@@ -52,12 +52,13 @@ def main():
     metadata = sum(e['implementation'] == 'metadata' for e in entries)
     lines = ['# API implementation inventory', '', f'Reference: scikit-image {skimage.__version__}.', '',
              f'{len(entries)} public callable names inventoried in {len(MODULES)} modules; '
-             f'{kernels} have partially native image implementations and {metadata} has metadata-only execution. '
+             f'{kernels} have partially native image implementations and {metadata} '
+             f'{"has" if metadata == 1 else "have"} metadata-only execution. '
              'All covered entries have per-function tests and benchmarks.', '',
              'An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, '
              'no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. '
              'Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. '
-             'Metadata entries inspect dtype without running an image kernel. Identity-preserving conversion calls '
+             'Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls '
              'can return the input without processing pixels.', '',
              '| API | Implementation | Dedicated parity test | Benchmark |', '|---|---|---|---|']
     for entry in entries:

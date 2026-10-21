@@ -27,15 +27,16 @@ Current native coverage: RGB/gray conversion; Gaussian; Sobel, Prewitt, and
 Scharr with directional variants; uint8 Otsu; mean thresholding; inversion;
 gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
 histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDbDr,
-CIE RGB and XYZ conversion pairs. There are 43 partial native image entries,
-one dtype metadata helper, and 402 pending entries in the current
+CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB and Lab/LCh conversions.
+There are 51 partial native image entries, two metadata helpers,
+and 393 pending entries in the current
 446-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
 
-- Port HSV, Lab/Luv/LCh, stain separation, and color-distance APIs with the same
+- Port Luv, stain separation, and color-distance APIs with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.

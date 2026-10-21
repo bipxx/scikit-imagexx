@@ -2,9 +2,9 @@
 
 Reference: scikit-image 0.26.0.
 
-446 public callable names inventoried in 17 modules; 43 have partially native image implementations and 1 has metadata-only execution. All covered entries have per-function tests and benchmarks.
+446 public callable names inventoried in 17 modules; 51 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
-An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries inspect dtype without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
+An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
 | API | Implementation | Dedicated parity test | Benchmark |
 |---|---|---|---|
@@ -17,18 +17,18 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.gray2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.gray2rgba` | upstream-only | pending | pending |
 | `color.hed2rgb` | upstream-only | pending | pending |
-| `color.hsv2rgb` | upstream-only | pending | pending |
-| `color.lab2lch` | upstream-only | pending | pending |
-| `color.lab2rgb` | upstream-only | pending | pending |
-| `color.lab2xyz` | upstream-only | pending | pending |
+| `color.hsv2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.lab2lch` | native-partial | yes (partial input contract) | yes |
+| `color.lab2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.lab2xyz` | native-partial | yes (partial input contract) | yes |
 | `color.label2rgb` | upstream-only | pending | pending |
-| `color.lch2lab` | upstream-only | pending | pending |
+| `color.lch2lab` | native-partial | yes (partial input contract) | yes |
 | `color.luv2rgb` | upstream-only | pending | pending |
 | `color.luv2xyz` | upstream-only | pending | pending |
 | `color.rgb2gray` | native-partial | yes (partial input contract) | yes |
 | `color.rgb2hed` | upstream-only | pending | pending |
-| `color.rgb2hsv` | upstream-only | pending | pending |
-| `color.rgb2lab` | upstream-only | pending | pending |
+| `color.rgb2hsv` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2lab` | native-partial | yes (partial input contract) | yes |
 | `color.rgb2luv` | upstream-only | pending | pending |
 | `color.rgb2rgbcie` | native-partial | yes (partial input contract) | yes |
 | `color.rgb2xyz` | native-partial | yes (partial input contract) | yes |
@@ -40,10 +40,10 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.rgba2rgb` | upstream-only | pending | pending |
 | `color.rgbcie2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.separate_stains` | upstream-only | pending | pending |
-| `color.xyz2lab` | upstream-only | pending | pending |
+| `color.xyz2lab` | native-partial | yes (partial input contract) | yes |
 | `color.xyz2luv` | upstream-only | pending | pending |
 | `color.xyz2rgb` | native-partial | yes (partial input contract) | yes |
-| `color.xyz_tristimulus_values` | upstream-only | pending | pending |
+| `color.xyz_tristimulus_values` | metadata | yes (partial input contract) | yes |
 | `color.ycbcr2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.ydbdr2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.yiq2rgb` | native-partial | yes (partial input contract) | yes |

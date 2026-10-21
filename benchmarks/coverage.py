@@ -10,7 +10,7 @@ import platform
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance
 
 
 def main():
@@ -48,14 +48,15 @@ def main():
                 native = getattr(importlib.import_module('skimagexx.'+module), name)
                 reference = getattr(importlib.import_module('skimage.'+module), name)
                 data = rgb if needs_color_input(api) else gray
-                expected = reference(data)
+                call_args,options = default_call(api,data)
+                expected = reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
-                    actual = native(data)
-                    tol = 2e-6 if dtype == np.float32 else 2e-13
+                    actual = native(*call_args,**options)
+                    rtol,atol = parity_tolerance(api,np.dtype(dtype))
                     assert np.asarray(actual).dtype == np.asarray(expected).dtype
-                    np.testing.assert_allclose(actual, expected, rtol=tol, atol=tol)
-                    timing = measure(lambda: reference(data), lambda: native(data), args.repeat, 15)
+                    np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
+                    timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     backend = 'identity' if actual is data else execution_kind(api)
                     results.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name,
                                     'threads': threads, 'backend': backend, 'max_abs_error':
@@ -75,7 +76,7 @@ def main():
              'Every native public function is checked before timing. Fallback is disabled; '
              'forwarding to scikit-image cannot count as native performance. Reference thread pools use one thread. '
              'Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. '
-             'Identity calls return the input unchanged; metadata calls inspect dtype only. '
+             'Identity calls return the input unchanged; metadata calls return small values/arrays without processing pixels. '
              'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.', '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:

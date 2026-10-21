@@ -1,11 +1,15 @@
 """Color API compatible with scikit-image."""
 import numpy as np
+import warnings
 from . import _core
+from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
 from ._compat import fallback, module_attribute, native_image
 
 __all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
            'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
            'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb']
+__all__ += ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
+            'lab2lch','lch2lab','xyz_tristimulus_values']
 
 
 def rgb2gray(rgb, *, channel_axis=-1):
@@ -26,7 +30,7 @@ def __getattr__(name):
     return module_attribute('color', name)
 
 
-_TRANSFORMS = {name: i for i, name in enumerate(__all__[2:])}
+_TRANSFORMS = {name: i for i, name in enumerate(__all__[2:16])}
 _COLOR_TYPES = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32,
                 np.int32, np.uint64, np.int64, np.float32, np.float64}
 
@@ -116,3 +120,85 @@ def rgb2xyz(rgb, *, channel_axis=-1):
 
 def xyz2rgb(xyz, *, channel_axis=-1):
     return _transform('xyz2rgb', xyz, channel_axis)
+
+
+def xyz_tristimulus_values(*, illuminant, observer, dtype=float):
+    illuminant = illuminant.upper()
+    observer = observer.upper()
+    try:
+        return np.asarray(_ILLUMINANTS[illuminant][observer],dtype=dtype)
+    except KeyError:
+        raise ValueError(f'Unknown illuminant/observer combination (`{illuminant}`, `{observer}`)')
+
+
+_PERCEPTUAL = {name: i for i,name in enumerate(__all__[16:24])}
+
+
+def _perceptual(name, image, channel_axis, illuminant='D65', observer='2'):
+    cie = name in ('xyz2lab','lab2xyz','rgb2lab','lab2rgb')
+    options = {'channel_axis':channel_axis}
+    if cie:
+        options.update(illuminant=illuminant,observer=observer)
+    if isinstance(image,np.ndarray) and type(image) is not np.ndarray:
+        return fallback('color',name,image,**options)
+    axis = channel_axis
+    if axis is None:
+        axis = -1
+    elif not np.isscalar(axis):
+        if len(axis) > 1:
+            raise ValueError('only a single channel axis is currently supported')
+        axis = axis[0]
+    if name == 'rgb2hsv' and axis == -1:
+        image.ndim  # Upstream inspects this before coercing array-like input.
+    a = np.asarray(image)
+    moved = a if axis == -1 else np.moveaxis(a,axis,-1)
+    polar = name in ('lab2lch','lch2lab')
+    if polar and moved.shape[-1] < 3:
+        raise ValueError('Input image has less than 3 channels.')
+    if not polar and moved.shape[-1] != 3:
+        shape = (1,)+moved.shape if name == 'rgb2hsv' and moved.ndim == 1 else moved.shape
+        raise ValueError(f'the input array must have size 3 along `channel_axis`, got {shape}')
+    if moved.dtype.type not in _COLOR_TYPES or not moved.dtype.isnative:
+        return fallback('color',name,image,**options)
+    white = xyz_tristimulus_values(illuminant=illuminant,observer=observer) if cie else (1.0,1.0,1.0)
+    result,negative_z,unsupported = _core.perceptual_transform(moved,_PERCEPTUAL[name],white)
+    if unsupported:
+        return fallback('color',name,image,**options)
+    if negative_z:
+        target = 'XYZ' if name == 'lab2xyz' else 'sRGB'
+        via = '' if name == 'lab2xyz' else ', via XYZ'
+        warnings.warn(f'Conversion from CIE-LAB{via} to {target} color space resulted in '
+                      f'{negative_z} negative Z values that have been clipped to zero',UserWarning,stacklevel=3)
+    return result if axis == -1 else np.moveaxis(result,-1,axis)
+
+
+def rgb2hsv(rgb, *, channel_axis=-1):
+    return _perceptual('rgb2hsv',rgb,channel_axis)
+
+
+def hsv2rgb(hsv, *, channel_axis=-1):
+    return _perceptual('hsv2rgb',hsv,channel_axis)
+
+
+def xyz2lab(xyz, illuminant='D65', observer='2', *, channel_axis=-1):
+    return _perceptual('xyz2lab',xyz,channel_axis,illuminant,observer)
+
+
+def lab2xyz(lab, illuminant='D65', observer='2', *, channel_axis=-1):
+    return _perceptual('lab2xyz',lab,channel_axis,illuminant,observer)
+
+
+def rgb2lab(rgb, illuminant='D65', observer='2', *, channel_axis=-1):
+    return _perceptual('rgb2lab',rgb,channel_axis,illuminant,observer)
+
+
+def lab2rgb(lab, illuminant='D65', observer='2', *, channel_axis=-1):
+    return _perceptual('lab2rgb',lab,channel_axis,illuminant,observer)
+
+
+def lab2lch(lab, *, channel_axis=-1):
+    return _perceptual('lab2lch',lab,channel_axis)
+
+
+def lch2lab(lch, *, channel_axis=-1):
+    return _perceptual('lch2lab',lch,channel_axis)

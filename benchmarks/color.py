@@ -11,10 +11,12 @@ import numpy as np
 import skimage
 from skimage import color as reference
 import skimagexx as xx
+from skimagexx.coverage import parity_tolerance
 
 FUNCTIONS = ['rgb2yuv','yuv2rgb','rgb2yiq','yiq2rgb','rgb2ypbpr','ypbpr2rgb',
              'rgb2ycbcr','ycbcr2rgb','rgb2ydbdr','ydbdr2rgb','rgb2rgbcie',
-             'rgbcie2rgb','rgb2xyz','xyz2rgb']
+             'rgbcie2rgb','rgb2xyz','xyz2rgb','rgb2hsv','hsv2rgb','xyz2lab',
+             'lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab']
 
 
 def main():
@@ -41,8 +43,8 @@ def main():
                     xx.set_num_threads(threads)
                     actual = current(a,channel_axis=axis)
                     assert actual.dtype == expected.dtype
-                    tol = 2e-6 if dtype == np.float32 else 2e-13
-                    np.testing.assert_allclose(actual,expected,rtol=tol,atol=tol)
+                    rtol,atol = parity_tolerance('color.'+name,np.dtype(dtype))
+                    np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
                     timing = measure(lambda: original(a,channel_axis=axis),lambda: current(a,channel_axis=axis),7,15)
                     result = {'api':'color.'+name,'dtype':np.dtype(dtype).name,'size':args.size,
                               'threads':threads,'layout':layout,'channel_axis':axis,'backend':'native',

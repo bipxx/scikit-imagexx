@@ -9,7 +9,8 @@ def main():
     reports = [('Every covered public entry','function-coverage'),
                ('Additional integer widths','conversion-widths'),
                ('Non-default exposure parameters','exposure-parameters'),
-               ('Color layouts and uint16 inputs','color-layouts')]
+               ('Color layouts and uint16 inputs','color-layouts'),
+               ('Perceptual color parameters','perceptual-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     digest = hashlib.sha256()
@@ -57,7 +58,9 @@ def main():
               '|---|---|---:|---:|---:|']
     examples = {('filters.gaussian','uint8'),('filters.sobel','uint8'),('filters.threshold_otsu','uint8'),
                 ('color.rgb2yuv','uint8'),('color.rgb2xyz','uint8'),('color.rgb2xyz','float32'),
-                ('color.xyz2rgb','float32'),('color.rgb2ycbcr','float64')}
+                ('color.xyz2rgb','float32'),('color.rgb2ycbcr','float64'),
+                ('color.rgb2hsv','float32'),('color.hsv2rgb','float32'),
+                ('color.rgb2lab','float64'),('color.lab2lch','float64')}
     for r in data[0][2]['results']:
         if r['size'] == 1024 and r['threads'] == 1 and (r['api'],r['dtype']) in examples:
             lines.append(f'| {r["api"]} | {r["dtype"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
@@ -84,9 +87,9 @@ def main():
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
               'checks on Windows/Linux without asserting speed ratios on shared runners.','',
               f'Coverage remains partial: {native_count} native image entries, {metadata_count} '
-              f'metadata helper, {len(inventory)-len(covered)} inventoried entries still pending. '
+              f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
-              '[documented input contracts](../README.md). Reproduce all four reports, then run '
+              '[documented input contracts](../README.md). Reproduce all five reports, then run '
               '`python benchmarks/summarize.py` to check their source hashes and API coverage '
               'before regenerating this summary.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance
 from skimage import exposure as reference_exposure
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
@@ -57,11 +57,12 @@ def test_every_native_function(native, original, name, dtype, shape):
         with pytest.raises(NotImplementedError):
             getattr(native, name)(a)
         return
-    actual = getattr(native, name)(a)
-    expected = getattr(original, name)(a)
+    args, options = default_call(api,a)
+    actual = getattr(native, name)(*args,**options)
+    expected = getattr(original, name)(*args,**options)
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
-    tol = 2e-6 if dtype == np.float32 else 2e-13
-    np.testing.assert_allclose(actual, expected, rtol=tol, atol=tol)
+    rtol,atol = parity_tolerance(api,np.dtype(dtype))
+    np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
 
 
 @pytest.mark.parametrize('name', ['sobel', 'prewitt', 'scharr'])

@@ -3,8 +3,12 @@
 #include <cstdint>
 #include "skimagexx/convert.hpp"
 namespace skimagexx::detail { struct ColorSpec; }
+namespace skimagexx { struct PerceptualInfo; }
+namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::simd {
 #ifdef SKIMAGEXX_AVX2
+std::size_t perceptual_transform(const void*, void*, std::size_t, PixelType, const detail::PerceptualSpec&,
+                                std::ptrdiff_t, std::ptrdiff_t, PerceptualInfo&);
 std::size_t color_transform(const void*, void*, std::size_t, PixelType, const detail::ColorSpec&,
                            std::ptrdiff_t pixel_stride, std::ptrdiff_t channel_stride);
 void gray(const float*, float*, std::size_t);

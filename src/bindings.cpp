@@ -1,8 +1,10 @@
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
+#include "skimagexx/perceptual.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <string>
 #include <type_traits>
 
@@ -83,6 +85,37 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("perceptual_transform", [](py::array image, int operation, std::array<double,3> white) {
+        if (!image.ndim()) throw py::value_error("expected a color array");
+        const auto nch = image.shape(image.ndim()-1);
+        if (nch < 3 || (operation < 6 && nch != 3)) throw py::value_error("invalid color channel count");
+        const auto type = pixel_type(image.dtype());
+        const bool floating = type == skimagexx::PixelType::float32 || type == skimagexx::PixelType::float64;
+        const auto dtype = type == skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>();
+        py::array output(dtype,std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
+        const auto n = static_cast<std::size_t>(image.size()/nch);
+        std::ptrdiff_t pixels = nch, channels = 1;
+        py::array input = image;
+        if (!floating || !linear_color_view(image,pixels,channels)) {
+            input = py::array::ensure(image,py::array::c_style);
+            if (!input) throw py::type_error("unable to make input contiguous");
+            if (reinterpret_cast<std::uintptr_t>(input.data()) % skimagexx::pixel_size(type))
+                input = py::array::ensure(input.attr("copy")(),py::array::c_style);
+            pixels = nch; channels = 1;
+        }
+        const auto* source = input.data(); auto* destination = output.mutable_data();
+        skimagexx::PerceptualInfo info;
+        { py::gil_scoped_release release; info = skimagexx::perceptual_into(source,destination,n,type,
+            static_cast<skimagexx::PerceptualTransform>(operation),white,static_cast<std::size_t>(nch),pixels,channels); }
+        if (image.ndim() == 1 && type == skimagexx::PixelType::float32 && info.negative_z && (operation == 3 || operation == 5)) {
+            py::array_t<double> promoted(3);
+            auto* target = promoted.mutable_data();
+            { py::gil_scoped_release release; skimagexx::lab_scalar_negative_z_into(static_cast<const float*>(source),target,
+                static_cast<skimagexx::PerceptualTransform>(operation),white,channels); }
+            output = std::move(promoted);
+        }
+        return py::make_tuple(output,info.negative_z,info.unsupported);
+    },py::arg("image"),py::arg("operation"),py::arg("white"));
     m.def("color_transform", [](py::array image, int operation) {
         if (!image.ndim() || image.shape(image.ndim()-1) != 3) throw py::value_error("expected an array of color triples");
         const auto input_type = pixel_type(image.dtype());

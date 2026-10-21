@@ -1,5 +1,6 @@
 #include "simd.hpp"
 #include "color_detail.hpp"
+#include "perceptual_detail.hpp"
 #include "simd_math.hpp"
 #include <cstring>
 #include <climits>
@@ -16,6 +17,11 @@ template<> struct Vector<TYPE> { \
     static R sub(R a, R b) { return _mm256_sub_##SUFFIX(a,b); } \
     static R mul(R a, R b) { return _mm256_mul_##SUFFIX(a,b); } \
     static R div(R a, R b) { return _mm256_div_##SUFFIX(a,b); } \
+    static R minimum(R a, R b) { return _mm256_min_##SUFFIX(a,b); } \
+    static R maximum(R a, R b) { return _mm256_max_##SUFFIX(a,b); } \
+    static R floor(R a) { return _mm256_floor_##SUFFIX(a); } \
+    static R eq(R a, R b) { return _mm256_cmp_##SUFFIX(a,b,_CMP_EQ_OQ); } \
+    static R absolute(R a) { return _mm256_andnot_##SUFFIX(set(TYPE(-0.0)),a); } \
     static R gt(R a, R b) { return _mm256_cmp_##SUFFIX(a,b,_CMP_GT_OQ); } \
     static R choose(R a, R b, R mask) { return _mm256_blendv_##SUFFIX(a,b,mask); } \
     static R clip(R x) { \
@@ -196,5 +202,226 @@ std::size_t color_transform(const void* source, void* out, std::size_t n, PixelT
         case PixelType::float64: return run(static_cast<const double*>(source),static_cast<double*>(out),n,spec,pixel_stride,channel_stride);
         default: return 0;
     }
+}
+namespace {
+bool all_finite(__m256 x) { return _mm256_movemask_ps(_mm256_cmp_ps(Vector<float>::absolute(x),_mm256_set1_ps(INFINITY),_CMP_LT_OQ)) == 255; }
+bool all_finite(__m256d x) { return _mm256_movemask_pd(_mm256_cmp_pd(Vector<double>::absolute(x),_mm256_set1_pd(INFINITY),_CMP_LT_OQ)) == 15; }
+int mask_bits(__m256 x) { return _mm256_movemask_ps(x); }
+int mask_bits(__m256d x) { return _mm256_movemask_pd(x); }
+__m256 bytes_mod6(__m256 x) {
+    auto ints = _mm256_and_si256(_mm256_cvttps_epi32(x),_mm256_set1_epi32(255));
+    const auto bytes = _mm256_cvtepi32_ps(ints);
+    return _mm256_sub_ps(bytes,_mm256_mul_ps(_mm256_floor_ps(_mm256_div_ps(bytes,_mm256_set1_ps(6))),_mm256_set1_ps(6)));
+}
+__m256d bytes_mod6(__m256d x) {
+    const auto ints = _mm_and_si128(_mm256_cvttpd_epi32(x),_mm_set1_epi32(255));
+    const auto bytes = _mm256_cvtepi32_pd(ints);
+    return _mm256_sub_pd(bytes,_mm256_mul_pd(_mm256_floor_pd(_mm256_div_pd(bytes,_mm256_set1_pd(6))),_mm256_set1_pd(6)));
+}
+__m256d cube_root(__m256d x) {
+    if (mask_bits(_mm256_cmp_pd(x,_mm256_set1_pd(1e8),_CMP_GT_OQ))) {
+        double v[4]; _mm256_storeu_pd(v,x); for (auto& a : v) a = std::cbrt(a); return _mm256_loadu_pd(v);
+    }
+    return power(x,1.0/3.0);
+}
+__m256 cube_root(__m256 x) {
+    const auto lo = _mm256_cvtpd_ps(cube_root(_mm256_cvtps_pd(_mm256_castps256_ps128(x))));
+    const auto hi = _mm256_cvtpd_ps(cube_root(_mm256_cvtps_pd(_mm256_extractf128_ps(x,1))));
+    return _mm256_insertf128_ps(_mm256_castps128_ps256(lo),hi,1);
+}
+__m256d multiply_white(__m256d x, double white) { return _mm256_mul_pd(x,_mm256_set1_pd(white)); }
+__m256 multiply_white(__m256 x, double white) {
+    const auto lo = _mm256_cvtpd_ps(multiply_white(_mm256_cvtps_pd(_mm256_castps256_ps128(x)),white));
+    const auto hi = _mm256_cvtpd_ps(multiply_white(_mm256_cvtps_pd(_mm256_extractf128_ps(x,1)),white));
+    return _mm256_insertf128_ps(_mm256_castps128_ps256(lo),hi,1);
+}
+void polar4(__m256d x, __m256d y, __m256d& radius, __m256d& angle) {
+    using V = Vector<double>;
+    const auto ax = V::absolute(x), ay = V::absolute(y), high = V::maximum(ax,ay), low = V::minimum(ax,ay);
+    const auto unusual = _mm256_or_pd(V::gt(high,V::set(1e150)),_mm256_andnot_pd(V::eq(high,V::set(0)),V::gt(V::set(1e-150),high)));
+    if (!all_finite(x) || !all_finite(y) || mask_bits(unusual)) {
+        double a[4], b[4], r[4], h[4]; _mm256_storeu_pd(a,x); _mm256_storeu_pd(b,y);
+        for (int j = 0; j < 4; ++j) { r[j] = std::hypot(a[j],b[j]); const auto t = std::atan2(b[j],a[j]); h[j] = t+(t < 0 ? 2*detail::pi : 0); }
+        radius = _mm256_loadu_pd(r); angle = _mm256_loadu_pd(h); return;
+    }
+    const auto ratio = V::div(low,V::choose(high,V::set(1),V::eq(high,V::set(0))));
+    radius = V::mul(high,_mm256_sqrt_pd(V::add(V::set(1),V::mul(ratio,ratio))));
+    const auto reduce = V::gt(ratio,V::set(0.4142135623730950488));
+    const auto z = V::choose(ratio,V::div(V::sub(ratio,V::set(1)),V::add(ratio,V::set(1))),reduce);
+    const auto square = V::mul(z,z);
+    auto series = V::set(-1.0/31);
+    for (int k = 14; k >= 0; --k) series = V::add(V::set((k%2 ? -1.0 : 1.0)/double(2*k+1)),V::mul(square,series));
+    angle = V::add(V::mul(z,series),V::choose(V::set(0),V::set(detail::pi/4),reduce));
+    angle = V::choose(angle,V::sub(V::set(detail::pi/2),angle),V::gt(ay,ax));
+    angle = V::choose(angle,V::sub(V::set(detail::pi),angle),x); // Sign bit includes -0.
+    angle = _mm256_xor_pd(angle,_mm256_and_pd(y,V::set(-0.0)));
+    angle = V::add(angle,V::choose(V::set(0),V::set(2*detail::pi),V::gt(V::set(0),angle)));
+}
+void polar(__m256d x, __m256d y, __m256d& r, __m256d& h) { polar4(x,y,r,h); }
+void polar(__m256 x, __m256 y, __m256& r, __m256& h) {
+    __m256d r0,h0,r1,h1;
+    polar4(_mm256_cvtps_pd(_mm256_castps256_ps128(x)),_mm256_cvtps_pd(_mm256_castps256_ps128(y)),r0,h0);
+    polar4(_mm256_cvtps_pd(_mm256_extractf128_ps(x,1)),_mm256_cvtps_pd(_mm256_extractf128_ps(y,1)),r1,h1);
+    r = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(r0)),_mm256_cvtpd_ps(r1),1);
+    h = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(h0)),_mm256_cvtpd_ps(h1),1);
+}
+void sincos4(__m256d h, __m256d& sine, __m256d& cosine) {
+    using V = Vector<double>;
+    const auto k = _mm256_round_pd(V::mul(h,V::set(2/detail::pi)),_MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
+    auto r = V::sub(h,V::mul(k,V::set(1.57079632673412561417)));
+    r = V::sub(r,V::mul(k,V::set(6.07710050650619224932e-11)));
+    if (!all_finite(h) || mask_bits(V::gt(V::absolute(h),V::set(1e6))) || mask_bits(V::gt(V::set(1e-8),V::absolute(r)))) {
+        double v[4], s[4], c[4]; _mm256_storeu_pd(v,h);
+        for (int j = 0; j < 4; ++j) { s[j] = std::sin(v[j]); c[j] = std::cos(v[j]); }
+        sine = _mm256_loadu_pd(s); cosine = _mm256_loadu_pd(c); return;
+    }
+    constexpr double scoeff[] = {1,-1.0/6,1.0/120,-1.0/5040,1.0/362880,-1.0/39916800,1.0/6227020800,-1.0/1307674368000,1.0/355687428096000};
+    constexpr double ccoeff[] = {1,-1.0/2,1.0/24,-1.0/720,1.0/40320,-1.0/3628800,1.0/479001600,-1.0/87178291200,1.0/20922789888000};
+    const auto square = V::mul(r,r);
+    auto s = V::set(scoeff[8]), c = V::set(ccoeff[8]);
+    for (int j = 7; j >= 0; --j) { s = V::add(V::set(scoeff[j]),V::mul(square,s)); c = V::add(V::set(ccoeff[j]),V::mul(square,c)); }
+    s = V::mul(r,s);
+    const auto quadrant = _mm256_cvtepi32_pd(_mm_and_si128(_mm256_cvtpd_epi32(k),_mm_set1_epi32(3)));
+    const auto ns = _mm256_xor_pd(s,V::set(-0.0)), nc = _mm256_xor_pd(c,V::set(-0.0));
+    sine = V::choose(V::choose(V::choose(s,c,V::eq(quadrant,V::set(1))),ns,V::eq(quadrant,V::set(2))),nc,V::eq(quadrant,V::set(3)));
+    cosine = V::choose(V::choose(V::choose(c,ns,V::eq(quadrant,V::set(1))),nc,V::eq(quadrant,V::set(2))),s,V::eq(quadrant,V::set(3)));
+}
+void sincos(__m256d h, __m256d& s, __m256d& c) { sincos4(h,s,c); }
+void sincos(__m256 h, __m256& s, __m256& c) {
+    __m256d s0,c0,s1,c1;
+    sincos4(_mm256_cvtps_pd(_mm256_castps256_ps128(h)),s0,c0);
+    sincos4(_mm256_cvtps_pd(_mm256_extractf128_ps(h,1)),s1,c1);
+    s = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(s0)),_mm256_cvtpd_ps(s1),1);
+    c = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(c0)),_mm256_cvtpd_ps(c1),1);
+}
+template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOutput<Input>* out, std::size_t n,
+    const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
+    using T = detail::ColorOutput<Input>; using V = Vector<T>; using R = typename V::R; using Op = PerceptualTransform;
+    const auto op = spec.transform;
+    const auto* lut = op == Op::rgb2lab && std::is_same_v<Input,std::uint8_t> ? detail::srgb_decode_table().data() : nullptr;
+    const auto& matrix = detail::color_spec(op == Op::rgb2lab ? ColorTransform::rgb2xyz : ColorTransform::xyz2rgb).matrix;
+    R weights[9]; for (int j = 0; j < 9; ++j) weights[j] = V::set(T(matrix[j]));
+    std::size_t i = 0;
+    for (; i+V::lanes <= n; i += V::lanes) {
+        const auto* start = p+std::ptrdiff_t(i)*pixels;
+        R x,y,z;
+        if constexpr (std::is_floating_point_v<Input>) {
+            if (pixels == 3 && channels == 1) unpack(start,x,y,z);
+            else if (pixels == 1) { x=V::load(start); y=V::load(start+channels); z=V::load(start+2*channels); }
+            else if (pixels == 0) { x=V::set(start[0]); y=V::set(start[channels]); z=V::set(start[2*channels]); }
+            else if (pixels >= INT_MIN/7 && pixels <= INT_MAX/7) { x=gather(start,pixels); y=gather(start+channels,pixels); z=gather(start+2*channels,pixels); }
+            else {
+                T block[3*V::lanes];
+                for (std::size_t j=0;j<3*V::lanes;++j) block[j]=start[std::ptrdiff_t(j/3)*pixels+std::ptrdiff_t(j%3)*channels];
+                unpack(block,x,y,z);
+            }
+        } else {
+            double block[12];
+            for (int j=0;j<12;++j) {
+                const auto offset=std::ptrdiff_t(j/3)*pixels+std::ptrdiff_t(j%3)*channels;
+                if constexpr (std::is_same_v<Input,bool>) block[j]=reinterpret_cast<const unsigned char*>(start)[offset] != 0;
+                else block[j]=detail::color_value(start[offset],0,false);
+                if constexpr (std::is_same_v<Input,std::uint8_t>) if (lut) block[j]=lut[start[offset]];
+            }
+            unpack(block,x,y,z);
+        }
+        bool scalar_block = false;
+        if (op == Op::rgb2hsv || op == Op::hsv2rgb) scalar_block = !all_finite(x) || !all_finite(y) || !all_finite(z);
+        if (!scalar_block && op == Op::rgb2hsv) {
+            const auto high=V::maximum(V::maximum(x,y),z), low=V::minimum(V::minimum(x,y),z), delta=V::sub(high,low);
+            const auto zero=V::eq(delta,V::set(0)), divisor=V::choose(delta,V::set(1),zero);
+            auto h=V::div(V::sub(y,z),divisor);
+            h=V::choose(h,V::add(V::set(2),V::div(V::sub(z,x),divisor)),V::eq(y,high));
+            h=V::choose(h,V::add(V::set(4),V::div(V::sub(x,y),divisor)),V::eq(z,high));
+            h=V::div(h,V::set(6)); h=V::sub(h,V::floor(h));
+            const auto s=V::choose(V::div(delta,V::choose(high,V::set(1),zero)),V::set(0),zero);
+            x=V::choose(h,V::set(0),zero); y=s; z=high;
+            scalar_block = !all_finite(delta) || !all_finite(x) || !all_finite(y);
+        } else if (!scalar_block && op == Op::hsv2rgb) {
+            const auto h6=V::mul(x,V::set(6)), hi=V::floor(h6);
+            scalar_block = !all_finite(hi) || mask_bits(V::gt(V::set(T(-2147483648.0)),hi)) ||
+                           mask_bits(V::gt(hi,V::set(T(2147483648.0)))) || mask_bits(V::eq(hi,V::set(T(2147483648.0))));
+            if (!scalar_block) {
+                const auto f=V::sub(h6,hi), value=z, s=y;
+                const auto p0=V::mul(value,V::sub(V::set(1),s)), q=V::mul(value,V::sub(V::set(1),V::mul(f,s))),
+                           t=V::mul(value,V::sub(V::set(1),V::mul(V::sub(V::set(1),f),s)));
+                const auto sector=bytes_mod6(hi);
+                x=value; y=t; z=p0;
+                x=V::choose(x,q,V::eq(sector,V::set(1))); y=V::choose(y,value,V::eq(sector,V::set(1)));
+                for (int j=2;j<=5;++j) {
+                    const auto mask=V::eq(sector,V::set(T(j)));
+                    const auto r=j==2 || j==3 ? p0 : j==4 ? t : value;
+                    const auto g=j==2 ? value : j==3 ? q : p0;
+                    const auto b=j==2 ? t : j==3 || j==4 ? value : q;
+                    x=V::choose(x,r,mask); y=V::choose(y,g,mask); z=V::choose(z,b,mask);
+                }
+            }
+        } else if (op == Op::xyz2lab || op == Op::rgb2lab) {
+            if (op == Op::rgb2lab) {
+                if constexpr (!std::is_same_v<Input,std::uint8_t>) { x=decode<T>(x); y=decode<T>(y); z=decode<T>(z); }
+                const auto a=x,b=y,c=z;
+                x=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
+                y=V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5]));
+                z=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
+            }
+            R values[]={x,y,z};
+            for (int j=0;j<3;++j) {
+                auto v=V::div(values[j],V::set(T(spec.white[j])));
+                const auto mask=V::gt(v,V::set(T(0.008856))), positive=V::choose(V::set(1),v,mask);
+                values[j]=V::choose(V::add(V::mul(V::set(T(7.787)),v),V::set(T(16.0/116.0))),cube_root(positive),mask);
+            }
+            x=V::sub(V::mul(V::set(116),values[1]),V::set(16));
+            y=V::mul(V::set(500),V::sub(values[0],values[1])); z=V::mul(V::set(200),V::sub(values[1],values[2]));
+        } else if (op == Op::lab2xyz || op == Op::lab2rgb) {
+            const auto fy=V::div(V::add(x,V::set(16)),V::set(116)), fx=V::add(V::div(y,V::set(500)),fy);
+            auto fz=V::sub(fy,V::div(z,V::set(200)));
+            const auto invalid=V::gt(V::set(0),fz); auto bits=static_cast<unsigned>(mask_bits(invalid));
+            while (bits) { ++info.negative_z; bits &= bits-1; }
+            fz=V::choose(fz,V::set(0),invalid);
+            R values[]={fx,fy,fz};
+            for (int j=0;j<3;++j) {
+                const auto v=values[j], mask=V::gt(v,V::set(T(0.2068966)));
+                values[j]=multiply_white(V::choose(V::div(V::sub(v,V::set(T(16.0/116.0))),V::set(T(7.787))),V::mul(V::mul(v,v),v),mask),spec.white[j]);
+            }
+            x=values[0]; y=values[1]; z=values[2];
+            if (op == Op::lab2rgb) {
+                const auto a=x,b=y,c=z;
+                x=encode<T>(V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2])));
+                y=encode<T>(V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5])));
+                z=encode<T>(V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8])));
+            }
+        } else if (op == Op::lab2lch) { R radius,angle; polar(y,z,radius,angle); y=radius; z=angle; }
+        else if (op == Op::lch2lab) { R sine,cosine; sincos(z,sine,cosine); z=V::mul(y,sine); y=V::mul(y,cosine); }
+        if (scalar_block) {
+            for (std::size_t j=0;j<V::lanes;++j) detail::perceptual_pixel(start+std::ptrdiff_t(j)*pixels,out+(i+j)*spec.channels,spec,channels,info);
+        } else if (spec.channels == 3) pack(out+3*i,x,y,z);
+        else {
+            T block[3*V::lanes]; pack(block,x,y,z);
+            for (std::size_t j=0;j<V::lanes;++j) {
+                std::copy(block+3*j,block+3*j+3,out+(i+j)*spec.channels);
+                for (std::size_t c=3;c<spec.channels;++c) {
+                    const auto offset=std::ptrdiff_t(j)*pixels+std::ptrdiff_t(c)*channels;
+                    if constexpr (std::is_same_v<Input,bool>) out[(i+j)*spec.channels+c]=reinterpret_cast<const unsigned char*>(start)[offset] != 0;
+                    else out[(i+j)*spec.channels+c]=detail::color_value(start[offset],0,false);
+                }
+            }
+        }
+    }
+    return i;
+}
+}
+std::size_t perceptual_transform(const void* source, void* out, std::size_t n, PixelType type,
+    const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
+#define PERCEPTUAL_CASE(KIND,TYPE,OUTPUT) case PixelType::KIND: return run_perceptual(static_cast<const TYPE*>(source),static_cast<OUTPUT*>(out),n,spec,pixels,channels,info)
+    switch(type) {
+        PERCEPTUAL_CASE(boolean,bool,double);
+        PERCEPTUAL_CASE(uint8,std::uint8_t,double); PERCEPTUAL_CASE(int8,std::int8_t,double);
+        PERCEPTUAL_CASE(uint16,std::uint16_t,double); PERCEPTUAL_CASE(int16,std::int16_t,double);
+        PERCEPTUAL_CASE(uint32,std::uint32_t,double); PERCEPTUAL_CASE(int32,std::int32_t,double);
+        PERCEPTUAL_CASE(uint64,std::uint64_t,double); PERCEPTUAL_CASE(int64,std::int64_t,double);
+        PERCEPTUAL_CASE(float32,float,float); PERCEPTUAL_CASE(float64,double,double);
+        default: return 0;
+    }
+#undef PERCEPTUAL_CASE
 }
 } // namespace skimagexx::simd

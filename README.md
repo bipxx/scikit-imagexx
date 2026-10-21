@@ -14,10 +14,10 @@ floating-point inputs, smaller sizes, raw samples, and before/after regressions.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **43 partially native
-image functions and one dtype metadata helper**. The
+The reference is scikit-image **0.26.0**. There are currently **51 partially native
+image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 446 exported public callable names across 17
-modules; 402 remain pending native implementation and dedicated parity tests.
+modules; 393 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -26,6 +26,10 @@ This is not full scikit-image coverage.
 | `gray2rgb` | 2D grayscale; uint8, float32, float64; arbitrary output channel axis | Exact replication with original dtype |
 | `rgb2yuv`/`yuv2rgb`, `rgb2yiq`/`yiq2rgb`, `rgb2ypbpr`/`ypbpr2rgb`, `rgb2ycbcr`/`ycbcr2rgb`, `rgb2ydbdr`/`ydbdr2rgb`, `rgb2rgbcie`/`rgbcie2rgb` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions with three channels; channel axis, including empty arrays | Upstream matrices, integer normalization and dtype-dependent YCbCr subtraction/errors; float32 output for float32 input, float64 otherwise |
 | `rgb2xyz`, `xyz2rgb` | Same color input types and dimensions | Piecewise sRGB transfer, XYZ matrix, inverse clipping; uint8 decode LUT |
+| `rgb2hsv`, `hsv2rgb` | Same color dtypes, arbitrary dimensions and channel axes; finite inputs and RGB-to-HSV intermediates; inverse hue sector must fit int32 | Upstream tie order, grayscale cases, signed zero and uint8-wrapped hue sectors |
+| `xyz2lab`, `lab2xyz`, `rgb2lab`, `lab2rgb` | Same color dtypes/dimensions; all eight illuminants and three observers | Fused XYZ/Lab/sRGB stages; upstream negative-Z warning counts and single-pixel float32 promotion |
+| `lab2lch`, `lch2lab` | Same color dtypes; three or more channels; extra channels preserved after normalization | Native hypot/atan2 and sin/cos; IEEE/special ranges use scalar libm |
+| `xyz_tristimulus_values` | All upstream white-point combinations and NumPy output dtypes | Metadata helper; no image kernel |
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
 | `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
@@ -55,6 +59,11 @@ Color matrix float32 parity includes an absolute dot-product roundoff bound of
 tolerance. BLAS fusion can differ near cancellation, especially for out-of-range
 YCbCr values. Float64 color comparisons use the base tolerance. Color float16,
 non-native byte order, and ndarray subclasses use explicit upstream fallback.
+Forward Lab conversions use `atol=2.5e-4` for float32 and `2e-12` for float64,
+with the same relative tolerance. The 500× opponent-channel scaling amplifies
+cbrt/matrix roundoff; four float32 epsilon units at that scale are about 2.4e-4.
+HSV nonfinite values, nonfinite RGB-to-HSV intermediates, and inverse hue sectors
+outside int32 currently require explicit upstream fallback.
 
 N-dimensional spatial filtering, integer spatial filters beyond uint8, masks, negative/sequence edge axes,
 anisotropic sigma, other boundary modes, floating-point Otsu histograms, and
@@ -96,7 +105,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 446 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 44 covered wrapper signatures have per-function parity tests. Tests also run
+All 53 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -168,6 +177,11 @@ the conversion pixel types above and writes float32 for float32 input, float64
 otherwise. `color_transform_strided_into<T>` accepts floating input with signed
 pixel/channel strides measured in elements. Both use the global worker setting
 and write caller-owned output without allocation.
+`skimagexx/perceptual.hpp` provides `perceptual_into` with explicit white point,
+channel count and element strides. Its result reports negative-Z counts and
+unsupported HSV inputs. For interleaved extra-channel buffers, set pixel stride
+to the channel count. The one-pixel promotion helper preserves NumPy's special
+float32 inverse-Lab behavior.
 
 ## CPU execution
 
@@ -175,6 +189,7 @@ and write caller-owned output without allocation.
 |---|---|---|
 | RGB to gray | Contiguous AVX2 loads/shuffles; fused uint8 normalization | Independent pixel ranges |
 | Color matrices / XYZ | AVX2 matrix arithmetic, interleaved double path, vector sRGB transfer; uint8 decode LUT; bounded normalization blocks | Independent pixel ranges |
+| HSV / Lab / LCh | AVX2 masked arithmetic, vector cube roots, range-reduced atan2/sin/cos; libm for special ranges | Independent pixel ranges; local warning counts reduced once per worker |
 | Gaussian | Register-resident AVX2 double accumulation; fused uint8 conversion | Independent rows in each pass |
 | Sobel | AVX2 fused derivatives and square root | Independent rows |
 | Otsu | AVX2 constant-image detection and variance scoring | Per-thread eight-lane histograms, then reduction |
@@ -224,7 +239,7 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 688 current comparisons against original scikit-image, including one-worker
+records 868 current comparisons against original scikit-image, including one-worker
 measurements and optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
@@ -240,20 +255,23 @@ python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
 python benchmarks/conversions.py --size 1024 --threads 1 4
 python benchmarks/color.py --size 512 --threads 1
 python benchmarks/exposure.py --size 1024 --threads 1
+python benchmarks/perceptual.py --size 512 --threads 1 4
 python benchmarks/summarize.py
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 44 entries in 496 cases.
+performance. The full function benchmark covers 53 entries in 604 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 5,079 checks with SIMD enabled and disabled; inventory checks alone do not
+has 6,577 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
-[Color layouts and integer inputs](benchmarks/color-layouts.md) add 56 one-worker
+[Color layouts and integer inputs](benchmarks/color-layouts.md) add 88 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
+[Perceptual parameters](benchmarks/perceptual-parameters.md) add 40 comparisons
+with alternate white points, wrapped hues, extra channels, and negative-Z warnings.
 
 [Earlier single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the

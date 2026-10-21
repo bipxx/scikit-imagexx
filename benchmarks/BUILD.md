@@ -40,8 +40,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 43 native image functions, one metadata
-helper, and 496 per-function performance cases. The suite now has 5079 checks in both SIMD
+The current function benchmark covers 51 native image functions, two metadata
+helpers, and 604 per-function performance cases. The suite now has 6577 checks in both SIMD
 modes; 446 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -49,9 +49,12 @@ performance results retain slower cases as well as faster ones.
 `conversion-widths.json` records 112 additional cases across boolean and
 8/16/32/64-bit integer inputs, with exact parity required before timing. Identity,
 copy, and metadata rows are identified separately from conversion kernels.
-`color-layouts.json` adds 56 one-worker comparisons on uint16/float32 strided and
+`color-layouts.json` adds 88 one-worker comparisons on uint16/float32 strided and
 channel-first images; input movement, normalization and any required copying are
 included. Uniform floating layouts are read directly without a full copy.
+`perceptual-parameters.json` adds 40 cases on alternate white points, wrapped
+hues, four-channel polar conversions and negative-Z warning counts. Warnings
+are checked before timing and ignored during timed calls in that report.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the

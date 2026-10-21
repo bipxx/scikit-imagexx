@@ -1,6 +1,7 @@
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
+#include "skimagexx/perceptual.hpp"
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -94,6 +95,23 @@ int main() {
         color_transform_into(white,xyz,1,PixelType::uint8,ColorTransform::rgb2xyz);
         require(std::abs(xyz[0]-0.950456) < 1e-14 && std::abs(xyz[1]-1) < 1e-14 && std::abs(xyz[2]-1.088754) < 1e-14);
         color_transform_into(nullptr,nullptr,0,PixelType::float32,ColorTransform::rgb2yuv);
+        const double hsv_red[] = {1,0,0}, hsv_gray[] = {0.4,0.4,0.4};
+        double hsv[3];
+        auto perception = perceptual_into(hsv_red,hsv,1,PixelType::float64,PerceptualTransform::rgb2hsv);
+        require(!perception.unsupported && hsv[0] == 0 && hsv[1] == 1 && hsv[2] == 1);
+        perceptual_into(hsv_gray,hsv,1,PixelType::float64,PerceptualTransform::rgb2hsv);
+        require(hsv[0] == 0 && hsv[1] == 0 && hsv[2] == 0.4);
+        const double xyz_source[] = {0.1,0.4,0.7};
+        double lab[3], xyz_back[3];
+        perceptual_into(xyz_source,lab,1,PixelType::float64,PerceptualTransform::xyz2lab);
+        perceptual_into(lab,xyz_back,1,PixelType::float64,PerceptualTransform::lab2xyz);
+        for (int j = 0; j < 3; ++j) require(std::abs(xyz_source[j]-xyz_back[j]) < 2e-15);
+        const float invalid_lab[] = {0,0,100};
+        float xyz32[3];
+        perception = perceptual_into(invalid_lab,xyz32,1,PixelType::float32,PerceptualTransform::lab2xyz);
+        require(perception.negative_z == 1);
+        lab_scalar_negative_z_into(invalid_lab,xyz_back,PerceptualTransform::lab2xyz,{0.95047,1,1.08883});
+        require(xyz_back[0] < 0 && xyz_back[2] < 0);
         std::uint16_t expanded[5];
         convert_into(bytes,expanded,5,PixelType::uint8,PixelType::uint16);
         require(expanded[1] == 257 && expanded[4] == 65535);
