@@ -132,11 +132,17 @@ def main():
               'promotion, so output float64 does not imply a float64 input error budget.','',
               'CIE76 fuses raw Lab conversion, subtraction, squared components and square root '
               'without temporary image arrays. Uniform floating layouts use direct loads or gathers; '
-              'integer/mixed blocks convert raw values before vector arithmetic. Color-space routing '
+              'integer/mixed blocks convert raw values before vector arithmetic. Aligned nonuniform '
+              'CIE76 views now use per-row offsets and signed strides instead of full image copies. '
+              'Weighted Lab metrics preserve dtype-specific rounding, double hue cancellation '
+              'and promoted trigonometric stages. Float32 CIEDE2000 uses the documented '
+              'hue-roundoff budget, while float64 retains strict comparisons. Color-space routing '
               'preserves the upstream intermediate RGB allocation and dtype rounding. Its parameter '
               'report includes all stage checks and propagated bounds for ill-conditioned HSV ratios.','',
               'The [fixed CIE76 integer-load experiment](distance-tuning.md) preserves '
               'historical before/after snapshots separately from these current-source totals.','',
+              'The [fixed nonuniform-layout experiment](distance-layout-tuning.md) records '
+              'the separate one-worker copy-removal comparison, including all raw samples.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '

@@ -80,7 +80,7 @@ def main():
             if name in METRICS:
                 compute_dtype=np.float32 if call[0].dtype==call[1].dtype==np.float32 else np.float64
             rtol,atol=parity_tolerance('color.'+name,np.dtype(compute_dtype))
-            parity={'parity_contract':'base dtype tolerance','rtol':rtol,'atol':atol}
+            parity={'parity_contract':'input computation precision and API budget','rtol':rtol,'atol':atol}
             if name=='convert_colorspace' and call[1]!='RGB' and call[2]=='HSV':
                 parity.update(check_routed_hsv(call[0],call[1],actual,expected))
             else: np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
@@ -90,6 +90,7 @@ def main():
             if second_dtype and second_dtype!=dtype: dtype+='/'+second_dtype
             results.append({'api':'color.'+name,'dtype':dtype,'second_dtype':second_dtype,'size':1 if workload=='scalar-pair' else args.size,
                 'shape':list(call[0].shape),'second_shape':list(call[1].shape) if name in METRICS else None,
+                'output_dtype':actual.dtype.name,'compute_dtype':np.dtype(compute_dtype).name,
                 'threads':threads,'workload':workload,'layout':workload,'options':options,'backend':backend,
                 'max_abs_error':float(np.max(np.abs(actual-expected))),**parity,**timing})
             print(f'{name:18} {dtype:18} {workload:24} t={threads}: {timing["speedup"]:.2f}x',flush=True)
@@ -107,6 +108,8 @@ def main():
         'Reference pools use one thread. Raw Lab integer values are not intensity-normalized. '
         'All four Lab metrics include mixed dtypes, broadcast/strided/planar inputs, extra channels, scalar pairs '
         'and non-default weights. RGB intermediate allocations are included in composed routes. '
+        'Float32 CIEDE2000 uses its documented hue-roundoff budget; CMC scalar promotion retains '
+        'the input computation precision budget. The JSON records output and computation dtypes. '
         'Ill-conditioned HSV routes check each stage and a propagated ratio error bound. '
         'RGB identity rows perform no image processing and are excluded from processing speedup counts.','',
         '| API | Input | Workload | Workers | Original ms | C++ ms | Speedup |',

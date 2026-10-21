@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **71 partially native
+The reference is scikit-image **0.26.0**. There are currently **74 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 377 remain pending native implementation and dedicated parity tests.
+export list; 374 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -33,6 +33,7 @@ This is not full scikit-image coverage.
 | `rgb2luv`, `luv2rgb` | Same color dtypes/dimensions; three channels; fixed D65/2 reference, matching upstream signatures | Fused sRGB/XYZ/Luv stages; vector arithmetic and transfer, with float32 inverse cube powers preserving libm rounding |
 | `separate_stains`, `combine_stains`, `rgb2hed`, `hed2rgb` | Same color input dtypes/dimensions; three input channels; unbatched real numeric 3×K matrices for general functions; standard HED presets | Native log/exp and matrix stages; output dtype follows NumPy promotion; 11 stain-family matrix pairs available as metadata |
 | `deltaE_cie76` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; array-like inputs; broadcastable pixel shapes; arbitrary channel axes; first three channels used, extras ignored | Fused raw Lab difference/square/sum/sqrt; no integer intensity normalization; float32 only when both inputs are float32, float64 otherwise; scalar return preserved |
+| `deltaE_ciede94`, `deltaE_ciede2000`, `deltaE_cmc` | Same raw Lab input dtypes, broadcasting and extra-channel handling; finite Python int/float or NumPy float32 scalar weights; upstream channel-axis semantics | Fused weighted metrics; double hue-cancellation stage; dtype-specific intermediate rounding and promoted trigonometry; CMC returns float64 for two float32 scalar colors |
 | `convert_colorspace` | All nine upstream spaces and all 81 routes; input contracts of the participating native transforms | Same route through RGB and intermediate rounding/allocation; RGB-to-RGB returns the original object without validation or processing |
 | `xyz_tristimulus_values` | All upstream white-point combinations and NumPy output dtypes | Metadata helper; no image kernel |
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
@@ -89,6 +90,17 @@ CIE76 uses the base dtype tolerance. Float16, complex, object and non-native-end
 distance inputs currently require fallback. Array subclasses are stripped by
 `np.asarray`, matching upstream. Integer Lab values are cast without intensity
 normalization. Color-space routes retain the numerical contracts of each stage.
+Weighted distances use the input computation precision for their error budget.
+CIEDE2000 float32 uses `rtol=2e-6, atol=2.5e-4`: NumPy's AVX-512 math path can
+differ from platform libm by two float32 ULPs in atan2 and one in power. The
+chroma-scaled hue term amplifies those differences near small distances. Tests
+also compare float32 results with a float64 reference away from the formula's
+hue discontinuity. Float64 input comparisons retain `rtol=atol=2e-13`.
+CMC's scalar float64 return retains float32 Lab intermediates for float32 inputs
+and their error budget. The final promoted accumulation and square root remain
+float64. Parameter arrays, NumPy float64 weight scalars and nonfinite weights
+currently require explicit upstream fallback. The tests include all 34 of
+[Sharma's CIEDE2000 reference pairs](https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt).
 For ill-conditioned matrix-to-HSV routes, tests verify matrix accuracy and HSV
 against the same intermediate RGB, then propagate the measured RGB perturbation
 through the max/min, saturation ratio and periodic hue. Near-zero RGB value or
@@ -108,8 +120,8 @@ data-dependent downcast warnings. Float16 conversions beyond identity and
 non-native-endian conversions beyond identity/copy still require fallback.
 Floating exposure and color arithmetic is
 numerically checked; full NumPy floating-point warning/`errstate` semantics
-remain pending. The C++ API takes
-contiguous buffers; caller-supplied pointer lengths must match dimensions.
+remain pending. Each C++ entry documents its buffer layout; caller-supplied
+lengths and strides must describe valid storage.
 Morphology supports caller output buffers; grayscale output dtype changes, float16,
 non-native byte order, ndarray subclasses and scalar inputs currently require fallback.
 Sparse-footprint NaN behavior in original SciPy depends on traversal order, so
@@ -145,7 +157,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 73 covered wrapper signatures have per-function parity tests. Tests also run
+All 76 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -228,6 +240,9 @@ independent input dtypes and signed pixel/channel strides. It writes float32
 only when both inputs are float32, float64 otherwise. Inputs are not normalized;
 broadcasting is represented with zero strides. It uses the same process-wide
 worker limit as the other kernels.
+`delta_e76_rows_into` accepts per-row element offsets, preserving nonuniform
+ND views without a temporary image copy. `delta_e_into` provides CIE94,
+CIEDE2000 and CMC with scalar weights and explicit intermediate-promotion flags.
 
 ## CPU execution
 
@@ -242,6 +257,7 @@ worker limit as the other kernels.
 | Prewitt/Scharr and directional edges | AVX2 fused gradient arithmetic | Independent rows |
 | Gray to RGB / invert | AVX2 replication / arithmetic | Independent pixel ranges |
 | CIE76 distance | AVX2 raw-value differences, squares and square root; contiguous loads or gathers for floating inputs | Independent broadcasted pixel pairs |
+| CIE94 / CIEDE2000 / CMC | SIMD scaling, reductions, roots, powers and promoted trig/exp; rounding-sensitive atan2 and hue-cancellation hypot use libm | Independent broadcasted pixel pairs |
 | Color-space routing | Uses SIMD kernels of the participating transforms, preserving intermediate RGB | Uses the same global limit in each transform |
 | Mean threshold | AVX2 double-precision reduction | Per-worker partial sums |
 | Exposure correction | uint8 SIMD LUT mapping; AVX2 float/double log/exp/power and simple gamma paths | Independent pixel ranges |
@@ -287,7 +303,7 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 1,640 current comparisons against original scikit-image, including one-worker
+records 1,838 current comparisons against original scikit-image, including one-worker
 measurements and optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
@@ -325,11 +341,11 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 73 entries in 844 cases.
+performance. The full function benchmark covers 76 entries in 880 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 15,381 checks with SIMD enabled and disabled; inventory checks alone do not
+has 16,913 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
@@ -338,11 +354,14 @@ with alternate white points, wrapped hues, extra channels, negative-Z warnings,
 and Luv low-lightness/midtone branches.
 [Stain parameters](benchmarks/stain-parameters.md) add 156 comparisons across all
 11 standard matrix families, three input dtypes and custom output widths.
-[Lab distance and color routes](benchmarks/color-distance.md) add 84 comparisons
+[Lab distance and color routes](benchmarks/color-distance.md) add 246 comparisons
 over broadcast/strided/planar inputs, extra channels, mixed dtypes, representative
-color routes, out-of-gamut HSV and identity calls. Identity rows are labeled separately.
+color routes, all four Lab distance metrics, scalar pairs, non-default weights,
+out-of-gamut HSV and identity calls. Identity rows are labeled separately.
 The [CIE76 integer-load experiment](benchmarks/distance-tuning.md) records the
 fixed five-layout optimization from individual conversions to packed SIMD loads.
+The [nonuniform-layout experiment](benchmarks/distance-layout-tuning.md) records
+the measured change from full input copies to row-strided C++ processing.
 The [linear-color experiment](benchmarks/linear-color-tuning.md) retains a separate
 16-case before/after comparison for skipping unused nonlinear SIMD work.
 [Morphology footprints and output reuse](benchmarks/morphology-parameters.md) add

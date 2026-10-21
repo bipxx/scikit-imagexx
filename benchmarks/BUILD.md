@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 71 native image functions, two metadata
-helpers, and 844 per-function performance cases. The suite now has 15381 checks in both SIMD
+The current function benchmark covers 74 native image functions, two metadata
+helpers, and 880 per-function performance cases. The suite now has 16913 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -77,7 +77,7 @@ These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the
 JSON; small differences should not be treated as stable performance guarantees.
 
-`color-distance.json` adds 84 comparisons for CIE76 layouts, mixed dtypes and
+`color-distance.json` adds 246 comparisons for all four Lab distance metrics and layouts, mixed dtypes and
 representative composed color routes, including identity and out-of-gamut HSV.
 The latter verify each stage and a propagated ratio bound; identity rows are
 excluded from native processing speedup counts. CIE76 uses a fused one-pass
@@ -85,3 +85,12 @@ SIMD kernel, raw integer casts and the process-wide worker limit.
 `distance-tuning.json` retains the historical five-case uint8 experiment from
 `c98d286` to `f2910d0`: geometric-mean native latency fell from 2.6574 to
 0.7389 ms. Its snapshots are excluded from the current-source aggregate.
+
+The weighted distances preserve float32 operation order and promoted trig stages.
+NumPy AVX-512 atan2/power differences require the documented float32 CIEDE2000
+error budget; float64 comparisons retain the base budget. CMC scalar output
+retains its float32 intermediate budget while promoting the final accumulation.
+CIE76 nonuniform layouts now pass row offsets to C++ and avoid full image copies.
+`distance-layout-tuning.json` records the historical fixed one-worker experiment
+from `83402fc` to `f3b3ff9`: native median latency fell from 1.6552 to 0.7387 ms.
+Its two 123-case snapshots are excluded from the current-source aggregate.
