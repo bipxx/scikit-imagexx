@@ -2,8 +2,11 @@
 #include <cstddef>
 #include <cstdint>
 #include "skimagexx/convert.hpp"
+namespace skimagexx::detail { struct ColorSpec; }
 namespace skimagexx::simd {
 #ifdef SKIMAGEXX_AVX2
+std::size_t color_transform(const void*, void*, std::size_t, PixelType, const detail::ColorSpec&,
+                           std::ptrdiff_t pixel_stride, std::ptrdiff_t channel_stride);
 void gray(const float*, float*, std::size_t);
 void gray(const double*, double*, std::size_t);
 void gray(const std::uint8_t*, double*, std::size_t);

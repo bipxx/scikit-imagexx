@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-446 public callable names inventoried in 17 modules; 29 have partially native image implementations and 1 has metadata-only execution. All covered entries have per-function tests and benchmarks.
+446 public callable names inventoried in 17 modules; 43 have partially native image implementations and 1 has metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries inspect dtype without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -30,25 +30,25 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.rgb2hsv` | upstream-only | pending | pending |
 | `color.rgb2lab` | upstream-only | pending | pending |
 | `color.rgb2luv` | upstream-only | pending | pending |
-| `color.rgb2rgbcie` | upstream-only | pending | pending |
-| `color.rgb2xyz` | upstream-only | pending | pending |
-| `color.rgb2ycbcr` | upstream-only | pending | pending |
-| `color.rgb2ydbdr` | upstream-only | pending | pending |
-| `color.rgb2yiq` | upstream-only | pending | pending |
-| `color.rgb2ypbpr` | upstream-only | pending | pending |
-| `color.rgb2yuv` | upstream-only | pending | pending |
+| `color.rgb2rgbcie` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2xyz` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2ycbcr` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2ydbdr` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2yiq` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2ypbpr` | native-partial | yes (partial input contract) | yes |
+| `color.rgb2yuv` | native-partial | yes (partial input contract) | yes |
 | `color.rgba2rgb` | upstream-only | pending | pending |
-| `color.rgbcie2rgb` | upstream-only | pending | pending |
+| `color.rgbcie2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.separate_stains` | upstream-only | pending | pending |
 | `color.xyz2lab` | upstream-only | pending | pending |
 | `color.xyz2luv` | upstream-only | pending | pending |
-| `color.xyz2rgb` | upstream-only | pending | pending |
+| `color.xyz2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.xyz_tristimulus_values` | upstream-only | pending | pending |
-| `color.ycbcr2rgb` | upstream-only | pending | pending |
-| `color.ydbdr2rgb` | upstream-only | pending | pending |
-| `color.yiq2rgb` | upstream-only | pending | pending |
-| `color.ypbpr2rgb` | upstream-only | pending | pending |
-| `color.yuv2rgb` | upstream-only | pending | pending |
+| `color.ycbcr2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.ydbdr2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.yiq2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.ypbpr2rgb` | native-partial | yes (partial input contract) | yes |
+| `color.yuv2rgb` | native-partial | yes (partial input contract) | yes |
 | `data.astronaut` | upstream-only | pending | pending |
 | `data.binary_blobs` | upstream-only | pending | pending |
 | `data.brain` | upstream-only | pending | pending |

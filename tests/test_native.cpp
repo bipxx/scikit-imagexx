@@ -1,5 +1,6 @@
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
+#include "skimagexx/color.hpp"
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -75,6 +76,24 @@ int main() {
         float normalized[5];
         convert_into(bytes,normalized,5,PixelType::uint8,PixelType::float32);
         require(normalized[0] == 0 && normalized[4] == 1);
+        std::vector<double> color_rgb(3*19), yuv(color_rgb.size()), roundtrip(color_rgb.size());
+        for (std::size_t j = 0; j < color_rgb.size(); ++j) color_rgb[j] = double(j)/double(color_rgb.size());
+        color_transform_into(color_rgb.data(),yuv.data(),19,PixelType::float64,ColorTransform::rgb2yuv);
+        color_transform_into(yuv.data(),roundtrip.data(),19,PixelType::float64,ColorTransform::yuv2rgb);
+        for (std::size_t j = 0; j < color_rgb.size(); ++j) require(std::abs(roundtrip[j]-color_rgb[j]) < 2e-15);
+        std::vector<double> planar(color_rgb.size()), strided(yuv.size());
+        for (std::size_t j = 0; j < 19; ++j)
+            for (std::size_t channel = 0; channel < 3; ++channel) planar[19*channel+j] = color_rgb[3*j+channel];
+        color_transform_strided_into(planar.data(),strided.data(),19,1,19,ColorTransform::rgb2yuv);
+        for (std::size_t j = 0; j < yuv.size(); ++j) require(strided[j] == yuv[j]);
+        color_transform_strided_into(planar.data()+18,strided.data(),19,-1,19,ColorTransform::rgb2yuv);
+        for (std::size_t j = 0; j < 19; ++j)
+            for (std::size_t channel = 0; channel < 3; ++channel) require(strided[3*j+channel] == yuv[3*(18-j)+channel]);
+        const std::uint8_t white[] = {255,255,255};
+        double xyz[3];
+        color_transform_into(white,xyz,1,PixelType::uint8,ColorTransform::rgb2xyz);
+        require(std::abs(xyz[0]-0.950456) < 1e-14 && std::abs(xyz[1]-1) < 1e-14 && std::abs(xyz[2]-1.088754) < 1e-14);
+        color_transform_into(nullptr,nullptr,0,PixelType::float32,ColorTransform::rgb2yuv);
         std::uint16_t expanded[5];
         convert_into(bytes,expanded,5,PixelType::uint8,PixelType::uint16);
         require(expanded[1] == 257 && expanded[4] == 65535);

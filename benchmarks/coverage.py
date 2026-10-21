@@ -10,7 +10,7 @@ import platform
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input
 
 
 def main():
@@ -47,7 +47,7 @@ def main():
                     continue
                 native = getattr(importlib.import_module('skimagexx.'+module), name)
                 reference = getattr(importlib.import_module('skimage.'+module), name)
-                data = rgb if name == 'rgb2gray' else gray
+                data = rgb if needs_color_input(api) else gray
                 expected = reference(data)
                 for threads in args.threads:
                     xx.set_num_threads(threads)

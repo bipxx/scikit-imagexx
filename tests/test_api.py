@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input
 from skimage import exposure as reference_exposure
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
@@ -49,10 +49,10 @@ def test_signatures(native, original, name):
 @pytest.mark.parametrize('shape', [(1, 1), (3, 19), (519, 521)])
 def test_every_native_function(native, original, name, dtype, shape):
     rng = np.random.default_rng(15)
-    a = rng.integers(0, 256, (*shape, 3) if name == 'rgb2gray' else shape, dtype=np.uint8)
+    api = native.__name__.split('.', 1)[1]+'.'+name
+    a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
-    api = native.__name__.split('.', 1)[1]+'.'+name
     if np.dtype(dtype).name not in native_dtypes(api):
         with pytest.raises(NotImplementedError):
             getattr(native, name)(a)

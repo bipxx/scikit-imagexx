@@ -1,5 +1,6 @@
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
+#include "skimagexx/color.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <string>
@@ -7,6 +8,24 @@
 
 namespace py = pybind11;
 namespace {
+bool linear_color_view(const py::array& a, std::ptrdiff_t& pixel_stride, std::ptrdiff_t& channel_stride) {
+    if (!a.size()) return false;
+    const auto bytes = a.itemsize();
+    if (reinterpret_cast<std::uintptr_t>(a.data()) % static_cast<std::size_t>(bytes)) return false;
+    py::ssize_t step = 3*bytes, span = 1;
+    bool found = false;
+    for (int axis = static_cast<int>(a.ndim())-2; axis >= 0; --axis) {
+        if (a.shape(axis) <= 1) continue;
+        if (!found) { step = a.strides(axis); found = true; }
+        else if (a.strides(axis)%span != 0 || a.strides(axis)/span != step) return false;
+        span *= a.shape(axis); // NumPy's element count bounds this product.
+    }
+    const auto channels = a.strides(a.ndim()-1);
+    if (step%bytes || channels%bytes) return false;
+    pixel_stride = static_cast<std::ptrdiff_t>(step/bytes);
+    channel_stride = static_cast<std::ptrdiff_t>(channels/bytes);
+    return true;
+}
 skimagexx::PixelType pixel_type(const py::dtype& dtype) {
     using Type = skimagexx::PixelType;
     const auto kind = dtype.kind();
@@ -64,6 +83,31 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("color_transform", [](py::array image, int operation) {
+        if (!image.ndim() || image.shape(image.ndim()-1) != 3) throw py::value_error("expected an array of color triples");
+        const auto input_type = pixel_type(image.dtype());
+        const auto output_type = input_type == skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>();
+        py::array output(output_type,std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
+        auto* destination = output.mutable_data();
+        const auto count = static_cast<std::size_t>(image.size()/3);
+        std::ptrdiff_t pixels, channels;
+        if ((input_type == skimagexx::PixelType::float32 || input_type == skimagexx::PixelType::float64) && linear_color_view(image,pixels,channels)) {
+            const auto* source = image.data();
+            { py::gil_scoped_release release;
+              if (input_type == skimagexx::PixelType::float32)
+                  skimagexx::color_transform_strided_into(static_cast<const float*>(source),static_cast<float*>(destination),count,pixels,channels,static_cast<skimagexx::ColorTransform>(operation));
+              else skimagexx::color_transform_strided_into(static_cast<const double*>(source),static_cast<double*>(destination),count,pixels,channels,static_cast<skimagexx::ColorTransform>(operation)); }
+            return output;
+        }
+        auto input = py::array::ensure(image,py::array::c_style);
+        if (!input) throw py::type_error("unable to make input contiguous");
+        if ((reinterpret_cast<std::uintptr_t>(input.data()) % skimagexx::pixel_size(input_type)) != 0)
+            input = py::array::ensure(input.attr("copy")(),py::array::c_style);
+        const auto* source = input.data();
+        { py::gil_scoped_release release;
+          skimagexx::color_transform_into(source,destination,count,input_type,static_cast<skimagexx::ColorTransform>(operation)); }
+        return output;
+    },py::arg("image"),py::arg("operation"));
     m.def("convert", [](py::array image, py::dtype dtype) {
         const auto source_type = pixel_type(image.dtype()), target_type = pixel_type(dtype);
         auto input = py::array::ensure(image,py::array::c_style);
