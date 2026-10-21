@@ -1,0 +1,6743 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-21T23:19:59.518582+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "avx2": true,
+    "reference_thread_pools": 1,
+    "fallback_enabled": false,
+    "repeat": 7,
+    "scope": "Allocation-inclusive public raw-value means; dtype, layout, warnings and scale/depth reduction tolerances checked before timing",
+    "source_sha256": "cd602026dea7134286d42ae32aaabd8ec288b2ec5f9b6061bec7c098db0986af",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "current_binary_sha256": {
+      "_core.cp313-win_amd64.pyd": "e08b194aa08132306ff3999871d028037923482e5592df9954e785fa505347df"
+    }
+  },
+  "results": [
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.3129666666666668,
+      "cpp_ms": 0.4843,
+      "speedup": 2.711060637345998,
+      "samples_ms": [
+        [
+          1.3826,
+          1.5216666666666667,
+          1.1886833333333333,
+          1.7543666666666669,
+          1.2331666666666667,
+          1.1475333333333333,
+          1.3129666666666668
+        ],
+        [
+          0.5408388888888889,
+          0.5037388888888888,
+          0.4119333333333333,
+          0.5632222222222223,
+          0.3793222222222222,
+          0.41167777777777775,
+          0.4843
+        ]
+      ],
+      "loops": [
+        6,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 7.105427357601002e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6718428571428572,
+      "cpp_ms": 0.2599,
+      "speedup": 2.5850052217886,
+      "samples_ms": [
+        [
+          0.6567785714285714,
+          0.81885,
+          0.7392357142857143,
+          0.6718428571428572,
+          0.62815,
+          0.6623285714285715,
+          0.8774214285714286
+        ],
+        [
+          0.2599,
+          0.2627793103448276,
+          0.2201793103448276,
+          0.2255793103448276,
+          0.30339655172413793,
+          0.2557689655172414,
+          0.2672965517241379
+        ]
+      ],
+      "loops": [
+        14,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 6.94003183029771e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.61301875,
+      "cpp_ms": 0.2837390243902439,
+      "speedup": 2.1605020716391734,
+      "samples_ms": [
+        [
+          0.61301875,
+          0.60693125,
+          0.67133125,
+          0.61795,
+          0.626925,
+          0.5672625,
+          0.59548125
+        ],
+        [
+          0.22753170731707317,
+          0.2569268292682927,
+          0.2837390243902439,
+          0.29663170731707317,
+          0.2574707317073171,
+          0.30285365853658536,
+          0.37659756097560976
+        ]
+      ],
+      "loops": [
+        16,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.5918158177492005e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.121975,
+      "cpp_ms": 0.35341071428571424,
+      "speedup": 3.1747056742963977,
+      "samples_ms": [
+        [
+          1.0640083333333332,
+          1.121975,
+          1.1131333333333333,
+          1.1556333333333333,
+          1.3025083333333332,
+          1.2394833333333333,
+          0.9894916666666667
+        ],
+        [
+          0.35648928571428573,
+          0.35341071428571424,
+          0.3298,
+          0.34011071428571427,
+          0.3326428571428572,
+          0.36510714285714285,
+          0.40181428571428573
+        ]
+      ],
+      "loops": [
+        12,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.5918158177492005e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9194461538461539,
+      "cpp_ms": 0.32420344827586206,
+      "speedup": 2.836015960767341,
+      "samples_ms": [
+        [
+          0.9105076923076922,
+          0.9313846153846154,
+          0.8793692307692308,
+          0.9183615384615385,
+          1.0687,
+          0.9277,
+          0.9194461538461539
+        ],
+        [
+          0.2969172413793103,
+          0.3316724137931034,
+          0.32420344827586206,
+          0.30983793103448276,
+          0.2978172413793103,
+          0.32643793103448276,
+          0.3384931034482759
+        ]
+      ],
+      "loops": [
+        13,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.5918158177492005e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8531266666666666,
+      "cpp_ms": 0.2999925925925926,
+      "speedup": 2.843825773475888,
+      "samples_ms": [
+        [
+          0.8663933333333333,
+          0.8531266666666666,
+          0.86822,
+          0.8261866666666666,
+          0.8142733333333334,
+          0.8189533333333334,
+          1.0770933333333332
+        ],
+        [
+          0.29339629629629627,
+          0.3063148148148148,
+          0.2999925925925926,
+          0.34902222222222223,
+          0.2916222222222222,
+          0.31955185185185186,
+          0.28944444444444445
+        ]
+      ],
+      "loops": [
+        15,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.4868839329520077e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.30106071428571424,
+      "cpp_ms": 0.09899076923076923,
+      "speedup": 3.0413008871956086,
+      "samples_ms": [
+        [
+          0.29278571428571426,
+          0.3230321428571428,
+          0.27206428571428576,
+          0.30106071428571424,
+          0.29086428571428574,
+          0.30231071428571427,
+          0.3198607142857143
+        ],
+        [
+          0.09480923076923077,
+          0.10780461538461539,
+          0.09515076923076923,
+          0.17824153846153848,
+          0.09899076923076923,
+          0.11664923076923077,
+          0.09458153846153847
+        ]
+      ],
+      "loops": [
+        28,
+        65
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 6.94003183029771e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5527133333333334,
+      "cpp_ms": 0.25416666666666665,
+      "speedup": 2.174609836065574,
+      "samples_ms": [
+        [
+          0.5471533333333334,
+          0.7871333333333334,
+          0.55158,
+          0.5287466666666666,
+          0.57374,
+          0.5527133333333334,
+          0.7107266666666666
+        ],
+        [
+          0.23944358974358976,
+          0.2548923076923077,
+          0.25416666666666665,
+          0.2500025641025641,
+          0.23132564102564104,
+          0.25695128205128204,
+          0.26185641025641027
+        ]
+      ],
+      "loops": [
+        15,
+        39
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.40291818181818184,
+      "cpp_ms": 0.07352826086956521,
+      "speedup": 5.479773043087948,
+      "samples_ms": [
+        [
+          0.4759,
+          0.47414545454545454,
+          0.3974272727272727,
+          0.40291818181818184,
+          0.3844772727272727,
+          0.40251818181818183,
+          0.45205
+        ],
+        [
+          0.07802391304347826,
+          0.06676086956521739,
+          0.10375652173913043,
+          0.06375,
+          0.08146956521739131,
+          0.07135217391304348,
+          0.07352826086956521
+        ]
+      ],
+      "loops": [
+        22,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "bool",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04479375,
+      "cpp_ms": 0.009665277777777778,
+      "speedup": 4.6345020836327055,
+      "samples_ms": [
+        [
+          0.04770625,
+          0.0428328125,
+          0.0479796875,
+          0.04479375,
+          0.042684375,
+          0.0473234375,
+          0.04435625
+        ],
+        [
+          0.009454166666666666,
+          0.009334722222222223,
+          0.009847222222222222,
+          0.009665277777777778,
+          0.012293055555555555,
+          0.00992361111111111,
+          0.009661111111111112
+        ]
+      ],
+      "loops": [
+        64,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 9.059419880941277e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0495909090909092,
+      "cpp_ms": 0.413951724137931,
+      "speedup": 2.535539406863733,
+      "samples_ms": [
+        [
+          1.3110545454545455,
+          1.0195454545454545,
+          1.2144181818181818,
+          1.0495909090909092,
+          1.0145454545454546,
+          1.0782636363636364,
+          1.0301636363636364
+        ],
+        [
+          0.454,
+          0.44210689655172414,
+          0.40086206896551724,
+          0.4438137931034483,
+          0.413951724137931,
+          0.3932689655172414,
+          0.383751724137931
+        ]
+      ],
+      "loops": [
+        11,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.8118839761882555e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6432705882352941,
+      "cpp_ms": 0.2511514285714286,
+      "speedup": 2.5612858023315805,
+      "samples_ms": [
+        [
+          0.6352823529411765,
+          0.5936176470588235,
+          0.5985411764705882,
+          0.8182882352941175,
+          0.6821823529411765,
+          0.6432705882352941,
+          0.7854588235294118
+        ],
+        [
+          0.23849428571428571,
+          0.2717685714285714,
+          0.2531171428571429,
+          0.24337142857142857,
+          0.2511514285714286,
+          0.25949714285714287,
+          0.23347428571428572
+        ]
+      ],
+      "loops": [
+        17,
+        35
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7697081167259162e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.61364,
+      "cpp_ms": 0.23385405405405404,
+      "speedup": 2.6240297713981926,
+      "samples_ms": [
+        [
+          0.72741,
+          0.61364,
+          0.52148,
+          0.58764,
+          0.577945,
+          0.628595,
+          0.65127
+        ],
+        [
+          0.21938648648648648,
+          0.2475081081081081,
+          0.2237081081081081,
+          0.23683513513513516,
+          0.2627432432432433,
+          0.22920270270270268,
+          0.23385405405405404
+        ]
+      ],
+      "loops": [
+        20,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.170913033526046e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0742,
+      "cpp_ms": 0.36124814814814815,
+      "speedup": 2.973579257102433,
+      "samples_ms": [
+        [
+          1.0917181818181818,
+          1.0087,
+          1.0742,
+          1.0032181818181818,
+          1.1842818181818182,
+          1.0513727272727273,
+          1.1637
+        ],
+        [
+          0.3426296296296296,
+          0.36124814814814815,
+          0.3657888888888889,
+          0.41286666666666666,
+          0.3554333333333333,
+          0.4706333333333333,
+          0.35345925925925925
+        ]
+      ],
+      "loops": [
+        11,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.170913033526046e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0037416666666665,
+      "cpp_ms": 0.3274548387096774,
+      "speedup": 3.0652827443988007,
+      "samples_ms": [
+        [
+          1.0384833333333334,
+          0.99785,
+          0.9542833333333334,
+          1.0037416666666665,
+          1.0208166666666667,
+          0.9008333333333334,
+          1.03425
+        ],
+        [
+          0.303758064516129,
+          0.33662258064516126,
+          0.3274548387096774,
+          0.29396774193548386,
+          0.4210774193548387,
+          0.2892612903225807,
+          0.49571612903225803
+        ]
+      ],
+      "loops": [
+        12,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.170913033526046e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8346076923076923,
+      "cpp_ms": 0.30375675675675673,
+      "speedup": 2.7476185261486448,
+      "samples_ms": [
+        [
+          0.8016692307692308,
+          0.8041384615384615,
+          0.8346076923076923,
+          1.008776923076923,
+          1.000846153846154,
+          0.8098615384615385,
+          0.8364076923076923
+        ],
+        [
+          0.2881216216216216,
+          0.3267702702702703,
+          0.2818945945945946,
+          0.30375675675675673,
+          0.32323513513513513,
+          0.38103513513513515,
+          0.2852783783783784
+        ]
+      ],
+      "loops": [
+        13,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 6.34155402902762e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2864185185185185,
+      "cpp_ms": 0.12539183673469387,
+      "speedup": 2.284187918265585,
+      "samples_ms": [
+        [
+          0.2783111111111111,
+          0.3516,
+          0.31600370370370373,
+          0.4310925925925926,
+          0.27956296296296296,
+          0.2864185185185185,
+          0.28376666666666667
+        ],
+        [
+          0.12361224489795919,
+          0.12946938775510203,
+          0.12253061224489796,
+          0.12539183673469387,
+          0.1238673469387755,
+          0.1263591836734694,
+          0.13059591836734694
+        ]
+      ],
+      "loops": [
+        27,
+        49
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7697081167259162e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.53286875,
+      "cpp_ms": 0.24991,
+      "speedup": 2.132242607338642,
+      "samples_ms": [
+        [
+          0.6653125,
+          0.60320625,
+          0.60283125,
+          0.53286875,
+          0.5259,
+          0.52973125,
+          0.52846875
+        ],
+        [
+          0.24375333333333335,
+          0.24991,
+          0.28377,
+          0.24906666666666666,
+          0.2579,
+          0.40516,
+          0.22797
+        ]
+      ],
+      "loops": [
+        16,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.5297099404706387e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.44514761904761907,
+      "cpp_ms": 0.07131395348837209,
+      "speedup": 6.242083032462944,
+      "samples_ms": [
+        [
+          0.39434761904761906,
+          0.38271428571428573,
+          0.5264047619047619,
+          0.41028095238095236,
+          0.44514761904761907,
+          0.49114285714285716,
+          0.5808666666666666
+        ],
+        [
+          0.1245953488372093,
+          0.09740232558139535,
+          0.06695581395348836,
+          0.08147674418604652,
+          0.06528372093023256,
+          0.06483488372093023,
+          0.07131395348837209
+        ]
+      ],
+      "loops": [
+        21,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint8",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.5297099404706387e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04403928571428572,
+      "cpp_ms": 0.009095714285714287,
+      "speedup": 4.8417622114025445,
+      "samples_ms": [
+        [
+          0.04403928571428572,
+          0.04377857142857143,
+          0.04630535714285715,
+          0.059692857142857145,
+          0.043439285714285715,
+          0.043069642857142855,
+          0.046778571428571426
+        ],
+        [
+          0.008595714285714286,
+          0.008592857142857143,
+          0.00902,
+          0.012738571428571429,
+          0.009095714285714287,
+          0.01467357142857143,
+          0.00936857142857143
+        ]
+      ],
+      "loops": [
+        56,
+        140
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 4.547473508864641e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.064475,
+      "cpp_ms": 0.37631,
+      "speedup": 2.828718343918578,
+      "samples_ms": [
+        [
+          1.20885,
+          1.04465,
+          1.064475,
+          1.0498375,
+          1.0746625,
+          0.9902625,
+          1.0715875
+        ],
+        [
+          0.40301,
+          0.36658,
+          0.3546366666666667,
+          0.3673266666666667,
+          0.37631,
+          0.38261,
+          0.5060433333333333
+        ]
+      ],
+      "loops": [
+        8,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 9.094947017729282e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6129066666666666,
+      "cpp_ms": 0.2420675,
+      "speedup": 2.531965946137613,
+      "samples_ms": [
+        [
+          0.5925066666666666,
+          0.59432,
+          0.7574933333333334,
+          0.6129066666666666,
+          0.6179666666666667,
+          0.5709533333333334,
+          0.71392
+        ],
+        [
+          0.210295,
+          0.23659,
+          0.20868,
+          0.2809725,
+          0.2926375,
+          0.2466025,
+          0.2420675
+        ]
+      ],
+      "loops": [
+        15,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.883240742781069e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.575555,
+      "cpp_ms": 0.22372857142857142,
+      "speedup": 2.5725592235489434,
+      "samples_ms": [
+        [
+          0.63055,
+          0.51939,
+          0.575555,
+          0.62638,
+          0.57657,
+          0.550225,
+          0.536585
+        ],
+        [
+          0.22055714285714287,
+          0.2577,
+          0.22372857142857142,
+          0.22300952380952382,
+          0.23052380952380952,
+          0.22494285714285714,
+          0.21992857142857142
+        ]
+      ],
+      "loops": [
+        20,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 5.877524246718977e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0141538461538462,
+      "cpp_ms": 0.3349166666666667,
+      "speedup": 3.0280781671674926,
+      "samples_ms": [
+        [
+          1.5136,
+          0.9747538461538461,
+          1.0141538461538462,
+          1.077376923076923,
+          0.9660230769230769,
+          1.2631538461538463,
+          0.9784769230769231
+        ],
+        [
+          0.36771944444444443,
+          0.3599,
+          0.3329138888888889,
+          0.32937222222222223,
+          0.344525,
+          0.3349166666666667,
+          0.3233416666666667
+        ]
+      ],
+      "loops": [
+        13,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 5.877524246718977e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8998714285714285,
+      "cpp_ms": 0.31764444444444445,
+      "speedup": 2.832951887905015,
+      "samples_ms": [
+        [
+          0.8998714285714285,
+          0.8256642857142856,
+          0.9710928571428572,
+          0.9158142857142857,
+          0.9442285714285715,
+          0.8832071428571429,
+          0.8744214285714286
+        ],
+        [
+          0.31764444444444445,
+          0.31962222222222225,
+          0.28094722222222224,
+          0.37848611111111113,
+          0.28679722222222226,
+          0.3192861111111111,
+          0.3031388888888889
+        ]
+      ],
+      "loops": [
+        14,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 5.877524246718977e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8528933333333334,
+      "cpp_ms": 0.32431944444444444,
+      "speedup": 2.6297940131043642,
+      "samples_ms": [
+        [
+          1.0022266666666666,
+          0.83896,
+          0.8307866666666667,
+          0.88458,
+          0.80538,
+          0.8528933333333334,
+          0.96028
+        ],
+        [
+          0.2848055555555556,
+          0.3695416666666667,
+          0.28775277777777775,
+          0.34604722222222223,
+          0.31569444444444444,
+          0.32431944444444444,
+          0.375725
+        ]
+      ],
+      "loops": [
+        15,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.18321143417857e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3436222222222223,
+      "cpp_ms": 0.10012291666666667,
+      "speedup": 3.432003717652608,
+      "samples_ms": [
+        [
+          0.2717111111111111,
+          0.29574814814814815,
+          0.2719333333333333,
+          0.3546037037037037,
+          0.4219703703703704,
+          0.34628888888888887,
+          0.3436222222222223
+        ],
+        [
+          0.10081041666666667,
+          0.1214375,
+          0.09874791666666667,
+          0.09479375,
+          0.10231875,
+          0.10012291666666667,
+          0.09533125
+        ]
+      ],
+      "loops": [
+        27,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.883240742781069e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5770526315789474,
+      "cpp_ms": 0.2226121212121212,
+      "speedup": 2.5921887291532038,
+      "samples_ms": [
+        [
+          0.5770526315789474,
+          0.6182736842105263,
+          0.5477842105263159,
+          0.6231263157894738,
+          0.6704473684210526,
+          0.5582105263157895,
+          0.528078947368421
+        ],
+        [
+          0.2226121212121212,
+          0.23486060606060605,
+          0.3323212121212121,
+          0.2425030303030303,
+          0.2216939393939394,
+          0.22213939393939394,
+          0.22244242424242425
+        ]
+      ],
+      "loops": [
+        19,
+        33
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2737367544323206e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3816458333333333,
+      "cpp_ms": 0.07028695652173914,
+      "speedup": 5.429824425749515,
+      "samples_ms": [
+        [
+          0.394175,
+          0.3733458333333333,
+          0.3726541666666667,
+          0.3816458333333333,
+          0.37672916666666667,
+          0.4065708333333333,
+          0.4234708333333333
+        ],
+        [
+          0.0700391304347826,
+          0.10568695652173914,
+          0.06567173913043478,
+          0.07363478260869565,
+          0.07028695652173914,
+          0.08114130434782608,
+          0.0647
+        ]
+      ],
+      "loops": [
+        24,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int8",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.255973186038318e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.0475375,
+      "cpp_ms": 0.00870979020979021,
+      "speedup": 5.457938578883983,
+      "samples_ms": [
+        [
+          0.052171875,
+          0.04731875,
+          0.056753125,
+          0.1197,
+          0.04715625,
+          0.0473125,
+          0.0475375
+        ],
+        [
+          0.00870979020979021,
+          0.008685314685314685,
+          0.008772027972027972,
+          0.008620979020979021,
+          0.009962237762237763,
+          0.008425874125874127,
+          0.008995104895104895
+        ]
+      ],
+      "loops": [
+        32,
+        143
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.11275,
+      "cpp_ms": 0.40973,
+      "speedup": 2.7158128523661924,
+      "samples_ms": [
+        [
+          1.11275,
+          1.0816666666666668,
+          1.0220916666666666,
+          1.251925,
+          1.1557,
+          1.0396166666666666,
+          1.12185
+        ],
+        [
+          0.375005,
+          0.40973,
+          0.419735,
+          0.38047,
+          0.420395,
+          0.38346,
+          0.443205
+        ]
+      ],
+      "loops": [
+        12,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7052,
+      "cpp_ms": 0.250095,
+      "speedup": 2.819728503168796,
+      "samples_ms": [
+        [
+          0.741025,
+          0.66510625,
+          0.8119625,
+          0.66066875,
+          0.6191875,
+          0.7052,
+          0.7780375
+        ],
+        [
+          0.250095,
+          0.2698875,
+          0.266615,
+          0.231655,
+          0.2344225,
+          0.26757,
+          0.2322125
+        ]
+      ],
+      "loops": [
+        16,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5866,
+      "cpp_ms": 0.23700731707317074,
+      "speedup": 2.4750290718615253,
+      "samples_ms": [
+        [
+          0.5796777777777777,
+          0.6338055555555555,
+          0.5597722222222222,
+          0.5531722222222223,
+          0.5989833333333334,
+          0.5866,
+          0.5889722222222222
+        ],
+        [
+          0.22618292682926827,
+          0.22951707317073172,
+          0.2697634146341463,
+          0.22995365853658536,
+          0.2582439024390244,
+          0.23700731707317074,
+          0.27047073170731706
+        ]
+      ],
+      "loops": [
+        18,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0615,
+      "cpp_ms": 0.3683705882352941,
+      "speedup": 2.881608993500791,
+      "samples_ms": [
+        [
+          1.6668833333333333,
+          1.00215,
+          1.2462,
+          1.0923083333333332,
+          1.0288583333333334,
+          1.044775,
+          1.0615
+        ],
+        [
+          0.3683705882352941,
+          0.33605882352941174,
+          0.3400735294117647,
+          0.39326470588235296,
+          0.4077205882352941,
+          0.4059558823529412,
+          0.3398
+        ]
+      ],
+      "loops": [
+        12,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9667307692307693,
+      "cpp_ms": 0.2975235294117647,
+      "speedup": 3.249258205366472,
+      "samples_ms": [
+        [
+          0.9855076923076923,
+          0.8661769230769231,
+          1.0405692307692307,
+          0.9667307692307693,
+          0.8835076923076922,
+          0.8851076923076923,
+          0.9753692307692308
+        ],
+        [
+          0.2975235294117647,
+          0.3303470588235294,
+          0.29391764705882356,
+          0.35904117647058825,
+          0.3509058823529412,
+          0.28801764705882354,
+          0.2893
+        ]
+      ],
+      "loops": [
+        13,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">u2",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0153916666666667,
+      "cpp_ms": 0.69939,
+      "speedup": 1.451824685321018,
+      "samples_ms": [
+        [
+          1.0763166666666668,
+          0.8996583333333333,
+          1.0357,
+          1.1732583333333333,
+          0.9455,
+          1.0153916666666667,
+          0.9510833333333334
+        ],
+        [
+          0.66878,
+          0.66789,
+          0.71206,
+          0.67675,
+          0.76707,
+          0.7824,
+          0.69939
+        ]
+      ],
+      "loops": [
+        12,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.34009285714285714,
+      "cpp_ms": 0.12462280701754386,
+      "speedup": 2.7289776669448664,
+      "samples_ms": [
+        [
+          0.34009285714285714,
+          0.3779214285714286,
+          0.3273785714285714,
+          0.3428535714285714,
+          0.3630214285714286,
+          0.3106285714285714,
+          0.31261428571428573
+        ],
+        [
+          0.11570701754385965,
+          0.1305578947368421,
+          0.11918421052631578,
+          0.1344140350877193,
+          0.12462280701754386,
+          0.11676491228070175,
+          0.14453859649122805
+        ]
+      ],
+      "loops": [
+        28,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5727764705882353,
+      "cpp_ms": 0.24138333333333334,
+      "speedup": 2.372891544244571,
+      "samples_ms": [
+        [
+          0.5624529411764706,
+          0.6787411764705882,
+          0.5727764705882353,
+          0.5806529411764706,
+          0.6164235294117647,
+          0.5465941176470588,
+          0.5529235294117647
+        ],
+        [
+          0.25718888888888886,
+          0.25475833333333336,
+          0.23084166666666667,
+          0.22745277777777778,
+          0.24138333333333334,
+          0.23288611111111113,
+          0.2990861111111111
+        ]
+      ],
+      "loops": [
+        17,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.40794583333333334,
+      "cpp_ms": 0.07223333333333333,
+      "speedup": 5.6476119058606375,
+      "samples_ms": [
+        [
+          0.3900625,
+          0.4179541666666667,
+          0.44727916666666667,
+          0.3853375,
+          0.40794583333333334,
+          0.39847916666666666,
+          0.5679208333333333
+        ],
+        [
+          0.08032820512820513,
+          0.07223333333333333,
+          0.07180256410256411,
+          0.07864358974358975,
+          0.07744615384615385,
+          0.07132564102564103,
+          0.0692
+        ]
+      ],
+      "loops": [
+        24,
+        39
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint16",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04576904761904762,
+      "cpp_ms": 0.009346268656716419,
+      "speedup": 4.897039588751501,
+      "samples_ms": [
+        [
+          0.04508809523809524,
+          0.04871428571428572,
+          0.04576904761904762,
+          0.04414047619047619,
+          0.06732380952380952,
+          0.045766666666666664,
+          0.05079285714285715
+        ],
+        [
+          0.009500746268656716,
+          0.01083731343283582,
+          0.009346268656716419,
+          0.008674626865671642,
+          0.008939552238805971,
+          0.009043283582089553,
+          0.009530597014925373
+        ]
+      ],
+      "loops": [
+        42,
+        134
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1638454545454546,
+      "cpp_ms": 0.39326,
+      "speedup": 2.95948088934917,
+      "samples_ms": [
+        [
+          1.4515454545454547,
+          0.991090909090909,
+          1.3282,
+          1.1638454545454546,
+          1.1091545454545455,
+          1.1264909090909092,
+          1.1859272727272727
+        ],
+        [
+          0.4150766666666667,
+          0.43626,
+          0.37639,
+          0.39326,
+          0.36581,
+          0.38398,
+          0.3952033333333333
+        ]
+      ],
+      "loops": [
+        11,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6520666666666667,
+      "cpp_ms": 0.22953555555555555,
+      "speedup": 2.8408089765807283,
+      "samples_ms": [
+        [
+          0.6520666666666667,
+          0.6858333333333334,
+          0.6064916666666667,
+          0.6384083333333334,
+          0.62445,
+          0.680975,
+          0.7587833333333334
+        ],
+        [
+          0.22146888888888888,
+          0.22953555555555555,
+          0.2363488888888889,
+          0.22106,
+          0.2517844444444444,
+          0.2555688888888889,
+          0.22781111111111113
+        ]
+      ],
+      "loops": [
+        12,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5628944444444445,
+      "cpp_ms": 0.2294923076923077,
+      "speedup": 2.452781315873761,
+      "samples_ms": [
+        [
+          0.5827666666666667,
+          0.5414666666666667,
+          0.53,
+          0.5311833333333333,
+          0.7140055555555554,
+          0.5628944444444445,
+          0.7146333333333333
+        ],
+        [
+          0.22962307692307693,
+          0.21902307692307693,
+          0.22248205128205129,
+          0.2294923076923077,
+          0.2553307692307692,
+          0.22190512820512823,
+          0.28238974358974356
+        ]
+      ],
+      "loops": [
+        18,
+        39
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0664,
+      "cpp_ms": 0.3725478260869565,
+      "speedup": 2.8624512755876106,
+      "samples_ms": [
+        [
+          1.1182545454545454,
+          1.1978636363636366,
+          1.0293272727272726,
+          1.0406727272727272,
+          1.0193818181818182,
+          1.0664,
+          1.286018181818182
+        ],
+        [
+          0.35428695652173914,
+          0.4151913043478261,
+          0.3944608695652174,
+          0.36561304347826085,
+          0.3725478260869565,
+          0.372895652173913,
+          0.3385913043478261
+        ]
+      ],
+      "loops": [
+        11,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9199384615384615,
+      "cpp_ms": 0.3127233333333333,
+      "speedup": 2.9417007414598473,
+      "samples_ms": [
+        [
+          0.9755538461538461,
+          0.9199384615384615,
+          0.8510615384615385,
+          0.9596846153846154,
+          0.8959,
+          0.9113076923076923,
+          1.004946153846154
+        ],
+        [
+          0.2940233333333333,
+          0.3250033333333333,
+          0.3160366666666667,
+          0.3825733333333333,
+          0.3127233333333333,
+          0.3062933333333333,
+          0.2916166666666667
+        ]
+      ],
+      "loops": [
+        13,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">i2",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9924153846153846,
+      "cpp_ms": 0.6760333333333334,
+      "speedup": 1.4679977091100802,
+      "samples_ms": [
+        [
+          0.9924153846153846,
+          1.077,
+          0.9342923076923078,
+          1.0843384615384615,
+          0.9594076923076923,
+          1.2601307692307693,
+          0.9730615384615385
+        ],
+        [
+          0.6760333333333334,
+          0.7335,
+          0.6756777777777777,
+          0.6941555555555555,
+          0.6650111111111111,
+          0.7085166666666666,
+          0.66695
+        ]
+      ],
+      "loops": [
+        13,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.32687222222222223,
+      "cpp_ms": 0.11958591549295775,
+      "speedup": 2.733367227024919,
+      "samples_ms": [
+        [
+          0.29636666666666667,
+          0.33835,
+          0.30081111111111114,
+          0.32687222222222223,
+          0.2915166666666667,
+          0.35915555555555556,
+          0.35399444444444444
+        ],
+        [
+          0.11652112676056338,
+          0.11863802816901409,
+          0.14551830985915493,
+          0.11737464788732394,
+          0.1356014084507042,
+          0.1633,
+          0.11958591549295775
+        ]
+      ],
+      "loops": [
+        18,
+        71
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5574105263157895,
+      "cpp_ms": 0.24277826086956522,
+      "speedup": 2.2959655626467446,
+      "samples_ms": [
+        [
+          0.5961842105263159,
+          0.5361631578947369,
+          0.6259473684210526,
+          0.5411157894736841,
+          0.5574105263157895,
+          0.5461263157894737,
+          0.5830105263157894
+        ],
+        [
+          0.2320086956521739,
+          0.22793913043478262,
+          0.2939478260869565,
+          0.278195652173913,
+          0.2285695652173913,
+          0.24277826086956522,
+          0.32503478260869567
+        ]
+      ],
+      "loops": [
+        19,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.4445476190476191,
+      "cpp_ms": 0.07357719298245614,
+      "speedup": 6.041921430104267,
+      "samples_ms": [
+        [
+          0.37618571428571423,
+          0.4580047619047619,
+          0.5122809523809524,
+          0.4675809523809524,
+          0.4445476190476191,
+          0.3847714285714286,
+          0.4347809523809524
+        ],
+        [
+          0.06841929824561403,
+          0.0736280701754386,
+          0.07357719298245614,
+          0.08061754385964913,
+          0.08259122807017544,
+          0.06987017543859649,
+          0.07225438596491228
+        ]
+      ],
+      "loops": [
+        21,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int16",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.048488461538461536,
+      "cpp_ms": 0.00948936170212766,
+      "speedup": 5.109770610555364,
+      "samples_ms": [
+        [
+          0.06329423076923077,
+          0.04679807692307692,
+          0.0487,
+          0.04806346153846154,
+          0.06323269230769231,
+          0.048488461538461536,
+          0.045573076923076924
+        ],
+        [
+          0.010795744680851063,
+          0.009324468085106383,
+          0.010275531914893618,
+          0.00941276595744681,
+          0.009469148936170213,
+          0.009735106382978724,
+          0.00948936170212766
+        ]
+      ],
+      "loops": [
+        52,
+        94
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.07208,
+      "cpp_ms": 0.45716,
+      "speedup": 2.3450870592352784,
+      "samples_ms": [
+        [
+          1.07208,
+          1.19929,
+          1.04869,
+          1.04975,
+          1.42209,
+          1.01757,
+          1.09914
+        ],
+        [
+          0.45716,
+          0.412625,
+          0.5729,
+          0.43873,
+          0.64308,
+          0.42452,
+          0.48928
+        ]
+      ],
+      "loops": [
+        10,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6320538461538461,
+      "cpp_ms": 0.24499666666666667,
+      "speedup": 2.579846716909806,
+      "samples_ms": [
+        [
+          0.7158538461538462,
+          0.6320538461538461,
+          0.6152461538461539,
+          0.6257769230769231,
+          0.6613846153846153,
+          0.6282692307692308,
+          0.8226307692307693
+        ],
+        [
+          0.23604333333333335,
+          0.22837,
+          0.3486866666666667,
+          0.2672633333333333,
+          0.25476666666666664,
+          0.24253333333333335,
+          0.24499666666666667
+        ]
+      ],
+      "loops": [
+        13,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6706222222222222,
+      "cpp_ms": 0.267196875,
+      "speedup": 2.5098430594378107,
+      "samples_ms": [
+        [
+          0.5450666666666666,
+          0.6978888888888889,
+          0.7020944444444445,
+          0.5588833333333334,
+          0.6706222222222222,
+          0.6736888888888889,
+          0.5439222222222222
+        ],
+        [
+          0.356265625,
+          0.240509375,
+          0.289609375,
+          0.285321875,
+          0.267196875,
+          0.260525,
+          0.24214375
+        ]
+      ],
+      "loops": [
+        18,
+        32
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1877222222222223,
+      "cpp_ms": 0.37447,
+      "speedup": 3.1717419879355417,
+      "samples_ms": [
+        [
+          1.1877222222222223,
+          1.0572333333333332,
+          1.3628555555555555,
+          1.0466555555555555,
+          1.3531666666666669,
+          1.2299222222222221,
+          1.0276222222222222
+        ],
+        [
+          0.41988,
+          0.37447,
+          0.36056,
+          0.363825,
+          0.397475,
+          0.35318,
+          0.49424
+        ]
+      ],
+      "loops": [
+        9,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.951725,
+      "cpp_ms": 0.36261739130434784,
+      "speedup": 2.6245983309752763,
+      "samples_ms": [
+        [
+          0.973475,
+          1.083575,
+          0.951725,
+          0.9332875,
+          0.8653125,
+          0.85485,
+          1.0927625
+        ],
+        [
+          0.35200434782608697,
+          0.31247391304347827,
+          0.38462173913043474,
+          0.38767391304347826,
+          0.3479869565217391,
+          0.36261739130434784,
+          0.4645
+        ]
+      ],
+      "loops": [
+        8,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">u4",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9478615384615385,
+      "cpp_ms": 0.6706588235294118,
+      "speedup": 1.4133289613239093,
+      "samples_ms": [
+        [
+          0.9410307692307692,
+          1.0966538461538462,
+          0.9478615384615385,
+          1.0377692307692308,
+          0.9248461538461539,
+          0.9476923076923077,
+          1.2756846153846155
+        ],
+        [
+          0.6514,
+          0.6976117647058824,
+          0.6586882352941176,
+          0.7460058823529412,
+          0.6510882352941176,
+          0.9519529411764706,
+          0.6706588235294118
+        ]
+      ],
+      "loops": [
+        13,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.33620555555555554,
+      "cpp_ms": 0.12381896551724138,
+      "speedup": 2.715299341672662,
+      "samples_ms": [
+        [
+          0.37656666666666666,
+          0.47100555555555557,
+          0.32135555555555556,
+          0.29752222222222224,
+          0.45515555555555554,
+          0.33620555555555554,
+          0.3195
+        ],
+        [
+          0.12387758620689655,
+          0.1206448275862069,
+          0.12381896551724138,
+          0.16349137931034485,
+          0.11872241379310344,
+          0.1260396551724138,
+          0.11691379310344828
+        ]
+      ],
+      "loops": [
+        18,
+        58
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6263666666666666,
+      "cpp_ms": 0.2715567567567567,
+      "speedup": 2.30657735844049,
+      "samples_ms": [
+        [
+          0.8618866666666666,
+          0.5613733333333334,
+          0.69012,
+          0.6261133333333334,
+          0.6263666666666666,
+          0.67906,
+          0.5662866666666666
+        ],
+        [
+          0.2574567567567567,
+          0.33541891891891895,
+          0.2589324324324324,
+          0.3143864864864865,
+          0.25796486486486486,
+          0.28688918918918915,
+          0.2715567567567567
+        ]
+      ],
+      "loops": [
+        15,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1058,
+      "cpp_ms": 0.631325,
+      "speedup": 1.7515542707797092,
+      "samples_ms": [
+        [
+          1.301288888888889,
+          0.8866444444444445,
+          1.1308,
+          1.1281555555555556,
+          1.1058,
+          0.40904444444444443,
+          0.4882
+        ],
+        [
+          0.645565,
+          0.68053,
+          0.530055,
+          0.631325,
+          0.593455,
+          0.6863,
+          0.127605
+        ]
+      ],
+      "loops": [
+        9,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint32",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05728771929824561,
+      "cpp_ms": 0.008862773722627736,
+      "speedup": 6.4638589555753985,
+      "samples_ms": [
+        [
+          0.05728771929824561,
+          0.05307894736842105,
+          0.04375964912280701,
+          0.04302456140350877,
+          0.06584035087719298,
+          0.05955789473684211,
+          0.07600350877192984
+        ],
+        [
+          0.00932116788321168,
+          0.008513868613138686,
+          0.008934306569343065,
+          0.010553284671532846,
+          0.008437956204379562,
+          0.008327737226277372,
+          0.008862773722627736
+        ]
+      ],
+      "loops": [
+        57,
+        137
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.02695,
+      "cpp_ms": 0.4312157894736842,
+      "speedup": 2.381522256532936,
+      "samples_ms": [
+        [
+          1.01915,
+          1.0251166666666667,
+          1.2202416666666667,
+          1.0124916666666666,
+          1.1033833333333332,
+          1.1556333333333333,
+          1.02695
+        ],
+        [
+          0.3949052631578947,
+          0.5087105263157895,
+          0.4107,
+          0.4312157894736842,
+          0.4686105263157895,
+          0.4113157894736842,
+          0.47812105263157895
+        ]
+      ],
+      "loops": [
+        12,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.68280625,
+      "cpp_ms": 0.23038837209302326,
+      "speedup": 2.9637183673675387,
+      "samples_ms": [
+        [
+          0.74805625,
+          0.6556625,
+          0.68280625,
+          0.92939375,
+          0.709275,
+          0.647875,
+          0.65095625
+        ],
+        [
+          0.3055325581395349,
+          0.26491162790697675,
+          0.22809767441860465,
+          0.23038837209302326,
+          0.23019767441860464,
+          0.22662790697674418,
+          0.2382720930232558
+        ]
+      ],
+      "loops": [
+        16,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6283722222222222,
+      "cpp_ms": 0.250934375,
+      "speedup": 2.5041297041197415,
+      "samples_ms": [
+        [
+          0.5431777777777778,
+          0.6283722222222222,
+          0.7254055555555555,
+          0.5797166666666667,
+          0.5668555555555556,
+          0.6704166666666667,
+          0.7018277777777777
+        ],
+        [
+          0.224565625,
+          0.223575,
+          0.250934375,
+          0.346215625,
+          0.26761875,
+          0.327334375,
+          0.228025
+        ]
+      ],
+      "loops": [
+        18,
+        32
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1266727272727273,
+      "cpp_ms": 0.3651758620689655,
+      "speedup": 3.085288060632958,
+      "samples_ms": [
+        [
+          1.1079,
+          1.2536636363636364,
+          1.0456272727272726,
+          1.2849636363636365,
+          1.4790090909090907,
+          1.1266727272727273,
+          1.0438272727272726
+        ],
+        [
+          0.3866413793103448,
+          0.363548275862069,
+          0.3593620689655172,
+          0.3726655172413793,
+          0.3651758620689655,
+          0.3554551724137931,
+          0.3899310344827586
+        ]
+      ],
+      "loops": [
+        11,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8967272727272727,
+      "cpp_ms": 0.29532222222222226,
+      "speedup": 3.036436831538227,
+      "samples_ms": [
+        [
+          0.925690909090909,
+          0.8633,
+          0.8977090909090909,
+          1.1099636363636365,
+          0.8967272727272727,
+          0.8642,
+          0.8274363636363636
+        ],
+        [
+          0.3078222222222223,
+          0.3020259259259259,
+          0.28726666666666667,
+          0.3073888888888889,
+          0.29532222222222226,
+          0.29014814814814816,
+          0.28825185185185187
+        ]
+      ],
+      "loops": [
+        11,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">i4",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.050125,
+      "cpp_ms": 0.61525,
+      "speedup": 1.7068264932954085,
+      "samples_ms": [
+        [
+          1.7291833333333333,
+          1.1562416666666668,
+          0.934625,
+          1.1270416666666667,
+          0.9458083333333334,
+          1.050125,
+          0.9546083333333334
+        ],
+        [
+          0.74556,
+          0.681545,
+          0.61525,
+          0.61037,
+          0.643415,
+          0.606775,
+          0.608505
+        ]
+      ],
+      "loops": [
+        12,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3465285714285714,
+      "cpp_ms": 0.12881636363636365,
+      "speedup": 2.690097450715102,
+      "samples_ms": [
+        [
+          0.44216428571428573,
+          0.49445,
+          0.3019928571428572,
+          0.43411428571428573,
+          0.3465285714285714,
+          0.31751428571428575,
+          0.3188785714285714
+        ],
+        [
+          0.12120181818181817,
+          0.12881636363636365,
+          0.12735272727272728,
+          0.14629818181818183,
+          0.12192,
+          0.13453636363636365,
+          0.1377309090909091
+        ]
+      ],
+      "loops": [
+        14,
+        55
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.60334,
+      "cpp_ms": 0.2332807692307692,
+      "speedup": 2.5863254909072926,
+      "samples_ms": [
+        [
+          0.5496533333333333,
+          0.57002,
+          0.6297933333333334,
+          0.8256933333333334,
+          0.56484,
+          0.7724266666666666,
+          0.60334
+        ],
+        [
+          0.23188461538461538,
+          0.33358076923076924,
+          0.2332807692307692,
+          0.2739961538461539,
+          0.22896538461538463,
+          0.2317307692307692,
+          0.28886923076923077
+        ]
+      ],
+      "loops": [
+        15,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.00425,
+      "cpp_ms": 0.6490136363636364,
+      "speedup": 1.5473480736502245,
+      "samples_ms": [
+        [
+          1.42202,
+          1.34535,
+          1.07895,
+          0.92358,
+          1.00021,
+          1.00425,
+          0.91398
+        ],
+        [
+          0.67035,
+          0.6955727272727273,
+          0.6129772727272728,
+          0.6490136363636364,
+          0.6320227272727273,
+          0.5406090909090909,
+          0.7341136363636364
+        ]
+      ],
+      "loops": [
+        10,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int32",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.043218181818181815,
+      "cpp_ms": 0.012340776699029126,
+      "speedup": 3.502063352429177,
+      "samples_ms": [
+        [
+          0.044210909090909085,
+          0.04320545454545455,
+          0.04312545454545454,
+          0.046930909090909086,
+          0.04482,
+          0.043218181818181815,
+          0.04296
+        ],
+        [
+          0.009763106796116505,
+          0.012340776699029126,
+          0.009433009708737863,
+          0.009059223300970875,
+          0.02490873786407767,
+          0.023144660194174757,
+          0.01966019417475728
+        ]
+      ],
+      "loops": [
+        55,
+        103
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.4811,
+      "cpp_ms": 0.49021,
+      "speedup": 3.021358193427307,
+      "samples_ms": [
+        [
+          1.7275285714285713,
+          1.124457142857143,
+          1.1638714285714287,
+          1.4811,
+          1.5763142857142858,
+          1.1806285714285714,
+          1.729657142857143
+        ],
+        [
+          0.51448,
+          0.46804,
+          0.53765,
+          0.478195,
+          0.47566,
+          0.49021,
+          0.55508
+        ]
+      ],
+      "loops": [
+        7,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7873666666666667,
+      "cpp_ms": 0.34661904761904766,
+      "speedup": 2.2715620277510644,
+      "samples_ms": [
+        [
+          0.7565333333333334,
+          1.0641416666666668,
+          0.706225,
+          0.8046083333333334,
+          0.7873666666666667,
+          0.7066,
+          1.120425
+        ],
+        [
+          0.3526809523809524,
+          0.33239523809523813,
+          0.34661904761904766,
+          0.36574761904761904,
+          0.3353952380952381,
+          0.32936190476190474,
+          0.36497142857142856
+        ]
+      ],
+      "loops": [
+        12,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0601272727272728,
+      "cpp_ms": 0.3999153846153846,
+      "speedup": 2.6508789446718626,
+      "samples_ms": [
+        [
+          1.1066272727272728,
+          0.9374818181818182,
+          1.2995454545454546,
+          0.8150909090909091,
+          0.8418363636363636,
+          1.0601272727272728,
+          1.2775545454545454
+        ],
+        [
+          0.41094615384615385,
+          0.3858,
+          0.37023076923076925,
+          0.4087230769230769,
+          0.3722115384615384,
+          0.46716153846153846,
+          0.3999153846153846
+        ]
+      ],
+      "loops": [
+        11,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2768875,
+      "cpp_ms": 0.4466333333333333,
+      "speedup": 2.8589167102022537,
+      "samples_ms": [
+        [
+          2.0154375,
+          1.5015625,
+          1.3136375,
+          1.2768875,
+          1.074475,
+          1.1252375,
+          1.12865
+        ],
+        [
+          0.4466333333333333,
+          0.5180458333333333,
+          0.4361666666666667,
+          0.4854,
+          0.43120416666666667,
+          0.59005,
+          0.42689166666666667
+        ]
+      ],
+      "loops": [
+        8,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9624583333333334,
+      "cpp_ms": 0.46611111111111114,
+      "speedup": 2.064868891537545,
+      "samples_ms": [
+        [
+          0.8977333333333334,
+          1.1088666666666667,
+          0.937075,
+          1.0684083333333332,
+          0.9624583333333334,
+          1.163175,
+          0.938075
+        ],
+        [
+          0.46611111111111114,
+          0.4502,
+          0.8327333333333333,
+          0.45994444444444443,
+          0.4662555555555556,
+          0.47004444444444443,
+          0.4499944444444444
+        ]
+      ],
+      "loops": [
+        12,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">u8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2226666666666668,
+      "cpp_ms": 0.5335066666666666,
+      "speedup": 2.2917551795666413,
+      "samples_ms": [
+        [
+          1.4727555555555556,
+          1.2283222222222223,
+          1.2067444444444444,
+          1.2226666666666668,
+          1.1423333333333332,
+          1.2752444444444444,
+          1.0907555555555555
+        ],
+        [
+          0.5335066666666666,
+          0.6347066666666666,
+          0.5430866666666666,
+          0.5171666666666667,
+          0.5193266666666667,
+          0.5305933333333334,
+          0.7198933333333334
+        ]
+      ],
+      "loops": [
+        9,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.464075,
+      "cpp_ms": 0.213388,
+      "speedup": 2.1747942714679365,
+      "samples_ms": [
+        [
+          0.3771,
+          0.50961,
+          0.41056,
+          0.575965,
+          0.464075,
+          0.679515,
+          0.415475
+        ],
+        [
+          0.364728,
+          0.202304,
+          0.213388,
+          0.232836,
+          0.201408,
+          0.21338,
+          0.233116
+        ]
+      ],
+      "loops": [
+        20,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.78054,
+      "cpp_ms": 0.379496,
+      "speedup": 2.0567805721272423,
+      "samples_ms": [
+        [
+          1.33349,
+          0.7029,
+          0.66135,
+          0.83573,
+          1.20131,
+          0.69994,
+          0.78054
+        ],
+        [
+          0.397884,
+          0.379496,
+          0.375532,
+          0.378612,
+          0.485252,
+          0.3772,
+          0.390528
+        ]
+      ],
+      "loops": [
+        10,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.37475,
+      "cpp_ms": 0.1700625,
+      "speedup": 2.2036016170525543,
+      "samples_ms": [
+        [
+          0.37475,
+          0.36709090909090913,
+          0.5379772727272727,
+          0.3693818181818182,
+          0.4989181818181818,
+          0.4935318181818182,
+          0.37081363636363635
+        ],
+        [
+          0.17165,
+          0.168125,
+          0.185825,
+          0.1957,
+          0.15749375,
+          0.1700625,
+          0.16675
+        ]
+      ],
+      "loops": [
+        22,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.846257060213247e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.052245454545454546,
+      "cpp_ms": 0.009183035714285713,
+      "speedup": 5.689344588323685,
+      "samples_ms": [
+        [
+          0.05929818181818182,
+          0.04458181818181818,
+          0.052245454545454546,
+          0.04598363636363636,
+          0.05266727272727273,
+          0.05131090909090909,
+          0.06212
+        ],
+        [
+          0.008950892857142857,
+          0.00958125,
+          0.009183035714285713,
+          0.010670535714285714,
+          0.00937232142857143,
+          0.008750892857142856,
+          0.008955357142857143
+        ]
+      ],
+      "loops": [
+        55,
+        112
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7763568394002505e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.244175,
+      "cpp_ms": 0.4506590909090909,
+      "speedup": 2.7607897523828737,
+      "samples_ms": [
+        [
+          1.5112,
+          1.1750125,
+          1.244175,
+          1.5989125,
+          1.05025,
+          1.0838125,
+          1.4889375
+        ],
+        [
+          0.4455409090909091,
+          0.4736,
+          0.5720318181818183,
+          0.4506590909090909,
+          0.44285,
+          0.4480454545454545,
+          0.5635318181818182
+        ]
+      ],
+      "loops": [
+        8,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.552713678800501e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7258,
+      "cpp_ms": 0.2954,
+      "speedup": 2.4570074475287744,
+      "samples_ms": [
+        [
+          0.8235142857142856,
+          0.8628214285714285,
+          0.6663785714285715,
+          0.6653714285714285,
+          0.6607571428571428,
+          0.7258,
+          1.0697785714285715
+        ],
+        [
+          0.2920592592592593,
+          0.28904444444444444,
+          0.2954,
+          0.3554666666666667,
+          0.3146962962962963,
+          0.40092222222222224,
+          0.28217777777777775
+        ]
+      ],
+      "loops": [
+        14,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7240714285714285,
+      "cpp_ms": 0.3371137931034483,
+      "speedup": 2.1478546514091654,
+      "samples_ms": [
+        [
+          0.7004857142857143,
+          1.0465428571428572,
+          0.6299714285714285,
+          0.7240714285714285,
+          0.8140285714285714,
+          0.8745428571428572,
+          0.6341
+        ],
+        [
+          0.3388724137931034,
+          0.4240655172413793,
+          0.3357758620689655,
+          0.3317241379310345,
+          0.3695275862068966,
+          0.3371137931034483,
+          0.3236137931034483
+        ]
+      ],
+      "loops": [
+        7,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2964,
+      "cpp_ms": 0.40774074074074074,
+      "speedup": 3.1794713416295757,
+      "samples_ms": [
+        [
+          1.38201,
+          1.21134,
+          1.06758,
+          1.2964,
+          1.49984,
+          1.08348,
+          1.52725
+        ],
+        [
+          0.4003,
+          0.4207518518518519,
+          0.40222222222222226,
+          0.4081259259259259,
+          0.40774074074074074,
+          0.40020370370370373,
+          0.4241037037037037
+        ]
+      ],
+      "loops": [
+        10,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9846777777777778,
+      "cpp_ms": 0.4172125,
+      "speedup": 2.360134889960818,
+      "samples_ms": [
+        [
+          1.3521,
+          0.9726666666666667,
+          0.8949555555555555,
+          1.344488888888889,
+          0.8843666666666666,
+          0.9974444444444445,
+          0.9846777777777778
+        ],
+        [
+          0.4229125,
+          0.5002083333333334,
+          0.4192708333333333,
+          0.4152125,
+          0.4172125,
+          0.4016625,
+          0.4093625
+        ]
+      ],
+      "loops": [
+        9,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">i8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.2959079088746003e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0895444444444444,
+      "cpp_ms": 0.52245,
+      "speedup": 2.0854520900458313,
+      "samples_ms": [
+        [
+          1.0295888888888889,
+          1.0895444444444444,
+          1.3326444444444445,
+          1.0798444444444446,
+          1.147111111111111,
+          1.0160111111111112,
+          1.3468444444444445
+        ],
+        [
+          0.495635,
+          0.4875,
+          0.5347,
+          0.52245,
+          0.526065,
+          0.52464,
+          0.497955
+        ]
+      ],
+      "loops": [
+        9,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.243441966476004e-11,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.35597619047619045,
+      "cpp_ms": 0.20071707317073173,
+      "speedup": 1.7735222263498926,
+      "samples_ms": [
+        [
+          0.4575285714285714,
+          0.42392380952380954,
+          0.35597619047619045,
+          0.34554285714285715,
+          0.3431047619047619,
+          0.33656190476190473,
+          0.4909619047619047
+        ],
+        [
+          0.21304878048780487,
+          0.20071707317073173,
+          0.1725609756097561,
+          0.17455365853658536,
+          0.21030243902439025,
+          0.2127,
+          0.181409756097561
+        ]
+      ],
+      "loops": [
+        21,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.470015915148855e-12,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6490285714285715,
+      "cpp_ms": 0.3552263157894737,
+      "speedup": 1.8270847135470134,
+      "samples_ms": [
+        [
+          0.5971285714285715,
+          0.5949714285714285,
+          0.7608785714285715,
+          0.7022357142857143,
+          0.8365857142857143,
+          0.6490285714285715,
+          0.5760285714285714
+        ],
+        [
+          0.4112842105263158,
+          0.33616842105263156,
+          0.3399894736842105,
+          0.4707842105263158,
+          0.34655263157894733,
+          0.3552263157894737,
+          0.3720052631578947
+        ]
+      ],
+      "loops": [
+        14,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.881784197001252e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.35488636363636367,
+      "cpp_ms": 0.12252452830188679,
+      "speedup": 2.896451580388567,
+      "samples_ms": [
+        [
+          0.41460909090909087,
+          0.35488636363636367,
+          0.3240318181818182,
+          0.3558,
+          0.3477181818181818,
+          0.4667590909090909,
+          0.3343772727272727
+        ],
+        [
+          0.14147924528301886,
+          0.12252452830188679,
+          0.12793584905660377,
+          0.11275660377358492,
+          0.12102264150943397,
+          0.12860943396226415,
+          0.11717547169811321
+        ]
+      ],
+      "loops": [
+        22,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.86402062860725e-13,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04371666666666667,
+      "cpp_ms": 0.00898142857142857,
+      "speedup": 4.867451354647156,
+      "samples_ms": [
+        [
+          0.05181296296296296,
+          0.04568148148148148,
+          0.042918518518518516,
+          0.042387037037037036,
+          0.04746111111111111,
+          0.043253703703703704,
+          0.04371666666666667
+        ],
+        [
+          0.011667857142857143,
+          0.009042142857142856,
+          0.008545,
+          0.00888857142857143,
+          0.00989,
+          0.008891428571428571,
+          0.00898142857142857
+        ]
+      ],
+      "loops": [
+        54,
+        140
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 9.469687938690186e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.3741,
+      "cpp_ms": 0.44027777777777777,
+      "speedup": 3.120984227129338,
+      "samples_ms": [
+        [
+          1.8398285714285714,
+          1.3741,
+          1.4509,
+          1.296157142857143,
+          1.2689,
+          1.295857142857143,
+          1.5576
+        ],
+        [
+          0.44027777777777777,
+          0.46320370370370373,
+          0.4176962962962963,
+          0.4503111111111111,
+          0.4024259259259259,
+          0.5282370370370371,
+          0.42735185185185187
+        ]
+      ],
+      "loops": [
+        7,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.893937587738037e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.78855,
+      "cpp_ms": 0.23303225806451613,
+      "speedup": 3.383866279069767,
+      "samples_ms": [
+        [
+          0.7799571428571428,
+          0.9806571428571429,
+          0.78855,
+          0.7533785714285715,
+          0.8059571428571428,
+          0.76495,
+          1.0699857142857143
+        ],
+        [
+          0.20604193548387098,
+          0.20286774193548388,
+          0.2434225806451613,
+          0.23303225806451613,
+          0.24766774193548388,
+          0.27978387096774193,
+          0.20802903225806452
+        ]
+      ],
+      "loops": [
+        14,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.8498518329579383e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7282666666666666,
+      "cpp_ms": 0.36498461538461535,
+      "speedup": 1.9953352441971561,
+      "samples_ms": [
+        [
+          0.7111333333333334,
+          0.96826,
+          0.7857733333333333,
+          0.9361066666666666,
+          0.72252,
+          0.70424,
+          0.7282666666666666
+        ],
+        [
+          0.35761923076923074,
+          0.4181923076923077,
+          0.4132923076923077,
+          0.36135384615384614,
+          0.3610923076923077,
+          0.3883961538461539,
+          0.36498461538461535
+        ]
+      ],
+      "loops": [
+        15,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.2239394891366828e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.27689,
+      "cpp_ms": 0.318564,
+      "speedup": 4.00826835423965,
+      "samples_ms": [
+        [
+          1.27689,
+          1.28797,
+          1.2488,
+          1.28927,
+          1.21586,
+          1.34288,
+          1.26654
+        ],
+        [
+          0.315388,
+          0.31432,
+          0.411016,
+          0.318564,
+          0.39274,
+          0.314928,
+          0.324364
+        ]
+      ],
+      "loops": [
+        10,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.2239394891366828e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2395833333333333,
+      "cpp_ms": 0.4165740740740741,
+      "speedup": 2.975661258057346,
+      "samples_ms": [
+        [
+          1.52715,
+          1.2395833333333333,
+          1.1225833333333333,
+          1.3689833333333332,
+          1.1287,
+          1.1221833333333333,
+          1.6470666666666667
+        ],
+        [
+          0.4165740740740741,
+          0.44407777777777774,
+          0.4094037037037037,
+          0.41027777777777774,
+          0.39361851851851853,
+          0.4432259259259259,
+          0.5029518518518519
+        ]
+      ],
+      "loops": [
+        6,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">f2",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.2239394891366828e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2695222222222222,
+      "cpp_ms": 0.5560043478260869,
+      "speedup": 2.2832954943354458,
+      "samples_ms": [
+        [
+          1.4636777777777779,
+          1.2128333333333332,
+          1.2049777777777777,
+          1.2485777777777778,
+          1.2884,
+          1.2695222222222222,
+          1.339088888888889
+        ],
+        [
+          0.5357739130434783,
+          0.5447652173913043,
+          0.5645478260869565,
+          0.5364130434782609,
+          0.5560043478260869,
+          0.5784521739130435,
+          0.6165826086956522
+        ]
+      ],
+      "loops": [
+        9,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 6.628740084124729e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.51539,
+      "cpp_ms": 0.18208409090909092,
+      "speedup": 2.8305053858731606,
+      "samples_ms": [
+        [
+          0.54777,
+          0.476445,
+          0.542275,
+          0.444575,
+          0.51539,
+          0.45029,
+          0.615185
+        ],
+        [
+          0.16225681818181817,
+          0.18208409090909092,
+          0.178625,
+          0.18641818181818182,
+          0.1915840909090909,
+          0.25186363636363635,
+          0.16367272727272728
+        ]
+      ],
+      "loops": [
+        20,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 1.8498518329579383e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.7494923076923078,
+      "cpp_ms": 0.38026315789473686,
+      "speedup": 1.9709832313015705,
+      "samples_ms": [
+        [
+          0.7647769230769231,
+          0.8956,
+          0.7041,
+          0.7144923076923078,
+          0.7748153846153846,
+          0.6862384615384615,
+          0.7494923076923078
+        ],
+        [
+          0.4309789473684211,
+          0.3771842105263158,
+          0.38026315789473686,
+          0.4699894736842105,
+          0.3697105263157895,
+          0.37664210526315794,
+          0.46087894736842105
+        ]
+      ],
+      "loops": [
+        13,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 4.734843969345093e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0324,
+      "cpp_ms": 0.022319298245614034,
+      "speedup": 46.255934601477755,
+      "samples_ms": [
+        [
+          1.1352363636363636,
+          1.2603909090909091,
+          1.0324,
+          0.9632818181818182,
+          0.9882454545454545,
+          0.9931181818181818,
+          1.0672
+        ],
+        [
+          0.021687719298245613,
+          0.02117719298245614,
+          0.022319298245614034,
+          0.026863157894736842,
+          0.02204736842105263,
+          0.04027017543859649,
+          0.036803508771929824
+        ]
+      ],
+      "loops": [
+        11,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float16",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float16",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 0.001953125,
+      "atol": 2.72504985332489e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.047029166666666664,
+      "cpp_ms": 0.011684444444444445,
+      "speedup": 4.024938189425637,
+      "samples_ms": [
+        [
+          0.046739583333333334,
+          0.046283333333333336,
+          0.046066666666666665,
+          0.047029166666666664,
+          0.06992291666666667,
+          0.08576041666666667,
+          0.05175833333333334
+        ],
+        [
+          0.019873333333333333,
+          0.018338518518518518,
+          0.018857037037037037,
+          0.00907925925925926,
+          0.011684444444444445,
+          0.010231851851851851,
+          0.009146666666666666
+        ]
+      ],
+      "loops": [
+        48,
+        135
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 8.798559974820819e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1409833333333332,
+      "cpp_ms": 0.2568315789473684,
+      "speedup": 4.442535213191797,
+      "samples_ms": [
+        [
+          1.3887833333333333,
+          1.0586333333333333,
+          1.0920666666666667,
+          1.1409833333333332,
+          1.0879833333333333,
+          1.66265,
+          1.3477833333333333
+        ],
+        [
+          0.24033684210526315,
+          0.2568315789473684,
+          0.3820368421052631,
+          0.3427921052631579,
+          0.23667631578947368,
+          0.36867368421052626,
+          0.24289736842105264
+        ]
+      ],
+      "loops": [
+        6,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.7597119949641638e-05,
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 0.5721416666666667,
+      "cpp_ms": 0.11081272727272728,
+      "speedup": 5.163140378799065,
+      "samples_ms": [
+        [
+          0.6048583333333334,
+          0.5378083333333333,
+          0.6275666666666666,
+          0.5468333333333334,
+          0.5368333333333334,
+          0.6502916666666666,
+          0.5721416666666667
+        ],
+        [
+          0.10629818181818182,
+          0.1447690909090909,
+          0.13931636363636365,
+          0.10972909090909092,
+          0.11081272727272728,
+          0.10832909090909092,
+          0.11263272727272727
+        ]
+      ],
+      "loops": [
+        12,
+        55
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.7187505363835953e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.47181,
+      "cpp_ms": 0.23556111111111114,
+      "speedup": 2.002919742458904,
+      "samples_ms": [
+        [
+          0.474935,
+          0.614735,
+          0.46666,
+          0.46396,
+          0.46133,
+          0.47181,
+          0.67405
+        ],
+        [
+          0.22614444444444443,
+          0.24426111111111112,
+          0.23556111111111114,
+          0.42837222222222227,
+          0.22493888888888888,
+          0.25472222222222224,
+          0.22214444444444445
+        ]
+      ],
+      "loops": [
+        20,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.1371974323992617e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.983325,
+      "cpp_ms": 0.15625454545454545,
+      "speedup": 6.293096928089365,
+      "samples_ms": [
+        [
+          0.983325,
+          1.55965,
+          0.9422583333333334,
+          1.0745,
+          1.1432666666666667,
+          0.9492166666666666,
+          0.9393083333333334
+        ],
+        [
+          0.15211818181818182,
+          0.15625454545454545,
+          0.17195454545454544,
+          0.15255454545454544,
+          0.16669090909090908,
+          0.15330909090909092,
+          0.17324545454545456
+        ]
+      ],
+      "loops": [
+        12,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.1371974323992617e-05,
+      "max_abs_error": 2.384185791015625e-07,
+      "reference_ms": 0.87362,
+      "cpp_ms": 0.21875853658536587,
+      "speedup": 3.9935355832803734,
+      "samples_ms": [
+        [
+          1.77884,
+          0.87362,
+          0.86582,
+          1.20184,
+          0.85974,
+          1.12996,
+          0.85662
+        ],
+        [
+          0.2087341463414634,
+          0.21875853658536587,
+          0.2553073170731707,
+          0.21661463414634147,
+          0.22039024390243903,
+          0.21415365853658536,
+          0.21999024390243901
+        ]
+      ],
+      "loops": [
+        5,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">f4",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.1371974323992617e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.08714,
+      "cpp_ms": 0.3079551724137931,
+      "speedup": 3.5301891229130975,
+      "samples_ms": [
+        [
+          1.11744,
+          0.90726,
+          0.92142,
+          1.10364,
+          1.05937,
+          1.22695,
+          1.08714
+        ],
+        [
+          0.2991620689655172,
+          0.3079551724137931,
+          0.37368275862068967,
+          0.30237931034482757,
+          0.34124827586206896,
+          0.3037965517241379,
+          0.35885172413793104
+        ]
+      ],
+      "loops": [
+        10,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 6.158953328849748e-05,
+      "max_abs_error": 1.862645149230957e-09,
+      "reference_ms": 0.20986875,
+      "cpp_ms": 0.09862888888888889,
+      "speedup": 2.1278628641597006,
+      "samples_ms": [
+        [
+          0.20986875,
+          0.20075625,
+          0.1998625,
+          0.2382,
+          0.205446875,
+          0.219359375,
+          0.227403125
+        ],
+        [
+          0.09865333333333333,
+          0.09303777777777777,
+          0.12234666666666667,
+          0.09610222222222221,
+          0.1102911111111111,
+          0.09384666666666668,
+          0.09862888888888889
+        ]
+      ],
+      "loops": [
+        32,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 1.7187505363835953e-05,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.53236,
+      "cpp_ms": 0.24685714285714286,
+      "speedup": 2.1565509259259263,
+      "samples_ms": [
+        [
+          0.5035466666666667,
+          0.52116,
+          0.5494933333333334,
+          0.5972933333333333,
+          0.53236,
+          0.5559466666666666,
+          0.4961066666666667
+        ],
+        [
+          0.25089285714285714,
+          0.2278035714285714,
+          0.24755,
+          0.24895714285714288,
+          0.2398,
+          0.22135,
+          0.24685714285714286
+        ]
+      ],
+      "loops": [
+        15,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 4.399279987410409e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3827884615384616,
+      "cpp_ms": 0.056433333333333335,
+      "speedup": 6.783020582488982,
+      "samples_ms": [
+        [
+          0.35036538461538463,
+          0.3857653846153846,
+          0.3827884615384616,
+          0.4623884615384616,
+          0.4418961538461539,
+          0.3819730769230769,
+          0.36606923076923076
+        ],
+        [
+          0.059894871794871796,
+          0.05747435897435898,
+          0.05431538461538462,
+          0.056433333333333335,
+          0.050756410256410256,
+          0.05473846153846154,
+          0.0575051282051282
+        ]
+      ],
+      "loops": [
+        26,
+        39
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float32",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float32",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 2.384185791015625e-07,
+      "atol": 3.120552946711541e-06,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04647090909090909,
+      "cpp_ms": 0.009304918032786885,
+      "speedup": 4.994230892433852,
+      "samples_ms": [
+        [
+          0.044465454545454544,
+          0.04520363636363636,
+          0.06591090909090909,
+          0.05661454545454546,
+          0.04647090909090909,
+          0.05328,
+          0.04522
+        ],
+        [
+          0.009106557377049181,
+          0.009304918032786885,
+          0.009071311475409837,
+          0.009618032786885245,
+          0.013577868852459016,
+          0.009321311475409837,
+          0.008738524590163934
+        ]
+      ],
+      "loops": [
+        55,
+        122
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor2",
+      "factors": [
+        2,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.7913608336019266e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0241909090909092,
+      "cpp_ms": 0.329930303030303,
+      "speedup": 3.1042644451996293,
+      "samples_ms": [
+        [
+          1.1330272727272728,
+          1.0157727272727273,
+          1.0241909090909092,
+          0.9742636363636363,
+          1.0572454545454546,
+          1.294,
+          0.9888454545454546
+        ],
+        [
+          0.329930303030303,
+          0.35224545454545453,
+          0.30171818181818183,
+          0.33801818181818183,
+          0.3200090909090909,
+          0.3396787878787879,
+          0.3205909090909091
+        ]
+      ],
+      "loops": [
+        11,
+        33
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        129,
+        130
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "factor4",
+      "factors": [
+        4,
+        4
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.582721667203853e-14,
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 0.7854875,
+      "cpp_ms": 0.18746190476190477,
+      "speedup": 4.190117992226992,
+      "samples_ms": [
+        [
+          0.876825,
+          0.6583875,
+          0.653875,
+          0.824825,
+          0.7854875,
+          0.7190875,
+          0.9247375
+        ],
+        [
+          0.19361904761904764,
+          0.1909,
+          0.18481666666666666,
+          0.18250238095238094,
+          0.19900238095238096,
+          0.18746190476190477,
+          0.17872380952380953
+        ]
+      ],
+      "loops": [
+        8,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "anisotropic",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.4993253970704015e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5596642857142857,
+      "cpp_ms": 0.23949117647058824,
+      "speedup": 2.3368889575061975,
+      "samples_ms": [
+        [
+          0.5318214285714286,
+          0.5596642857142857,
+          0.8071428571428572,
+          0.6710428571428572,
+          0.5206642857142857,
+          0.49555714285714286,
+          0.5606642857142857
+        ],
+        [
+          0.22553529411764706,
+          0.2131,
+          0.26636764705882354,
+          0.28501470588235295,
+          0.23785,
+          0.23949117647058824,
+          0.2962058823529412
+        ]
+      ],
+      "loops": [
+        14,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "fortran",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.3153002900607855e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0189333333333335,
+      "cpp_ms": 0.2780333333333333,
+      "speedup": 3.664788394676898,
+      "samples_ms": [
+        [
+          0.9674,
+          1.0274166666666666,
+          1.2141,
+          1.0189333333333335,
+          1.1744833333333333,
+          0.95095,
+          0.993075
+        ],
+        [
+          0.2728555555555556,
+          0.32455555555555554,
+          0.2689166666666667,
+          0.3545166666666667,
+          0.2621833333333333,
+          0.2780333333333333,
+          0.33869444444444446
+        ]
+      ],
+      "loops": [
+        12,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "reversed",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.3153002900607855e-14,
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 0.8555090909090909,
+      "cpp_ms": 0.25956666666666667,
+      "speedup": 3.2959127683668585,
+      "samples_ms": [
+        [
+          0.8555090909090909,
+          0.7801181818181817,
+          0.8266454545454546,
+          1.158718181818182,
+          1.0746363636363636,
+          0.8587454545454546,
+          0.7870909090909091
+        ],
+        [
+          0.29433333333333334,
+          0.25405555555555553,
+          0.2571407407407407,
+          0.27861851851851854,
+          0.25956666666666667,
+          0.2566814814814815,
+          0.2713
+        ]
+      ],
+      "loops": [
+        11,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": ">f8",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        257,
+        173
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "endian",
+      "factors": [
+        2,
+        3
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 2.3153002900607855e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.04141,
+      "cpp_ms": 0.3572,
+      "speedup": 2.915481522956327,
+      "samples_ms": [
+        [
+          1.54523,
+          0.94935,
+          1.02441,
+          1.08893,
+          1.08564,
+          0.91155,
+          1.04141
+        ],
+        [
+          0.38173103448275864,
+          0.3503655172413793,
+          0.3532896551724138,
+          0.3637620689655172,
+          0.3572,
+          0.3558655172413793,
+          0.3837034482758621
+        ]
+      ],
+      "loops": [
+        10,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        4,
+        5
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "large-block",
+      "factors": [
+        129,
+        127
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 1.2539446963562376e-13,
+      "max_abs_error": 8.673617379884035e-18,
+      "reference_ms": 0.33760555555555555,
+      "cpp_ms": 0.1414372093023256,
+      "speedup": 2.3869642028493026,
+      "samples_ms": [
+        [
+          0.2587888888888889,
+          0.26339444444444443,
+          0.3756111111111111,
+          0.33760555555555555,
+          0.30397777777777774,
+          0.3660666666666667,
+          0.3592833333333333
+        ],
+        [
+          0.15266744186046513,
+          0.12581162790697675,
+          0.11125116279069767,
+          0.1414372093023256,
+          0.15526511627906978,
+          0.14640930232558141,
+          0.1168186046511628
+        ]
+      ],
+      "loops": [
+        18,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        171,
+        104
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "constant-padding",
+      "factors": [
+        3,
+        5
+      ],
+      "cval": 1,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 3.4993253970704015e-14,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5562615384615385,
+      "cpp_ms": 0.22913870967741937,
+      "speedup": 2.427619232231173,
+      "samples_ms": [
+        [
+          0.5796384615384615,
+          0.5297846153846154,
+          0.5562615384615385,
+          0.5557076923076922,
+          0.6388307692307692,
+          1.0756538461538463,
+          0.5469538461538461
+        ],
+        [
+          0.22913870967741937,
+          0.2263741935483871,
+          0.255358064516129,
+          0.22286774193548387,
+          0.23022903225806451,
+          0.28208387096774196,
+          0.22296774193548388
+        ]
+      ],
+      "loops": [
+        13,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "output_shape": [
+        513,
+        517
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "unit-factors",
+      "factors": [
+        1,
+        1
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 8.956804168009633e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.329275,
+      "cpp_ms": 0.10104651162790698,
+      "speedup": 3.2586478711162252,
+      "samples_ms": [
+        [
+          0.326445,
+          0.40746,
+          0.308295,
+          0.312875,
+          0.44286,
+          0.35165,
+          0.329275
+        ],
+        [
+          0.10104651162790698,
+          0.10022790697674418,
+          0.10028837209302326,
+          0.11144418604651163,
+          0.09183255813953489,
+          0.10386511627906977,
+          0.10424418604651163
+        ]
+      ],
+      "loops": [
+        20,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.downscale_local_mean",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        1,
+        517
+      ],
+      "output_shape": [
+        1,
+        259
+      ],
+      "output_dtype": "float64",
+      "output_dtype_metadata": null,
+      "workload": "single-row",
+      "factors": [
+        1,
+        2
+      ],
+      "cval": 0,
+      "threads": 1,
+      "rtol": 4.440892098500626e-16,
+      "atol": 5.879306388421965e-15,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04874074074074074,
+      "cpp_ms": 0.010115068493150687,
+      "speedup": 4.818626860880381,
+      "samples_ms": [
+        [
+          0.04281851851851852,
+          0.04309444444444444,
+          0.05135,
+          0.043648148148148144,
+          0.08841111111111111,
+          0.04874074074074074,
+          0.055355555555555554
+        ],
+        [
+          0.00958082191780822,
+          0.010279452054794521,
+          0.010197260273972603,
+          0.01036986301369863,
+          0.009675342465753425,
+          0.00966027397260274,
+          0.010115068493150687
+        ]
+      ],
+      "loops": [
+        54,
+        73
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}

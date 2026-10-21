@@ -627,3 +627,10 @@ Scalar padding casts retain upstream warning counts and validation order.
 Nonfinite/risky floating arithmetic, nonscalar constants, input subclasses,
 and nondefault floating underflow or callback policies currently use explicit
 fallback. The dedicated report keeps all 120 workloads per worker setting.
+The [independent local-mean confirmation](benchmarks/downscale-tuning.md)
+measures all 120 cases faster than original scikit-image: 3.04× geometric-mean
+speedup with one worker and 5.52× with four. The
+[optimization history](benchmarks/downscale-tuning.md) preserves the initial
+port, intermediate regressions and paired confirmation against its measured
+binary. The final one-worker aggregate is 1.87× faster than that initial C++
+build; individual regressions against it remain follow-up targets.
