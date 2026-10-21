@@ -8,6 +8,7 @@ Nine fixed calls: uint8/float32/float64, 512x512 contiguous/Fortran/reversed arr
 | owned-zero-allocation `c0bc3f3` | 0.043790 | 2.64x | 4/9 |
 | short-dispatch `3beea61` | 0.041399 | 2.79x | 8/9 |
 | confirmation `3beea61` | 0.047133 | 2.45x | 6/9 |
+| metadata-compatible confirmation `e243d12` | 0.034780 | 3.32x | 8/9 |
 
 The optimized path allocates a NumPy-owned zero buffer and avoids copying or reading an image when no derivative axes are requested. No convolution or image arithmetic is needed for that result. Mask erosion and multiplication still execute when requested. Input subclasses and unsupported metadata retain explicit compatibility dispatch. Ownership, dtype, layout, signed zeros, masks, endian storage and unused boundary options are parity-checked.
 
@@ -18,3 +19,5 @@ confirmation: reference geometric-mean drift +7.1%; paired reference/native spee
 The small incremental dispatch gain is not established as stable: confirmation is slower than the first optimized observations, while retaining a substantial improvement over the initial implementation. Allocation state and ordinary system load are uncontrolled; no affinity, frequency locking or hardware-counter profiling was used. Every raw sample, including slower cases, is retained in [JSON](farid-empty-tuning.json).
 
 The [initial 243-case profile](farid-initial.md) retains its separate source fingerprint and all observations (241 faster, two empty-axis cases slower). Historical tuning/profile files are excluded from the [current-source aggregate](STATUS.md).
+
+The metadata-compatible source preserves generic floating dtype tags and upstream directional tag removal. Its additional unchanged-recipe observation has reference drift -13.5% and paired speedup improvement 2.87x. This later observation is retained alongside the earlier confirmation, rather than replacing it.

@@ -169,3 +169,9 @@ and omission of unused input copies reduce geometric-mean native latency by
 2.79x initially and 2.45x in confirmation. Reference drift and slower observations
 are reported; the small dispatch-only increment is not claimed as stable.
 The initial 243-case profile is retained separately from the current aggregate.
+
+A further 240 cases check dtype metadata on every real input type and native/
+endian storage. Generic Farid preserves tags on native float32/64 output;
+directional SciPy convolution drops them. Empty-axis allocation follows the
+same generic rule. The metadata-compatible confirmation is retained as a fifth
+fixed-workload observation, with its own source fingerprint and raw samples.

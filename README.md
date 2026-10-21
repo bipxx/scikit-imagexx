@@ -77,7 +77,9 @@ zeros without consuming boundary options. Nonfinite images, oversized full-kerne
 plans, unsupported metadata/classes and extreme constant-fill values use explicit
 fallback. Floating magnitude calls with nondefault NumPy underflow policies also
 use fallback; directional convolution retains SciPy's warning behavior. Scalar
-signed-integer inputs preserve the reference conversion error.
+signed-integer inputs preserve the reference conversion error. Generic Farid
+retains dtype metadata on native float32/64 outputs; directional variants follow
+SciPy and remove those tags.
 
 Spatial/exposure float32 outputs are checked with `rtol=atol=2e-6`, float64 with
 `rtol=atol=2e-13`; dtype conversion values are checked exactly. Spatial filters
