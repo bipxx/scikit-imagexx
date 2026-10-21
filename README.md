@@ -387,7 +387,7 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The last completed aggregate's serial function benchmark covers 93 entries in 542 cases; the current registry adds `transform.integrate` and requires a new aggregate refresh.
+performance. The published serial function benchmark covers 94 entries in 548 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
