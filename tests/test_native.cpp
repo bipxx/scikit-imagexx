@@ -22,6 +22,7 @@
 #include <stdexcept>
 #include <limits>
 #include <algorithm>
+#include <array>
 
 void require(bool condition) {
     if (!condition) throw std::runtime_error("native check failed");
@@ -591,7 +592,12 @@ int main() {
     {
         const std::uint8_t repeated=3;std::vector<double> output(257*259);
         LocalMeanView view{&repeated,PixelType::uint8,false,false,{513,517},{0,0}};
-        for(auto workers:{1,4}) {
+        const int worker_limits[]={1
+#ifdef _OPENMP
+            ,4
+#endif
+        };
+        for(auto workers:worker_limits) {
             set_num_threads(workers);
             require(downscale_local_mean_into(view,{2,2},&repeated,output.data(),{259*8,8}));
             for(auto value:output)require(value==3.);

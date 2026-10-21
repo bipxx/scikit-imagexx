@@ -63,7 +63,7 @@ def main():
             assert not np.shares_memory(actual, image)
             np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
             timing = measure(reference, native, args.repeat, 15)
-            rows.append(dict(api='transform.downscale_local_mean', dtype=str(image.dtype),
+            rows.append(dict(api='transform.downscale_local_mean', backend='native', dtype=str(image.dtype),
                 shape=list(image.shape), output_shape=list(actual.shape), output_dtype=str(actual.dtype),
                 output_dtype_metadata=None if actual.dtype.metadata is None else dict(actual.dtype.metadata),
                 workload=label, factors=list(factors), cval=cval, threads=workers,
@@ -97,9 +97,19 @@ def main():
     report = dict(metadata=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),
         platform=platform.platform(), cpu=platform.processor(), reference=skimage.__version__,
         numpy=np.__version__, scipy=scipy.__version__, avx2=xx.has_avx2(),
-        reference_thread_pools=1, fallback_enabled=False, repeat=args.repeat, **fingerprint), results=rows)
+        reference_thread_pools=1, fallback_enabled=False, repeat=args.repeat,
+        scope='Allocation-inclusive public raw-value means; dtype, layout, warnings and scale/depth reduction tolerances checked before timing',
+        **fingerprint), results=rows)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
+    lines=['# Local-block mean performance','',
+        'Original scikit-image '+skimage.__version__+'. Reference pools use one thread; native worker limits are explicit. Every call includes allocation, dispatch, constant casting and required conversion. Values, shapes, dtypes, metadata, strides and warnings are checked before timing. All samples and slower cases remain in JSON.','',
+        '| Input | Shape | Workload | Factors | Workers | Original ms | C++ ms | Speedup |',
+        '|---|---|---|---|---:|---:|---:|---:|']
+    for row in rows:
+        shape='×'.join(map(str,row['shape']));factors='×'.join(map(str,row['factors']))
+        lines.append(f'| {row["dtype"]} | {shape} | {row["workload"]} | {factors} | {row["threads"]} | {row["reference_ms"]:.4f} | {row["cpp_ms"]:.4f} | {row["speedup"]:.2f}x |')
+    args.output.with_suffix('.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 
 
 if __name__ == '__main__':
