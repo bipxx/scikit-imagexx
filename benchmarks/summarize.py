@@ -171,7 +171,8 @@ def main():
               'Roberts fuses cross differences and rounded magnitude stages. Half and endian conversion, '
               'mask erosion/broadcast multiplication, layout preparation and allocation are included in the edge report. '
               'The [fixed column experiment](edge-tuning.md) retains separate baseline, optimized and '
-              'confirmation snapshots.','',
+              'confirmation snapshots. The [metadata experiment](edge-metadata-tuning.md) '
+              'retains the separate validation-overhead comparison.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '

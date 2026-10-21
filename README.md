@@ -513,7 +513,7 @@ Laplace and Roberts use optional global workers and runtime-dispatched AVX2,
 including a vector path along single-column images. Half decoding requires AVX2
 integer operations only, without an F16C requirement; byte-order conversion is
 also vectorized. Native floating inputs currently require finite values with
-magnitude at most `sqrt(finfo(working_dtype).max)/16`. Roberts float32/64 calls
+magnitude at most `sqrt(finfo(working_dtype).max)/16`. Roberts magnitude calls on float32/64 input
 with a non-default underflow policy use explicit upstream fallback. Other
 unsupported classes/options also retain explicit compatibility fallback.
 Nonempty float16 masks raise the same upstream `RuntimeError`; empty masks follow
@@ -523,3 +523,8 @@ one-thread comparisons for dtypes, dimensions, layouts and masks, while the
 
 The pure C++ interface in `include/skimagexx/small_edge.hpp` includes typed
 numeric and binary16 entry points with caller-owned output buffers.
+
+Native dtype checks compare equivalent NumPy descriptors by storage semantics,
+so views created with `dtype.newbyteorder('=')` can swap backends consistently.
+The per-function descriptor suite also checks warnings, copy/identity behavior
+and rejection of opposite-endian data by typed low-level interfaces.
