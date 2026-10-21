@@ -131,3 +131,31 @@ def test_half_fallback_and_root_aliases(name):
     with pytest.warns(xx.FallbackWarning): actual=getattr(xx.color,name)(*args)
     np.testing.assert_array_equal(actual,getattr(original,name)(*args))
     assert getattr(xx,name) is getattr(xx.color,name)
+
+
+@pytest.mark.parametrize('name',NAMES[:2])
+@pytest.mark.parametrize('dtype',['float32','float64'])
+def test_nonfinite_matrix_coefficients(name,dtype):
+    a=np.tile(np.array([[0,1,.5],[1e-6,1e-5,1e-4]],dtype=dtype),(19,1))
+    for value in (np.nan,np.inf,-np.inf):
+        matrix=np.eye(3); matrix[0,1]=value
+        compare(name,a,matrix)
+
+
+@pytest.mark.parametrize('dtype',['float32','float64'])
+def test_logarithm_dynamic_range(dtype):
+    top=30 if dtype=='float32' else 300
+    values=np.concatenate((np.geomspace(1e-6,1,1031),np.geomspace(1,10.**top,1031)))
+    image=np.repeat(values[:,None],3,axis=1).astype(dtype)
+    compare('separate_stains',image,np.eye(3))
+    compare('separate_stains',image,-np.eye(3))
+
+
+@pytest.mark.parametrize('name',NAMES[:2])
+def test_batched_matrix_explicit_fallback(name):
+    image=np.ones((2,3))*.25
+    matrix=np.broadcast_to(np.eye(3),(2,3,3))
+    with pytest.raises(NotImplementedError): getattr(xx.color,name)(image,matrix)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning): actual=getattr(xx.color,name)(image,matrix)
+    np.testing.assert_array_equal(actual,getattr(original,name)(image,matrix))

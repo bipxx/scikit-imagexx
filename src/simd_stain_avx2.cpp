@@ -15,6 +15,14 @@ void pack(double* p,__m256d r,__m256d g,__m256d b) {
     _mm256_storeu_pd(p+4,_mm256_blend_pd(_mm256_blend_pd(_mm256_permute4x64_pd(g,_MM_SHUFFLE(2,0,0,1)),_mm256_permute4x64_pd(b,_MM_SHUFFLE(0,0,1,0)),2),_mm256_permute4x64_pd(r,_MM_SHUFFLE(0,2,0,0)),4));
     _mm256_storeu_pd(p+8,_mm256_blend_pd(_mm256_blend_pd(_mm256_permute4x64_pd(b,_MM_SHUFFLE(3,0,0,2)),_mm256_permute4x64_pd(r,_MM_SHUFFLE(0,0,3,0)),2),_mm256_permute4x64_pd(g,_MM_SHUFFLE(0,3,0,0)),4));
 }
+void unpack(__m256d a,__m256d b,__m256d c,__m256d* out) {
+    out[0]=_mm256_blend_pd(_mm256_blend_pd(_mm256_permute4x64_pd(a,_MM_SHUFFLE(0,0,3,0)),
+        _mm256_permute4x64_pd(b,_MM_SHUFFLE(0,2,0,0)),4),_mm256_permute4x64_pd(c,_MM_SHUFFLE(1,0,0,0)),8);
+    out[1]=_mm256_blend_pd(_mm256_permute4x64_pd(a,_MM_SHUFFLE(0,0,0,1)),_mm256_permute4x64_pd(b,_MM_SHUFFLE(0,3,0,0)),6);
+    out[1]=_mm256_blend_pd(out[1],_mm256_permute4x64_pd(c,_MM_SHUFFLE(2,0,0,0)),8);
+    out[2]=_mm256_blend_pd(_mm256_blend_pd(_mm256_permute4x64_pd(a,_MM_SHUFFLE(0,0,0,2)),
+        _mm256_permute4x64_pd(b,_MM_SHUFFLE(0,0,1,0)),2),_mm256_permute4x64_pd(c,_MM_SHUFFLE(3,0,0,0)),12);
+}
 template<class Input> __m256d load(const Input* p,std::ptrdiff_t step) {
     if constexpr (std::is_same_v<Input,double>) {
         if (!step) return _mm256_set1_pd(*p);
@@ -43,12 +51,22 @@ template<class Input> std::size_t run(const Input* p,double* output,std::size_t 
     std::size_t i=0;
     for (;i+4<=n;i+=4) {
         __m256d values[3];
+        bool contiguous=false;
+        if constexpr (std::is_floating_point_v<Input>) {
+            if (pixels==3 && channels==1) {
+                const auto* start=p+3*i;
+                if constexpr (std::is_same_v<Input,double>)
+                    unpack(_mm256_loadu_pd(start),_mm256_loadu_pd(start+4),_mm256_loadu_pd(start+8),values);
+                else unpack(_mm256_cvtps_pd(_mm_loadu_ps(start)),_mm256_cvtps_pd(_mm_loadu_ps(start+4)),_mm256_cvtps_pd(_mm_loadu_ps(start+8)),values);
+                contiguous=true;
+            }
+        }
         for (int c=0;c<3;++c) {
             const auto* start=p+std::ptrdiff_t(i)*pixels+std::ptrdiff_t(c)*channels;
             auto value=_mm256_setzero_pd();
             if constexpr (std::is_same_v<Input,std::uint8_t>) {
                 if (!separate) value=load(start,pixels);
-            } else value=load(start,pixels);
+            } else value=contiguous ? values[c] : load(start,pixels);
             if (separate) {
                 if constexpr (std::is_same_v<Input,std::uint8_t>) {
                     double logs[4]; for (int j=0;j<4;++j) logs[j]=lookup[start[std::ptrdiff_t(j)*pixels]];
