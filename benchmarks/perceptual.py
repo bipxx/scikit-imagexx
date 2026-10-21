@@ -42,7 +42,8 @@ def main():
                ('lab2lch',extra,{},'four-channels'),('lch2lab',lch,{},'four-channels'),
                ('lab2xyz',negative,{},'negative-Z'),('lab2rgb',negative,{},'negative-Z'),
                ('xyz2luv',a,alt,'D50/10'),('luv2xyz',luv,alt,'D50/10'),
-               ('rgb2luv',dark,{},'dark-sRGB'),('luv2rgb',low,{},'low-lightness')]
+               ('rgb2luv',dark,{},'dark-sRGB'),('luv2rgb',low,{},'low-lightness'),
+               ('luv2rgb',luv,{},'Luv-midtones')]
         for name,image,options,workload in cases:
             old,current=getattr(reference,name),getattr(xx.color,name)
             with warnings.catch_warnings(record=True) as expected_warnings:

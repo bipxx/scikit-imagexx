@@ -230,6 +230,16 @@ __m256 cube_root(__m256 x) {
     const auto hi = _mm256_cvtpd_ps(cube_root(_mm256_cvtps_pd(_mm256_extractf128_ps(x,1))));
     return _mm256_insertf128_ps(_mm256_castps128_ps256(lo),hi,1);
 }
+__m256d luv_cube(__m256d x,__m256d) { return _mm256_mul_pd(_mm256_mul_pd(x,x),x); }
+__m256 luv_cube(__m256 x,__m256 nonlinear) {
+    // One float32 power rounding affects the cancellation in Luv->XYZ and is
+    // amplified by the sRGB transfer near black. Match NumPy's powf stage;
+    // the remaining inverse arithmetic and transfer stay vectorized.
+    float values[8]; _mm256_storeu_ps(values,x);
+    const auto mask=static_cast<unsigned>(mask_bits(nonlinear));
+    for (unsigned j=0;j<8;++j) if (mask&(1u<<j)) values[j]=std::pow(values[j],3.0f);
+    return _mm256_loadu_ps(values);
+}
 __m256d multiply_white(__m256d x, double white) { return _mm256_mul_pd(x,_mm256_set1_pd(white)); }
 __m256 multiply_white(__m256 x, double white) {
     const auto lo = _mm256_cvtpd_ps(multiply_white(_mm256_cvtps_pd(_mm256_castps256_ps128(x)),white));
@@ -375,8 +385,12 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
             const auto v=V::mul(factor,V::sub(V::div(V::mul(V::set(9),y),denominator),V::set(T(spec.uv[1]))));
             x=light; y=u; z=v;
         } else if (!scalar_block && (op==Op::luv2xyz || op==Op::luv2rgb)) {
-            const auto light=x,curve=V::div(V::add(light,V::set(16)),V::set(116));
-            auto luminance=V::choose(V::div(light,V::set(T(903.3))),V::mul(V::mul(curve,curve),curve),V::gt(light,V::set(T(7.999625))));
+            const auto light=x,nonlinear=V::gt(light,V::set(T(7.999625)));
+            auto luminance=V::div(light,V::set(T(903.3)));
+            if (mask_bits(nonlinear)) {
+                const auto curve=V::div(V::add(light,V::set(16)),V::set(116));
+                luminance=V::choose(luminance,luv_cube(curve,nonlinear),nonlinear);
+            }
             luminance=V::mul(luminance,V::set(T(spec.white[1])));
             const auto denominator=V::add(V::mul(V::set(13),light),V::set(std::numeric_limits<T>::epsilon()));
             const auto a=V::add(V::set(T(spec.uv[0])),V::div(y,denominator)),b=V::add(V::set(T(spec.uv[1])),V::div(z,denominator));

@@ -239,3 +239,14 @@ def test_luv_signed_zero(name,dtype):
     actual=getattr(xx.color,name)(a)
     expected=getattr(reference,name)(a)
     np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('name',['luv2xyz','luv2rgb'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_luv_inverse_real_colors(name,dtype):
+    rgb=np.random.default_rng(71).random((519,521,3)).astype(dtype)
+    luv=reference.rgb2luv(rgb)
+    compare(name,luv)
+    luv[...,0]=rgb[...,0]*dtype(80)+dtype(20)
+    luv[...,1:]=rgb[...,1:]*dtype(200)-dtype(100)
+    compare(name,luv)
