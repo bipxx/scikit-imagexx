@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-450 public callable names inventoried in 17 modules; 79 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+450 public callable names inventoried in 17 modules; 81 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -15,7 +15,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.deltaE_ciede94` | native-partial | yes (partial input contract) | yes |
 | `color.deltaE_cmc` | native-partial | yes (partial input contract) | yes |
 | `color.gray2rgb` | native-partial | yes (partial input contract) | yes |
-| `color.gray2rgba` | upstream-only | pending | pending |
+| `color.gray2rgba` | native-partial | yes (partial input contract) | yes |
 | `color.hed2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.hsv2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.lab2lch` | native-partial | yes (partial input contract) | yes |
@@ -37,7 +37,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.rgb2yiq` | native-partial | yes (partial input contract) | yes |
 | `color.rgb2ypbpr` | native-partial | yes (partial input contract) | yes |
 | `color.rgb2yuv` | native-partial | yes (partial input contract) | yes |
-| `color.rgba2rgb` | upstream-only | pending | pending |
+| `color.rgba2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.rgbcie2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.separate_stains` | native-partial | yes (partial input contract) | yes |
 | `color.xyz2lab` | native-partial | yes (partial input contract) | yes |

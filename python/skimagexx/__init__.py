@@ -6,7 +6,7 @@ from .filters import (gaussian, sobel, sobel_h, sobel_v, prewitt, prewitt_h, pre
                       scharr, scharr_h, scharr_v, threshold_otsu, threshold_mean,
                       threshold_yen, threshold_triangle, threshold_isodata,
                       threshold_niblack, threshold_sauvola)
-from .color import (rgb2gray, gray2rgb, rgb2yuv, yuv2rgb, rgb2yiq, yiq2rgb,
+from .color import (rgba2rgb, gray2rgba, rgb2gray, gray2rgb, rgb2yuv, yuv2rgb, rgb2yiq, yiq2rgb,
                     rgb2ypbpr, ypbpr2rgb, rgb2ycbcr, ycbcr2rgb, rgb2ydbdr,
                     ydbdr2rgb, rgb2rgbcie, rgbcie2rgb, rgb2xyz, xyz2rgb)
 from .color import (rgb2hsv,hsv2rgb,xyz2lab,lab2xyz,rgb2lab,lab2rgb,

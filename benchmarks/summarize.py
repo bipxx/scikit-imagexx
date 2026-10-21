@@ -15,7 +15,8 @@ def main():
                ('Stain matrices and output widths','stain-parameters'),
                ('Lab distances and color routes','color-distance'),
                ('Histogram threshold parameters','threshold-parameters'),
-               ('Local threshold windows and dtypes','local-threshold-parameters')]
+               ('Local threshold windows and dtypes','local-threshold-parameters'),
+               ('Alpha and grayscale layouts','alpha-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)

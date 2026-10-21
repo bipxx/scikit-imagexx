@@ -13,17 +13,18 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **79 partially native
+The reference is scikit-image **0.26.0**. There are currently **81 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 369 remain pending native implementation and dedicated parity tests.
+export list; 367 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
 | `rgb2gray` | 3D RGB; uint8, float32, float64; arbitrary channel axis | Same luminance weights; uint8 normalized to float64 |
-| `gray2rgb` | 2D grayscale; uint8, float32, float64; arbitrary output channel axis | Exact replication with original dtype |
+| `gray2rgb`, `gray2rgba` | Arbitrary dimensions, including scalars and empty arrays; fixed object-free storage, including float16 and complex; arbitrary output channel axis; RGBA default alpha for real image dtypes, explicit scalar or same-dtype broadcast alpha for additional storage | Exact replication and NumPy stack dtype/endian normalization; alpha casting warnings and broadcast errors preserved |
+| `rgba2rgb` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions with four channels and any channel axis; RGB background | Fused normalization and alpha compositing; float32 output for float32 input, float64 otherwise; clipping preserves signed zero and background NaN |
 | `rgb2yuv`/`yuv2rgb`, `rgb2yiq`/`yiq2rgb`, `rgb2ypbpr`/`ypbpr2rgb`, `rgb2ycbcr`/`ycbcr2rgb`, `rgb2ydbdr`/`ydbdr2rgb`, `rgb2rgbcie`/`rgbcie2rgb` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions with three channels; channel axis, including empty arrays | Upstream matrices, integer normalization and dtype-dependent YCbCr subtraction/errors; float32 output for float32 input, float64 otherwise |
 | `rgb2xyz`, `xyz2rgb` | Same color input types and dimensions | Piecewise sRGB transfer, XYZ matrix, inverse clipping; uint8 decode LUT |
 | `rgb2hsv`, `hsv2rgb` | Same color dtypes, arbitrary dimensions and channel axes; finite inputs and RGB-to-HSV intermediates; inverse hue sector must fit int32 | Upstream tie order, grayscale cases, signed zero and uint8-wrapped hue sectors |
@@ -494,3 +495,10 @@ exception types, including NumPy's unsigned padding-width rejection.
 The [local threshold report](benchmarks/local-threshold-parameters.md) covers
 256 comparisons across all 11 native input types, window shapes/sizes, layouts,
 N-D volumes and scalar-promotion cases. Numerical parity is checked before timing.
+
+Alpha compositing uses SIMD with strict floating-point order and optional global workers.
+Grayscale expansion copies raw values with SIMD and follows physical stride order to
+reduce cache misses on planar/Fortran views. Object-backed arrays and subclasses,
+unsupported alpha array casts, signaling NaNs in alpha/background metadata, and exceptional RGBA arithmetic use
+explicit compatibility fallback. Native RGBA requires native byte order and finite
+input with magnitude at most `sqrt(finfo(input.dtype).max)/2`; quiet-NaN backgrounds follow upstream behavior.

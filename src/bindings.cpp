@@ -1,3 +1,5 @@
+#include "skimagexx/alpha.hpp"
+#include <cstring>
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
@@ -15,6 +17,69 @@
 
 namespace py = pybind11;
 namespace {
+struct RawRows {
+    std::size_t rows=0,columns=1;
+    std::ptrdiff_t image_step=0,alpha_step=0;
+    std::vector<std::ptrdiff_t> image,alpha;
+};
+RawRows raw_rows(const py::array& a,const py::array* b,int dimensions) {
+    RawRows result;std::size_t count=1;
+    for(int axis=0;axis<dimensions;++axis)count*=std::size_t(a.shape(axis));
+    if(!count)return result;
+    int axis=dimensions-1;
+    while(axis>=0 && a.shape(axis)==1)--axis;
+    if(axis<0) {result.rows=1;result.image={0};if(b)result.alpha={0};return result;}
+    result.columns=std::size_t(a.shape(axis));result.image_step=a.strides(axis);result.alpha_step=b ? b->strides(axis) : 0;
+    int prefix=axis;
+    for(int outer=axis-1;outer>=0;--outer) {
+        const auto span=std::ptrdiff_t(result.columns),step=a.strides(outer),other=b ? b->strides(outer) : 0;
+        if(a.shape(outer)>1 && (step%span || step/span!=result.image_step || other%span || other/span!=result.alpha_step))break;
+        result.columns*=std::size_t(a.shape(outer));prefix=outer;
+    }
+    result.rows=count/result.columns;result.image.resize(result.rows);if(b)result.alpha.resize(result.rows);
+    for(std::size_t row=0;row<result.rows;++row) {
+        auto remainder=row;std::ptrdiff_t first=0,second=0;
+        for(int outer=prefix-1;outer>=0;--outer) {
+            const auto dim=std::size_t(a.shape(outer)),index=remainder%dim;remainder/=dim;
+            first+=std::ptrdiff_t(index)*a.strides(outer);if(b)second+=std::ptrdiff_t(index)*b->strides(outer);
+        }
+        result.image[row]=first;if(b)result.alpha[row]=second;
+    }
+    return result;
+}
+std::uint64_t raw_component(const unsigned char* p,std::size_t bytes,bool swap) {
+    std::uint64_t result=0;
+    if(bytes==2) {std::uint16_t value;std::memcpy(&value,p,2);result=value;}
+    else if(bytes==4) {std::uint32_t value;std::memcpy(&value,p,4);result=value;}
+    else std::memcpy(&result,p,8);
+    if(swap) {
+        auto value=result;result=0;
+        for(std::size_t i=0;i<bytes;++i) {result=(result<<8)|(value&255);value>>=8;}
+    }
+    return result;
+}
+unsigned alpha_array_flags(const py::array& a) {
+    const char kind=a.dtype().kind();
+    if(kind!='f' && kind!='c' && kind!='m' && kind!='M')return 0;
+    const auto bytes=std::size_t(a.itemsize())/(kind=='c' ? 2 : 1);
+    if(bytes!=2 && bytes!=4 && bytes!=8)return 4;
+    const bool swap=!a.dtype().attr("isnative").cast<bool>();
+    const auto layout=raw_rows(a,nullptr,int(a.ndim()));
+    const auto* data=static_cast<const unsigned char*>(a.data());unsigned flags=0;
+    for(std::size_t row=0;row<layout.rows;++row)for(std::size_t col=0;col<layout.columns;++col) {
+        const auto* pixel=data+layout.image[row]+std::ptrdiff_t(col)*layout.image_step;
+        for(int component=0;component<(kind=='c' ? 2 : 1);++component) {
+            const auto bits=raw_component(pixel+std::size_t(component)*bytes,bytes,swap);
+            if(kind=='m' || kind=='M') {if(bits==0x8000000000000000ULL)flags|=1;continue;}
+            const std::uint64_t exponent=bytes==2 ? 0x7c00ULL : bytes==4 ? 0x7f800000ULL : 0x7ff0000000000000ULL;
+            const std::uint64_t mantissa=bytes==2 ? 0x3ffULL : bytes==4 ? 0x7fffffULL : 0xfffffffffffffULL;
+            const std::uint64_t quiet=bytes==2 ? 0x200ULL : bytes==4 ? 0x400000ULL : 0x8000000000000ULL;
+            if((bits&exponent)==exponent && (bits&mantissa)) {flags|=1;if(!(bits&quiet))flags|=2;}
+        }
+    }
+    return flags;
+}
+
 bool linear_color_view(const py::array& a, std::ptrdiff_t& pixel_stride, std::ptrdiff_t& channel_stride) {
     if (!a.size()) return false;
     const auto bytes = a.itemsize();
@@ -438,6 +503,38 @@ PYBIND11_MODULE(_core, m) {
         py::array result(wide ? py::dtype::of<double>() : py::dtype::of<float>(),output_shape);
         const skimagexx::LocalThresholdParameters parameters{k,r,divide_double,r_double,k_double};
         {py::gil_scoped_release release;skimagexx::local_threshold_into(input.data(),result.mutable_data(),type,dimensions,window,operation,parameters);}
+        return result;
+    });
+    m.def("alpha_array_flags", [](py::array a) {return alpha_array_flags(a);});
+    m.def("gray_expand", [](py::array image,py::object alpha_object,int channels,py::dtype target,std::size_t swap_component) -> py::array {
+        if(image.dtype().attr("hasobject").cast<bool>() || target.attr("hasobject").cast<bool>() || target.itemsize()!=image.itemsize())throw py::type_error("matching fixed-size object-free storage required");
+        if(channels!=3 && channels!=4)throw py::value_error("three or four channels required");
+        py::array alpha;
+        if(channels==4) {
+            alpha=alpha_object.cast<py::array>();
+            if(!image.dtype().attr("__eq__")(alpha.dtype()).cast<bool>() || image.ndim()!=alpha.ndim())throw py::type_error("matching alpha dtype and shape required");
+            for(py::ssize_t axis=0;axis<image.ndim();++axis)if(image.shape(axis)!=alpha.shape(axis))throw py::value_error("alpha must be broadcast to image.shape");
+        }
+        std::vector<py::ssize_t> shape;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis)shape.push_back(image.shape(axis));
+        shape.push_back(channels);py::array result(target,shape);
+        const auto layout=raw_rows(image,channels==4 ? &alpha : nullptr,int(image.ndim()));
+        {py::gil_scoped_release release;skimagexx::gray_expand_rows_into(image.data(),channels==4 ? alpha.data() : nullptr,
+            result.mutable_data(),layout.rows,layout.columns,std::size_t(image.itemsize()),channels,layout.image.data(),layout.alpha.data(),layout.image_step,layout.alpha_step,swap_component);}
+        return result;
+    });
+    m.def("rgba_composite", [](py::array image,py::array_t<double,py::array::c_style|py::array::forcecast> background) -> py::array {
+        if(image.ndim()<1 || image.shape(image.ndim()-1)!=4 || background.ndim()!=1 || background.size()!=3)
+            throw py::value_error("RGBA channels and three background values required");
+        if(reinterpret_cast<std::uintptr_t>(background.data())%alignof(double))background=decltype(background)::ensure(background.attr("copy")());
+        const auto type=pixel_type(image.dtype());
+        std::vector<py::ssize_t> shape;
+        for(py::ssize_t axis=0;axis<image.ndim()-1;++axis)shape.push_back(image.shape(axis));
+        shape.push_back(3);
+        py::array result(type==skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>(),shape);
+        const auto layout=raw_rows(image,nullptr,int(image.ndim()-1));
+        {py::gil_scoped_release release;skimagexx::rgba2rgb_rows_into(image.data(),result.mutable_data(),layout.rows,layout.columns,type,
+            background.data(),layout.image.data(),layout.image_step,image.strides(image.ndim()-1));}
         return result;
     });
     m.def("threshold_otsu_result", [](py::array image) {

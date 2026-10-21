@@ -4,7 +4,7 @@ NATIVE_FUNCTIONS = {
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist'),
-    'color': ('rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
+    'color': ('rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
               'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
               'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb',
               'rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
@@ -39,11 +39,14 @@ def execution_kind(api):
 
 def needs_color_input(api):
     """Default parity/benchmark sample layout, reviewed alongside the registry."""
-    return api.startswith('color.') and api not in ('color.gray2rgb','color.xyz_tristimulus_values')
+    return api.startswith('color.') and api not in ('color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')
 
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='color.rgba2rgb':
+        import numpy as np
+        return (np.concatenate((image,image[...,:1]),axis=-1),), {}
     if api == 'color.xyz_tristimulus_values':
         return (), {'illuminant':'D65','observer':'2','dtype':image.dtype}
     if api.startswith('color.deltaE_'):

@@ -1,3 +1,4 @@
+#include "skimagexx/alpha.hpp"
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
@@ -49,6 +50,25 @@ int main() {
         LocalThresholdParameters local_promoted;local_promoted.k_double=true;
         local_threshold_into(local32,local_output.data(),PixelType::float32,{1},{1},LocalThreshold::sauvola,local_promoted);
         require(local_output[0]==.4);
+        const std::ptrdiff_t alpha_offsets[]={0};
+        std::vector<std::uint64_t> gray_words(19),expanded_words(19*4);
+        for(std::size_t j=0;j<19;++j)gray_words[j]=UINT64_MAX-j;
+        const std::uint64_t opacity_word=0x123456789abcdef0ULL;
+        gray_expand_rows_into(gray_words.data(),&opacity_word,expanded_words.data(),1,19,8,4,alpha_offsets,alpha_offsets,8,0);
+        for(std::size_t j=0;j<19;++j) {
+            for(std::size_t c=0;c<3;++c)require(expanded_words[4*j+c]==gray_words[j]);
+            require(expanded_words[4*j+3]==opacity_word);
+        }
+        const std::uint8_t rgba_pixels[]={255,0,0,255,0,0,255,0,0,255,0,128,255,0,0,0,0,0,0,255};
+        const double alpha_background[]={1,1,1};double rgb_composed[15],rgb_reversed[15];
+        rgba2rgb_rows_into(rgba_pixels,rgb_composed,1,5,PixelType::uint8,alpha_background,alpha_offsets,4,1);
+        require(rgb_composed[0]==1 && rgb_composed[1]==0 && rgb_composed[2]==0);
+        require(rgb_composed[3]==1 && rgb_composed[4]==1 && rgb_composed[5]==1);
+        require(rgb_composed[7]==1 && std::abs(rgb_composed[6]-(1-128*(1./255)))<1e-15);
+        require(rgb_composed[12]==0 && rgb_composed[13]==0 && rgb_composed[14]==0);
+        rgba2rgb_rows_into(rgba_pixels+16,rgb_reversed,1,5,PixelType::uint8,alpha_background,alpha_offsets,-4,1);
+        for(std::size_t j=0;j<5;++j)for(std::size_t c=0;c<3;++c)require(rgb_reversed[3*j+c]==rgb_composed[3*(4-j)+c]);
+        gray_expand_rows_into(nullptr,nullptr,nullptr,0,1,4,3,nullptr,nullptr,4,0);
         const double hist_counts[]={1,2,3,4,3,2,1};
         const double hist_centers[]={0,1,2,3,4,5,6};
         require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::yen)[0]==2);

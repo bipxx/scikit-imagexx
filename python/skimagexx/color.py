@@ -28,10 +28,47 @@ def rgb2gray(rgb, *, channel_axis=-1):
     return fallback('color', 'rgb2gray', rgb, channel_axis=channel_axis)
 
 
+def _stack_axis(axis,ndim):
+    try:from numpy._core.multiarray import normalize_axis_index
+    except ImportError:from numpy.core.multiarray import normalize_axis_index
+    return normalize_axis_index(axis,ndim)
+
+
+def _pixel_order(arr,trailing_channel=False):
+    dimensions=arr.ndim-int(trailing_channel)
+    order=tuple(sorted(range(dimensions),key=lambda i:abs(arr.strides[i]),reverse=True))
+    if order==tuple(range(dimensions)):return arr,None
+    axes=order+((dimensions,) if trailing_channel else ())
+    return arr.transpose(axes),order
+
+
+def _restore_pixels(result,order):
+    if order is None:return result
+    inverse=tuple(order.index(i) for i in range(len(order)))
+    return result.transpose(inverse+(len(order),))
+
+
+def _expansion_format(arr):
+    target=np.result_type(arr.dtype)
+    if target==arr.dtype:return target,0
+    if arr.dtype.fields is not None or target!=arr.dtype.newbyteorder('='):return None,0
+    width=arr.dtype.itemsize
+    component=width//2 if arr.dtype.kind=='c' else 4 if arr.dtype.kind=='U' else width
+    if component not in (2,4,8):return None,0
+    return target,component
+
+
 def gray2rgb(image, *, channel_axis=-1):
-    if native_image(image) and isinstance(channel_axis, (int, np.integer)) and -3 <= channel_axis < 3:
-        return np.moveaxis(_core.gray2rgb(image), -1, channel_axis)
-    return fallback('color', 'gray2rgb', image, channel_axis=channel_axis)
+    if isinstance(image,np.ndarray) and type(image) is not np.ndarray:
+        return fallback('color','gray2rgb',image,channel_axis=channel_axis)
+    arr=np.asarray(image)
+    if arr.dtype.hasobject:return fallback('color','gray2rgb',image,channel_axis=channel_axis)
+    target,swap=_expansion_format(arr)
+    if target is None:return fallback('color','gray2rgb',image,channel_axis=channel_axis)
+    axis=_stack_axis(channel_axis,arr.ndim+1)
+    ordered,order=_pixel_order(arr)
+    result=_restore_pixels(_core.gray_expand(ordered,None,3,target,swap),order)
+    return np.moveaxis(result,-1,axis)
 
 
 def __getattr__(name):
@@ -373,3 +410,69 @@ def deltaE_ciede2000(lab1,lab2,kL=1,kC=1,kH=1,*,channel_axis=-1):
 
 def deltaE_cmc(lab1,lab2,kL=1,kC=1,*,channel_axis=-1):
     return _weighted_distance('deltaE_cmc',lab1,lab2,channel_axis,(kL,kC,1,.045,.015),{'kL':kL,'kC':kC})
+
+
+
+def gray2rgba(image,alpha=None,*,channel_axis=-1):
+    def forwarded():return fallback('color','gray2rgba',image,alpha,channel_axis=channel_axis)
+    if isinstance(image,np.ndarray) and type(image) is not np.ndarray:return forwarded()
+    arr=np.asarray(image)
+    if arr.dtype.hasobject:return forwarded()
+    target,swap=_expansion_format(arr)
+    if target is None:return forwarded()
+    if alpha is None:
+        if arr.dtype.type not in _COLOR_TYPES|{np.float16}:return forwarded()
+        from .util import dtype_limits
+        _,actual_alpha=dtype_limits(arr,clip_negative=False)
+    else:actual_alpha=alpha
+    if isinstance(actual_alpha,np.ndarray) and type(actual_alpha) is not np.ndarray:return forwarded()
+    source_alpha=np.asarray(actual_alpha)
+    if source_alpha.size<=1:
+        with np.errstate(over='ignore',under='ignore'):
+            alpha_arr=source_alpha.astype(arr.dtype)
+        unsafe=not np.array_equal(alpha_arr,actual_alpha)
+    else:
+        if source_alpha.dtype!=arr.dtype or source_alpha.dtype.hasobject or source_alpha.dtype.kind=='V':return forwarded()
+        flags=_core.alpha_array_flags(_pixel_order(source_alpha)[0])
+        if flags&6:return forwarded()
+        unsafe=bool(flags&1);alpha_arr=source_alpha
+    if unsafe:warnings.warn(f'alpha cannot be safely cast to image dtype {arr.dtype.name}',UserWarning,stacklevel=2)
+    try:alpha_arr=np.broadcast_to(alpha_arr,arr.shape)
+    except ValueError as error:raise ValueError('alpha.shape must match image.shape') from error
+    axis=_stack_axis(channel_axis,arr.ndim+1)
+    ordered,order=_pixel_order(arr)
+    ordered_alpha=alpha_arr.transpose(order) if order is not None else alpha_arr
+    result=_restore_pixels(_core.gray_expand(ordered,ordered_alpha,4,target,swap),order)
+    return np.moveaxis(result,-1,axis)
+
+
+def rgba2rgb(rgba,background=(1,1,1),*,channel_axis=-1):
+    def forwarded():return fallback('color','rgba2rgb',rgba,background,channel_axis=channel_axis)
+    if isinstance(rgba,np.ndarray) and type(rgba) is not np.ndarray:return forwarded()
+    arr=np.asanyarray(rgba)
+    if not isinstance(channel_axis,int):raise TypeError('channel_axis must be an integer')
+    if channel_axis < -arr.ndim or channel_axis>=arr.ndim:
+        axis_error=np.exceptions.AxisError if hasattr(np,'exceptions') else np.AxisError
+        raise axis_error('channel_axis exceeds array dimensions')
+    axis=channel_axis%arr.ndim
+    if arr.shape[axis]!=4:raise ValueError(f'the input array must have size 4 along `channel_axis`, got {arr.shape}')
+    if arr.dtype.type not in _COLOR_TYPES or not arr.dtype.isnative:return forwarded()
+    if arr.size and arr.dtype.kind=='f':
+        low,high=_core.intensity_bounds(arr.ravel(order='K'))
+        if not (np.isfinite(low) and np.isfinite(high)):return forwarded()
+        if max(abs(low),abs(high))>np.sqrt(np.finfo(arr.dtype).max)/2:return forwarded()
+    if isinstance(background,np.ndarray) and type(background) is not np.ndarray:return forwarded()
+    raw_background=np.asanyarray(background)
+    if raw_background.dtype.kind in 'OcV' or _core.alpha_array_flags(raw_background)&6:return forwarded()
+    float_dtype=np.float32 if arr.dtype==np.float32 else np.float64
+    converted_background=raw_background.ravel().astype(float_dtype)
+    if converted_background.size!=3:
+        raise ValueError(f'background must be an array-like containing 3 RGB values. Got {converted_background.size} items')
+    if np.any(converted_background<0) or np.any(converted_background>1):raise ValueError('background RGB values must be floats between 0 and 1.')
+    moved=np.moveaxis(arr,axis,-1)
+    ordered,order=_pixel_order(moved,trailing_channel=True)
+    result=_restore_pixels(_core.rgba_composite(ordered,converted_background),order)
+    return np.moveaxis(result,-1,axis)
+
+
+__all__ += ['rgba2rgb','gray2rgba']
