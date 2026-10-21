@@ -157,9 +157,18 @@ void gaussian_impl(const Input* image, Output* result, std::size_t h, std::size_
     });
 }
 template<class Input, class Output>
-void sobel_impl(const Input* image, Output* result, std::size_t h, std::size_t w) {
+void sobel_impl(const Input* image, Output* result, std::size_t h, std::size_t w,
+                EdgeFilter filter = EdgeFilter::sobel, int axis = -1) {
     const auto count = checked_size(image,h,w);
     check_output(result);
+    if (axis < -1 || axis > 1) throw std::invalid_argument("axis must be -1, 0, or 1");
+    double outer, center;
+    switch (filter) {
+        case EdgeFilter::sobel: outer = 0.25; center = 0.5; break;
+        case EdgeFilter::prewitt: outer = center = 1.0/3.0; break;
+        case EdgeFilter::scharr: outer = 3.0/16.0; center = 10.0/16.0; break;
+        default: throw std::invalid_argument("unsupported edge filter");
+    }
     const bool vectorized = has_avx2();
     partition(h,active_workers(count),[&](auto begin, auto end, auto) {
         for (auto y = begin; y < end; ++y) {
@@ -171,14 +180,14 @@ void sobel_impl(const Input* image, Output* result, std::size_t h, std::size_t w
                 const auto l = x ? x-1 : 0, r = x+1 < w ? x+1 : x;
                 const auto tl = Output(sample(top[l])), tr = Output(sample(top[r]));
                 const auto bl = Output(sample(bot[l])), br = Output(sample(bot[r]));
-                const Output dx = (tr-tl)*Output(0.25)+(Output(sample(mid[r]))-Output(sample(mid[l])))*Output(0.5)+(br-bl)*Output(0.25);
-                const Output dy = (bl-tl)*Output(0.25)+(Output(sample(bot[x]))-Output(sample(top[x])))*Output(0.5)+(br-tr)*Output(0.25);
-                output[x] = std::sqrt(dx*dx+dy*dy)/Output(std::sqrt(2.0));
+                const Output dx = (tr-tl)*Output(outer)+(Output(sample(mid[r]))-Output(sample(mid[l])))*Output(center)+(br-bl)*Output(outer);
+                const Output dy = (bl-tl)*Output(outer)+(Output(sample(bot[x]))-Output(sample(top[x])))*Output(center)+(br-tr)*Output(outer);
+                output[x] = axis == 0 ? dy : axis == 1 ? dx : std::sqrt(dx*dx+dy*dy)/Output(std::sqrt(2.0));
             };
             pixel(0);
             std::size_t tail = 1;
 #ifdef SKIMAGEXX_AVX2
-            if (vectorized) tail = simd::edges(top,mid,bot,output,w);
+            if (vectorized) tail = simd::gradient(top,mid,bot,output,w,outer,center,axis);
 #else
             (void)vectorized;
 #endif
@@ -254,6 +263,56 @@ void gaussian_into(const std::uint8_t* p, double* out, std::size_t h, std::size_
 }
 template<class T> void sobel_into(const T* p, T* out, std::size_t h, std::size_t w) { sobel_impl(p,out,h,w); }
 void sobel_into(const std::uint8_t* p, double* out, std::size_t h, std::size_t w) { sobel_impl(p,out,h,w); }
+template<class T> void gradient_into(const T* p, T* out, std::size_t h, std::size_t w, EdgeFilter f, int axis) { sobel_impl(p,out,h,w,f,axis); }
+void gradient_into(const std::uint8_t* p, double* out, std::size_t h, std::size_t w, EdgeFilter f, int axis) { sobel_impl(p,out,h,w,f,axis); }
+template<class T> void gray2rgb_into(const T* p, T* out, std::size_t h, std::size_t w) {
+    const auto n = checked_size(p,h,w,3);
+    check_output(out);
+    const bool vectorized = has_avx2();
+    partition(n,active_workers(n),[&](auto begin, auto end, auto) {
+#ifdef SKIMAGEXX_AVX2
+        if (vectorized) { simd::gray2rgb(p+begin,out+3*begin,end-begin); return; }
+#else
+        (void)vectorized;
+#endif
+        for (auto i = begin; i < end; ++i) out[3*i] = out[3*i+1] = out[3*i+2] = p[i];
+    });
+}
+template<class T> void invert_into(const T* p, T* out, std::size_t h, std::size_t w, bool signed_float) {
+    const auto n = checked_size(p,h,w);
+    check_output(out);
+    const bool vectorized = has_avx2();
+    partition(n,active_workers(n),[&](auto begin, auto end, auto) {
+#ifdef SKIMAGEXX_AVX2
+        if (vectorized) { simd::invert(p+begin,out+begin,end-begin,signed_float); return; }
+#else
+        (void)vectorized;
+#endif
+        for (auto i = begin; i < end; ++i) {
+            if constexpr (std::is_same_v<T,std::uint8_t>) out[i] = T(255-p[i]);
+            else out[i] = signed_float ? -p[i] : T(1)-p[i];
+        }
+    });
+}
+template<class T> double threshold_mean(const T* p, std::size_t h, std::size_t w) {
+    const auto n = checked_size(p,h,w);
+    const int threads = active_workers(n);
+    std::vector<double> partials(static_cast<std::size_t>(threads));
+    const bool vectorized = has_avx2();
+    partition(n,threads,[&](auto begin, auto end, auto id) {
+#ifdef SKIMAGEXX_AVX2
+        if (vectorized) { partials[id] = simd::sum(p+begin,end-begin); return; }
+#else
+        (void)vectorized;
+#endif
+        double sum = 0;
+        for (auto i = begin; i < end; ++i) sum += double(p[i]);
+        partials[id] = sum;
+    });
+    double sum = 0;
+    for (auto v : partials) sum += v;
+    return sum/double(n);
+}
 template<class T> std::vector<T> rgb2gray(const T* p, std::size_t h, std::size_t w) {
     std::vector<T> out(checked_size(p,h,w,3)); rgb2gray_into(p,out.data(),h,w); return out;
 }
@@ -266,7 +325,7 @@ template<class T> std::vector<T> gaussian(const T* p, std::size_t h, std::size_t
 template<class T> std::vector<T> sobel(const T* p, std::size_t h, std::size_t w) {
     std::vector<T> out(checked_size(p,h,w)); sobel_into(p,out.data(),h,w); return out;
 }
-std::uint8_t threshold_otsu(const std::uint8_t* image, std::size_t h, std::size_t w) {
+std::uint8_t threshold_otsu(const std::uint8_t* image, std::size_t h, std::size_t w, bool* constant_output) {
     const auto count = checked_size(image,h,w);
     // Random data exits on the first SIMD block. Constant images skip counting.
     bool constant = true;
@@ -278,6 +337,7 @@ std::uint8_t threshold_otsu(const std::uint8_t* image, std::size_t h, std::size_
         for (std::size_t i = 1; i < count; ++i)
             if (image[i] != image[0]) { constant = false; break; }
     }
+    if (constant_output) *constant_output = constant;
     if (constant) return image[0];
     const int threads = active_workers(count);
     Histogram counts{};
@@ -337,4 +397,14 @@ template void gaussian_into(const float*,float*,std::size_t,std::size_t,double,B
 template void gaussian_into(const double*,double*,std::size_t,std::size_t,double,Border,double);
 template void sobel_into(const float*,float*,std::size_t,std::size_t);
 template void sobel_into(const double*,double*,std::size_t,std::size_t);
+template void gradient_into(const float*,float*,std::size_t,std::size_t,EdgeFilter,int);
+template void gradient_into(const double*,double*,std::size_t,std::size_t,EdgeFilter,int);
+#define SKIMAGEXX_INSTANTIATE_POINTWISE(T) \
+    template void gray2rgb_into(const T*,T*,std::size_t,std::size_t); \
+    template void invert_into(const T*,T*,std::size_t,std::size_t,bool); \
+    template double threshold_mean(const T*,std::size_t,std::size_t);
+SKIMAGEXX_INSTANTIATE_POINTWISE(float)
+SKIMAGEXX_INSTANTIATE_POINTWISE(double)
+SKIMAGEXX_INSTANTIATE_POINTWISE(std::uint8_t)
+#undef SKIMAGEXX_INSTANTIATE_POINTWISE
 } // namespace skimagexx

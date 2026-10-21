@@ -5,6 +5,58 @@
 #include <type_traits>
 
 namespace skimagexx::simd {
+void gray2rgb(const float* p, float* out, std::size_t n) {
+    std::size_t i = 0;
+    for (; i+8 <= n; i += 8) {
+        const auto a = _mm256_loadu_ps(p+i);
+        _mm256_storeu_ps(out+3*i,_mm256_permutevar8x32_ps(a,_mm256_setr_epi32(0,0,0,1,1,1,2,2)));
+        _mm256_storeu_ps(out+3*i+8,_mm256_permutevar8x32_ps(a,_mm256_setr_epi32(2,3,3,3,4,4,4,5)));
+        _mm256_storeu_ps(out+3*i+16,_mm256_permutevar8x32_ps(a,_mm256_setr_epi32(5,5,6,6,6,7,7,7)));
+    }
+    for (; i < n; ++i) out[3*i] = out[3*i+1] = out[3*i+2] = p[i];
+}
+void gray2rgb(const double* p, double* out, std::size_t n) {
+    std::size_t i = 0;
+    for (; i+4 <= n; i += 4) {
+        const auto a = _mm256_loadu_pd(p+i);
+        _mm256_storeu_pd(out+3*i,_mm256_permute4x64_pd(a,_MM_SHUFFLE(1,0,0,0)));
+        _mm256_storeu_pd(out+3*i+4,_mm256_permute4x64_pd(a,_MM_SHUFFLE(2,2,1,1)));
+        _mm256_storeu_pd(out+3*i+8,_mm256_permute4x64_pd(a,_MM_SHUFFLE(3,3,3,2)));
+    }
+    for (; i < n; ++i) out[3*i] = out[3*i+1] = out[3*i+2] = p[i];
+}
+void gray2rgb(const std::uint8_t* p, std::uint8_t* out, std::size_t n) {
+    std::size_t i = 0;
+    for (; i+16 <= n; i += 16) {
+        const auto a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p+i));
+        _mm_storeu_si128(reinterpret_cast<__m128i*>(out+3*i),_mm_shuffle_epi8(a,_mm_setr_epi8(0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5)));
+        _mm_storeu_si128(reinterpret_cast<__m128i*>(out+3*i+16),_mm_shuffle_epi8(a,_mm_setr_epi8(5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10)));
+        _mm_storeu_si128(reinterpret_cast<__m128i*>(out+3*i+32),_mm_shuffle_epi8(a,_mm_setr_epi8(10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15)));
+    }
+    for (; i < n; ++i) out[3*i] = out[3*i+1] = out[3*i+2] = p[i];
+}
+void invert(const float* p, float* out, std::size_t n, bool signed_float) {
+    std::size_t i = 0;
+    for (; i+8 <= n; i += 8) {
+        const auto a = _mm256_loadu_ps(p+i);
+        _mm256_storeu_ps(out+i,signed_float ? _mm256_xor_ps(a,_mm256_set1_ps(-0.0f)) : _mm256_sub_ps(_mm256_set1_ps(1),a));
+    }
+    for (; i < n; ++i) out[i] = signed_float ? -p[i] : 1.0f-p[i];
+}
+void invert(const double* p, double* out, std::size_t n, bool signed_float) {
+    std::size_t i = 0;
+    for (; i+4 <= n; i += 4) {
+        const auto a = _mm256_loadu_pd(p+i);
+        _mm256_storeu_pd(out+i,signed_float ? _mm256_xor_pd(a,_mm256_set1_pd(-0.0)) : _mm256_sub_pd(_mm256_set1_pd(1),a));
+    }
+    for (; i < n; ++i) out[i] = signed_float ? -p[i] : 1.0-p[i];
+}
+void invert(const std::uint8_t* p, std::uint8_t* out, std::size_t n, bool) {
+    std::size_t i = 0;
+    for (; i+32 <= n; i += 32) _mm256_storeu_si256(reinterpret_cast<__m256i*>(out+i),
+        _mm256_xor_si256(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p+i)),_mm256_set1_epi8(-1)));
+    for (; i < n; ++i) out[i] = std::uint8_t(255-p[i]);
+}
 bool uniform(const std::uint8_t* p, std::size_t n) {
     const auto value = _mm256_set1_epi8(static_cast<char>(p[0]));
     std::size_t i = 0;
@@ -116,9 +168,9 @@ void convolve(const float* const* p, float* out, std::size_t n, const double* k,
 void convolve(const std::uint8_t* const* p, double* out, std::size_t n, const double* k, std::size_t taps, double scale) { convolve_impl(p,out,n,k,taps,scale); }
 
 // Interior pixels only. Caller handles reflected borders and vector tails.
-std::size_t edges(const float* t, const float* m, const float* b, float* out, std::size_t w) {
+std::size_t gradient(const float* t, const float* m, const float* b, float* out, std::size_t w, double outer, double center, int axis) {
     std::size_t x = 1;
-    const auto q = _mm256_set1_ps(0.25f), half = _mm256_set1_ps(0.5f);
+    const auto q = _mm256_set1_ps(float(outer)), half = _mm256_set1_ps(float(center));
     for (; x+8 < w; x += 8) {
         const auto tl = _mm256_loadu_ps(t+x-1), tr = _mm256_loadu_ps(t+x+1);
         const auto bl = _mm256_loadu_ps(b+x-1), br = _mm256_loadu_ps(b+x+1);
@@ -128,16 +180,18 @@ std::size_t edges(const float* t, const float* m, const float* b, float* out, st
         const auto dy = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(_mm256_sub_ps(bl,tl),q),
             _mm256_mul_ps(_mm256_sub_ps(_mm256_loadu_ps(b+x),_mm256_loadu_ps(t+x)),half)),
             _mm256_mul_ps(_mm256_sub_ps(br,tr),q));
-        _mm256_storeu_ps(out+x, _mm256_div_ps(_mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(dx,dx),_mm256_mul_ps(dy,dy))),_mm256_set1_ps(float(std::sqrt(2.0)))));
+        if (axis == 0) _mm256_storeu_ps(out+x,dy);
+        else if (axis == 1) _mm256_storeu_ps(out+x,dx);
+        else _mm256_storeu_ps(out+x, _mm256_div_ps(_mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(dx,dx),_mm256_mul_ps(dy,dy))),_mm256_set1_ps(float(std::sqrt(2.0)))));
     }
     return x;
 }
 namespace {
 __m256d edge_load(const double* p) { return load4(p); }
 __m256d edge_load(const std::uint8_t* p) { return load4(p); }
-template<class T> std::size_t edges_double(const T* t, const T* m, const T* b, double* out, std::size_t w) {
+template<class T> std::size_t edges_double(const T* t, const T* m, const T* b, double* out, std::size_t w, double outer, double center, int axis) {
     std::size_t x = 1;
-    const auto q = _mm256_set1_pd(0.25), half = _mm256_set1_pd(0.5);
+    const auto q = _mm256_set1_pd(outer), half = _mm256_set1_pd(center);
     for (; x+4 < w; x += 4) {
         const auto tl = edge_load(t+x-1), tr = edge_load(t+x+1);
         const auto bl = edge_load(b+x-1), br = edge_load(b+x+1);
@@ -148,11 +202,28 @@ template<class T> std::size_t edges_double(const T* t, const T* m, const T* b, d
             _mm256_mul_pd(_mm256_sub_pd(edge_load(b+x),edge_load(t+x)),half)),
             _mm256_mul_pd(_mm256_sub_pd(br,tr),q));
         constexpr double scale = std::is_same_v<T,std::uint8_t> ? 255.0 : 1.0;
-        _mm256_storeu_pd(out+x, _mm256_div_pd(_mm256_sqrt_pd(_mm256_add_pd(_mm256_mul_pd(dx,dx),_mm256_mul_pd(dy,dy))),_mm256_set1_pd(std::sqrt(2.0)*scale)));
+        if (axis == 0) _mm256_storeu_pd(out+x,_mm256_div_pd(dy,_mm256_set1_pd(scale)));
+        else if (axis == 1) _mm256_storeu_pd(out+x,_mm256_div_pd(dx,_mm256_set1_pd(scale)));
+        else _mm256_storeu_pd(out+x, _mm256_div_pd(_mm256_sqrt_pd(_mm256_add_pd(_mm256_mul_pd(dx,dx),_mm256_mul_pd(dy,dy))),_mm256_set1_pd(std::sqrt(2.0)*scale)));
     }
     return x;
 }
 }
-std::size_t edges(const double* t, const double* m, const double* b, double* out, std::size_t w) { return edges_double(t,m,b,out,w); }
-std::size_t edges(const std::uint8_t* t, const std::uint8_t* m, const std::uint8_t* b, double* out, std::size_t w) { return edges_double(t,m,b,out,w); }
+std::size_t gradient(const double* t, const double* m, const double* b, double* out, std::size_t w, double outer, double center, int axis) { return edges_double(t,m,b,out,w,outer,center,axis); }
+std::size_t gradient(const std::uint8_t* t, const std::uint8_t* m, const std::uint8_t* b, double* out, std::size_t w, double outer, double center, int axis) { return edges_double(t,m,b,out,w,outer,center,axis); }
+namespace {
+template<class T> double sum_impl(const T* p, std::size_t n) {
+    auto a = _mm256_setzero_pd(), b = _mm256_setzero_pd();
+    std::size_t i = 0;
+    for (; i+8 <= n; i += 8) { a = _mm256_add_pd(a,load4(p+i)); b = _mm256_add_pd(b,load4(p+i+4)); }
+    double lanes[4];
+    _mm256_storeu_pd(lanes,_mm256_add_pd(a,b));
+    double total = (lanes[0]+lanes[1])+(lanes[2]+lanes[3]);
+    for (; i < n; ++i) total += double(p[i]);
+    return total;
+}
+}
+double sum(const float* p, std::size_t n) { return sum_impl(p,n); }
+double sum(const double* p, std::size_t n) { return sum_impl(p,n); }
+double sum(const std::uint8_t* p, std::size_t n) { return sum_impl(p,n); }
 }

@@ -12,7 +12,9 @@ jobs:
         with:
           python-version: '3.13'
       - run: python -m pip install ".[test]" cmake
+      - run: python tools/inventory.py
       - run: python -m pytest -q
+      - run: python benchmarks/coverage.py --sizes 64 --threads 1 --repeat 1 --output build/ci-performance.json
       - run: python -m pytest -q
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'

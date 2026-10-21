@@ -5,6 +5,7 @@
 
 namespace skimagexx {
 enum class Border { nearest, reflect };
+enum class EdgeFilter { sobel, prewitt, scharr };
 // Process-wide worker limit, shared by all algorithms and calling threads.
 // Default: 1 (serial). Set >1 to opt into parallel execution, or 1 to disable it.
 // Each call snapshots the limit. Small images still run serially. SIMD is independent.
@@ -26,6 +27,12 @@ void gaussian_into(const std::uint8_t*, double*, std::size_t height, std::size_t
 template<class T>
 void sobel_into(const T*, T*, std::size_t height, std::size_t width);
 void sobel_into(const std::uint8_t*, double*, std::size_t height, std::size_t width);
+// axis=-1: normalized magnitude; 0: horizontal edges; 1: vertical edges.
+template<class T> void gradient_into(const T*, T*, std::size_t, std::size_t, EdgeFilter, int axis = -1);
+void gradient_into(const std::uint8_t*, double*, std::size_t, std::size_t, EdgeFilter, int axis = -1);
+template<class T> void gray2rgb_into(const T*, T*, std::size_t, std::size_t);
+template<class T> void invert_into(const T*, T*, std::size_t, std::size_t, bool signed_float = false);
+template<class T> double threshold_mean(const T*, std::size_t, std::size_t);
 
 // Contiguous row-major buffers. Every function allocates and owns its result.
 // Pointers must reference at least height * width (* 3 for RGB) elements.
@@ -45,7 +52,7 @@ std::vector<T> sobel(const T* image, std::size_t height, std::size_t width);
 
 // Integer histogram with all 256 bins. First maximum wins ties.
 std::uint8_t threshold_otsu(const std::uint8_t* image, std::size_t height,
-                          std::size_t width);
+                          std::size_t width, bool* constant = nullptr);
 
 // Only float and double instantiations of the three templates are provided.
 extern template std::vector<float> rgb2gray(const float*, std::size_t, std::size_t);

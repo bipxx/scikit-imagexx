@@ -5,7 +5,7 @@ import sys
 import numpy as np
 import pytest
 from skimage import color, filters
-import skimagexx as xx
+from skimagexx import _core as xx
 
 
 @pytest.fixture(autouse=True, params=[1, 4])

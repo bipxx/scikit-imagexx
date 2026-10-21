@@ -33,6 +33,13 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
+The function-coverage milestone adds strict native dispatch tests for 15 public
+functions and availability/signature checks for 446 exported API names. The
+combined suite currently has 1307 checks; the inventory checks do not invoke
+the unported algorithms and are not numerical parity evidence. See
+`function-coverage.json` for the corresponding 172-case performance run against
+original scikit-image, with fallback disabled and one/four C++ workers.
+
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the
 JSON; small differences should not be treated as stable performance guarantees.

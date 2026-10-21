@@ -2,8 +2,9 @@
 
 An incremental C++17 rewrite of selected scikit-image algorithms, with NumPy
 bindings, numerical parity checks, explicit AVX2 SIMD, OpenMP parallelism, and
-reproducible benchmarks. This is the first core-processing milestone, not a
-complete or drop-in scikit-image replacement.
+reproducible benchmarks. The native port is in progress. Python compatibility
+namespaces let applications swap backends while unsupported calls use explicitly
+reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
 On an i7-12700K with **one worker**, the optimized 2048² uint8 paths measured
 5.30× (RGB), 5.46× (Gaussian σ=1), 8.79× (Sobel), and 14.96× (Otsu) faster
@@ -13,25 +14,66 @@ floating-point inputs, smaller sizes, raw samples, and before/after regressions.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. Inputs must be nonempty.
+The reference is scikit-image **0.26.0**. Native kernels require nonempty inputs.
+There are currently **15 partially native public functions**. The
+[API inventory](coverage/README.md) tracks 446 exported public callable names across 17
+modules; 431 remain pending native implementation and dedicated parity tests.
+This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
-| `rgb2gray` | H×W×3 RGB; uint8, float32, float64; channel last | Same luminance weights; uint8 normalized to float64 |
+| `rgb2gray` | 3D RGB; uint8, float32, float64; arbitrary channel axis | Same luminance weights; uint8 normalized to float64 |
+| `gray2rgb` | 2D grayscale; uint8, float32, float64; arbitrary output channel axis | Exact replication with original dtype |
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
-| `sobel` | 2D grayscale; same dtypes; reflected borders; gradient magnitude | Same 2D normalization; uint8 normalized to float64 |
+| `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
+| `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
+| `threshold_mean` | 2D grayscale; same dtypes | Double accumulation; output scalar dtype follows upstream; numerical tolerance applies |
+| `invert` | 2D grayscale; same dtypes; `signed_float` | Dtype-preserving inversion, including signed floating zero |
 
 Float32 outputs are checked with `rtol=atol=2e-6`, float64 with
 `rtol=atol=2e-13`. Float inputs retain dtype and range. Gaussian's intermediate
 image retains input floating precision. Noncontiguous arrays are copied; input
-arrays are never modified. Unsupported dtypes/options raise errors. Negative
-sigma is deliberately rejected. Gaussian radius is capped at 100000.
+arrays are never modified. Public wrappers preserve upstream signatures and
+forward unsupported dtypes/options with a `FallbackWarning`; disable fallback
+to require native execution. Low-level `_core` functions reject unsupported
+inputs. Native Gaussian radius is capped at 100000.
 
-N-dimensional images, signed/16-bit integers, masks, Sobel axis selection,
-arbitrary channel axes, anisotropic sigma, other boundary modes, floating-point
-Otsu histograms, and output buffers are not yet supported. The C++ API takes
+N-dimensional images, signed/16-bit integers, masks, negative/sequence edge axes,
+anisotropic sigma, other boundary modes, floating-point Otsu histograms, and
+Gaussian output buffers currently require upstream fallback. The C++ API takes
 contiguous buffers; caller-supplied pointer lengths must match dimensions.
+
+## Swap Python backends
+
+```python
+# Replace `import skimage as ski` or `from skimage import filters, color`:
+import skimagexx as ski
+from skimagexx import filters, color
+
+ski.set_num_threads(1)           # serial by default; SIMD remains active
+ski.set_fallback_enabled(False)  # require C++; unsupported calls raise
+gray = color.rgb2gray(rgb)
+edges = filters.scharr(gray)
+mask = edges > filters.threshold_mean(edges)
+```
+
+For compatibility during migration, install `pip install ".[compat]"` and leave
+fallback enabled (the default). Unsupported calls warn and execute original
+scikit-image. `filters`, `color`, and `util` expose native wrappers. Other top-level
+processing namespaces such as `morphology`, `measure`, and `transform` currently
+expose upstream-only objects, reported with warnings. Classes and nested modules
+are original upstream objects, not accelerated implementations. This does not
+patch `sys.modules`, change already imported scikit-image symbols, or guarantee
+every nested import path is interchangeable. Use the module alias/import change
+shown above. Unknown options retain upstream behavior through fallback.
+
+All 446 inventoried names have availability/signature checks. These checks do
+not invoke the algorithms and do not establish numerical parity for pending ports.
+The 15 native wrapper signatures have per-function parity tests. Tests also run
+the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
+and assert that strict mode never silently falls back. Adding a native function
+requires updating the registry, per-function tests, and benchmark coverage.
 
 ## Build and use
 
@@ -89,6 +131,9 @@ and must not overlap; output needs height × width elements. See
 | Gaussian | Register-resident AVX2 double accumulation; fused uint8 conversion | Independent rows in each pass |
 | Sobel | AVX2 fused derivatives and square root | Independent rows |
 | Otsu | AVX2 constant-image detection and variance scoring | Per-thread eight-lane histograms, then reduction |
+| Prewitt/Scharr and directional edges | AVX2 fused gradient arithmetic | Independent rows |
+| Gray to RGB / invert | AVX2 replication / arithmetic | Independent pixel ranges |
+| Mean threshold | AVX2 double-precision reduction | Per-worker partial sums |
 
 Histogram counting uses scalar independent lanes, since AVX2 has no efficient
 conflict-safe histogram scatter. Prefix sums, borders, tails, and small kernels
@@ -120,6 +165,18 @@ pool, setting one C++ thread per caller avoids oversubscription.
 OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 
 ## Benchmarks and validation
+
+[Current per-function performance](benchmarks/function-coverage.md) compares
+**every native public function** with original scikit-image. Its raw JSON records
+input dtype/size, worker count, error, samples, and source hash. Fallback is
+disabled during timing and parity verification. These results include Python
+dispatch and allocation costs. Ratios below one are retained as regressions;
+CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
+
+```sh
+python tools/inventory.py
+python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
+```
 
 [Current single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the
@@ -181,7 +238,7 @@ Remove-Item Env:SKIMAGEXX_DISABLE_SIMD
 
 ## Next milestones
 
-1. Expand dtype, border, channel, and output-buffer parity for these functions.
+1. Expand dtype, border, channel, and output-buffer parity for native functions.
 2. Add morphology, connected components, and region measurements with the same
    parity and benchmarking requirements.
 3. Add geometric transforms, feature detection, and restoration incrementally.

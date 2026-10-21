@@ -43,6 +43,18 @@ int main() {
         }
         const std::uint8_t binary[] = {10, 10, 200, 200};
         require(threshold_otsu(binary,2,2) == 10);
+        require(threshold_mean(binary,2,2) == 105);
+        std::vector<std::uint8_t> inverted(4), tripled(12);
+        invert_into(binary,inverted.data(),2,2);
+        gray2rgb_into(binary,tripled.data(),2,2);
+        for (std::size_t i = 0; i < 4; ++i) {
+            require(inverted[i] == 255-binary[i]);
+            for (std::size_t c = 0; c < 3; ++c) require(tripled[3*i+c] == binary[i]);
+        }
+        for (auto filter : {EdgeFilter::sobel,EdgeFilter::prewitt,EdgeFilter::scharr}) {
+            gradient_into(a.data(),direct.data()+1,513,515,filter,0);
+            for (std::size_t i = 1; i <= a.size(); ++i) require(direct[i] == 0);
+        }
     }
     set_num_threads(1);
     require(get_num_threads() == 1);
