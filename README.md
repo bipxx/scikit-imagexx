@@ -15,9 +15,9 @@ floating-point inputs, smaller sizes, raw samples, and before/after regressions.
 ## Supported parity surface
 
 The reference is scikit-image **0.26.0**. Native kernels require nonempty inputs.
-There are currently **15 partially native public functions**. The
+There are currently **22 partially native public functions**. The
 [API inventory](coverage/README.md) tracks 446 exported public callable names across 17
-modules; 431 remain pending native implementation and dedicated parity tests.
+modules; 424 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -30,6 +30,10 @@ This is not full scikit-image coverage.
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
 | `threshold_mean` | 2D grayscale; same dtypes | Double accumulation; output scalar dtype follows upstream; numerical tolerance applies |
 | `invert` | 2D grayscale; same dtypes; `signed_float` | Dtype-preserving inversion, including signed floating zero |
+| `adjust_gamma`, `adjust_log`, `adjust_sigmoid` | Nonempty arrays of any dimension; uint8, float32, float64; finite nonnegative gain; log gain ≤1 for uint8 | Same dtype; uint8 LUTs; floating expression rounding tested against upstream |
+| `rescale_intensity` | Nonempty arrays of any dimension; same dtypes; `'image'`, `'dtype'`, or finite range pairs | Native min/max and SIMD scaling; output dtype follows input unless a pair requests floating output |
+| `histogram`, `cumulative_distribution` | Nonempty uint8 arrays of any dimension; image/dtype histogram range; normalization; no channel axis | Exact integer counts/bin centers; float64 probabilities/CDF |
+| `equalize_hist` | Nonempty uint8 arrays of any dimension; mask=None | Float64 output using native histogram and CDF lookup |
 
 Float32 outputs are checked with `rtol=atol=2e-6`, float64 with
 `rtol=atol=2e-13`. Float inputs retain dtype and range. Gaussian's intermediate
@@ -39,9 +43,14 @@ forward unsupported dtypes/options with a `FallbackWarning`; disable fallback
 to require native execution. Low-level `_core` functions reject unsupported
 inputs. Native Gaussian radius is capped at 100000.
 
-N-dimensional images, signed/16-bit integers, masks, negative/sequence edge axes,
+N-dimensional spatial filtering, signed/16-bit integers, masks, negative/sequence edge axes,
 anisotropic sigma, other boundary modes, floating-point Otsu histograms, and
-Gaussian output buffers currently require upstream fallback. The C++ API takes
+Gaussian output buffers currently require upstream fallback. Exposure histogram
+functions on floating images, channel-wise histograms, masked equalization,
+nonfinite transform parameters, negative gain, named rescale output dtypes,
+and empty arrays also currently use fallback. Floating exposure arithmetic is
+numerically checked; full NumPy floating-point warning/`errstate` semantics
+remain pending. The C++ API takes
 contiguous buffers; caller-supplied pointer lengths must match dimensions.
 
 ## Swap Python backends
@@ -60,7 +69,7 @@ mask = edges > filters.threshold_mean(edges)
 
 For compatibility during migration, install `pip install ".[compat]"` and leave
 fallback enabled (the default). Unsupported calls warn and execute original
-scikit-image. `filters`, `color`, and `util` expose native wrappers. Other top-level
+scikit-image. `filters`, `color`, `exposure`, and `util` expose native wrappers. Other top-level
 processing namespaces such as `morphology`, `measure`, and `transform` currently
 expose upstream-only objects, reported with warnings. Classes and nested modules
 are original upstream objects, not accelerated implementations. This does not
@@ -70,7 +79,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 446 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-The 15 native wrapper signatures have per-function parity tests. Tests also run
+The 22 native wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -134,6 +143,9 @@ and must not overlap; output needs height × width elements. See
 | Prewitt/Scharr and directional edges | AVX2 fused gradient arithmetic | Independent rows |
 | Gray to RGB / invert | AVX2 replication / arithmetic | Independent pixel ranges |
 | Mean threshold | AVX2 double-precision reduction | Per-worker partial sums |
+| Exposure correction | uint8 SIMD LUT mapping; AVX2 float/double log/exp/power and simple gamma paths | Independent pixel ranges |
+| Intensity rescaling | AVX2 min/max and scaling; uint8 LUT | Per-worker ranges, then pixel ranges |
+| Histograms / equalization | Eight-lane counting; AVX2 CDF lookup | Per-worker histograms, then independent pixel ranges |
 
 Histogram counting uses scalar independent lanes, since AVX2 has no efficient
 conflict-safe histogram scatter. Prefix sums, borders, tails, and small kernels
@@ -145,6 +157,12 @@ off unsupported machines. Portable scalar code is always available. There are
 no global `-march=native`, AVX2, or fast-math requirements. Disable the compiled
 SIMD backend with `-DSKIMAGEXX_AVX2=OFF`, or disable dispatch for a process by
 setting `SKIMAGEXX_DISABLE_SIMD=1` **before its first kernel call**.
+
+Floating exposure transforms use IEEE-754 range reduction and reduced-interval
+polynomials in the AVX2 translation unit. Standard-library math handles special
+values, subnormals, and extreme exponent ranges. These paths retain the same
+float32/float64 tolerances as the parity suite; they are not bitwise libm
+replacements. Without AVX2, correction uses scalar standard-library math.
 
 Parallel execution is **optional and off by default**. All four algorithms share
 one process-wide worker limit, initially **1**. Set it once at application startup:
@@ -176,7 +194,13 @@ CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 ```sh
 python tools/inventory.py
 python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
+python benchmarks/exposure.py --size 1024 --threads 1
 ```
+
+[Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
+cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
+ranges. This prevents the default gamma=1 case from standing in for all gamma
+performance. The full function benchmark now covers 22 functions in 232 cases.
 
 [Current single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the

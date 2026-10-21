@@ -24,7 +24,10 @@ For every native entry:
 5. Update the registry, inventory, documented native input contract, and CI.
 
 Current native coverage: RGB/gray conversion; Gaussian; Sobel, Prewitt, and
-Scharr with directional variants; uint8 Otsu; mean thresholding; inversion.
+Scharr with directional variants; uint8 Otsu; mean thresholding; inversion;
+gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
+histogram equalization. There are 22 partial native entries and 424 pending
+entries in the current 446-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
@@ -32,7 +35,7 @@ Next work:
 
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.
-- Port utility dtype conversions and exposure operations, followed by native
+- Port utility dtype conversions and remaining exposure operations, followed by native
   binary/grayscale morphology and connected-component labeling.
 - Port geometric transforms, measurements, features, restoration, registration,
   segmentation, and graph operations with representative per-function cases.

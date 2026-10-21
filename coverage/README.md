@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-446 public callable names inventoried in 17 modules; 15 have partially native implementations with per-function tests and benchmarks.
+446 public callable names inventoried in 17 modules; 22 have partially native implementations with per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback.
 
@@ -108,16 +108,16 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `draw.rectangle` | upstream-only | pending | pending |
 | `draw.rectangle_perimeter` | upstream-only | pending | pending |
 | `draw.set_color` | upstream-only | pending | pending |
-| `exposure.adjust_gamma` | upstream-only | pending | pending |
-| `exposure.adjust_log` | upstream-only | pending | pending |
-| `exposure.adjust_sigmoid` | upstream-only | pending | pending |
-| `exposure.cumulative_distribution` | upstream-only | pending | pending |
+| `exposure.adjust_gamma` | native-partial | yes (partial input contract) | yes |
+| `exposure.adjust_log` | native-partial | yes (partial input contract) | yes |
+| `exposure.adjust_sigmoid` | native-partial | yes (partial input contract) | yes |
+| `exposure.cumulative_distribution` | native-partial | yes (partial input contract) | yes |
 | `exposure.equalize_adapthist` | upstream-only | pending | pending |
-| `exposure.equalize_hist` | upstream-only | pending | pending |
-| `exposure.histogram` | upstream-only | pending | pending |
+| `exposure.equalize_hist` | native-partial | yes (partial input contract) | yes |
+| `exposure.histogram` | native-partial | yes (partial input contract) | yes |
 | `exposure.is_low_contrast` | upstream-only | pending | pending |
 | `exposure.match_histograms` | upstream-only | pending | pending |
-| `exposure.rescale_intensity` | upstream-only | pending | pending |
+| `exposure.rescale_intensity` | native-partial | yes (partial input contract) | yes |
 | `feature.BRIEF` | upstream-only | pending | pending |
 | `feature.CENSURE` | upstream-only | pending | pending |
 | `feature.Cascade` | upstream-only | pending | pending |

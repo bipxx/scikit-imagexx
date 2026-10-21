@@ -2,10 +2,13 @@
 #include <cstddef>
 #include <cstdint>
 #include <vector>
+#include <utility>
+#include <array>
 
 namespace skimagexx {
 enum class Border { nearest, reflect };
 enum class EdgeFilter { sobel, prewitt, scharr };
+enum class ExposureTransform { gamma, log, sigmoid };
 // Process-wide worker limit, shared by all algorithms and calling threads.
 // Default: 1 (serial). Set >1 to opt into parallel execution, or 1 to disable it.
 // Each call snapshots the limit. Small images still run serially. SIMD is independent.
@@ -33,6 +36,17 @@ void gradient_into(const std::uint8_t*, double*, std::size_t, std::size_t, EdgeF
 template<class T> void gray2rgb_into(const T*, T*, std::size_t, std::size_t);
 template<class T> void invert_into(const T*, T*, std::size_t, std::size_t, bool signed_float = false);
 template<class T> double threshold_mean(const T*, std::size_t, std::size_t);
+// Pointwise exposure correction. Float inputs must be nonnegative. Nonfinite
+// transform parameters are rejected. Output dtype equals input dtype.
+// gamma: parameter=exponent, gain=multiplier; log: inverse controls exp2;
+// sigmoid: parameter=cutoff, gain=slope, inverse complements the curve.
+template<class T> void exposure_into(const T*, T*, std::size_t height, std::size_t width,
+                                     ExposureTransform, double parameter, double gain, bool inverse = false);
+template<class T> std::pair<double,double> intensity_bounds(const T*, std::size_t height, std::size_t width);
+template<class Input, class Output> void rescale_into(const Input*, Output*, std::size_t height, std::size_t width,
+                                                      double input_min, double input_max, double output_min, double output_max);
+std::array<std::uint64_t,256> histogram_u8(const std::uint8_t*, std::size_t height, std::size_t width);
+void equalize_hist_into(const std::uint8_t*, double*, std::size_t height, std::size_t width);
 
 // Contiguous row-major buffers. Every function allocates and owns its result.
 // Pointers must reference at least height * width (* 3 for RGB) elements.

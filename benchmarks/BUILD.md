@@ -33,12 +33,12 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The function-coverage milestone adds strict native dispatch tests for 15 public
-functions and availability/signature checks for 446 exported API names. The
-combined suite currently has 1307 checks; the inventory checks do not invoke
-the unported algorithms and are not numerical parity evidence. See
-`function-coverage.json` for the corresponding 172-case performance run against
-original scikit-image, with fallback disabled and one/four C++ workers.
+The current function benchmark covers 22 native public functions and 232
+per-function performance cases. The suite now has 2037 checks in both SIMD
+modes; 446 inventory availability/signature checks still do not establish
+numerical parity for unported functions. `exposure-parameters.json` records
+24 additional one-thread measurements with non-default options. All checked-in
+performance results retain slower cases as well as faster ones.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the

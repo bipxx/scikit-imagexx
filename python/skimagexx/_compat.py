@@ -53,3 +53,8 @@ def native_image(image, rgb=False):
     return (isinstance(image, np.ndarray) and image.dtype in (np.uint8, np.float32, np.float64)
             and image.ndim == (3 if rgb else 2) and all(image.shape)
             and (not rgb or image.shape[-1] == 3))
+
+
+def native_array(image):
+    import numpy as np
+    return isinstance(image, np.ndarray) and image.dtype in (np.uint8, np.float32, np.float64) and image.size > 0

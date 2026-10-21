@@ -10,12 +10,15 @@ import warnings
 import pytest
 import skimage
 import skimagexx as xx
+from skimagexx.coverage import native_functions, native_dtypes
 
 INVENTORY = json.loads((Path(__file__).resolve().parents[1]/'coverage/api.json').read_text(encoding='utf-8'))
 
 
 def test_inventory_reference_version():
     assert INVENTORY['reference_version'] == skimage.__version__ == '0.26.0'
+    declared = {entry['api'] for entry in INVENTORY['entries'] if entry['implementation'] == 'native-partial'}
+    assert declared == set(native_functions())
 
 
 @pytest.mark.parametrize('entry', INVENTORY['entries'], ids=lambda entry: entry['api'])
@@ -33,5 +36,8 @@ def test_api_availability_and_signature(entry):
         if entry['implementation'] == 'upstream-only':
             assert entry['parity_test'] is None
             assert entry['benchmark'] is None
+            assert entry['native_default_case_dtypes'] == []
+        else:
+            assert entry['native_default_case_dtypes'] == list(native_dtypes(entry['api']))
     finally:
         xx.set_fallback_enabled(previous)

@@ -5,9 +5,11 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions
+from skimagexx.coverage import native_functions, native_dtypes
+from skimage import exposure as reference_exposure
 
-MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util)]
+MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
+           (xx.exposure, reference_exposure)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__]
 
 
@@ -50,10 +52,10 @@ def test_every_native_function(native, original, name, dtype, shape):
     a = rng.integers(0, 256, (*shape, 3) if name == 'rgb2gray' else shape, dtype=np.uint8)
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
-    if name == 'threshold_otsu' and dtype != np.uint8:
-        # Floating Otsu is explicitly reference-backed until its native port.
+    api = native.__name__.split('.', 1)[1]+'.'+name
+    if np.dtype(dtype).name not in native_dtypes(api):
         with pytest.raises(NotImplementedError):
-            native.threshold_otsu(a)
+            getattr(native, name)(a)
         return
     actual = getattr(native, name)(a)
     expected = getattr(original, name)(a)

@@ -10,7 +10,7 @@ import platform
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions
+from skimagexx.coverage import native_functions, native_dtypes
 
 
 def main():
@@ -39,7 +39,7 @@ def main():
                 gray = (gray/255).astype(dtype); rgb = (rgb/255).astype(dtype)
             for api in native_functions():
                 module, name = api.rsplit('.', 1)
-                if name == 'threshold_otsu' and dtype != np.uint8:
+                if np.dtype(dtype).name not in native_dtypes(api):
                     continue
                 native = getattr(importlib.import_module('skimagexx.'+module), name)
                 reference = getattr(importlib.import_module('skimage.'+module), name)

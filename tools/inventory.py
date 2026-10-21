@@ -5,7 +5,7 @@ import json
 import re
 from pathlib import Path
 import skimage
-from skimagexx.coverage import native_functions
+from skimagexx.coverage import native_functions, native_dtypes
 
 MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
@@ -29,8 +29,13 @@ def inventory():
             entries.append({'api': path, 'kind': 'class' if inspect.isclass(value) else 'callable',
                             'signature': signature,
                             'implementation': 'native-partial' if path in native else 'upstream-only',
+                            'native_default_case_dtypes': list(native_dtypes(path)) if path in native else [],
                             'parity_test': 'tests/test_api.py::test_every_native_function' if path in native else None,
                             'benchmark': 'benchmarks/coverage.py' if path in native else None})
+    inventoried = {entry['api'] for entry in entries}
+    missing = native-inventoried
+    if missing:
+        raise ValueError(f'Native registry entries absent from upstream inventory: {sorted(missing)}')
     return {'reference_version': skimage.__version__, 'modules': list(MODULES), 'entries': entries}
 
 

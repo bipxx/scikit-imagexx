@@ -11,7 +11,7 @@ void shape(const py::array& a, bool rgb) {
         throw py::value_error(rgb ? "expected an HxWx3 RGB image" : "expected a 2D grayscale image");
     if (a.shape(0) == 0 || a.shape(1) == 0) throw py::value_error("image must be nonempty");
 }
-template<class T, bool preserve = false, class F> py::array execute(const py::array& image, F function) {
+template<class T, bool preserve = false, bool flat = false, class F> py::array execute(const py::array& image, F function) {
     // NumPy owns the uninitialized output, avoiding vector zero-fill and capsules.
     // Ensure aligned input as well as contiguous input before typed C++ access.
     auto input = py::array_t<T,py::array::c_style>::ensure(image);
@@ -20,8 +20,11 @@ template<class T, bool preserve = false, class F> py::array execute(const py::ar
         input = py::array_t<T,py::array::c_style>::ensure(input.attr("copy")());
     }
     using Output = std::conditional_t<std::is_same_v<T,std::uint8_t> && !preserve,double,T>;
-    const auto h = static_cast<std::size_t>(input.shape(0)), w = static_cast<std::size_t>(input.shape(1));
-    py::array_t<Output> output({input.shape(0),input.shape(1)});
+    const auto h = static_cast<std::size_t>(flat ? input.size() : input.shape(0));
+    const auto w = flat ? std::size_t{1} : static_cast<std::size_t>(input.shape(1));
+    const auto dimensions = flat ? std::vector<py::ssize_t>(input.shape(),input.shape()+input.ndim()) :
+                                  std::vector<py::ssize_t>{input.shape(0),input.shape(1)};
+    py::array_t<Output> output(dimensions);
     const auto* source = input.data();
     auto* destination = output.mutable_data();
     { py::gil_scoped_release release; function(source,destination,h,w); }
@@ -36,6 +39,82 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("histogram_u8", [](py::array image, bool full_range, bool normalize, bool cumulative) -> py::tuple {
+        if (!image.size()) throw py::value_error("image must be nonempty");
+        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("histogram requires uint8");
+        auto input = py::array_t<std::uint8_t,py::array::c_style>::ensure(image);
+        const auto* p = input.data(); const auto n = static_cast<std::size_t>(input.size());
+        std::array<std::uint64_t,256> counts;
+        { py::gil_scoped_release release; counts = skimagexx::histogram_u8(p,n,1); }
+        std::size_t first = 0, last = 255;
+        if (!full_range) {
+            while (counts[first] == 0) ++first;
+            while (counts[last] == 0) --last;
+        }
+        const auto bins = static_cast<py::ssize_t>(last-first+1);
+        py::array_t<std::int64_t> centers(bins);
+        for (std::size_t i = first; i <= last; ++i) centers.mutable_data()[i-first] = static_cast<std::int64_t>(i);
+        if (normalize || cumulative) {
+            py::array_t<double> values(bins);
+            std::uint64_t total = 0;
+            for (std::size_t i = first; i <= last; ++i) {
+                total += counts[i];
+                values.mutable_data()[i-first] = double(cumulative ? total : counts[i])/double(n);
+            }
+            return py::make_tuple(values,centers);
+        }
+        py::array_t<std::int64_t> values(bins);
+        for (std::size_t i = first; i <= last; ++i) values.mutable_data()[i-first] = static_cast<std::int64_t>(counts[i]);
+        return py::make_tuple(values,centers);
+    },py::arg("image"),py::arg("full_range")=false,py::arg("normalize")=false,py::arg("cumulative")=false);
+    m.def("equalize_hist", [](py::array image) {
+        if (!image.size()) throw py::value_error("image must be nonempty");
+        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("equalize_hist requires uint8");
+        return execute<std::uint8_t,false,true>(image,[](const auto* p, auto* out, auto h, auto w) {
+            skimagexx::equalize_hist_into(p,out,h,w);
+        });
+    },py::arg("image"));
+    m.def("intensity_bounds", [](py::array image) {
+        if (!image.size()) throw py::value_error("image must be nonempty");
+        auto run = [&](auto dummy) {
+            using T = decltype(dummy);
+            auto input = py::array_t<T,py::array::c_style>::ensure(image);
+            if ((reinterpret_cast<std::uintptr_t>(input.data()) % alignof(T)) != 0)
+                input = py::array_t<T,py::array::c_style>::ensure(input.attr("copy")());
+            const auto* p = input.data(); const auto n = static_cast<std::size_t>(input.size());
+            std::pair<double,double> range;
+            { py::gil_scoped_release release; range = skimagexx::intensity_bounds(p,n,1); }
+            return py::make_tuple(range.first,range.second);
+        };
+        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return run(std::uint8_t{});
+        if (image.dtype().is(py::dtype::of<float>())) return run(float{});
+        if (image.dtype().is(py::dtype::of<double>())) return run(double{});
+        throw py::type_error("unsupported dtype");
+    });
+    m.def("rescale", [](py::array image, double imin, double imax, double omin, double omax, bool float_output) {
+        if (!image.size()) throw py::value_error("image must be nonempty");
+        auto fn = [=](const auto* p, auto* out, auto h, auto w) { skimagexx::rescale_into(p,out,h,w,imin,imax,omin,omax); };
+        if (image.dtype().is(py::dtype::of<std::uint8_t>())) {
+            if (float_output) return execute<std::uint8_t,false,true>(image,fn);
+            return execute<std::uint8_t,true,true>(image,fn);
+        }
+        if (image.dtype().is(py::dtype::of<float>())) return execute<float,true,true>(image,fn);
+        if (image.dtype().is(py::dtype::of<double>())) return execute<double,true,true>(image,fn);
+        throw py::type_error("unsupported dtype");
+    },py::arg("image"),py::arg("imin"),py::arg("imax"),py::arg("omin"),py::arg("omax"),py::arg("float_output")=false);
+    m.def("exposure", [](py::array image, const std::string& name, double parameter, double gain, bool inverse) {
+        if (!image.size()) throw py::value_error("image must be nonempty");
+        skimagexx::ExposureTransform transform;
+        if (name == "gamma") transform = skimagexx::ExposureTransform::gamma;
+        else if (name == "log") transform = skimagexx::ExposureTransform::log;
+        else if (name == "sigmoid") transform = skimagexx::ExposureTransform::sigmoid;
+        else throw py::value_error("unknown exposure transform");
+        auto fn = [=](const auto* p, auto* out, auto h, auto w) { skimagexx::exposure_into(p,out,h,w,transform,parameter,gain,inverse); };
+        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return execute<std::uint8_t,true,true>(image,fn);
+        if (image.dtype().is(py::dtype::of<float>())) return execute<float,true,true>(image,fn);
+        if (image.dtype().is(py::dtype::of<double>())) return execute<double,true,true>(image,fn);
+        throw py::type_error("supported dtypes are uint8, float32, and float64");
+    },py::arg("image"),py::arg("name"),py::arg("parameter"),py::arg("gain"),py::arg("inverse")=false);
     m.def("threshold_otsu_result", [](py::array image) {
         shape(image,false);
         if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");

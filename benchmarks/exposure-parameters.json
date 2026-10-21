@@ -1,0 +1,1041 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-21T02:15:34.709233+00:00",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "avx2": true,
+    "source_sha256": "9d990b251d2f0778432a0afef276b18b4a999c75145a522c0c4bd0acb1bf1e93",
+    "fallback_enabled": false,
+    "reference_thread_pools": 1
+  },
+  "results": [
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.7,
+        "gain": 1.3
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 2.49274,
+      "cpp_ms": 0.21987058823529412,
+      "speedup": 11.3373053667933,
+      "samples_ms": [
+        [
+          2.56308,
+          2.49274,
+          2.64174,
+          2.5617,
+          2.48908,
+          2.23836,
+          2.39132
+        ],
+        [
+          0.17519411764705883,
+          0.23048235294117647,
+          0.1932,
+          0.24793529411764706,
+          0.21987058823529412,
+          0.24211176470588236,
+          0.2073588235294118
+        ]
+      ],
+      "loops": [
+        5,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.5,
+        "gain": 1.3
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 2.59016,
+      "cpp_ms": 0.2678611111111111,
+      "speedup": 9.66978741055688,
+      "samples_ms": [
+        [
+          2.72234,
+          2.521,
+          2.84122,
+          2.59016,
+          2.53904,
+          2.37676,
+          2.75476
+        ],
+        [
+          0.27092222222222223,
+          0.49286111111111114,
+          0.26415,
+          0.28984444444444446,
+          0.2452888888888889,
+          0.17633888888888888,
+          0.2678611111111111
+        ]
+      ],
+      "loops": [
+        5,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 2,
+        "gain": 1.3
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 2.644,
+      "cpp_ms": 0.20485833333333334,
+      "speedup": 12.9064800878656,
+      "samples_ms": [
+        [
+          2.644,
+          2.34616,
+          2.7314,
+          3.11362,
+          2.6076,
+          3.25658,
+          2.5116
+        ],
+        [
+          0.19840833333333335,
+          0.2642166666666667,
+          0.20485833333333334,
+          0.20549791666666667,
+          0.16710833333333333,
+          0.21308125,
+          0.17818333333333333
+        ]
+      ],
+      "loops": [
+        5,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 30.099,
+      "cpp_ms": 0.23015263157894736,
+      "speedup": 130.77843078963616,
+      "samples_ms": [
+        [
+          26.9394,
+          30.6437,
+          27.1076,
+          30.099,
+          33.7528,
+          24.3183,
+          34.1986
+        ],
+        [
+          0.3020842105263158,
+          0.17896842105263158,
+          0.30961578947368423,
+          0.1988578947368421,
+          0.23015263157894736,
+          0.1657578947368421,
+          0.2403263157894737
+        ]
+      ],
+      "loops": [
+        1,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7,
+        "inv": true
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 37.3296,
+      "cpp_ms": 0.2961866666666667,
+      "speedup": 126.03403259205903,
+      "samples_ms": [
+        [
+          35.6254,
+          51.3941,
+          38.2633,
+          36.8852,
+          40.5563,
+          37.3296,
+          35.3713
+        ],
+        [
+          0.4888266666666667,
+          0.2520422222222222,
+          0.24993111111111113,
+          0.3608511111111111,
+          0.2961866666666667,
+          0.3003311111111111,
+          0.23539333333333334
+        ]
+      ],
+      "loops": [
+        1,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.3
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 56.3656,
+      "cpp_ms": 0.38283870967741934,
+      "speedup": 147.23067071115605,
+      "samples_ms": [
+        [
+          40.3358,
+          44.5665,
+          38.9828,
+          56.3656,
+          93.5401,
+          127.8025,
+          57.5236
+        ],
+        [
+          0.23527419354838708,
+          0.26707096774193545,
+          0.23321612903225805,
+          0.38283870967741934,
+          1.3960129032258066,
+          0.5123483870967742,
+          0.39777741935483873
+        ]
+      ],
+      "loops": [
+        1,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.7,
+        "inv": true
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 46.4317,
+      "cpp_ms": 0.3831,
+      "speedup": 121.19994779430958,
+      "samples_ms": [
+        [
+          96.7652,
+          98.6054,
+          71.4793,
+          46.4317,
+          41.8524,
+          43.4297,
+          38.7787
+        ],
+        [
+          0.35762,
+          0.39434,
+          0.35132,
+          0.3831,
+          0.19072,
+          0.64934,
+          0.52006
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.rescale_intensity",
+      "options": {
+        "in_range": [
+          0,
+          0.7
+        ],
+        "out_range": [
+          -1,
+          2
+        ]
+      },
+      "dtype": "uint8",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 25.8159,
+      "cpp_ms": 3.8327333333333335,
+      "speedup": 6.735636882294619,
+      "samples_ms": [
+        [
+          26.2217,
+          23.4897,
+          24.5082,
+          25.8159,
+          25.4221,
+          27.7625,
+          34.4559
+        ],
+        [
+          4.069866666666666,
+          3.8740333333333337,
+          3.4226666666666663,
+          4.0530333333333335,
+          3.8327333333333335,
+          3.6148333333333333,
+          3.5211666666666663
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.7,
+        "gain": 1.3
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 18.3074,
+      "cpp_ms": 9.9949,
+      "speedup": 1.8316741538184476,
+      "samples_ms": [
+        [
+          16.0366,
+          15.4809,
+          16.8097,
+          18.3074,
+          20.7954,
+          20.1161,
+          21.6365
+        ],
+        [
+          11.5289,
+          9.1492,
+          8.5808,
+          10.78,
+          9.9949,
+          12.1654,
+          8.3817
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.5,
+        "gain": 1.3
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 11.5108,
+      "cpp_ms": 3.073,
+      "speedup": 3.7457858769931662,
+      "samples_ms": [
+        [
+          11.5108,
+          11.9895,
+          11.9465,
+          27.0576,
+          11.0646,
+          8.5614,
+          9.3421
+        ],
+        [
+          3.073,
+          3.735775,
+          6.476575,
+          3.9591,
+          2.894225,
+          3.01825,
+          2.361075
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 2,
+        "gain": 1.3
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 10.527,
+      "cpp_ms": 3.03836,
+      "speedup": 3.4646980607959557,
+      "samples_ms": [
+        [
+          6.5616,
+          8.7438,
+          6.9531,
+          11.2155,
+          10.527,
+          10.5898,
+          10.7835
+        ],
+        [
+          2.61662,
+          3.03836,
+          3.16716,
+          2.30428,
+          0.89968,
+          3.40508,
+          3.05116
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 17.2509,
+      "cpp_ms": 4.390466666666667,
+      "speedup": 3.9291722975537913,
+      "samples_ms": [
+        [
+          13.5861,
+          13.6075,
+          17.822,
+          17.2509,
+          17.0165,
+          21.7991,
+          17.8581
+        ],
+        [
+          4.8524,
+          4.5132666666666665,
+          4.3544,
+          4.330966666666667,
+          3.7214,
+          5.0468,
+          4.390466666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7,
+        "inv": true
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 19.0216,
+      "cpp_ms": 6.27175,
+      "speedup": 3.032901502770359,
+      "samples_ms": [
+        [
+          18.7416,
+          19.4321,
+          16.4485,
+          18.5661,
+          19.8317,
+          20.7056,
+          19.0216
+        ],
+        [
+          6.1002,
+          6.8373,
+          5.1988,
+          15.0723,
+          5.8364,
+          6.93655,
+          6.27175
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.3
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 17.1436,
+      "cpp_ms": 2.21378,
+      "speedup": 7.744039606464961,
+      "samples_ms": [
+        [
+          18.0924,
+          17.1436,
+          21.6448,
+          17.0102,
+          18.5566,
+          12.5506,
+          13.9971
+        ],
+        [
+          2.44324,
+          2.96222,
+          2.57952,
+          1.89342,
+          2.09358,
+          2.21378,
+          1.84672
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.7,
+        "inv": true
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 16.0385,
+      "cpp_ms": 1.84065,
+      "speedup": 8.71349794909407,
+      "samples_ms": [
+        [
+          13.3615,
+          13.4663,
+          16.2496,
+          17.293,
+          21.9376,
+          16.0385,
+          15.0435
+        ],
+        [
+          1.9787,
+          1.84065,
+          1.32055,
+          1.5951,
+          1.3807,
+          1.8851333333333333,
+          2.026466666666667
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.rescale_intensity",
+      "options": {
+        "in_range": [
+          0,
+          0.7
+        ],
+        "out_range": [
+          -1,
+          2
+        ]
+      },
+      "dtype": "float32",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 15.7593,
+      "cpp_ms": 2.047216666666667,
+      "speedup": 7.69791505540042,
+      "samples_ms": [
+        [
+          14.4529,
+          12.3873,
+          15.8159,
+          17.0413,
+          11.108,
+          16.2385,
+          15.7593
+        ],
+        [
+          3.9533,
+          1.8890833333333332,
+          2.05605,
+          2.047216666666667,
+          1.6461333333333332,
+          1.72295,
+          2.09205
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.7,
+        "gain": 1.3
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 48.9931,
+      "cpp_ms": 10.7677,
+      "speedup": 4.550006036572341,
+      "samples_ms": [
+        [
+          66.5478,
+          64.0594,
+          57.15,
+          48.9931,
+          38.2535,
+          41.76,
+          38.0879
+        ],
+        [
+          13.1506,
+          14.7919,
+          10.6971,
+          10.5359,
+          13.3252,
+          9.9052,
+          10.7677
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 0.5,
+        "gain": 1.3
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 24.1829,
+      "cpp_ms": 4.8972,
+      "speedup": 4.938107489994283,
+      "samples_ms": [
+        [
+          34.4285,
+          22.0404,
+          24.1829,
+          21.524,
+          27.185,
+          34.4425,
+          23.8154
+        ],
+        [
+          6.8871,
+          5.5813,
+          4.8927,
+          4.8972,
+          3.94295,
+          4.90945,
+          4.5854
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_gamma",
+      "options": {
+        "gamma": 2,
+        "gain": 1.3
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 30.335,
+      "cpp_ms": 5.64005,
+      "speedup": 5.37849841756722,
+      "samples_ms": [
+        [
+          24.8349,
+          26.3675,
+          30.335,
+          31.3995,
+          23.9712,
+          32.2205,
+          33.9883
+        ],
+        [
+          6.8764,
+          4.757,
+          6.71345,
+          6.04065,
+          5.5394,
+          5.04375,
+          5.64005
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 41.0136,
+      "cpp_ms": 7.47155,
+      "speedup": 5.4893027551177465,
+      "samples_ms": [
+        [
+          35.2438,
+          41.0136,
+          52.9412,
+          41.44,
+          44.3091,
+          39.9784,
+          37.9617
+        ],
+        [
+          6.6518,
+          8.52035,
+          7.47155,
+          7.49765,
+          7.25765,
+          7.47395,
+          7.451
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_log",
+      "options": {
+        "gain": 0.7,
+        "inv": true
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 46.0426,
+      "cpp_ms": 7.27075,
+      "speedup": 6.332579169961834,
+      "samples_ms": [
+        [
+          45.6006,
+          46.0426,
+          38.8093,
+          42.0718,
+          47.0827,
+          47.5175,
+          53.6255
+        ],
+        [
+          6.45585,
+          7.27075,
+          8.6799,
+          7.057,
+          7.258,
+          7.48265,
+          10.5687
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.3
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 54.4501,
+      "cpp_ms": 7.5469,
+      "speedup": 7.214896182538526,
+      "samples_ms": [
+        [
+          54.7554,
+          56.994,
+          54.3127,
+          46.6906,
+          49.7865,
+          59.218,
+          54.4501
+        ],
+        [
+          7.1195,
+          9.8099,
+          7.4121,
+          7.492,
+          10.2353,
+          7.5469,
+          7.6548
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.adjust_sigmoid",
+      "options": {
+        "gain": 7,
+        "cutoff": 0.7,
+        "inv": true
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 47.0226,
+      "cpp_ms": 6.5769,
+      "speedup": 7.1496601742462245,
+      "samples_ms": [
+        [
+          51.202,
+          44.6181,
+          52.7306,
+          47.0226,
+          44.8232,
+          46.1408,
+          47.0694
+        ],
+        [
+          6.1205,
+          6.6894,
+          6.1782,
+          5.1086,
+          6.5769,
+          7.7319,
+          7.9327
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "exposure.rescale_intensity",
+      "options": {
+        "in_range": [
+          0,
+          0.7
+        ],
+        "out_range": [
+          -1,
+          2
+        ]
+      },
+      "dtype": "float64",
+      "size": 1024,
+      "threads": 1,
+      "backend": "native",
+      "reference_ms": 28.3833,
+      "cpp_ms": 5.10255,
+      "speedup": 5.562571655348796,
+      "samples_ms": [
+        [
+          29.0162,
+          25.8604,
+          25.8277,
+          26.1544,
+          28.3833,
+          29.4947,
+          30.75
+        ],
+        [
+          5.10255,
+          4.68935,
+          5.5443,
+          5.01205,
+          5.4326,
+          5.3755,
+          4.3363
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}

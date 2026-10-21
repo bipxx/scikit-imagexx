@@ -23,5 +23,17 @@ double sum(const double*, std::size_t);
 double sum(const std::uint8_t*, std::size_t);
 void otsu_scores(const float*, const float*, const double*, const double*, double*, std::size_t);
 bool uniform(const std::uint8_t*, std::size_t);
+void lookup(const std::uint8_t*, std::uint8_t*, std::size_t, const std::int32_t*);
+void lookup(const std::uint8_t*, double*, std::size_t, const double*);
+void bounds(const float*, std::size_t, double&, double&);
+void bounds(const double*, std::size_t, double&, double&);
+void bounds(const std::uint8_t*, std::size_t, double&, double&);
+void rescale(const float*, float*, std::size_t, double, double, double, double);
+void rescale(const double*, double*, std::size_t, double, double, double, double);
+void rescale(const std::uint8_t*, double*, std::size_t, double, double, double, double);
+bool gamma_simple(const float*, float*, std::size_t, double, double);
+bool gamma_simple(const double*, double*, std::size_t, double, double);
+bool exposure(const float*, float*, std::size_t, int, double, double, bool);
+bool exposure(const double*, double*, std::size_t, int, double, double, bool);
 #endif
 }

@@ -55,6 +55,21 @@ int main() {
             gradient_into(a.data(),direct.data()+1,513,515,filter,0);
             for (std::size_t i = 1; i <= a.size(); ++i) require(direct[i] == 0);
         }
+        const auto counts = histogram_u8(binary,2,2);
+        require(counts[10] == 2 && counts[200] == 2);
+        std::vector<double> equalized(4);
+        equalize_hist_into(binary,equalized.data(),2,2);
+        require(equalized[0] == 0.5 && equalized[3] == 1.0);
+        const auto range = intensity_bounds(binary,2,2);
+        require(range.first == 10 && range.second == 200);
+        rescale_into(binary,inverted.data(),2,2,10,200,0,255);
+        require(inverted[0] == 0 && inverted[3] == 255);
+        exposure_into(binary,inverted.data(),2,2,ExposureTransform::gamma,1,1,false);
+        require(std::equal(inverted.begin(),inverted.end(),binary));
+        const double values[] = {0.0,0.25,1.0};
+        std::vector<double> corrected(3);
+        exposure_into(values,corrected.data(),1,3,ExposureTransform::gamma,0.5,1,false);
+        require(corrected[0] == 0 && corrected[1] == 0.5 && corrected[2] == 1);
     }
     set_num_threads(1);
     require(get_num_threads() == 1);
