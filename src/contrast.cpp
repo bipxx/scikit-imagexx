@@ -71,6 +71,18 @@ template<class T> T read(const unsigned char* pointer,bool swap) {
 }
 
 struct Query {std::size_t lower,upper;double weight;};
+template<class F> void chunks(const Plan& p,std::size_t bytes,std::size_t begin,std::size_t end,F body) {
+    if(p.dense) {body(p.origin+begin*bytes,end-begin,std::ptrdiff_t(bytes),begin);return;}
+    const auto columns=p.axes.back().size;const auto step=p.axes.back().stride;
+    while(begin<end) {
+        const auto count=std::min(columns-begin%columns,end-begin);
+        auto pointer=p.at(begin);auto stride=step;
+        // Selection depends on the multiset. Read reversed dense row segments
+        // forward to reuse vector conversion without changing any values.
+        if(stride==-std::ptrdiff_t(bytes)) {pointer+=std::ptrdiff_t(count-1)*stride;stride=std::ptrdiff_t(bytes);}
+        body(pointer,count,stride,begin);begin+=count;
+    }
+}
 std::array<Query,2> queries(const Plan& p,const std::array<double,2>& positions) {
     std::array<Query,2> output;
     for(std::size_t j=0;j<2;++j) {
@@ -109,26 +121,27 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
     std::vector<Value> values(p.count);
     const auto workers=detail::active_workers(p.count);std::vector<unsigned char> valid(std::size_t(workers),1);
     detail::partition(p.count,workers,[&](auto begin,auto end,auto worker) {
-        std::size_t done=begin;
-        if(p.dense) {
-            if constexpr(Half) {
+        chunks(p,sizeof(Input),begin,end,[&](const unsigned char* source,std::size_t count,std::ptrdiff_t stride,std::size_t offset) {
+            std::size_t done=0;
+            if(stride==std::ptrdiff_t(sizeof(Input))) {
+                if constexpr(Half) {
 #ifdef SKIMAGEXX_AVX2
-                if(has_avx2() && !view.swap)done+=simd::edge_half(reinterpret_cast<const std::uint16_t*>(p.origin)+begin,values.data()+begin,end-begin);
+                    if(has_avx2() && !view.swap)done=simd::edge_half(reinterpret_cast<const std::uint16_t*>(source),values.data()+offset,count);
 #endif
-            } else if(view.swap && sizeof(Input)>1) {
+                } else if(view.swap && sizeof(Input)>1) {
 #ifdef SKIMAGEXX_AVX2
-                if(has_avx2())done+=simd::edge_swap(p.origin+begin*sizeof(Input),reinterpret_cast<unsigned char*>(values.data()+begin),end-begin,sizeof(Input));
+                    if(has_avx2())done=simd::edge_swap(source,reinterpret_cast<unsigned char*>(values.data()+offset),count,sizeof(Input));
 #endif
-            } else {
-                std::memcpy(values.data()+begin,p.origin+begin*sizeof(Input),(end-begin)*sizeof(Input));done=end;
+                } else {
+                    std::memcpy(values.data()+offset,source,count*sizeof(Input));done=count;
+                }
             }
-        }
-        for(auto i=done;i<end;++i) {
-            const auto* pointer=p.dense ? p.origin+i*sizeof(Input) : p.at(i);
-            const auto value=read<Input>(pointer,view.swap);
-            if constexpr(Half)values[i]=detail::decode_half(std::uint16_t(value));
-            else values[i]=value;
-        }
+            for(auto i=done;i<count;++i) {
+                const auto value=read<Input>(source+std::ptrdiff_t(i)*stride,view.swap);
+                if constexpr(Half)values[offset+i]=detail::decode_half(std::uint16_t(value));
+                else values[offset+i]=value;
+            }
+        });
         if constexpr(std::is_floating_point_v<Value>) {
 #ifdef SKIMAGEXX_AVX2
             if(has_avx2()) {
@@ -140,12 +153,50 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
         }
     });
     if(std::find(valid.begin(),valid.end(),0)!=valid.end())return false;
-    std::vector<std::size_t> ranks;
-    for(const auto& q:wanted) {ranks.push_back(q.lower);ranks.push_back(q.upper);}
-    std::sort(ranks.begin(),ranks.end());ranks.erase(std::unique(ranks.begin(),ranks.end()),ranks.end());
-    select(values,ranks,0,ranks.size(),0,values.size());
+    std::array<std::array<Value,2>,2> picked;bool selected=false;
+    if constexpr(std::is_integral_v<Value> && sizeof(Value)==1) {
+        const auto counts=histogram_u8(reinterpret_cast<const std::uint8_t*>(values.data()),values.size(),1);
+        auto value_at=[&](std::size_t rank) {
+            std::uint64_t cumulative=0;
+            for(std::size_t i=0;i<256;++i) {
+                const auto bin=std::uint8_t((i+(std::is_signed_v<Value> ? 128 : 0))%256);
+                cumulative+=counts[bin];
+                if(rank<cumulative) {Value result;std::memcpy(&result,&bin,1);return result;}
+            }
+            throw std::logic_error("contrast histogram rank missing");
+        };
+        for(std::size_t j=0;j<2;++j)picked[j]={value_at(wanted[j].lower),value_at(wanted[j].upper)};
+        selected=true;
+    }
+    if(!selected && std::all_of(wanted.begin(),wanted.end(),[&](const Query& q) {
+        return q.weight==0 && (q.lower==0 || q.lower==values.size()-1);
+    })) {
+        Value lower,upper;
+        if constexpr(std::is_floating_point_v<Value>) {
+            const auto bounds=intensity_bounds(values.data(),values.size(),1);
+            lower=Value(bounds.first);upper=Value(bounds.second);
+        } else {
+            const auto bounds=std::minmax_element(values.begin(),values.end());lower=*bounds.first;upper=*bounds.second;
+        }
+        // Endpoint neighbors are safe when the complete floating range is
+        // safe. Otherwise preserve upstream arithmetic through explicit fallback.
+        double span=difference(lower,upper);
+        if constexpr(Half)span=detail::decode_half(detail::encode_half(float(span)));
+        if(!std::isfinite(span))return false;
+        for(std::size_t j=0;j<2;++j) {
+            const auto value=wanted[j].lower==0 ? lower : upper;picked[j]={value,value};
+        }
+        selected=true;
+    }
+    if(!selected) {
+        std::vector<std::size_t> ranks;
+        for(const auto& q:wanted) {ranks.push_back(q.lower);ranks.push_back(q.upper);}
+        std::sort(ranks.begin(),ranks.end());ranks.erase(std::unique(ranks.begin(),ranks.end()),ranks.end());
+        select(values,ranks,0,ranks.size(),0,values.size());
+        for(std::size_t j=0;j<2;++j)picked[j]={values[wanted[j].lower],values[wanted[j].upper]};
+    }
     for(std::size_t j=0;j<2;++j) {
-        const auto& q=wanted[j];const auto lower=values[q.lower],upper=values[q.upper];
+        const auto& q=wanted[j];const auto lower=picked[j][0],upper=picked[j][1];
         double delta=difference(lower,upper);
         if constexpr(Half)delta=detail::decode_half(detail::encode_half(float(delta)));
         if(!std::isfinite(delta))return false;
