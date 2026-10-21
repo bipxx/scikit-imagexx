@@ -416,6 +416,9 @@ def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
 
 
 def farid(image,mask=None,*,axis=None,mode='reflect',cval=0.0):
+    if (mask is None and type(axis) in (tuple,list) and not axis
+            and type(image) in (np.ndarray,np.memmap) and image.dtype.type in (np.float32,np.float64)):
+        return np.zeros(image.shape,dtype=image.dtype.type)
     return _farid('farid',image,mask,axis,mode,cval)
 
 
