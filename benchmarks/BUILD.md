@@ -42,7 +42,7 @@ binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
 The current function benchmark covers 77 native image functions, two metadata
-helpers, and 916 per-function performance cases. The suite now has 17873 checks in both SIMD
+helpers, and 916 per-function performance cases. The suite now has 18025 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in

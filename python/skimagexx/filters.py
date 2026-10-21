@@ -117,7 +117,8 @@ def _threshold_histogram(image,hist,nbins):
         counts,centers=_core.histogram_u8(image)
         return counts,centers,image.flat[0] if centers.size==1 else None
     import operator
-    bins=operator.index(nbins)
+    try:bins=operator.index(nbins)
+    except TypeError:return None
     if bins<1:raise ValueError('`bins` must be positive, when an integer')
     if bins>1000000:return None
     low,high=_core.intensity_bounds(image) if image.size else (0.,1.)
@@ -145,7 +146,7 @@ def _yen_log_mode():
 
 
 def _histogram_threshold(name,image,nbins,hist=None,return_all=False):
-    if image is None and hist is None:raise Exception('Either image or hist must be provided.')
+    if name!='triangle' and image is None and hist is None:raise Exception('Either image or hist must be provided.')
     log_mode=_yen_log_mode() if name=='yen' else True
     prepared=_threshold_histogram(image,hist,nbins) if log_mode is not None else None
     if prepared is None:
@@ -153,9 +154,10 @@ def _histogram_threshold(name,image,nbins,hist=None,return_all=False):
         if name=='isodata':options['return_all']=return_all
         return fallback('filters','threshold_'+name,image,nbins,**options)
     counts,centers,constant=prepared
-    if name=='triangle' and constant is not None:return constant
+    if name=='triangle' and (constant is not None or centers.size==1):return image.flat[0]
     if name=='triangle' and not image.size:raise IndexError('index 0 is out of bounds for axis 0 with size 0')
     if name!='triangle':counts=counts.astype(np.float32,copy=False)
+    if name=='isodata' and centers.size==1:return centers if return_all else centers[0]
     width=float(centers[1]-centers[0]) if name=='isodata' and centers.size>1 else float('nan')
     indices,status=_core.threshold_indices(counts,centers,name,centers.dtype==np.float32,log_mode,width)
     # Replay only arithmetic-status metadata so NumPy errstate (including raise)

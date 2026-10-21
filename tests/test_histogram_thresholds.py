@@ -16,7 +16,7 @@ def strict(request):
 
 @pytest.mark.parametrize('name',NAMES)
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
-@pytest.mark.parametrize('nbins',[2,7,32,256,513])
+@pytest.mark.parametrize('nbins',[1,2,7,32,256,513])
 @pytest.mark.parametrize('layout',['flat','volume','reversed','fortran','constant','skewed'])
 def test_image_reference(name,dtype,nbins,layout):
     rng=np.random.default_rng(59)
@@ -38,7 +38,7 @@ def test_image_reference(name,dtype,nbins,layout):
 
 @pytest.mark.parametrize('name',NAMES)
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
-@pytest.mark.parametrize('nbins',[2,7,256])
+@pytest.mark.parametrize('nbins',[1,2,7,256])
 def test_edges_neighbors(name,dtype,nbins):
     edges=np.linspace(dtype(-1.3),dtype(2.7),nbins+1,dtype=dtype)
     a=np.concatenate([edges,np.nextafter(edges,dtype(-np.inf)),np.nextafter(edges,dtype(np.inf))])
@@ -195,8 +195,9 @@ def test_wide_count_conversion_matches_upstream(dtype):
         np.testing.assert_array_equal(getattr(xx.filters,name)(**options),getattr(original,name)(**options))
 
 @pytest.mark.parametrize('name',['threshold_yen','threshold_isodata'])
-def test_histogram_cast_underflow_error(name):
-    counts=np.array([1e-46,2e-46,3e-46],dtype=np.float64)
+@pytest.mark.parametrize('size',[1,3])
+def test_histogram_cast_underflow_error(name,size):
+    counts=np.array([1e-46,2e-46,3e-46],dtype=np.float64)[:size]
     with np.errstate(all='raise'):
         with pytest.raises(FloatingPointError,match='underflow'):getattr(original,name)(hist=counts)
         with pytest.raises(FloatingPointError,match='underflow'):getattr(xx.filters,name)(hist=counts)
@@ -225,3 +226,49 @@ def test_yen_log_provider_rounding_across_exponents():
     mode=_yen_log_mode()
     assert mode is not None
     np.testing.assert_array_equal(_core.threshold_logarithms(values,mode),np.log(values))
+
+
+@pytest.mark.parametrize('kind',['negative','nonfinite','overflow','nonfinite-centers'])
+def test_histogram_metadata_fallback_is_explicit(kind):
+    counts=np.arange(31,dtype=np.float64)+1;centers=np.arange(31,dtype=np.float64)
+    if kind=='negative':counts[7]=-1
+    if kind=='nonfinite':counts[7]=np.nan
+    if kind=='overflow':counts*=1e38
+    if kind=='nonfinite-centers':centers[7]=np.inf
+    with pytest.raises(NotImplementedError):xx.filters.threshold_yen(hist=(counts,centers))
+    xx.set_fallback_enabled(True)
+    with np.errstate(all='ignore'):
+        with pytest.warns(xx.FallbackWarning):actual=xx.filters.threshold_yen(hist=(counts,centers))
+        expected=original.threshold_yen(hist=(counts,centers))
+    np.testing.assert_array_equal(actual,expected)
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('bins',['auto',np.array([-1,0,.25,.5,1,2])])
+def test_automatic_or_explicit_edges_use_visible_fallback(name,bins):
+    a=np.linspace(0,1,257,dtype=np.float32)
+    with pytest.raises(NotImplementedError):getattr(xx.filters,name)(a,nbins=bins)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning):actual=getattr(xx.filters,name)(a,nbins=bins)
+    expected=getattr(original,name)(a,nbins=bins)
+    np.testing.assert_array_equal(actual,expected)
+
+@pytest.mark.parametrize('kind',['positive','zero','trimmed'])
+def test_isodata_single_bin_preserves_output_alias(kind):
+    counts=np.array([1],dtype=np.float32)
+    centers=np.array([.3],dtype=np.float32)
+    if kind=='zero':counts[:]=0
+    if kind=='trimmed':counts=np.array([0,1,0],dtype=np.float32);centers=np.array([.1,.3,.5],dtype=np.float32)
+    centers.flags.writeable=False
+    expected=original.threshold_isodata(hist=(counts,centers),return_all=True)
+    actual=xx.filters.threshold_isodata(hist=(counts,centers),return_all=True)
+    np.testing.assert_array_equal(actual,expected)
+    assert (actual is centers)==(expected is centers)
+    assert np.shares_memory(actual,centers)==np.shares_memory(expected,centers)
+    assert actual.flags.writeable==expected.flags.writeable
+
+
+def test_triangle_none_uses_explicit_fallback_error():
+    with pytest.raises(NotImplementedError):xx.filters.threshold_triangle(None)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning),pytest.raises(AttributeError):xx.filters.threshold_triangle(None)

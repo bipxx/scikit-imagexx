@@ -467,3 +467,12 @@ Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
 checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
 SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
 Only this translation unit uses the additional `-mfma` flag on GCC/Clang.
+
+`skimagexx/threshold.hpp` exposes floating `histogram_edges` and the shared
+`threshold_indices` selector for standalone C++. It returns the selected bin
+indices (all fixed points for ISODATA); the caller maps them to its bin centers.
+The `float_centers` flag preserves float32 ISODATA arithmetic. An optional
+`bin_width` preserves integer-center spacing when conversion to double would
+lose it. `threshold_logs` provides the dispatched compatibility logarithm.
+The [Yen tuning experiment](benchmarks/threshold-tuning.md) retains measured
+before/after snapshots, noisy repeats and the discarded metadata-scan attempt.
