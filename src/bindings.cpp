@@ -532,7 +532,9 @@ PYBIND11_MODULE(_core, m) {
         if(reinterpret_cast<std::uintptr_t>(input.data())%std::size_t(input.itemsize()))input=input.attr("copy")().cast<py::array>();
         const std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());
         const std::vector<std::size_t> shape_values(dimensions.begin(),dimensions.end());
-        py::array output(type==skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>(),dimensions);
+        const auto output_dtype=type==skimagexx::PixelType::uint8 ? py::dtype::of<double>() :
+            !directional ? image.dtype() : type==skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>();
+        py::array output(output_dtype,dimensions);
         {py::gil_scoped_release release;skimagexx::farid_into(input.data(),output.mutable_data(),type,shape_values,axes,static_cast<skimagexx::FaridBorder>(border),cval,directional);}
         return output;
     });

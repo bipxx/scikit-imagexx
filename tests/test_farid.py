@@ -38,6 +38,7 @@ def check(name,image,**options):
         warnings.simplefilter('always');actual=getattr(xx.filters,name)(image,**options)
     assert [(type(w.message),str(w.message)) for w in notices]==[(type(w.message),str(w.message)) for w in expected_notices]
     assert actual.shape==expected.shape and actual.dtype==expected.dtype
+    assert actual.dtype.metadata==expected.dtype.metadata
     tolerance=2e-6 if expected.dtype==np.float32 else 2e-13
     np.testing.assert_allclose(actual,expected,rtol=tolerance,atol=tolerance)
     assert not np.shares_memory(actual,image)
@@ -266,3 +267,23 @@ def test_empty_axes_zero_allocation_contract(dtype,layout):
     assert actual.flags.c_contiguous==expected.flags.c_contiguous
     assert actual.flags.writeable==expected.flags.writeable
     np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('endian',[False,True])
+def test_input_dtype_metadata(name,dtype,endian):
+    tagged=np.dtype(dtype,metadata={'units':'linear','source':'parity'})
+    if endian:tagged=tagged.newbyteorder('>')
+    image=sample(np.dtype(dtype),(17,19),531).astype(tagged)
+    check(name,image)
+
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('endian',[False,True])
+@pytest.mark.parametrize('mask',[None,np.asarray(False)])
+def test_empty_axes_dtype_metadata(dtype,endian,mask):
+    tagged=np.dtype(dtype,metadata={'units':'linear','source':'parity'})
+    if endian:tagged=tagged.newbyteorder('>')
+    image=sample(np.dtype(dtype),(17,19),532).astype(tagged)
+    check('farid',image,axis=(),mask=mask)

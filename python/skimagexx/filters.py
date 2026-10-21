@@ -389,7 +389,7 @@ def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
         # No convolution or image arithmetic is requested. Use NumPy's owned
         # zero allocation (which can use zeroed pages), and avoid reading/copying
         # input storage solely to produce zeros. Signed scalar errors are above.
-        result=np.zeros(image.shape,dtype=np.float32 if image.dtype.type==np.float32 else np.float64)
+        result=np.zeros(image.shape,dtype=image.dtype if image.dtype.isnative and image.dtype.type in (np.float32,np.float64) else np.float32 if image.dtype.type==np.float32 else np.float64)
     else:
         native=image if image.dtype.isnative else _core.edge_native(image)
         if native.dtype==np.float16:prepared=_core.edge_half(native)
@@ -418,7 +418,7 @@ def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
 def farid(image,mask=None,*,axis=None,mode='reflect',cval=0.0):
     if (mask is None and type(axis) in (tuple,list) and not axis
             and type(image) in (np.ndarray,np.memmap) and image.dtype.type in (np.float32,np.float64)):
-        return np.zeros(image.shape,dtype=image.dtype.type)
+        return np.zeros(image.shape,dtype=image.dtype if image.dtype.isnative else image.dtype.type)
     return _farid('farid',image,mask,axis,mode,cval)
 
 
