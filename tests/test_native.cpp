@@ -2,6 +2,7 @@
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
 #include "skimagexx/perceptual.hpp"
+#include "skimagexx/stain.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <iostream>
@@ -23,6 +24,17 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        const double identity_stain[]={1,0,0,0,1,0,0,0,1};
+        const std::uint8_t white_stain[]={255,255,255};
+        double separated[3],combined[3];
+        stain_transform_into(white_stain,separated,1,PixelType::uint8,StainTransform::separate,identity_stain);
+        require(separated[0]==0 && separated[1]==0 && separated[2]==0);
+        stain_transform_into(separated,combined,1,PixelType::float64,StainTransform::combine,identity_stain);
+        require(combined[0]==1 && combined[1]==1 && combined[2]==1);
+        const float zero_stain[]={0,0,0};
+        float combined32[3];
+        stain_transform_into(zero_stain,combined32,1,PixelType::float32,StainTransform::combine,identity_stain,3,PixelType::float32,PixelType::float32);
+        require(combined32[0]==1 && combined32[1]==1 && combined32[2]==1);
         MorphologyFootprint rectangle;
         rectangle.scipy_separable=true;
         for (int y=-15;y<=15;++y) for (int x=-15;x<=15;++x) {

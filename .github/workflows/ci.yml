@@ -18,6 +18,7 @@ jobs:
       - run: python benchmarks/conversions.py --size 64 --threads 1 --dtypes uint16 int16 --output build/ci-conversions.json
       - run: python benchmarks/color.py --size 32 --threads 1 --output build/ci-color-layouts.json
       - run: python benchmarks/perceptual.py --size 32 --threads 1 --output build/ci-perceptual.json
+      - run: python benchmarks/stains.py --size 32 --threads 1 --repeat 1 --output build/ci-stains.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
       - run: python -m pytest -q
         env:

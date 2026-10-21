@@ -4,6 +4,7 @@ import warnings
 from functools import lru_cache as _lru_cache
 from . import _core
 from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
+from ._stain_matrices import MATRICES as _STAIN_MATRICES
 from ._compat import fallback, module_attribute, native_image
 
 __all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -12,6 +13,9 @@ __all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
 __all__ += ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
             'lab2lch','lch2lab','xyz_tristimulus_values']
 __all__ += ['xyz2luv','luv2xyz','rgb2luv','luv2rgb']
+__all__ += ['separate_stains','combine_stains','rgb2hed','hed2rgb']
+globals().update(_STAIN_MATRICES)
+_STAIN_LOG_ADJUST=-np.log(1e-6)
 
 
 def rgb2gray(rgb, *, channel_axis=-1):
@@ -231,3 +235,49 @@ def rgb2luv(rgb, *, channel_axis=-1):
 
 def luv2rgb(luv, *, channel_axis=-1):
     return _perceptual('luv2rgb',luv,channel_axis)
+
+
+def _stain(name,image,matrix,channel_axis):
+    options={'channel_axis':channel_axis}
+    args=(image,matrix) if name in ('separate_stains','combine_stains') else (image,)
+    if isinstance(image,np.ndarray) and type(image) is not np.ndarray:
+        return fallback('color',name,*args,**options)
+    if isinstance(matrix,np.ndarray) and type(matrix) is not np.ndarray:
+        return fallback('color',name,*args,**options)
+    axis=channel_axis
+    if axis is None: axis=-1
+    elif not np.isscalar(axis):
+        if len(axis)>1: raise ValueError('only a single channel axis is currently supported')
+        axis=axis[0]
+    a=np.asarray(image)
+    moved=a if axis==-1 else np.moveaxis(a,axis,-1)
+    if moved.shape[-1]!=3:
+        raise ValueError(f'the input array must have size 3 along `channel_axis`, got {moved.shape}')
+    mat=np.asarray(matrix)
+    if moved.dtype.type not in _COLOR_TYPES or not moved.dtype.isnative or mat.dtype.kind not in 'buif' or mat.ndim!=2 or mat.shape[0]!=3:
+        return fallback('color',name,*args,**options)
+    prepared=np.float32 if moved.dtype==np.float32 else np.float64
+    intermediate=np.result_type(np.empty(0,dtype=prepared),_STAIN_LOG_ADJUST)
+    output_dtype=np.result_type(intermediate,mat.dtype)
+    if output_dtype not in (np.dtype(np.float32),np.dtype(np.float64)):
+        return fallback('color',name,*args,**options)
+    weights=np.array(mat.T,dtype=np.float64,order='C',copy=True)
+    result=_core.stain_transform(moved,weights,name in ('combine_stains','hed2rgb'),
+                                 intermediate==np.float32,output_dtype==np.float32,float(_STAIN_LOG_ADJUST))
+    return result if axis==-1 else np.moveaxis(result,-1,axis)
+
+
+def separate_stains(rgb,conv_matrix,*,channel_axis=-1):
+    return _stain('separate_stains',rgb,conv_matrix,channel_axis)
+
+
+def combine_stains(stains,conv_matrix,*,channel_axis=-1):
+    return _stain('combine_stains',stains,conv_matrix,channel_axis)
+
+
+def rgb2hed(rgb,*,channel_axis=-1):
+    return _stain('rgb2hed',rgb,_STAIN_MATRICES['hed_from_rgb'],channel_axis)
+
+
+def hed2rgb(hed,*,channel_axis=-1):
+    return _stain('hed2rgb',hed,_STAIN_MATRICES['rgb_from_hed'],channel_axis)

@@ -3,6 +3,7 @@
 #include "skimagexx/color.hpp"
 #include "skimagexx/perceptual.hpp"
 #include "skimagexx/morphology.hpp"
+#include "skimagexx/stain.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -86,6 +87,30 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("stain_transform",[](py::array image,py::array_t<double,py::array::c_style|py::array::forcecast> weights,
+        bool combine,bool intermediate32,bool output32,double adjust) {
+        if (!image.ndim() || image.shape(image.ndim()-1)!=3) throw py::value_error("expected three input channels");
+        if (weights.ndim()!=2 || weights.shape(1)!=3) throw py::value_error("expected an output-major stain matrix");
+        if (!weights.attr("flags").attr("aligned").cast<bool>()) weights=weights.attr("copy")().cast<py::array_t<double>>();
+        const auto type=pixel_type(image.dtype());
+        const auto count=static_cast<std::size_t>(image.size()/3),channels=static_cast<std::size_t>(weights.shape(0));
+        auto dims=std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()); dims.back()=weights.shape(0);
+        py::array output(output32 ? py::dtype::of<float>() : py::dtype::of<double>(),dims);
+        std::ptrdiff_t pixels=3,stride=1;
+        py::array input=image;
+        if ((type!=skimagexx::PixelType::float32 && type!=skimagexx::PixelType::float64) || !linear_color_view(image,pixels,stride)) {
+            input=py::array::ensure(image,py::array::c_style);
+            if (!input) throw py::type_error("unable to make input contiguous");
+            if (reinterpret_cast<std::uintptr_t>(input.data())%skimagexx::pixel_size(type)) input=input.attr("copy")().cast<py::array>();
+            pixels=3; stride=1;
+        }
+        { py::gil_scoped_release release;
+          skimagexx::stain_transform_into(input.data(),output.mutable_data(),count,type,
+            combine ? skimagexx::StainTransform::combine : skimagexx::StainTransform::separate,weights.data(),channels,
+            intermediate32 ? skimagexx::PixelType::float32 : skimagexx::PixelType::float64,
+            output32 ? skimagexx::PixelType::float32 : skimagexx::PixelType::float64,pixels,stride,adjust); }
+        return output;
+    });
     m.def("morphology", [](py::array image,py::list footprints,int operation,int mode,double cval,py::object out) {
         const auto in_type=pixel_type(image.dtype());
         std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());

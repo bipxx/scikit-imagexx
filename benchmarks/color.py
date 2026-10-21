@@ -11,13 +11,13 @@ import numpy as np
 import skimage
 from skimage import color as reference
 import skimagexx as xx
-from skimagexx.coverage import parity_tolerance
+from skimagexx.coverage import parity_tolerance, default_call
 
 FUNCTIONS = ['rgb2yuv','yuv2rgb','rgb2yiq','yiq2rgb','rgb2ypbpr','ypbpr2rgb',
              'rgb2ycbcr','ycbcr2rgb','rgb2ydbdr','ydbdr2rgb','rgb2rgbcie',
              'rgbcie2rgb','rgb2xyz','xyz2rgb','rgb2hsv','hsv2rgb','xyz2lab',
              'lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab',
-             'xyz2luv','luv2xyz','rgb2luv','luv2rgb']
+             'xyz2luv','luv2xyz','rgb2luv','luv2rgb','separate_stains','combine_stains','rgb2hed','hed2rgb']
 
 
 def main():
@@ -39,14 +39,16 @@ def main():
         for layout,a,axis in layouts:
             for name in FUNCTIONS:
                 original, current = getattr(reference,name), getattr(xx.color,name)
-                expected = original(a,channel_axis=axis)
+                call_args,options=default_call('color.'+name,a)
+                options['channel_axis']=axis
+                expected = original(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
-                    actual = current(a,channel_axis=axis)
+                    actual = current(*call_args,**options)
                     assert actual.dtype == expected.dtype
                     rtol,atol = parity_tolerance('color.'+name,np.dtype(dtype))
                     np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
-                    timing = measure(lambda: original(a,channel_axis=axis),lambda: current(a,channel_axis=axis),7,15)
+                    timing = measure(lambda: original(*call_args,**options),lambda: current(*call_args,**options),7,15)
                     result = {'api':'color.'+name,'dtype':np.dtype(dtype).name,'size':args.size,
                               'threads':threads,'layout':layout,'channel_axis':axis,'backend':'native',
                               'max_abs_error':float(np.max(np.abs(actual-expected))),**timing}

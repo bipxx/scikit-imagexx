@@ -8,7 +8,8 @@ NATIVE_FUNCTIONS = {
               'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
               'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb',
               'rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
-              'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb'),
+              'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
+              'separate_stains','combine_stains','rgb2hed','hed2rgb'),
     'filters': ('gaussian', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu'),
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
@@ -45,6 +46,10 @@ def default_call(api, image):
     if api.startswith('morphology.binary_'):
         # Avoid timing the trivial all-foreground case for numeric inputs.
         return ((image > (127 if str(image.dtype)=='uint8' else .5)).astype(image.dtype),), {}
+    if api in ('color.separate_stains','color.combine_stains'):
+        from ._stain_matrices import MATRICES
+        matrix=MATRICES['hed_from_rgb' if api.endswith('separate_stains') else 'rgb_from_hed']
+        return (image,matrix), {}
     return (image,), {}
 
 

@@ -5,8 +5,10 @@
 namespace skimagexx::detail { struct ColorSpec; }
 namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
+namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
 #ifdef SKIMAGEXX_AVX2
+std::size_t stain_transform(const void*,double*,std::size_t,PixelType,const detail::StainSpec&,std::ptrdiff_t,std::ptrdiff_t);
 bool boolean_pack(const std::uint8_t*,std::uint64_t*,std::size_t,std::size_t);
 std::size_t boolean_unpack(const std::uint64_t*,std::uint8_t*,std::size_t);
 std::size_t boolean_combine(const std::uint64_t*,const std::uint64_t*,std::uint64_t*,std::size_t,bool);
