@@ -25,7 +25,7 @@ For every native entry:
 5. Update the registry, inventory, documented native input contract, and CI.
 
 Current native coverage includes N-D Laplace, Farid derivatives and Roberts cross filters with eroded masks.
-Other native coverage: RGB/gray and RGBA conversion, grayscale alpha expansion; Gaussian; Sobel, Prewitt, and
+Other native coverage: RGB/gray and RGBA conversion, grayscale alpha expansion; N-D Gaussian, difference of Gaussians and unsharp masking; Sobel, Prewitt, and
 Scharr with directional variants; uint8 Otsu; mean, Yen, Triangle, ISODATA, Niblack and Sauvola thresholding; inversion;
 gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
 histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDbDr,
@@ -34,8 +34,8 @@ six grayscale and four binary morphology functions.
 Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
 CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting and extra channels;
 color-space routing composes the native kernels for all nine upstream spaces.
-There are 88 partial native image entries, two metadata helpers,
-and 360 pending entries in the current
+There are 90 partial native image entries, two metadata helpers,
+and 358 pending entries in the current
 450-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.

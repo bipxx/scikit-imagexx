@@ -1,3 +1,5 @@
+#include "../src/execution.hpp"
+#include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
@@ -11,6 +13,8 @@
 #include "skimagexx/distance.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
+#include <cstring>
+#include <type_traits>
 #include <iostream>
 #include <stdexcept>
 #include <limits>
@@ -22,6 +26,18 @@ void require(bool condition) {
 int main() {
     using namespace skimagexx;
     require(get_num_threads() == 1);
+    {
+        const auto length=std::size_t(std::numeric_limits<int>::max())+17;
+        bool visited=false;
+        detail::partition(length,1,[&](auto begin,auto end,auto worker) {
+            static_assert(std::is_same_v<decltype(begin),std::size_t>);
+            static_assert(std::is_same_v<decltype(end),std::size_t>);
+            static_assert(std::is_same_v<decltype(worker),std::size_t>);
+            require(begin==0 && end==length && worker==0);visited=true;
+        });
+        require(visited);
+    }
+
 #ifdef _OPENMP
     const int thread_counts[] = {1, 4};
 #else
@@ -91,6 +107,24 @@ int main() {
             try {gray_expand_rows_into(image,nullptr,output,1,1,6,3,offsets,nullptr,6,0,0,bad);}
             catch(const std::invalid_argument&){rejected=true;}require(rejected);
             gray_expand_rows_into(nullptr,nullptr,nullptr,0,17,6,3,nullptr,nullptr,6,0,0,order);
+        }
+        {
+            const GaussianPass one{0,{.25,.5,.25},GaussianBorder::reflect,0};
+            const double impulse[]={0,0,1,0,0},expected[]={0,.25,.5,.25,0};double result[5];
+            gaussian_nd_into(impulse,result,PixelType::float64,PixelType::float64,{5},{one});
+            require(std::equal(result,result+5,expected));
+            const double precise[]={16777217.,0.,-16777216.};float single[3];
+            gaussian_nd_into(precise,single,PixelType::float64,PixelType::float32,{3},{one});
+            require(single[1]==.25f); // No premature float32 cast before the first axis.
+            const std::uint8_t bytes[]={0,0,255,0,0};
+            gaussian_nd_into(bytes,result,PixelType::uint8,PixelType::float64,{5},{one});
+            require(std::equal(result,result+5,expected));
+            gaussian_nd_into(bytes,result,PixelType::uint8,PixelType::float64,{5},{one},true);
+            for(int j=0;j<5;++j)require(result[j]==255*expected[j]);
+            std::uint32_t signaling=0x7f800001,bits;float unchanged;
+            gaussian_nd_into(&signaling,&unchanged,PixelType::float32,PixelType::float32,{},{});
+            std::memcpy(&bits,&unchanged,4);require(bits==signaling);
+            gaussian_nd_into(nullptr,nullptr,PixelType::float32,PixelType::float64,{0,7},{});
         }
         const float log_inputs[]={.001f,.1f,.2f,.5f,.7f,.9f,1.f,1.1f,2.f,3.f,7.f,10.973364f,10.973365f,13.f,100.f,1e10f,0.f,-1.f,std::numeric_limits<float>::denorm_min()};
         float log_results[19];

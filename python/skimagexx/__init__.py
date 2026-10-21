@@ -2,7 +2,7 @@
 from ._core import set_num_threads, get_num_threads, has_avx2
 from ._compat import set_fallback_enabled, FallbackWarning
 from . import filters, color, util
-from .filters import (gaussian, sobel, sobel_h, sobel_v, prewitt, prewitt_h, prewitt_v,
+from .filters import (gaussian, difference_of_gaussians, unsharp_mask, sobel, sobel_h, sobel_v, prewitt, prewitt_h, prewitt_v,
                       scharr, scharr_h, scharr_v, threshold_otsu, threshold_mean,
                       threshold_yen, threshold_triangle, threshold_isodata,
                       threshold_niblack, threshold_sauvola,

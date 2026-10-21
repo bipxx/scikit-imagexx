@@ -25,6 +25,6 @@ template<class F> void partition(std::size_t length, int threads, F body) {
 #else
     (void)threads;
 #endif
-    body(0,length,0);
+    body(std::size_t{0},length,std::size_t{0});
 }
 } // namespace skimagexx::detail

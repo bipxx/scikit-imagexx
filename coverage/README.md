@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-450 public callable names inventoried in 17 modules; 88 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+450 public callable names inventoried in 17 modules; 90 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -163,7 +163,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.apply_hysteresis_threshold` | upstream-only | pending | pending |
 | `filters.butterworth` | upstream-only | pending | pending |
 | `filters.correlate_sparse` | upstream-only | pending | pending |
-| `filters.difference_of_gaussians` | upstream-only | pending | pending |
+| `filters.difference_of_gaussians` | native-partial | yes (partial input contract) | yes |
 | `filters.farid` | native-partial | yes (partial input contract) | yes |
 | `filters.farid_h` | native-partial | yes (partial input contract) | yes |
 | `filters.farid_v` | native-partial | yes (partial input contract) | yes |
@@ -203,7 +203,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.threshold_triangle` | native-partial | yes (partial input contract) | yes |
 | `filters.threshold_yen` | native-partial | yes (partial input contract) | yes |
 | `filters.try_all_threshold` | upstream-only | pending | pending |
-| `filters.unsharp_mask` | upstream-only | pending | pending |
+| `filters.unsharp_mask` | native-partial | yes (partial input contract) | yes |
 | `filters.wiener` | upstream-only | pending | pending |
 | `filters.window` | upstream-only | pending | pending |
 | `filters.rank.autolevel` | upstream-only | pending | pending |

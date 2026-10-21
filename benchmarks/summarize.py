@@ -19,7 +19,8 @@ def main():
                ('Alpha and grayscale layouts','alpha-parameters'),
                ('Laplace and Roberts layouts','edge-parameters'),
                ('Farid derivatives and boundaries','farid-parameters'),
-               ('Every covered entry with dtype metadata','metadata-parameters')]
+               ('Every covered entry with dtype metadata','metadata-parameters'),
+               ('Gaussian families and output precision','gaussian-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)
@@ -186,6 +187,11 @@ def main():
               'Axes, boundaries, endian normalization, masks and input movement are included in its report. '
               'Empty axes use owned zero allocation and omit unused image copies; '
               'the [fixed empty-axis experiment](farid-empty-tuning.md) retains separate historical observations.','',
+              'Gaussian-family workloads cover N-D and strided images, channels, all five boundaries, '
+              'typed sigma, endian conversion and float32/float64 output buffers. Native convolution '
+              'retains SciPy coefficient order and double accumulation; float32 results round after '
+              'each axis. Difference of Gaussians reuses its first blur buffer, and unsharp masking '
+              'fuses the subtraction, scale, addition and clipping stages.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -194,7 +200,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all fourteen reports, including this summary. '
+              'to rebuild and reproduce all fifteen reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

@@ -11,7 +11,7 @@ NATIVE_FUNCTIONS = {
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
               'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace',
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
-    'filters': ('gaussian', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
+    'filters': ('gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata',
                 'threshold_niblack','threshold_sauvola','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
@@ -44,6 +44,7 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='filters.difference_of_gaussians':return (image,1.), {}
     if api=='color.rgba2rgb':
         import numpy as np
         return (np.concatenate((image,image[...,:1]),axis=-1),), {}

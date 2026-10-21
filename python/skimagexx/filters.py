@@ -11,16 +11,7 @@ __all__ = ["gaussian", "sobel", "sobel_h", "sobel_v", "prewitt", "prewitt_h", "p
 
 def gaussian(image, sigma=1.0, *, mode='nearest', cval=0, preserve_range=False,
              truncate=4.0, channel_axis=None, out=None):
-    if (native_image(image) and np.isscalar(sigma) and np.isfinite(sigma) and sigma >= 0
-            and isinstance(mode, str) and mode in ('nearest', 'reflect') and channel_axis is None
-            and np.isscalar(truncate) and np.isfinite(truncate) and truncate >= 0
-            and float(sigma)*float(truncate) < 100000):
-        if out is None:
-            return _core.gaussian(image, sigma, mode=mode, preserve_range=preserve_range, truncate=truncate)
-        # Output dtype affects intermediate precision upstream. Dispatch this
-        # option upstream until the native API can write that precision directly.
-    return fallback('filters', 'gaussian', image, sigma, mode=mode, cval=cval,
-                    preserve_range=preserve_range, truncate=truncate, channel_axis=channel_axis, out=out)
+    return _gaussian_nd(image,sigma,mode,cval,preserve_range,truncate,channel_axis,out)
 
 
 def _edge(name, image, mask, axis, mode, cval):
@@ -382,7 +373,7 @@ def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
         # The ordered full-kernel plan preserves upstream cancellation. Larger
         # plans and nonfinite warning stages are explicit compatibility paths.
         if image.ndim>8 or not isinstance(mode,str) or mode not in _FARID_MODES:return forwarded()
-        if not isinstance(cval,(int,float,np.integer,np.floating)) or not _isfinite(cval):return forwarded()
+        if not isinstance(cval,(int,float,np.bool_,np.integer,np.floating)) or not _isfinite(cval):return forwarded()
         border=_FARID_MODES[mode];constant=float(cval)
     else:border=0;constant=0.0
     if len(axes)>1 and image.dtype.kind=='f' and np.geterr()['under']!='ignore':return forwarded()
@@ -432,3 +423,189 @@ def farid_v(image,*,mask=None):
 
 
 __all__ += ['farid','farid_h','farid_v']
+
+
+_GAUSSIAN_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64}
+_GAUSSIAN_MODES={'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
+
+
+def _gaussian_sequence(value,rank):
+    if not isinstance(value,str) and np.iterable(value):
+        result=list(value)
+        if len(result)!=rank:raise RuntimeError('sequence argument must have length equal to input rank')
+        return result
+    return [value]*rank
+
+
+def _gaussian_coefficients(sigma,radius):
+    # Match SciPy's typed scalar and small-array arithmetic. Only coefficient
+    # metadata uses NumPy; every image convolution/normalization runs in C++.
+    variance=sigma*sigma
+    positions=np.arange(-radius,radius+1)
+    weights=np.exp(-.5/variance*positions**2)
+    weights=weights/weights.sum()
+    result=np.ascontiguousarray(weights[::-1],dtype=np.float64)
+    result.flags.writeable=False
+    return result
+
+
+@_lru_cache(maxsize=64,typed=True)
+def _gaussian_cached_coefficients(sigma,radius):
+    return _gaussian_coefficients(sigma,radius)
+
+
+def _gaussian_copy_flags(flags,source,target):
+    if flags&1:np.asarray([np.finfo(np.float64).max]).astype(np.float32)
+    if flags&2:np.asarray([1e-300]).astype(np.float32)
+    if flags&4:
+        bits=np.array([0x7f800001],dtype=np.uint32) if source==np.float32 else np.array([0x7ff0000000000001],dtype=np.uint64)
+        bits.view(source).astype(target)
+
+
+def _gaussian_nd(image,sigma,mode,cval,preserve_range,truncate,channel_axis,out):
+    def forwarded():
+        return fallback('filters','gaussian',image,sigma,mode=mode,cval=cval,preserve_range=preserve_range,
+                        truncate=truncate,channel_axis=channel_axis,out=out)
+    if np.any(np.asarray(sigma)<0.):raise ValueError('Sigma values less than zero are not valid')
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if channel_axis is not None:
+        from collections.abc import Iterable
+        if not isinstance(sigma,Iterable):sigmas=[sigma]*(image.ndim-1)
+        else:sigmas=sigma
+        if len(sigmas)==image.ndim-1:
+            sigmas=list(sigmas);sigmas.insert(channel_axis%image.ndim,0)
+    else:sigmas=sigma
+    preserve=bool(preserve_range)
+    if not preserve and image.ndim==0 and image.dtype.kind=='i':raise TypeError('return arrays must be of ArrayType')
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:native=_core.edge_half(native)
+    if out is not None:
+        if not np.issubdtype(out.dtype,np.floating):raise ValueError(f'dtype of `out` must be float; got {out.dtype!r}.')
+        if type(out) not in (np.ndarray,np.memmap) or out.dtype.type not in (np.float32,np.float64) or not out.flags.writeable:return forwarded()
+        if out.shape!=image.shape:raise RuntimeError('output shape not correct')
+        # Partial aliases and self-overlapping outputs retain upstream's line
+        # update behavior through compatibility dispatch. Exact in-place output
+        # is safe because the native result owns a separate working buffer.
+        strides=sorted((abs(step),length) for step,length in zip(out.strides,out.shape) if length>1)
+        extent=out.itemsize
+        for step,length in strides:
+            if step<extent:return forwarded()
+            extent+=(length-1)*step
+        if np.may_share_memory(image,out):
+            same=(image.dtype==out.dtype and image.shape==out.shape and image.strides==out.strides
+                  and image.__array_interface__['data'][0]==out.__array_interface__['data'][0])
+            if not same:return forwarded()
+        target=np.dtype(out.dtype.type)
+    else:target=np.dtype(np.float32 if native.dtype==np.float32 else np.float64)
+    sigmas=_gaussian_sequence(sigmas,image.ndim);modes=_gaussian_sequence(mode,image.ndim)
+    axes=[];kernels=[];codes=[]
+    for axis,standard_deviation in enumerate(sigmas):
+        if not (isinstance(standard_deviation,(int,float,np.bool_,np.integer,np.floating)) or
+                isinstance(standard_deviation,np.ndarray) and standard_deviation.ndim==0 and standard_deviation.dtype.kind in 'biuf'):return forwarded()
+        if not standard_deviation>1e-15:continue
+        radius=int(truncate*float(standard_deviation)+.5)
+        if radius<0:raise ValueError('Radius must be a nonnegative integer.')
+        if radius>100000:return forwarded()
+        border=modes[axis]
+        if not isinstance(border,str) or border not in _GAUSSIAN_MODES:return forwarded()
+        cache=(type(standard_deviation) in (int,float) and 1e-15<float(standard_deviation)<1e154 and np.geterr()['under']=='ignore')
+        weights=(_gaussian_cached_coefficients if cache else _gaussian_coefficients)(standard_deviation,radius)
+        axes.append(axis);kernels.append(weights);codes.append(_GAUSSIAN_MODES[border])
+    if axes:
+        if not isinstance(cval,(int,float,np.bool_,np.integer,np.floating)):return forwarded()
+        constant=float(cval)
+    else:constant=0.
+    result,flags=_core.gaussian_nd(native,kernels,axes,codes,constant,preserve,target)
+    if out is not None:
+        # NumPy owns output storage and handles its endian/stride copy protocol;
+        # its dtype is already the precision used for all native filter passes.
+        out[...]=result
+        _gaussian_copy_flags(flags,native.dtype.type,target)
+        return out
+    _gaussian_copy_flags(flags,native.dtype.type,target)
+    return result
+
+
+
+def _gaussian_family_image(image,preserve):
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return None
+    if not preserve and image.ndim==0 and image.dtype.kind=='i':raise TypeError('return arrays must be of ArrayType')
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:native=_core.edge_half(native)
+    elif native.dtype.type not in (np.float32,np.float64):native=_core.gaussian_nd(native,[],[],[],0.,bool(preserve),np.dtype(np.float64))[0]
+    if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
+    if native.size:
+        low,high=_core.intensity_bounds(native)
+        if not (_isfinite(low) and _isfinite(high)):return None
+        amplitude=max(abs(low),abs(high))
+        if amplitude>np.finfo(native.dtype).max/16:return None
+    else:low=0.;amplitude=0.
+    return native,low,amplitude
+
+
+def difference_of_gaussians(image,low_sigma,high_sigma=None,*,mode='nearest',cval=0,channel_axis=None,truncate=4.0):
+    def forwarded():return fallback('filters','difference_of_gaussians',image,low_sigma,high_sigma,mode=mode,cval=cval,channel_axis=channel_axis,truncate=truncate)
+    prepared=_gaussian_family_image(image,False)
+    if prepared is None:return forwarded()
+    native=prepared[0]
+    low=np.array(low_sigma,dtype='float',ndmin=1)
+    high=low*1.6 if high_sigma is None else np.array(high_sigma,dtype='float',ndmin=1)
+    spatial=native.ndim-(channel_axis is not None)
+    if len(low)!=1 and len(low)!=spatial:raise ValueError('low_sigma must have length equal to number of spatial dimensions of input')
+    if len(high)!=1 and len(high)!=spatial:raise ValueError('high_sigma must have length equal to number of spatial dimensions of input')
+    low=low*np.ones(spatial);high=high*np.ones(spatial)
+    if any(high<low):raise ValueError('high_sigma must be equal to or larger thanlow_sigma for all axes')
+    first=gaussian(native,low,mode=mode,cval=cval,channel_axis=channel_axis,truncate=truncate)
+    second=gaussian(native,high,mode=mode,cval=cval,channel_axis=channel_axis,truncate=truncate)
+    result=_core.gaussian_difference(first,second)
+    return result[()] if result.ndim==0 else result
+
+
+def unsharp_mask(image,radius=1.0,amount=1.0,preserve_range=False,*,channel_axis=None):
+    def forwarded():return fallback('filters','unsharp_mask',image,radius,amount,preserve_range,channel_axis=channel_axis)
+    prepared=_gaussian_family_image(image,preserve_range)
+    if prepared is None:return forwarded()
+    native,minimum,amplitude=prepared
+    channels=None;effective_axis=None;too_many=False
+    if channel_axis is not None:
+        channels=image.shape[channel_axis]
+        if not channels:return np.empty_like(native,dtype=native.dtype.type)
+        effective_axis=0 if channel_axis<0 else channel_axis
+        if channel_axis<0 and channels<native.shape[0]:return forwarded()
+        too_many=channel_axis<0 and channels>native.shape[0]
+    if channel_axis is not None and native.ndim==1 and np.any(np.asarray(radius)<0.):raise ValueError('Sigma values less than zero are not valid')
+    if not isinstance(amount,(int,float,np.bool_,np.integer,np.floating)) or not _isfinite(amount):return forwarded()
+    if np.geterr()['under']!='ignore':return forwarded()
+    probe=np.empty(0,dtype=native.dtype);blur_probe=np.empty(0,dtype=native.dtype.type)
+    product_dtype=np.result_type(probe,amount)
+    if product_dtype not in (np.dtype(np.float32),np.dtype(np.float64)):return forwarded()
+    value=float(amount)
+    maximum=np.finfo(product_dtype).max
+    if abs(value)>maximum or amplitude and abs(value)>maximum/(4*amplitude):return forwarded()
+    product=(probe-blur_probe)*amount
+    result_dtype=(probe+product).dtype
+    sigmas=radius
+    if channel_axis is not None:
+        sigmas=_gaussian_sequence(radius,native.ndim-1)
+        if channels>1:
+            for parameter in sigmas:
+                if isinstance(parameter,np.integer):
+                    if int(parameter)*int(parameter)>np.iinfo(parameter.dtype).max:return forwarded()
+                elif isinstance(parameter,np.floating):
+                    number=float(parameter);limits=np.finfo(parameter.dtype)
+                    if not _isfinite(number) or number>1e-15 and not np.sqrt(limits.tiny)<=abs(number)<=np.sqrt(limits.max):return forwarded()
+        sigmas=list(sigmas);sigmas.insert(effective_axis,0)
+        target=np.dtype(native.dtype.type)
+    else:target=result_dtype
+    blurred=gaussian(native,sigmas,mode='reflect')
+    if too_many:raise IndexError(f'index {native.shape[0]} is out of bounds for axis 0 with size {native.shape[0]}')
+    if channel_axis is not None and image.ndim==1 and channels and not preserve_range:raise TypeError('return arrays must be of ArrayType')
+    lower=-1. if minimum<0 else 0.
+    result=_core.gaussian_unsharp(native,blurred,value,product.dtype==np.float64,not preserve_range,lower,target)
+    if result.ndim==0:
+        if not preserve_range:raise TypeError('return arrays must be of ArrayType')
+        return result[()]
+    return result
+
+
+__all__ += ['difference_of_gaussians','unsharp_mask']

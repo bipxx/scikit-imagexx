@@ -109,17 +109,13 @@ def test_pipeline_can_swap_backend():
 
 def test_explicit_fallback_for_unsupported_options():
     a = np.arange(81, dtype=np.uint16).reshape(9, 9)
-    with pytest.raises(NotImplementedError):
-        xx.filters.gaussian(a, mode='wrap')
-    xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning):
-        actual = xx.filters.gaussian(a, mode='wrap')
-    np.testing.assert_array_equal(actual, reference_filters.gaussian(a, mode='wrap'))
+    actual = xx.filters.gaussian(a, mode='wrap')
+    np.testing.assert_allclose(actual, reference_filters.gaussian(a, mode='wrap'),rtol=2e-13,atol=2e-13)
     out = np.empty(a.shape)
-    with pytest.warns(xx.FallbackWarning):
-        result = xx.filters.gaussian(a, out=out)
+    result = xx.filters.gaussian(a, out=out)
     assert result is out
-    np.testing.assert_array_equal(out, reference_filters.gaussian(a))
+    np.testing.assert_allclose(out, reference_filters.gaussian(a),rtol=2e-13,atol=2e-13)
+    xx.set_fallback_enabled(True)
     with pytest.warns(xx.FallbackWarning):
         actual = xx.filters.threshold_otsu(a, nbins=32)
     assert actual == reference_filters.threshold_otsu(a, nbins=32)

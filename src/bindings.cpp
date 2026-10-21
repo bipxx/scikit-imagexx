@@ -1,3 +1,4 @@
+#include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
@@ -676,6 +677,45 @@ PYBIND11_MODULE(_core, m) {
         shape(image,true);
         return dispatch(image,[](const auto* p, auto* out, auto h, auto w) { skimagexx::rgb2gray_into(p,out,h,w); });
     },py::arg("image"));
+    m.def("gaussian_difference", [](py::array first,py::array second) {
+        const auto type=pixel_type(first.dtype());
+        if(!first.dtype().equal(second.dtype()) || first.ndim()!=second.ndim() || !(first.flags()&py::array::c_style) || !(second.flags()&py::array::c_style) || !first.writeable() || !first.attr("flags").attr("aligned").cast<bool>() || !second.attr("flags").attr("aligned").cast<bool>())throw py::type_error("matching contiguous writable difference buffers required");
+        for(py::ssize_t axis=0;axis<first.ndim();++axis)if(first.shape(axis)!=second.shape(axis))throw py::value_error("difference shape mismatch");
+        {py::gil_scoped_release release;skimagexx::gaussian_difference_into(first.data(),second.data(),first.mutable_data(),std::size_t(first.size()),type);}
+        return first;
+    });
+    m.def("gaussian_unsharp", [](py::array image,py::array blur,double amount,bool wide,bool clip,double lower,py::dtype dtype) {
+        const auto source=pixel_type(image.dtype()),target=pixel_type(dtype);
+        if(!image.dtype().equal(blur.dtype()) || image.ndim()!=blur.ndim() || !(image.flags()&py::array::c_style) || !(blur.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>() || !blur.attr("flags").attr("aligned").cast<bool>())throw py::type_error("matching contiguous unsharp buffers required");
+        std::vector<py::ssize_t> dimensions;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {if(image.shape(axis)!=blur.shape(axis))throw py::value_error("blur shape mismatch");dimensions.push_back(image.shape(axis));}
+        py::array result(dtype,dimensions);
+        {py::gil_scoped_release release;skimagexx::gaussian_unsharp_into(image.data(),blur.data(),result.mutable_data(),std::size_t(image.size()),source,target,amount,wide,clip,lower);}
+        return result;
+    });
+    m.def("gaussian_nd", [](py::array image,py::list kernels,const std::vector<std::size_t>& axes,
+            const std::vector<int>& modes,double cval,bool preserve,py::dtype output_dtype) {
+        const auto source=pixel_type(image.dtype()),target=pixel_type(output_dtype);
+        if(target!=skimagexx::PixelType::float32 && target!=skimagexx::PixelType::float64)throw py::type_error("floating Gaussian output required");
+        if(axes.size()!=std::size_t(kernels.size()) || modes.size()!=axes.size())throw py::value_error("one Gaussian kernel and mode per axis required");
+        auto input=py::array::ensure(image,py::array::c_style);
+        if(!input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")().cast<py::array>();
+        std::vector<py::ssize_t> dimensions;std::vector<std::size_t> shape;
+        for(py::ssize_t axis=0;axis<input.ndim();++axis) {dimensions.push_back(input.shape(axis));shape.push_back(std::size_t(input.shape(axis)));}
+        std::vector<skimagexx::GaussianPass> passes;
+        for(std::size_t j=0;j<axes.size();++j) {
+            auto weights=py::array_t<double,py::array::c_style|py::array::forcecast>::ensure(kernels[j]);
+            if(!weights || weights.ndim()!=1)throw py::type_error("one-dimensional Gaussian coefficients required");
+            skimagexx::GaussianPass pass;pass.axis=axes[j];pass.border=static_cast<skimagexx::GaussianBorder>(modes[j]);pass.cval=cval;
+            pass.weights.resize(std::size_t(weights.size()));
+            if(weights.size())std::memcpy(pass.weights.data(),weights.data(),std::size_t(weights.size())*sizeof(double));
+            passes.push_back(std::move(pass));
+        }
+        py::array result(output_dtype,dimensions);skimagexx::ConversionInfo info;
+        {py::gil_scoped_release release;info=skimagexx::gaussian_nd_into(input.data(),result.mutable_data(),source,target,shape,passes,preserve);}
+        const unsigned flags=unsigned(info.floating_overflow)|(unsigned(info.floating_underflow)<<1)|(unsigned(info.invalid_float_cast)<<2);
+        return py::make_tuple(result,flags);
+    });
     m.def("gaussian", [](py::array image, double sigma, const std::string& mode, bool preserve_range, double truncate) {
         shape(image,false);
         skimagexx::Border border;

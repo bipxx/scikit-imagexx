@@ -9,7 +9,7 @@ description = "A measured, incremental C++ image processing library"
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.24"]
 license = "BSD-3-Clause"
-license-files = ["LICENSE", "third_party/scikit-image-LICENSE.txt", "third_party/numpy-LICENSE.txt"]
+license-files = ["LICENSE", "third_party/scikit-image-LICENSE.txt", "third_party/numpy-LICENSE.txt", "third_party/scipy-ndimage-LICENSE.txt"]
 
 [project.optional-dependencies]
 compat = ["scikit-image==0.26.0"]

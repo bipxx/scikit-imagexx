@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **88 partially native
+The reference is scikit-image **0.26.0**. There are currently **90 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 360 remain pending native implementation and dedicated parity tests.
+export list; 358 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -37,7 +37,9 @@ This is not full scikit-image coverage.
 | `deltaE_ciede94`, `deltaE_ciede2000`, `deltaE_cmc` | Same raw Lab input dtypes, broadcasting and extra-channel handling; finite Python int/float or NumPy float32 scalar weights; upstream channel-axis semantics | Fused weighted metrics; double hue-cancellation stage; dtype-specific intermediate rounding and promoted trigonometry; CMC returns float64 for two float32 scalar colors |
 | `convert_colorspace` | All nine upstream spaces and all 81 routes; input contracts of the participating native transforms | Same route through RGB and intermediate rounding/allocation; RGB-to-RGB returns the original object without validation or processing |
 | `xyz_tristimulus_values` | All upstream white-point combinations and NumPy output dtypes | Metadata helper; no image kernel |
-| `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
+| `gaussian` | N-D real arrays, scalars and empty images; all 12 real dtypes; endian/strided storage; scalar/per-axis sigma, channels, all five boundary modes and grid aliases, preserve-range and floating output buffers | Ordered separable convolution with double accumulation, typed-sigma kernel rounding and output precision after every axis; preserves output identity and casting warnings |
+| `difference_of_gaussians` | Same real image storage; scalar/per-axis low/high sigma, channels and boundary modes | Two native blurs with upstream normalization, output dtype and subtraction stages |
+| `unsharp_mask` | Finite real image working ranges; scalar/per-axis radius, finite scalar amount, preserve-range and channel axes | Native blur and fused sharpening with upstream scalar promotion, float32 rounding and clipping; exceptional arithmetic and upstream channel loops that leave output regions unwritten require explicit fallback |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
 | `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
 | `farid`, `farid_h`, `farid_v` | All 12 real image dtypes, endian/native storage, arrays/memmaps and eroded numeric masks; generic N-D images up to eight dimensions, ordered/repeated/negative axes, all five boundary modes and grid aliases; directional nonempty 2D images | Ordered full convolution with float64 accumulation, float32 gradient rounding before magnitude stages, upstream dimension normalization and signed zeros; optional global workers and runtime AVX2 |
