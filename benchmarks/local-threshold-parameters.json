@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-10-21T14:16:02.040262+00:00",
+    "timestamp_utc": "2026-10-21T15:05:29.762796+00:00",
     "platform": "Windows-11-10.0.26200-SP0",
     "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
     "reference": "0.26.0",
@@ -9,7 +9,7 @@
     "fallback_enabled": false,
     "reference_thread_pools": 1,
     "repeat": 7,
-    "source_sha256": "0aa1e5115d1488e312696a4bae6a425dab7e07e5eda4d9e379c683485abe4d63",
+    "source_sha256": "886c6d1439c2338af8d2407dee40287fb01e8cfa3b6dff95a80ea2a5b5686343",
     "source_hash_schema": "cpp-python-build-posix-lf-v2",
     "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
     "scope": "Warmed allocation-inclusive Python API; raw numeric input range; exact shape/dtype and bounded numerical parity before every timing"
@@ -39,32 +39,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.6489,
-      "cpp_ms": 4.134666666666667,
-      "speedup": 2.091801031925185,
+      "reference_ms": 10.121,
+      "cpp_ms": 2.83636,
+      "speedup": 3.5683058568023807,
       "samples_ms": [
         [
-          8.0932,
-          8.5287,
-          7.9266,
-          9.0105,
-          8.6489,
-          8.9432,
-          8.853
+          10.121,
+          11.4403,
+          8.97,
+          9.6128,
+          20.6675,
+          10.572,
+          9.8367
         ],
         [
-          3.7394333333333334,
-          3.6813333333333333,
-          3.9266333333333336,
-          4.6201,
-          4.3326,
-          4.134666666666667,
-          4.4747
+          2.9688,
+          2.22944,
+          2.69334,
+          2.8179,
+          4.23082,
+          2.83636,
+          3.10748
         ]
       ],
       "loops": [
         1,
-        3
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -95,32 +95,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.9385,
-      "cpp_ms": 3.5597666666666665,
-      "speedup": 2.7918964726152464,
+      "reference_ms": 11.1527,
+      "cpp_ms": 2.685675,
+      "speedup": 4.152661807553036,
       "samples_ms": [
         [
-          10.2627,
-          9.9385,
-          9.4101,
-          10.1066,
-          11.5978,
-          9.8808,
-          8.8362
+          10.6602,
+          13.3281,
+          12.0327,
+          11.1527,
+          9.4981,
+          14.3393,
+          9.7967
         ],
         [
-          3.0569666666666664,
-          3.4704666666666664,
-          3.169,
-          3.7727,
-          3.7478,
-          3.9786,
-          3.5597666666666665
+          3.261125,
+          2.574875,
+          2.72405,
+          2.359925,
+          2.895225,
+          2.685675,
+          2.2682
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -151,32 +151,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.5115,
-      "cpp_ms": 3.8114666666666666,
-      "speedup": 2.233129853774575,
+      "reference_ms": 10.2086,
+      "cpp_ms": 2.652725,
+      "speedup": 3.8483446267517363,
       "samples_ms": [
         [
-          7.7585,
-          7.7098,
-          7.9731,
-          8.5115,
-          9.4267,
-          9.4143,
-          8.6561
+          12.6598,
+          10.2086,
+          9.9378,
+          10.2704,
+          9.6936,
+          12.388,
+          9.1836
         ],
         [
-          3.7323333333333335,
-          3.8114666666666666,
-          3.6991,
-          3.7453333333333334,
-          3.9606,
-          3.9485666666666663,
-          4.1021
+          3.51365,
+          2.097975,
+          2.474125,
+          2.652725,
+          2.383725,
+          2.86685,
+          2.65605
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -207,32 +207,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.4667,
-      "cpp_ms": 2.8505666666666665,
-      "speedup": 2.9701813674474082,
+      "reference_ms": 9.1041,
+      "cpp_ms": 3.62522,
+      "speedup": 2.5113234507147153,
       "samples_ms": [
         [
-          9.1582,
-          8.0,
-          8.3841,
-          8.4667,
-          9.4355,
-          8.6965,
-          7.9851
+          8.5779,
+          9.0676,
+          11.4928,
+          9.1041,
+          10.221,
+          8.2272,
+          10.2195
         ],
         [
-          3.1856333333333335,
-          3.1177666666666664,
-          2.8505666666666665,
-          2.7693,
-          3.0333333333333337,
-          2.4193,
-          2.0156666666666667
+          3.65996,
+          3.64084,
+          3.68482,
+          3.2725,
+          3.62522,
+          3.36982,
+          3.51084
         ]
       ],
       "loops": [
         1,
-        3
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -263,32 +263,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.2132,
-      "cpp_ms": 4.1902333333333335,
-      "speedup": 2.198731971966557,
+      "reference_ms": 9.1553,
+      "cpp_ms": 2.47858,
+      "speedup": 3.693768205988913,
       "samples_ms": [
         [
-          9.2132,
-          8.7841,
-          8.6895,
-          8.9089,
-          11.658,
-          10.2677,
-          11.3264
+          9.3987,
+          8.2733,
+          8.0796,
+          9.1553,
+          8.391,
+          10.0563,
+          9.1832
         ],
         [
-          4.003833333333334,
-          4.180666666666666,
-          4.1902333333333335,
-          4.029433333333333,
-          4.4665,
-          4.3281,
-          4.542666666666667
+          2.74712,
+          2.45104,
+          2.64588,
+          2.56344,
+          2.26364,
+          2.47858,
+          1.89388
         ]
       ],
       "loops": [
         1,
-        3
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -319,32 +319,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.589,
-      "cpp_ms": 5.3497,
-      "speedup": 2.1662896984877658,
+      "reference_ms": 11.1387,
+      "cpp_ms": 4.42708,
+      "speedup": 2.5160376591342373,
       "samples_ms": [
         [
-          14.4908,
-          8.4105,
-          10.444,
-          10.9736,
-          11.589,
-          12.5171,
-          13.8767
+          11.1387,
+          14.7967,
+          9.5211,
+          10.4515,
+          11.9942,
+          10.7369,
+          11.8744
         ],
         [
-          6.1783,
-          4.00365,
-          6.0778,
-          5.3497,
-          4.414,
-          6.26,
-          3.9645
+          4.29808,
+          4.47452,
+          4.47784,
+          4.42708,
+          3.707,
+          4.56948,
+          3.79926
         ]
       ],
       "loops": [
         1,
-        2
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -375,32 +375,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.1299,
-      "cpp_ms": 5.1344,
-      "speedup": 2.752006076659395,
+      "reference_ms": 13.7613,
+      "cpp_ms": 3.6642,
+      "speedup": 3.7556083183232354,
       "samples_ms": [
         [
-          13.9292,
-          19.0957,
-          15.8116,
-          18.1695,
-          14.1299,
-          12.0139,
-          13.2135
+          15.2325,
+          12.0546,
+          13.7613,
+          14.5529,
+          13.7175,
+          14.734,
+          12.4711
         ],
         [
-          5.50265,
-          6.14995,
-          5.14015,
-          4.21545,
-          3.653,
-          5.1344,
-          3.19695
+          4.9057,
+          3.6642,
+          4.4812,
+          3.6439333333333335,
+          3.3125,
+          4.3202,
+          3.6530666666666667
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -431,32 +431,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 15.6783,
-      "cpp_ms": 7.29825,
-      "speedup": 2.148227314767239,
+      "reference_ms": 16.9933,
+      "cpp_ms": 6.013466666666667,
+      "speedup": 2.8258741491319483,
       "samples_ms": [
         [
-          15.7123,
-          15.8255,
-          15.6783,
-          17.9074,
-          13.157,
-          14.2882,
-          14.2937
+          14.7348,
+          15.9842,
+          17.7656,
+          16.9933,
+          21.005,
+          17.8991,
+          13.0967
         ],
         [
-          7.84265,
-          8.93355,
-          7.29825,
-          9.25805,
-          5.85035,
-          6.4652,
-          4.67105
+          5.343566666666667,
+          7.076533333333333,
+          6.921133333333333,
+          5.0878,
+          5.789233333333333,
+          6.8457,
+          6.013466666666667
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -487,32 +487,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.7444,
-      "cpp_ms": 2.278075,
-      "speedup": 3.838504000087794,
+      "reference_ms": 9.8329,
+      "cpp_ms": 3.1908333333333334,
+      "speedup": 3.0816087751371115,
       "samples_ms": [
         [
-          7.1115,
-          7.5774,
-          10.5845,
-          9.3181,
-          9.5149,
-          7.5942,
-          8.7444
+          8.4371,
+          8.035,
+          12.7091,
+          9.8329,
+          10.1676,
+          9.482,
+          10.5644
         ],
         [
-          2.001275,
-          2.94315,
-          2.711975,
-          2.221125,
-          2.278075,
-          1.810025,
-          4.2805
+          2.4086666666666665,
+          4.408833333333333,
+          3.1908333333333334,
+          4.0896,
+          4.223333333333333,
+          2.8711,
+          2.9775333333333336
         ]
       ],
       "loops": [
         1,
-        4
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -543,32 +543,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.7728,
-      "cpp_ms": 3.6057,
-      "speedup": 2.9877138974401642,
+      "reference_ms": 12.7645,
+      "cpp_ms": 3.6498,
+      "speedup": 3.4973149213655543,
       "samples_ms": [
         [
-          11.1768,
-          10.451,
-          12.0961,
-          10.7728,
-          9.0385,
-          11.0238,
-          9.6253
+          10.9501,
+          12.9613,
+          11.672,
+          14.7005,
+          12.7645,
+          9.9469,
+          16.7107
         ],
         [
-          3.479025,
-          4.33665,
-          3.6057,
-          3.84495,
-          3.1705,
-          3.2419,
-          4.7955
+          3.4449,
+          4.670333333333333,
+          4.1335,
+          3.4296333333333333,
+          4.4182,
+          3.6498,
+          3.6183666666666667
         ]
       ],
       "loops": [
         1,
-        4
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -597,530 +597,530 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.1028,
-      "cpp_ms": 2.720075,
-      "speedup": 3.7141622933191183,
+      "reference_ms": 10.6806,
+      "cpp_ms": 2.6283333333333334,
+      "speedup": 4.063639822447685,
       "samples_ms": [
         [
-          10.5231,
+          11.6806,
+          10.3153,
+          10.6806,
+          11.0432,
+          11.2648,
+          8.3772,
+          9.5515
+        ],
+        [
+          3.3942,
+          2.6283333333333334,
+          2.093433333333333,
+          2.7584,
+          2.0309,
+          3.4981666666666666,
+          2.3730666666666664
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 16.0841,
+      "cpp_ms": 4.391466666666667,
+      "speedup": 3.6625804590721396,
+      "samples_ms": [
+        [
+          15.0629,
+          16.3373,
+          18.6523,
+          16.5901,
+          14.7627,
+          16.0841,
+          13.5435
+        ],
+        [
+          4.391466666666667,
+          3.9620666666666664,
+          4.8739333333333335,
+          5.302633333333333,
+          3.4984,
+          3.5353333333333334,
+          5.003633333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "strided",
+      "workload": "strided",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 14.6264,
+      "cpp_ms": 3.69632,
+      "speedup": 3.9570167085100856,
+      "samples_ms": [
+        [
+          10.8814,
+          14.6264,
+          15.0002,
+          17.1515,
+          15.1383,
+          12.8682,
+          11.3498
+        ],
+        [
+          3.14604,
+          3.69632,
+          3.94522,
+          4.30962,
+          5.22322,
+          3.64442,
+          3.50482
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "strided",
+      "workload": "strided",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 17.1696,
+      "cpp_ms": 4.767133333333333,
+      "speedup": 3.6016613758093614,
+      "samples_ms": [
+        [
+          17.0156,
+          17.3688,
+          20.2872,
+          17.5867,
+          16.6495,
+          15.5286,
+          17.1696
+        ],
+        [
+          5.2773666666666665,
+          5.2363,
+          5.014466666666667,
+          4.767133333333333,
+          4.2168,
+          3.1504,
+          4.169033333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 19.308,
+      "cpp_ms": 3.9676,
+      "speedup": 4.86641798568404,
+      "samples_ms": [
+        [
+          23.8245,
+          21.6157,
+          19.6153,
+          19.308,
+          15.1801,
+          14.2448,
+          15.6918
+        ],
+        [
+          5.383466666666667,
+          3.4456666666666664,
+          3.9676,
+          4.615233333333333,
+          2.5528,
+          4.7928,
+          3.0496333333333334
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 22.233,
+      "cpp_ms": 4.2151,
+      "speedup": 5.274607957106594,
+      "samples_ms": [
+        [
+          22.233,
+          20.9184,
+          23.4311,
+          22.8363,
+          21.237,
+          22.3504,
+          20.1666
+        ],
+        [
+          3.3784666666666667,
+          3.9461,
+          3.5442,
+          4.2151,
+          4.2803,
+          4.3841,
+          4.2867
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 32.0878,
+      "cpp_ms": 8.1163,
+      "speedup": 3.953500979510368,
+      "samples_ms": [
+        [
+          24.6336,
+          31.9002,
+          27.3964,
+          33.7322,
+          32.0878,
+          34.0838,
+          40.4812
+        ],
+        [
+          8.1163,
+          9.2971,
+          6.9472,
+          8.5208,
+          6.9735,
+          6.8418,
+          12.3924
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 37.1373,
+      "cpp_ms": 11.3292,
+      "speedup": 3.2780160999894083,
+      "samples_ms": [
+        [
+          32.5099,
+          33.5889,
+          37.7755,
+          37.1373,
+          43.0492,
+          35.8726,
+          50.8264
+        ],
+        [
+          9.0195,
+          11.5673,
+          9.7716,
+          13.1566,
+          13.6714,
+          11.3292,
+          10.9605
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-15",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "15"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 21.4944,
+      "cpp_ms": 5.56365,
+      "speedup": 3.863363079992451,
+      "samples_ms": [
+        [
+          26.8965,
+          17.3813,
+          25.5471,
+          24.4947,
+          21.4944,
+          18.6744,
+          20.5769
+        ],
+        [
+          6.05295,
+          5.56365,
+          5.90285,
+          5.5334,
+          5.7478,
+          5.2509,
+          4.57695
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-15",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "15"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 11.3453,
+      "cpp_ms": 4.1598,
+      "speedup": 2.727366700322131,
+      "samples_ms": [
+        [
+          20.6497,
+          15.8005,
+          13.1245,
+          11.298,
           9.6795,
-          10.855,
-          8.9523,
-          7.2084,
-          10.1028,
-          11.4098
+          11.3453,
+          9.5345
         ],
         [
-          2.3713,
-          3.1946,
-          3.109125,
-          2.48365,
-          2.720075,
-          2.165175,
-          4.8473
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "reversed",
-      "workload": "reversed",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 11.4593,
-      "cpp_ms": 4.14215,
-      "speedup": 2.766510145697283,
-      "samples_ms": [
-        [
-          11.3117,
-          13.0862,
-          10.4557,
-          12.1942,
-          14.7258,
-          11.4593,
-          11.1292
-        ],
-        [
-          3.64455,
-          4.747375,
-          3.413125,
-          4.14215,
-          4.982475,
-          4.573,
-          3.45355
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 8.3905,
-      "cpp_ms": 2.32048,
-      "speedup": 3.615846721367993,
-      "samples_ms": [
-        [
-          8.0312,
-          7.8432,
-          10.0917,
-          9.9103,
-          8.3905,
-          8.1716,
-          9.7664
-        ],
-        [
-          2.27834,
-          2.34852,
-          2.19672,
-          2.38614,
-          2.66666,
-          2.32048,
-          2.09486
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.9937,
-      "cpp_ms": 3.846625,
-      "speedup": 3.3779482013453355,
-      "samples_ms": [
-        [
-          10.6223,
-          12.9937,
-          13.3275,
-          11.6634,
-          14.8296,
-          16.4231,
-          11.3284
-        ],
-        [
-          4.3181,
-          3.576625,
-          3.4407,
-          3.846625,
-          3.789625,
-          4.82265,
-          4.978475
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 16.6394,
-      "cpp_ms": 3.6574,
-      "speedup": 4.549516049652758,
-      "samples_ms": [
-        [
-          16.6394,
-          16.7591,
-          12.7795,
-          16.6797,
-          14.2472,
-          13.6363,
-          20.0659
-        ],
-        [
-          4.739075,
-          2.0671,
-          2.0715,
-          4.0123,
-          4.344625,
-          1.9125,
-          3.6574
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 21.1221,
-      "cpp_ms": 3.8582,
-      "speedup": 5.474599554196257,
-      "samples_ms": [
-        [
-          21.6304,
-          20.9102,
-          19.0423,
-          21.1221,
-          20.2699,
-          21.8055,
-          22.4607
-        ],
-        [
-          3.76825,
-          3.61465,
-          3.8136,
-          3.8582,
-          3.8682,
-          3.9814,
-          4.2954
+          5.27575,
+          4.84805,
+          2.85705,
+          4.41435,
+          3.0295,
+          2.35655,
+          4.1598
         ]
       ],
       "loops": [
         1,
         2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        1,
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
-      "window": [
-        1,
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 26.268,
-      "cpp_ms": 7.3081,
-      "speedup": 3.594367893159645,
-      "samples_ms": [
-        [
-          25.6957,
-          26.268,
-          30.8511,
-          31.8362,
-          31.0096,
-          25.1176,
-          26.1624
-        ],
-        [
-          7.1914,
-          7.0497,
-          7.3116,
-          11.6762,
-          9.8609,
-          7.3081,
-          7.2902
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        1,
-        512,
-        512
-      ],
-      "dtype": "uint8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
-      "window": [
-        1,
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 26.7741,
-      "cpp_ms": 7.3638,
-      "speedup": 3.6359080909313124,
-      "samples_ms": [
-        [
-          23.7941,
-          25.0875,
-          26.7741,
-          27.5716,
-          26.7832,
-          23.2427,
-          27.3625
-        ],
-        [
-          7.3659,
-          7.5329,
-          7.5494,
-          7.3638,
-          6.70655,
-          6.2343,
-          6.54895
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-15",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "15"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 13.9635,
-      "cpp_ms": 3.35355,
-      "speedup": 4.163796573780024,
-      "samples_ms": [
-        [
-          14.6864,
-          13.9635,
-          12.1514,
-          10.6053,
-          14.4303,
-          14.188,
-          11.2936
-        ],
-        [
-          2.923875,
-          4.20355,
-          3.021875,
-          2.82805,
-          3.35355,
-          3.9189,
-          3.59725
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-15",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "15"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.9223,
-      "cpp_ms": 3.060525,
-      "speedup": 4.222249450666143,
-      "samples_ms": [
-        [
-          12.9223,
-          16.0271,
-          13.1789,
-          12.896,
-          12.8791,
-          14.7576,
-          11.1476
-        ],
-        [
-          3.48555,
-          3.060525,
-          2.88935,
-          2.9729,
-          3.636925,
-          2.856675,
-          3.0972
-        ]
-      ],
-      "loops": [
-        1,
-        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1151,32 +1151,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.1214,
-      "cpp_ms": 2.69264,
-      "speedup": 3.7589131855725237,
+      "reference_ms": 13.9632,
+      "cpp_ms": 3.4947,
+      "speedup": 3.9955360975191008,
       "samples_ms": [
         [
-          10.9433,
-          8.6178,
-          15.2563,
-          10.026,
-          9.6317,
-          10.1214,
-          10.7054
+          10.48,
+          15.8327,
+          11.8893,
+          13.9632,
+          14.2238,
+          14.7779,
+          12.8572
         ],
         [
-          2.69264,
-          2.67228,
-          3.00488,
-          2.99898,
-          2.66138,
-          2.36386,
-          3.75026
+          3.51225,
+          3.4379,
+          3.4947,
+          2.722325,
+          4.11065,
+          3.4868,
+          3.95325
         ]
       ],
       "loops": [
         1,
-        5
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1207,32 +1207,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 16.6858,
-      "cpp_ms": 5.075666666666667,
-      "speedup": 3.2874105207854467,
+      "reference_ms": 11.507,
+      "cpp_ms": 3.54275,
+      "speedup": 3.2480417754569193,
       "samples_ms": [
         [
-          14.0559,
-          16.5633,
-          19.0236,
-          18.718,
-          16.9663,
-          13.1539,
-          16.6858
+          18.1593,
+          11.507,
+          10.5733,
+          11.0972,
+          9.7543,
+          12.7468,
+          14.1277
         ],
         [
-          5.530166666666667,
-          4.022433333333334,
-          4.816733333333333,
-          6.728133333333333,
-          4.758133333333333,
-          5.075666666666667,
-          5.388666666666667
+          3.66645,
+          3.33875,
+          3.7445,
+          3.01075,
+          2.4472,
+          3.5661,
+          3.54275
         ]
       ],
       "loops": [
         1,
-        3
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -1263,27 +1263,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 13.1351,
-      "cpp_ms": 3.607225,
-      "speedup": 3.641330939988495,
+      "reference_ms": 11.2169,
+      "cpp_ms": 3.48935,
+      "speedup": 3.2146101709487445,
       "samples_ms": [
         [
-          17.8929,
-          13.8896,
-          13.1351,
-          12.9111,
-          13.9715,
-          11.5233,
-          11.4634
+          12.2662,
+          8.6994,
+          11.2169,
+          9.7014,
+          11.8787,
+          16.2408,
+          10.7159
         ],
         [
-          5.60585,
-          3.62915,
-          3.607225,
-          2.527,
-          2.342125,
-          3.673175,
-          2.28025
+          3.160125,
+          3.229325,
+          3.48935,
+          3.762625,
+          2.828275,
+          4.430075,
+          3.55705
         ]
       ],
       "loops": [
@@ -1319,27 +1319,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.1723,
-      "cpp_ms": 5.27585,
-      "speedup": 3.444430755233754,
+      "reference_ms": 15.4511,
+      "cpp_ms": 3.7968,
+      "speedup": 4.069505899705015,
       "samples_ms": [
         [
-          18.1723,
-          18.2433,
-          14.321,
-          13.7992,
-          16.5688,
-          18.8545,
-          20.443
+          14.498,
+          15.4511,
+          14.11,
+          16.6439,
+          12.0285,
+          21.9336,
+          20.5484
         ],
         [
-          5.59815,
-          3.97835,
-          6.03825,
-          4.4357,
-          4.2945,
-          5.27585,
-          6.522
+          3.98935,
+          3.4558,
+          3.5698,
+          3.7968,
+          3.31345,
+          4.38455,
+          5.8193
         ]
       ],
       "loops": [
@@ -1375,27 +1375,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 20.0127,
-      "cpp_ms": 6.50745,
-      "speedup": 3.0753520964433068,
+      "reference_ms": 16.4849,
+      "cpp_ms": 6.1917,
+      "speedup": 2.662419044850364,
       "samples_ms": [
         [
-          21.1587,
-          19.6997,
-          23.9309,
-          21.8329,
-          15.746,
-          20.0127,
-          18.8002
+          19.0612,
+          16.8308,
+          16.4849,
+          16.1327,
+          15.843,
+          20.0382,
+          13.6881
         ],
         [
-          6.50745,
-          6.6093,
-          7.4024,
-          5.12415,
-          5.02495,
-          5.08015,
-          6.9871
+          7.1081,
+          6.1917,
+          6.0236,
+          6.00165,
+          5.37095,
+          6.398,
+          6.4151
         ]
       ],
       "loops": [
@@ -1431,915 +1431,915 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 19.6817,
-      "cpp_ms": 7.09685,
-      "speedup": 2.773300830650218,
-      "samples_ms": [
-        [
-          16.2321,
-          20.6441,
-          19.4958,
-          19.1132,
-          19.9462,
-          19.6817,
-          23.7001
-        ],
-        [
-          6.49235,
-          6.8366,
-          7.9094,
-          6.0923,
-          7.4843,
-          7.09685,
-          7.20665
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-(3, 31)",
-      "window": [
-        3,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "(3, 31)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 11.689,
-      "cpp_ms": 2.9652,
-      "speedup": 3.9420612437609606,
-      "samples_ms": [
-        [
-          12.9199,
-          10.3007,
-          11.1873,
-          11.7159,
-          13.6068,
-          11.5256,
-          11.689
-        ],
-        [
-          3.8007333333333335,
-          2.9652,
-          2.7450666666666663,
-          3.1078,
-          2.9966666666666666,
-          2.8299,
-          2.4020333333333337
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-(3, 31)",
-      "window": [
-        3,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "(3, 31)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 17.6516,
-      "cpp_ms": 3.5331,
-      "speedup": 4.99606577792873,
-      "samples_ms": [
-        [
-          17.6516,
-          19.9622,
-          22.1668,
-          18.0084,
-          13.0844,
-          15.5725,
-          12.5148
-        ],
-        [
-          5.2312,
-          5.03165,
-          5.2093,
-          3.5331,
-          2.47885,
-          3.0256,
-          3.19465
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "reversed",
-      "workload": "reversed",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 14.6629,
-      "cpp_ms": 4.907633333333333,
-      "speedup": 2.987774147756217,
-      "samples_ms": [
-        [
-          12.2282,
-          14.1388,
-          16.6867,
-          15.8524,
-          14.6629,
-          15.0841,
-          13.6584
-        ],
-        [
-          4.809333333333333,
-          5.3831,
-          4.907633333333333,
-          4.9305,
-          4.410866666666667,
-          4.199133333333333,
-          5.389566666666667
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "reversed",
-      "workload": "reversed",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 13.1992,
-      "cpp_ms": 3.8938,
-      "speedup": 3.389799167907956,
-      "samples_ms": [
-        [
-          18.6328,
-          13.1992,
-          13.0365,
-          10.8811,
-          15.9434,
-          15.0249,
-          11.4728
-        ],
-        [
-          5.353,
-          3.10055,
-          4.19485,
-          3.96135,
-          3.8938,
-          3.61875,
-          3.2055
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 15.0919,
-      "cpp_ms": 5.3668,
-      "speedup": 2.812085414026981,
-      "samples_ms": [
-        [
-          13.7249,
-          15.0919,
-          21.169,
-          15.2266,
-          20.6374,
-          13.4205,
-          14.9127
-        ],
-        [
-          5.60525,
-          4.8404,
-          5.42465,
-          5.03415,
-          5.11525,
-          6.25415,
-          5.3668
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.0499,
-      "cpp_ms": 3.3169333333333335,
-      "speedup": 3.6328435904650878,
-      "samples_ms": [
-        [
-          14.9119,
-          11.5824,
-          12.0499,
-          9.5364,
-          12.2962,
-          13.7655,
-          11.3446
-        ],
-        [
-          3.0224333333333333,
-          4.1752666666666665,
-          3.8978333333333337,
-          3.4134666666666664,
-          3.2281333333333335,
-          2.8472333333333335,
-          3.3169333333333335
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 18.0874,
-      "cpp_ms": 4.416,
-      "speedup": 4.095878623188405,
-      "samples_ms": [
-        [
-          19.3579,
-          19.646,
-          18.0874,
-          16.6889,
-          16.0491,
-          19.6734,
-          15.2121
-        ],
-        [
-          4.020066666666667,
-          4.416,
-          3.9726333333333335,
-          5.898433333333333,
-          3.9348666666666663,
-          4.7628,
-          5.015866666666667
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 25.3756,
-      "cpp_ms": 5.0835,
-      "speedup": 4.991757647290252,
-      "samples_ms": [
-        [
-          22.2734,
-          20.2817,
-          22.4895,
-          28.205,
-          25.3756,
-          30.777,
-          28.7732
-        ],
-        [
-          5.2361,
-          4.966825,
-          4.587625,
-          5.1893,
-          5.0835,
-          4.91205,
-          5.31845
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        1,
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
-      "window": [
-        1,
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 26.102,
-      "cpp_ms": 8.1122,
-      "speedup": 3.217622839673578,
-      "samples_ms": [
-        [
-          29.5662,
-          21.8749,
-          26.102,
-          30.8681,
-          24.9778,
-          25.2948,
-          27.1518
-        ],
-        [
-          8.5354,
-          8.1122,
-          7.359,
-          9.4341,
-          6.1444,
-          6.9683,
-          8.9502
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        1,
-        512,
-        512
-      ],
-      "dtype": "uint16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
-      "window": [
-        1,
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 27.2073,
-      "cpp_ms": 8.5119,
-      "speedup": 3.196383886088887,
-      "samples_ms": [
-        [
-          29.8147,
-          27.5762,
-          29.2557,
-          27.2073,
-          25.144,
-          23.7788,
-          23.5787
-        ],
-        [
-          7.3297,
-          11.2266,
-          8.5119,
-          8.6045,
-          6.9962,
-          6.7718,
-          9.2013
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-15",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "15"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 11.3835,
-      "cpp_ms": 4.3989,
-      "speedup": 2.587806042419696,
-      "samples_ms": [
-        [
-          11.3835,
-          8.3648,
-          9.6763,
-          11.9543,
-          11.2698,
-          12.063,
-          13.1347
-        ],
-        [
-          5.236675,
-          3.560625,
-          3.783175,
-          4.3989,
-          5.296725,
-          3.96895,
-          5.296975
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-15",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "window_size": "15"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 13.3549,
-      "cpp_ms": 3.785,
-      "speedup": 3.5283751651254955,
-      "samples_ms": [
-        [
-          12.8397,
-          16.2522,
-          14.2797,
-          13.3549,
-          12.4535,
-          14.5039,
-          8.8558
-        ],
-        [
-          4.3556,
-          3.6924666666666663,
-          4.2929,
-          3.2494333333333336,
-          2.6329666666666665,
-          3.785,
-          4.210733333333333
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-3",
-      "window": [
-        3,
-        3
-      ],
-      "parameter_repr": {
-        "window_size": "3"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 13.1125,
-      "cpp_ms": 3.5119,
-      "speedup": 3.733733876249324,
-      "samples_ms": [
-        [
-          13.8996,
-          12.971,
-          12.4072,
-          13.246,
-          13.3865,
-          9.9747,
-          13.1125
-        ],
-        [
-          4.838,
-          2.3135666666666665,
-          4.9168,
-          2.5094,
-          3.5119,
-          3.2013333333333334,
-          3.7453333333333334
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-3",
-      "window": [
-        3,
-        3
-      ],
-      "parameter_repr": {
-        "window_size": "3"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 10.5725,
-      "cpp_ms": 3.10936,
-      "speedup": 3.4002174080839787,
-      "samples_ms": [
-        [
-          10.2467,
-          16.1144,
-          11.0075,
-          9.4594,
-          12.9143,
-          9.4216,
-          10.5725
-        ],
-        [
-          3.39524,
-          3.61278,
-          3.08436,
-          3.10936,
-          2.9091,
-          4.75548,
-          2.98546
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-31",
-      "window": [
-        31,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "31"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 13.6973,
-      "cpp_ms": 4.9658,
-      "speedup": 2.7583269563816506,
-      "samples_ms": [
-        [
-          12.6314,
-          13.6973,
-          11.8866,
-          14.2087,
-          16.2936,
-          13.2862,
-          17.3704
-        ],
-        [
-          4.1671,
-          4.9658,
-          6.196,
-          5.018833333333333,
-          5.740933333333333,
-          4.114866666666667,
-          4.9524
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-31",
-      "window": [
-        31,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "31"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.8886,
+      "reference_ms": 17.0116,
       "cpp_ms": 5.04995,
-      "speedup": 2.5522232893394987,
+      "speedup": 3.368667016505114,
       "samples_ms": [
         [
-          13.7575,
-          14.4553,
-          12.8886,
-          12.9815,
-          12.0555,
-          9.8419,
-          12.0865
+          17.0116,
+          17.4772,
+          12.0782,
+          13.3837,
+          16.1109,
+          20.5881,
+          23.0781
         ],
         [
-          5.30505,
-          6.08425,
+          5.02075,
           5.04995,
-          4.2173,
-          4.71585,
-          6.9762,
-          4.2088
+          7.41335,
+          4.68895,
+          7.57825,
+          4.52835,
+          7.0304
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-(3, 31)",
+      "window": [
+        3,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "(3, 31)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 13.7379,
+      "cpp_ms": 3.006475,
+      "speedup": 4.569437630447617,
+      "samples_ms": [
+        [
+          19.4963,
+          15.026,
+          13.7379,
+          10.7085,
+          16.829,
+          11.6067,
+          10.8721
+        ],
+        [
+          3.957725,
+          4.813625,
+          3.006475,
+          3.6627,
+          2.114925,
+          2.693525,
+          2.85205
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-(3, 31)",
+      "window": [
+        3,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "(3, 31)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 15.723,
+      "cpp_ms": 4.74745,
+      "speedup": 3.311883221518921,
+      "samples_ms": [
+        [
+          10.7317,
+          12.7095,
+          15.723,
+          21.8681,
+          25.2081,
+          17.1063,
+          14.532
+        ],
+        [
+          3.4229,
+          3.10355,
+          3.9976,
+          6.3929,
+          4.74745,
+          5.60015,
+          5.81345
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 16.2271,
+      "cpp_ms": 3.24965,
+      "speedup": 4.993491606788424,
+      "samples_ms": [
+        [
+          21.9303,
+          12.8988,
+          16.9332,
+          16.2271,
+          17.2684,
+          11.5566,
+          10.9489
+        ],
+        [
+          3.232,
+          3.24965,
+          4.8077,
+          4.06785,
+          2.85555,
+          3.19255,
+          5.00495
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 22.8691,
+      "cpp_ms": 6.6433,
+      "speedup": 3.4424307196724517,
+      "samples_ms": [
+        [
+          24.8345,
+          17.2942,
+          21.3301,
+          22.8691,
+          27.9099,
+          30.2515,
+          17.1403
+        ],
+        [
+          5.76405,
+          5.54415,
+          6.6433,
+          6.0841,
+          8.02445,
+          6.91055,
+          6.75365
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "strided",
+      "workload": "strided",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 22.3223,
+      "cpp_ms": 7.19735,
+      "speedup": 3.101460954379042,
+      "samples_ms": [
+        [
+          17.9827,
+          22.3223,
+          18.7063,
+          20.0459,
+          27.7146,
+          34.7272,
+          28.225
+        ],
+        [
+          7.29205,
+          9.88775,
+          6.54745,
+          7.19735,
+          6.06645,
+          6.7948,
+          7.4523
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "strided",
+      "workload": "strided",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 29.7236,
+      "cpp_ms": 6.38195,
+      "speedup": 4.65744795869601,
+      "samples_ms": [
+        [
+          40.6761,
+          29.9257,
+          28.0478,
+          26.2816,
+          31.1479,
+          29.7236,
+          27.2935
+        ],
+        [
+          6.7403,
+          12.17945,
+          7.94015,
+          5.9709,
+          6.01755,
+          5.3617,
+          6.38195
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 32.691,
+      "cpp_ms": 6.40965,
+      "speedup": 5.100278486344808,
+      "samples_ms": [
+        [
+          42.743,
+          33.2613,
+          32.691,
+          33.7111,
+          29.8533,
+          23.2012,
+          22.7609
+        ],
+        [
+          6.8941,
+          6.40965,
+          6.6894,
+          5.20975,
+          3.43295,
+          4.3478,
+          6.5148
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 24.1658,
+      "cpp_ms": 5.108266666666667,
+      "speedup": 4.7307240551263305,
+      "samples_ms": [
+        [
+          15.7729,
+          19.4005,
+          20.3405,
+          27.728,
+          24.1658,
+          27.8204,
+          32.5566
+        ],
+        [
+          3.7280333333333333,
+          3.7274,
+          6.255266666666667,
+          4.965833333333333,
+          5.108266666666667,
+          5.586866666666667,
+          5.570666666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 27.6475,
+      "cpp_ms": 6.6144,
+      "speedup": 4.179895379777456,
+      "samples_ms": [
+        [
+          29.6189,
+          31.5534,
+          27.6475,
+          24.9049,
+          26.1978,
+          24.4772,
+          28.8202
+        ],
+        [
+          6.5875,
+          7.4175,
+          5.5293,
+          6.9289,
+          6.6144,
+          6.36,
+          9.2586
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 20.5175,
+      "cpp_ms": 5.8721,
+      "speedup": 3.494065155566152,
+      "samples_ms": [
+        [
+          28.6484,
+          20.5175,
+          19.7786,
+          19.9191,
+          20.236,
+          27.223,
+          23.1366
+        ],
+        [
+          6.6208,
+          7.0359,
+          5.2258,
+          5.6686,
+          6.196,
+          5.579,
+          5.8721
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-15",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "15"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.9337,
+      "cpp_ms": 3.1992333333333334,
+      "speedup": 3.1050251622784626,
+      "samples_ms": [
+        [
+          11.7701,
+          9.9337,
+          7.8487,
+          8.1118,
+          10.4487,
+          10.1749,
+          9.4872
+        ],
+        [
+          3.2357333333333336,
+          3.1992333333333334,
+          3.0814333333333335,
+          3.1504333333333334,
+          3.0978333333333334,
+          3.6241,
+          3.8170666666666664
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-15",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "15"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.0163,
+      "cpp_ms": 2.09882,
+      "speedup": 4.295890071564021,
+      "samples_ms": [
+        [
+          9.8251,
+          10.2299,
+          7.6723,
+          9.0156,
+          9.3146,
+          9.0163,
+          8.5058
+        ],
+        [
+          3.61768,
+          2.09882,
+          1.91006,
+          2.0044,
+          1.92394,
+          2.6908,
+          2.1941
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-3",
+      "window": [
+        3,
+        3
+      ],
+      "parameter_repr": {
+        "window_size": "3"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.9823,
+      "cpp_ms": 1.8978,
+      "speedup": 4.733006639266519,
+      "samples_ms": [
+        [
+          9.1542,
+          8.1872,
+          8.9823,
+          8.8248,
+          8.3929,
+          10.5242,
+          10.6447
+        ],
+        [
+          1.9011,
+          2.14418,
+          1.8978,
+          1.88374,
+          1.69728,
+          1.72832,
+          1.96686
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-3",
+      "window": [
+        3,
+        3
+      ],
+      "parameter_repr": {
+        "window_size": "3"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.132,
+      "cpp_ms": 2.13076,
+      "speedup": 4.28579473990501,
+      "samples_ms": [
+        [
+          9.5251,
+          7.4939,
+          8.8242,
+          9.132,
+          12.1815,
+          8.2192,
+          9.2098
+        ],
+        [
+          1.9345,
+          2.15758,
+          2.05528,
+          2.13076,
+          1.85066,
+          2.20888,
+          3.52758
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-31",
+      "window": [
+        31,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "31"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 14.4901,
+      "cpp_ms": 3.9684333333333335,
+      "speedup": 3.651340159424794,
+      "samples_ms": [
+        [
+          10.7111,
+          14.3831,
+          14.4901,
+          16.6126,
+          14.7815,
+          15.5522,
+          13.9335
+        ],
+        [
+          3.1811333333333334,
+          3.8465666666666665,
+          4.554833333333333,
+          4.121166666666666,
+          4.1691666666666665,
+          3.8781333333333334,
+          3.9684333333333335
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-31",
+      "window": [
+        31,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "31"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.4785,
+      "cpp_ms": 2.43275,
+      "speedup": 3.8962079950673107,
+      "samples_ms": [
+        [
+          12.1658,
+          12.0255,
+          9.2842,
+          9.4785,
+          9.3127,
+          8.1748,
+          10.1178
+        ],
+        [
+          3.8184,
+          2.39805,
+          3.48,
+          2.28925,
+          2.02255,
+          2.43275,
+          2.624
         ]
       ],
       "loops": [
@@ -2375,32 +2375,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.587,
-      "cpp_ms": 6.05,
-      "speedup": 2.411074380165289,
+      "reference_ms": 13.7841,
+      "cpp_ms": 5.235566666666667,
+      "speedup": 2.632780915150859,
       "samples_ms": [
         [
-          15.5513,
-          14.587,
-          13.2796,
-          16.2037,
-          12.2376,
-          13.2633,
-          18.6349
+          11.9441,
+          14.2212,
+          13.7841,
+          10.7732,
+          15.6616,
+          16.6992,
+          13.3416
         ],
         [
-          6.8395,
-          7.9873,
-          5.9458,
-          6.05,
-          5.5209,
-          5.931,
-          8.3375
+          6.2068,
+          5.150833333333333,
+          5.235566666666667,
+          4.152733333333334,
+          5.451733333333333,
+          5.529833333333333,
+          4.928566666666667
         ]
       ],
       "loops": [
         1,
-        1
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -2431,32 +2431,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 17.1875,
-      "cpp_ms": 5.9885,
-      "speedup": 2.8700843282959005,
+      "reference_ms": 12.1067,
+      "cpp_ms": 4.484566666666667,
+      "speedup": 2.6996365312144612,
       "samples_ms": [
         [
-          17.2401,
-          17.1875,
-          16.7074,
-          16.7258,
-          16.2667,
-          19.6379,
-          21.2053
+          12.1067,
+          11.573,
+          13.163,
+          12.9323,
+          11.535,
+          11.441,
+          16.727
         ],
         [
-          4.4779,
-          8.1399,
-          6.1479,
-          5.9885,
-          5.6704,
-          5.1367,
-          9.2672
+          4.484566666666667,
+          4.382033333333333,
+          4.781633333333333,
+          4.896833333333333,
+          4.6541,
+          4.397833333333333,
+          4.008766666666666
         ]
       ],
       "loops": [
         1,
-        1
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -2487,27 +2487,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.0466,
-      "cpp_ms": 4.84185,
-      "speedup": 3.727211706269298,
+      "reference_ms": 10.3227,
+      "cpp_ms": 3.17525,
+      "speedup": 3.250988111172348,
       "samples_ms": [
         [
-          18.0466,
-          26.655,
-          21.0092,
-          19.8964,
-          13.8083,
-          12.356,
-          10.4313
+          11.9372,
+          12.2752,
+          9.7697,
+          9.4869,
+          10.3227,
+          8.7852,
+          11.3149
         ],
         [
-          4.84185,
-          5.3979,
-          6.85125,
-          4.6676,
-          2.72115,
-          5.35535,
-          3.65655
+          4.05415,
+          3.02155,
+          2.86895,
+          3.5515,
+          3.17525,
+          2.9929,
+          3.65855
         ]
       ],
       "loops": [
@@ -2543,32 +2543,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.5284,
-      "cpp_ms": 4.757533333333333,
-      "speedup": 3.0537673584350435,
+      "reference_ms": 10.2279,
+      "cpp_ms": 3.09124,
+      "speedup": 3.3086722480299167,
       "samples_ms": [
         [
-          17.8872,
-          14.5284,
-          17.3042,
-          12.5033,
-          16.8194,
-          14.2073,
-          11.9861
+          8.4836,
+          8.1132,
+          10.2279,
+          10.7378,
+          10.3133,
+          10.8987,
+          8.7962
         ],
         [
-          3.7393333333333336,
-          5.473933333333333,
-          4.5408,
-          4.520966666666667,
-          6.740766666666667,
-          4.757533333333333,
-          6.6809
+          2.64642,
+          2.73034,
+          3.08838,
+          3.31738,
+          3.40078,
+          3.09124,
+          3.10058
         ]
       ],
       "loops": [
         1,
-        3
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -2597,27 +2597,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.4127,
-      "cpp_ms": 4.679425,
-      "speedup": 2.6526122333406343,
+      "reference_ms": 9.0694,
+      "cpp_ms": 3.218125,
+      "speedup": 2.818224898038454,
       "samples_ms": [
         [
-          11.2335,
-          12.3415,
-          12.9683,
-          15.0355,
-          13.4631,
-          12.4127,
-          12.3117
+          10.8447,
+          9.0694,
+          8.7611,
+          9.7975,
+          8.3606,
+          8.1783,
+          9.2632
         ],
         [
-          4.0445,
-          4.679425,
-          5.9767,
-          5.791025,
-          4.101675,
-          5.279075,
-          4.6056
+          3.68675,
+          4.1843,
+          3.120475,
+          3.218125,
+          3.063675,
+          3.9114,
+          2.484375
         ]
       ],
       "loops": [
@@ -2651,32 +2651,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 15.219,
-      "cpp_ms": 3.9445,
-      "speedup": 3.858283686145265,
+      "reference_ms": 12.0809,
+      "cpp_ms": 3.3407,
+      "speedup": 3.6162780255635045,
       "samples_ms": [
         [
-          16.9313,
-          15.5666,
-          11.9608,
-          14.6227,
-          16.4713,
-          15.219,
-          14.7534
+          11.8672,
+          12.4038,
+          16.0635,
+          11.0731,
+          12.0809,
+          12.1268,
+          10.482
         ],
         [
-          5.4636,
-          3.4166,
-          3.9244,
-          5.4166,
-          3.9445,
-          6.3762,
-          3.54975
+          3.328,
+          3.3407,
+          3.503375,
+          3.738025,
+          3.6042,
+          3.166825,
+          3.223975
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -2705,27 +2705,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.3123,
-      "cpp_ms": 3.160675,
-      "speedup": 3.8954653673661483,
+      "reference_ms": 9.2497,
+      "cpp_ms": 3.2901,
+      "speedup": 2.8113735144828427,
       "samples_ms": [
         [
-          10.8741,
-          11.5925,
-          12.6877,
-          9.538,
-          13.9311,
-          15.7402,
-          12.3123
+          8.8084,
+          7.9403,
+          8.8288,
+          9.2497,
+          9.9275,
+          9.5555,
+          9.655
         ],
         [
-          3.160675,
-          2.0624,
-          2.425225,
-          3.5819,
-          2.6998,
-          3.455725,
-          4.733375
+          3.3452,
+          3.8658,
+          3.2901,
+          3.410875,
+          3.203875,
+          2.97525,
+          2.756775
         ]
       ],
       "loops": [
@@ -2759,27 +2759,81 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.1751,
-      "cpp_ms": 4.285933333333333,
-      "speedup": 3.3073542907806934,
+      "reference_ms": 12.9213,
+      "cpp_ms": 3.755425,
+      "speedup": 3.4407024504550088,
       "samples_ms": [
         [
-          20.4052,
-          15.2201,
-          15.4531,
-          14.1751,
-          13.0548,
-          12.5405,
-          8.3472
+          10.8771,
+          11.3094,
+          13.3517,
+          10.5961,
+          12.9213,
+          13.7949,
+          15.4678
         ],
         [
-          5.592233333333333,
-          4.476133333333333,
-          3.6950333333333334,
-          4.285933333333333,
-          3.8690333333333333,
-          5.539133333333333,
-          2.6905333333333337
+          3.522325,
+          3.3387,
+          3.287525,
+          3.778375,
+          3.88425,
+          3.755425,
+          4.755675
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 15.8369,
+      "cpp_ms": 3.7343333333333333,
+      "speedup": 4.24089083281264,
+      "samples_ms": [
+        [
+          15.558,
+          13.9861,
+          20.0968,
+          12.9967,
+          18.0341,
+          17.8649,
+          15.8369
+        ],
+        [
+          4.1637,
+          3.7343333333333333,
+          3.5219,
+          3.8528333333333333,
+          3.8338,
+          2.8340333333333336,
+          2.4933666666666667
         ]
       ],
       "loops": [
@@ -2792,60 +2846,6 @@
       ]
     },
     {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int16",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.6659,
-      "cpp_ms": 3.70985,
-      "speedup": 3.414127255818969,
-      "samples_ms": [
-        [
-          11.9032,
-          14.2558,
-          11.9687,
-          15.2284,
-          12.6659,
-          15.1011,
-          11.4171
-        ],
-        [
-          4.0585,
-          3.165175,
-          3.380175,
-          3.513925,
-          4.0827,
-          3.70985,
-          3.956625
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
       "api": "filters.threshold_sauvola",
       "size": 512,
       "shape": [
@@ -2867,32 +2867,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 25.7196,
-      "cpp_ms": 4.76235,
-      "speedup": 5.400611042867492,
+      "reference_ms": 17.7144,
+      "cpp_ms": 4.343575,
+      "speedup": 4.07829955739224,
       "samples_ms": [
         [
-          19.1708,
-          17.7382,
-          24.1347,
-          26.6145,
-          26.3317,
-          25.7196,
-          26.9372
+          15.3577,
+          17.5805,
+          17.8135,
+          17.2984,
+          20.2967,
+          17.7144,
+          18.3604
         ],
         [
-          4.08875,
-          4.76235,
-          6.05075,
-          4.30545,
-          5.9068,
-          4.9322,
-          4.3628
+          3.27275,
+          4.507875,
+          4.8717,
+          4.115275,
+          5.904675,
+          4.343575,
+          4.0108
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -2925,32 +2925,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 21.9693,
-      "cpp_ms": 6.037,
-      "speedup": 3.6391088288885207,
+      "reference_ms": 23.9855,
+      "cpp_ms": 7.861,
+      "speedup": 3.0512021371326803,
       "samples_ms": [
         [
-          21.9693,
-          25.4315,
-          21.1346,
-          24.0864,
-          26.7878,
-          19.5525,
-          20.2994
+          20.1617,
+          21.6358,
+          23.0329,
+          23.9855,
+          27.8525,
+          40.7124,
+          29.3065
         ],
         [
-          5.6907,
-          6.4215,
-          5.3697,
-          5.6678,
-          6.7016,
-          6.037,
-          6.1142
+          5.71335,
+          5.35215,
+          6.6786,
+          7.861,
+          8.4689,
+          8.00375,
+          9.445
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -2983,32 +2983,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 23.2405,
-      "cpp_ms": 6.9512,
-      "speedup": 3.3433795603636782,
+      "reference_ms": 22.1318,
+      "cpp_ms": 5.66655,
+      "speedup": 3.905692176015388,
       "samples_ms": [
         [
-          21.8645,
-          20.0481,
-          21.7032,
-          23.2405,
-          23.6652,
-          28.6753,
-          28.1785
+          21.6515,
+          22.1318,
+          22.2474,
+          28.1009,
+          19.1368,
+          21.1911,
+          22.5395
         ],
         [
-          5.3466,
-          6.7071,
-          7.0008,
-          5.9689,
-          6.9512,
-          9.9011,
-          9.5726
+          5.66655,
+          6.11335,
+          4.99155,
+          7.8307,
+          4.7119,
+          4.9807,
+          6.5173
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -3039,32 +3039,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.2426,
-      "cpp_ms": 3.3309333333333333,
-      "speedup": 2.174345528780722,
+      "reference_ms": 8.2234,
+      "cpp_ms": 2.63484,
+      "speedup": 3.121024426530643,
       "samples_ms": [
         [
-          9.7388,
-          8.77575,
-          7.67375,
-          6.8152,
-          7.2426,
-          6.85455,
-          6.3649
+          7.3054,
+          11.2692,
+          10.6423,
+          8.2234,
+          7.8699,
+          7.071,
+          9.7411
         ],
         [
-          4.5917666666666666,
-          3.3309333333333333,
-          3.8769333333333336,
-          2.6509333333333336,
-          3.5848333333333335,
-          2.7803666666666667,
-          2.4474333333333336
+          2.85516,
+          3.05612,
+          2.422,
+          2.63486,
+          2.63484,
+          2.4977,
+          2.2795
         ]
       ],
       "loops": [
-        2,
-        3
+        1,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -3095,32 +3095,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.0835,
-      "cpp_ms": 2.8599,
-      "speedup": 2.8264974299800696,
+      "reference_ms": 9.0253,
+      "cpp_ms": 2.798975,
+      "speedup": 3.224501826561509,
       "samples_ms": [
         [
-          10.8192,
-          8.0835,
-          7.07,
-          8.8623,
-          6.9204,
-          9.8606,
-          7.2214
+          10.3458,
+          9.0253,
+          10.4904,
+          8.1713,
+          6.9333,
+          9.3477,
+          8.2709
         ],
         [
-          4.0274,
-          4.0461,
-          2.7795333333333336,
-          2.8599,
-          2.7303,
-          3.4286333333333334,
-          2.7834
+          3.7141,
+          3.556375,
+          2.553375,
+          2.798975,
+          2.132625,
+          2.7916,
+          3.3298
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -3151,143 +3151,31 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.452,
-      "cpp_ms": 3.215,
-      "speedup": 2.317884914463453,
+      "reference_ms": 7.7282,
+      "cpp_ms": 2.46362,
+      "speedup": 3.1369285847655077,
       "samples_ms": [
         [
-          8.89265,
-          9.10065,
-          6.4882,
-          7.40265,
-          6.59635,
-          7.452,
-          7.5582
+          9.1922,
+          6.7645,
+          7.8137,
+          7.7282,
+          6.8833,
+          7.4703,
+          7.8726
         ],
         [
-          3.97015,
-          2.5095,
-          3.08745,
-          3.215,
-          2.7995,
-          3.6939,
-          4.03755
+          2.60458,
+          2.39698,
+          2.58792,
+          2.16848,
+          2.24172,
+          2.46362,
+          2.62018
         ]
       ],
       "loops": [
-        2,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-3",
-      "window": [
-        3,
-        3
-      ],
-      "parameter_repr": {
-        "window_size": "3"
-      },
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 7.2405,
-      "cpp_ms": 2.5852333333333335,
-      "speedup": 2.800714313343734,
-      "samples_ms": [
-        [
-          7.07905,
-          7.14725,
-          7.24985,
-          7.12395,
-          7.2405,
-          8.1916,
-          7.5253
-        ],
-        [
-          2.9189666666666665,
-          2.2091333333333334,
-          1.8945,
-          2.3559,
-          2.5852333333333335,
-          2.6334,
-          3.2490333333333337
-        ]
-      ],
-      "loops": [
-        2,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-31",
-      "window": [
-        31,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "31"
-      },
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 8.6805,
-      "cpp_ms": 2.18172,
-      "speedup": 3.978741543369452,
-      "samples_ms": [
-        [
-          7.65,
-          6.46985,
-          7.29175,
-          8.75725,
-          8.6805,
-          12.1477,
-          12.1435
-        ],
-        [
-          1.83246,
-          2.52768,
-          2.18172,
-          1.98038,
-          1.9706,
-          2.9353,
-          2.5355
-        ]
-      ],
-      "loops": [
-        2,
+        1,
         5
       ],
       "sample_labels": [
@@ -3307,6 +3195,62 @@
       "threads": 1,
       "backend": "native",
       "layout": "contiguous",
+      "workload": "window-3",
+      "window": [
+        3,
+        3
+      ],
+      "parameter_repr": {
+        "window_size": "3"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 7.3055,
+      "cpp_ms": 1.86855,
+      "speedup": 3.9097160900163233,
+      "samples_ms": [
+        [
+          8.8982,
+          7.3055,
+          11.1951,
+          7.1961,
+          7.3149,
+          6.7099,
+          6.1094
+        ],
+        [
+          1.86855,
+          3.9721166666666665,
+          1.8491666666666668,
+          1.7633,
+          1.7868166666666667,
+          1.9201,
+          2.9990666666666663
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
       "workload": "window-31",
       "window": [
         31,
@@ -3319,32 +3263,88 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.1362,
-      "cpp_ms": 3.2005333333333335,
-      "speedup": 3.4794825862356276,
+      "reference_ms": 7.6895,
+      "cpp_ms": 3.2947666666666664,
+      "speedup": 2.333852675455015,
       "samples_ms": [
         [
-          12.1979,
-          11.1362,
-          13.3501,
-          10.6388,
-          8.7952,
-          11.8478,
-          10.5938
+          7.1879,
+          7.8014,
+          8.1533,
+          7.6895,
+          6.8257,
+          8.2119,
+          7.035
         ],
         [
-          3.2674666666666665,
-          2.9565666666666663,
-          2.4615666666666667,
-          4.3469,
-          3.6273,
-          2.8235333333333337,
-          3.2005333333333335
+          3.8798,
+          2.8311,
+          2.8439,
+          3.4789,
+          3.2947666666666664,
+          3.4055333333333335,
+          2.8264333333333336
         ]
       ],
       "loops": [
         1,
         3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-31",
+      "window": [
+        31,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "31"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.01,
+      "cpp_ms": 1.98904,
+      "speedup": 4.0270683344729115,
+      "samples_ms": [
+        [
+          8.01,
+          7.4891,
+          9.494,
+          11.6984,
+          6.9448,
+          7.7154,
+          8.5061
+        ],
+        [
+          2.95048,
+          3.09038,
+          2.49948,
+          1.89032,
+          1.8575,
+          1.98904,
+          1.90534
+        ]
+      ],
+      "loops": [
+        1,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -3375,32 +3375,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.2766,
-      "cpp_ms": 4.5997,
-      "speedup": 3.1038111181163988,
+      "reference_ms": 12.4576,
+      "cpp_ms": 5.2082,
+      "speedup": 2.3919204331630888,
       "samples_ms": [
         [
-          15.1013,
-          14.6578,
-          17.4686,
-          12.9812,
-          8.7754,
-          14.2766,
-          10.7908
+          12.5184,
+          12.4576,
+          12.6251,
+          11.7,
+          11.1115,
+          12.6185,
+          9.4619
         ],
         [
-          4.5997,
-          5.35325,
-          4.48575,
-          3.1574,
-          3.52185,
-          5.12685,
-          5.5407
+          4.210066666666667,
+          5.798733333333333,
+          4.755366666666667,
+          5.2519,
+          5.2082,
+          5.1116,
+          5.2956
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -3431,27 +3431,27 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.7347,
-      "cpp_ms": 7.2044,
-      "speedup": 2.0452362445172394,
+      "reference_ms": 10.858,
+      "cpp_ms": 4.48345,
+      "speedup": 2.421795715353132,
       "samples_ms": [
         [
-          13.2349,
-          18.0741,
-          14.7347,
-          14.813,
-          14.6265,
-          14.4358,
-          15.6181
+          13.588,
+          9.4873,
+          10.9481,
+          10.858,
+          14.432,
+          9.7589,
+          10.6085
         ],
         [
-          10.1162,
-          8.7776,
-          7.2044,
-          6.23775,
-          7.4771,
-          6.9446,
-          6.21645
+          3.91945,
+          5.3177,
+          5.0603,
+          4.48345,
+          5.0764,
+          3.7585,
+          4.22705
         ]
       ],
       "loops": [
@@ -3487,32 +3487,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.1214,
-      "cpp_ms": 2.2583666666666664,
-      "speedup": 4.038936694661333,
+      "reference_ms": 7.05655,
+      "cpp_ms": 2.049916666666667,
+      "speedup": 3.4423594455059146,
       "samples_ms": [
         [
-          8.5554,
-          8.4588,
-          9.6384,
-          11.5302,
-          11.2431,
-          9.1214,
-          6.1562
+          7.05655,
+          6.61985,
+          6.6453,
+          7.9672,
+          7.1435,
+          6.6481,
+          7.1988
         ],
         [
-          2.0433,
-          2.313,
-          3.1849666666666665,
-          3.0192666666666663,
-          2.0424333333333333,
-          1.9741,
-          2.2583666666666664
+          2.70825,
+          2.049916666666667,
+          1.8285666666666667,
+          1.75615,
+          1.664,
+          2.37995,
+          2.2187
         ]
       ],
       "loops": [
-        1,
-        3
+        2,
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -3543,32 +3543,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.7868,
-      "cpp_ms": 2.3138,
-      "speedup": 3.797562451378684,
+      "reference_ms": 7.5053,
+      "cpp_ms": 1.88205,
+      "speedup": 3.9878324167795753,
       "samples_ms": [
         [
-          9.9505,
-          8.541,
-          9.3481,
-          10.5308,
-          8.4607,
-          8.7868,
-          6.2995
+          7.3535,
+          7.2779,
+          8.2517,
+          9.3729,
+          7.0867,
+          7.5509,
+          7.5053
         ],
         [
-          2.1551333333333336,
-          2.6747,
-          3.3558666666666666,
-          2.2324333333333333,
-          1.9981,
-          2.9938,
-          2.3138
+          1.88205,
+          1.8223166666666668,
+          2.0073333333333334,
+          3.4437,
+          1.85595,
+          2.1088833333333334,
+          1.8246666666666667
         ]
       ],
       "loops": [
         1,
-        3
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -3597,32 +3597,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 6.91675,
-      "cpp_ms": 2.3657,
-      "speedup": 2.923764636259881,
+      "reference_ms": 9.0416,
+      "cpp_ms": 2.87634,
+      "speedup": 3.143439231801526,
       "samples_ms": [
         [
-          7.7799,
-          6.91675,
-          6.39635,
-          7.3334,
-          6.65645,
-          6.48635,
-          7.32355
+          10.344,
+          9.0416,
+          7.645,
+          7.555,
+          11.0169,
+          9.231,
+          7.0759
         ],
         [
-          2.269475,
-          2.128475,
-          2.3657,
-          3.3785,
-          2.448975,
-          2.2653,
-          2.46145
+          2.1248,
+          2.87634,
+          2.58294,
+          3.0756,
+          3.51976,
+          2.88294,
+          2.71134
         ]
       ],
       "loops": [
-        2,
-        4
+        1,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -3651,243 +3651,27 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.8511,
-      "cpp_ms": 2.4411666666666667,
-      "speedup": 3.2161261691814023,
+      "reference_ms": 8.9258,
+      "cpp_ms": 2.9514,
+      "speedup": 3.0242596733753473,
       "samples_ms": [
         [
-          9.0897,
-          9.1572,
-          6.19565,
-          8.4476,
-          7.8511,
-          7.06815,
-          6.4721
+          8.626,
+          11.28,
+          6.0985,
+          14.695,
+          9.5035,
+          6.4635,
+          8.9258
         ],
         [
-          2.6376333333333335,
-          3.2437666666666667,
-          3.6169,
-          2.168,
-          2.4411666666666667,
-          2.264,
-          2.4307
-        ]
-      ],
-      "loops": [
-        2,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 7.0086,
-      "cpp_ms": 3.25846,
-      "speedup": 2.150893366805178,
-      "samples_ms": [
-        [
-          7.75155,
-          7.0086,
-          7.61725,
-          6.32065,
-          5.98425,
-          6.21365,
-          7.5229
-        ],
-        [
-          4.03732,
-          2.64042,
-          2.35592,
-          3.25846,
-          3.02848,
-          5.01302,
-          4.45506
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "strided",
-      "workload": "strided",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 6.62695,
-      "cpp_ms": 2.30206,
-      "speedup": 2.8787042909394196,
-      "samples_ms": [
-        [
-          6.41565,
-          9.22365,
-          6.53735,
-          7.08165,
-          6.62695,
-          6.59775,
-          8.2545
-        ],
-        [
-          2.6404,
-          4.12624,
-          2.63874,
-          2.30206,
-          2.28364,
-          2.1512,
-          2.20882
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.8916,
-      "cpp_ms": 3.67225,
-      "speedup": 3.510545306011301,
-      "samples_ms": [
-        [
-          12.7232,
-          12.8916,
-          12.7179,
-          14.068,
-          10.3854,
-          16.5406,
-          17.6377
-        ],
-        [
-          5.5878,
-          3.67225,
-          5.3643,
-          3.16735,
-          3.3201,
-          3.4784,
-          4.5133
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "fortran",
-      "workload": "fortran",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.2811,
-      "cpp_ms": 2.9821,
-      "speedup": 4.118272358405151,
-      "samples_ms": [
-        [
-          12.2945,
-          12.2811,
-          13.4289,
-          12.7773,
-          9.2563,
-          8.7455,
-          11.1038
-        ],
-        [
-          2.781025,
-          4.3747,
-          2.8228,
-          2.9821,
-          3.589675,
-          4.128875,
-          2.36365
+          4.2536,
+          2.9514,
+          3.302075,
+          2.825225,
+          2.546825,
+          2.602475,
+          3.89535
         ]
       ],
       "loops": [
@@ -3903,7 +3687,6 @@
       "api": "filters.threshold_niblack",
       "size": 512,
       "shape": [
-        1,
         512,
         512
       ],
@@ -3911,46 +3694,43 @@
       "output_dtype": "float32",
       "threads": 1,
       "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
+      "layout": "strided",
+      "workload": "strided",
       "window": [
-        1,
         15,
         15
       ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
+      "parameter_repr": {},
       "rtol": 2e-06,
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.4052,
-      "cpp_ms": 5.7954,
-      "speedup": 3.175829105842565,
+      "reference_ms": 6.5697,
+      "cpp_ms": 2.30535,
+      "speedup": 2.849762508946581,
       "samples_ms": [
         [
-          20.0225,
-          17.5205,
-          18.3622,
-          22.5684,
-          18.4052,
-          19.7918,
-          18.3763
+          6.5697,
+          7.6563,
+          6.5643,
+          7.1934,
+          9.1645,
+          6.1022,
+          6.2552
         ],
         [
-          5.2945,
-          6.4923,
-          5.2137,
-          4.76,
-          5.7954,
-          6.55695,
-          11.98275
+          2.30535,
+          4.048275,
+          2.26655,
+          2.529,
+          2.069175,
+          2.1942,
+          2.59985
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -3961,7 +3741,6 @@
       "api": "filters.threshold_sauvola",
       "size": 512,
       "shape": [
-        1,
         512,
         512
       ],
@@ -3969,45 +3748,42 @@
       "output_dtype": "float32",
       "threads": 1,
       "backend": "native",
-      "layout": "volume",
-      "workload": "volume",
+      "layout": "strided",
+      "workload": "strided",
       "window": [
-        1,
         15,
         15
       ],
-      "parameter_repr": {
-        "window_size": "(1, 15, 15)"
-      },
+      "parameter_repr": {},
       "rtol": 2e-06,
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.5524,
-      "cpp_ms": 6.5271,
-      "speedup": 2.8423649093778245,
+      "reference_ms": 7.71355,
+      "cpp_ms": 4.8733,
+      "speedup": 1.582818623930396,
       "samples_ms": [
         [
-          20.963,
-          31.4163,
-          23.1185,
-          18.5524,
-          15.3191,
-          15.0319,
-          17.5552
+          7.1713,
+          12.42935,
+          7.4147,
+          8.044,
+          12.39085,
+          7.71355,
+          7.62585
         ],
         [
-          6.1661,
-          17.1433,
-          5.8494,
-          5.0287,
-          6.5271,
-          7.6358,
-          7.5257
+          4.3476,
+          6.5824,
+          2.9257,
+          3.8307,
+          10.431,
+          5.1832,
+          4.8733
         ]
       ],
       "loops": [
-        1,
+        2,
         1
       ],
       "sample_labels": [
@@ -4026,6 +3802,230 @@
       "output_dtype": "float32",
       "threads": 1,
       "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 12.2068,
+      "cpp_ms": 3.10565,
+      "speedup": 3.930513741084797,
+      "samples_ms": [
+        [
+          13.5673,
+          11.0203,
+          12.2068,
+          12.5897,
+          10.3293,
+          17.3524,
+          8.7019
+        ],
+        [
+          3.364025,
+          2.74725,
+          4.437775,
+          3.014625,
+          2.81745,
+          3.10565,
+          3.341525
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.9043,
+      "cpp_ms": 2.9008,
+      "speedup": 3.0696014892443464,
+      "samples_ms": [
+        [
+          8.7878,
+          12.5803,
+          8.0469,
+          9.5717,
+          8.9043,
+          9.4441,
+          8.4599
+        ],
+        [
+          2.878925,
+          2.673575,
+          3.77085,
+          3.012875,
+          3.283725,
+          2.7335,
+          2.9008
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 19.8347,
+      "cpp_ms": 6.00985,
+      "speedup": 3.300365233741275,
+      "samples_ms": [
+        [
+          14.4761,
+          19.8347,
+          14.8866,
+          22.7332,
+          20.4853,
+          21.7823,
+          14.3028
+        ],
+        [
+          6.00985,
+          5.22985,
+          6.9942,
+          6.5698,
+          5.97125,
+          6.87245,
+          4.67215
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        1,
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "window": [
+        1,
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "window_size": "(1, 15, 15)"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 17.8513,
+      "cpp_ms": 5.438766666666667,
+      "speedup": 3.2822331043189936,
+      "samples_ms": [
+        [
+          15.0776,
+          15.7353,
+          18.2261,
+          17.8513,
+          17.5083,
+          18.124,
+          18.3666
+        ],
+        [
+          5.000566666666667,
+          5.438766666666667,
+          5.019933333333333,
+          5.896766666666667,
+          6.072933333333333,
+          4.395466666666667,
+          6.280166666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
       "layout": "contiguous",
       "workload": "int64-window",
       "window": [
@@ -4039,31 +4039,31 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.2206,
-      "cpp_ms": 2.59564,
-      "speedup": 3.167080180610562,
+      "reference_ms": 8.5473,
+      "cpp_ms": 2.6636,
+      "speedup": 3.2089277669319713,
       "samples_ms": [
         [
-          8.7759,
-          7.8861,
-          8.5293,
-          9.7137,
-          7.0415,
-          8.0375,
-          8.2206
+          8.6258,
+          6.16775,
+          8.5473,
+          9.54325,
+          9.0834,
+          7.7541,
+          7.2018
         ],
         [
-          2.68884,
-          2.39044,
-          2.59564,
-          2.49006,
-          2.79198,
-          2.39066,
-          2.61894
+          3.60532,
+          2.36982,
+          3.11502,
+          2.64014,
+          2.28716,
+          2.9245,
+          2.6636
         ]
       ],
       "loops": [
-        1,
+        2,
         5
       ],
       "sample_labels": [
@@ -4095,27 +4095,27 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.6162,
-      "cpp_ms": 2.88215,
-      "speedup": 2.6425411585101397,
+      "reference_ms": 8.1725,
+      "cpp_ms": 2.4073,
+      "speedup": 3.394882233207327,
       "samples_ms": [
         [
-          7.6162,
-          6.9968,
-          6.8035,
-          9.7011,
-          9.1236,
-          7.3789,
-          9.9801
+          8.1725,
+          6.6788,
+          7.6204,
+          8.9543,
+          9.1824,
+          6.8274,
+          11.9648
         ],
         [
-          2.75575,
-          4.02535,
-          2.408125,
-          2.45595,
-          2.920175,
-          3.895125,
-          2.88215
+          2.13795,
+          2.39345,
+          2.379275,
+          2.9,
+          2.4073,
+          3.34345,
+          4.19415
         ]
       ],
       "loops": [
@@ -4151,31 +4151,31 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 6.3359,
-      "cpp_ms": 2.5935666666666664,
-      "speedup": 2.442929299420361,
+      "reference_ms": 6.02465,
+      "cpp_ms": 2.1487333333333334,
+      "speedup": 2.8038146504917627,
       "samples_ms": [
         [
-          6.2767,
-          6.3359,
-          5.6487,
-          6.9391,
-          5.8247,
-          7.327,
-          7.7765
+          6.8847,
+          5.40825,
+          5.634,
+          6.02465,
+          5.8412,
+          6.07045,
+          6.9537
         ],
         [
-          2.5807333333333333,
-          2.5935666666666664,
-          2.1857333333333333,
-          2.2881666666666667,
-          2.7413,
-          3.9491333333333336,
-          2.7301666666666664
+          2.5809666666666664,
+          2.1817333333333333,
+          2.0919333333333334,
+          1.8682666666666667,
+          1.7437,
+          2.1487333333333334,
+          2.1549
         ]
       ],
       "loops": [
-        1,
+        2,
         3
       ],
       "sample_labels": [
@@ -4207,31 +4207,31 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 6.8931,
-      "cpp_ms": 1.96294,
-      "speedup": 3.511620324615118,
+      "reference_ms": 6.4252,
+      "cpp_ms": 2.16342,
+      "speedup": 2.9699272448253233,
       "samples_ms": [
         [
-          6.8931,
-          6.3632,
-          6.9469,
-          6.4724,
-          7.5728,
-          8.4452,
-          6.6126
+          6.62155,
+          6.4252,
+          6.59015,
+          5.64845,
+          5.7024,
+          5.6328,
+          9.31575
         ],
         [
-          2.21096,
-          1.96294,
-          1.85462,
-          1.7481,
-          1.75594,
-          2.35998,
-          2.13706
+          2.46072,
+          2.22272,
+          2.208,
+          1.97872,
+          1.96854,
+          1.86482,
+          2.16342
         ]
       ],
       "loops": [
-        1,
+        2,
         5
       ],
       "sample_labels": [
@@ -4263,32 +4263,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.00715,
-      "cpp_ms": 2.4874,
-      "speedup": 2.817057972179786,
+      "reference_ms": 7.3309,
+      "cpp_ms": 3.7747,
+      "speedup": 1.9421146051341827,
       "samples_ms": [
         [
-          8.4844,
-          8.67115,
-          8.1145,
-          6.3194,
-          6.11955,
-          7.00715,
-          6.82555
+          7.3309,
+          9.7808,
+          6.9544,
+          9.46145,
+          9.5881,
+          6.5241,
+          6.69945
         ],
         [
-          2.0698166666666666,
-          2.4874,
-          2.2895166666666666,
-          2.6987666666666663,
-          2.2456333333333336,
-          3.4373333333333336,
-          2.6218
+          3.29285,
+          6.36425,
+          4.6949,
+          2.25355,
+          4.60295,
+          3.7747,
+          2.9673
         ]
       ],
       "loops": [
         2,
-        6
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -4319,195 +4319,27 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 6.9828,
-      "cpp_ms": 2.30584,
-      "speedup": 3.028310724074524,
+      "reference_ms": 9.4184,
+      "cpp_ms": 4.5819,
+      "speedup": 2.055566468059102,
       "samples_ms": [
         [
-          6.6993,
-          8.6179,
-          6.9828,
-          6.5835,
-          6.6596,
-          8.7957,
-          7.2578
+          9.6783,
+          9.4184,
+          7.3565,
+          8.1693,
+          12.0206,
+          10.7649,
+          9.0126
         ],
         [
-          2.45726,
-          2.6732,
-          1.7502,
-          1.72774,
-          1.84336,
-          2.30584,
-          2.63006
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k-np.float32(0.17)",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "np.float32(0.17)"
-      },
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 7.05915,
-      "cpp_ms": 2.6003333333333334,
-      "speedup": 2.7147096526086396,
-      "samples_ms": [
-        [
-          5.7991,
-          6.70475,
-          7.05915,
-          6.4063,
-          7.9232,
-          7.9586,
-          7.4158
-        ],
-        [
-          2.6013333333333333,
-          2.3486333333333334,
-          2.3712666666666666,
-          2.5986,
-          2.8325166666666663,
-          2.81975,
-          2.6003333333333334
-        ]
-      ],
-      "loops": [
-        2,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float32",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k-np.float32(0.17)",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "np.float32(0.17)"
-      },
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 9.64665,
-      "cpp_ms": 2.396575,
-      "speedup": 4.025181769817343,
-      "samples_ms": [
-        [
-          9.69115,
-          9.64665,
-          9.9046,
-          9.7377,
-          6.56765,
-          6.99035,
-          6.91875
-        ],
-        [
-          3.333375,
-          1.9586,
-          2.0509,
-          2.4304,
-          2.780825,
-          2.396575,
-          2.307025
-        ]
-      ],
-      "loops": [
-        2,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float32",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k-np.float64(0.17)",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "np.float64(0.17)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 7.5339,
-      "cpp_ms": 2.1395333333333335,
-      "speedup": 3.521281899479637,
-      "samples_ms": [
-        [
-          7.5235,
-          8.6149,
-          7.0572,
-          7.5339,
-          7.9175,
-          7.0834,
-          8.2209
-        ],
-        [
-          2.074866666666667,
-          2.1395333333333335,
-          4.9463,
-          2.0364666666666666,
-          2.045666666666667,
-          2.5533333333333337,
-          2.3459333333333334
+          3.4086333333333334,
+          5.061966666666667,
+          3.0981,
+          2.4938666666666665,
+          4.766066666666667,
+          4.5819,
+          6.242133333333333
         ]
       ],
       "loops": [
@@ -4520,6 +4352,174 @@
       ]
     },
     {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k-np.float32(0.17)",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "np.float32(0.17)"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 7.3158,
+      "cpp_ms": 2.519425,
+      "speedup": 2.9037578018793972,
+      "samples_ms": [
+        [
+          7.9579,
+          10.0413,
+          10.5739,
+          6.7929,
+          5.3982,
+          7.3158,
+          5.5574
+        ],
+        [
+          2.30365,
+          3.833375,
+          2.655125,
+          2.430225,
+          2.83645,
+          2.519425,
+          2.06075
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k-np.float32(0.17)",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "np.float32(0.17)"
+      },
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 7.23105,
+      "cpp_ms": 2.23988,
+      "speedup": 3.2283202671571694,
+      "samples_ms": [
+        [
+          7.38065,
+          8.5134,
+          7.23105,
+          6.8536,
+          5.86075,
+          7.76845,
+          7.1836
+        ],
+        [
+          2.28642,
+          2.05332,
+          2.519,
+          2.09414,
+          2.9587,
+          2.23988,
+          2.1329
+        ]
+      ],
+      "loops": [
+        2,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k-np.float64(0.17)",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "np.float64(0.17)"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 7.09225,
+      "cpp_ms": 2.06845,
+      "speedup": 3.4287751698131452,
+      "samples_ms": [
+        [
+          7.86995,
+          6.6977,
+          7.43395,
+          6.32315,
+          7.5232,
+          6.57325,
+          7.09225
+        ],
+        [
+          2.06845,
+          2.8887,
+          2.2915,
+          1.96605,
+          2.015233333333333,
+          3.0783333333333336,
+          1.92975
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "filters.threshold_sauvola",
       "size": 512,
       "shape": [
@@ -4543,27 +4543,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.7108,
-      "cpp_ms": 2.88715,
-      "speedup": 3.0170929809673903,
+      "reference_ms": 11.1525,
+      "cpp_ms": 3.48385,
+      "speedup": 3.201199822035966,
       "samples_ms": [
         [
-          10.038,
-          9.2446,
-          8.6963,
-          10.4072,
-          8.7108,
-          6.7625,
-          7.0941
+          11.1525,
+          11.5013,
+          15.924,
+          10.3304,
+          9.2691,
+          11.5419,
+          10.9525
         ],
         [
-          3.037025,
-          2.88715,
-          2.33025,
-          4.2216,
-          2.036525,
-          1.901325,
-          3.4987
+          3.48385,
+          4.869175,
+          4.62585,
+          2.663225,
+          3.162125,
+          2.94145,
+          3.922625
         ]
       ],
       "loops": [
@@ -4599,32 +4599,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.7115,
-      "cpp_ms": 2.90202,
-      "speedup": 3.3464621194891833,
+      "reference_ms": 11.0427,
+      "cpp_ms": 2.990525,
+      "speedup": 3.6925623427324634,
       "samples_ms": [
         [
-          7.7338,
-          11.4415,
-          7.3551,
-          9.7115,
-          9.8388,
-          7.4061,
-          10.4503
+          13.0836,
+          9.1559,
+          9.4156,
+          9.8705,
+          11.7526,
+          11.3821,
+          11.0427
         ],
         [
-          2.28376,
-          4.06582,
-          2.90202,
-          3.46822,
-          4.15678,
-          2.68358,
-          2.63154
+          3.476525,
+          3.15945,
+          2.742,
+          2.650775,
+          2.990525,
+          3.7455,
+          2.612825
         ]
       ],
       "loops": [
         1,
-        5
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -4655,32 +4655,32 @@
       "atol": 2e-06,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.2915,
-      "cpp_ms": 4.675566666666667,
-      "speedup": 2.4150013902058216,
+      "reference_ms": 9.1347,
+      "cpp_ms": 2.50144,
+      "speedup": 3.6517765766918258,
       "samples_ms": [
         [
-          11.89,
-          13.516,
-          12.0636,
-          8.9524,
-          9.1741,
-          11.2915,
-          9.7589
+          6.6848,
+          8.3306,
+          11.0732,
+          11.1584,
+          10.7927,
+          7.2807,
+          9.1347
         ],
         [
-          4.681333333333333,
-          4.675566666666667,
-          4.676433333333333,
-          2.7277333333333336,
-          3.8295666666666666,
-          2.9835666666666665,
-          4.864966666666667
+          2.14474,
+          3.03554,
+          2.98664,
+          3.04518,
+          2.45204,
+          2.50144,
+          1.88064
         ]
       ],
       "loops": [
         1,
-        3
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -4711,32 +4711,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.227,
-      "cpp_ms": 3.0576333333333334,
-      "speedup": 3.3447437560640583,
+      "reference_ms": 11.887,
+      "cpp_ms": 3.634975,
+      "speedup": 3.270173797618966,
       "samples_ms": [
         [
-          8.5921,
-          8.803,
-          10.569,
-          10.227,
-          12.3565,
-          9.143,
-          10.4236
+          11.887,
+          12.5317,
+          10.2203,
+          10.9716,
+          12.8619,
+          13.1141,
+          9.7527
         ],
         [
-          4.242466666666667,
-          2.7948333333333335,
-          3.0576333333333334,
-          3.4148666666666667,
-          4.5465,
-          2.6032,
-          2.898
+          4.31425,
+          2.84225,
+          3.083275,
+          3.735325,
+          3.628475,
+          3.979625,
+          3.634975
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -4767,32 +4767,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.5351,
-      "cpp_ms": 2.33958,
-      "speedup": 4.075560570700723,
+      "reference_ms": 10.3716,
+      "cpp_ms": 2.86055,
+      "speedup": 3.6257363094509802,
       "samples_ms": [
         [
-          9.835,
-          9.2195,
-          9.923,
-          9.5351,
-          10.0022,
-          7.9861,
-          8.0298
+          9.29,
+          12.3175,
+          11.6347,
+          9.3378,
+          7.9716,
+          12.4832,
+          10.3716
         ],
         [
-          2.2559,
-          2.4018,
-          6.1512,
-          4.22606,
-          2.25444,
-          2.33958,
-          2.22674
+          2.8508,
+          4.14655,
+          3.5353,
+          2.2644,
+          2.47555,
+          3.0925,
+          2.86055
         ]
       ],
       "loops": [
         1,
-        5
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -4823,32 +4823,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.182,
-      "cpp_ms": 2.24578,
-      "speedup": 4.088557205069063,
+      "reference_ms": 9.0963,
+      "cpp_ms": 2.860625,
+      "speedup": 3.1798295826960885,
       "samples_ms": [
         [
-          9.0556,
-          9.2019,
-          8.9088,
-          10.4089,
-          9.6382,
-          9.182,
-          7.8056
+          8.9817,
+          9.0963,
+          8.4159,
+          13.6985,
+          8.1984,
+          10.3559,
+          13.5039
         ],
         [
-          2.24578,
-          2.186,
-          2.23444,
-          2.331,
-          2.16106,
-          3.52598,
-          2.68808
+          2.083625,
+          3.7504,
+          2.860625,
+          2.973625,
+          2.0349,
+          2.122075,
+          4.371575
         ]
       ],
       "loops": [
         1,
-        5
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -4879,32 +4879,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.5553,
-      "cpp_ms": 1.958925,
-      "speedup": 4.367344334264967,
+      "reference_ms": 11.1284,
+      "cpp_ms": 2.447,
+      "speedup": 4.547772782999591,
       "samples_ms": [
         [
-          8.5553,
-          8.9576,
-          8.8541,
-          8.6466,
-          7.9466,
-          7.9033,
-          6.7056
+          12.0766,
+          10.6939,
+          9.6184,
+          11.9904,
+          12.3499,
+          11.1284,
+          7.8896
         ],
         [
-          1.958925,
-          2.26915,
-          2.37575,
-          2.401375,
-          1.773375,
-          1.951625,
-          1.7175
+          2.2124666666666664,
+          3.2471333333333336,
+          2.6833333333333336,
+          2.2370333333333337,
+          4.231566666666667,
+          2.447,
+          2.3529333333333335
         ]
       ],
       "loops": [
         1,
-        4
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -4935,195 +4935,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.3548,
-      "cpp_ms": 2.28974,
-      "speedup": 3.648798553547564,
+      "reference_ms": 9.6603,
+      "cpp_ms": 3.9252,
+      "speedup": 2.46109752369306,
       "samples_ms": [
         [
-          8.2937,
-          8.0287,
-          8.1168,
-          9.8194,
-          9.0388,
-          8.679,
-          8.3548
+          8.115,
+          8.5873,
+          9.4991,
+          10.031,
+          9.6603,
+          12.2173,
+          12.5661
         ],
         [
-          1.91276,
-          2.9765,
-          2.93142,
-          2.28974,
-          1.8428,
-          2.03742,
-          2.53532
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-31",
-      "window": [
-        31,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "31"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 8.2253,
-      "cpp_ms": 3.300525,
-      "speedup": 2.492118678089092,
-      "samples_ms": [
-        [
-          8.1555,
-          10.5482,
-          8.2049,
-          8.2253,
-          8.5664,
-          8.6812,
-          8.0011
-        ],
-        [
-          3.300525,
-          2.498225,
-          3.461625,
-          2.023025,
-          3.963275,
-          3.323975,
-          2.127925
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-31",
-      "window": [
-        31,
-        31
-      ],
-      "parameter_repr": {
-        "window_size": "31"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 9.8116,
-      "cpp_ms": 2.3447,
-      "speedup": 4.1845865142662175,
-      "samples_ms": [
-        [
-          11.185,
-          9.5523,
-          9.8116,
-          13.2151,
-          8.8832,
-          8.4305,
-          10.0897
-        ],
-        [
-          2.42485,
-          2.3447,
-          2.838975,
-          4.497425,
-          2.194025,
-          2.14335,
-          2.255175
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "window-127",
-      "window": [
-        127,
-        127
-      ],
-      "parameter_repr": {
-        "window_size": "127"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.8759,
-      "cpp_ms": 5.995733333333333,
-      "speedup": 2.14751045187689,
-      "samples_ms": [
-        [
-          14.8626,
-          14.0603,
-          15.4246,
-          12.8759,
-          12.7162,
-          10.7849,
-          9.9808
-        ],
-        [
-          6.065266666666667,
-          3.7741666666666664,
-          6.014833333333333,
-          6.767566666666667,
-          3.5766333333333336,
-          5.995733333333333,
-          2.9412333333333334
+          2.5737666666666663,
+          5.304466666666667,
+          2.9935,
+          3.1327333333333334,
+          4.4183,
+          3.9841666666666664,
+          3.9252
         ]
       ],
       "loops": [
@@ -5136,6 +4968,174 @@
       ]
     },
     {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-31",
+      "window": [
+        31,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "31"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 13.1279,
+      "cpp_ms": 3.15225,
+      "speedup": 4.164612578317075,
+      "samples_ms": [
+        [
+          14.6384,
+          14.7641,
+          10.7051,
+          12.1195,
+          13.9014,
+          11.5885,
+          13.1279
+        ],
+        [
+          2.91345,
+          4.132525,
+          2.496,
+          2.552375,
+          3.51555,
+          3.15225,
+          4.197725
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-31",
+      "window": [
+        31,
+        31
+      ],
+      "parameter_repr": {
+        "window_size": "31"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 13.8565,
+      "cpp_ms": 5.6677,
+      "speedup": 2.444818885967853,
+      "samples_ms": [
+        [
+          14.2851,
+          15.7279,
+          13.8565,
+          11.3494,
+          10.8078,
+          11.8017,
+          16.2645
+        ],
+        [
+          6.1066,
+          5.6677,
+          5.8155,
+          5.54255,
+          2.35405,
+          4.73295,
+          6.0292
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "window-127",
+      "window": [
+        127,
+        127
+      ],
+      "parameter_repr": {
+        "window_size": "127"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 15.236,
+      "cpp_ms": 5.25075,
+      "speedup": 2.901680712279198,
+      "samples_ms": [
+        [
+          12.8398,
+          13.5813,
+          17.2105,
+          15.9211,
+          15.9808,
+          12.4171,
+          15.236
+        ],
+        [
+          4.22385,
+          6.2671,
+          5.25075,
+          6.3699,
+          5.40045,
+          3.955,
+          4.14075
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "filters.threshold_sauvola",
       "size": 512,
       "shape": [
@@ -5159,27 +5159,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.089,
-      "cpp_ms": 4.3092,
-      "speedup": 2.573331476840249,
+      "reference_ms": 16.3617,
+      "cpp_ms": 6.4586,
+      "speedup": 2.5333199145325613,
       "samples_ms": [
         [
-          11.0283,
-          12.8481,
-          10.2993,
-          12.2677,
-          12.4273,
-          10.4922,
-          11.089
+          12.381,
+          15.1278,
+          14.1448,
+          16.3617,
+          21.517,
+          17.9365,
+          17.5147
         ],
         [
-          4.2944,
-          4.20655,
-          4.8709,
-          4.9013,
-          7.16025,
-          4.3092,
-          4.12235
+          5.97015,
+          7.9768,
+          6.0447,
+          7.45245,
+          6.4586,
+          5.8762,
+          6.4851
         ]
       ],
       "loops": [
@@ -5215,27 +5215,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 7.7767,
-      "cpp_ms": 2.01,
-      "speedup": 3.8690049751243785,
+      "reference_ms": 10.3024,
+      "cpp_ms": 2.55365,
+      "speedup": 4.034382158870636,
       "samples_ms": [
         [
-          9.7359,
-          7.3916,
-          8.8512,
-          6.9802,
-          7.7767,
-          7.4129,
-          8.0345
+          13.7897,
+          10.9916,
+          9.5867,
+          10.8703,
+          10.3024,
+          9.3257,
+          9.5174
         ],
         [
-          2.025725,
-          1.969875,
-          1.800125,
-          2.333175,
-          2.090525,
-          2.01,
-          1.84055
+          2.35685,
+          2.55365,
+          2.6471,
+          2.351575,
+          2.809075,
+          2.46955,
+          3.973
         ]
       ],
       "loops": [
@@ -5271,27 +5271,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.0342,
-      "cpp_ms": 2.5815666666666663,
-      "speedup": 3.4995028858445134,
+      "reference_ms": 11.1287,
+      "cpp_ms": 2.6061,
+      "speedup": 4.270250565979817,
       "samples_ms": [
         [
-          10.8065,
-          8.0405,
-          9.7504,
-          9.0342,
-          8.4436,
-          9.1487,
-          8.2676
+          11.5805,
+          8.717,
+          10.1338,
+          9.8049,
+          11.1287,
+          11.8642,
+          11.4919
         ],
         [
-          2.5815666666666663,
-          2.1605,
-          2.5846333333333336,
-          2.8084,
-          2.3543,
-          2.6048666666666667,
-          2.2824333333333335
+          2.8511333333333333,
+          2.6061,
+          2.4745,
+          2.2383666666666664,
+          2.549,
+          3.3521666666666663,
+          3.0481
         ]
       ],
       "loops": [
@@ -5325,32 +5325,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.5218,
-      "cpp_ms": 3.4290333333333334,
-      "speedup": 2.7768175676332496,
+      "reference_ms": 9.2686,
+      "cpp_ms": 3.3696,
+      "speedup": 2.7506528964862293,
       "samples_ms": [
         [
-          9.1916,
-          9.819,
-          8.8378,
-          9.5218,
-          10.1236,
-          13.9117,
-          8.3585
+          8.112,
+          7.9548,
+          10.9328,
+          9.3636,
+          9.8764,
+          9.2686,
+          8.7489
         ],
         [
-          3.2684,
-          3.7536,
-          3.4290333333333334,
-          3.9989333333333335,
-          3.2748333333333335,
-          3.5424666666666664,
-          2.9527
+          3.3696,
+          4.45715,
+          4.7606,
+          3.0307,
+          3.2807,
+          3.19235,
+          4.5015
         ]
       ],
       "loops": [
         1,
-        3
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -5379,27 +5379,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.6218,
-      "cpp_ms": 3.9889333333333337,
-      "speedup": 2.412123541798977,
+      "reference_ms": 10.9961,
+      "cpp_ms": 4.7769,
+      "speedup": 2.3019322154535367,
       "samples_ms": [
         [
-          8.5811,
-          11.1443,
-          8.6715,
-          8.1689,
-          12.3193,
-          9.6218,
-          10.1362
+          11.3008,
+          9.4249,
+          10.713,
+          10.9961,
+          11.5191,
+          9.5129,
+          11.9146
         ],
         [
-          3.7226666666666666,
-          4.0387,
-          3.5188333333333337,
-          3.6092333333333335,
-          3.9889333333333337,
-          5.342,
-          4.143633333333334
+          4.6652,
+          3.8541,
+          5.0711,
+          4.8328,
+          4.213933333333333,
+          4.7769,
+          5.339066666666667
         ]
       ],
       "loops": [
@@ -5433,27 +5433,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.6242,
-      "cpp_ms": 3.57695,
-      "speedup": 2.6906163071890856,
+      "reference_ms": 11.0934,
+      "cpp_ms": 4.25805,
+      "speedup": 2.6052770634445346,
       "samples_ms": [
         [
-          9.6242,
-          9.0034,
-          10.0542,
-          10.2327,
-          9.6368,
-          9.1352,
-          8.2536
+          11.4613,
+          8.691,
+          12.8398,
+          13.2947,
+          8.9656,
+          11.0247,
+          11.0934
         ],
         [
-          3.4207,
-          3.66605,
-          3.6131,
-          3.53195,
-          5.7957,
-          3.5462,
-          3.57695
+          5.49445,
+          4.25805,
+          5.24875,
+          3.3003,
+          3.6201,
+          4.671,
+          3.5344
         ]
       ],
       "loops": [
@@ -5487,32 +5487,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.7642,
-      "cpp_ms": 4.2227,
-      "speedup": 2.549127335590973,
+      "reference_ms": 9.4072,
+      "cpp_ms": 4.242366666666667,
+      "speedup": 2.217441522420661,
       "samples_ms": [
         [
-          10.0543,
-          10.9188,
-          8.789,
-          11.5927,
-          10.7642,
-          13.1488,
-          10.4656
+          9.4367,
+          9.4072,
+          9.4019,
+          9.0961,
+          9.2291,
+          14.8572,
+          9.5862
         ],
         [
-          4.1496,
-          4.156,
-          3.88175,
-          4.2227,
-          5.54475,
-          5.50475,
-          4.2233
+          4.242366666666667,
+          4.120633333333333,
+          4.156033333333333,
+          3.9898333333333333,
+          4.271966666666667,
+          4.5958,
+          5.084533333333333
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -5541,32 +5541,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.0986,
-      "cpp_ms": 4.8281,
-      "speedup": 2.9201135022058367,
+      "reference_ms": 15.8467,
+      "cpp_ms": 5.545266666666667,
+      "speedup": 2.8576984575433704,
       "samples_ms": [
         [
-          13.0163,
-          14.0986,
-          13.8613,
-          14.1826,
-          14.766,
-          16.8467,
-          12.3253
+          10.3841,
+          19.836,
+          15.7789,
+          12.6321,
+          20.7831,
+          15.8467,
+          18.8402
         ],
         [
-          4.94305,
-          4.92195,
-          4.8281,
-          4.30005,
-          5.55745,
-          4.16815,
-          4.47785
+          5.823666666666667,
+          6.516566666666667,
+          4.5148,
+          4.0652333333333335,
+          4.892433333333333,
+          5.545266666666667,
+          7.031633333333333
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -5595,32 +5595,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 14.902,
-      "cpp_ms": 5.00255,
-      "speedup": 2.9788807708068883,
+      "reference_ms": 14.252,
+      "cpp_ms": 5.1803,
+      "speedup": 2.751192015906415,
       "samples_ms": [
         [
-          15.1025,
-          15.3592,
-          14.2697,
-          15.0492,
-          14.902,
-          13.8106,
-          12.957
+          16.7,
+          14.5792,
+          13.2328,
+          14.6614,
+          13.2987,
+          14.252,
+          12.0962
         ],
         [
-          5.00035,
-          4.95015,
-          7.43325,
-          5.012,
-          5.081,
-          5.00255,
-          4.72995
+          5.1444,
+          5.1122,
+          5.1803,
+          5.7097,
+          6.739,
+          5.0052,
+          5.235
         ]
       ],
       "loops": [
         1,
-        2
+        1
       ],
       "sample_labels": [
         "scikit-image",
@@ -5653,27 +5653,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.9592,
-      "cpp_ms": 4.8598,
-      "speedup": 3.9012305033128936,
+      "reference_ms": 18.2364,
+      "cpp_ms": 5.063866666666667,
+      "speedup": 3.6012796545459334,
       "samples_ms": [
         [
-          26.4906,
-          17.7446,
-          18.9934,
-          17.6774,
-          18.9592,
-          21.8314,
-          18.9405
+          17.6793,
+          18.6245,
+          17.8371,
+          19.265,
+          20.0332,
+          17.4097,
+          18.2364
         ],
         [
-          5.1642,
-          4.5994,
-          4.747033333333333,
-          4.6564,
-          4.8598,
-          5.571633333333333,
-          4.956466666666667
+          4.7772,
+          5.063866666666667,
+          5.567166666666667,
+          5.066933333333333,
+          5.248,
+          4.882933333333333,
+          4.687133333333333
         ]
       ],
       "loops": [
@@ -5711,27 +5711,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 18.1866,
-      "cpp_ms": 5.45335,
-      "speedup": 3.3349409078823102,
+      "reference_ms": 17.0902,
+      "cpp_ms": 5.05155,
+      "speedup": 3.3831596242737376,
       "samples_ms": [
         [
-          18.1866,
-          17.6816,
-          26.1694,
-          19.4914,
-          23.7978,
-          15.8105,
-          17.8839
+          18.5055,
+          17.2462,
+          16.6646,
+          17.0902,
+          17.7341,
+          15.9107,
+          16.2076
         ],
         [
-          5.4873,
-          6.5625,
-          5.8104,
-          4.88895,
-          4.2281,
-          5.45335,
-          5.1046
+          5.05155,
+          4.7316,
+          5.3407,
+          4.8694,
+          4.47985,
+          5.07425,
+          5.338
         ]
       ],
       "loops": [
@@ -5767,32 +5767,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.2164,
-      "cpp_ms": 3.4823333333333335,
-      "speedup": 2.6466162534698956,
+      "reference_ms": 9.4156,
+      "cpp_ms": 3.383425,
+      "speedup": 2.782860562891153,
       "samples_ms": [
         [
-          8.819,
-          9.1456,
-          9.3633,
-          8.4815,
-          9.5519,
-          10.5902,
-          9.2164
+          8.4044,
+          9.6958,
+          9.6461,
+          9.4156,
+          9.603,
+          8.7174,
+          8.3677
         ],
         [
-          3.4239333333333333,
-          5.4663,
-          3.3151666666666664,
-          3.5796,
-          3.5326333333333335,
-          3.4507,
-          3.4823333333333335
+          3.383425,
+          3.759775,
+          3.113375,
+          3.44215,
+          3.146,
+          3.55125,
+          3.27245
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -5823,27 +5823,251 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.4762,
-      "cpp_ms": 3.4552666666666667,
-      "speedup": 3.0319512242181017,
+      "reference_ms": 8.4394,
+      "cpp_ms": 2.2887,
+      "speedup": 3.687420806571416,
       "samples_ms": [
         [
-          10.5225,
-          10.2808,
-          11.4685,
-          9.3209,
-          10.4762,
-          11.2417,
-          9.6993
+          8.0679,
+          8.4394,
+          7.9118,
+          8.3844,
+          9.4063,
+          9.491,
+          12.1192
         ],
         [
-          3.54645,
-          3.87015,
-          2.1528833333333335,
-          3.3684333333333334,
-          3.4366333333333334,
-          3.4552666666666667,
-          5.057483333333333
+          3.0268,
+          2.0193,
+          2.09122,
+          2.09028,
+          2.2887,
+          3.44062,
+          3.48098
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k-0.0",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "0.0"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.9571,
+      "cpp_ms": 3.97635,
+      "speedup": 2.5040803752184795,
+      "samples_ms": [
+        [
+          14.8167,
+          9.9571,
+          9.922,
+          11.4238,
+          10.2487,
+          7.6982,
+          9.6655
+        ],
+        [
+          5.60555,
+          4.65115,
+          3.97635,
+          6.2215,
+          3.3646,
+          3.0718,
+          3.62495
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k-0.0",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "0.0"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.1978,
+      "cpp_ms": 2.28614,
+      "speedup": 3.585869631781081,
+      "samples_ms": [
+        [
+          7.9687,
+          9.03505,
+          7.93885,
+          7.18895,
+          8.24965,
+          8.1978,
+          8.60725
+        ],
+        [
+          2.41038,
+          2.21308,
+          2.28614,
+          2.13048,
+          1.9635,
+          3.14196,
+          3.26518
+        ]
+      ],
+      "loops": [
+        2,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k--0.2",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "-0.2"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.2377,
+      "cpp_ms": 3.2593,
+      "speedup": 2.527444543306845,
+      "samples_ms": [
+        [
+          8.0595,
+          8.1897,
+          9.3234,
+          8.6419,
+          8.2377,
+          7.6633,
+          8.8043
+        ],
+        [
+          3.411425,
+          3.5264,
+          3.06145,
+          3.488525,
+          3.0848,
+          3.03435,
+          3.2593
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "k--0.2",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {
+        "k": "-0.2"
+      },
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.4956,
+      "cpp_ms": 3.0594333333333337,
+      "speedup": 2.776854101522068,
+      "samples_ms": [
+        [
+          7.3716,
+          7.5011,
+          8.4956,
+          10.0329,
+          8.0761,
+          9.4749,
+          8.5855
+        ],
+        [
+          2.2350666666666665,
+          2.1861666666666664,
+          2.0292833333333333,
+          3.5722333333333336,
+          3.0594333333333337,
+          3.2812666666666663,
+          3.3592
         ]
       ],
       "loops": [
@@ -5867,39 +6091,39 @@
       "threads": 1,
       "backend": "native",
       "layout": "contiguous",
-      "workload": "k-0.0",
+      "workload": "k-np.float32(0.17)",
       "window": [
         15,
         15
       ],
       "parameter_repr": {
-        "k": "0.0"
+        "k": "np.float32(0.17)"
       },
       "rtol": 2e-13,
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.2153,
-      "cpp_ms": 3.200775,
-      "speedup": 2.566659637119135,
+      "reference_ms": 8.1156,
+      "cpp_ms": 3.09525,
+      "speedup": 2.621952992488491,
       "samples_ms": [
         [
-          8.3745,
-          8.1739,
-          8.0372,
-          8.4367,
-          10.0594,
-          8.165,
-          8.2153
+          9.3084,
+          8.1156,
+          7.9007,
+          8.4322,
+          7.874,
+          8.8827,
+          7.9822
         ],
         [
-          3.0752,
-          3.306025,
-          3.148825,
-          5.810225,
-          3.259375,
-          3.200775,
-          3.1516
+          3.212125,
+          3.09525,
+          2.927575,
+          3.081225,
+          3.2361,
+          3.077175,
+          3.114225
         ]
       ],
       "loops": [
@@ -5923,151 +6147,39 @@
       "threads": 1,
       "backend": "native",
       "layout": "contiguous",
-      "workload": "k-0.0",
+      "workload": "k-np.float32(0.17)",
       "window": [
         15,
         15
       ],
       "parameter_repr": {
-        "k": "0.0"
+        "k": "np.float32(0.17)"
       },
       "rtol": 2e-13,
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.1641,
-      "cpp_ms": 3.4838666666666667,
-      "speedup": 2.917476749971296,
+      "reference_ms": 8.2552,
+      "cpp_ms": 3.03258,
+      "speedup": 2.7221705610404343,
       "samples_ms": [
         [
-          10.9154,
-          10.805,
-          8.6899,
-          10.1641,
-          9.6311,
-          11.3498,
-          8.6947
+          7.7589,
+          8.5342,
+          7.8029,
+          8.2552,
+          8.4605,
+          10.8758,
+          8.2088
         ],
         [
-          2.2499,
-          2.079833333333333,
-          3.4267,
-          3.4838666666666667,
-          4.053433333333333,
-          4.513133333333333,
-          3.5143
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k--0.2",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "-0.2"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 9.4727,
-      "cpp_ms": 3.52265,
-      "speedup": 2.6890835024768283,
-      "samples_ms": [
-        [
-          8.7864,
-          12.7042,
-          11.6028,
-          9.4727,
-          8.5376,
-          8.6734,
-          10.6431
-        ],
-        [
-          3.425625,
-          4.808225,
-          3.804975,
-          3.7923,
-          3.333275,
-          3.3714,
-          3.52265
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k--0.2",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "-0.2"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 9.1086,
-      "cpp_ms": 3.53432,
-      "speedup": 2.577185993345254,
-      "samples_ms": [
-        [
-          7.9163,
-          8.5697,
-          8.7646,
-          10.449,
-          9.1086,
-          9.43,
-          10.8997
-        ],
-        [
-          2.18508,
-          3.53432,
-          3.83166,
-          3.64798,
-          3.7262,
-          3.26468,
-          3.29444
+          2.03842,
+          2.16968,
+          2.26632,
+          3.49912,
+          3.03258,
+          3.37006,
+          3.88626
         ]
       ],
       "loops": [
@@ -6091,118 +6203,6 @@
       "threads": 1,
       "backend": "native",
       "layout": "contiguous",
-      "workload": "k-np.float32(0.17)",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "np.float32(0.17)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 8.9053,
-      "cpp_ms": 3.644675,
-      "speedup": 2.4433728658933926,
-      "samples_ms": [
-        [
-          9.8365,
-          8.9053,
-          8.5629,
-          8.3144,
-          10.4148,
-          7.873,
-          9.6681
-        ],
-        [
-          3.62785,
-          3.289125,
-          4.548525,
-          5.61175,
-          3.644675,
-          3.371,
-          4.8277
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "k-np.float32(0.17)",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {
-        "k": "np.float32(0.17)"
-      },
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 10.1304,
-      "cpp_ms": 3.798,
-      "speedup": 2.667298578199052,
-      "samples_ms": [
-        [
-          9.3443,
-          8.4888,
-          10.0755,
-          10.1304,
-          13.1497,
-          15.5884,
-          14.7096
-        ],
-        [
-          3.2822333333333336,
-          5.6489,
-          3.4963333333333333,
-          3.6983666666666664,
-          4.227533333333333,
-          4.604833333333333,
-          3.798
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "float64",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
       "workload": "k-np.float64(0.17)",
       "window": [
         15,
@@ -6215,27 +6215,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 10.2152,
-      "cpp_ms": 3.7690666666666663,
-      "speedup": 2.7102731003254563,
+      "reference_ms": 10.1892,
+      "cpp_ms": 3.3753,
+      "speedup": 3.01875388854324,
       "samples_ms": [
         [
-          10.6294,
-          10.2152,
-          12.326,
-          9.7215,
-          9.6104,
-          8.9887,
-          13.0684
+          10.1892,
+          9.9288,
+          11.5168,
+          11.6968,
+          10.0293,
+          9.7444,
+          11.794
         ],
         [
-          3.3972,
-          4.813433333333333,
-          3.3039,
-          3.7690666666666663,
-          4.712266666666667,
-          3.5015,
-          3.9681
+          3.1597,
+          3.6463666666666663,
+          2.9286,
+          5.563233333333333,
+          3.7775,
+          3.3753,
+          2.9886333333333335
         ]
       ],
       "loops": [
@@ -6271,27 +6271,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.6082,
-      "cpp_ms": 2.194775,
-      "speedup": 3.922133248282854,
+      "reference_ms": 10.4354,
+      "cpp_ms": 3.766275,
+      "speedup": 2.7707482857730783,
       "samples_ms": [
         [
-          9.0666,
-          9.3048,
-          7.3833,
-          7.7297,
-          7.876,
-          9.5413,
-          8.6082
+          11.2299,
+          10.2703,
+          13.3645,
+          12.3758,
+          10.4354,
+          10.1635,
+          8.3679
         ],
         [
-          2.6025,
-          2.377425,
-          3.8778,
-          2.011525,
-          2.02045,
-          2.194775,
-          2.1375
+          2.7235,
+          2.421875,
+          4.533375,
+          4.489675,
+          3.97655,
+          3.766275,
+          3.3991
         ]
       ],
       "loops": [
@@ -6327,32 +6327,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.7793,
-      "cpp_ms": 2.61745,
-      "speedup": 3.73619362356492,
+      "reference_ms": 8.0548,
+      "cpp_ms": 2.1864,
+      "speedup": 3.684046834979876,
       "samples_ms": [
         [
-          10.525,
-          9.8518,
-          9.1751,
-          8.295,
-          7.0297,
-          9.7793,
-          11.0207
+          8.2836,
+          8.0548,
+          8.0885,
+          7.9746,
+          7.5999,
+          7.4416,
+          8.3618
         ],
         [
-          3.295475,
-          4.106825,
-          2.670625,
-          2.1151,
-          1.949675,
-          2.0229,
-          2.61745
+          2.49596,
+          2.11544,
+          2.0533,
+          2.1864,
+          2.23764,
+          2.32204,
+          1.96616
         ]
       ],
       "loops": [
         1,
-        4
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -6383,27 +6383,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 8.6789,
-      "cpp_ms": 2.2389,
-      "speedup": 3.8764125240073253,
+      "reference_ms": 8.9313,
+      "cpp_ms": 3.2497,
+      "speedup": 2.748346001169339,
       "samples_ms": [
         [
-          8.2034,
-          9.6241,
-          8.121,
-          8.5378,
-          8.6927,
-          8.6789,
-          9.3791
+          7.5028,
+          8.5456,
+          9.0635,
+          9.7684,
+          8.5413,
+          8.9313,
+          9.3197
         ],
         [
-          1.95902,
-          2.2389,
-          2.26248,
-          2.45108,
-          2.88368,
-          2.02264,
-          2.15716
+          2.17082,
+          2.1177,
+          3.29538,
+          3.28902,
+          3.2497,
+          3.16086,
+          3.54944
         ]
       ],
       "loops": [
@@ -6439,32 +6439,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.3245,
-      "cpp_ms": 3.0416666666666665,
-      "speedup": 3.065589041095891,
+      "reference_ms": 7.5593,
+      "cpp_ms": 2.10875,
+      "speedup": 3.5847302904564313,
       "samples_ms": [
         [
-          9.9474,
-          9.3245,
-          8.3002,
-          9.5081,
-          7.7863,
-          7.9574,
-          9.3939
+          8.7921,
+          7.5266,
+          7.5713,
+          7.4042,
+          7.5593,
+          8.1999,
+          7.5589
         ],
         [
-          3.0416666666666665,
-          3.2946,
-          2.8643333333333336,
-          2.5248333333333335,
-          3.5525333333333333,
-          1.9940666666666667,
-          3.6744333333333334
+          2.1616,
+          2.10875,
+          2.055133333333333,
+          2.0568166666666667,
+          2.1677,
+          2.3275833333333336,
+          2.0112
         ]
       ],
       "loops": [
         1,
-        3
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -6493,27 +6493,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.037,
-      "cpp_ms": 1.86086,
-      "speedup": 4.8563567382823,
+      "reference_ms": 8.0327,
+      "cpp_ms": 2.94264,
+      "speedup": 2.729759671587418,
       "samples_ms": [
         [
-          13.9216,
-          9.037,
-          9.3902,
-          7.8814,
-          8.6166,
-          8.5553,
-          9.0891
+          7.7975,
+          9.1957,
+          7.7162,
+          7.649,
+          8.0327,
+          8.717,
+          8.7854
         ],
         [
-          1.89172,
-          1.86086,
-          3.69522,
-          1.80126,
-          1.6498,
-          2.23866,
-          1.75466
+          2.94264,
+          2.75174,
+          2.91666,
+          3.05604,
+          3.15846,
+          2.81512,
+          3.0374
         ]
       ],
       "loops": [
@@ -6547,32 +6547,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 9.8731,
-      "cpp_ms": 3.57562,
-      "speedup": 2.761227423495786,
+      "reference_ms": 10.1709,
+      "cpp_ms": 3.1508333333333334,
+      "speedup": 3.2280031737635544,
       "samples_ms": [
         [
-          9.4588,
-          10.6562,
-          7.5272,
-          7.6598,
-          9.8731,
-          13.4983,
-          16.9224
+          10.7827,
+          8.9993,
+          9.5271,
+          9.184,
+          10.1709,
+          12.0547,
+          11.5896
         ],
         [
-          2.24604,
-          4.25576,
-          1.90558,
-          4.41244,
-          3.95926,
-          3.57562,
-          2.63394
+          3.1400333333333337,
+          3.185,
+          3.9093333333333335,
+          3.0559666666666665,
+          3.3784333333333336,
+          3.1093,
+          3.1508333333333334
         ]
       ],
       "loops": [
         1,
-        5
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -6601,243 +6601,189 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.4089,
-      "cpp_ms": 2.58235,
-      "speedup": 4.418030088872539,
+      "reference_ms": 8.2763,
+      "cpp_ms": 3.124425,
+      "speedup": 2.648903398225274,
       "samples_ms": [
         [
-          11.8197,
-          12.8327,
-          11.4089,
-          10.9897,
-          11.5794,
-          10.0423,
-          9.3945
+          8.9046,
+          9.0157,
+          8.0655,
+          8.1384,
+          9.282,
+          8.2763,
+          8.1282
         ],
         [
-          4.21955,
-          3.61165,
-          2.58235,
-          2.6824,
-          2.05955,
+          2.728475,
+          3.104175,
+          3.259625,
+          3.124425,
+          3.9154,
+          2.972475,
+          3.277425
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "additional-width",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 9.9198,
+      "cpp_ms": 2.944675,
+      "speedup": 3.3687249017293928,
+      "samples_ms": [
+        [
+          11.0512,
+          12.0802,
+          10.6064,
+          8.396,
+          9.9198,
+          8.9591,
+          9.1766
+        ],
+        [
+          2.699025,
+          2.849225,
+          2.78,
+          2.996525,
+          3.25595,
+          2.944675,
+          3.213675
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "additional-width",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.9737,
+      "cpp_ms": 3.05664,
+      "speedup": 2.935805328726968,
+      "samples_ms": [
+        [
+          9.2901,
+          9.4681,
+          7.5996,
+          8.1688,
+          8.8973,
+          9.0639,
+          8.9737
+        ],
+        [
+          3.05664,
+          3.05924,
+          3.11052,
+          2.91986,
+          2.55956,
+          2.88192,
+          3.67818
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.threshold_sauvola",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "additional-width",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 8.8946,
+      "cpp_ms": 2.4017333333333335,
+      "speedup": 3.7034086493088325,
+      "samples_ms": [
+        [
+          8.8529,
+          9.8736,
+          9.4017,
+          8.0213,
+          8.8946,
+          8.7752,
+          9.1775
+        ],
+        [
+          2.5220666666666665,
+          2.4017333333333335,
+          2.2045666666666666,
           2.4625,
-          2.2216
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int8",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "additional-width",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.3142,
-      "cpp_ms": 3.65795,
-      "speedup": 3.3664210828469496,
-      "samples_ms": [
-        [
-          9.6141,
-          11.2036,
-          11.7915,
-          12.8517,
-          19.2414,
-          12.3142,
-          16.8446
-        ],
-        [
-          2.359975,
-          2.18405,
-          3.603625,
-          3.65795,
-          4.0783,
-          5.85905,
-          4.006825
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint32",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "additional-width",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 20.8359,
-      "cpp_ms": 5.18755,
-      "speedup": 4.016520322695685,
-      "samples_ms": [
-        [
-          15.3739,
-          20.8999,
-          16.4517,
-          21.5402,
-          11.8271,
-          20.8359,
-          21.1702
-        ],
-        [
-          5.4911,
-          4.64395,
-          5.18755,
-          5.51155,
-          3.87905,
-          6.03065,
-          4.43605
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_sauvola",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "uint32",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "additional-width",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 12.9752,
-      "cpp_ms": 3.1674,
-      "speedup": 4.096482919744901,
-      "samples_ms": [
-        [
-          23.2675,
-          17.4657,
-          20.0085,
-          12.2825,
-          12.0312,
-          12.1937,
-          12.9752
-        ],
-        [
-          5.87065,
-          2.53735,
-          3.1674,
-          4.1538,
-          4.4932,
-          3.12735,
-          2.9894
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "filters.threshold_niblack",
-      "size": 512,
-      "shape": [
-        512,
-        512
-      ],
-      "dtype": "int32",
-      "output_dtype": "float64",
-      "threads": 1,
-      "backend": "native",
-      "layout": "contiguous",
-      "workload": "additional-width",
-      "window": [
-        15,
-        15
-      ],
-      "parameter_repr": {},
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "warnings": [],
-      "max_abs_error": 0.0,
-      "reference_ms": 16.5922,
-      "cpp_ms": 4.8407,
-      "speedup": 3.4276447621211803,
-      "samples_ms": [
-        [
-          17.7004,
-          15.232,
-          16.5922,
-          15.3811,
-          18.5732,
-          12.0219,
-          18.122
-        ],
-        [
-          4.437866666666667,
-          4.8407,
-          5.0075,
-          5.236633333333333,
-          4.391033333333333,
-          4.752533333333333,
-          5.564633333333333
+          1.9338,
+          2.3330666666666664,
+          2.4608333333333334
         ]
       ],
       "loops": [
@@ -6850,6 +6796,60 @@
       ]
     },
     {
+      "api": "filters.threshold_niblack",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "additional-width",
+      "window": [
+        15,
+        15
+      ],
+      "parameter_repr": {},
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 7.5733,
+      "cpp_ms": 2.74836,
+      "speedup": 2.7555705948274607,
+      "samples_ms": [
+        [
+          7.8828,
+          7.5811,
+          7.2992,
+          8.3319,
+          7.2478,
+          7.5288,
+          7.5733
+        ],
+        [
+          2.72702,
+          2.53472,
+          2.78614,
+          2.81266,
+          2.69876,
+          2.93206,
+          2.74836
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "filters.threshold_sauvola",
       "size": 512,
       "shape": [
@@ -6871,32 +6871,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.5388,
-      "cpp_ms": 2.827525,
-      "speedup": 4.434549650312553,
+      "reference_ms": 8.6048,
+      "cpp_ms": 2.078733333333333,
+      "speedup": 4.139443892113787,
       "samples_ms": [
         [
-          12.5388,
-          12.8453,
-          11.8214,
-          12.5502,
-          11.5068,
-          11.8761,
-          12.9523
+          8.2435,
+          8.7401,
+          8.6048,
+          8.1633,
+          8.6607,
+          8.4792,
+          10.4581
         ],
         [
-          2.7567,
-          2.827525,
-          2.43225,
-          2.842825,
-          2.5626,
-          4.3051,
-          2.936225
+          1.9161333333333332,
+          2.078733333333333,
+          2.3372333333333333,
+          1.9653833333333333,
+          2.1106,
+          2.1101666666666663,
+          2.03215
         ]
       ],
       "loops": [
         1,
-        4
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -6925,27 +6925,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.9163,
-      "cpp_ms": 3.9642,
-      "speedup": 3.2582362141163412,
+      "reference_ms": 7.7892,
+      "cpp_ms": 4.157033333333334,
+      "speedup": 1.8737400870813319,
       "samples_ms": [
         [
-          9.7763,
-          9.454,
-          15.2358,
-          15.49,
-          12.9163,
-          13.4388,
-          11.1064
+          7.7814,
+          8.5967,
+          7.6735,
+          7.6666,
+          7.7892,
+          7.9811,
+          8.3898
         ],
         [
-          4.353566666666667,
-          4.3459,
-          3.9642,
-          3.9821333333333335,
-          3.4737666666666667,
-          3.9239,
-          3.7409333333333334
+          4.1109333333333336,
+          4.294966666666667,
+          4.2241,
+          4.254766666666667,
+          4.157033333333334,
+          4.099366666666667,
+          3.9305333333333334
         ]
       ],
       "loops": [
@@ -6979,32 +6979,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.4322,
-      "cpp_ms": 4.8129,
-      "speedup": 2.583099586527873,
+      "reference_ms": 9.5788,
+      "cpp_ms": 3.5337333333333336,
+      "speedup": 2.7106742632909477,
       "samples_ms": [
         [
-          11.7298,
-          12.5265,
-          11.9294,
-          11.9199,
-          14.7772,
-          13.1295,
-          12.4322
+          9.4997,
+          8.9185,
+          9.9382,
+          9.2588,
+          11.2438,
+          10.5305,
+          9.5788
         ],
         [
-          3.96465,
-          5.3391,
-          3.8941,
-          6.02655,
-          5.82695,
-          3.9959,
-          4.8129
+          3.3304,
+          3.5337333333333336,
+          3.4585666666666666,
+          3.5895,
+          3.6912333333333334,
+          3.7548333333333335,
+          3.4736333333333334
         ]
       ],
       "loops": [
         1,
-        2
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -7033,32 +7033,32 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 11.9566,
-      "cpp_ms": 2.92335,
-      "speedup": 4.090033694220671,
+      "reference_ms": 7.6158,
+      "cpp_ms": 2.79786,
+      "speedup": 2.72200896399391,
       "samples_ms": [
         [
-          10.0658,
-          12.1919,
-          11.0187,
-          11.106,
-          11.9566,
-          17.0087,
-          17.2095
+          7.5269,
+          7.75045,
+          7.5326,
+          7.6158,
+          7.73665,
+          8.44365,
+          6.9582
         ],
         [
-          2.5696,
-          3.432075,
-          2.458175,
-          2.6945,
-          3.7221,
-          2.92335,
-          4.7219
+          2.75824,
+          2.81318,
+          2.79786,
+          2.8747,
+          3.20214,
+          2.66258,
+          2.45292
         ]
       ],
       "loops": [
-        1,
-        4
+        2,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -7087,27 +7087,27 @@
       "atol": 2e-13,
       "warnings": [],
       "max_abs_error": 0.0,
-      "reference_ms": 12.5625,
-      "cpp_ms": 3.35784,
-      "speedup": 3.7412443713816024,
+      "reference_ms": 8.7393,
+      "cpp_ms": 2.09438,
+      "speedup": 4.172738471528567,
       "samples_ms": [
         [
-          12.5625,
-          15.4782,
-          14.8614,
-          14.5798,
-          10.5064,
-          9.4022,
-          11.5188
+          8.1195,
+          8.7307,
+          8.7841,
+          9.7702,
+          8.7393,
+          8.4649,
+          9.5932
         ],
         [
-          2.5394,
-          2.36788,
-          3.98478,
-          4.72374,
-          3.35784,
-          3.97718,
-          2.90114
+          2.09438,
+          1.9208,
+          2.29128,
+          2.2036,
+          2.00544,
+          2.29872,
+          2.07314
         ]
       ],
       "loops": [

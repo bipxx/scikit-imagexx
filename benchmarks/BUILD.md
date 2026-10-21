@@ -42,7 +42,7 @@ binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
 The current function benchmark covers 88 native image functions, two metadata
-helpers, and 524 one-worker per-function performance cases. The suite now covers 25089 checks in both SIMD
+helpers, and 524 one-worker per-function performance cases. The suite now covers 25329 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -147,11 +147,11 @@ and sanitizer validation remain unchanged. The separate metadata experiment
 records allocation-inclusive one-worker validation-overhead measurements.
 
 
-Farid adds 1418 dedicated checks across 12 real input dtypes, reflected/constant/
+Farid adds 1658 dedicated checks across 12 real input dtypes, reflected/constant/
 nearest/mirror/wrap boundaries and grid aliases, ordered/repeated/negative axes,
 N-D kernels through rank eight, high-amplitude constant cancellation, eroded masks,
 endian descriptors, memory maps, subnormal policies and parallel skinny images.
-The latest full Windows SIMD run passes 25089 tests. Linux passes 3814
+Both full Windows SIMD and scalar runs pass 25329 tests. Linux passes 4054
 Farid/shared-API/descriptor checks in both modes. Native and portable CTest pass on Windows; Linux C++ checks
 pass with address and undefined-behavior sanitizers.
 
@@ -175,3 +175,8 @@ endian storage. Generic Farid preserves tags on native float32/64 output;
 directional SciPy convolution drops them. Empty-axis allocation follows the
 same generic rule. The metadata-compatible confirmation is retained as a fifth
 fixed-workload observation, with its own source fingerprint and raw samples.
+
+The final Farid source snapshot (`8f0a084`) also passes the complete
+Windows/Linux CI workflow: full parity in both SIMD modes, all benchmark smoke
+suites and native/portable CTest. The workflow run is
+https://github.com/bipxx/scikit-imagexx/actions/runs/39620952451.
