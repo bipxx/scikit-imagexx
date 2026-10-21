@@ -179,3 +179,10 @@ def test_nondefault_underflow_policy_is_explicit(dtype):
     with np.errstate(under='raise'):
         with pytest.raises(NotImplementedError,match='outside native coverage'):
             xx.transform.downscale_local_mean(image,(2,2))
+
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('factors',[(1,1),(2,2),(4,4)])
+def test_vector_negative_zero_and_parallel_tails(dtype,factors):
+    actual,expected=check(np.full((513,517),-0.,dtype=dtype),factors)
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
