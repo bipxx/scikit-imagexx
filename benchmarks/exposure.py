@@ -2,7 +2,7 @@
 from run import measure
 import argparse
 from datetime import datetime, timezone
-import hashlib
+from provenance import source_fingerprint
 import json
 from pathlib import Path
 import platform
@@ -52,13 +52,10 @@ def main():
             results.append(result)
             print(f'{name} {options} {np.dtype(dtype).name}: {timing["speedup"]:.2f}x',flush=True)
     root = Path(__file__).resolve().parents[1]
-    digest = hashlib.sha256()
-    for p in sorted(list((root/'src').glob('*'))+list((root/'include/skimagexx').glob('*'))+
-                    list((root/'python/skimagexx').glob('*.py'))):
-        digest.update(str(p.relative_to(root)).encode()); digest.update(p.read_bytes())
+    fingerprint = source_fingerprint(root)
     report = {'metadata': {'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'cpu': platform.processor(),
                            'platform': platform.platform(), 'reference': skimage.__version__,
-                           'numpy': np.__version__, 'avx2': xx.has_avx2(), 'source_sha256': digest.hexdigest(),
+                           'numpy': np.__version__, 'avx2': xx.has_avx2(), **fingerprint,
                            'fallback_enabled': False, 'reference_thread_pools': 1}, 'results': results}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')

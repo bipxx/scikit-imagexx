@@ -2,7 +2,7 @@
 from run import measure
 import argparse
 from datetime import datetime, timezone
-import hashlib
+from provenance import source_fingerprint
 import json
 from pathlib import Path
 import platform
@@ -58,12 +58,10 @@ def main():
                                     'backend':'native','max_abs_error':0,**timing})
                     print(f'{name:16} {dtype:7} {workload:16} t={threads}: {timing["speedup"]:.2f}x',flush=True)
     root=Path(__file__).resolve().parents[1]
-    digest=hashlib.sha256()
-    for p in sorted(list((root/'src').glob('*'))+list((root/'include/skimagexx').glob('*'))+list((root/'python/skimagexx').glob('*.py'))):
-        digest.update(str(p.relative_to(root)).encode()); digest.update(p.read_bytes())
+    fingerprint = source_fingerprint(root)
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),
                         'cpu':platform.processor(),'reference':skimage.__version__,'numpy':np.__version__,
-                        'source_sha256':digest.hexdigest(),'avx2':xx.has_avx2(),'fallback_enabled':False,
+                        **fingerprint,'avx2':xx.has_avx2(),'fallback_enabled':False,
                         'reference_thread_pools':1,'repeat':args.repeat,
                         'warning_policy':'FutureWarning checked before timing and ignored during timed calls'},'results':results}
     args.output.parent.mkdir(parents=True,exist_ok=True)

@@ -345,7 +345,7 @@ performance. The full function benchmark covers 76 entries in 880 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 16,913 checks with SIMD enabled and disabled; inventory checks alone do not
+has 16,919 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
@@ -388,7 +388,8 @@ waiting where the runtime supports it. Input creation, imports, and I/O are excl
 
 Results depend on CPU, compiler, memory bandwidth, allocator, system load, and
 image shape. Values below 1× are retained as regressions. The JSON contains raw
-timings, loop counts, versions, source hash, and the invocation. Rebuild after
+timings, loop counts, versions, source fingerprint, and the invocation. The current fingerprint uses POSIX relative
+paths, LF line endings, and includes CMake/Python build configuration. Rebuild after
 source changes before rerunning; the hash describes source files, not binary
 provenance. `benchmarks/requirements.txt` pins this run's numerical/build tools.
 The initial multithreaded run predates the change to serial-by-default execution;

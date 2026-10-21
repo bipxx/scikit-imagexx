@@ -3,7 +3,7 @@ from run import measure
 from color_parity import check_float32_luv_inverse_stages
 import argparse
 from datetime import datetime, timezone
-import hashlib
+from provenance import source_fingerprint
 import json
 from pathlib import Path
 import platform
@@ -72,12 +72,10 @@ def main():
                 results.append(result)
                 print(f'{name:10} {np.dtype(dtype).name:7} {workload:14} t={threads}: {timing["speedup"]:.2f}x',flush=True)
     root=Path(__file__).resolve().parents[1]
-    digest=hashlib.sha256()
-    for p in sorted(list((root/'src').glob('*'))+list((root/'include/skimagexx').glob('*'))+list((root/'python/skimagexx').glob('*.py'))):
-        digest.update(str(p.relative_to(root)).encode()); digest.update(p.read_bytes())
+    fingerprint = source_fingerprint(root)
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),
                          'cpu':platform.processor(),'reference':skimage.__version__,'numpy':np.__version__,
-                         'source_sha256':digest.hexdigest(),'avx2':xx.has_avx2(),'fallback_enabled':False,
+                         **fingerprint,'avx2':xx.has_avx2(),'fallback_enabled':False,
                          'reference_thread_pools':1,'warning_policy':'warning count/text verified before timing; UserWarning ignored during timing'},
             'results':results}
     args.output.parent.mkdir(parents=True,exist_ok=True)

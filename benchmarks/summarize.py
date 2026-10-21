@@ -1,5 +1,5 @@
 """Verify report provenance/coverage and summarize original-library comparisons."""
-import hashlib
+from provenance import source_fingerprint
 import json
 from pathlib import Path
 
@@ -16,12 +16,11 @@ def main():
                ('Lab distances and color routes','color-distance')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
-    digest = hashlib.sha256()
-    for p in sorted(list((root/'src').glob('*'))+list((root/'include/skimagexx').glob('*'))+
-                    list((root/'python/skimagexx').glob('*.py'))):
-        digest.update(str(p.relative_to(root)).encode()); digest.update(p.read_bytes())
-    source_hash = digest.hexdigest()
+    fingerprint = source_fingerprint(root)
+    source_hash = fingerprint['source_sha256']
     for _,name,report in data:
+        if report['metadata'].get('source_hash_schema')!=fingerprint['source_hash_schema']:
+            raise ValueError(f'{name}: provenance schema changed; rebuild and rerun this report')
         if report['metadata']['source_sha256'] != source_hash:
             raise ValueError(f'{name}: source changed; rebuild and rerun this report')
         if report['metadata']['fallback_enabled']:
@@ -52,7 +51,8 @@ def main():
              f'Reference: original scikit-image {meta["reference"]}. '
              f'{len(all_rows)} comparisons on {meta["platform"]}; CPU: {meta["cpu"]}. '
              'Individual reports record timestamps, CPU, '
-             'versions, raw samples and options. All reports match the current source SHA-256:',
+             'versions, raw samples and options. All reports match the current source/build SHA-256 '
+             '(POSIX relative paths and LF line endings):',
              f'`{source_hash}`.','',
              '| Report | Cases | Worker counts |','|---|---:|---|']
     for label,name,d in data:

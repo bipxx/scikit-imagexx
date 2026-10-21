@@ -2,7 +2,7 @@
 from run import measure
 import argparse
 from datetime import datetime, timezone
-import hashlib
+from provenance import source_fingerprint
 import importlib
 import json
 from pathlib import Path
@@ -30,12 +30,8 @@ def main():
     apis = [api for api in native_functions() if args.modules is None or api.rsplit('.',1)[0] in args.modules]
     if not apis:
         parser.error('module selection matches no registered entry points')
-    digest = hashlib.sha256()
     root = Path(__file__).resolve().parents[1]
-    files = sorted(list((root/'src').glob('*'))+list((root/'include/skimagexx').glob('*'))+
-                   list((root/'python/skimagexx').glob('*.py')))
-    for p in files:
-        digest.update(str(p.relative_to(root)).encode()); digest.update(p.read_bytes())
+    fingerprint = source_fingerprint(root)
     results = []
     for size in args.sizes:
         for dtype in (np.uint8, np.float32, np.float64):
@@ -69,7 +65,7 @@ def main():
     assert set(r['api'] for r in results) == set(apis)
     report = {'metadata': {'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'platform': platform.platform(),
                            'cpu': platform.processor(), 'reference': skimage.__version__, 'numpy': np.__version__,
-                           'source_sha256': digest.hexdigest(), 'fallback_enabled': False, 'avx2': xx.has_avx2(),
+                           **fingerprint, 'fallback_enabled': False, 'avx2': xx.has_avx2(),
                            'selected_apis': apis,
                            'special_default_arguments': {'color.deltaE_cie76':'second input is first[..., ::-1]; raw Lab values',
                                'color.deltaE_ciede94':'second input is first[..., ::-1]; raw Lab; graphic-arts weights',
