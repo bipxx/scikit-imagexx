@@ -2,6 +2,7 @@
 from ._compat import module_attribute, fallback
 from . import _core
 import numpy as np
+import warnings
 
 
 def __getattr__(name):
@@ -101,6 +102,28 @@ def integrate(ii,start,end):
 
 
 _MEAN_DTYPES={}
+_MEAN_ZEROS={}
+
+
+def _local_mean_constant(image,cval,notices):
+    if type(cval) is int and cval==0:
+        key=image.dtype.str
+        constant=_MEAN_ZEROS.get(key)
+        if constant is None:
+            constant=np.zeros((),dtype=key);constant.flags.writeable=False
+            _MEAN_ZEROS[key]=constant
+        return constant
+    values=np.asarray(cval)
+    if values.size!=1 or values.ndim>=3:return None
+    constant=np.empty((),dtype=image.dtype);scalar=values.reshape(-1)[0]
+    # pad casts both sides of every axis, including zero-width sides. Delay
+    # warnings until native success, so delegation never repeats probe notices.
+    with warnings.catch_warnings(record=True) as captured:
+        warnings.simplefilter('always')
+        try:
+            for _ in range(2*image.ndim):constant[()]=scalar
+        finally:notices.extend(captured)
+    return constant
 
 
 def _local_mean_output(image,blocks,after,shape,target):
@@ -135,8 +158,18 @@ def _local_mean_output(image,blocks,after,shape,target):
 def downscale_local_mean(image,factors,cval=0,clip=True):
     """Average raw values over local blocks, with after-only constant padding."""
     if isinstance(image,np.generic) and image.dtype.type in _REAL_TYPES:image=np.asarray(image)
-    def upstream():return fallback('transform','downscale_local_mean',image,factors,cval=cval,clip=clip)
+    notices=[]
+    def upstream():
+        notices.clear()
+        return fallback('transform','downscale_local_mean',image,factors,cval=cval,clip=clip)
+    try:return _local_mean_dispatch(image,factors,cval,clip,notices,upstream)
+    finally:
+        for notice in notices:warnings.warn(notice.message,stacklevel=3)
+
+
+def _local_mean_dispatch(image,factors,cval,clip,notices,upstream):
     if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _REAL_TYPES:return upstream()
+    if any(policy in ('call','log','print') for policy in np.geterr().values()):return upstream()
     # Validation order follows block_reduce/view_as_blocks. Only shape, factor
     # and constant metadata use NumPy; no image pixel is padded or reduced here.
     if np.isscalar(factors):block_shape=(factors,)*image.ndim
@@ -153,11 +186,10 @@ def downscale_local_mean(image,factors,cval=0,clip=True):
         # np.pad checks the complete width descriptor before casting cval.
         widths=np.asarray([(0,width) for width in after])
         if widths.dtype.kind not in 'iu':raise TypeError('`pad_width` must be of integral type.')
-        values=np.asarray(cval)
-        if values.size!=1 or values.ndim>=3:return upstream()
         # np.pad first normalizes scalar constants to NumPy scalars. This
         # distinction matters for out-of-range signed-to-unsigned assignment.
-        constant=np.empty((),dtype=image.dtype);constant[()]=values.reshape(-1)[0]
+        constant=_local_mean_constant(image,cval,notices)
+        if constant is None:return upstream()
     if not isinstance(block_shape,tuple):raise TypeError('block needs to be a tuple')
     if not all(isinstance(factor,(int,np.integer)) and not isinstance(factor,(bool,np.bool_)) for factor in block_shape):
         # Zero-byte storage asks NumPy's shape converter to reproduce upstream

@@ -186,3 +186,47 @@ def test_nondefault_underflow_policy_is_explicit(dtype):
 def test_vector_negative_zero_and_parallel_tails(dtype,factors):
     actual,expected=check(np.full((513,517),-0.,dtype=dtype),factors)
     np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int32,np.int64,np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('constant',[1e300,complex(1,2),np.nan,np.inf,-np.inf])
+def test_constant_warning_and_error_parity_with_fallback_enabled(dtype,constant):
+    image=np.ones((3,5),dtype=dtype)
+    def call(function):
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            try:value=function(image,(2,2),cval=constant);error=None
+            except Exception as caught:value=None;error=caught
+        upstream_notices=[(type(w.message),str(w.message)) for w in notices
+                          if not isinstance(w.message,xx.FallbackWarning)]
+        assert sum(isinstance(w.message,xx.FallbackWarning) for w in notices)<=1
+        return value,error,upstream_notices
+    expected,error,notices=call(original.downscale_local_mean)
+    xx.set_fallback_enabled(True)
+    actual,actual_error,actual_notices=call(xx.transform.downscale_local_mean)
+    assert actual_notices==notices
+    if error is not None:
+        assert type(actual_error) is type(error) and str(actual_error)==str(error)
+    else:
+        assert actual_error is None
+        assert actual.dtype==expected.dtype and actual.shape==expected.shape
+        np.testing.assert_allclose(actual,expected,rtol=2*np.finfo(expected.dtype).eps,atol=0)
+
+
+@pytest.mark.parametrize('dtype,constant,policy',[(np.uint8,np.nan,'invalid'),(np.float16,1e300,'over'),(np.float32,1e300,'over')])
+def test_cast_error_callbacks_are_not_repeated_by_probes(dtype,constant,policy):
+    image=np.ones((3,5),dtype=dtype)
+    def run(function,replacement=False):
+        events=[];previous=np.seterrcall(lambda message,flags:events.append((message,flags)))
+        try:
+            with np.errstate(**{policy:'call'}):
+                if replacement:
+                    with pytest.warns(xx.FallbackWarning):result=function(image,(2,2),cval=constant)
+                else:result=function(image,(2,2),cval=constant)
+        finally:np.seterrcall(previous)
+        return result,events
+    expected,events=run(original.downscale_local_mean)
+    xx.set_fallback_enabled(True)
+    actual,actual_events=run(xx.transform.downscale_local_mean,True)
+    assert actual_events==events
+    np.testing.assert_array_equal(actual,expected)
