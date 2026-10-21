@@ -202,6 +202,10 @@ def main():
               '[native-call experiment](integral-binding-tuning.md) retain independent '
               'confirmation samples and rejected variants. All current integral workloads check exact '
               'values, dtype tags, strides and warnings before timing.','',
+              'Integral-window queries read only selected corners through the original byte strides. '
+              'They preserve raw scalar-to-double conversion and ordered corner additions; SIMD '
+              'operates across independent windows. The report includes single-window overhead '
+              'and large batches without charging either backend for table construction.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -210,7 +214,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all sixteen reports, including this summary. '
+              f'to rebuild and reproduce all {len(reports)} reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

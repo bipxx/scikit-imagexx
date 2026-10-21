@@ -1,0 +1,7100 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-21T19:14:41.964362+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "source_sha256": "294ae8fc2881102f5ba8e16aaaa1e6c7ddeec6b586a1ae9da2b4c4abb7f8128f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "scope": "Public raw integral-table corner queries; no image copying or preprocessing; exact corner order, float64 conversion and signed zero checked before timing"
+  },
+  "results": [
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.064866666666667,
+      "cpp_ms": 0.05482352941176471,
+      "speedup": 92.3849070100143,
+      "samples_ms": [
+        [
+          4.360166666666667,
+          4.264966666666667,
+          5.154533333333333,
+          5.064866666666667,
+          4.1903,
+          5.620766666666667,
+          5.129266666666667
+        ],
+        [
+          0.05529117647058824,
+          0.0525,
+          0.054264705882352944,
+          0.05603823529411765,
+          0.05482352941176471,
+          0.05889117647058824,
+          0.05004705882352941
+        ]
+      ],
+      "loops": [
+        3,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5476,
+      "cpp_ms": 0.0583175,
+      "speedup": 77.98002314914048,
+      "samples_ms": [
+        [
+          4.772733333333333,
+          5.0033,
+          4.526733333333333,
+          4.353433333333333,
+          4.5476,
+          4.191566666666667,
+          6.6540333333333335
+        ],
+        [
+          0.053265,
+          0.06515,
+          0.0604175,
+          0.05877,
+          0.0583175,
+          0.050255,
+          0.0489475
+        ]
+      ],
+      "loops": [
+        3,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.8988,
+      "cpp_ms": 0.05676666666666667,
+      "speedup": 86.29712272460364,
+      "samples_ms": [
+        [
+          4.3024,
+          5.85515,
+          5.5805,
+          6.99295,
+          4.8814,
+          4.8988,
+          4.89195
+        ],
+        [
+          0.061406666666666665,
+          0.07574444444444443,
+          0.05356444444444444,
+          0.05676666666666667,
+          0.05022222222222222,
+          0.06264,
+          0.04984
+        ]
+      ],
+      "loops": [
+        2,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5931,
+      "cpp_ms": 0.05676666666666667,
+      "speedup": 80.91192014092778,
+      "samples_ms": [
+        [
+          5.372,
+          4.492,
+          4.559833333333333,
+          5.3392,
+          4.5202,
+          4.5931,
+          5.177533333333333
+        ],
+        [
+          0.05795185185185185,
+          0.05676666666666667,
+          0.054655555555555554,
+          0.0714888888888889,
+          0.14602222222222222,
+          0.05294814814814815,
+          0.05452222222222222
+        ]
+      ],
+      "loops": [
+        3,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.48165,
+      "cpp_ms": 0.06415428571428572,
+      "speedup": 69.8573750779371,
+      "samples_ms": [
+        [
+          5.50605,
+          4.2703,
+          4.1513,
+          4.6654,
+          4.48165,
+          4.2245,
+          4.58805
+        ],
+        [
+          0.04962285714285714,
+          0.0686642857142857,
+          0.06415428571428572,
+          0.046585714285714286,
+          0.0808342857142857,
+          0.04821857142857143,
+          0.07908714285714286
+        ]
+      ],
+      "loops": [
+        2,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.787066666666667,
+      "cpp_ms": 0.05027826086956522,
+      "speedup": 95.21146085552866,
+      "samples_ms": [
+        [
+          4.787066666666667,
+          4.733266666666667,
+          5.168666666666667,
+          5.3148,
+          4.648933333333333,
+          4.9169,
+          4.637533333333333
+        ],
+        [
+          0.05027826086956522,
+          0.05528260869565218,
+          0.07499347826086956,
+          0.05921304347826087,
+          0.05009565217391304,
+          0.05017173913043478,
+          0.050082608695652175
+        ]
+      ],
+      "loops": [
+        3,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5423,
+      "cpp_ms": 0.04985438596491228,
+      "speedup": 91.1113418024422,
+      "samples_ms": [
+        [
+          5.37415,
+          4.5423,
+          5.86035,
+          4.56455,
+          4.40995,
+          4.4553,
+          4.146
+        ],
+        [
+          0.047335087719298244,
+          0.05321052631578947,
+          0.049550877192982457,
+          0.08185263157894737,
+          0.04632807017543859,
+          0.04985438596491228,
+          0.06824912280701755
+        ]
+      ],
+      "loops": [
+        2,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4522,
+      "cpp_ms": 0.07932,
+      "speedup": 56.129601613716595,
+      "samples_ms": [
+        [
+          4.3115,
+          4.449766666666667,
+          4.699333333333333,
+          4.298066666666667,
+          4.4522,
+          4.938266666666667,
+          4.6709
+        ],
+        [
+          0.1052,
+          0.096565,
+          0.057035,
+          0.05656,
+          0.05408,
+          0.09432,
+          0.07932
+        ]
+      ],
+      "loops": [
+        3,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.629966666666667,
+      "cpp_ms": 0.05838928571428572,
+      "speedup": 79.29479886639346,
+      "samples_ms": [
+        [
+          4.299666666666667,
+          7.676033333333333,
+          4.6478,
+          5.013633333333333,
+          4.629966666666667,
+          4.348766666666667,
+          4.280433333333333
+        ],
+        [
+          0.051,
+          0.05391428571428572,
+          0.061196428571428575,
+          0.05040714285714285,
+          0.06428928571428572,
+          0.06693571428571429,
+          0.05838928571428572
+        ]
+      ],
+      "loops": [
+        3,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.19415,
+      "cpp_ms": 0.03858048780487805,
+      "speedup": 56.872012896699964,
+      "samples_ms": [
+        [
+          2.3570833333333336,
+          2.0909166666666668,
+          2.4510833333333335,
+          2.19415,
+          2.0323333333333333,
+          2.1297,
+          2.32085
+        ],
+        [
+          0.03602682926829268,
+          0.03858048780487805,
+          0.04078292682926829,
+          0.03951463414634147,
+          0.03841463414634146,
+          0.03685853658536585,
+          0.040180487804878054
+        ]
+      ],
+      "loops": [
+        6,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "bool",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.1856,
+      "cpp_ms": 0.05481016949152542,
+      "speedup": 149.34454820953678,
+      "samples_ms": [
+        [
+          7.9724,
+          8.1856,
+          8.0279,
+          11.048,
+          12.8709,
+          7.9944,
+          9.9293
+        ],
+        [
+          0.06643728813559321,
+          0.05254237288135594,
+          0.0644135593220339,
+          0.054433898305084744,
+          0.051930508474576274,
+          0.05481016949152542,
+          0.06254915254237288
+        ]
+      ],
+      "loops": [
+        1,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.007433333333333,
+      "cpp_ms": 0.04886904761904762,
+      "speedup": 102.46635809987819,
+      "samples_ms": [
+        [
+          5.2065,
+          4.714266666666667,
+          5.007433333333333,
+          5.2672,
+          5.291433333333333,
+          3.9857333333333336,
+          4.180766666666666
+        ],
+        [
+          0.05879285714285715,
+          0.05047857142857143,
+          0.04617380952380953,
+          0.04886904761904762,
+          0.04631428571428572,
+          0.05064523809523809,
+          0.048069047619047615
+        ]
+      ],
+      "loops": [
+        3,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.664933333333333,
+      "cpp_ms": 0.05983103448275862,
+      "speedup": 77.96845522832497,
+      "samples_ms": [
+        [
+          6.238533333333333,
+          5.0661,
+          4.072966666666667,
+          4.406066666666667,
+          4.664933333333333,
+          4.471866666666667,
+          6.146366666666667
+        ],
+        [
+          0.06596896551724138,
+          0.05068965517241379,
+          0.05450689655172414,
+          0.05093448275862069,
+          0.11065172413793103,
+          0.10139655172413793,
+          0.05983103448275862
+        ]
+      ],
+      "loops": [
+        3,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.7832,
+      "cpp_ms": 0.047375925925925925,
+      "speedup": 100.96267052339444,
+      "samples_ms": [
+        [
+          4.7168,
+          4.91,
+          4.8098,
+          4.2913,
+          4.7832,
+          5.7457,
+          4.6112
+        ],
+        [
+          0.047375925925925925,
+          0.046620370370370375,
+          0.04678148148148148,
+          0.047907407407407405,
+          0.04559074074074074,
+          0.06482222222222223,
+          0.04785
+        ]
+      ],
+      "loops": [
+        1,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5374,
+      "cpp_ms": 0.05501428571428572,
+      "speedup": 82.47675928330302,
+      "samples_ms": [
+        [
+          4.5374,
+          4.231,
+          4.523666666666667,
+          4.789033333333333,
+          5.150433333333333,
+          3.9616,
+          4.684566666666667
+        ],
+        [
+          0.10715714285714285,
+          0.05095238095238096,
+          0.06911904761904762,
+          0.059480952380952384,
+          0.05409523809523809,
+          0.052852380952380956,
+          0.05501428571428572
+        ]
+      ],
+      "loops": [
+        3,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3824,
+      "cpp_ms": 0.04910740740740741,
+      "speedup": 89.24111923976166,
+      "samples_ms": [
+        [
+          4.286866666666667,
+          4.556866666666667,
+          4.9724,
+          4.3824,
+          4.6791,
+          4.099233333333333,
+          4.277066666666667
+        ],
+        [
+          0.04910740740740741,
+          0.0535037037037037,
+          0.05017777777777778,
+          0.08287777777777779,
+          0.04416111111111111,
+          0.048016666666666666,
+          0.0488962962962963
+        ]
+      ],
+      "loops": [
+        3,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.375,
+      "cpp_ms": 0.04730810810810811,
+      "speedup": 92.47886197440585,
+      "samples_ms": [
+        [
+          4.8435,
+          3.9826333333333337,
+          4.2717,
+          3.9404666666666666,
+          4.375,
+          4.842566666666667,
+          5.706533333333333
+        ],
+        [
+          0.04831081081081082,
+          0.04561891891891892,
+          0.04764054054054054,
+          0.04730810810810811,
+          0.0459027027027027,
+          0.04544054054054054,
+          0.07675405405405406
+        ]
+      ],
+      "loops": [
+        3,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.113,
+      "cpp_ms": 0.043947457627118644,
+      "speedup": 93.58903158625478,
+      "samples_ms": [
+        [
+          4.417033333333333,
+          4.113,
+          3.9659666666666666,
+          4.612966666666667,
+          4.082833333333333,
+          4.183466666666667,
+          4.109933333333333
+        ],
+        [
+          0.06454237288135593,
+          0.04938474576271187,
+          0.04389661016949153,
+          0.043371186440677965,
+          0.0457135593220339,
+          0.04390847457627119,
+          0.043947457627118644
+        ]
+      ],
+      "loops": [
+        3,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5419,
+      "cpp_ms": 0.04848245614035088,
+      "speedup": 93.68130993305591,
+      "samples_ms": [
+        [
+          4.950266666666667,
+          5.2993,
+          4.3899333333333335,
+          4.5419,
+          4.5413,
+          5.1321,
+          4.151933333333334
+        ],
+        [
+          0.04848245614035088,
+          0.0645438596491228,
+          0.04780350877192983,
+          0.06774912280701754,
+          0.045045614035087715,
+          0.045052631578947365,
+          0.06180175438596491
+        ]
+      ],
+      "loops": [
+        3,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3193,
+      "cpp_ms": 0.04265753424657534,
+      "speedup": 101.25526653821453,
+      "samples_ms": [
+        [
+          4.563966666666667,
+          4.388933333333333,
+          4.3193,
+          4.407633333333333,
+          4.066166666666667,
+          4.2474,
+          3.8959666666666664
+        ],
+        [
+          0.053465753424657536,
+          0.05041095890410959,
+          0.04187671232876712,
+          0.04197534246575343,
+          0.04265753424657534,
+          0.05777945205479452,
+          0.04210273972602739
+        ]
+      ],
+      "loops": [
+        3,
+        73
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.23052,
+      "cpp_ms": 0.03785,
+      "speedup": 58.93051519154557,
+      "samples_ms": [
+        [
+          2.04422,
+          2.00536,
+          2.23052,
+          2.48622,
+          2.12748,
+          2.24898,
+          2.43054
+        ],
+        [
+          0.033712121212121214,
+          0.0426,
+          0.03785,
+          0.044645454545454544,
+          0.033960606060606066,
+          0.03482727272727273,
+          0.039937878787878786
+        ]
+      ],
+      "loops": [
+        5,
+        66
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 10.2436,
+      "cpp_ms": 0.06658846153846153,
+      "speedup": 153.83445965459484,
+      "samples_ms": [
+        [
+          9.1182,
+          8.0842,
+          10.7815,
+          10.3076,
+          10.2436,
+          7.8729,
+          11.5315
+        ],
+        [
+          0.055709615384615385,
+          0.06658846153846153,
+          0.06674230769230768,
+          0.05266923076923077,
+          0.11574807692307693,
+          0.0515,
+          0.08414615384615384
+        ]
+      ],
+      "loops": [
+        1,
+        52
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-1",
+      "workload": "batch-1",
+      "windows": 1,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.0605046511627907,
+      "cpp_ms": 0.030050819672131145,
+      "speedup": 2.0134110091812953,
+      "samples_ms": [
+        [
+          0.0605046511627907,
+          0.0674906976744186,
+          0.05607209302325582,
+          0.06151627906976744,
+          0.07965348837209302,
+          0.05973720930232558,
+          0.055344186046511624
+        ],
+        [
+          0.029421311475409835,
+          0.028678688524590164,
+          0.02972950819672131,
+          0.030050819672131145,
+          0.04198688524590164,
+          0.06038852459016394,
+          0.03894262295081967
+        ]
+      ],
+      "loops": [
+        43,
+        61
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-17",
+      "workload": "batch-17",
+      "windows": 17,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.39574,
+      "cpp_ms": 0.03534423076923077,
+      "speedup": 11.196735404537788,
+      "samples_ms": [
+        [
+          0.4013466666666667,
+          0.39574,
+          0.42796,
+          0.4449,
+          0.30874666666666667,
+          0.3299866666666667,
+          0.3767466666666667
+        ],
+        [
+          0.04393846153846154,
+          0.034125,
+          0.03534423076923077,
+          0.03271538461538462,
+          0.04015384615384616,
+          0.03706153846153846,
+          0.03265192307692308
+        ]
+      ],
+      "loops": [
+        15,
+        52
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-4097",
+      "workload": "batch-4097",
+      "windows": 4097,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 68.2107,
+      "cpp_ms": 0.24092916666666667,
+      "speedup": 283.11516178683223,
+      "samples_ms": [
+        [
+          65.5495,
+          80.7904,
+          67.6641,
+          68.2607,
+          63.0499,
+          68.2107,
+          69.2866
+        ],
+        [
+          0.220625,
+          0.236825,
+          0.2605375,
+          0.24092916666666667,
+          0.242125,
+          0.235725,
+          0.27726666666666666
+        ]
+      ],
+      "loops": [
+        1,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-65539",
+      "workload": "batch-65539",
+      "windows": 65539,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1098.7999,
+      "cpp_ms": 5.831533333333333,
+      "speedup": 188.42383935614419,
+      "samples_ms": [
+        [
+          1073.8527,
+          1048.5642,
+          1116.9331,
+          1098.9096,
+          1120.2529,
+          1087.6514,
+          1098.7999
+        ],
+        [
+          5.711933333333333,
+          6.286166666666667,
+          5.360533333333333,
+          4.590966666666667,
+          5.831533333333333,
+          6.833866666666667,
+          6.0315
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.351566666666667,
+      "cpp_ms": 0.04995714285714285,
+      "speedup": 87.1059956152893,
+      "samples_ms": [
+        [
+          4.125633333333334,
+          4.1871,
+          4.810166666666667,
+          4.357433333333333,
+          4.5208,
+          4.1857,
+          4.351566666666667
+        ],
+        [
+          0.059993877551020404,
+          0.04421632653061225,
+          0.05625714285714285,
+          0.04692244897959184,
+          0.04304285714285715,
+          0.04995714285714285,
+          0.05083265306122449
+        ]
+      ],
+      "loops": [
+        3,
+        49
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.365833333333333,
+      "cpp_ms": 0.04548985507246377,
+      "speedup": 95.97377978845418,
+      "samples_ms": [
+        [
+          4.365833333333333,
+          4.8323,
+          4.0992,
+          3.9905333333333335,
+          3.9373666666666667,
+          4.750533333333333,
+          4.5745
+        ],
+        [
+          0.04548985507246377,
+          0.044707246376811595,
+          0.06969130434782608,
+          0.05946666666666667,
+          0.04293188405797101,
+          0.043057971014492755,
+          0.05814202898550725
+        ]
+      ],
+      "loops": [
+        3,
+        69
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6458,
+      "cpp_ms": 0.043294594594594595,
+      "speedup": 107.30669829577377,
+      "samples_ms": [
+        [
+          4.743566666666667,
+          4.6458,
+          4.115266666666667,
+          3.9410666666666665,
+          4.152666666666667,
+          5.905233333333333,
+          4.9142
+        ],
+        [
+          0.04413513513513513,
+          0.04222297297297297,
+          0.06675135135135135,
+          0.04301351351351351,
+          0.044572972972972975,
+          0.042891891891891895,
+          0.043294594594594595
+        ]
+      ],
+      "loops": [
+        3,
+        74
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.12555,
+      "cpp_ms": 0.049642,
+      "speedup": 83.1060392409653,
+      "samples_ms": [
+        [
+          4.12555,
+          4.85675,
+          4.0706,
+          4.61505,
+          4.0449,
+          4.88385,
+          3.9931
+        ],
+        [
+          0.050998,
+          0.048598,
+          0.049642,
+          0.046936,
+          0.049972,
+          0.04489,
+          0.051276
+        ]
+      ],
+      "loops": [
+        2,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.372766666666667,
+      "cpp_ms": 0.0482859375,
+      "speedup": 90.55983777195311,
+      "samples_ms": [
+        [
+          4.002366666666666,
+          4.407366666666667,
+          4.372766666666667,
+          4.7636,
+          4.0924,
+          4.659633333333333,
+          4.222933333333333
+        ],
+        [
+          0.09255,
+          0.0629609375,
+          0.0472859375,
+          0.0443078125,
+          0.0482859375,
+          0.045265625,
+          0.051128125
+        ]
+      ],
+      "loops": [
+        3,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.123033333333334,
+      "cpp_ms": 0.04478039215686275,
+      "speedup": 92.07229179437779,
+      "samples_ms": [
+        [
+          3.9836,
+          4.0713,
+          4.123033333333334,
+          4.651433333333333,
+          4.338633333333333,
+          4.4325,
+          3.9831666666666665
+        ],
+        [
+          0.04478039215686275,
+          0.04560392156862745,
+          0.043468627450980395,
+          0.048174509803921566,
+          0.04456862745098039,
+          0.06737450980392157,
+          0.04354705882352941
+        ]
+      ],
+      "loops": [
+        3,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.561733333333333,
+      "cpp_ms": 0.0473013698630137,
+      "speedup": 96.43977217878172,
+      "samples_ms": [
+        [
+          4.561733333333333,
+          4.435766666666667,
+          4.073666666666666,
+          4.609033333333333,
+          4.072266666666667,
+          4.699533333333333,
+          4.8254
+        ],
+        [
+          0.042026027397260274,
+          0.04237397260273973,
+          0.055964383561643835,
+          0.04753150684931507,
+          0.05685890410958904,
+          0.04240547945205479,
+          0.0473013698630137
+        ]
+      ],
+      "loops": [
+        3,
+        73
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.2119,
+      "cpp_ms": 0.050648275862068964,
+      "speedup": 83.1597903050109,
+      "samples_ms": [
+        [
+          5.696833333333333,
+          3.9736666666666665,
+          4.2119,
+          4.433966666666667,
+          4.2052,
+          4.176266666666667,
+          5.2311
+        ],
+        [
+          0.05175862068965517,
+          0.046396551724137924,
+          0.05326206896551724,
+          0.05018965517241379,
+          0.06123103448275862,
+          0.050648275862068964,
+          0.04602068965517241
+        ]
+      ],
+      "loops": [
+        3,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.2793,
+      "cpp_ms": 0.04532328767123288,
+      "speedup": 94.41724596506074,
+      "samples_ms": [
+        [
+          4.371833333333333,
+          4.625633333333333,
+          4.129433333333333,
+          4.215566666666667,
+          4.221433333333333,
+          4.2793,
+          4.673433333333333
+        ],
+        [
+          0.042497260273972604,
+          0.04289041095890411,
+          0.061316438356164384,
+          0.04521917808219178,
+          0.04688493150684932,
+          0.04701643835616438,
+          0.04532328767123288
+        ]
+      ],
+      "loops": [
+        3,
+        73
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.065771428571429,
+      "cpp_ms": 0.038677142857142854,
+      "speedup": 53.410652286326375,
+      "samples_ms": [
+        [
+          2.007157142857143,
+          2.0320714285714288,
+          1.9418714285714287,
+          2.0844428571428573,
+          2.065771428571429,
+          2.172285714285714,
+          2.097842857142857
+        ],
+        [
+          0.04196571428571428,
+          0.03560714285714286,
+          0.034364285714285715,
+          0.038394285714285714,
+          0.038677142857142854,
+          0.04869285714285714,
+          0.04496714285714286
+        ]
+      ],
+      "loops": [
+        7,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "int8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.0384,
+      "cpp_ms": 0.06443214285714285,
+      "speedup": 124.7576076714151,
+      "samples_ms": [
+        [
+          8.473,
+          8.3263,
+          7.8122,
+          7.9168,
+          8.0384,
+          8.3951,
+          8.0149
+        ],
+        [
+          0.09130357142857143,
+          0.07728214285714285,
+          0.06443214285714285,
+          0.049617857142857144,
+          0.06954464285714286,
+          0.05039821428571428,
+          0.049310714285714284
+        ]
+      ],
+      "loops": [
+        1,
+        56
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.31845,
+      "cpp_ms": 0.045053125,
+      "speedup": 95.85239647638205,
+      "samples_ms": [
+        [
+          5.16245,
+          4.65635,
+          4.46825,
+          4.14325,
+          4.0688,
+          4.31845,
+          4.0105
+        ],
+        [
+          0.0543796875,
+          0.0455890625,
+          0.06381875,
+          0.0425234375,
+          0.04349375,
+          0.045053125,
+          0.0425609375
+        ]
+      ],
+      "loops": [
+        2,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.466966666666667,
+      "cpp_ms": 0.04661384615384616,
+      "speedup": 95.82918028097737,
+      "samples_ms": [
+        [
+          4.931966666666667,
+          4.466966666666667,
+          4.000666666666667,
+          4.696166666666667,
+          4.095366666666666,
+          4.636433333333333,
+          4.1525
+        ],
+        [
+          0.07518,
+          0.04428,
+          0.046652307692307694,
+          0.04661384615384616,
+          0.04347230769230769,
+          0.04378153846153846,
+          0.05084153846153846
+        ]
+      ],
+      "loops": [
+        3,
+        65
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.11205,
+      "cpp_ms": 0.04570151515151515,
+      "speedup": 89.97622915492491,
+      "samples_ms": [
+        [
+          4.40705,
+          5.10935,
+          4.11205,
+          4.01885,
+          4.07485,
+          4.3044,
+          4.0615
+        ],
+        [
+          0.04570151515151515,
+          0.04504242424242424,
+          0.045066666666666665,
+          0.06392575757575758,
+          0.06007121212121212,
+          0.04345909090909091,
+          0.05088636363636364
+        ]
+      ],
+      "loops": [
+        2,
+        66
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.44,
+      "cpp_ms": 0.04633166666666667,
+      "speedup": 95.83078528004606,
+      "samples_ms": [
+        [
+          4.1194,
+          4.1504666666666665,
+          4.762866666666667,
+          4.195,
+          4.662133333333333,
+          4.44,
+          4.611
+        ],
+        [
+          0.043475,
+          0.043443333333333334,
+          0.062371666666666666,
+          0.04364,
+          0.04705666666666666,
+          0.06052,
+          0.04633166666666667
+        ]
+      ],
+      "loops": [
+        3,
+        60
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">u2",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.355366666666667,
+      "cpp_ms": 0.05160714285714286,
+      "speedup": 84.39464821222607,
+      "samples_ms": [
+        [
+          4.1472,
+          4.355366666666667,
+          4.208866666666667,
+          5.5701,
+          4.646,
+          4.743033333333333,
+          4.2588
+        ],
+        [
+          0.052885714285714286,
+          0.049614285714285715,
+          0.049647619047619045,
+          0.05249047619047619,
+          0.07290238095238094,
+          0.04992619047619047,
+          0.05160714285714286
+        ]
+      ],
+      "loops": [
+        3,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4182,
+      "cpp_ms": 0.04904736842105263,
+      "speedup": 90.08026612297456,
+      "samples_ms": [
+        [
+          4.073733333333333,
+          4.4182,
+          5.176666666666667,
+          4.3117,
+          4.659833333333333,
+          4.654,
+          4.1883333333333335
+        ],
+        [
+          0.04786052631578947,
+          0.05030789473684211,
+          0.04904736842105263,
+          0.07519473684210527,
+          0.05026052631578947,
+          0.046628947368421055,
+          0.045928947368421055
+        ]
+      ],
+      "loops": [
+        3,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.417033333333333,
+      "cpp_ms": 0.048629508196721315,
+      "speedup": 90.83031058971592,
+      "samples_ms": [
+        [
+          4.323366666666667,
+          3.9502333333333337,
+          4.417866666666667,
+          4.432,
+          4.417033333333333,
+          5.076233333333333,
+          4.261666666666667
+        ],
+        [
+          0.04680983606557377,
+          0.06555901639344262,
+          0.048629508196721315,
+          0.04435245901639344,
+          0.046237704918032786,
+          0.05302786885245902,
+          0.06296393442622951
+        ]
+      ],
+      "loops": [
+        3,
+        61
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.1957,
+      "cpp_ms": 0.04623584905660377,
+      "speedup": 90.74560293817589,
+      "samples_ms": [
+        [
+          4.7062,
+          4.187333333333333,
+          4.1957,
+          4.095,
+          3.9260333333333337,
+          5.177633333333333,
+          5.247033333333333
+        ],
+        [
+          0.044966037735849056,
+          0.04760566037735849,
+          0.043416981132075476,
+          0.044130188679245286,
+          0.04647547169811321,
+          0.04623584905660377,
+          0.05475849056603773
+        ]
+      ],
+      "loops": [
+        3,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.438166666666667,
+      "cpp_ms": 0.0455984375,
+      "speedup": 97.33155147403168,
+      "samples_ms": [
+        [
+          4.891066666666667,
+          5.064166666666667,
+          4.159066666666667,
+          4.2853,
+          4.274233333333333,
+          4.438166666666667,
+          4.5576
+        ],
+        [
+          0.061596875,
+          0.0455984375,
+          0.0742265625,
+          0.04506875,
+          0.0439765625,
+          0.044278125,
+          0.0646625
+        ]
+      ],
+      "loops": [
+        3,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.18538,
+      "cpp_ms": 0.036060655737704915,
+      "speedup": 60.60289130335955,
+      "samples_ms": [
+        [
+          2.31932,
+          2.2478,
+          2.06434,
+          2.7236,
+          2.13328,
+          1.93588,
+          2.18538
+        ],
+        [
+          0.05229836065573771,
+          0.03585245901639344,
+          0.035416393442622957,
+          0.03635081967213115,
+          0.036060655737704915,
+          0.036714754098360655,
+          0.035736065573770494
+        ]
+      ],
+      "loops": [
+        5,
+        61
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "uint16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.5226,
+      "cpp_ms": 0.05202096774193549,
+      "speedup": 163.83009332465198,
+      "samples_ms": [
+        [
+          8.277,
+          8.6569,
+          11.0746,
+          8.025,
+          10.2544,
+          8.5226,
+          8.1378
+        ],
+        [
+          0.0508758064516129,
+          0.05202096774193549,
+          0.0581258064516129,
+          0.05117258064516129,
+          0.052429032258064515,
+          0.04937096774193549,
+          0.06911612903225806
+        ]
+      ],
+      "loops": [
+        1,
+        62
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.079166666666667,
+      "cpp_ms": 0.04613166666666666,
+      "speedup": 88.42443729903538,
+      "samples_ms": [
+        [
+          4.079166666666667,
+          4.0454,
+          5.090666666666667,
+          4.0471,
+          5.1415,
+          3.9729333333333336,
+          4.570333333333333
+        ],
+        [
+          0.04613166666666666,
+          0.04348166666666666,
+          0.04713333333333333,
+          0.049166666666666664,
+          0.044995,
+          0.04394833333333333,
+          0.048661666666666666
+        ]
+      ],
+      "loops": [
+        3,
+        60
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.1255,
+      "cpp_ms": 0.04781041666666666,
+      "speedup": 86.2887271776548,
+      "samples_ms": [
+        [
+          4.623466666666667,
+          4.1255,
+          4.1068,
+          4.066833333333333,
+          4.1318,
+          3.8955,
+          4.3251
+        ],
+        [
+          0.04489166666666666,
+          0.04841875,
+          0.08038125,
+          0.04463958333333334,
+          0.04781041666666666,
+          0.04782083333333333,
+          0.04478125
+        ]
+      ],
+      "loops": [
+        3,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.388133333333333,
+      "cpp_ms": 0.046792,
+      "speedup": 93.77956345814098,
+      "samples_ms": [
+        [
+          4.388133333333333,
+          4.723433333333333,
+          4.823033333333333,
+          4.1325,
+          4.409733333333333,
+          3.9886,
+          4.077133333333333
+        ],
+        [
+          0.044018,
+          0.046792,
+          0.044564,
+          0.049188,
+          0.047566,
+          0.062392,
+          0.04389
+        ]
+      ],
+      "loops": [
+        3,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.49825,
+      "cpp_ms": 0.0521093023255814,
+      "speedup": 86.32335877181237,
+      "samples_ms": [
+        [
+          4.7388,
+          4.10265,
+          4.4268,
+          4.49825,
+          6.6712,
+          4.44875,
+          4.6922
+        ],
+        [
+          0.04798837209302326,
+          0.09301627906976744,
+          0.046051162790697674,
+          0.0521093023255814,
+          0.05034418604651163,
+          0.07626744186046512,
+          0.055237209302325584
+        ]
+      ],
+      "loops": [
+        2,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">i2",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.056466666666666,
+      "cpp_ms": 0.051885714285714285,
+      "speedup": 78.18080029368575,
+      "samples_ms": [
+        [
+          4.034166666666667,
+          4.425033333333333,
+          4.8397,
+          3.9352333333333336,
+          4.506233333333333,
+          4.0243,
+          4.056466666666666
+        ],
+        [
+          0.052548979591836735,
+          0.048704081632653065,
+          0.061004081632653064,
+          0.04837142857142857,
+          0.05135510204081632,
+          0.051885714285714285,
+          0.07000204081632652
+        ]
+      ],
+      "loops": [
+        3,
+        49
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.502566666666667,
+      "cpp_ms": 0.046114754098360654,
+      "speedup": 97.63831022633013,
+      "samples_ms": [
+        [
+          5.153166666666667,
+          4.1779,
+          4.502566666666667,
+          4.615533333333333,
+          4.147966666666666,
+          5.029466666666667,
+          3.9658333333333333
+        ],
+        [
+          0.04510655737704918,
+          0.054319672131147544,
+          0.044581967213114755,
+          0.051816393442622954,
+          0.04745573770491804,
+          0.046114754098360654,
+          0.04425737704918033
+        ]
+      ],
+      "loops": [
+        3,
+        61
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3411,
+      "cpp_ms": 0.04684264705882353,
+      "speedup": 92.67409663140049,
+      "samples_ms": [
+        [
+          4.55845,
+          3.96725,
+          4.2616,
+          4.74175,
+          4.02615,
+          4.57545,
+          4.3411
+        ],
+        [
+          0.0813764705882353,
+          0.050075,
+          0.04305588235294117,
+          0.04684264705882353,
+          0.04359117647058824,
+          0.04769852941176471,
+          0.04254558823529412
+        ]
+      ],
+      "loops": [
+        2,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.41685,
+      "cpp_ms": 0.047527450980392155,
+      "speedup": 92.9326086059656,
+      "samples_ms": [
+        [
+          5.07695,
+          4.28045,
+          4.21125,
+          4.29385,
+          4.98715,
+          4.41685,
+          4.4236
+        ],
+        [
+          0.044605882352941176,
+          0.059219607843137255,
+          0.04583137254901961,
+          0.0756156862745098,
+          0.047527450980392155,
+          0.048133333333333334,
+          0.047152941176470585
+        ]
+      ],
+      "loops": [
+        2,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.327133333333333,
+      "cpp_ms": 0.051933962264150944,
+      "speedup": 83.31991522858007,
+      "samples_ms": [
+        [
+          4.909633333333333,
+          4.2872,
+          4.327133333333333,
+          5.907566666666667,
+          4.288433333333333,
+          3.9653333333333336,
+          4.477866666666667
+        ],
+        [
+          0.051933962264150944,
+          0.046990566037735854,
+          0.07867169811320754,
+          0.04284150943396227,
+          0.0611,
+          0.0641377358490566,
+          0.043952830188679244
+        ]
+      ],
+      "loops": [
+        3,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.092014285714286,
+      "cpp_ms": 0.037809259259259265,
+      "speedup": 55.330739789671064,
+      "samples_ms": [
+        [
+          2.0309285714285714,
+          2.9918142857142858,
+          2.2268714285714286,
+          2.070142857142857,
+          2.0145285714285714,
+          2.2310714285714286,
+          2.092014285714286
+        ],
+        [
+          0.03716481481481482,
+          0.03739259259259259,
+          0.037809259259259265,
+          0.03717222222222222,
+          0.05137037037037037,
+          0.0383037037037037,
+          0.043525925925925926
+        ]
+      ],
+      "loops": [
+        7,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "int16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.2889,
+      "cpp_ms": 0.053545833333333334,
+      "speedup": 154.80009337794723,
+      "samples_ms": [
+        [
+          8.0157,
+          9.5355,
+          9.4734,
+          8.0767,
+          9.4589,
+          8.2889,
+          7.9484
+        ],
+        [
+          0.059214583333333334,
+          0.05388958333333334,
+          0.053025,
+          0.05292291666666667,
+          0.05318958333333334,
+          0.056952083333333334,
+          0.053545833333333334
+        ]
+      ],
+      "loops": [
+        1,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.684033333333333,
+      "cpp_ms": 0.050786956521739125,
+      "speedup": 92.22906143880375,
+      "samples_ms": [
+        [
+          5.1152,
+          4.0689,
+          4.684033333333333,
+          4.4826,
+          4.545866666666667,
+          4.743433333333333,
+          5.039033333333333
+        ],
+        [
+          0.05055,
+          0.05152826086956522,
+          0.06618043478260868,
+          0.050786956521739125,
+          0.048,
+          0.05749565217391304,
+          0.04536956521739131
+        ]
+      ],
+      "loops": [
+        3,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6059,
+      "cpp_ms": 0.052332142857142855,
+      "speedup": 88.01283013717328,
+      "samples_ms": [
+        [
+          4.257366666666667,
+          4.1419,
+          4.249933333333333,
+          4.7430666666666665,
+          6.273066666666667,
+          5.0362,
+          4.6059
+        ],
+        [
+          0.04582321428571428,
+          0.045964285714285714,
+          0.044067857142857145,
+          0.08893035714285714,
+          0.06232142857142857,
+          0.052332142857142855,
+          0.056233928571428574
+        ]
+      ],
+      "loops": [
+        3,
+        56
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.254633333333333,
+      "cpp_ms": 0.04811777777777778,
+      "speedup": 88.42123493280374,
+      "samples_ms": [
+        [
+          4.0271,
+          4.203333333333333,
+          4.515833333333333,
+          4.5107,
+          4.486433333333333,
+          4.254633333333333,
+          4.0312
+        ],
+        [
+          0.04811777777777778,
+          0.0731311111111111,
+          0.04945111111111111,
+          0.04896,
+          0.04583555555555555,
+          0.04372,
+          0.04521111111111111
+        ]
+      ],
+      "loops": [
+        3,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6144,
+      "cpp_ms": 0.04517205882352941,
+      "speedup": 102.15164241299605,
+      "samples_ms": [
+        [
+          4.480733333333333,
+          4.678633333333333,
+          4.246966666666667,
+          4.717,
+          5.0109,
+          4.172666666666666,
+          4.6144
+        ],
+        [
+          0.04403235294117647,
+          0.04517205882352941,
+          0.06023823529411765,
+          0.06264117647058824,
+          0.04463088235294117,
+          0.043927941176470586,
+          0.04916029411764706
+        ]
+      ],
+      "loops": [
+        3,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">u4",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.854133333333333,
+      "cpp_ms": 0.06499571428571428,
+      "speedup": 74.68389857206702,
+      "samples_ms": [
+        [
+          4.807,
+          4.9406,
+          4.4007,
+          5.124466666666667,
+          4.854133333333333,
+          5.1925333333333334,
+          4.082666666666666
+        ],
+        [
+          0.05104,
+          0.05913,
+          0.07651285714285715,
+          0.07347857142857143,
+          0.06974857142857144,
+          0.06499571428571428,
+          0.04894285714285714
+        ]
+      ],
+      "loops": [
+        3,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.2741,
+      "cpp_ms": 0.05315277777777778,
+      "speedup": 80.4116017768487,
+      "samples_ms": [
+        [
+          4.236133333333333,
+          4.341666666666667,
+          4.655133333333333,
+          4.2741,
+          4.702566666666667,
+          4.160266666666667,
+          3.9712
+        ],
+        [
+          0.05315277777777778,
+          0.045822222222222216,
+          0.09803888888888888,
+          0.05456388888888889,
+          0.049994444444444446,
+          0.04731666666666667,
+          0.05738888888888889
+        ]
+      ],
+      "loops": [
+        3,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.249333333333333,
+      "cpp_ms": 0.05005087719298246,
+      "speedup": 84.90027691121315,
+      "samples_ms": [
+        [
+          4.1713,
+          4.114166666666667,
+          4.741666666666667,
+          4.1633,
+          4.6913,
+          4.680766666666667,
+          4.249333333333333
+        ],
+        [
+          0.06284385964912281,
+          0.05005087719298246,
+          0.06762807017543859,
+          0.04936315789473684,
+          0.04554912280701754,
+          0.053259649122807014,
+          0.045201754385964917
+        ]
+      ],
+      "loops": [
+        3,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3498,
+      "cpp_ms": 0.04378055555555555,
+      "speedup": 99.35460947909398,
+      "samples_ms": [
+        [
+          5.596633333333333,
+          4.112666666666667,
+          4.9996,
+          4.7148,
+          4.303633333333333,
+          4.3498,
+          4.064933333333333
+        ],
+        [
+          0.044770833333333336,
+          0.04378055555555555,
+          0.04334166666666667,
+          0.07196805555555556,
+          0.04309583333333333,
+          0.04377916666666667,
+          0.04881111111111111
+        ]
+      ],
+      "loops": [
+        3,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.2002,
+      "cpp_ms": 0.04930961538461538,
+      "speedup": 85.18014118014118,
+      "samples_ms": [
+        [
+          3.96835,
+          3.9619,
+          4.09,
+          4.2002,
+          4.2201,
+          4.26735,
+          5.29455
+        ],
+        [
+          0.07055576923076923,
+          0.04512307692307692,
+          0.044625,
+          0.057532692307692306,
+          0.04361346153846154,
+          0.04930961538461538,
+          0.04932692307692308
+        ]
+      ],
+      "loops": [
+        2,
+        52
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.06394,
+      "cpp_ms": 0.04891,
+      "speedup": 42.19873236556941,
+      "samples_ms": [
+        [
+          2.55744,
+          2.06394,
+          1.99788,
+          2.07976,
+          1.97114,
+          1.93722,
+          2.1009
+        ],
+        [
+          0.04891,
+          0.04502428571428572,
+          0.03616285714285714,
+          0.053098571428571426,
+          0.04564,
+          0.06384714285714285,
+          0.057921428571428575
+        ]
+      ],
+      "loops": [
+        5,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "uint32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 9.6342,
+      "cpp_ms": 0.05455111111111111,
+      "speedup": 176.60868502525662,
+      "samples_ms": [
+        [
+          8.1404,
+          9.6342,
+          9.574,
+          8.6071,
+          9.7002,
+          11.5316,
+          10.4999
+        ],
+        [
+          0.05239777777777778,
+          0.05381111111111111,
+          0.08606222222222222,
+          0.05455111111111111,
+          0.05344444444444445,
+          0.0626,
+          0.08711777777777778
+        ]
+      ],
+      "loops": [
+        1,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.59025,
+      "cpp_ms": 0.05020869565217391,
+      "speedup": 91.42340665050226,
+      "samples_ms": [
+        [
+          5.82115,
+          4.76295,
+          5.04155,
+          4.2487,
+          4.11465,
+          4.59025,
+          4.34015
+        ],
+        [
+          0.04877608695652173,
+          0.09079130434782608,
+          0.05705869565217391,
+          0.06810869565217392,
+          0.04727391304347826,
+          0.05020869565217391,
+          0.04781521739130434
+        ]
+      ],
+      "loops": [
+        2,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.309733333333333,
+      "cpp_ms": 0.05367142857142857,
+      "speedup": 80.29846508739242,
+      "samples_ms": [
+        [
+          4.167333333333334,
+          4.528766666666667,
+          4.309733333333333,
+          4.768833333333333,
+          4.726266666666667,
+          4.024066666666666,
+          4.1305
+        ],
+        [
+          0.06703333333333333,
+          0.05228571428571428,
+          0.05635238095238095,
+          0.09032857142857144,
+          0.05182380952380953,
+          0.05367142857142857,
+          0.052661904761904764
+        ]
+      ],
+      "loops": [
+        3,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.1849,
+      "cpp_ms": 0.04867619047619047,
+      "speedup": 85.97427117980827,
+      "samples_ms": [
+        [
+          4.2828,
+          4.822966666666667,
+          4.1482,
+          4.1287,
+          4.4836,
+          4.1849,
+          4.107066666666666
+        ],
+        [
+          0.058239682539682536,
+          0.04867619047619047,
+          0.04562857142857143,
+          0.08223174603174603,
+          0.04453968253968254,
+          0.04552539682539683,
+          0.09903333333333333
+        ]
+      ],
+      "loops": [
+        3,
+        63
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.299733333333333,
+      "cpp_ms": 0.055084,
+      "speedup": 78.05775421780069,
+      "samples_ms": [
+        [
+          4.553833333333333,
+          4.299733333333333,
+          4.267033333333333,
+          3.9746333333333337,
+          4.492133333333333,
+          4.2651666666666666,
+          5.0947
+        ],
+        [
+          0.051288,
+          0.064648,
+          0.055328,
+          0.050612,
+          0.055084,
+          0.054744,
+          0.0691
+        ]
+      ],
+      "loops": [
+        3,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">i4",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5013,
+      "cpp_ms": 0.05805471698113208,
+      "speedup": 77.5354740160551,
+      "samples_ms": [
+        [
+          4.571233333333333,
+          4.941533333333333,
+          4.578733333333333,
+          4.3143,
+          4.5013,
+          4.131966666666666,
+          4.358666666666667
+        ],
+        [
+          0.054118867924528295,
+          0.06908301886792453,
+          0.05805471698113208,
+          0.06476037735849056,
+          0.061277358490566036,
+          0.05021320754716981,
+          0.05012641509433962
+        ]
+      ],
+      "loops": [
+        3,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.1599,
+      "cpp_ms": 0.05017454545454546,
+      "speedup": 82.90857370633425,
+      "samples_ms": [
+        [
+          5.58635,
+          4.2756,
+          4.0556,
+          4.037,
+          4.1599,
+          5.45385,
+          4.1485
+        ],
+        [
+          0.053105454545454546,
+          0.044067272727272726,
+          0.05017454545454546,
+          0.09990181818181817,
+          0.04618909090909091,
+          0.06466363636363635,
+          0.04888909090909091
+        ]
+      ],
+      "loops": [
+        2,
+        55
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.278433333333333,
+      "cpp_ms": 0.05047111111111111,
+      "speedup": 84.76994540331101,
+      "samples_ms": [
+        [
+          4.525333333333333,
+          4.278433333333333,
+          5.135966666666667,
+          4.098766666666666,
+          4.163266666666667,
+          4.088033333333334,
+          4.3977
+        ],
+        [
+          0.05466888888888889,
+          0.050708888888888894,
+          0.04487555555555556,
+          0.05047111111111111,
+          0.04690222222222222,
+          0.07950444444444443,
+          0.04866
+        ]
+      ],
+      "loops": [
+        3,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.764666666666667,
+      "cpp_ms": 0.051092307692307694,
+      "speedup": 93.25604737528857,
+      "samples_ms": [
+        [
+          5.149966666666667,
+          4.764666666666667,
+          4.4716,
+          4.720266666666667,
+          4.468833333333333,
+          5.0186,
+          4.999266666666667
+        ],
+        [
+          0.055784615384615384,
+          0.051092307692307694,
+          0.04548846153846154,
+          0.046417307692307695,
+          0.04731538461538462,
+          0.0545173076923077,
+          0.07394230769230768
+        ]
+      ],
+      "loops": [
+        3,
+        52
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.73435,
+      "cpp_ms": 0.044834375,
+      "speedup": 105.59643130968146,
+      "samples_ms": [
+        [
+          4.93415,
+          5.9821,
+          4.66285,
+          4.63455,
+          3.9591,
+          4.73435,
+          5.0649
+        ],
+        [
+          0.0539265625,
+          0.066465625,
+          0.044834375,
+          0.0422640625,
+          0.045146875,
+          0.0423484375,
+          0.0426
+        ]
+      ],
+      "loops": [
+        2,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.1938,
+      "cpp_ms": 0.038072222222222216,
+      "speedup": 57.62206332992851,
+      "samples_ms": [
+        [
+          2.5955333333333335,
+          2.3255833333333333,
+          2.1938,
+          2.0219,
+          2.0280833333333335,
+          2.2493333333333334,
+          2.052216666666667
+        ],
+        [
+          0.03852592592592593,
+          0.04084444444444445,
+          0.0377962962962963,
+          0.035220370370370374,
+          0.038072222222222216,
+          0.04518148148148148,
+          0.0352962962962963
+        ]
+      ],
+      "loops": [
+        6,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "int32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.6622,
+      "cpp_ms": 0.0617,
+      "speedup": 140.39222042139386,
+      "samples_ms": [
+        [
+          11.5948,
+          10.2867,
+          8.8926,
+          8.4373,
+          8.6622,
+          8.2574,
+          8.3384
+        ],
+        [
+          0.05619722222222222,
+          0.08206111111111111,
+          0.05981388888888889,
+          0.06475833333333333,
+          0.10767222222222222,
+          0.0617,
+          0.054663888888888894
+        ]
+      ],
+      "loops": [
+        1,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.431566666666667,
+      "cpp_ms": 0.06183023255813953,
+      "speedup": 71.67313599378143,
+      "samples_ms": [
+        [
+          5.0402,
+          4.3583,
+          4.5919,
+          4.291133333333333,
+          4.480033333333333,
+          4.431566666666667,
+          4.013833333333333
+        ],
+        [
+          0.05332790697674418,
+          0.05063720930232558,
+          0.06183023255813953,
+          0.07710465116279071,
+          0.06914418604651164,
+          0.10443720930232558,
+          0.05057209302325582
+        ]
+      ],
+      "loops": [
+        3,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4801,
+      "cpp_ms": 0.0512375,
+      "speedup": 87.43791168577702,
+      "samples_ms": [
+        [
+          4.340566666666667,
+          4.8517,
+          4.7508333333333335,
+          4.4801,
+          4.346,
+          4.236,
+          6.840333333333333
+        ],
+        [
+          0.049505,
+          0.048525,
+          0.0512375,
+          0.07966,
+          0.06171,
+          0.0541425,
+          0.0511975
+        ]
+      ],
+      "loops": [
+        3,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.939766666666667,
+      "cpp_ms": 0.059728947368421055,
+      "speedup": 82.70305914144308,
+      "samples_ms": [
+        [
+          5.3919,
+          4.435566666666667,
+          4.153666666666666,
+          6.359766666666667,
+          5.240633333333333,
+          4.939766666666667,
+          4.450066666666667
+        ],
+        [
+          0.11697105263157895,
+          0.049507894736842105,
+          0.07723684210526316,
+          0.059728947368421055,
+          0.05550526315789474,
+          0.050139473684210525,
+          0.06960263157894737
+        ]
+      ],
+      "loops": [
+        3,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3768,
+      "cpp_ms": 0.059566666666666664,
+      "speedup": 73.47733631785115,
+      "samples_ms": [
+        [
+          4.313733333333333,
+          5.1295,
+          4.310666666666667,
+          4.442866666666667,
+          4.588366666666667,
+          4.3768,
+          4.276166666666667
+        ],
+        [
+          0.059566666666666664,
+          0.05061,
+          0.05238,
+          0.10262333333333333,
+          0.053693333333333336,
+          0.06921666666666668,
+          0.06495666666666666
+        ]
+      ],
+      "loops": [
+        3,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">u8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6295,
+      "cpp_ms": 0.058866666666666664,
+      "speedup": 78.64382785956965,
+      "samples_ms": [
+        [
+          4.4249,
+          4.812766666666667,
+          4.6295,
+          5.1549,
+          4.124666666666666,
+          4.890566666666667,
+          4.0225
+        ],
+        [
+          0.07219629629629629,
+          0.05787777777777778,
+          0.05597407407407407,
+          0.06837407407407407,
+          0.058866666666666664,
+          0.055129629629629626,
+          0.0597
+        ]
+      ],
+      "loops": [
+        3,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.71555,
+      "cpp_ms": 0.048710526315789475,
+      "speedup": 96.80761750405186,
+      "samples_ms": [
+        [
+          6.4462,
+          4.8318,
+          4.2432,
+          4.26525,
+          4.71555,
+          4.51605,
+          5.2621
+        ],
+        [
+          0.04860877192982457,
+          0.1006719298245614,
+          0.048710526315789475,
+          0.048591228070175435,
+          0.06933333333333333,
+          0.047349122807017544,
+          0.057777192982456135
+        ]
+      ],
+      "loops": [
+        2,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.833666666666667,
+      "cpp_ms": 0.058575555555555554,
+      "speedup": 82.52020182859745,
+      "samples_ms": [
+        [
+          4.136733333333334,
+          4.235166666666667,
+          4.833666666666667,
+          5.723833333333333,
+          5.330833333333333,
+          5.0801,
+          4.286166666666667
+        ],
+        [
+          0.05079777777777778,
+          0.07046666666666668,
+          0.058575555555555554,
+          0.04940666666666666,
+          0.06875777777777778,
+          0.051644444444444444,
+          0.05884
+        ]
+      ],
+      "loops": [
+        3,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.60915,
+      "cpp_ms": 0.07996944444444444,
+      "speedup": 57.63638889853763,
+      "samples_ms": [
+        [
+          5.0576,
+          5.23745,
+          4.29395,
+          4.60915,
+          5.25615,
+          4.55705,
+          4.5359
+        ],
+        [
+          0.09436388888888889,
+          0.05782222222222222,
+          0.05593888888888889,
+          0.07996944444444444,
+          0.09273888888888888,
+          0.09711944444444444,
+          0.059769444444444444
+        ]
+      ],
+      "loops": [
+        2,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.406366666666667,
+      "cpp_ms": 0.06958571428571429,
+      "speedup": 63.32286320399644,
+      "samples_ms": [
+        [
+          4.145866666666667,
+          4.410933333333333,
+          4.1966,
+          4.273033333333333,
+          5.651566666666667,
+          4.480566666666667,
+          4.406366666666667
+        ],
+        [
+          0.0611,
+          0.08401190476190476,
+          0.06958571428571429,
+          0.050397619047619045,
+          0.11003571428571429,
+          0.05828571428571428,
+          0.07841904761904762
+        ]
+      ],
+      "loops": [
+        3,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.2007166666666667,
+      "cpp_ms": 0.04213888888888889,
+      "speedup": 52.22531311799604,
+      "samples_ms": [
+        [
+          2.1577333333333333,
+          2.003366666666667,
+          2.2251666666666665,
+          1.9794166666666668,
+          2.3060333333333336,
+          2.2093333333333334,
+          2.2007166666666667
+        ],
+        [
+          0.04105277777777778,
+          0.04304444444444445,
+          0.053875,
+          0.04213888888888889,
+          0.03834166666666666,
+          0.03975277777777778,
+          0.04788333333333333
+        ]
+      ],
+      "loops": [
+        6,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "uint64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 9.1925,
+      "cpp_ms": 0.06772444444444443,
+      "speedup": 135.73385614910097,
+      "samples_ms": [
+        [
+          9.1925,
+          10.1715,
+          8.4205,
+          9.6071,
+          10.4441,
+          8.4634,
+          7.889
+        ],
+        [
+          0.07600222222222222,
+          0.10469777777777778,
+          0.08888,
+          0.06772444444444443,
+          0.06122888888888889,
+          0.05852,
+          0.06729777777777778
+        ]
+      ],
+      "loops": [
+        1,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.520366666666667,
+      "cpp_ms": 0.052969696969696965,
+      "speedup": 85.33872997711671,
+      "samples_ms": [
+        [
+          4.0731,
+          4.143433333333333,
+          4.520366666666667,
+          6.789933333333333,
+          4.719966666666667,
+          4.040166666666667,
+          4.8603
+        ],
+        [
+          0.0499030303030303,
+          0.04671818181818182,
+          0.04728181818181818,
+          0.052969696969696965,
+          0.05367575757575758,
+          0.05981818181818182,
+          0.05783636363636364
+        ]
+      ],
+      "loops": [
+        3,
+        33
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.190066666666667,
+      "cpp_ms": 0.05637941176470588,
+      "speedup": 92.05606274018815,
+      "samples_ms": [
+        [
+          7.668466666666667,
+          4.799266666666667,
+          5.190066666666667,
+          5.895,
+          4.7463,
+          5.8436,
+          5.1193
+        ],
+        [
+          0.055132352941176466,
+          0.05637941176470588,
+          0.07565,
+          0.12442941176470589,
+          0.05153823529411765,
+          0.06203529411764706,
+          0.053544117647058825
+        ]
+      ],
+      "loops": [
+        3,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.8634,
+      "cpp_ms": 0.05186585365853659,
+      "speedup": 93.76882200799436,
+      "samples_ms": [
+        [
+          5.3993,
+          4.8982,
+          4.8634,
+          4.5456,
+          4.6544,
+          5.4244,
+          4.439
+        ],
+        [
+          0.059131707317073165,
+          0.06831219512195123,
+          0.054363414634146345,
+          0.051080487804878054,
+          0.05117317073170732,
+          0.050021951219512195,
+          0.05186585365853659
+        ]
+      ],
+      "loops": [
+        1,
+        41
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.633066666666667,
+      "cpp_ms": 0.0544375,
+      "speedup": 85.10799846919251,
+      "samples_ms": [
+        [
+          5.2547,
+          4.673333333333333,
+          4.328366666666667,
+          4.633066666666667,
+          6.098966666666667,
+          4.5307,
+          4.352966666666667
+        ],
+        [
+          0.0544375,
+          0.0527825,
+          0.0611575,
+          0.0846375,
+          0.0907475,
+          0.05106,
+          0.04814
+        ]
+      ],
+      "loops": [
+        3,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">i8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.996,
+      "cpp_ms": 0.07453181818181817,
+      "speedup": 67.03177410501922,
+      "samples_ms": [
+        [
+          4.3984,
+          5.47,
+          5.5178,
+          5.3239,
+          4.582733333333333,
+          4.581566666666667,
+          4.996
+        ],
+        [
+          0.07578636363636364,
+          0.07453181818181817,
+          0.0684090909090909,
+          0.08751363636363636,
+          0.053529545454545455,
+          0.053020454545454544,
+          0.09705227272727272
+        ]
+      ],
+      "loops": [
+        3,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.78745,
+      "cpp_ms": 0.047677777777777784,
+      "speedup": 100.41260778373338,
+      "samples_ms": [
+        [
+          4.1237,
+          4.78745,
+          6.9335,
+          5.7383,
+          4.6162,
+          4.57375,
+          5.0718
+        ],
+        [
+          0.0874037037037037,
+          0.047677777777777784,
+          0.04755555555555555,
+          0.04638333333333334,
+          0.06107222222222222,
+          0.04591481481481482,
+          0.047737037037037036
+        ]
+      ],
+      "loops": [
+        2,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.761933333333333,
+      "cpp_ms": 0.05555526315789474,
+      "speedup": 85.71525113290069,
+      "samples_ms": [
+        [
+          4.761933333333333,
+          5.182866666666667,
+          4.913633333333333,
+          4.351333333333333,
+          5.0144,
+          4.368333333333333,
+          4.758833333333333
+        ],
+        [
+          0.046252631578947365,
+          0.05555526315789474,
+          0.053928947368421055,
+          0.0907,
+          0.059302631578947364,
+          0.05710263157894736,
+          0.05021315789473684
+        ]
+      ],
+      "loops": [
+        3,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3741666666666665,
+      "cpp_ms": 0.061395454545454545,
+      "speedup": 71.24577379630315,
+      "samples_ms": [
+        [
+          4.061866666666666,
+          4.718866666666667,
+          4.789433333333333,
+          4.3741666666666665,
+          5.3024,
+          4.359066666666667,
+          4.0786
+        ],
+        [
+          0.048381818181818186,
+          0.06985454545454546,
+          0.049879545454545454,
+          0.08309772727272728,
+          0.061395454545454545,
+          0.10459318181818182,
+          0.056756818181818186
+        ]
+      ],
+      "loops": [
+        3,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.616266666666667,
+      "cpp_ms": 0.050417021276595746,
+      "speedup": 91.56167004276391,
+      "samples_ms": [
+        [
+          4.3892,
+          4.616266666666667,
+          5.525933333333333,
+          7.0485,
+          4.6026,
+          4.3409,
+          5.8676
+        ],
+        [
+          0.09723617021276595,
+          0.050417021276595746,
+          0.06669574468085106,
+          0.09981489361702128,
+          0.04615531914893617,
+          0.047055319148936174,
+          0.04873191489361702
+        ]
+      ],
+      "loops": [
+        3,
+        47
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.287,
+      "cpp_ms": 0.03872291666666666,
+      "speedup": 59.06063377629526,
+      "samples_ms": [
+        [
+          2.5377,
+          2.287,
+          2.645475,
+          2.106925,
+          2.709875,
+          1.981375,
+          2.23865
+        ],
+        [
+          0.04768541666666667,
+          0.0365375,
+          0.038414583333333335,
+          0.10031875,
+          0.03649375,
+          0.03872291666666666,
+          0.040325
+        ]
+      ],
+      "loops": [
+        4,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "int64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 9.4485,
+      "cpp_ms": 0.061528813559322035,
+      "speedup": 153.56220042972836,
+      "samples_ms": [
+        [
+          9.4485,
+          9.2748,
+          9.4316,
+          9.2745,
+          11.244,
+          12.3771,
+          10.1296
+        ],
+        [
+          0.0642135593220339,
+          0.05756610169491525,
+          0.061528813559322035,
+          0.05257966101694916,
+          0.06474745762711864,
+          0.06249491525423729,
+          0.054938983050847455
+        ]
+      ],
+      "loops": [
+        1,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.372933333333333,
+      "cpp_ms": 0.06304166666666666,
+      "speedup": 69.36576338400529,
+      "samples_ms": [
+        [
+          4.143066666666667,
+          6.316366666666667,
+          4.372933333333333,
+          4.196833333333333,
+          4.9709,
+          4.491433333333333,
+          4.352133333333333
+        ],
+        [
+          0.06304166666666666,
+          0.08743888888888889,
+          0.056105555555555554,
+          0.10723611111111112,
+          0.09023055555555556,
+          0.05884166666666667,
+          0.05543888888888889
+        ]
+      ],
+      "loops": [
+        3,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4362,
+      "cpp_ms": 0.059825,
+      "speedup": 74.15294609277058,
+      "samples_ms": [
+        [
+          4.55475,
+          4.1807,
+          4.28825,
+          5.07895,
+          4.0818,
+          4.7985,
+          4.4362
+        ],
+        [
+          0.0507875,
+          0.0906625,
+          0.059825,
+          0.0658325,
+          0.0535775,
+          0.13533,
+          0.05091
+        ]
+      ],
+      "loops": [
+        2,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.173266666666667,
+      "cpp_ms": 0.05269117647058824,
+      "speedup": 98.18089124569727,
+      "samples_ms": [
+        [
+          5.6076,
+          5.227833333333333,
+          5.173266666666667,
+          4.268666666666667,
+          5.405533333333333,
+          4.008633333333333,
+          4.7832333333333334
+        ],
+        [
+          0.06772941176470589,
+          0.05235882352941176,
+          0.05971470588235295,
+          0.052176470588235296,
+          0.05149411764705882,
+          0.05269117647058824,
+          0.07369411764705883
+        ]
+      ],
+      "loops": [
+        3,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.69405,
+      "cpp_ms": 0.052544,
+      "speedup": 89.3356044457978,
+      "samples_ms": [
+        [
+          4.3793,
+          5.5159,
+          6.0311,
+          4.69405,
+          4.07505,
+          5.3504,
+          4.2496
+        ],
+        [
+          0.056476,
+          0.049158,
+          0.101006,
+          0.048916,
+          0.09524,
+          0.04912,
+          0.052544
+        ]
+      ],
+      "loops": [
+        2,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">f2",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.63465,
+      "cpp_ms": 0.07945744680851063,
+      "speedup": 58.32870531530325,
+      "samples_ms": [
+        [
+          4.16955,
+          6.28795,
+          4.28685,
+          5.1075,
+          4.63465,
+          4.1205,
+          4.85815
+        ],
+        [
+          0.08225531914893616,
+          0.056595744680851066,
+          0.0843595744680851,
+          0.08455957446808511,
+          0.05537234042553192,
+          0.059893617021276595,
+          0.07945744680851063
+        ]
+      ],
+      "loops": [
+        2,
+        47
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5137,
+      "cpp_ms": 0.058296428571428575,
+      "speedup": 77.42669852355571,
+      "samples_ms": [
+        [
+          5.4776,
+          5.6924,
+          4.06785,
+          4.8465,
+          4.13985,
+          4.37585,
+          4.5137
+        ],
+        [
+          0.047673214285714284,
+          0.06372857142857143,
+          0.058296428571428575,
+          0.047173214285714284,
+          0.08424285714285715,
+          0.048625,
+          0.08767857142857144
+        ]
+      ],
+      "loops": [
+        2,
+        56
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4437,
+      "cpp_ms": 0.04949782608695652,
+      "speedup": 89.7756598884448,
+      "samples_ms": [
+        [
+          4.12135,
+          4.18865,
+          4.78905,
+          4.11315,
+          4.4437,
+          4.90755,
+          4.65195
+        ],
+        [
+          0.04938478260869566,
+          0.05054130434782609,
+          0.04842826086956522,
+          0.04949782608695652,
+          0.050093478260869566,
+          0.05087391304347826,
+          0.048573913043478266
+        ]
+      ],
+      "loops": [
+        2,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6416,
+      "cpp_ms": 0.05075,
+      "speedup": 91.46009852216748,
+      "samples_ms": [
+        [
+          4.9801,
+          5.1625,
+          4.2553,
+          4.2669,
+          4.9771,
+          4.6416,
+          4.445
+        ],
+        [
+          0.04871521739130434,
+          0.04943260869565218,
+          0.047563043478260875,
+          0.07228695652173914,
+          0.07137391304347826,
+          0.05075,
+          0.13031521739130436
+        ]
+      ],
+      "loops": [
+        1,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.324533333333333,
+      "cpp_ms": 0.05094137931034483,
+      "speedup": 84.89234865407613,
+      "samples_ms": [
+        [
+          4.324533333333333,
+          4.3574,
+          4.657166666666667,
+          4.285966666666667,
+          4.260733333333333,
+          4.7037,
+          4.1348
+        ],
+        [
+          0.050993103448275866,
+          0.05160689655172414,
+          0.05094137931034483,
+          0.050727586206896554,
+          0.05837931034482759,
+          0.05013793103448276,
+          0.05039310344827586
+        ]
+      ],
+      "loops": [
+        3,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.269025,
+      "cpp_ms": 0.038603125,
+      "speedup": 58.77827248441674,
+      "samples_ms": [
+        [
+          2.269025,
+          2.2905,
+          2.51615,
+          2.1678,
+          2.07345,
+          2.98015,
+          2.044275
+        ],
+        [
+          0.040153125,
+          0.035515625,
+          0.0371359375,
+          0.0496546875,
+          0.0371765625,
+          0.0508109375,
+          0.038603125
+        ]
+      ],
+      "loops": [
+        4,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.3182,
+      "cpp_ms": 0.06304473684210526,
+      "speedup": 131.94122803356012,
+      "samples_ms": [
+        [
+          8.1668,
+          8.5327,
+          8.0289,
+          8.9598,
+          7.9983,
+          8.3182,
+          10.8057
+        ],
+        [
+          0.1336,
+          0.06774473684210526,
+          0.061607894736842105,
+          0.061247368421052634,
+          0.05875,
+          0.1475,
+          0.06304473684210526
+        ]
+      ],
+      "loops": [
+        1,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.7857,
+      "cpp_ms": 0.05217631578947369,
+      "speedup": 110.88747667322338,
+      "samples_ms": [
+        [
+          4.58,
+          6.517633333333333,
+          5.780333333333333,
+          5.8111,
+          5.7857,
+          5.8854,
+          4.168433333333334
+        ],
+        [
+          0.05035,
+          0.08927105263157895,
+          0.05389736842105263,
+          0.06548684210526316,
+          0.051373684210526314,
+          0.050728947368421054,
+          0.05217631578947369
+        ]
+      ],
+      "loops": [
+        3,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.373466666666667,
+      "cpp_ms": 0.07118823529411765,
+      "speedup": 61.43524486310803,
+      "samples_ms": [
+        [
+          4.346133333333333,
+          4.147033333333334,
+          4.956133333333333,
+          4.373466666666667,
+          4.265233333333333,
+          5.1774,
+          4.530866666666667
+        ],
+        [
+          0.08307450980392157,
+          0.05138823529411765,
+          0.07118823529411765,
+          0.05381764705882353,
+          0.08912156862745098,
+          0.05962941176470588,
+          0.0855764705882353
+        ]
+      ],
+      "loops": [
+        3,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6523,
+      "cpp_ms": 0.05515116279069767,
+      "speedup": 84.35542905334178,
+      "samples_ms": [
+        [
+          5.173933333333333,
+          4.6523,
+          4.139666666666667,
+          4.4624,
+          4.457666666666667,
+          6.578766666666667,
+          7.0487
+        ],
+        [
+          0.05515116279069767,
+          0.08560232558139534,
+          0.0494,
+          0.06963720930232559,
+          0.05037441860465116,
+          0.05178604651162791,
+          0.058
+        ]
+      ],
+      "loops": [
+        3,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.61715,
+      "cpp_ms": 0.055044,
+      "speedup": 83.88107695661651,
+      "samples_ms": [
+        [
+          7.611,
+          4.61715,
+          4.1296,
+          4.54175,
+          4.17485,
+          5.0344,
+          5.20435
+        ],
+        [
+          0.076712,
+          0.05378,
+          0.054648,
+          0.059736,
+          0.055044,
+          0.052736,
+          0.05602
+        ]
+      ],
+      "loops": [
+        2,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">f4",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.022333333333333,
+      "cpp_ms": 0.05637291666666666,
+      "speedup": 89.09124505709745,
+      "samples_ms": [
+        [
+          5.697833333333333,
+          4.0601666666666665,
+          5.022333333333333,
+          4.526466666666667,
+          5.569,
+          4.489333333333333,
+          5.117233333333333
+        ],
+        [
+          0.05919375,
+          0.054045833333333335,
+          0.05637291666666666,
+          0.05555,
+          0.06830208333333333,
+          0.05554375,
+          0.058
+        ]
+      ],
+      "loops": [
+        3,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.010633333333333,
+      "cpp_ms": 0.05704,
+      "speedup": 87.84420289855072,
+      "samples_ms": [
+        [
+          5.010633333333333,
+          5.375666666666667,
+          4.7091,
+          4.435733333333333,
+          5.550433333333333,
+          4.154566666666667,
+          5.685333333333333
+        ],
+        [
+          0.05619,
+          0.05704,
+          0.05441,
+          0.060816666666666665,
+          0.052636666666666665,
+          0.08787,
+          0.07605
+        ]
+      ],
+      "loops": [
+        3,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.3837,
+      "cpp_ms": 0.04983555555555556,
+      "speedup": 87.96330152501561,
+      "samples_ms": [
+        [
+          4.391433333333333,
+          4.877266666666667,
+          4.2283,
+          4.3837,
+          4.070566666666666,
+          4.021433333333333,
+          4.7002
+        ],
+        [
+          0.04983555555555556,
+          0.047391111111111106,
+          0.04986888888888889,
+          0.04912,
+          0.05074888888888889,
+          0.1085,
+          0.04649111111111111
+        ]
+      ],
+      "loops": [
+        3,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.348266666666667,
+      "cpp_ms": 0.05178043478260869,
+      "speedup": 83.97508991421417,
+      "samples_ms": [
+        [
+          4.638866666666667,
+          4.348266666666667,
+          4.753266666666667,
+          4.266633333333333,
+          5.3304,
+          4.250466666666667,
+          4.305633333333333
+        ],
+        [
+          0.05074347826086957,
+          0.052117391304347824,
+          0.05178043478260869,
+          0.0671608695652174,
+          0.04874347826086957,
+          0.0559,
+          0.04664782608695652
+        ]
+      ],
+      "loops": [
+        3,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5909,
+      "cpp_ms": 0.05165952380952381,
+      "speedup": 88.86841498824724,
+      "samples_ms": [
+        [
+          4.085966666666667,
+          5.298733333333333,
+          4.907766666666667,
+          4.478333333333333,
+          4.5909,
+          5.846633333333333,
+          4.4678
+        ],
+        [
+          0.04861666666666666,
+          0.049614285714285715,
+          0.08165,
+          0.08204285714285714,
+          0.04882857142857143,
+          0.05165952380952381,
+          0.0858142857142857
+        ]
+      ],
+      "loops": [
+        3,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.40006,
+      "cpp_ms": 0.038046,
+      "speedup": 63.08310991957104,
+      "samples_ms": [
+        [
+          2.74492,
+          2.3115,
+          2.80804,
+          2.32648,
+          3.8515,
+          2.40006,
+          2.03252
+        ],
+        [
+          0.036844,
+          0.036714,
+          0.071818,
+          0.03912,
+          0.038046,
+          0.037862,
+          0.04135
+        ]
+      ],
+      "loops": [
+        5,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.6533,
+      "cpp_ms": 0.05814545454545454,
+      "speedup": 148.8216072545341,
+      "samples_ms": [
+        [
+          8.922,
+          9.9829,
+          8.6533,
+          8.3065,
+          9.9814,
+          8.1802,
+          7.8914
+        ],
+        [
+          0.057109090909090915,
+          0.07545227272727272,
+          0.057679545454545456,
+          0.05774318181818182,
+          0.08502954545454545,
+          0.05814545454545454,
+          0.08363636363636363
+        ]
+      ],
+      "loops": [
+        1,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-1",
+      "workload": "batch-1",
+      "windows": 1,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05598181818181818,
+      "cpp_ms": 0.02926176470588235,
+      "speedup": 1.9131388261954148,
+      "samples_ms": [
+        [
+          0.05538363636363636,
+          0.059378181818181816,
+          0.07428181818181817,
+          0.05508,
+          0.09126,
+          0.055694545454545455,
+          0.05598181818181818
+        ],
+        [
+          0.028275,
+          0.03032058823529412,
+          0.02926176470588235,
+          0.0299,
+          0.027783823529411767,
+          0.02877941176470588,
+          0.029457352941176473
+        ]
+      ],
+      "loops": [
+        55,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-17",
+      "workload": "batch-17",
+      "windows": 17,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.36133076923076923,
+      "cpp_ms": 0.03530652173913043,
+      "speedup": 10.234108358238647,
+      "samples_ms": [
+        [
+          0.4025653846153846,
+          0.3012346153846154,
+          0.36133076923076923,
+          0.39306538461538465,
+          0.36744615384615387,
+          0.32519230769230767,
+          0.3472230769230769
+        ],
+        [
+          0.045106521739130434,
+          0.037873913043478265,
+          0.03346086956521739,
+          0.033810869565217394,
+          0.03420434782608696,
+          0.05820217391304348,
+          0.03530652173913043
+        ]
+      ],
+      "loops": [
+        26,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-4097",
+      "workload": "batch-4097",
+      "windows": 4097,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 74.7084,
+      "cpp_ms": 0.38148461538461537,
+      "speedup": 195.83594458895408,
+      "samples_ms": [
+        [
+          71.1733,
+          77.4593,
+          76.1135,
+          77.2496,
+          71.5249,
+          68.7331,
+          74.7084
+        ],
+        [
+          0.3739461538461539,
+          0.3705538461538461,
+          0.32011538461538463,
+          0.44982307692307694,
+          0.38148461538461537,
+          0.4523846153846154,
+          0.43403846153846154
+        ]
+      ],
+      "loops": [
+        1,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-65539",
+      "workload": "batch-65539",
+      "windows": 65539,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1172.639,
+      "cpp_ms": 8.4128,
+      "speedup": 139.3874809813617,
+      "samples_ms": [
+        [
+          1133.9147,
+          1172.9876,
+          1172.639,
+          1154.4691,
+          1179.7847,
+          1171.0115,
+          1216.115
+        ],
+        [
+          7.1433,
+          8.0873,
+          8.4616,
+          8.4643,
+          8.1044,
+          8.4128,
+          13.9796
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "contiguous",
+      "workload": "contiguous",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.57955,
+      "cpp_ms": 0.07249298245614035,
+      "speedup": 90.76119890612523,
+      "samples_ms": [
+        [
+          4.36995,
+          6.57955,
+          5.2521,
+          5.2503,
+          7.40745,
+          11.75165,
+          11.4203
+        ],
+        [
+          0.07249298245614035,
+          0.08072631578947367,
+          0.0470140350877193,
+          0.04940526315789474,
+          0.04971578947368421,
+          0.28064736842105265,
+          0.11013157894736843
+        ]
+      ],
+      "loops": [
+        2,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "fortran",
+      "workload": "fortran",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.5364,
+      "cpp_ms": 0.05973396226415094,
+      "speedup": 92.68429198648096,
+      "samples_ms": [
+        [
+          4.4225,
+          5.682,
+          7.575,
+          4.1544,
+          5.4232,
+          10.2057,
+          5.5364
+        ],
+        [
+          0.048871698113207546,
+          0.08724150943396226,
+          0.05973396226415094,
+          0.08693773584905659,
+          0.05276792452830189,
+          0.047196226415094335,
+          0.14468679245283017
+        ]
+      ],
+      "loops": [
+        1,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "reversed",
+      "workload": "reversed",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.5282,
+      "cpp_ms": 0.057057142857142855,
+      "speedup": 79.36254381572358,
+      "samples_ms": [
+        [
+          4.920333333333333,
+          4.5282,
+          4.143133333333333,
+          4.2223,
+          4.1702,
+          5.635066666666667,
+          5.236666666666667
+        ],
+        [
+          0.05803928571428572,
+          0.057057142857142855,
+          0.13946785714285714,
+          0.05633214285714286,
+          0.10479642857142857,
+          0.05161071428571428,
+          0.05669285714285714
+        ]
+      ],
+      "loops": [
+        3,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "stepped",
+      "workload": "stepped",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.783,
+      "cpp_ms": 0.077185,
+      "speedup": 61.96799896352918,
+      "samples_ms": [
+        [
+          5.5406,
+          4.3241,
+          5.0493,
+          4.370633333333333,
+          4.783,
+          5.367533333333333,
+          4.444566666666667
+        ],
+        [
+          0.0555675,
+          0.077185,
+          0.10789,
+          0.1106025,
+          0.0512925,
+          0.080355,
+          0.0682675
+        ]
+      ],
+      "loops": [
+        3,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": ">f8",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "endian",
+      "workload": "endian",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.7305,
+      "cpp_ms": 0.09816818181818182,
+      "speedup": 68.5609112376719,
+      "samples_ms": [
+        [
+          5.289,
+          6.8004,
+          6.7305,
+          9.4858,
+          6.1647,
+          5.7115,
+          7.94225
+        ],
+        [
+          0.06460454545454546,
+          0.09816818181818182,
+          0.06898636363636364,
+          0.07253636363636363,
+          0.1081409090909091,
+          0.17855454545454544,
+          0.20834545454545456
+        ]
+      ],
+      "loops": [
+        2,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "dtype-metadata",
+      "workload": "dtype-metadata",
+      "windows": 257,
+      "input_dtype_metadata": {
+        "units": "raw"
+      },
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 9.3545,
+      "cpp_ms": 0.12287391304347825,
+      "speedup": 76.13088708821344,
+      "samples_ms": [
+        [
+          9.3545,
+          9.9896,
+          10.045,
+          8.1045,
+          8.4649,
+          8.6563,
+          11.9746
+        ],
+        [
+          0.21215217391304347,
+          0.13317826086956522,
+          0.11494782608695653,
+          0.14177826086956521,
+          0.09083478260869565,
+          0.09066521739130436,
+          0.12287391304347825
+        ]
+      ],
+      "loops": [
+        1,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "readonly",
+      "workload": "readonly",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.1396,
+      "cpp_ms": 0.09208387096774194,
+      "speedup": 77.53366496181602,
+      "samples_ms": [
+        [
+          13.8162,
+          11.0987,
+          7.1396,
+          4.3429,
+          5.9759,
+          6.3943,
+          8.3123
+        ],
+        [
+          0.20307096774193548,
+          0.18558064516129033,
+          0.09208387096774194,
+          0.053793548387096775,
+          0.09603548387096775,
+          0.06681935483870968,
+          0.054419354838709674
+        ]
+      ],
+      "loops": [
+        1,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "unaligned",
+      "workload": "unaligned",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.3175,
+      "cpp_ms": 0.0494609375,
+      "speedup": 107.50908229347654,
+      "samples_ms": [
+        [
+          6.72875,
+          5.3175,
+          4.7302,
+          4.5752,
+          5.14865,
+          7.3143,
+          6.4619
+        ],
+        [
+          0.0856203125,
+          0.088746875,
+          0.0494609375,
+          0.0476203125,
+          0.04703125,
+          0.0457953125,
+          0.0930515625
+        ]
+      ],
+      "loops": [
+        2,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "zero-stride",
+      "workload": "zero-stride",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.068733333333333,
+      "cpp_ms": 0.076048,
+      "speedup": 79.80135353110316,
+      "samples_ms": [
+        [
+          6.068733333333333,
+          6.2786,
+          5.416066666666667,
+          6.153366666666667,
+          5.233833333333333,
+          5.3709,
+          7.146466666666667
+        ],
+        [
+          0.138072,
+          0.061608,
+          0.052356,
+          0.081236,
+          0.05846,
+          0.07834,
+          0.076048
+        ]
+      ],
+      "loops": [
+        3,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        262144
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "line",
+      "workload": "line",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.490375,
+      "cpp_ms": 0.04740740740740741,
+      "speedup": 52.53134765624999,
+      "samples_ms": [
+        [
+          2.087975,
+          2.490375,
+          2.530775,
+          2.1227,
+          2.41115,
+          2.791675,
+          2.617525
+        ],
+        [
+          0.04950740740740741,
+          0.08416666666666667,
+          0.04675185185185186,
+          0.05148888888888889,
+          0.04740740740740741,
+          0.04651851851851852,
+          0.042351851851851856
+        ]
+      ],
+      "loops": [
+        4,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "volume",
+      "workload": "volume",
+      "windows": 257,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 9.4051,
+      "cpp_ms": 0.06923636363636364,
+      "speedup": 135.84046743697476,
+      "samples_ms": [
+        [
+          8.0276,
+          9.4051,
+          10.4268,
+          8.7296,
+          7.8886,
+          9.8888,
+          12.4996
+        ],
+        [
+          0.07303939393939393,
+          0.07870606060606061,
+          0.06237878787878788,
+          0.06180909090909091,
+          0.06923636363636364,
+          0.07943939393939393,
+          0.06412727272727273
+        ]
+      ],
+      "loops": [
+        1,
+        33
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-1",
+      "workload": "batch-1",
+      "windows": 1,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05836190476190476,
+      "cpp_ms": 0.028740677966101694,
+      "speedup": 2.0306377194977774,
+      "samples_ms": [
+        [
+          0.07485238095238095,
+          0.05757142857142857,
+          0.05592619047619048,
+          0.057557142857142855,
+          0.05836190476190476,
+          0.0754642857142857,
+          0.08422857142857143
+        ],
+        [
+          0.031133898305084746,
+          0.030103389830508472,
+          0.028620338983050844,
+          0.02743220338983051,
+          0.028740677966101694,
+          0.02863559322033898,
+          0.030533898305084746
+        ]
+      ],
+      "loops": [
+        42,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-17",
+      "workload": "batch-17",
+      "windows": 17,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.35431111111111113,
+      "cpp_ms": 0.03573035714285715,
+      "speedup": 9.916248799151493,
+      "samples_ms": [
+        [
+          0.3238,
+          0.3841407407407407,
+          0.31208888888888886,
+          0.3613148148148148,
+          0.3797037037037037,
+          0.35431111111111113,
+          0.33384444444444444
+        ],
+        [
+          0.053951785714285716,
+          0.06822142857142857,
+          0.03573035714285715,
+          0.033114285714285714,
+          0.060407142857142854,
+          0.03494642857142857,
+          0.033116071428571425
+        ]
+      ],
+      "loops": [
+        27,
+        56
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-4097",
+      "workload": "batch-4097",
+      "windows": 4097,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 76.2333,
+      "cpp_ms": 0.629190909090909,
+      "speedup": 121.1608414847351,
+      "samples_ms": [
+        [
+          74.4334,
+          77.834,
+          76.2333,
+          79.4834,
+          76.0632,
+          76.5174,
+          74.5513
+        ],
+        [
+          0.629190909090909,
+          0.7434090909090909,
+          1.1039181818181818,
+          0.9735363636363636,
+          0.5159818181818182,
+          0.5267,
+          0.5288272727272727
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "transform.integrate",
+      "size": 512,
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "batch-65539",
+      "workload": "batch-65539",
+      "windows": 65539,
+      "input_dtype_metadata": null,
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1205.9596,
+      "cpp_ms": 12.9659,
+      "speedup": 93.01009571259998,
+      "samples_ms": [
+        [
+          1202.5286,
+          1173.2361,
+          1205.9596,
+          1179.9595,
+          1290.8716,
+          1326.0801,
+          1273.9325
+        ],
+        [
+          12.9659,
+          8.0129,
+          12.3451,
+          12.9797,
+          8.1797,
+          13.0425,
+          19.1501
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}

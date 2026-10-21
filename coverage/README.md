@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-450 public callable names inventoried in 17 modules; 91 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+450 public callable names inventoried in 17 modules; 92 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -414,7 +414,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.hough_line_peaks` | upstream-only | pending | pending |
 | `transform.ifrt2` | upstream-only | pending | pending |
 | `transform.integral_image` | native-partial | yes (partial input contract) | yes |
-| `transform.integrate` | upstream-only | pending | pending |
+| `transform.integrate` | native-partial | yes (partial input contract) | yes |
 | `transform.iradon` | upstream-only | pending | pending |
 | `transform.iradon_sart` | upstream-only | pending | pending |
 | `transform.matrix_transform` | upstream-only | pending | pending |

@@ -1,6 +1,8 @@
-# Current performance verification
+# Last completed aggregate verification
 
-Reference: original scikit-image 0.26.0. 2652 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
+This 16-report checkpoint predates the `transform.integrate` port. Its source hash and totals describe that checkpoint. The new port has a separate [144-workload one-worker report](integrate-parameters.md); the current registry requires a fresh 17-report aggregate.
+
+Reference: original scikit-image 0.26.0. 2652 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. These checkpoint reports match source/build SHA-256 (POSIX relative paths and LF line endings):
 `1e7ff448ca59f88a2c2d523dd537bfcdf3191d5ebc0306de2d43a497fb6db79c`.
 
 | Report | Cases | Worker counts |
