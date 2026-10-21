@@ -1,3 +1,4 @@
+#include "skimagexx/integrate.hpp"
 #include "skimagexx/integral.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -678,6 +679,19 @@ PYBIND11_MODULE(_core, m) {
         shape(image,true);
         return dispatch(image,[](const auto* p, auto* out, auto h, auto w) { skimagexx::rgb2gray_into(p,out,h,w); });
     },py::arg("image"));
+    m.def("integrate", [](py::array table,py::array_t<std::int64_t,py::array::c_style> lower,
+            py::array_t<std::int64_t,py::array::c_style> upper,py::array output) {
+        if(lower.ndim()!=2 || upper.ndim()!=2 || lower.shape(0)!=upper.shape(0) || lower.shape(1)!=table.ndim() || upper.shape(1)!=table.ndim())throw py::value_error("one lower/upper coordinate per integral table axis required");
+        if(output.ndim()!=1 || output.shape(0)!=lower.shape(0) || pixel_type(output.dtype())!=skimagexx::PixelType::float64 || !(output.flags()&py::array::c_style) || !output.writeable() || !output.attr("flags").attr("aligned").cast<bool>())throw py::type_error("contiguous aligned writable double integral output required");
+        skimagexx::IntegralTableView view;const auto dtype=table.dtype();
+        view.half=dtype.kind()=='f' && dtype.itemsize()==2;
+        view.type=view.half ? skimagexx::PixelType::uint16 : pixel_type(dtype.attr("newbyteorder")("=").cast<py::dtype>());
+        view.swap=dtype.itemsize()>1 && !dtype.attr("isnative").cast<bool>();view.data=table.data();
+        for(py::ssize_t axis=0;axis<table.ndim();++axis) {view.shape.push_back(std::size_t(table.shape(axis)));view.strides.push_back(table.strides(axis));}
+        bool supported;
+        {py::gil_scoped_release release;supported=skimagexx::integrate_windows_into(view,lower.data(),upper.data(),static_cast<double*>(output.mutable_data()),std::size_t(lower.shape(0)));}
+        return supported;
+    });
     m.def("integral_image", [](py::array image,py::array result) {
         const auto source=pixel_type(image.dtype()),target=pixel_type(result.dtype());
         auto dense=[](const py::array& array) {

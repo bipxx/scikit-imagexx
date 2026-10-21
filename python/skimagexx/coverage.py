@@ -1,6 +1,6 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
-    'transform': ('integral_image',),
+    'transform': ('integral_image','integrate'),
     'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -45,6 +45,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='transform.integrate':
+        return (image,tuple(n//4 for n in image.shape),tuple(3*n//4 for n in image.shape)), {}
     if api=='filters.difference_of_gaussians':return (image,1.), {}
     if api=='color.rgba2rgb':
         import numpy as np
@@ -67,7 +69,7 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
-    if api=='transform.integral_image':return (0.,0.)
+    if api in ('transform.integral_image','transform.integrate'):return (0.,0.)
     name = str(dtype)
     single = name == 'float32'
     if api=='color.deltaE_ciede2000' and single:

@@ -1,4 +1,5 @@
 #include "skimagexx/integral.hpp"
+#include "skimagexx/integrate.hpp"
 #include "../src/execution.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -47,6 +48,53 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        {
+            const double table[]={1,3,6,5,12,21};
+            IntegralTableView view{table,PixelType::float64,false,false,{2,3},{24,8}};
+            const std::int64_t lower[]={-1,-1,0,0,-1,1},upper[]={1,2,1,2,1,2};
+            double result[3];
+            require(integrate_windows_into(view,lower,upper,result,3));
+            require(result[0]==21 && result[1]==11 && result[2]==9);
+            // A reversed view reads raw corners through signed byte strides.
+            view.data=table+5;view.strides={-24,-8};
+            require(integrate_windows_into(view,lower,upper,result,3));
+            require(result[0]==1 && result[1]==11 && result[2]==-2);
+            const std::uint16_t half[]={0x3c00,0xc000,0x8000,0x0001};
+            view={half,PixelType::uint16,true,false,{4},{2}};
+            const std::int64_t half_lower[]={-1,-1,-1,-1},half_upper[]={0,1,2,3};
+            double decoded[4];
+            require(integrate_windows_into(view,half_lower,half_upper,decoded,4));
+            require(decoded[0]==1 && decoded[1]==-2 && decoded[2]==0 && !std::signbit(decoded[2]) && decoded[3]==std::ldexp(1.,-24));
+            const unsigned char swapped[]={0,1,1,0};
+            view={swapped,PixelType::uint16,false,true,{2},{2}};
+            const std::int64_t lo[]={-1,-1},hi[]={0,1};
+            require(integrate_windows_into(view,lo,hi,result,2));
+            const std::uint16_t endian=1;
+            if(*reinterpret_cast<const unsigned char*>(&endian))require(result[0]==1 && result[1]==256);
+            else require(result[0]==256 && result[1]==1);
+            const double infinity=std::numeric_limits<double>::infinity();
+            view={&infinity,PixelType::float64,false,false,{}, {}};
+            require(!integrate_windows_into(view,nullptr,nullptr,result,1));
+            const double finite=-0.;view.data=&finite;
+            require(integrate_windows_into(view,nullptr,nullptr,result,1));
+            require(result[0]==0 && !std::signbit(result[0]));
+            view={table,PixelType::float64,false,false,{2,3},{24,8}};
+            constexpr std::size_t windows=65539;
+            std::vector<std::int64_t> many_lower(windows*2),many_upper(windows*2);
+            std::vector<double> many_result(windows);
+            for(std::size_t i=0;i<windows;++i) {many_upper[2*i]=1;many_upper[2*i+1]=2;}
+            require(integrate_windows_into(view,many_lower.data(),many_upper.data(),many_result.data(),windows));
+            for(auto value:many_result)require(value==11);
+            bool rejected=false;
+            const std::int64_t outside[]={2,2};
+            try {integrate_windows_into(view,lower,outside,result,1);}catch(const std::out_of_range&){rejected=true;}
+            require(rejected);
+            view.strides[0]=std::numeric_limits<std::ptrdiff_t>::min();rejected=false;
+            try {integrate_windows_into(view,lower,upper,result,1);}catch(const std::overflow_error&){rejected=true;}
+            require(rejected);
+            view={nullptr,PixelType::float64,false,false,{0,3},{24,8}};
+            require(integrate_windows_into(view,nullptr,nullptr,nullptr,0));
+        }
         {
             // Reference impulse responses pin derivative sign and border rules.
             const double impulse[]={0,0,1,0,0};

@@ -18,6 +18,7 @@ jobs:
       - run: python -m pytest -q
       - run: python benchmarks/coverage.py --sizes 64 --threads 1 --repeat 1 --output build/ci-performance.json
       - run: python benchmarks/integral.py --size 32 --threads 1 --repeat 1 --output build/ci-integral.json
+      - run: python benchmarks/integrate.py --size 32 --threads 1 --repeat 1 --output build/ci-integrate.json
       - run: python benchmarks/gaussian.py --size 32 --threads 1 --repeat 1 --output build/ci-gaussian.json
       - run: python benchmarks/metadata.py --sizes 32 --threads 1 --repeat 1 --output build/ci-metadata.json
       - run: python benchmarks/conversions.py --size 64 --threads 1 --dtypes uint16 int16 --output build/ci-conversions.json
