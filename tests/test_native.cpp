@@ -1,3 +1,4 @@
+#include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
@@ -36,6 +37,18 @@ int main() {
             }
         }
         threshold_logs(nullptr,nullptr,0);
+        std::vector<std::uint8_t> local_input(17*19,10);
+        std::vector<double> local_output(local_input.size());
+        local_threshold_into(local_input.data(),local_output.data(),PixelType::uint8,{17,19},{15,15},LocalThreshold::niblack);
+        require(std::all_of(local_output.begin(),local_output.end(),[](double v){return v==10;}));
+        local_threshold_into(local_input.data(),local_output.data(),PixelType::uint8,{17,19},{15,15},LocalThreshold::sauvola);
+        require(std::all_of(local_output.begin(),local_output.end(),[](double v){return v==8;}));
+        const float local32[]={.5f};float local32_output[1];
+        local_threshold_into(local32,local32_output,PixelType::float32,{1},{1},LocalThreshold::sauvola);
+        require(local32_output[0]==.4f);
+        LocalThresholdParameters local_promoted;local_promoted.k_double=true;
+        local_threshold_into(local32,local_output.data(),PixelType::float32,{1},{1},LocalThreshold::sauvola,local_promoted);
+        require(local_output[0]==.4);
         const double hist_counts[]={1,2,3,4,3,2,1};
         const double hist_centers[]={0,1,2,3,4,5,6};
         require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::yen)[0]==2);

@@ -13,7 +13,8 @@ NATIVE_FUNCTIONS = {
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
     'filters': ('gaussian', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
-                'threshold_yen', 'threshold_triangle', 'threshold_isodata'),
+                'threshold_yen', 'threshold_triangle', 'threshold_isodata',
+                'threshold_niblack','threshold_sauvola'),
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }

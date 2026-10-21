@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 77 native image functions, two metadata
-helpers, and 916 per-function performance cases. The suite now has 18025 checks in both SIMD
+The current function benchmark covers 79 native image functions, two metadata
+helpers, and 940 per-function performance cases. The suite now has 19021 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -109,3 +109,11 @@ Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
 checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
 SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
 Only this translation unit uses the additional `-mfma` flag on GCC/Clang.
+
+`local-threshold-parameters.json` adds 256 Niblack/Sauvola comparisons. Two
+float64 integral buffers share reflected input preparation and ordered prefix
+passes; output math preserves float32 casts before division and the original
+variance clipping. AVX2 operates across independent prefix columns and output
+pixels without reassociating each cumulative sequence. All 11 supported real
+input types are included; additional cases cover anisotropic windows, size 127,
+Fortran/reversed/stepped storage, singleton-depth volumes and strong scalars.

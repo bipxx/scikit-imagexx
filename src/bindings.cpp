@@ -1,3 +1,4 @@
+#include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
@@ -417,6 +418,27 @@ PYBIND11_MODULE(_core, m) {
         {py::gil_scoped_release release;indices=skimagexx::threshold_indices(counts.data(),centers.data(),std::size_t(counts.size()),kind,float_centers,&warnings,numpy_log,bin_width);}
         py::array_t<py::ssize_t> result(py::ssize_t(indices.size()));
         std::copy(indices.begin(),indices.end(),result.mutable_data());return py::make_tuple(result,warnings);
+    });
+    m.def("local_threshold", [](py::array image,const std::vector<std::size_t>& window,
+            const std::string& method,double k,double r,bool divide_double,bool r_double,bool k_double) -> py::array {
+        const auto type=pixel_type(image.dtype());
+        auto input=py::array::ensure(image,py::array::c_style);
+        if(!input)throw py::type_error("array storage required");
+        if(reinterpret_cast<std::uintptr_t>(input.data())%std::size_t(input.itemsize()))input=input.attr("copy")().cast<py::array>();
+        std::vector<std::size_t> dimensions;
+        std::vector<py::ssize_t> output_shape;
+        for(py::ssize_t axis=0;axis<input.ndim();++axis) {
+            dimensions.push_back(std::size_t(input.shape(axis)));output_shape.push_back(input.shape(axis));
+        }
+        skimagexx::LocalThreshold operation;
+        if(method=="niblack")operation=skimagexx::LocalThreshold::niblack;
+        else if(method=="sauvola")operation=skimagexx::LocalThreshold::sauvola;
+        else throw py::value_error("invalid local threshold method");
+        const bool wide=type!=skimagexx::PixelType::float32 || k_double || (operation==skimagexx::LocalThreshold::sauvola && r_double);
+        py::array result(wide ? py::dtype::of<double>() : py::dtype::of<float>(),output_shape);
+        const skimagexx::LocalThresholdParameters parameters{k,r,divide_double,r_double,k_double};
+        {py::gil_scoped_release release;skimagexx::local_threshold_into(input.data(),result.mutable_data(),type,dimensions,window,operation,parameters);}
+        return result;
     });
     m.def("threshold_otsu_result", [](py::array image) {
         shape(image,false);

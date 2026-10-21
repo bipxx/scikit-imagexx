@@ -14,7 +14,8 @@ def main():
                ('Morphology footprints and output reuse','morphology-parameters'),
                ('Stain matrices and output widths','stain-parameters'),
                ('Lab distances and color routes','color-distance'),
-               ('Histogram threshold parameters','threshold-parameters')]
+               ('Histogram threshold parameters','threshold-parameters'),
+               ('Local threshold windows and dtypes','local-threshold-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)
@@ -152,6 +153,12 @@ def main():
               'Yen retains the installed NumPy float32 log rounding because near ties can '
               'change the selected bin. Supplied-histogram cases measure selection without '
               'an image scan; degenerate warning and error contracts are parity-tested.','',
+              'Niblack and Sauvola share reflected input preparation, ordered float64 '
+              'integral sums and squared sums. Independent prefix columns and output pixels '
+              'use AVX2 while preserving each cumulative sequence. Float32 window sums round '
+              'before division; strong window/weight/range metadata retains upstream promotion. '
+              'The parameter report includes all eleven input types, noncontiguous layouts, '
+              'large/anisotropic windows and singleton-depth N-D volumes.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -160,7 +167,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all nine reports, including this summary. '
+              'to rebuild and reproduce all ten reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

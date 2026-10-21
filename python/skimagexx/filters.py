@@ -187,3 +187,100 @@ def threshold_isodata(image=None,nbins=256,return_all=False,*,hist=None):
 
 
 __all__ += ['threshold_yen','threshold_triangle','threshold_isodata']
+
+
+_LOCAL_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64}
+
+
+def _local_threshold(name,image,window_size,k,r=None):
+    import math
+    from collections.abc import Iterable
+    original_r=r
+    def forwarded():
+        options={'window_size':window_size,'k':k}
+        if name=='sauvola':options['r']=original_r
+        return fallback('filters','threshold_'+name,image,**options)
+    if type(image) is not np.ndarray or not image.ndim or image.dtype.type not in _LOCAL_TYPES or not image.dtype.isnative:
+        return forwarded()
+    if isinstance(window_size,Iterable):
+        if not isinstance(window_size,(tuple,list,np.ndarray)):return forwarded()
+        window=tuple(window_size)
+    else:window=(window_size,)*image.ndim
+    if any(w%2==0 for w in window):
+        raise ValueError(f'Window size for `threshold_sauvola` or `threshold_niblack` must not be even on any dimension. Got {window}')
+    # Shape-only metadata reproduces np.pad's invalid-width/broadcast checks.
+    pad=np.asarray([(w//2+1,w//2) for w in window])
+    if pad.dtype.kind!='i':raise TypeError('`pad_width` must be of integral type.')
+    np.broadcast_to(pad,(image.ndim,2))
+    if (pad<0).any():raise ValueError("index can't contain negative values")
+    if any(size==0 for size in image.shape):raise ValueError("can't extend empty axis using modes other than 'constant' or 'empty'")
+    if len(window)!=image.ndim:raise RuntimeError('Unexpected initial index in kernel_indices')
+    if image.ndim>=20:return forwarded()
+    cpp_window=tuple(int(w) for w in window)
+    padded_count=math.prod(size+w for size,w in zip(image.shape,cpp_window))
+    if padded_count>np.iinfo(np.intp).max//16:return forwarded()
+    with np.errstate(over='ignore'):
+        area=math.prod(window)
+    # Small NumPy integer window scalars can wrap math.prod upstream. Preserve
+    # that exceptional path through explicit fallback until its divisor and
+    # warning stages are native; ordinary strong-scalar precision stays native.
+    if int(area)!=math.prod(cpp_window):return forwarded()
+    if not np.isscalar(k) or not np.isrealobj(k):return forwarded()
+    if name=='sauvola' and r is None:
+        from .util import dtype_limits
+        low,high=dtype_limits(image,clip_negative=False)
+        r=.5*(high-low)
+    if name=='sauvola' and (not np.isscalar(r) or not np.isrealobj(r)):return forwarded()
+    try:
+        k_value=float(k);r_value=float(r) if name=='sauvola' else 1.
+    except (ValueError,TypeError,OverflowError):return forwarded()
+    if not math.isfinite(k_value) or not math.isfinite(r_value) or r_value==0:return forwarded()
+    statistics_dtype=np.dtype('float32') if image.dtype==np.float32 else np.dtype('float64')
+    probe=np.empty(0,dtype=statistics_dtype)
+    with np.errstate(all='ignore'):
+        divide_double=(probe/area).dtype==np.float64
+        if name=='niblack':
+            product=k*probe;r_double=False
+        else:
+            ratio=probe/r;r_double=ratio.dtype==np.float64
+            product=k*(ratio-1)
+        k_double=product.dtype==np.float64
+    if product.dtype not in (np.dtype('float32'),np.dtype('float64')):return forwarded()
+    # Explicit finite working-range contract until exceptional arithmetic
+    # warning modes are implemented for every prefix/formula stage.
+    if image.dtype.kind=='f':
+        low,high=_core.intensity_bounds(image)
+        if not (math.isfinite(low) and math.isfinite(high)):return forwarded()
+        amplitude=max(abs(low),abs(high))
+    elif image.dtype.kind=='b':amplitude=1.
+    else:
+        info=np.iinfo(image.dtype);amplitude=float(max(abs(int(info.min)),abs(int(info.max))))
+    safe=min(math.sqrt(np.finfo(statistics_dtype).max/float(area)),math.sqrt(np.finfo(np.float64).max/padded_count))
+    if amplitude>safe:return forwarded()
+    stage_max=np.finfo(np.float64 if k_double else statistics_dtype).max
+    stage_tiny=np.finfo(np.float64 if k_double else statistics_dtype).tiny
+    if k_value and not stage_tiny<=abs(k_value)<=stage_max:return forwarded()
+    if name=='sauvola':
+        ratio_max=np.finfo(np.float64 if r_double else statistics_dtype).max
+        ratio_tiny=np.finfo(np.float64 if r_double else statistics_dtype).tiny
+        if not ratio_tiny<=abs(r_value)<=ratio_max:return forwarded()
+        ratio_bound=2*amplitude/abs(r_value)+1
+        if not math.isfinite(ratio_bound) or ratio_bound>ratio_max:return forwarded()
+        product_bound=abs(k_value)*ratio_bound
+        final_bound=amplitude*(1+product_bound)
+    else:
+        product_bound=abs(k_value)*2*amplitude
+        final_bound=amplitude+product_bound
+    if not math.isfinite(final_bound) or product_bound>stage_max or final_bound>stage_max:return forwarded()
+    return _core.local_threshold(image,cpp_window,name,k_value,r_value,divide_double,r_double,k_double)
+
+
+def threshold_niblack(image,window_size=15,k=0.2):
+    return _local_threshold('niblack',image,window_size,k)
+
+
+def threshold_sauvola(image,window_size=15,k=0.2,r=None):
+    return _local_threshold('sauvola',image,window_size,k,r)
+
+
+__all__ += ['threshold_niblack','threshold_sauvola']

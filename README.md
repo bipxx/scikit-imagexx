@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **77 partially native
+The reference is scikit-image **0.26.0**. There are currently **79 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 371 remain pending native implementation and dedicated parity tests.
+export list; 369 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -41,6 +41,7 @@ This is not full scikit-image coverage.
 | `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
 | `threshold_yen`, `threshold_triangle`, `threshold_isodata` | ND uint8/float32/float64 arrays; integer-bin and floating-bin histograms; supplied count/bin-center metadata for Yen and ISODATA; `return_all` for ISODATA | Exact threshold and dtype; SIMD floating bin assignment, global optional workers, upstream first-maximum and fixed-point rules |
+| `threshold_niblack`, `threshold_sauvola` | Nonempty N-D bool, signed/unsigned 8/16/32/64-bit integers, float32/64; odd scalar or per-axis windows; finite scalar weights and nonzero Sauvola range | Reflected padding, float64 integral images in upstream axis order, dtype-specific statistics and parameter promotion; SIMD prefix columns and output math; optional global workers |
 | `threshold_mean` | 2D grayscale; same dtypes | Double accumulation; output scalar dtype follows upstream; numerical tolerance applies |
 | `invert` | 2D grayscale; same dtypes; `signed_float` | Dtype-preserving inversion, including signed floating zero |
 | `adjust_gamma`, `adjust_log`, `adjust_sigmoid` | Nonempty arrays of any dimension; uint8, float32, float64; finite nonnegative gain; log gain ≤1 for uint8 | Same dtype; uint8 LUTs; floating expression rounding tested against upstream |
@@ -172,7 +173,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 79 covered wrapper signatures have per-function parity tests. Tests also run
+All 81 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -329,7 +330,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all nine reports with their default workloads:
+To rebuild and reproduce all ten reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt
@@ -357,7 +358,7 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 79 entries in 916 cases.
+performance. The full function benchmark covers 81 entries in 940 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
@@ -476,3 +477,20 @@ The `float_centers` flag preserves float32 ISODATA arithmetic. An optional
 lose it. `threshold_logs` provides the dispatched compatibility logarithm.
 The [Yen tuning experiment](benchmarks/threshold-tuning.md) retains measured
 before/after snapshots, noisy repeats and the discarded metadata-scan attempt.
+
+`skimagexx/local_threshold.hpp` provides the standalone local-threshold kernel.
+Niblack and Sauvola preserve raw intensity ranges, including integer images.
+Float32 statistics round the window sums before division, matching the original;
+NumPy integer window scalars can promote that division without changing the
+stored statistics dtype. Strong scalar weights/ranges preserve their staged
+promotion. NaN `r` in the C++ parameter struct selects half the input dtype range.
+
+The native local-threshold domain uses finite images/parameters whose padded
+prefix sums, statistics and final expressions fit their working dtypes. Float16,
+non-native byte order, subclasses, array-valued weights, nonfinite values,
+zero/subnormal ranges, overflowing typed window products and extreme arithmetic
+use explicit upstream fallback. Window metadata errors preserve upstream
+exception types, including NumPy's unsigned padding-width rejection.
+The [local threshold report](benchmarks/local-threshold-parameters.md) covers
+256 comparisons across all 11 native input types, window shapes/sizes, layouts,
+N-D volumes and scalar-promotion cases. Numerical parity is checked before timing.
