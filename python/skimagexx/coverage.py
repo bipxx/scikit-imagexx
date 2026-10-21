@@ -62,6 +62,12 @@ def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
     name = str(dtype)
     single = name == 'float32'
+    if api=='color.deltaE_ciede2000' and single:
+        # atan2 provider differences of a few float32 ULPs are amplified by
+        # chroma in the hue term, especially when the final distance is small.
+        # Float64 retains the base budget. Float32 also has independent
+        # float64-reference accuracy checks on ordinary Lab colors.
+        return (2e-6,2.5e-4)
     if api in ('color.xyz2lab','color.rgb2lab','color.xyz2luv','color.rgb2luv'):
         # Four epsilon units amplified by the 500*a scaling are about 2.4e-4.
         return (2e-6,2.5e-4) if single else (2e-13,2e-12)

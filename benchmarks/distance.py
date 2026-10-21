@@ -12,6 +12,7 @@ import numpy as np
 import skimage
 from skimage import color as reference
 import skimagexx as xx
+from skimagexx.coverage import parity_tolerance
 
 METRICS=('deltaE_cie76','deltaE_ciede94','deltaE_ciede2000','deltaE_cmc')
 
@@ -75,7 +76,10 @@ def main():
             actual=new(*call,**options)
             assert actual.shape==expected.shape and actual.dtype==expected.dtype
             if backend=='identity': assert actual is call[0]
-            rtol=atol=2e-6 if actual.dtype==np.float32 else 2e-13
+            compute_dtype=actual.dtype
+            if name in METRICS:
+                compute_dtype=np.float32 if call[0].dtype==call[1].dtype==np.float32 else np.float64
+            rtol,atol=parity_tolerance('color.'+name,np.dtype(compute_dtype))
             parity={'parity_contract':'base dtype tolerance','rtol':rtol,'atol':atol}
             if name=='convert_colorspace' and call[1]!='RGB' and call[2]=='HSV':
                 parity.update(check_routed_hsv(call[0],call[1],actual,expected))

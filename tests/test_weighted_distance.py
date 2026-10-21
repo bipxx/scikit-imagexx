@@ -5,6 +5,7 @@ import numpy as np
 import pytest
 from skimage import color as reference
 import skimagexx as xx
+from skimagexx.coverage import parity_tolerance
 
 NAMES=['deltaE_ciede94','deltaE_ciede2000','deltaE_cmc']
 TYPES=[np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64]
@@ -31,8 +32,11 @@ def compare(name,a,b,**kwargs):
         actual=getattr(xx.color,name)(a,b,**kwargs)
     assert type(actual)==type(expected)
     assert actual.shape==expected.shape and actual.dtype==expected.dtype
-    single=actual.dtype==np.float32
-    np.testing.assert_allclose(actual,expected,rtol=2e-6 if single else 2e-13,atol=2e-6 if single else 2e-13)
+    # CMC may return float64 for two float32 scalar colors, while its Lab and
+    # chroma intermediates still have float32 precision.
+    single=np.asarray(a).dtype==np.asarray(b).dtype==np.float32
+    rtol,atol=parity_tolerance('color.'+name,np.dtype(np.float32 if single else np.float64))
+    np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
     if isinstance(actual,np.ndarray):
         assert not np.shares_memory(actual,a) and not np.shares_memory(actual,b)
 
@@ -122,6 +126,28 @@ def test_random_scalar_pairs_and_scalar_broadcast(name,dtype):
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_float32_weight_scalars(name,dtype):
     compare(name,sample(dtype),sample(dtype)[:,::-1],kL=np.float32(2),kC=np.float32(.7))
+
+
+def test_ciede2000_float32_accuracy_against_float64_reference():
+    rng=np.random.default_rng(342)
+    a=(rng.random((67,71,3))*200-100).astype(np.float32)
+    b=(rng.random(a.shape)*200-100).astype(np.float32)
+    for image in (a,b):
+        image[...,0]=np.abs(image[...,0])
+        # Positive a* keeps this accuracy check away from the formula's
+        # discontinuity at a 180-degree hue separation. Other tests exercise it.
+        image[...,1]=np.abs(image[...,1])+10
+    expected=reference.deltaE_ciede2000(a.astype(np.float64),b.astype(np.float64))
+    np.testing.assert_allclose(xx.color.deltaE_ciede2000(a,b),expected,rtol=2e-6,atol=2.5e-4)
+    np.testing.assert_allclose(reference.deltaE_ciede2000(a,b),expected,rtol=2e-6,atol=2.5e-4)
+
+
+def test_cmc_scalar_promotion_retains_double_final_precision():
+    a,b=np.ones(3,dtype=np.float32),np.zeros(3,dtype=np.float32)
+    actual=xx.color.deltaE_cmc(a,b)
+    assert actual.dtype==np.float64
+    assert actual!=np.float64(np.float32(actual))
+    compare('deltaE_cmc',a,b)
 
 
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
