@@ -17,7 +17,11 @@ def inventory():
     entries = []
     for module in MODULES:
         upstream = importlib.import_module('skimage.'+module)
-        for name in sorted(n for n in getattr(upstream, '__all__', dir(upstream)) if not n.startswith('_')):
+        names=set(getattr(upstream, '__all__', dir(upstream)))
+        # Still callable in the pinned release, but removed from its export list.
+        if module=='morphology':
+            names.update(('binary_erosion','binary_dilation','binary_opening','binary_closing'))
+        for name in sorted(n for n in names if not n.startswith('_')):
             value = getattr(upstream, name)
             if not callable(value):
                 continue

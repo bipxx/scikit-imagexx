@@ -7,6 +7,9 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::simd {
 #ifdef SKIMAGEXX_AVX2
+bool morphology_has_nan(const void*, std::size_t, PixelType);
+std::size_t morphology_difference(const void*,const void*,void*,std::size_t,PixelType,bool&,bool&);
+std::size_t morphology_line(const void* const*, std::size_t, void*, std::size_t, PixelType, bool, double, bool);
 std::size_t perceptual_transform(const void*, void*, std::size_t, PixelType, const detail::PerceptualSpec&,
                                 std::ptrdiff_t, std::ptrdiff_t, PerceptualInfo&);
 std::size_t color_transform(const void*, void*, std::size_t, PixelType, const detail::ColorSpec&,

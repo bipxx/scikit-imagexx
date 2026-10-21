@@ -2,6 +2,7 @@
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
 #include "skimagexx/perceptual.hpp"
+#include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -22,6 +23,15 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        const std::uint8_t morph_source[]={4,1,7,2,8};
+        std::uint8_t morph_result[5];
+        const std::vector<MorphologyFootprint> footprint={{{-1,0,1},1,true}};
+        morphology_into(morph_source,morph_result,PixelType::uint8,PixelType::uint8,{5},footprint,MorphologyOp::erosion,MorphologyMode::reflect);
+        require(std::equal(morph_result,morph_result+5,std::vector<std::uint8_t>{1,1,1,2,2}.begin()));
+        morphology_into(morph_source,morph_result,PixelType::uint8,PixelType::uint8,{5},footprint,MorphologyOp::dilation,MorphologyMode::reflect);
+        require(std::equal(morph_result,morph_result+5,std::vector<std::uint8_t>{4,7,7,8,8}.begin()));
+        morphology_into(morph_source,morph_result,PixelType::uint8,PixelType::uint8,{5},footprint,MorphologyOp::binary_erosion,MorphologyMode::ignore);
+        require(std::all_of(morph_result,morph_result+5,[](auto v){return v==1;}));
         const double rgb[] = {1, 0, 0, 0, 1, 0};
         const auto gray = rgb2gray(rgb, 1, 2);
         require(gray[0] == 0.2125 && gray[1] == 0.7154);

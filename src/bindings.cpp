@@ -2,6 +2,7 @@
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
 #include "skimagexx/perceptual.hpp"
+#include "skimagexx/morphology.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -85,6 +86,33 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("morphology", [](py::array image,py::list footprints,int operation,int mode,double cval,py::object out) {
+        const auto in_type=pixel_type(image.dtype());
+        std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());
+        std::vector<std::size_t> sizes(dimensions.begin(),dimensions.end());
+        auto input=py::array::ensure(image,py::array::c_style);
+        if (!input.attr("flags").attr("aligned").cast<bool>()) input=input.attr("copy")().cast<py::array>();
+        py::array target=out.is_none() ? py::array(operation>=6 ? py::dtype::of<bool>() : image.dtype(),dimensions) : out.cast<py::array>();
+        const auto out_type=pixel_type(target.dtype());
+        if (!target.writeable()) throw py::value_error("output array is read-only");
+        if (target.ndim()!=image.ndim() || !std::equal(dimensions.begin(),dimensions.end(),target.shape())) throw py::value_error("output shape mismatch");
+        const bool direct=(target.flags() & py::array::c_style) && target.attr("flags").attr("aligned").cast<bool>();
+        py::array buffer=direct ? target : py::array(target.dtype(),dimensions);
+        std::vector<skimagexx::MorphologyFootprint> plans;
+        for (auto item:footprints) {
+            auto tuple=py::cast<py::tuple>(item);
+            auto offsets=py::array_t<std::int64_t,py::array::c_style|py::array::forcecast>::ensure(tuple[0]);
+            if (!offsets || offsets.ndim()!=2 || offsets.shape(1)!=image.ndim()) throw py::value_error("footprint rank mismatch");
+            skimagexx::MorphologyFootprint fp;
+            fp.offsets.assign(offsets.data(),offsets.data()+offsets.size());
+            fp.iterations=tuple[1].cast<std::int64_t>(); fp.scipy_separable=tuple[2].cast<bool>(); plans.push_back(std::move(fp));
+        }
+        skimagexx::MorphologyInfo info;
+        { py::gil_scoped_release release; info=skimagexx::morphology_into(input.data(),buffer.mutable_data(),in_type,out_type,sizes,plans,
+            static_cast<skimagexx::MorphologyOp>(operation),static_cast<skimagexx::MorphologyMode>(mode),cval); }
+        if (!info.unsupported_nan && !direct) target.attr("__setitem__")(py::ellipsis(),buffer);
+        return py::make_tuple(target,info.unsupported_nan,info.invalid_subtract,info.overflow_subtract);
+    });
     m.def("perceptual_transform", [](py::array image, int operation, std::array<double,3> white) {
         if (!image.ndim()) throw py::value_error("expected a color array");
         const auto nch = image.shape(image.ndim()-1);

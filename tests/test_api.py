@@ -7,9 +7,10 @@ from skimage import filters as reference_filters, color as reference_color, util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance
 from skimage import exposure as reference_exposure
+from skimage import morphology as reference_morphology
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
-           (xx.exposure, reference_exposure)]
+           (xx.exposure, reference_exposure), (xx.morphology,reference_morphology)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__]
 
 
@@ -22,12 +23,12 @@ def test_unported_namespace_interchangeability():
     a = np.zeros((9, 11), dtype=bool)
     a[3:6, 4:7] = True
     with pytest.raises(NotImplementedError):
-        xx.morphology.dilation(a)
+        xx.morphology.remove_small_objects(a)
     xx.set_fallback_enabled(True)
     from skimage import morphology
     with pytest.warns(xx.FallbackWarning):
-        actual = xx.morphology.dilation(a)
-    np.testing.assert_array_equal(actual, morphology.dilation(a))
+        actual = xx.morphology.remove_small_objects(a)
+    np.testing.assert_array_equal(actual, morphology.remove_small_objects(a))
 
 
 @pytest.fixture(autouse=True, params=[1, 4])

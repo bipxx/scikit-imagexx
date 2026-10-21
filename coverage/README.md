@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-446 public callable names inventoried in 17 modules; 51 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+450 public callable names inventoried in 17 modules; 61 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -311,17 +311,21 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.area_closing` | upstream-only | pending | pending |
 | `morphology.area_opening` | upstream-only | pending | pending |
 | `morphology.ball` | upstream-only | pending | pending |
-| `morphology.black_tophat` | upstream-only | pending | pending |
-| `morphology.closing` | upstream-only | pending | pending |
+| `morphology.binary_closing` | native-partial | yes (partial input contract) | yes |
+| `morphology.binary_dilation` | native-partial | yes (partial input contract) | yes |
+| `morphology.binary_erosion` | native-partial | yes (partial input contract) | yes |
+| `morphology.binary_opening` | native-partial | yes (partial input contract) | yes |
+| `morphology.black_tophat` | native-partial | yes (partial input contract) | yes |
+| `morphology.closing` | native-partial | yes (partial input contract) | yes |
 | `morphology.convex_hull_image` | upstream-only | pending | pending |
 | `morphology.convex_hull_object` | upstream-only | pending | pending |
 | `morphology.diameter_closing` | upstream-only | pending | pending |
 | `morphology.diameter_opening` | upstream-only | pending | pending |
 | `morphology.diamond` | upstream-only | pending | pending |
-| `morphology.dilation` | upstream-only | pending | pending |
+| `morphology.dilation` | native-partial | yes (partial input contract) | yes |
 | `morphology.disk` | upstream-only | pending | pending |
 | `morphology.ellipse` | upstream-only | pending | pending |
-| `morphology.erosion` | upstream-only | pending | pending |
+| `morphology.erosion` | native-partial | yes (partial input contract) | yes |
 | `morphology.flood` | upstream-only | pending | pending |
 | `morphology.flood_fill` | upstream-only | pending | pending |
 | `morphology.footprint_from_sequence` | upstream-only | pending | pending |
@@ -341,7 +345,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.mirror_footprint` | upstream-only | pending | pending |
 | `morphology.octagon` | upstream-only | pending | pending |
 | `morphology.octahedron` | upstream-only | pending | pending |
-| `morphology.opening` | upstream-only | pending | pending |
+| `morphology.opening` | native-partial | yes (partial input contract) | yes |
 | `morphology.pad_footprint` | upstream-only | pending | pending |
 | `morphology.reconstruction` | upstream-only | pending | pending |
 | `morphology.remove_objects_by_distance` | upstream-only | pending | pending |
@@ -350,7 +354,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.skeletonize` | upstream-only | pending | pending |
 | `morphology.star` | upstream-only | pending | pending |
 | `morphology.thin` | upstream-only | pending | pending |
-| `morphology.white_tophat` | upstream-only | pending | pending |
+| `morphology.white_tophat` | native-partial | yes (partial input contract) | yes |
 | `registration.optical_flow_ilk` | upstream-only | pending | pending |
 | `registration.optical_flow_tvl1` | upstream-only | pending | pending |
 | `registration.phase_cross_correlation` | upstream-only | pending | pending |

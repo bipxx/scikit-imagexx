@@ -1,5 +1,7 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
+                   'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist'),
     'color': ('rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -40,6 +42,9 @@ def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
     if api == 'color.xyz_tristimulus_values':
         return (), {'illuminant':'D65','observer':'2','dtype':image.dtype}
+    if api.startswith('morphology.binary_'):
+        # Avoid timing the trivial all-foreground case for numeric inputs.
+        return ((image > (127 if str(image.dtype)=='uint8' else .5)).astype(image.dtype),), {}
     return (image,), {}
 
 

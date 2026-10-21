@@ -7,6 +7,7 @@ import importlib
 import json
 from pathlib import Path
 import platform
+import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
@@ -24,6 +25,8 @@ def main():
     if min(args.sizes+args.threads+[args.repeat]) < 1:
         parser.error('sizes, threads, and repeat must be positive')
     xx.set_fallback_enabled(False)
+    # Binary morphology deprecation text is tested separately before timing.
+    warnings.filterwarnings('ignore',message=r'`binary_.*` is deprecated since version 0.26',category=FutureWarning)
     apis = [api for api in native_functions() if args.modules is None or api.rsplit('.',1)[0] in args.modules]
     if not apis:
         parser.error('module selection matches no registered entry points')
