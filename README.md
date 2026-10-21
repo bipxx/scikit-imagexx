@@ -587,6 +587,10 @@ AVX2 accelerates raw integer conversion, independent column sums and integer
 prefixes; floating prefixes retain upstream addition order. All stages share the
 global optional worker limit. NumPy handles small dtype metadata and output
 allocation; raw conversion and cumulative image arithmetic run in C++.
+Strided 64-bit single-chain inputs avoid a dense copy, including reversed,
+unaligned and nonnative-endian storage. Normalization and keep-order allocation
+share the native call. The [paired experiment](benchmarks/integral-stride-tuning.md)
+retains all 148 one-thread workloads, rejected variants and an independent repeat.
 
 The native integral-image working range excludes nonfinite and potentially
 overflowing floating arithmetic. Unsupported target precisions and input
