@@ -3,6 +3,60 @@
 #include <immintrin.h>
 
 namespace skimagexx::simd {
+bool boolean_pack(const std::uint8_t* input,std::uint64_t* output,std::size_t n,std::size_t offset) {
+    std::size_t i=0;
+    const auto zero=_mm256_setzero_si256(),ones=_mm256_set1_epi8(1);
+    for (;i+32<=n;i+=32) {
+        const auto value=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i));
+        const auto is_zero=_mm256_cmpeq_epi8(value,zero),is_one=_mm256_cmpeq_epi8(value,ones);
+        if (_mm256_movemask_epi8(_mm256_or_si256(is_zero,is_one))!=-1) return false;
+        const auto bits=std::uint64_t(~std::uint32_t(_mm256_movemask_epi8(is_zero)));
+        const auto position=offset+i,word=position/64,shift=position%64;
+        output[word]|=bits<<shift;
+        if (shift>32) output[word+1]|=bits>>(64-shift);
+    }
+    for (;i<n;++i) {
+        if (input[i]>1) return false;
+        if (input[i]) output[(offset+i)/64]|=std::uint64_t(1)<<((offset+i)%64);
+    }
+    return true;
+}
+std::size_t boolean_unpack(const std::uint64_t* input,std::uint8_t* output,std::size_t n) {
+    const auto indices=_mm256_setr_epi8(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,
+                                      2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3);
+    const auto weights=_mm256_setr_epi8(1,2,4,8,16,32,64,-128,1,2,4,8,16,32,64,-128,
+                                      1,2,4,8,16,32,64,-128,1,2,4,8,16,32,64,-128);
+    const auto zero=_mm256_setzero_si256(),ones=_mm256_set1_epi8(1);
+    std::size_t i=0;
+    for (;i+32<=n;i+=32) {
+        const auto bits=std::uint32_t(input[i/64]>>(i%64));
+        const auto bytes=_mm256_shuffle_epi8(_mm256_set1_epi32(static_cast<int>(bits)),indices);
+        const auto value=_mm256_andnot_si256(_mm256_cmpeq_epi8(_mm256_and_si256(bytes,weights),zero),ones);
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),value);
+    }
+    return i;
+}
+std::size_t boolean_combine(const std::uint64_t* a,const std::uint64_t* b,std::uint64_t* output,std::size_t n,bool erode) {
+    std::size_t i=0;
+    for (;i+4<=n;i+=4) {
+        const auto x=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(a+i)),y=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(b+i));
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),erode ? _mm256_and_si256(x,y) : _mm256_or_si256(x,y));
+    }
+    return i;
+}
+std::size_t boolean_shift_reduce(std::uint64_t* data,std::size_t n,std::size_t shift,bool erode) {
+    const auto words=shift/64,bits=shift%64;
+    const auto right=_mm_cvtsi32_si128(static_cast<int>(bits)),left=_mm_cvtsi32_si128(static_cast<int>(64-bits));
+    std::size_t i=0;
+    for (;i+words+4+(bits ? 1 : 0)<=n;i+=4) {
+        const auto original=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i));
+        auto shifted=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i+words));
+        if (bits) shifted=_mm256_or_si256(_mm256_srl_epi64(shifted,right),
+            _mm256_sll_epi64(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i+words+1)),left));
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(data+i),erode ? _mm256_and_si256(original,shifted) : _mm256_or_si256(original,shifted));
+    }
+    return i;
+}
 namespace {
 template<class T> __m256i integer_extrema(__m256i a,__m256i b,bool erode) {
     if constexpr (sizeof(T)==1 && std::is_unsigned_v<T>) return erode ? _mm256_min_epu8(a,b) : _mm256_max_epu8(a,b);

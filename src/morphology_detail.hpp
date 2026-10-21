@@ -7,6 +7,8 @@
 #include <type_traits>
 
 namespace skimagexx::detail {
+bool boolean_rectangle_into(const std::uint8_t*,std::uint8_t*,std::size_t,std::size_t,
+    const std::vector<std::ptrdiff_t>&,const std::vector<std::ptrdiff_t>&,bool,bool,int);
 // SciPy's generic grayscale buffers are double, including 64-bit integers.
 // Make the observed x86 cast boundaries explicit rather than invoking C++ UB.
 template<class T> T morphology_cast(double v) {

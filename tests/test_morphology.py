@@ -162,3 +162,38 @@ def test_invalid_arguments(name,options):
         with pytest.raises(Exception) as expected: getattr(reference,name)(a,**options)
         with pytest.raises(type(expected.value)) as actual: getattr(xx.morphology,name)(a,**options)
     assert str(actual.value)==str(expected.value)
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('shape',[(19,35),(71,137),(519,521)])
+@pytest.mark.parametrize('fp_shape',[(17,1),(1,17),(31,31),(65,129)])
+@pytest.mark.parametrize('uniform',[False,True])
+def test_packed_boolean_rectangles(name,shape,fp_shape,uniform):
+    a=np.ones(shape,dtype=bool) if uniform else sample('bool',shape)
+    fp=np.ones(fp_shape,dtype=bool)
+    modes=('ignore','min','max') if name.startswith('binary_') else xx.morphology._MODES
+    for mode in modes:
+        compare(name,a,footprint=fp,mode=mode)
+
+
+@pytest.mark.parametrize('name',NAMES[:6])
+@pytest.mark.parametrize('cval',[-2.5,0,.5,1,2,256])
+def test_boolean_storage_and_constants(name,cval):
+    a=np.arange(37*69,dtype=np.uint8).reshape(37,69)%3
+    a=a.view(bool)
+    compare(name,a,footprint=np.ones((31,31)),mode='constant',cval=cval)
+    canonical=(a.view(np.uint8)!=0)
+    compare(name,canonical,footprint=np.ones((31,31)),mode='constant',cval=cval)
+
+
+@pytest.mark.parametrize('name',NAMES)
+def test_packed_boolean_inplace_and_strided_out(name):
+    source=sample('bool',(33,67))
+    fp=np.ones((31,31))
+    expected=getattr(reference,name)(source,fp)
+    image=source.copy()
+    assert getattr(xx.morphology,name)(image,fp,out=image) is image
+    np.testing.assert_array_equal(image,expected)
+    out=np.zeros((33,134),dtype=bool)[:,::2]
+    assert getattr(xx.morphology,name)(source,fp,out=out) is out
+    np.testing.assert_array_equal(out,expected)

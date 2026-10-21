@@ -234,6 +234,23 @@ template<class T> void apply_footprint(const T* source,T* output,const std::vect
         } else cval=double(detail::morphology_cast<T>(cval));
     }
     if (!fp.rectangle) { stencil(source,output,shape,fp,erode,mode,cval,type,workers,binary); return; }
+    if constexpr (std::is_same_v<T,std::uint8_t>) {
+        if (type==PixelType::boolean && fp.separable && shape.size()==2 &&
+            fp.low[0]==-fp.high[0] && fp.low[1]==-fp.high[1] &&
+            (fp.high[0]>7 || fp.high[1]>7) &&
+            fp.high[0]<std::ptrdiff_t(shape[0]) && fp.high[1]<std::ptrdiff_t(shape[1]) &&
+            (mode!=Mode::constant || cval==0 || cval==1)) {
+            std::vector<std::ptrdiff_t> rows(shape[0]+std::size_t(2*fp.high[0])),cols(shape[1]+std::size_t(2*fp.high[1]));
+            const auto map=[&](auto& indices,auto length,auto low) {
+                for (std::size_t j=0;j<indices.size();++j) {
+                    std::size_t value;
+                    indices[j]=map_index(std::ptrdiff_t(j),low,length,mode,value) ? std::ptrdiff_t(value) : -1;
+                }
+            };
+            map(rows,shape[0],fp.low[0]); map(cols,shape[1],fp.low[1]);
+            if (detail::boolean_rectangle_into(source,output,shape[0],shape[1],rows,cols,cval!=0,erode,workers)) return;
+        }
+    }
     // Small odd rectangles use SIMD separable stencils; large windows use vHGW.
     if (fp.separable) {
         std::vector<std::size_t> axes;
