@@ -1,3 +1,4 @@
+#include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
@@ -377,6 +378,45 @@ PYBIND11_MODULE(_core, m) {
         if (image.dtype().is(py::dtype::of<double>())) return execute<double,true,true>(image,fn);
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"),py::arg("name"),py::arg("parameter"),py::arg("gain"),py::arg("inverse")=false);
+    m.def("histogram_edges", [](py::array image,py::array edges) -> py::array {
+        auto run=[&](auto dummy) -> py::array {
+            using T=decltype(dummy);
+            auto input=py::array_t<T,py::array::c_style>::ensure(image);
+            if(reinterpret_cast<std::uintptr_t>(input.data())%alignof(T))
+                input=py::array_t<T,py::array::c_style>::ensure(input.attr("copy")());
+            auto e=py::array_t<T,py::array::c_style|py::array::forcecast>::ensure(edges);
+            if(reinterpret_cast<std::uintptr_t>(e.data())%alignof(T))e=decltype(e)::ensure(e.attr("copy")());
+            if(e.ndim()!=1 || e.size()<2)throw py::value_error("at least two edges required");
+            std::vector<std::uint64_t> counts;
+            {py::gil_scoped_release release;counts=skimagexx::histogram_edges(input.data(),std::size_t(input.size()),e.data(),std::size_t(e.size()-1));}
+            py::array_t<std::int64_t> output(py::ssize_t(counts.size()));
+            std::copy(counts.begin(),counts.end(),output.mutable_data());return output;
+        };
+        if(image.dtype().is(py::dtype::of<float>()))return run(float{});
+        if(image.dtype().is(py::dtype::of<double>()))return run(double{});
+        throw py::type_error("floating image required");
+    });
+    m.def("threshold_logarithms", [](py::array_t<float,py::array::c_style|py::array::forcecast> values,bool numpy_log) {
+        py::array_t<float> output(values.size());
+        for(py::ssize_t i=0;i<values.size();++i)output.mutable_data()[i]=skimagexx::threshold_log(values.data()[i],numpy_log);
+        return output;
+    });
+    m.def("threshold_indices", [](py::array_t<double,py::array::c_style|py::array::forcecast> counts,
+            py::array_t<double,py::array::c_style|py::array::forcecast> centers,
+            const std::string& method,bool float_centers,bool numpy_log,double bin_width) {
+        if(reinterpret_cast<std::uintptr_t>(counts.data())%alignof(double))counts=decltype(counts)::ensure(counts.attr("copy")());
+        if(reinterpret_cast<std::uintptr_t>(centers.data())%alignof(double))centers=decltype(centers)::ensure(centers.attr("copy")());
+        if(counts.ndim()!=1 || centers.ndim()!=1 || counts.size()!=centers.size())throw py::value_error("matching one-dimensional histogram required");
+        skimagexx::HistogramThreshold kind;
+        if(method=="yen")kind=skimagexx::HistogramThreshold::yen;
+        else if(method=="triangle")kind=skimagexx::HistogramThreshold::triangle;
+        else if(method=="isodata")kind=skimagexx::HistogramThreshold::isodata;
+        else throw py::value_error("unknown threshold method");
+        std::vector<std::size_t> indices;unsigned warnings=0;
+        {py::gil_scoped_release release;indices=skimagexx::threshold_indices(counts.data(),centers.data(),std::size_t(counts.size()),kind,float_centers,&warnings,numpy_log,bin_width);}
+        py::array_t<py::ssize_t> result(py::ssize_t(indices.size()));
+        std::copy(indices.begin(),indices.end(),result.mutable_data());return py::make_tuple(result,warnings);
+    });
     m.def("threshold_otsu_result", [](py::array image) {
         shape(image,false);
         if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");

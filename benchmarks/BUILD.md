@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 74 native image functions, two metadata
-helpers, and 880 per-function performance cases. The suite now has 16919 checks in both SIMD
+The current function benchmark covers 77 native image functions, two metadata
+helpers, and 916 per-function performance cases. The suite now has 17873 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -94,3 +94,12 @@ CIE76 nonuniform layouts now pass row offsets to C++ and avoid full image copies
 `distance-layout-tuning.json` records the historical fixed one-worker experiment
 from `83402fc` to `f3b3ff9`: native median latency fell from 1.6552 to 0.7387 ms.
 Its two 123-case snapshots are excluded from the current-source aggregate.
+
+`threshold-parameters.json` adds 152 comparisons for Yen, Triangle and ISODATA,
+including four layouts, two non-default floating bin counts, constant inputs,
+ISODATA all-threshold output and supplied histograms. Histogram counts and selected
+thresholds require exact reference parity; warning text/order and output dtype
+are checked before timing. The C++ float32 log approximation preserves NumPy's
+near-tie behavior without requiring a hardware FMA instruction. Pixel scans and
+floating bin assignment use the SIMD/runtime-worker paths; selectors operate on
+small histogram buffers.

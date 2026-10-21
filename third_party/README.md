@@ -8,3 +8,13 @@ C++ installations.
 The CIEDE2000 numerical fixture in `tests/data/ciede2000-sharma.txt` comes from
 [Gaurav Sharma's supplementary test data](https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt)
 for Sharma, Wu and Dalal's implementation notes, DOI 10.1002/col.20070.
+
+The float32 logarithm in `src/threshold.cpp` follows the range reduction,
+rational coefficients and fused evaluation used in NumPy's
+[`loops_exponent_log.dispatch.c.src`](https://github.com/numpy/numpy/blob/v2.4.0/numpy/_core/src/umath/loops_exponent_log.dispatch.c.src)
+and [`npy_simd_data.h`](https://github.com/numpy/numpy/blob/v2.4.0/numpy/_core/src/umath/npy_simd_data.h).
+The included `numpy-LICENSE.txt` preserves NumPy's BSD notice. This rounding is
+observable in Yen's first-maximum threshold selection. The standalone C++ path
+uses scalar `std::fma` without requiring a hardware FMA instruction; Python uses
+fixed metadata probes to select this approximation or platform libm according
+to the installed NumPy provider. Unrecognized providers require explicit fallback.

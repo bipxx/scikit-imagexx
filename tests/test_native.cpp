@@ -1,3 +1,4 @@
+#include "skimagexx/threshold.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
@@ -25,6 +26,18 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        const double hist_counts[]={1,2,3,4,3,2,1};
+        const double hist_centers[]={0,1,2,3,4,5,6};
+        require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::yen)[0]==2);
+        require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::isodata)==std::vector<std::size_t>({2,3}));
+        require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::triangle)[0]==2);
+        const float histogram_input[]={0,.25f,.5f,.75f,1};
+        const float histogram_bins[]={0,.5f,1};
+        require(histogram_edges(histogram_input,5,histogram_bins,2)==std::vector<std::uint64_t>({2,3}));
+        require(histogram_edges(static_cast<const float*>(nullptr),0,histogram_bins,2)==std::vector<std::uint64_t>({0,0}));
+        bool invalid_histogram=false;
+        try {histogram_edges(histogram_input,5,histogram_bins,0);}catch(const std::invalid_argument&) {invalid_histogram=true;}
+        require(invalid_histogram);
         const double identity_stain[]={1,0,0,0,1,0,0,0,1};
         const std::uint8_t white_stain[]={255,255,255};
         double separated[3],combined[3];

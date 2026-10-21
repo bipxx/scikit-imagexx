@@ -13,7 +13,8 @@ def main():
                ('Perceptual color parameters','perceptual-parameters'),
                ('Morphology footprints and output reuse','morphology-parameters'),
                ('Stain matrices and output widths','stain-parameters'),
-               ('Lab distances and color routes','color-distance')]
+               ('Lab distances and color routes','color-distance'),
+               ('Histogram threshold parameters','threshold-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)
@@ -96,11 +97,12 @@ def main():
               'functions and parameter variants. Identity returns, copies and dtype metadata are '
               'excluded from this count and labeled separately in the full reports.','',
               f'{len(slower)} one-worker processing workloads remained slower:','',
-              '| Operation | Input | Size | Layout | Reference / C++ |',
+              '| Operation | Input | Shape | Layout | Reference / C++ |',
               '|---|---|---:|---|---:|']
     for r in slower:
         dtype = r.get('dtype',r.get('input_dtype',''))
-        lines.append(f'| {r["api"]} | {dtype} | {r["size"]}² | {r.get("layout","standard")} | {r["speedup"]:.4f}x |')
+        shape="×".join(map(str,r["shape"])) if "shape" in r else f'{r["size"]}²'
+        lines.append(f'| {r["api"]} | {dtype} | {shape or "scalar"} | {r.get("layout","standard")} | {r["speedup"]:.4f}x |')
     lines += ['',
               'The color port fuses integer normalization, matrix arithmetic and sRGB transfer. '
               'Uniform floating layouts now avoid a full contiguous copy: planar input uses '
@@ -143,6 +145,13 @@ def main():
               'historical before/after snapshots separately from these current-source totals.','',
               'The [fixed nonuniform-layout experiment](distance-layout-tuning.md) records '
               'the separate one-worker copy-removal comparison, including all raw samples.','',
+              'Yen, Triangle and ISODATA use native histograms and selectors. Floating bin '
+              'edges and centers are small NumPy metadata arrays, while image scans, bin '
+              'assignment, accumulation and threshold selection run in C++. AVX2 computes '
+              'floating bin indices; exact edge corrections preserve histogram parity. '
+              'Yen retains the installed NumPy float32 log rounding because near ties can '
+              'change the selected bin. Supplied-histogram cases measure selection without '
+              'an image scan; degenerate warning and error contracts are parity-tested.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -151,7 +160,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all eight reports, including this summary. '
+              'to rebuild and reproduce all nine reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

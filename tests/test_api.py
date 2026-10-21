@@ -59,8 +59,13 @@ def test_every_native_function(native, original, name, dtype, shape):
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    try:
+        expected = getattr(original, name)(*args,**options)
+    except (IndexError,ValueError) as error:
+        with pytest.raises(type(error)):
+            getattr(native, name)(*args,**options)
+        return
     actual = getattr(native, name)(*args,**options)
-    expected = getattr(original, name)(*args,**options)
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
     rtol,atol = parity_tolerance(api,np.dtype(dtype))
     np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)

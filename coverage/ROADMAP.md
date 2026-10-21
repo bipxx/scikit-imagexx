@@ -25,7 +25,7 @@ For every native entry:
 5. Update the registry, inventory, documented native input contract, and CI.
 
 Current native coverage: RGB/gray conversion; Gaussian; Sobel, Prewitt, and
-Scharr with directional variants; uint8 Otsu; mean thresholding; inversion;
+Scharr with directional variants; uint8 Otsu; mean, Yen, Triangle and ISODATA thresholding; inversion;
 gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
 histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDbDr,
 CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB, Lab/LCh and Luv/XYZ/sRGB conversions;
@@ -33,8 +33,8 @@ six grayscale and four binary morphology functions.
 Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
 CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting and extra channels;
 color-space routing composes the native kernels for all nine upstream spaces.
-There are 74 partial native image entries, two metadata helpers,
-and 374 pending entries in the current
+There are 77 partial native image entries, two metadata helpers,
+and 371 pending entries in the current
 450-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
@@ -45,6 +45,8 @@ Next work:
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Broaden distance parameter-array, strong-scalar and float16 contracts;
   extend direct nonuniform-row processing to the weighted distance kernels.
+- Broaden histogram thresholds to remaining integer widths, float16 and extreme
+  arithmetic-warning modes; share the floating histogram kernel with exposure.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.
 - Broaden morphology NaN/output-dtype parity and optimize remaining memory-bound
