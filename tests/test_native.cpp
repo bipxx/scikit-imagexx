@@ -72,6 +72,17 @@ int main() {
                 for(std::size_t i=0;i<length;++i) {sum+=input[i];require(inplace[i]==sum);}
             }
             integral_line_u64_into(nullptr,nullptr,0,0);
+            unsigned char packed[72];
+            for(unsigned i=0;i<72;++i)packed[i]=static_cast<unsigned char>(i*71);
+            for(int direction:{1,-1}) {
+                const auto* first=packed+(direction>0 ? 0 : 64);
+                integral_line_u64_into(first,output.data(),65,direction);
+                std::uint64_t sum=0;
+                for(std::size_t i=0;i<65;++i) {
+                    std::uint64_t word;std::memcpy(&word,first+std::ptrdiff_t(i)*direction,8);
+                    sum+=word;require(output[i]==sum);
+                }
+            }
             bool rejected=false;
             try {integral_line_u64_into(nullptr,output.data(),1,8);}catch(const std::invalid_argument&){rejected=true;}
             require(rejected);rejected=false;

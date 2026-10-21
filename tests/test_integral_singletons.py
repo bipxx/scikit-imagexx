@@ -52,3 +52,15 @@ def test_empty_singleton_and_tagged_output(dtype,shape):
     image=sample(dtype,shape)
     for target in (np.dtype(np.int64,metadata={'sum':'raw'}),np.dtype(np.uint64,metadata={'sum':'modular'}),np.dtype('>i8'),np.dtype('>u8')):
         check(image,dtype=target)
+
+
+@pytest.mark.parametrize('dtype',[np.int64,np.uint64])
+@pytest.mark.parametrize('stride',[1,7,-1,-7])
+@pytest.mark.parametrize('length',[4,17,513])
+def test_overlapping_unaligned_byte_strides(dtype,stride,length):
+    raw=np.random.default_rng(991).integers(0,256,(length-1)*abs(stride)+8,dtype=np.uint8)
+    offset=(length-1)*abs(stride) if stride<0 else 0
+    image=np.ndarray((length,),dtype=dtype,buffer=raw,offset=offset,strides=(stride,)).reshape(length,1)
+    snapshot=raw.copy()
+    for target in (None,np.int64,np.uint64):check(image,dtype=target)
+    np.testing.assert_array_equal(raw,snapshot)
