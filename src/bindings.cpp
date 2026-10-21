@@ -1,3 +1,4 @@
+#include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
 #include <cstring>
 #include "skimagexx/local_threshold.hpp"
@@ -504,6 +505,54 @@ PYBIND11_MODULE(_core, m) {
         const skimagexx::LocalThresholdParameters parameters{k,r,divide_double,r_double,k_double};
         {py::gil_scoped_release release;skimagexx::local_threshold_into(input.data(),result.mutable_data(),type,dimensions,window,operation,parameters);}
         return result;
+    });
+    m.def("edge_native", [](py::array image) {
+        const auto bytes=std::size_t(image.itemsize());
+        if(image.dtype().attr("isnative").cast<bool>() || image.dtype().attr("hasobject").cast<bool>() || (bytes!=2 && bytes!=4 && bytes!=8) || std::string("iuf").find(image.dtype().kind())==std::string::npos)throw py::type_error("nonnative real multibyte storage required");
+        auto input=py::array::ensure(image,py::array::c_style);
+        py::dtype dtype=py::dtype::from_args(image.dtype().attr("type"));
+        py::array output(dtype,std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
+        {py::gil_scoped_release release;skimagexx::edge_swap_into(input.data(),output.mutable_data(),std::size_t(input.size()),bytes);}
+        return output;
+    });
+    m.def("edge_half", [](py::array image) {
+        if(image.dtype().kind()!='f' || image.itemsize()!=2 || !image.dtype().attr("isnative").cast<bool>())throw py::type_error("native binary16 input required");
+        auto input=py::array::ensure(image,py::array::c_style);
+        if(reinterpret_cast<std::uintptr_t>(input.data())%2)input=input.attr("copy")().cast<py::array>();
+        py::array_t<float> output(std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
+        {py::gil_scoped_release release;skimagexx::edge_half_to_float(static_cast<const std::uint16_t*>(input.data()),output.mutable_data(),std::size_t(input.size()));}
+        return output;
+    });
+    m.def("laplace_nd", [](py::array image) -> py::array {
+        if(image.ndim()<1)throw py::value_error("at least one image dimension required");
+        const std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());
+        const std::vector<std::size_t> shape_values(dimensions.begin(),dimensions.end());
+        auto run=[&](auto dummy) -> py::array {
+            using T=decltype(dummy);using F=std::conditional_t<std::is_same_v<T,std::uint8_t>,double,T>;
+            auto input=py::array_t<T,py::array::c_style>::ensure(image);
+            if(reinterpret_cast<std::uintptr_t>(input.data())%alignof(T))input=input.attr("copy")().template cast<decltype(input)>();
+            py::array_t<F> output(dimensions);
+            {py::gil_scoped_release release;skimagexx::laplace_nd_into(input.data(),output.mutable_data(),shape_values);}
+            return output;
+        };
+        if(image.dtype().is(py::dtype::of<float>()))return run(float{});
+        if(image.dtype().is(py::dtype::of<double>()))return run(double{});
+        if(image.dtype().is(py::dtype::of<std::uint8_t>()))return run(std::uint8_t{});
+        throw py::type_error("prepared real image required");
+    });
+    m.def("edge_apply_mask", [](py::array image,py::array mask) {
+        const bool single=image.dtype().is(py::dtype::of<float>());
+        if((!single && !image.dtype().is(py::dtype::of<double>())) || !(image.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>() || !image.writeable())throw py::type_error("contiguous writable floating output required");
+        if(!mask.dtype().is(py::dtype::of<bool>()) || mask.ndim()!=image.ndim())throw py::type_error("broadcast boolean mask required");
+        for(py::ssize_t axis=0;axis<image.ndim();++axis)if(image.shape(axis)!=mask.shape(axis))throw py::value_error("mask shape mismatch");
+        const auto layout=raw_rows(image,&mask,int(image.ndim()));
+        {py::gil_scoped_release release;skimagexx::edge_mask_rows_into(image.mutable_data(),single,static_cast<const unsigned char*>(mask.data()),layout.rows,layout.columns,layout.alpha.data(),layout.alpha_step);}
+    });
+    m.def("small_edge", [](py::array image,int operation) {
+        shape(image,false);
+        return dispatch(image,[=](const auto* input,auto* output,auto h,auto w) {
+            skimagexx::small_edge_into(input,output,h,w,static_cast<skimagexx::SmallEdge>(operation));
+        });
     });
     m.def("alpha_array_flags", [](py::array a) {return alpha_array_flags(a);});
     m.def("gray_expand", [](py::array image,py::object alpha_object,int channels,py::dtype target,std::size_t swap_component) -> py::array {

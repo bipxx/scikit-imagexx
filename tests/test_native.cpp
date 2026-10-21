@@ -1,3 +1,4 @@
+#include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
@@ -69,6 +70,56 @@ int main() {
         rgba2rgb_rows_into(rgba_pixels+16,rgb_reversed,1,5,PixelType::uint8,alpha_background,alpha_offsets,-4,1);
         for(std::size_t j=0;j<5;++j)for(std::size_t c=0;c<3;++c)require(rgb_reversed[3*j+c]==rgb_composed[3*(4-j)+c]);
         gray_expand_rows_into(nullptr,nullptr,nullptr,0,1,4,3,nullptr,nullptr,4,0);
+        std::uint8_t impulse[3*19]={};impulse[19+9]=255;
+        double small_edge_output[3*19];
+        small_edge_into(impulse,small_edge_output,3,19,SmallEdge::laplace);
+        for(std::size_t j=0;j<3*19;++j) {
+            const double expected=j==28 ? 4. : (j==9 || j==27 || j==29 || j==47) ? -1. : 0.;
+            require(small_edge_output[j]==expected);
+        }
+        small_edge_into(impulse,small_edge_output,3,19,SmallEdge::roberts_positive);
+        require(small_edge_output[8]==1 && small_edge_output[28]==-1);
+        small_edge_into(impulse,small_edge_output,3,19,SmallEdge::roberts_negative);
+        require(small_edge_output[9]==1 && small_edge_output[27]==-1);
+        small_edge_into(impulse,small_edge_output,3,19,SmallEdge::roberts);
+        for(std::size_t j=0;j<3*19;++j) {
+            const double expected=(j==8 || j==9 || j==27 || j==28) ? 1/std::sqrt(2.) : 0.;
+            require(small_edge_output[j]==expected);
+        }
+        const float singleton_edge[]={.7f};float singleton_result[1];
+        small_edge_into(singleton_edge,singleton_result,1,1,SmallEdge::roberts);
+        require(singleton_result[0]==0);
+        float line[17],line_laplace[17];for(int j=0;j<17;++j)line[j]=float(j);
+        for(const auto& dimensions:std::vector<std::vector<std::size_t>>{{17},{17,1,1},{1,17,1}}) {
+            laplace_nd_into(line,line_laplace,dimensions);
+            require(line_laplace[0]==-1 && line_laplace[16]==1);
+            for(int j=1;j<16;++j)require(line_laplace[j]==0);
+        }
+        const std::uint16_t halves[]={0,0x8000,1,0x03ff,0x0400,0x3c00,0x7bff,0xfbff,0x7c00,0xfc00,0x7e00};
+        float decoded[11];edge_half_to_float(halves,decoded,11);
+        require(decoded[0]==0 && std::signbit(decoded[1]));
+        require(decoded[2]==std::ldexp(1.f,-24) && decoded[3]==1023*std::ldexp(1.f,-24));
+        require(decoded[4]==std::ldexp(1.f,-14) && decoded[5]==1 && decoded[6]==65504 && decoded[7]==-65504);
+        require(std::isinf(decoded[8]) && decoded[8]>0 && std::isinf(decoded[9]) && decoded[9]<0 && std::isnan(decoded[10]));
+        const unsigned char mask_bytes[]={1,0,1,0,1,0,1,0};const std::ptrdiff_t mask_offsets[]={0};
+        float masked32[]={1,-1,2,-2,3,-3,4,-4};double masked64[]={1,-1,2,-2,3,-3,4,-4};
+        edge_mask_rows_into(masked32,true,mask_bytes,1,8,mask_offsets,1);
+        edge_mask_rows_into(masked64,false,mask_bytes,1,8,mask_offsets,1);
+        for(int j=0;j<8;++j) {
+            require(masked32[j]==(j%2 ? 0 : j/2+1) && masked64[j]==masked32[j]);
+            if(j%2)require(std::signbit(masked32[j]) && std::signbit(masked64[j]));
+        }
+        std::uint16_t impulse16[3*19]={};impulse16[28]=65535;
+        small_edge_numeric_into(impulse16,small_edge_output,{3,19},PixelType::uint16,SmallEdge::laplace);
+        require(small_edge_output[28]==4 && small_edge_output[9]==-1 && small_edge_output[27]==-1);
+        impulse16[28]=0x3c00;float half_edges[3*19];
+        small_edge_half_into(impulse16,half_edges,{3,19},SmallEdge::laplace);
+        require(half_edges[28]==4 && half_edges[9]==-1 && half_edges[27]==-1);
+        const std::uint16_t source_swap[]={0x1234,0xabcd};std::uint16_t target_swap[2];
+        edge_swap_into(source_swap,target_swap,2,2);
+        require(target_swap[0]==0x3412 && target_swap[1]==0xcdab);
+        edge_swap_into(nullptr,nullptr,0,2);edge_half_to_float(nullptr,nullptr,0);
+        laplace_nd_into(static_cast<const float*>(nullptr),static_cast<float*>(nullptr),{0,17});
         const double hist_counts[]={1,2,3,4,3,2,1};
         const double hist_centers[]={0,1,2,3,4,5,6};
         require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::yen)[0]==2);

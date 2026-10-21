@@ -5,7 +5,8 @@ from . import filters, color, util
 from .filters import (gaussian, sobel, sobel_h, sobel_v, prewitt, prewitt_h, prewitt_v,
                       scharr, scharr_h, scharr_v, threshold_otsu, threshold_mean,
                       threshold_yen, threshold_triangle, threshold_isodata,
-                      threshold_niblack, threshold_sauvola)
+                      threshold_niblack, threshold_sauvola,
+                      laplace, roberts, roberts_pos_diag, roberts_neg_diag)
 from .color import (rgba2rgb, gray2rgba, rgb2gray, gray2rgb, rgb2yuv, yuv2rgb, rgb2yiq, yiq2rgb,
                     rgb2ypbpr, ypbpr2rgb, rgb2ycbcr, ycbcr2rgb, rgb2ydbdr,
                     ydbdr2rgb, rgb2rgbcie, rgbcie2rgb, rgb2xyz, xyz2rgb)

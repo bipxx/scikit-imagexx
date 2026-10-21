@@ -284,3 +284,70 @@ def threshold_sauvola(image,window_size=15,k=0.2,r=None):
 
 
 __all__ += ['threshold_niblack','threshold_sauvola']
+
+
+_SMALL_EDGES = {'laplace':0,'roberts':1,'roberts_pos_diag':2,'roberts_neg_diag':3}
+_SMALL_EDGE_DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
+                                                'int32','uint64','int64','float16','float32','float64'))
+_SMALL_EDGE_TYPES = {dtype.type for dtype in _SMALL_EDGE_DTYPES}
+
+
+@_lru_cache(maxsize=64)
+def _edge_mask_plans(ndim):
+    if ndim<=3:
+        coordinates=np.indices((3,)*ndim,dtype=np.int64).reshape(ndim,-1).T.copy()-1
+        return [(coordinates,1,True)]
+    plans=[]
+    for axis in range(ndim):
+        coordinates=np.zeros((3,ndim),dtype=np.int64);coordinates[:,axis]=(-1,0,1)
+        plans.append((coordinates,1,True))
+    return plans
+
+
+def _small_edge(name,image,mask,options):
+    def forwarded():return fallback('filters',name,image,mask=mask,**options)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _SMALL_EDGE_TYPES or image.ndim<1:return forwarded()
+    if name!='laplace' and (image.ndim!=2 or not image.size):return forwarded()
+    if name=='laplace' and (not isinstance(options['ksize'],(int,np.integer)) or options['ksize']<3):return forwarded()
+    if mask is not None and (type(mask) not in (np.ndarray,np.memmap) or mask.dtype.type not in _SMALL_EDGE_TYPES):return forwarded()
+    if name!='laplace' and image.dtype.type in (np.float32,np.float64) and np.geterr()['under']!='ignore':return forwarded()
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:prepared=_core.edge_half(native)
+    elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
+    else:prepared=_core.convert(native,np.dtype(np.float64))[0]
+    if image.dtype.kind=='f' and prepared.size:
+        low,high=_core.intensity_bounds(prepared)
+        if not (np.isfinite(low) and np.isfinite(high)):return forwarded()
+        if max(abs(low),abs(high))>np.sqrt(np.finfo(prepared.dtype).max)/16:return forwarded()
+    if name=='laplace' and (prepared.ndim!=2 or not prepared.size):result=_core.laplace_nd(prepared)
+    else:result=_core.small_edge(prepared,_SMALL_EDGES[name])
+    if mask is not None:
+        if mask.dtype.type==np.float16 and mask.size:raise RuntimeError('data type not supported')
+        if mask.ndim==0:eroded=np.asarray(bool(mask),dtype=bool)
+        else:
+            native_mask=mask if mask.dtype.isnative else _core.edge_native(mask)
+            prepared_mask=_core.edge_half(native_mask) if native_mask.dtype==np.float16 else native_mask
+            eroded=_core.morphology(prepared_mask,_edge_mask_plans(mask.ndim),6,6,0.,None)[0]
+        try:broadcast=np.broadcast_to(eroded,result.shape)
+        except ValueError:return forwarded()
+        _core.edge_apply_mask(result,broadcast)
+    return result
+
+
+def laplace(image,ksize=3,mask=None):
+    return _small_edge('laplace',image,mask,{'ksize':ksize})
+
+
+def roberts(image,mask=None):
+    return _small_edge('roberts',image,mask,{})
+
+
+def roberts_pos_diag(image,mask=None):
+    return _small_edge('roberts_pos_diag',image,mask,{})
+
+
+def roberts_neg_diag(image,mask=None):
+    return _small_edge('roberts_neg_diag',image,mask,{})
+
+
+__all__ += list(_SMALL_EDGES)

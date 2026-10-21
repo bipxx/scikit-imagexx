@@ -1870,11 +1870,15 @@
       "api": "filters.laplace",
       "kind": "callable",
       "signature": "(image, ksize=3, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.median",
@@ -1952,31 +1956,43 @@
       "api": "filters.roberts",
       "kind": "callable",
       "signature": "(image, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.roberts_neg_diag",
       "kind": "callable",
       "signature": "(image, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.roberts_pos_diag",
       "kind": "callable",
       "signature": "(image, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.sato",

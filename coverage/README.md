@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-450 public callable names inventoried in 17 modules; 81 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+450 public callable names inventoried in 17 modules; 85 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -174,16 +174,16 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.gabor_kernel` | upstream-only | pending | pending |
 | `filters.gaussian` | native-partial | yes (partial input contract) | yes |
 | `filters.hessian` | upstream-only | pending | pending |
-| `filters.laplace` | upstream-only | pending | pending |
+| `filters.laplace` | native-partial | yes (partial input contract) | yes |
 | `filters.median` | upstream-only | pending | pending |
 | `filters.meijering` | upstream-only | pending | pending |
 | `filters.prewitt` | native-partial | yes (partial input contract) | yes |
 | `filters.prewitt_h` | native-partial | yes (partial input contract) | yes |
 | `filters.prewitt_v` | native-partial | yes (partial input contract) | yes |
 | `filters.rank_order` | upstream-only | pending | pending |
-| `filters.roberts` | upstream-only | pending | pending |
-| `filters.roberts_neg_diag` | upstream-only | pending | pending |
-| `filters.roberts_pos_diag` | upstream-only | pending | pending |
+| `filters.roberts` | native-partial | yes (partial input contract) | yes |
+| `filters.roberts_neg_diag` | native-partial | yes (partial input contract) | yes |
+| `filters.roberts_pos_diag` | native-partial | yes (partial input contract) | yes |
 | `filters.sato` | upstream-only | pending | pending |
 | `filters.scharr` | native-partial | yes (partial input contract) | yes |
 | `filters.scharr_h` | native-partial | yes (partial input contract) | yes |

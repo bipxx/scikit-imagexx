@@ -9,6 +9,16 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t laplace_nd(const float* const*,const float* const*,const float*,float*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);
+std::size_t laplace_nd(const double* const*,const double* const*,const double*,double*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);
+std::size_t laplace_nd(const std::uint8_t* const*,const std::uint8_t* const*,const std::uint8_t*,double*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);
+std::size_t edge_mask(float*,const unsigned char*,std::size_t,std::ptrdiff_t);
+std::size_t edge_mask(double*,const unsigned char*,std::size_t,std::ptrdiff_t);
+std::size_t edge_half(const std::uint16_t*,float*,std::size_t);
+std::size_t edge_swap(const unsigned char*,unsigned char*,std::size_t,std::size_t);
+std::size_t small_edge(const float*,const float*,const float*,float*,std::size_t,std::size_t,std::size_t,int);
+std::size_t small_edge(const double*,const double*,const double*,double*,std::size_t,std::size_t,std::size_t,int);
+std::size_t small_edge(const std::uint8_t*,const std::uint8_t*,const std::uint8_t*,double*,std::size_t,std::size_t,std::size_t,int);
 #ifdef SKIMAGEXX_AVX2
 std::size_t gray_expand(const unsigned char*,const unsigned char*,unsigned char*,std::size_t,std::size_t,int,std::ptrdiff_t,std::ptrdiff_t,std::size_t);
 std::size_t rgba_composite(const void*,void*,std::size_t,PixelType,const double*,std::ptrdiff_t,std::ptrdiff_t);
