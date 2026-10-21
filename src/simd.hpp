@@ -9,6 +9,8 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+bool contrast_finite(const void*,std::size_t,bool);
+unsigned char contrast_truth(const unsigned char*,std::size_t);
 // A contiguous span with positive or negative element-size byte stride.
 double downscale_sum(const void*,std::size_t,std::ptrdiff_t,PixelType,bool,bool,double,bool&);
 std::size_t downscale_linear(const void*,void*,std::size_t,PixelType,bool,bool,double,bool&);

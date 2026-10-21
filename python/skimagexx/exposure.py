@@ -12,6 +12,50 @@ def _finite_scalar(value):
     return np.isscalar(value) and np.isreal(value) and np.isfinite(value)
 
 
+_CONTRAST_REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,
+               np.uint64,np.int64,np.float16,np.float32,np.float64}
+
+
+def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
+                    upper_percentile=99,method='linear'):
+    """Compare raw percentile span with the dtype range; method is ignored."""
+    image=np.asanyarray(image)
+    source=image
+    def upstream():
+        return fallback('exposure','is_low_contrast',source,fraction_threshold,
+                        lower_percentile,upper_percentile,method)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _CONTRAST_REAL:
+        return upstream()
+    if image.dtype.type==np.bool_:
+        if not image.size:return not ((image.max()==1) and (image.min()==0))
+        return _core.contrast(image,None)
+    if (any(value in ('call','log','print') for value in np.geterr().values())
+            or np.geterr()['under']!='ignore'):
+        return upstream()
+    if image.ndim==3:
+        from . import color
+        if image.shape[2] in (3,4) and image.dtype.type not in (np.uint8,np.float32,np.float64):
+            return upstream()
+        if image.shape[2]==4:image=color.rgba2rgb(image)
+        if image.shape[2]==3:image=color.rgb2gray(image)
+    from .util import dtype_limits
+    lower_limit,upper_limit=dtype_limits(image,clip_negative=False)
+    # Only the two percentile parameters and their virtual ranks use NumPy.
+    # In particular, preserve NumPy-version-specific scalar precision here.
+    if not all(isinstance(value,(int,float,np.integer,np.floating))
+               for value in (lower_percentile,upper_percentile)):
+        return upstream()
+    quantiles=np.true_divide([lower_percentile,upper_percentile],100)
+    if not all(0<=value<=1 for value in quantiles):
+        raise ValueError('Percentiles must be in the range [0, 100]')
+    if not image.size:
+        np.percentile(image,[lower_percentile,upper_percentile])
+    values=_core.contrast(image,tuple((image.size-1)*quantiles))
+    if values is None:return upstream()
+    span=np.float64(values[1])-np.float64(values[0])
+    return span/(upper_limit-lower_limit)<fraction_threshold
+
+
 def adjust_gamma(image, gamma=1, gain=1):
     if native_array(image) and _finite_scalar(gamma) and _finite_scalar(gain) and gamma >= 0 and gain >= 0:
         return _core.exposure(image, 'gamma', gamma, gain)

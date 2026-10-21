@@ -1,6 +1,7 @@
 #include "skimagexx/integral.hpp"
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
+#include "skimagexx/contrast.hpp"
 #include "../src/execution.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -684,6 +685,56 @@ int main() {
             require(downscale_local_mean_into(view,{1},nullptr,output.data()+1,{2}));
             require(output.front()==0x7777 && output.back()==0x7777);
             for(std::size_t i=0;i<count;++i)require(output[i+1]==(pattern[i%8]==0x8000 ? 0 : pattern[i%8]));
+        }
+    }
+    {
+        const std::uint8_t source[]={0,10,20,30};std::array<double,2> percentiles;
+        ContrastView view{source,PixelType::uint8,false,false,{2,2},{2,1}};
+        require(contrast_percentiles(view,{.75,2.25},percentiles));
+        require(percentiles[0]==7.5 && percentiles[1]==22.5);
+        view.data=source+3;view.strides={-2,-1};
+        require(contrast_percentiles(view,{.75,2.25},percentiles));
+        require(percentiles[0]==7.5 && percentiles[1]==22.5);
+        view.data=source;view.shape={4,3};view.strides={1,0};
+        require(contrast_percentiles(view,{2.5,8.5},percentiles));
+        require(percentiles[0]==5 && percentiles[1]==25);
+    }
+    {
+        const float source[]={1.f,1.00000011920928955078125f};
+        ContrastView view{source,PixelType::float32,false,false,{2},{4}};
+        std::array<double,2> result;
+        require(contrast_percentiles(view,{.25,.75},result));
+        require(result[0]==1.+std::ldexp(1.,-25));
+        require(result[1]==1.+3*std::ldexp(1.,-25));
+        const float exceptional[]={-std::numeric_limits<float>::max(),std::numeric_limits<float>::max()};
+        view.data=exceptional;
+        require(!contrast_percentiles(view,{.25,.75},result));
+    }
+    {
+        for(std::size_t count:{std::size_t(1),std::size_t(31),std::size_t(32),std::size_t(33),std::size_t(65)}) {
+            std::vector<unsigned char> image(count+2,255);
+            ContrastView view{image.data()+1,PixelType::boolean,false,false,{count},{1}};
+            require(contrast_boolean_constant(view));
+            image[count]=0;
+            require(contrast_boolean_constant(view)==(count==1));
+            std::fill(image.begin(),image.end(),0);
+            require(contrast_boolean_constant(view));
+            image[1]=2;
+            require(contrast_boolean_constant(view)==(count==1));
+        }
+    }
+    {
+        const std::uint16_t half[]={0x3c00,0x4000,0x4200,0x4400};
+        std::array<double,2> result;
+        for(bool endian:{false,true}) {
+            std::vector<unsigned char> image(9);
+            for(std::size_t i=0;i<4;++i) {
+                const auto* bytes=reinterpret_cast<const unsigned char*>(half+i);
+                image[1+2*i]=bytes[endian ? 1 : 0];image[2+2*i]=bytes[endian ? 0 : 1];
+            }
+            ContrastView view{image.data()+1,PixelType::uint16,true,endian,{4},{2}};
+            require(contrast_percentiles(view,{.5,2.5},result));
+            require(result[0]==1.5 && result[1]==3.5);
         }
     }
     bool rejected = false;

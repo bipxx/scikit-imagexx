@@ -1,5 +1,6 @@
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
+#include "skimagexx/contrast.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -207,6 +208,25 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 
 PYBIND11_MODULE(_core, m) {
     if(_import_array()<0)throw py::error_already_set();
+    m.def("contrast",[](py::array image,py::object ranks) -> py::object {
+        skimagexx::ContrastView view;view.data=image.data();
+        const auto descriptor=image.dtype();view.half=descriptor.kind()=='f' && descriptor.itemsize()==2;
+        view.swap=!PyArray_ISNOTSWAPPED(reinterpret_cast<PyArrayObject*>(image.ptr()));
+        const auto native_descriptor=view.swap ? py::dtype::from_args(descriptor.attr("type")) : descriptor;
+        view.type=view.half ? skimagexx::PixelType::uint16 : pixel_type(native_descriptor);
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            view.shape.push_back(std::size_t(image.shape(axis)));view.strides.push_back(image.strides(axis));
+        }
+        if(ranks.is_none()) {
+            bool constant;
+            {py::gil_scoped_release release;constant=skimagexx::contrast_boolean_constant(view);}
+            return py::bool_(constant);
+        }
+        const auto positions=ranks.cast<std::array<double,2>>();std::array<double,2> output;
+        bool supported;
+        {py::gil_scoped_release release;supported=skimagexx::contrast_percentiles(view,positions,output);}
+        return supported ? py::cast(output) : py::none();
+    });
     m.def("downscale_local_mean",[](py::array image,py::array result,
         const std::vector<std::size_t>& factors,py::object constant) {
         skimagexx::LocalMeanView view;view.data=image.data();
