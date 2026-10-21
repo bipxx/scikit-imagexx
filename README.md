@@ -41,7 +41,7 @@ On Linux install a compiler with OpenMP; Apple Clang needs an OpenMP runtime
 or a build with `SKIMAGEXX_OPENMP=OFF`.
 
 ```powershell
-git clone https://github.com/lyehe/scikit-imagexx.git
+git clone https://github.com/bipxx/scikit-imagexx.git
 cd scikit-imagexx
 python -m venv .venv
 .\.venv\Scripts\python -m pip install ".[test]"
