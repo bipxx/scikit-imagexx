@@ -488,6 +488,62 @@ namespace {
 template<class T,class Input> void distance_load_other(const void* source,std::ptrdiff_t pixels,std::ptrdiff_t channels,
     typename Vector<T>::R (&values)[3]) {
     using V=Vector<T>;
+    if constexpr(std::is_same_v<T,double> && std::is_integral_v<Input> && sizeof(Input)<=4) {
+        using Storage=std::conditional_t<std::is_same_v<Input,bool>,unsigned char,Input>;
+        const auto* p=static_cast<const Storage*>(source);
+        if constexpr(sizeof(Input)==1) {
+            if(pixels==3 && (channels==1 || channels==-1)) {
+                // Exactly twelve bytes: no overread at a four-pixel tail.
+                const auto* start=p+(channels<0 ? 2*channels : 0);
+                std::uint64_t low; std::uint32_t high;
+                std::memcpy(&low,start,8); std::memcpy(&high,start+8,4);
+                auto packed=_mm_insert_epi32(_mm_cvtsi64_si128(static_cast<long long>(low)),static_cast<int>(high),2);
+                if constexpr(std::is_same_v<Input,bool>)
+                    packed=_mm_andnot_si128(_mm_cmpeq_epi8(packed,_mm_setzero_si128()),_mm_set1_epi8(1));
+                for(int c=0;c<3;++c) {
+                    const int k=channels==1 ? c : 2-c;
+                    const auto bytes=_mm_shuffle_epi8(packed,_mm_setr_epi8(char(k),char(k+3),char(k+6),char(k+9),
+                        -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+                    const auto ints=std::is_signed_v<Input> ? _mm_cvtepi8_epi32(bytes) : _mm_cvtepu8_epi32(bytes);
+                    values[c]=_mm256_cvtepi32_pd(ints);
+                }
+                return;
+            }
+        }
+        for(int c=0;c<3;++c) {
+            const auto* channel=p+c*channels;
+            if(!pixels) { values[c]=V::set(T(std::is_same_v<Input,bool> ? (*channel!=0) : *channel)); continue; }
+            __m128i ints;
+            if(pixels==1 && sizeof(Input)==1) {
+                std::uint32_t word; std::memcpy(&word,channel,4);
+                auto bytes=_mm_cvtsi32_si128(static_cast<int>(word));
+                if constexpr(std::is_same_v<Input,bool>)
+                    bytes=_mm_andnot_si128(_mm_cmpeq_epi8(bytes,_mm_setzero_si128()),_mm_set1_epi8(1));
+                ints=std::is_signed_v<Input> ? _mm_cvtepi8_epi32(bytes) : _mm_cvtepu8_epi32(bytes);
+            } else {
+                const auto lane=[&](int j) { const auto v=channel[std::ptrdiff_t(j)*pixels];
+                    if constexpr(std::is_same_v<Input,bool>) return int(v!=0);
+                    else return static_cast<int>(v); };
+                ints=_mm_setr_epi32(lane(0),lane(1),lane(2),lane(3));
+            }
+            if constexpr(std::is_same_v<Input,std::uint32_t>)
+                values[c]=_mm256_add_pd(_mm256_cvtepi32_pd(_mm_and_si128(ints,_mm_set1_epi32(0x7fffffff))),
+                    _mm256_mul_pd(_mm256_cvtepi32_pd(_mm_srli_epi32(ints,31)),_mm256_set1_pd(2147483648.0)));
+            else values[c]=_mm256_cvtepi32_pd(ints);
+        }
+        return;
+    }
+    if constexpr(std::is_same_v<T,double> && std::is_same_v<Input,float>) {
+        const auto* p=static_cast<const float*>(source);
+        const int s=static_cast<int>(pixels);
+        for(int c=0;c<3;++c) {
+            const auto* channel=p+c*channels;
+            const auto lanes=pixels==0 ? _mm_set1_ps(*channel) : pixels==1 ? _mm_loadu_ps(channel) :
+                _mm_i32gather_ps(channel,_mm_setr_epi32(0,s,2*s,3*s),4);
+            values[c]=_mm256_cvtps_pd(lanes);
+        }
+        return;
+    }
     for(int c=0;c<3;++c) {
         T lanes[V::lanes];
         for(std::size_t j=0;j<V::lanes;++j)
