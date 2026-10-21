@@ -230,3 +230,17 @@ def test_cast_error_callbacks_are_not_repeated_by_probes(dtype,constant,policy):
     actual,actual_events=run(xx.transform.downscale_local_mean,True)
     assert actual_events==events
     np.testing.assert_array_equal(actual,expected)
+
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('length',[8,9,15,16,17,31,32,33,65,127,128,129,257])
+@pytest.mark.parametrize('layout',['C','reversed','endian','unaligned'])
+def test_block_sum_vector_tails_and_partial_padding(dtype,length,layout):
+    image=sample(dtype,(5,length+3))
+    if layout=='reversed':image=image[::-1,::-1]
+    elif layout=='endian':image=image.astype(image.dtype.newbyteorder('>'))
+    elif layout=='unaligned':
+        storage=np.empty(image.nbytes+1,dtype=np.uint8)
+        view=np.ndarray(image.shape,dtype=image.dtype,buffer=storage,offset=1)
+        view[:]=image;image=view
+    check(image,(2,length));check(image,(2,length),cval=1.75)

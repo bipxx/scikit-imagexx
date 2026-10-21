@@ -168,6 +168,19 @@ template<class Input,class Value,bool Boolean=false,bool Half=false> bool run(co
                     const auto row=start[outer]+y;
                     const bool valid_row=row<image.shape[outer];
                     const auto base=valid_row ? std::ptrdiff_t(row)*image.strides[outer] : 0;
+#ifdef SKIMAGEXX_AVX2
+                    if(vectorized && factors[inner]>=8 &&
+                        (image.strides[inner]==std::ptrdiff_t(sizeof(Input)) || image.strides[inner]==-std::ptrdiff_t(sizeof(Input)))) {
+                        if(!valid_row)return Value(fill*Value(factors[inner]));
+                        const auto available=std::min(factors[inner],image.shape[inner]-start[inner]);
+                        bool valid=true;
+                        auto total=Value(simd::downscale_sum(bytes+base+std::ptrdiff_t(start[inner])*image.strides[inner],
+                            available,image.strides[inner],image.type,Half,image.swap,double(bound),valid));
+                        if(!valid)supported[worker]=0;
+                        if(available<factors[inner])total=Value(total+Value(fill*Value(factors[inner]-available)));
+                        return total;
+                    }
+#endif
                     return pairwise<Value>(0,factors[inner],[&](std::size_t x) {
                         const auto column=start[inner]+x;
                         return valid_row && column<image.shape[inner]

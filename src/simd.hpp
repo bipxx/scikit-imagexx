@@ -9,6 +9,8 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+// A contiguous span with positive or negative element-size byte stride.
+double downscale_sum(const void*,std::size_t,std::ptrdiff_t,PixelType,bool,bool,double,bool&);
 std::size_t downscale_row(const void*,void*,std::size_t,std::size_t,std::ptrdiff_t,
     std::size_t,std::size_t,std::size_t,std::size_t,std::size_t,PixelType,bool,double,double,bool&);
 std::size_t integrate_add(const double*,double*,std::size_t);

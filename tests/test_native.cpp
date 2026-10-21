@@ -604,6 +604,36 @@ int main() {
         }
         set_num_threads(1);
     }
+    {
+        for(auto length:{8U,9U,15U,16U,17U,31U,32U,33U,65U,127U,128U,129U,257U}) {
+            const auto width=std::size_t(length)+3;
+            std::vector<float> image(3*width);
+            for(std::size_t i=0;i<image.size();++i)image[i]=float(int(i%17)-8)*.25f;
+            const float fill=2.5f;float output[4];
+            for(bool reversed:{false,true}) {
+                LocalMeanView view{image.data()+(reversed ? image.size()-1 : 0),PixelType::float32,false,false,
+                    {3,width},{std::ptrdiff_t(width*4)*(reversed ? -1 : 1),reversed ? -4 : 4}};
+                require(downscale_local_mean_into(view,{2,length},&fill,output,{8,4}));
+                for(std::size_t y=0;y<2;++y)for(std::size_t x=0;x<2;++x) {
+                    double sum=0;
+                    for(std::size_t dy=0;dy<2;++dy)for(std::size_t dx=0;dx<length;++dx) {
+                        const auto row=2*y+dy,column=std::size_t(length)*x+dx;
+                        if(row<3 && column<width) {
+                            const auto index=row*width+column;
+                            sum+=image[reversed ? image.size()-1-index : index];
+                        } else sum+=fill;
+                    }
+                    require(output[2*y+x]==float(sum/double(2*length)));
+                }
+            }
+            std::vector<unsigned char> raw(image.size()*2+1);
+            for(std::size_t i=0;i<image.size();++i) {raw[1+2*i]=0x3c;raw[2+2*i]=0;}
+            const unsigned char half_fill[]={0x3c,0};std::uint16_t half_output[4];
+            LocalMeanView half{raw.data()+1,PixelType::uint16,true,true,{3,width},{std::ptrdiff_t(width*2),2}};
+            require(downscale_local_mean_into(half,{2,length},half_fill,half_output,{4,2}));
+            for(auto value:half_output)require(value==0x3c00);
+        }
+    }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
