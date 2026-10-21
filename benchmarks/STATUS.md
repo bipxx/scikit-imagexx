@@ -1,6 +1,8 @@
-# Current performance verification
+# Last completed whole-library performance checkpoint
 
-Reference: original scikit-image 0.26.0. 2805 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
+These 17 reports were refreshed at `9b285ad`, before the local-mean port. They cover the 94 reviewed entries at that checkpoint. The new port changes the source fingerprint and requires a fresh aggregate after validation; its experiments are recorded separately.
+
+Reference: original scikit-image 0.26.0. 2805 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the recorded checkpoint source/build SHA-256 (POSIX relative paths and LF line endings):
 `23b011e17f94169a964984643fa8d2f6c59cd34a19aa9fb205a4211709a31539`.
 
 | Report | Cases | Worker counts |

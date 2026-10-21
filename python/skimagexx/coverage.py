@@ -1,6 +1,6 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
-    'transform': ('integral_image','integrate'),
+    'transform': ('integral_image','integrate','downscale_local_mean'),
     'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -45,6 +45,7 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='transform.downscale_local_mean':return (image,2),{}
     if api=='transform.integrate':
         return (image,tuple(n//4 for n in image.shape),tuple(3*n//4 for n in image.shape)), {}
     if api=='filters.difference_of_gaussians':return (image,1.), {}

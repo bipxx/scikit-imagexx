@@ -1,4 +1,4 @@
-"""Native integral images; remaining transforms use explicit fallback."""
+"""Native integral images, window queries and raw local-block means."""
 from ._compat import module_attribute, fallback
 from . import _core
 import numpy as np
@@ -56,7 +56,7 @@ def integral_image(image,*,dtype=None):
     return result
 
 
-__all__=['integral_image','integrate']
+__all__=['integral_image','integrate','downscale_local_mean']
 
 
 

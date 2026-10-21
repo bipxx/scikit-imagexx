@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **92 partially native
+The reference is scikit-image **0.26.0**. There are currently **93 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 361 remain pending native implementation and dedicated parity tests.
+export list; 360 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
@@ -62,6 +62,7 @@ This is not full scikit-image coverage.
 | `binary_erosion`, `binary_dilation`, `binary_opening`, `binary_closing` | Same input dtypes/dimensions; nonzero truth, including NaN; `ignore`/`max`/`min` modes; footprints/sequences, including convergence iterations; any supported numeric output dtype | Exact bool/numeric 0/1 values; original deprecation warnings retained |
 | `transform.integral_image` | N-D real arrays, including empty/strided/endian storage; all 12 real image dtypes; default 64-bit accumulation, explicit int64/uint64 for integer inputs and float64 for all real inputs, explicit float32 for float32 input; scalar identity | Exact ordered cumulative sums, signed/unsigned modular overflow, signed zero, output physical layout and dtype tags; floating exceptional arithmetic uses explicit fallback |
 | `transform.integrate` | N-D real integral tables, including scalars and arbitrary signed/zero strides, memmaps, endian/unaligned storage and float16; integer window coordinates, negative indexing and broadcasting | Exact upstream corner order, raw scalar-to-float64 conversion and signed zero; only queried corners are read; sampled nonfinite values or overflow use explicit fallback; corner count must fit the native index width |
+| `transform.downscale_local_mean` | N-D real arrays, memmaps and NumPy scalars; all 12 real image dtypes; positive integer factors; scalar constant padding; upstream ignores `clip` | Raw-value means, independent output storage, dtype tags and physical layout; integer/bool output float64, half output with float32 accumulation; scale/depth reduction tolerance; exceptional floating ranges and callback policies use explicit fallback |
 
 Histogram thresholds use native image scans and selectors. Floating bin edges and
 centers use small NumPy metadata arrays to preserve version-specific rounding.
@@ -191,9 +192,9 @@ patch `sys.modules`, change already imported scikit-image symbols, or guarantee
 every nested import path is interchangeable. Use the module alias/import change
 shown above. Unknown options retain upstream behavior through fallback.
 
-All 450 inventoried names have availability/signature checks. These checks do
+All 455 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 94 covered wrapper signatures have per-function parity tests. Tests also run
+All 95 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -383,13 +384,16 @@ python benchmarks/morphology.py --size 512 --threads 1 4
 python benchmarks/gaussian.py --size 512 --threads 1 4
 python benchmarks/integral.py --size 512 --threads 1 4
 python benchmarks/integrate.py --size 512 --threads 1 4
+python benchmarks/downscale.py --size 513 --threads 1 4
 python benchmarks/summarize.py
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The published serial function benchmark covers 94 entries in 548 cases.
+performance. The last whole-library checkpoint covers 94 entries in 548 serial
+default cases; the new local-mean port has its own parameter report until the
+aggregate is refreshed.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
@@ -610,3 +614,16 @@ callers with caller-owned output storage. The corner count grows as 2**ndim.
 The [coordinate experiment](benchmarks/integrate-metadata-tuning.md) preserves
 paired baseline/current measurements, an independent confirmation, diagnostic
 profiles, and all slower results against the preceding C++ version.
+
+Local-block means read raw strided storage and apply virtual after-only padding.
+AVX2 sums large spans, groups small output blocks, normalizes byte order, and
+streams unit-factor conversion. Reversed inputs retain logical output order;
+half conversion needs no F16C instructions. Every output block is independent
+under the optional global worker limit. The C++ interface is
+`include/skimagexx/downscale.hpp`; no Python dependency is needed for native use.
+Metadata-only NumPy allocation preserves broadcast/singleton output strides,
+with protected-memory tests verifying that it never reads image pixels.
+Scalar padding casts retain upstream warning counts and validation order.
+Nonfinite/risky floating arithmetic, nonscalar constants, input subclasses,
+and nondefault floating underflow or callback policies currently use explicit
+fallback. The dedicated report keeps all 120 workloads per worker setting.

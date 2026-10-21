@@ -22,7 +22,8 @@ def main():
                ('Every covered entry with dtype metadata','metadata-parameters'),
                ('Gaussian families and output precision','gaussian-parameters'),
                ('Integral-image dtypes and layouts','integral-parameters'),
-               ('Integral-window batches and layouts','integrate-parameters')]
+               ('Integral-window batches and layouts','integrate-parameters'),
+               ('Raw local-block means and layouts','downscale-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)

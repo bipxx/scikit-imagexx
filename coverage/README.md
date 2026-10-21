@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 92 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 93 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -409,7 +409,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.ProjectiveTransform` | upstream-only | pending | pending |
 | `transform.SimilarityTransform` | upstream-only | pending | pending |
 | `transform.ThinPlateSplineTransform` | upstream-only | pending | pending |
-| `transform.downscale_local_mean` | upstream-only | pending | pending |
+| `transform.downscale_local_mean` | native-partial | yes (partial input contract) | yes |
 | `transform.estimate_transform` | upstream-only | pending | pending |
 | `transform.frt2` | upstream-only | pending | pending |
 | `transform.hough_circle` | upstream-only | pending | pending |

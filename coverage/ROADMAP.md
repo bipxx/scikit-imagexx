@@ -28,7 +28,7 @@ For every native entry:
    Retain regressions; investigate them rather than removing adverse workloads.
 5. Update the registry, inventory, documented native input contract, and CI.
 
-Current native coverage includes N-D integral images with ordered prefix sums, modular integer arithmetic and physical-layout preservation, plus direct strided integral-window queries with exact corner order; N-D Laplace, Farid derivatives and Roberts cross filters with eroded masks.
+Current native coverage includes raw N-D local-block means with virtual padding, dtype/layout preservation and SIMD block reductions; N-D integral images with ordered prefix sums, modular integer arithmetic and physical-layout preservation, plus direct strided integral-window queries with exact corner order; N-D Laplace, Farid derivatives and Roberts cross filters with eroded masks.
 Other native coverage: RGB/gray and RGBA conversion, grayscale alpha expansion; N-D Gaussian, difference of Gaussians and unsharp masking; Sobel, Prewitt, and
 Scharr with directional variants; uint8 Otsu; mean, Yen, Triangle, ISODATA, Niblack and Sauvola thresholding; inversion;
 gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
@@ -38,8 +38,8 @@ six grayscale and four binary morphology functions.
 Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
 CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting and extra channels;
 color-space routing composes the native kernels for all nine upstream spaces.
-There are 92 partial native image entries, two metadata helpers,
-and 361 pending entries in the current
+There are 93 partial native image entries, two metadata helpers,
+and 360 pending entries in the current
 455-name inventory. The `future` namespace is available through explicit
 compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
