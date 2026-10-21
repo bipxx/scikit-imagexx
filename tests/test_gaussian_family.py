@@ -102,3 +102,10 @@ def test_numpy_boolean_parameters(value,dtype):
     image=sample(dtype,(13,17))
     check('unsharp_mask',image,radius=value,amount=value)
     check('difference_of_gaussians',image,low_sigma=value)
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('shape',[(19,23,3),(67,131,33)])
+def test_channel_interior_spans(name,dtype,shape):
+    check(name,sample(dtype,shape),channel_axis=2)

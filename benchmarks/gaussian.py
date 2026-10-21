@@ -55,13 +55,16 @@ def main():
             assert notices_expected==[(type(w.message).__name__,str(w.message)) for w in notices]
             assert actual.dtype==expected.dtype and actual.shape==expected.shape
             np.testing.assert_allclose(actual,expected,rtol=tolerance,atol=tolerance)
+            # Output-buffer calls share storage with the timed reference. Capture
+            # parity error before timing can overwrite that storage.
+            maximum_error=float(np.max(np.abs(actual.astype(np.float64)-expected.astype(np.float64))))
             timing=measure(lambda:invoke(reference),lambda:invoke(native),args.repeat,15)
             rows.append({'api':'filters.'+name,'size':args.size,'shape':list(image.shape),
                          'dtype':str(image.dtype),'output_dtype':str(actual.dtype),'threads':workers,
                          'backend':'native','layout':layout,'workload':workload,
                          'parameter_repr':{key:(f'array(shape={value.shape},dtype={value.dtype})' if isinstance(value,np.ndarray) else repr(value)) for key,value in options.items()},
                          'rtol':tolerance,'atol':tolerance,'warnings':notices_expected,
-                         'max_abs_error':float(np.max(np.abs(actual.astype(np.float64)-expected.astype(np.float64)))),**timing})
+                         'max_abs_error':maximum_error,**timing})
             print(f'{name:18} {str(image.dtype):7} {workload:22} t={workers}: {timing["speedup"]:.2f}x',flush=True)
 
     for dtype in real:

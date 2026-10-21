@@ -163,3 +163,10 @@ def test_no_axis_cast_side_effects(policy):
                 return [(type(w.message),str(w.message)) for w in notices]
     assert execute(xx.filters.gaussian,actual_out)==execute(original.gaussian,expected_out)
     np.testing.assert_array_equal(actual_out,expected_out)
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('shape',[(19,23,3),(67,131,33)])
+@pytest.mark.parametrize('mode',['reflect','constant','nearest','mirror','wrap'])
+def test_channel_interior_spans(dtype,shape,mode):
+    check(sample(dtype,shape),sigma=.75,channel_axis=2,mode=mode,cval=.25)

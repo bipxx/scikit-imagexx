@@ -84,12 +84,22 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                 for(;position<stop;++position)scalar(position);
                 begin=stop;
             } else {
-                const auto inner=begin%stride,span=std::min(end-begin,stride-inner);
+                const auto inner=begin%stride;
+                // Away from the boundary, every neighbor is a fixed linear
+                // offset. Span adjacent axis coordinates too: channel-last
+                // images otherwise expose only three pixels per SIMD call.
+                const bool interior=coordinate>=radius && radius<length-coordinate;
+                const auto span=interior ? std::min(end,block+(length-radius)*stride)-begin : std::min(end-begin,stride-inner);
                 for(std::size_t j=0;j<radius;++j) {
-                    const auto distance=std::ptrdiff_t(radius-j);
-                    const auto lo=index_at(std::ptrdiff_t(coordinate)-distance,length,pass.border),hi=index_at(std::ptrdiff_t(coordinate)+distance,length,pass.border);
-                    left[j]=lo<0 ? nullptr : input+block+std::size_t(lo)*stride+inner;
-                    right[j]=hi<0 ? nullptr : input+block+std::size_t(hi)*stride+inner;
+                    if(interior) {
+                        const auto distance=(radius-j)*stride;
+                        left[j]=input+begin-distance;right[j]=input+begin+distance;
+                    } else {
+                        const auto distance=std::ptrdiff_t(radius-j);
+                        const auto lo=index_at(std::ptrdiff_t(coordinate)-distance,length,pass.border),hi=index_at(std::ptrdiff_t(coordinate)+distance,length,pass.border);
+                        left[j]=lo<0 ? nullptr : input+block+std::size_t(lo)*stride+inner;
+                        right[j]=hi<0 ? nullptr : input+block+std::size_t(hi)*stride+inner;
+                    }
                 }
                 std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
