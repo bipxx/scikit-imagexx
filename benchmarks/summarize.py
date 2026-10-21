@@ -174,6 +174,11 @@ def main():
               'The [fixed column experiment](edge-tuning.md) retains separate baseline, optimized and '
               'confirmation snapshots. The [metadata experiment](edge-metadata-tuning.md) '
               'retains the separate validation-overhead comparison.','',
+              'Farid preserves the ordered full coefficient sum while vectorizing independent output pixels. '
+              'Float32 gradients round before each magnitude stage, including the dimension-typed divisor. '
+              'Axes, boundaries, endian normalization, masks and input movement are included in its report. '
+              'Empty axes use owned zero allocation and omit unused image copies; '
+              'the [fixed empty-axis experiment](farid-empty-tuning.md) retains separate historical observations.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '

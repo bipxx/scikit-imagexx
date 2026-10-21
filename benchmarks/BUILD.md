@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 85 native image functions, two metadata
-helpers, and 506 one-worker per-function performance cases. The suite now has 23593 checks in both SIMD
+The current function benchmark covers 88 native image functions, two metadata
+helpers, and 524 one-worker per-function performance cases. The suite now covers 25089 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -145,3 +145,27 @@ Linux passes the 3432 descriptor/edge cases in both modes. The dtype fix changes
 binding comparisons; image arithmetic kernels and their native/portable C++
 and sanitizer validation remain unchanged. The separate metadata experiment
 records allocation-inclusive one-worker validation-overhead measurements.
+
+
+Farid adds 1418 dedicated checks across 12 real input dtypes, reflected/constant/
+nearest/mirror/wrap boundaries and grid aliases, ordered/repeated/negative axes,
+N-D kernels through rank eight, high-amplitude constant cancellation, eroded masks,
+endian descriptors, memory maps, subnormal policies and parallel skinny images.
+The latest full Windows SIMD run passes 25089 tests. Linux passes 3814
+Farid/shared-API/descriptor checks in both modes. Native and portable CTest pass on Windows; Linux C++ checks
+pass with address and undefined-behavior sanitizers.
+
+`farid-parameters.json` records 243 one-worker comparisons, with the same
+allocation/dispatch/conversion costs and strict no-fallback provenance checks.
+The full ordered coefficient kernel retains upstream convolution cancellation;
+AVX2 works across independent output pixels without changing each sum's order.
+Float32 gradients round before squaring, addition, square root and the typed
+sqrt(ndim) divisor. `src/simd_farid_avx2.cpp` uses the existing strict AVX2 flags;
+the global optional worker limit partitions the same row and output stages.
+
+The fixed nine-case empty-axis allocation experiment retains baseline, two
+optimizations and confirmation in `farid-empty-tuning.json`. Owned zero allocation
+and omission of unused input copies reduce geometric-mean native latency by
+2.79x initially and 2.45x in confirmation. Reference drift and slower observations
+are reported; the small dispatch-only increment is not claimed as stable.
+The initial 243-case profile is retained separately from the current aggregate.
