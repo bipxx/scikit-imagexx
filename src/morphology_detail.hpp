@@ -16,12 +16,8 @@ template<class T> T morphology_cast(double v) {
     else if constexpr (std::is_same_v<T,std::uint64_t>) {
         if (!std::isfinite(v) || v >= 18446744073709551616.0) return 0;
         if (v < 0) {
-#if !defined(_MSC_VER) && (defined(__x86_64__) || defined(__i386__))
-            // GCC/Clang x86 SciPy wheels convert through a signed register.
+            // SciPy's x86 min/max output casts convert through a signed register.
             return v >= -9223372036854775808.0 ? T(std::int64_t(v)) : T(1)<<63;
-#else
-            return 0;
-#endif
         }
         return T(v);
     }
