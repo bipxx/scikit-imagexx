@@ -4,27 +4,27 @@
 
 | API | Options | Dtype | Original ms | Native ms | Speedup |
 |---|---|---|---:|---:|---:|
-| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | uint8 | 2.0388 | 0.1689 | 12.07x |
-| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | uint8 | 2.1393 | 0.1427 | 14.99x |
-| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | uint8 | 2.0750 | 0.1507 | 13.77x |
-| exposure.adjust_log | `{'gain': 0.7}` | uint8 | 16.9397 | 0.1541 | 109.91x |
-| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | uint8 | 21.8592 | 0.1522 | 143.65x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | uint8 | 21.5797 | 0.1643 | 131.36x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | uint8 | 23.3176 | 0.1701 | 137.08x |
-| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | uint8 | 15.7940 | 2.7987 | 5.64x |
-| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | float32 | 9.6427 | 6.4112 | 1.50x |
-| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | float32 | 1.8815 | 1.0286 | 1.83x |
-| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | float32 | 2.1354 | 1.1393 | 1.87x |
-| exposure.adjust_log | `{'gain': 0.7}` | float32 | 4.4005 | 2.6130 | 1.68x |
-| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | float32 | 8.6819 | 4.1741 | 2.08x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | float32 | 3.1498 | 0.6522 | 4.83x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | float32 | 3.5738 | 0.5795 | 6.17x |
-| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | float32 | 4.4344 | 1.0462 | 4.24x |
-| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | float64 | 21.0107 | 6.6604 | 3.15x |
-| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | float64 | 11.6164 | 2.3324 | 4.98x |
-| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | float64 | 12.6796 | 2.1420 | 5.92x |
-| exposure.adjust_log | `{'gain': 0.7}` | float64 | 19.0507 | 3.4978 | 5.45x |
-| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | float64 | 19.7908 | 3.2849 | 6.02x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | float64 | 22.8488 | 3.5011 | 6.53x |
-| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | float64 | 21.1778 | 3.7769 | 5.61x |
-| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | float64 | 13.3218 | 2.4077 | 5.53x |
+| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | uint8 | 2.0143 | 0.1403 | 14.35x |
+| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | uint8 | 2.0376 | 0.1433 | 14.22x |
+| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | uint8 | 2.3235 | 0.1835 | 12.66x |
+| exposure.adjust_log | `{'gain': 0.7}` | uint8 | 16.6217 | 0.1676 | 99.18x |
+| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | uint8 | 20.4769 | 0.1473 | 139.00x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | uint8 | 19.2118 | 0.1572 | 122.20x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | uint8 | 23.0050 | 0.1682 | 136.73x |
+| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | uint8 | 13.0556 | 2.1042 | 6.20x |
+| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | float32 | 9.2618 | 6.7722 | 1.37x |
+| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | float32 | 2.4059 | 1.1366 | 2.12x |
+| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | float32 | 2.5262 | 1.1403 | 2.22x |
+| exposure.adjust_log | `{'gain': 0.7}` | float32 | 5.3964 | 3.6003 | 1.50x |
+| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | float32 | 8.9713 | 4.7091 | 1.91x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | float32 | 2.8981 | 0.4951 | 5.85x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | float32 | 3.3331 | 0.5557 | 6.00x |
+| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | float32 | 5.1189 | 1.2813 | 3.99x |
+| exposure.adjust_gamma | `{'gamma': 0.7, 'gain': 1.3}` | float64 | 21.4600 | 7.1660 | 2.99x |
+| exposure.adjust_gamma | `{'gamma': 0.5, 'gain': 1.3}` | float64 | 11.8005 | 2.3734 | 4.97x |
+| exposure.adjust_gamma | `{'gamma': 2, 'gain': 1.3}` | float64 | 10.5603 | 2.1609 | 4.89x |
+| exposure.adjust_log | `{'gain': 0.7}` | float64 | 18.5680 | 3.1730 | 5.85x |
+| exposure.adjust_log | `{'gain': 0.7, 'inv': True}` | float64 | 21.4956 | 3.5163 | 6.11x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.3}` | float64 | 20.2162 | 3.3726 | 5.99x |
+| exposure.adjust_sigmoid | `{'gain': 7, 'cutoff': 0.7, 'inv': True}` | float64 | 21.1928 | 3.3561 | 6.31x |
+| exposure.rescale_intensity | `{'in_range': (0, 0.7), 'out_range': (-1, 2)}` | float64 | 13.2222 | 2.3188 | 5.70x |
