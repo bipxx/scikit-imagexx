@@ -25118,6 +25118,8 @@
     "initial_full_ci": "https://github.com/bipxx/scikit-imagexx/actions/runs/39658631055",
     "initial_full_ci_tests_per_os_per_simd_mode": 31029,
     "metadata_candidate_ci": "https://github.com/bipxx/scikit-imagexx/actions/runs/39660931141",
-    "metadata_candidate_ci_status_at_archive": "pending"
+    "metadata_candidate_ci_status_at_archive": "pending",
+    "metadata_candidate_ci_verified_status": "success",
+    "metadata_candidate_ci_tests_per_os_per_simd_mode": 31047
   }
 }
