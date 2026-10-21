@@ -1,7 +1,7 @@
 # Current performance verification
 
 Reference: original scikit-image 0.26.0. 1705 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
-`e5c9f695c5dfd43422bafb0e59e7916e7d3a51df9df7425e65df12bc98e083b2`.
+`0aa1e5115d1488e312696a4bae6a425dab7e07e5eda4d9e379c683485abe4d63`.
 
 | Report | Cases | Worker counts |
 |---|---:|---|
@@ -24,44 +24,44 @@ Examples from the 1024² one-worker default-parameter comparisons (color-space r
 
 | Operation | Input | Original ms | C++ ms | Reference / C++ |
 |---|---|---:|---:|---:|
-| morphology.erosion | uint8 | 10.1025 | 0.4625 | 21.84x |
-| color.rgb2yuv | uint8 | 15.4361 | 8.3561 | 1.85x |
-| color.rgb2xyz | uint8 | 85.6207 | 8.1730 | 10.48x |
-| color.rgb2hed | uint8 | 42.3721 | 13.7455 | 3.08x |
-| filters.gaussian | uint8 | 21.8625 | 5.2360 | 4.18x |
-| filters.sobel | uint8 | 23.6826 | 3.1466 | 7.53x |
-| filters.threshold_otsu | uint8 | 3.4186 | 0.2466 | 13.86x |
-| morphology.opening | float32 | 9.7412 | 2.8060 | 3.47x |
-| color.rgb2xyz | float32 | 54.6297 | 23.0229 | 2.37x |
-| color.xyz2rgb | float32 | 73.4533 | 25.3937 | 2.89x |
-| color.rgb2hsv | float32 | 161.4551 | 4.8827 | 33.07x |
-| color.hsv2rgb | float32 | 137.6603 | 4.8389 | 28.45x |
-| color.rgb2luv | float32 | 91.6968 | 31.4657 | 2.91x |
-| color.luv2rgb | float32 | 49.4842 | 5.4703 | 9.05x |
-| color.separate_stains | float32 | 25.7871 | 12.9746 | 1.99x |
-| color.deltaE_cie76 | float32 | 8.2799 | 1.5609 | 5.30x |
-| color.convert_colorspace | float32 | 149.2115 | 3.9322 | 37.95x |
-| color.deltaE_ciede94 | float32 | 120.7940 | 20.4958 | 5.89x |
-| color.deltaE_ciede2000 | float32 | 183.6372 | 97.9609 | 1.87x |
-| color.deltaE_cmc | float32 | 216.0457 | 46.6271 | 4.63x |
-| morphology.binary_dilation | float64 | 11.8769 | 5.1005 | 2.33x |
-| color.rgb2ycbcr | float64 | 14.3216 | 6.6142 | 2.17x |
-| color.rgb2lab | float64 | 295.6673 | 65.9720 | 4.48x |
-| color.lab2lch | float64 | 40.1111 | 15.1017 | 2.66x |
-| color.luv2xyz | float64 | 93.6591 | 7.2964 | 12.84x |
-| color.combine_stains | float64 | 44.1093 | 13.9173 | 3.17x |
-| color.deltaE_cie76 | float64 | 24.1262 | 3.9432 | 6.12x |
+| morphology.erosion | uint8 | 14.5198 | 0.7149 | 20.31x |
+| color.rgb2yuv | uint8 | 16.1905 | 7.5540 | 2.14x |
+| color.rgb2xyz | uint8 | 94.1044 | 8.6960 | 10.82x |
+| color.rgb2hed | uint8 | 42.8026 | 13.6356 | 3.14x |
+| filters.gaussian | uint8 | 20.4307 | 5.6198 | 3.64x |
+| filters.sobel | uint8 | 26.8050 | 3.5060 | 7.65x |
+| filters.threshold_otsu | uint8 | 3.2511 | 0.2881 | 11.29x |
+| morphology.opening | float32 | 9.4862 | 3.7073 | 2.56x |
+| color.rgb2xyz | float32 | 51.0145 | 21.2821 | 2.40x |
+| color.xyz2rgb | float32 | 71.4367 | 21.3077 | 3.35x |
+| color.rgb2hsv | float32 | 136.2702 | 3.8316 | 35.56x |
+| color.hsv2rgb | float32 | 111.5776 | 4.2003 | 26.56x |
+| color.rgb2luv | float32 | 89.8240 | 31.9871 | 2.81x |
+| color.luv2rgb | float32 | 39.8686 | 4.1958 | 9.50x |
+| color.separate_stains | float32 | 25.7608 | 13.0680 | 1.97x |
+| color.deltaE_cie76 | float32 | 6.6681 | 1.3417 | 4.97x |
+| color.convert_colorspace | float32 | 137.3167 | 3.6170 | 37.96x |
+| color.deltaE_ciede94 | float32 | 104.6223 | 20.0297 | 5.22x |
+| color.deltaE_ciede2000 | float32 | 229.9643 | 100.9628 | 2.28x |
+| color.deltaE_cmc | float32 | 186.6831 | 47.2789 | 3.95x |
+| morphology.binary_dilation | float64 | 12.0661 | 5.3200 | 2.27x |
+| color.rgb2ycbcr | float64 | 15.3109 | 6.1951 | 2.47x |
+| color.rgb2lab | float64 | 180.3058 | 56.9279 | 3.17x |
+| color.lab2lch | float64 | 32.4265 | 12.8965 | 2.51x |
+| color.luv2xyz | float64 | 91.0691 | 7.4581 | 12.21x |
+| color.combine_stains | float64 | 39.2596 | 12.1058 | 3.24x |
+| color.deltaE_cie76 | float64 | 22.6561 | 3.7933 | 5.97x |
 
 Boolean 31×31 rectangles, with one worker (the previous slower morphology workloads):
 
 | Operation | Image | Original ms | C++ ms | Reference / C++ |
 |---|---|---:|---:|---:|
-| morphology.erosion | 512² | 2.2963 | 0.1548 | 14.84x |
-| morphology.dilation | 512² | 2.1802 | 0.1488 | 14.65x |
-| morphology.opening | 512² | 3.5699 | 0.2183 | 16.35x |
-| morphology.closing | 512² | 3.5145 | 0.2186 | 16.08x |
-| morphology.white_tophat | 512² | 3.9286 | 0.2561 | 15.34x |
-| morphology.black_tophat | 512² | 4.1123 | 0.3281 | 12.53x |
+| morphology.erosion | 512² | 2.2952 | 0.1595 | 14.39x |
+| morphology.dilation | 512² | 2.5693 | 0.1611 | 15.94x |
+| morphology.opening | 512² | 5.2385 | 0.2958 | 17.71x |
+| morphology.closing | 512² | 4.8911 | 0.3268 | 14.97x |
+| morphology.white_tophat | 512² | 4.9168 | 0.3479 | 14.13x |
+| morphology.black_tophat | 512² | 3.4146 | 0.2292 | 14.90x |
 
 The [fixed-workload tuning experiment](morphology-tuning.md) preserves separate historical before/after C++ snapshots. Its cases are not added to this current-source total.
 
@@ -71,28 +71,28 @@ The [fixed-workload tuning experiment](morphology-tuning.md) preserves separate 
 
 | Operation | Input | Shape | Layout | Workload | Reference / C++ |
 |---|---|---:|---|---|---:|
-| util.img_as_bool | uint8 | 256² | standard | default | 0.7967x |
-| util.img_as_bool | float64 | 256² | standard | default | 0.5285x |
-| util.img_as_bool | uint8 | 1024² | standard | default | 0.9479x |
-| util.img_as_float64 | float32 | 1024² | standard | default | 0.9535x |
-| util.img_as_float | bool | 1024² | standard | default | 0.9756x |
-| util.img_as_int | uint16 | 1024² | standard | default | 0.6913x |
-| util.img_as_bool | int16 | 1024² | standard | default | 0.9064x |
-| util.img_as_int | uint64 | 1024² | standard | default | 0.9662x |
-| color.separate_stains | uint16 | 512² | strided | default | 0.8851x |
-| color.separate_stains | uint16 | 512² | channel-first | default | 0.9292x |
-| color.rgb2hed | uint16 | 512² | channel-first | default | 0.9095x |
-| morphology.black_tophat | uint8 | 512² | rectangle-31 | rectangle-31 | 0.9769x |
-| morphology.black_tophat | float32 | 512² | rectangle-31 | rectangle-31 | 0.9859x |
-| filters.threshold_yen | float32/int64 | 257 | histogram-only | supplied-histogram | 0.7485x |
-| filters.threshold_isodata | float32/int64 | 257 | histogram-only | supplied-histogram | 0.9961x |
-| filters.threshold_isodata | float32/int64 | 257 | histogram-only | trimmed-histogram | 0.6622x |
-| filters.threshold_yen | float32/float32 | 257 | histogram-only | supplied-histogram | 0.9692x |
-| filters.threshold_isodata | float32/float32 | 257 | histogram-only | trimmed-histogram | 0.9907x |
-| filters.threshold_yen | float32/float32 | 257 | histogram-only | large-counts | 0.9439x |
-| filters.threshold_yen | float32/float64 | 257 | histogram-only | supplied-histogram | 0.3850x |
-| filters.roberts_pos_diag | float32 | 512×1 | single-column | single-column | 0.9803x |
-| filters.roberts_pos_diag | float64 | 512×1 | single-column | single-column | 0.9126x |
+| color.rgb2yiq | uint8 | 256² | standard | default | 0.8728x |
+| color.gray2rgba | float32 | 256² | standard | default | 0.8088x |
+| util.invert | float32 | 256² | standard | default | 0.3451x |
+| util.img_as_bool | float32 | 256² | standard | default | 0.7691x |
+| util.invert | float64 | 256² | standard | default | 0.9727x |
+| util.invert | float32 | 1024² | standard | default | 0.9325x |
+| util.img_as_float64 | float32 | 1024² | standard | default | 0.9772x |
+| util.img_as_bool | float64 | 1024² | standard | default | 0.7650x |
+| util.img_as_float | bool | 1024² | standard | default | 0.9778x |
+| util.img_as_bool | int8 | 1024² | standard | default | 0.8741x |
+| util.img_as_int | uint16 | 1024² | standard | default | 0.8135x |
+| util.img_as_bool | int16 | 1024² | standard | default | 0.8845x |
+| color.separate_stains | uint16 | 512² | strided | default | 0.8676x |
+| color.rgb2hed | uint16 | 512² | strided | default | 0.9620x |
+| color.separate_stains | uint16 | 512² | channel-first | default | 0.9417x |
+| filters.threshold_isodata | float32/int64 | 257 | histogram-only | trimmed-histogram | 0.8774x |
+| filters.threshold_yen | float32/int64 | 257 | histogram-only | large-counts | 0.7410x |
+| filters.threshold_isodata | float32/float32 | 257 | histogram-only | supplied-histogram | 0.9762x |
+| filters.threshold_isodata | float32/float32 | 257 | histogram-only | trimmed-histogram | 0.9392x |
+| filters.threshold_isodata | float32/float32 | 257 | histogram-only | large-counts | 0.9361x |
+| filters.threshold_isodata | float32/float64 | 257 | histogram-only | large-counts | 0.9226x |
+| color.gray2rgba | float32 | 512×512 | contiguous | alpha-array | 0.9623x |
 
 The color port fuses integer normalization, matrix arithmetic and sRGB transfer. Uniform floating layouts now avoid a full contiguous copy: planar input uses contiguous channel loads, other uniform strides use gathers, and scalar tails preserve the same arithmetic. General nonuniform layouts and unaligned arrays can still require copying. Simple matrix transforms remain sensitive to dispatch, shuffling and memory traffic; this run has no hardware-counter profiling to quantify their individual contribution. Further optimization remains necessary.
 
@@ -114,7 +114,7 @@ Niblack and Sauvola share reflected input preparation, ordered float64 integral 
 
 RGBA compositing fuses integer normalization, blending and clipping with strict SIMD arithmetic. Grayscale RGB/RGBA expansion replicates raw storage and normalizes endian components directly. Both use physical stride order and partition pixels across the global worker limit; the alpha report includes planar, Fortran, negative and stepped layouts plus background/alpha options. The [fixed grayscale expansion experiment](alpha-tuning.md) retains initial, optimized and confirmation observations separately from this aggregate.
 
-Laplace uses sparse neighbor loads in scipy coefficient order, retaining singleton-axis terms. Roberts fuses cross differences and rounded magnitude stages. Half and endian conversion, mask erosion/broadcast multiplication, layout preparation and allocation are included in the edge report. The [fixed column experiment](edge-tuning.md) retains separate baseline, optimized and confirmation snapshots.
+Laplace uses sparse neighbor loads in scipy coefficient order, retaining singleton-axis terms. Roberts fuses cross differences and rounded magnitude stages. Half and endian conversion, mask erosion/broadcast multiplication, layout preparation and allocation are included in the edge report. The [fixed column experiment](edge-tuning.md) retains separate baseline, optimized and confirmation snapshots. The [metadata experiment](edge-metadata-tuning.md) retains the separate validation-overhead comparison.
 
 Measurements use ordinary system load without CPU affinity or frequency locking. Small differences near 1x can change between runs. These are measured comparisons on this machine, not universal speed guarantees. CI runs parity and benchmark smoke checks on Windows/Linux without asserting speed ratios on shared runners.
 

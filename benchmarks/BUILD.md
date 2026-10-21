@@ -42,21 +42,21 @@ binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
 The current function benchmark covers 85 native image functions, two metadata
-helpers, and 506 one-worker per-function performance cases. The suite now has 22999 checks in both SIMD
+helpers, and 506 one-worker per-function performance cases. The suite now has 23593 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
 performance results retain slower cases as well as faster ones.
-`conversion-widths.json` records 112 additional cases across boolean and
+`conversion-widths.json` records 56 one-worker cases across boolean and
 8/16/32/64-bit integer inputs, with exact parity required before timing. Identity,
 copy, and metadata rows are identified separately from conversion kernels.
 `color-layouts.json` adds 120 one-worker comparisons on uint16/float32 strided and
 channel-first images; input movement, normalization and any required copying are
 included. Uniform floating layouts are read directly without a full copy.
-`perceptual-parameters.json` adds 60 cases on alternate white points, wrapped
+`perceptual-parameters.json` adds 30 one-worker cases on alternate white points, wrapped
 hues, four-channel polar conversions, negative-Z warning counts and Luv lightness branches. Warnings
 are checked before timing and ignored during timed calls in that report.
-`morphology-parameters.json` adds 240 comparisons across all ten new APIs,
+`morphology-parameters.json` adds 120 one-worker comparisons across all ten new APIs,
 four input dtypes, large rectangles, disks and asymmetric even footprints.
 The latter reuse output buffers; all require exact values and dtype, and binary
 deprecation warnings are verified before timed calls. Rectangle filtering uses
@@ -67,7 +67,7 @@ and unpack with SIMD; other storage/modes retain the general native kernel.
 `morphology-tuning.json` records the historical 18-case experiment from kernel
 `3b4355a` to `2795b77`: geometric-mean native latency fell from 3.6556 to
 0.1891 ms. It is excluded from the current-source report aggregate.
-`stain-parameters.json` adds 156 comparisons over 11 standard families and
+`stain-parameters.json` adds 78 one-worker comparisons over 11 standard families and
 custom 3×1/3×7 matrices, with input-precision and coefficient-scaled parity
 budgets. `linear-color-tuning.json` is a separate historical 16-case experiment
 from `aa6e251` to `0316dba`, where geometric-mean native latency fell from
@@ -77,7 +77,7 @@ These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the
 JSON; small differences should not be treated as stable performance guarantees.
 
-`color-distance.json` adds 246 comparisons for all four Lab distance metrics and layouts, mixed dtypes and
+`color-distance.json` adds 123 one-worker comparisons for all four Lab distance metrics and layouts, mixed dtypes and
 representative composed color routes, including identity and out-of-gamut HSV.
 The latter verify each stage and a propagated ratio bound; identity rows are
 excluded from native processing speedup counts. CIE76 uses a fused one-pass
@@ -95,7 +95,7 @@ CIE76 nonuniform layouts now pass row offsets to C++ and avoid full image copies
 from `83402fc` to `f3b3ff9`: native median latency fell from 1.6552 to 0.7387 ms.
 Its two 123-case snapshots are excluded from the current-source aggregate.
 
-`threshold-parameters.json` adds 152 comparisons for Yen, Triangle and ISODATA,
+`threshold-parameters.json` adds 76 one-worker comparisons for Yen, Triangle and ISODATA,
 including four layouts, two non-default floating bin counts, constant inputs,
 ISODATA all-threshold output and supplied histograms. Histogram counts and selected
 thresholds require exact reference parity; warning text/order and output dtype
@@ -110,7 +110,7 @@ checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
 SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
 Only this translation unit uses the additional `-mfma` flag on GCC/Clang.
 
-`local-threshold-parameters.json` adds 256 Niblack/Sauvola comparisons. Two
+`local-threshold-parameters.json` adds 128 one-worker Niblack/Sauvola comparisons. Two
 float64 integral buffers share reflected input preparation and ordered prefix
 passes; output math preserves float32 casts before division and the original
 variance clipping. AVX2 operates across independent prefix columns and output
@@ -126,9 +126,9 @@ planar/Fortran/negative/stepped strides, endian storage, backgrounds and alpha
 broadcasting. `src/simd_alpha_avx2.cpp` uses the same runtime-dispatched AVX2
 and strict floating-point flags as the existing color kernels.
 
-The Laplace/Roberts family adds 2838 dedicated cases, including all 12 real image
+The Laplace/Roberts family adds 2894 dedicated cases, including all 12 real image
 dtypes, nonnative storage, memory-mapped arrays, N-D Laplace, masks and singleton
-axes. The full 22999-case suite passes with SIMD enabled and disabled. Linux
+axes. The full 23593-case suite passes with SIMD enabled and disabled. Linux
 passes the family and fallback-policy checks in both modes; address/undefined
 sanitizer C++ checks also pass. Native/portable CTest covers typed buffers,
 normalization, half decoding, reflected edges, byte swapping and signed zeros.
@@ -137,3 +137,11 @@ input dtype, ordinary/strided/Fortran/unaligned/thin layouts, N-D volumes and
 broadcast masks. The fixed column experiment retains initial and confirmation
 measurements separately from the current-source aggregate. The new SIMD source
 is `src/simd_small_edge_avx2.cpp`, compiled with the existing strict AVX2 flags.
+
+The descriptor compatibility suite adds 538 checks across every covered default
+entry point, equivalent native descriptors, copy/identity behavior and rejection
+of opposite-endian typed buffers. All 23593 tests pass in both SIMD modes.
+Linux passes the 3432 descriptor/edge cases in both modes. The dtype fix changes
+binding comparisons; image arithmetic kernels and their native/portable C++
+and sanitizer validation remain unchanged. The separate metadata experiment
+records allocation-inclusive one-worker validation-overhead measurements.
