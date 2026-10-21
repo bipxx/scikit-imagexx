@@ -205,6 +205,11 @@ namespace {
 struct PermutationGroup {std::size_t chunk;bool alpha;__m128i mask;};
 struct PermutationBlock {std::vector<PermutationGroup> groups;std::size_t bytes;};
 struct alignas(16) ByteBlock {__m128i value;};
+__m128i six_bytes(const unsigned char* p) {
+    std::uint32_t low;std::uint16_t high;std::memcpy(&low,p,4);std::memcpy(&high,p+4,2);
+    return _mm_cvtsi64_si128(static_cast<long long>(low)|(static_cast<long long>(high)<<32));
+}
+
 __m128i item_chunk(const unsigned char* p,std::size_t bytes,std::size_t chunk,std::ptrdiff_t step,std::size_t remaining) {
     const auto offset=16*chunk,tail=std::min(std::size_t(16),bytes-offset);
     if(tail==16)return _mm_loadu_si128(reinterpret_cast<const __m128i*>(p+offset));
@@ -242,6 +247,28 @@ std::size_t gray_expand_mapped(const unsigned char* input,const unsigned char* a
         }
         for(const auto& mask:masks)block.groups.push_back({mask.chunk,mask.alpha,_mm_loadu_si128(reinterpret_cast<const __m128i*>(mask.bytes))});
         plan.push_back(std::move(block));
+    }
+    if(bytes==6) {
+        const auto first=plan[0].groups[0].mask;
+        auto last_gray=_mm_set1_epi8(static_cast<char>(-128)),last_alpha=last_gray;
+        for(const auto& group:plan[1].groups) {
+            if(group.alpha)last_alpha=group.mask;else last_gray=group.mask;
+        }
+        const auto constant_alpha=channels==4 && alpha_step==0 ? six_bytes(alpha) : _mm_setzero_si128();
+        for(std::size_t i=0;i<count;++i) {
+            const auto gray=six_bytes(input+std::ptrdiff_t(i)*source_step);
+            auto* out=output+i*std::size_t(channels)*6;
+            _mm_storeu_si128(reinterpret_cast<__m128i*>(out),_mm_shuffle_epi8(gray,first));
+            auto tail=_mm_shuffle_epi8(gray,last_gray);
+            if(channels==3) {
+                const auto value=static_cast<std::uint16_t>(_mm_extract_epi16(tail,0));std::memcpy(out+16,&value,2);
+            } else {
+                const auto a=alpha_step==0 ? constant_alpha : six_bytes(alpha+std::ptrdiff_t(i)*alpha_step);
+                tail=_mm_or_si128(tail,_mm_shuffle_epi8(a,last_alpha));
+                _mm_storel_epi64(reinterpret_cast<__m128i*>(out+16),tail);
+            }
+        }
+        return count;
     }
     std::vector<ByteBlock> gray(chunks),opacity(channels==4 ? chunks : 0);
     for(std::size_t i=0;i<count;++i) {
