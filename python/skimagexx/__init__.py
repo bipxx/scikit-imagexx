@@ -24,7 +24,7 @@ __all__ = filters.__all__ + color.__all__ + util.__all__ + [
     'filters', 'color', 'util', 'set_num_threads', 'get_num_threads', 'has_avx2',
     'set_fallback_enabled', 'FallbackWarning']
 
-_COMPAT_MODULES = ('data', 'draw', 'exposure', 'feature', 'graph', 'io', 'measure',
+_COMPAT_MODULES = ('data', 'draw', 'exposure', 'feature', 'future', 'graph', 'io', 'measure',
                    'metrics', 'morphology', 'registration', 'restoration', 'segmentation', 'transform')
 
 

@@ -1,6 +1,8 @@
-# Current performance verification
+# Last completed performance verification
 
-Reference: original scikit-image 0.26.0. 2805 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
+This 17-report checkpoint was produced before adding the missing `future` compatibility namespace. That addition changes the global source fingerprint without adding native image algorithms. The reports and timings below remain tied to their recorded checkpoint; a fresh aggregate is required for the current source.
+
+Reference: original scikit-image 0.26.0. 2805 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. These checkpoint reports match source/build SHA-256 (POSIX relative paths and LF line endings):
 `9df0360bf25a89ce495437806fbbcb310b07ba39e67137a983e9780194ee310a`.
 
 | Report | Cases | Worker counts |

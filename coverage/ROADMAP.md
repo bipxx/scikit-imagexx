@@ -6,10 +6,14 @@ the original library. The project remains incomplete until that work is done;
 upstream forwarding is a migration aid, not implementation progress.
 
 `api.json` is generated from exported names in scikit-image 0.26.0. It records
-450 callable names across 17 modules, including four callable deprecated binary
+455 callable names across 18 modules, including the experimental `future`
+namespace and four callable deprecated binary
 morphology functions that upstream omits from its export list. Other nested namespaces, plugin APIs,
-and future upstream additions still need inventory review. Class APIs also
-need constructor, method, and state parity cases beyond their top-level name.
+and later upstream additions still need inventory review. Static discovery also
+records 284 member paths across 29 exported classes, including inherited methods
+and properties. This establishes no numerical parity: constructors, methods,
+properties, instance fields and runtime-generated attributes still need complete
+implementation classification, state/parity cases and appropriate benchmarks.
 
 For every native entry:
 
@@ -35,8 +39,9 @@ Native stain separation/reconstruction and HED presets cover unbatched 3×K real
 CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting and extra channels;
 color-space routing composes the native kernels for all nine upstream spaces.
 There are 92 partial native image entries, two metadata helpers,
-and 356 pending entries in the current
-450-name inventory.
+and 361 pending entries in the current
+455-name inventory. The `future` namespace is available through explicit
+compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
