@@ -191,3 +191,18 @@ def test_alpha_broadcast_shape_error_preserves_prior_warning(dtype):
         with pytest.raises(ValueError,match='alpha.shape must match image.shape'):original.gray2rgba(a,alpha)
     actual=[(type(w.message),str(w.message)) for w in notices if not isinstance(w.message,xx.FallbackWarning)]
     assert actual==[(type(w.message),str(w.message)) for w in expected_notices]
+
+
+@pytest.mark.parametrize('name',['gray2rgb','gray2rgba'])
+@pytest.mark.parametrize('dtype',[np.uint8,np.uint16,np.float32,np.float64])
+@pytest.mark.parametrize('step',[-1,2,-2])
+def test_expansion_tightly_bounded_strides(name,dtype,step):
+    # The allocation ends exactly after the last selected element. Vector loads
+    # must not assume an extra unselected pixel is readable after this view.
+    item=np.dtype(dtype).itemsize
+    storage=bytearray((513-1)*abs(step)*item+item)
+    a=np.ndarray((513,),dtype=dtype,buffer=storage,strides=(abs(step)*item,))
+    a[:]=np.arange(513,dtype=np.uint16).astype(dtype)
+    if step<0:a=a[::-1]
+    check(name,a)
+    if name=='gray2rgba':check(name,a,alpha=a)

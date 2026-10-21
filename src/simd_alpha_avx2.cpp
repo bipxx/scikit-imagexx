@@ -24,6 +24,23 @@ void pack(double* p, __m256d r, __m256d g, __m256d b) {
 
 template<class T> __m128i raw128(const unsigned char* p,std::ptrdiff_t step) {
     if(step==std::ptrdiff_t(sizeof(T)))return _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+    if(step==-std::ptrdiff_t(sizeof(T))) {
+        const auto x=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p-(16-sizeof(T))));
+        if constexpr(sizeof(T)==1)return _mm_shuffle_epi8(x,_mm_setr_epi8(15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0));
+        else return _mm_shuffle_epi8(x,_mm_setr_epi8(14,15,12,13,10,11,8,9,6,7,4,5,2,3,0,1));
+    }
+    if(step==2*std::ptrdiff_t(sizeof(T))) {
+        // Overlap loads by one item: the last load ends at the final selected
+        // element, so tightly bounded strided views need no readable padding.
+        const auto lo=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+        const auto hi=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p+16-sizeof(T)));
+        if constexpr(sizeof(T)==1)return _mm_unpacklo_epi64(
+            _mm_shuffle_epi8(lo,_mm_setr_epi8(0,2,4,6,8,10,12,14,-1,-1,-1,-1,-1,-1,-1,-1)),
+            _mm_shuffle_epi8(hi,_mm_setr_epi8(1,3,5,7,9,11,13,15,-1,-1,-1,-1,-1,-1,-1,-1)));
+        else return _mm_unpacklo_epi64(
+            _mm_shuffle_epi8(lo,_mm_setr_epi8(0,1,4,5,8,9,12,13,-1,-1,-1,-1,-1,-1,-1,-1)),
+            _mm_shuffle_epi8(hi,_mm_setr_epi8(2,3,6,7,10,11,14,15,-1,-1,-1,-1,-1,-1,-1,-1)));
+    }
     if(step==0) {
         const auto value=detail::alpha_load<T>(p);
         if constexpr(sizeof(T)==1)return _mm_set1_epi8(static_cast<char>(value));
@@ -35,6 +52,20 @@ template<class T> __m128i raw128(const unsigned char* p,std::ptrdiff_t step) {
 }
 template<class T> __m256i raw256(const unsigned char* p,std::ptrdiff_t step) {
     if(step==std::ptrdiff_t(sizeof(T)))return _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
+    if(step==-std::ptrdiff_t(sizeof(T))) {
+        const auto x=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p-(32-sizeof(T))));
+        if constexpr(sizeof(T)==4)return _mm256_permutevar8x32_epi32(x,_mm256_setr_epi32(7,6,5,4,3,2,1,0));
+        else return _mm256_permute4x64_epi64(x,_MM_SHUFFLE(0,1,2,3));
+    }
+    if(step==2*std::ptrdiff_t(sizeof(T))) {
+        const auto lo=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
+        const auto hi=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p+32-sizeof(T)));
+        if constexpr(sizeof(T)==4)return _mm256_blend_epi32(
+            _mm256_permutevar8x32_epi32(lo,_mm256_setr_epi32(0,2,4,6,0,2,4,6)),
+            _mm256_permutevar8x32_epi32(hi,_mm256_setr_epi32(1,3,5,7,1,3,5,7)),0xf0);
+        else return _mm256_blend_epi32(_mm256_permute4x64_epi64(lo,_MM_SHUFFLE(2,0,2,0)),
+            _mm256_permute4x64_epi64(hi,_MM_SHUFFLE(3,1,3,1)),0xf0);
+    }
     if(step==0) {
         const T value=detail::alpha_load<T>(p);
         if constexpr(sizeof(T)==4)return _mm256_set1_epi32(static_cast<int>(value));
@@ -158,11 +189,12 @@ std::size_t rgba_composite(const void* input,void* output,std::size_t count,Pixe
 namespace {
 __m128i swapped_bytes(__m128i x,std::size_t width) {
     if(!width)return x;
-    alignas(16) unsigned char indices[16];
-    for(std::size_t i=0;i<16;++i)indices[i]=static_cast<unsigned char>((i/width)*width+width-1-i%width);
-    return _mm_shuffle_epi8(x,_mm_load_si128(reinterpret_cast<const __m128i*>(indices)));
+    if(width==2)return _mm_shuffle_epi8(x,_mm_setr_epi8(1,0,3,2,5,4,7,6,9,8,11,10,13,12,15,14));
+    if(width==4)return _mm_shuffle_epi8(x,_mm_setr_epi8(3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12));
+    return _mm_shuffle_epi8(x,_mm_setr_epi8(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8));
 }
 __m256i swapped_bytes(__m256i x,std::size_t width) {
+    if(!width)return x;
     if(!width)return x;
     const auto mask=swapped_bytes(_mm_setr_epi8(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15),width);
     return _mm256_shuffle_epi8(x,_mm256_broadcastsi128_si256(mask));
