@@ -125,14 +125,18 @@ def test_explicit_fallback_for_unsupported_options():
     assert actual == reference_filters.threshold_otsu(a, nbins=32)
 
 
-def test_unported_function_is_never_native():
+def test_upstream_adapter_obeys_fallback_policy():
+    from skimagexx._compat import module_attribute
     a = np.arange(9.0).reshape(3, 3)
+    # Exercise the upstream adapter directly so adding native algorithms never
+    # turns this policy check into an assertion that a function must stay unported.
+    upstream = module_attribute('filters', 'median')
     with pytest.raises(NotImplementedError):
-        xx.filters.laplace(a)
+        upstream(a)
     xx.set_fallback_enabled(True)
     with pytest.warns(xx.FallbackWarning):
-        actual = xx.filters.laplace(a)
-    np.testing.assert_array_equal(actual, reference_filters.laplace(a))
+        actual = upstream(a)
+    np.testing.assert_array_equal(actual, reference_filters.median(a))
 
 
 def test_mask_sequence_axis_and_histogram_fallback():

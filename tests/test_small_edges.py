@@ -306,3 +306,17 @@ def test_equivalent_native_dtype_descriptors(name,dtype):
     assert image.dtype==np.dtype(dtype)
     check(name,image)
     if name=='laplace':check(name,image[None,...])
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['full','broadcast','scalar'])
+def test_large_parallel_mask_application(name,dtype,layout):
+    image=sample(dtype,(513,517),438)
+    if layout=='scalar':mask=np.asarray(False,dtype=bool)
+    elif layout=='broadcast':
+        mask=np.ones((517,),dtype=bool);mask[127:237]=False
+    else:
+        mask=np.ones(image.shape,dtype=bool);mask[123:345,135:246]=False
+    actual,expected=check(name,image,mask=mask)
+    if layout=='scalar':np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
