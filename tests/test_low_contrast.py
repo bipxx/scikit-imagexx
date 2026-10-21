@@ -20,7 +20,7 @@ def configuration(request):
     xx.set_num_threads(1)
 
 
-def check(image, **options):
+def check(image, allow_fallback=False, **options):
     with warnings.catch_warnings(record=True) as expected_notices:
         warnings.simplefilter('always')
         try:
@@ -33,6 +33,10 @@ def check(image, **options):
     with warnings.catch_warnings(record=True) as notices:
         warnings.simplefilter('always')
         actual=xx.exposure.is_low_contrast(image, **options)
+    if allow_fallback:
+        fallback=[w for w in notices if isinstance(w.message, xx.FallbackWarning)]
+        assert len(fallback)<=1
+        notices=[w for w in notices if w not in fallback]
     assert [(type(w.message), str(w.message)) for w in notices]==[
         (type(w.message), str(w.message)) for w in expected_notices]
     assert type(actual) is type(expected)
@@ -199,3 +203,54 @@ def test_noncanonical_boolean_storage(count):
     raw[:]=0
     raw[0]=2
     check(raw.view(np.bool_))
+
+
+@pytest.mark.parametrize('word,dtype,bits', [
+    ('uint16', 'float16', 0x7c01), ('uint16', 'float16', 0x7e01),
+    ('uint32', 'float32', 0x7f800001), ('uint32', 'float32', 0x7fc00001),
+    ('uint64', 'float64', 0x7ff0000000000001), ('uint64', 'float64', 0x7ff8000000000001),
+])
+def test_nan_payload_fallback_warning_parity(word, dtype, bits):
+    special=np.array([bits], dtype=word).view(dtype)[0]
+    image=np.linspace(0, 1, 67, dtype=dtype)
+    image[-1]=special
+    xx.set_fallback_enabled(True)
+    with warnings.catch_warnings(record=True) as expected_notices:
+        warnings.simplefilter('always')
+        expected=original.is_low_contrast(image)
+    with warnings.catch_warnings(record=True) as notices:
+        warnings.simplefilter('always')
+        actual=xx.exposure.is_low_contrast(image)
+    assert type(actual) is type(expected) and actual==expected
+    fallback=[w for w in notices if isinstance(w.message, xx.FallbackWarning)]
+    assert len(fallback)==1
+    assert [(type(w.message), str(w.message)) for w in notices if w not in fallback]==[
+        (type(w.message), str(w.message)) for w in expected_notices]
+
+
+def test_callback_policy_is_delegated_before_private_arithmetic():
+    image=np.array([-np.finfo(np.float32).max, np.finfo(np.float32).max], dtype=np.float32)
+    previous=np.geterrcall()
+    expected_calls=[]
+    actual_calls=[]
+    xx.set_fallback_enabled(True)
+    try:
+        np.seterrcall(lambda *args: expected_calls.append(args))
+        with np.errstate(all='call'):
+            expected=original.is_low_contrast(image)
+        np.seterrcall(lambda *args: actual_calls.append(args))
+        with np.errstate(all='call'), pytest.warns(xx.FallbackWarning):
+            actual=xx.exposure.is_low_contrast(image)
+    finally:
+        np.seterrcall(previous)
+    assert expected_calls and actual_calls==expected_calls
+    assert type(actual) is type(expected) and actual==expected
+
+
+@pytest.mark.parametrize('length', [65503, 65504, 65505, 65536, 70001])
+@pytest.mark.parametrize('upper', [97.3,100])
+def test_low_precision_percentile_index_overflow(length,upper):
+    image=np.linspace(0, .04, length, dtype=np.float32)
+    xx.set_fallback_enabled(True)
+    check(image, allow_fallback=True, lower_percentile=np.float16(1.1),
+          upper_percentile=np.float16(upper))

@@ -50,8 +50,17 @@ def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
         raise ValueError('Percentiles must be in the range [0, 100]')
     if not image.size:
         np.percentile(image,[lower_percentile,upper_percentile])
-    values=_core.contrast(image,tuple((image.size-1)*quantiles))
+    # Low-precision percentile parameters may overflow their virtual ranks.
+    # Delegate those exceptional paths without repeating private probe notices.
+    # Finite rounding beyond the last element selects that last value upstream.
+    with warnings.catch_warnings(record=True) as notices:
+        warnings.simplefilter('always')
+        positions=(image.size-1)*quantiles
+    if not all(np.isfinite(value) for value in positions):return upstream()
+    ranks=tuple(min(float(value),image.size-1) for value in positions)
+    values=_core.contrast(image,ranks)
     if values is None:return upstream()
+    for notice in notices:warnings.warn(notice.message,stacklevel=2)
     span=np.float64(values[1])-np.float64(values[0])
     return span/(upper_limit-lower_limit)<fraction_threshold
 
