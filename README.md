@@ -502,3 +502,7 @@ reduce cache misses on planar/Fortran views. Object-backed arrays and subclasses
 unsupported alpha array casts, signaling NaNs in alpha/background metadata, and exceptional RGBA arithmetic use
 explicit compatibility fallback. Native RGBA requires native byte order and finite
 input with magnitude at most `sqrt(finfo(input.dtype).max)/2`; quiet-NaN backgrounds follow upstream behavior.
+
+The [alpha report](benchmarks/alpha-parameters.md) records 184 one-worker
+comparisons against original scikit-image. The [fixed grayscale experiment](benchmarks/alpha-tuning.md)
+preserves before/after and confirmation timings for reversed, stepped and endian storage.
