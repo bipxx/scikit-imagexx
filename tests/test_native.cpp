@@ -1,3 +1,4 @@
+#include "skimagexx/integral.hpp"
 #include "../src/execution.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -107,6 +108,34 @@ int main() {
             try {gray_expand_rows_into(image,nullptr,output,1,1,6,3,offsets,nullptr,6,0,0,bad);}
             catch(const std::invalid_argument&){rejected=true;}require(rejected);
             gray_expand_rows_into(nullptr,nullptr,nullptr,0,17,6,3,nullptr,nullptr,6,0,0,order);
+        }
+        {
+            const std::uint8_t input[]={1,2,3,4,5,6};
+            const std::uint64_t expected[]={1,3,6,5,12,21};std::uint64_t sums[6];
+            integral_image_into(input,sums,PixelType::uint8,PixelType::uint64,{2,3});
+            require(std::equal(sums,sums+6,expected));
+            const std::uint8_t fortran_input[]={1,4,2,5,3,6};
+            const std::uint64_t fortran_expected[]={1,5,3,12,6,21};
+            integral_image_into(fortran_input,sums,PixelType::uint8,PixelType::uint64,{2,3},{1,2});
+            require(std::equal(sums,sums+6,fortran_expected));
+            const auto maximum=std::numeric_limits<std::uint64_t>::max();
+            const std::uint64_t wrapping[]={maximum,1,maximum,1,maximum},wrapped[]={maximum,0,maximum,0,maximum};
+            integral_image_into(wrapping,sums,PixelType::uint64,PixelType::uint64,{5});
+            require(std::equal(sums,sums+5,wrapped));
+            const auto high=std::numeric_limits<std::int64_t>::max(),low=std::numeric_limits<std::int64_t>::min();
+            const std::int64_t signed_input[]={high,1,-1,low},signed_expected[]={high,low,high-1,-1};std::int64_t signed_sums[4];
+            integral_image_into(signed_input,signed_sums,PixelType::int64,PixelType::int64,{2,2});
+            require(std::equal(signed_sums,signed_sums+4,signed_expected));
+            const double cancellation[]={1e16,1,-1e16,2},ordered[]={1e16,1e16,0,2};double wide[4];
+            integral_image_into(cancellation,wide,PixelType::float64,PixelType::float64,{4});
+            require(std::equal(wide,wide+4,ordered));
+            const float narrow[]={16777216.f,1.f,-16777216.f};float single[3];
+            integral_image_into(narrow,wide,PixelType::float32,PixelType::float64,{3});require(wide[2]==1.);
+            integral_image_into(narrow,single,PixelType::float32,PixelType::float32,{3});require(single[2]==0.f);
+            const double negative_zero[]={-0.,-0.,-0.,-0.};
+            integral_image_into(negative_zero,wide,PixelType::float64,PixelType::float64,{2,2});
+            for(auto value:wide)require(value==0. && std::signbit(value));
+            integral_image_into(nullptr,nullptr,PixelType::uint8,PixelType::uint64,{3,0,5});
         }
         {
             const GaussianPass one{0,{.25,.5,.25},GaussianBorder::reflect,0};

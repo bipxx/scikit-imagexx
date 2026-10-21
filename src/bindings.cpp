@@ -1,3 +1,4 @@
+#include "skimagexx/integral.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
@@ -677,6 +678,29 @@ PYBIND11_MODULE(_core, m) {
         shape(image,true);
         return dispatch(image,[](const auto* p, auto* out, auto h, auto w) { skimagexx::rgb2gray_into(p,out,h,w); });
     },py::arg("image"));
+    m.def("integral_image", [](py::array image,py::array result) {
+        const auto source=pixel_type(image.dtype()),target=pixel_type(result.dtype());
+        auto dense=[](const py::array& array) {
+            if(!array.size())return true;
+            std::vector<std::pair<py::ssize_t,py::ssize_t>> axes;
+            for(py::ssize_t axis=0;axis<array.ndim();++axis)if(array.shape(axis)>1)axes.emplace_back(array.strides(axis),array.shape(axis));
+            std::sort(axes.begin(),axes.end());auto extent=array.itemsize();
+            for(const auto& axis:axes) {if(axis.first!=extent)return false;extent*=axis.second;}
+            return extent==array.nbytes();
+        };
+        auto input=image;
+        if(!dense(input) || !input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")("K").cast<py::array>();
+        if(!result.writeable() || !dense(result) || !result.attr("flags").attr("aligned").cast<bool>())throw py::type_error("dense aligned writable integral output required");
+        if(input.ndim()!=result.ndim())throw py::value_error("integral output shape mismatch");
+        std::vector<std::size_t> shape,strides;
+        for(py::ssize_t axis=0;axis<input.ndim();++axis) {
+            if(input.shape(axis)!=result.shape(axis))throw py::value_error("integral output shape mismatch");
+            if(input.size() && input.shape(axis)>1 && input.strides(axis)/input.itemsize()!=result.strides(axis)/result.itemsize())throw py::value_error("matching integral physical axis order required");
+            shape.push_back(std::size_t(input.shape(axis)));strides.push_back(std::size_t(result.strides(axis)/result.itemsize()));
+        }
+        {py::gil_scoped_release release;skimagexx::integral_image_into(input.data(),result.mutable_data(),source,target,shape,strides);}
+        return result;
+    });
     m.def("gaussian_difference", [](py::array first,py::array second) {
         const auto type=pixel_type(first.dtype());
         if(!first.dtype().equal(second.dtype()) || first.ndim()!=second.ndim() || !(first.flags()&py::array::c_style) || !(second.flags()&py::array::c_style) || !first.writeable() || !first.attr("flags").attr("aligned").cast<bool>() || !second.attr("flags").attr("aligned").cast<bool>())throw py::type_error("matching contiguous writable difference buffers required");

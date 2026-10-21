@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **90 partially native
+The reference is scikit-image **0.26.0**. There are currently **91 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 358 remain pending native implementation and dedicated parity tests.
+export list; 357 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -58,6 +58,7 @@ This is not full scikit-image coverage.
 | `dtype_limits` | Boolean, integer, float16/32/64; `clip_negative` | Metadata only; no pixel processing |
 | `erosion`, `dilation`, `opening`, `closing`, `white_tophat`, `black_tophat` | ND arrays, including empty; bool, signed/unsigned 8/16/32/64-bit integers, float32/64; all eight modes, constant fill, flat footprints/sequences; same-dtype output buffers, overlapping/strided views | Exact values on the documented domain; upstream footprint mirroring/centering, integer buffering and wrapping; grayscale NaN inputs/constant fill require fallback |
 | `binary_erosion`, `binary_dilation`, `binary_opening`, `binary_closing` | Same input dtypes/dimensions; nonzero truth, including NaN; `ignore`/`max`/`min` modes; footprints/sequences, including convergence iterations; any supported numeric output dtype | Exact bool/numeric 0/1 values; original deprecation warnings retained |
+| `transform.integral_image` | N-D real arrays, including empty/strided/endian storage; all 12 real image dtypes; default 64-bit accumulation, explicit int64/uint64 for integer inputs and float64 for all real inputs, explicit float32 for float32 input; scalar identity | Exact ordered cumulative sums, signed/unsigned modular overflow, signed zero, output physical layout and dtype tags; floating exceptional arithmetic uses explicit fallback |
 
 Histogram thresholds use native image scans and selectors. Floating bin edges and
 centers use small NumPy metadata arrays to preserve version-specific rounding.
@@ -179,8 +180,8 @@ mask = edges > filters.threshold_mean(edges)
 
 For compatibility during migration, install `pip install ".[compat]"` and leave
 fallback enabled (the default). Unsupported calls warn and execute original
-scikit-image. `filters`, `color`, `exposure`, `morphology`, and `util` expose native wrappers. Other top-level
-processing namespaces such as `measure` and `transform` currently
+scikit-image. `filters`, `color`, `exposure`, `morphology`, `transform`, and `util` expose native wrappers.
+Unported operations in these modules and processing namespaces such as `measure`
 expose upstream-only objects, reported with warnings. Classes and nested modules
 are original upstream objects, not accelerated implementations. This does not
 patch `sys.modules`, change already imported scikit-image symbols, or guarantee
@@ -189,7 +190,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 92 covered wrapper signatures have per-function parity tests. Tests also run
+All 93 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -354,7 +355,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all fifteen reports with their default workloads:
+To rebuild and reproduce all sixteen reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt
@@ -377,17 +378,18 @@ python benchmarks/stains.py --size 512 --threads 1 4
 python benchmarks/distance.py --size 512 --threads 1 4
 python benchmarks/morphology.py --size 512 --threads 1 4
 python benchmarks/gaussian.py --size 512 --threads 1 4
+python benchmarks/integral.py --size 512 --threads 1 4
 python benchmarks/summarize.py
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The published serial function benchmark covers 92 entries in 536 cases.
+performance. The published serial function benchmark covers 93 entries in 542 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-passes 29,425 checks in each SIMD mode on Windows and Linux; inventory checks alone do not
+runs per-function reference checks in each SIMD mode on Windows and Linux; inventory checks alone do not
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
@@ -572,3 +574,19 @@ initial implementation, optimized results and an independent confirmation,
 including slower observations. The native C++ interface in
 `include/skimagexx/gaussian_nd.hpp` accepts ordered axis kernels and caller-owned
 output buffers without requiring Python.
+
+
+Integral images retain logical axis order while processing dense physical layouts,
+so Fortran and transposed images preserve upstream output strides. Integer sums
+use defined unsigned modular arithmetic, including signed output bit patterns.
+AVX2 accelerates raw integer conversion, independent column sums and integer
+prefixes; floating prefixes retain upstream addition order. All stages share the
+global optional worker limit. NumPy handles small dtype metadata and output
+allocation; raw conversion and cumulative image arithmetic run in C++.
+
+The native integral-image working range excludes nonfinite and potentially
+overflowing floating arithmetic. Unsupported target precisions and input
+subclasses use explicit fallback. Zero-dimensional inputs preserve upstream
+identity and dtype-validation order. The [integral report](benchmarks/integral-parameters.md)
+checks 148 one-worker workloads, and `include/skimagexx/integral.hpp` exposes
+caller-owned output buffers with optional dense physical strides for C++ callers.

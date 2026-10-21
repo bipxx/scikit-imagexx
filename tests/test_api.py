@@ -8,9 +8,10 @@ import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
+from skimage import transform as reference_transform
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
-           (xx.exposure, reference_exposure), (xx.morphology,reference_morphology)]
+           (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__]
 
 
@@ -151,3 +152,14 @@ def test_mask_sequence_axis_and_histogram_fallback():
     with pytest.warns(xx.FallbackWarning):
         actual = xx.filters.sobel(a, axis=-1)
     np.testing.assert_array_equal(actual, reference_filters.sobel(a, axis=-1))
+
+
+def test_integral_pipeline_can_swap_backend():
+    image=np.random.default_rng(545).integers(0,256,(37,41,3),dtype=np.uint8)
+    def pipeline(backend):
+        gray=backend.color.rgb2gray(image)
+        smooth=backend.filters.gaussian(gray,.75)
+        return backend.transform.integral_image(smooth)
+    actual,expected=pipeline(xx),pipeline(skimage)
+    assert actual.dtype==expected.dtype and actual.strides==expected.strides
+    np.testing.assert_allclose(actual,expected,rtol=2e-13,atol=2e-13)

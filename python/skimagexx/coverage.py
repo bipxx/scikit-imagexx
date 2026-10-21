@@ -1,5 +1,6 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'transform': ('integral_image',),
     'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -66,6 +67,7 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api=='transform.integral_image':return (0.,0.)
     name = str(dtype)
     single = name == 'float32'
     if api=='color.deltaE_ciede2000' and single:

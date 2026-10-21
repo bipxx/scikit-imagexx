@@ -11,6 +11,9 @@ namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
 std::size_t gaussian_difference(const void*,const void*,void*,std::size_t,bool);
 std::size_t gaussian_unsharp(const void*,const void*,void*,std::size_t,bool,bool,double,bool,bool,double);
+std::size_t integral_prefix_u64(std::uint64_t*,std::size_t);
+std::size_t integral_cast_u64(const void*,std::uint64_t*,std::size_t,PixelType);
+std::size_t integral_add(const void*,void*,std::size_t,PixelType);
 std::size_t gaussian_prepare(const void*,double*,std::size_t,PixelType,bool);
 std::size_t gaussian_rows(const void* const*,const void* const*,const void*,void*,std::size_t,std::size_t,const double*,double,double,bool,bool);
 std::size_t farid_row(const void* const*,const std::ptrdiff_t*,const double*,std::size_t,void*,PixelType,std::size_t,std::size_t,std::size_t,double,bool,bool);
