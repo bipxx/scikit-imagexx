@@ -670,6 +670,22 @@ int main() {
             }
         }
     }
+    {
+        const std::uint16_t pattern[]={0,0x8000,1,0x8001,0x3c00,0xbc00,0x7bff,0xfbff};
+        const auto count=std::size_t(65);
+        for(bool endian:{false,true}) {
+            std::vector<unsigned char> source(2*count+1);
+            for(std::size_t i=0;i<count;++i) {
+                const auto value=pattern[i%8];const auto* bytes=reinterpret_cast<const unsigned char*>(&value);
+                source[1+2*i]=bytes[endian ? 1 : 0];source[2+2*i]=bytes[endian ? 0 : 1];
+            }
+            LocalMeanView view{source.data()+1,PixelType::uint16,true,endian,{count},{2}};
+            std::vector<std::uint16_t> output(count+2,0x7777);
+            require(downscale_local_mean_into(view,{1},nullptr,output.data()+1,{2}));
+            require(output.front()==0x7777 && output.back()==0x7777);
+            for(std::size_t i=0;i<count;++i)require(output[i+1]==(pattern[i%8]==0x8000 ? 0 : pattern[i%8]));
+        }
+    }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);

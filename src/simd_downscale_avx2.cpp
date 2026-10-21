@@ -23,6 +23,11 @@ template<> struct Vector<float> {
     }
     static Register reverse(Register a){return _mm256_permutevar8x32_ps(a,_mm256_setr_epi32(7,6,5,4,3,2,1,0));}
     static Register zero_sum(Register a){return _mm256_andnot_ps(_mm256_cmp_ps(a,fill(0),_CMP_EQ_OQ),a);}
+    static Register swap_words(Register a) {
+        const auto order=_mm256_setr_epi8(3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12,
+                                         3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12);
+        return _mm256_castsi256_ps(_mm256_shuffle_epi8(_mm256_castps_si256(a),order));
+    }
     static Register pairs(Register a,Register b) {
         return _mm256_castsi256_ps(_mm256_permute4x64_epi64(_mm256_castps_si256(_mm256_hadd_ps(a,b)),0xd8));
     }
@@ -44,6 +49,11 @@ template<> struct Vector<double> {
     }
     static Register reverse(Register a){return _mm256_permute4x64_pd(a,0x1b);}
     static Register zero_sum(Register a){return _mm256_andnot_pd(_mm256_cmp_pd(a,fill(0),_CMP_EQ_OQ),a);}
+    static Register swap_words(Register a) {
+        const auto order=_mm256_setr_epi8(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8,
+                                         7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
+        return _mm256_castsi256_pd(_mm256_shuffle_epi8(_mm256_castpd_si256(a),order));
+    }
     static Register pairs(Register a,Register b){return _mm256_permute4x64_pd(_mm256_hadd_pd(a,b),0xd8);}
     static bool bad(Register a,double bound) {
         const auto absolute=_mm256_andnot_pd(_mm256_set1_pd(-0.),a);
@@ -128,6 +138,19 @@ template<class Value> Value span_sum(const unsigned char* source,std::size_t cou
     return sum;
 }
 
+template<class Value> std::size_t linear_float(const void* input,void* output,std::size_t count,
+    bool swap,Value bound,bool& supported) {
+    using Op=Vector<Value>;std::size_t i=0;
+    const auto* source=static_cast<const Value*>(input);auto* target=static_cast<Value*>(output);
+    for(;i+Op::lanes<=count;i+=Op::lanes) {
+        auto value=Op::load(source+i);
+        if(swap)value=Op::swap_words(value);
+        if(Op::bad(value,bound))supported=false;
+        Op::store(target+i,Op::zero_sum(value));
+    }
+    return i;
+}
+
 template<class Op,class Getter> typename Op::Register vector_sum(std::size_t begin,std::size_t count,const Getter& get) {
     if(count<8) {
         auto sum=Op::fill(-0.0);
@@ -209,6 +232,36 @@ template<class Value,bool Half=false> std::size_t row(const void* input,void* ou
     return begin;
 }
 }
+std::size_t downscale_linear(const void* input,void* output,std::size_t count,PixelType type,
+    bool half,bool swap,double bound,bool& supported) {
+    if(half) {
+        const auto* source=static_cast<const unsigned char*>(input);auto* target=static_cast<unsigned char*>(output);
+        const auto reverse=_mm256_setr_epi8(1,0,3,2,5,4,7,6,9,8,11,10,13,12,15,14,
+                                           1,0,3,2,5,4,7,6,9,8,11,10,13,12,15,14);
+        const auto exponent=_mm256_set1_epi16(0x7c00),negative_zero=_mm256_set1_epi16(-32768);
+        std::size_t i=0;
+        for(;i+16<=count;i+=16) {
+            auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(source+2*i));
+            if(swap)words=_mm256_shuffle_epi8(words,reverse);
+            if(_mm256_movemask_epi8(_mm256_cmpeq_epi16(_mm256_and_si256(words,exponent),exponent)))supported=false;
+            words=_mm256_andnot_si256(_mm256_cmpeq_epi16(words,negative_zero),words);
+            _mm256_storeu_si256(reinterpret_cast<__m256i*>(target+2*i),words);
+        }
+        return i;
+    }
+    if(type==PixelType::float32)return linear_float<float>(input,output,count,swap,float(bound),supported);
+    if(type==PixelType::float64)return linear_float<double>(input,output,count,swap,bound,supported);
+    if(!swap || pixel_size(type)==1)return gaussian_prepare(input,static_cast<double*>(output),count,type,true);
+    const auto bytes=pixel_size(type),end=count/4*4;
+    alignas(32) unsigned char normalized[128*8];std::size_t i=0;
+    for(;i<end;) {
+        const auto length=std::min(std::size_t(128),end-i);
+        native_words(static_cast<const unsigned char*>(input)+i*bytes,normalized,length,bytes);
+        gaussian_prepare(normalized,static_cast<double*>(output)+i,length,type,true);i+=length;
+    }
+    return i;
+}
+
 double downscale_sum(const void* input,std::size_t count,std::ptrdiff_t stride,PixelType type,
     bool half,bool swap,double bound,bool& supported) {
     if(!count)return 0.;

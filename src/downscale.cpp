@@ -119,10 +119,11 @@ template<class Input,class Value,bool Boolean=false,bool Half=false> bool run(co
 #ifdef SKIMAGEXX_AVX2
             if(linear && vectorized) {
                 bool valid=true;
-                const auto done=simd::downscale_row(image.data,output,1,geometry.count,0,sizeof(Input),0,1,1,
-                    index,end,image.type,Half,image.swap,0.,double(bound),valid);
+                const auto done=simd::downscale_linear(bytes+index*sizeof(Input),
+                    static_cast<unsigned char*>(output)+index*(Half ? 2 : sizeof(Value)),end-index,
+                    image.type,Half,image.swap,double(bound),valid);
                 if(!valid)supported[worker]=0;
-                if(done>index) {index=done-1;continue;}
+                if(done) {index+=done-1;continue;}
             }
             if(rank==2 && vectorized) {
                 const auto inner=geometry.output_axes.back(),outer=geometry.output_axes.front();
