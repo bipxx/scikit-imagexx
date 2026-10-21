@@ -31,15 +31,17 @@ histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDb
 CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB, Lab/LCh and Luv/XYZ/sRGB conversions;
 six grayscale and four binary morphology functions.
 Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
-There are 69 partial native image entries, two metadata helpers,
-and 379 pending entries in the current
+CIE76 distance supports raw Lab dtype promotion, broadcasting and extra channels;
+color-space routing composes the native kernels for all nine upstream spaces.
+There are 71 partial native image entries, two metadata helpers,
+and 377 pending entries in the current
 450-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
 
-- Port color-distance APIs and remaining color conversions with the same
+- Port CIE94, CIEDE2000, CMC and remaining color conversions with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.

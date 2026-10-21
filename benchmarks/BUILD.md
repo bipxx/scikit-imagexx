@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 69 native image functions, two metadata
-helpers, and 820 per-function performance cases. The suite now has 14095 checks in both SIMD
+The current function benchmark covers 71 native image functions, two metadata
+helpers, and 844 per-function performance cases. The suite now has 15381 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -76,3 +76,12 @@ from `aa6e251` to `0316dba`, where geometric-mean native latency fell from
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the
 JSON; small differences should not be treated as stable performance guarantees.
+
+`color-distance.json` adds 84 comparisons for CIE76 layouts, mixed dtypes and
+representative composed color routes, including identity and out-of-gamut HSV.
+The latter verify each stage and a propagated ratio bound; identity rows are
+excluded from native processing speedup counts. CIE76 uses a fused one-pass
+SIMD kernel, raw integer casts and the process-wide worker limit.
+`distance-tuning.json` retains the historical five-case uint8 experiment from
+`c98d286` to `f2910d0`: geometric-mean native latency fell from 2.6574 to
+0.7389 ms. Its snapshots are excluded from the current-source aggregate.
