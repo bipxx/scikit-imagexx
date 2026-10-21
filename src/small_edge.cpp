@@ -2,6 +2,7 @@
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include "simd.hpp"
+#include "half.hpp"
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -157,15 +158,7 @@ void edge_half_to_float(const std::uint16_t* input,float* output,std::size_t cou
         if(has_avx2())begin+=simd::edge_half(input+begin,output+begin,end-begin);
 #endif
         for(auto j=begin;j<end;++j) {
-            const auto h=input[j];const auto sign=std::uint32_t(h&0x8000)<<16;
-            std::uint32_t mantissa=h&1023,exponent=(h>>10)&31,bits=sign;
-            if(exponent==31)bits|=0x7f800000U|(mantissa<<13);
-            else if(exponent)bits|=((exponent+112)<<23)|(mantissa<<13);
-            else if(mantissa) {
-                int shift=0;while((mantissa&1024)==0) {mantissa<<=1;++shift;}
-                bits|=(std::uint32_t(113-shift)<<23)|((mantissa&1023)<<13);
-            }
-            std::memcpy(output+j,&bits,4);
+            output[j]=detail::decode_half(input[j]);
         }
     });
 }

@@ -9,6 +9,8 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t downscale_row(const void*,void*,std::size_t,std::size_t,std::ptrdiff_t,
+    std::size_t,std::size_t,std::size_t,std::size_t,std::size_t,PixelType,bool,double,double,bool&);
 std::size_t integrate_add(const double*,double*,std::size_t);
 std::size_t gaussian_difference(const void*,const void*,void*,std::size_t,bool);
 std::size_t gaussian_unsharp(const void*,const void*,void*,std::size_t,bool,bool,double,bool,bool,double);

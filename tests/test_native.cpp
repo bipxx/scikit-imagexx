@@ -1,5 +1,6 @@
 #include "skimagexx/integral.hpp"
 #include "skimagexx/integrate.hpp"
+#include "skimagexx/downscale.hpp"
 #include "../src/execution.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -534,6 +535,68 @@ int main() {
         delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::cmc);
         require(std::abs(weighted-5/(.040975*50/(1+.01765*50)))<1e-12);
         delta_e_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float32,DistanceMetric::cmc,{},true,true);
+    }
+    {
+        std::int16_t image[15];for(int i=0;i<15;++i)image[i]=std::int16_t(i);
+        const std::int16_t fill=-1;
+        LocalMeanView view{image,PixelType::int16,false,false,{3,5},{10,2}};
+        double output[4];
+        require(downscale_local_mean_into(view,{2,3},&fill,output,{16,8}));
+        const double expected[]={21./6,22./6,30./6,23./6};
+        for(int i=0;i<4;++i)require(output[i]==expected[i]);
+        view.data=image+14;view.strides={-10,-2};
+        require(downscale_local_mean_into(view,{2,3},&fill,output,{16,8}));
+        for(std::size_t y=0;y<2;++y)for(std::size_t x=0;x<2;++x) {
+            double sum=0;
+            for(std::size_t dy=0;dy<2;++dy)for(std::size_t dx=0;dx<3;++dx) {
+                const auto row=2*y+dy,column=3*x+dx;
+                sum+=row<3 && column<5 ? image[14-row*5-column] : fill;
+            }
+            require(output[2*y+x]==sum/6);
+        }
+        view={image,PixelType::int16,false,false,{5,3},{2,10}};
+        require(downscale_local_mean_into(view,{3,2},&fill,output,{8,16}));
+        for(int i=0;i<4;++i)require(output[i]==expected[i]);
+        std::array<unsigned char,31> unaligned{};
+        const auto* bytes=reinterpret_cast<const unsigned char*>(image);
+        for(int i=0;i<15;++i) {unaligned[1+2*i]=bytes[2*i+1];unaligned[2+2*i]=bytes[2*i];}
+        view={unaligned.data()+1,PixelType::int16,false,true,{3,5},{10,2}};
+        require(downscale_local_mean_into(view,{2,3},&fill,output,{16,8}));
+        for(int i=0;i<4;++i)require(output[i]==expected[i]);
+        bool caught=false;
+        try {downscale_local_mean_into(view,{0,3},&fill,output,{16,8});}catch(const std::invalid_argument&){caught=true;}
+        require(caught);caught=false;
+        try {downscale_local_mean_into(view,{2,3},&fill,output,{0,8});}catch(const std::invalid_argument&){caught=true;}
+        require(caught);caught=false;
+        view.strides[0]=std::numeric_limits<std::ptrdiff_t>::max();
+        try {downscale_local_mean_into(view,{2,3},&fill,output,{16,8});}catch(const std::overflow_error&){caught=true;}
+        require(caught);
+        view={nullptr,PixelType::float64,false,false,{0,5},{0,0}};
+        require(downscale_local_mean_into(view,{2,3},nullptr,nullptr,{0,0}));
+    }
+    {
+        const std::uint16_t image[]={0x3c00,0x3c01,0x3c01,0x3c02};
+        std::uint16_t output[2];
+        LocalMeanView view{image,PixelType::uint16,true,false,{4},{2}};
+        require(downscale_local_mean_into(view,{2},nullptr,output,{2}));
+        require(output[0]==0x3c00 && output[1]==0x3c02);
+        const float negative_zero=-0.f;float mean;
+        view={&negative_zero,PixelType::float32,false,false,{1,1},
+            {std::numeric_limits<std::ptrdiff_t>::min(),std::numeric_limits<std::ptrdiff_t>::max()}};
+        require(downscale_local_mean_into(view,{1,1},nullptr,&mean,{0,0}));
+        require(mean==0 && !std::signbit(mean));
+        const float nonfinite=std::numeric_limits<float>::infinity();view.data=&nonfinite;
+        require(!downscale_local_mean_into(view,{1,1},nullptr,&mean,{0,0}));
+    }
+    {
+        const std::uint8_t repeated=3;std::vector<double> output(257*259);
+        LocalMeanView view{&repeated,PixelType::uint8,false,false,{513,517},{0,0}};
+        for(auto workers:{1,4}) {
+            set_num_threads(workers);
+            require(downscale_local_mean_into(view,{2,2},&repeated,output.data(),{259*8,8}));
+            for(auto value:output)require(value==3.);
+        }
+        set_num_threads(1);
     }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }

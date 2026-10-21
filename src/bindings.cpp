@@ -1,4 +1,5 @@
 #include "skimagexx/integrate.hpp"
+#include "skimagexx/downscale.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -206,6 +207,40 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 
 PYBIND11_MODULE(_core, m) {
     if(_import_array()<0)throw py::error_already_set();
+    m.def("downscale_local_mean",[](py::array image,py::array result,
+        const std::vector<std::size_t>& factors,py::object constant) {
+        skimagexx::LocalMeanView view;view.data=image.data();
+        const auto descriptor=image.dtype();view.half=descriptor.kind()=='f' && descriptor.itemsize()==2;
+        view.swap=!PyArray_ISNOTSWAPPED(reinterpret_cast<PyArrayObject*>(image.ptr()));
+        const auto native_descriptor=view.swap ? py::dtype::from_args(descriptor.attr("type")) : descriptor;
+        view.type=view.half ? skimagexx::PixelType::uint16 : pixel_type(native_descriptor);
+        if(result.ndim()!=image.ndim() || factors.size()!=std::size_t(image.ndim()) || !result.writeable())
+            throw py::value_error("invalid local-mean output dimensions");
+        const auto output_descriptor=result.dtype();
+        const bool valid_output=view.half ? output_descriptor.kind()=='f' && output_descriptor.itemsize()==2
+            : pixel_type(output_descriptor)==(view.type==skimagexx::PixelType::float32 ? skimagexx::PixelType::float32 : skimagexx::PixelType::float64);
+        if(!valid_output || !PyArray_ISNOTSWAPPED(reinterpret_cast<PyArrayObject*>(result.ptr())))
+            throw py::type_error("native local-mean output dtype required");
+        std::vector<std::size_t> output_strides;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            const auto length=std::size_t(image.shape(axis)),factor=factors[std::size_t(axis)];
+            if(!factor || std::size_t(result.shape(axis))!=(length ? (length-1)/factor+1 : 0))
+                throw py::value_error("invalid local-mean output shape");
+            view.shape.push_back(length);view.strides.push_back(image.strides(axis));
+            if(result.strides(axis)<0)throw py::value_error("positive local-mean output strides required");
+            output_strides.push_back(std::size_t(result.strides(axis)));
+        }
+        const void* constant_data=nullptr;
+        if(!constant.is_none()) {
+            const auto constant_storage=constant.cast<py::array>();
+            if(constant_storage.size()!=1 || !dtype_matches(constant_storage.dtype(),descriptor))
+                throw py::type_error("one input-storage padding constant required");
+            constant_data=constant_storage.data();
+        }
+        auto* output_data=result.mutable_data();
+        py::gil_scoped_release release;
+        return skimagexx::downscale_local_mean_into(view,factors,constant_data,output_data,output_strides);
+    });
     m.def("distance_metric",[](py::array first,py::array second,int operation,std::array<double,5> parameters,
         bool wide_trig,bool promoted_cmc) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)

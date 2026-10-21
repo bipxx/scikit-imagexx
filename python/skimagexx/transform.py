@@ -98,3 +98,54 @@ def integrate(ii,start,end):
         del result
         return _integrate_fallback(ii,start,end)
     return result
+
+
+_MEAN_DTYPES={}
+
+
+def downscale_local_mean(image,factors,cval=0,clip=True):
+    """Average raw values over local blocks, with after-only constant padding."""
+    def upstream():return fallback('transform','downscale_local_mean',image,factors,cval=cval,clip=clip)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _REAL_TYPES:return upstream()
+    # Validation order follows block_reduce/view_as_blocks. Only shape, factor
+    # and constant metadata use NumPy; no image pixel is padded or reduced here.
+    if np.isscalar(factors):block_shape=(factors,)*image.ndim
+    else:
+        if len(factors)!=image.ndim:raise ValueError('`block_size` must be a scalar or have the same length as `image.shape`')
+        block_shape=factors
+    after=[]
+    for length,factor in zip(image.shape,block_shape):
+        if factor<1:raise ValueError('Down-sampling factors must be >= 1. Use `skimage.transform.resize` to up-sample an image.')
+        remainder=length%factor
+        after.append(factor-remainder if remainder else 0)
+    padded=any(after);constant=None
+    if padded:
+        # np.pad checks the complete width descriptor before casting cval.
+        widths=np.asarray([(0,width) for width in after])
+        if widths.dtype.kind not in 'iu':raise TypeError('`pad_width` must be of integral type.')
+        values=np.asarray(cval)
+        if values.size!=1 or values.ndim>=3:return upstream()
+        # np.pad first normalizes scalar constants to NumPy scalars. This
+        # distinction matters for out-of-range signed-to-unsigned assignment.
+        constant=np.empty((),dtype=image.dtype);constant[()]=values.reshape(-1)[0]
+    if not isinstance(block_shape,tuple):raise TypeError('block needs to be a tuple')
+    if not all(isinstance(factor,(int,np.integer)) and not isinstance(factor,(bool,np.bool_)) for factor in block_shape):
+        # Zero-byte storage asks NumPy's shape converter to reproduce upstream
+        # scalar-type errors without allocating or inspecting image pixels.
+        descriptor=np.array(block_shape)
+        dimensions=tuple((np.array(image.shape)+np.array(after))//descriptor)+tuple(descriptor)
+        np.empty(dimensions,dtype='V0')
+        return upstream()
+    block_shape=tuple(int(factor) for factor in block_shape)
+    if image.dtype.kind=='f' and np.geterr()['under']!='ignore':return upstream()
+    source=image.dtype
+    if source.metadata is None:
+        target=_MEAN_DTYPES.get(source)
+        if target is None:
+            target=np.empty((0,1),dtype=source).mean(axis=1).dtype;_MEAN_DTYPES[source]=target
+    else:target=np.empty((0,1),dtype=source).mean(axis=1).dtype
+    shape=tuple((length-1)//factor+1 if length else 0 for length,factor in zip(image.shape,block_shape))
+    if padded:result=np.empty(shape,dtype=target,order='F' if image.flags.f_contiguous else 'C')
+    else:result=np.empty_like(image,shape=shape,dtype=target,order='K',subok=False)
+    if not _core.downscale_local_mean(image,result,block_shape,constant):return upstream()
+    return result[()] if not image.ndim else result
