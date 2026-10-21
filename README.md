@@ -520,3 +520,6 @@ Nonempty float16 masks raise the same upstream `RuntimeError`; empty masks follo
 upstream broadcasting. The [edge report](benchmarks/edge-parameters.md) records
 one-thread comparisons for dtypes, dimensions, layouts and masks, while the
 [fixed column experiment](benchmarks/edge-tuning.md) retains tuning observations.
+
+The pure C++ interface in `include/skimagexx/small_edge.hpp` includes typed
+numeric and binary16 entry points with caller-owned output buffers.

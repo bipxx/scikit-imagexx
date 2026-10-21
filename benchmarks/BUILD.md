@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 81 native image functions, two metadata
-helpers, and 482 one-worker per-function performance cases. The suite now has 20081 checks in both SIMD
+The current function benchmark covers 85 native image functions, two metadata
+helpers, and 506 one-worker per-function performance cases. The suite now has 22999 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -125,3 +125,15 @@ covering all eleven compositing numeric dtypes, float16 grayscale expansion,
 planar/Fortran/negative/stepped strides, endian storage, backgrounds and alpha
 broadcasting. `src/simd_alpha_avx2.cpp` uses the same runtime-dispatched AVX2
 and strict floating-point flags as the existing color kernels.
+
+The Laplace/Roberts family adds 2838 dedicated cases, including all 12 real image
+dtypes, nonnative storage, memory-mapped arrays, N-D Laplace, masks and singleton
+axes. The full 22999-case suite passes with SIMD enabled and disabled. Linux
+passes the family and fallback-policy checks in both modes; address/undefined
+sanitizer C++ checks also pass. Native/portable CTest covers typed buffers,
+normalization, half decoding, reflected edges, byte swapping and signed zeros.
+`edge-parameters.json` records 260 one-worker comparisons across every numeric
+input dtype, ordinary/strided/Fortran/unaligned/thin layouts, N-D volumes and
+broadcast masks. The fixed column experiment retains initial and confirmation
+measurements separately from the current-source aggregate. The new SIMD source
+is `src/simd_small_edge_avx2.cpp`, compiled with the existing strict AVX2 flags.
