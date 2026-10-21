@@ -5,7 +5,8 @@ from . import filters, color, util
 from .filters import (gaussian, sobel, sobel_h, sobel_v, prewitt, prewitt_h, prewitt_v,
                       scharr, scharr_h, scharr_v, threshold_otsu, threshold_mean)
 from .color import rgb2gray, gray2rgb
-from .util import invert
+from .util import (invert, img_as_float, img_as_float32, img_as_float64,
+                   img_as_ubyte, img_as_uint, img_as_int, img_as_bool, dtype_limits)
 
 __version__ = "0.1.0"
 __all__ = filters.__all__ + color.__all__ + util.__all__ + [

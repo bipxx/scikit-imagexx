@@ -1,4 +1,5 @@
 #include "skimagexx/image.hpp"
+#include "skimagexx/convert.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <string>
@@ -6,6 +7,30 @@
 
 namespace py = pybind11;
 namespace {
+skimagexx::PixelType pixel_type(const py::dtype& dtype) {
+    using Type = skimagexx::PixelType;
+    const auto kind = dtype.kind();
+    const auto size = dtype.itemsize();
+    if (size > 1 && !dtype.attr("isnative").cast<bool>()) throw py::type_error("native byte order is required");
+    if (kind == 'b' && size == 1) return Type::boolean;
+    if (kind == 'u') {
+        if (size == 1) return Type::uint8;
+        if (size == 2) return Type::uint16;
+        if (size == 4) return Type::uint32;
+        if (size == 8) return Type::uint64;
+    }
+    if (kind == 'i') {
+        if (size == 1) return Type::int8;
+        if (size == 2) return Type::int16;
+        if (size == 4) return Type::int32;
+        if (size == 8) return Type::int64;
+    }
+    if (kind == 'f') {
+        if (size == 4) return Type::float32;
+        if (size == 8) return Type::float64;
+    }
+    throw py::type_error("unsupported dtype for native conversion");
+}
 void shape(const py::array& a, bool rgb) {
     if (a.ndim() != (rgb ? 3 : 2) || (rgb && a.shape(2) != 3))
         throw py::value_error(rgb ? "expected an HxWx3 RGB image" : "expected a 2D grayscale image");
@@ -39,6 +64,21 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("convert", [](py::array image, py::dtype dtype) {
+        const auto source_type = pixel_type(image.dtype()), target_type = pixel_type(dtype);
+        auto input = py::array::ensure(image,py::array::c_style);
+        if (!input) throw py::type_error("unable to make input contiguous");
+        if ((reinterpret_cast<std::uintptr_t>(input.data()) % skimagexx::pixel_size(source_type)) != 0)
+            input = py::array::ensure(input.attr("copy")(),py::array::c_style);
+        py::array output(dtype,std::vector<py::ssize_t>(input.shape(),input.shape()+input.ndim()));
+        const auto* source = input.data(); auto* destination = output.mutable_data();
+        const auto n = static_cast<std::size_t>(input.size());
+        skimagexx::ConversionInfo info;
+        { py::gil_scoped_release release; info = skimagexx::convert_into(source,destination,n,source_type,target_type); }
+        const bool unsigned_input = input.dtype().kind() == 'u';
+        py::object maximum = unsigned_input ? py::object(py::int_(info.maximum_unsigned)) : py::object(py::int_(info.maximum_signed));
+        return py::make_tuple(output,info.downcast_without_scaling,info.nan_to_integer,info.floating_overflow,info.floating_underflow,info.invalid_float_cast,maximum);
+    },py::arg("image"),py::arg("dtype"));
     m.def("histogram_u8", [](py::array image, bool full_range, bool normalize, bool cumulative) -> py::tuple {
         if (!image.size()) throw py::value_error("image must be nonempty");
         if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("histogram requires uint8");

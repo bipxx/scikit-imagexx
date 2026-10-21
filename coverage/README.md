@@ -2,9 +2,9 @@
 
 Reference: scikit-image 0.26.0.
 
-446 public callable names inventoried in 17 modules; 22 have partially native implementations with per-function tests and benchmarks.
+446 public callable names inventoried in 17 modules; 29 have partially native image implementations and 1 has metadata-only execution. All covered entries have per-function tests and benchmarks.
 
-An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback.
+An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries inspect dtype without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
 | API | Implementation | Dedicated parity test | Benchmark |
 |---|---|---|---|
@@ -434,14 +434,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.apply_parallel` | upstream-only | pending | pending |
 | `util.compare_images` | upstream-only | pending | pending |
 | `util.crop` | upstream-only | pending | pending |
-| `util.dtype_limits` | upstream-only | pending | pending |
-| `util.img_as_bool` | upstream-only | pending | pending |
-| `util.img_as_float` | upstream-only | pending | pending |
-| `util.img_as_float32` | upstream-only | pending | pending |
-| `util.img_as_float64` | upstream-only | pending | pending |
-| `util.img_as_int` | upstream-only | pending | pending |
-| `util.img_as_ubyte` | upstream-only | pending | pending |
-| `util.img_as_uint` | upstream-only | pending | pending |
+| `util.dtype_limits` | metadata | yes (partial input contract) | yes |
+| `util.img_as_bool` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_float` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_float32` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_float64` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_int` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_ubyte` | native-partial | yes (partial input contract) | yes |
+| `util.img_as_uint` | native-partial | yes (partial input contract) | yes |
 | `util.invert` | native-partial | yes (partial input contract) | yes |
 | `util.label_points` | upstream-only | pending | pending |
 | `util.lookfor` | upstream-only | pending | pending |

@@ -15,6 +15,7 @@ jobs:
       - run: python tools/inventory.py
       - run: python -m pytest -q
       - run: python benchmarks/coverage.py --sizes 64 --threads 1 --repeat 1 --output build/ci-performance.json
+      - run: python benchmarks/conversions.py --size 64 --threads 1 --dtypes uint16 int16 --output build/ci-conversions.json
       - run: python -m pytest -q
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'

@@ -1,238 +1,334 @@
 # Native function performance versus scikit-image
 
-Every native public function is checked before timing. Fallback is disabled; forwarding to scikit-image cannot count as native performance. Reference thread pools use one thread. Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.
+Every native public function is checked before timing. Fallback is disabled; forwarding to scikit-image cannot count as native performance. Reference thread pools use one thread. Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. Identity calls return the input unchanged; metadata calls inspect dtype only. Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.
 
-| API | Size | Dtype | Workers | Reference ms | Native ms | Speedup |
-|---|---:|---|---:|---:|---:|---:|
-| exposure.adjust_gamma | 256 | uint8 | 1 | 0.1486 | 0.0133 | 11.20x |
-| exposure.adjust_gamma | 256 | uint8 | 4 | 0.1526 | 0.0156 | 9.78x |
-| exposure.adjust_log | 256 | uint8 | 1 | 0.4544 | 0.0146 | 31.05x |
-| exposure.adjust_log | 256 | uint8 | 4 | 0.4861 | 0.0143 | 34.09x |
-| exposure.adjust_sigmoid | 256 | uint8 | 1 | 0.3804 | 0.0142 | 26.73x |
-| exposure.adjust_sigmoid | 256 | uint8 | 4 | 0.3779 | 0.0145 | 26.09x |
-| exposure.rescale_intensity | 256 | uint8 | 1 | 0.1658 | 0.0302 | 5.49x |
-| exposure.rescale_intensity | 256 | uint8 | 4 | 0.1800 | 0.0367 | 4.90x |
-| exposure.histogram | 256 | uint8 | 1 | 0.0904 | 0.0223 | 4.06x |
-| exposure.histogram | 256 | uint8 | 4 | 0.0976 | 0.0235 | 4.15x |
-| exposure.cumulative_distribution | 256 | uint8 | 1 | 0.1259 | 0.0199 | 6.32x |
-| exposure.cumulative_distribution | 256 | uint8 | 4 | 0.1090 | 0.0221 | 4.94x |
-| exposure.equalize_hist | 256 | uint8 | 1 | 2.3380 | 0.0546 | 42.79x |
-| exposure.equalize_hist | 256 | uint8 | 4 | 2.3197 | 0.0336 | 69.02x |
-| color.rgb2gray | 256 | uint8 | 1 | 0.3418 | 0.0507 | 6.75x |
-| color.rgb2gray | 256 | uint8 | 4 | 0.2938 | 0.0570 | 5.16x |
-| color.gray2rgb | 256 | uint8 | 1 | 0.0962 | 0.0083 | 11.62x |
-| color.gray2rgb | 256 | uint8 | 4 | 0.1325 | 0.0842 | 1.57x |
-| filters.gaussian | 256 | uint8 | 1 | 0.9085 | 0.2281 | 3.98x |
-| filters.gaussian | 256 | uint8 | 4 | 0.8716 | 0.2221 | 3.92x |
-| filters.sobel | 256 | uint8 | 1 | 1.2954 | 0.1711 | 7.57x |
-| filters.sobel | 256 | uint8 | 4 | 1.3644 | 0.1613 | 8.46x |
-| filters.sobel_h | 256 | uint8 | 1 | 0.6496 | 0.0862 | 7.53x |
-| filters.sobel_h | 256 | uint8 | 4 | 0.7371 | 0.1049 | 7.02x |
-| filters.sobel_v | 256 | uint8 | 1 | 0.5700 | 0.0690 | 8.26x |
-| filters.sobel_v | 256 | uint8 | 4 | 0.7615 | 0.0817 | 9.32x |
-| filters.prewitt | 256 | uint8 | 1 | 1.4053 | 0.1503 | 9.35x |
-| filters.prewitt | 256 | uint8 | 4 | 1.4140 | 0.1658 | 8.53x |
-| filters.prewitt_h | 256 | uint8 | 1 | 0.6293 | 0.0910 | 6.92x |
-| filters.prewitt_h | 256 | uint8 | 4 | 0.7846 | 0.0901 | 8.71x |
-| filters.prewitt_v | 256 | uint8 | 1 | 0.4633 | 0.0813 | 5.70x |
-| filters.prewitt_v | 256 | uint8 | 4 | 0.5444 | 0.0848 | 6.42x |
-| filters.scharr | 256 | uint8 | 1 | 1.1552 | 0.1520 | 7.60x |
-| filters.scharr | 256 | uint8 | 4 | 1.2238 | 0.1646 | 7.43x |
-| filters.scharr_h | 256 | uint8 | 1 | 0.5265 | 0.0866 | 6.08x |
-| filters.scharr_h | 256 | uint8 | 4 | 0.7017 | 0.0840 | 8.35x |
-| filters.scharr_v | 256 | uint8 | 1 | 0.6454 | 0.0823 | 7.84x |
-| filters.scharr_v | 256 | uint8 | 4 | 0.6105 | 0.0807 | 7.56x |
-| filters.threshold_mean | 256 | uint8 | 1 | 0.0561 | 0.0087 | 6.46x |
-| filters.threshold_mean | 256 | uint8 | 4 | 0.0635 | 0.0090 | 7.05x |
-| filters.threshold_otsu | 256 | uint8 | 1 | 0.1967 | 0.0217 | 9.07x |
-| filters.threshold_otsu | 256 | uint8 | 4 | 0.2035 | 0.0212 | 9.61x |
-| util.invert | 256 | uint8 | 1 | 0.0236 | 0.0040 | 5.94x |
-| util.invert | 256 | uint8 | 4 | 0.0296 | 0.0045 | 6.60x |
-| exposure.adjust_gamma | 256 | float32 | 1 | 0.1870 | 0.0225 | 8.33x |
-| exposure.adjust_gamma | 256 | float32 | 4 | 0.1602 | 0.0224 | 7.16x |
-| exposure.adjust_log | 256 | float32 | 1 | 0.3210 | 0.2309 | 1.39x |
-| exposure.adjust_log | 256 | float32 | 4 | 0.4278 | 0.2419 | 1.77x |
-| exposure.adjust_sigmoid | 256 | float32 | 1 | 0.2555 | 0.0696 | 3.67x |
-| exposure.adjust_sigmoid | 256 | float32 | 4 | 0.1492 | 0.0569 | 2.62x |
-| exposure.rescale_intensity | 256 | float32 | 1 | 0.1236 | 0.0501 | 2.47x |
-| exposure.rescale_intensity | 256 | float32 | 4 | 0.1448 | 0.0545 | 2.66x |
-| color.rgb2gray | 256 | float32 | 1 | 0.0672 | 0.0386 | 1.74x |
-| color.rgb2gray | 256 | float32 | 4 | 0.0741 | 0.0399 | 1.86x |
-| color.gray2rgb | 256 | float32 | 1 | 0.0884 | 0.0373 | 2.37x |
-| color.gray2rgb | 256 | float32 | 4 | 0.1105 | 0.0441 | 2.51x |
-| filters.gaussian | 256 | float32 | 1 | 0.7831 | 0.2024 | 3.87x |
-| filters.gaussian | 256 | float32 | 4 | 0.8085 | 0.1932 | 4.19x |
-| filters.sobel | 256 | float32 | 1 | 1.4882 | 0.0822 | 18.11x |
-| filters.sobel | 256 | float32 | 4 | 1.5190 | 0.0702 | 21.64x |
-| filters.sobel_h | 256 | float32 | 1 | 0.5257 | 0.0344 | 15.29x |
-| filters.sobel_h | 256 | float32 | 4 | 0.6275 | 0.0284 | 22.09x |
-| filters.sobel_v | 256 | float32 | 1 | 0.5337 | 0.0371 | 14.38x |
-| filters.sobel_v | 256 | float32 | 4 | 0.6673 | 0.0443 | 15.05x |
-| filters.prewitt | 256 | float32 | 1 | 1.2750 | 0.0619 | 20.58x |
-| filters.prewitt | 256 | float32 | 4 | 1.5376 | 0.0844 | 18.21x |
-| filters.prewitt_h | 256 | float32 | 1 | 0.6575 | 0.0310 | 21.24x |
-| filters.prewitt_h | 256 | float32 | 4 | 0.5818 | 0.0305 | 19.06x |
-| filters.prewitt_v | 256 | float32 | 1 | 0.6306 | 0.0363 | 17.36x |
-| filters.prewitt_v | 256 | float32 | 4 | 0.5411 | 0.0265 | 20.41x |
-| filters.scharr | 256 | float32 | 1 | 1.2661 | 0.0595 | 21.27x |
-| filters.scharr | 256 | float32 | 4 | 0.8650 | 0.0650 | 13.31x |
-| filters.scharr_h | 256 | float32 | 1 | 0.3359 | 0.0305 | 11.03x |
-| filters.scharr_h | 256 | float32 | 4 | 0.5170 | 0.0318 | 16.26x |
-| filters.scharr_v | 256 | float32 | 1 | 0.5287 | 0.0355 | 14.88x |
-| filters.scharr_v | 256 | float32 | 4 | 0.4870 | 0.0260 | 18.73x |
-| filters.threshold_mean | 256 | float32 | 1 | 0.0153 | 0.0074 | 2.08x |
-| filters.threshold_mean | 256 | float32 | 4 | 0.0189 | 0.0059 | 3.21x |
-| util.invert | 256 | float32 | 1 | 0.0109 | 0.0092 | 1.18x |
-| util.invert | 256 | float32 | 4 | 0.0097 | 0.0095 | 1.02x |
-| exposure.adjust_gamma | 256 | float64 | 1 | 0.2262 | 0.0397 | 5.70x |
-| exposure.adjust_gamma | 256 | float64 | 4 | 0.2298 | 0.0458 | 5.02x |
-| exposure.adjust_log | 256 | float64 | 1 | 0.6822 | 0.1800 | 3.79x |
-| exposure.adjust_log | 256 | float64 | 4 | 0.8150 | 0.1631 | 5.00x |
-| exposure.adjust_sigmoid | 256 | float64 | 1 | 0.7132 | 0.1845 | 3.87x |
-| exposure.adjust_sigmoid | 256 | float64 | 4 | 0.6228 | 0.1808 | 3.44x |
-| exposure.rescale_intensity | 256 | float64 | 1 | 0.1893 | 0.0963 | 1.97x |
-| exposure.rescale_intensity | 256 | float64 | 4 | 0.1674 | 0.0659 | 2.54x |
-| color.rgb2gray | 256 | float64 | 1 | 0.2125 | 0.1387 | 1.53x |
-| color.rgb2gray | 256 | float64 | 4 | 0.1280 | 0.1863 | 0.69x |
-| color.gray2rgb | 256 | float64 | 1 | 0.2150 | 0.0908 | 2.37x |
-| color.gray2rgb | 256 | float64 | 4 | 0.2036 | 0.0812 | 2.51x |
-| filters.gaussian | 256 | float64 | 1 | 0.8363 | 0.1655 | 5.05x |
-| filters.gaussian | 256 | float64 | 4 | 0.6893 | 0.2150 | 3.21x |
-| filters.sobel | 256 | float64 | 1 | 1.1960 | 0.1350 | 8.86x |
-| filters.sobel | 256 | float64 | 4 | 1.0580 | 0.2845 | 3.72x |
-| filters.sobel_h | 256 | float64 | 1 | 0.4329 | 0.0505 | 8.57x |
-| filters.sobel_h | 256 | float64 | 4 | 0.6413 | 0.0761 | 8.42x |
-| filters.sobel_v | 256 | float64 | 1 | 0.6288 | 0.0546 | 11.51x |
-| filters.sobel_v | 256 | float64 | 4 | 0.3883 | 0.1689 | 2.30x |
-| filters.prewitt | 256 | float64 | 1 | 1.3205 | 0.1378 | 9.58x |
-| filters.prewitt | 256 | float64 | 4 | 1.5725 | 0.3046 | 5.16x |
-| filters.prewitt_h | 256 | float64 | 1 | 0.7094 | 0.0688 | 10.31x |
-| filters.prewitt_h | 256 | float64 | 4 | 0.6017 | 0.0825 | 7.29x |
-| filters.prewitt_v | 256 | float64 | 1 | 0.7190 | 0.0636 | 11.30x |
-| filters.prewitt_v | 256 | float64 | 4 | 0.7792 | 0.1981 | 3.93x |
-| filters.scharr | 256 | float64 | 1 | 1.4634 | 0.1561 | 9.38x |
-| filters.scharr | 256 | float64 | 4 | 1.7355 | 0.3831 | 4.53x |
-| filters.scharr_h | 256 | float64 | 1 | 0.5934 | 0.0772 | 7.68x |
-| filters.scharr_h | 256 | float64 | 4 | 0.4020 | 0.0829 | 4.85x |
-| filters.scharr_v | 256 | float64 | 1 | 0.5968 | 0.0539 | 11.07x |
-| filters.scharr_v | 256 | float64 | 4 | 0.5241 | 0.0678 | 7.73x |
-| filters.threshold_mean | 256 | float64 | 1 | 0.0290 | 0.0153 | 1.89x |
-| filters.threshold_mean | 256 | float64 | 4 | 0.0250 | 0.0071 | 3.51x |
-| util.invert | 256 | float64 | 1 | 0.0305 | 0.0304 | 1.00x |
-| util.invert | 256 | float64 | 4 | 0.0331 | 0.0411 | 0.81x |
-| exposure.adjust_gamma | 1024 | uint8 | 1 | 2.7546 | 0.2473 | 11.14x |
-| exposure.adjust_gamma | 1024 | uint8 | 4 | 2.6110 | 0.2864 | 9.12x |
-| exposure.adjust_log | 1024 | uint8 | 1 | 28.3721 | 0.2123 | 133.67x |
-| exposure.adjust_log | 1024 | uint8 | 4 | 28.6012 | 0.2496 | 114.58x |
-| exposure.adjust_sigmoid | 1024 | uint8 | 1 | 35.7201 | 0.2579 | 138.49x |
-| exposure.adjust_sigmoid | 1024 | uint8 | 4 | 30.6846 | 0.2848 | 107.74x |
-| exposure.rescale_intensity | 1024 | uint8 | 1 | 26.0612 | 0.5677 | 45.91x |
-| exposure.rescale_intensity | 1024 | uint8 | 4 | 25.1424 | 0.2454 | 102.47x |
-| exposure.histogram | 1024 | uint8 | 1 | 5.3673 | 0.3029 | 17.72x |
-| exposure.histogram | 1024 | uint8 | 4 | 4.9888 | 0.1352 | 36.89x |
-| exposure.cumulative_distribution | 1024 | uint8 | 1 | 5.7769 | 0.3277 | 17.63x |
-| exposure.cumulative_distribution | 1024 | uint8 | 4 | 4.9589 | 0.1271 | 39.02x |
-| exposure.equalize_hist | 1024 | uint8 | 1 | 45.4125 | 3.8918 | 11.67x |
-| exposure.equalize_hist | 1024 | uint8 | 4 | 41.1910 | 1.7947 | 22.95x |
-| color.rgb2gray | 1024 | uint8 | 1 | 15.6496 | 3.1459 | 4.97x |
-| color.rgb2gray | 1024 | uint8 | 4 | 21.3769 | 2.2765 | 9.39x |
-| color.gray2rgb | 1024 | uint8 | 1 | 1.2541 | 0.2240 | 5.60x |
-| color.gray2rgb | 1024 | uint8 | 4 | 1.4598 | 0.1492 | 9.78x |
-| filters.gaussian | 1024 | uint8 | 1 | 29.6766 | 7.4435 | 3.99x |
-| filters.gaussian | 1024 | uint8 | 4 | 31.1911 | 4.2337 | 7.37x |
-| filters.sobel | 1024 | uint8 | 1 | 34.4395 | 4.1733 | 8.25x |
-| filters.sobel | 1024 | uint8 | 4 | 41.7390 | 2.3080 | 18.08x |
-| filters.sobel_h | 1024 | uint8 | 1 | 17.5639 | 3.7095 | 4.73x |
-| filters.sobel_h | 1024 | uint8 | 4 | 16.9978 | 2.1528 | 7.90x |
-| filters.sobel_v | 1024 | uint8 | 1 | 17.0360 | 3.8776 | 4.39x |
-| filters.sobel_v | 1024 | uint8 | 4 | 17.9793 | 2.0242 | 8.88x |
-| filters.prewitt | 1024 | uint8 | 1 | 38.3318 | 3.9126 | 9.80x |
-| filters.prewitt | 1024 | uint8 | 4 | 39.2588 | 2.2428 | 17.50x |
-| filters.prewitt_h | 1024 | uint8 | 1 | 15.2868 | 3.7980 | 4.02x |
-| filters.prewitt_h | 1024 | uint8 | 4 | 18.4896 | 2.2352 | 8.27x |
-| filters.prewitt_v | 1024 | uint8 | 1 | 15.8225 | 3.7069 | 4.27x |
-| filters.prewitt_v | 1024 | uint8 | 4 | 14.7479 | 1.8714 | 7.88x |
-| filters.scharr | 1024 | uint8 | 1 | 35.3282 | 4.2851 | 8.24x |
-| filters.scharr | 1024 | uint8 | 4 | 38.2624 | 2.4004 | 15.94x |
-| filters.scharr_h | 1024 | uint8 | 1 | 16.8381 | 3.4800 | 4.84x |
-| filters.scharr_h | 1024 | uint8 | 4 | 17.1159 | 2.0417 | 8.38x |
-| filters.scharr_v | 1024 | uint8 | 1 | 18.4017 | 4.0919 | 4.50x |
-| filters.scharr_v | 1024 | uint8 | 4 | 15.1388 | 1.9630 | 7.71x |
-| filters.threshold_mean | 1024 | uint8 | 1 | 0.7009 | 0.1021 | 6.87x |
-| filters.threshold_mean | 1024 | uint8 | 4 | 0.8558 | 0.0793 | 10.79x |
-| filters.threshold_otsu | 1024 | uint8 | 1 | 6.6048 | 0.3540 | 18.66x |
-| filters.threshold_otsu | 1024 | uint8 | 4 | 7.5892 | 0.1468 | 51.68x |
-| util.invert | 1024 | uint8 | 1 | 0.4138 | 0.0856 | 4.84x |
-| util.invert | 1024 | uint8 | 4 | 0.3958 | 0.0563 | 7.03x |
-| exposure.adjust_gamma | 1024 | float32 | 1 | 9.9237 | 1.4359 | 6.91x |
-| exposure.adjust_gamma | 1024 | float32 | 4 | 8.6841 | 0.4305 | 20.17x |
-| exposure.adjust_log | 1024 | float32 | 1 | 12.4973 | 3.6107 | 3.46x |
-| exposure.adjust_log | 1024 | float32 | 4 | 11.2985 | 1.4790 | 7.64x |
-| exposure.adjust_sigmoid | 1024 | float32 | 1 | 24.8222 | 3.2611 | 7.61x |
-| exposure.adjust_sigmoid | 1024 | float32 | 4 | 10.6024 | 0.4965 | 21.35x |
-| exposure.rescale_intensity | 1024 | float32 | 1 | 13.5958 | 2.7216 | 5.00x |
-| exposure.rescale_intensity | 1024 | float32 | 4 | 11.5626 | 0.5841 | 19.79x |
-| color.rgb2gray | 1024 | float32 | 1 | 3.3846 | 3.5734 | 0.95x |
-| color.rgb2gray | 1024 | float32 | 4 | 2.4003 | 0.9275 | 2.59x |
-| color.gray2rgb | 1024 | float32 | 1 | 10.2154 | 4.7001 | 2.17x |
-| color.gray2rgb | 1024 | float32 | 4 | 11.3461 | 2.6990 | 4.20x |
-| filters.gaussian | 1024 | float32 | 1 | 19.4245 | 5.6479 | 3.44x |
-| filters.gaussian | 1024 | float32 | 4 | 19.4288 | 1.7531 | 11.08x |
-| filters.sobel | 1024 | float32 | 1 | 26.3787 | 1.9397 | 13.60x |
-| filters.sobel | 1024 | float32 | 4 | 27.5187 | 0.5809 | 47.37x |
-| filters.sobel_h | 1024 | float32 | 1 | 9.5842 | 0.9675 | 9.91x |
-| filters.sobel_h | 1024 | float32 | 4 | 9.8472 | 1.2090 | 8.14x |
-| filters.sobel_v | 1024 | float32 | 1 | 11.8143 | 2.8324 | 4.17x |
-| filters.sobel_v | 1024 | float32 | 4 | 12.0911 | 1.2560 | 9.63x |
-| filters.prewitt | 1024 | float32 | 1 | 29.2693 | 2.2878 | 12.79x |
-| filters.prewitt | 1024 | float32 | 4 | 25.6703 | 0.6170 | 41.61x |
-| filters.prewitt_h | 1024 | float32 | 1 | 9.3417 | 2.2679 | 4.12x |
-| filters.prewitt_h | 1024 | float32 | 4 | 10.6432 | 1.3275 | 8.02x |
-| filters.prewitt_v | 1024 | float32 | 1 | 10.8848 | 1.8950 | 5.74x |
-| filters.prewitt_v | 1024 | float32 | 4 | 10.7754 | 1.2199 | 8.83x |
-| filters.scharr | 1024 | float32 | 1 | 26.8920 | 2.1672 | 12.41x |
-| filters.scharr | 1024 | float32 | 4 | 26.8249 | 0.6725 | 39.89x |
-| filters.scharr_h | 1024 | float32 | 1 | 11.1529 | 2.6052 | 4.28x |
-| filters.scharr_h | 1024 | float32 | 4 | 10.4932 | 0.5728 | 18.32x |
-| filters.scharr_v | 1024 | float32 | 1 | 10.5492 | 2.5972 | 4.06x |
-| filters.scharr_v | 1024 | float32 | 4 | 9.9540 | 0.3683 | 27.02x |
-| filters.threshold_mean | 1024 | float32 | 1 | 1.2791 | 0.3871 | 3.30x |
-| filters.threshold_mean | 1024 | float32 | 4 | 1.1011 | 0.1252 | 8.79x |
-| util.invert | 1024 | float32 | 1 | 2.4333 | 2.3975 | 1.01x |
-| util.invert | 1024 | float32 | 4 | 1.2117 | 0.2274 | 5.33x |
-| exposure.adjust_gamma | 1024 | float64 | 1 | 25.3933 | 4.6511 | 5.46x |
-| exposure.adjust_gamma | 1024 | float64 | 4 | 22.0541 | 2.2037 | 10.01x |
-| exposure.adjust_log | 1024 | float64 | 1 | 32.3397 | 5.2810 | 6.12x |
-| exposure.adjust_log | 1024 | float64 | 4 | 42.5297 | 3.3731 | 12.61x |
-| exposure.adjust_sigmoid | 1024 | float64 | 1 | 39.8892 | 5.2674 | 7.57x |
-| exposure.adjust_sigmoid | 1024 | float64 | 4 | 46.4474 | 3.0069 | 15.45x |
-| exposure.rescale_intensity | 1024 | float64 | 1 | 33.0086 | 6.6162 | 4.99x |
-| exposure.rescale_intensity | 1024 | float64 | 4 | 34.0135 | 3.6050 | 9.44x |
-| color.rgb2gray | 1024 | float64 | 1 | 9.3867 | 8.4581 | 1.11x |
-| color.rgb2gray | 1024 | float64 | 4 | 7.4695 | 4.3271 | 1.73x |
-| color.gray2rgb | 1024 | float64 | 1 | 26.5374 | 9.6526 | 2.75x |
-| color.gray2rgb | 1024 | float64 | 4 | 24.0354 | 4.7164 | 5.10x |
-| filters.gaussian | 1024 | float64 | 1 | 29.8680 | 10.1968 | 2.93x |
-| filters.gaussian | 1024 | float64 | 4 | 32.6081 | 4.7375 | 6.88x |
-| filters.sobel | 1024 | float64 | 1 | 39.5348 | 6.9297 | 5.71x |
-| filters.sobel | 1024 | float64 | 4 | 38.2350 | 3.0698 | 12.46x |
-| filters.sobel_h | 1024 | float64 | 1 | 13.8748 | 5.1429 | 2.70x |
-| filters.sobel_h | 1024 | float64 | 4 | 13.2699 | 2.5278 | 5.25x |
-| filters.sobel_v | 1024 | float64 | 1 | 14.6048 | 5.5102 | 2.65x |
-| filters.sobel_v | 1024 | float64 | 4 | 12.6138 | 2.6867 | 4.69x |
-| filters.prewitt | 1024 | float64 | 1 | 35.2444 | 5.1107 | 6.90x |
-| filters.prewitt | 1024 | float64 | 4 | 43.8295 | 3.0886 | 14.19x |
-| filters.prewitt_h | 1024 | float64 | 1 | 14.7781 | 5.0369 | 2.93x |
-| filters.prewitt_h | 1024 | float64 | 4 | 15.0393 | 3.0380 | 4.95x |
-| filters.prewitt_v | 1024 | float64 | 1 | 15.0391 | 5.1327 | 2.93x |
-| filters.prewitt_v | 1024 | float64 | 4 | 13.4615 | 2.3922 | 5.63x |
-| filters.scharr | 1024 | float64 | 1 | 39.8153 | 5.7333 | 6.94x |
-| filters.scharr | 1024 | float64 | 4 | 43.4520 | 3.1116 | 13.96x |
-| filters.scharr_h | 1024 | float64 | 1 | 12.8559 | 4.2093 | 3.05x |
-| filters.scharr_h | 1024 | float64 | 4 | 13.9102 | 2.6300 | 5.29x |
-| filters.scharr_v | 1024 | float64 | 1 | 13.8480 | 4.5808 | 3.02x |
-| filters.scharr_v | 1024 | float64 | 4 | 13.3404 | 2.8853 | 4.62x |
-| filters.threshold_mean | 1024 | float64 | 1 | 2.1020 | 0.5864 | 3.58x |
-| filters.threshold_mean | 1024 | float64 | 4 | 2.5119 | 0.1843 | 13.63x |
-| util.invert | 1024 | float64 | 1 | 5.3693 | 5.4084 | 0.99x |
-| util.invert | 1024 | float64 | 4 | 4.4895 | 2.4168 | 1.86x |
+| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |
+|---|---:|---|---:|---|---:|---:|---:|
+| exposure.adjust_gamma | 256 | uint8 | 1 | native | 0.1437 | 0.0141 | 10.23x |
+| exposure.adjust_gamma | 256 | uint8 | 4 | native | 0.1434 | 0.0142 | 10.12x |
+| exposure.adjust_log | 256 | uint8 | 1 | native | 0.4438 | 0.0136 | 32.52x |
+| exposure.adjust_log | 256 | uint8 | 4 | native | 0.4458 | 0.0145 | 30.80x |
+| exposure.adjust_sigmoid | 256 | uint8 | 1 | native | 0.4190 | 0.0181 | 23.17x |
+| exposure.adjust_sigmoid | 256 | uint8 | 4 | native | 0.3887 | 0.0140 | 27.68x |
+| exposure.rescale_intensity | 256 | uint8 | 1 | native | 0.1670 | 0.0281 | 5.94x |
+| exposure.rescale_intensity | 256 | uint8 | 4 | native | 0.2141 | 0.0300 | 7.13x |
+| exposure.histogram | 256 | uint8 | 1 | native | 0.1030 | 0.0182 | 5.64x |
+| exposure.histogram | 256 | uint8 | 4 | native | 0.0872 | 0.0181 | 4.80x |
+| exposure.cumulative_distribution | 256 | uint8 | 1 | native | 0.0894 | 0.0179 | 4.99x |
+| exposure.cumulative_distribution | 256 | uint8 | 4 | native | 0.0878 | 0.0182 | 4.82x |
+| exposure.equalize_hist | 256 | uint8 | 1 | native | 2.0524 | 0.0291 | 70.64x |
+| exposure.equalize_hist | 256 | uint8 | 4 | native | 2.0482 | 0.0288 | 71.24x |
+| color.rgb2gray | 256 | uint8 | 1 | native | 0.1973 | 0.0276 | 7.15x |
+| color.rgb2gray | 256 | uint8 | 4 | native | 0.2059 | 0.0281 | 7.33x |
+| color.gray2rgb | 256 | uint8 | 1 | native | 0.0993 | 0.0545 | 1.82x |
+| color.gray2rgb | 256 | uint8 | 4 | native | 0.0950 | 0.0572 | 1.66x |
+| filters.gaussian | 256 | uint8 | 1 | native | 0.6109 | 0.1474 | 4.15x |
+| filters.gaussian | 256 | uint8 | 4 | native | 0.6136 | 0.1503 | 4.08x |
+| filters.sobel | 256 | uint8 | 1 | native | 0.7312 | 0.1299 | 5.63x |
+| filters.sobel | 256 | uint8 | 4 | native | 0.7666 | 0.1529 | 5.01x |
+| filters.sobel_h | 256 | uint8 | 1 | native | 0.3822 | 0.0635 | 6.02x |
+| filters.sobel_h | 256 | uint8 | 4 | native | 0.3506 | 0.0654 | 5.36x |
+| filters.sobel_v | 256 | uint8 | 1 | native | 0.3769 | 0.0640 | 5.89x |
+| filters.sobel_v | 256 | uint8 | 4 | native | 0.3739 | 0.0666 | 5.61x |
+| filters.prewitt | 256 | uint8 | 1 | native | 0.7888 | 0.1346 | 5.86x |
+| filters.prewitt | 256 | uint8 | 4 | native | 0.8060 | 0.1329 | 6.07x |
+| filters.prewitt_h | 256 | uint8 | 1 | native | 0.3648 | 0.0640 | 5.70x |
+| filters.prewitt_h | 256 | uint8 | 4 | native | 0.3504 | 0.0641 | 5.47x |
+| filters.prewitt_v | 256 | uint8 | 1 | native | 0.3870 | 0.0633 | 6.12x |
+| filters.prewitt_v | 256 | uint8 | 4 | native | 0.4358 | 0.0643 | 6.78x |
+| filters.scharr | 256 | uint8 | 1 | native | 0.9128 | 0.1330 | 6.86x |
+| filters.scharr | 256 | uint8 | 4 | native | 0.8221 | 0.1307 | 6.29x |
+| filters.scharr_h | 256 | uint8 | 1 | native | 0.3737 | 0.0647 | 5.77x |
+| filters.scharr_h | 256 | uint8 | 4 | native | 0.3535 | 0.0639 | 5.53x |
+| filters.scharr_v | 256 | uint8 | 1 | native | 0.3700 | 0.0652 | 5.68x |
+| filters.scharr_v | 256 | uint8 | 4 | native | 0.3486 | 0.0636 | 5.48x |
+| filters.threshold_mean | 256 | uint8 | 1 | native | 0.0424 | 0.0069 | 6.18x |
+| filters.threshold_mean | 256 | uint8 | 4 | native | 0.0455 | 0.0071 | 6.44x |
+| filters.threshold_otsu | 256 | uint8 | 1 | native | 0.1143 | 0.0178 | 6.41x |
+| filters.threshold_otsu | 256 | uint8 | 4 | native | 0.1133 | 0.0182 | 6.22x |
+| util.invert | 256 | uint8 | 1 | native | 0.0205 | 0.0028 | 7.27x |
+| util.invert | 256 | uint8 | 4 | native | 0.0205 | 0.0032 | 6.43x |
+| util.img_as_float | 256 | uint8 | 1 | native | 0.0529 | 0.0118 | 4.47x |
+| util.img_as_float | 256 | uint8 | 4 | native | 0.0474 | 0.0114 | 4.16x |
+| util.img_as_float32 | 256 | uint8 | 1 | native | 0.0287 | 0.0167 | 1.72x |
+| util.img_as_float32 | 256 | uint8 | 4 | native | 0.0292 | 0.0159 | 1.84x |
+| util.img_as_float64 | 256 | uint8 | 1 | native | 0.0469 | 0.0113 | 4.15x |
+| util.img_as_float64 | 256 | uint8 | 4 | native | 0.0491 | 0.0114 | 4.29x |
+| util.img_as_ubyte | 256 | uint8 | 1 | identity | 0.0005 | 0.0003 | 1.81x |
+| util.img_as_ubyte | 256 | uint8 | 4 | identity | 0.0005 | 0.0003 | 1.94x |
+| util.img_as_uint | 256 | uint8 | 1 | native | 0.0401 | 0.0195 | 2.05x |
+| util.img_as_uint | 256 | uint8 | 4 | native | 0.0378 | 0.0285 | 1.33x |
+| util.img_as_int | 256 | uint8 | 1 | native | 0.0407 | 0.0179 | 2.27x |
+| util.img_as_int | 256 | uint8 | 4 | native | 0.0412 | 0.0176 | 2.35x |
+| util.img_as_bool | 256 | uint8 | 1 | native | 0.0043 | 0.0035 | 1.22x |
+| util.img_as_bool | 256 | uint8 | 4 | native | 0.0046 | 0.0047 | 0.96x |
+| util.dtype_limits | 256 | uint8 | 1 | metadata | 0.0001 | 0.0001 | 1.08x |
+| util.dtype_limits | 256 | uint8 | 4 | metadata | 0.0001 | 0.0001 | 1.17x |
+| exposure.adjust_gamma | 256 | float32 | 1 | native | 0.1494 | 0.0128 | 11.64x |
+| exposure.adjust_gamma | 256 | float32 | 4 | native | 0.1441 | 0.0138 | 10.44x |
+| exposure.adjust_log | 256 | float32 | 1 | native | 0.2012 | 0.1595 | 1.26x |
+| exposure.adjust_log | 256 | float32 | 4 | native | 0.1988 | 0.1515 | 1.31x |
+| exposure.adjust_sigmoid | 256 | float32 | 1 | native | 0.1159 | 0.0380 | 3.05x |
+| exposure.adjust_sigmoid | 256 | float32 | 4 | native | 0.1038 | 0.0344 | 3.01x |
+| exposure.rescale_intensity | 256 | float32 | 1 | native | 0.0694 | 0.0329 | 2.11x |
+| exposure.rescale_intensity | 256 | float32 | 4 | native | 0.0566 | 0.0323 | 1.75x |
+| color.rgb2gray | 256 | float32 | 1 | native | 0.0427 | 0.0184 | 2.32x |
+| color.rgb2gray | 256 | float32 | 4 | native | 0.0436 | 0.0161 | 2.72x |
+| color.gray2rgb | 256 | float32 | 1 | native | 0.0493 | 0.0181 | 2.72x |
+| color.gray2rgb | 256 | float32 | 4 | native | 0.0494 | 0.0191 | 2.58x |
+| filters.gaussian | 256 | float32 | 1 | native | 0.7442 | 0.2562 | 2.91x |
+| filters.gaussian | 256 | float32 | 4 | native | 0.5068 | 0.1332 | 3.80x |
+| filters.sobel | 256 | float32 | 1 | native | 0.7042 | 0.0477 | 14.76x |
+| filters.sobel | 256 | float32 | 4 | native | 0.6415 | 0.0488 | 13.16x |
+| filters.sobel_h | 256 | float32 | 1 | native | 0.3063 | 0.0188 | 16.31x |
+| filters.sobel_h | 256 | float32 | 4 | native | 0.2893 | 0.0200 | 14.46x |
+| filters.sobel_v | 256 | float32 | 1 | native | 0.2949 | 0.0198 | 14.89x |
+| filters.sobel_v | 256 | float32 | 4 | native | 0.3128 | 0.0190 | 16.47x |
+| filters.prewitt | 256 | float32 | 1 | native | 0.6089 | 0.0476 | 12.79x |
+| filters.prewitt | 256 | float32 | 4 | native | 0.6422 | 0.0479 | 13.42x |
+| filters.prewitt_h | 256 | float32 | 1 | native | 0.3021 | 0.0186 | 16.23x |
+| filters.prewitt_h | 256 | float32 | 4 | native | 0.3176 | 0.0193 | 16.47x |
+| filters.prewitt_v | 256 | float32 | 1 | native | 0.3006 | 0.0211 | 14.26x |
+| filters.prewitt_v | 256 | float32 | 4 | native | 0.2949 | 0.0194 | 15.19x |
+| filters.scharr | 256 | float32 | 1 | native | 0.7297 | 0.0476 | 15.32x |
+| filters.scharr | 256 | float32 | 4 | native | 0.6341 | 0.0481 | 13.18x |
+| filters.scharr_h | 256 | float32 | 1 | native | 0.2980 | 0.0182 | 16.41x |
+| filters.scharr_h | 256 | float32 | 4 | native | 0.3014 | 0.0209 | 14.41x |
+| filters.scharr_v | 256 | float32 | 1 | native | 0.3016 | 0.0181 | 16.71x |
+| filters.scharr_v | 256 | float32 | 4 | native | 0.2884 | 0.0191 | 15.12x |
+| filters.threshold_mean | 256 | float32 | 1 | native | 0.0139 | 0.0054 | 2.60x |
+| filters.threshold_mean | 256 | float32 | 4 | native | 0.0141 | 0.0052 | 2.71x |
+| util.invert | 256 | float32 | 1 | native | 0.0086 | 0.0072 | 1.19x |
+| util.invert | 256 | float32 | 4 | native | 0.0068 | 0.0071 | 0.96x |
+| util.img_as_float | 256 | float32 | 1 | identity | 0.0005 | 0.0002 | 3.29x |
+| util.img_as_float | 256 | float32 | 4 | identity | 0.0007 | 0.0003 | 2.23x |
+| util.img_as_float32 | 256 | float32 | 1 | identity | 0.0005 | 0.0002 | 1.93x |
+| util.img_as_float32 | 256 | float32 | 4 | identity | 0.0005 | 0.0004 | 1.26x |
+| util.img_as_float64 | 256 | float32 | 1 | native | 0.0190 | 0.0111 | 1.72x |
+| util.img_as_float64 | 256 | float32 | 4 | native | 0.0202 | 0.0111 | 1.82x |
+| util.img_as_ubyte | 256 | float32 | 1 | native | 0.0707 | 0.0303 | 2.34x |
+| util.img_as_ubyte | 256 | float32 | 4 | native | 0.0600 | 0.0288 | 2.08x |
+| util.img_as_uint | 256 | float32 | 1 | native | 0.0571 | 0.0357 | 1.60x |
+| util.img_as_uint | 256 | float32 | 4 | native | 0.0601 | 0.0337 | 1.78x |
+| util.img_as_int | 256 | float32 | 1 | native | 0.0671 | 0.0349 | 1.92x |
+| util.img_as_int | 256 | float32 | 4 | native | 0.0648 | 0.0355 | 1.83x |
+| util.img_as_bool | 256 | float32 | 1 | native | 0.0043 | 0.0042 | 1.01x |
+| util.img_as_bool | 256 | float32 | 4 | native | 0.0056 | 0.0061 | 0.93x |
+| util.dtype_limits | 256 | float32 | 1 | metadata | 0.0001 | 0.0001 | 1.15x |
+| util.dtype_limits | 256 | float32 | 4 | metadata | 0.0001 | 0.0001 | 1.28x |
+| exposure.adjust_gamma | 256 | float64 | 1 | native | 0.1889 | 0.0229 | 8.24x |
+| exposure.adjust_gamma | 256 | float64 | 4 | native | 0.1888 | 0.0273 | 6.92x |
+| exposure.adjust_log | 256 | float64 | 1 | native | 0.4228 | 0.0983 | 4.30x |
+| exposure.adjust_log | 256 | float64 | 4 | native | 0.4329 | 0.0974 | 4.44x |
+| exposure.adjust_sigmoid | 256 | float64 | 1 | native | 0.3717 | 0.1295 | 2.87x |
+| exposure.adjust_sigmoid | 256 | float64 | 4 | native | 0.3595 | 0.1174 | 3.06x |
+| exposure.rescale_intensity | 256 | float64 | 1 | native | 0.1287 | 0.0495 | 2.60x |
+| exposure.rescale_intensity | 256 | float64 | 4 | native | 0.1232 | 0.0554 | 2.22x |
+| color.rgb2gray | 256 | float64 | 1 | native | 0.0658 | 0.0460 | 1.43x |
+| color.rgb2gray | 256 | float64 | 4 | native | 0.0652 | 0.0434 | 1.50x |
+| color.gray2rgb | 256 | float64 | 1 | native | 0.1328 | 0.0537 | 2.47x |
+| color.gray2rgb | 256 | float64 | 4 | native | 0.1353 | 0.0519 | 2.61x |
+| filters.gaussian | 256 | float64 | 1 | native | 0.5420 | 0.1239 | 4.37x |
+| filters.gaussian | 256 | float64 | 4 | native | 0.5447 | 0.1201 | 4.54x |
+| filters.sobel | 256 | float64 | 1 | native | 0.6547 | 0.1220 | 5.37x |
+| filters.sobel | 256 | float64 | 4 | native | 0.6667 | 0.1292 | 5.16x |
+| filters.sobel_h | 256 | float64 | 1 | native | 0.2976 | 0.0353 | 8.43x |
+| filters.sobel_h | 256 | float64 | 4 | native | 0.3071 | 0.0377 | 8.15x |
+| filters.sobel_v | 256 | float64 | 1 | native | 0.2938 | 0.0321 | 9.16x |
+| filters.sobel_v | 256 | float64 | 4 | native | 0.2891 | 0.0324 | 8.91x |
+| filters.prewitt | 256 | float64 | 1 | native | 0.7062 | 0.1255 | 5.63x |
+| filters.prewitt | 256 | float64 | 4 | native | 0.6742 | 0.1234 | 5.46x |
+| filters.prewitt_h | 256 | float64 | 1 | native | 0.2876 | 0.0317 | 9.07x |
+| filters.prewitt_h | 256 | float64 | 4 | native | 0.2872 | 0.0349 | 8.22x |
+| filters.prewitt_v | 256 | float64 | 1 | native | 0.2848 | 0.0328 | 8.69x |
+| filters.prewitt_v | 256 | float64 | 4 | native | 0.2872 | 0.0321 | 8.96x |
+| filters.scharr | 256 | float64 | 1 | native | 0.6798 | 0.1219 | 5.58x |
+| filters.scharr | 256 | float64 | 4 | native | 0.6909 | 0.1241 | 5.57x |
+| filters.scharr_h | 256 | float64 | 1 | native | 0.2820 | 0.0313 | 9.02x |
+| filters.scharr_h | 256 | float64 | 4 | native | 0.2930 | 0.0326 | 8.99x |
+| filters.scharr_v | 256 | float64 | 1 | native | 0.2818 | 0.0339 | 8.31x |
+| filters.scharr_v | 256 | float64 | 4 | native | 0.3094 | 0.0336 | 9.20x |
+| filters.threshold_mean | 256 | float64 | 1 | native | 0.0129 | 0.0050 | 2.55x |
+| filters.threshold_mean | 256 | float64 | 4 | native | 0.0137 | 0.0055 | 2.49x |
+| util.invert | 256 | float64 | 1 | native | 0.0178 | 0.0317 | 0.56x |
+| util.invert | 256 | float64 | 4 | native | 0.0130 | 0.0122 | 1.07x |
+| util.img_as_float | 256 | float64 | 1 | identity | 0.0005 | 0.0002 | 2.81x |
+| util.img_as_float | 256 | float64 | 4 | identity | 0.0005 | 0.0002 | 2.48x |
+| util.img_as_float32 | 256 | float64 | 1 | native | 0.0205 | 0.0076 | 2.69x |
+| util.img_as_float32 | 256 | float64 | 4 | native | 0.0191 | 0.0081 | 2.36x |
+| util.img_as_float64 | 256 | float64 | 1 | identity | 0.0005 | 0.0003 | 1.83x |
+| util.img_as_float64 | 256 | float64 | 4 | identity | 0.0005 | 0.0003 | 1.81x |
+| util.img_as_ubyte | 256 | float64 | 1 | native | 0.0809 | 0.0404 | 2.00x |
+| util.img_as_ubyte | 256 | float64 | 4 | native | 0.0894 | 0.0406 | 2.20x |
+| util.img_as_uint | 256 | float64 | 1 | native | 0.0879 | 0.0592 | 1.49x |
+| util.img_as_uint | 256 | float64 | 4 | native | 0.0870 | 0.0561 | 1.55x |
+| util.img_as_int | 256 | float64 | 1 | native | 0.0954 | 0.0603 | 1.58x |
+| util.img_as_int | 256 | float64 | 4 | native | 0.1079 | 0.0592 | 1.82x |
+| util.img_as_bool | 256 | float64 | 1 | native | 0.0064 | 0.0092 | 0.70x |
+| util.img_as_bool | 256 | float64 | 4 | native | 0.0079 | 0.0133 | 0.60x |
+| util.dtype_limits | 256 | float64 | 1 | metadata | 0.0001 | 0.0001 | 1.06x |
+| util.dtype_limits | 256 | float64 | 4 | metadata | 0.0001 | 0.0001 | 1.45x |
+| exposure.adjust_gamma | 1024 | uint8 | 1 | native | 2.0573 | 0.1457 | 14.12x |
+| exposure.adjust_gamma | 1024 | uint8 | 4 | native | 2.0895 | 0.0698 | 29.94x |
+| exposure.adjust_log | 1024 | uint8 | 1 | native | 16.3890 | 0.1465 | 111.91x |
+| exposure.adjust_log | 1024 | uint8 | 4 | native | 16.1551 | 0.0753 | 214.52x |
+| exposure.adjust_sigmoid | 1024 | uint8 | 1 | native | 19.5965 | 0.1451 | 135.06x |
+| exposure.adjust_sigmoid | 1024 | uint8 | 4 | native | 18.9794 | 0.0641 | 296.27x |
+| exposure.rescale_intensity | 1024 | uint8 | 1 | native | 12.9116 | 0.3874 | 33.33x |
+| exposure.rescale_intensity | 1024 | uint8 | 4 | native | 11.6347 | 0.1440 | 80.77x |
+| exposure.histogram | 1024 | uint8 | 1 | native | 3.3310 | 0.2469 | 13.49x |
+| exposure.histogram | 1024 | uint8 | 4 | native | 3.2467 | 0.0868 | 37.41x |
+| exposure.cumulative_distribution | 1024 | uint8 | 1 | native | 3.4159 | 0.2536 | 13.47x |
+| exposure.cumulative_distribution | 1024 | uint8 | 4 | native | 3.3712 | 0.0884 | 38.14x |
+| exposure.equalize_hist | 1024 | uint8 | 1 | native | 36.5529 | 2.2557 | 16.20x |
+| exposure.equalize_hist | 1024 | uint8 | 4 | native | 36.7391 | 1.3271 | 27.68x |
+| color.rgb2gray | 1024 | uint8 | 1 | native | 9.5394 | 1.9252 | 4.96x |
+| color.rgb2gray | 1024 | uint8 | 4 | native | 10.4489 | 1.2245 | 8.53x |
+| color.gray2rgb | 1024 | uint8 | 1 | native | 0.7756 | 0.1000 | 7.76x |
+| color.gray2rgb | 1024 | uint8 | 4 | native | 0.7585 | 0.0525 | 14.44x |
+| filters.gaussian | 1024 | uint8 | 1 | native | 24.2552 | 5.2934 | 4.58x |
+| filters.gaussian | 1024 | uint8 | 4 | native | 24.1830 | 2.8402 | 8.51x |
+| filters.sobel | 1024 | uint8 | 1 | native | 25.6046 | 3.2302 | 7.93x |
+| filters.sobel | 1024 | uint8 | 4 | native | 24.7012 | 1.5291 | 16.15x |
+| filters.sobel_h | 1024 | uint8 | 1 | native | 9.9451 | 2.4580 | 4.05x |
+| filters.sobel_h | 1024 | uint8 | 4 | native | 9.4000 | 1.3016 | 7.22x |
+| filters.sobel_v | 1024 | uint8 | 1 | native | 12.8826 | 2.2618 | 5.70x |
+| filters.sobel_v | 1024 | uint8 | 4 | native | 13.2660 | 1.2964 | 10.23x |
+| filters.prewitt | 1024 | uint8 | 1 | native | 28.2789 | 3.4315 | 8.24x |
+| filters.prewitt | 1024 | uint8 | 4 | native | 25.2390 | 1.5798 | 15.98x |
+| filters.prewitt_h | 1024 | uint8 | 1 | native | 9.3480 | 2.2625 | 4.13x |
+| filters.prewitt_h | 1024 | uint8 | 4 | native | 9.9888 | 1.4479 | 6.90x |
+| filters.prewitt_v | 1024 | uint8 | 1 | native | 12.7880 | 2.3247 | 5.50x |
+| filters.prewitt_v | 1024 | uint8 | 4 | native | 12.9732 | 1.2757 | 10.17x |
+| filters.scharr | 1024 | uint8 | 1 | native | 24.0643 | 3.2239 | 7.46x |
+| filters.scharr | 1024 | uint8 | 4 | native | 23.7967 | 1.4207 | 16.75x |
+| filters.scharr_h | 1024 | uint8 | 1 | native | 9.6480 | 2.3154 | 4.17x |
+| filters.scharr_h | 1024 | uint8 | 4 | native | 9.2297 | 1.2418 | 7.43x |
+| filters.scharr_v | 1024 | uint8 | 1 | native | 12.8496 | 2.2862 | 5.62x |
+| filters.scharr_v | 1024 | uint8 | 4 | native | 13.4498 | 1.3032 | 10.32x |
+| filters.threshold_mean | 1024 | uint8 | 1 | native | 0.6184 | 0.0921 | 6.71x |
+| filters.threshold_mean | 1024 | uint8 | 4 | native | 0.6323 | 0.0401 | 15.77x |
+| filters.threshold_otsu | 1024 | uint8 | 1 | native | 3.3625 | 0.2541 | 13.23x |
+| filters.threshold_otsu | 1024 | uint8 | 4 | native | 3.5139 | 0.1026 | 34.24x |
+| util.invert | 1024 | uint8 | 1 | native | 0.2976 | 0.0434 | 6.86x |
+| util.invert | 1024 | uint8 | 4 | native | 0.3001 | 0.0275 | 10.91x |
+| util.img_as_float | 1024 | uint8 | 1 | native | 2.4779 | 2.0547 | 1.21x |
+| util.img_as_float | 1024 | uint8 | 4 | native | 2.3780 | 1.1845 | 2.01x |
+| util.img_as_float32 | 1024 | uint8 | 1 | native | 0.4254 | 0.2143 | 1.99x |
+| util.img_as_float32 | 1024 | uint8 | 4 | native | 0.5385 | 0.0827 | 6.51x |
+| util.img_as_float64 | 1024 | uint8 | 1 | native | 2.8393 | 2.3580 | 1.20x |
+| util.img_as_float64 | 1024 | uint8 | 4 | native | 2.8182 | 1.6476 | 1.71x |
+| util.img_as_ubyte | 1024 | uint8 | 1 | identity | 0.0005 | 0.0003 | 2.02x |
+| util.img_as_ubyte | 1024 | uint8 | 4 | identity | 0.0005 | 0.0002 | 1.94x |
+| util.img_as_uint | 1024 | uint8 | 1 | native | 0.5166 | 0.2693 | 1.92x |
+| util.img_as_uint | 1024 | uint8 | 4 | native | 0.5277 | 0.0830 | 6.36x |
+| util.img_as_int | 1024 | uint8 | 1 | native | 0.5730 | 0.2235 | 2.56x |
+| util.img_as_int | 1024 | uint8 | 4 | native | 0.5792 | 0.0845 | 6.85x |
+| util.img_as_bool | 1024 | uint8 | 1 | native | 0.0476 | 0.0457 | 1.04x |
+| util.img_as_bool | 1024 | uint8 | 4 | native | 0.0549 | 0.0384 | 1.43x |
+| util.dtype_limits | 1024 | uint8 | 1 | metadata | 0.0001 | 0.0001 | 1.19x |
+| util.dtype_limits | 1024 | uint8 | 4 | metadata | 0.0001 | 0.0001 | 1.11x |
+| exposure.adjust_gamma | 1024 | float32 | 1 | native | 3.1183 | 0.2370 | 13.16x |
+| exposure.adjust_gamma | 1024 | float32 | 4 | native | 3.9543 | 0.2016 | 19.61x |
+| exposure.adjust_log | 1024 | float32 | 1 | native | 10.0945 | 3.3140 | 3.05x |
+| exposure.adjust_log | 1024 | float32 | 4 | native | 7.2167 | 0.7838 | 9.21x |
+| exposure.adjust_sigmoid | 1024 | float32 | 1 | native | 3.2145 | 0.6316 | 5.09x |
+| exposure.adjust_sigmoid | 1024 | float32 | 4 | native | 3.3986 | 0.1873 | 18.14x |
+| exposure.rescale_intensity | 1024 | float32 | 1 | native | 4.9610 | 0.5350 | 9.27x |
+| exposure.rescale_intensity | 1024 | float32 | 4 | native | 4.0074 | 0.1970 | 20.34x |
+| color.rgb2gray | 1024 | float32 | 1 | native | 1.3562 | 0.6641 | 2.04x |
+| color.rgb2gray | 1024 | float32 | 4 | native | 1.4456 | 0.3720 | 3.89x |
+| color.gray2rgb | 1024 | float32 | 1 | native | 6.6334 | 3.5547 | 1.87x |
+| color.gray2rgb | 1024 | float32 | 4 | native | 6.9991 | 1.9609 | 3.57x |
+| filters.gaussian | 1024 | float32 | 1 | native | 14.5715 | 2.9806 | 4.89x |
+| filters.gaussian | 1024 | float32 | 4 | native | 13.9908 | 1.0201 | 13.72x |
+| filters.sobel | 1024 | float32 | 1 | native | 12.6370 | 2.0982 | 6.02x |
+| filters.sobel | 1024 | float32 | 4 | native | 11.1470 | 0.5797 | 19.23x |
+| filters.sobel_h | 1024 | float32 | 1 | native | 5.1570 | 1.0496 | 4.91x |
+| filters.sobel_h | 1024 | float32 | 4 | native | 4.7955 | 0.1217 | 39.41x |
+| filters.sobel_v | 1024 | float32 | 1 | native | 5.2473 | 1.0272 | 5.11x |
+| filters.sobel_v | 1024 | float32 | 4 | native | 5.3477 | 0.7586 | 7.05x |
+| filters.prewitt | 1024 | float32 | 1 | native | 11.7936 | 2.1056 | 5.60x |
+| filters.prewitt | 1024 | float32 | 4 | native | 11.6471 | 0.6144 | 18.96x |
+| filters.prewitt_h | 1024 | float32 | 1 | native | 5.0358 | 1.0191 | 4.94x |
+| filters.prewitt_h | 1024 | float32 | 4 | native | 4.7757 | 0.1312 | 36.41x |
+| filters.prewitt_v | 1024 | float32 | 1 | native | 5.2317 | 1.1291 | 4.63x |
+| filters.prewitt_v | 1024 | float32 | 4 | native | 5.3784 | 0.7625 | 7.05x |
+| filters.scharr | 1024 | float32 | 1 | native | 11.8585 | 2.0867 | 5.68x |
+| filters.scharr | 1024 | float32 | 4 | native | 11.7897 | 0.5806 | 20.31x |
+| filters.scharr_h | 1024 | float32 | 1 | native | 5.0298 | 0.9805 | 5.13x |
+| filters.scharr_h | 1024 | float32 | 4 | native | 5.0355 | 0.1240 | 40.60x |
+| filters.scharr_v | 1024 | float32 | 1 | native | 5.4503 | 1.0139 | 5.38x |
+| filters.scharr_v | 1024 | float32 | 4 | native | 5.3473 | 0.8153 | 6.56x |
+| filters.threshold_mean | 1024 | float32 | 1 | native | 0.2264 | 0.0935 | 2.42x |
+| filters.threshold_mean | 1024 | float32 | 4 | native | 0.2074 | 0.0628 | 3.30x |
+| util.invert | 1024 | float32 | 1 | native | 0.1964 | 0.1895 | 1.04x |
+| util.invert | 1024 | float32 | 4 | native | 1.1845 | 0.6986 | 1.70x |
+| util.img_as_float | 1024 | float32 | 1 | identity | 0.0005 | 0.0002 | 3.32x |
+| util.img_as_float | 1024 | float32 | 4 | identity | 0.0005 | 0.0002 | 3.12x |
+| util.img_as_float32 | 1024 | float32 | 1 | identity | 0.0005 | 0.0003 | 1.93x |
+| util.img_as_float32 | 1024 | float32 | 4 | identity | 0.0005 | 0.0003 | 1.76x |
+| util.img_as_float64 | 1024 | float32 | 1 | native | 1.8977 | 2.0379 | 0.93x |
+| util.img_as_float64 | 1024 | float32 | 4 | native | 2.0303 | 1.1966 | 1.70x |
+| util.img_as_ubyte | 1024 | float32 | 1 | native | 1.1289 | 0.4466 | 2.53x |
+| util.img_as_ubyte | 1024 | float32 | 4 | native | 1.0639 | 0.1874 | 5.68x |
+| util.img_as_uint | 1024 | float32 | 1 | native | 1.1583 | 0.5725 | 2.02x |
+| util.img_as_uint | 1024 | float32 | 4 | native | 1.1849 | 0.1924 | 6.16x |
+| util.img_as_int | 1024 | float32 | 1 | native | 1.1858 | 0.5507 | 2.15x |
+| util.img_as_int | 1024 | float32 | 4 | native | 1.2099 | 0.2645 | 4.58x |
+| util.img_as_bool | 1024 | float32 | 1 | native | 0.1020 | 0.0831 | 1.23x |
+| util.img_as_bool | 1024 | float32 | 4 | native | 0.0980 | 0.0591 | 1.66x |
+| util.dtype_limits | 1024 | float32 | 1 | metadata | 0.0001 | 0.0001 | 1.11x |
+| util.dtype_limits | 1024 | float32 | 4 | metadata | 0.0001 | 0.0001 | 1.09x |
+| exposure.adjust_gamma | 1024 | float64 | 1 | native | 14.1694 | 2.8359 | 5.00x |
+| exposure.adjust_gamma | 1024 | float64 | 4 | native | 12.9857 | 1.5732 | 8.25x |
+| exposure.adjust_log | 1024 | float64 | 1 | native | 19.1881 | 3.1355 | 6.12x |
+| exposure.adjust_log | 1024 | float64 | 4 | native | 20.3631 | 1.7824 | 11.42x |
+| exposure.adjust_sigmoid | 1024 | float64 | 1 | native | 22.3142 | 3.5170 | 6.34x |
+| exposure.adjust_sigmoid | 1024 | float64 | 4 | native | 22.4436 | 2.1623 | 10.38x |
+| exposure.rescale_intensity | 1024 | float64 | 1 | native | 14.5565 | 2.5338 | 5.74x |
+| exposure.rescale_intensity | 1024 | float64 | 4 | native | 15.1786 | 1.8879 | 8.04x |
+| color.rgb2gray | 1024 | float64 | 1 | native | 3.8203 | 3.3730 | 1.13x |
+| color.rgb2gray | 1024 | float64 | 4 | native | 3.6614 | 2.4036 | 1.52x |
+| color.gray2rgb | 1024 | float64 | 1 | native | 10.5208 | 5.7997 | 1.81x |
+| color.gray2rgb | 1024 | float64 | 4 | native | 11.2104 | 3.1324 | 3.58x |
+| filters.gaussian | 1024 | float64 | 1 | native | 19.8216 | 5.2389 | 3.78x |
+| filters.gaussian | 1024 | float64 | 4 | native | 20.6755 | 3.1482 | 6.57x |
+| filters.sobel | 1024 | float64 | 1 | native | 22.7222 | 6.0346 | 3.77x |
+| filters.sobel | 1024 | float64 | 4 | native | 23.0436 | 2.2500 | 10.24x |
+| filters.sobel_h | 1024 | float64 | 1 | native | 7.4369 | 3.7292 | 1.99x |
+| filters.sobel_h | 1024 | float64 | 4 | native | 7.6144 | 1.7266 | 4.41x |
+| filters.sobel_v | 1024 | float64 | 1 | native | 10.7510 | 4.1435 | 2.59x |
+| filters.sobel_v | 1024 | float64 | 4 | native | 10.6668 | 1.6286 | 6.55x |
+| filters.prewitt | 1024 | float64 | 1 | native | 24.5474 | 6.1447 | 3.99x |
+| filters.prewitt | 1024 | float64 | 4 | native | 23.2836 | 2.2346 | 10.42x |
+| filters.prewitt_h | 1024 | float64 | 1 | native | 7.4208 | 3.4646 | 2.14x |
+| filters.prewitt_h | 1024 | float64 | 4 | native | 7.1116 | 1.7164 | 4.14x |
+| filters.prewitt_v | 1024 | float64 | 1 | native | 11.3802 | 4.0231 | 2.83x |
+| filters.prewitt_v | 1024 | float64 | 4 | native | 10.9475 | 1.8632 | 5.88x |
+| filters.scharr | 1024 | float64 | 1 | native | 23.0453 | 6.1317 | 3.76x |
+| filters.scharr | 1024 | float64 | 4 | native | 22.4401 | 2.2739 | 9.87x |
+| filters.scharr_h | 1024 | float64 | 1 | native | 7.5984 | 3.6856 | 2.06x |
+| filters.scharr_h | 1024 | float64 | 4 | native | 7.4148 | 1.7555 | 4.22x |
+| filters.scharr_v | 1024 | float64 | 1 | native | 11.1296 | 4.1093 | 2.71x |
+| filters.scharr_v | 1024 | float64 | 4 | native | 11.0838 | 1.8343 | 6.04x |
+| filters.threshold_mean | 1024 | float64 | 1 | native | 0.2897 | 0.1460 | 1.98x |
+| filters.threshold_mean | 1024 | float64 | 4 | native | 0.2855 | 0.1129 | 2.53x |
+| util.invert | 1024 | float64 | 1 | native | 2.3418 | 2.1086 | 1.11x |
+| util.invert | 1024 | float64 | 4 | native | 2.3879 | 1.5010 | 1.59x |
+| util.img_as_float | 1024 | float64 | 1 | identity | 0.0005 | 0.0002 | 2.87x |
+| util.img_as_float | 1024 | float64 | 4 | identity | 0.0005 | 0.0002 | 3.22x |
+| util.img_as_float32 | 1024 | float64 | 1 | native | 1.2754 | 1.1625 | 1.10x |
+| util.img_as_float32 | 1024 | float64 | 4 | native | 1.2447 | 0.7651 | 1.63x |
+| util.img_as_float64 | 1024 | float64 | 1 | identity | 0.0005 | 0.0003 | 1.54x |
+| util.img_as_float64 | 1024 | float64 | 4 | identity | 0.0005 | 0.0002 | 1.85x |
+| util.img_as_ubyte | 1024 | float64 | 1 | native | 4.4771 | 0.7224 | 6.20x |
+| util.img_as_ubyte | 1024 | float64 | 4 | native | 4.7904 | 0.2406 | 19.91x |
+| util.img_as_uint | 1024 | float64 | 1 | native | 4.6094 | 1.0721 | 4.30x |
+| util.img_as_uint | 1024 | float64 | 4 | native | 4.2055 | 0.3174 | 13.25x |
+| util.img_as_int | 1024 | float64 | 1 | native | 4.8360 | 1.0237 | 4.72x |
+| util.img_as_int | 1024 | float64 | 4 | native | 4.6920 | 0.3576 | 13.12x |
+| util.img_as_bool | 1024 | float64 | 1 | native | 0.1605 | 0.1935 | 0.83x |
+| util.img_as_bool | 1024 | float64 | 4 | native | 0.1794 | 0.0930 | 1.93x |
+| util.dtype_limits | 1024 | float64 | 1 | metadata | 0.0001 | 0.0001 | 0.94x |
+| util.dtype_limits | 1024 | float64 | 4 | metadata | 0.0001 | 0.0001 | 0.97x |

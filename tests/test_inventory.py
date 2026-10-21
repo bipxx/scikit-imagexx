@@ -17,7 +17,7 @@ INVENTORY = json.loads((Path(__file__).resolve().parents[1]/'coverage/api.json')
 
 def test_inventory_reference_version():
     assert INVENTORY['reference_version'] == skimage.__version__ == '0.26.0'
-    declared = {entry['api'] for entry in INVENTORY['entries'] if entry['implementation'] == 'native-partial'}
+    declared = {entry['api'] for entry in INVENTORY['entries'] if entry['implementation'] in ('native-partial', 'metadata')}
     assert declared == set(native_functions())
 
 

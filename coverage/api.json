@@ -26,6 +26,7 @@
       "signature": "(stains, conv_matrix, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -35,6 +36,7 @@
       "signature": "(arr, fromspace, tospace, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -44,6 +46,7 @@
       "signature": "(lab1, lab2, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -53,6 +56,7 @@
       "signature": "(lab1, lab2, kL=1, kC=1, kH=1, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -62,6 +66,7 @@
       "signature": "(lab1, lab2, kH=1, kC=1, kL=1, k1=0.045, k2=0.015, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -71,6 +76,7 @@
       "signature": "(lab1, lab2, kL=1, kC=1, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -84,6 +90,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -93,6 +100,7 @@
       "signature": "(image, alpha=None, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -102,6 +110,7 @@
       "signature": "(hed, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -111,6 +120,7 @@
       "signature": "(hsv, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -120,6 +130,7 @@
       "signature": "(lab, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -129,6 +140,7 @@
       "signature": "(lab, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -138,6 +150,7 @@
       "signature": "(lab, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -147,6 +160,7 @@
       "signature": "(label, image=None, colors=None, alpha=0.3, bg_label=0, bg_color=(0, 0, 0), image_alpha=1, kind='overlay', *, saturation=0, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -156,6 +170,7 @@
       "signature": "(lch, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -165,6 +180,7 @@
       "signature": "(luv, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -174,6 +190,7 @@
       "signature": "(luv, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -187,6 +204,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -196,6 +214,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -205,6 +224,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -214,6 +234,7 @@
       "signature": "(rgb, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -223,6 +244,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -232,6 +254,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -241,6 +264,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -250,6 +274,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -259,6 +284,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -268,6 +294,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -277,6 +304,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -286,6 +314,7 @@
       "signature": "(rgb, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -295,6 +324,7 @@
       "signature": "(rgba, background=(1, 1, 1), *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -304,6 +334,7 @@
       "signature": "(rgbcie, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -313,6 +344,7 @@
       "signature": "(rgb, conv_matrix, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -322,6 +354,7 @@
       "signature": "(xyz, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -331,6 +364,7 @@
       "signature": "(xyz, illuminant='D65', observer='2', *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -340,6 +374,7 @@
       "signature": "(xyz, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -349,6 +384,7 @@
       "signature": "(*, illuminant, observer, dtype=<class 'float'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -358,6 +394,7 @@
       "signature": "(ycbcr, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -367,6 +404,7 @@
       "signature": "(ydbdr, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -376,6 +414,7 @@
       "signature": "(yiq, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -385,6 +424,7 @@
       "signature": "(ypbpr, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -394,6 +434,7 @@
       "signature": "(yuv, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -403,6 +444,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -412,6 +454,7 @@
       "signature": "(length=512, blob_size_fraction=0.1, n_dim=2, volume_fraction=0.5, rng=None, *, boundary_mode='nearest')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -421,6 +464,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -430,6 +474,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -439,6 +484,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -448,6 +494,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -457,6 +504,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -466,6 +514,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -475,6 +524,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -484,6 +534,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -493,6 +544,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -502,6 +554,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -511,6 +564,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -520,6 +574,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -529,6 +584,7 @@
       "signature": "(directory=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -538,6 +594,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -547,6 +604,7 @@
       "signature": "(fname, alg='sha256')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -556,6 +614,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -565,6 +624,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -574,6 +634,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -583,6 +644,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -592,6 +654,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -601,6 +664,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -610,6 +674,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -619,6 +684,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -628,6 +694,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -637,6 +704,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -646,6 +714,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -655,6 +724,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -664,6 +734,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -673,6 +744,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -682,6 +754,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -691,6 +764,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -700,6 +774,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -709,6 +784,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -718,6 +794,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -727,6 +804,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -736,6 +814,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -745,6 +824,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -754,6 +834,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -763,6 +844,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -772,6 +854,7 @@
       "signature": "(r0, c0, r1, c1, r2, c2, weight, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -781,6 +864,7 @@
       "signature": "(r, c, radius, method='bresenham', shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -790,6 +874,7 @@
       "signature": "(r, c, radius, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -799,6 +884,7 @@
       "signature": "(center, radius, *, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -808,6 +894,7 @@
       "signature": "(r, c, r_radius, c_radius, shape=None, rotation=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -817,6 +904,7 @@
       "signature": "(r, c, r_radius, c_radius, orientation=0, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -826,6 +914,7 @@
       "signature": "(a, b, c, spacing=(1.0, 1.0, 1.0), levelset=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -835,6 +924,7 @@
       "signature": "(a, b, c)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -844,6 +934,7 @@
       "signature": "(r0, c0, r1, c1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -853,6 +944,7 @@
       "signature": "(r0, c0, r1, c1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -862,6 +954,7 @@
       "signature": "(start, stop, *, endpoint=False, integer=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -871,6 +964,7 @@
       "signature": "(r, c, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -880,6 +974,7 @@
       "signature": "(image_shape, polygon)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -889,6 +984,7 @@
       "signature": "(r, c, shape=None, clip=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -898,6 +994,7 @@
       "signature": "(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=None, num_channels=3, shape=None, intensity_range=None, allow_overlap=False, num_trials=100, rng=None, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -907,6 +1004,7 @@
       "signature": "(start, end=None, extent=None, shape=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -916,6 +1014,7 @@
       "signature": "(start, end=None, extent=None, shape=None, clip=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -925,6 +1024,7 @@
       "signature": "(image, coords, color, alpha=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -938,6 +1038,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -951,6 +1052,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -964,6 +1066,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -975,6 +1078,7 @@
       "native_default_case_dtypes": [
         "uint8"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -984,6 +1088,7 @@
       "signature": "(image, kernel_size=None, clip_limit=0.01, nbins=256)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -995,6 +1100,7 @@
       "native_default_case_dtypes": [
         "uint8"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1006,6 +1112,7 @@
       "native_default_case_dtypes": [
         "uint8"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1015,6 +1122,7 @@
       "signature": "(image, fraction_threshold=0.05, lower_percentile=1, upper_percentile=99, method='linear')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1024,6 +1132,7 @@
       "signature": "(image, reference, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1037,6 +1146,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1046,6 +1156,7 @@
       "signature": "(descriptor_size=256, patch_size=49, mode='normal', sigma=1, rng=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1055,6 +1166,7 @@
       "signature": "(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1064,6 +1176,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1073,6 +1186,7 @@
       "signature": "(downscale=1.2, n_scales=8, n_keypoints=500, fast_n=9, fast_threshold=0.08, harris_k=0.04)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1082,6 +1196,7 @@
       "signature": "(upsampling=2, n_octaves=8, n_scales=3, sigma_min=1.6, sigma_in=0.5, c_dog=0.013333333333333334, c_edge=10, n_bins=36, lambda_ori=1.5, c_max=0.8, lambda_descr=6, n_hist=4, n_ori=8)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1091,6 +1206,7 @@
       "signature": "(image, min_sigma=1, max_sigma=50, sigma_ratio=1.6, threshold=0.5, overlap=0.5, *, threshold_rel=None, exclude_border=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1100,6 +1216,7 @@
       "signature": "(image, min_sigma=1, max_sigma=30, num_sigma=10, threshold=0.01, overlap=0.5, log_scale=False, *, threshold_rel=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1109,6 +1226,7 @@
       "signature": "(image, min_sigma=1, max_sigma=50, num_sigma=10, threshold=0.2, overlap=0.5, log_scale=False, *, threshold_rel=None, exclude_border=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1118,6 +1236,7 @@
       "signature": "(image, sigma=1.0, low_threshold=None, high_threshold=None, mask=None, use_quantiles=False, *, mode='constant', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1127,6 +1246,7 @@
       "signature": "(image, n=12, threshold=0.15)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1136,6 +1256,7 @@
       "signature": "(image, sigma=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1145,6 +1266,7 @@
       "signature": "(image, method='k', k=0.05, eps=1e-06, sigma=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1154,6 +1276,7 @@
       "signature": "(image, mode='constant', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1163,6 +1286,7 @@
       "signature": "(image, window_size=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1172,6 +1296,7 @@
       "signature": "(image, corners, mask)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1181,6 +1306,7 @@
       "signature": "(image, min_distance=1, threshold_abs=None, threshold_rel=None, exclude_border=True, indices=True, num_peaks=inf, footprint=None, labels=None, *, num_peaks_per_label=inf, p_norm=inf)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1190,6 +1316,7 @@
       "signature": "(image, sigma=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1199,6 +1326,7 @@
       "signature": "(image, corners, window_size=11, alpha=0.99)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1208,6 +1336,7 @@
       "signature": "(image, step=4, radius=15, rings=3, histograms=8, orientations=8, normalization='l1', sigmas=None, ring_radii=None, visualize=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1217,6 +1346,7 @@
       "signature": "(image, r, c, width, height, feature_coord, color_positive_block=(1.0, 0.0, 0.0), color_negative_block=(0.0, 1.0, 0.0), alpha=0.5, max_n_features=None, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1226,6 +1356,7 @@
       "signature": "(image, r, c, width, height, lbp_code=0, color_greater_block=(1, 1, 1), color_less_block=(0, 0.69, 0.96), alpha=0.5)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1235,6 +1366,7 @@
       "signature": "(descriptors, gmm, *, improved=False, alpha=0.5)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1244,6 +1376,7 @@
       "signature": "(image, distances, angles, levels=None, symmetric=False, normed=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1253,6 +1386,7 @@
       "signature": "(P, prop='contrast')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1262,6 +1396,7 @@
       "signature": "(int_image, r, c, width, height, feature_type=None, feature_coord=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1271,6 +1406,7 @@
       "signature": "(width, height, feature_type=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1280,6 +1416,7 @@
       "signature": "(image, sigma=1, mode='constant', cval=0, order='rc', use_gaussian_derivatives=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1289,6 +1426,7 @@
       "signature": "(image, sigma=1, approximate=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1298,6 +1436,7 @@
       "signature": "(H_elems)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1307,6 +1446,7 @@
       "signature": "(image, orientations=9, pixels_per_cell=(8, 8), cells_per_block=(3, 3), block_norm='L2-Hys', visualize=False, transform_sqrt=False, feature_vector=True, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1316,6 +1456,7 @@
       "signature": "(descriptors, *, n_modes=32, gm_args=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1325,6 +1466,7 @@
       "signature": "(image, P, R, method='default')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1334,6 +1476,7 @@
       "signature": "(descriptors1, descriptors2, metric=None, p=2, max_distance=inf, cross_check=True, max_ratio=1.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1343,6 +1486,7 @@
       "signature": "(image, template, pad_input=False, mode='constant', constant_values=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1352,6 +1496,7 @@
       "signature": "(int_image, r, c, width, height)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1361,6 +1506,7 @@
       "signature": "(image, intensity=True, edges=True, texture=True, sigma_min=0.5, sigma_max=16, num_sigma=None, workers=None, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1370,6 +1516,7 @@
       "signature": "(image, min_distance=1, threshold_abs=None, threshold_rel=None, exclude_border=True, num_peaks=inf, footprint=None, labels=None, num_peaks_per_label=inf, p_norm=inf)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1379,6 +1526,7 @@
       "signature": "(image0, image1, *, keypoints0, keypoints1, matches, ax, keypoints_color='k', matches_color=None, only_matches=False, alignment='horizontal')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1388,6 +1536,7 @@
       "signature": "(image, sigma=1, mode='constant', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1397,6 +1546,7 @@
       "signature": "(image, sigma=1, mode='constant', cval=0, order='rc')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1406,6 +1556,7 @@
       "signature": "(A_elems)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1415,6 +1566,7 @@
       "signature": "(impulse_response, **filter_params)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1424,6 +1576,7 @@
       "signature": "(image, low, high)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1433,6 +1586,7 @@
       "signature": "(image, cutoff_frequency_ratio=0.005, high_pass=True, order=2.0, channel_axis=None, *, squared_butterworth=True, npad=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1442,6 +1596,7 @@
       "signature": "(image, kernel, mode='reflect')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1451,6 +1606,7 @@
       "signature": "(image, low_sigma, high_sigma=None, *, mode='nearest', cval=0, channel_axis=None, truncate=4.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1460,6 +1616,7 @@
       "signature": "(image, mask=None, *, axis=None, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1469,6 +1626,7 @@
       "signature": "(image, *, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1478,6 +1636,7 @@
       "signature": "(image, *, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1487,6 +1646,7 @@
       "signature": "(data, impulse_response=None, filter_params=None, predefined_filter=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1496,6 +1656,7 @@
       "signature": "(data, impulse_response=None, filter_params=None, max_gain=2, predefined_filter=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1505,6 +1666,7 @@
       "signature": "(image, sigmas=range(1, 10, 2), scale_range=None, scale_step=None, alpha=0.5, beta=0.5, gamma=None, black_ridges=True, mode='reflect', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1514,6 +1676,7 @@
       "signature": "(image, frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None, n_stds=3, offset=0, mode='reflect', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1523,6 +1686,7 @@
       "signature": "(frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None, n_stds=3, offset=0, dtype=<class 'numpy.complex128'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1536,6 +1700,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1545,6 +1710,7 @@
       "signature": "(image, sigmas=range(1, 10, 2), scale_range=None, scale_step=None, alpha=0.5, beta=0.5, gamma=15, black_ridges=True, mode='reflect', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1554,6 +1720,7 @@
       "signature": "(image, ksize=3, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1563,6 +1730,7 @@
       "signature": "(image, footprint=None, out=None, mode='nearest', cval=0.0, behavior='ndimage')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1572,6 +1740,7 @@
       "signature": "(image, sigmas=range(1, 10, 2), alpha=None, black_ridges=True, mode='reflect', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1585,6 +1754,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1598,6 +1768,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1611,6 +1782,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1620,6 +1792,7 @@
       "signature": "(image)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1629,6 +1802,7 @@
       "signature": "(image, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1638,6 +1812,7 @@
       "signature": "(image, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1647,6 +1822,7 @@
       "signature": "(image, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1656,6 +1832,7 @@
       "signature": "(image, sigmas=range(1, 10, 2), black_ridges=True, mode='reflect', cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1669,6 +1846,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1682,6 +1860,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1695,6 +1874,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1708,6 +1888,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1721,6 +1902,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1734,6 +1916,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1743,6 +1926,7 @@
       "signature": "(image=None, nbins=256, return_all=False, *, hist=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1752,6 +1936,7 @@
       "signature": "(image, *, tolerance=None, initial_guess=None, iter_callback=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1761,6 +1946,7 @@
       "signature": "(image, block_size=3, method='gaussian', offset=0, mode='reflect', param=None, cval=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1774,6 +1960,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1783,6 +1970,7 @@
       "signature": "(image=None, nbins=256, max_num_iter=10000, *, hist=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1792,6 +1980,7 @@
       "signature": "(image=None, classes=3, nbins=256, *, hist=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1801,6 +1990,7 @@
       "signature": "(image, window_size=15, k=0.2)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1812,6 +2002,7 @@
       "native_default_case_dtypes": [
         "uint8"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -1821,6 +2012,7 @@
       "signature": "(image, window_size=15, k=0.2, r=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1830,6 +2022,7 @@
       "signature": "(image, nbins=256)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1839,6 +2032,7 @@
       "signature": "(image=None, nbins=256, *, hist=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1848,6 +2042,7 @@
       "signature": "(image, figsize=(8, 5), verbose=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1857,6 +2052,7 @@
       "signature": "(image, radius=1.0, amount=1.0, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1866,6 +2062,7 @@
       "signature": "(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1875,6 +2072,7 @@
       "signature": "(window_type, shape, warp_kwargs=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1884,6 +2082,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1893,6 +2092,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1902,6 +2102,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1911,6 +2112,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1920,6 +2122,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1929,6 +2132,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1938,6 +2142,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1947,6 +2152,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1956,6 +2162,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1965,6 +2172,7 @@
       "signature": "(image, footprint, *, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1974,6 +2182,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1983,6 +2192,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -1992,6 +2202,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2001,6 +2212,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2010,6 +2222,7 @@
       "signature": "(image, footprint=None, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2019,6 +2232,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2028,6 +2242,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2037,6 +2252,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2046,6 +2262,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2055,6 +2272,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2064,6 +2282,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2073,6 +2292,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2082,6 +2302,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2091,6 +2312,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2100,6 +2322,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2109,6 +2332,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2118,6 +2342,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2127,6 +2352,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2136,6 +2362,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2145,6 +2372,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2154,6 +2382,7 @@
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, n_bins=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2163,6 +2392,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2172,6 +2402,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2181,6 +2412,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2190,6 +2422,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2199,6 +2432,7 @@
       "signature": "(label_image=None, connectivity=1, data=None, **attr)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2208,6 +2442,7 @@
       "signature": "(graph, nodes=None, shape=None, partition_size=100)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2217,6 +2452,7 @@
       "signature": "(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_edge=1.0, *, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2226,6 +2462,7 @@
       "signature": "(labels, rag, thresh, in_place=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2235,6 +2472,7 @@
       "signature": "(labels, rag, thresh, rag_copy, in_place_merge, merge_func, weight_func)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2244,6 +2482,7 @@
       "signature": "(image, *, mask=None, edge_function=None, connectivity=1, spacing=None, sparse_type='matrix')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2253,6 +2492,7 @@
       "signature": "(labels, edge_map, connectivity=2)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2262,6 +2502,7 @@
       "signature": "(image, labels, connectivity=2, mode='distance', sigma=255.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2271,6 +2512,7 @@
       "signature": "(array, start, end, fully_connected=True, geometric=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2280,6 +2522,7 @@
       "signature": "(arr, reach=1, axis=-1, output_indexlist=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2289,6 +2532,7 @@
       "signature": "(labels, rag, image, border_color='black', edge_width=1.5, edge_cmap='magma', img_cmap='bone', in_place=True, ax=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2298,6 +2542,7 @@
       "signature": "(load_pattern, conserve_memory=True, load_func=None, **load_func_kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2307,6 +2552,7 @@
       "signature": "(filename, conserve_memory=True, dtype=None, **imread_kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2316,6 +2562,7 @@
       "signature": "(ic)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2325,6 +2572,7 @@
       "signature": "(fname, as_gray=False, plugin=<DEPRECATED>, **plugin_args)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2334,6 +2582,7 @@
       "signature": "(load_pattern, conserve_memory=True, plugin=<DEPRECATED>, **plugin_args)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2343,6 +2592,7 @@
       "signature": "(imread)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2352,6 +2602,7 @@
       "signature": "(fname, arr, plugin=<DEPRECATED>, *, check_contrast=True, **plugin_args)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2361,6 +2612,7 @@
       "signature": "(f)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2370,6 +2622,7 @@
       "signature": "(f)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2379,6 +2632,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2388,6 +2642,7 @@
       "signature": "(img)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2397,6 +2652,7 @@
       "signature": "(center, radius)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2406,6 +2662,7 @@
       "signature": "(center, axis_lengths, theta)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2415,6 +2672,7 @@
       "signature": "(origin, direction)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2424,6 +2682,7 @@
       "signature": "(*args, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2433,6 +2692,7 @@
       "signature": "(coords, tolerance)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2442,6 +2702,7 @@
       "signature": "(image, block_size=2, func=<function sum>, cval=0, func_kwargs=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2451,6 +2712,7 @@
       "signature": "(image, h_size=11, channel_axis=None, reduce_func=<function max>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2460,6 +2722,7 @@
       "signature": "(image, *, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2469,6 +2732,7 @@
       "signature": "(image, connectivity=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2478,6 +2742,7 @@
       "signature": "(image, level=None, fully_connected='low', positive_orientation='low', *, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2487,6 +2752,7 @@
       "signature": "(shape, verts, binarize=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2496,6 +2762,7 @@
       "signature": "(image, mu=None, *, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2505,6 +2772,7 @@
       "signature": "(image, mu=None, T=None, *, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2514,6 +2782,7 @@
       "signature": "(image0_mask, image1_mask, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2523,6 +2792,7 @@
       "signature": "(label_image, background=None, return_num=False, connectivity=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2532,6 +2802,7 @@
       "signature": "(image0, image1_mask, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2541,6 +2812,7 @@
       "signature": "(image0, image1, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2550,6 +2822,7 @@
       "signature": "(volume, level=None, *, spacing=(1.0, 1.0, 1.0), gradient_direction='descent', step_size=1, allow_degenerate=True, method='lewiner', mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2559,6 +2832,7 @@
       "signature": "(verts, faces)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2568,6 +2842,7 @@
       "signature": "(image, order=3, *, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2577,6 +2852,7 @@
       "signature": "(image, center=None, order=3, *, spacing=None, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2586,6 +2862,7 @@
       "signature": "(coords, order=3)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2595,6 +2872,7 @@
       "signature": "(coords, center=None, order=3)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2604,6 +2882,7 @@
       "signature": "(nu)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2613,6 +2892,7 @@
       "signature": "(mu, order=3, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2622,6 +2902,7 @@
       "signature": "(image0, image1, mask=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2631,6 +2912,7 @@
       "signature": "(image, neighborhood=4)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2640,6 +2922,7 @@
       "signature": "(image, directions=4)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2649,6 +2932,7 @@
       "signature": "(points, verts)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2658,6 +2942,7 @@
       "signature": "(image, src, dst, linewidth=1, order=None, mode='reflect', cval=0.0, *, reduce_func=<function mean>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2667,6 +2952,7 @@
       "signature": "(data, model_class, min_samples, residual_threshold, is_data_valid=None, is_model_valid=None, max_trials=100, stop_sample_num=inf, stop_residuals_sum=0, stop_probability=1, rng=None, initial_inliers=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2676,6 +2962,7 @@
       "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2685,6 +2972,7 @@
       "signature": "(label_image, intensity_image=None, properties=('label', 'bbox'), *, cache=True, separator='-', extra_properties=None, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2694,6 +2982,7 @@
       "signature": "(image, base=2)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2703,6 +2992,7 @@
       "signature": "(coords, degree=2, preserve_ends=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2712,6 +3002,7 @@
       "signature": "(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2721,6 +3012,7 @@
       "signature": "(im_true, im_test, *, ignore_labels=None, normalize=False, sparse_type='matrix')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2730,6 +3022,7 @@
       "signature": "(image0, image1, method='standard')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2739,6 +3032,7 @@
       "signature": "(image0, image1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2748,6 +3042,7 @@
       "signature": "(image0, image1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2757,6 +3052,7 @@
       "signature": "(image0, image1, *, bins=100)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2766,6 +3062,7 @@
       "signature": "(image_true, image_test, *, normalization='euclidean')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2775,6 +3072,7 @@
       "signature": "(image_true, image_test, *, data_range=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2784,6 +3082,7 @@
       "signature": "(im1, im2, *, win_size=None, gradient=False, data_range=None, channel_axis=None, gaussian_weights=False, full=False, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2793,6 +3092,7 @@
       "signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2802,6 +3102,7 @@
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2811,6 +3112,7 @@
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2820,6 +3122,7 @@
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, strict_radius=True, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2829,6 +3132,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2838,6 +3142,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2847,6 +3152,7 @@
       "signature": "(image, offset_coordinates=True, tolerance=1e-10, include_borders=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2856,6 +3162,7 @@
       "signature": "(image, *, connectivity=2)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2865,6 +3172,7 @@
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2874,6 +3182,7 @@
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2883,6 +3192,7 @@
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2892,6 +3202,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2901,6 +3212,7 @@
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, strict_radius=True, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2910,6 +3222,7 @@
       "signature": "(width, height, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2919,6 +3232,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2928,6 +3242,7 @@
       "signature": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2937,6 +3252,7 @@
       "signature": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2946,6 +3262,7 @@
       "signature": "(footprints)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2955,6 +3272,7 @@
       "signature": "(shape, *, dtype=<class 'numpy.uint8'>, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2964,6 +3282,7 @@
       "signature": "(image, h, footprint=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2973,6 +3292,7 @@
       "signature": "(image, h, footprint=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2982,6 +3302,7 @@
       "signature": "(image, radius, out=None, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -2991,6 +3312,7 @@
       "signature": "(image, radius, out=None, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3000,6 +3322,7 @@
       "signature": "(image, radius, out=None, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3009,6 +3332,7 @@
       "signature": "(image, radius, out=None, spacing=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3018,6 +3342,7 @@
       "signature": "(label_image, background=None, return_num=False, connectivity=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3027,6 +3352,7 @@
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3036,6 +3362,7 @@
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3045,6 +3372,7 @@
       "signature": "(image, connectivity=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3054,6 +3382,7 @@
       "signature": "(image, connectivity=1, parent=None, tree_traverser=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3063,6 +3392,7 @@
       "signature": "(image, mask=None, return_distance=False, *, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3072,6 +3402,7 @@
       "signature": "(footprint)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3081,6 +3412,7 @@
       "signature": "(m, n, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3090,6 +3422,7 @@
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3099,6 +3432,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3108,6 +3442,7 @@
       "signature": "(footprint, *, pad_end=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3117,6 +3452,7 @@
       "signature": "(seed, mask, method='dilation', footprint=None, offset=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3126,6 +3462,7 @@
       "signature": "(label_image, min_distance, *, priority=None, p_norm=2, spacing=None, out=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3135,6 +3472,7 @@
       "signature": "(ar, area_threshold=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3144,6 +3482,7 @@
       "signature": "(ar, min_size=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3153,6 +3492,7 @@
       "signature": "(image, *, method=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3162,6 +3502,7 @@
       "signature": "(a, dtype=<class 'numpy.uint8'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3171,6 +3512,7 @@
       "signature": "(image, max_num_iter=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3180,6 +3522,7 @@
       "signature": "(image, footprint=None, out=None, *, mode='reflect', cval=0.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3189,6 +3532,7 @@
       "signature": "(reference_image, moving_image, *, radius=7, num_warp=10, gaussian=False, prefilter=False, dtype=<class 'numpy.float32'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3198,6 +3542,7 @@
       "signature": "(reference_image, moving_image, *, attachment=15, tightness=0.3, num_warp=5, num_iter=10, tol=0.0001, prefilter=False, dtype=<class 'numpy.float32'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3207,6 +3552,7 @@
       "signature": "(reference_image, moving_image, *, upsample_factor=1, space='real', disambiguate=False, reference_mask=None, moving_mask=None, overlap_ratio=0.3, normalization='phase')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3216,6 +3562,7 @@
       "signature": "(radius, ndim)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3225,6 +3572,7 @@
       "signature": "(image, denoise_function, denoise_parameters, *, stride=4, approximate_loss=True, extra_output=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3234,6 +3582,7 @@
       "signature": "(x, func, max_shifts, shift_steps=1, num_workers=<DEPRECATED>, func_kw=None, *, workers=None, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3243,6 +3592,7 @@
       "signature": "(image, win_size=None, sigma_color=None, sigma_spatial=1, bins=10000, mode='constant', cval=0, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3252,6 +3602,7 @@
       "signature": "(image, denoise_function, *, stride=4, masks=None, denoiser_kwargs=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3261,6 +3612,7 @@
       "signature": "(image, patch_size=7, patch_distance=11, h=0.1, fast_mode=True, sigma=0.0, *, preserve_range=False, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3270,6 +3622,7 @@
       "signature": "(image, weight=5.0, max_num_iter=100, eps=0.001, isotropic=True, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3279,6 +3632,7 @@
       "signature": "(image, weight=0.1, eps=0.0002, max_num_iter=200, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3288,6 +3642,7 @@
       "signature": "(image, sigma=None, wavelet='db1', mode='soft', wavelet_levels=None, convert2ycbcr=False, method='BayesShrink', rescale_sigma=True, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3297,6 +3652,7 @@
       "signature": "(shape, intensity)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3306,6 +3662,7 @@
       "signature": "(image, average_sigmas=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3315,6 +3672,7 @@
       "signature": "(image, mask, *, split_into_regions=False, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3324,6 +3682,7 @@
       "signature": "(image, psf, num_iter=50, clip=True, filter_epsilon=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3333,6 +3692,7 @@
       "signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3342,6 +3702,7 @@
       "signature": "(image, psf, reg=None, user_params=None, is_real=True, clip=True, *, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3351,6 +3712,7 @@
       "signature": "(image, wrap_around=False, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3360,6 +3722,7 @@
       "signature": "(image, psf, balance, reg=None, is_real=True, clip=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3369,6 +3732,7 @@
       "signature": "(image, snake, alpha=0.01, beta=0.1, w_line=0.0, w_edge=1, gamma=0.01, max_px_move=1.0, max_num_iter=2500, convergence=0.1, *, boundary_condition='periodic')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3378,6 +3742,7 @@
       "signature": "(image, mu=0.25, lambda1=1.0, lambda2=1.0, tol=0.001, max_num_iter=500, dt=0.5, init_level_set='checkerboard', extended_output=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3387,6 +3752,7 @@
       "signature": "(image_shape, square_size=5)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3396,6 +3762,7 @@
       "signature": "(labels, buffer_size=0, bgval=0, mask=None, *, out=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3405,6 +3772,7 @@
       "signature": "(image_shape, *, center=None, radius=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3414,6 +3782,7 @@
       "signature": "(label_image, distance=1, spacing=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3423,6 +3792,7 @@
       "signature": "(image, scale=1, sigma=0.8, min_size=20, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3432,6 +3802,7 @@
       "signature": "(label_img, connectivity=1, mode='thick', background=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3441,6 +3812,7 @@
       "signature": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3450,6 +3822,7 @@
       "signature": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3459,6 +3832,7 @@
       "signature": "(image, alpha=100.0, sigma=5.0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3468,6 +3842,7 @@
       "signature": "(s1, s2, return_mapping: bool = False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3477,6 +3852,7 @@
       "signature": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3486,6 +3862,7 @@
       "signature": "(image, num_iter, init_level_set='checkerboard', smoothing=1, lambda1=1, lambda2=1, iter_callback=<function <lambda>>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3495,6 +3872,7 @@
       "signature": "(gimage, num_iter, init_level_set='disk', smoothing=1, threshold='auto', balloon=0, iter_callback=<function <lambda>>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3504,6 +3882,7 @@
       "signature": "(image, ratio=1.0, kernel_size=5, max_dist=10, return_tree=False, sigma=0, convert2lab=True, rng=42, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3513,6 +3892,7 @@
       "signature": "(data, labels, beta=130, mode='cg_j', tol=0.001, copy=True, return_full_prob=False, spacing=None, *, prob_tol=0.001, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3522,6 +3902,7 @@
       "signature": "(label_field, offset=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3531,6 +3912,7 @@
       "signature": "(image, n_segments=100, compactness=10.0, max_num_iter=10, sigma=0, spacing=None, convert2lab=None, enforce_connectivity=True, min_size_factor=0.5, max_size_factor=3, slic_zero=False, start_label=1, mask=None, *, channel_axis=-1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3540,6 +3922,7 @@
       "signature": "(image, markers=None, connectivity=1, offset=None, mask=None, compactness=0, watershed_line=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3549,6 +3932,7 @@
       "signature": "(matrix=None, *, scale=None, shear=None, rotation=None, translation=None, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3558,6 +3942,7 @@
       "signature": "(*, rotation=None, translation=None, matrix=None, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3567,6 +3952,7 @@
       "signature": "(matrix=None, *, rotation=None, translation=None, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3576,6 +3962,7 @@
       "signature": "(matrix=None, *, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3585,6 +3972,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3594,6 +3982,7 @@
       "signature": "(params=None, *, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3603,6 +3992,7 @@
       "signature": "(matrix=None, *, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3612,6 +4002,7 @@
       "signature": "(matrix=None, *, scale=None, rotation=None, translation=None, dimensionality=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3621,6 +4012,7 @@
       "signature": "()",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3630,6 +4022,7 @@
       "signature": "(image, factors, cval=0, clip=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3639,6 +4032,7 @@
       "signature": "(ttype, src, dst, *args, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3648,6 +4042,7 @@
       "signature": "(a)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3657,6 +4052,7 @@
       "signature": "(image, radius, normalize=True, full_output=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3666,6 +4062,7 @@
       "signature": "(hspaces, radii, min_xdistance=1, min_ydistance=1, threshold=None, num_peaks=inf, total_num_peaks=inf, normalize=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3675,6 +4072,7 @@
       "signature": "(image, threshold=4, accuracy=1, min_size=4, max_size=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3684,6 +4082,7 @@
       "signature": "(image, theta=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3693,6 +4092,7 @@
       "signature": "(hspace, angles, dists, min_distance=9, min_angle=10, threshold=None, num_peaks=inf)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3702,6 +4102,7 @@
       "signature": "(a)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3711,6 +4112,7 @@
       "signature": "(image, *, dtype=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3720,6 +4122,7 @@
       "signature": "(ii, start, end)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3729,6 +4132,7 @@
       "signature": "(radon_image, theta=None, output_size=None, filter_name='ramp', interpolation='linear', circle=True, preserve_range=True)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3738,6 +4142,7 @@
       "signature": "(radon_image, theta=None, image=None, projection_shifts=None, clip=None, relaxation=0.15, dtype=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3747,6 +4152,7 @@
       "signature": "(coords, matrix)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3756,6 +4162,7 @@
       "signature": "(theta)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3765,6 +4172,7 @@
       "signature": "(image, threshold=10, line_length=50, line_gap=10, theta=None, rng=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3774,6 +4182,7 @@
       "signature": "(image, upscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3783,6 +4192,7 @@
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3792,6 +4202,7 @@
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3801,6 +4212,7 @@
       "signature": "(image, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3810,6 +4222,7 @@
       "signature": "(image, theta=None, circle=True, *, preserve_range=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3819,6 +4232,7 @@
       "signature": "(image, scale, order=None, mode='reflect', cval=0, clip=True, preserve_range=False, anti_aliasing=None, anti_aliasing_sigma=None, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3828,6 +4242,7 @@
       "signature": "(image, output_shape, order=None, mode='reflect', cval=0, clip=True, preserve_range=False, anti_aliasing=None, anti_aliasing_sigma=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3837,6 +4252,7 @@
       "signature": "(image, output_shape, grid_mode=True, preserve_range=False, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3846,6 +4262,7 @@
       "signature": "(image, angle, resize=False, center=None, order=None, mode='constant', cval=0, clip=True, preserve_range=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3855,6 +4272,7 @@
       "signature": "(image, center=None, strength=1, radius=100, rotation=0, output_shape=None, order=None, mode='reflect', cval=0, clip=True, preserve_range=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3864,6 +4282,7 @@
       "signature": "(image, inverse_map, map_args=None, output_shape=None, order=None, mode='constant', cval=0.0, clip=True, preserve_range=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3873,6 +4292,7 @@
       "signature": "(coord_map, shape, dtype=<class 'numpy.float64'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3882,6 +4302,7 @@
       "signature": "(image, center=None, *, radius=None, output_shape=None, scaling='linear', channel_axis=None, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3891,6 +4312,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3900,6 +4322,7 @@
       "signature": null,
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3909,6 +4332,7 @@
       "signature": "(function, array, chunks=None, depth=0, mode=None, extra_arguments=(), extra_keywords=None, *, dtype=None, compute=None, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3918,6 +4342,7 @@
       "signature": "(image0, image1, *, method='diff', n_tiles=(8, 8))",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3927,6 +4352,7 @@
       "signature": "(ar, crop_width, copy=False, order='K')",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -3934,73 +4360,113 @@
       "api": "util.dtype_limits",
       "kind": "callable",
       "signature": "(image, clip_negative=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "metadata",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "metadata",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_bool",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_float",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_float32",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_float64",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_int",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_ubyte",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.img_as_uint",
       "kind": "callable",
       "signature": "(image, force_copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.invert",
@@ -4012,6 +4478,7 @@
         "float32",
         "float64"
       ],
+      "execution_kind": "native",
       "parity_test": "tests/test_api.py::test_every_native_function",
       "benchmark": "benchmarks/coverage.py"
     },
@@ -4021,6 +4488,7 @@
       "signature": "(coords, output_shape)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4030,6 +4498,7 @@
       "signature": "(what)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4039,6 +4508,7 @@
       "signature": "(input_arr, input_vals, output_vals, out=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4048,6 +4518,7 @@
       "signature": "(arr_in, fill='mean', rescale_intensity=False, grid_shape=None, padding_width=0, *, channel_axis=None)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4057,6 +4528,7 @@
       "signature": "(image, mode='gaussian', rng=None, clip=True, **kwargs)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4066,6 +4538,7 @@
       "signature": "(ar_shape, n_points)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4075,6 +4548,7 @@
       "signature": "(ar_shape, n_points, dtype=<class 'int'>)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4084,6 +4558,7 @@
       "signature": "(image, slices, axes=None, copy=False)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4093,6 +4568,7 @@
       "signature": "(ar)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4102,6 +4578,7 @@
       "signature": "(arr_in, block_shape)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     },
@@ -4111,6 +4588,7 @@
       "signature": "(arr_in, window_shape, step=1)",
       "implementation": "upstream-only",
       "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
       "parity_test": null,
       "benchmark": null
     }

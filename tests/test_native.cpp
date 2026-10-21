@@ -1,4 +1,5 @@
 #include "skimagexx/image.hpp"
+#include "skimagexx/convert.hpp"
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -70,12 +71,31 @@ int main() {
         std::vector<double> corrected(3);
         exposure_into(values,corrected.data(),1,3,ExposureTransform::gamma,0.5,1,false);
         require(corrected[0] == 0 && corrected[1] == 0.5 && corrected[2] == 1);
+        const std::uint8_t bytes[] = {0,1,127,128,255};
+        float normalized[5];
+        convert_into(bytes,normalized,5,PixelType::uint8,PixelType::float32);
+        require(normalized[0] == 0 && normalized[4] == 1);
+        std::uint16_t expanded[5];
+        convert_into(bytes,expanded,5,PixelType::uint8,PixelType::uint16);
+        require(expanded[1] == 257 && expanded[4] == 65535);
+        std::uint8_t restored[5];
+        convert_into(expanded,restored,5,PixelType::uint16,PixelType::uint8);
+        require(std::equal(restored,restored+5,bytes));
+        const std::int64_t small[] = {-65535,0,127};
+        const auto info = convert_into(small,restored,3,PixelType::int64,PixelType::uint8);
+        require(info.downcast_without_scaling && info.maximum_signed == 127);
+        require(restored[0] == 1 && restored[2] == 127);
     }
     set_num_threads(1);
     require(get_num_threads() == 1);
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
+    rejected = false;
+    try { convert_into(nullptr,nullptr,1,PixelType::uint8,PixelType::float32); }
+    catch (const std::invalid_argument&) { rejected = true; }
+    require(rejected);
+    convert_into(nullptr,nullptr,0,PixelType::uint8,PixelType::float32);
     rejected = false;
     const float pixel = 1;
     try { sobel_into(&pixel,static_cast<float*>(nullptr),1,1); }

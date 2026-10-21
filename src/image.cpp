@@ -1,5 +1,6 @@
 #include "skimagexx/image.hpp"
 #include "simd.hpp"
+#include "execution.hpp"
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -19,7 +20,8 @@
 namespace skimagexx {
 namespace {
 std::atomic<int> workers{1};
-constexpr std::size_t parallel_min = 256*1024;
+using detail::active_workers;
+using detail::partition;
 std::size_t checked_size(const void* p, std::size_t h, std::size_t w, std::size_t channels = 1) {
     const auto limit = static_cast<std::size_t>(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double);
     if (!p || !h || !w) throw std::invalid_argument("image must be nonempty and nonnull");
@@ -28,27 +30,6 @@ std::size_t checked_size(const void* p, std::size_t h, std::size_t w, std::size_
 }
 void check_output(const void* output) {
     if (!output) throw std::invalid_argument("output must be nonnull");
-}
-int active_workers(std::size_t count) { return count >= parallel_min ? get_num_threads() : 1; }
-
-// Serial calls never enter OpenMP. Snapshot the worker setting once per call.
-template<class F> void partition(std::size_t length, int threads, F body) {
-#ifdef _OPENMP
-    if (threads > 1) {
-        #pragma omp parallel num_threads(threads)
-        {
-            const auto id = static_cast<std::size_t>(omp_get_thread_num());
-            const auto team = static_cast<std::size_t>(omp_get_num_threads());
-            const auto block = length/team, extra = length%team;
-            const auto begin = block*id+std::min(id,extra);
-            body(begin,begin+block+(id < extra),id);
-        }
-        return;
-    }
-#else
-    (void)threads;
-#endif
-    body(0,length,0);
 }
 std::size_t boundary(std::ptrdiff_t x, std::size_t n, Border border) {
     const auto size = static_cast<std::ptrdiff_t>(n);

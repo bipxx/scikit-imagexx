@@ -1,6 +1,6 @@
 # scikit-imagexx
 
-An incremental C++17 rewrite of selected scikit-image algorithms, with NumPy
+An incremental C++17 rewrite of scikit-image algorithms, with NumPy
 bindings, numerical parity checks, explicit AVX2 SIMD, OpenMP parallelism, and
 reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
@@ -14,10 +14,10 @@ floating-point inputs, smaller sizes, raw samples, and before/after regressions.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. Native kernels require nonempty inputs.
-There are currently **22 partially native public functions**. The
+The reference is scikit-image **0.26.0**. There are currently **29 partially native
+image functions and one dtype metadata helper**. The
 [API inventory](coverage/README.md) tracks 446 exported public callable names across 17
-modules; 424 remain pending native implementation and dedicated parity tests.
+modules; 416 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -34,21 +34,28 @@ This is not full scikit-image coverage.
 | `rescale_intensity` | Nonempty arrays of any dimension; same dtypes; `'image'`, `'dtype'`, or finite range pairs | Native min/max and SIMD scaling; output dtype follows input unless a pair requests floating output |
 | `histogram`, `cumulative_distribution` | Nonempty uint8 arrays of any dimension; image/dtype histogram range; normalization; no channel axis | Exact integer counts/bin centers; float64 probabilities/CDF |
 | `equalize_hist` | Nonempty uint8 arrays of any dimension; mask=None | Float64 output using native histogram and CDF lookup |
+| `img_as_float`, `img_as_float32`, `img_as_float64`, `img_as_ubyte`, `img_as_uint`, `img_as_int`, `img_as_bool` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions; `force_copy` | Exact values, dtype, identity, warnings and copy behavior; float16 identity supported |
+| `dtype_limits` | Boolean, integer, float16/32/64; `clip_negative` | Metadata only; no pixel processing |
 
-Float32 outputs are checked with `rtol=atol=2e-6`, float64 with
-`rtol=atol=2e-13`. Float inputs retain dtype and range. Gaussian's intermediate
+Spatial/exposure float32 outputs are checked with `rtol=atol=2e-6`, float64 with
+`rtol=atol=2e-13`; dtype conversion values are checked exactly. Spatial filters
+retain floating input dtype. Gaussian's intermediate
 image retains input floating precision. Noncontiguous arrays are copied; input
 arrays are never modified. Public wrappers preserve upstream signatures and
 forward unsupported dtypes/options with a `FallbackWarning`; disable fallback
 to require native execution. Low-level `_core` functions reject unsupported
 inputs. Native Gaussian radius is capped at 100000.
 
-N-dimensional spatial filtering, signed/16-bit integers, masks, negative/sequence edge axes,
+N-dimensional spatial filtering, integer spatial filters beyond uint8, masks, negative/sequence edge axes,
 anisotropic sigma, other boundary modes, floating-point Otsu histograms, and
 Gaussian output buffers currently require upstream fallback. Exposure histogram
 functions on floating images, channel-wise histograms, masked equalization,
 nonfinite transform parameters, negative gain, named rescale output dtypes,
-and empty arrays also currently use fallback. Floating exposure arithmetic is
+and empty exposure arrays also currently use fallback. Dtype conversions support
+empty arrays where upstream does, preserve upstream scalar behavior, and reproduce
+data-dependent downcast warnings. Float16 conversions beyond identity and
+non-native-endian conversions beyond identity/copy still require fallback.
+Floating exposure arithmetic is
 numerically checked; full NumPy floating-point warning/`errstate` semantics
 remain pending. The C++ API takes
 contiguous buffers; caller-supplied pointer lengths must match dimensions.
@@ -79,7 +86,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 446 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-The 22 native wrapper signatures have per-function parity tests. Tests also run
+All 30 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -132,6 +139,19 @@ overloads also accept uint8 input with double output. Buffers must be contiguous
 and must not overlap; output needs height × width elements. See
 `tests/test_native.cpp` for a complete runnable example.
 
+`skimagexx/convert.hpp` exposes dtype conversions into caller-owned storage:
+
+```cpp
+#include <skimagexx/convert.hpp>
+// source contains count uint16 pixels; destination has count float elements.
+auto status = skimagexx::convert_into(source, destination, count,
+    skimagexx::PixelType::uint16, skimagexx::PixelType::float32);
+```
+
+`ConversionInfo` reports data-dependent downcasting and floating exceptions so
+bindings can reproduce warnings without rescanning pixels. Identity and copy
+decisions belong to the caller; input and output buffers must not overlap.
+
 ## CPU execution
 
 | Algorithm | SIMD work | Parallel work |
@@ -146,6 +166,7 @@ and must not overlap; output needs height × width elements. See
 | Exposure correction | uint8 SIMD LUT mapping; AVX2 float/double log/exp/power and simple gamma paths | Independent pixel ranges |
 | Intensity rescaling | AVX2 min/max and scaling; uint8 LUT | Per-worker ranges, then pixel ranges |
 | Histograms / equalization | Eight-lane counting; AVX2 CDF lookup | Per-worker histograms, then independent pixel ranges |
+| Dtype conversion | AVX2 normalization, rounding, integer packing, boolean comparisons and validation maxima; portable loops for 32/64-bit integer-to-float paths | Per-worker ranges and validation extrema |
 
 Histogram counting uses scalar independent lanes, since AVX2 has no efficient
 conflict-safe histogram scatter. Prefix sums, borders, tails, and small kernels
@@ -184,6 +205,10 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 
 ## Benchmarks and validation
 
+[Verification summary and remaining slower workloads](benchmarks/STATUS.md)
+records 464 current comparisons against original scikit-image, including one-worker
+measurements and optional parallel execution.
+
 [Current per-function performance](benchmarks/function-coverage.md) compares
 **every native public function** with original scikit-image. Its raw JSON records
 input dtype/size, worker count, error, samples, and source hash. Fallback is
@@ -194,17 +219,23 @@ CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 ```sh
 python tools/inventory.py
 python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
+python benchmarks/conversions.py --size 1024 --threads 1 4
 python benchmarks/exposure.py --size 1024 --threads 1
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark now covers 22 functions in 232 cases.
+performance. The full function benchmark covers 30 entries in 328 cases.
+[Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
+across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
+copies, and metadata separately from native image processing. The Python suite
+has 2,949 checks with SIMD enabled and disabled; inventory checks alone do not
+establish numerical parity for pending ports.
 
-[Current single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
+[Earlier single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the
-optimized kernels. The [initial multithreaded results](benchmarks/results.md)
+earlier optimized kernels. The [initial multithreaded results](benchmarks/results.md)
 and [earlier single-thread results](benchmarks/single-thread.md) are historical
 snapshots, with their own source hashes. The benchmark checks parity before timing,
 warms both libraries, alternates their timing order, uses medians of seven

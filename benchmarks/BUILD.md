@@ -10,6 +10,10 @@ Intel Core i7-12700K (12 physical cores, 20 logical processors), using:
 - Baseline code compiled with `/fp:precise`; no fast-math flag.
 - Package and numerical dependency versions in `requirements.txt`.
 
+The current build also uses those AVX2/strict floating-point flags for
+`src/simd_convert_avx2.cpp`. Portable image and conversion code retains the
+baseline compiler target; AVX2 is selected only after runtime CPU/OS checks.
+
 The Python wheel was built and installed using:
 
 ```powershell
@@ -33,12 +37,15 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 22 native public functions and 232
-per-function performance cases. The suite now has 2037 checks in both SIMD
+The current function benchmark covers 29 native image functions, one metadata
+helper, and 328 per-function performance cases. The suite now has 2949 checks in both SIMD
 modes; 446 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
 performance results retain slower cases as well as faster ones.
+`conversion-widths.json` records 112 additional cases across boolean and
+8/16/32/64-bit integer inputs, with exact parity required before timing. Identity,
+copy, and metadata rows are identified separately from conversion kernels.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the
