@@ -100,6 +100,7 @@ template<class T> void stencil(const T* source, T* output, const std::vector<std
     const bool vectorized=has_avx2();
     detail::partition(rows,workers,[&](auto begin,auto end,auto) {
         std::vector<const void*> pointers(fp.points);
+        std::vector<const T*> row_sources(fp.points);
         std::vector<std::size_t> coordinates(ndim,0);
         for (auto row=begin;row<end;++row) {
             auto index=row*width;
@@ -110,26 +111,6 @@ template<class T> void stencil(const T* source, T* output, const std::vector<std
             if constexpr (std::is_floating_point_v<T>) { minimum=-INFINITY; maximum=INFINITY; }
             const bool below=cval<minimum;
             const bool above=std::is_integral_v<T> && sizeof(T)==8 ? cval>=std::ldexp(1.0,int(sizeof(T)*8)-(std::is_signed_v<T>?1:0)) : cval>maximum;
-            auto* out=output+row*width;
-            const auto left=std::min(width,std::size_t(std::max(std::ptrdiff_t(0),-fp.low.back())));
-            const auto right=fp.high.back() > std::ptrdiff_t(width) ? std::size_t(0) :
-                std::min(width,std::size_t(std::max(std::ptrdiff_t(0),std::ptrdiff_t(width)-fp.high.back())));
-            const auto border=[&](std::size_t x) {
-                double value=erode ? INFINITY : -INFINITY;
-                for (std::size_t k=0;k<fp.points;++k) {
-                    std::size_t base=0; bool valid=true;
-                    for (std::size_t d=0;d<ndim;++d) {
-                        std::size_t mapped;
-                        if (!map_index(std::ptrdiff_t(d+1==ndim ? x : coordinates[d]),fp.offsets[k*ndim+d],shape[d],mode,mapped)) { valid=false; break; }
-                        base+=mapped*strides[d];
-                    }
-                    value=detail::extrema(value,valid ? double(source[base]) : cval,erode);
-                }
-                out[x]=detail::morphology_cast<T>(value);
-            };
-            if (!fp.points) { std::fill(out,out+width,T(erode)); continue; }
-            if (left>=right) { for (std::size_t x=0;x<width;++x) border(x); continue; }
-            // Build interior pointers once per row, retaining footprint order.
             for (std::size_t k=0;k<fp.points;++k) {
                 std::size_t base=0; bool valid=true;
                 for (std::size_t d=0;d+1<ndim;++d) {
@@ -137,11 +118,32 @@ template<class T> void stencil(const T* source, T* output, const std::vector<std
                     if (!map_index(std::ptrdiff_t(coordinates[d]),fp.offsets[k*ndim+d],shape[d],mode,mapped)) { valid=false; break; }
                     base+=mapped*strides[d];
                 }
+                row_sources[k]=valid ? source+base : nullptr;
                 if (!valid && ((erode && below) || (!erode && above))) forced=true;
-                if (!valid && ((erode && above) || (!erode && below))) continue;
-                pointers[usable++]=valid ? source+base+std::ptrdiff_t(left)+fp.offsets[k*ndim+ndim-1] : nullptr;
             }
+            auto* out=output+row*width;
+            const auto left=std::min(width,std::size_t(std::max(std::ptrdiff_t(0),-fp.low.back())));
+            const auto right=fp.high.back() > std::ptrdiff_t(width) ? std::size_t(0) :
+                std::min(width,std::size_t(std::max(std::ptrdiff_t(0),std::ptrdiff_t(width)-fp.high.back())));
+            const auto border=[&](std::size_t x) {
+                double value=erode ? INFINITY : -INFINITY;
+                for (std::size_t k=0;k<fp.points;++k) {
+                    std::size_t mapped=0;
+                    const bool valid=row_sources[k] && map_index(std::ptrdiff_t(x),fp.offsets[k*ndim+ndim-1],width,mode,mapped);
+                    value=detail::extrema(value,valid ? double(row_sources[k][mapped]) : cval,erode);
+                    if (binary && value==double(!erode)) break;
+                }
+                out[x]=detail::morphology_cast<T>(value);
+            };
+            if (!fp.points) { std::fill(out,out+width,T(erode)); continue; }
             if (forced) { std::fill(out,out+width,detail::morphology_cast<T>(cval)); continue; }
+            if (left>=right) { for (std::size_t x=0;x<width;++x) border(x); continue; }
+            // Build interior pointers once per row, retaining footprint order.
+            for (std::size_t k=0;k<fp.points;++k) {
+                const bool valid=row_sources[k]!=nullptr;
+                if (!valid && ((erode && above) || (!erode && below))) continue;
+                pointers[usable++]=valid ? row_sources[k]+std::ptrdiff_t(left)+fp.offsets[k*ndim+ndim-1] : nullptr;
+            }
             for (std::size_t x=0;x<left;++x) border(x);
             std::size_t consumed=0;
             const auto fill=detail::morphology_cast<T>(cval);
@@ -166,21 +168,24 @@ template<class T> void stencil(const T* source, T* output, const std::vector<std
 // van Herk/Gil-Werman: linear work per line, independent of window length.
 template<class Input,class Output> void rectangular_axis(const Input* source, Output* output,
     const std::vector<std::size_t>& shape,std::size_t axis,std::ptrdiff_t low,std::ptrdiff_t high,
-    bool erode,Mode mode,double cval,int workers) {
+    bool erode,Mode mode,double cval,int workers,PixelType type=PixelType::float64) {
     const auto strides=strides_for(shape);
     const auto length=shape[axis], step=strides[axis];
     const auto n=shape[0]*strides[0], lines=n/length, window=std::size_t(high-low+1), extended=length+window-1;
+    const auto run=[&](auto sample) {
+    using Work=decltype(sample);
+    const auto fill=detail::morphology_cast<Work>(cval);
     detail::partition(lines,workers,[&](auto begin,auto end,auto) {
-        std::unique_ptr<double[]> values(new double[extended]), prefix(new double[extended]), suffix(new double[extended]);
+        std::unique_ptr<Work[]> values(new Work[extended]), prefix(new Work[extended]), suffix(new Work[extended]);
         for (auto line=begin;line<end;++line) {
             auto remaining=line; std::size_t base=0;
             for (std::size_t d=shape.size();d-->0;) if (d!=axis) { base+=(remaining%shape[d])*strides[d]; remaining/=shape[d]; }
             for (std::size_t j=0;j<extended;++j) {
                 const auto position=std::ptrdiff_t(j)+low;
-                if (position>=0 && std::size_t(position)<length) values[j]=double(source[base+std::size_t(position)*step]);
+                if (position>=0 && std::size_t(position)<length) values[j]=Work(source[base+std::size_t(position)*step]);
                 else {
                     std::size_t mapped;
-                    values[j]=map_index(std::ptrdiff_t(j),low,length,mode,mapped) ? double(source[base+mapped*step]) : cval;
+                    values[j]=map_index(std::ptrdiff_t(j),low,length,mode,mapped) ? Work(source[base+mapped*step]) : fill;
                 }
             }
             for (std::size_t block=0;block<extended;block+=window) {
@@ -190,9 +195,32 @@ template<class Input,class Output> void rectangular_axis(const Input* source, Ou
                 suffix[stop-1]=values[stop-1];
                 for (auto j=stop-1;j>block;--j) suffix[j-1]=detail::extrema(suffix[j],values[j-1],erode);
             }
-            for (std::size_t j=0;j<length;++j) output[base+j*step]=detail::morphology_cast<Output>(detail::extrema(suffix[j],prefix[j+window-1],erode));
+            std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+            if constexpr (std::is_same_v<Work,Output>) {
+                if (step==1 && has_avx2()) {
+                    const void* pointers[]={suffix.get(),prefix.get()+window-1};
+                    done=simd::morphology_line(pointers,2,output+base,length,type,erode,0,false);
+                }
+            }
+#else
+            (void)type;
+#endif
+            for (auto j=done;j<length;++j) {
+                const auto value=detail::extrema(suffix[j],prefix[j+window-1],erode);
+                if constexpr (std::is_same_v<Work,Output>) output[base+j*step]=value;
+                else output[base+j*step]=detail::morphology_cast<Output>(value);
+            }
         }
     });
+    };
+    // Casting extrema commutes with monotone float/small-integer conversion.
+    // Wide integers must retain SciPy's double-buffer rounding. Out-of-range
+    // integer constants also stay double until the final, potentially wrapping cast.
+    if constexpr (sizeof(Input)<8) {
+        if (std::is_floating_point_v<Input> || (std::isfinite(cval) && cval>=double(std::numeric_limits<Input>::lowest()) && cval<=double(std::numeric_limits<Input>::max()))) run(Input{});
+        else run(double{});
+    } else run(double{});
 }
 template<class T> void apply_footprint(const T* source,T* output,const std::vector<std::size_t>& shape,
     const Plan& fp,bool erode,Mode mode,double cval,PixelType type,int workers,bool binary) {
@@ -225,7 +253,7 @@ template<class T> void apply_footprint(const T* source,T* output,const std::vect
                 line.low[axis]=fp.low[axis]; line.high[axis]=fp.high[axis]; line.offsets.assign(line.points*shape.size(),0);
                 for (std::size_t k=0;k<line.points;++k) line.offsets[k*shape.size()+axis]=fp.low[axis]+std::ptrdiff_t(k);
                 stencil(current,destination,shape,line,erode,mode,cval,type,workers,binary);
-            } else rectangular_axis(current,destination,shape,axis,fp.low[axis],fp.high[axis],erode,mode,cval,workers);
+            } else rectangular_axis(current,destination,shape,axis,fp.low[axis],fp.high[axis],erode,mode,cval,workers,type);
             current=destination;
         }
     } else {

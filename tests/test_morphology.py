@@ -87,8 +87,9 @@ def test_64bit_rounding(name,dtype,fp):
 @pytest.mark.parametrize('name',NAMES[:6])
 @pytest.mark.parametrize('dtype',DTYPES)
 @pytest.mark.parametrize('cval',[-129.,256.,2.**32,2.**63,2.**64])
-def test_constant_casts(name,dtype,cval):
-    compare(name,sample(dtype,(3,41)),footprint=np.array([[1,0,1]]),mode='constant',cval=cval)
+@pytest.mark.parametrize('fp',[np.array([[1,0,1]]),np.ones((1,3)),np.ones((2,4))],ids=['sparse','separable','even-rectangle'])
+def test_constant_casts(name,dtype,cval,fp):
+    compare(name,sample(dtype,(3,41)),footprint=fp,mode='constant',cval=cval)
 
 
 @pytest.mark.parametrize('name',NAMES)
