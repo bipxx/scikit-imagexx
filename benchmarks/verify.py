@@ -8,7 +8,7 @@ import sys
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,nargs='+',
-                        help='Override worker counts in every report; use 1 for serial-only verification')
+                        help='Override worker counts (exposure stays serial); use 1 for serial-only verification')
     args=parser.parse_args()
     if args.threads is not None and min(args.threads)<1:
         parser.error('worker counts must be positive')
@@ -25,7 +25,8 @@ def main():
     run('-m','pip','install','.','--no-build-isolation')
     run('tools/inventory.py')
     for name in ('stains','perceptual','color','morphology','coverage','conversions','exposure'):
-        options=[] if args.threads is None else ['--threads',*map(str,args.threads)]
+        workers=[1] if name=='exposure' else args.threads
+        options=[] if workers is None else ['--threads',*map(str,workers)]
         run(f'benchmarks/{name}.py',*options)
     # Reject missing APIs, mixed source snapshots, or absent serial comparisons.
     run('benchmarks/summarize.py')
