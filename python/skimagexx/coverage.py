@@ -8,7 +8,7 @@ NATIVE_FUNCTIONS = {
               'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
               'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb',
               'rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
-              'lab2lch','lch2lab','xyz_tristimulus_values'),
+              'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb'),
     'filters': ('gaussian', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu'),
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
@@ -52,7 +52,7 @@ def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
     name = str(dtype)
     single = name == 'float32'
-    if api in ('color.xyz2lab','color.rgb2lab'):
+    if api in ('color.xyz2lab','color.rgb2lab','color.xyz2luv','color.rgb2luv'):
         # Four epsilon units amplified by the 500*a scaling are about 2.4e-4.
         return (2e-6,2.5e-4) if single else (2e-13,2e-12)
     return (2e-6,2e-6) if single else (2e-13,2e-13)

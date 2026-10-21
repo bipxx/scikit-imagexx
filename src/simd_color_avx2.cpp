@@ -15,6 +15,7 @@ template<> struct Vector<TYPE> { \
     static R load(const TYPE* p) { return _mm256_loadu_##SUFFIX(p); } \
     static R add(R a, R b) { return _mm256_add_##SUFFIX(a,b); } \
     static R sub(R a, R b) { return _mm256_sub_##SUFFIX(a,b); } \
+    static R negate(R a) { return _mm256_xor_##SUFFIX(a,set(TYPE(-0.0))); } \
     static R mul(R a, R b) { return _mm256_mul_##SUFFIX(a,b); } \
     static R div(R a, R b) { return _mm256_div_##SUFFIX(a,b); } \
     static R minimum(R a, R b) { return _mm256_min_##SUFFIX(a,b); } \
@@ -298,8 +299,9 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
     const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
     using T = detail::ColorOutput<Input>; using V = Vector<T>; using R = typename V::R; using Op = PerceptualTransform;
     const auto op = spec.transform;
-    const auto* lut = op == Op::rgb2lab && std::is_same_v<Input,std::uint8_t> ? detail::srgb_decode_table().data() : nullptr;
-    const auto& matrix = detail::color_spec(op == Op::rgb2lab ? ColorTransform::rgb2xyz : ColorTransform::xyz2rgb).matrix;
+    const bool rgb_forward=op==Op::rgb2lab || op==Op::rgb2luv;
+    const auto* lut = rgb_forward && std::is_same_v<Input,std::uint8_t> ? detail::srgb_decode_table().data() : nullptr;
+    const auto& matrix = detail::color_spec(rgb_forward ? ColorTransform::rgb2xyz : ColorTransform::xyz2rgb).matrix;
     R weights[9]; for (int j = 0; j < 9; ++j) weights[j] = V::set(T(matrix[j]));
     std::size_t i = 0;
     for (; i+V::lanes <= n; i += V::lanes) {
@@ -326,7 +328,7 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
             unpack(block,x,y,z);
         }
         bool scalar_block = false;
-        if (op == Op::rgb2hsv || op == Op::hsv2rgb) scalar_block = !all_finite(x) || !all_finite(y) || !all_finite(z);
+        if (op == Op::rgb2hsv || op == Op::hsv2rgb || static_cast<int>(op)>=8) scalar_block = !all_finite(x) || !all_finite(y) || !all_finite(z);
         if (!scalar_block && op == Op::rgb2hsv) {
             const auto high=V::maximum(V::maximum(x,y),z), low=V::minimum(V::minimum(x,y),z), delta=V::sub(high,low);
             const auto zero=V::eq(delta,V::set(0)), divisor=V::choose(delta,V::set(1),zero);
@@ -355,6 +357,37 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
                     const auto b=j==2 ? t : j==3 || j==4 ? value : q;
                     x=V::choose(x,r,mask); y=V::choose(y,g,mask); z=V::choose(z,b,mask);
                 }
+            }
+        } else if (!scalar_block && (op==Op::xyz2luv || op==Op::rgb2luv)) {
+            if (op==Op::rgb2luv) {
+                if constexpr (!std::is_same_v<Input,std::uint8_t>) { x=decode<T>(x); y=decode<T>(y); z=decode<T>(z); }
+                const auto a=x,b=y,c=z;
+                x=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
+                y=V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5]));
+                z=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
+            }
+            const auto scaled=V::div(y,V::set(T(spec.white[1]))),mask=V::gt(scaled,V::set(T(.008856)));
+            const auto positive=V::choose(V::set(1),scaled,mask);
+            const auto light=V::choose(V::mul(V::set(T(903.3)),scaled),V::sub(V::mul(V::set(116),cube_root(positive)),V::set(16)),mask);
+            const auto denominator=V::add(V::add(V::add(x,V::mul(V::set(15),y)),V::mul(V::set(3),z)),V::set(std::numeric_limits<T>::epsilon()));
+            const auto factor=V::mul(V::set(13),light);
+            const auto u=V::mul(factor,V::sub(V::div(V::mul(V::set(4),x),denominator),V::set(T(spec.uv[0]))));
+            const auto v=V::mul(factor,V::sub(V::div(V::mul(V::set(9),y),denominator),V::set(T(spec.uv[1]))));
+            x=light; y=u; z=v;
+        } else if (!scalar_block && (op==Op::luv2xyz || op==Op::luv2rgb)) {
+            const auto light=x,curve=V::div(V::add(light,V::set(16)),V::set(116));
+            auto luminance=V::choose(V::div(light,V::set(T(903.3))),V::mul(V::mul(curve,curve),curve),V::gt(light,V::set(T(7.999625))));
+            luminance=V::mul(luminance,V::set(T(spec.white[1])));
+            const auto denominator=V::add(V::mul(V::set(13),light),V::set(std::numeric_limits<T>::epsilon()));
+            const auto a=V::add(V::set(T(spec.uv[0])),V::div(y,denominator)),b=V::add(V::set(T(spec.uv[1])),V::div(z,denominator));
+            const auto c=V::mul(V::mul(V::set(3),luminance),V::sub(V::mul(V::set(5),b),V::set(3)));
+            z=V::div(V::sub(V::mul(V::sub(a,V::set(4)),c),V::mul(V::mul(V::mul(V::set(15),a),b),luminance)),V::mul(V::set(12),b));
+            x=V::negate(V::add(V::div(c,b),V::mul(V::set(3),z))); y=luminance;
+            if (op==Op::luv2rgb) {
+                const auto a0=x,b0=y,c0=z;
+                x=encode<T>(V::add(V::add(V::mul(a0,weights[0]),V::mul(b0,weights[1])),V::mul(c0,weights[2])));
+                y=encode<T>(V::add(V::add(V::mul(a0,weights[3]),V::mul(b0,weights[4])),V::mul(c0,weights[5])));
+                z=encode<T>(V::add(V::add(V::mul(a0,weights[6]),V::mul(b0,weights[7])),V::mul(c0,weights[8])));
             }
         } else if (op == Op::xyz2lab || op == Op::rgb2lab) {
             if (op == Op::rgb2lab) {

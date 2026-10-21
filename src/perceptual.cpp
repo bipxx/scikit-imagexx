@@ -56,10 +56,10 @@ template<class Input> PerceptualInfo execute_perceptual(const void* input, void*
 }
 PerceptualInfo perceptual_into(const void* input, void* output, std::size_t n, PixelType type,
     PerceptualTransform transform, std::array<double,3> white, std::size_t channels,
-    std::ptrdiff_t pixels, std::ptrdiff_t channel_stride) {
+    std::ptrdiff_t pixels, std::ptrdiff_t channel_stride,std::optional<std::array<double,2>> uv_reference) {
     const int op = static_cast<int>(transform);
-    if (op < 0 || op > 7) throw std::invalid_argument("unknown perceptual transform");
-    if (channels < 3 || (op < 6 && channels != 3)) throw std::invalid_argument("invalid color channel count");
+    if (op < 0 || op > 11) throw std::invalid_argument("unknown perceptual transform");
+    if (channels < 3 || ((op!=6 && op!=7) && channels != 3)) throw std::invalid_argument("invalid color channel count");
     for (auto value : white) if (!(value > 0) || !std::isfinite(value)) throw std::invalid_argument("white point must be finite and positive");
     if (n && (!input || !output)) throw std::invalid_argument("input and output must be nonnull");
     const auto bytes = std::max(pixel_size(type),type == PixelType::float32 ? std::size_t{4} : std::size_t{8});
@@ -68,7 +68,12 @@ PerceptualInfo perceptual_into(const void* input, void* output, std::size_t n, P
     const auto step = magnitude(pixels), offset = magnitude(channel_stride);
     if (channels > limit || n > limit/channels || offset > limit/(channels-1) ||
         (n > 1 && step > (limit-(channels-1)*offset)/(n-1))) throw std::overflow_error("color strides overflow");
-    const detail::PerceptualSpec spec{transform,white,channels};
+    detail::PerceptualSpec spec{transform,white,channels};
+    if (op>=8) spec.uv=type==PixelType::float32 ? detail::luv_reference<float>(white) : detail::luv_reference<double>(white);
+    if (uv_reference) {
+        for (auto value:*uv_reference) if (!(value>0) || !std::isfinite(value)) throw std::invalid_argument("u/v reference must be finite and positive");
+        spec.uv=*uv_reference;
+    }
     if (!n) return {};
     switch (type) {
         case PixelType::boolean: return execute_perceptual<bool>(input,output,n,type,spec,pixels,channel_stride);

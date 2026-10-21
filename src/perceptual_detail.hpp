@@ -8,8 +8,37 @@ struct PerceptualSpec {
     PerceptualTransform transform;
     std::array<double,3> white;
     std::size_t channels;
+    std::array<double,2> uv = {0,0};
 };
 constexpr double pi = 3.141592653589793238462643383279502884;
+
+template<class T> std::array<double,2> luv_reference(const std::array<double,3>& white) {
+    const T x=T(white[0]),y=T(white[1]),z=T(white[2]);
+    const T denominator=T(T(x+T(T(15)*y))+T(T(3)*z));
+    return {double(T(T(T(4)*x)/denominator)),double(T(T(T(9)*y)/denominator))};
+}
+
+template<class T> void xyz_to_luv(T* v,const PerceptualSpec& spec) {
+    const T x=v[0],y=v[1],z=v[2],epsilon=std::numeric_limits<T>::epsilon();
+    const T scaled=T(y/T(spec.white[1]));
+    const T light=scaled>T(0.008856) ? T(T(T(116)*T(std::cbrt(scaled)))-T(16)) : T(T(903.3)*scaled);
+    const T denominator=T(T(T(x+T(T(15)*y))+T(T(3)*z))+epsilon);
+    const T u=T(T(T(4)*x)/denominator),w=T(T(T(9)*y)/denominator),factor=T(T(13)*light);
+    v[0]=light; v[1]=T(factor*T(u-T(spec.uv[0]))); v[2]=T(factor*T(w-T(spec.uv[1])));
+}
+
+template<class T> void luv_to_xyz(T* v,const PerceptualSpec& spec) {
+    const T light=v[0],epsilon=std::numeric_limits<T>::epsilon();
+    const T curve=T(T(light+T(16))/T(116));
+    T y=light>T(7.999625) ? T(std::pow(curve,T(3))) : T(light/T(903.3));
+    y=T(y*T(spec.white[1]));
+    const T denominator=T(T(T(13)*light)+epsilon);
+    const T a=T(T(spec.uv[0])+T(v[1]/denominator)),b=T(T(spec.uv[1])+T(v[2]/denominator));
+    const T c=T(T(T(3)*y)*T(T(T(5)*b)-T(3)));
+    const T z=T(T(T(T(a-T(4))*c)-T(T(T(T(15)*a)*b)*y))/T(T(12)*b));
+    const T x=T(-T(T(c/b)+T(T(3)*z)));
+    v[0]=x; v[1]=y; v[2]=z;
+}
 template<class T> void xyz_to_lab(T* v, const std::array<double,3>& white) {
     for (int j = 0; j < 3; ++j) {
         const T scaled = T(v[j]/T(white[j]));
@@ -86,6 +115,14 @@ template<class Input> void perceptual_pixel(const Input* source, ColorOutput<Inp
         case Op::hsv2rgb: hsv_to_rgb(v,info); break;
         case Op::rgb2lab: color_pixel(source,v,color_spec(ColorTransform::rgb2xyz),stride); xyz_to_lab(v,spec.white); break;
         case Op::xyz2lab: xyz_to_lab(v,spec.white); break;
+        case Op::xyz2luv: xyz_to_luv(v,spec); break;
+        case Op::luv2xyz: luv_to_xyz(v,spec); break;
+        case Op::rgb2luv: color_pixel(source,v,color_spec(ColorTransform::rgb2xyz),stride); xyz_to_luv(v,spec); break;
+        case Op::luv2rgb: {
+            luv_to_xyz(v,spec);
+            T rgb[3]; color_pixel(v,rgb,color_spec(ColorTransform::xyz2rgb));
+            std::copy(rgb,rgb+3,v); break;
+        }
         case Op::lab2xyz: lab_to_xyz(v,spec.white,info); break;
         case Op::lab2rgb: {
             lab_to_xyz(v,spec.white,info);

@@ -113,10 +113,10 @@ PYBIND11_MODULE(_core, m) {
         if (!info.unsupported_nan && !direct) target.attr("__setitem__")(py::ellipsis(),buffer);
         return py::make_tuple(target,info.unsupported_nan,info.invalid_subtract,info.overflow_subtract);
     });
-    m.def("perceptual_transform", [](py::array image, int operation, std::array<double,3> white) {
+    m.def("perceptual_transform", [](py::array image, int operation, std::array<double,3> white,py::object uv) {
         if (!image.ndim()) throw py::value_error("expected a color array");
         const auto nch = image.shape(image.ndim()-1);
-        if (nch < 3 || (operation < 6 && nch != 3)) throw py::value_error("invalid color channel count");
+        if (nch < 3 || ((operation!=6 && operation!=7) && nch != 3)) throw py::value_error("invalid color channel count");
         const auto type = pixel_type(image.dtype());
         const bool floating = type == skimagexx::PixelType::float32 || type == skimagexx::PixelType::float64;
         const auto dtype = type == skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>();
@@ -133,8 +133,10 @@ PYBIND11_MODULE(_core, m) {
         }
         const auto* source = input.data(); auto* destination = output.mutable_data();
         skimagexx::PerceptualInfo info;
+        std::optional<std::array<double,2>> uv_reference;
+        if (!uv.is_none()) uv_reference=uv.cast<std::array<double,2>>();
         { py::gil_scoped_release release; info = skimagexx::perceptual_into(source,destination,n,type,
-            static_cast<skimagexx::PerceptualTransform>(operation),white,static_cast<std::size_t>(nch),pixels,channels); }
+            static_cast<skimagexx::PerceptualTransform>(operation),white,static_cast<std::size_t>(nch),pixels,channels,uv_reference); }
         if (image.ndim() == 1 && type == skimagexx::PixelType::float32 && info.negative_z && (operation == 3 || operation == 5)) {
             py::array_t<double> promoted(3);
             auto* target = promoted.mutable_data();
@@ -143,7 +145,7 @@ PYBIND11_MODULE(_core, m) {
             output = std::move(promoted);
         }
         return py::make_tuple(output,info.negative_z,info.unsupported);
-    },py::arg("image"),py::arg("operation"),py::arg("white"));
+    },py::arg("image"),py::arg("operation"),py::arg("white"),py::arg("uv_reference")=py::none());
     m.def("color_transform", [](py::array image, int operation) {
         if (!image.ndim() || image.shape(image.ndim()-1) != 3) throw py::value_error("expected an array of color triples");
         const auto input_type = pixel_type(image.dtype());

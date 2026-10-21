@@ -6,9 +6,10 @@ from skimage import color as reference
 import skimagexx as xx
 from skimagexx.coverage import parity_tolerance
 
-FUNCTIONS = ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab']
+FUNCTIONS = ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab',
+             'xyz2luv','luv2xyz','rgb2luv','luv2rgb']
 DTYPES = [np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64]
-CIE = ['xyz2lab','lab2xyz','rgb2lab','lab2rgb']
+CIE = ['xyz2lab','lab2xyz','rgb2lab','lab2rgb','xyz2luv','luv2xyz']
 
 
 @pytest.fixture(autouse=True,params=[1,4])
@@ -66,7 +67,7 @@ def test_source_dtypes_and_integer_extrema(name,dtype):
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_all_white_points(name,illuminant,observer,dtype):
     a=np.random.default_rng(61).random((7,9,3)).astype(dtype)
-    if name.startswith('lab'):
+    if name.startswith(('lab','luv')):
         a[...,0]*=100
         a[...,1:]=a[...,1:]*255-128
     compare(name,a,illuminant=illuminant.lower(),observer=observer.lower())
@@ -166,7 +167,7 @@ def test_hsv_signed_zero_reductions_and_tails(dtype):
     np.testing.assert_array_equal(actual,expected)
 
 
-@pytest.mark.parametrize('name',['lab2lch','lch2lab','xyz2lab','lab2xyz','rgb2lab','lab2rgb'])
+@pytest.mark.parametrize('name',['lab2lch','lch2lab','xyz2lab','lab2xyz','rgb2lab','lab2rgb','xyz2luv','luv2xyz','rgb2luv','luv2rgb'])
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_nonfinite_signed_zero_and_polar_boundaries(name,dtype):
     a=np.array([[0,-0.0,0.0],[-0.0,-0.0,-0.0],[1,np.inf,np.nan],
@@ -205,3 +206,36 @@ def test_fallback_half_and_root_aliases(name):
         actual=getattr(xx.color,name)(a)
     np.testing.assert_array_equal(actual,getattr(reference,name)(a))
     assert getattr(xx,name) is getattr(xx.color,name)
+
+
+@pytest.mark.parametrize('name',['xyz2luv','luv2xyz'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('illuminant',['A','B','C','D50','D55','D65','D75','E'])
+@pytest.mark.parametrize('observer',['2','10','R'])
+def test_luv_branch_and_singular_boundaries(name,dtype,illuminant,observer):
+    w=reference.xyz_tristimulus_values(illuminant=illuminant,observer=observer,dtype=dtype)
+    denominator=np.array([1,15,3],dtype=dtype)@w
+    v0=9*w[1]/denominator
+    if name=='luv2xyz':
+        branch=dtype(7.999625)
+        levels=np.array([0.,-0.,-1.,np.nextafter(branch,dtype(-np.inf)),branch,
+                         np.nextafter(branch,dtype(np.inf)),16.,100.],dtype=dtype)
+        a=np.zeros((len(levels),3),dtype=dtype); a[:,0]=levels
+        a[:,1]=dtype(10)
+        a[:,2]=-v0*(dtype(13)*levels+np.finfo(dtype).eps)
+    else:
+        branch=dtype(.008856)
+        levels=np.array([0.,-0.,-1.,np.nextafter(branch,dtype(-np.inf)),branch,
+                         np.nextafter(branch,dtype(np.inf)),1.,100.],dtype=dtype)
+        a=np.zeros((len(levels),3),dtype=dtype); a[:,1]=levels
+        a[:,0]=-dtype(15)*levels-np.finfo(dtype).eps
+    compare(name,np.tile(a,(19,1)),illuminant=illuminant,observer=observer)
+
+
+@pytest.mark.parametrize('name',['xyz2luv','luv2xyz','rgb2luv','luv2rgb'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_luv_signed_zero(name,dtype):
+    a=np.tile(np.array([[0.,-0.,0.],[-0.,0.,-0.]],dtype=dtype),(19,1))
+    actual=getattr(xx.color,name)(a)
+    expected=getattr(reference,name)(a)
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))

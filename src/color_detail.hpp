@@ -35,7 +35,8 @@ template<class T> T decode_srgb(T value) {
 }
 template<class T> T encode_srgb(T value) {
     value = value > T(0.0031308) ? T(T(T(1.055)*T(std::pow(value,T(1.0/2.4))))-T(0.055)) : T(value*T(12.92));
-    return std::clamp(value,T(0),T(1));
+    // NumPy clipping chooses the bound on equality, including -0 -> +0.
+    return value<=T(0) ? T(0) : value>=T(1) ? T(1) : value;
 }
 template<class Input> void color_pixel(const Input* source, ColorOutput<Input>* out, const ColorSpec& spec, std::ptrdiff_t channel_stride = 1) {
     using T = ColorOutput<Input>;

@@ -198,21 +198,29 @@
       "api": "color.luv2rgb",
       "kind": "callable",
       "signature": "(luv, *, channel_axis=-1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "color.luv2xyz",
       "kind": "callable",
       "signature": "(luv, illuminant='D65', observer='2', *, channel_axis=-1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "color.rgb2gray",
@@ -270,11 +278,15 @@
       "api": "color.rgb2luv",
       "kind": "callable",
       "signature": "(rgb, *, channel_axis=-1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "color.rgb2rgbcie",
@@ -426,11 +438,15 @@
       "api": "color.xyz2luv",
       "kind": "callable",
       "signature": "(xyz, illuminant='D65', observer='2', *, channel_axis=-1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "color.xyz2rgb",

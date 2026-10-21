@@ -23,9 +23,28 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        MorphologyFootprint rectangle;
+        rectangle.scipy_separable=true;
+        for (int y=-15;y<=15;++y) for (int x=-15;x<=15;++x) {
+            rectangle.offsets.push_back(y); rectangle.offsets.push_back(x);
+        }
+        std::vector<std::uint8_t> bool_source(33*67,1),bool_output(33*67+2,255);
+        morphology_into(bool_source.data(),bool_output.data()+1,PixelType::boolean,PixelType::boolean,
+            {33,67},{rectangle},MorphologyOp::erosion,MorphologyMode::constant,0);
+        require(std::count(bool_output.begin()+1,bool_output.end()-1,std::uint8_t(1))==3*37);
+        require(bool_output.front()==255 && bool_output.back()==255);
+        bool_source[0]=2;
+        morphology_into(bool_source.data(),bool_output.data()+1,PixelType::boolean,PixelType::boolean,
+            {33,67},{rectangle},MorphologyOp::dilation,MorphologyMode::reflect);
+        require(bool_output[1]==2 && bool_output[33*67]==1);
         const std::uint8_t morph_source[]={4,1,7,2,8};
         std::uint8_t morph_result[5];
         const std::vector<MorphologyFootprint> footprint={{{-1,0,1},1,true}};
+        const std::uint64_t wide_source[]={1,2,3};
+        std::uint64_t wide_output[3];
+        morphology_into(wide_source,wide_output,PixelType::uint64,PixelType::uint64,{3},footprint,
+            MorphologyOp::erosion,MorphologyMode::constant,-std::numeric_limits<double>::infinity());
+        require(wide_output[0]==(std::uint64_t(1)<<63) && wide_output[1]==1 && wide_output[2]==(std::uint64_t(1)<<63));
         morphology_into(morph_source,morph_result,PixelType::uint8,PixelType::uint8,{5},footprint,MorphologyOp::erosion,MorphologyMode::reflect);
         require(std::equal(morph_result,morph_result+5,std::vector<std::uint8_t>{1,1,1,2,2}.begin()));
         morphology_into(morph_source,morph_result,PixelType::uint8,PixelType::uint8,{5},footprint,MorphologyOp::dilation,MorphologyMode::reflect);
@@ -113,6 +132,10 @@ int main() {
         require(hsv[0] == 0 && hsv[1] == 0 && hsv[2] == 0.4);
         const double xyz_source[] = {0.1,0.4,0.7};
         double lab[3], xyz_back[3];
+        double luv[3];
+        perceptual_into(xyz_source,luv,1,PixelType::float64,PerceptualTransform::xyz2luv);
+        perceptual_into(luv,xyz_back,1,PixelType::float64,PerceptualTransform::luv2xyz);
+        for (int j=0;j<3;++j) require(std::abs(xyz_source[j]-xyz_back[j])<2e-14);
         perceptual_into(xyz_source,lab,1,PixelType::float64,PerceptualTransform::xyz2lab);
         perceptual_into(lab,xyz_back,1,PixelType::float64,PerceptualTransform::lab2xyz);
         for (int j = 0; j < 3; ++j) require(std::abs(xyz_source[j]-xyz_back[j]) < 2e-15);

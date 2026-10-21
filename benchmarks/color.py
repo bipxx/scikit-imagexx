@@ -16,7 +16,8 @@ from skimagexx.coverage import parity_tolerance
 FUNCTIONS = ['rgb2yuv','yuv2rgb','rgb2yiq','yiq2rgb','rgb2ypbpr','ypbpr2rgb',
              'rgb2ycbcr','ycbcr2rgb','rgb2ydbdr','ydbdr2rgb','rgb2rgbcie',
              'rgbcie2rgb','rgb2xyz','xyz2rgb','rgb2hsv','hsv2rgb','xyz2lab',
-             'lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab']
+             'lab2xyz','rgb2lab','lab2rgb','lab2lch','lch2lab',
+             'xyz2luv','luv2xyz','rgb2luv','luv2rgb']
 
 
 def main():

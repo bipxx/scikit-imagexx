@@ -32,12 +32,17 @@ def main():
         extra=np.concatenate((lab,a[...,:1]),axis=-1)
         lch=extra.copy(); lch[...,1]=np.abs(lch[...,1]); lch[...,2]=a[...,2]*dtype(40)-dtype(20)
         negative=np.broadcast_to(np.array([0,0,100],dtype=dtype),a.shape)
+        luv=a.copy(); luv[...,0]*=dtype(100); luv[...,1:]=luv[...,1:]*dtype(200)-dtype(100)
+        dark=np.broadcast_to(np.array([.01,.03,.04],dtype=dtype),a.shape)
+        low=luv.copy(); low[...,0]=a[...,0]*dtype(7.9); low[...,1:]=a[...,1:]*dtype(2)-dtype(1)
         alt={'illuminant':'D50','observer':'10'}
         cases=[('rgb2hsv',gray,{},'grayscale'),('hsv2rgb',hsv,{},'wrapped-hue'),
                ('xyz2lab',a,alt,'D50/10'),('lab2xyz',lab,alt,'D50/10'),
                ('rgb2lab',a,alt,'D50/10'),('lab2rgb',lab,alt,'D50/10'),
                ('lab2lch',extra,{},'four-channels'),('lch2lab',lch,{},'four-channels'),
-               ('lab2xyz',negative,{},'negative-Z'),('lab2rgb',negative,{},'negative-Z')]
+               ('lab2xyz',negative,{},'negative-Z'),('lab2rgb',negative,{},'negative-Z'),
+               ('xyz2luv',a,alt,'D50/10'),('luv2xyz',luv,alt,'D50/10'),
+               ('rgb2luv',dark,{},'dark-sRGB'),('luv2rgb',low,{},'low-lightness')]
         for name,image,options,workload in cases:
             old,current=getattr(reference,name),getattr(xx.color,name)
             with warnings.catch_warnings(record=True) as expected_warnings:
