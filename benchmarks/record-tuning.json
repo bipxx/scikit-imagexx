@@ -1,0 +1,3752 @@
+{
+  "metric": "geometric mean native median ms; lower is better",
+  "workload": "24 fixed 512x512 structured RGB/RGBA calls, 6/18/32-byte records, contiguous/reversed/strided/Fortran, one worker",
+  "budget_minutes": 5,
+  "mutable_surface": [
+    "src/simd_alpha_avx2.cpp"
+  ],
+  "recipe": "python benchmarks/alpha.py --records-only --threads 1",
+  "observations": [
+    {
+      "label": "baseline",
+      "revision": "10900f1c4c56a7c136efc426d2c11980619d28ca",
+      "metric_cpp_ms": 8.70069725599877,
+      "reference_geomean_ms": 11.096662895725473,
+      "metadata": {
+        "timestamp_utc": "2026-10-21T15:40:15.576545+00:00",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+        "reference": "0.26.0",
+        "numpy": "2.5.4",
+        "avx2": true,
+        "fallback_enabled": false,
+        "reference_thread_pools": 1,
+        "repeat": 7,
+        "source_sha256": "2d5665edeb2ba8ecb6fe5e85ac77fcda4f08b99d90a14cf843fd8e8bfb8aefba",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "scope": "Allocation-inclusive warmed Python API; strict native dispatch; shape, dtype, warnings and values verified before timing"
+      },
+      "results": [
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.67604,
+          "cpp_ms": 2.40486,
+          "speedup": 1.1127633209417596,
+          "samples_ms": [
+            [
+              2.67604,
+              2.45356,
+              2.74294,
+              3.2711,
+              2.76694,
+              2.26962,
+              2.1339
+            ],
+            [
+              2.40486,
+              2.59044,
+              2.80052,
+              2.4249,
+              2.37854,
+              2.38408,
+              2.25168
+            ]
+          ],
+          "loops": [
+            5,
+            5
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.533,
+          "cpp_ms": 3.2684,
+          "speedup": 0.7749969403989719,
+          "samples_ms": [
+            [
+              2.672125,
+              2.95805,
+              2.506225,
+              2.533,
+              2.2798,
+              2.392075,
+              2.5906
+            ],
+            [
+              3.3546666666666667,
+              3.5287,
+              3.1621666666666663,
+              3.3067,
+              3.1404,
+              3.1522,
+              3.2684
+            ]
+          ],
+          "loops": [
+            4,
+            3
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.29485,
+          "cpp_ms": 3.490325,
+          "speedup": 0.6574889157886443,
+          "samples_ms": [
+            [
+              2.081783333333333,
+              2.30975,
+              2.0466,
+              2.6474166666666665,
+              2.29485,
+              2.2121833333333334,
+              2.7165666666666666
+            ],
+            [
+              3.5815,
+              3.428475,
+              3.490325,
+              3.49265,
+              3.69995,
+              3.4682,
+              3.436125
+            ]
+          ],
+          "loops": [
+            6,
+            4
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.3495333333333335,
+          "cpp_ms": 5.2611,
+          "speedup": 0.636660267497925,
+          "samples_ms": [
+            [
+              2.9246666666666665,
+              3.3495333333333335,
+              3.2734,
+              3.1852666666666667,
+              4.770433333333333,
+              3.5361,
+              4.0911
+            ],
+            [
+              5.253,
+              5.0652,
+              5.33345,
+              5.2611,
+              5.15855,
+              5.3785,
+              5.52585
+            ]
+          ],
+          "loops": [
+            3,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.20158,
+          "cpp_ms": 3.693625,
+          "speedup": 0.5960485972452536,
+          "samples_ms": [
+            [
+              2.20158,
+              2.82356,
+              2.47858,
+              2.87544,
+              2.09856,
+              1.41956,
+              1.4647
+            ],
+            [
+              3.72755,
+              3.632475,
+              3.640225,
+              3.70715,
+              3.693625,
+              3.753525,
+              3.581425
+            ]
+          ],
+          "loops": [
+            5,
+            4
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.248775,
+          "cpp_ms": 5.6439,
+          "speedup": 0.5756258969861267,
+          "samples_ms": [
+            [
+              3.092075,
+              3.11495,
+              3.248775,
+              3.612025,
+              3.829975,
+              3.484575,
+              2.73895
+            ],
+            [
+              5.33265,
+              5.1047,
+              5.6439,
+              5.82995,
+              6.02905,
+              7.8831,
+              5.2568
+            ]
+          ],
+          "loops": [
+            4,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.0894166666666667,
+          "cpp_ms": 2.37744,
+          "speedup": 0.8788514817058124,
+          "samples_ms": [
+            [
+              2.0894166666666667,
+              2.1383833333333335,
+              2.9413333333333336,
+              2.8206833333333337,
+              1.4470166666666668,
+              1.2411333333333332,
+              1.1079
+            ],
+            [
+              2.37744,
+              2.85966,
+              3.9013,
+              2.90868,
+              1.76934,
+              1.73412,
+              2.23254
+            ]
+          ],
+          "loops": [
+            6,
+            5
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.000875,
+          "cpp_ms": 5.4274,
+          "speedup": 0.5529120757637175,
+          "samples_ms": [
+            [
+              2.67525,
+              3.686175,
+              3.897625,
+              4.2203,
+              3.000875,
+              2.6949,
+              2.714675
+            ],
+            [
+              5.233566666666667,
+              6.033633333333333,
+              4.1433333333333335,
+              6.1469,
+              5.7787,
+              4.895166666666667,
+              5.4274
+            ]
+          ],
+          "loops": [
+            4,
+            3
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 9.3084,
+          "cpp_ms": 6.326,
+          "speedup": 1.4714511539677524,
+          "samples_ms": [
+            [
+              8.6097,
+              9.3084,
+              8.3144,
+              12.706,
+              8.8282,
+              11.9931,
+              15.5604
+            ],
+            [
+              6.5573,
+              6.326,
+              5.9088,
+              7.7095,
+              6.0502,
+              6.0561,
+              8.7504
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 32.7386,
+          "cpp_ms": 17.9095,
+          "speedup": 1.8280018984337918,
+          "samples_ms": [
+            [
+              36.6114,
+              37.3715,
+              32.7386,
+              31.8613,
+              35.1678,
+              24.2906,
+              26.046
+            ],
+            [
+              19.4792,
+              19.6772,
+              17.3982,
+              17.9095,
+              19.7546,
+              15.5397,
+              16.0562
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 12.1261,
+          "cpp_ms": 8.8297,
+          "speedup": 1.3733309172452064,
+          "samples_ms": [
+            [
+              21.3653,
+              14.2693,
+              9.8171,
+              10.2942,
+              12.611,
+              11.9016,
+              12.1261
+            ],
+            [
+              9.7907,
+              9.3851,
+              8.8297,
+              9.4949,
+              6.9654,
+              6.4476,
+              8.3898
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 29.6722,
+          "cpp_ms": 18.4251,
+          "speedup": 1.6104227385468735,
+          "samples_ms": [
+            [
+              29.6722,
+              25.6948,
+              37.7191,
+              31.01,
+              25.3363,
+              30.8289,
+              27.7656
+            ],
+            [
+              19.7303,
+              18.4251,
+              22.0396,
+              18.2143,
+              15.6105,
+              17.3497,
+              20.4888
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 13.0067,
+          "cpp_ms": 8.63655,
+          "speedup": 1.5060064493345144,
+          "samples_ms": [
+            [
+              12.8055,
+              10.7228,
+              19.3983,
+              13.0067,
+              13.9796,
+              13.7973,
+              11.2713
+            ],
+            [
+              8.63655,
+              8.41235,
+              7.4339,
+              9.47055,
+              9.60465,
+              7.9721,
+              9.7464
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 33.3708,
+          "cpp_ms": 18.0003,
+          "speedup": 1.8539024349594175,
+          "samples_ms": [
+            [
+              37.4555,
+              23.4604,
+              29.2408,
+              29.182,
+              33.3708,
+              34.3464,
+              39.1354
+            ],
+            [
+              17.037,
+              18.0003,
+              15.1382,
+              23.5561,
+              16.1664,
+              19.2152,
+              22.7183
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 11.5397,
+          "cpp_ms": 9.0243,
+          "speedup": 1.2787363008765222,
+          "samples_ms": [
+            [
+              11.49,
+              11.622,
+              8.5644,
+              10.6318,
+              11.5397,
+              12.4816,
+              15.3306
+            ],
+            [
+              9.3209,
+              6.9356,
+              7.9985,
+              9.3305,
+              8.2858,
+              9.0243,
+              9.2121
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 24.2575,
+          "cpp_ms": 15.841,
+          "speedup": 1.5313111545988258,
+          "samples_ms": [
+            [
+              29.861,
+              28.8849,
+              22.0857,
+              25.7953,
+              22.1896,
+              20.0176,
+              24.2575
+            ],
+            [
+              15.841,
+              16.7883,
+              15.2491,
+              14.1964,
+              18.7159,
+              14.9307,
+              18.1943
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 15.9288,
+          "cpp_ms": 9.0864,
+          "speedup": 1.7530375066032755,
+          "samples_ms": [
+            [
+              14.5666,
+              18.708,
+              15.7236,
+              21.0295,
+              19.8002,
+              13.6124,
+              15.9288
+            ],
+            [
+              6.3026,
+              9.2106,
+              9.0864,
+              10.1123,
+              6.8392,
+              8.9864,
+              9.693
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 43.9072,
+          "cpp_ms": 21.9979,
+          "speedup": 1.9959723428145415,
+          "samples_ms": [
+            [
+              38.582,
+              45.1386,
+              43.6377,
+              43.9072,
+              45.0979,
+              40.4269,
+              44.9535
+            ],
+            [
+              17.6652,
+              24.9783,
+              24.1392,
+              21.9979,
+              20.4927,
+              21.4869,
+              23.5885
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 18.3903,
+          "cpp_ms": 10.1719,
+          "speedup": 1.8079513168631227,
+          "samples_ms": [
+            [
+              19.2739,
+              17.1656,
+              22.2677,
+              17.4284,
+              18.3903,
+              17.4583,
+              20.5024
+            ],
+            [
+              10.1719,
+              11.187,
+              8.3764,
+              8.9864,
+              10.3042,
+              10.2319,
+              6.9425
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 36.0974,
+          "cpp_ms": 20.0854,
+          "speedup": 1.7971959731944598,
+          "samples_ms": [
+            [
+              36.0193,
+              37.0047,
+              32.7064,
+              37.657,
+              33.1696,
+              36.0974,
+              37.826
+            ],
+            [
+              16.3394,
+              17.6992,
+              21.4943,
+              22.2333,
+              20.0854,
+              20.9292,
+              16.2717
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 24.0482,
+          "cpp_ms": 10.6863,
+          "speedup": 2.250376650477715,
+          "samples_ms": [
+            [
+              27.3891,
+              17.255,
+              17.9988,
+              27.3894,
+              16.3942,
+              24.5858,
+              24.0482
+            ],
+            [
+              12.7822,
+              10.6863,
+              11.7261,
+              10.944,
+              10.1337,
+              8.7916,
+              10.1693
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 43.4948,
+          "cpp_ms": 23.4547,
+          "speedup": 1.8544172383360265,
+          "samples_ms": [
+            [
+              31.7722,
+              32.2852,
+              42.3082,
+              52.3141,
+              43.4948,
+              49.0703,
+              45.8193
+            ],
+            [
+              24.7037,
+              22.1756,
+              23.4547,
+              27.8003,
+              30.2123,
+              20.2586,
+              22.0657
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 19.767,
+          "cpp_ms": 10.05285,
+          "speedup": 1.966308061892896,
+          "samples_ms": [
+            [
+              16.8579,
+              24.7417,
+              32.5467,
+              24.0607,
+              19.767,
+              17.7376,
+              16.4828
+            ],
+            [
+              8.497,
+              11.8068,
+              9.44255,
+              12.5111,
+              10.07905,
+              10.05285,
+              9.51025
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 40.663,
+          "cpp_ms": 21.6476,
+          "speedup": 1.8784068441767214,
+          "samples_ms": [
+            [
+              41.4167,
+              35.6419,
+              35.4524,
+              45.0191,
+              38.1089,
+              42.8063,
+              40.663
+            ],
+            [
+              20.7176,
+              21.6476,
+              20.3677,
+              18.374,
+              23.2694,
+              21.6979,
+              22.9709
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "six-byte fast path",
+      "revision": "9ddd595b7b2decddbf420d8ee8f90546e6b80a7f",
+      "metric_cpp_ms": 5.55588909202459,
+      "reference_geomean_ms": 9.914126602484519,
+      "metadata": {
+        "timestamp_utc": "2026-10-21T15:42:51.556827+00:00",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+        "reference": "0.26.0",
+        "numpy": "2.5.4",
+        "avx2": true,
+        "fallback_enabled": false,
+        "reference_thread_pools": 1,
+        "repeat": 7,
+        "source_sha256": "96f542f04192c2d5c62723a80cca30713bd076f96d8afa6a5935afc6c4c24edb",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "scope": "Allocation-inclusive warmed Python API; strict native dispatch; shape, dtype, warnings and values verified before timing"
+      },
+      "results": [
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.1609,
+          "cpp_ms": 1.274825,
+          "speedup": 1.6950561841821423,
+          "samples_ms": [
+            [
+              2.6944,
+              2.1609,
+              1.98438,
+              2.1946,
+              2.49786,
+              2.00138,
+              2.12888
+            ],
+            [
+              1.1805625,
+              1.3418125,
+              1.2869875,
+              1.274825,
+              1.2454875,
+              1.139575,
+              1.402825
+            ]
+          ],
+          "loops": [
+            5,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.2532,
+          "cpp_ms": 1.3945625,
+          "speedup": 2.3327746156948868,
+          "samples_ms": [
+            [
+              4.057666666666666,
+              2.8355333333333337,
+              3.4872,
+              2.8676333333333335,
+              3.0667333333333335,
+              3.2532,
+              3.4095666666666666
+            ],
+            [
+              1.4466875,
+              1.3058625,
+              1.3752375,
+              1.799475,
+              1.700975,
+              1.3945625,
+              1.349875
+            ]
+          ],
+          "loops": [
+            3,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.1205,
+          "cpp_ms": 1.1968416666666668,
+          "speedup": 1.7717464716162674,
+          "samples_ms": [
+            [
+              2.06102,
+              2.1205,
+              2.7189,
+              1.98186,
+              2.15306,
+              1.99626,
+              2.12662
+            ],
+            [
+              1.1154083333333333,
+              1.199575,
+              1.4559583333333332,
+              1.1916916666666668,
+              1.1968416666666668,
+              1.23185,
+              1.192575
+            ]
+          ],
+          "loops": [
+            5,
+            12
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.1007333333333333,
+          "cpp_ms": 1.4273625,
+          "speedup": 2.1723516859475662,
+          "samples_ms": [
+            [
+              3.0416333333333334,
+              2.7768666666666664,
+              3.8854333333333333,
+              3.1007333333333333,
+              3.6423333333333336,
+              2.8947666666666665,
+              4.046366666666667
+            ],
+            [
+              1.3765625,
+              1.4217,
+              1.4357125,
+              1.42365,
+              1.4423125,
+              1.4273625,
+              1.446825
+            ]
+          ],
+          "loops": [
+            3,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.52208,
+          "cpp_ms": 1.46857,
+          "speedup": 1.717371320400117,
+          "samples_ms": [
+            [
+              2.61568,
+              2.29606,
+              2.28266,
+              2.52208,
+              2.96146,
+              2.61714,
+              2.2917
+            ],
+            [
+              1.49621,
+              1.30462,
+              1.49461,
+              1.56985,
+              1.44451,
+              1.46857,
+              1.45055
+            ]
+          ],
+          "loops": [
+            5,
+            10
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.632175,
+          "cpp_ms": 1.83554,
+          "speedup": 1.9788046024603116,
+          "samples_ms": [
+            [
+              3.55245,
+              3.200425,
+              3.218375,
+              4.20705,
+              3.632175,
+              5.4227,
+              4.41775
+            ],
+            [
+              1.94598,
+              1.83554,
+              1.72656,
+              1.7552,
+              1.52494,
+              1.96506,
+              1.89168
+            ]
+          ],
+          "loops": [
+            4,
+            5
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.5466,
+          "cpp_ms": 1.31512,
+          "speedup": 1.9364012409513962,
+          "samples_ms": [
+            [
+              2.5466,
+              2.1921,
+              2.67125,
+              3.0453166666666664,
+              2.6335833333333336,
+              1.1054333333333333,
+              1.2659666666666667
+            ],
+            [
+              1.22121,
+              1.27882,
+              1.31512,
+              1.44772,
+              1.42368,
+              1.61238,
+              0.27261
+            ]
+          ],
+          "loops": [
+            6,
+            10
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.8391,
+          "cpp_ms": 1.889525,
+          "speedup": 2.031780473928633,
+          "samples_ms": [
+            [
+              2.9268666666666667,
+              4.9983,
+              2.7491333333333334,
+              3.8281666666666667,
+              4.868233333333333,
+              4.859866666666667,
+              3.8391
+            ],
+            [
+              1.889525,
+              1.39835,
+              1.374275,
+              2.163825,
+              2.4725,
+              1.5663,
+              2.402725
+            ]
+          ],
+          "loops": [
+            3,
+            4
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 12.1791,
+          "cpp_ms": 8.1318,
+          "speedup": 1.4977126835386998,
+          "samples_ms": [
+            [
+              12.3001,
+              13.7317,
+              12.1137,
+              13.767,
+              10.2064,
+              12.1791,
+              10.1785
+            ],
+            [
+              6.2343,
+              10.3817,
+              6.1429,
+              8.1318,
+              9.5735,
+              7.4816,
+              8.234
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 27.5414,
+          "cpp_ms": 16.0372,
+          "speedup": 1.7173446736338016,
+          "samples_ms": [
+            [
+              27.5414,
+              27.1603,
+              34.8213,
+              28.0395,
+              29.9794,
+              19.5197,
+              25.4221
+            ],
+            [
+              15.4044,
+              20.1058,
+              17.1194,
+              15.685,
+              14.6341,
+              16.0372,
+              17.9776
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 11.2764,
+          "cpp_ms": 6.90585,
+          "speedup": 1.6328764742935338,
+          "samples_ms": [
+            [
+              10.7497,
+              9.5283,
+              11.8206,
+              12.1862,
+              8.5006,
+              12.088,
+              11.2764
+            ],
+            [
+              7.4421,
+              6.96745,
+              6.90585,
+              6.98215,
+              6.31395,
+              6.48175,
+              6.23535
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 21.5463,
+          "cpp_ms": 15.291,
+          "speedup": 1.4090837747694722,
+          "samples_ms": [
+            [
+              21.9355,
+              22.7968,
+              21.5463,
+              21.0276,
+              20.3288,
+              17.7739,
+              21.998
+            ],
+            [
+              16.5182,
+              16.5178,
+              14.4909,
+              14.6746,
+              15.291,
+              17.2281,
+              14.0304
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 10.75,
+          "cpp_ms": 7.1005,
+          "speedup": 1.5139778888810647,
+          "samples_ms": [
+            [
+              11.3573,
+              9.2395,
+              9.6851,
+              9.9528,
+              11.074,
+              10.75,
+              10.8895
+            ],
+            [
+              6.6346,
+              6.897,
+              7.4692,
+              7.8395,
+              6.6211,
+              7.3377,
+              7.1005
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 22.2507,
+          "cpp_ms": 14.8777,
+          "speedup": 1.4955739126343452,
+          "samples_ms": [
+            [
+              23.3163,
+              25.7153,
+              20.0254,
+              21.0042,
+              22.2507,
+              20.9878,
+              22.6472
+            ],
+            [
+              16.7663,
+              14.8777,
+              14.2622,
+              15.1235,
+              14.7475,
+              14.2406,
+              16.8316
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 10.8687,
+          "cpp_ms": 6.5442,
+          "speedup": 1.6608141560465757,
+          "samples_ms": [
+            [
+              9.1386,
+              10.8687,
+              11.7125,
+              14.0988,
+              10.1209,
+              11.4655,
+              10.5327
+            ],
+            [
+              6.2016,
+              6.5442,
+              6.5392,
+              7.3354,
+              6.9073,
+              6.383,
+              7.2797
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 26.9232,
+          "cpp_ms": 18.5135,
+          "speedup": 1.4542469009101466,
+          "samples_ms": [
+            [
+              25.4613,
+              19.4403,
+              30.8138,
+              23.5822,
+              30.1719,
+              26.9232,
+              39.4452
+            ],
+            [
+              15.1993,
+              18.5135,
+              15.7173,
+              18.5707,
+              18.9071,
+              20.1752,
+              17.0892
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 22.3684,
+          "cpp_ms": 9.3025,
+          "speedup": 2.4045579145391023,
+          "samples_ms": [
+            [
+              27.3677,
+              26.6579,
+              37.5028,
+              22.3684,
+              21.0817,
+              19.1911,
+              13.5758
+            ],
+            [
+              10.6204,
+              14.6373,
+              11.5587,
+              9.3025,
+              8.2016,
+              8.4191,
+              8.5059
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 34.5135,
+          "cpp_ms": 16.9386,
+          "speedup": 2.0375650880238036,
+          "samples_ms": [
+            [
+              37.4006,
+              35.6756,
+              34.5135,
+              32.2213,
+              25.2269,
+              27.0999,
+              37.0656
+            ],
+            [
+              18.421,
+              15.2453,
+              16.9856,
+              13.8847,
+              16.9386,
+              16.7032,
+              17.0891
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 14.5328,
+          "cpp_ms": 6.9625,
+          "speedup": 2.0872962298025133,
+          "samples_ms": [
+            [
+              17.4246,
+              15.3114,
+              14.2765,
+              14.5328,
+              15.479,
+              14.0634,
+              12.7086
+            ],
+            [
+              8.5207,
+              6.4395,
+              6.8047,
+              6.916,
+              8.3011,
+              6.9625,
+              7.4027
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 26.7849,
+          "cpp_ms": 17.4096,
+          "speedup": 1.53851323407775,
+          "samples_ms": [
+            [
+              39.2474,
+              32.7431,
+              25.0555,
+              26.7849,
+              24.0822,
+              26.9981,
+              24.1234
+            ],
+            [
+              17.4096,
+              18.6973,
+              17.499,
+              17.8753,
+              16.4828,
+              13.8384,
+              14.0742
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 13.8818,
+          "cpp_ms": 7.38,
+          "speedup": 1.8810027100271003,
+          "samples_ms": [
+            [
+              12.9636,
+              14.1733,
+              13.4613,
+              13.8785,
+              13.8818,
+              15.6244,
+              14.8471
+            ],
+            [
+              7.54315,
+              6.86535,
+              7.5445,
+              7.1438,
+              7.69795,
+              7.0473,
+              7.38
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 30.5346,
+          "cpp_ms": 16.1798,
+          "speedup": 1.8872050334367545,
+          "samples_ms": [
+            [
+              29.9805,
+              30.7891,
+              37.5829,
+              37.8825,
+              30.5346,
+              29.6847,
+              27.7883
+            ],
+            [
+              19.3347,
+              15.3558,
+              22.8981,
+              16.2903,
+              16.1798,
+              15.5293,
+              14.1896
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 11.3615,
+          "cpp_ms": 6.5733,
+          "speedup": 1.7284316857590556,
+          "samples_ms": [
+            [
+              10.8102,
+              11.7085,
+              10.7912,
+              11.0028,
+              14.4117,
+              12.6572,
+              11.3615
+            ],
+            [
+              6.33605,
+              6.2892,
+              6.7444,
+              6.5733,
+              6.2772,
+              6.6684,
+              6.67945
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 23.7906,
+          "cpp_ms": 13.9209,
+          "speedup": 1.7089843329095102,
+          "samples_ms": [
+            [
+              24.5563,
+              22.9816,
+              23.1416,
+              24.4794,
+              23.8554,
+              23.7906,
+              23.7391
+            ],
+            [
+              13.9209,
+              14.061,
+              13.8076,
+              14.0669,
+              13.3686,
+              13.8573,
+              13.9349
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "confirmation",
+      "revision": "9ddd595b7b2decddbf420d8ee8f90546e6b80a7f",
+      "metric_cpp_ms": 5.775612843749944,
+      "reference_geomean_ms": 9.753513238348283,
+      "metadata": {
+        "timestamp_utc": "2026-10-21T15:44:13.833978+00:00",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+        "reference": "0.26.0",
+        "numpy": "2.5.4",
+        "avx2": true,
+        "fallback_enabled": false,
+        "reference_thread_pools": 1,
+        "repeat": 7,
+        "source_sha256": "96f542f04192c2d5c62723a80cca30713bd076f96d8afa6a5935afc6c4c24edb",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "scope": "Allocation-inclusive warmed Python API; strict native dispatch; shape, dtype, warnings and values verified before timing"
+      },
+      "results": [
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.4436666666666667,
+          "cpp_ms": 1.303225,
+          "speedup": 1.8750919194050655,
+          "samples_ms": [
+            [
+              2.4358333333333335,
+              2.5489,
+              2.1212,
+              2.4436666666666667,
+              2.5739,
+              2.4247,
+              3.4415333333333336
+            ],
+            [
+              1.46915,
+              1.2637375,
+              1.1945625,
+              1.454,
+              1.3426375,
+              1.303225,
+              1.2892125
+            ]
+          ],
+          "loops": [
+            6,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-6-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.5998,
+          "cpp_ms": 1.378542857142857,
+          "speedup": 1.8859043710750483,
+          "samples_ms": [
+            [
+              3.4292666666666665,
+              3.0606666666666666,
+              2.4222,
+              2.2984,
+              2.9293666666666667,
+              2.5998,
+              2.4202
+            ],
+            [
+              1.526457142857143,
+              1.353357142857143,
+              1.2296142857142858,
+              1.3702285714285714,
+              1.5386285714285715,
+              1.5101857142857142,
+              1.378542857142857
+            ]
+          ],
+          "loops": [
+            3,
+            7
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.0555166666666667,
+          "cpp_ms": 1.1951076923076922,
+          "speedup": 1.7199426293521451,
+          "samples_ms": [
+            [
+              2.033,
+              1.9652833333333333,
+              2.0555166666666667,
+              1.9433666666666667,
+              2.1099166666666664,
+              2.1806333333333336,
+              2.4328666666666665
+            ],
+            [
+              1.2947846153846154,
+              1.1951076923076922,
+              1.1099846153846156,
+              1.1130076923076924,
+              1.1384538461538463,
+              1.3458307692307692,
+              1.362476923076923
+            ]
+          ],
+          "loops": [
+            6,
+            13
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-6-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.5217,
+          "cpp_ms": 1.5339714285714285,
+          "speedup": 2.295805472256887,
+          "samples_ms": [
+            [
+              4.0056666666666665,
+              4.309866666666667,
+              4.033566666666666,
+              3.5217,
+              2.8617,
+              2.7673333333333336,
+              2.6596666666666664
+            ],
+            [
+              1.7386,
+              1.7818285714285713,
+              1.5339714285714285,
+              1.4890571428571429,
+              1.3194142857142857,
+              1.575,
+              1.2921714285714287
+            ]
+          ],
+          "loops": [
+            3,
+            7
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.19546,
+          "cpp_ms": 1.30668,
+          "speedup": 1.680181834879236,
+          "samples_ms": [
+            [
+              2.40408,
+              2.50318,
+              2.19546,
+              2.1083,
+              2.02566,
+              2.04392,
+              2.39754
+            ],
+            [
+              1.4328,
+              1.29169,
+              1.30668,
+              1.39435,
+              1.28748,
+              1.26452,
+              1.51411
+            ]
+          ],
+          "loops": [
+            5,
+            10
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-6-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 3.0586,
+          "cpp_ms": 1.5102625,
+          "speedup": 2.0252108491073573,
+          "samples_ms": [
+            [
+              2.9488333333333334,
+              3.1909333333333336,
+              3.3846333333333334,
+              3.2802666666666664,
+              3.0586,
+              2.9259333333333335,
+              2.8672666666666666
+            ],
+            [
+              1.7065375,
+              1.4944,
+              1.4355875,
+              1.5102625,
+              1.363025,
+              1.5275125,
+              2.0020625
+            ]
+          ],
+          "loops": [
+            3,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 1.9837142857142858,
+          "cpp_ms": 1.1139,
+          "speedup": 1.7808728662485735,
+          "samples_ms": [
+            [
+              2.109,
+              2.031614285714286,
+              1.9837142857142858,
+              1.9051857142857143,
+              2.0628714285714285,
+              1.8612714285714287,
+              1.1286142857142858
+            ],
+            [
+              1.1173181818181819,
+              1.0801,
+              1.1524454545454546,
+              1.0737363636363635,
+              1.1674090909090908,
+              1.1139,
+              0.2237
+            ]
+          ],
+          "loops": [
+            7,
+            11
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('x', '>i2'), ('y', '>f4')]",
+          "output_dtype": "[('x', '<i2'), ('y', '<f4')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-6-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('x', '>i2'), ('y', '>f4')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 2.9137333333333335,
+          "cpp_ms": 1.3185125,
+          "speedup": 2.2098640197444723,
+          "samples_ms": [
+            [
+              2.9059666666666666,
+              3.2331666666666665,
+              2.6403666666666665,
+              2.7490666666666663,
+              2.9137333333333335,
+              3.9365333333333337,
+              3.149
+            ],
+            [
+              1.3445625,
+              1.3136625,
+              1.3185125,
+              1.455325,
+              1.4253125,
+              1.256875,
+              1.302825
+            ]
+          ],
+          "loops": [
+            3,
+            8
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 8.7864,
+          "cpp_ms": 6.0512,
+          "speedup": 1.452009518773136,
+          "samples_ms": [
+            [
+              7.8793,
+              8.1899,
+              8.4658,
+              11.3065,
+              8.7864,
+              9.5594,
+              10.1648
+            ],
+            [
+              5.9591,
+              6.0512,
+              7.6188,
+              5.9787,
+              6.315,
+              6.0105,
+              6.0917
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-18-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 17.7767,
+          "cpp_ms": 14.2983,
+          "speedup": 1.2432736758915397,
+          "samples_ms": [
+            [
+              17.5979,
+              17.5314,
+              19.1446,
+              16.2733,
+              17.7767,
+              18.0399,
+              19.7939
+            ],
+            [
+              14.8799,
+              13.9667,
+              14.5159,
+              13.9851,
+              14.1325,
+              14.2993,
+              14.2983
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 8.7661,
+          "cpp_ms": 6.2821,
+          "speedup": 1.3954091784594325,
+          "samples_ms": [
+            [
+              8.8955,
+              12.5838,
+              10.1426,
+              8.3948,
+              8.091,
+              8.5494,
+              8.7661
+            ],
+            [
+              6.31035,
+              6.4835,
+              6.2915,
+              6.23385,
+              6.07425,
+              5.9532,
+              6.2821
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-18-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 22.0626,
+          "cpp_ms": 16.0893,
+          "speedup": 1.3712591598142865,
+          "samples_ms": [
+            [
+              22.4992,
+              19.4994,
+              21.1727,
+              25.6339,
+              20.3873,
+              22.0626,
+              24.2366
+            ],
+            [
+              14.7655,
+              14.0706,
+              16.0893,
+              16.313,
+              16.0221,
+              16.7232,
+              16.3063
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 11.6944,
+          "cpp_ms": 8.1124,
+          "speedup": 1.441546274838519,
+          "samples_ms": [
+            [
+              11.9098,
+              11.4036,
+              10.8131,
+              9.4694,
+              11.6944,
+              12.414,
+              12.175
+            ],
+            [
+              6.7788,
+              8.7615,
+              7.5124,
+              8.0928,
+              8.1124,
+              8.7764,
+              9.2278
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-18-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 27.2964,
+          "cpp_ms": 17.9709,
+          "speedup": 1.518922257649867,
+          "samples_ms": [
+            [
+              27.2964,
+              29.5427,
+              41.4681,
+              22.6609,
+              23.6302,
+              24.6493,
+              28.0239
+            ],
+            [
+              18.3724,
+              22.1323,
+              17.9709,
+              19.2378,
+              17.1009,
+              16.5739,
+              17.189
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 11.1339,
+          "cpp_ms": 7.47775,
+          "speedup": 1.4889371803015614,
+          "samples_ms": [
+            [
+              11.9676,
+              11.4315,
+              11.1339,
+              10.0289,
+              13.1477,
+              10.7315,
+              8.9426
+            ],
+            [
+              7.4903,
+              7.88055,
+              7.42,
+              7.47775,
+              7.79705,
+              6.85335,
+              7.3993
+            ]
+          ],
+          "loops": [
+            1,
+            2
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))]",
+          "output_dtype": "[('record', [('a', '<i2'), ('b', '<u4')]), ('vec', '<f4', (3,))]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-18-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 21.7894,
+          "cpp_ms": 17.1282,
+          "speedup": 1.27213600962156,
+          "samples_ms": [
+            [
+              25.0525,
+              20.8963,
+              21.7894,
+              21.2562,
+              23.7054,
+              28.4275,
+              20.4149
+            ],
+            [
+              17.1282,
+              16.1703,
+              15.9062,
+              20.079,
+              17.7117,
+              17.4903,
+              16.8823
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 15.1923,
+          "cpp_ms": 9.6003,
+          "speedup": 1.5824817974438297,
+          "samples_ms": [
+            [
+              15.2973,
+              17.8327,
+              18.1605,
+              15.1923,
+              14.7331,
+              14.8553,
+              15.0319
+            ],
+            [
+              10.2139,
+              9.9581,
+              10.78,
+              9.2601,
+              9.6003,
+              9.078,
+              8.2458
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "contiguous",
+          "workload": "record-32-contiguous",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 34.0296,
+          "cpp_ms": 19.8036,
+          "speedup": 1.7183542386232808,
+          "samples_ms": [
+            [
+              34.0296,
+              36.1358,
+              38.1826,
+              33.6663,
+              30.8355,
+              35.6318,
+              29.7601
+            ],
+            [
+              19.8036,
+              20.6526,
+              19.6562,
+              21.1038,
+              19.5042,
+              16.6561,
+              20.6944
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 22.1357,
+          "cpp_ms": 13.0935,
+          "speedup": 1.6905869324473974,
+          "samples_ms": [
+            [
+              17.1959,
+              16.9055,
+              22.861,
+              25.1728,
+              20.8199,
+              23.1,
+              22.1357
+            ],
+            [
+              11.7822,
+              12.1181,
+              18.7184,
+              16.0541,
+              13.0935,
+              12.0006,
+              14.1475
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "reversed",
+          "workload": "record-32-reversed",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 39.1413,
+          "cpp_ms": 21.6805,
+          "speedup": 1.8053688798690068,
+          "samples_ms": [
+            [
+              39.1413,
+              44.5234,
+              31.6395,
+              34.9986,
+              36.6483,
+              43.2238,
+              41.1081
+            ],
+            [
+              22.9387,
+              18.1769,
+              17.9164,
+              19.0862,
+              21.6805,
+              27.3795,
+              28.2586
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 17.4503,
+          "cpp_ms": 10.8489,
+          "speedup": 1.6084856529233376,
+          "samples_ms": [
+            [
+              16.8681,
+              17.4503,
+              18.4719,
+              16.0757,
+              21.5893,
+              19.1937,
+              16.8585
+            ],
+            [
+              10.8886,
+              10.5726,
+              10.5363,
+              10.5528,
+              13.2043,
+              10.8489,
+              13.8672
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "strided",
+          "workload": "record-32-strided",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 39.7974,
+          "cpp_ms": 20.7975,
+          "speedup": 1.9135665344392356,
+          "samples_ms": [
+            [
+              35.5629,
+              39.7974,
+              31.2999,
+              31.448,
+              44.3176,
+              45.7744,
+              51.3578
+            ],
+            [
+              19.0441,
+              21.6726,
+              17.3616,
+              19.0814,
+              21.8937,
+              21.2618,
+              20.7975
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgb",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {},
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 14.8368,
+          "cpp_ms": 6.8501,
+          "speedup": 2.165924585042554,
+          "samples_ms": [
+            [
+              19.8197,
+              19.0641,
+              14.8368,
+              11.9097,
+              13.9387,
+              15.7358,
+              13.1278
+            ],
+            [
+              7.3784,
+              8.9776,
+              6.6005,
+              6.2856,
+              6.8501,
+              6.5639,
+              8.043
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        },
+        {
+          "api": "color.gray2rgba",
+          "size": 512,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')]",
+          "output_dtype": "[('z', '<c16'), ('when', '<M8[ns]'), ('dt', '<m8[ms]')]",
+          "threads": 1,
+          "backend": "native",
+          "layout": "fortran",
+          "workload": "record-32-fortran",
+          "parameter_repr": {
+            "alpha": "array(shape=(512, 512),dtype=[('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')])"
+          },
+          "rtol": 0,
+          "atol": 0,
+          "warnings": [],
+          "max_abs_error": 0.0,
+          "reference_ms": 28.5053,
+          "cpp_ms": 14.5989,
+          "speedup": 1.9525649192747396,
+          "samples_ms": [
+            [
+              28.5053,
+              27.8023,
+              25.4372,
+              30.8776,
+              26.9997,
+              29.8299,
+              36.1886
+            ],
+            [
+              18.9706,
+              13.7691,
+              15.9362,
+              14.5989,
+              14.421,
+              13.852,
+              19.049
+            ]
+          ],
+          "loops": [
+            1,
+            1
+          ],
+          "sample_labels": [
+            "scikit-image",
+            "current"
+          ]
+        }
+      ]
+    }
+  ]
+}

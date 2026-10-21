@@ -42,7 +42,7 @@ binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
 The current function benchmark covers 88 native image functions, two metadata
-helpers, and 524 one-worker per-function performance cases. The suite now covers 25329 checks in both SIMD
+helpers, and 524 one-worker per-function performance cases. The suite now covers 27293 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -120,7 +120,7 @@ Fortran/reversed/stepped storage, singleton-depth volumes and strong scalars.
 
 Alpha-family validation adds 1020 dedicated parity cases and direct C++ byte-copy,
 compositing, reversed-stride and empty-buffer checks. `alpha-parameters.json`
-records 184 one-worker comparisons against original scikit-image,
+records 208 one-worker comparisons against original scikit-image,
 covering all eleven compositing numeric dtypes, float16 grayscale expansion,
 planar/Fortran/negative/stepped strides, endian storage, backgrounds and alpha
 broadcasting. `src/simd_alpha_avx2.cpp` uses the same runtime-dispatched AVX2
@@ -180,3 +180,18 @@ The final Farid source snapshot (`8f0a084`) also passes the complete
 Windows/Linux CI workflow: full parity in both SIMD modes, all benchmark smoke
 suites and native/portable CTest. The workflow run is
 https://github.com/bipxx/scikit-imagexx/actions/runs/39620952451.
+
+
+The metadata checkpoint adds 1964 checks spanning every covered entry, mixed Lab
+operand descriptors, scalar/broadcast promotion, warning/error behavior, and
+nonzero structured records with nested/subarray fields. Windows passes 27293
+full tests with SIMD enabled and disabled. Linux passes 5380 targeted cases in
+both modes; native/portable CTest and address/undefined sanitizer checks pass.
+The kept six-byte specialization is revalidated separately on the same cases.
+
+`metadata-parameters.json` adds 262 one-worker tagged-dtype comparisons across
+every covered API, with descriptor equality checked before timing.
+`alpha-parameters.json` now includes 24 structured-record workloads. The fixed
+24-case experiment retains baseline, kept and confirmation measurements in
+`record-tuning.json`, separately from the current-source aggregate. The full
+verification command now regenerates fourteen reports with one source fingerprint.
