@@ -32,9 +32,9 @@ def main():
         extra=np.concatenate((lab,a[...,:1]),axis=-1)
         lch=extra.copy(); lch[...,1]=np.abs(lch[...,1]); lch[...,2]=a[...,2]*dtype(40)-dtype(20)
         negative=np.broadcast_to(np.array([0,0,100],dtype=dtype),a.shape)
-        luv=a.copy(); luv[...,0]*=dtype(100); luv[...,1:]=luv[...,1:]*dtype(200)-dtype(100)
+        luv=a.copy(); luv[...,0]=luv[...,0]*dtype(80)+dtype(20); luv[...,1:]=luv[...,1:]*dtype(200)-dtype(100)
         dark=np.broadcast_to(np.array([.01,.03,.04],dtype=dtype),a.shape)
-        low=luv.copy(); low[...,0]=a[...,0]*dtype(7.9); low[...,1:]=a[...,1:]*dtype(2)-dtype(1)
+        low=luv.copy(); low[...,0]=a[...,0]*dtype(7.5)+dtype(.25); low[...,1:]=a[...,1:]*dtype(2)-dtype(1)
         alt={'illuminant':'D50','observer':'10'}
         cases=[('rgb2hsv',gray,{},'grayscale'),('hsv2rgb',hsv,{},'wrapped-hue'),
                ('xyz2lab',a,alt,'D50/10'),('lab2xyz',lab,alt,'D50/10'),

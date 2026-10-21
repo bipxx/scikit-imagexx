@@ -1,7 +1,7 @@
 """Color API compatible with scikit-image."""
 import numpy as np
 import warnings
-from functools import lru_cache
+from functools import lru_cache as _lru_cache
 from . import _core
 from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
 from ._compat import fallback, module_attribute, native_image
@@ -137,7 +137,7 @@ _PERCEPTUAL = {name:i for i,name in enumerate(('rgb2hsv','hsv2rgb','xyz2lab','la
                                              'lab2lch','lch2lab','xyz2luv','luv2xyz','rgb2luv','luv2rgb'))}
 
 
-@lru_cache(maxsize=64)
+@_lru_cache(maxsize=64)
 def _luv_reference(white,dtype):
     # Three-value metadata only. NumPy's dot rounding affects singular inverse
     # denominators, so preserve its installed BLAS behavior without image work.
