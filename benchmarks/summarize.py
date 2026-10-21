@@ -191,7 +191,9 @@ def main():
               'typed sigma, endian conversion and float32/float64 output buffers. Native convolution '
               'retains SciPy coefficient order and double accumulation; float32 results round after '
               'each axis. Difference of Gaussians reuses its first blur buffer, and unsharp masking '
-              'fuses the subtraction, scale, addition and clipping stages.','',
+              'fuses the subtraction, scale, addition and clipping stages. The '
+              '[fixed interior-span experiment](gaussian-tuning.md) retains baseline, optimized and '
+              'independent confirmation snapshots.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
