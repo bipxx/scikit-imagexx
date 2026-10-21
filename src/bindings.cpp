@@ -4,6 +4,7 @@
 #include "skimagexx/perceptual.hpp"
 #include "skimagexx/morphology.hpp"
 #include "skimagexx/stain.hpp"
+#include "skimagexx/distance.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -87,6 +88,30 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("delta_e76",[](py::array first,py::array second) -> py::array {
+        if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
+            throw py::value_error("distance inputs must have three channels");
+        if(first.ndim()!=second.ndim() || !std::equal(first.shape(),first.shape()+first.ndim(),second.shape()))
+            throw py::value_error("distance inputs must have matching broadcasted shapes");
+        const auto at=pixel_type(first.dtype()),bt=pixel_type(second.dtype());
+        auto prepare=[](py::array a,std::ptrdiff_t& pixels,std::ptrdiff_t& channels) {
+            if(!linear_color_view(a,pixels,channels)) {
+                a=a.attr("copy")().cast<py::array>();
+                pixels=3; channels=1;
+            }
+            return a;
+        };
+        std::ptrdiff_t ap=3,ac=1,bp=3,bc=1;
+        first=prepare(first,ap,ac); second=prepare(second,bp,bc);
+        std::vector<py::ssize_t> dims(first.shape(),first.shape()+first.ndim()-1);
+        const auto dtype=at==skimagexx::PixelType::float32 && bt==skimagexx::PixelType::float32 ?
+            py::dtype::of<float>() : py::dtype::of<double>();
+        py::array out(dtype,dims);
+        { py::gil_scoped_release release;
+          skimagexx::delta_e76_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,ap,ac,bp,bc); }
+        if(dims.empty()) return out.attr("reshape")(py::tuple()).cast<py::array>();
+        return out;
+    },py::arg("first"),py::arg("second"));
     m.def("stain_transform",[](py::array image,py::array_t<double,py::array::c_style|py::array::forcecast> weights,
         bool combine,bool intermediate32,bool output32,double adjust) {
         if (!image.ndim() || image.shape(image.ndim()-1)!=3) throw py::value_error("expected three input channels");

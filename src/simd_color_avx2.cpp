@@ -1,6 +1,7 @@
 #include "simd.hpp"
 #include "color_detail.hpp"
 #include "perceptual_detail.hpp"
+#include "distance_detail.hpp"
 #include "simd_math.hpp"
 #include <cstring>
 #include <climits>
@@ -482,5 +483,69 @@ std::size_t perceptual_transform(const void* source, void* out, std::size_t n, P
         default: return 0;
     }
 #undef PERCEPTUAL_CASE
+}
+namespace {
+template<class T,class Input> void distance_load_other(const void* source,std::ptrdiff_t pixels,std::ptrdiff_t channels,
+    typename Vector<T>::R (&values)[3]) {
+    using V=Vector<T>;
+    for(int c=0;c<3;++c) {
+        T lanes[V::lanes];
+        for(std::size_t j=0;j<V::lanes;++j)
+            lanes[j]=detail::distance_read<T,Input>(source,std::ptrdiff_t(j)*pixels+c*channels);
+        values[c]=V::load(lanes);
+    }
+}
+template<class T> void distance_load(const void* source,PixelType type,std::ptrdiff_t pixels,std::ptrdiff_t channels,
+    typename Vector<T>::R (&values)[3]) {
+    using V=Vector<T>;
+    const bool same=(std::is_same_v<T,float> && type==PixelType::float32) ||
+                    (std::is_same_v<T,double> && type==PixelType::float64);
+    if(same) {
+        const auto* p=static_cast<const T*>(source);
+        if(pixels==3 && channels==1) unpack(p,values[0],values[1],values[2]);
+        else for(int c=0;c<3;++c) values[c]=pixels==0 ? V::set(p[c*channels]) :
+            pixels==1 ? V::load(p+c*channels) : gather(p+c*channels,pixels);
+    } else {
+#define DISTANCE_LOAD(KIND,TYPE) case PixelType::KIND: return distance_load_other<T,TYPE>(source,pixels,channels,values)
+        switch(type) {
+            DISTANCE_LOAD(boolean,bool);
+            DISTANCE_LOAD(uint8,std::uint8_t); DISTANCE_LOAD(int8,std::int8_t);
+            DISTANCE_LOAD(uint16,std::uint16_t); DISTANCE_LOAD(int16,std::int16_t);
+            DISTANCE_LOAD(uint32,std::uint32_t); DISTANCE_LOAD(int32,std::int32_t);
+            DISTANCE_LOAD(uint64,std::uint64_t); DISTANCE_LOAD(int64,std::int64_t);
+            DISTANCE_LOAD(float32,float); DISTANCE_LOAD(float64,double);
+            default: return;
+        }
+#undef DISTANCE_LOAD
+    }
+}
+__m256 distance_sqrt(__m256 v){return _mm256_sqrt_ps(v);}
+__m256d distance_sqrt(__m256d v){return _mm256_sqrt_pd(v);}
+void distance_store(float* p,__m256 v){_mm256_storeu_ps(p,v);}
+void distance_store(double* p,__m256d v){_mm256_storeu_pd(p,v);}
+template<class T> std::size_t distance_run(const void* a,const void* b,T* out,std::size_t n,PixelType at,PixelType bt,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    using V=Vector<T>;
+    const auto safe=std::numeric_limits<int>::max()/std::ptrdiff_t(V::lanes);
+    if(ap>safe || ap < -safe || bp>safe || bp < -safe) return 0;
+    const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
+    std::size_t i=0;
+    for(;i+V::lanes<=n;i+=V::lanes) {
+        typename V::R av[3],bv[3];
+        distance_load<T>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
+        distance_load<T>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
+        const auto x=V::sub(bv[0],av[0]),y=V::sub(bv[1],av[1]),z=V::sub(bv[2],av[2]);
+        distance_store(out+i,distance_sqrt(V::add(V::add(V::mul(x,x),V::mul(y,y)),V::mul(z,z))));
+    }
+    return i;
+}
+}
+std::size_t delta_e76(const void* a,const void* b,float* out,std::size_t n,PixelType at,PixelType bt,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    return distance_run(a,b,out,n,at,bt,ap,ac,bp,bc);
+}
+std::size_t delta_e76(const void* a,const void* b,double* out,std::size_t n,PixelType at,PixelType bt,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    return distance_run(a,b,out,n,at,bt,ap,ac,bp,bc);
 }
 } // namespace skimagexx::simd

@@ -14,6 +14,7 @@ __all__ += ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
             'lab2lch','lch2lab','xyz_tristimulus_values']
 __all__ += ['xyz2luv','luv2xyz','rgb2luv','luv2rgb']
 __all__ += ['separate_stains','combine_stains','rgb2hed','hed2rgb']
+__all__ += ['deltaE_cie76','convert_colorspace']
 globals().update(_STAIN_MATRICES)
 _STAIN_LOG_ADJUST=-np.log(1e-6)
 
@@ -281,3 +282,40 @@ def rgb2hed(rgb,*,channel_axis=-1):
 
 def hed2rgb(hed,*,channel_axis=-1):
     return _stain('hed2rgb',hed,_STAIN_MATRICES['rgb_from_hed'],channel_axis)
+
+
+def deltaE_cie76(lab1,lab2,channel_axis=-1):
+    a,b=np.asarray(lab1),np.asarray(lab2)
+    if any(x.dtype.type not in _COLOR_TYPES or not x.dtype.isnative for x in (a,b)):
+        return fallback('color','deltaE_cie76',lab1,lab2,channel_axis=channel_axis)
+    a,b=np.moveaxis(a,channel_axis,-1),np.moveaxis(b,channel_axis,-1)
+    for x in (a,b):
+        if x.shape[-1]<3:
+            raise ValueError(f'not enough values to unpack (expected 3, got {x.shape[-1]})')
+    try:
+        a,b=np.broadcast_arrays(a[...,:3],b[...,:3])
+    except ValueError:
+        # Ask the same ufunc to diagnose incompatible pixel shapes, using
+        # zero-stride scalar views: no image arithmetic or allocation runs.
+        scalar=np.empty((),dtype=np.float64)
+        np.subtract(np.broadcast_to(scalar,b.shape[:-1]),np.broadcast_to(scalar,a.shape[:-1]))
+        raise
+    result=_core.delta_e76(a,b)
+    return result[()] if result.ndim==0 else result
+
+
+def convert_colorspace(arr,fromspace,tospace,*,channel_axis=-1):
+    # Match upstream's route through RGB, including RGB->RGB identity and the
+    # intermediate allocation/rounding of non-RGB pairs.
+    def identity(image,*,channel_axis):
+        return image
+    fromdict={'rgb':identity,'hsv':hsv2rgb,'rgb cie':rgbcie2rgb,'xyz':xyz2rgb,
+              'yuv':yuv2rgb,'yiq':yiq2rgb,'ypbpr':ypbpr2rgb,'ycbcr':ycbcr2rgb,'ydbdr':ydbdr2rgb}
+    todict={'rgb':identity,'hsv':rgb2hsv,'rgb cie':rgb2rgbcie,'xyz':rgb2xyz,
+            'yuv':rgb2yuv,'yiq':rgb2yiq,'ypbpr':rgb2ypbpr,'ycbcr':rgb2ycbcr,'ydbdr':rgb2ydbdr}
+    fromspace,tospace=fromspace.lower(),tospace.lower()
+    if fromspace not in fromdict:
+        raise ValueError(f'`fromspace` has to be one of {fromdict.keys()}')
+    if tospace not in todict:
+        raise ValueError(f'`tospace` has to be one of {todict.keys()}')
+    return todict[tospace](fromdict[fromspace](arr,channel_axis=channel_axis),channel_axis=channel_axis)

@@ -9,7 +9,7 @@ NATIVE_FUNCTIONS = {
               'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb',
               'rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
-              'separate_stains','combine_stains','rgb2hed','hed2rgb'),
+              'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace'),
     'filters': ('gaussian', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu'),
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
@@ -43,6 +43,10 @@ def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
     if api == 'color.xyz_tristimulus_values':
         return (), {'illuminant':'D65','observer':'2','dtype':image.dtype}
+    if api == 'color.deltaE_cie76':
+        return (image,image[...,::-1]), {}
+    if api == 'color.convert_colorspace':
+        return (image,'RGB','HSV'), {}
     if api.startswith('morphology.binary_'):
         # Avoid timing the trivial all-foreground case for numeric inputs.
         return ((image > (127 if str(image.dtype)=='uint8' else .5)).astype(image.dtype),), {}

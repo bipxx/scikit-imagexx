@@ -3,6 +3,7 @@
 #include "skimagexx/color.hpp"
 #include "skimagexx/perceptual.hpp"
 #include "skimagexx/stain.hpp"
+#include "skimagexx/distance.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <iostream>
@@ -170,6 +171,17 @@ int main() {
     }
     set_num_threads(1);
     require(get_num_threads() == 1);
+    {
+        const std::int16_t a[]={-100,20,30,0,0,0};
+        const float b[]={-97,24,30,0,0,12};
+        double distances[2];
+        delta_e76_into(a,b,distances,2,PixelType::int16,PixelType::float32);
+        require(distances[0]==5 && distances[1]==12);
+        float single[1];
+        delta_e76_into(b,b,single,1,PixelType::float32,PixelType::float32);
+        require(single[0]==0);
+        delta_e76_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float64);
+    }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
