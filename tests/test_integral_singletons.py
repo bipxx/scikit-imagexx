@@ -1,6 +1,9 @@
 """Raw strided integer prefixes, singleton axes and exact parallel carries."""
 import numpy as np
 import pytest
+import gc
+import sys
+import weakref
 import skimagexx as xx
 from test_integral import sample,check
 
@@ -64,3 +67,32 @@ def test_overlapping_unaligned_byte_strides(dtype,stride,length):
     snapshot=raw.copy()
     for target in (None,np.int64,np.uint64):check(image,dtype=target)
     np.testing.assert_array_equal(raw,snapshot)
+
+
+@pytest.mark.parametrize('dtype',[np.float16,np.dtype('>f2'),np.dtype('>f8')])
+def test_irrelevant_extreme_singleton_strides(dtype):
+    base=np.arange(1,6,dtype=dtype)
+    limits=np.iinfo(np.intp)
+    image=np.ndarray((1,5,1),dtype=dtype,buffer=base,
+                     strides=(int(limits.max),base.itemsize,int(limits.min)))
+    check(image)
+
+
+@pytest.mark.parametrize('dtype',[np.int64,np.float16,np.dtype('>f8')])
+def test_result_does_not_retain_source_storage(dtype):
+    image=line(dtype,17,'stepped').reshape(17,1)
+    handle=weakref.ref(image)
+    actual=xx.transform.integral_image(image)
+    assert actual.base is None
+    del image;gc.collect()
+    assert handle() is None
+
+
+def test_dynamic_output_descriptor_does_not_leak_references():
+    image=np.arange(35,dtype=np.float32).reshape(5,7)
+    target=np.dtype(np.float64,metadata={'units':'reference-count-check'})
+    for _ in range(10):xx.transform.integral_image(image,dtype=target)
+    gc.collect();before=sys.getrefcount(target)
+    for _ in range(1000):xx.transform.integral_image(image,dtype=target)
+    gc.collect()
+    assert sys.getrefcount(target)==before

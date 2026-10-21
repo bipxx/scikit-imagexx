@@ -50,3 +50,22 @@ jobs:
       - run: cmake -S . -B build/portable -DCMAKE_BUILD_TYPE=Release -DSKIMAGEXX_AVX2=OFF -DSKIMAGEXX_OPENMP=OFF
       - run: cmake --build build/portable --config Release
       - run: ctest --test-dir build/portable -C Release --output-on-failure
+  numpy-minimum:
+    runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # Build isolation supplies NumPy2 headers; exercise the resulting wheel
+      # with the declared minimum runtime, rather than rebuilding against1.x.
+      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
+      - run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
+      - run: python -m pip install --no-deps build/wheels/*.whl
+      - run: python -c "import numpy,skimagexx; assert numpy.__version__ == '1.24.4'; assert skimagexx.get_num_threads() == 1"
+      - run: python -m pytest -q tests/test_integral.py tests/test_integral_singletons.py

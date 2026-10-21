@@ -1,4 +1,7 @@
 #include "skimagexx/integrate.hpp"
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#define NPY_TARGET_VERSION NPY_1_23_API_VERSION
+#include <numpy/arrayobject.h>
 #include "skimagexx/integral.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -202,6 +205,7 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    if(_import_array()<0)throw py::error_already_set();
     m.def("distance_metric",[](py::array first,py::array second,int operation,std::array<double,5> parameters,
         bool wide_trig,bool promoted_cmc) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
@@ -713,8 +717,13 @@ PYBIND11_MODULE(_core, m) {
         py::gil_scoped_release release;
         skimagexx::integral_line_u64_into(input,output,count,stride,swap);
     });
-    m.def("integral_image", [](py::array image,py::array result) {
-        const auto source=pixel_type(image.dtype()),target=pixel_type(result.dtype());
+    m.def("integral_image", [](py::array image,py::dtype output_dtype) -> py::object {
+        const auto target=pixel_type(output_dtype);
+        const auto descriptor=image.dtype();
+        const bool half=descriptor.kind()=='f' && descriptor.itemsize()==2;
+        const bool swap=!descriptor.attr("isnative").cast<bool>();
+        const auto native_dtype=swap ? py::dtype::from_args(descriptor.attr("type")) : descriptor;
+        const auto source=half ? skimagexx::PixelType::float32 : pixel_type(native_dtype);
         auto dense=[](const py::array& array) {
             if(!array.size() || (array.flags()&(py::array::c_style|py::array::f_style)))return true;
             std::vector<std::pair<py::ssize_t,py::ssize_t>> axes;
@@ -723,10 +732,50 @@ PYBIND11_MODULE(_core, m) {
             for(const auto& axis:axes) {if(axis.first!=extent)return false;extent*=axis.second;}
             return extent==array.nbytes();
         };
+        const auto count=std::size_t(image.size());
+        bool raw_line=(source==skimagexx::PixelType::int64 || source==skimagexx::PixelType::uint64)
+            && (target==skimagexx::PixelType::int64 || target==skimagexx::PixelType::uint64);
+        py::ssize_t line_stride=0;bool axis_found=false;
+        if(raw_line && count)for(py::ssize_t axis=0;axis<image.ndim();++axis)if(image.shape(axis)>1) {
+            if(axis_found) {raw_line=false;break;}
+            axis_found=true;line_stride=image.strides(axis);
+        }
         auto input=image;
-        if(!dense(input) || !input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")("K").cast<py::array>();
-        if(!result.writeable() || !dense(result) || !result.attr("flags").attr("aligned").cast<bool>())throw py::type_error("dense aligned writable integral output required");
-        if(input.ndim()!=result.ndim())throw py::value_error("integral output shape mismatch");
+        if(!raw_line) {
+            if(!dense(input) || !input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")("K").cast<py::array>();
+            if(swap || half) {
+                std::vector<py::ssize_t> dimensions(input.shape(),input.shape()+input.ndim()),steps(std::size_t(input.ndim()));
+                for(py::ssize_t axis=0;axis<input.ndim();++axis)
+                    steps[std::size_t(axis)]=count && input.shape(axis)>1 ? input.strides(axis)/input.itemsize() : 0;
+                auto physical=input.attr("ravel")("K").cast<py::array>();
+                // The flattened view owns any needed dense copy. Release the
+                // extra reference before replacing conversion intermediates.
+                input=image;
+                if(swap) {
+                    py::array converted(native_dtype,std::vector<py::ssize_t>{py::ssize_t(count)});
+                    {py::gil_scoped_release release;skimagexx::edge_swap_into(physical.data(),converted.mutable_data(),count,std::size_t(descriptor.itemsize()));}
+                    physical=std::move(converted);
+                }
+                if(half) {
+                    py::array_t<float> converted(count);
+                    {py::gil_scoped_release release;skimagexx::edge_half_to_float(static_cast<const std::uint16_t*>(physical.data()),converted.mutable_data(),count);}
+                    physical=std::move(converted);
+                }
+                for(auto& step:steps)step*=physical.itemsize();
+                input=py::array(physical.dtype(),dimensions,steps,physical.data(),physical);
+            }
+        }
+        // This is the same keep-order allocation used by NumPy cumulative
+        // sums. The C API steals the descriptor reference passed as arg3.
+        auto* allocated=PyArray_NewLikeArray(reinterpret_cast<PyArrayObject*>(image.ptr()),NPY_KEEPORDER,
+            reinterpret_cast<PyArray_Descr*>(output_dtype.inc_ref().ptr()),0);
+        if(!allocated)throw py::error_already_set();
+        auto result=py::reinterpret_steal<py::array>(allocated);
+        if(raw_line) {
+            const auto* bytes=image.data();auto* values=static_cast<std::uint64_t*>(result.mutable_data());
+            {py::gil_scoped_release release;skimagexx::integral_line_u64_into(bytes,values,count,line_stride,swap);}
+            return result;
+        }
         const bool c_order=(result.flags()&py::array::c_style)!=0;
         std::vector<std::size_t> shape,strides;shape.reserve(std::size_t(input.ndim()));
         if(!c_order)strides.reserve(std::size_t(input.ndim()));
@@ -736,7 +785,7 @@ PYBIND11_MODULE(_core, m) {
             shape.push_back(std::size_t(input.shape(axis)));
             if(!c_order)strides.push_back(std::size_t(result.strides(axis)/result.itemsize()));
         }
-        const auto count=std::size_t(input.size());bool supported=true;
+        bool supported=true;
         {
             py::gil_scoped_release release;
             if(count && (source==skimagexx::PixelType::float32 || source==skimagexx::PixelType::float64)) {
@@ -750,7 +799,8 @@ PYBIND11_MODULE(_core, m) {
             }
             if(supported)skimagexx::integral_image_into(input.data(),result.mutable_data(),source,target,shape,strides);
         }
-        return supported;
+        if(!supported)return py::none();
+        return result;
     });
     m.def("gaussian_difference", [](py::array first,py::array second) {
         const auto type=pixel_type(first.dtype());

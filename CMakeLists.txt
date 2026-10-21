@@ -34,10 +34,10 @@ else()
 endif()
 
 if(SKIMAGEXX_BUILD_PYTHON)
-    find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
+    find_package(Python COMPONENTS Interpreter Development.Module NumPy REQUIRED)
     find_package(pybind11 CONFIG REQUIRED)
     pybind11_add_module(_core src/bindings.cpp)
-    target_link_libraries(_core PRIVATE skimagexx)
+    target_link_libraries(_core PRIVATE skimagexx Python::NumPy)
     install(TARGETS _core LIBRARY DESTINATION skimagexx RUNTIME DESTINATION skimagexx)
 endif()
 
