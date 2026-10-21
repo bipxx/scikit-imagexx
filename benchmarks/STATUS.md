@@ -1,6 +1,8 @@
-# Current performance verification
+# Last completed performance verification
 
-Reference: original scikit-image 0.26.0. 2495 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
+The aggregate below is the Gaussian checkpoint, not verification of the current integral-image source. A fresh 16-suite, one-worker verification is running. Integral-image tuning results and retained slower cases are in [the paired confirmation](integral-binding-tuning.md).
+
+Reference: original scikit-image 0.26.0. 2495 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. These checkpoint reports match source/build SHA-256 (POSIX relative paths and LF line endings):
 `423a63332ff25215f86c978a99f1fb6c9e52ea071e7a1cbe9ca31b1365afb94b`.
 
 | Report | Cases | Worker counts |
