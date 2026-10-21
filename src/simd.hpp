@@ -9,6 +9,7 @@ namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
 #ifdef SKIMAGEXX_AVX2
+std::size_t threshold_logs(const float*,float*,std::size_t);
 std::size_t histogram_edges(const float*,std::size_t,const float*,std::size_t,std::uint64_t*);
 std::size_t histogram_edges(const double*,std::size_t,const double*,std::size_t,std::uint64_t*);
 std::size_t metric_distance(const void*,const void*,void*,std::size_t,PixelType,PixelType,DistanceMetric,

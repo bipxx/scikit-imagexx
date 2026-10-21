@@ -103,3 +103,9 @@ are checked before timing. The C++ float32 log approximation preserves NumPy's
 near-tie behavior without requiring a hardware FMA instruction. Pixel scans and
 floating bin assignment use the SIMD/runtime-worker paths; selectors operate on
 small histogram buffers.
+
+Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
+`src/simd_threshold_fma.cpp`. It is dispatched only after the runtime AVX2/OS
+checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
+SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
+Only this translation unit uses the additional `-mfma` flag on GCC/Clang.

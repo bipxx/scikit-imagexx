@@ -26,6 +26,16 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        const float log_inputs[]={.001f,.1f,.2f,.5f,.7f,.9f,1.f,1.1f,2.f,3.f,7.f,10.973364f,10.973365f,13.f,100.f,1e10f,0.f,-1.f,std::numeric_limits<float>::denorm_min()};
+        float log_results[19];
+        for(bool numpy_log : {false,true}) {
+            threshold_logs(log_inputs,log_results,19,numpy_log);
+            for(std::size_t j=0;j<19;++j) {
+                const auto expected=threshold_log(log_inputs[j],numpy_log);
+                require(log_results[j]==expected || (std::isnan(log_results[j]) && std::isnan(expected)));
+            }
+        }
+        threshold_logs(nullptr,nullptr,0);
         const double hist_counts[]={1,2,3,4,3,2,1};
         const double hist_centers[]={0,1,2,3,4,5,6};
         require(threshold_indices(hist_counts,hist_centers,7,HistogramThreshold::yen)[0]==2);

@@ -18,3 +18,9 @@ observable in Yen's first-maximum threshold selection. The standalone C++ path
 uses scalar `std::fma` without requiring a hardware FMA instruction; Python uses
 fixed metadata probes to select this approximation or platform libm according
 to the installed NumPy provider. Unrecognized providers require explicit fallback.
+
+Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
+`src/simd_threshold_fma.cpp`. It is dispatched only after the runtime AVX2/OS
+checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
+SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
+Only this translation unit uses the additional `-mfma` flag on GCC/Clang.

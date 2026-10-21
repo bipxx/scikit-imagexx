@@ -461,3 +461,9 @@ The [threshold parameter report](benchmarks/threshold-parameters.md) compares al
 three new selectors across layouts, bin counts, constant inputs, supplied
 histograms and ISODATA all-threshold output. Timing includes image copies and
 histogram metadata. Tests require exact threshold values and matching dtypes.
+
+Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
+`src/simd_threshold_fma.cpp`. It is dispatched only after the runtime AVX2/OS
+checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
+SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
+Only this translation unit uses the additional `-mfma` flag on GCC/Clang.

@@ -398,7 +398,8 @@ PYBIND11_MODULE(_core, m) {
     });
     m.def("threshold_logarithms", [](py::array_t<float,py::array::c_style|py::array::forcecast> values,bool numpy_log) {
         py::array_t<float> output(values.size());
-        for(py::ssize_t i=0;i<values.size();++i)output.mutable_data()[i]=skimagexx::threshold_log(values.data()[i],numpy_log);
+        if(reinterpret_cast<std::uintptr_t>(values.data())%alignof(float))values=decltype(values)::ensure(values.attr("copy")());
+        skimagexx::threshold_logs(values.data(),output.mutable_data(),std::size_t(values.size()),numpy_log);
         return output;
     });
     m.def("threshold_indices", [](py::array_t<double,py::array::c_style|py::array::forcecast> counts,
