@@ -24,6 +24,7 @@ template<> struct Vector<TYPE> { \
     static R eq(R a, R b) { return _mm256_cmp_##SUFFIX(a,b,_CMP_EQ_OQ); } \
     static R absolute(R a) { return _mm256_andnot_##SUFFIX(set(TYPE(-0.0)),a); } \
     static R gt(R a, R b) { return _mm256_cmp_##SUFFIX(a,b,_CMP_GT_OQ); } \
+    static int bits(R mask) { return _mm256_movemask_##SUFFIX(mask); } \
     static R choose(R a, R b, R mask) { return _mm256_blendv_##SUFFIX(a,b,mask); } \
     static R clip(R x) { \
         const auto bounded = _mm256_min_##SUFFIX(_mm256_max_##SUFFIX(x,set(0)),set(1)); \
@@ -86,15 +87,19 @@ __m256 power(__m256 x, float exponent) {
 template<class T> typename Vector<T>::R decode(typename Vector<T>::R x) {
     using V = Vector<T>;
     const auto mask = V::gt(x,V::set(T(0.04045)));
+    const auto linear=V::div(x,V::set(T(12.92)));
+    if (!V::bits(mask)) return linear;
     const auto adjusted = V::choose(V::set(1),V::div(V::add(x,V::set(T(0.055))),V::set(T(1.055))),mask);
-    return V::choose(V::div(x,V::set(T(12.92))),power(adjusted,T(2.4)),mask);
+    return V::choose(linear,power(adjusted,T(2.4)),mask);
 }
 template<class T> typename Vector<T>::R encode(typename Vector<T>::R x) {
     using V = Vector<T>;
     const auto mask = V::gt(x,V::set(T(0.0031308)));
+    const auto linear=V::mul(x,V::set(T(12.92)));
+    if (!V::bits(mask)) return V::clip(linear);
     const auto adjusted = V::choose(V::set(1),x,mask);
     const auto nonlinear = V::sub(V::mul(V::set(T(1.055)),power(adjusted,T(1.0/2.4))),V::set(T(0.055)));
-    return V::clip(V::choose(V::mul(x,V::set(T(12.92))),nonlinear,mask));
+    return V::clip(V::choose(linear,nonlinear,mask));
 }
 std::size_t linear_double(const double* p, double* out, std::size_t n, const detail::ColorSpec& spec) {
     // Keep triples interleaved: replicate input components directly into output
@@ -377,8 +382,11 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
                 z=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
             }
             const auto scaled=V::div(y,V::set(T(spec.white[1]))),mask=V::gt(scaled,V::set(T(.008856)));
-            const auto positive=V::choose(V::set(1),scaled,mask);
-            const auto light=V::choose(V::mul(V::set(T(903.3)),scaled),V::sub(V::mul(V::set(116),cube_root(positive)),V::set(16)),mask);
+            auto light=V::mul(V::set(T(903.3)),scaled);
+            if (V::bits(mask)) {
+                const auto positive=V::choose(V::set(1),scaled,mask);
+                light=V::choose(light,V::sub(V::mul(V::set(116),cube_root(positive)),V::set(16)),mask);
+            }
             const auto denominator=V::add(V::add(V::add(x,V::mul(V::set(15),y)),V::mul(V::set(3),z)),V::set(std::numeric_limits<T>::epsilon()));
             const auto factor=V::mul(V::set(13),light);
             const auto u=V::mul(factor,V::sub(V::div(V::mul(V::set(4),x),denominator),V::set(T(spec.uv[0]))));
@@ -414,8 +422,12 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
             R values[]={x,y,z};
             for (int j=0;j<3;++j) {
                 auto v=V::div(values[j],V::set(T(spec.white[j])));
-                const auto mask=V::gt(v,V::set(T(0.008856))), positive=V::choose(V::set(1),v,mask);
-                values[j]=V::choose(V::add(V::mul(V::set(T(7.787)),v),V::set(T(16.0/116.0))),cube_root(positive),mask);
+                const auto mask=V::gt(v,V::set(T(0.008856)));
+                values[j]=V::add(V::mul(V::set(T(7.787)),v),V::set(T(16.0/116.0)));
+                if (V::bits(mask)) {
+                    const auto positive=V::choose(V::set(1),v,mask);
+                    values[j]=V::choose(values[j],cube_root(positive),mask);
+                }
             }
             x=V::sub(V::mul(V::set(116),values[1]),V::set(16));
             y=V::mul(V::set(500),V::sub(values[0],values[1])); z=V::mul(V::set(200),V::sub(values[1],values[2]));

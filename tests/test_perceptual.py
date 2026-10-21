@@ -250,3 +250,14 @@ def test_luv_inverse_real_colors(name,dtype):
     luv[...,0]=rgb[...,0]*dtype(80)+dtype(20)
     luv[...,1:]=rgb[...,1:]*dtype(200)-dtype(100)
     compare(name,luv)
+
+
+@pytest.mark.parametrize('name',['rgb2xyz','xyz2rgb','rgb2lab','lab2rgb','xyz2lab','xyz2luv','rgb2luv','luv2rgb'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_linear_and_mixed_vector_blocks(name,dtype):
+    values=np.array([0.,-0.,np.nextafter(dtype(.0031308),dtype(0)),.0031308,
+                     .008856,.01,.04045,.1,1.,-1.],dtype=dtype)
+    image=np.repeat(values[:,None],3,axis=1)
+    for block in (image,np.broadcast_to(image[0],(19,3)),np.broadcast_to(image[1],(19,3)),
+                  np.tile(image,(19,1)),np.tile(image[::-1],(19,1))):
+        compare(name,block)
