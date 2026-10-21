@@ -49,6 +49,39 @@ SMALL_EDGE(double,double)
 SMALL_EDGE(std::uint8_t,double)
 #undef SMALL_EDGE
 namespace {
+template<class Input,class Output> std::size_t column_run(const Input* input,Output* output,
+    std::size_t height,std::size_t y,std::size_t end,int operation) {
+    const auto divisor=_mm256_set1_pd(std::sqrt(2.0));
+    for(;y+4<=end && y+4<height;y+=4) {
+        const auto current=load(input+y),next=load(input+y+1);
+        if(operation==0) {
+            auto sum=_mm256_sub_pd(_mm256_setzero_pd(),load(input+y-1));
+            sum=_mm256_sub_pd(sum,current);sum=_mm256_add_pd(sum,_mm256_mul_pd(_mm256_set1_pd(4),current));
+            sum=_mm256_sub_pd(sum,current);sum=_mm256_sub_pd(sum,next);
+            sum=_mm256_andnot_pd(_mm256_cmp_pd(sum,_mm256_setzero_pd(),_CMP_EQ_OQ),sum);
+            store(output+y,sum);
+        } else {
+            auto gradient=_mm256_sub_pd(_mm256_add_pd(_mm256_setzero_pd(),next),current);
+            gradient=_mm256_andnot_pd(_mm256_cmp_pd(gradient,_mm256_setzero_pd(),_CMP_EQ_OQ),gradient);
+            if(operation!=1)store(output+y,gradient);
+            else if constexpr(std::is_same_v<Output,float>) {
+                const auto g=_mm256_cvtpd_ps(gradient),square=_mm_mul_ps(g,g);
+                store(output+y,_mm256_div_pd(_mm256_cvtps_pd(_mm_sqrt_ps(_mm_add_ps(square,square))),divisor));
+            } else {
+                const auto square=_mm256_mul_pd(gradient,gradient);
+                store(output+y,_mm256_div_pd(_mm256_sqrt_pd(_mm256_add_pd(square,square)),divisor));
+            }
+        }
+    }
+    return y;
+}
+}
+#define COLUMN_EDGE(Input,Output) std::size_t small_edge_column(const Input* input,Output* output,std::size_t height,std::size_t begin,std::size_t end,int operation) {return column_run(input,output,height,begin,end,operation);}
+COLUMN_EDGE(float,float)
+COLUMN_EDGE(double,double)
+COLUMN_EDGE(std::uint8_t,double)
+#undef COLUMN_EDGE
+namespace {
 template<class Input,class Output> std::size_t laplace_run(const Input* const* negative,const Input* const* positive,
     const Input* mid,Output* output,std::size_t width,std::size_t x,std::size_t end,std::size_t outer,std::size_t singletons) {
     const auto center=_mm256_set1_pd(double(2*(outer+singletons+1)));

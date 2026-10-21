@@ -15,10 +15,36 @@ template<class T> double value(T x) {
     if constexpr(std::is_same_v<T,std::uint8_t>)return double(x)*(1.0/255.0);
     else return double(x);
 }
+template<class Input,class Output> void column_run(const Input* image,Output* output,std::size_t height,SmallEdge operation) {
+    detail::partition(height,detail::active_workers(height),[&](auto begin,auto end,auto) {
+        auto scalar=[&](std::size_t y) {
+            const double current=value(image[y]),next=value(image[std::min(y+1,height-1)]);
+            if(operation==SmallEdge::laplace) {
+                double sum=0;sum-=value(image[y ? y-1 : 0]);sum-=current;
+                sum+=4*current;sum-=current;sum-=next;
+                output[y]=sum==0 ? Output(0) : Output(sum);
+            } else {
+                double difference=0;difference+=next;difference-=current;
+                const Output gradient=difference==0 ? Output(0) : Output(difference);
+                if(operation!=SmallEdge::roberts)output[y]=gradient;
+                else {
+                    const Output squared=Output(gradient*gradient),sum=Output(squared+squared);
+                    output[y]=Output(double(Output(std::sqrt(sum)))/std::sqrt(2.0));
+                }
+            }
+        };
+        if(operation==SmallEdge::laplace && begin==0 && begin<end)scalar(begin++);
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2())begin=simd::small_edge_column(image,output,height,begin,end,int(operation));
+#endif
+        for(auto y=begin;y<end;++y)scalar(y);
+    });
+}
 template<class Input,class Output> void run(const Input* image,Output* output,std::size_t h,std::size_t w,SmallEdge operation) {
     if(!h || !w || !image || !output)throw std::invalid_argument("nonempty image and output required");
     if(h>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/w)throw std::overflow_error("image dimensions overflow");
     if(int(operation)<0 || int(operation)>3)throw std::invalid_argument("unsupported small edge operation");
+    if(w==1) {column_run(image,output,h,operation);return;}
     const auto count=h*w;
     detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
         while(begin<end) {

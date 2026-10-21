@@ -316,6 +316,7 @@ def _small_edge(name,image,mask,options):
     elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
     else:prepared=_core.convert(native,np.dtype(np.float64))[0]
     if image.dtype.kind=='f' and prepared.size:
+        if not prepared.flags.c_contiguous or not prepared.flags.aligned:prepared=prepared.copy(order='C')
         low,high=_core.intensity_bounds(prepared)
         if not (np.isfinite(low) and np.isfinite(high)):return forwarded()
         if max(abs(low),abs(high))>np.sqrt(np.finfo(prepared.dtype).max)/16:return forwarded()
