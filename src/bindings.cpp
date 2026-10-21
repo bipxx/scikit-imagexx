@@ -18,6 +18,7 @@
 
 namespace py = pybind11;
 namespace {
+bool dtype_matches(const py::dtype& a,const py::dtype& b) {return a.is(b) || a.equal(b);}
 struct RawRows {
     std::size_t rows=0,columns=1;
     std::ptrdiff_t image_step=0,alpha_step=0;
@@ -189,9 +190,9 @@ template<class T, bool preserve = false, bool flat = false, class F> py::array e
     return output;
 }
 template<class F> py::array dispatch(const py::array& image, F function) {
-    if (image.dtype().is(py::dtype::of<float>())) return execute<float>(image,function);
-    if (image.dtype().is(py::dtype::of<double>())) return execute<double>(image,function);
-    if (image.dtype().is(py::dtype::of<std::uint8_t>())) return execute<std::uint8_t>(image,function);
+    if (dtype_matches(image.dtype(),py::dtype::of<float>())) return execute<float>(image,function);
+    if (dtype_matches(image.dtype(),py::dtype::of<double>())) return execute<double>(image,function);
+    if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return execute<std::uint8_t>(image,function);
     throw py::type_error("supported dtypes are uint8, float32, and float64");
 }
 }
@@ -416,9 +417,9 @@ PYBIND11_MODULE(_core, m) {
             { py::gil_scoped_release release; range = skimagexx::intensity_bounds(p,n,1); }
             return py::make_tuple(range.first,range.second);
         };
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return run(std::uint8_t{});
-        if (image.dtype().is(py::dtype::of<float>())) return run(float{});
-        if (image.dtype().is(py::dtype::of<double>())) return run(double{});
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return run(std::uint8_t{});
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return run(float{});
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return run(double{});
         throw py::type_error("unsupported dtype");
     });
     m.def("rescale", [](py::array image, double imin, double imax, double omin, double omax, bool float_output) {
@@ -535,9 +536,9 @@ PYBIND11_MODULE(_core, m) {
             {py::gil_scoped_release release;skimagexx::laplace_nd_into(input.data(),output.mutable_data(),shape_values);}
             return output;
         };
-        if(image.dtype().is(py::dtype::of<float>()))return run(float{});
-        if(image.dtype().is(py::dtype::of<double>()))return run(double{});
-        if(image.dtype().is(py::dtype::of<std::uint8_t>()))return run(std::uint8_t{});
+        if(dtype_matches(image.dtype(),py::dtype::of<float>()))return run(float{});
+        if(dtype_matches(image.dtype(),py::dtype::of<double>()))return run(double{});
+        if(dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>()))return run(std::uint8_t{});
         throw py::type_error("prepared real image required");
     });
     m.def("edge_apply_mask", [](py::array image,py::array mask) {

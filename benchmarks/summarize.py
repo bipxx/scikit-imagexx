@@ -167,6 +167,11 @@ def main():
               'the alpha report includes planar, Fortran, negative and stepped layouts plus background/alpha options. '
               'The [fixed grayscale expansion experiment](alpha-tuning.md) retains initial, optimized and '
               'confirmation observations separately from this aggregate.','',
+              'Laplace uses sparse neighbor loads in scipy coefficient order, retaining singleton-axis terms. '
+              'Roberts fuses cross differences and rounded magnitude stages. Half and endian conversion, '
+              'mask erosion/broadcast multiplication, layout preparation and allocation are included in the edge report. '
+              'The [fixed column experiment](edge-tuning.md) retains separate baseline, optimized and '
+              'confirmation snapshots.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '

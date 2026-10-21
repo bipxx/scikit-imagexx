@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **81 partially native
+The reference is scikit-image **0.26.0**. There are currently **85 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 367 remain pending native implementation and dedicated parity tests.
+export list; 363 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -40,6 +40,8 @@ This is not full scikit-image coverage.
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
 | `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
+| `laplace` | One or more dimensions, including empty; all 12 real image dtypes (including float16), native/endian storage, arrays/memmaps; integer `ksize` ≥3; eroded numeric masks and mask broadcasting | Sparse reflected Laplacian in upstream coefficient order, including singleton axes; float64 convolution accumulation; float16/32 output is float32, otherwise float64 |
+| `roberts`, `roberts_pos_diag`, `roberts_neg_diag` | Nonempty 2D arrays; same real dtypes/storage and masks | Fused cross differences with upstream gradient rounding, magnitude/sqrt(2) stages, signed zero and mask semantics |
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
 | `threshold_yen`, `threshold_triangle`, `threshold_isodata` | ND uint8/float32/float64 arrays; integer-bin and floating-bin histograms; supplied count/bin-center metadata for Yen and ISODATA; `return_all` for ISODATA | Exact threshold and dtype; SIMD floating bin assignment, global optional workers, upstream first-maximum and fixed-point rules |
 | `threshold_niblack`, `threshold_sauvola` | Nonempty N-D bool, signed/unsigned 8/16/32/64-bit integers, float32/64; odd scalar or per-axis windows; finite scalar weights and nonzero Sauvola range | Reflected padding, float64 integral images in upstream axis order, dtype-specific statistics and parameter promotion; SIMD prefix columns and output math; optional global workers |
@@ -506,3 +508,15 @@ input with magnitude at most `sqrt(finfo(input.dtype).max)/2`; quiet-NaN backgro
 The [alpha report](benchmarks/alpha-parameters.md) records 184 one-worker
 comparisons against original scikit-image. The [fixed grayscale experiment](benchmarks/alpha-tuning.md)
 preserves before/after and confirmation timings for reversed, stepped and endian storage.
+
+Laplace and Roberts use optional global workers and runtime-dispatched AVX2,
+including a vector path along single-column images. Half decoding requires AVX2
+integer operations only, without an F16C requirement; byte-order conversion is
+also vectorized. Native floating inputs currently require finite values with
+magnitude at most `sqrt(finfo(working_dtype).max)/16`. Roberts float32/64 calls
+with a non-default underflow policy use explicit upstream fallback. Other
+unsupported classes/options also retain explicit compatibility fallback.
+Nonempty float16 masks raise the same upstream `RuntimeError`; empty masks follow
+upstream broadcasting. The [edge report](benchmarks/edge-parameters.md) records
+one-thread comparisons for dtypes, dimensions, layouts and masks, while the
+[fixed column experiment](benchmarks/edge-tuning.md) retains tuning observations.

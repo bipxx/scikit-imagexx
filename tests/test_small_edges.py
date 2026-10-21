@@ -278,3 +278,31 @@ def test_signaling_nan_masks_preserve_warning_behavior(name,dtype):
                   dtype=np.uint32 if dtype==np.float32 else np.uint64)
     words[7,9]=0x7f800001 if dtype==np.float32 else 0x7ff0000000000001
     check(name,image,mask=words.view(dtype))
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('shape',[(1,513),(513,1)])
+def test_skinny_arrays_and_scalar_masks(name,dtype,shape):
+    image=sample(dtype,shape,435)
+    check(name,image)
+    for flag in (False,True):
+        actual,expected=check(name,image,mask=np.asarray(flag,dtype=bool))
+        np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('shape',[(1,262145),(262145,1)])
+def test_parallel_skinny_arrays(name,dtype,shape):
+    check(name,sample(dtype,shape,436))
+
+
+@pytest.mark.parametrize('name',NAMES)
+@pytest.mark.parametrize('dtype',['f4','f8'])
+def test_equivalent_native_dtype_descriptors(name,dtype):
+    alias=np.dtype('>'+dtype).newbyteorder('=')
+    image=sample(np.dtype(dtype),(17,19),437).view(alias)
+    assert image.dtype==np.dtype(dtype)
+    check(name,image)
+    if name=='laplace':check(name,image[None,...])
