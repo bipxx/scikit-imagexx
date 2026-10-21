@@ -5,7 +5,7 @@ from functools import lru_cache as _lru_cache
 from . import _core
 from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
 from ._stain_matrices import MATRICES as _STAIN_MATRICES
-from ._compat import fallback, module_attribute, native_image
+from ._compat import retain_dtype_metadata, fallback, module_attribute, native_image
 
 __all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
            'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
@@ -24,7 +24,7 @@ def rgb2gray(rgb, *, channel_axis=-1):
     if isinstance(channel_axis, (int, np.integer)) and isinstance(rgb, np.ndarray) and rgb.ndim == 3:
         moved = np.moveaxis(rgb, channel_axis, -1)
         if native_image(moved, rgb=True):
-            return _core.rgb2gray(moved)
+            return retain_dtype_metadata(_core.rgb2gray(moved),moved)
     return fallback('color', 'rgb2gray', rgb, channel_axis=channel_axis)
 
 
@@ -48,10 +48,40 @@ def _restore_pixels(result,order):
     return result.transpose(inverse+(len(order),))
 
 
+def _field_byte_order(source,target):
+    if source.itemsize!=target.itemsize:return None
+    order=list(range(source.itemsize))
+    def visit(a,b,offset):
+        if a.fields is not None:
+            if b.fields is None or a.names!=b.names:return False
+            for name in a.names:
+                first,start=a.fields[name][:2];second,end=b.fields[name][:2]
+                if start!=end or not visit(first,second,offset+start):return False
+            return True
+        if a.subdtype is not None:
+            if b.subdtype is None:return False
+            first,shape=a.subdtype;second,other=b.subdtype
+            if shape!=other or first.itemsize!=second.itemsize:return False
+            for index in range(int(np.prod(shape))):
+                if not visit(first,second,offset+index*first.itemsize):return False
+            return True
+        if a==b:return True
+        if b!=a.newbyteorder('='):return False
+        component=a.itemsize//2 if a.kind=='c' else 4 if a.kind=='U' else a.itemsize
+        if component not in (2,4,8):return False
+        for start in range(0,a.itemsize,component):
+            for byte in range(component):order[offset+start+byte]=offset+start+component-1-byte
+        return True
+    return tuple(order) if visit(source,target,0) else None
+
+
 def _expansion_format(arr):
-    target=np.result_type(arr.dtype)
+    target=np.result_type(arr.dtype,arr.dtype)
     if target==arr.dtype:return target,0
-    if arr.dtype.fields is not None or target!=arr.dtype.newbyteorder('='):return None,0
+    if arr.dtype.fields is not None:
+        order=_field_byte_order(arr.dtype,target)
+        return (target,order) if order is not None else (None,0)
+    if target!=arr.dtype.newbyteorder('='):return None,0
     width=arr.dtype.itemsize
     component=width//2 if arr.dtype.kind=='c' else 4 if arr.dtype.kind=='U' else width
     if component not in (2,4,8):return None,0
@@ -107,7 +137,7 @@ def _transform(name, image, channel_axis):
         raise ValueError(f'the input array must have size 3 along `channel_axis`, got {moved.shape}')
     if moved.dtype.type not in _COLOR_TYPES or not moved.dtype.isnative:
         return fallback('color', name, image, channel_axis=channel_axis)
-    result = _core.color_transform(moved, _TRANSFORMS[name])
+    result = retain_dtype_metadata(_core.color_transform(moved, _TRANSFORMS[name]),moved)
     return result if axis == -1 else np.moveaxis(result, -1, axis)
 
 
@@ -218,6 +248,7 @@ def _perceptual(name, image, channel_axis, illuminant='D65', observer='2'):
     white = xyz_tristimulus_values(illuminant=illuminant,observer=observer) if cie or name in ('rgb2luv','luv2rgb') else (1.0,1.0,1.0)
     uv=_luv_reference(tuple(white),np.dtype(np.float32 if moved.dtype==np.float32 else np.float64).str) if 'luv' in name else None
     result,negative_z,unsupported = _core.perceptual_transform(moved,_PERCEPTUAL[name],white,uv)
+    if name in ('rgb2hsv','lab2lch','lch2lab'):result=retain_dtype_metadata(result,moved)
     if unsupported:
         return fallback('color',name,image,**options)
     if negative_z:
@@ -303,6 +334,7 @@ def _stain(name,image,matrix,channel_axis):
     weights=np.array(mat.T,dtype=np.float64,order='C',copy=True)
     result=_core.stain_transform(moved,weights,name in ('combine_stains','hed2rgb'),
                                  intermediate==np.float32,output_dtype==np.float32,float(_STAIN_LOG_ADJUST))
+    result=retain_dtype_metadata(result,moved)
     return result if axis==-1 else np.moveaxis(result,-1,axis)
 
 
@@ -322,8 +354,25 @@ def hed2rgb(hed,*,channel_axis=-1):
     return _stain('hed2rgb',hed,_STAIN_MATRICES['rgb_from_hed'],channel_axis)
 
 
+def _distance_metadata(result,a,b,first_scalar,second_scalar,reverse):
+    if result.ndim==0 or (a.dtype.metadata is None and b.dtype.metadata is None):return result
+    prepared=np.float32 if a.dtype.type is b.dtype.type is np.float32 else np.float64
+    def component(image,scalar):
+        # Component extraction turns a one-color vector into NumPy scalars,
+        # which cannot carry dtype tags. Type promotion also drops old tags.
+        dtype=image.dtype if image.dtype.type is prepared else np.dtype(prepared)
+        return prepared(0) if scalar else np.empty(0,dtype=dtype)
+    first=component(a,first_scalar);second=component(b,second_scalar)
+    # The initial lightness term determines the result descriptor. CIE76 and
+    # CIEDE2000 subtract comparison-reference; CIE94 and CMC reverse that order.
+    descriptor=(second-first if reverse else first-second).dtype
+    if descriptor.metadata is not None and descriptor==result.dtype:return result.view(descriptor)
+    return result
+
+
 def deltaE_cie76(lab1,lab2,channel_axis=-1):
     a,b=np.asarray(lab1),np.asarray(lab2)
+    first_scalar=a.ndim==1;second_scalar=b.ndim==1
     if any(x.dtype.type not in _COLOR_TYPES or not x.dtype.isnative for x in (a,b)):
         return fallback('color','deltaE_cie76',lab1,lab2,channel_axis=channel_axis)
     a,b=np.moveaxis(a,channel_axis,-1),np.moveaxis(b,channel_axis,-1)
@@ -339,6 +388,7 @@ def deltaE_cie76(lab1,lab2,channel_axis=-1):
         np.subtract(np.broadcast_to(scalar,b.shape[:-1]),np.broadcast_to(scalar,a.shape[:-1]))
         raise
     result=_core.delta_e76(a,b)
+    result=_distance_metadata(result,a,b,first_scalar,second_scalar,True)
     return result[()] if result.ndim==0 else result
 
 
@@ -371,8 +421,8 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
         valid=False
     if not valid:
         return fallback('color',name,lab1,lab2,channel_axis=channel_axis,**options)
-    first_scalar=a.ndim==1
-    both_scalar=a.ndim==b.ndim==1
+    first_scalar=a.ndim==1;second_scalar=b.ndim==1
+    both_scalar=first_scalar and second_scalar
     if name=='deltaE_ciede2000': channel_axis=channel_axis%a.ndim
     a,b=np.moveaxis(a,channel_axis,-1),np.moveaxis(b,channel_axis,-1)
     for x in (a,b):
@@ -395,6 +445,7 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
         raise
     result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
                                  parameters,bool(wide),promote)
+    result=_distance_metadata(result,a,b,first_scalar,second_scalar,name=='deltaE_ciede2000')
     return result[()] if result.ndim==0 else result
 
 
@@ -411,6 +462,13 @@ def deltaE_ciede2000(lab1,lab2,kL=1,kC=1,kH=1,*,channel_axis=-1):
 def deltaE_cmc(lab1,lab2,kL=1,kC=1,*,channel_axis=-1):
     return _weighted_distance('deltaE_cmc',lab1,lab2,channel_axis,(kL,kC,1,.045,.015),{'kL':kL,'kC':kC})
 
+
+
+def _alpha_flags(image):
+    if image.dtype.fields is None:return _core.alpha_array_flags(_pixel_order(image)[0])
+    flags=0
+    for name in image.dtype.names:flags|=_alpha_flags(image[name])
+    return flags
 
 
 def gray2rgba(image,alpha=None,*,channel_axis=-1):
@@ -432,8 +490,8 @@ def gray2rgba(image,alpha=None,*,channel_axis=-1):
             alpha_arr=source_alpha.astype(arr.dtype)
         unsafe=not np.array_equal(alpha_arr,actual_alpha)
     else:
-        if source_alpha.dtype!=arr.dtype or source_alpha.dtype.hasobject or source_alpha.dtype.kind=='V':return forwarded()
-        flags=_core.alpha_array_flags(_pixel_order(source_alpha)[0])
+        if source_alpha.dtype!=arr.dtype or source_alpha.dtype.hasobject:return forwarded()
+        flags=_alpha_flags(source_alpha)
         if flags&6:return forwarded()
         unsafe=bool(flags&1);alpha_arr=source_alpha
     if unsafe:warnings.warn(f'alpha cannot be safely cast to image dtype {arr.dtype.name}',UserWarning,stacklevel=2)

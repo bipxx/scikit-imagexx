@@ -570,7 +570,7 @@ PYBIND11_MODULE(_core, m) {
         });
     });
     m.def("alpha_array_flags", [](py::array a) {return alpha_array_flags(a);});
-    m.def("gray_expand", [](py::array image,py::object alpha_object,int channels,py::dtype target,std::size_t swap_component) -> py::array {
+    m.def("gray_expand", [](py::array image,py::object alpha_object,int channels,py::dtype target,py::object swap_object) -> py::array {
         if(image.dtype().attr("hasobject").cast<bool>() || target.attr("hasobject").cast<bool>() || target.itemsize()!=image.itemsize())throw py::type_error("matching fixed-size object-free storage required");
         if(channels!=3 && channels!=4)throw py::value_error("three or four channels required");
         py::array alpha;
@@ -579,12 +579,18 @@ PYBIND11_MODULE(_core, m) {
             if(!image.dtype().attr("__eq__")(alpha.dtype()).cast<bool>() || image.ndim()!=alpha.ndim())throw py::type_error("matching alpha dtype and shape required");
             for(py::ssize_t axis=0;axis<image.ndim();++axis)if(image.shape(axis)!=alpha.shape(axis))throw py::value_error("alpha must be broadcast to image.shape");
         }
+        std::size_t swap_component=0;std::vector<std::size_t> byte_order;
+        if(py::isinstance<py::int_>(swap_object))swap_component=swap_object.cast<std::size_t>();
+        else {
+            byte_order=swap_object.cast<std::vector<std::size_t>>();
+            if(byte_order.size()!=std::size_t(image.itemsize()))throw py::value_error("one byte index per item byte required");
+        }
         std::vector<py::ssize_t> shape;
         for(py::ssize_t axis=0;axis<image.ndim();++axis)shape.push_back(image.shape(axis));
         shape.push_back(channels);py::array result(target,shape);
         const auto layout=raw_rows(image,channels==4 ? &alpha : nullptr,int(image.ndim()));
         {py::gil_scoped_release release;skimagexx::gray_expand_rows_into(image.data(),channels==4 ? alpha.data() : nullptr,
-            result.mutable_data(),layout.rows,layout.columns,std::size_t(image.itemsize()),channels,layout.image.data(),layout.alpha.data(),layout.image_step,layout.alpha_step,swap_component);}
+            result.mutable_data(),layout.rows,layout.columns,std::size_t(image.itemsize()),channels,layout.image.data(),layout.alpha.data(),layout.image_step,layout.alpha_step,swap_component,byte_order.empty() ? nullptr : byte_order.data());}
         return result;
     });
     m.def("rgba_composite", [](py::array image,py::array_t<double,py::array::c_style|py::array::forcecast> background) -> py::array {

@@ -14,8 +14,16 @@ import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance
 
 
+def dtype_metadata(value):
+    if isinstance(value,(tuple,list)):return [dtype_metadata(item) for item in value]
+    dtype=getattr(value,'dtype',None)
+    metadata=getattr(dtype,'metadata',None)
+    return None if metadata is None else dict(metadata)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--dtype-metadata',action='store_true',help='Attach and verify custom NumPy dtype tags')
     parser.add_argument('--sizes', nargs='+', type=int, default=[256, 1024])
     parser.add_argument('--threads', nargs='+', type=int, default=[1, 4])
     parser.add_argument('--repeat', type=int, default=7)
@@ -40,6 +48,9 @@ def main():
             rgb = rng.integers(0, 256, (size, size, 3), dtype=np.uint8)
             if dtype != np.uint8:
                 gray = (gray/255).astype(dtype); rgb = (rgb/255).astype(dtype)
+            if args.dtype_metadata:
+                tagged=np.dtype(dtype,metadata={'units':'linear','source':'benchmark'})
+                gray=gray.view(tagged);rgb=rgb.view(tagged)
             for api in apis:
                 module, name = api.rsplit('.', 1)
                 if np.dtype(dtype).name not in native_dtypes(api):
@@ -48,6 +59,9 @@ def main():
                 reference = getattr(importlib.import_module('skimage.'+module), name)
                 data = rgb if needs_color_input(api) else gray
                 call_args,options = default_call(api,data)
+                if args.dtype_metadata and call_args and isinstance(call_args[0],np.ndarray) and call_args[0].dtype.metadata is None:
+                    first=call_args[0].view(np.dtype(call_args[0].dtype,metadata={'units':'linear','source':'benchmark'}))
+                    call_args=(first,*call_args[1:])
                 expected = reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
@@ -55,10 +69,12 @@ def main():
                     rtol,atol = parity_tolerance(api,np.dtype(dtype))
                     assert np.asarray(actual).dtype == np.asarray(expected).dtype
                     np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
+                    if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
-                    backend = 'identity' if actual is data else execution_kind(api)
+                    backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     results.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name,
-                                    'threads': threads, 'backend': backend, 'max_abs_error':
+                                    'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
+                                    'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     float(np.max(np.abs(np.asarray(actual, dtype=float)-np.asarray(expected, dtype=float)))),
                                     **timing})
                     print(f'{api:24} {size} {np.dtype(dtype).name} t={threads}: {timing["speedup"]:.2f}x',flush=True)
@@ -66,7 +82,7 @@ def main():
     report = {'metadata': {'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'platform': platform.platform(),
                            'cpu': platform.processor(), 'reference': skimage.__version__, 'numpy': np.__version__,
                            **fingerprint, 'fallback_enabled': False, 'avx2': xx.has_avx2(),
-                           'selected_apis': apis,
+                           'selected_apis': apis, 'dtype_metadata':args.dtype_metadata,
                            'special_default_arguments': {'color.deltaE_cie76':'second input is first[..., ::-1]; raw Lab values',
                                'color.deltaE_ciede94':'second input is first[..., ::-1]; raw Lab; graphic-arts weights',
                                'color.deltaE_ciede2000':'second input is first[..., ::-1]; raw Lab; kL=kC=kH=1',
@@ -78,7 +94,7 @@ def main():
               'results': results}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2)+'\n',encoding='utf-8')
-    lines = ['# Native function performance versus scikit-image', '',
+    lines = ['# Native function performance versus scikit-image'+(' with dtype metadata' if args.dtype_metadata else ''), '',
              'Every native public function is checked before timing. Fallback is disabled; '
              'forwarding to scikit-image cannot count as native performance. Reference thread pools use one thread. '
              'Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. '

@@ -17,6 +17,7 @@ jobs:
       - run: python tools/inventory.py
       - run: python -m pytest -q
       - run: python benchmarks/coverage.py --sizes 64 --threads 1 --repeat 1 --output build/ci-performance.json
+      - run: python benchmarks/metadata.py --sizes 32 --threads 1 --repeat 1 --output build/ci-metadata.json
       - run: python benchmarks/conversions.py --size 64 --threads 1 --dtypes uint16 int16 --output build/ci-conversions.json
       - run: python benchmarks/color.py --size 32 --threads 1 --output build/ci-color-layouts.json
       - run: python benchmarks/perceptual.py --size 32 --threads 1 --output build/ci-perceptual.json

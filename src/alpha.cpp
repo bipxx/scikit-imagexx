@@ -62,9 +62,10 @@ template<class Input,bool Boolean=false> void composite(const void* image,void* 
 }
 void gray_expand_rows_into(const void* image,const void* alpha,void* output,std::size_t rows,std::size_t columns,
     std::size_t item_bytes,int channels,const std::ptrdiff_t* image_offsets,const std::ptrdiff_t* alpha_offsets,
-    std::ptrdiff_t image_step,std::ptrdiff_t alpha_step,std::size_t swap_component) {
+    std::ptrdiff_t image_step,std::ptrdiff_t alpha_step,std::size_t swap_component,const std::size_t* byte_order) {
     if(channels!=3 && channels!=4)throw std::invalid_argument("three or four output channels required");
     if(swap_component && (swap_component!=2 && swap_component!=4 && swap_component!=8 || item_bytes%swap_component))throw std::invalid_argument("invalid byte-swap component");
+    if(byte_order)for(std::size_t j=0;j<item_bytes;++j)if(byte_order[j]>=item_bytes)throw std::invalid_argument("byte permutation exceeds item storage");
     const auto count=checked_pixels(rows,columns,item_bytes,channels);
     if(!count || !item_bytes)return;
     if(!image || !output || !image_offsets || (channels==4 && (!alpha || !alpha_offsets)))
@@ -72,7 +73,7 @@ void gray_expand_rows_into(const void* image,const void* alpha,void* output,std:
     const auto* source=static_cast<const unsigned char*>(image);
     const auto* opacity=static_cast<const unsigned char*>(alpha);auto* target=static_cast<unsigned char*>(output);
     detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
-        std::vector<unsigned char> swapped(swap_component ? item_bytes : 0);
+        std::vector<unsigned char> swapped(swap_component || byte_order ? item_bytes : 0);
         while(begin<end) {
             const auto row=begin/columns,column=begin%columns,span=std::min(end-begin,columns-column);
             const auto* start=source+image_offsets[row]+std::ptrdiff_t(column)*image_step;
@@ -80,18 +81,22 @@ void gray_expand_rows_into(const void* image,const void* alpha,void* output,std:
             auto* out=target+begin*std::size_t(channels)*item_bytes;
             std::size_t i=0;
 #ifdef SKIMAGEXX_AVX2
-            if(has_avx2())i=simd::gray_expand(start,a,out,span,item_bytes,channels,image_step,alpha_step,swap_component);
+            if(has_avx2())i=byte_order ? simd::gray_expand_mapped(start,a,out,span,item_bytes,channels,image_step,alpha_step,byte_order) : simd::gray_expand(start,a,out,span,item_bytes,channels,image_step,alpha_step,swap_component);
 #endif
             for(;i<span;++i) {
                 const auto* value=start+std::ptrdiff_t(i)*image_step;
-                if(swap_component) {
+                if(byte_order) {
+                    for(std::size_t byte=0;byte<item_bytes;++byte)swapped[byte]=value[byte_order[byte]];
+                    value=swapped.data();
+                } else if(swap_component) {
                     for(std::size_t byte=0;byte<item_bytes;++byte)swapped[byte]=value[(byte/swap_component)*swap_component+swap_component-1-byte%swap_component];
                     value=swapped.data();
                 }
                 for(int channel=0;channel<3;++channel)std::memcpy(out+(i*std::size_t(channels)+std::size_t(channel))*item_bytes,value,item_bytes);
                 if(channels==4) {
                     auto* destination=out+(i*4+3)*item_bytes;const auto* source_alpha=a+std::ptrdiff_t(i)*alpha_step;
-                    if(swap_component)for(std::size_t byte=0;byte<item_bytes;++byte)destination[byte]=source_alpha[(byte/swap_component)*swap_component+swap_component-1-byte%swap_component];
+                    if(byte_order)for(std::size_t byte=0;byte<item_bytes;++byte)destination[byte]=source_alpha[byte_order[byte]];
+                    else if(swap_component)for(std::size_t byte=0;byte<item_bytes;++byte)destination[byte]=source_alpha[(byte/swap_component)*swap_component+swap_component-1-byte%swap_component];
                     else std::memcpy(destination,source_alpha,item_bytes);
                 }
             }

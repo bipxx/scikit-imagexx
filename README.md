@@ -331,6 +331,14 @@ not a per-call context manager. Calls release Python's GIL. When calling from yo
 pool, setting one C++ thread per caller avoids oversubscription.
 OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 
+Custom dtype metadata is parity-tested across every covered entry point,
+including mixed-dtype Lab operands and scalar/broadcast colors. Descriptor
+propagation follows the upstream operation order; stack expansion removes tags
+while the applicable color/gradient operations retain them. Pixel arithmetic
+remains native. Grayscale expansion also handles mixed-endian structured records
+whose normalized field offsets and item size remain unchanged, including nested
+fields and subarrays; field byte permutation is vectorized with optional workers.
+
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
@@ -344,7 +352,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all thirteen reports with their default workloads:
+To rebuild and reproduce all fourteen reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt

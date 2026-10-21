@@ -26,6 +26,7 @@ std::size_t small_edge(const float*,const float*,const float*,float*,std::size_t
 std::size_t small_edge(const double*,const double*,const double*,double*,std::size_t,std::size_t,std::size_t,int);
 std::size_t small_edge(const std::uint8_t*,const std::uint8_t*,const std::uint8_t*,double*,std::size_t,std::size_t,std::size_t,int);
 #ifdef SKIMAGEXX_AVX2
+std::size_t gray_expand_mapped(const unsigned char*,const unsigned char*,unsigned char*,std::size_t,std::size_t,int,std::ptrdiff_t,std::ptrdiff_t,const std::size_t*);
 std::size_t gray_expand(const unsigned char*,const unsigned char*,unsigned char*,std::size_t,std::size_t,int,std::ptrdiff_t,std::ptrdiff_t,std::size_t);
 std::size_t rgba_composite(const void*,void*,std::size_t,PixelType,const double*,std::ptrdiff_t,std::ptrdiff_t);
 std::size_t local_prefix_columns(double*,double*,std::size_t,std::size_t,std::size_t);

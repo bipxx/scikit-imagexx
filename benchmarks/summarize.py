@@ -18,7 +18,8 @@ def main():
                ('Local threshold windows and dtypes','local-threshold-parameters'),
                ('Alpha and grayscale layouts','alpha-parameters'),
                ('Laplace and Roberts layouts','edge-parameters'),
-               ('Farid derivatives and boundaries','farid-parameters')]
+               ('Farid derivatives and boundaries','farid-parameters'),
+               ('Every covered entry with dtype metadata','metadata-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)
@@ -41,12 +42,18 @@ def main():
     actual = {r['api'] for r in data[0][2]['results']}
     if covered != actual:
         raise ValueError('function report does not cover the current implementation inventory')
+    metadata_report=next(report for _,name,report in data if name=='metadata-parameters')
+    if metadata_report['metadata'].get('dtype_metadata') is not True:raise ValueError('metadata report must exercise tagged dtypes')
+    if any('output_dtype_metadata' not in row for row in metadata_report['results']):raise ValueError('metadata report must record output descriptors')
+    if {r['api'] for r in metadata_report['results']}!=covered:raise ValueError('metadata report does not cover every current entry')
     for entry in inventory:
         if entry['api'] not in covered:
             continue
         serial_dtypes={r['dtype'] for r in data[0][2]['results'] if r['api']==entry['api'] and r['threads']==1}
         if serial_dtypes!=set(entry['native_default_case_dtypes']):
             raise ValueError(f'{entry["api"]}: missing one-worker default dtype comparisons')
+        tagged_dtypes={r['dtype'] for r in metadata_report['results'] if r['api']==entry['api'] and r['threads']==1}
+        if tagged_dtypes!=set(entry['native_default_case_dtypes']):raise ValueError(f'{entry["api"]}: missing one-worker dtype-metadata comparisons')
     all_rows = [r for _,_,d in data for r in d['results']]
     serial = [r for r in all_rows if r['threads'] == 1 and r['backend'] == 'native']
     slower = [r for r in serial if r['speedup'] < 1]
@@ -187,7 +194,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all thirteen reports, including this summary. '
+              'to rebuild and reproduce all fourteen reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

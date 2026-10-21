@@ -5,6 +5,7 @@
 #include <climits>
 #include <cstring>
 #include <limits>
+#include <vector>
 namespace skimagexx::simd {
 namespace {
 void pack(float* p, __m256 r, __m256 g, __m256 b) {
@@ -199,6 +200,65 @@ __m256i swapped_bytes(__m256i x,std::size_t width) {
     const auto mask=swapped_bytes(_mm_setr_epi8(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15),width);
     return _mm256_shuffle_epi8(x,_mm256_broadcastsi128_si256(mask));
 }
+}
+namespace {
+struct PermutationGroup {std::size_t chunk;bool alpha;__m128i mask;};
+struct PermutationBlock {std::vector<PermutationGroup> groups;std::size_t bytes;};
+struct alignas(16) ByteBlock {__m128i value;};
+__m128i item_chunk(const unsigned char* p,std::size_t bytes,std::size_t chunk,std::ptrdiff_t step,std::size_t remaining) {
+    const auto offset=16*chunk,tail=std::min(std::size_t(16),bytes-offset);
+    if(tail==16)return _mm_loadu_si128(reinterpret_cast<const __m128i*>(p+offset));
+    // Borrow readable bytes only from within this item, or adjacent items in
+    // a contiguous row. General strided/broadcast tails load exact storage.
+    if(bytes>=16) {
+        const auto value=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p+bytes-16));
+        alignas(16) unsigned char storage[16];_mm_store_si128(reinterpret_cast<__m128i*>(storage),value);
+        __m128i result=_mm_setzero_si128();std::memcpy(&result,storage+16-tail,tail);return result;
+    }
+    if(step==std::ptrdiff_t(bytes) && remaining>=(16+bytes-1)/bytes)
+        return _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+    __m128i result=_mm_setzero_si128();std::memcpy(&result,p+offset,tail);return result;
+}
+}
+std::size_t gray_expand_mapped(const unsigned char* input,const unsigned char* alpha,unsigned char* output,
+    std::size_t count,std::size_t bytes,int channels,std::ptrdiff_t source_step,std::ptrdiff_t alpha_step,const std::size_t* order) {
+    if(!bytes)return count;
+    const auto chunks=(bytes+15)/16,out_bytes=bytes*std::size_t(channels);
+    std::vector<PermutationBlock> plan;
+    for(std::size_t start=0;start<out_bytes;start+=16) {
+        PermutationBlock block;block.bytes=std::min(std::size_t(16),out_bytes-start);
+        struct Mask {std::size_t chunk;bool alpha; signed char bytes[16];};
+        std::vector<Mask> masks;masks.reserve(2);
+        for(std::size_t lane=0;lane<block.bytes;++lane) {
+            const auto channel=(start+lane)/bytes,index=order[(start+lane)%bytes];
+            const auto chunk=index/16;const bool opacity=channel==3;
+            auto group=std::find_if(masks.begin(),masks.end(),[&](const Mask& entry){return entry.chunk==chunk && entry.alpha==opacity;});
+            if(group==masks.end()) {
+                Mask entry;entry.chunk=chunk;entry.alpha=opacity;
+                std::fill(entry.bytes,entry.bytes+16,static_cast<signed char>(-128));
+                masks.push_back(entry);group=masks.end()-1;
+            }
+            group->bytes[lane]=static_cast<signed char>(index%16);
+        }
+        for(const auto& mask:masks)block.groups.push_back({mask.chunk,mask.alpha,_mm_loadu_si128(reinterpret_cast<const __m128i*>(mask.bytes))});
+        plan.push_back(std::move(block));
+    }
+    std::vector<ByteBlock> gray(chunks),opacity(channels==4 ? chunks : 0);
+    for(std::size_t i=0;i<count;++i) {
+        for(std::size_t chunk=0;chunk<chunks;++chunk) {
+            gray[chunk].value=item_chunk(input+std::ptrdiff_t(i)*source_step,bytes,chunk,source_step,count-i);
+            if(channels==4 && (alpha_step!=0 || i==0))opacity[chunk].value=item_chunk(alpha+std::ptrdiff_t(i)*alpha_step,bytes,chunk,alpha_step,count-i);
+        }
+        std::size_t position=0;
+        for(const auto& block:plan) {
+            auto value=_mm_setzero_si128();
+            for(const auto& group:block.groups)value=_mm_or_si128(value,_mm_shuffle_epi8(group.alpha ? opacity[group.chunk].value : gray[group.chunk].value,group.mask));
+            if(block.bytes==16)_mm_storeu_si128(reinterpret_cast<__m128i*>(output+i*out_bytes+position),value);
+            else std::memcpy(output+i*out_bytes+position,&value,block.bytes);
+            position+=block.bytes;
+        }
+    }
+    return count;
 }
 std::size_t gray_expand(const unsigned char* input,const unsigned char* alpha,unsigned char* output,std::size_t count,
     std::size_t bytes,int channels,std::ptrdiff_t source_step,std::ptrdiff_t alpha_step,std::size_t swap_component) {

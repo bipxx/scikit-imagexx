@@ -58,3 +58,11 @@ def native_image(image, rgb=False):
 def native_array(image):
     import numpy as np
     return isinstance(image, np.ndarray) and image.dtype in (np.uint8, np.float32, np.float64) and image.size > 0
+
+
+
+def retain_dtype_metadata(result,image):
+    """Retain tags only when upstream keeps the same numerical dtype."""
+    if image.dtype.metadata is not None and result.dtype==image.dtype:
+        return result.view(image.dtype)
+    return result

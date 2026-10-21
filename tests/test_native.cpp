@@ -73,6 +73,25 @@ int main() {
             try {farid_into(impulse,result,PixelType::float64,{std::numeric_limits<std::size_t>::max()},{0});}
             catch(const std::overflow_error&){overflow=true;}require(overflow);
         }
+        {
+            const unsigned char image[]={0x11,0x22,0x33,0x44,0x55,0x66};
+            const unsigned char alpha[]={0xaa,0xbb,0xcc,0xdd,0xee,0xff};
+            const unsigned char expected[]={0x22,0x11,0x66,0x55,0x44,0x33};
+            const unsigned char expected_alpha[]={0xbb,0xaa,0xff,0xee,0xdd,0xcc};
+            const std::size_t order[]={1,0,5,4,3,2};
+            const std::ptrdiff_t offsets[]={0};
+            for(int channels:{3,4}) {
+                constexpr std::size_t count=262149;
+                std::vector<unsigned char> output(count*6*channels);
+                gray_expand_rows_into(image,alpha,output.data(),1,count,6,channels,offsets,offsets,0,0,0,order);
+                for(std::size_t i=0;i<count;++i)for(int channel=0;channel<channels;++channel)
+                    require(std::equal(output.data()+(i*channels+channel)*6,output.data()+(i*channels+channel+1)*6,channel==3 ? expected_alpha : expected));
+            }
+            const std::size_t bad[]={0,1,2,3,4,6};unsigned char output[18];bool rejected=false;
+            try {gray_expand_rows_into(image,nullptr,output,1,1,6,3,offsets,nullptr,6,0,0,bad);}
+            catch(const std::invalid_argument&){rejected=true;}require(rejected);
+            gray_expand_rows_into(nullptr,nullptr,nullptr,0,17,6,3,nullptr,nullptr,6,0,0,order);
+        }
         const float log_inputs[]={.001f,.1f,.2f,.5f,.7f,.9f,1.f,1.1f,2.f,3.f,7.f,10.973364f,10.973365f,13.f,100.f,1e10f,0.f,-1.f,std::numeric_limits<float>::denorm_min()};
         float log_results[19];
         for(bool numpy_log : {false,true}) {

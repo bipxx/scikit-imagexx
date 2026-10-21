@@ -24,7 +24,7 @@ def main():
     # Install benchmarks/requirements.txt first to supply the build dependencies.
     run('-m','pip','install','.','--no-build-isolation')
     run('tools/inventory.py')
-    for name in ('farid','edges','alpha','local_thresholds','thresholds','distance','stains','perceptual','color','morphology','coverage','conversions','exposure'):
+    for name in ('metadata','farid','edges','alpha','local_thresholds','thresholds','distance','stains','perceptual','color','morphology','coverage','conversions','exposure'):
         workers=[1] if name=='exposure' else args.threads
         options=[] if workers is None else ['--threads',*map(str,workers)]
         run(f'benchmarks/{name}.py',*options)

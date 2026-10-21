@@ -3,7 +3,7 @@ import numpy as np
 from math import isfinite as _isfinite
 from functools import lru_cache as _lru_cache
 from . import _core
-from ._compat import fallback, module_attribute, native_image
+from ._compat import fallback, module_attribute, native_image, retain_dtype_metadata
 
 __all__ = ["gaussian", "sobel", "sobel_h", "sobel_v", "prewitt", "prewitt_h", "prewitt_v",
            "scharr", "scharr_h", "scharr_v", "threshold_otsu", "threshold_mean"]
@@ -26,7 +26,7 @@ def gaussian(image, sigma=1.0, *, mode='nearest', cval=0, preserve_range=False,
 def _edge(name, image, mask, axis, mode, cval):
     if (native_image(image) and mask is None and isinstance(mode, str) and mode == 'reflect'
             and (axis is None or isinstance(axis, (int, np.integer)) and 0 <= axis < 2)):
-        return _core.gradient(image, name, -1 if axis is None else int(axis) % 2)
+        return retain_dtype_metadata(_core.gradient(image, name, -1 if axis is None else int(axis) % 2),image)
     return fallback('filters', name, image, mask, axis=axis, mode=mode, cval=cval)
 
 
@@ -44,7 +44,7 @@ def scharr(image, mask=None, *, axis=None, mode='reflect', cval=0.0):
 
 def _direction(name, suffix, image, mask):
     if native_image(image) and mask is None:
-        return _core.gradient(image, name, 0 if suffix == 'h' else 1)
+        return retain_dtype_metadata(_core.gradient(image, name, 0 if suffix == 'h' else 1),image)
     return fallback('filters', name+'_'+suffix, image, mask)
 
 
@@ -273,7 +273,8 @@ def _local_threshold(name,image,window_size,k,r=None):
         product_bound=abs(k_value)*2*amplitude
         final_bound=amplitude+product_bound
     if not math.isfinite(final_bound) or product_bound>stage_max or final_bound>stage_max:return forwarded()
-    return _core.local_threshold(image,cpp_window,name,k_value,r_value,divide_double,r_double,k_double)
+    result=_core.local_threshold(image,cpp_window,name,k_value,r_value,divide_double,r_double,k_double)
+    return retain_dtype_metadata(result,image) if image.dtype.type==np.float64 else result
 
 
 def threshold_niblack(image,window_size=15,k=0.2):
