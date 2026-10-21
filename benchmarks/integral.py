@@ -3,6 +3,8 @@ from run import measure
 import argparse
 from datetime import datetime,timezone
 import json
+import hashlib
+import sys
 from pathlib import Path
 import platform
 import warnings
@@ -19,11 +21,24 @@ def main():
     parser.add_argument('--size',type=int,default=512)
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
     parser.add_argument('--repeat',type=int,default=7)
+    parser.add_argument('--baseline-dir',type=Path,help='Directory with preserved _baseline package and baseline-source.json')
     parser.add_argument('--output',type=Path,default=Path('benchmarks/integral-parameters.json'))
     args=parser.parse_args()
     if min([args.size,args.repeat,*args.threads])<1:parser.error('size, repeats and workers must be positive')
     root=Path(__file__).resolve().parents[1];fingerprint=source_fingerprint(root)
     xx.set_fallback_enabled(False);rows=[];rng=np.random.default_rng(544);replacement=xx.transform
+    baseline=None;baseline_provenance=None
+    if args.baseline_dir:
+        sys.path.insert(0,str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        baseline.set_fallback_enabled(False)
+        baseline_provenance=json.loads((args.baseline_dir/'baseline-source.json').read_text(encoding='utf-8'))
+        binaries=[*Path(baseline.__file__).parent.glob('*.pyd'),*Path(baseline.__file__).parent.glob('*.so')]
+        assert binaries,'preserved baseline binary is missing'
+        for file in binaries:
+            assert hashlib.sha256(file.read_bytes()).hexdigest()==baseline_provenance['binary_sha256'][file.name]
+        assert baseline.has_avx2()==xx.has_avx2(),'baseline/current ISA settings differ'
+    baseline_transform=None if baseline is None else baseline.transform
     real=(np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64)
 
     def sample(dtype):
@@ -37,6 +52,7 @@ def main():
     def add(image,workload,dtype=None):
         def reference():return original.integral_image(image,dtype=dtype)
         def native():return replacement.integral_image(image,dtype=dtype)
+        def previous():return baseline_transform.integral_image(image,dtype=dtype)
         with warnings.catch_warnings(record=True) as expected_notices:
             warnings.simplefilter('always');expected=reference()
         expected_warnings=[(type(w.message).__name__,str(w.message)) for w in expected_notices]
@@ -50,8 +66,16 @@ def main():
             assert actual.dtype.metadata==expected.dtype.metadata
             np.testing.assert_array_equal(actual,expected,strict=True)
             if expected.dtype.kind=='f':np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+            if baseline is not None:
+                baseline.set_num_threads(workers)
+                with warnings.catch_warnings(record=True) as baseline_notices:
+                    warnings.simplefilter('always');old=previous()
+                assert [(type(w.message).__name__,str(w.message)) for w in baseline_notices]==expected_warnings
+                assert old.dtype==expected.dtype and old.dtype.metadata==expected.dtype.metadata and old.strides==expected.strides
+                np.testing.assert_array_equal(old,expected,strict=True)
+                if old.dtype.kind=='f':np.testing.assert_array_equal(np.signbit(old),np.signbit(expected))
             maximum_error=float(np.max(np.abs(actual.astype(np.float64)-expected.astype(np.float64))))
-            timing=measure(reference,native,args.repeat,15)
+            timing=measure(reference,native,args.repeat,15,baseline=previous if baseline is not None else None)
             rows.append({'api':'transform.integral_image','size':args.size,'shape':list(image.shape),
                          'dtype':str(image.dtype),'output_dtype':str(actual.dtype),'threads':workers,
                          'backend':'identity' if actual is image else 'native','layout':workload,'workload':workload,
@@ -80,6 +104,7 @@ def main():
               'cpu':platform.processor(),'reference':skimage.__version__,'numpy':np.__version__,'scipy':scipy.__version__,
               'avx2':xx.has_avx2(),'fallback_enabled':False,'reference_thread_pools':1,'repeat':args.repeat,**fingerprint,
               'scope':'Allocation-inclusive public API; exact ordered sums, dtype descriptors, output strides and warnings checked before timing'}
+    if baseline_provenance is not None:metadata['baseline']=baseline_provenance
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps({'metadata':metadata,'results':rows},indent=2)+'\n',encoding='utf-8')
     lines=['# Integral-image performance','','Original scikit-image '+skimage.__version__+

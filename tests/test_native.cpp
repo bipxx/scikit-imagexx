@@ -119,6 +119,11 @@ int main() {
             integral_image_into(fortran_input,sums,PixelType::uint8,PixelType::uint64,{2,3},{1,2});
             require(std::equal(sums,sums+6,fortran_expected));
             const auto maximum=std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t repeated[66],scanned[66];std::fill(repeated,repeated+66,maximum);
+            integral_image_into(repeated,scanned,PixelType::uint64,PixelType::uint64,{33});
+            for(std::size_t j=0;j<33;++j)require(scanned[j]==maximum-j);
+            integral_image_into(repeated,scanned,PixelType::uint64,PixelType::uint64,{2,33});
+            for(std::size_t j=0;j<33;++j) {require(scanned[j]==maximum-j);require(scanned[33+j]==maximum-(2*j+1));}
             const std::uint64_t wrapping[]={maximum,1,maximum,1,maximum},wrapped[]={maximum,0,maximum,0,maximum};
             integral_image_into(wrapping,sums,PixelType::uint64,PixelType::uint64,{5});
             require(std::equal(sums,sums+5,wrapped));

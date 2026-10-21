@@ -51,7 +51,7 @@ template<class T> void accumulate(T* output,const std::vector<std::size_t>& shap
                     auto* values=output+row*length;std::size_t position=1;
 #ifdef SKIMAGEXX_AVX2
                     if constexpr(std::is_same_v<T,std::uint64_t>) {
-                        if(has_avx2())position=std::max(position,simd::integral_prefix_u64(values,length));
+                        if(has_avx2())position=std::max(position,simd::integral_prefix_u64(values,values,length));
                     }
 #endif
                     // Starting from the first value, rather than 0 + value,
@@ -100,6 +100,17 @@ void integral_image_into(const void* input,void* output,PixelType source,PixelTy
     }
     if(!input || !output)throw std::invalid_argument("nonnull integral storage required");
     const auto workers=detail::active_workers(count);
+    if(shape.size()==1 && workers==1 && (source==PixelType::int64 || source==PixelType::uint64)
+            && (target==PixelType::int64 || target==PixelType::uint64)) {
+        const auto* values=static_cast<const std::uint64_t*>(input);
+        auto* result=static_cast<std::uint64_t*>(output);std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2())done=simd::integral_prefix_u64(values,result,count);
+#endif
+        std::uint64_t sum=done ? result[done-1] : 0;
+        for(auto i=done;i<count;++i) {sum+=values[i];result[i]=sum;}
+        return;
+    }
     if(target==PixelType::float64) {
         auto* values=static_cast<double*>(output);
         if(floating)convert_into(input,output,count,source,target);

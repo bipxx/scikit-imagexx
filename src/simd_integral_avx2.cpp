@@ -35,16 +35,20 @@ std::size_t integral_cast_u64(const void* input,std::uint64_t* output,std::size_
     }
 #undef RAW
 }
-std::size_t integral_prefix_u64(std::uint64_t* output,std::size_t count) {
+namespace {
+inline __m256i prefix_four(__m256i value) {
+    value=_mm256_add_epi64(value,_mm256_slli_si256(value,8));
+    const auto low=_mm256_castsi256_si128(value);
+    const auto cross=_mm256_inserti128_si256(_mm256_setzero_si256(),_mm_unpackhi_epi64(low,low),1);
+    return _mm256_add_epi64(value,cross);
+}
+inline __m256i last_word(__m256i value) {return _mm256_permute4x64_epi64(value,_MM_SHUFFLE(3,3,3,3));}
+}
+std::size_t integral_prefix_u64(const std::uint64_t* input,std::uint64_t* output,std::size_t count) {
     auto carry=_mm256_setzero_si256();std::size_t i=0;
     for(;i+4<=count;i+=4) {
-        auto value=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(output+i));
-        value=_mm256_add_epi64(value,_mm256_slli_si256(value,8));
-        const auto low=_mm256_castsi256_si128(value);
-        const auto cross=_mm256_inserti128_si256(_mm256_setzero_si256(),_mm_unpackhi_epi64(low,low),1);
-        value=_mm256_add_epi64(_mm256_add_epi64(value,cross),carry);
-        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),value);
-        carry=_mm256_permute4x64_epi64(value,_MM_SHUFFLE(3,3,3,3));
+        const auto value=_mm256_add_epi64(prefix_four(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i))),carry);
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),value);carry=last_word(value);
     }
     return i;
 }

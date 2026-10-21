@@ -120,7 +120,7 @@ def test_non_numeric_scalar_identity(image):
 
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.int64,np.uint64,np.float32,np.float64])
-@pytest.mark.parametrize('shape',[(513,517),(1,262145),(262145,1),(67,131,33)])
+@pytest.mark.parametrize('shape',[(262145,),(513,517),(1,262145),(262145,1),(67,131,33)])
 def test_worker_partitions(dtype,shape):
     check(sample(dtype,shape))
 
@@ -162,3 +162,10 @@ def test_floating_error_policies_on_safe_working_ranges(dtype,policy):
 @pytest.mark.parametrize('dtype',REAL)
 def test_numpy_scalar_identity(dtype):
     check(dtype(1))
+
+
+@pytest.mark.parametrize('dtype',REAL[:9])
+@pytest.mark.parametrize('length',[1,2,3,4,7,8,15,16,17,31,32,33,65])
+def test_integer_simd_chunk_boundaries(dtype,length):
+    image=sample(dtype,(length,))
+    check(image);check(image,dtype=np.int64);check(image,dtype=np.uint64)
