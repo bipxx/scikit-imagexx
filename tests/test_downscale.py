@@ -244,3 +244,26 @@ def test_block_sum_vector_tails_and_partial_padding(dtype,length,layout):
         view=np.ndarray(image.shape,dtype=image.dtype,buffer=storage,offset=1)
         view[:]=image;image=view
     check(image,(2,length));check(image,(2,length),cval=1.75)
+
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+def test_negative_underflow_zero_survives_vector_division(dtype):
+    image=np.zeros((3,35),dtype=dtype)
+    image[::2,::2]=-np.finfo(dtype).smallest_subnormal
+    actual,expected=check(image,(2,2))
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('factors',[(1,1),(2,3),(3,5),(4,8),(2,4),(129,1)])
+@pytest.mark.parametrize('layout',['C','F','reversed','endian-reversed','unaligned-reversed'])
+def test_small_block_packets_and_combined_layouts(dtype,factors,layout):
+    image=sample(dtype,(67,131))
+    if layout=='F':image=np.asfortranarray(image)
+    elif layout=='endian-reversed':image=image.astype(image.dtype.newbyteorder('>'))[::-1,::-1]
+    elif layout=='reversed':image=image[::-1,::-1]
+    elif layout=='unaligned-reversed':
+        storage=np.empty(image.nbytes+1,dtype=np.uint8)
+        view=np.ndarray(image.shape,dtype=image.dtype,buffer=storage,offset=1)
+        view[:]=image;image=view[::-1,::-1]
+    check(image,factors);check(image,factors,cval=1.75)

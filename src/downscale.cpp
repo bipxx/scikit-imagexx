@@ -117,23 +117,24 @@ template<class Input,class Value,bool Boolean=false,bool Half=false> bool run(co
         std::vector<std::size_t> start(rank);
         for(auto index=begin;index<end;++index) {
 #ifdef SKIMAGEXX_AVX2
-            if(linear && !image.swap && vectorized) {
+            if(linear && vectorized) {
                 bool valid=true;
-                const auto done=simd::downscale_row(image.data,output,1,geometry.count,0,0,1,1,
-                    index,end,image.type,Half,0.,double(bound),valid);
+                const auto done=simd::downscale_row(image.data,output,1,geometry.count,0,sizeof(Input),0,1,1,
+                    index,end,image.type,Half,image.swap,0.,double(bound),valid);
                 if(!valid)supported[worker]=0;
                 if(done>index) {index=done-1;continue;}
             }
-            if(rank==2 && !image.swap && vectorized) {
+            if(rank==2 && vectorized) {
                 const auto inner=geometry.output_axes.back(),outer=geometry.output_axes.front();
                 const auto output_columns=geometry.blocks[inner];
-                if(image.strides[inner]==std::ptrdiff_t(sizeof(Input)) && strides[inner]==(Half ? 2 : sizeof(Value))) {
+                if((image.strides[inner]==std::ptrdiff_t(sizeof(Input)) || image.strides[inner]==-std::ptrdiff_t(sizeof(Input)))
+                    && strides[inner]==(Half ? 2 : sizeof(Value))) {
                     const auto row=index/output_columns,column=index%output_columns;
                     const auto stop=std::min(output_columns,column+end-index);
                     bool valid=true;
                     const auto done=simd::downscale_row(image.data,static_cast<unsigned char*>(output)+row*strides[outer],
-                        image.shape[outer],image.shape[inner],image.strides[outer],row,factors[outer],factors[inner],
-                        column,stop,image.type,Half,double(fill),double(bound),valid);
+                        image.shape[outer],image.shape[inner],image.strides[outer],image.strides[inner],row,factors[outer],factors[inner],
+                        column,stop,image.type,Half,image.swap,double(fill),double(bound),valid);
                     if(!valid)supported[worker]=0;
                     if(done>column) {index+=done-column-1;continue;}
                 }

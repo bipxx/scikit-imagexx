@@ -634,6 +634,42 @@ int main() {
             for(auto value:half_output)require(value==0x3c00);
         }
     }
+    {
+        const auto height=std::size_t(5),width=std::size_t(67);
+        std::vector<float> image(height*width);
+        for(std::size_t i=0;i<image.size();++i)image[i]=float(int(i%17)-8)*.25f;
+        std::vector<unsigned char> swapped(image.size()*4+1);
+        const auto* bytes=reinterpret_cast<const unsigned char*>(image.data());
+        for(std::size_t i=0;i<image.size();++i)for(std::size_t b=0;b<4;++b)swapped[1+4*i+b]=bytes[4*i+3-b];
+        const float fill=2.5f;unsigned char swapped_fill[4];
+        for(std::size_t b=0;b<4;++b)swapped_fill[b]=reinterpret_cast<const unsigned char*>(&fill)[3-b];
+        for(const auto& factors:std::vector<std::vector<std::size_t>>{{1,1},{2,3},{3,5},{4,8}}) {
+            const auto rows=(height-1)/factors[0]+1,columns=(width-1)/factors[1]+1;
+            for(bool endian:{false,true})for(bool reversed:{false,true}) {
+                const auto* first=endian ? swapped.data()+1 : bytes;
+                if(reversed)first+=(image.size()-1)*4;
+                LocalMeanView view{first,PixelType::float32,false,endian,{height,width},
+                    {std::ptrdiff_t(width*4)*(reversed ? -1 : 1),reversed ? -4 : 4}};
+                std::vector<float> output(rows*columns+2,99.f);
+                require(downscale_local_mean_into(view,factors,endian ? static_cast<const void*>(swapped_fill) : &fill,
+                    output.data()+1,{columns*4,4}));
+                require(output.front()==99.f && output.back()==99.f);
+                for(std::size_t y=0;y<rows;++y)for(std::size_t x=0;x<columns;++x) {
+                    double sum=0;
+                    for(std::size_t dy=0;dy<factors[0];++dy)for(std::size_t dx=0;dx<factors[1];++dx) {
+                        const auto row=y*factors[0]+dy,column=x*factors[1]+dx;
+                        if(row<height && column<width) {
+                            const auto index=row*width+column;
+                            sum+=image[reversed ? image.size()-1-index : index];
+                        } else sum+=fill;
+                    }
+                    const float expected=float(sum/double(factors[0]*factors[1]));
+                    require(output[1+y*columns+x]==expected);
+                    if(expected==0)require(!std::signbit(output[1+y*columns+x]));
+                }
+            }
+        }
+    }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
