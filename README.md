@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **65 partially native
+The reference is scikit-image **0.26.0**. There are currently **69 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 383 remain pending native implementation and dedicated parity tests.
+export list; 379 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -31,6 +31,7 @@ This is not full scikit-image coverage.
 | `lab2lch`, `lch2lab` | Same color dtypes; three or more channels; extra channels preserved after normalization | Native hypot/atan2 and sin/cos; IEEE/special ranges use scalar libm |
 | `xyz2luv`, `luv2xyz` | Same color dtypes/dimensions; three channels; all eight illuminants and three observers | Native Luv curves and epsilon-regularized denominators; dtype-specific white metadata preserves upstream dot rounding |
 | `rgb2luv`, `luv2rgb` | Same color dtypes/dimensions; three channels; fixed D65/2 reference, matching upstream signatures | Fused sRGB/XYZ/Luv stages; vector arithmetic and transfer, with float32 inverse cube powers preserving libm rounding |
+| `separate_stains`, `combine_stains`, `rgb2hed`, `hed2rgb` | Same color input dtypes/dimensions; three input channels; unbatched real numeric 3×K matrices for general functions; standard HED presets | Native log/exp and matrix stages; output dtype follows NumPy promotion; 11 stain-family matrix pairs available as metadata |
 | `xyz_tristimulus_values` | All upstream white-point combinations and NumPy output dtypes | Metadata helper; no image kernel |
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
@@ -68,9 +69,20 @@ with the same relative tolerance. The 500× opponent-channel scaling amplifies
 cbrt/matrix roundoff; four float32 epsilon units at that scale are about 2.4e-4.
 Luv also scales chromaticity differences by `13*L`. Its cached three-value
 white-point dot product uses NumPy metadata arithmetic to preserve singular
-denominators; all pixel processing remains in C++. Float32 inverse powers
-retain reference rounding because sRGB can amplify a one-ULP XYZ difference
-near black. Inverse Luv uses the base tolerance and has real-color stress tests.
+denominators; all pixel processing remains in C++. Float32 inverse powers use
+platform libm. NumPy's dispatched power can differ by one ULP, which Luv/XYZ
+cancellation and the near-black sRGB slope amplify. Inverse Luv stress tests and
+parameter benchmarks require luminance within one ULP, exact remaining XYZ arithmetic given
+that luminance, and the base RGB tolerance against the reconstructed XYZ.
+Direct RGB comparisons must also satisfy the propagated bound
+`12.92 * (abs(native_XYZ - reference_XYZ) @ abs(RGB_from_XYZ.T))` plus the base
+tolerance. Other inverse workloads retain the base tolerance.
+Stain error budgets follow input precision and matrix coefficient magnitude.
+Float32 separation rounds the logarithm in float32 before scaling, even when
+NumPy promotes the result to float64. Standard HED default cases use the base
+input-dtype tolerance; parameter reports record the matrix-scaled budget.
+Stain float16/endian inputs, ndarray subclasses, complex matrices and batched or
+vector matrices currently require explicit upstream fallback.
 HSV nonfinite values, nonfinite RGB-to-HSV intermediates, and inverse hue sectors
 outside int32 currently require explicit upstream fallback.
 
@@ -122,7 +134,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 67 covered wrapper signatures have per-function parity tests. Tests also run
+All 71 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -256,7 +268,7 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 1,312 current comparisons against original scikit-image, including one-worker
+records 1,532 current comparisons against original scikit-image, including one-worker
 measurements and optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
@@ -266,6 +278,18 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
+To rebuild and reproduce all seven reports with their default workloads:
+
+```sh
+python -m pip install -r benchmarks/requirements.txt
+python benchmarks/verify.py
+```
+
+Use `python benchmarks/verify.py --threads 1` for serial-only comparisons.
+Both commands check parity before timing and regenerate the summary only after
+all reports pass coverage and source-provenance checks. Individual suites can
+also be run after rebuilding/installing the extension:
+
 ```sh
 python tools/inventory.py
 python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
@@ -273,6 +297,7 @@ python benchmarks/conversions.py --size 1024 --threads 1 4
 python benchmarks/color.py --size 512 --threads 1
 python benchmarks/exposure.py --size 1024 --threads 1
 python benchmarks/perceptual.py --size 512 --threads 1 4
+python benchmarks/stains.py --size 512 --threads 1 4
 python benchmarks/morphology.py --size 512 --threads 1 4
 python benchmarks/summarize.py
 ```
@@ -280,17 +305,21 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 67 entries in 772 cases.
+performance. The full function benchmark covers 71 entries in 820 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 13,397 checks with SIMD enabled and disabled; inventory checks alone do not
+has 14,095 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
-[Color layouts and integer inputs](benchmarks/color-layouts.md) add 104 one-worker
+[Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
 [Perceptual parameters](benchmarks/perceptual-parameters.md) add 60 comparisons
 with alternate white points, wrapped hues, extra channels, negative-Z warnings,
 and Luv low-lightness/midtone branches.
+[Stain parameters](benchmarks/stain-parameters.md) add 156 comparisons across all
+11 standard matrix families, three input dtypes and custom output widths.
+The [linear-color experiment](benchmarks/linear-color-tuning.md) retains a separate
+16-case before/after comparison for skipping unused nonlinear SIMD work.
 [Morphology footprints and output reuse](benchmarks/morphology-parameters.md) add
 240 comparisons across ten APIs, four dtypes, rectangles, disks and even/asymmetric
 footprints. Every case checks exact output values, dtype and warning parity.

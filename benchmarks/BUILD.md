@@ -12,8 +12,8 @@ Intel Core i7-12700K (12 physical cores, 20 logical processors), using:
 
 The current build also uses those AVX2/strict floating-point flags for
 `src/simd_convert_avx2.cpp`. `src/simd_color_avx2.cpp` and
-`src/simd_morphology_avx2.cpp` use the same flags;
-there is no FMA requirement or fast-math option. Color arithmetic uses a uint8
+`src/simd_morphology_avx2.cpp` use the same flags, as do the stain kernels in
+`src/simd_stain_avx2.cpp`. There is no FMA requirement or fast-math option. Color arithmetic uses a uint8
 decode LUT and double-precision vector log/exp range reduction for sRGB powers.
 Portable image and conversion code retains the
 baseline compiler target; AVX2 is selected only after runtime CPU/OS checks.
@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 65 native image functions, two metadata
-helpers, and 772 per-function performance cases. The suite now has 13397 checks in both SIMD
+The current function benchmark covers 69 native image functions, two metadata
+helpers, and 820 per-function performance cases. The suite now has 14095 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -50,7 +50,7 @@ performance results retain slower cases as well as faster ones.
 `conversion-widths.json` records 112 additional cases across boolean and
 8/16/32/64-bit integer inputs, with exact parity required before timing. Identity,
 copy, and metadata rows are identified separately from conversion kernels.
-`color-layouts.json` adds 104 one-worker comparisons on uint16/float32 strided and
+`color-layouts.json` adds 120 one-worker comparisons on uint16/float32 strided and
 channel-first images; input movement, normalization and any required copying are
 included. Uniform floating layouts are read directly without a full copy.
 `perceptual-parameters.json` adds 60 cases on alternate white points, wrapped
@@ -67,6 +67,11 @@ and unpack with SIMD; other storage/modes retain the general native kernel.
 `morphology-tuning.json` records the historical 18-case experiment from kernel
 `3b4355a` to `2795b77`: geometric-mean native latency fell from 3.6556 to
 0.1891 ms. It is excluded from the current-source report aggregate.
+`stain-parameters.json` adds 156 comparisons over 11 standard families and
+custom 3×1/3×7 matrices, with input-precision and coefficient-scaled parity
+budgets. `linear-color-tuning.json` is a separate historical 16-case experiment
+from `aa6e251` to `0316dba`, where geometric-mean native latency fell from
+4.1235 to 0.7731 ms by skipping unused nonlinear vector stages.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the

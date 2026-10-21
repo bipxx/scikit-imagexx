@@ -11,7 +11,8 @@ def main():
                ('Non-default exposure parameters','exposure-parameters'),
                ('Color layouts and uint16 inputs','color-layouts'),
                ('Perceptual color parameters','perceptual-parameters'),
-               ('Morphology footprints and output reuse','morphology-parameters')]
+               ('Morphology footprints and output reuse','morphology-parameters'),
+               ('Stain matrices and output widths','stain-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     digest = hashlib.sha256()
@@ -71,6 +72,7 @@ def main():
                 ('color.rgb2hsv','float32'),('color.hsv2rgb','float32'),
                 ('color.rgb2lab','float64'),('color.lab2lch','float64'),
                 ('color.rgb2luv','float32'),('color.luv2xyz','float64'),('color.luv2rgb','float32'),
+                ('color.rgb2hed','uint8'),('color.separate_stains','float32'),('color.combine_stains','float64'),
                 ('morphology.erosion','uint8'),('morphology.opening','float32'),
                 ('morphology.binary_dilation','float64')}
     for r in data[0][2]['results']:
@@ -113,7 +115,16 @@ def main():
               'Luv conversions fuse sRGB/XYZ stages with vector chromaticity arithmetic. '
               'Cached three-value white metadata preserves NumPy dot rounding at singular '
               'denominators. Float32 inverse cube powers retain libm rounding because sRGB '
-              'amplifies small XYZ differences near black; surrounding arithmetic remains vectorized.','',
+              'amplifies small XYZ differences near black; surrounding arithmetic remains vectorized. '
+              'Cross-platform real-color stress tests separately bound the one-ULP luminance '
+              'difference and its propagation through XYZ/sRGB; see the numerical contract.','',
+              'Uniformly linear SIMD blocks skip unused sRGB power and CIE cube-root stages. '
+              'The [fixed linear-color experiment](linear-color-tuning.md) retains historical '
+              'before/after timings separately from this aggregate. Stain kernels fuse input '
+              'normalization, logarithmic scaling, matrix arithmetic and reconstruction. '
+              'Uint8 separation uses a log lookup table; floating layouts use direct loads '
+              'or gathers. Float32 log values retain float32 precision before NumPy-compatible '
+              'promotion, so output float64 does not imply a float64 input error budget.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -121,9 +132,10 @@ def main():
               f'Coverage remains partial: {native_count} native image entries, {metadata_count} '
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
-              '[documented input contracts](../README.md). Reproduce all six reports, then run '
-              '`python benchmarks/summarize.py` to check their source hashes and API coverage '
-              'before regenerating this summary.']
+              '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
+              'to rebuild and reproduce all seven reports, including this summary. '
+              'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
+              'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     print(f'{len(all_rows)} comparisons verified; {len(serial)-len(slower)}/{len(serial)} serial workloads faster; {source_hash}')
 

@@ -30,22 +30,23 @@ gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
 histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDbDr,
 CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB, Lab/LCh and Luv/XYZ/sRGB conversions;
 six grayscale and four binary morphology functions.
-There are 65 partial native image entries, two metadata helpers,
-and 383 pending entries in the current
+Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
+There are 69 partial native image entries, two metadata helpers,
+and 379 pending entries in the current
 450-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
 
-- Port stain separation and color-distance APIs with the same
+- Port color-distance APIs and remaining color conversions with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.
 - Broaden morphology NaN/output-dtype parity and optimize remaining memory-bound
   conversions, strided color transforms and other measured regressions.
-- Avoid unused nonlinear vector work for uniformly linear sRGB/Luv inputs,
-  including the slower dark `rgb2luv` and small `luv2rgb` cases in the current report.
+- Broaden stain batched/vector matrix, float16 and warning contracts, and improve
+  remaining uint16 separation layout regressions and custom-output-width costs.
 - Complete float16/endian conversion coverage and floating warning contracts;
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.
