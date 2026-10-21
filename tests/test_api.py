@@ -98,7 +98,7 @@ def test_pipeline_can_swap_backend():
         gray = backend.color.rgb2gray(a)
         smooth = backend.filters.gaussian(gray, 1.2, mode='reflect')
         edges = backend.filters.scharr(smooth, axis=0)
-        return edges > backend.filters.threshold_mean(edges)
+        return backend.morphology.opening(edges > backend.filters.threshold_mean(edges))
     np.testing.assert_array_equal(pipeline(xx), pipeline(skimage))
 
 

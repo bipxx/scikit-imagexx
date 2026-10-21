@@ -6,18 +6,18 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-On an i7-12700K with **one worker**, the optimized 2048² uint8 paths measured
-5.30× (RGB), 5.46× (Gaussian σ=1), 8.79× (Sobel), and 14.96× (Otsu) faster
-than scikit-image in one local run. Allocation and conversion are included.
-See the full [benchmark report](benchmarks/optimized-single-thread.md), including
-floating-point inputs, smaller sizes, raw samples, and before/after regressions.
+Every native public function has measured comparisons against original scikit-image,
+including **one-worker** runs. Allocation, conversion and Python dispatch are
+included. See the [current verification report](benchmarks/STATUS.md) for measured
+speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **51 partially native
+The reference is scikit-image **0.26.0**. There are currently **61 partially native
 image functions and two metadata helpers**. The
-[API inventory](coverage/README.md) tracks 446 exported public callable names across 17
-modules; 393 remain pending native implementation and dedicated parity tests.
+[API inventory](coverage/README.md) tracks 450 public callable names across 17
+modules, including four deprecated binary morphology functions omitted from upstream's
+export list; 387 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -42,6 +42,8 @@ This is not full scikit-image coverage.
 | `equalize_hist` | Nonempty uint8 arrays of any dimension; mask=None | Float64 output using native histogram and CDF lookup |
 | `img_as_float`, `img_as_float32`, `img_as_float64`, `img_as_ubyte`, `img_as_uint`, `img_as_int`, `img_as_bool` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions; `force_copy` | Exact values, dtype, identity, warnings and copy behavior; float16 identity supported |
 | `dtype_limits` | Boolean, integer, float16/32/64; `clip_negative` | Metadata only; no pixel processing |
+| `erosion`, `dilation`, `opening`, `closing`, `white_tophat`, `black_tophat` | ND arrays, including empty; bool, signed/unsigned 8/16/32/64-bit integers, float32/64; all eight modes, constant fill, flat footprints/sequences; same-dtype output buffers, overlapping/strided views | Exact values on the documented domain; upstream footprint mirroring/centering, integer buffering and wrapping; grayscale NaN inputs/constant fill require fallback |
+| `binary_erosion`, `binary_dilation`, `binary_opening`, `binary_closing` | Same input dtypes/dimensions; nonzero truth, including NaN; `ignore`/`max`/`min` modes; footprints/sequences, including convergence iterations; any supported numeric output dtype | Exact bool/numeric 0/1 values; original deprecation warnings retained |
 
 Spatial/exposure float32 outputs are checked with `rtol=atol=2e-6`, float64 with
 `rtol=atol=2e-13`; dtype conversion values are checked exactly. Spatial filters
@@ -49,7 +51,7 @@ retain floating input dtype. Gaussian's intermediate
 image retains input floating precision. Noncontiguous arrays are generally copied;
 new color transforms directly read uniformly strided floating arrays, including
 planar channel-first, reversed, and broadcast inputs. Input
-arrays are never modified. Public wrappers preserve upstream signatures and
+arrays are modified only when explicitly reused as morphology output. Public wrappers preserve upstream signatures and
 forward unsupported dtypes/options with a `FallbackWarning`; disable fallback
 to require native execution. Low-level `_core` functions reject unsupported
 inputs. Native Gaussian radius is capped at 100000.
@@ -65,7 +67,7 @@ cbrt/matrix roundoff; four float32 epsilon units at that scale are about 2.4e-4.
 HSV nonfinite values, nonfinite RGB-to-HSV intermediates, and inverse hue sectors
 outside int32 currently require explicit upstream fallback.
 
-N-dimensional spatial filtering, integer spatial filters beyond uint8, masks, negative/sequence edge axes,
+N-dimensional Gaussian/edge filtering, integer Gaussian/edge filters beyond uint8, masks, negative/sequence edge axes,
 anisotropic sigma, other boundary modes, floating-point Otsu histograms, and
 Gaussian output buffers currently require upstream fallback. Exposure histogram
 functions on floating images, channel-wise histograms, masked equalization,
@@ -78,6 +80,12 @@ Floating exposure and color arithmetic is
 numerically checked; full NumPy floating-point warning/`errstate` semantics
 remain pending. The C++ API takes
 contiguous buffers; caller-supplied pointer lengths must match dimensions.
+Morphology supports caller output buffers; grayscale output dtype changes, float16,
+non-native byte order, ndarray subclasses and scalar inputs currently require fallback.
+Sparse-footprint NaN behavior in original SciPy depends on traversal order, so
+grayscale NaN calls are explicitly excluded from native coverage. Large rectangles
+use separable linear-work extrema scans; small neighborhoods use SIMD stencils.
+The scan recurrence and exceptional/border handling retain scalar code paths.
 
 ## Swap Python backends
 
@@ -95,17 +103,17 @@ mask = edges > filters.threshold_mean(edges)
 
 For compatibility during migration, install `pip install ".[compat]"` and leave
 fallback enabled (the default). Unsupported calls warn and execute original
-scikit-image. `filters`, `color`, `exposure`, and `util` expose native wrappers. Other top-level
-processing namespaces such as `morphology`, `measure`, and `transform` currently
+scikit-image. `filters`, `color`, `exposure`, `morphology`, and `util` expose native wrappers. Other top-level
+processing namespaces such as `measure` and `transform` currently
 expose upstream-only objects, reported with warnings. Classes and nested modules
 are original upstream objects, not accelerated implementations. This does not
 patch `sys.modules`, change already imported scikit-image symbols, or guarantee
 every nested import path is interchangeable. Use the module alias/import change
 shown above. Unknown options retain upstream behavior through fallback.
 
-All 446 inventoried names have availability/signature checks. These checks do
+All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 53 covered wrapper signatures have per-function parity tests. Tests also run
+All 63 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -239,7 +247,7 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 868 current comparisons against original scikit-image, including one-worker
+records 1,228 current comparisons against original scikit-image, including one-worker
 measurements and optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
@@ -256,22 +264,26 @@ python benchmarks/conversions.py --size 1024 --threads 1 4
 python benchmarks/color.py --size 512 --threads 1
 python benchmarks/exposure.py --size 1024 --threads 1
 python benchmarks/perceptual.py --size 512 --threads 1 4
+python benchmarks/morphology.py --size 512 --threads 1 4
 python benchmarks/summarize.py
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 53 entries in 604 cases.
+performance. The full function benchmark covers 63 entries in 724 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 6,577 checks with SIMD enabled and disabled; inventory checks alone do not
+has 10,869 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 88 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
 [Perceptual parameters](benchmarks/perceptual-parameters.md) add 40 comparisons
 with alternate white points, wrapped hues, extra channels, and negative-Z warnings.
+[Morphology footprints and output reuse](benchmarks/morphology-parameters.md) add
+240 comparisons across ten APIs, four dtypes, rectangles, disks and even/asymmetric
+footprints. Every case checks exact output values, dtype and warning parity.
 
 [Earlier single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the
@@ -334,7 +346,7 @@ Remove-Item Env:SKIMAGEXX_DISABLE_SIMD
 ## Next milestones
 
 1. Expand dtype, border, channel, and output-buffer parity for native functions.
-2. Add morphology, connected components, and region measurements with the same
+2. Expand morphology and add connected components and region measurements with the same
    parity and benchmarking requirements.
 3. Add geometric transforms, feature detection, and restoration incrementally.
 4. Add ARM NEON and broader CPU/compiler validation; no ARM SIMD claim is made.

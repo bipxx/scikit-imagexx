@@ -11,7 +11,8 @@ Intel Core i7-12700K (12 physical cores, 20 logical processors), using:
 - Package and numerical dependency versions in `requirements.txt`.
 
 The current build also uses those AVX2/strict floating-point flags for
-`src/simd_convert_avx2.cpp`. `src/simd_color_avx2.cpp` uses the same flags;
+`src/simd_convert_avx2.cpp`. `src/simd_color_avx2.cpp` and
+`src/simd_morphology_avx2.cpp` use the same flags;
 there is no FMA requirement or fast-math option. Color arithmetic uses a uint8
 decode LUT and double-precision vector log/exp range reduction for sRGB powers.
 Portable image and conversion code retains the
@@ -40,9 +41,9 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 51 native image functions, two metadata
-helpers, and 604 per-function performance cases. The suite now has 6577 checks in both SIMD
-modes; 446 inventory availability/signature checks still do not establish
+The current function benchmark covers 61 native image functions, two metadata
+helpers, and 724 per-function performance cases. The suite now has 10869 checks in both SIMD
+modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
 performance results retain slower cases as well as faster ones.
@@ -55,6 +56,12 @@ included. Uniform floating layouts are read directly without a full copy.
 `perceptual-parameters.json` adds 40 cases on alternate white points, wrapped
 hues, four-channel polar conversions and negative-Z warning counts. Warnings
 are checked before timing and ignored during timed calls in that report.
+`morphology-parameters.json` adds 240 comparisons across all ten new APIs,
+four input dtypes, large rectangles, disks and asymmetric even footprints.
+The latter reuse output buffers; all require exact values and dtype, and binary
+deprecation warnings are verified before timed calls. Rectangle filtering uses
+linear-work extrema scans above the small-stencil threshold. Binary SIMD stencils
+stop when every lane reaches its terminal value, and top-hat subtraction is vectorized.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the

@@ -42,6 +42,8 @@ Next work:
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.
+- Extend morphology constant-value boundary tests to fractional values near
+  integer conversion limits, and reduce the remaining boolean rectangle scan costs.
 - Complete float16/endian conversion coverage and floating warning contracts;
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.

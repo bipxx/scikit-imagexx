@@ -10,7 +10,8 @@ def main():
                ('Additional integer widths','conversion-widths'),
                ('Non-default exposure parameters','exposure-parameters'),
                ('Color layouts and uint16 inputs','color-layouts'),
-               ('Perceptual color parameters','perceptual-parameters')]
+               ('Perceptual color parameters','perceptual-parameters'),
+               ('Morphology footprints and output reuse','morphology-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     digest = hashlib.sha256()
@@ -60,7 +61,9 @@ def main():
                 ('color.rgb2yuv','uint8'),('color.rgb2xyz','uint8'),('color.rgb2xyz','float32'),
                 ('color.xyz2rgb','float32'),('color.rgb2ycbcr','float64'),
                 ('color.rgb2hsv','float32'),('color.hsv2rgb','float32'),
-                ('color.rgb2lab','float64'),('color.lab2lch','float64')}
+                ('color.rgb2lab','float64'),('color.lab2lch','float64'),
+                ('morphology.erosion','uint8'),('morphology.opening','float32'),
+                ('morphology.binary_dilation','float64')}
     for r in data[0][2]['results']:
         if r['size'] == 1024 and r['threads'] == 1 and (r['api'],r['dtype']) in examples:
             lines.append(f'| {r["api"]} | {r["dtype"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
@@ -82,6 +85,13 @@ def main():
               'can still require copying. Simple matrix transforms remain sensitive to dispatch, '
               'shuffling and memory traffic; this run has no hardware-counter profiling to '
               'quantify their individual contribution. Further optimization remains necessary.','',
+              'Morphology reuses row mappings across border pixels and stops binary reductions '
+              'when the result is known for every SIMD lane. Large rectangular footprints use '
+              'linear-work prefix/suffix scans; small input types use narrower working buffers '
+              'when conversion preserves extrema, while 64-bit integer scans retain double '
+              'buffers for upstream rounding. Contiguous scan outputs and top-hat subtraction '
+              'use SIMD. Boolean grayscale rectangles remain a bottleneck: their full scan '
+              'passes can cost more than the reference on nearly uniform intermediate images.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -89,7 +99,7 @@ def main():
               f'Coverage remains partial: {native_count} native image entries, {metadata_count} '
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
-              '[documented input contracts](../README.md). Reproduce all five reports, then run '
+              '[documented input contracts](../README.md). Reproduce all six reports, then run '
               '`python benchmarks/summarize.py` to check their source hashes and API coverage '
               'before regenerating this summary.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
