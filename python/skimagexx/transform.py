@@ -103,8 +103,38 @@ def integrate(ii,start,end):
 _MEAN_DTYPES={}
 
 
+def _local_mean_output(image,blocks,after,shape,target):
+    if not image.ndim or not all(shape) or image.flags.c_contiguous:
+        return np.empty(shape,dtype=target)
+    padded=any(after)
+    if padded and not image.flags.f_contiguous:return np.empty(shape,dtype=target)
+    if image.flags.f_contiguous and all(length>1 for length in shape):
+        return np.empty(shape,dtype=target,order='F')
+    # Reduction allocation ignores broadcast strides and resolves singleton
+    # axes differently from empty_like(order='K'). Ask the public iterator to
+    # allocate from metadata, with buffer initialization explicitly delayed.
+    # It is never reset or advanced, so it never reads this virtual block view.
+    if padded:
+        padded_shape=tuple(length+width for length,width in zip(image.shape,after))
+        steps=[0]*image.ndim;step=image.itemsize
+        axes=range(image.ndim) if image.flags.f_contiguous else range(image.ndim-1,-1,-1)
+        for axis in axes:steps[axis]=step;step*=padded_shape[axis]
+        steps=tuple(steps)
+    else:steps=image.strides
+    view=np.lib.stride_tricks.as_strided(image,shape=shape+blocks,
+        strides=tuple(stride*factor for stride,factor in zip(steps,blocks))+tuple(steps),writeable=False)
+    iterator=np.nditer([None,view],flags=['reduce_ok','buffered','delay_bufalloc','zerosize_ok'],
+        op_flags=[['readwrite','allocate','no_subtype'],['readonly','aligned','no_broadcast']],
+        op_dtypes=[target,target],casting='unsafe',order='K',
+        op_axes=[list(range(image.ndim))+[-1]*image.ndim,None])
+    result=iterator.operands[0]
+    iterator.close()
+    return result
+
+
 def downscale_local_mean(image,factors,cval=0,clip=True):
     """Average raw values over local blocks, with after-only constant padding."""
+    if isinstance(image,np.generic) and image.dtype.type in _REAL_TYPES:image=np.asarray(image)
     def upstream():return fallback('transform','downscale_local_mean',image,factors,cval=cval,clip=clip)
     if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _REAL_TYPES:return upstream()
     # Validation order follows block_reduce/view_as_blocks. Only shape, factor
@@ -145,7 +175,6 @@ def downscale_local_mean(image,factors,cval=0,clip=True):
             target=np.empty((0,1),dtype=source).mean(axis=1).dtype;_MEAN_DTYPES[source]=target
     else:target=np.empty((0,1),dtype=source).mean(axis=1).dtype
     shape=tuple((length-1)//factor+1 if length else 0 for length,factor in zip(image.shape,block_shape))
-    if padded:result=np.empty(shape,dtype=target,order='F' if image.flags.f_contiguous else 'C')
-    else:result=np.empty_like(image,shape=shape,dtype=target,order='K',subok=False)
+    result=_local_mean_output(image,block_shape,after,shape,target)
     if not _core.downscale_local_mean(image,result,block_shape,constant):return upstream()
     return result[()] if not image.ndim else result
