@@ -114,6 +114,39 @@ def test_distance_large_layouts_and_readonly(dtype):
     compare('deltaE_cie76',a,np.array([20,-10,5],dtype=dtype if dtype!=np.uint16 else np.int16))
 
 
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('layout',range(4))
+def test_distance_nonuniform_nd_rows(dtype,layout):
+    rng=np.random.default_rng(86)
+    a=rng.integers(0,256,(3,5,7,9,4),dtype=np.uint8).astype(dtype)
+    b=rng.integers(0,256,a.shape,dtype=np.uint8).astype(dtype)
+    if layout==0:
+        first,second=a[::-1,:,::2,::2,:3],b[:,:,::-2,::-2,:3]
+    elif layout==1:
+        first,second=np.asfortranarray(a[...,:3]),b[...,2::-1]
+    elif layout==2:
+        first,second=a[:,:,0:1,:1,:3],b[:,:,::-1,:,:3]
+    else:
+        first=a.transpose(1,0,2,3,4)[...,:3]
+        second=b.transpose(1,0,2,3,4)[:,::-1,:,:,2::-1]
+    first.flags.writeable=False;second.flags.writeable=False
+    compare('deltaE_cie76',first,second)
+
+
+def test_distance_parallel_nonuniform_batches():
+    a=np.random.default_rng(87).random((2,513,515,3),dtype=np.float32)
+    compare('deltaE_cie76',a,a[::-1,::-1,:,::-1])
+
+
+@pytest.mark.parametrize('first_type,second_type',[(np.uint16,np.float32),(np.int64,np.float64),(np.bool_,np.float32)])
+def test_distance_mixed_dtype_nonuniform_rows(first_type,second_type):
+    rng=np.random.default_rng(88)
+    raw=rng.integers(0,256,(3,17,19,3),dtype=np.uint8)
+    a=raw.view(np.bool_) if first_type==np.bool_ else raw.astype(first_type)
+    b=rng.integers(0,256,raw.shape,dtype=np.uint8).astype(second_type)
+    compare('deltaE_cie76',a[:,::-1],b[:,:,::-1,::-1])
+
+
 @pytest.mark.parametrize('fromspace',SPACES)
 @pytest.mark.parametrize('tospace',SPACES)
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])

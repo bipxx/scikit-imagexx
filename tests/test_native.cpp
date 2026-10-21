@@ -181,6 +181,21 @@ int main() {
         delta_e76_into(b,b,single,1,PixelType::float32,PixelType::float32);
         require(single[0]==0);
         delta_e76_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float64);
+        {
+            const float origin[]={0,0,0};
+            float pixels[54]={},distances[18];
+            for(int i=0;i<18;++i)pixels[3*i]=float(i+1);
+            const std::ptrdiff_t first_rows[]={0,0},second_rows[]={27,0};
+            delta_e76_rows_into(origin,pixels,distances,2,9,PixelType::float32,PixelType::float32,
+                first_rows,second_rows,0,1,3,1);
+            for(int i=0;i<18;++i)require(distances[i]==float((i+9)%18+1));
+            delta_e76_rows_into(nullptr,nullptr,nullptr,0,9,PixelType::float32,PixelType::float32,nullptr,nullptr);
+            const std::ptrdiff_t overflow[]={std::numeric_limits<std::ptrdiff_t>::max()};
+            bool caught=false;
+            try {delta_e76_rows_into(origin,pixels,distances,1,1,PixelType::float32,PixelType::float32,
+                overflow,second_rows);}catch(const std::overflow_error&){caught=true;}
+            require(caught);
+        }
         const double gray1[]={50,0,0},gray2[]={55,0,0};
         double weighted;
         delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::cie94);

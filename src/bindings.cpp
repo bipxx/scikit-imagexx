@@ -31,6 +31,47 @@ bool linear_color_view(const py::array& a, std::ptrdiff_t& pixel_stride, std::pt
     channel_stride = static_cast<std::ptrdiff_t>(channels/bytes);
     return true;
 }
+py::array aligned_distance_view(py::array a) {
+    const auto bytes=a.itemsize();
+    bool aligned=reinterpret_cast<std::uintptr_t>(a.data())%std::size_t(bytes)==0;
+    for(int axis=0;axis<a.ndim();++axis) aligned=aligned && a.strides(axis)%bytes==0;
+    return aligned ? a : a.attr("copy")().cast<py::array>();
+}
+struct DistanceRowLayout {
+    std::size_t columns=1;
+    std::ptrdiff_t ap=3,ac=1,bp=3,bc=1;
+    std::vector<std::ptrdiff_t> first,second;
+};
+DistanceRowLayout distance_rows(const py::array& a,const py::array& b) {
+    DistanceRowLayout result;
+    const auto ab=a.itemsize(),bb=b.itemsize();
+    result.ac=a.strides(a.ndim()-1)/ab;result.bc=b.strides(b.ndim()-1)/bb;
+    int axis=int(a.ndim())-2;
+    while(axis>=0 && a.shape(axis)==1) --axis;
+    if(axis<0) {result.first={0};result.second={0};return result;}
+    result.columns=std::size_t(a.shape(axis));
+    result.ap=a.strides(axis)/ab;result.bp=b.strides(axis)/bb;
+    int prefix=axis;
+    for(int outer=axis-1;outer>=0;--outer) {
+        const auto span=std::ptrdiff_t(result.columns);
+        const auto astep=a.strides(outer)/ab,bstep=b.strides(outer)/bb;
+        if(a.shape(outer)>1 && (astep%span || bstep%span || astep/span!=result.ap || bstep/span!=result.bp)) break;
+        result.columns*=std::size_t(a.shape(outer));prefix=outer;
+    }
+    const auto rows=std::size_t(a.size()/3)/result.columns;
+    result.first.resize(rows);result.second.resize(rows);
+    for(std::size_t row=0;row<rows;++row) {
+        auto remainder=row;
+        std::ptrdiff_t first=0,second=0;
+        for(int outer=prefix-1;outer>=0;--outer) {
+            const auto dim=std::size_t(a.shape(outer)),index=remainder%dim;remainder/=dim;
+            first+=std::ptrdiff_t(index)*(a.strides(outer)/ab);
+            second+=std::ptrdiff_t(index)*(b.strides(outer)/bb);
+        }
+        result.first[row]=first;result.second[row]=second;
+    }
+    return result;
+}
 skimagexx::PixelType pixel_type(const py::dtype& dtype) {
     using Type = skimagexx::PixelType;
     const auto kind = dtype.kind();
@@ -117,21 +158,22 @@ PYBIND11_MODULE(_core, m) {
         if(first.ndim()!=second.ndim() || !std::equal(first.shape(),first.shape()+first.ndim(),second.shape()))
             throw py::value_error("distance inputs must have matching broadcasted shapes");
         const auto at=pixel_type(first.dtype()),bt=pixel_type(second.dtype());
-        auto prepare=[](py::array a,std::ptrdiff_t& pixels,std::ptrdiff_t& channels) {
-            if(!linear_color_view(a,pixels,channels)) {
-                a=a.attr("copy")().cast<py::array>();
-                pixels=3; channels=1;
-            }
-            return a;
-        };
         std::ptrdiff_t ap=3,ac=1,bp=3,bc=1;
-        first=prepare(first,ap,ac); second=prepare(second,bp,bc);
+        first=aligned_distance_view(first);second=aligned_distance_view(second);
+        const bool linear=!first.size() || (linear_color_view(first,ap,ac) && linear_color_view(second,bp,bc));
         std::vector<py::ssize_t> dims(first.shape(),first.shape()+first.ndim()-1);
         const auto dtype=at==skimagexx::PixelType::float32 && bt==skimagexx::PixelType::float32 ?
             py::dtype::of<float>() : py::dtype::of<double>();
         py::array out(dtype,dims);
-        { py::gil_scoped_release release;
-          skimagexx::delta_e76_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,ap,ac,bp,bc); }
+        if(linear) {
+            py::gil_scoped_release release;
+            skimagexx::delta_e76_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,ap,ac,bp,bc);
+        } else {
+            const auto layout=distance_rows(first,second);
+            py::gil_scoped_release release;
+            skimagexx::delta_e76_rows_into(first.data(),second.data(),out.mutable_data(),layout.first.size(),layout.columns,
+                at,bt,layout.first.data(),layout.second.data(),layout.ap,layout.ac,layout.bp,layout.bc);
+        }
         if(dims.empty()) return out.attr("reshape")(py::tuple()).cast<py::array>();
         return out;
     },py::arg("first"),py::arg("second"));

@@ -87,4 +87,53 @@ void delta_e76_into(const void* a,const void* b,void* out,std::size_t n,PixelTyp
         execute_distance(a,b,static_cast<float*>(out),n,at,bt,ap,ac,bp,bc);
     else execute_distance(a,b,static_cast<double*>(out),n,at,bt,ap,ac,bp,bc);
 }
+namespace {
+template<class T> void execute_distance_rows(const void* a,const void* b,T* out,std::size_t count,std::size_t columns,
+    PixelType at,PixelType bt,const std::ptrdiff_t* rows_a,const std::ptrdiff_t* rows_b,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    const auto ar=detail::distance_reader<T>(at),br=detail::distance_reader<T>(bt);
+    const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
+    const bool vectorized=has_avx2();
+    detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
+        auto position=begin;
+        while(position<end) {
+            const auto row=position/columns,col=position%columns;
+            const auto length=std::min(end-position,columns-col);
+            const auto* first=static_cast<const unsigned char*>(a)+(rows_a[row]+std::ptrdiff_t(col)*ap)*ab;
+            const auto* second=static_cast<const unsigned char*>(b)+(rows_b[row]+std::ptrdiff_t(col)*bp)*bb;
+            std::size_t consumed=0;
+#ifdef SKIMAGEXX_AVX2
+            if(vectorized) consumed=simd::delta_e76(first,second,out+position,length,at,bt,ap,ac,bp,bc);
+#else
+            (void)vectorized;
+#endif
+            for(auto j=consumed;j<length;++j)
+                out[position+j]=detail::distance_pixel(first+std::ptrdiff_t(j)*ap*ab,second+std::ptrdiff_t(j)*bp*bb,ar,br,ac,bc);
+            position+=length;
+        }
+    });
+}
+void validate_rows(std::size_t rows,std::size_t columns,PixelType type,const std::ptrdiff_t* offsets,
+    std::ptrdiff_t pixels,std::ptrdiff_t channels) {
+    validate_distance(columns,type,pixels,channels);
+    const auto magnitude=[](std::ptrdiff_t v){return v<0 ? std::size_t(-(v+1))+1 : std::size_t(v);};
+    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/std::max(pixel_size(type),sizeof(double));
+    const auto span=(columns-1)*magnitude(pixels)+2*magnitude(channels);
+    for(std::size_t row=0;row<rows;++row) if(magnitude(offsets[row])>limit-span)
+        throw std::overflow_error("distance row offsets overflow");
+}
+}
+void delta_e76_rows_into(const void* a,const void* b,void* out,std::size_t rows,std::size_t columns,
+    PixelType at,PixelType bt,const std::ptrdiff_t* rows_a,const std::ptrdiff_t* rows_b,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    (void)detail::distance_reader<double>(at);(void)detail::distance_reader<double>(bt);
+    if(!rows || !columns) return;
+    if(!a || !b || !out || !rows_a || !rows_b) throw std::invalid_argument("distance row buffers must be nonnull");
+    const bool single=at==PixelType::float32 && bt==PixelType::float32;
+    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(single?sizeof(float):sizeof(double));
+    if(rows>limit/columns) throw std::overflow_error("distance output size overflows");
+    validate_rows(rows,columns,at,rows_a,ap,ac);validate_rows(rows,columns,bt,rows_b,bp,bc);
+    if(single) execute_distance_rows(a,b,static_cast<float*>(out),rows*columns,columns,at,bt,rows_a,rows_b,ap,ac,bp,bc);
+    else execute_distance_rows(a,b,static_cast<double*>(out),rows*columns,columns,at,bt,rows_a,rows_b,ap,ac,bp,bc);
+}
 }

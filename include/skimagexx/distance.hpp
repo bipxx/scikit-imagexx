@@ -22,4 +22,11 @@ void delta_e_into(const void* first,const void* second,void* output,std::size_t 
 void delta_e76_into(const void* first,const void* second,void* output,std::size_t count,
     PixelType first_type,PixelType second_type,std::ptrdiff_t first_pixels=3,
     std::ptrdiff_t first_channels=1,std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1);
+// Rows may be independently reversed, strided or broadcast. Row offsets and
+// pixel/channel strides count input elements. Output has rows*columns values.
+// The global worker limit is captured once for the whole image.
+void delta_e76_rows_into(const void* first,const void* second,void* output,std::size_t rows,std::size_t columns,
+    PixelType first_type,PixelType second_type,const std::ptrdiff_t* first_rows,const std::ptrdiff_t* second_rows,
+    std::ptrdiff_t first_pixels=3,std::ptrdiff_t first_channels=1,
+    std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1);
 }
