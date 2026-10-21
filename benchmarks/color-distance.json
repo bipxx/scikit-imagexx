@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-10-21T18:58:57.581509+00:00",
+    "timestamp_utc": "2026-10-21T19:43:34.945675+00:00",
     "platform": "Windows-11-10.0.26200-SP0",
     "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
     "reference": "0.26.0",
     "numpy": "2.5.4",
-    "source_sha256": "1e7ff448ca59f88a2c2d523dd537bfcdf3191d5ebc0306de2d43a497fb6db79c",
+    "source_sha256": "9df0360bf25a89ce495437806fbbcb310b07ba39e67137a983e9780194ee310a",
     "source_hash_schema": "cpp-python-build-posix-lf-v2",
     "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
     "avx2": true,
@@ -46,272 +46,272 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 7.6286,
-      "cpp_ms": 0.6250933333333334,
-      "speedup": 12.203937545326562,
+      "reference_ms": 3.6128,
+      "cpp_ms": 0.6070105263157894,
+      "speedup": 5.95179135018902,
       "samples_ms": [
         [
-          9.4322,
-          7.6286,
-          7.5167,
-          8.2153,
-          3.9169,
-          9.4025,
-          6.0941
+          3.2401,
+          3.6128,
+          2.93215,
+          3.3589,
+          3.66,
+          3.77695,
+          4.92925
         ],
         [
-          0.63214,
-          0.6956266666666666,
-          0.5962466666666666,
-          0.6250933333333334,
-          0.6498066666666666,
-          0.5918666666666667,
-          0.60528
-        ]
-      ],
-      "loops": [
-        1,
-        15
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede94",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "contiguous",
-      "layout": "contiguous",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 8.526512829121202e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 33.0143,
-      "cpp_ms": 3.605125,
-      "speedup": 9.157602024895114,
-      "samples_ms": [
-        [
-          43.8949,
-          42.8752,
-          30.7048,
-          27.6826,
-          33.0143,
-          31.937,
-          40.4031
-        ],
-        [
-          3.659875,
-          3.595275,
-          3.605125,
-          3.571425,
-          3.8248,
-          3.5456,
-          3.883725
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "contiguous",
-      "layout": "contiguous",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 56.6403,
-      "cpp_ms": 17.7082,
-      "speedup": 3.1985351419116568,
-      "samples_ms": [
-        [
-          54.5625,
-          47.3164,
-          48.036,
-          59.3456,
-          59.6906,
-          63.6538,
-          56.6403
-        ],
-        [
-          17.6009,
-          16.9446,
-          17.6314,
-          18.1597,
-          19.1144,
-          17.7082,
-          18.2407
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "contiguous",
-      "layout": "contiguous",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 1.1368683772161603e-13,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 39.7463,
-      "cpp_ms": 8.5105,
-      "speedup": 4.670266141824804,
-      "samples_ms": [
-        [
-          38.4917,
-          39.8674,
-          36.7064,
-          41.6424,
-          47.7457,
-          39.7463,
-          38.0342
-        ],
-        [
-          8.7037,
-          8.287,
-          8.3755,
-          8.7761,
-          8.5105,
-          8.4558,
-          8.5665
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        3,
-        512,
-        512
-      ],
-      "second_shape": [
-        3,
-        512,
-        512
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "channel-first",
-      "layout": "channel-first",
-      "options": {
-        "channel_axis": 0
-      },
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 3.36765,
-      "cpp_ms": 0.50508,
-      "speedup": 6.667557614635305,
-      "samples_ms": [
-        [
-          3.73955,
-          3.2613,
-          2.687,
-          3.15515,
-          3.36765,
-          5.78205,
-          4.1167
-        ],
-        [
-          0.49802,
-          0.538885,
-          0.50508,
-          0.47849,
-          0.5476,
-          0.620255,
-          0.49281
+          0.5843578947368422,
+          0.5831578947368421,
+          0.6557105263157894,
+          0.6355,
+          0.6156736842105263,
+          0.6070105263157894,
+          0.6067631578947369
         ]
       ],
       "loops": [
         2,
-        20
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede94",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 8.526512829121202e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 21.8836,
+      "cpp_ms": 3.4860666666666664,
+      "speedup": 6.277447361878718,
+      "samples_ms": [
+        [
+          20.2239,
+          21.8836,
+          26.1498,
+          26.0938,
+          18.9633,
+          21.6093,
+          24.151
+        ],
+        [
+          3.3871666666666664,
+          3.7304,
+          3.4860666666666664,
+          3.5898333333333334,
+          3.4696333333333333,
+          3.4674,
+          3.5664666666666665
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 42.5002,
+      "cpp_ms": 17.2472,
+      "speedup": 2.464179692935665,
+      "samples_ms": [
+        [
+          46.1363,
+          45.9259,
+          47.8772,
+          41.9151,
+          41.1738,
+          38.1796,
+          42.5002
+        ],
+        [
+          17.2472,
+          17.2607,
+          17.1083,
+          17.984,
+          17.1389,
+          17.1901,
+          17.2799
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 1.1368683772161603e-13,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 32.6288,
+      "cpp_ms": 8.6123,
+      "speedup": 3.7886278926651418,
+      "samples_ms": [
+        [
+          32.7133,
+          32.6288,
+          31.1863,
+          34.4614,
+          36.8038,
+          30.3582,
+          32.1687
+        ],
+        [
+          8.4142,
+          8.4903,
+          8.6243,
+          8.4734,
+          8.7328,
+          8.6123,
+          8.8626
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        3,
+        512,
+        512
+      ],
+      "second_shape": [
+        3,
+        512,
+        512
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.73145,
+      "cpp_ms": 0.6059,
+      "speedup": 4.50808714309292,
+      "samples_ms": [
+        [
+          2.821925,
+          2.1312,
+          2.778475,
+          2.5528,
+          2.233575,
+          3.166275,
+          2.73145
+        ],
+        [
+          0.632752380952381,
+          0.5993571428571428,
+          0.6095952380952381,
+          0.6059,
+          0.6431571428571429,
+          0.5978476190476191,
+          0.6050809523809524
+        ]
+      ],
+      "loops": [
+        4,
+        21
       ],
       "sample_labels": [
         "scikit-image",
@@ -346,32 +346,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 28.7212,
-      "cpp_ms": 3.48315,
-      "speedup": 8.24575456124485,
+      "reference_ms": 20.9883,
+      "cpp_ms": 3.2558,
+      "speedup": 6.4464340561459545,
       "samples_ms": [
         [
-          29.0457,
-          27.0938,
-          35.599,
-          26.8176,
-          25.1378,
-          33.1644,
-          28.7212
+          23.2604,
+          22.7118,
+          19.713,
+          20.7714,
+          20.4134,
+          21.3957,
+          20.9883
         ],
         [
-          3.2757,
-          3.532925,
-          3.5906,
-          3.42695,
-          3.48315,
-          3.465375,
-          3.508975
+          3.2328,
+          3.2166333333333337,
+          3.2668666666666666,
+          3.3864333333333336,
+          3.2542666666666666,
+          3.2558,
+          3.3929666666666667
         ]
       ],
       "loops": [
         1,
-        4
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -406,27 +406,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 45.3726,
-      "cpp_ms": 17.2434,
-      "speedup": 2.631302411357389,
+      "reference_ms": 41.8133,
+      "cpp_ms": 16.9861,
+      "speedup": 2.461618617575547,
       "samples_ms": [
         [
-          45.3726,
-          44.6472,
-          46.84,
-          43.05,
-          46.9845,
-          40.8439,
-          50.6014
+          39.7382,
+          38.359,
+          38.051,
+          43.2528,
+          41.8133,
+          46.959,
+          41.9605
         ],
         [
-          16.7688,
-          17.8934,
-          17.8461,
-          17.073,
-          17.3364,
-          17.1675,
-          17.2434
+          17.5273,
+          16.9861,
+          17.0671,
+          16.953,
+          16.7539,
+          16.7554,
+          17.5544
         ]
       ],
       "loops": [
@@ -466,27 +466,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 41.6137,
-      "cpp_ms": 8.4357,
-      "speedup": 4.9330464573183015,
+      "reference_ms": 36.134,
+      "cpp_ms": 8.2316,
+      "speedup": 4.38966908013023,
       "samples_ms": [
         [
-          42.7089,
-          40.4385,
-          41.7326,
-          43.4719,
-          36.193,
-          39.769,
-          41.6137
+          35.8614,
+          36.134,
+          37.1947,
+          30.8769,
+          36.5941,
+          42.1642,
+          35.364
         ],
         [
-          8.511,
-          9.2586,
-          8.252,
-          8.4357,
-          8.6475,
-          8.0953,
-          8.1609
+          8.274,
+          8.1307,
+          8.2888,
+          8.1342,
+          8.2316,
+          8.1049,
+          8.6747
         ]
       ],
       "loops": [
@@ -526,271 +526,31 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 9.308766666666665,
-      "cpp_ms": 0.7250214285714285,
-      "speedup": 12.839298674259217,
+      "reference_ms": 5.53225,
+      "cpp_ms": 0.6032277777777778,
+      "speedup": 9.171079654819904,
       "samples_ms": [
         [
-          8.0342,
-          9.119066666666667,
-          9.641233333333334,
-          9.308766666666665,
-          9.816433333333334,
-          5.378,
-          9.387766666666666
+          7.01255,
+          4.1684,
+          7.9632,
+          5.53225,
+          5.65975,
+          5.09885,
+          4.7106
         ],
         [
-          0.6313928571428572,
-          0.7250214285714285,
-          0.8119714285714286,
-          0.7476428571428572,
-          0.9504357142857143,
-          0.6491785714285715,
-          0.6429642857142857
+          0.64755,
+          0.7441666666666666,
+          0.6032277777777778,
+          0.5861388888888889,
+          0.5986666666666667,
+          0.6098,
+          0.5988166666666667
         ]
       ],
       "loops": [
-        3,
-        14
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede94",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "strided",
-      "layout": "strided",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 8.526512829121202e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 32.9784,
-      "cpp_ms": 4.607733333333333,
-      "speedup": 7.157185022281383,
-      "samples_ms": [
-        [
-          29.282,
-          39.4934,
-          39.5887,
-          39.234,
-          32.9784,
-          29.5647,
-          32.5452
-        ],
-        [
-          4.6637,
-          4.4775,
-          4.938466666666667,
-          4.607733333333333,
-          4.722766666666667,
-          4.4979,
-          4.3673
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "strided",
-      "layout": "strided",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 72.077,
-      "cpp_ms": 19.2455,
-      "speedup": 3.745135226416565,
-      "samples_ms": [
-        [
-          72.077,
-          74.3733,
-          76.689,
-          76.5807,
-          64.0754,
-          69.7582,
-          58.7649
-        ],
-        [
-          20.8815,
-          20.298,
-          19.0695,
-          19.4518,
-          18.6595,
-          19.2455,
-          17.8064
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "strided",
-      "layout": "strided",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 1.1368683772161603e-13,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 55.6884,
-      "cpp_ms": 9.9019,
-      "speedup": 5.624011553338248,
-      "samples_ms": [
-        [
-          41.1472,
-          42.9311,
-          42.7291,
-          58.3337,
-          55.6884,
-          56.7076,
-          67.5624
-        ],
-        [
-          9.9378,
-          9.3856,
-          11.8718,
-          9.9019,
-          9.6818,
-          9.331,
-          10.327
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "uint8",
-      "second_dtype": "uint8",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        1,
-        1,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "broadcast",
-      "layout": "broadcast",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 4.777533333333333,
-      "cpp_ms": 0.6015333333333334,
-      "speedup": 7.9422586722819455,
-      "samples_ms": [
-        [
-          4.8561,
-          5.986233333333333,
-          5.631133333333333,
-          4.777533333333333,
-          2.6855333333333333,
-          2.6873,
-          1.7930666666666668
-        ],
-        [
-          0.6015333333333334,
-          0.6938777777777777,
-          0.6080111111111112,
-          0.5694666666666667,
-          0.5495055555555555,
-          0.5266222222222222,
-          0.6259666666666667
-        ]
-      ],
-      "loops": [
-        3,
+        2,
         18
       ],
       "sample_labels": [
@@ -809,6 +569,246 @@
         3
       ],
       "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 8.526512829121202e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 23.3753,
+      "cpp_ms": 4.306033333333333,
+      "speedup": 5.428499547147027,
+      "samples_ms": [
+        [
+          23.3753,
+          23.8746,
+          24.1196,
+          24.6318,
+          21.9179,
+          20.8614,
+          21.9059
+        ],
+        [
+          4.286366666666667,
+          4.306033333333333,
+          4.479133333333333,
+          4.3852,
+          4.251,
+          4.6753,
+          4.155
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 41.905,
+      "cpp_ms": 17.8877,
+      "speedup": 2.3426712210066136,
+      "samples_ms": [
+        [
+          41.905,
+          43.7623,
+          42.2486,
+          41.3944,
+          42.2239,
+          39.023,
+          39.8892
+        ],
+        [
+          18.0693,
+          17.7562,
+          17.4949,
+          17.66,
+          18.4298,
+          17.8984,
+          17.8877
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 1.1368683772161603e-13,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 33.7506,
+      "cpp_ms": 9.1918,
+      "speedup": 3.6718161839900776,
+      "samples_ms": [
+        [
+          35.1508,
+          36.6451,
+          33.7506,
+          36.2073,
+          33.3156,
+          30.2915,
+          30.9937
+        ],
+        [
+          9.6068,
+          9.1918,
+          9.5335,
+          9.0943,
+          9.1814,
+          8.8058,
+          9.9048
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        1,
+        1,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.2963833333333334,
+      "cpp_ms": 0.5947,
+      "speedup": 5.5429348130710165,
+      "samples_ms": [
+        [
+          3.2963833333333334,
+          3.6349666666666667,
+          3.8787333333333334,
+          4.774983333333333,
+          2.8749833333333337,
+          2.9335833333333334,
+          2.8806333333333334
+        ],
+        [
+          0.6138363636363636,
+          0.5947,
+          0.5924272727272727,
+          0.5915545454545454,
+          0.619909090909091,
+          0.7073454545454546,
+          0.563209090909091
+        ]
+      ],
+      "loops": [
+        6,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede94",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
         1,
         1,
         3
@@ -826,27 +826,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 14.7514,
-      "cpp_ms": 3.442225,
-      "speedup": 4.2854258510120635,
+      "reference_ms": 14.9587,
+      "cpp_ms": 3.346875,
+      "speedup": 4.4694528478057896,
       "samples_ms": [
         [
-          14.7514,
-          13.3332,
-          16.5915,
-          14.5526,
-          14.0727,
-          24.5686,
-          23.3585
+          17.1576,
+          14.9587,
+          14.028,
+          12.0037,
+          11.2646,
+          15.9965,
+          15.4955
         ],
         [
-          3.442225,
-          3.4202,
-          3.316425,
-          3.456575,
-          3.467475,
-          3.3416,
-          3.7659
+          3.315,
+          3.3584,
+          3.323125,
+          3.409225,
+          3.459875,
+          3.333725,
+          3.346875
         ]
       ],
       "loops": [
@@ -886,27 +886,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 47.385,
-      "cpp_ms": 16.1876,
-      "speedup": 2.9272406039190493,
+      "reference_ms": 35.4752,
+      "cpp_ms": 15.9555,
+      "speedup": 2.223383786155244,
       "samples_ms": [
         [
-          43.2824,
-          45.7518,
-          48.3644,
-          40.0203,
-          48.5257,
-          49.4648,
-          47.385
+          36.0774,
+          35.7711,
+          34.2708,
+          35.3994,
+          35.4752,
+          34.3411,
+          38.5006
         ],
         [
-          16.1876,
-          16.0997,
-          15.9818,
-          16.2133,
-          15.9931,
-          16.2355,
-          16.5362
+          15.9383,
+          15.8861,
+          15.9852,
+          15.7577,
+          15.9555,
+          15.9953,
+          16.0777
         ]
       ],
       "loops": [
@@ -946,27 +946,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 36.6581,
-      "cpp_ms": 8.4208,
-      "speedup": 4.353279973399202,
+      "reference_ms": 22.4812,
+      "cpp_ms": 8.2679,
+      "speedup": 2.719094328668707,
       "samples_ms": [
         [
-          31.5916,
-          31.8465,
-          24.1188,
-          39.7093,
-          46.2228,
-          41.4959,
-          36.6581
+          25.0849,
+          21.6616,
+          23.2845,
+          22.4677,
+          22.4812,
+          22.6533,
+          22.0366
         ],
         [
-          8.4208,
-          8.4866,
-          8.4046,
-          9.0311,
-          8.3969,
-          9.7261,
-          8.2988
+          8.2892,
+          8.3415,
+          8.2003,
+          8.0248,
+          8.1197,
+          9.2089,
+          8.2679
         ]
       ],
       "loops": [
@@ -1006,31 +1006,31 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 7.0636,
-      "cpp_ms": 0.62048,
-      "speedup": 11.384089736977824,
+      "reference_ms": 6.55845,
+      "cpp_ms": 0.62765,
+      "speedup": 10.449215327013462,
       "samples_ms": [
         [
-          10.6896,
-          6.5545,
-          5.5629,
-          10.7082,
-          11.2942,
-          5.3561,
-          7.0636
+          7.20975,
+          6.8516,
+          6.55845,
+          4.88065,
+          5.71665,
+          6.74095,
+          4.2718
         ],
         [
-          0.5815,
-          0.65683,
-          0.62048,
-          0.60253,
-          0.600575,
-          0.624405,
-          0.644875
+          0.635575,
+          0.59992,
+          0.57993,
+          0.64183,
+          0.62867,
+          0.606085,
+          0.62765
         ]
       ],
       "loops": [
-        1,
+        2,
         20
       ],
       "sample_labels": [
@@ -1066,27 +1066,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 28.5644,
-      "cpp_ms": 3.530175,
-      "speedup": 8.091496880466266,
+      "reference_ms": 26.9797,
+      "cpp_ms": 3.458525,
+      "speedup": 7.800926695628918,
       "samples_ms": [
         [
-          34.3037,
-          39.3033,
-          27.7216,
-          28.2165,
-          27.5437,
-          28.5644,
-          39.9011
+          26.9797,
+          25.1516,
+          26.2395,
+          23.9889,
+          33.223,
+          27.6372,
+          32.5111
         ],
         [
-          4.40385,
-          3.423975,
-          3.5341,
-          3.42445,
-          3.470425,
-          3.530175,
-          3.53445
+          3.458525,
+          3.7965,
+          3.538525,
+          3.426275,
+          3.415225,
+          3.43505,
+          3.611625
         ]
       ],
       "loops": [
@@ -1126,27 +1126,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 55.8421,
-      "cpp_ms": 17.8179,
-      "speedup": 3.1340449772419867,
+      "reference_ms": 52.7568,
+      "cpp_ms": 17.3927,
+      "speedup": 3.0332725798754647,
       "samples_ms": [
         [
-          62.4675,
-          58.1149,
-          55.8421,
-          51.446,
-          49.8884,
-          45.5194,
-          60.2347
+          49.6388,
+          52.7568,
+          48.8227,
+          46.8828,
+          60.1382,
+          55.9597,
+          64.7936
         ],
         [
-          18.3576,
-          18.5481,
-          17.8179,
-          17.6139,
-          18.3663,
-          17.4375,
-          16.9671
+          18.3878,
+          17.3927,
+          16.9314,
+          17.7046,
+          17.9979,
+          17.3834,
+          17.3137
         ]
       ],
       "loops": [
@@ -1186,27 +1186,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 52.5384,
-      "cpp_ms": 8.5652,
-      "speedup": 6.133937327791529,
+      "reference_ms": 56.0541,
+      "cpp_ms": 9.0923,
+      "speedup": 6.165007753813667,
       "samples_ms": [
         [
-          66.382,
-          52.5384,
-          52.678,
-          59.3858,
-          52.0253,
-          48.7843,
-          43.0306
+          85.0757,
+          75.9254,
+          56.0541,
+          53.0877,
+          52.2116,
+          56.3268,
+          54.1835
         ],
         [
-          8.958,
-          8.8995,
-          8.3946,
-          8.3372,
-          8.9457,
-          8.5652,
-          8.5613
+          10.1526,
+          9.1831,
+          9.0281,
+          9.0923,
+          9.3975,
+          8.426,
+          8.4459
         ]
       ],
       "loops": [
@@ -1240,27 +1240,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 49.5384,
-      "cpp_ms": 2.3685,
-      "speedup": 20.915516149461684,
+      "reference_ms": 45.8209,
+      "cpp_ms": 2.3302666666666667,
+      "speedup": 19.663371860159067,
       "samples_ms": [
         [
-          49.5384,
-          52.896,
-          47.2074,
-          47.9921,
-          55.9483,
-          51.2678,
-          47.8278
+          68.4654,
+          51.364,
+          45.8287,
+          45.8209,
+          43.1898,
+          45.2489,
+          44.8436
         ],
         [
-          2.3685,
-          2.4539333333333335,
-          2.33195,
-          2.4748166666666664,
-          2.34595,
-          2.4913,
-          2.3007166666666663
+          2.4128,
+          2.3303833333333337,
+          2.1463333333333336,
+          2.3302666666666667,
+          2.2205666666666666,
+          2.3468666666666667,
+          2.2201
         ]
       ],
       "loops": [
@@ -1294,27 +1294,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 81.6646,
-      "cpp_ms": 7.4337,
-      "speedup": 10.985727161440467,
+      "reference_ms": 56.2479,
+      "cpp_ms": 6.487,
+      "speedup": 8.67086480653615,
       "samples_ms": [
         [
-          81.4565,
-          79.8629,
-          88.8098,
-          81.6646,
-          65.4694,
-          101.2591,
-          97.973
+          64.8981,
+          75.2685,
+          50.3896,
+          57.1141,
+          55.2701,
+          52.3762,
+          56.2479
         ],
         [
-          8.10055,
-          8.9147,
-          7.38855,
-          6.75865,
-          6.11735,
-          7.4337,
-          7.5486
+          6.45295,
+          6.83145,
+          6.61785,
+          6.2436,
+          6.487,
+          6.6185,
+          6.2271
         ]
       ],
       "loops": [
@@ -1349,27 +1349,27 @@
       "rtol": 2e-13,
       "atol": 2e-13,
       "route_rgb_max_abs_error": 2.112893193739751e-15,
-      "reference_ms": 79.0233,
-      "cpp_ms": 7.7594,
-      "speedup": 10.184202386782484,
+      "reference_ms": 54.5122,
+      "cpp_ms": 6.6574,
+      "speedup": 8.18821161414366,
       "samples_ms": [
         [
-          72.6249,
-          85.4577,
-          73.7068,
-          81.369,
-          79.0233,
-          79.1651,
-          68.7594
+          54.5122,
+          55.3483,
+          53.5403,
+          52.8333,
+          54.648,
+          54.6195,
+          53.8525
         ],
         [
-          8.243,
-          7.7594,
-          9.74925,
-          6.6812,
-          7.0174,
-          7.74275,
-          7.7661
+          6.46525,
+          6.70725,
+          6.61725,
+          6.3035,
+          6.73165,
+          6.75655,
+          6.6574
         ]
       ],
       "loops": [
@@ -1403,32 +1403,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 4.610266666666667,
-      "cpp_ms": 2.2805666666666666,
-      "speedup": 2.0215443530116786,
+      "reference_ms": 3.0492333333333335,
+      "cpp_ms": 1.1102625,
+      "speedup": 2.7464075687806564,
       "samples_ms": [
         [
-          4.610266666666667,
-          5.936833333333333,
-          4.068266666666666,
-          3.6268666666666665,
-          4.6805,
-          4.296733333333333,
-          6.256633333333333
+          4.103366666666666,
+          2.9955,
+          4.4833,
+          2.7613333333333334,
+          3.0492333333333335,
+          2.9708,
+          3.8133
         ],
         [
-          2.74785,
-          2.2805666666666666,
-          3.09695,
-          2.018683333333333,
-          1.6434833333333332,
-          1.7259333333333333,
-          2.8421833333333333
+          1.137325,
+          1.781525,
+          1.0024875,
+          1.089625,
+          1.1102625,
+          1.6625,
+          1.0198875
         ]
       ],
       "loops": [
         3,
-        6
+        8
       ],
       "sample_labels": [
         "scikit-image",
@@ -1457,32 +1457,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 8.19485,
-      "cpp_ms": 2.7296,
-      "speedup": 3.0022164419695194,
+      "reference_ms": 3.7819,
+      "cpp_ms": 2.1356666666666664,
+      "speedup": 1.7708287810207588,
       "samples_ms": [
         [
-          8.19485,
-          4.63945,
-          6.8929,
-          9.11715,
-          10.3945,
-          10.56565,
-          7.71035
+          4.7483,
+          3.7637,
+          5.04475,
+          3.7819,
+          3.64615,
+          3.90695,
+          3.73085
         ],
         [
-          1.7905,
-          2.138,
-          2.7296,
-          3.05165,
-          2.837975,
-          2.32115,
-          2.8986
+          2.6185166666666664,
+          2.1165833333333337,
+          2.1356666666666664,
+          2.8070833333333334,
+          1.9448166666666666,
+          2.2156666666666665,
+          1.7929333333333333
         ]
       ],
       "loops": [
         2,
-        4
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -1511,32 +1511,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 2.068775,
-      "cpp_ms": 1.7196142857142858,
-      "speedup": 1.2030459488423484,
+      "reference_ms": 1.151681818181818,
+      "cpp_ms": 0.6552,
+      "speedup": 1.7577561327561324,
       "samples_ms": [
         [
-          2.408175,
-          2.2095,
-          2.068775,
-          1.8355,
-          2.164375,
-          1.792825,
-          1.95475
+          1.5008363636363635,
+          1.0387,
+          1.151681818181818,
+          1.6582818181818182,
+          1.4308545454545454,
+          1.008590909090909,
+          1.0865636363636364
         ],
         [
-          1.8401285714285713,
-          1.453457142857143,
-          1.6566857142857143,
-          1.7196142857142858,
-          1.522957142857143,
-          1.7424857142857144,
-          1.7953857142857144
+          0.9487166666666667,
+          0.42321111111111115,
+          0.5709333333333334,
+          0.6657722222222222,
+          0.69015,
+          0.6552,
+          0.4336888888888889
         ]
       ],
       "loops": [
-        4,
-        7
+        11,
+        18
       ],
       "sample_labels": [
         "scikit-image",
@@ -1565,32 +1565,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 0.0005831192660550458,
-      "cpp_ms": 0.0006033596837944664,
-      "speedup": 0.9664538114112453,
+      "reference_ms": 0.0005676433121019109,
+      "cpp_ms": 0.0005760511882998172,
+      "speedup": 0.9854042898119494,
       "samples_ms": [
         [
-          0.0006012844036697247,
-          0.0005831192660550458,
-          0.0005645871559633028,
-          0.0005581651376146789,
-          0.0006144954128440367,
-          0.0005770642201834862,
-          0.0007921100917431192
+          0.0005850955414012739,
+          0.0005696815286624204,
+          0.0005676433121019109,
+          0.000555031847133758,
+          0.0005723566878980892,
+          0.000556687898089172,
+          0.0005573248407643312
         ],
         [
-          0.0006709486166007905,
-          0.0005994071146245059,
-          0.0006407114624505929,
-          0.0006104743083003953,
-          0.0006,
-          0.0006033596837944664,
-          0.0006023715415019763
+          0.0005729433272394881,
+          0.0005760511882998172,
+          0.0005882998171846435,
+          0.0005758683729433273,
+          0.0005674588665447898,
+          0.0006007312614259598,
+          0.000806581352833638
         ]
       ],
       "loops": [
-        545,
-        506
+        785,
+        547
       ],
       "sample_labels": [
         "scikit-image",
@@ -1625,32 +1625,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 1.936125,
-      "cpp_ms": 0.49888,
-      "speedup": 3.8809433130211675,
+      "reference_ms": 1.48598,
+      "cpp_ms": 0.30302,
+      "speedup": 4.903900732624909,
       "samples_ms": [
         [
-          3.0848,
-          3.08125,
-          2.33345,
-          1.113825,
-          1.65025,
-          1.936125,
-          1.650425
+          1.79688,
+          1.48598,
+          1.82516,
+          1.39222,
+          2.0483,
+          0.90272,
+          1.44536
         ],
         [
-          0.3249266666666667,
-          0.49888,
-          0.7627,
-          0.5619333333333334,
-          0.3436333333333333,
-          0.9682133333333334,
-          0.30102666666666666
+          0.30302,
+          0.333972,
+          0.314436,
+          0.282808,
+          0.338568,
+          0.242072,
+          0.261416
         ]
       ],
       "loops": [
-        4,
-        15
+        5,
+        25
       ],
       "sample_labels": [
         "scikit-image",
@@ -1685,27 +1685,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 27.8961,
-      "cpp_ms": 5.2977,
-      "speedup": 5.265700209524889,
+      "reference_ms": 22.954,
+      "cpp_ms": 5.15975,
+      "speedup": 4.448665148505257,
       "samples_ms": [
         [
-          33.4694,
-          27.8961,
-          32.2919,
-          25.6826,
-          22.903,
-          27.2596,
-          29.0737
+          22.954,
+          23.7439,
+          20.6772,
+          26.1108,
+          21.27,
+          23.2777,
+          22.4274
         ],
         [
-          5.44745,
-          5.83765,
-          5.17485,
-          5.2977,
-          5.26365,
-          5.20215,
-          5.3683
+          5.1123,
+          5.15975,
+          5.74705,
+          5.40225,
+          5.12885,
+          5.1647,
+          5.12755
         ]
       ],
       "loops": [
@@ -1745,27 +1745,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 57.233,
-      "cpp_ms": 33.4234,
-      "speedup": 1.7123631946480609,
+      "reference_ms": 41.7611,
+      "cpp_ms": 31.1436,
+      "speedup": 1.3409207670275756,
       "samples_ms": [
         [
-          47.7984,
-          57.3706,
-          56.8984,
-          58.3425,
-          57.233,
-          54.8121,
-          57.5931
+          45.0213,
+          40.8996,
+          43.3563,
+          41.7611,
+          43.3555,
+          41.3528,
+          39.3419
         ],
         [
-          33.4234,
-          35.1166,
-          34.4466,
-          34.6411,
-          31.0303,
-          33.1439,
-          31.9737
+          31.2793,
+          30.9552,
+          31.0667,
+          31.2657,
+          31.1436,
+          30.5244,
+          32.2476
         ]
       ],
       "loops": [
@@ -1805,27 +1805,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 47.0746,
-      "cpp_ms": 12.9625,
-      "speedup": 3.6315988428158144,
+      "reference_ms": 35.2064,
+      "cpp_ms": 12.9417,
+      "speedup": 2.7203844935363977,
       "samples_ms": [
         [
-          42.0991,
-          56.3179,
-          56.6796,
-          60.1051,
-          45.5118,
-          47.0746,
-          44.7666
+          35.3121,
+          34.9301,
+          33.1459,
+          40.5763,
+          36.0948,
+          30.4475,
+          35.2064
         ],
         [
-          13.915,
-          12.6472,
-          13.249,
-          13.9089,
-          12.8652,
-          12.8909,
-          12.9625
+          12.5893,
+          12.8421,
+          12.9417,
+          13.0121,
+          13.229,
+          12.6809,
+          14.9777
         ]
       ],
       "loops": [
@@ -1865,32 +1865,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 1.2044,
-      "cpp_ms": 0.3351095238095238,
-      "speedup": 3.594048853963878,
+      "reference_ms": 0.8444714285714285,
+      "cpp_ms": 0.2487464285714286,
+      "speedup": 3.3949087567660694,
       "samples_ms": [
         [
-          0.6901909090909091,
-          1.6433636363636364,
-          1.2044,
-          0.8736818181818182,
-          0.7151727272727273,
-          1.3459272727272726,
-          1.2217454545454547
+          0.8444714285714285,
+          1.5507857142857142,
+          0.9392142857142857,
+          0.8072857142857143,
+          1.1947571428571429,
+          0.5493571428571429,
+          0.6791428571428572
         ],
         [
-          0.46588095238095234,
-          0.32456666666666667,
-          0.5830190476190475,
-          0.25125714285714285,
-          0.42075238095238093,
-          0.29981904761904765,
-          0.3351095238095238
+          0.23642857142857143,
+          0.2487464285714286,
+          0.2868678571428572,
+          0.2587035714285714,
+          0.30631785714285714,
+          0.22723214285714288,
+          0.23853214285714286
         ]
       ],
       "loops": [
-        11,
-        21
+        7,
+        28
       ],
       "sample_labels": [
         "scikit-image",
@@ -1925,27 +1925,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 29.3712,
-      "cpp_ms": 5.072366666666667,
-      "speedup": 5.79043313114851,
+      "reference_ms": 22.1193,
+      "cpp_ms": 4.297966666666667,
+      "speedup": 5.146456851689558,
       "samples_ms": [
         [
-          29.6693,
-          38.0028,
-          30.6627,
-          27.9622,
-          25.9628,
-          29.3712,
-          22.1594
+          25.5024,
+          23.3892,
+          25.8553,
+          21.4479,
+          21.7173,
+          22.1193,
+          20.7649
         ],
         [
-          5.272266666666667,
-          5.838866666666667,
-          5.500533333333333,
-          4.387933333333333,
-          4.4136,
-          5.072366666666667,
-          4.426666666666667
+          4.297966666666667,
+          4.2211,
+          4.416633333333333,
+          4.221833333333333,
+          4.4068,
+          4.3762,
+          4.184266666666667
         ]
       ],
       "loops": [
@@ -1985,27 +1985,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 45.1585,
-      "cpp_ms": 30.2316,
-      "speedup": 1.493751571203641,
+      "reference_ms": 39.7917,
+      "cpp_ms": 28.9516,
+      "speedup": 1.3744214482101162,
       "samples_ms": [
         [
-          43.8066,
-          45.1585,
-          61.6253,
-          50.6309,
-          44.9059,
-          49.2411,
-          41.8804
+          40.5854,
+          45.1862,
+          38.6843,
+          38.7411,
+          38.6634,
+          40.0198,
+          39.7917
         ],
         [
-          30.4966,
-          30.1941,
-          31.7673,
-          32.4213,
-          30.2316,
-          29.1287,
-          28.4927
+          29.0706,
+          28.4026,
+          28.8746,
+          28.9516,
+          31.0468,
+          28.3836,
+          28.9608
         ]
       ],
       "loops": [
@@ -2045,27 +2045,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 36.3011,
-      "cpp_ms": 12.5677,
-      "speedup": 2.888444186287069,
+      "reference_ms": 35.9383,
+      "cpp_ms": 12.2333,
+      "speedup": 2.937743699574113,
       "samples_ms": [
         [
-          35.4011,
-          33.861,
-          46.8196,
-          39.5721,
-          36.3011,
-          41.9805,
-          34.7288
+          37.8905,
+          39.2093,
+          34.3457,
+          35.9383,
+          34.2798,
+          34.1276,
+          39.4312
         ],
         [
-          12.3135,
-          12.8987,
-          13.2542,
-          12.4415,
-          12.1686,
-          12.5677,
-          12.9386
+          12.1441,
+          12.5269,
+          12.1931,
+          12.0472,
+          12.4041,
+          12.263,
+          12.2333
         ]
       ],
       "loops": [
@@ -2105,32 +2105,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 3.3503666666666665,
-      "cpp_ms": 0.78858,
-      "speedup": 4.248607201129456,
+      "reference_ms": 3.2116,
+      "cpp_ms": 1.0543909090909092,
+      "speedup": 3.04592914478846,
       "samples_ms": [
         [
-          3.8183666666666665,
-          3.0679333333333334,
-          3.3503666666666665,
-          1.9300333333333333,
-          1.9574,
-          4.031166666666667,
-          6.075866666666667
+          3.2031,
+          2.5426,
+          4.568166666666667,
+          3.2133666666666665,
+          3.2116,
+          5.414833333333333,
+          2.1956333333333333
         ],
         [
-          1.27132,
-          0.78858,
-          0.58796,
-          0.6565,
-          0.71016,
-          0.81292,
-          0.9436
+          1.1178727272727274,
+          0.7866272727272727,
+          1.0543909090909092,
+          1.3937181818181819,
+          0.9463181818181817,
+          1.3113545454545454,
+          0.7138727272727273
         ]
       ],
       "loops": [
         3,
-        5
+        11
       ],
       "sample_labels": [
         "scikit-image",
@@ -2165,32 +2165,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 32.7385,
-      "cpp_ms": 6.8274,
-      "speedup": 4.7951636054720685,
+      "reference_ms": 26.4407,
+      "cpp_ms": 6.24705,
+      "speedup": 4.232509744599451,
       "samples_ms": [
         [
-          32.7385,
-          41.1781,
-          28.3425,
-          32.6531,
-          42.3954,
-          31.5413,
-          33.1024
+          23.4944,
+          29.0291,
+          25.5592,
+          28.2936,
+          26.0616,
+          26.4407,
+          27.4847
         ],
         [
-          6.8274,
-          6.5838,
-          6.4339,
-          6.6031,
-          9.8414,
-          7.608,
-          6.9937
+          6.13045,
+          6.13985,
+          7.5618,
+          6.1445,
+          6.3556,
+          6.3515,
+          6.24705
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -2225,27 +2225,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 49.4771,
-      "cpp_ms": 33.0402,
-      "speedup": 1.4974818554367104,
+      "reference_ms": 45.7614,
+      "cpp_ms": 32.3022,
+      "speedup": 1.4166651187844792,
       "samples_ms": [
         [
-          57.2674,
-          54.2183,
-          46.0709,
-          49.4771,
-          46.512,
-          46.3051,
-          56.2057
+          47.6259,
+          48.3699,
+          45.6505,
+          43.5162,
+          47.3647,
+          42.9868,
+          45.7614
         ],
         [
-          33.0402,
-          34.9999,
-          32.9267,
-          33.7304,
-          31.9386,
-          34.3236,
-          32.6887
+          34.6727,
+          33.4836,
+          31.5294,
+          32.1821,
+          32.5346,
+          32.3022,
+          31.8313
         ]
       ],
       "loops": [
@@ -2285,27 +2285,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 62.6464,
-      "cpp_ms": 16.0168,
-      "speedup": 3.911293142200689,
+      "reference_ms": 39.8696,
+      "cpp_ms": 14.2229,
+      "speedup": 2.8031976601115103,
       "samples_ms": [
         [
-          62.6464,
-          65.2181,
-          53.9647,
-          49.973,
-          64.0776,
-          65.903,
-          59.872
+          41.0272,
+          39.8696,
+          35.3959,
+          41.3416,
+          35.8817,
+          35.8436,
+          39.9317
         ],
         [
-          16.0168,
-          16.4349,
-          17.5314,
-          14.4317,
-          15.8653,
-          14.3097,
-          18.0057
+          14.8239,
+          14.2229,
+          13.8728,
+          14.4058,
+          13.6619,
+          13.6667,
+          14.7586
         ]
       ],
       "loops": [
@@ -2345,32 +2345,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 2.516475,
-      "cpp_ms": 0.33431818181818185,
-      "speedup": 7.527185588035349,
+      "reference_ms": 2.70917,
+      "cpp_ms": 0.3977625,
+      "speedup": 6.811024166430973,
       "samples_ms": [
         [
-          1.49245,
-          2.599825,
-          1.4828625,
-          2.9116625,
-          2.898425,
-          2.516475,
-          1.901325
+          0.97761,
+          0.84973,
+          2.54856,
+          3.66944,
+          3.20873,
+          2.70917,
+          3.61566
         ],
         [
-          0.2771818181818182,
-          0.2570909090909091,
-          0.35651818181818185,
-          0.33431818181818185,
-          0.5750181818181818,
-          0.36996363636363633,
-          0.3097090909090909
+          0.200334375,
+          0.224040625,
+          0.3977625,
+          0.5185625,
+          0.456353125,
+          0.57994375,
+          0.36613125
         ]
       ],
       "loops": [
-        8,
-        11
+        10,
+        32
       ],
       "sample_labels": [
         "scikit-image",
@@ -2405,27 +2405,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 18.4318,
-      "cpp_ms": 5.34755,
-      "speedup": 3.4467746912137334,
+      "reference_ms": 24.0739,
+      "cpp_ms": 6.29025,
+      "speedup": 3.8271769802472075,
       "samples_ms": [
         [
-          18.4318,
-          20.6679,
-          14.9883,
-          25.0705,
-          23.4459,
-          14.3744,
-          17.0909
+          30.0207,
+          21.8303,
+          26.3968,
+          25.0003,
+          18.4274,
+          24.0739,
+          20.2641
         ],
         [
-          5.3424,
-          5.0498,
-          5.35575,
-          5.76965,
-          6.6796,
-          5.2987,
-          5.34755
+          6.86445,
+          6.15455,
+          7.9462,
+          6.29025,
+          7.40155,
+          4.7017,
+          6.21735
         ]
       ],
       "loops": [
@@ -2465,27 +2465,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 54.9306,
-      "cpp_ms": 30.4406,
-      "speedup": 1.8045176507690386,
+      "reference_ms": 43.8034,
+      "cpp_ms": 28.7614,
+      "speedup": 1.5229926220559502,
       "samples_ms": [
         [
-          50.1295,
-          55.5265,
-          57.0835,
-          67.1372,
-          54.9306,
-          46.5422,
-          48.4039
+          41.0871,
+          43.8034,
+          41.1903,
+          72.313,
+          38.2566,
+          55.0433,
+          78.5729
         ],
         [
-          28.8575,
-          32.8919,
-          28.7894,
-          30.4406,
-          28.299,
-          31.8962,
-          30.7571
+          28.5601,
+          27.9414,
+          27.614,
+          28.7614,
+          75.9207,
+          37.9138,
+          37.6511
         ]
       ],
       "loops": [
@@ -2525,27 +2525,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 31.9791,
-      "cpp_ms": 13.2948,
-      "speedup": 2.405384059933207,
+      "reference_ms": 55.675,
+      "cpp_ms": 17.7035,
+      "speedup": 3.1448583613409777,
       "samples_ms": [
         [
-          31.9791,
-          29.8388,
-          28.8618,
-          33.9626,
-          27.9854,
-          32.3315,
-          38.0039
+          68.8416,
+          38.2905,
+          35.0152,
+          29.2224,
+          57.3741,
+          67.7323,
+          55.675
         ],
         [
-          13.1836,
-          13.2948,
-          13.6518,
-          13.1155,
-          14.2411,
-          12.9051,
-          13.446
+          17.2041,
+          13.2755,
+          12.6405,
+          17.7035,
+          19.3912,
+          19.6202,
+          26.0317
         ]
       ],
       "loops": [
@@ -2585,32 +2585,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 2.09885,
-      "cpp_ms": 0.6189533333333334,
-      "speedup": 3.390966470277781,
+      "reference_ms": 1.9459,
+      "cpp_ms": 0.45515,
+      "speedup": 4.2752938591673075,
       "samples_ms": [
         [
-          4.1847,
-          2.09885,
-          3.7686,
-          2.2544,
-          1.0964,
-          1.558,
-          1.90425
+          2.7552,
+          7.414066666666667,
+          1.9459,
+          1.6787333333333332,
+          1.4137333333333333,
+          1.5516666666666667,
+          2.8174333333333337
         ],
         [
-          0.6189533333333334,
-          0.54792,
-          0.65206,
-          0.9098066666666667,
-          0.4290666666666667,
-          0.54754,
-          0.7840666666666666
+          1.0489785714285713,
+          0.3323,
+          0.6203357142857143,
+          0.45515,
+          0.33229285714285717,
+          0.35291428571428574,
+          0.6368928571428571
         ]
       ],
       "loops": [
-        2,
-        15
+        3,
+        14
       ],
       "sample_labels": [
         "scikit-image",
@@ -2645,27 +2645,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 35.0408,
-      "cpp_ms": 5.5478,
-      "speedup": 6.31616136126032,
+      "reference_ms": 23.7688,
+      "cpp_ms": 5.1574,
+      "speedup": 4.608678791639198,
       "samples_ms": [
         [
-          42.3749,
-          36.4289,
-          32.5278,
-          31.7705,
-          35.0408,
-          30.7902,
-          38.6345
+          26.6289,
+          23.6119,
+          28.9,
+          23.5154,
+          26.3199,
+          23.5639,
+          23.7688
         ],
         [
-          5.54735,
-          5.66545,
-          5.49635,
-          7.074,
-          5.5478,
-          5.3821,
-          5.87475
+          5.28945,
+          5.1456,
+          5.24445,
+          5.1574,
+          5.14475,
+          5.09345,
+          5.41095
         ]
       ],
       "loops": [
@@ -2705,27 +2705,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 48.5896,
-      "cpp_ms": 32.2043,
-      "speedup": 1.5087923041332987,
+      "reference_ms": 43.0409,
+      "cpp_ms": 31.5507,
+      "speedup": 1.36418209421661,
       "samples_ms": [
         [
-          54.1899,
-          51.0964,
-          47.9826,
-          45.5811,
-          48.5896,
-          40.1356,
-          51.7589
+          43.9531,
+          41.0714,
+          42.3012,
+          38.4833,
+          44.5097,
+          47.2069,
+          43.0409
         ],
         [
-          31.1211,
-          32.2043,
-          31.4745,
-          34.0308,
-          31.4486,
-          32.4613,
-          32.6728
+          31.5871,
+          32.3422,
+          31.3881,
+          30.9518,
+          32.697,
+          31.5507,
+          30.7092
         ]
       ],
       "loops": [
@@ -2765,27 +2765,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 53.453,
-      "cpp_ms": 13.8509,
-      "speedup": 3.8591716061772163,
+      "reference_ms": 38.3665,
+      "cpp_ms": 12.7234,
+      "speedup": 3.0154282660295206,
       "samples_ms": [
         [
-          42.4436,
-          46.2121,
-          45.4608,
-          57.8101,
-          55.001,
-          54.9549,
-          53.453
+          40.4868,
+          38.6782,
+          39.3353,
+          38.3665,
+          37.3202,
+          37.5067,
+          37.332
         ],
         [
-          14.3215,
-          14.3294,
-          13.8509,
-          13.9321,
-          13.1804,
-          13.4593,
-          12.8226
+          13.2601,
+          12.7234,
+          12.8292,
+          12.6362,
+          12.5262,
+          12.3869,
+          12.7461
         ]
       ],
       "loops": [
@@ -2819,32 +2819,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 37.3379,
-      "cpp_ms": 0.5116454545454545,
-      "speedup": 72.97611982729518,
+      "reference_ms": 34.5149,
+      "cpp_ms": 0.4064913043478261,
+      "speedup": 84.9093194142877,
       "samples_ms": [
         [
-          41.4184,
-          35.007,
-          37.3379,
-          37.3656,
-          37.8377,
-          36.394,
-          36.9872
+          35.206,
+          33.5203,
+          33.9149,
+          33.6476,
+          34.7169,
+          34.526,
+          34.5149
         ],
         [
-          0.5240090909090909,
-          0.5709636363636363,
-          0.6349545454545454,
-          0.5083727272727273,
-          0.5116454545454545,
-          0.3876636363636364,
-          0.39833636363636366
+          0.4163391304347826,
+          0.38194782608695654,
+          0.4264391304347826,
+          0.5400173913043478,
+          0.4060086956521739,
+          0.4064913043478261,
+          0.37601304347826087
         ]
       ],
       "loops": [
         1,
-        11
+        23
       ],
       "sample_labels": [
         "scikit-image",
@@ -2873,27 +2873,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 39.7893,
-      "cpp_ms": 5.81145,
-      "speedup": 6.846707792375397,
+      "reference_ms": 36.2325,
+      "cpp_ms": 5.29485,
+      "speedup": 6.842970055808946,
       "samples_ms": [
         [
-          39.7893,
-          38.9548,
-          38.1106,
-          35.6939,
-          46.4878,
-          50.02,
-          65.8529
+          36.2325,
+          38.419,
+          40.3999,
+          36.1618,
+          29.6822,
+          35.942,
+          37.0493
         ],
         [
-          5.68,
-          6.2492,
-          6.05475,
-          5.53165,
-          5.81145,
-          5.6617,
-          8.5986
+          6.01465,
+          5.341,
+          5.2517,
+          5.26565,
+          5.20855,
+          5.4923,
+          5.29485
         ]
       ],
       "loops": [
@@ -2928,27 +2928,27 @@
       "rtol": 2e-06,
       "atol": 2e-06,
       "route_rgb_max_abs_error": 1.132891469524111e-06,
-      "reference_ms": 68.969,
-      "cpp_ms": 7.8343,
-      "speedup": 8.803466806223913,
+      "reference_ms": 44.1027,
+      "cpp_ms": 5.45085,
+      "speedup": 8.090976636671344,
       "samples_ms": [
         [
-          70.1096,
-          63.1423,
-          70.6839,
-          68.969,
-          68.6944,
-          63.0586,
-          69.3302
+          43.521,
+          45.3438,
+          44.3203,
+          41.7933,
+          43.2461,
+          44.1027,
+          47.284
         ],
         [
-          7.20575,
-          7.13545,
-          10.94075,
-          6.9514,
-          10.4077,
-          7.8343,
-          10.39015
+          5.45085,
+          5.68925,
+          5.35195,
+          5.4353,
+          5.50845,
+          5.32425,
+          6.1136
         ]
       ],
       "loops": [
@@ -2982,32 +2982,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 3.6328,
-      "cpp_ms": 1.00865,
-      "speedup": 3.601645764140187,
+      "reference_ms": 1.756557142857143,
+      "cpp_ms": 0.5376833333333334,
+      "speedup": 3.266898997905476,
       "samples_ms": [
         [
-          3.6328,
-          2.1012666666666666,
-          4.871533333333333,
-          4.263133333333333,
-          3.3566333333333334,
-          4.107166666666666,
-          1.9212666666666667
+          1.6459857142857144,
+          1.756557142857143,
+          1.7146714285714286,
+          2.2447285714285714,
+          2.308214285714286,
+          1.6936142857142857,
+          1.9220285714285714
         ],
         [
-          1.00865,
-          0.57699,
-          1.14971,
-          1.35886,
-          1.82546,
-          0.82907,
-          0.6364
+          0.466825,
+          0.4938666666666667,
+          0.5376833333333334,
+          0.61825,
+          1.084525,
+          0.433925,
+          0.586
         ]
       ],
       "loops": [
-        3,
-        10
+        7,
+        12
       ],
       "sample_labels": [
         "scikit-image",
@@ -3036,32 +3036,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 3.3503333333333334,
-      "cpp_ms": 1.314675,
-      "speedup": 2.548411838160255,
+      "reference_ms": 2.467225,
+      "cpp_ms": 0.5166083333333333,
+      "speedup": 4.775813398286903,
       "samples_ms": [
         [
-          3.0511333333333335,
-          3.0423,
-          2.2034,
-          5.809766666666667,
-          3.3503333333333334,
-          4.995233333333333,
-          4.574166666666667
+          2.3371,
+          2.467225,
+          2.14805,
+          2.26045,
+          2.6319,
+          2.5253,
+          2.484675
         ],
         [
-          0.9833875,
-          1.314675,
-          1.491325,
-          2.301525,
-          1.175725,
-          2.0992375,
-          0.799225
+          0.7101083333333333,
+          0.4525166666666667,
+          0.5166083333333333,
+          0.466175,
+          0.403725,
+          0.5403166666666667,
+          0.7110416666666667
         ]
       ],
       "loops": [
-        3,
-        8
+        4,
+        12
       ],
       "sample_labels": [
         "scikit-image",
@@ -3090,32 +3090,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 1.3293,
-      "cpp_ms": 1.0151166666666667,
-      "speedup": 1.3095046546373978,
+      "reference_ms": 0.7101111111111111,
+      "cpp_ms": 0.24015238095238095,
+      "speedup": 2.9569188874788495,
       "samples_ms": [
         [
-          1.27299,
-          1.32317,
-          1.55993,
-          1.3293,
-          1.721,
-          1.43266,
-          1.13558
+          0.5901166666666666,
+          0.6502722222222223,
+          0.7928388888888889,
+          0.69465,
+          0.8533388888888889,
+          0.7101111111111111,
+          0.7709
         ],
         [
-          1.7463,
-          1.0151166666666667,
-          0.9079333333333334,
-          1.7452166666666666,
-          1.0888666666666666,
-          0.30446666666666666,
-          0.8949333333333334
+          0.21422380952380954,
+          0.2301904761904762,
+          0.24015238095238095,
+          0.24168571428571428,
+          0.2581333333333333,
+          0.29523809523809524,
+          0.22085714285714286
         ]
       ],
       "loops": [
-        10,
-        6
+        18,
+        21
       ],
       "sample_labels": [
         "scikit-image",
@@ -3144,32 +3144,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 0.0012382575757575757,
-      "cpp_ms": 0.0011120535714285713,
-      "speedup": 1.113487342311108,
+      "reference_ms": 0.0005514619883040936,
+      "cpp_ms": 0.0005423848878394333,
+      "speedup": 1.0167355335079826,
       "samples_ms": [
         [
-          0.0017791666666666667,
-          0.0012412878787878788,
-          0.0008556818181818181,
-          0.002294318181818182,
-          0.0011946969696969697,
-          0.0012382575757575757,
-          0.0010943181818181818
+          0.0005485380116959064,
+          0.0005513157894736842,
+          0.0005514619883040936,
+          0.0005657894736842105,
+          0.0005726608187134503,
+          0.000539766081871345,
+          0.0005707602339181286
         ],
         [
-          0.0011120535714285713,
-          0.0011540178571428571,
-          0.0010004464285714285,
-          0.001339732142857143,
-          0.0010553571428571428,
-          0.0024223214285714286,
-          0.0008294642857142857
+          0.000589728453364817,
+          0.0005423848878394333,
+          0.0005865407319952775,
+          0.0005335301062573789,
+          0.0005375442739079102,
+          0.0005976387249114522,
+          0.0005380165289256198
         ]
       ],
       "loops": [
-        264,
-        224
+        684,
+        847
       ],
       "sample_labels": [
         "scikit-image",
@@ -3204,32 +3204,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 15.5054,
-      "cpp_ms": 4.144283333333333,
-      "speedup": 3.741394772719047,
+      "reference_ms": 3.205525,
+      "cpp_ms": 0.6822384615384615,
+      "speedup": 4.698540438150433,
       "samples_ms": [
         [
-          14.4474,
-          15.5054,
-          11.293,
-          17.4497,
-          17.2054,
-          17.2793,
-          13.2666
+          2.65735,
+          3.205525,
+          3.33685,
+          4.499875,
+          2.988475,
+          2.568975,
+          3.299375
         ],
         [
-          4.246533333333333,
-          3.15805,
-          4.88905,
-          4.833716666666667,
-          3.8831166666666665,
-          4.12835,
-          4.144283333333333
+          0.6029384615384615,
+          0.7829,
+          1.3828692307692307,
+          1.0654846153846156,
+          0.5986923076923077,
+          0.6822384615384615,
+          0.5096307692307692
         ]
       ],
       "loops": [
-        1,
-        6
+        4,
+        13
       ],
       "sample_labels": [
         "scikit-image",
@@ -3264,447 +3264,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 78.6811,
-      "cpp_ms": 6.15735,
-      "speedup": 12.778403046765249,
+      "reference_ms": 24.4763,
+      "cpp_ms": 3.276575,
+      "speedup": 7.470086904770988,
       "samples_ms": [
         [
-          77.07,
-          134.7942,
-          112.8632,
-          159.1535,
-          78.0753,
-          78.6811,
-          75.8463
+          23.5525,
+          21.3567,
+          24.4763,
+          28.2542,
+          25.1499,
+          27.2643,
+          24.443
         ],
         [
-          5.0665,
-          10.86495,
-          5.5307,
-          6.15735,
-          7.28245,
-          5.54015,
-          6.3987
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "contiguous",
-      "layout": "contiguous",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 163.1522,
-      "cpp_ms": 31.7342,
-      "speedup": 5.141210429126935,
-      "samples_ms": [
-        [
-          134.309,
-          196.3727,
-          163.1522,
-          127.8586,
-          158.357,
-          175.3831,
-          184.4254
-        ],
-        [
-          31.7278,
-          31.8132,
-          29.731,
-          31.3993,
-          31.7342,
-          37.8064,
-          33.3536
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "contiguous",
-      "layout": "contiguous",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 1.1368683772161603e-13,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 94.9916,
-      "cpp_ms": 13.6016,
-      "speedup": 6.9838548406069885,
-      "samples_ms": [
-        [
-          103.5701,
-          93.8157,
-          118.0823,
-          108.6931,
-          88.4485,
-          75.948,
-          94.9916
-        ],
-        [
-          13.0608,
-          13.6016,
-          15.8642,
-          16.0846,
-          11.5439,
-          12.6737,
-          15.4404
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        3,
-        512,
-        512
-      ],
-      "second_shape": [
-        3,
-        512,
-        512
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "channel-first",
-      "layout": "channel-first",
-      "options": {
-        "channel_axis": 0
-      },
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 10.2986,
-      "cpp_ms": 3.3977,
-      "speedup": 3.0310504164581924,
-      "samples_ms": [
-        [
-          12.4713,
-          10.2986,
-          10.4465,
-          11.0301,
-          6.8372,
-          5.0335,
-          4.9791
-        ],
-        [
-          4.3228,
-          3.3977,
-          4.6781,
-          3.2776,
-          4.89475,
-          2.4034,
-          3.3011
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede94",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        3,
-        512,
-        512
-      ],
-      "second_shape": [
-        3,
-        512,
-        512
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "channel-first",
-      "layout": "channel-first",
-      "options": {
-        "channel_axis": 0
-      },
-      "backend": "native",
-      "max_abs_error": 4.263256414560601e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 43.047,
-      "cpp_ms": 4.6932,
-      "speedup": 9.172206596778317,
-      "samples_ms": [
-        [
-          49.2339,
-          38.3293,
-          36.4134,
-          52.881,
-          43.047,
-          41.2105,
-          46.1019
-        ],
-        [
-          5.2763,
-          4.5208,
-          4.95205,
-          3.83185,
-          4.48795,
-          5.625,
-          4.6932
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        3,
-        512,
-        512
-      ],
-      "second_shape": [
-        3,
-        512,
-        512
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "channel-first",
-      "layout": "channel-first",
-      "options": {
-        "channel_axis": 0
-      },
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 106.9477,
-      "cpp_ms": 29.0176,
-      "speedup": 3.6856149371415965,
-      "samples_ms": [
-        [
-          93.203,
-          109.5138,
-          99.1169,
-          110.1899,
-          114.2526,
-          96.6409,
-          106.9477
-        ],
-        [
-          28.314,
-          29.0176,
-          28.2555,
-          32.5032,
-          29.9982,
-          28.0122,
-          30.8729
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        3,
-        512,
-        512
-      ],
-      "second_shape": [
-        3,
-        512,
-        512
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "channel-first",
-      "layout": "channel-first",
-      "options": {
-        "channel_axis": 0
-      },
-      "backend": "native",
-      "max_abs_error": 1.1368683772161603e-13,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 68.5776,
-      "cpp_ms": 13.0218,
-      "speedup": 5.266368704787356,
-      "samples_ms": [
-        [
-          85.092,
-          74.1102,
-          58.9851,
-          62.335,
-          68.5776,
-          61.3624,
-          68.6526
-        ],
-        [
-          13.0218,
-          13.9653,
-          12.4392,
-          13.5526,
-          12.4057,
-          11.7569,
-          13.158
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "strided",
-      "layout": "strided",
-      "options": {
-        "channel_axis": -1
-      },
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 15.2383,
-      "cpp_ms": 4.2037,
-      "speedup": 3.6249732378618833,
-      "samples_ms": [
-        [
-          9.7974,
-          15.2383,
-          19.4073,
-          17.9624,
-          15.3581,
-          12.7481,
-          11.3802
-        ],
-        [
-          2.529775,
-          3.507525,
-          4.772275,
-          5.149075,
-          4.2037,
-          4.7209,
-          3.681325
+          3.255425,
+          3.276575,
+          3.374175,
+          3.267125,
+          3.21555,
+          3.36465,
+          3.391825
         ]
       ],
       "loops": [
@@ -3717,6 +3297,426 @@
       ]
     },
     {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 59.9854,
+      "cpp_ms": 22.1475,
+      "speedup": 2.708450163675358,
+      "samples_ms": [
+        [
+          58.2207,
+          62.2369,
+          61.8361,
+          59.9854,
+          70.4236,
+          55.4182,
+          54.6857
+        ],
+        [
+          22.1475,
+          22.3903,
+          22.1237,
+          22.5962,
+          22.5748,
+          21.9076,
+          22.0934
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 1.1368683772161603e-13,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 38.3033,
+      "cpp_ms": 9.6322,
+      "speedup": 3.976588941259526,
+      "samples_ms": [
+        [
+          34.064,
+          35.3834,
+          39.7035,
+          36.1507,
+          38.3033,
+          39.5733,
+          41.5661
+        ],
+        [
+          9.4784,
+          10.2104,
+          10.0146,
+          9.603,
+          9.5216,
+          9.6322,
+          9.7642
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        3,
+        512,
+        512
+      ],
+      "second_shape": [
+        3,
+        512,
+        512
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.454825,
+      "cpp_ms": 0.56689375,
+      "speedup": 2.566309824371851,
+      "samples_ms": [
+        [
+          1.3656125,
+          1.289275,
+          1.51195,
+          1.4596375,
+          1.525875,
+          1.3671375,
+          1.454825
+        ],
+        [
+          0.5466875,
+          0.63594375,
+          0.5378,
+          0.64755625,
+          0.5626,
+          0.56990625,
+          0.56689375
+        ]
+      ],
+      "loops": [
+        8,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede94",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        3,
+        512,
+        512
+      ],
+      "second_shape": [
+        3,
+        512,
+        512
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 4.263256414560601e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 24.3715,
+      "cpp_ms": 3.36465,
+      "speedup": 7.243398273223069,
+      "samples_ms": [
+        [
+          24.3715,
+          23.8663,
+          22.6,
+          26.592,
+          29.1674,
+          26.0449,
+          22.3376
+        ],
+        [
+          3.36465,
+          3.254,
+          3.19725,
+          3.741375,
+          3.480625,
+          3.257525,
+          3.41375
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        3,
+        512,
+        512
+      ],
+      "second_shape": [
+        3,
+        512,
+        512
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 52.3433,
+      "cpp_ms": 22.0233,
+      "speedup": 2.3767237425817203,
+      "samples_ms": [
+        [
+          51.3482,
+          52.3421,
+          50.4952,
+          52.3433,
+          55.4711,
+          55.0483,
+          57.0045
+        ],
+        [
+          21.4649,
+          21.6596,
+          22.0233,
+          21.6015,
+          22.0952,
+          22.256,
+          22.0515
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        3,
+        512,
+        512
+      ],
+      "second_shape": [
+        3,
+        512,
+        512
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 1.1368683772161603e-13,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 43.6779,
+      "cpp_ms": 9.6574,
+      "speedup": 4.522739039493031,
+      "samples_ms": [
+        [
+          48.3082,
+          46.0567,
+          43.6779,
+          40.9536,
+          42.4848,
+          47.841,
+          40.7682
+        ],
+        [
+          9.4827,
+          9.9471,
+          9.739,
+          9.5865,
+          9.6574,
+          9.5387,
+          9.6774
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 5.8738,
+      "cpp_ms": 1.4447,
+      "speedup": 4.065757596732886,
+      "samples_ms": [
+        [
+          5.8738,
+          6.7544,
+          6.81435,
+          7.8578,
+          4.19155,
+          5.7143,
+          5.05625
+        ],
+        [
+          1.4447,
+          1.552957142857143,
+          2.073,
+          1.1918,
+          1.0505142857142857,
+          0.9284285714285715,
+          1.4734
+        ]
+      ],
+      "loops": [
+        2,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "color.deltaE_ciede94",
       "dtype": "float64",
       "second_dtype": "float64",
@@ -3744,32 +3744,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 64.7521,
-      "cpp_ms": 8.5221,
-      "speedup": 7.598138956360521,
+      "reference_ms": 26.571,
+      "cpp_ms": 4.61615,
+      "speedup": 5.756095447504956,
       "samples_ms": [
         [
-          62.1599,
-          50.5168,
-          50.6772,
-          65.4039,
-          69.1173,
-          64.7521,
-          66.523
+          26.571,
+          28.3517,
+          26.472,
+          26.6969,
+          30.3747,
+          24.9556,
+          25.1161
         ],
         [
-          6.7984,
-          8.5221,
-          8.1524,
-          8.8901,
-          9.7487,
-          9.8433,
-          7.6223
+          4.45015,
+          4.93705,
+          4.61615,
+          4.64935,
+          4.51065,
+          4.6578,
+          4.51045
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -3804,27 +3804,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 102.8379,
-      "cpp_ms": 30.4485,
-      "speedup": 3.3774373121828662,
+      "reference_ms": 58.1359,
+      "cpp_ms": 23.484,
+      "speedup": 2.4755535683869865,
       "samples_ms": [
         [
-          141.7985,
-          133.3546,
-          121.9607,
-          102.8379,
-          89.6669,
-          99.9932,
-          100.7366
+          59.78,
+          58.1359,
+          54.1416,
+          57.1134,
+          61.0091,
+          59.5719,
+          58.0811
         ],
         [
-          29.6872,
-          33.5187,
-          30.4485,
-          34.4807,
-          34.3384,
-          26.8333,
-          29.1269
+          23.0539,
+          22.9055,
+          23.8329,
+          24.2372,
+          23.484,
+          22.7825,
+          23.5429
         ]
       ],
       "loops": [
@@ -3864,27 +3864,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 77.4097,
-      "cpp_ms": 15.1425,
-      "speedup": 5.11208188872379,
+      "reference_ms": 42.6583,
+      "cpp_ms": 11.1701,
+      "speedup": 3.8189720772419227,
       "samples_ms": [
         [
-          77.4097,
-          77.8362,
-          68.1828,
-          66.9607,
-          76.2737,
-          81.332,
-          95.9387
+          47.4395,
+          49.3484,
+          53.3017,
+          42.6583,
+          37.9683,
+          36.7997,
+          38.7658
         ],
         [
-          15.1425,
-          14.6738,
-          13.4093,
-          15.5793,
-          12.5562,
-          15.7221,
-          16.5991
+          11.9132,
+          11.2613,
+          10.8779,
+          10.6438,
+          11.4108,
+          11.1701,
+          11.0441
         ]
       ],
       "loops": [
@@ -3924,32 +3924,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 7.1689,
-      "cpp_ms": 1.42575,
-      "speedup": 5.028160617219007,
+      "reference_ms": 1.7334714285714286,
+      "cpp_ms": 0.42125,
+      "speedup": 4.115065705807545,
       "samples_ms": [
         [
-          10.5003,
-          9.0924,
-          6.7676,
-          9.6727,
-          6.8257,
-          5.2038,
-          7.1689
+          1.487742857142857,
+          1.7334714285714286,
+          1.6599714285714287,
+          2.311328571428571,
+          2.242285714285714,
+          1.987957142857143,
+          1.5933142857142857
         ],
         [
-          2.21358,
-          0.93663,
-          1.42575,
-          1.58811,
-          1.59194,
-          1.41872,
-          1.08197
+          0.417525,
+          0.4724166666666667,
+          0.42125,
+          0.3998083333333333,
+          0.4320083333333333,
+          0.4823,
+          0.386875
         ]
       ],
       "loops": [
-        1,
-        10
+        7,
+        12
       ],
       "sample_labels": [
         "scikit-image",
@@ -3984,32 +3984,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 36.7754,
-      "cpp_ms": 4.608933333333333,
-      "speedup": 7.97915642086383,
+      "reference_ms": 14.525,
+      "cpp_ms": 3.263325,
+      "speedup": 4.450981744080041,
       "samples_ms": [
         [
-          28.2346,
-          27.2973,
-          36.7754,
-          23.6857,
-          43.5545,
-          41.4282,
-          43.0187
+          15.3273,
+          13.5921,
+          16.4544,
+          14.1909,
+          15.3624,
+          13.3344,
+          14.525
         ],
         [
-          4.608933333333333,
-          4.249766666666667,
-          4.5616,
-          4.678066666666667,
-          5.5919,
-          4.792566666666667,
-          4.310766666666667
+          3.3088,
+          3.18585,
+          3.402175,
+          3.19495,
+          3.263325,
+          3.193875,
+          3.4408
         ]
       ],
       "loops": [
         1,
-        3
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -4044,27 +4044,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 91.0801,
-      "cpp_ms": 25.0045,
-      "speedup": 3.6425483412985664,
+      "reference_ms": 49.1944,
+      "cpp_ms": 19.2226,
+      "speedup": 2.559195946438047,
       "samples_ms": [
         [
-          93.078,
-          89.6813,
-          105.0842,
-          101.0437,
-          91.0801,
-          85.6173,
-          82.7907
+          49.1944,
+          49.4945,
+          45.6336,
+          48.5895,
+          49.7735,
+          49.2258,
+          47.7339
         ],
         [
-          24.8312,
-          26.9915,
-          25.0045,
-          26.0662,
-          31.0918,
-          23.3403,
-          22.4005
+          19.0274,
+          18.9893,
+          19.1905,
+          19.2226,
+          19.4177,
+          19.3359,
+          19.8612
         ]
       ],
       "loops": [
@@ -4104,27 +4104,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 66.4019,
-      "cpp_ms": 14.9624,
-      "speedup": 4.437917713735764,
+      "reference_ms": 28.0508,
+      "cpp_ms": 9.7126,
+      "speedup": 2.8880835203755946,
       "samples_ms": [
         [
-          84.1649,
-          91.6614,
-          79.2053,
-          66.4019,
-          58.8164,
-          61.139,
-          50.0982
+          27.2201,
+          26.6082,
+          29.1508,
+          29.2568,
+          29.9337,
+          28.0508,
+          27.5276
         ],
         [
-          14.7211,
-          18.8295,
-          13.5528,
-          12.9784,
-          18.4296,
-          16.7935,
-          14.9624
+          9.6547,
+          9.8506,
+          9.9716,
+          10.7475,
+          9.7126,
+          9.5491,
+          9.6691
         ]
       ],
       "loops": [
@@ -4164,32 +4164,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 16.0076,
-      "cpp_ms": 3.845125,
-      "speedup": 4.163089626475082,
+      "reference_ms": 6.116,
+      "cpp_ms": 1.2204375,
+      "speedup": 5.011317662723408,
       "samples_ms": [
         [
-          5.7112,
-          11.959,
-          15.6944,
-          16.0076,
-          17.1652,
-          19.1502,
-          16.9943
+          4.7319,
+          5.3135,
+          4.3937,
+          7.0976,
+          6.1483,
+          6.116,
+          7.3827
         ],
         [
-          3.0393,
-          2.389125,
-          4.65445,
-          4.0882,
-          3.492525,
-          3.845125,
-          5.160475
+          1.2819625,
+          1.5868125,
+          1.0907875,
+          1.2204375,
+          1.7288125,
+          1.1637125,
+          0.84935
         ]
       ],
       "loops": [
         1,
-        4
+        8
       ],
       "sample_labels": [
         "scikit-image",
@@ -4224,32 +4224,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 62.3876,
-      "cpp_ms": 5.26695,
-      "speedup": 11.845109598534258,
+      "reference_ms": 29.2913,
+      "cpp_ms": 3.392425,
+      "speedup": 8.634325003500447,
       "samples_ms": [
         [
-          62.3876,
-          56.7819,
-          56.2212,
-          52.3753,
-          81.5239,
-          76.6189,
-          78.3259
+          29.2913,
+          25.2337,
+          25.8045,
+          29.2403,
+          31.1889,
+          29.9826,
+          29.4455
         ],
         [
-          7.6136,
-          4.86405,
-          5.49275,
-          4.987,
-          8.57045,
-          4.90705,
-          5.26695
+          3.2779,
+          3.291525,
+          3.392425,
+          3.456375,
+          3.515675,
+          3.387275,
+          3.510725
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -4284,27 +4284,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 118.5393,
-      "cpp_ms": 31.9972,
-      "speedup": 3.704677284262373,
+      "reference_ms": 54.997,
+      "cpp_ms": 22.3063,
+      "speedup": 2.4655366421145595,
       "samples_ms": [
         [
-          142.2467,
-          141.0987,
-          106.3402,
-          132.1885,
-          118.5393,
-          116.0431,
-          111.0963
+          54.8096,
+          54.997,
+          58.1949,
+          55.4302,
+          51.8857,
+          63.1422,
+          51.5946
         ],
         [
-          31.9972,
-          31.5579,
-          35.4244,
-          37.3708,
-          31.9212,
-          38.101,
-          24.5761
+          21.891,
+          22.3063,
+          21.8891,
+          21.8416,
+          22.3873,
+          22.6382,
+          22.5407
         ]
       ],
       "loops": [
@@ -4344,27 +4344,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 150.4606,
-      "cpp_ms": 14.9529,
-      "speedup": 10.062302295875716,
+      "reference_ms": 42.2263,
+      "cpp_ms": 9.6318,
+      "speedup": 4.384050748562055,
       "samples_ms": [
         [
-          161.4489,
-          149.1945,
-          152.7818,
-          145.0929,
-          171.4803,
-          150.4606,
-          124.3294
+          43.4911,
+          42.2263,
+          43.0319,
+          43.0153,
+          39.7779,
+          38.6543,
+          38.3281
         ],
         [
-          14.4002,
-          15.3808,
-          14.9529,
-          14.9491,
-          18.6651,
-          14.4285,
-          16.2371
+          9.5432,
+          9.6318,
+          9.5204,
+          9.6821,
+          9.7108,
+          9.8797,
+          9.6207
         ]
       ],
       "loops": [
@@ -4398,32 +4398,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 80.3211,
-      "cpp_ms": 3.1299,
-      "speedup": 25.662513179334802,
+      "reference_ms": 37.2787,
+      "cpp_ms": 0.9579642857142857,
+      "speedup": 38.91449875107184,
       "samples_ms": [
         [
-          81.2339,
-          94.5476,
-          76.4493,
-          80.3211,
-          83.9006,
-          73.5475,
-          61.8114
+          37.2787,
+          38.7985,
+          37.7742,
+          36.8808,
+          38.8908,
+          33.9508,
+          35.9976
         ],
         [
-          3.15065,
-          2.9491,
-          3.7639,
-          3.55715,
-          3.1299,
-          2.6563,
-          1.98295
+          0.9597,
+          1.0294214285714285,
+          0.9863428571428572,
+          0.9579642857142857,
+          0.93825,
+          0.90725,
+          0.87535
         ]
       ],
       "loops": [
         1,
-        2
+        14
       ],
       "sample_labels": [
         "scikit-image",
@@ -4452,32 +4452,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 123.1,
-      "cpp_ms": 10.2338,
-      "speedup": 12.028767417772478,
+      "reference_ms": 53.9489,
+      "cpp_ms": 6.21635,
+      "speedup": 8.678549309482252,
       "samples_ms": [
         [
-          145.3422,
-          123.1,
-          101.5567,
-          126.6287,
-          147.3805,
-          114.3783,
-          116.4401
+          48.0363,
+          52.0219,
+          54.4842,
+          60.6538,
+          56.4837,
+          53.9489,
+          47.6011
         ],
         [
-          16.7057,
-          9.0287,
-          9.6072,
-          10.2338,
-          8.8956,
-          14.8207,
-          12.2372
+          6.17155,
+          6.44885,
+          6.21635,
+          6.0922,
+          6.55125,
+          6.926,
+          5.9955
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -4507,32 +4507,32 @@
       "rtol": 2e-13,
       "atol": 2e-13,
       "route_rgb_max_abs_error": 2.112893193739751e-15,
-      "reference_ms": 113.4872,
-      "cpp_ms": 11.7956,
-      "speedup": 9.621146868323782,
+      "reference_ms": 51.8678,
+      "cpp_ms": 6.24335,
+      "speedup": 8.307687379371652,
       "samples_ms": [
         [
-          111.6419,
-          113.4872,
-          119.1232,
-          117.6323,
-          104.4947,
-          119.4898,
-          113.2508
+          52.399,
+          55.5048,
+          49.147,
+          50.7083,
+          51.5415,
+          52.8697,
+          51.8678
         ],
         [
-          9.822,
-          9.2893,
-          11.7956,
-          14.6195,
-          10.1377,
-          14.3571,
-          11.9655
+          6.14295,
+          6.4166,
+          6.24335,
+          6.13315,
+          6.3693,
+          6.1381,
+          6.24565
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -4561,32 +4561,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 9.0683,
-      "cpp_ms": 4.2637,
-      "speedup": 2.1268616459882264,
+      "reference_ms": 2.88472,
+      "cpp_ms": 1.20514,
+      "speedup": 2.393680402276914,
       "samples_ms": [
         [
-          5.3481,
-          11.8577,
-          14.1108,
-          9.7021,
-          9.0683,
-          7.1408,
-          6.7224
+          2.56858,
+          2.89286,
+          2.81378,
+          2.35986,
+          3.01148,
+          3.19452,
+          2.88472
         ],
         [
-          4.48995,
-          4.008275,
-          5.594625,
-          4.562925,
-          4.144825,
-          4.2637,
-          3.995225
+          1.20514,
+          1.1419,
+          0.77311,
+          1.28947,
+          1.51325,
+          0.81553,
+          1.4856
         ]
       ],
       "loops": [
-        1,
-        4
+        5,
+        10
       ],
       "sample_labels": [
         "scikit-image",
@@ -4615,32 +4615,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 12.7645,
-      "cpp_ms": 5.0079,
-      "speedup": 2.5488727810060103,
+      "reference_ms": 3.56705,
+      "cpp_ms": 1.0821714285714286,
+      "speedup": 3.2961968000844863,
       "samples_ms": [
         [
-          10.54275,
-          9.06365,
-          13.84445,
-          14.67145,
-          15.36705,
-          11.2852,
-          12.7645
+          3.68455,
+          2.817575,
+          3.56705,
+          3.01925,
+          3.81515,
+          3.581175,
+          3.555925
         ],
         [
-          3.09145,
-          5.0079,
-          4.36635,
-          6.703,
-          6.3205,
-          5.85765,
-          4.09115
+          1.0821714285714286,
+          0.801,
+          0.7371428571428572,
+          1.1498714285714287,
+          1.1094714285714287,
+          1.2869142857142857,
+          0.7778428571428572
         ]
       ],
       "loops": [
-        2,
-        2
+        4,
+        7
       ],
       "sample_labels": [
         "scikit-image",
@@ -4669,32 +4669,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 3.737025,
-      "cpp_ms": 2.65152,
-      "speedup": 1.4093897085445328,
+      "reference_ms": 0.927025,
+      "cpp_ms": 0.3615263157894737,
+      "speedup": 2.5641978453923424,
       "samples_ms": [
         [
-          2.87285,
-          3.874225,
-          4.20075,
-          4.09575,
-          3.737025,
-          2.718775,
-          3.209225
+          1.0914916666666667,
+          0.927025,
+          0.9097416666666667,
+          0.8393083333333333,
+          0.9294666666666667,
+          0.907675,
+          0.9792583333333333
         ],
         [
-          3.22958,
-          2.65152,
-          2.79712,
-          2.59266,
-          2.9053,
-          1.97818,
-          1.68034
+          0.4568210526315789,
+          0.4313894736842105,
+          0.29666315789473685,
+          0.2883421052631579,
+          0.3888315789473684,
+          0.3615263157894737,
+          0.2907842105263158
         ]
       ],
       "loops": [
-        4,
-        5
+        12,
+        19
       ],
       "sample_labels": [
         "scikit-image",
@@ -4723,32 +4723,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 0.000986963190184049,
-      "cpp_ms": 0.0008811475409836065,
-      "speedup": 1.1200884576972463,
+      "reference_ms": 0.0005421333333333334,
+      "cpp_ms": 0.000536978579481398,
+      "speedup": 1.0095995521030163,
       "samples_ms": [
         [
-          0.000986963190184049,
-          0.001118711656441718,
-          0.0007621165644171779,
-          0.001075,
-          0.0008401840490797546,
-          0.0006486196319018406,
-          0.0012168711656441718
+          0.0005457333333333333,
+          0.0005306666666666666,
+          0.00053,
+          0.0005344,
+          0.000554,
+          0.0007297333333333334,
+          0.0005421333333333334
         ],
         [
-          0.0006937158469945355,
-          0.0013442622950819673,
-          0.0009153005464480874,
-          0.0005959016393442623,
-          0.0008811475409836065,
-          0.0006210382513661203,
-          0.0009655737704918033
+          0.0005314543404735063,
+          0.0005367531003382187,
+          0.0005374295377677565,
+          0.0005502818489289741,
+          0.0005284103720405863,
+          0.0007234498308906426,
+          0.000536978579481398
         ]
       ],
       "loops": [
-        652,
-        366
+        750,
+        887
       ],
       "sample_labels": [
         "scikit-image",
@@ -4781,32 +4781,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 11.18845,
-      "cpp_ms": 1.9101142857142857,
-      "speedup": 5.85747674035959,
+      "reference_ms": 3.1578333333333335,
+      "cpp_ms": 0.5745142857142856,
+      "speedup": 5.4965270870631935,
       "samples_ms": [
         [
-          8.1337,
-          9.039,
-          13.56975,
-          16.57645,
-          19.3769,
-          11.18845,
-          9.32885
+          3.1578333333333335,
+          2.7722,
+          3.1932333333333336,
+          2.6376666666666666,
+          3.0156,
+          4.586633333333333,
+          3.3367333333333336
         ],
         [
-          2.0308714285714284,
-          1.494,
-          2.597257142857143,
-          2.488714285714286,
-          1.9101142857142857,
-          1.267642857142857,
-          1.0977428571428571
+          0.6323761904761905,
+          0.5727714285714285,
+          0.5607190476190476,
+          0.6095857142857143,
+          0.5714285714285715,
+          0.6132238095238095,
+          0.5745142857142856
         ]
       ],
       "loops": [
-        2,
-        7
+        3,
+        21
       ],
       "sample_labels": [
         "scikit-image",
@@ -4839,433 +4839,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 46.3008,
-      "cpp_ms": 5.64795,
-      "speedup": 8.197806283695854,
+      "reference_ms": 23.6979,
+      "cpp_ms": 3.470725,
+      "speedup": 6.827939407472503,
       "samples_ms": [
         [
-          43.453,
-          35.1762,
-          49.755,
-          46.3008,
-          37.3413,
-          47.9579,
-          67.6339
+          19.6071,
+          23.6979,
+          25.8224,
+          20.698,
+          27.2925,
+          32.6857,
+          19.8836
         ],
         [
-          8.40245,
-          3.5552,
-          5.64795,
-          5.0899,
-          4.5736,
-          7.52045,
-          5.95995
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "uint16/float32",
-      "second_dtype": "float32",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 2.842170943040401e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 100.6465,
-      "cpp_ms": 24.3533,
-      "speedup": 4.132766401268,
-      "samples_ms": [
-        [
-          87.4974,
-          83.5414,
-          95.3387,
-          107.0663,
-          115.0277,
-          108.1832,
-          100.6465
-        ],
-        [
-          25.1105,
-          23.0532,
-          30.2378,
-          25.2624,
-          24.3533,
-          23.0837,
-          20.566
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "uint16/float32",
-      "second_dtype": "float32",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 8.526512829121202e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 79.8316,
-      "cpp_ms": 12.6993,
-      "speedup": 6.286299244840267,
-      "samples_ms": [
-        [
-          108.4017,
-          87.4668,
-          79.8316,
-          67.9528,
-          69.0856,
-          98.3768,
-          79.4616
-        ],
-        [
-          9.3846,
-          12.6993,
-          11.7686,
-          14.9073,
-          14.2906,
-          15.7287,
-          8.9949
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "float32/float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 10.473,
-      "cpp_ms": 1.84785,
-      "speedup": 5.6676678301810215,
-      "samples_ms": [
-        [
-          13.3244,
-          9.2912,
-          12.1541,
-          11.57,
-          5.4951,
-          9.7401,
-          10.473
-        ],
-        [
-          1.84785,
-          1.0767333333333333,
-          2.17285,
-          1.91775,
-          2.7671833333333336,
-          1.4972333333333332,
-          1.4715166666666668
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede94",
-      "dtype": "float32/float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 42.4337,
-      "cpp_ms": 4.81665,
-      "speedup": 8.809795189602733,
-      "samples_ms": [
-        [
-          42.4337,
-          41.1012,
-          41.3037,
-          36.9526,
-          46.2309,
-          49.6518,
-          48.4057
-        ],
-        [
-          4.6401,
-          6.644,
-          4.17455,
-          7.7557,
-          4.4409,
-          4.81665,
-          4.91855
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_ciede2000",
-      "dtype": "float32/float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 2.842170943040401e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 77.2489,
-      "cpp_ms": 23.2586,
-      "speedup": 3.3213048076840397,
-      "samples_ms": [
-        [
-          69.4166,
-          76.9086,
-          91.8126,
-          91.0617,
-          70.3819,
-          79.6778,
-          77.2489
-        ],
-        [
-          31.5173,
-          22.9451,
-          22.1059,
-          22.1552,
-          32.5295,
-          23.2586,
-          23.9855
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cmc",
-      "dtype": "float32/float64",
-      "second_dtype": "float64",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 8.526512829121202e-14,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 97.2642,
-      "cpp_ms": 13.3866,
-      "speedup": 7.2657881762359375,
-      "samples_ms": [
-        [
-          81.6169,
-          207.2629,
-          126.6601,
-          97.2642,
-          74.0376,
-          87.5246,
-          105.9418
-        ],
-        [
-          14.9437,
-          21.1358,
-          24.9842,
-          11.289,
-          12.0302,
-          10.909,
-          13.3866
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.deltaE_cie76",
-      "dtype": "int64/float32",
-      "second_dtype": "float32",
-      "size": 512,
-      "shape": [
-        512,
-        512,
-        3
-      ],
-      "second_shape": [
-        512,
-        512,
-        3
-      ],
-      "output_dtype": "float64",
-      "compute_dtype": "float64",
-      "threads": 1,
-      "workload": "mixed-dtypes",
-      "layout": "mixed-dtypes",
-      "options": {},
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "input computation precision and API budget",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 14.5539,
-      "cpp_ms": 3.872875,
-      "speedup": 3.757905948423329,
-      "samples_ms": [
-        [
-          14.5539,
-          14.7931,
-          10.68,
-          13.0035,
-          29.641,
-          14.1461,
-          18.4794
-        ],
-        [
-          2.315975,
-          3.067775,
-          2.5095,
-          6.45185,
-          6.3995,
-          3.872875,
-          4.007925
+          3.596675,
+          3.503025,
+          3.392275,
+          3.4344,
+          3.63935,
+          3.470725,
+          3.4022
         ]
       ],
       "loops": [
@@ -5278,6 +4872,412 @@
       ]
     },
     {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "uint16/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.842170943040401e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 45.3107,
+      "cpp_ms": 17.2468,
+      "speedup": 2.627194610014611,
+      "samples_ms": [
+        [
+          48.9042,
+          46.4374,
+          45.3107,
+          45.4059,
+          43.5432,
+          42.3444,
+          41.2647
+        ],
+        [
+          17.2107,
+          17.2251,
+          17.271,
+          17.2468,
+          17.3648,
+          17.2393,
+          17.6833
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "uint16/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 8.526512829121202e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 34.0888,
+      "cpp_ms": 8.4471,
+      "speedup": 4.035562500739898,
+      "samples_ms": [
+        [
+          35.6244,
+          34.4769,
+          34.0888,
+          31.4173,
+          32.3366,
+          32.9401,
+          36.4144
+        ],
+        [
+          8.4471,
+          8.3844,
+          9.1626,
+          8.6468,
+          8.3531,
+          8.9446,
+          8.3909
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 4.769,
+      "cpp_ms": 0.665475,
+      "speedup": 7.166309778729478,
+      "samples_ms": [
+        [
+          4.9335,
+          5.0929,
+          3.8259,
+          6.5202,
+          4.29495,
+          4.1313,
+          4.769
+        ],
+        [
+          0.749125,
+          0.661525,
+          0.78533125,
+          0.5516125,
+          0.665475,
+          0.6041125,
+          1.01044375
+        ]
+      ],
+      "loops": [
+        2,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede94",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 20.5665,
+      "cpp_ms": 3.39855,
+      "speedup": 6.051551396919274,
+      "samples_ms": [
+        [
+          19.3398,
+          20.5665,
+          18.0357,
+          22.1882,
+          18.7571,
+          20.6727,
+          20.8118
+        ],
+        [
+          3.60045,
+          3.42295,
+          3.39855,
+          3.534675,
+          3.29925,
+          3.350425,
+          3.32355
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.842170943040401e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 39.46,
+      "cpp_ms": 17.2557,
+      "speedup": 2.286780600033612,
+      "samples_ms": [
+        [
+          36.6275,
+          36.8875,
+          41.4689,
+          39.46,
+          40.7522,
+          40.7557,
+          39.0189
+        ],
+        [
+          16.8528,
+          17.1337,
+          17.2557,
+          18.0891,
+          17.2623,
+          17.2539,
+          17.3556
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 8.526512829121202e-14,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 32.3774,
+      "cpp_ms": 8.5085,
+      "speedup": 3.8053005817711703,
+      "samples_ms": [
+        [
+          32.3774,
+          31.0679,
+          29.9061,
+          29.8239,
+          39.6782,
+          37.1159,
+          35.5917
+        ],
+        [
+          8.5085,
+          8.5421,
+          8.7118,
+          8.2332,
+          8.5264,
+          8.4642,
+          8.4948
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "int64/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "second_shape": [
+        512,
+        512,
+        3
+      ],
+      "output_dtype": "float64",
+      "compute_dtype": "float64",
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "input computation precision and API budget",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 5.40985,
+      "cpp_ms": 1.722375,
+      "speedup": 3.140924595398795,
+      "samples_ms": [
+        [
+          7.56125,
+          6.06845,
+          5.40985,
+          4.53315,
+          6.09525,
+          4.98935,
+          3.4171
+        ],
+        [
+          1.6557375,
+          1.8275375,
+          1.6777,
+          1.722375,
+          1.833325,
+          1.5972875,
+          1.7641375
+        ]
+      ],
+      "loops": [
+        2,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "color.deltaE_ciede94",
       "dtype": "int64/float32",
       "second_dtype": "float32",
@@ -5303,32 +5303,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 65.7056,
-      "cpp_ms": 6.4273,
-      "speedup": 10.222892972165607,
+      "reference_ms": 21.9986,
+      "cpp_ms": 4.8365,
+      "speedup": 4.548454460870464,
       "samples_ms": [
         [
-          168.0444,
-          93.7145,
-          50.3417,
-          47.4463,
-          68.3377,
-          65.7056,
-          56.6911
+          24.3317,
+          26.7466,
+          24.9866,
+          20.9044,
+          20.7468,
+          21.0262,
+          21.9986
         ],
         [
-          41.6819,
-          5.6663,
-          6.4273,
-          6.9105,
-          8.2503,
-          5.9814,
-          5.7737
+          4.8365,
+          4.742566666666667,
+          4.8859,
+          5.366333333333333,
+          4.913066666666667,
+          4.764266666666667,
+          4.8293
         ]
       ],
       "loops": [
         1,
-        1
+        3
       ],
       "sample_labels": [
         "scikit-image",
@@ -5361,27 +5361,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 89.3677,
-      "cpp_ms": 25.2297,
-      "speedup": 3.542162609939872,
+      "reference_ms": 40.4378,
+      "cpp_ms": 18.6507,
+      "speedup": 2.168165269936249,
       "samples_ms": [
         [
-          74.1517,
-          97.5125,
-          95.3342,
-          98.4064,
-          88.4834,
-          89.3677,
-          87.5846
+          40.4378,
+          46.5477,
+          40.0905,
+          37.7387,
+          49.3039,
+          39.9358,
+          41.3391
         ],
         [
-          27.3249,
-          25.2297,
-          23.7235,
-          27.8046,
-          24.0877,
-          23.8735,
-          29.7103
+          18.9709,
+          18.1216,
+          18.4607,
+          18.6507,
+          19.0009,
+          18.4786,
+          18.7899
         ]
       ],
       "loops": [
@@ -5419,27 +5419,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 86.0114,
-      "cpp_ms": 13.3542,
-      "speedup": 6.440775186832607,
+      "reference_ms": 33.6366,
+      "cpp_ms": 9.4318,
+      "speedup": 3.566296995271316,
       "samples_ms": [
         [
-          110.4563,
-          77.441,
-          86.0114,
-          84.2707,
-          104.8692,
-          87.6112,
-          73.4902
+          33.6366,
+          31.1912,
+          35.8574,
+          38.1726,
+          30.6537,
+          30.6815,
+          38.4359
         ],
         [
-          14.3183,
-          13.2737,
-          13.3542,
-          13.8869,
-          14.1321,
-          12.7912,
-          12.6847
+          9.4037,
+          9.4318,
+          9.5634,
+          9.5017,
+          9.4426,
+          9.3592,
+          9.3443
         ]
       ],
       "loops": [
@@ -5477,32 +5477,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 13.5931,
-      "cpp_ms": 1.31164,
-      "speedup": 10.363438138513617,
+      "reference_ms": 3.31015,
+      "cpp_ms": 0.6725857142857143,
+      "speedup": 4.9215288545273035,
       "samples_ms": [
         [
-          11.1318,
-          15.8721,
-          9.8523,
-          12.4003,
-          17.8306,
-          16.4259,
-          13.5931
+          3.31015,
+          3.58635,
+          3.09715,
+          3.75565,
+          3.77185,
+          2.8808,
+          2.8901
         ],
         [
-          1.31164,
-          0.90388,
-          1.62332,
-          1.56894,
-          1.58224,
-          0.90968,
-          1.24144
+          0.6840571428571428,
+          0.6604142857142857,
+          0.9079,
+          0.6443857142857143,
+          0.8340714285714286,
+          0.6725857142857143,
+          0.6627142857142857
         ]
       ],
       "loops": [
-        1,
-        5
+        2,
+        7
       ],
       "sample_labels": [
         "scikit-image",
@@ -5535,32 +5535,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 64.3218,
-      "cpp_ms": 5.1735,
-      "speedup": 12.432937083212526,
+      "reference_ms": 21.2134,
+      "cpp_ms": 3.53005,
+      "speedup": 6.009376637724678,
       "samples_ms": [
         [
-          59.8497,
-          60.421,
-          64.9466,
-          65.633,
-          70.1746,
-          64.3218,
-          51.7742
+          19.2434,
+          20.4996,
+          21.2134,
+          27.0763,
+          21.2398,
+          19.6876,
+          21.8215
         ],
         [
-          6.227,
-          3.82185,
-          5.35065,
-          5.0206,
-          5.23835,
-          5.14315,
-          5.1735
+          3.400725,
+          3.4519,
+          3.587775,
+          3.6306,
+          3.619575,
+          3.528625,
+          3.53005
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -5593,27 +5593,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 79.9516,
-      "cpp_ms": 23.6416,
-      "speedup": 3.3818184894423386,
+      "reference_ms": 46.5448,
+      "cpp_ms": 16.5676,
+      "speedup": 2.8093869963060434,
       "samples_ms": [
         [
-          100.6266,
-          104.8749,
-          98.5846,
-          78.9111,
-          79.8927,
-          79.9516,
-          71.6296
+          46.5448,
+          48.7827,
+          47.3393,
+          43.6602,
+          40.8146,
+          46.7807,
+          44.9388
         ],
         [
-          24.489,
-          29.3049,
-          21.8656,
-          23.0967,
-          20.9485,
-          23.6416,
-          26.64
+          16.2718,
+          16.6276,
+          16.4592,
+          16.2928,
+          16.5676,
+          16.7205,
+          16.646
         ]
       ],
       "loops": [
@@ -5651,27 +5651,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 84.006,
-      "cpp_ms": 11.6206,
-      "speedup": 7.229058740512539,
+      "reference_ms": 29.9766,
+      "cpp_ms": 8.5989,
+      "speedup": 3.4860970589261417,
       "samples_ms": [
         [
-          58.8009,
-          79.6699,
-          91.6427,
-          84.006,
-          63.368,
-          92.1542,
-          130.6978
+          34.2568,
+          28.3054,
+          27.0329,
+          29.9766,
+          32.0768,
+          30.3319,
+          29.0998
         ],
         [
-          11.0265,
-          14.6438,
-          11.269,
-          11.3831,
-          11.6206,
-          12.8477,
-          16.9486
+          8.2026,
+          8.9083,
+          8.5989,
+          8.9327,
+          9.4679,
+          8.1017,
+          8.0561
         ]
       ],
       "loops": [
@@ -5711,27 +5711,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 52.2699,
-      "cpp_ms": 8.7005,
-      "speedup": 6.007689213263606,
+      "reference_ms": 17.2961,
+      "cpp_ms": 5.2134,
+      "speedup": 3.3176238155522304,
       "samples_ms": [
         [
-          46.7379,
-          48.9131,
-          51.1468,
-          52.2699,
-          59.088,
-          67.5252,
-          54.1795
+          14.8674,
+          15.9169,
+          21.3089,
+          18.6515,
+          17.2961,
+          17.561,
+          16.7835
         ],
         [
-          7.66855,
-          8.2747,
-          7.78975,
-          9.0697,
-          8.7005,
-          12.5631,
-          8.95415
+          6.46775,
+          5.2251,
+          5.81265,
+          5.20325,
+          5.2134,
+          5.146,
+          5.06605
         ]
       ],
       "loops": [
@@ -5771,32 +5771,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 61.6102,
-      "cpp_ms": 9.4889,
-      "speedup": 6.4928706172475215,
+      "reference_ms": 16.3338,
+      "cpp_ms": 5.3464,
+      "speedup": 3.0551024988777495,
       "samples_ms": [
         [
-          63.6637,
-          65.8245,
-          48.8952,
-          61.6102,
-          59.3477,
-          69.0502,
-          54.6448
+          18.0662,
+          16.2821,
+          15.6306,
+          15.3072,
+          16.4088,
+          16.3338,
+          18.4594
         ],
         [
-          9.4889,
-          8.8918,
-          9.7504,
-          11.4603,
-          7.1344,
-          10.392,
-          7.6041
+          5.16485,
+          5.16035,
+          8.5909,
+          5.3464,
+          5.5668,
+          5.10195,
+          5.4534
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -5833,32 +5833,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 57.7524,
-      "cpp_ms": 7.3612,
-      "speedup": 7.845514318317665,
+      "reference_ms": 17.5322,
+      "cpp_ms": 5.19895,
+      "speedup": 3.372257859760144,
       "samples_ms": [
         [
-          58.9765,
-          59.4865,
-          54.1889,
-          55.7271,
-          57.7524,
-          60.1647,
-          55.1787
+          21.8621,
+          16.1014,
+          17.9922,
+          17.871,
+          15.6839,
+          17.5322,
+          16.7179
         ],
         [
-          7.3612,
-          7.0268,
-          7.8292,
-          7.2304,
-          7.9924,
-          7.1156,
-          8.5871
+          5.12785,
+          5.19895,
+          5.19735,
+          5.26735,
+          5.07755,
+          5.2493,
+          5.2651
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -5893,27 +5893,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 55.4041,
-      "cpp_ms": 8.4389,
-      "speedup": 6.565322494637926,
+      "reference_ms": 18.4937,
+      "cpp_ms": 5.2689,
+      "speedup": 3.509973618781909,
       "samples_ms": [
         [
-          55.4041,
-          62.087,
-          48.8442,
-          56.3957,
-          54.868,
-          49.9978,
-          77.006
+          18.3888,
+          18.4421,
+          14.9626,
+          18.4937,
+          20.5886,
+          21.5301,
+          23.4938
         ],
         [
-          8.05945,
-          7.77315,
-          8.5231,
-          6.8317,
-          12.3444,
-          8.4389,
-          10.5092
+          5.3867,
+          5.93495,
+          5.0961,
+          5.2259,
+          5.2689,
+          5.20615,
+          5.3526
         ]
       ],
       "loops": [
@@ -5947,32 +5947,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 0.11756969696969698,
-      "cpp_ms": 0.03813111111111111,
-      "speedup": 3.083301103582006,
+      "reference_ms": 0.04437857142857143,
+      "cpp_ms": 0.01690481927710843,
+      "speedup": 2.625202358043923,
       "samples_ms": [
         [
-          0.13608787878787879,
-          0.0992969696969697,
-          0.11310606060606061,
-          0.11756969696969698,
-          0.08261515151515152,
-          0.13051212121212122,
-          0.3797787878787879
+          0.0435,
+          0.04437857142857143,
+          0.045211904761904766,
+          0.04583809523809523,
+          0.043461904761904764,
+          0.05310476190476191,
+          0.04249761904761905
         ],
         [
-          0.04381777777777778,
-          0.03813111111111111,
-          0.03272888888888889,
-          0.04149333333333333,
-          0.03561333333333334,
-          0.03566,
-          0.05869111111111111
+          0.01706144578313253,
+          0.025759036144578314,
+          0.016644578313253014,
+          0.01690481927710843,
+          0.016225301204819277,
+          0.017165060240963856,
+          0.016781927710843376
         ]
       ],
       "loops": [
-        33,
-        45
+        42,
+        83
       ],
       "sample_labels": [
         "scikit-image",
@@ -6007,27 +6007,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 100.6217,
-      "cpp_ms": 47.3143,
-      "speedup": 2.126665722625084,
+      "reference_ms": 28.883,
+      "cpp_ms": 24.8875,
+      "speedup": 1.1605424409844298,
       "samples_ms": [
         [
-          85.7015,
-          100.6217,
-          90.9295,
-          143.7532,
-          102.4271,
-          125.4993,
-          83.0723
+          28.5806,
+          29.0675,
+          28.883,
+          26.0459,
+          31.9306,
+          29.6793,
+          27.1895
         ],
         [
-          36.7781,
-          37.2719,
-          67.2079,
-          40.6553,
-          47.3143,
-          58.2089,
-          62.4784
+          24.9691,
+          24.7862,
+          24.7392,
+          25.6462,
+          24.5907,
+          25.435,
+          24.8875
         ]
       ],
       "loops": [
@@ -6067,27 +6067,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 122.1209,
-      "cpp_ms": 63.5339,
-      "speedup": 1.922137630461848,
+      "reference_ms": 31.4053,
+      "cpp_ms": 24.9997,
+      "speedup": 1.2562270747248967,
       "samples_ms": [
         [
-          102.861,
-          152.5186,
-          114.8015,
-          135.6724,
-          119.4688,
-          133.8985,
-          122.1209
+          31.7402,
+          30.8306,
+          29.7223,
+          31.4053,
+          29.3143,
+          34.5858,
+          33.4001
         ],
         [
-          67.5695,
-          63.4559,
-          57.3464,
-          63.5339,
-          50.8488,
-          66.8819,
-          71.2308
+          25.9422,
+          25.1367,
+          24.9259,
+          24.7054,
+          24.6326,
+          24.9997,
+          25.4053
         ]
       ],
       "loops": [
@@ -6127,27 +6127,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 104.658,
-      "cpp_ms": 56.9225,
-      "speedup": 1.838605120997848,
+      "reference_ms": 29.8252,
+      "cpp_ms": 24.7309,
+      "speedup": 1.2059892684859832,
       "samples_ms": [
         [
-          161.4013,
-          104.658,
-          93.3514,
-          93.9631,
-          104.643,
-          125.3207,
-          120.881
+          30.3324,
+          33.2821,
+          29.3324,
+          30.128,
+          29.8252,
+          27.6138,
+          27.9016
         ],
         [
-          61.8949,
-          59.6235,
-          58.8233,
-          53.3916,
-          56.9225,
-          34.9049,
-          50.8074
+          25.1899,
+          25.2703,
+          24.7309,
+          24.6437,
+          24.7099,
+          24.9157,
+          24.5971
         ]
       ],
       "loops": [
@@ -6181,32 +6181,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 0.00025,
-      "reference_ms": 0.20594838709677418,
-      "cpp_ms": 0.041315254237288136,
-      "speedup": 4.984802608594387,
+      "reference_ms": 0.08751632653061225,
+      "cpp_ms": 0.01639157894736842,
+      "speedup": 5.339102890064323,
       "samples_ms": [
         [
-          0.21601290322580646,
-          0.3035838709677419,
-          0.1768,
-          0.17186129032258063,
-          0.22775161290322582,
-          0.17278709677419354,
-          0.20594838709677418
+          0.0873204081632653,
+          0.08751632653061225,
+          0.09348571428571428,
+          0.08606122448979592,
+          0.09476530612244898,
+          0.08984489795918367,
+          0.08697755102040816
         ],
         [
-          0.02893728813559322,
-          0.04409152542372881,
-          0.04811186440677966,
-          0.03260677966101695,
-          0.11691525423728813,
-          0.041315254237288136,
-          0.031191525423728814
+          0.017437894736842107,
+          0.017025263157894738,
+          0.01639157894736842,
+          0.01601052631578947,
+          0.016473684210526317,
+          0.01632315789473684,
+          0.016261052631578947
         ]
       ],
       "loops": [
-        31,
-        59
+        49,
+        95
       ],
       "sample_labels": [
         "scikit-image",
@@ -6241,27 +6241,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 113.3459,
-      "cpp_ms": 24.9793,
-      "speedup": 4.537593127109247,
+      "reference_ms": 24.6715,
+      "cpp_ms": 10.9286,
+      "speedup": 2.2575169738118332,
       "samples_ms": [
         [
-          95.4449,
-          118.8324,
-          120.6543,
-          113.3625,
-          113.3459,
-          102.0705,
-          96.8702
+          27.8795,
+          22.3876,
+          23.4126,
+          24.6715,
+          26.3071,
+          24.179,
+          29.4746
         ],
         [
-          29.7027,
-          21.4184,
-          31.9784,
-          21.2114,
-          17.14,
-          24.9793,
-          43.6227
+          11.0202,
+          10.727,
+          10.7591,
+          10.7965,
+          10.9286,
+          10.9477,
+          10.9836
         ]
       ],
       "loops": [
@@ -6301,27 +6301,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 131.5853,
-      "cpp_ms": 26.0208,
-      "speedup": 5.05692753489516,
+      "reference_ms": 25.1296,
+      "cpp_ms": 10.7283,
+      "speedup": 2.342365519234175,
       "samples_ms": [
         [
-          117.7621,
-          131.5853,
-          120.5179,
-          158.3576,
-          132.7562,
-          130.8253,
-          141.6835
+          26.1239,
+          26.2832,
+          24.024,
+          25.1296,
+          28.2481,
+          24.2608,
+          24.2802
         ],
         [
-          30.726,
-          22.3301,
-          26.0208,
-          18.8155,
-          26.0492,
-          42.4373,
-          21.3102
+          10.7283,
+          10.7454,
+          10.684,
+          10.6903,
+          11.1182,
+          10.9516,
+          10.7094
         ]
       ],
       "loops": [
@@ -6355,32 +6355,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 0.1426,
-      "cpp_ms": 0.03893023255813954,
-      "speedup": 3.662962962962963,
+      "reference_ms": 0.05368666666666667,
+      "cpp_ms": 0.016717647058823528,
+      "speedup": 3.2113769645789354,
       "samples_ms": [
         [
-          0.10038709677419355,
-          0.39673548387096774,
-          0.0983483870967742,
-          0.1400774193548387,
-          0.20731612903225807,
-          0.1426,
-          0.15090967741935485
+          0.058944,
+          0.08525866666666668,
+          0.052434666666666664,
+          0.05368666666666667,
+          0.052450666666666666,
+          0.054926666666666665,
+          0.052401333333333334
         ],
         [
-          0.0748,
-          0.031706976744186044,
-          0.06502093023255814,
-          0.03417906976744186,
-          0.03893023255813954,
-          0.21086976744186045,
-          0.03067209302325581
+          0.016225882352941177,
+          0.015909411764705884,
+          0.016717647058823528,
+          0.016030588235294116,
+          0.019028235294117648,
+          0.02170235294117647,
+          0.020847058823529413
         ]
       ],
       "loops": [
-        31,
-        43
+        75,
+        85
       ],
       "sample_labels": [
         "scikit-image",
@@ -6415,32 +6415,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 78.649,
-      "cpp_ms": 8.22235,
-      "speedup": 9.565270269448515,
+      "reference_ms": 19.8483,
+      "cpp_ms": 3.31835,
+      "speedup": 5.981376286407401,
       "samples_ms": [
         [
-          78.649,
-          102.3953,
-          100.395,
-          74.5981,
-          79.4479,
-          56.0386,
-          75.3825
+          20.4346,
+          23.3317,
+          18.4198,
+          19.8483,
+          18.0526,
+          22.0109,
+          18.2325
         ],
         [
-          9.67165,
-          9.60725,
-          5.95745,
-          8.22235,
-          5.05935,
-          6.1429,
-          11.70905
+          3.34815,
+          3.31835,
+          3.223525,
+          3.8689,
+          3.1835,
+          3.1403,
+          3.3617
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -6475,32 +6475,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 59.4318,
-      "cpp_ms": 5.17995,
-      "speedup": 11.473431210725973,
+      "reference_ms": 21.2299,
+      "cpp_ms": 3.2906,
+      "speedup": 6.451680544581536,
       "samples_ms": [
         [
-          67.9212,
-          65.1791,
-          63.7606,
-          57.8888,
-          55.4449,
-          47.924,
-          59.4318
+          18.4635,
+          22.5253,
+          20.6282,
+          24.3464,
+          23.0856,
+          19.2654,
+          21.2299
         ],
         [
-          4.9248,
-          5.30625,
-          5.08055,
-          5.17995,
-          9.66065,
-          5.97525,
-          4.80425
+          3.2906,
+          3.3706,
+          3.277375,
+          3.2729,
+          3.23535,
+          3.4788,
+          3.424725
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -6537,32 +6537,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 67.3784,
-      "cpp_ms": 5.8627,
-      "speedup": 11.49272519487608,
+      "reference_ms": 20.3915,
+      "cpp_ms": 3.326725,
+      "speedup": 6.129601935837798,
       "samples_ms": [
         [
-          67.3784,
-          77.8779,
-          61.4885,
-          65.5126,
-          64.3274,
-          71.0689,
-          84.1448
+          24.9647,
+          20.3915,
+          19.9835,
+          21.799,
+          20.5394,
+          18.9386,
+          19.2384
         ],
         [
-          5.428,
-          5.8627,
-          5.23055,
-          5.17755,
-          7.68295,
-          7.6376,
-          6.40635
+          3.374675,
+          3.249475,
+          3.5224,
+          3.214175,
+          3.44255,
+          3.326725,
+          3.24355
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -6597,32 +6597,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 87.0334,
-      "cpp_ms": 7.66645,
-      "speedup": 11.352503440314617,
+      "reference_ms": 25.3582,
+      "cpp_ms": 3.328875,
+      "speedup": 7.6176486050092,
       "samples_ms": [
         [
-          97.3152,
-          87.0334,
-          96.5436,
-          82.6605,
-          72.0771,
-          101.5395,
-          81.5214
+          30.4666,
+          27.8895,
+          30.2397,
+          22.8663,
+          19.9626,
+          25.3582,
+          21.9038
         ],
         [
-          11.95835,
-          5.62205,
-          15.3584,
-          5.60065,
-          5.40025,
-          12.1598,
-          7.66645
+          3.328875,
+          3.34285,
+          3.26665,
+          3.7636,
+          3.316925,
+          3.246775,
+          3.4741
         ]
       ],
       "loops": [
         1,
-        2
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -6651,32 +6651,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 0.0856875,
-      "cpp_ms": 0.03935490196078432,
-      "speedup": 2.1773018285087935,
+      "reference_ms": 0.03902530120481928,
+      "cpp_ms": 0.013722549019607842,
+      "speedup": 2.8438813480685625,
       "samples_ms": [
         [
-          0.14298125,
-          0.178153125,
-          0.082959375,
-          0.0732,
-          0.145525,
-          0.0856875,
-          0.081528125
+          0.039795180722891565,
+          0.03718795180722891,
+          0.03902530120481928,
+          0.03706506024096385,
+          0.03838433734939759,
+          0.039926506024096385,
+          0.04667710843373494
         ],
         [
-          0.028247058823529413,
-          0.0678078431372549,
-          0.03935490196078432,
-          0.04619803921568627,
-          0.030098039215686278,
-          0.0761156862745098,
-          0.03147450980392157
+          0.013670588235294117,
+          0.014149019607843137,
+          0.013698039215686275,
+          0.013647058823529413,
+          0.014040196078431372,
+          0.014169607843137255,
+          0.013722549019607842
         ]
       ],
       "loops": [
-        32,
-        51
+        83,
+        102
       ],
       "sample_labels": [
         "scikit-image",
@@ -6711,27 +6711,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 119.5054,
-      "cpp_ms": 28.2542,
-      "speedup": 4.229650812976478,
+      "reference_ms": 40.4028,
+      "cpp_ms": 17.3414,
+      "speedup": 2.3298464945160138,
       "samples_ms": [
         [
-          158.3749,
-          114.3193,
-          150.2727,
-          139.1266,
-          117.2174,
-          119.5054,
-          112.8358
+          38.9594,
+          40.4028,
+          40.9682,
+          40.0186,
+          38.8665,
+          42.7053,
+          41.1766
         ],
         [
-          31.4291,
-          30.7865,
-          25.3994,
-          28.2542,
-          27.2121,
-          29.2527,
-          24.9829
+          17.2657,
+          17.3414,
+          17.3135,
+          17.6535,
+          16.9717,
+          18.5296,
+          17.4885
         ]
       ],
       "loops": [
@@ -6771,27 +6771,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 90.7206,
-      "cpp_ms": 23.2038,
-      "speedup": 3.9097303027952317,
+      "reference_ms": 38.9802,
+      "cpp_ms": 17.4047,
+      "speedup": 2.239636420047459,
       "samples_ms": [
         [
-          90.7206,
-          86.8919,
-          102.7799,
-          91.795,
-          93.1858,
-          67.481,
-          63.9642
+          37.5833,
+          38.5553,
+          39.3883,
+          43.0603,
+          36.4072,
+          39.1959,
+          38.9802
         ],
         [
-          23.7067,
-          24.6767,
-          23.2038,
-          22.2865,
-          38.6059,
-          20.7225,
-          20.5456
+          17.0615,
+          17.6693,
+          17.4047,
+          17.4115,
+          17.0952,
+          17.304,
+          17.6258
         ]
       ],
       "loops": [
@@ -6831,27 +6831,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 112.7405,
-      "cpp_ms": 27.2104,
-      "speedup": 4.143287125510834,
+      "reference_ms": 44.0143,
+      "cpp_ms": 17.6038,
+      "speedup": 2.5002726684011405,
       "samples_ms": [
         [
-          68.8556,
-          112.0062,
-          121.1337,
-          112.7405,
-          114.1862,
-          119.4524,
-          111.5757
+          42.0305,
+          41.0882,
+          39.1735,
+          44.0143,
+          52.2317,
+          50.0865,
+          48.3986
         ],
         [
-          22.35,
-          25.4795,
-          27.5818,
-          25.8164,
-          27.2104,
-          31.3234,
-          31.6376
+          17.3114,
+          17.6038,
+          17.4611,
+          18.3413,
+          17.705,
+          17.723,
+          17.5512
         ]
       ],
       "loops": [
@@ -6885,32 +6885,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 0.21427391304347826,
-      "cpp_ms": 0.0394775,
-      "speedup": 5.427747781482573,
+      "reference_ms": 0.08114814814814815,
+      "cpp_ms": 0.015134328358208955,
+      "speedup": 5.361859887500914,
       "samples_ms": [
         [
-          0.23402173913043478,
-          0.24062173913043478,
-          0.2538478260869565,
-          0.21427391304347826,
-          0.19083478260869566,
-          0.1414217391304348,
-          0.1659217391304348
+          0.08497592592592593,
+          0.08584444444444443,
+          0.07964074074074075,
+          0.07959444444444444,
+          0.08114814814814815,
+          0.08576851851851852,
+          0.07659074074074075
         ],
         [
-          0.057815,
-          0.0394325,
-          0.05867,
-          0.04023,
-          0.037415,
-          0.0285275,
-          0.0394775
+          0.015134328358208955,
+          0.01786417910447761,
+          0.015455223880597016,
+          0.01697910447761194,
+          0.014880597014925374,
+          0.014643283582089552,
+          0.0146
         ]
       ],
       "loops": [
-        23,
-        40
+        54,
+        67
       ],
       "sample_labels": [
         "scikit-image",
@@ -6945,27 +6945,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 68.3715,
-      "cpp_ms": 11.5769,
-      "speedup": 5.905855626290284,
+      "reference_ms": 30.292,
+      "cpp_ms": 8.3367,
+      "speedup": 3.6335720368970934,
       "samples_ms": [
         [
-          83.1816,
-          74.6422,
-          83.3325,
-          67.9747,
-          68.3715,
-          59.6089,
-          62.0521
+          29.8857,
+          30.9315,
+          29.1093,
+          30.292,
+          36.7893,
+          29.9172,
+          30.7265
         ],
         [
-          14.1401,
-          9.9897,
-          11.5769,
-          13.1746,
-          11.6125,
-          11.5661,
-          11.4344
+          8.2715,
+          8.3252,
+          8.5895,
+          8.4962,
+          8.3626,
+          8.3347,
+          8.3367
         ]
       ],
       "loops": [
@@ -7005,27 +7005,27 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 60.1484,
-      "cpp_ms": 12.2952,
-      "speedup": 4.892022903246796,
+      "reference_ms": 33.376,
+      "cpp_ms": 8.6037,
+      "speedup": 3.879261248067692,
       "samples_ms": [
         [
-          57.8327,
-          70.7292,
-          68.7627,
-          58.0886,
-          63.321,
-          60.1484,
-          55.2133
+          33.2174,
+          35.559,
+          34.2237,
+          33.376,
+          32.0689,
+          34.5445,
+          32.6089
         ],
         [
-          12.8243,
-          16.2685,
-          14.2273,
-          9.1797,
-          12.2952,
-          10.6192,
-          11.5127
+          8.4835,
+          8.6551,
+          8.5093,
+          8.3895,
+          8.6037,
+          8.6209,
+          9.2156
         ]
       ],
       "loops": [
@@ -7059,32 +7059,32 @@
       "parity_contract": "input computation precision and API budget",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 0.06468214285714285,
-      "cpp_ms": 0.015529896907216494,
-      "speedup": 4.1650078711782115,
+      "reference_ms": 0.047571052631578944,
+      "cpp_ms": 0.015854166666666666,
+      "speedup": 3.0005394563939416,
       "samples_ms": [
         [
-          0.06468214285714285,
-          0.05506785714285715,
-          0.10808214285714285,
-          0.056035714285714286,
-          0.11041071428571429,
-          0.06607857142857143,
-          0.058296428571428575
+          0.045171052631578945,
+          0.047571052631578944,
+          0.047335526315789474,
+          0.04592631578947369,
+          0.06485131578947369,
+          0.1055328947368421,
+          0.05058421052631579
         ],
         [
-          0.026337113402061855,
-          0.015064948453608248,
-          0.015529896907216494,
-          0.015611340206185566,
-          0.01554639175257732,
-          0.015171134020618557,
-          0.014987628865979381
+          0.02188333333333333,
+          0.033696666666666666,
+          0.015854166666666666,
+          0.024600833333333332,
+          0.015775,
+          0.013304166666666666,
+          0.013389166666666666
         ]
       ],
       "loops": [
-        28,
-        97
+        76,
+        120
       ],
       "sample_labels": [
         "scikit-image",
@@ -7114,32 +7114,32 @@
       "rtol": 2e-06,
       "atol": 2e-06,
       "route_rgb_max_abs_error": 3.0517578125e-05,
-      "reference_ms": 47.183,
-      "cpp_ms": 1.32565,
-      "speedup": 35.59235092218911,
+      "reference_ms": 33.156,
+      "cpp_ms": 0.6182214285714285,
+      "speedup": 53.63126942496332,
       "samples_ms": [
         [
-          55.1447,
-          52.5645,
-          45.4011,
-          47.183,
-          54.523,
-          43.0384,
-          39.9943
+          33.1567,
+          32.366,
+          32.7126,
+          33.156,
+          34.1845,
+          34.6254,
+          31.9083
         ],
         [
-          1.32565,
-          2.371275,
-          1.2181,
-          1.096375,
-          2.25315,
-          1.8476,
-          1.195
+          0.6733357142857144,
+          0.6087285714285715,
+          0.7516857142857143,
+          0.5520571428571428,
+          0.5658571428571428,
+          0.6182214285714285,
+          0.6804
         ]
       ],
       "loops": [
         1,
-        4
+        14
       ],
       "sample_labels": [
         "scikit-image",
@@ -7169,32 +7169,32 @@
       "rtol": 2e-13,
       "atol": 2e-13,
       "route_rgb_max_abs_error": 5.684341886080802e-14,
-      "reference_ms": 59.5446,
-      "cpp_ms": 4.746625,
-      "speedup": 12.544618544755485,
+      "reference_ms": 37.5247,
+      "cpp_ms": 1.37228,
+      "speedup": 27.344783863351505,
       "samples_ms": [
         [
-          54.6147,
-          59.5446,
-          57.6947,
-          61.9199,
-          56.2298,
-          65.4536,
-          65.2655
+          36.5263,
+          37.6685,
+          40.4875,
+          36.4464,
+          37.5247,
+          40.2832,
+          36.3679
         ],
         [
-          2.8202,
-          2.51745,
-          4.746625,
-          5.381925,
-          3.586575,
-          5.34605,
-          5.6532
+          1.62784,
+          2.2822,
+          1.964,
+          1.37228,
+          1.30184,
+          1.30366,
+          1.33724
         ]
       ],
       "loops": [
         1,
-        4
+        5
       ],
       "sample_labels": [
         "scikit-image",
