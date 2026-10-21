@@ -16,7 +16,7 @@ template<class T> T morphology_cast(double v) {
     else if constexpr (std::is_same_v<T,std::int64_t>)
         return v >= 9223372036854775808.0 || v < -9223372036854775808.0 || !std::isfinite(v) ? std::numeric_limits<T>::min() : T(v);
     else if constexpr (std::is_same_v<T,std::uint64_t>) {
-        if (!std::isfinite(v) || v >= 18446744073709551616.0) return 0;
+        if (std::isnan(v) || v >= 18446744073709551616.0) return 0;
         if (v < 0) {
             // SciPy's x86 min/max output casts convert through a signed register.
             return v >= -9223372036854775808.0 ? T(std::int64_t(v)) : T(1)<<63;
@@ -26,7 +26,7 @@ template<class T> T morphology_cast(double v) {
     else if constexpr (std::is_same_v<T,std::int32_t>)
         return v >= 2147483648.0 || v < -2147483648.0 || !std::isfinite(v) ? std::numeric_limits<T>::min() : T(v);
     else if constexpr (std::is_same_v<T,std::uint32_t>) {
-        if (!std::isfinite(v) || v >= 18446744073709551616.0 || v < -9223372036854775808.0) return 0;
+        if (!std::isfinite(v) || v >= 9223372036854775808.0 || v < -9223372036854775808.0) return 0;
         double r = std::fmod(std::trunc(v),4294967296.0);
         if (r < 0) r += 4294967296.0;
         return T(r);

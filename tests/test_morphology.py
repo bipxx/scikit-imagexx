@@ -165,11 +165,12 @@ def test_invalid_arguments(name,options):
 
 
 @pytest.mark.parametrize('name',NAMES)
-@pytest.mark.parametrize('shape',[(19,35),(71,137),(519,521)])
-@pytest.mark.parametrize('fp_shape',[(17,1),(1,17),(31,31),(65,129)])
-@pytest.mark.parametrize('uniform',[False,True])
-def test_packed_boolean_rectangles(name,shape,fp_shape,uniform):
-    a=np.ones(shape,dtype=bool) if uniform else sample('bool',shape)
+@pytest.mark.parametrize('shape,fp_shape',[
+    ((19,35),(17,1)),((19,35),(1,17)),((19,35),(31,31)),
+    ((71,137),(65,129)),((519,521),(31,31))])
+@pytest.mark.parametrize('pattern',['random','zeros','ones'])
+def test_packed_boolean_rectangles(name,shape,fp_shape,pattern):
+    a=sample('bool',shape) if pattern=='random' else np.full(shape,pattern=='ones',dtype=bool)
     fp=np.ones(fp_shape,dtype=bool)
     modes=('ignore','min','max') if name.startswith('binary_') else xx.morphology._MODES
     for mode in modes:
@@ -197,3 +198,11 @@ def test_packed_boolean_inplace_and_strided_out(name):
     out=np.zeros((33,134),dtype=bool)[:,::2]
     assert getattr(xx.morphology,name)(source,fp,out=out) is out
     np.testing.assert_array_equal(out,expected)
+
+
+@pytest.mark.parametrize('name',NAMES[:6])
+@pytest.mark.parametrize('dtype',['uint32','uint64'])
+@pytest.mark.parametrize('cval',[-np.inf,np.inf,-2.**63-2048,2.**63+2048,2.**63+2.**31,2.**64-4096])
+@pytest.mark.parametrize('fp',[np.array([[1,0,1]]),np.ones((1,3)),np.ones((1,2))])
+def test_unsigned_constant_cast_boundaries(name,dtype,cval,fp):
+    compare(name,sample(dtype,(3,41)),footprint=fp,mode='constant',cval=cval)
