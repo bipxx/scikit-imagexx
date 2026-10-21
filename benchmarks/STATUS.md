@@ -1,7 +1,7 @@
 # Current performance verification
 
-Reference: original scikit-image 0.26.0. 1966 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
-`886c6d1439c2338af8d2407dee40287fb01e8cfa3b6dff95a80ea2a5b5686343`.
+Reference: original scikit-image 0.26.0. 2252 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the current source/build SHA-256 (POSIX relative paths and LF line endings):
+`96f542f04192c2d5c62723a80cca30713bd076f96d8afa6a5935afc6c4c24edb`.
 
 | Report | Cases | Worker counts |
 |---|---:|---|
@@ -15,9 +15,10 @@ Reference: original scikit-image 0.26.0. 1966 comparisons on Windows-11-10.0.262
 | [Lab distances and color routes](color-distance.md) | 123 | 1 |
 | [Histogram threshold parameters](threshold-parameters.md) | 76 | 1 |
 | [Local threshold windows and dtypes](local-threshold-parameters.md) | 128 | 1 |
-| [Alpha and grayscale layouts](alpha-parameters.md) | 184 | 1 |
+| [Alpha and grayscale layouts](alpha-parameters.md) | 208 | 1 |
 | [Laplace and Roberts layouts](edge-parameters.md) | 260 | 1 |
 | [Farid derivatives and boundaries](farid-parameters.md) | 243 | 1 |
+| [Every covered entry with dtype metadata](metadata-parameters.md) | 262 | 1 |
 
 Every workload checks values and dtype against original scikit-image before timing with fallback disabled. Integer-width conversion cases also require exact values and matching identity behavior. Timings include allocation, Python dispatch, integer normalization and any needed input copying. Inputs/imports/I/O are excluded. Reference thread pools use one thread. Native worker counts are explicit.
 
@@ -25,72 +26,83 @@ Examples from the 1024² one-worker default-parameter comparisons (color-space r
 
 | Operation | Input | Original ms | C++ ms | Reference / C++ |
 |---|---|---:|---:|---:|
-| morphology.erosion | uint8 | 5.7999 | 0.4319 | 13.43x |
-| color.rgb2yuv | uint8 | 17.1529 | 8.4563 | 2.03x |
-| color.rgb2xyz | uint8 | 90.3854 | 8.9799 | 10.07x |
-| color.rgb2hed | uint8 | 40.8430 | 13.2706 | 3.08x |
-| filters.gaussian | uint8 | 24.3341 | 5.6243 | 4.33x |
-| filters.sobel | uint8 | 26.7275 | 3.6608 | 7.30x |
-| filters.threshold_otsu | uint8 | 4.3096 | 0.2836 | 15.20x |
-| morphology.opening | float32 | 17.1364 | 2.9269 | 5.85x |
-| color.rgb2xyz | float32 | 82.2650 | 25.4686 | 3.23x |
-| color.xyz2rgb | float32 | 102.1850 | 32.4437 | 3.15x |
-| color.rgb2hsv | float32 | 176.9402 | 6.0140 | 29.42x |
-| color.hsv2rgb | float32 | 163.4117 | 5.1028 | 32.02x |
-| color.rgb2luv | float32 | 103.7191 | 32.1100 | 3.23x |
-| color.luv2rgb | float32 | 61.8089 | 4.9198 | 12.56x |
-| color.separate_stains | float32 | 41.9423 | 14.0314 | 2.99x |
-| color.deltaE_cie76 | float32 | 13.2676 | 2.2361 | 5.93x |
-| color.convert_colorspace | float32 | 204.5513 | 5.8496 | 34.97x |
-| color.deltaE_ciede94 | float32 | 163.3479 | 25.8974 | 6.31x |
-| color.deltaE_ciede2000 | float32 | 289.5509 | 113.1874 | 2.56x |
-| color.deltaE_cmc | float32 | 281.7622 | 53.3987 | 5.28x |
-| morphology.binary_dilation | float64 | 13.6562 | 5.3657 | 2.55x |
-| color.rgb2ycbcr | float64 | 25.5165 | 12.9367 | 1.97x |
-| color.rgb2lab | float64 | 276.1380 | 64.0547 | 4.31x |
-| color.lab2lch | float64 | 51.5875 | 15.9405 | 3.24x |
-| color.luv2xyz | float64 | 162.5920 | 14.2047 | 11.45x |
-| color.combine_stains | float64 | 83.8262 | 22.4518 | 3.73x |
-| color.deltaE_cie76 | float64 | 34.7907 | 6.2909 | 5.53x |
+| morphology.erosion | uint8 | 10.2172 | 0.4965 | 20.58x |
+| color.rgb2yuv | uint8 | 15.2751 | 7.8178 | 1.95x |
+| color.rgb2xyz | uint8 | 96.1257 | 9.6071 | 10.01x |
+| color.rgb2hed | uint8 | 53.2776 | 13.8912 | 3.84x |
+| filters.gaussian | uint8 | 27.7059 | 5.6874 | 4.87x |
+| filters.sobel | uint8 | 29.2850 | 3.3998 | 8.61x |
+| filters.threshold_otsu | uint8 | 4.0720 | 0.2738 | 14.87x |
+| morphology.opening | float32 | 8.8258 | 2.9886 | 2.95x |
+| color.rgb2xyz | float32 | 59.2840 | 21.7887 | 2.72x |
+| color.xyz2rgb | float32 | 76.9060 | 21.9079 | 3.51x |
+| color.rgb2hsv | float32 | 153.6735 | 4.1910 | 36.67x |
+| color.hsv2rgb | float32 | 155.7656 | 5.0133 | 31.07x |
+| color.rgb2luv | float32 | 113.9963 | 31.7356 | 3.59x |
+| color.luv2rgb | float32 | 65.0051 | 5.6718 | 11.46x |
+| color.separate_stains | float32 | 32.0296 | 12.8709 | 2.49x |
+| color.deltaE_cie76 | float32 | 12.7621 | 1.8393 | 6.94x |
+| color.convert_colorspace | float32 | 209.9960 | 7.1688 | 29.29x |
+| color.deltaE_ciede94 | float32 | 153.3195 | 22.0744 | 6.95x |
+| color.deltaE_ciede2000 | float32 | 267.0704 | 101.8211 | 2.62x |
+| color.deltaE_cmc | float32 | 415.5031 | 63.9440 | 6.50x |
+| morphology.binary_dilation | float64 | 12.6095 | 6.2238 | 2.03x |
+| color.rgb2ycbcr | float64 | 17.7696 | 6.3024 | 2.82x |
+| color.rgb2lab | float64 | 218.8060 | 53.0567 | 4.12x |
+| color.lab2lch | float64 | 38.5944 | 13.4208 | 2.88x |
+| color.luv2xyz | float64 | 104.5170 | 6.5203 | 16.03x |
+| color.combine_stains | float64 | 44.9583 | 12.2013 | 3.68x |
+| color.deltaE_cie76 | float64 | 35.0073 | 5.5338 | 6.33x |
 
 Boolean 31×31 rectangles, with one worker (the previous slower morphology workloads):
 
 | Operation | Image | Original ms | C++ ms | Reference / C++ |
 |---|---|---:|---:|---:|
-| morphology.erosion | 512² | 2.2425 | 0.1477 | 15.19x |
-| morphology.dilation | 512² | 2.2461 | 0.1569 | 14.32x |
-| morphology.opening | 512² | 4.3288 | 0.3281 | 13.19x |
-| morphology.closing | 512² | 3.3834 | 0.2314 | 14.62x |
-| morphology.white_tophat | 512² | 3.7687 | 0.2587 | 14.57x |
-| morphology.black_tophat | 512² | 3.3174 | 0.2251 | 14.74x |
+| morphology.erosion | 512² | 2.3291 | 0.1689 | 13.79x |
+| morphology.dilation | 512² | 2.1698 | 0.1597 | 13.59x |
+| morphology.opening | 512² | 3.7620 | 0.2673 | 14.07x |
+| morphology.closing | 512² | 4.0665 | 0.3100 | 13.12x |
+| morphology.white_tophat | 512² | 4.2125 | 0.3000 | 14.04x |
+| morphology.black_tophat | 512² | 4.2966 | 0.2918 | 14.72x |
 
 The [fixed-workload tuning experiment](morphology-tuning.md) preserves separate historical before/after C++ snapshots. Its cases are not added to this current-source total.
 
-1919 of 1938 one-worker native processing workloads measured faster than the reference. These are workload cases, including repeated functions and parameter variants. Identity returns, copies and dtype metadata are excluded from this count and labeled separately in the full reports.
+2183 of 2213 one-worker native processing workloads measured faster than the reference. These are workload cases, including repeated functions and parameter variants. Identity returns, copies and dtype metadata are excluded from this count and labeled separately in the full reports.
 
-19 one-worker processing workloads remained slower:
+30 one-worker processing workloads remained slower:
 
 | Operation | Input | Shape | Layout | Workload | Reference / C++ |
 |---|---|---:|---|---|---:|
-| util.img_as_bool | float64 | 256² | standard | default | 0.7658x |
-| util.invert | float32 | 1024² | standard | default | 0.7891x |
-| util.img_as_bool | float32 | 1024² | standard | default | 0.6549x |
-| util.invert | float64 | 1024² | standard | default | 0.9741x |
-| util.img_as_bool | float64 | 1024² | standard | default | 0.9037x |
-| util.img_as_bool | int8 | 1024² | standard | default | 0.9825x |
-| util.img_as_int | uint16 | 1024² | standard | default | 0.7402x |
-| color.separate_stains | uint16 | 512² | channel-first | default | 0.8499x |
-| color.rgb2hed | uint16 | 512² | channel-first | default | 0.9283x |
-| color.lch2lab | float32 | 512² | standard | four-channels | 0.9865x |
-| filters.threshold_yen | float32/int64 | 257 | histogram-only | supplied-histogram | 0.6827x |
-| filters.threshold_isodata | float32/int64 | 257 | histogram-only | trimmed-histogram | 0.8209x |
-| filters.threshold_yen | float32/float32 | 257 | histogram-only | supplied-histogram | 0.5361x |
-| filters.threshold_yen | float32/float32 | 257 | histogram-only | trimmed-histogram | 0.8229x |
-| filters.threshold_isodata | float32/float32 | 257 | histogram-only | large-counts | 0.9698x |
-| filters.threshold_yen | float32/float64 | 257 | histogram-only | trimmed-histogram | 0.8004x |
-| color.gray2rgb | float16 | 512×512 | strided | strided | 0.8759x |
-| color.gray2rgb | float16 | 512×512 | fortran | fortran | 0.7667x |
-| color.gray2rgba | >f4 | 512×512 | contiguous | endian-contiguous | 0.9900x |
+| color.rgb2ypbpr | uint8 | 256² | standard | default | 0.9678x |
+| filters.threshold_mean | float32 | 256² | standard | default | 0.8220x |
+| util.invert | float32 | 256² | standard | default | 0.7059x |
+| util.img_as_bool | float64 | 256² | standard | default | 0.5716x |
+| util.img_as_bool | uint8 | 1024² | standard | default | 0.8208x |
+| util.img_as_float64 | float32 | 1024² | standard | default | 0.8920x |
+| util.img_as_bool | float32 | 1024² | standard | default | 0.9335x |
+| util.img_as_float32 | float64 | 1024² | standard | default | 0.8257x |
+| util.img_as_float | bool | 1024² | standard | default | 0.9756x |
+| util.img_as_float64 | bool | 1024² | standard | default | 0.9431x |
+| util.img_as_int | uint16 | 1024² | standard | default | 0.7859x |
+| util.img_as_bool | uint16 | 1024² | standard | default | 0.8447x |
+| util.img_as_float | uint32 | 1024² | standard | default | 0.9327x |
+| util.img_as_int | uint64 | 1024² | standard | default | 0.7590x |
+| color.lch2lab | uint16 | 512² | strided | default | 0.7970x |
+| color.separate_stains | uint16 | 512² | channel-first | default | 0.8433x |
+| color.rgb2hed | uint16 | 512² | channel-first | default | 0.8535x |
+| morphology.dilation | float32 | 512² | rectangle-31 | rectangle-31 | 0.9406x |
+| morphology.closing | float32 | 512² | rectangle-31 | rectangle-31 | 0.9652x |
+| morphology.white_tophat | float32 | 512² | rectangle-31 | rectangle-31 | 0.9276x |
+| morphology.black_tophat | float64 | 512² | rectangle-31 | rectangle-31 | 0.8668x |
+| filters.threshold_yen | float32/int64 | 257 | histogram-only | trimmed-histogram | 0.4511x |
+| filters.threshold_isodata | float32/float32 | 257 | histogram-only | trimmed-histogram | 0.7516x |
+| filters.threshold_yen | float32/float32 | 257 | histogram-only | large-counts | 0.9509x |
+| filters.threshold_yen | float32/float64 | 257 | histogram-only | large-counts | 0.8986x |
+| color.gray2rgb | int16 | 512×512 | fortran | fortran | 0.9767x |
+| filters.farid | float32 | 512×512 | contiguous | axis=() | 0.8403x |
+| util.invert | float32 | 512² | dtype-metadata | default | 0.9606x |
+| util.invert | float64 | 512² | dtype-metadata | default | 0.8587x |
+| util.img_as_bool | float64 | 512² | dtype-metadata | default | 0.9146x |
 
 The color port fuses integer normalization, matrix arithmetic and sRGB transfer. Uniform floating layouts now avoid a full contiguous copy: planar input uses contiguous channel loads, other uniform strides use gathers, and scalar tails preserve the same arithmetic. General nonuniform layouts and unaligned arrays can still require copying. Simple matrix transforms remain sensitive to dispatch, shuffling and memory traffic; this run has no hardware-counter profiling to quantify their individual contribution. Further optimization remains necessary.
 
@@ -118,4 +130,4 @@ Farid preserves the ordered full coefficient sum while vectorizing independent o
 
 Measurements use ordinary system load without CPU affinity or frequency locking. Small differences near 1x can change between runs. These are measured comparisons on this machine, not universal speed guarantees. CI runs parity and benchmark smoke checks on Windows/Linux without asserting speed ratios on shared runners.
 
-Coverage remains partial: 88 native image entries, 2 metadata helpers, 360 inventoried entries still pending. See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and [documented input contracts](../README.md). Run `python benchmarks/verify.py` to rebuild and reproduce all thirteen reports, including this summary. Use `--threads 1` for serial-only verification. The summary rejects mixed source hashes, missing APIs and absent one-worker comparisons.
+Coverage remains partial: 88 native image entries, 2 metadata helpers, 360 inventoried entries still pending. See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and [documented input contracts](../README.md). Run `python benchmarks/verify.py` to rebuild and reproduce all fourteen reports, including this summary. Use `--threads 1` for serial-only verification. The summary rejects mixed source hashes, missing APIs and absent one-worker comparisons.
