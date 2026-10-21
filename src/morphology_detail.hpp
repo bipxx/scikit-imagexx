@@ -22,7 +22,7 @@ template<class T> T morphology_cast(double v) {
         return T(v);
     }
     else if constexpr (std::is_same_v<T,std::int32_t>)
-        return v > 2147483647.0 || v < -2147483648.0 || !std::isfinite(v) ? std::numeric_limits<T>::min() : T(v);
+        return v >= 2147483648.0 || v < -2147483648.0 || !std::isfinite(v) ? std::numeric_limits<T>::min() : T(v);
     else if constexpr (std::is_same_v<T,std::uint32_t>) {
         if (!std::isfinite(v) || v >= 18446744073709551616.0 || v < -9223372036854775808.0) return 0;
         double r = std::fmod(std::trunc(v),4294967296.0);
