@@ -2,7 +2,6 @@
 from ._compat import module_attribute, fallback
 from . import _core
 import numpy as np
-from math import isfinite as _isfinite
 
 
 def __getattr__(name):
@@ -19,7 +18,6 @@ for _type in _REAL_TYPES:
         _platform=np.dtype(np.uintp if _descriptor.kind=='u' else np.intp)
         _default=_platform if _descriptor.itemsize<=_platform.itemsize else _descriptor
     _DEFAULT_DTYPES[_type]=_default
-_MAXIMUM={np.float32:float(np.finfo(np.float32).max),np.float64:float(np.finfo(np.float64).max)}
 
 
 def _integral_fallback(image,dtype):
@@ -67,17 +65,13 @@ def integral_image(image,*,dtype=None):
     if target.kind in 'iu' and source.kind=='f':return _integral_fallback(image,dtype)
     if target.type==np.float32 and source.type!=np.float32:return _integral_fallback(image,dtype)
     native=_integral_storage(image)
-    if native.dtype.kind=='f' and native.size:
-        low,high=_core.intensity_bounds(native.ravel(order='K'))
-        # Leave room for rounding at every ordered axis stage. Each finite
-        # addition's rounding error is bounded by the smaller operand's
-        # magnitude; the conservative factor doubles per spatial axis.
-        limit=_MAXIMUM[target.type]/native.size/(2.**native.ndim)
-        if not (_isfinite(low) and _isfinite(high)) or max(abs(low),abs(high))>limit:return _integral_fallback(image,dtype)
     # Keep-order allocation matches upstream strides, including singleton and
     # empty dimensions. All conversion and prefix arithmetic remain native.
     result=np.empty_like(image,dtype=target,order='K',subok=False)
-    return _core.integral_image(native,result)
+    if not _core.integral_image(native,result):
+        del result
+        return _integral_fallback(image,dtype)
+    return result
 
 
 __all__=['integral_image']

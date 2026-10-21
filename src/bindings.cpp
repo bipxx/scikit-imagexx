@@ -681,7 +681,7 @@ PYBIND11_MODULE(_core, m) {
     m.def("integral_image", [](py::array image,py::array result) {
         const auto source=pixel_type(image.dtype()),target=pixel_type(result.dtype());
         auto dense=[](const py::array& array) {
-            if(!array.size())return true;
+            if(!array.size() || (array.flags()&(py::array::c_style|py::array::f_style)))return true;
             std::vector<std::pair<py::ssize_t,py::ssize_t>> axes;
             for(py::ssize_t axis=0;axis<array.ndim();++axis)if(array.shape(axis)>1)axes.emplace_back(array.strides(axis),array.shape(axis));
             std::sort(axes.begin(),axes.end());auto extent=array.itemsize();
@@ -692,14 +692,30 @@ PYBIND11_MODULE(_core, m) {
         if(!dense(input) || !input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")("K").cast<py::array>();
         if(!result.writeable() || !dense(result) || !result.attr("flags").attr("aligned").cast<bool>())throw py::type_error("dense aligned writable integral output required");
         if(input.ndim()!=result.ndim())throw py::value_error("integral output shape mismatch");
-        std::vector<std::size_t> shape,strides;
+        const bool c_order=(result.flags()&py::array::c_style)!=0;
+        std::vector<std::size_t> shape,strides;shape.reserve(std::size_t(input.ndim()));
+        if(!c_order)strides.reserve(std::size_t(input.ndim()));
         for(py::ssize_t axis=0;axis<input.ndim();++axis) {
             if(input.shape(axis)!=result.shape(axis))throw py::value_error("integral output shape mismatch");
             if(input.size() && input.shape(axis)>1 && input.strides(axis)/input.itemsize()!=result.strides(axis)/result.itemsize())throw py::value_error("matching integral physical axis order required");
-            shape.push_back(std::size_t(input.shape(axis)));strides.push_back(std::size_t(result.strides(axis)/result.itemsize()));
+            shape.push_back(std::size_t(input.shape(axis)));
+            if(!c_order)strides.push_back(std::size_t(result.strides(axis)/result.itemsize()));
         }
-        {py::gil_scoped_release release;skimagexx::integral_image_into(input.data(),result.mutable_data(),source,target,shape,strides);}
-        return result;
+        const auto count=std::size_t(input.size());bool supported=true;
+        {
+            py::gil_scoped_release release;
+            if(count && (source==skimagexx::PixelType::float32 || source==skimagexx::PixelType::float64)) {
+                const auto range=source==skimagexx::PixelType::float32
+                    ? skimagexx::intensity_bounds(static_cast<const float*>(input.data()),count,1)
+                    : skimagexx::intensity_bounds(static_cast<const double*>(input.data()),count,1);
+                const double maximum=target==skimagexx::PixelType::float32 ? double(std::numeric_limits<float>::max()) : std::numeric_limits<double>::max();
+                const auto limit=std::ldexp(maximum/double(count),-int(shape.size()));
+                supported=std::isfinite(range.first) && std::isfinite(range.second)
+                    && std::max(std::abs(range.first),std::abs(range.second))<=limit;
+            }
+            if(supported)skimagexx::integral_image_into(input.data(),result.mutable_data(),source,target,shape,strides);
+        }
+        return supported;
     });
     m.def("gaussian_difference", [](py::array first,py::array second) {
         const auto type=pixel_type(first.dtype());

@@ -195,6 +195,11 @@ def main():
               'fuses the subtraction, scale, addition and clipping stages. The '
               '[fixed interior-span experiment](gaussian-tuning.md) retains baseline, optimized and '
               'independent confirmation snapshots.','',
+              'Integral images preserve ordered floating prefixes, modular integer overflow and physical '
+              'output layout. The [dispatch experiment](integral-dispatch-tuning.md) and '
+              '[paired integer-prefix experiment](integral-integer-tuning.md) retain independent '
+              'confirmation samples and rejected variants. All current integral workloads check exact '
+              'values, dtype tags, strides and warnings before timing.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
