@@ -1,5 +1,6 @@
 """Perceptual color options, extra channels, and warning-count workloads."""
 from run import measure
+from color_parity import check_float32_luv_inverse_stages
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -57,13 +58,17 @@ def main():
                 assert [(w.category,str(w.message)) for w in actual_warnings]==[(w.category,str(w.message)) for w in expected_warnings]
                 assert actual.dtype==expected.dtype
                 rtol,atol=parity_tolerance('color.'+name,actual.dtype)
-                np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
+                parity={'parity_contract':'base dtype/API tolerance','rtol':rtol,'atol':atol}
+                if name=='luv2rgb' and actual.dtype==np.float32:
+                    parity.update(check_float32_luv_inverse_stages(image,actual,expected))
+                else:
+                    np.testing.assert_allclose(actual,expected,rtol=rtol,atol=atol)
                 with warnings.catch_warnings():
                     warnings.simplefilter('ignore',UserWarning)
                     timing=measure(lambda: old(image,**options),lambda: current(image,**options),7,15)
                 result={'api':'color.'+name,'dtype':np.dtype(dtype).name,'size':args.size,'threads':threads,
                         'workload':workload,'options':options,'channels':image.shape[-1],'backend':'native',
-                        'max_abs_error':float(np.max(np.abs(actual-expected))),**timing}
+                        'max_abs_error':float(np.max(np.abs(actual-expected))),**parity,**timing}
                 results.append(result)
                 print(f'{name:10} {np.dtype(dtype).name:7} {workload:14} t={threads}: {timing["speedup"]:.2f}x',flush=True)
     root=Path(__file__).resolve().parents[1]
@@ -81,6 +86,8 @@ def main():
            'Strict native dispatch versus original scikit-image. Values, dtype and warnings are '
            'checked before timing. Seven warmed allocation-inclusive samples; one-thread reference. '
            'UserWarning is ignored during timing, while native negative-Z counting remains included. '
+           'Float32 inverse Luv checks each rounding stage and a propagated direct RGB bound; '
+           'the JSON records its contract and measured errors. '
            'Speedup = reference/current; slower cases remain visible.','',
            '| API | Input | Workload | Workers | Original ms | C++ ms | Speedup |',
            '|---|---|---|---:|---:|---:|---:|']
