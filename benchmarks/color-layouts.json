@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-10-21T05:12:15.714300+00:00",
+    "timestamp_utc": "2026-10-21T05:53:59.531559+00:00",
     "platform": "Windows-11-10.0.26200-SP0",
     "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
     "reference": "0.26.0",
     "numpy": "2.5.4",
-    "source_sha256": "fc888e0fb93c2cdd5e923abfe9fb4605d4116626afd7f81957ceb4a14f87eee8",
+    "source_sha256": "ff70e599ada128399a30dd5a9bf4250a659cf08a00061f77b43f7cd0fbdb582a",
     "avx2": true,
     "fallback_enabled": false,
     "reference_thread_pools": 1,
@@ -23,1011 +23,27 @@
       "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 4.5366,
-      "cpp_ms": 2.2800833333333337,
-      "speedup": 1.989664120463433,
+      "reference_ms": 3.314875,
+      "cpp_ms": 1.95276,
+      "speedup": 1.6975332350109587,
       "samples_ms": [
         [
-          3.8646,
-          4.1142,
-          4.1332,
-          4.5366,
-          4.55055,
-          4.6635,
-          5.60745
+          3.635725,
+          3.314875,
+          3.6733,
+          3.345175,
+          2.998425,
+          3.188225,
+          3.250525
         ],
         [
-          2.2800833333333337,
-          2.4002833333333333,
-          2.1152333333333333,
-          2.1721,
-          2.1974166666666664,
-          2.61975,
-          2.2844333333333333
-        ]
-      ],
-      "loops": [
-        2,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.yuv2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 4.78035,
-      "cpp_ms": 2.4324,
-      "speedup": 1.9652812037493836,
-      "samples_ms": [
-        [
-          6.19215,
-          4.92615,
-          4.47135,
-          4.78035,
-          4.18195,
-          4.82085,
-          4.5211
-        ],
-        [
-          2.4324,
-          2.471025,
-          2.489875,
-          2.571625,
-          2.264425,
-          2.227375,
-          2.198125
-        ]
-      ],
-      "loops": [
-        2,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2yiq",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 4.1484,
-      "cpp_ms": 2.3401285714285716,
-      "speedup": 1.7727231104518064,
-      "samples_ms": [
-        [
-          4.182833333333334,
-          4.1484,
-          3.8858666666666664,
-          3.8914666666666666,
-          3.9293666666666667,
-          4.8993,
-          4.841366666666667
-        ],
-        [
-          2.1386857142857143,
-          2.152357142857143,
-          2.3762,
-          2.454785714285714,
-          2.422185714285714,
-          2.3401285714285716,
-          2.1749714285714288
-        ]
-      ],
-      "loops": [
-        3,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.yiq2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 4.28915,
-      "cpp_ms": 2.32226,
-      "speedup": 1.8469723459044207,
-      "samples_ms": [
-        [
-          4.02445,
-          5.05165,
-          4.14495,
-          4.5118,
-          4.15275,
-          4.61095,
-          4.28915
-        ],
-        [
-          2.33638,
-          2.32226,
-          2.45372,
-          2.18676,
-          2.3588,
-          2.1095,
-          2.19804
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ypbpr",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 5.0522,
-      "cpp_ms": 3.5129,
-      "speedup": 1.4381849753764695,
-      "samples_ms": [
-        [
-          4.851,
-          5.0522,
-          5.3898,
-          5.4092,
-          4.94095,
-          4.98565,
-          6.4962
-        ],
-        [
-          3.387325,
-          3.763775,
-          3.744575,
-          3.567725,
-          3.5129,
-          3.4477,
-          3.4372
-        ]
-      ],
-      "loops": [
-        2,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ypbpr2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 4.700233333333333,
-      "cpp_ms": 2.4189,
-      "speedup": 1.9431284192539309,
-      "samples_ms": [
-        [
-          5.8984,
-          5.223433333333333,
-          4.669466666666667,
-          5.012533333333333,
-          4.399466666666667,
-          4.6355,
-          4.700233333333333
-        ],
-        [
-          2.3048333333333333,
-          2.4189,
-          2.3090333333333333,
-          2.4576666666666664,
-          2.4686,
-          2.4118666666666666,
-          2.648
-        ]
-      ],
-      "loops": [
-        3,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ycbcr",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 5.684341886080802e-14,
-      "reference_ms": 5.51495,
-      "cpp_ms": 2.461075,
-      "speedup": 2.2408703513708437,
-      "samples_ms": [
-        [
-          4.89875,
-          6.0238,
-          5.15265,
-          5.8505,
-          6.2302,
-          5.0571,
-          5.51495
-        ],
-        [
-          2.297125,
-          2.492425,
-          2.42285,
-          2.252425,
-          2.5945,
-          2.500275,
-          2.461075
-        ]
-      ],
-      "loops": [
-        2,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ycbcr2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.734723475976807e-18,
-      "reference_ms": 6.7924,
-      "cpp_ms": 3.9541333333333335,
-      "speedup": 1.7177974103048286,
-      "samples_ms": [
-        [
-          8.4068,
-          7.5142,
-          6.7924,
-          5.9845,
-          9.5727,
-          6.5603,
-          6.7477
-        ],
-        [
-          4.0536666666666665,
-          3.9541333333333335,
-          3.7034,
-          3.624,
-          3.8287,
-          4.0578,
-          4.0079
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ydbdr",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 4.6788,
-      "cpp_ms": 2.3646,
-      "speedup": 1.9786856127886323,
-      "samples_ms": [
-        [
-          4.412266666666667,
-          5.2142,
-          4.6788,
-          4.837433333333333,
-          4.828066666666667,
-          4.266666666666667,
-          4.149266666666667
-        ],
-        [
-          2.3454666666666664,
-          2.5397166666666666,
-          2.2406333333333337,
-          2.4506,
-          2.5529833333333336,
-          2.2846333333333333,
-          2.3646
-        ]
-      ],
-      "loops": [
-        3,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ydbdr2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 4.48315,
-      "cpp_ms": 2.36,
-      "speedup": 1.8996398305084747,
-      "samples_ms": [
-        [
-          4.8406,
-          4.06555,
-          5.1017,
-          5.15835,
-          3.89915,
-          4.48315,
-          4.09195
-        ],
-        [
-          2.24802,
-          2.36,
-          2.63586,
-          2.5135,
-          2.23574,
-          2.13738,
-          2.51544
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2rgbcie",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 5.551115123125783e-17,
-      "reference_ms": 5.3621,
-      "cpp_ms": 3.8183,
-      "speedup": 1.4043160568839537,
-      "samples_ms": [
-        [
-          6.43305,
-          6.5299,
-          5.8346,
-          4.9875,
-          5.3621,
-          4.53425,
-          4.6922
-        ],
-        [
-          5.4826,
-          3.8183,
-          4.127833333333333,
-          3.9916,
-          3.5327,
-          2.5458,
-          2.5173666666666663
-        ]
-      ],
-      "loops": [
-        2,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgbcie2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.7763568394002505e-15,
-      "reference_ms": 4.8457,
-      "cpp_ms": 2.46904,
-      "speedup": 1.9625846482843532,
-      "samples_ms": [
-        [
-          4.7567,
-          5.6911,
-          5.185966666666667,
-          4.918233333333333,
-          4.8457,
-          4.569,
-          4.5136
-        ],
-        [
-          2.7678,
-          2.56138,
-          2.35288,
-          2.512,
-          2.42714,
-          2.44542,
-          2.46904
-        ]
-      ],
-      "loops": [
-        3,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2xyz",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 3.3306690738754696e-16,
-      "reference_ms": 24.8029,
-      "cpp_ms": 10.1241,
-      "speedup": 2.449886903527227,
-      "samples_ms": [
-        [
-          23.0437,
-          24.8029,
-          23.2184,
-          29.7138,
-          29.1452,
-          26.374,
-          21.0706
-        ],
-        [
-          9.8083,
-          9.8348,
-          9.9263,
-          10.2982,
-          10.1241,
-          10.3027,
-          10.1698
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.7832957333041577e-15,
-      "reference_ms": 27.6204,
-      "cpp_ms": 9.2617,
-      "speedup": 2.9822170875757155,
-      "samples_ms": [
-        [
-          33.3755,
-          28.2697,
-          27.5838,
-          25.8248,
-          26.1575,
-          27.6204,
-          28.3694
-        ],
-        [
-          9.156,
-          8.8182,
-          10.254,
-          8.6067,
-          9.5431,
-          9.2617,
-          10.6326
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2hsv",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 53.7796,
-      "cpp_ms": 3.75315,
-      "speedup": 14.329190146943233,
-      "samples_ms": [
-        [
-          53.63,
-          59.894,
-          55.787,
-          53.225,
-          53.7796,
-          51.1272,
-          55.2703
-        ],
-        [
-          3.793625,
-          3.75315,
-          3.87745,
-          3.61495,
-          3.757575,
-          3.726525,
-          3.692
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.hsv2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 56.9866,
-      "cpp_ms": 5.0255,
-      "speedup": 11.339488608098698,
-      "samples_ms": [
-        [
-          60.7801,
-          56.5606,
-          54.0414,
-          52.7608,
-          75.5665,
-          67.1306,
-          56.9866
-        ],
-        [
-          4.902033333333333,
-          4.752966666666667,
-          5.267233333333333,
-          5.4608,
-          5.886033333333333,
-          4.974533333333333,
-          5.0255
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.2737367544323206e-13,
-      "reference_ms": 28.3501,
-      "cpp_ms": 10.6372,
-      "speedup": 2.665184447034934,
-      "samples_ms": [
-        [
-          28.5102,
-          30.0249,
-          28.3501,
-          32.272,
-          28.1686,
-          27.6517,
-          28.0228
-        ],
-        [
-          10.5844,
-          11.0158,
-          10.6372,
-          11.1646,
-          9.7268,
-          10.2097,
-          11.0328
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 29.689,
-      "cpp_ms": 5.36085,
-      "speedup": 5.538114291576895,
-      "samples_ms": [
-        [
-          28.9334,
-          31.8816,
-          32.5684,
-          31.04,
-          25.9471,
-          25.2397,
-          29.689
-        ],
-        [
-          5.36085,
-          6.386,
-          5.7102,
-          5.2946,
-          5.40045,
-          4.92035,
-          5.2454
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2lab",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-13,
-      "reference_ms": 53.5087,
-      "cpp_ms": 18.0944,
-      "speedup": 2.9571967017419754,
-      "samples_ms": [
-        [
-          54.4711,
-          66.2432,
-          53.5087,
-          49.8144,
-          47.4546,
-          53.6567,
-          49.6029
-        ],
-        [
-          19.196,
-          22.2374,
-          16.9641,
-          18.0944,
-          16.0461,
-          21.8993,
-          16.986
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.3877787807814457e-17,
-      "reference_ms": 35.2662,
-      "cpp_ms": 12.4825,
-      "speedup": 2.8252513518926494,
-      "samples_ms": [
-        [
-          37.8433,
-          35.6695,
-          34.5031,
-          31.603,
-          34.3778,
-          42.1694,
-          35.2662
-        ],
-        [
-          12.8937,
-          11.2419,
-          12.4825,
-          14.3492,
-          12.2296,
-          12.64,
-          11.5302
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 6.217248937900877e-15,
-      "reference_ms": 12.923,
-      "cpp_ms": 7.3469,
-      "speedup": 1.7589731723584097,
-      "samples_ms": [
-        [
-          12.923,
-          13.8702,
-          12.8445,
-          15.3503,
-          10.7096,
-          10.8317,
-          13.3888
-        ],
-        [
-          7.21585,
-          7.2441,
-          7.22195,
-          7.3469,
-          7.96225,
-          8.4052,
-          8.74425
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.1102230246251565e-16,
-      "reference_ms": 10.8138,
-      "cpp_ms": 5.2609,
-      "speedup": 2.055503811134977,
-      "samples_ms": [
-        [
-          11.5743,
-          10.8667,
-          10.8138,
-          12.7772,
-          8.2119,
-          10.328,
-          9.2011
-        ],
-        [
-          6.0569,
-          5.7412,
-          5.8918,
-          5.20205,
-          4.89195,
-          5.06055,
-          5.2609
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2yuv",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 4.5826,
-      "cpp_ms": 3.6126666666666667,
-      "speedup": 1.2684812696069385,
-      "samples_ms": [
-        [
-          4.5826,
-          4.5258,
-          4.7241,
-          5.3904,
-          5.1927,
-          3.668,
-          3.82265
-        ],
-        [
-          4.158133333333334,
-          3.6126666666666667,
-          3.4997,
-          3.9466,
-          3.7030333333333334,
-          3.1549333333333336,
-          2.1737666666666664
-        ]
-      ],
-      "loops": [
-        2,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.yuv2rgb",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 3.2904666666666667,
-      "cpp_ms": 2.5755,
-      "speedup": 1.2776030544230894,
-      "samples_ms": [
-        [
-          3.8462333333333336,
-          3.1083333333333334,
-          3.4869,
-          3.6014666666666666,
-          3.2904666666666667,
-          3.1274333333333333,
-          2.9036
-        ],
-        [
-          2.345375,
-          2.5755,
-          2.65295,
-          1.9726,
-          2.700075,
-          1.97895,
-          3.17025
-        ]
-      ],
-      "loops": [
-        3,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2yiq",
-      "dtype": "uint16",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 3.873375,
-      "cpp_ms": 2.86642,
-      "speedup": 1.351293599681833,
-      "samples_ms": [
-        [
-          3.672825,
-          3.88315,
-          3.679225,
-          4.08085,
-          3.873375,
-          3.59145,
-          3.9493
-        ],
-        [
-          2.11254,
-          2.57304,
-          2.86796,
-          3.00032,
-          2.95352,
-          2.86642,
-          2.4849
+          2.15786,
+          2.40832,
+          1.95276,
+          1.94606,
+          2.04712,
+          1.92886,
+          1.8989
         ]
       ],
       "loops": [
@@ -1040,40 +56,1188 @@
       ]
     },
     {
-      "api": "color.yiq2rgb",
+      "api": "color.yuv2rgb",
       "dtype": "uint16",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 5.392766666666667,
-      "cpp_ms": 4.27805,
-      "speedup": 1.26056653537632,
+      "reference_ms": 3.9599666666666664,
+      "cpp_ms": 2.3874,
+      "speedup": 1.658694255954874,
       "samples_ms": [
         [
-          5.219866666666667,
-          5.632,
-          5.392766666666667,
-          6.676266666666667,
-          4.513333333333333,
-          5.615966666666667,
-          4.545566666666667
+          5.3619666666666665,
+          4.9217,
+          3.9599666666666664,
+          4.101066666666666,
+          3.7413666666666665,
+          3.9169,
+          3.7161666666666666
         ],
         [
-          3.97015,
-          5.05445,
+          3.545,
+          2.6761333333333335,
+          2.8205666666666667,
+          2.2078666666666664,
+          2.3874,
+          2.0351666666666666,
+          1.9708666666666668
+        ]
+      ],
+      "loops": [
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2yiq",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 3.733425,
+      "cpp_ms": 2.05256,
+      "speedup": 1.818911505631991,
+      "samples_ms": [
+        [
+          3.783475,
           4.27805,
-          4.4146,
-          4.25825,
-          4.07645,
-          4.5481
+          3.600575,
+          3.577225,
+          3.7351,
+          3.4831,
+          3.733425
+        ],
+        [
+          2.3023,
+          1.97916,
+          2.16844,
+          2.05256,
+          2.48934,
+          1.98534,
+          1.91218
+        ]
+      ],
+      "loops": [
+        4,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.yiq2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 3.9082666666666666,
+      "cpp_ms": 2.0622,
+      "speedup": 1.8951928361296997,
+      "samples_ms": [
+        [
+          4.037,
+          4.116466666666667,
+          4.023433333333333,
+          3.9082666666666666,
+          3.6712,
+          3.7265333333333337,
+          3.4372333333333334
+        ],
+        [
+          2.28486,
+          2.1202,
+          2.10148,
+          2.04542,
+          1.99742,
+          2.0622,
+          1.89984
         ]
       ],
       "loops": [
         3,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ypbpr",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 4.4655,
+      "cpp_ms": 3.42715,
+      "speedup": 1.3029776928351544,
+      "samples_ms": [
+        [
+          4.6765,
+          4.0924,
+          4.16675,
+          4.4655,
+          4.75195,
+          6.0795,
+          4.1151
+        ],
+        [
+          3.146025,
+          3.2027,
+          3.5361,
+          3.409275,
+          3.6177,
+          3.42715,
+          3.76865
+        ]
+      ],
+      "loops": [
+        2,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ypbpr2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 3.4991333333333334,
+      "cpp_ms": 2.1092714285714287,
+      "speedup": 1.6589298493950744,
+      "samples_ms": [
+        [
+          3.8649333333333336,
+          3.4991333333333334,
+          3.2594333333333334,
+          3.8986666666666667,
+          3.2742,
+          4.3703,
+          3.4015666666666666
+        ],
+        [
+          2.2723571428571425,
+          2.039157142857143,
+          2.1092714285714287,
+          2.0167142857142855,
+          1.9176142857142857,
+          2.5442571428571426,
+          2.4092857142857143
+        ]
+      ],
+      "loops": [
+        3,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ycbcr",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 4.552466666666667,
+      "cpp_ms": 2.37614,
+      "speedup": 1.9159084341270576,
+      "samples_ms": [
+        [
+          4.277766666666667,
+          4.405933333333333,
+          4.552466666666667,
+          5.447566666666667,
+          4.9047,
+          4.2233,
+          4.994933333333333
+        ],
+        [
+          2.03798,
+          2.40616,
+          2.9753,
+          2.76164,
+          2.34788,
+          1.97,
+          2.37614
+        ]
+      ],
+      "loops": [
+        3,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ycbcr2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.734723475976807e-18,
+      "reference_ms": 4.315,
+      "cpp_ms": 2.1699,
+      "speedup": 1.9885709018848796,
+      "samples_ms": [
+        [
+          4.073166666666666,
+          4.341166666666667,
+          4.4997,
+          4.284233333333333,
+          4.315,
+          4.2144,
+          4.7672
+        ],
+        [
+          3.709225,
+          2.70655,
+          1.970775,
+          2.460375,
+          2.1259,
+          2.1699,
+          1.955825
+        ]
+      ],
+      "loops": [
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ydbdr",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 3.328575,
+      "cpp_ms": 1.949,
+      "speedup": 1.7078373524884556,
+      "samples_ms": [
+        [
+          3.233725,
+          3.568775,
+          3.336325,
+          3.588025,
+          3.328575,
+          3.31925,
+          3.1963
+        ],
+        [
+          1.949,
+          2.02332,
+          2.27276,
+          1.946,
+          1.99778,
+          1.94308,
+          1.93176
+        ]
+      ],
+      "loops": [
+        4,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ydbdr2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 3.249525,
+      "cpp_ms": 2.0677142857142856,
+      "speedup": 1.5715541660909218,
+      "samples_ms": [
+        [
+          3.099125,
+          3.2016,
+          5.5281,
+          3.249525,
+          3.198675,
+          3.9201,
+          3.72495
+        ],
+        [
+          2.011071428571429,
+          2.436514285714286,
+          2.1449,
+          1.9398285714285715,
+          2.0133285714285716,
+          2.1934142857142858,
+          2.0677142857142856
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2rgbcie",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 5.551115123125783e-17,
+      "reference_ms": 4.57055,
+      "cpp_ms": 3.4570666666666665,
+      "speedup": 1.3220890543042272,
+      "samples_ms": [
+        [
+          4.57055,
+          4.3347,
+          4.70295,
+          4.6914,
+          4.61315,
+          4.28585,
+          3.49825
+        ],
+        [
+          3.5113666666666665,
+          3.7095,
+          3.4570666666666665,
+          3.4426,
+          3.4665,
+          3.2495666666666665,
+          2.4734333333333334
+        ]
+      ],
+      "loops": [
+        2,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgbcie2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.7763568394002505e-15,
+      "reference_ms": 3.8652,
+      "cpp_ms": 2.2795285714285716,
+      "speedup": 1.6956137547237211,
+      "samples_ms": [
+        [
+          3.2548666666666666,
+          3.0132,
+          3.8652,
+          4.386366666666667,
+          3.8189,
+          4.395566666666667,
+          4.452566666666667
+        ],
+        [
+          2.6003857142857143,
+          2.355642857142857,
+          2.2795285714285716,
+          1.9878,
+          2.341871428571429,
+          2.0097714285714288,
+          1.9080285714285714
+        ]
+      ],
+      "loops": [
+        3,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2xyz",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "reference_ms": 19.4415,
+      "cpp_ms": 8.8738,
+      "speedup": 2.190887782009962,
+      "samples_ms": [
+        [
+          17.5126,
+          17.4768,
+          20.6379,
+          19.3323,
+          23.1606,
+          22.6789,
+          19.4415
+        ],
+        [
+          8.9663,
+          9.1705,
+          8.8163,
+          8.616,
+          9.6075,
+          8.7908,
+          8.8738
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.7832957333041577e-15,
+      "reference_ms": 24.8011,
+      "cpp_ms": 10.6224,
+      "speedup": 2.3347925139328214,
+      "samples_ms": [
+        [
+          25.1777,
+          25.4894,
+          24.8011,
+          24.3055,
+          24.5078,
+          30.1278,
+          23.8676
+        ],
+        [
+          10.2478,
+          9.6005,
+          10.9213,
+          10.1846,
+          10.6224,
+          10.6893,
+          21.3317
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2hsv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 38.6264,
+      "cpp_ms": 3.5882,
+      "speedup": 10.764840309904686,
+      "samples_ms": [
+        [
+          38.1693,
+          38.6264,
+          40.7822,
+          40.4724,
+          39.013,
+          36.4965,
+          35.7405
+        ],
+        [
+          3.5882,
+          4.0704,
+          4.430266666666667,
+          4.479666666666667,
+          3.5159666666666665,
+          3.2959666666666667,
+          3.4821333333333335
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.hsv2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 41.6395,
+      "cpp_ms": 4.666766666666667,
+      "speedup": 8.922558802311379,
+      "samples_ms": [
+        [
+          45.4982,
+          41.488,
+          43.7283,
+          40.3952,
+          41.6395,
+          39.5093,
+          46.8619
+        ],
+        [
+          4.855733333333333,
+          4.431966666666667,
+          4.683266666666667,
+          4.571933333333333,
+          4.666766666666667,
+          4.517966666666667,
+          5.7489
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.2737367544323206e-13,
+      "reference_ms": 19.7889,
+      "cpp_ms": 9.5576,
+      "speedup": 2.0704884071314975,
+      "samples_ms": [
+        [
+          18.7113,
+          22.3495,
+          18.7111,
+          19.7889,
+          19.9076,
+          19.2747,
+          21.6691
+        ],
+        [
+          9.3969,
+          11.2104,
+          9.1015,
+          9.7828,
+          9.1154,
+          9.5576,
+          10.0048
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 13.7986,
+      "cpp_ms": 4.385066666666667,
+      "speedup": 3.146725249331063,
+      "samples_ms": [
+        [
+          16.5121,
+          14.8467,
+          13.5337,
+          13.7986,
+          12.7172,
+          18.9031,
+          12.7652
+        ],
+        [
+          4.400933333333333,
+          5.8656,
+          4.305366666666667,
+          4.403,
+          4.295533333333333,
+          4.385066666666667,
+          4.2379
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-13,
+      "reference_ms": 34.6877,
+      "cpp_ms": 15.7434,
+      "speedup": 2.2033169455136754,
+      "samples_ms": [
+        [
+          35.7822,
+          33.8578,
+          34.877,
+          33.8399,
+          35.3676,
+          34.6877,
+          34.1246
+        ],
+        [
+          15.7434,
+          15.8845,
+          15.658,
+          17.7588,
+          15.5514,
+          15.7147,
+          16.6264
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.3877787807814457e-17,
+      "reference_ms": 21.1154,
+      "cpp_ms": 11.7751,
+      "speedup": 1.793224685989928,
+      "samples_ms": [
+        [
+          22.8121,
+          20.2457,
+          20.8911,
+          26.5948,
+          22.4441,
+          21.1154,
+          20.224
+        ],
+        [
+          12.8928,
+          12.6685,
+          11.3937,
+          11.7937,
+          10.7992,
+          11.7751,
+          11.6182
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 6.217248937900877e-15,
+      "reference_ms": 8.6884,
+      "cpp_ms": 6.6069,
+      "speedup": 1.3150494180326626,
+      "samples_ms": [
+        [
+          8.9763,
+          7.6828,
+          8.6884,
+          8.4802,
+          13.7055,
+          10.621,
+          7.9959
+        ],
+        [
+          5.9579,
+          6.7848,
+          6.3737,
+          6.2988,
+          7.896,
+          7.0739,
+          6.6069
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.1102230246251565e-16,
+      "reference_ms": 6.216,
+      "cpp_ms": 4.55985,
+      "speedup": 1.363202736932136,
+      "samples_ms": [
+        [
+          6.4329,
+          6.216,
+          5.76485,
+          5.76855,
+          7.73225,
+          6.79805,
+          5.7018
+        ],
+        [
+          4.84435,
+          4.71355,
+          3.93925,
+          4.55985,
+          4.99715,
+          3.8685,
+          3.95455
+        ]
+      ],
+      "loops": [
+        2,
         2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 5.684341886080801e-13,
+      "reference_ms": 14.8941,
+      "cpp_ms": 7.9811,
+      "speedup": 1.8661713297665736,
+      "samples_ms": [
+        [
+          14.8941,
+          15.5082,
+          13.2997,
+          14.3873,
+          21.572,
+          13.9468,
+          15.7365
+        ],
+        [
+          8.0916,
+          7.2612,
+          7.4808,
+          7.4181,
+          9.183,
+          7.9811,
+          8.8995
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 12.3001,
+      "cpp_ms": 4.2743,
+      "speedup": 2.8776875745736143,
+      "samples_ms": [
+        [
+          14.1711,
+          12.9632,
+          12.7766,
+          11.6492,
+          12.3001,
+          11.7469,
+          10.6773
+        ],
+        [
+          4.18705,
+          4.2298,
+          4.80565,
+          4.2242,
+          4.36735,
+          4.4191,
+          4.2743
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 3.268496584496461e-13,
+      "reference_ms": 31.9817,
+      "cpp_ms": 15.6277,
+      "speedup": 2.046475169090781,
+      "samples_ms": [
+        [
+          31.9696,
+          35.9186,
+          31.9457,
+          32.3226,
+          31.9817,
+          31.9856,
+          28.5312
+        ],
+        [
+          13.7686,
+          13.8784,
+          16.0814,
+          15.6277,
+          18.9065,
+          19.0831,
+          15.5871
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.3877787807814457e-17,
+      "reference_ms": 16.0772,
+      "cpp_ms": 10.3002,
+      "speedup": 1.5608628958660997,
+      "samples_ms": [
+        [
+          20.0991,
+          19.0028,
+          15.8101,
+          14.7765,
+          15.7411,
+          16.0772,
+          16.5612
+        ],
+        [
+          9.9514,
+          11.8703,
+          10.3002,
+          10.2499,
+          10.6907,
+          9.9259,
+          10.4417
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2yuv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 3.3123666666666667,
+      "cpp_ms": 2.653225,
+      "speedup": 1.2484303693304062,
+      "samples_ms": [
+        [
+          4.218266666666667,
+          4.017533333333334,
+          2.8610666666666664,
+          3.2991666666666664,
+          3.1877333333333335,
+          3.7087333333333334,
+          3.3123666666666667
+        ],
+        [
+          3.1827,
+          3.2111,
+          1.9394,
+          2.977425,
+          2.3042,
+          2.653225,
+          1.91025
+        ]
+      ],
+      "loops": [
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.yuv2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 3.11295,
+      "cpp_ms": 1.9126714285714286,
+      "speedup": 1.6275403885366018,
+      "samples_ms": [
+        [
+          3.402175,
+          2.967275,
+          3.11295,
+          2.66445,
+          3.33045,
+          3.28875,
+          2.543925
+        ],
+        [
+          2.101642857142857,
+          1.9126714285714286,
+          1.868842857142857,
+          2.481257142857143,
+          1.9101714285714286,
+          2.0550142857142855,
+          1.880657142857143
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2yiq",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "reference_ms": 3.01232,
+      "cpp_ms": 1.9762833333333332,
+      "speedup": 1.5242348853487608,
+      "samples_ms": [
+        [
+          2.67784,
+          2.7441,
+          3.18166,
+          3.44622,
+          2.86934,
+          3.12534,
+          3.01232
+        ],
+        [
+          1.9097833333333332,
+          2.0633166666666667,
+          1.9591666666666667,
+          1.9762833333333332,
+          2.060216666666667,
+          2.2353666666666667,
+          1.8928166666666668
+        ]
+      ],
+      "loops": [
+        5,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.yiq2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 4.440892098500626e-16,
+      "reference_ms": 4.216233333333333,
+      "cpp_ms": 3.199125,
+      "speedup": 1.3179332890503914,
+      "samples_ms": [
+        [
+          4.338533333333333,
+          4.3703,
+          4.216233333333333,
+          4.1368,
+          4.024033333333334,
+          3.9213666666666667,
+          4.6007
+        ],
+        [
+          3.199125,
+          3.62515,
+          3.44995,
+          3.1562,
+          3.3518,
+          3.0988,
+          3.189475
+        ]
+      ],
+      "loops": [
+        3,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1089,32 +1253,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 4.1276,
-      "cpp_ms": 2.9563,
-      "speedup": 1.3962047153536514,
+      "reference_ms": 2.81278,
+      "cpp_ms": 1.98368,
+      "speedup": 1.417960558154541,
       "samples_ms": [
         [
-          4.0147,
-          3.0474,
-          3.07405,
-          4.46645,
-          4.67165,
-          4.1276,
-          4.41795
+          3.00836,
+          3.01904,
+          2.81278,
+          2.6829,
+          3.14372,
+          2.79774,
+          2.63194
         ],
         [
-          2.0401333333333334,
-          2.9102666666666663,
-          2.6225,
-          2.9563,
-          3.1124,
-          3.8141333333333334,
-          3.7301333333333333
+          2.28428,
+          1.89568,
+          2.35424,
+          1.77734,
+          1.98368,
+          1.9044,
+          2.42938
         ]
       ],
       "loops": [
-        2,
-        3
+        5,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -1130,32 +1294,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 3.7978666666666667,
-      "cpp_ms": 2.3144,
-      "speedup": 1.640972462265238,
+      "reference_ms": 2.79858,
+      "cpp_ms": 1.94948,
+      "speedup": 1.4355520446478034,
       "samples_ms": [
         [
-          2.8719333333333337,
-          3.3139,
-          3.7978666666666667,
-          3.9164,
-          3.9889,
-          3.4924666666666666,
-          4.2337
+          2.8774,
+          2.99582,
+          3.14276,
+          2.54786,
+          2.6506,
+          2.73626,
+          2.79858
         ],
         [
-          2.6027666666666667,
-          2.2475,
-          3.0611333333333337,
-          1.9855,
-          2.1538666666666666,
-          2.3144,
-          2.7329333333333334
+          2.2844,
+          2.40094,
+          1.94948,
+          1.98664,
+          1.85848,
+          1.8337,
+          1.94546
         ]
       ],
       "loops": [
-        3,
-        3
+        5,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -1171,32 +1335,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 5.684341886080802e-14,
-      "reference_ms": 6.9683,
-      "cpp_ms": 3.1161666666666665,
-      "speedup": 2.2361769267796974,
+      "reference_ms": 3.7830666666666666,
+      "cpp_ms": 2.0011,
+      "speedup": 1.8904935618743024,
       "samples_ms": [
         [
-          6.9683,
-          6.8572,
-          7.2115,
-          7.3332,
-          6.5626,
-          7.5941,
-          6.0691
+          4.5686,
+          3.3652,
+          3.7830666666666666,
+          3.5130333333333335,
+          3.8048333333333333,
+          4.364933333333333,
+          3.6998
         ],
         [
-          3.7360333333333333,
-          3.7386666666666666,
-          3.8237,
-          3.1161666666666665,
-          2.8275666666666663,
-          2.1029333333333335,
-          2.676
+          2.476125,
+          2.288,
+          1.948075,
+          1.91235,
+          1.8289,
+          2.0011,
+          2.1487
         ]
       ],
       "loops": [
-        1,
-        3
+        3,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1212,31 +1376,31 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.734723475976807e-18,
-      "reference_ms": 5.58195,
-      "cpp_ms": 2.648814285714286,
-      "speedup": 2.1073391328734687,
+      "reference_ms": 4.154066666666666,
+      "cpp_ms": 1.9297714285714287,
+      "speedup": 2.1526210851519543,
       "samples_ms": [
         [
-          5.4259,
-          5.6257,
-          7.20695,
-          5.5019,
-          6.83405,
-          5.58195,
-          4.4613
+          4.763,
+          3.6614666666666666,
+          4.154066666666666,
+          4.745166666666667,
+          4.4284,
+          3.8319666666666663,
+          3.9481
         ],
         [
-          2.2537,
-          2.0439,
-          2.6632285714285713,
-          2.636557142857143,
-          2.7073285714285715,
-          2.648814285714286,
-          2.7580428571428572
+          1.8822285714285714,
+          1.7990857142857144,
+          1.9063,
+          2.8329571428571425,
+          1.9595142857142858,
+          2.222185714285714,
+          1.9297714285714287
         ]
       ],
       "loops": [
-        2,
+        3,
         7
       ],
       "sample_labels": [
@@ -1253,32 +1417,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 4.440892098500626e-16,
-      "reference_ms": 3.8609666666666667,
-      "cpp_ms": 2.736871428571429,
-      "speedup": 1.4107227056266887,
+      "reference_ms": 2.99285,
+      "cpp_ms": 2.618325,
+      "speedup": 1.1430399205598998,
       "samples_ms": [
         [
-          3.4588,
-          3.8609666666666667,
-          4.584333333333333,
-          3.7338,
-          3.7561,
-          4.1188666666666665,
-          4.272933333333333
+          2.786175,
+          2.99285,
+          4.245,
+          2.7811,
+          2.98615,
+          3.59285,
+          3.119175
         ],
         [
-          2.0911142857142857,
-          2.764942857142857,
-          3.1312285714285713,
-          2.736871428571429,
-          2.9754714285714288,
-          2.018485714285714,
-          2.571357142857143
+          2.00855,
+          2.618325,
+          3.1328,
+          2.307075,
+          2.873825,
+          2.153125,
+          2.9215
         ]
       ],
       "loops": [
-        3,
-        7
+        4,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1294,32 +1458,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 2.220446049250313e-16,
-      "reference_ms": 5.71395,
-      "cpp_ms": 4.0606,
-      "speedup": 1.4071688912968525,
+      "reference_ms": 4.0417,
+      "cpp_ms": 3.73105,
+      "speedup": 1.0832607442945015,
       "samples_ms": [
         [
-          5.2147,
-          5.9413,
-          5.1108,
-          5.1202,
-          6.0154,
-          5.71395,
-          5.9496
+          4.0417,
+          3.6486333333333336,
+          4.4848,
+          5.275933333333333,
+          3.8962333333333334,
+          4.3341,
+          3.3979333333333335
         ],
         [
-          4.013533333333333,
-          3.9132666666666664,
-          4.0606,
-          4.155666666666667,
-          3.3175666666666666,
-          4.785233333333333,
-          4.4544
+          3.18905,
+          3.807825,
+          3.05475,
+          4.0548,
+          3.779175,
+          3.73105,
+          3.286475
         ]
       ],
       "loops": [
-        2,
-        3
+        3,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -1335,32 +1499,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 5.551115123125783e-17,
-      "reference_ms": 3.8131,
-      "cpp_ms": 2.31835,
-      "speedup": 1.644747341859512,
+      "reference_ms": 2.94935,
+      "cpp_ms": 2.23015,
+      "speedup": 1.3224895186422436,
       "samples_ms": [
         [
-          3.8502666666666667,
-          3.8845,
-          3.765,
-          3.6176333333333335,
-          3.8016333333333336,
-          3.8131,
-          4.1757
+          3.665225,
+          2.765675,
+          4.09045,
+          2.578825,
+          2.94935,
+          4.71525,
+          2.5542
         ],
         [
-          2.40965,
-          2.37015,
-          2.18445,
-          2.31835,
-          2.228675,
-          1.99555,
-          3.43035
+          1.8821,
+          1.905,
+          2.31875,
+          3.453,
+          3.7164,
+          2.23015,
+          2.19675
         ]
       ],
       "loops": [
-        3,
-        4
+        4,
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -1376,32 +1540,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.7763568394002505e-15,
-      "reference_ms": 4.3746,
-      "cpp_ms": 2.64362,
-      "speedup": 1.654776405080912,
+      "reference_ms": 2.88155,
+      "cpp_ms": 1.9323333333333332,
+      "speedup": 1.4912282214938761,
       "samples_ms": [
         [
-          4.93985,
-          5.04125,
-          3.8155,
-          4.6213,
-          3.719,
-          4.3746,
-          3.6283
+          3.8027,
+          2.7241,
+          2.9484,
+          2.65215,
+          2.88155,
+          3.03385,
+          2.8361
         ],
         [
-          2.92088,
-          2.9014,
-          2.61694,
-          2.81478,
-          2.55824,
-          2.0431,
-          2.64362
+          1.7902,
+          1.9323333333333332,
+          1.9794,
+          2.3794833333333334,
+          2.3149166666666665,
+          1.81695,
+          1.7485166666666667
         ]
       ],
       "loops": [
         2,
-        5
+        6
       ],
       "sample_labels": [
         "scikit-image",
@@ -1417,27 +1581,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 3.3306690738754696e-16,
-      "reference_ms": 25.556,
-      "cpp_ms": 10.943,
-      "speedup": 2.3353742118249112,
+      "reference_ms": 16.9482,
+      "cpp_ms": 8.3482,
+      "speedup": 2.0301621906518768,
       "samples_ms": [
         [
-          25.556,
-          28.8387,
-          23.4272,
-          30.3152,
-          25.4423,
-          24.3017,
-          50.9037
+          16.7058,
+          16.4515,
+          17.1753,
+          17.8087,
+          17.7735,
+          15.7913,
+          16.9482
         ],
         [
-          8.8731,
-          12.7493,
-          8.6806,
-          10.943,
-          12.5377,
-          9.2838,
-          32.7122
+          8.3809,
+          8.8901,
+          8.4468,
+          8.0952,
+          7.7002,
+          8.0365,
+          8.3482
         ]
       ],
       "loops": [
@@ -1458,27 +1622,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.7832957333041577e-15,
-      "reference_ms": 28.0122,
-      "cpp_ms": 8.506,
-      "speedup": 3.2932283094286383,
+      "reference_ms": 21.851,
+      "cpp_ms": 10.0622,
+      "speedup": 2.171592693446761,
       "samples_ms": [
         [
-          32.5471,
-          28.3248,
-          24.4894,
-          24.9208,
-          24.0682,
-          28.0122,
-          57.9401
+          23.2892,
+          21.8176,
+          22.6719,
+          21.3028,
+          22.189,
+          19.4537,
+          21.851
         ],
         [
-          9.6662,
-          8.293,
-          8.4434,
-          8.8205,
-          8.2728,
-          8.506,
-          19.3074
+          9.607,
+          12.5997,
+          10.0622,
+          8.6896,
+          13.3193,
+          10.356,
+          8.0155
         ]
       ],
       "loops": [
@@ -1499,27 +1663,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 29.2534,
-      "cpp_ms": 3.8309,
-      "speedup": 7.636169046438173,
+      "reference_ms": 25.131,
+      "cpp_ms": 4.08335,
+      "speedup": 6.1545054918143185,
       "samples_ms": [
         [
-          58.4296,
-          104.0225,
-          94.7137,
-          26.0886,
-          25.4193,
-          23.9495,
-          29.2534
+          20.2389,
+          22.3657,
+          25.131,
+          21.879,
+          26.3047,
+          29.4505,
+          26.4105
         ],
         [
-          7.7768,
-          14.75175,
-          3.8309,
-          3.6406,
-          3.5497,
-          3.8375,
-          3.3288
+          3.38045,
+          4.08335,
+          5.13905,
+          3.34675,
+          7.188,
+          3.94345,
+          4.93415
         ]
       ],
       "loops": [
@@ -1540,27 +1704,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 52.3483,
-      "cpp_ms": 4.5884,
-      "speedup": 11.408835323860169,
+      "reference_ms": 37.855,
+      "cpp_ms": 4.421766666666667,
+      "speedup": 8.56105779741129,
       "samples_ms": [
         [
-          49.9333,
-          52.5334,
-          52.3483,
-          50.2437,
-          47.6187,
-          56.7869,
-          54.4198
+          39.8829,
+          37.855,
+          37.7116,
+          36.9903,
+          36.8761,
+          41.1615,
+          38.1544
         ],
         [
-          4.5884,
-          4.514866666666667,
-          4.3889,
-          4.795566666666667,
-          4.5155,
-          4.720433333333333,
-          4.6191
+          4.364633333333333,
+          4.421766666666667,
+          4.662333333333333,
+          5.079766666666667,
+          4.4646,
+          4.417433333333333,
+          4.346
         ]
       ],
       "loops": [
@@ -1581,27 +1745,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 2.2737367544323206e-13,
-      "reference_ms": 27.7337,
-      "cpp_ms": 9.6558,
-      "speedup": 2.872232233476253,
+      "reference_ms": 23.306,
+      "cpp_ms": 9.7443,
+      "speedup": 2.39175723243332,
       "samples_ms": [
         [
-          28.3598,
-          28.4217,
-          25.984,
-          27.1843,
-          26.1543,
-          27.7337,
-          30.3342
+          26.4806,
+          24.4812,
+          21.3696,
+          22.4767,
+          25.0058,
+          23.306,
+          21.0349
         ],
         [
-          9.7733,
-          12.0472,
-          9.6467,
-          8.989,
-          8.267,
-          9.6558,
-          10.2243
+          11.6961,
+          9.7443,
+          9.015,
+          9.1234,
+          9.5256,
+          13.5073,
+          9.9834
         ]
       ],
       "loops": [
@@ -1622,27 +1786,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 18.9083,
-      "cpp_ms": 4.7013,
-      "speedup": 4.021930104439198,
+      "reference_ms": 14.437,
+      "cpp_ms": 4.760233333333333,
+      "speedup": 3.0328345249182465,
       "samples_ms": [
         [
-          19.1805,
-          16.5189,
-          16.403,
-          20.5135,
-          18.9083,
-          17.3966,
-          20.2745
+          13.8794,
+          14.7911,
+          11.9037,
+          14.4943,
+          14.437,
+          18.6186,
+          12.737
         ],
         [
-          4.4748,
-          4.7013,
-          4.852466666666667,
-          4.4286,
-          4.5363,
-          5.685466666666667,
-          5.455066666666667
+          4.235833333333333,
+          5.086466666666667,
+          4.597533333333333,
+          4.643733333333333,
+          6.9444333333333335,
+          5.340266666666667,
+          4.760233333333333
         ]
       ],
       "loops": [
@@ -1663,27 +1827,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 2.220446049250313e-13,
-      "reference_ms": 46.7898,
-      "cpp_ms": 17.2156,
-      "speedup": 2.7178721624573066,
+      "reference_ms": 35.225,
+      "cpp_ms": 15.7391,
+      "speedup": 2.238056813922016,
       "samples_ms": [
         [
-          45.3141,
-          46.7898,
-          48.7139,
-          48.2849,
-          45.9528,
-          44.8205,
-          67.8335
+          35.3803,
+          34.5429,
+          37.5344,
+          36.7979,
+          34.1021,
+          33.4887,
+          35.225
         ],
         [
-          15.8176,
-          17.2156,
-          17.4541,
-          15.7573,
-          17.014,
-          17.4136,
-          24.996
+          15.626,
+          15.7672,
+          15.8422,
+          15.4312,
+          15.782,
+          15.7391,
+          15.5505
         ]
       ],
       "loops": [
@@ -1704,27 +1868,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.3877787807814457e-17,
-      "reference_ms": 47.4584,
-      "cpp_ms": 15.7643,
-      "speedup": 3.010498404623104,
+      "reference_ms": 20.4134,
+      "cpp_ms": 11.982,
+      "speedup": 1.7036721749290602,
       "samples_ms": [
         [
-          38.9314,
-          46.4395,
-          47.4584,
-          44.9026,
-          55.6035,
-          56.3266,
-          66.3819
+          20.4134,
+          21.2425,
+          19.6784,
+          25.0165,
+          20.1951,
+          21.6174,
+          19.759
         ],
         [
-          13.2721,
-          15.7643,
-          13.319,
-          14.0729,
-          17.9171,
-          27.3965,
-          24.5365
+          10.9126,
+          10.6334,
+          13.8089,
+          11.982,
+          12.9212,
+          10.7762,
+          12.5133
         ]
       ],
       "loops": [
@@ -1745,27 +1909,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 6.217248937900877e-15,
-      "reference_ms": 14.7248,
-      "cpp_ms": 7.5209,
-      "speedup": 1.9578507891342791,
+      "reference_ms": 8.5402,
+      "cpp_ms": 6.6045,
+      "speedup": 1.2930880460292227,
       "samples_ms": [
         [
-          14.7248,
-          12.8992,
-          16.9371,
-          18.0132,
-          11.6852,
-          11.6074,
-          15.6608
+          10.9346,
+          8.0938,
+          8.5402,
+          10.5696,
+          8.7437,
+          8.2734,
+          8.3054
         ],
         [
-          7.3949,
-          12.4959,
-          7.496,
-          7.5209,
-          7.4821,
-          7.5757,
-          14.344
+          7.9131,
+          6.1507,
+          7.836,
+          6.6354,
+          5.9856,
+          6.6045,
+          6.1577
         ]
       ],
       "loops": [
@@ -1786,27 +1950,191 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.1102230246251565e-16,
-      "reference_ms": 10.3427,
-      "cpp_ms": 5.1679,
-      "speedup": 2.0013351651541247,
+      "reference_ms": 4.5505,
+      "cpp_ms": 4.8142,
+      "speedup": 0.9452245440571644,
       "samples_ms": [
         [
-          11.7266,
-          13.4451,
-          8.6966,
-          15.5716,
-          10.2428,
-          10.3427,
-          7.8267
+          4.7023,
+          4.184833333333334,
+          5.470933333333333,
+          4.200933333333333,
+          4.2658,
+          4.5505,
+          4.583733333333333
         ],
         [
-          5.9188,
-          5.3923,
-          5.0986,
-          5.0931,
-          4.5028,
-          6.403,
-          5.1679
+          4.8142,
+          4.707233333333333,
+          5.760833333333333,
+          4.771066666666667,
+          4.61,
+          5.511733333333333,
+          5.290366666666667
+        ]
+      ],
+      "loops": [
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 5.684341886080801e-13,
+      "reference_ms": 14.3627,
+      "cpp_ms": 7.9836,
+      "speedup": 1.7990255022796733,
+      "samples_ms": [
+        [
+          14.8228,
+          14.0081,
+          14.3627,
+          14.577,
+          14.9852,
+          13.8547,
+          11.9564
+        ],
+        [
+          7.5174,
+          11.5939,
+          7.9836,
+          8.1175,
+          7.2739,
+          8.1239,
+          6.9287
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 11.3876,
+      "cpp_ms": 4.1523,
+      "speedup": 2.7424800712857933,
+      "samples_ms": [
+        [
+          15.7866,
+          11.3876,
+          10.93,
+          12.1438,
+          13.1079,
+          10.7098,
+          10.5359
+        ],
+        [
+          3.9388666666666663,
+          5.311533333333333,
+          4.1523,
+          3.7761666666666667,
+          5.245666666666667,
+          4.3776,
+          3.8855
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 3.268496584496461e-13,
+      "reference_ms": 33.5787,
+      "cpp_ms": 14.3997,
+      "speedup": 2.331902747973916,
+      "samples_ms": [
+        [
+          32.7912,
+          33.5787,
+          29.9454,
+          28.268,
+          34.2048,
+          40.1967,
+          43.7582
+        ],
+        [
+          14.7666,
+          13.5796,
+          14.1987,
+          14.9689,
+          14.3997,
+          14.2056,
+          16.35
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "uint16",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 1.3877787807814457e-17,
+      "reference_ms": 19.8111,
+      "cpp_ms": 10.5796,
+      "speedup": 1.8725755227040721,
+      "samples_ms": [
+        [
+          24.0205,
+          19.7596,
+          19.7957,
+          19.0751,
+          19.8111,
+          20.1791,
+          22.2988
+        ],
+        [
+          10.4865,
+          12.8093,
+          11.1116,
+          10.149,
+          10.5796,
+          10.8059,
+          10.1669
         ]
       ],
       "loops": [
@@ -1827,32 +2155,32 @@
       "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 3.1066666666666665,
-      "cpp_ms": 1.9367,
-      "speedup": 1.6041031996006951,
+      "reference_ms": 1.6276625,
+      "cpp_ms": 0.98202,
+      "speedup": 1.6574636972770411,
       "samples_ms": [
         [
-          3.1410333333333336,
-          2.6680666666666664,
-          2.5495,
-          4.787433333333333,
-          2.54235,
-          3.1066666666666665,
-          3.24075
+          1.670625,
+          1.6276625,
+          1.7166625,
+          1.405475,
+          1.889,
+          1.3014625,
+          1.3303875
         ],
         [
-          1.6064,
-          1.7595,
-          4.9591,
-          3.3281,
-          4.1425,
-          1.9367,
-          1.7564
+          1.3722,
+          1.08653,
+          1.16506,
+          0.94063,
+          0.98202,
+          0.9396,
+          0.80262
         ]
       ],
       "loops": [
-        6,
-        1
+        8,
+        10
       ],
       "sample_labels": [
         "scikit-image",
@@ -1868,32 +2196,32 @@
       "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 1.9728,
-      "cpp_ms": 1.3021125,
-      "speedup": 1.5150764622872448,
+      "reference_ms": 0.7417307692307692,
+      "cpp_ms": 0.29836315789473683,
+      "speedup": 2.4859998615930103,
       "samples_ms": [
         [
-          1.644775,
-          1.674,
-          2.18575,
-          4.656225,
-          1.45065,
-          1.9728,
-          3.83175
+          0.8149230769230769,
+          0.7621769230769231,
+          0.7292307692307692,
+          0.8271384615384615,
+          0.7417307692307692,
+          0.6724538461538462,
+          0.6675692307692308
         ],
         [
-          1.115675,
-          1.2816625,
-          1.4448,
-          1.3021125,
-          0.98915,
-          3.2522875,
-          2.2872625
+          0.3919684210526316,
+          0.2970842105263158,
+          0.3580052631578947,
+          0.37703684210526317,
+          0.2824105263157895,
+          0.2781947368421053,
+          0.29836315789473683
         ]
       ],
       "loops": [
-        4,
-        8
+        13,
+        19
       ],
       "sample_labels": [
         "scikit-image",
@@ -1909,32 +2237,32 @@
       "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 3.11798,
-      "cpp_ms": 2.238,
-      "speedup": 1.3931992850759607,
+      "reference_ms": 1.3123555555555555,
+      "cpp_ms": 0.8269875,
+      "speedup": 1.5869109938851016,
       "samples_ms": [
         [
-          2.50206,
-          3.38986,
-          4.49404,
-          3.11798,
-          3.1298,
-          2.6081,
-          2.57456
+          1.9959777777777779,
+          1.2874222222222222,
+          1.2569222222222223,
+          1.318911111111111,
+          1.3123555555555555,
+          1.2508333333333332,
+          1.9075
         ],
         [
-          2.238,
-          9.2402,
-          2.5154,
-          1.8161,
-          1.7749,
-          1.9983,
-          4.7126
+          0.9032,
+          0.822925,
+          0.9655125,
+          0.8269875,
+          0.749725,
+          0.7553875,
+          0.855025
         ]
       ],
       "loops": [
-        5,
-        1
+        9,
+        8
       ],
       "sample_labels": [
         "scikit-image",
@@ -1950,605 +2278,31 @@
       "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 3.11105,
-      "cpp_ms": 2.9836166666666664,
-      "speedup": 1.042711027444321,
+      "reference_ms": 0.7266066666666666,
+      "cpp_ms": 0.3796111111111111,
+      "speedup": 1.9140816625201227,
       "samples_ms": [
         [
-          2.72975,
-          2.702,
-          3.0242,
-          7.98585,
-          3.11105,
-          5.7938,
-          3.39135
+          0.9157733333333333,
+          0.6582133333333333,
+          0.7873,
+          0.68544,
+          0.7266066666666666,
+          0.9354066666666666,
+          0.70222
         ],
         [
-          3.1681666666666666,
-          3.56625,
-          2.9836166666666664,
-          2.31105,
-          1.9129833333333333,
-          2.1463666666666663,
-          4.624783333333333
+          0.42477777777777775,
+          0.28577777777777774,
+          0.4347666666666667,
+          0.33612222222222227,
+          0.3234333333333333,
+          0.3796111111111111,
+          0.7504888888888889
         ]
       ],
       "loops": [
-        2,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ypbpr",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 2.71722,
-      "cpp_ms": 2.138785714285714,
-      "speedup": 1.2704498547239758,
-      "samples_ms": [
-        [
-          2.71722,
-          3.57848,
-          1.94584,
-          2.11844,
-          2.15384,
-          4.92254,
-          5.25606
-        ],
-        [
-          2.138785714285714,
-          1.287,
-          4.046671428571429,
-          3.175757142857143,
-          2.0521285714285713,
-          3.0292285714285714,
-          1.6489142857142858
-        ]
-      ],
-      "loops": [
-        5,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ypbpr2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 3.1363,
-      "cpp_ms": 2.9395666666666664,
-      "speedup": 1.0669259641443751,
-      "samples_ms": [
-        [
-          5.3167,
-          3.3629,
-          3.1059,
-          3.5086,
-          3.1363,
-          2.9241,
-          2.2549
-        ],
-        [
-          3.0266666666666664,
-          2.7075333333333336,
-          2.9395666666666664,
-          4.151133333333333,
-          2.7495,
-          1.7540666666666667,
-          3.3584666666666667
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ycbcr",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 3.0517578125e-05,
-      "reference_ms": 5.389233333333333,
-      "cpp_ms": 2.4384,
-      "speedup": 2.2101514654418195,
-      "samples_ms": [
-        [
-          4.5214,
-          3.8099333333333334,
-          6.728066666666667,
-          7.430066666666667,
-          9.267733333333334,
-          5.389233333333333,
-          5.1932
-        ],
-        [
-          2.4384,
-          2.01645,
-          2.1723,
-          1.9653,
-          2.9909,
-          8.2084,
-          3.02675
-        ]
-      ],
-      "loops": [
-        3,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ycbcr2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 9.00505,
-      "cpp_ms": 2.1596428571428574,
-      "speedup": 4.1696940631718205,
-      "samples_ms": [
-        [
-          13.6039,
-          5.8904,
-          5.57725,
-          13.1214,
-          9.00505,
-          16.2562,
-          6.84285
-        ],
-        [
-          4.814414285714285,
-          1.7130142857142856,
-          3.387728571428571,
-          2.1596428571428574,
-          1.4860285714285713,
-          1.479157142857143,
-          2.7137714285714285
-        ]
-      ],
-      "loops": [
-        2,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2ydbdr",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 3.2524,
-      "cpp_ms": 1.9883,
-      "speedup": 1.6357692501131622,
-      "samples_ms": [
-        [
-          9.544233333333334,
-          2.4468333333333336,
-          2.6574333333333335,
-          5.5329,
-          3.2524,
-          2.3365333333333336,
-          6.905866666666667
-        ],
-        [
-          1.96445,
-          1.9883,
-          2.21535,
-          2.81975,
-          2.74045,
-          1.5894,
-          1.32435
-        ]
-      ],
-      "loops": [
-        3,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.ydbdr2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 4.4616,
-      "cpp_ms": 2.6077333333333335,
-      "speedup": 1.7109111361079863,
-      "samples_ms": [
-        [
-          3.6847,
-          7.7574,
-          15.8514,
-          4.4616,
-          2.7909,
-          2.6566,
-          8.7255
-        ],
-        [
-          2.6077333333333335,
-          2.7788833333333334,
-          2.7619333333333334,
-          3.5151833333333333,
-          2.4759166666666665,
-          1.9407333333333332,
-          2.4595
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2rgbcie",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 2.9802322387695312e-08,
-      "reference_ms": 2.00145,
-      "cpp_ms": 1.60698,
-      "speedup": 1.2454728745846246,
-      "samples_ms": [
-        [
-          3.16415,
-          1.716175,
-          3.856275,
-          1.9772,
-          2.00145,
-          1.962325,
-          2.2409
-        ],
-        [
-          1.77254,
-          1.60698,
-          1.4908,
-          2.30638,
-          1.53802,
-          1.7625,
-          1.34082
-        ]
-      ],
-      "loops": [
-        4,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgbcie2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 9.5367431640625e-07,
-      "reference_ms": 3.4108,
-      "cpp_ms": 4.248742857142857,
-      "speedup": 0.8027786370422175,
-      "samples_ms": [
-        [
-          3.43295,
-          3.65715,
-          3.4108,
-          5.77845,
-          2.47825,
-          3.37075,
-          2.49015
-        ],
-        [
-          4.272285714285714,
-          4.009685714285714,
-          4.644085714285715,
-          4.731457142857143,
-          4.248742857142857,
-          2.5963857142857143,
-          3.391714285714286
-        ]
-      ],
-      "loops": [
-        2,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 42.4144,
-      "cpp_ms": 9.0551,
-      "speedup": 4.684034411547084,
-      "samples_ms": [
-        [
-          48.5152,
-          44.9,
-          54.2884,
-          35.2193,
-          42.4144,
-          28.1337,
-          27.2291
-        ],
-        [
-          8.2809,
-          8.5106,
-          8.8628,
-          17.0602,
-          9.9071,
-          9.0551,
-          10.4785
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 8.996576070785522e-07,
-      "reference_ms": 30.2158,
-      "cpp_ms": 9.2447,
-      "speedup": 3.2684457040250092,
-      "samples_ms": [
-        [
-          37.406,
-          31.824,
-          42.9148,
-          29.2985,
-          30.2158,
-          28.1772,
-          28.4058
-        ],
-        [
-          13.2326,
-          9.5897,
-          9.0975,
-          8.7486,
-          9.778,
-          8.6304,
-          9.2447
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2hsv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 63.1526,
-      "cpp_ms": 1.86928,
-      "speedup": 33.78445176752546,
-      "samples_ms": [
-        [
-          83.788,
-          77.5218,
-          66.0614,
-          60.7447,
-          63.1526,
-          59.6334,
-          62.3535
-        ],
-        [
-          3.07558,
-          2.64668,
-          1.86928,
-          1.35688,
-          2.36128,
-          1.40482,
-          1.36746
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.hsv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 46.5291,
-      "cpp_ms": 1.7050375,
-      "speedup": 27.28919451918213,
-      "samples_ms": [
-        [
-          47.7347,
-          90.8501,
-          42.0305,
-          43.9949,
-          45.99,
-          47.1234,
-          46.5291
-        ],
-        [
-          2.0009625,
-          2.815975,
-          1.7050375,
-          1.7351625,
-          1.478425,
-          1.43145,
-          1.3301625
-        ]
-      ],
-      "loops": [
-        1,
-        8
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 9.1552734375e-05,
-      "reference_ms": 22.5306,
-      "cpp_ms": 7.8053,
-      "speedup": 2.886577069427184,
-      "samples_ms": [
-        [
-          26.3195,
-          20.91,
-          22.8679,
-          22.5306,
-          22.5465,
-          20.7826,
-          18.4696
-        ],
-        [
-          8.0584,
-          5.6055,
-          8.0492,
-          6.4872,
-          7.8053,
-          6.5717,
-          7.9194
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "reference_ms": 12.3595,
-      "cpp_ms": 1.478611111111111,
-      "speedup": 8.35885778696224,
-      "samples_ms": [
-        [
-          13.8314,
-          13.193,
-          12.2683,
-          12.3595,
-          13.3821,
-          10.6734,
-          8.1663
-        ],
-        [
-          1.650311111111111,
-          1.478611111111111,
-          1.7842666666666667,
-          1.021011111111111,
-          1.5864,
-          1.3901222222222223,
-          0.7663222222222222
-        ]
-      ],
-      "loops": [
-        1,
+        15,
         9
       ],
       "sample_labels": [
@@ -2557,368 +2311,40 @@
       ]
     },
     {
-      "api": "color.rgb2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 9.1552734375e-05,
-      "reference_ms": 33.7746,
-      "cpp_ms": 13.04,
-      "speedup": 2.5900766871165644,
-      "samples_ms": [
-        [
-          32.6822,
-          35.7028,
-          35.5107,
-          28.2636,
-          32.6374,
-          33.7746,
-          36.8491
-        ],
-        [
-          13.04,
-          12.2935,
-          11.8936,
-          13.82,
-          15.2106,
-          14.3696,
-          12.2732
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 7.450580596923828e-09,
-      "reference_ms": 25.682,
-      "cpp_ms": 7.3204,
-      "speedup": 3.508278236161958,
-      "samples_ms": [
-        [
-          26.9806,
-          25.682,
-          25.47,
-          20.2744,
-          19.7746,
-          28.9933,
-          26.9303
-        ],
-        [
-          7.3204,
-          8.0133,
-          7.5215,
-          5.8504,
-          6.1886,
-          6.0124,
-          7.4101
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 5.960464477539063e-08,
-      "reference_ms": 9.521,
-      "cpp_ms": 3.059975,
-      "speedup": 3.111463328948766,
-      "samples_ms": [
-        [
-          9.4408,
-          7.3028,
-          10.3695,
-          10.491,
-          10.2709,
-          9.521,
-          8.7957
-        ],
-        [
-          2.6786,
-          3.011625,
-          3.183825,
-          3.059975,
-          2.842,
-          3.35175,
-          3.1262
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "strided",
-      "channel_axis": -1,
-      "backend": "native",
-      "max_abs_error": 5.960464477539063e-08,
-      "reference_ms": 3.9978,
-      "cpp_ms": 2.43556,
-      "speedup": 1.6414294864425427,
-      "samples_ms": [
-        [
-          4.5315,
-          4.30035,
-          2.8449,
-          3.49625,
-          4.4325,
-          3.9978,
-          2.83205
-        ],
-        [
-          2.38506,
-          3.11442,
-          2.2697,
-          2.43556,
-          2.5145,
-          2.17994,
-          3.6849
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2yuv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 1.05298,
-      "cpp_ms": 0.3145428571428572,
-      "speedup": 3.347651921155418,
-      "samples_ms": [
-        [
-          1.13718,
-          1.05298,
-          1.28655,
-          1.38151,
-          1.01885,
-          0.82018,
-          0.86073
-        ],
-        [
-          0.3145428571428572,
-          0.3001761904761905,
-          0.31948571428571426,
-          0.3362380952380953,
-          0.3585,
-          0.2684285714285714,
-          0.2275047619047619
-        ]
-      ],
-      "loops": [
-        10,
-        21
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.yuv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 1.450975,
-      "cpp_ms": 0.5528518518518518,
-      "speedup": 2.6245277014805386,
-      "samples_ms": [
-        [
-          1.3795916666666668,
-          1.3367916666666668,
-          1.450975,
-          1.872875,
-          1.5773166666666667,
-          1.7544083333333333,
-          1.4132583333333333
-        ],
-        [
-          0.49145185185185186,
-          0.2934703703703704,
-          0.5128740740740741,
-          1.203548148148148,
-          0.5528518518518518,
-          0.5669037037037037,
-          0.6096481481481482
-        ]
-      ],
-      "loops": [
-        12,
-        27
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2yiq",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 1.4649,
-      "cpp_ms": 0.5209692307692307,
-      "speedup": 2.8118743171012612,
-      "samples_ms": [
-        [
-          1.5736571428571429,
-          1.4649,
-          1.5707857142857142,
-          1.5510285714285714,
-          1.463042857142857,
-          1.3278285714285714,
-          1.4159142857142857
-        ],
-        [
-          0.5209692307692307,
-          0.38598461538461537,
-          0.6483,
-          1.4510384615384615,
-          0.4121230769230769,
-          0.4542538461538461,
-          0.5359461538461538
-        ]
-      ],
-      "loops": [
-        7,
-        13
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.yiq2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
-      "backend": "native",
-      "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 1.7100625,
-      "cpp_ms": 0.6612,
-      "speedup": 2.586301421657592,
-      "samples_ms": [
-        [
-          1.867875,
-          2.999025,
-          1.8264,
-          1.7100625,
-          1.5411375,
-          1.4291625,
-          1.1709625
-        ],
-        [
-          1.4992714285714286,
-          1.1052857142857144,
-          0.9098428571428572,
-          0.6612,
-          0.6268428571428571,
-          0.6187857142857143,
-          0.5192571428571429
-        ]
-      ],
-      "loops": [
-        8,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
       "api": "color.rgb2ypbpr",
       "dtype": "float32",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 0.8296,
-      "cpp_ms": 0.3003181818181818,
-      "speedup": 2.7624035114272742,
+      "reference_ms": 0.7381375,
+      "cpp_ms": 0.3162888888888889,
+      "speedup": 2.3337446427316797,
       "samples_ms": [
         [
-          1.1128153846153845,
-          0.7258076923076923,
-          1.0979692307692308,
-          0.8296,
-          0.6301923076923077,
-          0.7107,
-          1.2566923076923078
+          0.669225,
+          0.81536875,
+          0.79745,
+          0.62636875,
+          0.64284375,
+          0.7381375,
+          0.7507625
         ],
         [
-          0.345,
-          0.2798181818181818,
-          0.2893227272727273,
-          0.29469545454545454,
-          0.4135772727272727,
-          0.3674818181818182,
-          0.3003181818181818
+          0.2805888888888889,
+          0.5876555555555555,
+          0.2901444444444444,
+          0.3576111111111111,
+          0.3162888888888889,
+          0.30104444444444445,
+          0.33128888888888885
         ]
       ],
       "loops": [
-        13,
-        22
+        16,
+        9
       ],
       "sample_labels": [
         "scikit-image",
@@ -2930,36 +2356,36 @@
       "dtype": "float32",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 1.2045545454545454,
-      "cpp_ms": 0.29826296296296295,
-      "speedup": 4.038565611661687,
+      "reference_ms": 0.8686666666666666,
+      "cpp_ms": 0.37315238095238096,
+      "speedup": 2.3279140399683516,
       "samples_ms": [
         [
-          1.2196272727272728,
-          1.2045545454545454,
-          1.2147181818181818,
-          1.1310545454545453,
-          0.6791181818181817,
-          1.278681818181818,
-          1.1460090909090908
+          0.76995,
+          1.2366833333333334,
+          1.13855,
+          0.69295,
+          0.8686666666666666,
+          0.74385,
+          1.5792333333333333
         ],
         [
-          0.2620851851851852,
-          0.29826296296296295,
-          0.3151925925925926,
-          0.3344259259259259,
-          0.3122703703703704,
-          0.270637037037037,
-          0.2391
+          0.3064476190476191,
+          0.28045238095238095,
+          0.41704761904761906,
+          0.3322,
+          0.43370476190476187,
+          0.37315238095238096,
+          0.6149571428571429
         ]
       ],
       "loops": [
-        11,
-        27
+        6,
+        21
       ],
       "sample_labels": [
         "scikit-image",
@@ -2971,36 +2397,36 @@
       "dtype": "float32",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 3.0517578125e-05,
-      "reference_ms": 2.147088888888889,
-      "cpp_ms": 0.46554117647058824,
-      "speedup": 4.612027887987555,
+      "reference_ms": 0.97558,
+      "cpp_ms": 0.34042916666666667,
+      "speedup": 2.865735652301629,
       "samples_ms": [
         [
-          2.2195444444444443,
-          2.5925555555555557,
-          2.147088888888889,
-          1.9215555555555555,
-          2.742077777777778,
-          1.5678444444444446,
-          1.7522
+          0.94473,
+          0.93197,
+          1.10802,
+          1.15864,
+          1.1499,
+          0.97558,
+          0.96079
         ],
         [
-          0.40868235294117644,
-          0.5515,
-          0.3976705882352941,
-          0.7584823529411765,
-          0.5313,
-          0.3876941176470588,
-          0.46554117647058824
+          0.5400875,
+          0.35028333333333334,
+          0.3179666666666667,
+          0.34042916666666667,
+          0.4174916666666667,
+          0.27425,
+          0.28949583333333334
         ]
       ],
       "loops": [
-        9,
-        17
+        10,
+        24
       ],
       "sample_labels": [
         "scikit-image",
@@ -3012,36 +2438,36 @@
       "dtype": "float32",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 3.5967,
-      "cpp_ms": 0.38505,
-      "speedup": 9.34086482275029,
+      "reference_ms": 3.23746,
+      "cpp_ms": 1.029246153846154,
+      "speedup": 3.1454671828522742,
       "samples_ms": [
         [
-          3.2504,
-          3.5967,
-          4.265425,
-          2.997875,
-          5.734425,
-          3.47875,
-          4.0511
+          3.0471,
+          3.10716,
+          2.95532,
+          3.27252,
+          3.23746,
+          3.39606,
+          3.87994
         ],
         [
-          0.3305875,
-          0.4185,
-          0.3137,
-          0.3953875,
-          0.38505,
-          0.5249,
-          0.265975
+          0.8234769230769231,
+          0.8269692307692308,
+          1.029246153846154,
+          1.0042846153846154,
+          1.1769461538461539,
+          1.1120615384615384,
+          1.2836153846153846
         ]
       ],
       "loops": [
-        4,
-        8
+        5,
+        13
       ],
       "sample_labels": [
         "scikit-image",
@@ -3053,35 +2479,35 @@
       "dtype": "float32",
       "size": 512,
       "threads": 1,
-      "layout": "channel-first",
-      "channel_axis": 0,
+      "layout": "strided",
+      "channel_axis": -1,
       "backend": "native",
       "max_abs_error": 2.384185791015625e-07,
-      "reference_ms": 1.3499545454545454,
-      "cpp_ms": 0.41022173913043475,
-      "speedup": 3.2907923122653226,
+      "reference_ms": 0.9223071428571429,
+      "cpp_ms": 0.435,
+      "speedup": 2.120246305418719,
       "samples_ms": [
         [
-          1.309818181818182,
-          1.3499545454545454,
-          1.2946272727272727,
-          1.5200363636363636,
-          1.5641363636363634,
-          1.5724909090909092,
-          0.837990909090909
+          1.1185,
+          0.9811857142857143,
+          0.9098642857142857,
+          0.9223071428571429,
+          1.0512642857142858,
+          0.8445,
+          0.68095
         ],
         [
-          0.41022173913043475,
-          0.3938391304347826,
-          0.37867826086956524,
-          0.936304347826087,
-          0.42688695652173914,
-          0.5138869565217391,
-          0.36896521739130433
+          0.5042521739130434,
+          0.435,
+          0.4481826086956522,
+          0.36032173913043475,
+          0.4683695652173913,
+          0.2516260869565217,
+          0.329995652173913
         ]
       ],
       "loops": [
-        11,
+        14,
         23
       ],
       "sample_labels": [
@@ -3094,36 +2520,1102 @@
       "dtype": "float32",
       "size": 512,
       "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 0.8646333333333334,
+      "cpp_ms": 0.3070041666666667,
+      "speedup": 2.8163569984120738,
+      "samples_ms": [
+        [
+          0.7431533333333333,
+          0.9830533333333333,
+          0.7385533333333334,
+          0.6381466666666666,
+          1.1111666666666666,
+          1.48246,
+          0.8646333333333334
+        ],
+        [
+          0.6966541666666666,
+          0.3070041666666667,
+          0.26559166666666667,
+          0.2969208333333333,
+          0.2722583333333333,
+          0.36605,
+          0.3640041666666667
+        ]
+      ],
+      "loops": [
+        15,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2rgbcie",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 2.9802322387695312e-08,
+      "reference_ms": 0.7977058823529412,
+      "cpp_ms": 0.30341111111111113,
+      "speedup": 2.6291254774147546,
+      "samples_ms": [
+        [
+          0.7977058823529412,
+          0.8423705882352941,
+          1.048441176470588,
+          0.6184117647058824,
+          0.6509764705882353,
+          0.8874823529411765,
+          0.7099411764705882
+        ],
+        [
+          0.26317777777777773,
+          0.2708611111111111,
+          0.3363833333333333,
+          0.30341111111111113,
+          0.7727222222222222,
+          0.3125833333333333,
+          0.2651
+        ]
+      ],
+      "loops": [
+        17,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgbcie2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 9.5367431640625e-07,
+      "reference_ms": 0.73240625,
+      "cpp_ms": 0.3059923076923077,
+      "speedup": 2.393544646672868,
+      "samples_ms": [
+        [
+          0.92605,
+          0.73240625,
+          0.64573125,
+          1.04735,
+          0.77576875,
+          0.69510625,
+          0.69853125
+        ],
+        [
+          0.2517384615384615,
+          0.3059923076923077,
+          0.3211,
+          0.2578923076923077,
+          0.31643461538461537,
+          0.25429615384615384,
+          0.4225538461538461
+        ]
+      ],
+      "loops": [
+        16,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 10.4675,
+      "cpp_ms": 4.94535,
+      "speedup": 2.1166348185669364,
+      "samples_ms": [
+        [
+          10.4675,
+          10.4493,
+          11.8857,
+          10.9524,
+          10.4702,
+          9.8769,
+          10.0826
+        ],
+        [
+          5.1261,
+          5.40885,
+          5.38855,
+          4.857,
+          4.9314,
+          4.8203,
+          4.94535
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 8.996576070785522e-07,
+      "reference_ms": 15.6786,
+      "cpp_ms": 5.646,
+      "speedup": 2.776939426142402,
+      "samples_ms": [
+        [
+          15.6888,
+          15.6786,
+          16.205,
+          15.2573,
+          15.042,
+          15.4905,
+          15.7654
+        ],
+        [
+          5.8262,
+          5.51005,
+          5.626,
+          6.09915,
+          7.2696,
+          5.25295,
+          5.646
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2hsv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 35.7653,
+      "cpp_ms": 0.5539066666666667,
+      "speedup": 64.569181330188,
+      "samples_ms": [
+        [
+          37.3621,
+          36.0119,
+          36.2534,
+          32.4871,
+          35.7653,
+          32.4703,
+          34.6756
+        ],
+        [
+          0.64932,
+          0.5220533333333334,
+          0.51542,
+          0.55514,
+          0.54292,
+          0.6382133333333334,
+          0.5539066666666667
+        ]
+      ],
+      "loops": [
+        1,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.hsv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 26.7197,
+      "cpp_ms": 1.248075,
+      "speedup": 21.408729443342747,
+      "samples_ms": [
+        [
+          29.4299,
+          26.7197,
+          39.8457,
+          28.0267,
+          26.4301,
+          26.6433,
+          26.5633
+        ],
+        [
+          1.3822916666666667,
+          1.248075,
+          1.6501583333333332,
+          1.2428333333333332,
+          1.306625,
+          1.1793,
+          1.102925
+        ]
+      ],
+      "loops": [
+        1,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 9.1552734375e-05,
+      "reference_ms": 15.2278,
+      "cpp_ms": 5.66505,
+      "speedup": 2.68802570145012,
+      "samples_ms": [
+        [
+          15.0788,
+          14.7799,
+          17.0755,
+          15.8304,
+          15.2729,
+          15.1972,
+          15.2278
+        ],
+        [
+          5.5345,
+          5.7403,
+          6.37025,
+          5.4468,
+          5.4431,
+          5.9777,
+          5.66505
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 8.7808,
+      "cpp_ms": 0.8710333333333333,
+      "speedup": 10.080900080364318,
+      "samples_ms": [
+        [
+          10.4901,
+          7.447,
+          8.7808,
+          10.2966,
+          8.9324,
+          7.846,
+          8.4654
+        ],
+        [
+          0.8948666666666666,
+          0.8348,
+          0.8710333333333333,
+          0.684,
+          0.8011666666666666,
+          1.1332333333333333,
+          1.0056666666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 9.1552734375e-05,
+      "reference_ms": 25.7333,
+      "cpp_ms": 11.3187,
+      "speedup": 2.2735208106938076,
+      "samples_ms": [
+        [
+          25.0975,
+          32.3373,
+          27.9118,
+          27.4593,
+          25.0822,
+          25.3753,
+          25.7333
+        ],
+        [
+          11.3187,
+          14.4639,
+          13.5021,
+          10.7893,
+          10.8982,
+          11.7132,
+          11.2271
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 7.450580596923828e-09,
+      "reference_ms": 11.3253,
+      "cpp_ms": 5.82075,
+      "speedup": 1.945677103466048,
+      "samples_ms": [
+        [
+          12.3419,
+          13.0417,
+          11.3253,
+          10.7171,
+          10.862,
+          10.8447,
+          11.6517
+        ],
+        [
+          5.82075,
+          5.86375,
+          7.0322,
+          5.4342,
+          5.2877,
+          5.52535,
+          6.01645
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 5.960464477539063e-08,
+      "reference_ms": 5.00865,
+      "cpp_ms": 2.812425,
+      "speedup": 1.780900824021974,
+      "samples_ms": [
+        [
+          5.2002,
+          5.2454,
+          4.89775,
+          4.84735,
+          5.00865,
+          5.01815,
+          4.7533
+        ],
+        [
+          2.819575,
+          2.83115,
+          2.75115,
+          2.812425,
+          2.779,
+          2.91495,
+          2.45515
+        ]
+      ],
+      "loops": [
+        2,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 5.960464477539063e-08,
+      "reference_ms": 2.78968,
+      "cpp_ms": 1.648888888888889,
+      "speedup": 1.691854447439353,
+      "samples_ms": [
+        [
+          2.89968,
+          2.5377,
+          2.78968,
+          2.4165,
+          2.81122,
+          2.62168,
+          3.37776
+        ],
+        [
+          1.5708555555555554,
+          1.7005,
+          1.536288888888889,
+          1.648888888888889,
+          1.5806444444444445,
+          1.846711111111111,
+          1.744588888888889
+        ]
+      ],
+      "loops": [
+        5,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.00018310546875,
+      "reference_ms": 7.8849,
+      "cpp_ms": 2.8253,
+      "speedup": 2.790818674123102,
+      "samples_ms": [
+        [
+          8.6173,
+          8.3007,
+          7.5983,
+          7.8849,
+          8.27845,
+          7.35035,
+          6.241
+        ],
+        [
+          2.47205,
+          3.80335,
+          3.7429,
+          3.02295,
+          2.13465,
+          2.8253,
+          2.3384
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 5.40515,
+      "cpp_ms": 0.97,
+      "speedup": 5.572319587628866,
+      "samples_ms": [
+        [
+          5.40515,
+          5.9506,
+          5.7204,
+          5.858,
+          4.89225,
+          4.98715,
+          5.0603
+        ],
+        [
+          0.97,
+          0.933590909090909,
+          1.0708636363636366,
+          1.0209272727272727,
+          0.9361454545454546,
+          0.9553636363636363,
+          1.023090909090909
+        ]
+      ],
+      "loops": [
+        2,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 0.00014495849609375,
+      "reference_ms": 17.345,
+      "cpp_ms": 8.20145,
+      "speedup": 2.1148699315364965,
+      "samples_ms": [
+        [
+          17.3896,
+          16.4821,
+          20.3089,
+          24.3431,
+          17.345,
+          16.3282,
+          17.1188
+        ],
+        [
+          7.4715,
+          8.20145,
+          7.6648,
+          8.6457,
+          8.24445,
+          8.36,
+          7.20035
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "strided",
+      "channel_axis": -1,
+      "backend": "native",
+      "max_abs_error": 7.450580596923828e-09,
+      "reference_ms": 9.9902,
+      "cpp_ms": 8.0431,
+      "speedup": 1.2420832763486713,
+      "samples_ms": [
+        [
+          12.8813,
+          10.7763,
+          16.2272,
+          7.3103,
+          9.9902,
+          9.9245,
+          9.2439
+        ],
+        [
+          7.8806,
+          14.7501,
+          8.6138,
+          5.8678,
+          10.7842,
+          6.1747,
+          8.0431
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2yuv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
       "layout": "channel-first",
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 0.74335,
-      "cpp_ms": 0.300955,
-      "speedup": 2.4699705936103404,
+      "reference_ms": 0.6775454545454546,
+      "cpp_ms": 0.2213264705882353,
+      "speedup": 3.061294262474313,
       "samples_ms": [
         [
-          1.107325,
-          1.381975,
-          0.721875,
-          0.97475,
-          0.7191,
-          0.7330625,
-          0.74335
+          0.727809090909091,
+          0.6155181818181817,
+          0.6395363636363637,
+          0.6222636363636364,
+          0.6775454545454546,
+          0.707609090909091,
+          0.9755727272727273
         ],
         [
-          0.40761,
-          0.293125,
-          0.338465,
-          0.306825,
-          0.24077,
-          0.230125,
-          0.300955
+          0.18060588235294117,
+          0.23570588235294118,
+          0.18092941176470587,
+          0.24753823529411764,
+          0.2213264705882353,
+          0.18810882352941177,
+          0.24983235294117648
         ]
       ],
       "loops": [
-        8,
-        20
+        11,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.yuv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.384185791015625e-07,
+      "reference_ms": 0.6763714285714285,
+      "cpp_ms": 0.25727692307692307,
+      "speedup": 2.6289626775783566,
+      "samples_ms": [
+        [
+          0.7471142857142857,
+          1.019707142857143,
+          0.7835071428571428,
+          0.6763714285714285,
+          0.6458,
+          0.6450571428571429,
+          0.6113285714285714
+        ],
+        [
+          0.38128076923076926,
+          0.3226769230769231,
+          0.2769538461538461,
+          0.25727692307692307,
+          0.19310384615384615,
+          0.24270384615384616,
+          0.22315384615384615
+        ]
+      ],
+      "loops": [
+        14,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2yiq",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 0.6746769230769232,
+      "cpp_ms": 0.19475357142857141,
+      "speedup": 3.4642595672468595,
+      "samples_ms": [
+        [
+          0.6746769230769232,
+          0.6472538461538462,
+          0.7051,
+          0.6643230769230769,
+          0.6063615384615385,
+          0.6807076923076922,
+          0.7505461538461539
+        ],
+        [
+          0.19074642857142857,
+          0.2038107142857143,
+          0.1864392857142857,
+          0.1948,
+          0.19619642857142858,
+          0.1942107142857143,
+          0.19475357142857141
+        ]
+      ],
+      "loops": [
+        13,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.yiq2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.384185791015625e-07,
+      "reference_ms": 0.6508076923076923,
+      "cpp_ms": 0.2139,
+      "speedup": 3.0425792066745783,
+      "samples_ms": [
+        [
+          0.6756384615384615,
+          0.6215692307692308,
+          0.6417692307692308,
+          0.7015615384615385,
+          0.6508076923076923,
+          0.6656615384615385,
+          0.6036384615384615
+        ],
+        [
+          0.20476296296296295,
+          0.21724444444444443,
+          0.2597777777777778,
+          0.18631111111111112,
+          0.2008814814814815,
+          0.2139,
+          0.21905555555555556
+        ]
+      ],
+      "loops": [
+        13,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ypbpr",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 0.646075,
+      "cpp_ms": 0.19222727272727275,
+      "speedup": 3.3609955072121065,
+      "samples_ms": [
+        [
+          0.62110625,
+          0.6307625,
+          0.646075,
+          0.73745625,
+          0.64948125,
+          0.63658125,
+          0.70743125
+        ],
+        [
+          0.18815454545454544,
+          0.19222727272727275,
+          0.24498484848484847,
+          0.2499030303030303,
+          0.19203636363636364,
+          0.19103636363636364,
+          0.2491969696969697
+        ]
+      ],
+      "loops": [
+        16,
+        33
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ypbpr2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.384185791015625e-07,
+      "reference_ms": 0.6314866666666666,
+      "cpp_ms": 0.21979285714285712,
+      "speedup": 2.8730991301333506,
+      "samples_ms": [
+        [
+          0.6603066666666666,
+          0.62084,
+          0.61388,
+          0.6935533333333334,
+          0.6314866666666666,
+          0.63084,
+          0.7542533333333333
+        ],
+        [
+          0.20586428571428572,
+          0.24222857142857143,
+          0.21979285714285712,
+          0.2002857142857143,
+          0.2891285714285714,
+          0.2018285714285714,
+          0.33575
+        ]
+      ],
+      "loops": [
+        15,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ycbcr",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 3.0517578125e-05,
+      "reference_ms": 0.9894181818181818,
+      "cpp_ms": 0.22106,
+      "speedup": 4.475790200932696,
+      "samples_ms": [
+        [
+          1.0038090909090909,
+          0.9470636363636363,
+          0.9959818181818182,
+          0.9254636363636364,
+          0.9660545454545454,
+          0.9894181818181818,
+          1.0002727272727272
+        ],
+        [
+          0.21684,
+          0.221084,
+          0.216004,
+          0.22556,
+          0.230152,
+          0.22106,
+          0.21878
+        ]
+      ],
+      "loops": [
+        11,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ycbcr2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 2.208,
+      "cpp_ms": 0.28915555555555555,
+      "speedup": 7.636028281586229,
+      "samples_ms": [
+        [
+          2.998325,
+          2.934775,
+          1.900825,
+          1.862125,
+          2.208,
+          1.959025,
+          2.33725
+        ],
+        [
+          0.30622777777777777,
+          0.28915555555555555,
+          0.3206555555555556,
+          0.22407222222222223,
+          0.24270555555555556,
+          0.3009833333333333,
+          0.24154444444444445
+        ]
+      ],
+      "loops": [
+        4,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2ydbdr",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 2.384185791015625e-07,
+      "reference_ms": 0.6689071428571428,
+      "cpp_ms": 0.20862083333333334,
+      "speedup": 3.2063295509339964,
+      "samples_ms": [
+        [
+          0.8872285714285715,
+          0.7206214285714285,
+          0.6689071428571428,
+          0.9229642857142857,
+          0.6362,
+          0.6105785714285715,
+          0.6656642857142857
+        ],
+        [
+          0.20862083333333334,
+          0.2393375,
+          0.20584166666666665,
+          0.21319166666666667,
+          0.2523916666666667,
+          0.1961,
+          0.20105416666666664
+        ]
+      ],
+      "loops": [
+        14,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.ydbdr2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 0.6632823529411765,
+      "cpp_ms": 0.19835454545454545,
+      "speedup": 3.343923132294304,
+      "samples_ms": [
+        [
+          0.6632823529411765,
+          0.8053941176470588,
+          0.6939235294117647,
+          0.6459176470588235,
+          0.6303647058823529,
+          0.6289588235294118,
+          0.6653470588235294
+        ],
+        [
+          0.19835454545454545,
+          0.20858484848484848,
+          0.18815757575757575,
+          0.1837060606060606,
+          0.27815757575757577,
+          0.1889,
+          0.2001848484848485
+        ]
+      ],
+      "loops": [
+        17,
+        33
       ],
       "sample_labels": [
         "scikit-image",
@@ -3139,32 +3631,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 2.9802322387695312e-08,
-      "reference_ms": 1.1392666666666666,
-      "cpp_ms": 0.260790625,
-      "speedup": 4.368510818464685,
+      "reference_ms": 0.74225,
+      "cpp_ms": 0.23262916666666666,
+      "speedup": 3.190700506886855,
       "samples_ms": [
         [
-          1.2087866666666667,
-          1.12942,
-          1.1587466666666668,
-          0.9610066666666667,
-          1.1392666666666666,
-          1.1691066666666667,
-          0.6803733333333334
+          0.636425,
+          0.7157375,
+          0.749225,
+          0.75209375,
+          0.70510625,
+          0.74990625,
+          0.74225
         ],
         [
-          0.20274375,
-          0.260790625,
-          0.238640625,
-          0.254278125,
-          0.351953125,
-          0.311371875,
-          0.299971875
+          0.2165,
+          0.23262916666666666,
+          0.21168333333333333,
+          0.23539166666666667,
+          0.23780416666666665,
+          0.19679583333333334,
+          0.2672375
         ]
       ],
       "loops": [
-        15,
-        32
+        16,
+        24
       ],
       "sample_labels": [
         "scikit-image",
@@ -3180,32 +3672,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 9.5367431640625e-07,
-      "reference_ms": 0.8950571428571429,
-      "cpp_ms": 0.238968,
-      "speedup": 3.7455104568692996,
+      "reference_ms": 0.8763294117647059,
+      "cpp_ms": 0.22908214285714287,
+      "speedup": 3.825393812171517,
       "samples_ms": [
         [
-          0.80165,
-          1.2193214285714287,
-          0.8956071428571428,
-          0.8950571428571429,
-          0.7473857142857143,
-          1.2972428571428571,
-          0.6803214285714285
+          0.7069352941176471,
+          0.8763294117647059,
+          1.0490294117647059,
+          0.6807,
+          0.6200705882352942,
+          1.0003941176470588,
+          1.1431176470588236
         ],
         [
-          0.2235,
-          0.244184,
-          0.278248,
-          0.189172,
-          0.256864,
-          0.23806,
-          0.238968
+          0.20494285714285712,
+          0.30690357142857144,
+          0.219175,
+          0.22908214285714287,
+          0.1914392857142857,
+          0.2820964285714286,
+          0.37386428571428576
         ]
       ],
       "loops": [
-        14,
-        25
+        17,
+        28
       ],
       "sample_labels": [
         "scikit-image",
@@ -3221,27 +3713,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 1.1920928955078125e-07,
-      "reference_ms": 14.4489,
-      "cpp_ms": 6.64105,
-      "speedup": 2.1756951084542355,
+      "reference_ms": 11.7513,
+      "cpp_ms": 5.06255,
+      "speedup": 2.3212215187998146,
       "samples_ms": [
         [
-          12.3825,
-          11.2671,
-          16.4096,
-          14.9328,
-          14.4489,
-          15.3275,
-          12.4015
+          10.7433,
+          11.836,
+          14.8996,
+          12.3612,
+          10.1455,
+          10.1194,
+          11.7513
         ],
         [
-          6.64105,
-          6.9016,
-          6.3898,
-          6.9063,
-          6.09075,
-          4.94415,
-          7.44285
+          5.1523,
+          4.5843,
+          5.4825,
+          5.06255,
+          4.3858,
+          8.01425,
+          4.5719
         ]
       ],
       "loops": [
@@ -3262,27 +3754,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 8.996576070785522e-07,
-      "reference_ms": 18.1711,
-      "cpp_ms": 6.4666,
-      "speedup": 2.8099928865246033,
+      "reference_ms": 16.3697,
+      "cpp_ms": 5.28485,
+      "speedup": 3.0974767495766207,
       "samples_ms": [
         [
-          17.8575,
-          20.4487,
-          16.6029,
-          16.4574,
-          18.1711,
-          19.2268,
-          18.8914
+          15.6412,
+          16.4817,
+          19.2571,
+          15.6962,
+          16.591,
+          16.3697,
+          15.7024
         ],
         [
-          8.20745,
-          7.68755,
-          6.4666,
-          5.2963,
-          5.27535,
-          10.34775,
-          5.5131
+          5.28485,
+          5.0977,
+          5.3195,
+          5.6967,
+          4.85715,
+          5.10235,
+          5.8216
         ]
       ],
       "loops": [
@@ -3303,32 +3795,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 19.314,
-      "cpp_ms": 0.48842142857142856,
-      "speedup": 39.543719563023735,
+      "reference_ms": 20.5761,
+      "cpp_ms": 0.65699375,
+      "speedup": 31.318562771715865,
       "samples_ms": [
         [
-          18.8867,
-          20.7768,
-          18.2431,
-          24.3307,
-          19.314,
-          18.4853,
-          25.2612
+          17.6344,
+          21.9913,
+          22.0618,
+          20.5761,
+          17.8156,
+          19.1815,
+          20.9647
         ],
         [
-          0.41075,
-          0.7497285714285715,
-          0.48842142857142856,
-          0.45513571428571425,
-          0.3759571428571428,
-          0.5074857142857142,
-          0.49620714285714285
+          0.37669375,
+          0.67814375,
+          0.867825,
+          0.8819,
+          0.37373125,
+          0.3931,
+          0.65699375
         ]
       ],
       "loops": [
         1,
-        14
+        16
       ],
       "sample_labels": [
         "scikit-image",
@@ -3344,32 +3836,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 31.3881,
-      "cpp_ms": 1.3298285714285714,
-      "speedup": 23.60311748023376,
+      "reference_ms": 25.9572,
+      "cpp_ms": 1.0148384615384616,
+      "speedup": 25.577666775310963,
       "samples_ms": [
         [
-          37.0298,
-          34.1044,
-          29.8013,
-          29.9449,
-          29.9914,
-          31.672,
-          31.3881
+          25.4563,
+          26.5385,
+          25.9572,
+          29.2003,
+          27.3721,
+          23.9989,
+          25.7903
         ],
         [
-          1.4257142857142857,
-          1.3810714285714287,
-          1.1250714285714287,
-          1.1475714285714287,
-          1.3727857142857143,
-          1.3298285714285714,
-          1.159857142857143
+          0.6226384615384615,
+          1.3889,
+          1.0148384615384616,
+          1.0123153846153847,
+          1.150076923076923,
+          1.1353615384615385,
+          1.011246153846154
         ]
       ],
       "loops": [
         1,
-        7
+        13
       ],
       "sample_labels": [
         "scikit-image",
@@ -3385,27 +3877,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 9.1552734375e-05,
-      "reference_ms": 20.0199,
-      "cpp_ms": 6.00985,
-      "speedup": 3.331181310681631,
+      "reference_ms": 17.5114,
+      "cpp_ms": 5.5892,
+      "speedup": 3.1330780791526514,
       "samples_ms": [
         [
-          20.0199,
-          21.0566,
-          19.4573,
-          19.8325,
-          20.8038,
-          25.9496,
-          19.867
+          17.5114,
+          17.6993,
+          17.0795,
+          17.9993,
+          18.701,
+          16.9581,
+          16.2817
         ],
         [
-          5.39525,
-          7.9907,
-          6.6811,
-          5.54385,
-          6.75465,
-          5.95225,
-          6.00985
+          5.29665,
+          5.60585,
+          5.23055,
+          5.5892,
+          5.9767,
+          5.65255,
+          5.27465
         ]
       ],
       "loops": [
@@ -3426,32 +3918,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 0.0,
-      "reference_ms": 12.2526,
-      "cpp_ms": 0.7362888888888889,
-      "speedup": 16.641022545498444,
+      "reference_ms": 8.1409,
+      "cpp_ms": 0.5236357142857143,
+      "speedup": 15.546876918250145,
       "samples_ms": [
         [
-          17.1922,
-          17.51,
-          12.5761,
-          12.2526,
-          10.924,
-          11.8426,
-          11.3669
+          7.07215,
+          8.1409,
+          8.54925,
+          8.58445,
+          7.0746,
+          8.788,
+          7.2457
         ],
         [
-          1.978011111111111,
-          0.7232222222222222,
-          0.8327222222222223,
-          0.6083333333333334,
-          0.5348666666666666,
-          0.7362888888888889,
-          1.4874
+          0.5212071428571429,
+          0.5254714285714285,
+          0.5236357142857143,
+          0.5309428571428572,
+          0.5076285714285714,
+          0.5252,
+          0.5149785714285714
         ]
       ],
       "loops": [
-        1,
-        9
+        2,
+        14
       ],
       "sample_labels": [
         "scikit-image",
@@ -3467,27 +3959,27 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 9.1552734375e-05,
-      "reference_ms": 28.8175,
-      "cpp_ms": 10.8065,
-      "speedup": 2.6666820894831815,
+      "reference_ms": 24.8042,
+      "cpp_ms": 10.4328,
+      "speedup": 2.3775208956368377,
       "samples_ms": [
         [
-          33.1461,
-          36.0019,
-          28.8175,
-          28.2463,
-          27.8552,
-          27.9671,
-          31.7974
+          26.1323,
+          24.3517,
+          24.9773,
+          24.8042,
+          23.578,
+          23.2107,
+          26.5783
         ],
         [
-          10.7653,
-          12.5459,
-          10.5626,
-          10.8065,
-          10.6731,
-          12.8556,
-          11.3774
+          10.8674,
+          10.4328,
+          10.3396,
+          11.326,
+          11.1774,
+          9.8574,
+          10.1123
         ]
       ],
       "loops": [
@@ -3508,32 +4000,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 7.450580596923828e-09,
-      "reference_ms": 15.71,
-      "cpp_ms": 7.0194,
-      "speedup": 2.238083027039348,
+      "reference_ms": 11.0725,
+      "cpp_ms": 5.37255,
+      "speedup": 2.0609394049380647,
       "samples_ms": [
         [
-          15.71,
-          18.823,
-          14.5238,
-          16.3157,
-          18.9256,
-          12.6757,
-          15.2858
+          12.2163,
+          12.854,
+          10.7485,
+          11.901,
+          10.4811,
+          11.0725,
+          10.7815
         ],
         [
-          8.5557,
-          8.635,
-          6.3417,
-          9.5141,
-          6.8159,
-          7.0194,
-          6.3397
+          5.3357,
+          5.39835,
+          5.5373,
+          5.3357,
+          5.37255,
+          5.347,
+          5.37875
         ]
       ],
       "loops": [
         1,
-        1
+        2
       ],
       "sample_labels": [
         "scikit-image",
@@ -3549,32 +4041,32 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 5.960464477539063e-08,
-      "reference_ms": 5.5715,
-      "cpp_ms": 2.6621666666666663,
-      "speedup": 2.092844174544544,
+      "reference_ms": 4.968566666666667,
+      "cpp_ms": 2.25796,
+      "speedup": 2.2004670882861816,
       "samples_ms": [
         [
-          6.7803,
-          5.5715,
-          5.2786,
-          5.50375,
-          8.5888,
-          6.7211,
-          5.5565
+          5.2682,
+          4.968566666666667,
+          4.771833333333333,
+          4.441466666666667,
+          4.3618,
+          5.122266666666667,
+          6.683866666666667
         ],
         [
-          2.7958666666666665,
-          2.7146333333333335,
-          2.6647666666666665,
-          2.6211,
-          2.6621666666666663,
-          2.6202333333333336,
-          2.2179333333333333
+          2.61938,
+          2.4381,
+          2.21876,
+          2.25796,
+          2.21314,
+          2.1853,
+          2.63628
         ]
       ],
       "loops": [
-        2,
-        3
+        3,
+        5
       ],
       "sample_labels": [
         "scikit-image",
@@ -3590,32 +4082,196 @@
       "channel_axis": 0,
       "backend": "native",
       "max_abs_error": 5.960464477539063e-08,
-      "reference_ms": 6.014475,
-      "cpp_ms": 2.1060666666666665,
-      "speedup": 2.8557856668038366,
+      "reference_ms": 3.4314,
+      "cpp_ms": 1.837888888888889,
+      "speedup": 1.8670334320778672,
       "samples_ms": [
         [
-          2.797575,
-          3.501875,
-          6.014475,
-          6.5852,
-          3.1226,
-          6.69205,
-          7.2261
+          2.57824,
+          2.9832,
+          3.76256,
+          5.61708,
+          3.94088,
+          3.4314,
+          2.98344
         ],
         [
-          1.531688888888889,
-          2.610222222222222,
-          1.8896777777777778,
-          2.5104555555555557,
-          1.9337555555555554,
-          2.892611111111111,
-          2.1060666666666665
+          1.4624444444444444,
+          1.4420444444444445,
+          2.7023,
+          2.417111111111111,
+          2.034288888888889,
+          1.837888888888889,
+          1.6675333333333333
         ]
       ],
       "loops": [
-        4,
+        5,
         9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 0.00018310546875,
+      "reference_ms": 5.8583,
+      "cpp_ms": 2.1088,
+      "speedup": 2.7780254172989376,
+      "samples_ms": [
+        [
+          6.6683,
+          5.9632,
+          5.3606,
+          6.5612,
+          5.6818,
+          5.2313,
+          5.8583
+        ],
+        [
+          2.1088,
+          2.0348,
+          2.0999,
+          2.01115,
+          2.154675,
+          2.12235,
+          2.193
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "reference_ms": 5.1719,
+      "cpp_ms": 0.79464,
+      "speedup": 6.50848182824927,
+      "samples_ms": [
+        [
+          6.24525,
+          5.06535,
+          4.97485,
+          6.62855,
+          5.41405,
+          5.1719,
+          5.05265
+        ],
+        [
+          0.80934,
+          0.7769733333333334,
+          0.7828533333333334,
+          0.7900466666666667,
+          0.79464,
+          0.8396266666666666,
+          0.82838
+        ]
+      ],
+      "loops": [
+        2,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 0.00014495849609375,
+      "reference_ms": 18.7772,
+      "cpp_ms": 7.3143,
+      "speedup": 2.5671902984564485,
+      "samples_ms": [
+        [
+          16.8005,
+          15.4995,
+          18.7772,
+          22.4936,
+          21.0849,
+          19.3824,
+          17.3259
+        ],
+        [
+          7.4225,
+          7.1205,
+          10.3109,
+          7.1419,
+          7.1918,
+          7.3143,
+          7.7171
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "layout": "channel-first",
+      "channel_axis": 0,
+      "backend": "native",
+      "max_abs_error": 7.450580596923828e-09,
+      "reference_ms": 7.7496,
+      "cpp_ms": 5.8162,
+      "speedup": 1.3324163543206904,
+      "samples_ms": [
+        [
+          8.9049,
+          7.3031,
+          7.1794,
+          7.0344,
+          7.7496,
+          9.4161,
+          10.0561
+        ],
+        [
+          5.8521,
+          5.93045,
+          5.6713,
+          5.7348,
+          5.6903,
+          5.8162,
+          5.8788
+        ]
+      ],
+      "loops": [
+        1,
+        2
       ],
       "sample_labels": [
         "scikit-image",

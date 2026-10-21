@@ -41,8 +41,8 @@ shipped in the repository. `histogram-results.json` also covers constant,
 binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
-The current function benchmark covers 61 native image functions, two metadata
-helpers, and 724 per-function performance cases. The suite now has 10869 checks in both SIMD
+The current function benchmark covers 65 native image functions, two metadata
+helpers, and 772 per-function performance cases. The suite now has 13397 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -50,11 +50,11 @@ performance results retain slower cases as well as faster ones.
 `conversion-widths.json` records 112 additional cases across boolean and
 8/16/32/64-bit integer inputs, with exact parity required before timing. Identity,
 copy, and metadata rows are identified separately from conversion kernels.
-`color-layouts.json` adds 88 one-worker comparisons on uint16/float32 strided and
+`color-layouts.json` adds 104 one-worker comparisons on uint16/float32 strided and
 channel-first images; input movement, normalization and any required copying are
 included. Uniform floating layouts are read directly without a full copy.
-`perceptual-parameters.json` adds 40 cases on alternate white points, wrapped
-hues, four-channel polar conversions and negative-Z warning counts. Warnings
+`perceptual-parameters.json` adds 60 cases on alternate white points, wrapped
+hues, four-channel polar conversions, negative-Z warning counts and Luv lightness branches. Warnings
 are checked before timing and ignored during timed calls in that report.
 `morphology-parameters.json` adds 240 comparisons across all ten new APIs,
 four input dtypes, large rectangles, disks and asymmetric even footprints.
@@ -62,6 +62,11 @@ The latter reuse output buffers; all require exact values and dtype, and binary
 deprecation warnings are verified before timed calls. Rectangle filtering uses
 linear-work extrema scans above the small-stencil threshold. Binary SIMD stencils
 stop when every lane reaches its terminal value, and top-hat subtraction is vectorized.
+Canonical boolean rectangles now pack pixels into words, apply bitwise extrema,
+and unpack with SIMD; other storage/modes retain the general native kernel.
+`morphology-tuning.json` records the historical 18-case experiment from kernel
+`3b4355a` to `2795b77`: geometric-mean native latency fell from 3.6556 to
+0.1891 ms. It is excluded from the current-source report aggregate.
 
 These are local measurements under ordinary system load, without CPU affinity
 or frequency locking. Medians and individual samples are available in the

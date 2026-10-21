@@ -24,6 +24,8 @@ def main():
             raise ValueError(f'{name}: source changed; rebuild and rerun this report')
         if report['metadata']['fallback_enabled']:
             raise ValueError(f'{name}: fallback must be disabled')
+        if not any(r['threads']==1 for r in report['results']):
+            raise ValueError(f'{name}: one-worker comparisons are required')
     for field in ('reference','numpy','avx2'):
         if len({report['metadata'][field] for _,_,report in data}) != 1:
             raise ValueError(f'reports use different {field} settings')
@@ -33,6 +35,12 @@ def main():
     actual = {r['api'] for r in data[0][2]['results']}
     if covered != actual:
         raise ValueError('function report does not cover the current implementation inventory')
+    for entry in inventory:
+        if entry['api'] not in covered:
+            continue
+        serial_dtypes={r['dtype'] for r in data[0][2]['results'] if r['api']==entry['api'] and r['threads']==1}
+        if serial_dtypes!=set(entry['native_default_case_dtypes']):
+            raise ValueError(f'{entry["api"]}: missing one-worker default dtype comparisons')
     all_rows = [r for _,_,d in data for r in d['results']]
     serial = [r for r in all_rows if r['threads'] == 1 and r['backend'] == 'native']
     slower = [r for r in serial if r['speedup'] < 1]
@@ -62,11 +70,20 @@ def main():
                 ('color.xyz2rgb','float32'),('color.rgb2ycbcr','float64'),
                 ('color.rgb2hsv','float32'),('color.hsv2rgb','float32'),
                 ('color.rgb2lab','float64'),('color.lab2lch','float64'),
+                ('color.rgb2luv','float32'),('color.luv2xyz','float64'),('color.luv2rgb','float32'),
                 ('morphology.erosion','uint8'),('morphology.opening','float32'),
                 ('morphology.binary_dilation','float64')}
     for r in data[0][2]['results']:
         if r['size'] == 1024 and r['threads'] == 1 and (r['api'],r['dtype']) in examples:
             lines.append(f'| {r["api"]} | {r["dtype"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
+    morphology_report=next(report for _,name,report in data if name=='morphology-parameters')
+    boolean_rows=[r for r in morphology_report['results'] if r['threads']==1 and r['dtype']=='bool' and r['workload']=='rectangle-31' and not r['api'].startswith('morphology.binary_')]
+    lines+=['','Boolean 31×31 rectangles, with one worker (the previous slower morphology workloads):','',
+            '| Operation | Image | Original ms | C++ ms | Reference / C++ |','|---|---|---:|---:|---:|']
+    for r in boolean_rows:
+        lines.append(f'| {r["api"]} | {r["size"]}² | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
+    lines+=['','The [fixed-workload tuning experiment](morphology-tuning.md) preserves '
+            'separate historical before/after C++ snapshots. Its cases are not added to this current-source total.']
     lines += ['',f'{len(serial)-len(slower)} of {len(serial)} one-worker native processing workloads '
               'measured faster than the reference. These are workload cases, including repeated '
               'functions and parameter variants. Identity returns, copies and dtype metadata are '
@@ -76,7 +93,7 @@ def main():
               '|---|---|---:|---|---:|']
     for r in slower:
         dtype = r.get('dtype',r.get('input_dtype',''))
-        lines.append(f'| {r["api"]} | {dtype} | {r["size"]}² | {r.get("layout","standard")} | {r["speedup"]:.2f}x |')
+        lines.append(f'| {r["api"]} | {dtype} | {r["size"]}² | {r.get("layout","standard")} | {r["speedup"]:.4f}x |')
     lines += ['',
               'The color port fuses integer normalization, matrix arithmetic and sRGB transfer. '
               'Uniform floating layouts now avoid a full contiguous copy: planar input uses '
@@ -90,8 +107,13 @@ def main():
               'linear-work prefix/suffix scans; small input types use narrower working buffers '
               'when conversion preserves extrema, while 64-bit integer scans retain double '
               'buffers for upstream rounding. Contiguous scan outputs and top-hat subtraction '
-              'use SIMD. Boolean grayscale rectangles remain a bottleneck: their full scan '
-              'passes can cost more than the reference on nearly uniform intermediate images.','',
+              'use SIMD. Canonical 2D boolean rectangles now use packed words, with SIMD '
+              'packing, bitwise extrema and unpacking, avoiding the previous byte-wise scan '
+              'passes. Other storage and boundary constants retain the general native path.','',
+              'Luv conversions fuse sRGB/XYZ stages with vector chromaticity arithmetic. '
+              'Cached three-value white metadata preserves NumPy dot rounding at singular '
+              'denominators. Float32 inverse cube powers retain libm rounding because sRGB '
+              'amplifies small XYZ differences near black; surrounding arithmetic remains vectorized.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '

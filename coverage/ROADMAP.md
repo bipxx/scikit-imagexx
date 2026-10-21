@@ -28,22 +28,24 @@ Current native coverage: RGB/gray conversion; Gaussian; Sobel, Prewitt, and
 Scharr with directional variants; uint8 Otsu; mean thresholding; inversion;
 gamma/log/sigmoid correction; intensity rescaling; uint8 histogram, CDF, and
 histogram equalization; seven dtype conversion APIs; YUV, YIQ, YPbPr, YCbCr, YDbDr,
-CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB and Lab/LCh conversions;
+CIE RGB and XYZ conversion pairs; HSV, Lab/XYZ/sRGB, Lab/LCh and Luv/XYZ/sRGB conversions;
 six grayscale and four binary morphology functions.
-There are 61 partial native image entries, two metadata helpers,
-and 387 pending entries in the current
+There are 65 partial native image entries, two metadata helpers,
+and 383 pending entries in the current
 450-name inventory.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
 
-- Port Luv, stain separation, and color-distance APIs with the same
+- Port stain separation and color-distance APIs with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.
 - Complete dtype, dimension, boundary, mask, output-buffer, and channel handling
   for existing kernels; improve reduction parity for extreme dynamic ranges.
-- Extend morphology constant-value boundary tests to fractional values near
-  integer conversion limits, and reduce the remaining boolean rectangle scan costs.
+- Broaden morphology NaN/output-dtype parity and optimize remaining memory-bound
+  conversions, strided color transforms and other measured regressions.
+- Avoid unused nonlinear vector work for uniformly linear sRGB/Luv inputs,
+  including the slower dark `rgb2luv` and small `luv2rgb` cases in the current report.
 - Complete float16/endian conversion coverage and floating warning contracts;
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.

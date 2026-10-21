@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **61 partially native
+The reference is scikit-image **0.26.0**. There are currently **65 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 387 remain pending native implementation and dedicated parity tests.
+export list; 383 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -29,6 +29,8 @@ This is not full scikit-image coverage.
 | `rgb2hsv`, `hsv2rgb` | Same color dtypes, arbitrary dimensions and channel axes; finite inputs and RGB-to-HSV intermediates; inverse hue sector must fit int32 | Upstream tie order, grayscale cases, signed zero and uint8-wrapped hue sectors |
 | `xyz2lab`, `lab2xyz`, `rgb2lab`, `lab2rgb` | Same color dtypes/dimensions; all eight illuminants and three observers | Fused XYZ/Lab/sRGB stages; upstream negative-Z warning counts and single-pixel float32 promotion |
 | `lab2lch`, `lch2lab` | Same color dtypes; three or more channels; extra channels preserved after normalization | Native hypot/atan2 and sin/cos; IEEE/special ranges use scalar libm |
+| `xyz2luv`, `luv2xyz` | Same color dtypes/dimensions; three channels; all eight illuminants and three observers | Native Luv curves and epsilon-regularized denominators; dtype-specific white metadata preserves upstream dot rounding |
+| `rgb2luv`, `luv2rgb` | Same color dtypes/dimensions; three channels; fixed D65/2 reference, matching upstream signatures | Fused sRGB/XYZ/Luv stages; vector arithmetic and transfer, with float32 inverse cube powers preserving libm rounding |
 | `xyz_tristimulus_values` | All upstream white-point combinations and NumPy output dtypes | Metadata helper; no image kernel |
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
@@ -61,9 +63,14 @@ Color matrix float32 parity includes an absolute dot-product roundoff bound of
 tolerance. BLAS fusion can differ near cancellation, especially for out-of-range
 YCbCr values. Float64 color comparisons use the base tolerance. Color float16,
 non-native byte order, and ndarray subclasses use explicit upstream fallback.
-Forward Lab conversions use `atol=2.5e-4` for float32 and `2e-12` for float64,
+Forward Lab/Luv conversions use `atol=2.5e-4` for float32 and `2e-12` for float64,
 with the same relative tolerance. The 500× opponent-channel scaling amplifies
 cbrt/matrix roundoff; four float32 epsilon units at that scale are about 2.4e-4.
+Luv also scales chromaticity differences by `13*L`. Its cached three-value
+white-point dot product uses NumPy metadata arithmetic to preserve singular
+denominators; all pixel processing remains in C++. Float32 inverse powers
+retain reference rounding because sRGB can amplify a one-ULP XYZ difference
+near black. Inverse Luv uses the base tolerance and has real-color stress tests.
 HSV nonfinite values, nonfinite RGB-to-HSV intermediates, and inverse hue sectors
 outside int32 currently require explicit upstream fallback.
 
@@ -84,8 +91,10 @@ Morphology supports caller output buffers; grayscale output dtype changes, float
 non-native byte order, ndarray subclasses and scalar inputs currently require fallback.
 Sparse-footprint NaN behavior in original SciPy depends on traversal order, so
 grayscale NaN calls are explicitly excluded from native coverage. Large rectangles
-use separable linear-work extrema scans; small neighborhoods use SIMD stencils.
-The scan recurrence and exceptional/border handling retain scalar code paths.
+use separable linear-work extrema scans; canonical 2D boolean rectangles use
+packed-bit reductions with SIMD packing/unpacking. Noncanonical bool bytes and
+other cases retain the general native path. Small neighborhoods use SIMD stencils.
+Scan recurrences, exceptional/border handling and rounding-sensitive powers retain scalar code paths.
 
 ## Swap Python backends
 
@@ -113,7 +122,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 63 covered wrapper signatures have per-function parity tests. Tests also run
+All 67 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -247,7 +256,7 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 1,228 current comparisons against original scikit-image, including one-worker
+records 1,312 current comparisons against original scikit-image, including one-worker
 measurements and optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
@@ -271,19 +280,23 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 63 entries in 724 cases.
+performance. The full function benchmark covers 67 entries in 772 cases.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 10,869 checks with SIMD enabled and disabled; inventory checks alone do not
+has 13,397 checks with SIMD enabled and disabled; inventory checks alone do not
 establish numerical parity for pending ports.
-[Color layouts and integer inputs](benchmarks/color-layouts.md) add 88 one-worker
+[Color layouts and integer inputs](benchmarks/color-layouts.md) add 104 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
-[Perceptual parameters](benchmarks/perceptual-parameters.md) add 40 comparisons
-with alternate white points, wrapped hues, extra channels, and negative-Z warnings.
+[Perceptual parameters](benchmarks/perceptual-parameters.md) add 60 comparisons
+with alternate white points, wrapped hues, extra channels, negative-Z warnings,
+and Luv low-lightness/midtone branches.
 [Morphology footprints and output reuse](benchmarks/morphology-parameters.md) add
 240 comparisons across ten APIs, four dtypes, rectangles, disks and even/asymmetric
 footprints. Every case checks exact output values, dtype and warning parity.
+The [boolean rectangle tuning experiment](benchmarks/morphology-tuning.md) retains
+before/after C++ snapshots and 18 fixed one-worker workloads; it is historical
+evidence, separate from the current-source aggregate.
 
 [Earlier single-thread results and same-run before/after comparison](benchmarks/optimized-single-thread.md)
 and [Otsu input distributions](benchmarks/histogram-results.md) measure the
