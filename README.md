@@ -15,9 +15,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 The reference is scikit-image **0.26.0**. There are currently **92 partially native
 image functions and two metadata helpers**. The
-[API inventory](coverage/README.md) tracks 450 public callable names across 17
+[API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 356 remain pending native implementation and dedicated parity tests.
+export list; 361 remain pending native implementation and dedicated parity tests.
+Static discovery also records 284 member paths across 29 exported classes;
+their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |

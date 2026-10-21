@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-450 public callable names inventoried in 17 modules; 92 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 92 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -237,6 +237,11 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.threshold` | upstream-only | pending | pending |
 | `filters.rank.threshold_percentile` | upstream-only | pending | pending |
 | `filters.rank.windowed_histogram` | upstream-only | pending | pending |
+| `future.TrainableSegmenter` | upstream-only | pending | pending |
+| `future.fit_segmenter` | upstream-only | pending | pending |
+| `future.manual_lasso_segmentation` | upstream-only | pending | pending |
+| `future.manual_polygon_segmentation` | upstream-only | pending | pending |
+| `future.predict_segmenter` | upstream-only | pending | pending |
 | `graph.MCP` | upstream-only | pending | pending |
 | `graph.MCP_Connect` | upstream-only | pending | pending |
 | `graph.MCP_Flexible` | upstream-only | pending | pending |
@@ -458,3 +463,39 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.unique_rows` | upstream-only | pending | pending |
 | `util.view_as_blocks` | upstream-only | pending | pending |
 | `util.view_as_windows` | upstream-only | pending | pending |
+
+## Class member inventory
+
+29 exported class names expose 284 statically discoverable member paths, including inherited methods and properties. Their signatures and defining classes are recorded in `api.json`. These members still require native implementations, numerical/state parity cases and benchmarks; they do not increase native coverage. Constructors are not executed and property getters are not evaluated during inventory. Instance fields and runtime-generated attributes remain unassessed.
+
+| Class | Static member paths | Native member parity |
+|---|---:|---|
+| `feature.BRIEF` | 2 | pending |
+| `feature.CENSURE` | 2 | pending |
+| `feature.Cascade` | 11 | pending |
+| `feature.ORB` | 4 | pending |
+| `feature.SIFT` | 5 | pending |
+| `filters.LPIFilter2D` | 2 | pending |
+| `future.TrainableSegmenter` | 4 | pending |
+| `graph.MCP` | 10 | pending |
+| `graph.MCP_Connect` | 11 | pending |
+| `graph.MCP_Flexible` | 13 | pending |
+| `graph.MCP_Geometric` | 10 | pending |
+| `graph.RAG` | 46 | pending |
+| `io.ImageCollection` | 9 | pending |
+| `io.MultiImage` | 10 | pending |
+| `measure.CircleModel` | 6 | pending |
+| `measure.EllipseModel` | 6 | pending |
+| `measure.LineModelND` | 8 | pending |
+| `measure.RansacModelProtocol` | 6 | pending |
+| `transform.AffineTransform` | 17 | pending |
+| `transform.EssentialMatrixTransform` | 8 | pending |
+| `transform.EuclideanTransform` | 15 | pending |
+| `transform.FundamentalMatrixTransform` | 8 | pending |
+| `transform.PiecewiseAffineTransform` | 7 | pending |
+| `transform.PolynomialTransform` | 7 | pending |
+| `transform.ProjectiveTransform` | 13 | pending |
+| `transform.SimilarityTransform` | 16 | pending |
+| `transform.ThinPlateSplineTransform` | 5 | pending |
+| `util.FailedEstimationAccessError` | 13 | pending |
+| `util.PendingSkimage2Change` | 10 | pending |

@@ -8,6 +8,7 @@
     "feature",
     "filters",
     "filters.rank",
+    "future",
     "graph",
     "io",
     "measure",
@@ -19,6 +20,7 @@
     "transform",
     "util"
   ],
+  "class_member_scope": "Static public descriptors and custom data-model methods, including inherited members. Instance fields and runtime-generated attributes remain unassessed. Availability and signatures are not numerical parity.",
   "entries": [
     {
       "api": "color.combine_stains",
@@ -1310,7 +1312,29 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "feature.BRIEF.__init__",
+          "kind": "constructor",
+          "signature": "(self, descriptor_size=256, patch_size=49, mode='normal', sigma=1, rng=1)",
+          "defined_by": "skimage.feature.brief.BRIEF",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.BRIEF.extract",
+          "kind": "method",
+          "signature": "(self, image, keypoints)",
+          "defined_by": "skimage.feature.brief.BRIEF",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "feature.CENSURE",
@@ -1320,7 +1344,29 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "feature.CENSURE.__init__",
+          "kind": "constructor",
+          "signature": "(self, min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)",
+          "defined_by": "skimage.feature.censure.CENSURE",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.CENSURE.detect",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.censure.CENSURE",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "feature.Cascade",
@@ -1330,7 +1376,119 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "feature.Cascade.__init__",
+          "kind": "constructor",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.__reduce__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.__setstate__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.detect_multi_scale",
+          "kind": "method",
+          "signature": "(self, img, scale_factor, step_ratio, min_size, max_size, min_neighbor_number=4, intersection_score_threshold=0.5)",
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.eps",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.features_number",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.stages_number",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.stumps_number",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.window_height",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.Cascade.window_width",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.feature._cascade.Cascade",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "feature.ORB",
@@ -1340,7 +1498,49 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "feature.ORB.__init__",
+          "kind": "constructor",
+          "signature": "(self, downscale=1.2, n_scales=8, n_keypoints=500, fast_n=9, fast_threshold=0.08, harris_k=0.04)",
+          "defined_by": "skimage.feature.orb.ORB",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.ORB.detect",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.orb.ORB",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.ORB.detect_and_extract",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.orb.ORB",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.ORB.extract",
+          "kind": "method",
+          "signature": "(self, image, keypoints, scales, orientations)",
+          "defined_by": "skimage.feature.orb.ORB",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "feature.SIFT",
@@ -1350,7 +1550,59 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "feature.SIFT.__init__",
+          "kind": "constructor",
+          "signature": "(self, upsampling=2, n_octaves=8, n_scales=3, sigma_min=1.6, sigma_in=0.5, c_dog=0.013333333333333334, c_edge=10, n_bins=36, lambda_ori=1.5, c_max=0.8, lambda_descr=6, n_hist=4, n_ori=8)",
+          "defined_by": "skimage.feature.sift.SIFT",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.SIFT.deltas",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.feature.sift.SIFT",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.SIFT.detect",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.sift.SIFT",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.SIFT.detect_and_extract",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.sift.SIFT",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "feature.SIFT.extract",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.feature.sift.SIFT",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "feature.blob_dog",
@@ -1720,7 +1972,29 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "filters.LPIFilter2D.__call__",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "filters.LPIFilter2D.__init__",
+          "kind": "constructor",
+          "signature": "(self, impulse_response, **filter_params)",
+          "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "filters.apply_hysteresis_threshold",
@@ -2595,6 +2869,98 @@
       "benchmark": null
     },
     {
+      "api": "future.TrainableSegmenter",
+      "kind": "class",
+      "signature": "(clf=None, features_func=None)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "members": [
+        {
+          "api": "future.TrainableSegmenter.__init__",
+          "kind": "constructor",
+          "signature": "(self, clf=None, features_func=None)",
+          "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "future.TrainableSegmenter.compute_features",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "future.TrainableSegmenter.fit",
+          "kind": "method",
+          "signature": "(self, image, labels)",
+          "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "future.TrainableSegmenter.predict",
+          "kind": "method",
+          "signature": "(self, image)",
+          "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
+    },
+    {
+      "api": "future.fit_segmenter",
+      "kind": "callable",
+      "signature": "(labels, features, clf)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
+      "api": "future.manual_lasso_segmentation",
+      "kind": "callable",
+      "signature": "(image, alpha=0.4, return_all=False)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
+      "api": "future.manual_polygon_segmentation",
+      "kind": "callable",
+      "signature": "(image, alpha=0.4, return_all=False)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
+      "api": "future.predict_segmenter",
+      "kind": "callable",
+      "signature": "(features, clf)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
       "api": "graph.MCP",
       "kind": "class",
       "signature": null,
@@ -2602,7 +2968,109 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "graph.MCP.__init__",
+          "kind": "constructor",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.__reduce__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.__reduce_cython__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.__setstate__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.__setstate_cython__",
+          "kind": "method",
+          "signature": "(self, __pyx_state)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.find_costs",
+          "kind": "method",
+          "signature": "(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.goal_reached",
+          "kind": "method",
+          "signature": "(self, index, cumcost)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.offsets",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP.traceback",
+          "kind": "method",
+          "signature": "(self, end)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "graph.MCP_Connect",
@@ -2612,7 +3080,119 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "graph.MCP_Connect.__init__",
+          "kind": "constructor",
+          "signature": "(self, /, *args, **kwargs)",
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.__reduce__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.__reduce_cython__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.__setstate__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.__setstate_cython__",
+          "kind": "method",
+          "signature": "(self, __pyx_state)",
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.create_connection",
+          "kind": "method",
+          "signature": "(self, id1, id2, tb1, tb2, cost1, cost2)",
+          "defined_by": "skimage.graph._mcp.MCP_Connect",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.find_costs",
+          "kind": "method",
+          "signature": "(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.goal_reached",
+          "kind": "method",
+          "signature": "(self, index, cumcost)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.offsets",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Connect.traceback",
+          "kind": "method",
+          "signature": "(self, end)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "graph.MCP_Flexible",
@@ -2622,7 +3202,139 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "graph.MCP_Flexible.__init__",
+          "kind": "constructor",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.__reduce__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.__reduce_cython__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.__setstate__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.__setstate_cython__",
+          "kind": "method",
+          "signature": "(self, __pyx_state)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.examine_neighbor",
+          "kind": "method",
+          "signature": "(self, index, new_index, offset_length)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.find_costs",
+          "kind": "method",
+          "signature": "(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.goal_reached",
+          "kind": "method",
+          "signature": "(self, index, cumcost)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.offsets",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.traceback",
+          "kind": "method",
+          "signature": "(self, end)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.travel_cost",
+          "kind": "method",
+          "signature": "(self, old_cost, new_cost, offset_length)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Flexible.update_node",
+          "kind": "method",
+          "signature": "(self, index, new_index, offset_length)",
+          "defined_by": "skimage.graph._mcp.MCP_Flexible",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "graph.MCP_Geometric",
@@ -2632,7 +3344,109 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "graph.MCP_Geometric.__init__",
+          "kind": "constructor",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.__reduce__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.__reduce_cython__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.__setstate__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.__setstate_cython__",
+          "kind": "method",
+          "signature": "(self, __pyx_state)",
+          "defined_by": "skimage.graph._mcp.MCP_Geometric",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.find_costs",
+          "kind": "method",
+          "signature": "(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.goal_reached",
+          "kind": "method",
+          "signature": "(self, index, cumcost)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.offsets",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.MCP_Geometric.traceback",
+          "kind": "method",
+          "signature": "(self, end)",
+          "defined_by": "skimage.graph._mcp.MCP",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "graph.RAG",
@@ -2642,7 +3456,469 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "graph.RAG.__contains__",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__getitem__",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__init__",
+          "kind": "constructor",
+          "signature": "(self, label_image=None, connectivity=1, data=None, **attr)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__iter__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__len__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__new__",
+          "kind": "staticmethod",
+          "signature": "(cls, *args, backend=None, **kwargs)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.add_edge",
+          "kind": "method",
+          "signature": "(self, u, v, attr_dict=None, **attr)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.add_edges_from",
+          "kind": "method",
+          "signature": "(self, ebunch_to_add, **attr)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.add_node",
+          "kind": "method",
+          "signature": "(self, n, attr_dict=None, **attr)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.add_nodes_from",
+          "kind": "method",
+          "signature": "(self, nodes_for_adding, **attr)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.add_weighted_edges_from",
+          "kind": "method",
+          "signature": "(self, ebunch_to_add, weight='weight', **attr)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.adj",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.adjacency",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.clear",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.clear_edges",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.copy",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.degree",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.edge_subgraph",
+          "kind": "method",
+          "signature": "(self, edges)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.edges",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.fresh_copy",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.get_edge_data",
+          "kind": "method",
+          "signature": "(self, u, v, default=None)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.has_edge",
+          "kind": "method",
+          "signature": "(self, u, v)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.has_node",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.is_directed",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.is_multigraph",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.merge_nodes",
+          "kind": "method",
+          "signature": "(self, src, dst, weight_func=<function min_weight>, in_place=True, extra_arguments=None, extra_keywords=None)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.name",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.nbunch_iter",
+          "kind": "method",
+          "signature": "(self, nbunch=None)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.neighbors",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.next_id",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.graph._rag.RAG",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.nodes",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.number_of_edges",
+          "kind": "method",
+          "signature": "(self, u=None, v=None)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.number_of_nodes",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.order",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.remove_edge",
+          "kind": "method",
+          "signature": "(self, u, v)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.remove_edges_from",
+          "kind": "method",
+          "signature": "(self, ebunch)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.remove_node",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.remove_nodes_from",
+          "kind": "method",
+          "signature": "(self, nodes)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.size",
+          "kind": "method",
+          "signature": "(self, weight=None)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.subgraph",
+          "kind": "method",
+          "signature": "(self, nodes)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.to_directed",
+          "kind": "method",
+          "signature": "(self, as_view=False)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.to_directed_class",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.to_undirected",
+          "kind": "method",
+          "signature": "(self, as_view=False)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.to_undirected_class",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "graph.RAG.update",
+          "kind": "method",
+          "signature": "(self, edges=None, nodes=None)",
+          "defined_by": "networkx.classes.graph.Graph",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "graph.central_pixel",
@@ -2752,7 +4028,99 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "io.ImageCollection.__getitem__",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.__init__",
+          "kind": "constructor",
+          "signature": "(self, load_pattern, conserve_memory=True, load_func=None, **load_func_kwargs)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.__iter__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.__len__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.concatenate",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.conserve_memory",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.files",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.ImageCollection.reload",
+          "kind": "method",
+          "signature": "(self, n=None)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "io.MultiImage",
@@ -2762,7 +4130,109 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "io.MultiImage.__getitem__",
+          "kind": "method",
+          "signature": "(self, n)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.__init__",
+          "kind": "constructor",
+          "signature": "(self, filename, conserve_memory=True, dtype=None, **imread_kwargs)",
+          "defined_by": "skimage.io.collection.MultiImage",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.__iter__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.__len__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.concatenate",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.conserve_memory",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.filename",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.io.collection.MultiImage",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.files",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "io.MultiImage.reload",
+          "kind": "method",
+          "signature": "(self, n=None)",
+          "defined_by": "skimage.io.collection.ImageCollection",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "io.concatenate_images",
@@ -2862,7 +4332,69 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "measure.CircleModel.__init__",
+          "kind": "constructor",
+          "signature": "(self, center, radius)",
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.CircleModel.estimate",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.CircleModel.from_estimate",
+          "kind": "classmethod",
+          "signature": "(data)",
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.CircleModel.params",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.CircleModel.predict_xy",
+          "kind": "method",
+          "signature": "(self, t, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.CircleModel.residuals",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.measure.fit.CircleModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "measure.EllipseModel",
@@ -2872,7 +4404,69 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "measure.EllipseModel.__init__",
+          "kind": "constructor",
+          "signature": "(self, center, axis_lengths, theta)",
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.EllipseModel.estimate",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.EllipseModel.from_estimate",
+          "kind": "classmethod",
+          "signature": "(data)",
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.EllipseModel.params",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.EllipseModel.predict_xy",
+          "kind": "method",
+          "signature": "(self, t, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.EllipseModel.residuals",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.measure.fit.EllipseModel",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "measure.LineModelND",
@@ -2882,7 +4476,89 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "measure.LineModelND.__init__",
+          "kind": "constructor",
+          "signature": "(self, origin, direction)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.estimate",
+          "kind": "method",
+          "signature": "(self, data)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.from_estimate",
+          "kind": "classmethod",
+          "signature": "(data)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.params",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.predict",
+          "kind": "method",
+          "signature": "(self, x, axis=0, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.predict_x",
+          "kind": "method",
+          "signature": "(self, y, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.predict_y",
+          "kind": "method",
+          "signature": "(self, x, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.LineModelND.residuals",
+          "kind": "method",
+          "signature": "(self, data, params=<DEPRECATED>)",
+          "defined_by": "skimage.measure.fit.LineModelND",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "measure.RansacModelProtocol",
@@ -2892,7 +4568,69 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "measure.RansacModelProtocol.__class_getitem__",
+          "kind": "method",
+          "signature": null,
+          "defined_by": "typing.Generic",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.RansacModelProtocol.__init__",
+          "kind": "constructor",
+          "signature": "(self, *args, **kwargs)",
+          "defined_by": "skimage.measure.fit.RansacModelProtocol",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.RansacModelProtocol.__init_subclass__",
+          "kind": "classmethod",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "typing.Protocol",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.RansacModelProtocol.__subclasshook__",
+          "kind": "classmethod",
+          "signature": "(other)",
+          "defined_by": "skimage.measure.fit.RansacModelProtocol",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.RansacModelProtocol.from_estimate",
+          "kind": "classmethod",
+          "signature": "(*data)",
+          "defined_by": "skimage.measure.fit.RansacModelProtocol",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "measure.RansacModelProtocol.residuals",
+          "kind": "method",
+          "signature": "(self, *data)",
+          "defined_by": "skimage.measure.fit.RansacModelProtocol",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "measure.approximate_polygon",
@@ -4222,7 +5960,179 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.AffineTransform.__add__",
+          "kind": "method",
+          "signature": "(self, other)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__array__",
+          "kind": "method",
+          "signature": "(self, dtype=None, copy=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, matrix=None, *, scale=None, shear=None, rotation=None, translation=None, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__nice__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__repr__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst, weights=None)",
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(dst, weights=None)",
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.rotation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.scale",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.shear",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.AffineTransform.translation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.AffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.EssentialMatrixTransform",
@@ -4232,7 +6142,89 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.EssentialMatrixTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, *, rotation=None, translation=None, matrix=None, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst)",
+          "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EssentialMatrixTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.EuclideanTransform",
@@ -4242,7 +6234,159 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.EuclideanTransform.__add__",
+          "kind": "method",
+          "signature": "(self, other)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__array__",
+          "kind": "method",
+          "signature": "(self, dtype=None, copy=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, matrix=None, *, rotation=None, translation=None, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__nice__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__repr__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst) -> Union[Self, skimage._shared.utils.FailedEstimation]",
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.rotation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.EuclideanTransform.translation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.FundamentalMatrixTransform",
@@ -4252,7 +6396,89 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.FundamentalMatrixTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, matrix=None, *, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.FundamentalMatrixTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.PiecewiseAffineTransform",
@@ -4262,7 +6488,79 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.PiecewiseAffineTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst)",
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PiecewiseAffineTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.PolynomialTransform",
@@ -4272,7 +6570,79 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.PolynomialTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, params=None, *, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst, order=2, weights=None)",
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst, order=2, weights=None)",
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.PolynomialTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.PolynomialTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.ProjectiveTransform",
@@ -4282,7 +6652,139 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.ProjectiveTransform.__add__",
+          "kind": "method",
+          "signature": "(self, other)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__array__",
+          "kind": "method",
+          "signature": "(self, dtype=None, copy=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, matrix=None, *, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric._HMatrixTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__nice__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__repr__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst, weights=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst, weights=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ProjectiveTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.SimilarityTransform",
@@ -4292,7 +6794,169 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.SimilarityTransform.__add__",
+          "kind": "method",
+          "signature": "(self, other)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__array__",
+          "kind": "method",
+          "signature": "(self, dtype=None, copy=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self, matrix=None, *, scale=None, rotation=None, translation=None, dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.SimilarityTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__nice__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__repr__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.__str__",
+          "kind": "method",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.dimensionality",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric.SimilarityTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(dst) -> Union[Self, skimage._shared.utils.FailedEstimation]",
+          "defined_by": "skimage.transform._geometric.SimilarityTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.identity",
+          "kind": "classmethod",
+          "signature": "(dimensionality=None)",
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.ProjectiveTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.residuals",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._geometric._GeometricTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.rotation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.scale",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.SimilarityTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.SimilarityTransform.translation",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._geometric.EuclideanTransform",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.ThinPlateSplineTransform",
@@ -4302,7 +6966,59 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "transform.ThinPlateSplineTransform.__call__",
+          "kind": "method",
+          "signature": "(self, coords)",
+          "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ThinPlateSplineTransform.__init__",
+          "kind": "constructor",
+          "signature": "(self)",
+          "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ThinPlateSplineTransform.estimate",
+          "kind": "method",
+          "signature": "(self, src, dst)",
+          "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ThinPlateSplineTransform.from_estimate",
+          "kind": "classmethod",
+          "signature": "(src, dst) -> Union[Self, skimage._shared.utils.FailedEstimation]",
+          "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "transform.ThinPlateSplineTransform.inverse",
+          "kind": "property",
+          "signature": null,
+          "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
+          "inherited": false,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "transform.downscale_local_mean",
@@ -4610,7 +7326,139 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "util.FailedEstimationAccessError.__getattribute__",
+          "kind": "method",
+          "signature": "(self, name, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__getstate__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__init__",
+          "kind": "constructor",
+          "signature": "(self, /, *args, **kwargs)",
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "builtins.Exception",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__reduce__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__repr__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__setstate__",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.__str__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.add_note",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.args",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.name",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.obj",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "builtins.AttributeError",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.FailedEstimationAccessError.with_traceback",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "util.PendingSkimage2Change",
@@ -4620,7 +7468,109 @@
       "native_default_case_dtypes": [],
       "execution_kind": "upstream",
       "parity_test": null,
-      "benchmark": null
+      "benchmark": null,
+      "members": [
+        {
+          "api": "util.PendingSkimage2Change.__getattribute__",
+          "kind": "method",
+          "signature": "(self, name, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__init__",
+          "kind": "constructor",
+          "signature": "(self, /, *args, **kwargs)",
+          "defined_by": "builtins.PendingDeprecationWarning",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__new__",
+          "kind": "method",
+          "signature": "(*args, **kwargs)",
+          "defined_by": "builtins.PendingDeprecationWarning",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__reduce__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__repr__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__setstate__",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.__str__",
+          "kind": "method",
+          "signature": "(self, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.add_note",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.args",
+          "kind": "attribute",
+          "signature": null,
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        },
+        {
+          "api": "util.PendingSkimage2Change.with_traceback",
+          "kind": "method",
+          "signature": "(self, object, /)",
+          "defined_by": "builtins.BaseException",
+          "inherited": true,
+          "implementation": "upstream-only",
+          "parity_test": null,
+          "benchmark": null
+        }
+      ]
     },
     {
       "api": "util.apply_parallel",
