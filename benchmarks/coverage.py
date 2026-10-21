@@ -71,6 +71,10 @@ def main():
                            'cpu': platform.processor(), 'reference': skimage.__version__, 'numpy': np.__version__,
                            'source_sha256': digest.hexdigest(), 'fallback_enabled': False, 'avx2': xx.has_avx2(),
                            'selected_apis': apis,
+                           'special_default_arguments': {'color.deltaE_cie76':'second input is first[..., ::-1]; raw Lab values',
+                               'color.convert_colorspace':"fromspace='RGB', tospace='HSV'",
+                               'color.separate_stains':'conv_matrix=hed_from_rgb',
+                               'color.combine_stains':'conv_matrix=rgb_from_hed'},
                            'repeat': args.repeat, 'timing': 'allocation-inclusive, warmed Python calls; original reference pools limited to one thread'},
               'results': results}
     args.output.parent.mkdir(parents=True, exist_ok=True)

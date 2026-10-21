@@ -12,7 +12,8 @@ def main():
                ('Color layouts and uint16 inputs','color-layouts'),
                ('Perceptual color parameters','perceptual-parameters'),
                ('Morphology footprints and output reuse','morphology-parameters'),
-               ('Stain matrices and output widths','stain-parameters')]
+               ('Stain matrices and output widths','stain-parameters'),
+               ('Lab distances and color routes','color-distance')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     digest = hashlib.sha256()
@@ -63,7 +64,9 @@ def main():
               'values and matching identity behavior. Timings include allocation, Python dispatch, '
               'integer normalization and any needed input copying. Inputs/imports/I/O are excluded. '
               'Reference thread pools use one thread. Native worker counts are explicit.','',
-              'Examples from the 1024² one-worker default-parameter comparisons:','',
+              'Examples from the 1024² one-worker default-parameter comparisons '
+              '(color-space routing is RGB to HSV; CIE76 compares raw Lab values '
+              'with a channel-reversed second input):','',
               '| Operation | Input | Original ms | C++ ms | Reference / C++ |',
               '|---|---|---:|---:|---:|']
     examples = {('filters.gaussian','uint8'),('filters.sobel','uint8'),('filters.threshold_otsu','uint8'),
@@ -73,6 +76,7 @@ def main():
                 ('color.rgb2lab','float64'),('color.lab2lch','float64'),
                 ('color.rgb2luv','float32'),('color.luv2xyz','float64'),('color.luv2rgb','float32'),
                 ('color.rgb2hed','uint8'),('color.separate_stains','float32'),('color.combine_stains','float64'),
+                ('color.deltaE_cie76','float32'),('color.deltaE_cie76','float64'),('color.convert_colorspace','float32'),
                 ('morphology.erosion','uint8'),('morphology.opening','float32'),
                 ('morphology.binary_dilation','float64')}
     for r in data[0][2]['results']:
@@ -125,6 +129,13 @@ def main():
               'Uint8 separation uses a log lookup table; floating layouts use direct loads '
               'or gathers. Float32 log values retain float32 precision before NumPy-compatible '
               'promotion, so output float64 does not imply a float64 input error budget.','',
+              'CIE76 fuses raw Lab conversion, subtraction, squared components and square root '
+              'without temporary image arrays. Uniform floating layouts use direct loads or gathers; '
+              'integer/mixed blocks convert raw values before vector arithmetic. Color-space routing '
+              'preserves the upstream intermediate RGB allocation and dtype rounding. Its parameter '
+              'report includes all stage checks and propagated bounds for ill-conditioned HSV ratios.','',
+              'The [fixed CIE76 integer-load experiment](distance-tuning.md) preserves '
+              'historical before/after snapshots separately from these current-source totals.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -133,7 +144,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all seven reports, including this summary. '
+              'to rebuild and reproduce all eight reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
