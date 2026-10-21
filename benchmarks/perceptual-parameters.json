@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-10-21T10:23:38.674280+00:00",
+    "timestamp_utc": "2026-10-21T11:05:20.545392+00:00",
     "platform": "Windows-11-10.0.26200-SP0",
     "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
     "reference": "0.26.0",
     "numpy": "2.5.4",
-    "source_sha256": "c30707e1ac5b75dfa181037672afc3bf2b9ae916c6b1838cecb20123d8a21546",
+    "source_sha256": "92361a4dad2278c59ca9aa37320eb5e947b8b4cc6fd065de0a8a2077f8c8a9e8",
     "source_hash_schema": "cpp-python-build-posix-lf-v2",
     "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
     "avx2": true,
@@ -27,32 +27,32 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 30.5242,
-      "cpp_ms": 0.4151916666666667,
-      "speedup": 73.5183349055657,
+      "reference_ms": 29.6696,
+      "cpp_ms": 0.3947066666666667,
+      "speedup": 75.1687328986927,
       "samples_ms": [
         [
-          30.1189,
-          29.5622,
-          32.5074,
-          28.4334,
-          30.5242,
-          31.087,
-          31.4119
+          28.4444,
+          29.6696,
+          29.7942,
+          29.7696,
+          28.5132,
+          27.7224,
+          30.2428
         ],
         [
-          0.3641583333333333,
-          0.49899166666666667,
-          0.4691166666666667,
-          0.3983833333333333,
-          0.4151916666666667,
-          0.4066333333333333,
-          0.4254583333333333
+          0.3865166666666667,
+          0.40379,
+          0.39715,
+          0.3576066666666667,
+          0.3514633333333333,
+          0.4021366666666667,
+          0.3947066666666667
         ]
       ],
       "loops": [
         1,
-        12
+        30
       ],
       "sample_labels": [
         "scikit-image",
@@ -72,32 +72,32 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 28.9862,
-      "cpp_ms": 0.14645192307692306,
-      "speedup": 197.92297288424925,
+      "reference_ms": 28.5978,
+      "cpp_ms": 0.1831189189189189,
+      "speedup": 156.1706467514833,
       "samples_ms": [
         [
-          30.9971,
-          29.1951,
-          29.158,
-          27.9685,
-          28.9862,
-          27.1169,
-          28.7546
+          28.7519,
+          28.4081,
+          27.2622,
+          27.4732,
+          29.7338,
+          32.8306,
+          28.5978
         ],
         [
-          0.13940769230769232,
-          0.12586346153846154,
-          0.14645192307692306,
-          0.17834423076923078,
-          0.19525384615384617,
-          0.1237,
-          0.16747884615384614
+          0.20654594594594594,
+          0.1746837837837838,
+          0.12578108108108108,
+          0.13345945945945947,
+          0.20246486486486484,
+          0.19032162162162164,
+          0.1831189189189189
         ]
       ],
       "loops": [
         1,
-        52
+        37
       ],
       "sample_labels": [
         "scikit-image",
@@ -117,2075 +117,27 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-06,
       "atol": 2e-06,
-      "reference_ms": 27.2886,
-      "cpp_ms": 0.5723,
-      "speedup": 47.68233443997903,
+      "reference_ms": 22.9079,
+      "cpp_ms": 0.5447545454545454,
+      "speedup": 42.05178312167282,
       "samples_ms": [
         [
-          26.1024,
-          23.7152,
-          29.3909,
-          22.4964,
-          27.2886,
-          29.8399,
-          30.7919
+          25.1919,
+          21.9022,
+          24.4932,
+          21.8794,
+          22.9079,
+          23.4804,
+          21.2013
         ],
         [
-          0.46158,
-          0.93465,
-          0.48041,
-          0.55748,
-          0.5953,
-          0.5723,
-          0.74918
-        ]
-      ],
-      "loops": [
-        1,
-        10
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.hsv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "wrapped-hue",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 24.8051,
-      "cpp_ms": 0.6375294117647059,
-      "speedup": 38.90816571323122,
-      "samples_ms": [
-        [
-          27.4694,
-          26.5055,
-          23.6126,
-          22.9569,
-          26.3919,
-          24.8051,
-          22.5514
-        ],
-        [
-          0.7321117647058825,
-          0.6375294117647059,
-          0.7077529411764706,
-          0.7609529411764706,
-          0.5906117647058824,
-          0.5830470588235294,
-          0.5943882352941176
-        ]
-      ],
-      "loops": [
-        1,
-        17
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.000118255615234375,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 14.5077,
-      "cpp_ms": 5.8769,
-      "speedup": 2.468597389780326,
-      "samples_ms": [
-        [
-          21.252,
-          13.9393,
-          15.9346,
-          12.6929,
-          12.295,
-          14.5765,
-          14.5077
-        ],
-        [
-          8.5463,
-          5.8769,
-          4.8905,
-          5.0534,
-          6.2847,
-          5.2385,
-          7.2629
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.000118255615234375,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 14.3576,
-      "cpp_ms": 2.2379,
-      "speedup": 6.415657536082936,
-      "samples_ms": [
-        [
-          13.5959,
-          17.8145,
-          13.9779,
-          15.2139,
-          13.2946,
-          14.3576,
-          16.3396
-        ],
-        [
-          2.14265,
-          4.22915,
-          2.5425,
-          2.2379,
-          2.0514,
-          1.9913,
-          2.4281
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 12.4566,
-      "cpp_ms": 0.5204041666666667,
-      "speedup": 23.936395589966132,
-      "samples_ms": [
-        [
-          15.3506,
-          12.0288,
-          11.7826,
-          15.1951,
-          12.3919,
-          13.4928,
-          12.4566
-        ],
-        [
-          0.6988708333333333,
-          0.53705,
-          0.519775,
-          0.6438375,
-          0.4886041666666667,
-          0.4990375,
-          0.5204041666666667
-        ]
-      ],
-      "loops": [
-        1,
-        24
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 1.1920928955078125e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 13.0367,
-      "cpp_ms": 0.5961277777777777,
-      "speedup": 21.868969180731202,
-      "samples_ms": [
-        [
-          13.4835,
-          13.0367,
-          12.3452,
-          12.4609,
-          12.5368,
-          13.7074,
-          15.5572
-        ],
-        [
-          0.7760944444444445,
-          0.5891833333333334,
-          0.5175555555555555,
-          0.6561444444444445,
-          0.5501277777777778,
-          0.5961277777777777,
-          0.7481
-        ]
-      ],
-      "loops": [
-        1,
-        18
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 9.1552734375e-05,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 23.9622,
-      "cpp_ms": 10.8133,
-      "speedup": 2.2159932675501466,
-      "samples_ms": [
-        [
-          22.0387,
-          23.2108,
-          25.0787,
-          23.9622,
-          23.0794,
-          24.2853,
-          24.4303
-        ],
-        [
-          10.3897,
-          10.4362,
-          11.1216,
-          12.5493,
-          10.1095,
-          10.8133,
-          12.3889
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 9.1552734375e-05,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 22.6372,
-      "cpp_ms": 3.13044,
-      "speedup": 7.231315725584902,
-      "samples_ms": [
-        [
-          23.1449,
-          21.8836,
-          23.2369,
-          22.6372,
-          21.7109,
-          22.9636,
-          21.8739
-        ],
-        [
-          2.83986,
-          3.13044,
-          3.42266,
-          5.04968,
-          2.9525,
-          2.82612,
-          3.20228
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 3.5762786865234375e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 21.6245,
-      "cpp_ms": 6.11585,
-      "speedup": 3.5358126834372983,
-      "samples_ms": [
-        [
-          21.5254,
-          20.9017,
-          24.0025,
-          21.6245,
-          22.836,
-          19.7653,
-          22.8674
-        ],
-        [
-          5.9337,
-          7.2403,
-          6.47955,
-          5.78045,
-          6.55115,
-          6.11585,
-          5.5918
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 3.5762786865234375e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 22.9663,
-      "cpp_ms": 2.1199,
-      "speedup": 10.833671399594321,
-      "samples_ms": [
-        [
-          28.5171,
-          23.9902,
-          21.504,
-          21.5406,
-          22.9663,
-          23.4596,
-          21.5101
-        ],
-        [
-          2.7552333333333334,
-          2.9120333333333335,
-          1.7663666666666666,
-          2.2964,
-          2.1199,
-          1.9815333333333331,
-          1.7004
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 4.76837158203125e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 5.98385,
-      "cpp_ms": 2.75618,
-      "speedup": 2.1710664760646985,
-      "samples_ms": [
-        [
-          5.9008,
-          6.13545,
-          5.9172,
-          5.98385,
-          6.0758,
-          6.05505,
-          5.85005
-        ],
-        [
-          2.75618,
-          3.0079,
-          2.69656,
-          2.68848,
-          2.77874,
-          2.75034,
-          2.78156
-        ]
-      ],
-      "loops": [
-        2,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 4.76837158203125e-07,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 6.03625,
-      "cpp_ms": 0.8501823529411765,
-      "speedup": 7.09994741612526,
-      "samples_ms": [
-        [
-          6.04765,
-          5.88845,
-          6.03625,
-          5.72345,
-          7.93665,
-          5.9487,
-          6.0875
-        ],
-        [
-          0.826864705882353,
-          1.434735294117647,
-          0.7759647058823529,
-          0.7228,
-          1.6623470588235294,
-          0.8501823529411765,
-          0.9301294117647059
-        ]
-      ],
-      "loops": [
-        2,
-        17
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 1.9073486328125e-06,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 1.5960625,
-      "cpp_ms": 1.5368777777777778,
-      "speedup": 1.0385097130546057,
-      "samples_ms": [
-        [
-          1.6973375,
-          1.5445,
-          1.5474875,
-          1.428825,
-          1.692775,
-          1.5960625,
-          1.6072375
-        ],
-        [
-          1.5368777777777778,
-          1.4892222222222222,
-          1.5783555555555555,
-          1.445488888888889,
-          1.6064333333333332,
-          1.9472777777777777,
-          1.5222666666666667
-        ]
-      ],
-      "loops": [
-        8,
-        9
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 1.9073486328125e-06,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 1.5044,
-      "cpp_ms": 0.4610789473684211,
-      "speedup": 3.262781804691513,
-      "samples_ms": [
-        [
-          1.5044,
-          1.5723,
-          1.5366625,
-          1.5351625,
-          1.3881125,
-          1.3575875,
-          1.449975
-        ],
-        [
-          0.5448631578947368,
-          0.4610789473684211,
-          0.47547368421052627,
-          0.4043684210526316,
-          0.4331052631578947,
-          0.47194210526315794,
-          0.41605789473684207
-        ]
-      ],
-      "loops": [
-        8,
-        19
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "negative-Z",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 8.7175,
-      "cpp_ms": 0.4836107142857143,
-      "speedup": 18.025862005302375,
-      "samples_ms": [
-        [
-          9.1681,
-          8.7175,
-          8.5938,
-          8.5009,
-          8.8281,
-          8.1748,
-          8.7955
-        ],
-        [
-          0.4992285714285714,
-          0.47977857142857144,
-          0.48598214285714286,
-          0.47881071428571426,
-          0.4899,
-          0.4781,
-          0.4836107142857143
-        ]
-      ],
-      "loops": [
-        1,
-        28
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "negative-Z",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 8.616,
-      "cpp_ms": 0.16176739130434784,
-      "speedup": 53.26166126886431,
-      "samples_ms": [
-        [
-          8.616,
-          8.3983,
-          8.8016,
-          8.2816,
-          9.5618,
-          8.6373,
-          8.4501
-        ],
-        [
-          0.18121521739130436,
-          0.15902608695652173,
-          0.16176739130434784,
-          0.1453282608695652,
-          0.16221086956521738,
-          0.17151304347826085,
-          0.15132391304347828
-        ]
-      ],
-      "loops": [
-        1,
-        46
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "negative-Z",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 17.0076,
-      "cpp_ms": 2.87528,
-      "speedup": 5.915110876158148,
-      "samples_ms": [
-        [
-          16.4602,
-          16.1531,
-          16.2531,
-          18.2453,
-          17.5992,
-          17.8286,
-          17.0076
-        ],
-        [
-          2.87528,
-          3.04546,
-          3.04268,
-          2.59606,
-          2.70888,
-          2.8241,
-          3.16872
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "negative-Z",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 27.015,
-      "cpp_ms": 2.13475,
-      "speedup": 12.65487762033025,
-      "samples_ms": [
-        [
-          27.7658,
-          26.9605,
-          29.2426,
-          29.1328,
-          23.9919,
-          26.0386,
-          27.015
-        ],
-        [
-          2.13475,
-          2.2135333333333334,
-          2.2236666666666665,
-          2.094,
-          2.1376,
-          2.1339,
-          1.7373666666666667
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2luv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.00018310546875,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 9.0761,
-      "cpp_ms": 2.716425,
-      "speedup": 3.34119292820527,
-      "samples_ms": [
-        [
-          9.7844,
-          11.0213,
-          8.1482,
-          8.1527,
-          8.9785,
-          13.0103,
-          9.0761
-        ],
-        [
-          2.004775,
-          2.31865,
-          2.7541,
-          2.800525,
-          2.421075,
-          3.100375,
-          2.716425
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2luv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.00018310546875,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 13.1822,
-      "cpp_ms": 1.1428,
-      "speedup": 11.535001750087504,
-      "samples_ms": [
-        [
-          8.2834,
-          9.3358,
-          14.5257,
-          13.0206,
-          16.1627,
-          13.1822,
-          15.2158
-        ],
-        [
-          1.3892125,
-          1.287975,
-          1.1428,
-          1.286175,
-          0.987875,
-          0.9994625,
-          0.8699
-        ]
-      ],
-      "loops": [
-        1,
-        8
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 11.5379,
-      "cpp_ms": 3.40898,
-      "speedup": 3.384560777710635,
-      "samples_ms": [
-        [
-          13.1048,
-          7.3341,
-          11.9847,
-          10.4893,
-          12.6865,
-          9.8461,
-          11.5379
-        ],
-        [
-          3.13724,
-          3.2238,
-          3.38464,
-          3.57898,
-          3.40898,
-          3.57604,
-          3.4566
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2xyz",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "reference_ms": 11.4543,
-      "cpp_ms": 2.146214285714286,
-      "speedup": 5.336978733317801,
-      "samples_ms": [
-        [
-          9.1792,
-          11.6085,
-          11.4924,
-          9.3971,
-          12.0009,
-          11.4543,
-          9.2796
-        ],
-        [
-          2.2421285714285712,
-          2.1006714285714287,
-          2.071557142857143,
-          2.041385714285714,
-          2.167014285714286,
-          2.146214285714286,
-          2.221885714285714
-        ]
-      ],
-      "loops": [
-        1,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2luv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "dark-sRGB",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 9.291,
-      "cpp_ms": 0.423475,
-      "speedup": 21.93990200129878,
-      "samples_ms": [
-        [
-          11.9469,
-          9.291,
-          10.6987,
-          9.0532,
-          10.6335,
-          7.3529,
-          8.7258
-        ],
-        [
-          0.339025,
-          0.43585,
-          0.4872875,
-          0.5566,
-          0.3505625,
-          0.423475,
-          0.3584125
-        ]
-      ],
-      "loops": [
-        1,
-        8
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2luv",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "dark-sRGB",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-06,
-      "atol": 0.00025,
-      "reference_ms": 6.3146,
-      "cpp_ms": 0.19753076923076923,
-      "speedup": 31.9676778690759,
-      "samples_ms": [
-        [
-          6.7053,
-          6.8332,
-          6.4835,
-          6.0643,
-          6.0827,
-          6.0013,
-          6.3146
-        ],
-        [
-          0.16547692307692308,
-          0.2399923076923077,
-          0.1874,
-          0.23042307692307692,
-          0.12195384615384616,
-          0.22287692307692306,
-          0.19753076923076923
-        ]
-      ],
-      "loops": [
-        1,
-        13
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "low-lightness",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.9802322387695312e-08,
-      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "xyz_max_abs_error": 0.0,
-      "rgb_max_propagated_bound": 0.0,
-      "reference_ms": 14.5481,
-      "cpp_ms": 5.51145,
-      "speedup": 2.6396138947101035,
-      "samples_ms": [
-        [
-          18.7061,
-          14.1635,
-          14.5481,
-          16.4798,
-          14.8518,
-          14.4288,
-          14.2108
-        ],
-        [
-          5.51145,
-          5.37665,
-          5.40325,
-          5.3843,
-          7.4015,
-          5.6691,
-          5.74885
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "low-lightness",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.9802322387695312e-08,
-      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "xyz_max_abs_error": 0.0,
-      "rgb_max_propagated_bound": 0.0,
-      "reference_ms": 17.4232,
-      "cpp_ms": 2.0203166666666665,
-      "speedup": 8.623994588307115,
-      "samples_ms": [
-        [
-          17.4232,
-          17.7965,
-          16.9318,
-          18.735,
-          15.6693,
-          19.4456,
-          14.3523
-        ],
-        [
-          2.1673666666666667,
-          2.0203166666666665,
-          1.8203333333333334,
-          2.8971166666666663,
-          1.9649833333333333,
-          2.3100166666666664,
-          1.9436333333333333
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 1,
-      "workload": "Luv-midtones",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 1.1138617992401123e-06,
-      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "xyz_max_abs_error": 0.0,
-      "rgb_max_propagated_bound": 0.0,
-      "reference_ms": 21.5932,
-      "cpp_ms": 9.4875,
-      "speedup": 2.2759631093544135,
-      "samples_ms": [
-        [
-          23.7342,
-          21.9673,
-          26.3001,
-          18.9863,
-          21.5932,
-          19.9213,
-          19.2928
-        ],
-        [
-          10.5679,
-          9.4875,
-          8.8338,
-          8.068,
-          12.1588,
-          10.564,
-          8.0918
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.luv2rgb",
-      "dtype": "float32",
-      "size": 512,
-      "threads": 4,
-      "workload": "Luv-midtones",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 1.1138617992401123e-06,
-      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
-      "rtol": 2e-06,
-      "atol": 2e-06,
-      "xyz_max_abs_error": 0.0,
-      "rgb_max_propagated_bound": 0.0,
-      "reference_ms": 19.3899,
-      "cpp_ms": 2.1647,
-      "speedup": 8.957315101399733,
-      "samples_ms": [
-        [
-          19.4977,
-          20.6834,
-          18.1445,
-          18.2268,
-          18.2824,
-          19.3899,
-          20.0258
-        ],
-        [
-          2.0393166666666667,
-          2.3719,
-          2.1647,
-          2.1247333333333334,
-          2.52515,
-          2.6460666666666666,
-          2.000033333333333
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2hsv",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "grayscale",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 34.1238,
-      "cpp_ms": 1.9757142857142858,
-      "speedup": 17.271626898047725,
-      "samples_ms": [
-        [
-          35.389,
-          33.6549,
-          32.5929,
-          30.3022,
-          34.8747,
-          35.9957,
-          34.1238
-        ],
-        [
-          2.0241571428571428,
-          1.9051857142857143,
-          1.9757142857142858,
-          1.9663857142857144,
-          1.7565857142857144,
-          2.106457142857143,
-          2.271457142857143
-        ]
-      ],
-      "loops": [
-        1,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2hsv",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "grayscale",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 34.5355,
-      "cpp_ms": 1.1768777777777777,
-      "speedup": 29.345018363088776,
-      "samples_ms": [
-        [
-          33.3432,
-          35.1429,
-          34.5355,
-          35.4586,
-          33.6244,
-          35.4329,
-          34.1235
-        ],
-        [
-          1.8468,
-          1.1267555555555555,
-          1.134988888888889,
-          0.9900111111111112,
-          1.4050555555555555,
-          1.4974666666666667,
-          1.1768777777777777
-        ]
-      ],
-      "loops": [
-        1,
-        9
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.hsv2rgb",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "wrapped-hue",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 40.2328,
-      "cpp_ms": 2.355525,
-      "speedup": 17.080183823139212,
-      "samples_ms": [
-        [
-          39.1081,
-          40.5005,
-          39.4878,
-          38.5538,
-          40.2328,
-          40.5424,
-          46.8908
-        ],
-        [
-          2.0822,
-          2.485975,
-          2.280375,
-          2.154575,
-          2.91245,
-          2.355525,
-          2.59145
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.hsv2rgb",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "wrapped-hue",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 42.2346,
-      "cpp_ms": 1.1674,
-      "speedup": 36.17834504026041,
-      "samples_ms": [
-        [
-          38.439,
-          41.4141,
-          49.8486,
-          42.2346,
-          41.2413,
-          61.9472,
-          47.1311
-        ],
-        [
-          1.04578,
-          1.08464,
-          1.53662,
-          1.16216,
-          1.1674,
-          1.50726,
-          1.5865
-        ]
-      ],
-      "loops": [
-        1,
-        5
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.2737367544323206e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 24.5623,
-      "cpp_ms": 8.58385,
-      "speedup": 2.861454941547208,
-      "samples_ms": [
-        [
-          24.5623,
-          33.0058,
-          35.7327,
-          28.5408,
-          20.7274,
-          21.3996,
-          18.7121
-        ],
-        [
-          11.18155,
-          8.58385,
-          10.72275,
-          9.95425,
-          6.54115,
-          7.70805,
-          5.80835
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.2737367544323206e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 19.105,
-      "cpp_ms": 2.2011,
-      "speedup": 8.679751033574123,
-      "samples_ms": [
-        [
-          19.2515,
-          18.675,
-          19.105,
-          20.0446,
-          17.8083,
-          18.345,
-          21.5794
-        ],
-        [
-          2.1850625,
-          2.526775,
-          2.6684125,
-          2.0218875,
-          2.18125,
-          2.6991,
-          2.2011
-        ]
-      ],
-      "loops": [
-        1,
-        8
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 18.3869,
-      "cpp_ms": 2.092925,
-      "speedup": 8.78526464159012,
-      "samples_ms": [
-        [
-          18.8899,
-          20.2154,
-          17.2486,
-          17.9051,
-          18.3869,
-          18.1761,
-          19.7973
-        ],
-        [
-          2.40275,
-          1.9548625,
-          2.2789,
-          2.019275,
-          2.092925,
-          2.0505125,
-          2.185025
-        ]
-      ],
-      "loops": [
-        1,
-        8
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.220446049250313e-16,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 20.6935,
-      "cpp_ms": 1.35659,
-      "speedup": 15.254056126021863,
-      "samples_ms": [
-        [
-          18.3356,
-          20.1253,
-          20.6935,
-          18.2254,
-          22.4051,
-          21.8358,
-          20.747
-        ],
-        [
-          1.50176,
-          1.39023,
-          1.35114,
-          1.33923,
-          1.34832,
-          1.47814,
-          1.35659
-        ]
-      ],
-      "loops": [
-        1,
-        10
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.2737367544323206e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 38.192,
-      "cpp_ms": 12.1161,
-      "speedup": 3.15216942745603,
-      "samples_ms": [
-        [
-          39.0074,
-          38.4709,
-          36.4261,
-          36.1871,
-          38.192,
-          42.5127,
-          37.3254
-        ],
-        [
-          12.064,
-          12.1161,
-          12.616,
-          11.4979,
-          14.5683,
-          14.1496,
-          12.0304
-        ]
-      ],
-      "loops": [
-        1,
-        1
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.rgb2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 2.2737367544323206e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 41.6263,
-      "cpp_ms": 4.671533333333333,
-      "speedup": 8.910628915559489,
-      "samples_ms": [
-        [
-          45.3926,
-          42.8269,
-          41.6263,
-          40.0451,
-          46.7007,
-          33.1148,
-          36.7584
-        ],
-        [
-          3.5981,
-          4.687866666666667,
-          3.6832333333333334,
-          4.9767,
-          4.671533333333333,
-          4.909166666666667,
-          4.080633333333333
-        ]
-      ],
-      "loops": [
-        1,
-        3
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 6.661338147750939e-16,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 35.0342,
-      "cpp_ms": 7.6387,
-      "speedup": 4.586408682105594,
-      "samples_ms": [
-        [
-          41.884,
-          44.7824,
-          33.5093,
-          36.9054,
-          35.0342,
-          33.4916,
-          31.8459
-        ],
-        [
-          9.29195,
-          8.28185,
-          7.333,
-          7.6387,
-          9.3411,
-          7.42775,
-          7.17815
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2rgb",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 6.661338147750939e-16,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 32.4369,
-      "cpp_ms": 2.3987333333333334,
-      "speedup": 13.52251188127067,
-      "samples_ms": [
-        [
-          32.9313,
-          32.4369,
-          35.5594,
-          32.7713,
-          32.1348,
-          30.2438,
-          29.6698
-        ],
-        [
-          2.2340333333333335,
-          2.3756333333333335,
-          1.9623666666666668,
-          2.514,
-          2.6687333333333334,
-          2.4489166666666664,
-          2.3987333333333334
-        ]
-      ],
-      "loops": [
-        1,
-        6
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 7.105427357601002e-15,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 9.5996,
-      "cpp_ms": 5.3431,
-      "speedup": 1.79663491231682,
-      "samples_ms": [
-        [
-          9.5996,
-          13.8267,
-          9.1017,
-          10.4779,
-          8.4627,
-          8.421,
-          15.5777
-        ],
-        [
-          5.3651,
-          5.4888,
-          5.3431,
-          5.41115,
-          4.99685,
-          4.53735,
-          4.1906
-        ]
-      ],
-      "loops": [
-        1,
-        2
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2lch",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 7.105427357601002e-15,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 8.7577,
-      "cpp_ms": 2.1478,
-      "speedup": 4.077521184467827,
-      "samples_ms": [
-        [
-          10.3425,
-          8.5437,
-          8.6664,
-          10.6827,
-          8.7577,
-          8.1095,
-          10.3598
-        ],
-        [
-          2.117775,
-          2.015775,
-          2.9065,
-          2.0967,
-          2.233,
-          2.62515,
-          2.1478
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 3.552713678800501e-15,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 8.8152,
-      "cpp_ms": 3.29005,
-      "speedup": 2.679351377638638,
-      "samples_ms": [
-        [
-          8.8276,
-          8.1079,
-          7.6938,
-          8.8152,
-          8.8575,
-          8.0868,
-          9.8221
-        ],
-        [
-          3.310775,
-          3.51145,
-          3.201,
-          3.091175,
-          3.031225,
-          3.35625,
-          3.29005
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lch2lab",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "four-channels",
-      "options": {},
-      "channels": 4,
-      "backend": "native",
-      "max_abs_error": 3.552713678800501e-15,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 8.6037,
-      "cpp_ms": 2.0413,
-      "speedup": 4.2148140890608925,
-      "samples_ms": [
-        [
-          8.1288,
-          9.8272,
-          10.3164,
-          8.7353,
-          8.1312,
-          8.4502,
-          8.6037
-        ],
-        [
-          1.9249285714285713,
-          2.1398428571428574,
-          1.8183714285714285,
-          2.0413,
-          2.1933714285714285,
-          1.9849428571428571,
-          2.0791142857142857
-        ]
-      ],
-      "loops": [
-        1,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.lab2xyz",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "negative-Z",
-      "options": {},
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 0.0,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 14.3179,
-      "cpp_ms": 1.1332454545454547,
-      "speedup": 12.634420850814633,
-      "samples_ms": [
-        [
-          14.3179,
-          18.3123,
-          14.0565,
-          14.5232,
-          13.8905,
-          14.3796,
-          13.3489
-        ],
-        [
-          1.548681818181818,
-          1.0804454545454545,
-          1.1332454545454547,
-          1.1086090909090909,
-          1.2460727272727272,
-          1.1580272727272727,
-          1.1153272727272727
+          0.5447545454545454,
+          0.6973363636363636,
+          0.4926727272727273,
+          0.6074636363636363,
+          0.5931181818181818,
+          0.5242272727272727,
+          0.538590909090909
         ]
       ],
       "loops": [
@@ -2198,39 +150,183 @@
       ]
     },
     {
-      "api": "color.lab2xyz",
-      "dtype": "float64",
+      "api": "color.hsv2rgb",
+      "dtype": "float32",
       "size": 512,
       "threads": 4,
-      "workload": "negative-Z",
+      "workload": "wrapped-hue",
       "options": {},
       "channels": 3,
       "backend": "native",
       "max_abs_error": 0.0,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 13.9914,
-      "cpp_ms": 0.3631846153846154,
-      "speedup": 38.52420892108273,
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 22.7665,
+      "cpp_ms": 0.54516,
+      "speedup": 41.76113434588011,
       "samples_ms": [
         [
-          14.498,
-          12.9188,
-          15.0012,
-          12.7371,
-          13.9914,
-          13.2952,
-          15.1546
+          22.2938,
+          22.7665,
+          21.3772,
+          24.2029,
+          23.7707,
+          22.1536,
+          22.9186
         ],
         [
-          0.3631846153846154,
-          0.35570769230769234,
-          0.3657615384615384,
-          0.5119307692307693,
-          0.3257538461538461,
-          0.35021538461538465,
-          0.5949615384615385
+          0.62312,
+          0.5089066666666667,
+          0.60246,
+          0.52996,
+          0.52314,
+          0.6746333333333334,
+          0.54516
+        ]
+      ],
+      "loops": [
+        1,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.000118255615234375,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 14.6804,
+      "cpp_ms": 5.243366666666667,
+      "speedup": 2.79980419704897,
+      "samples_ms": [
+        [
+          15.1904,
+          14.9836,
+          12.6961,
+          16.6751,
+          14.6804,
+          14.3112,
+          12.2134
+        ],
+        [
+          4.793833333333333,
+          5.422633333333333,
+          5.3368,
+          5.8294,
+          5.243366666666667,
+          4.942766666666667,
+          5.2139
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.000118255615234375,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 14.3824,
+      "cpp_ms": 2.1943333333333337,
+      "speedup": 6.554336928452073,
+      "samples_ms": [
+        [
+          12.6331,
+          12.7059,
+          14.3824,
+          19.7467,
+          22.5842,
+          14.086,
+          20.3777
+        ],
+        [
+          1.8605777777777777,
+          1.9583,
+          2.1943333333333337,
+          2.9155555555555557,
+          3.4370444444444446,
+          1.846188888888889,
+          3.635488888888889
+        ]
+      ],
+      "loops": [
+        1,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 15.5454,
+      "cpp_ms": 1.237923076923077,
+      "speedup": 12.557646181569627,
+      "samples_ms": [
+        [
+          14.5849,
+          15.5454,
+          13.9379,
+          16.0815,
+          14.9352,
+          16.0343,
+          20.0021
+        ],
+        [
+          1.1010692307692307,
+          0.9912153846153846,
+          1.1284307692307693,
+          1.239323076923077,
+          1.3194615384615385,
+          1.3896538461538464,
+          1.237923076923077
         ]
       ],
       "loops": [
@@ -2243,39 +339,549 @@
       ]
     },
     {
+      "api": "color.lab2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 25.6069,
+      "cpp_ms": 0.512325,
+      "speedup": 49.981749865807835,
+      "samples_ms": [
+        [
+          25.6069,
+          39.4562,
+          25.985,
+          31.0539,
+          16.5595,
+          12.6688,
+          17.625
+        ],
+        [
+          1.59468125,
+          1.107375,
+          1.1427125,
+          0.2911875,
+          0.4725375,
+          0.512325,
+          0.48629375
+        ]
+      ],
+      "loops": [
+        1,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 9.1552734375e-05,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 25.9554,
+      "cpp_ms": 10.4882,
+      "speedup": 2.474723975515341,
+      "samples_ms": [
+        [
+          26.7464,
+          23.6629,
+          26.4316,
+          38.6554,
+          25.9554,
+          23.4074,
+          25.4832
+        ],
+        [
+          11.3292,
+          12.1138,
+          10.325,
+          10.4882,
+          10.2875,
+          10.252,
+          12.0729
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 9.1552734375e-05,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 25.6752,
+      "cpp_ms": 4.913966666666667,
+      "speedup": 5.224943867479769,
+      "samples_ms": [
+        [
+          27.9463,
+          24.9757,
+          24.2891,
+          25.6752,
+          25.0233,
+          25.8158,
+          27.0917
+        ],
+        [
+          5.038633333333333,
+          4.109933333333333,
+          3.7889333333333335,
+          5.489466666666667,
+          4.913966666666667,
+          4.293566666666667,
+          4.924266666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
       "api": "color.lab2rgb",
-      "dtype": "float64",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 3.5762786865234375e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 25.6104,
+      "cpp_ms": 6.60035,
+      "speedup": 3.880157870415963,
+      "samples_ms": [
+        [
+          26.4317,
+          26.1018,
+          24.0219,
+          25.6104,
+          24.8766,
+          23.1603,
+          26.488
+        ],
+        [
+          5.5874,
+          5.90605,
+          6.1796,
+          9.21765,
+          11.1241,
+          8.4025,
+          6.60035
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 3.5762786865234375e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 23.7552,
+      "cpp_ms": 2.82815,
+      "speedup": 8.399554479076428,
+      "samples_ms": [
+        [
+          23.4721,
+          26.2425,
+          22.6119,
+          25.0261,
+          23.1693,
+          23.7552,
+          27.2124
+        ],
+        [
+          2.5977,
+          3.993775,
+          3.4488,
+          2.311975,
+          1.8515,
+          2.82815,
+          2.856175
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 4.76837158203125e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 6.6485,
+      "cpp_ms": 2.7819,
+      "speedup": 2.389913368561056,
+      "samples_ms": [
+        [
+          7.7024,
+          9.7489,
+          6.3211,
+          8.9627,
+          6.6485,
+          6.1887,
+          6.1355
+        ],
+        [
+          2.7819,
+          2.71306,
+          3.61648,
+          2.83126,
+          3.64646,
+          2.7574,
+          2.70006
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 4.76837158203125e-07,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 6.70735,
+      "cpp_ms": 1.2882375,
+      "speedup": 5.206609806033438,
+      "samples_ms": [
+        [
+          6.5323,
+          6.56905,
+          8.90545,
+          5.7239,
+          7.85975,
+          6.70735,
+          8.1601
+        ],
+        [
+          0.99866875,
+          1.5687375,
+          1.4251125,
+          1.2882375,
+          1.6384,
+          0.76195625,
+          1.0647875
+        ]
+      ],
+      "loops": [
+        2,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 1.9073486328125e-06,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.9012666666666667,
+      "cpp_ms": 1.619711111111111,
+      "speedup": 1.173830724271818,
+      "samples_ms": [
+        [
+          1.9012666666666667,
+          1.8921,
+          2.1937333333333333,
+          1.7243,
+          1.8711666666666666,
+          2.15645,
+          1.9157
+        ],
+        [
+          1.5439666666666667,
+          1.619711111111111,
+          1.7677222222222222,
+          1.9816555555555555,
+          1.4651333333333332,
+          1.4272333333333334,
+          2.020966666666667
+        ]
+      ],
+      "loops": [
+        6,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 1.9073486328125e-06,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.89398,
+      "cpp_ms": 0.9517181818181818,
+      "speedup": 1.990063903561979,
+      "samples_ms": [
+        [
+          1.9718,
+          1.73814,
+          1.89398,
+          1.57726,
+          2.47784,
+          2.19072,
+          1.63252
+        ],
+        [
+          0.6841636363636363,
+          0.4636818181818182,
+          0.9786909090909091,
+          1.0990909090909091,
+          1.0859636363636365,
+          0.6962,
+          0.9517181818181818
+        ]
+      ],
+      "loops": [
+        5,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float32",
       "size": 512,
       "threads": 1,
       "workload": "negative-Z",
       "options": {},
       "channels": 3,
       "backend": "native",
-      "max_abs_error": 2.7755575615628914e-17,
+      "max_abs_error": 0.0,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 22.8619,
-      "cpp_ms": 3.03095,
-      "speedup": 7.542816608654053,
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 10.1695,
+      "cpp_ms": 0.4846388888888889,
+      "speedup": 20.983664813434974,
       "samples_ms": [
         [
-          22.7308,
-          22.8619,
-          25.9048,
-          23.293,
-          22.2885,
-          25.0614,
-          22.5889
+          8.9881,
+          12.6714,
+          9.321,
+          10.8694,
+          10.1695,
+          10.2988,
+          9.8613
         ],
         [
-          3.18725,
-          3.03095,
-          2.928325,
-          2.95145,
-          2.96635,
-          3.052025,
-          3.2932
+          0.478,
+          0.47781111111111113,
+          0.60265,
+          0.4846388888888889,
+          0.47877777777777775,
+          0.5587111111111112,
+          0.5880444444444445
+        ]
+      ],
+      "loops": [
+        1,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 9.7555,
+      "cpp_ms": 0.2661586206896552,
+      "speedup": 36.65295519912937,
+      "samples_ms": [
+        [
+          9.1045,
+          11.6859,
+          9.7101,
+          9.1853,
+          11.1277,
+          12.6974,
+          9.7555
+        ],
+        [
+          0.19415862068965517,
+          0.17436206896551726,
+          0.2661586206896552,
+          0.38475862068965516,
+          0.37578275862068966,
+          0.45188620689655173,
+          0.19450344827586205
+        ]
+      ],
+      "loops": [
+        1,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 17.9002,
+      "cpp_ms": 3.465425,
+      "speedup": 5.165369326994525,
+      "samples_ms": [
+        [
+          19.9332,
+          17.6982,
+          22.0715,
+          17.7716,
+          17.9002,
+          16.7865,
+          18.0324
+        ],
+        [
+          3.5784,
+          2.9597,
+          3.04515,
+          3.465425,
+          3.73225,
+          3.0732,
+          3.528775
         ]
       ],
       "loops": [
@@ -2289,134 +895,38 @@
     },
     {
       "api": "color.lab2rgb",
-      "dtype": "float64",
+      "dtype": "float32",
       "size": 512,
       "threads": 4,
       "workload": "negative-Z",
       "options": {},
       "channels": 3,
       "backend": "native",
-      "max_abs_error": 2.7755575615628914e-17,
+      "max_abs_error": 0.0,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 25.8105,
-      "cpp_ms": 1.1918285714285715,
-      "speedup": 21.656218535743395,
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 17.666,
+      "cpp_ms": 1.4755833333333332,
+      "speedup": 11.972214378494382,
       "samples_ms": [
         [
-          25.8105,
-          21.7494,
-          28.994,
-          30.2013,
-          24.2751,
-          29.6259,
-          24.1728
+          17.383,
+          17.4152,
+          17.666,
+          19.4904,
+          19.2662,
+          17.642,
+          25.3818
         ],
         [
-          0.9081428571428571,
-          1.122857142857143,
-          2.010242857142857,
-          0.9057571428571428,
-          1.556757142857143,
-          1.1918285714285715,
-          1.4335714285714287
-        ]
-      ],
-      "loops": [
-        1,
-        7
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2luv",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 1,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 5.684341886080801e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 11.4261,
-      "cpp_ms": 2.6918,
-      "speedup": 4.244780444312355,
-      "samples_ms": [
-        [
-          10.5861,
-          8.907,
-          12.2693,
-          10.0891,
-          11.9915,
-          11.4261,
-          11.4964
-        ],
-        [
-          3.16555,
-          2.661125,
-          2.4604,
-          2.93275,
-          2.6918,
-          2.803525,
-          2.530575
-        ]
-      ],
-      "loops": [
-        1,
-        4
-      ],
-      "sample_labels": [
-        "scikit-image",
-        "current"
-      ]
-    },
-    {
-      "api": "color.xyz2luv",
-      "dtype": "float64",
-      "size": 512,
-      "threads": 4,
-      "workload": "D50/10",
-      "options": {
-        "illuminant": "D50",
-        "observer": "10"
-      },
-      "channels": 3,
-      "backend": "native",
-      "max_abs_error": 5.684341886080801e-13,
-      "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 12.0105,
-      "cpp_ms": 1.725,
-      "speedup": 6.9626086956521736,
-      "samples_ms": [
-        [
-          13.404,
-          10.2772,
-          10.8316,
-          12.0105,
-          10.0683,
-          12.6617,
-          12.1544
-        ],
-        [
-          1.725,
-          1.7325833333333334,
-          1.6370833333333332,
-          1.5972666666666668,
-          1.73585,
-          1.6103333333333332,
-          1.8543666666666667
+          1.20335,
+          1.1744333333333332,
+          1.7358166666666668,
+          1.5431166666666667,
+          0.8697166666666666,
+          1.4755833333333332,
+          1.7604
         ]
       ],
       "loops": [
@@ -2429,8 +939,8 @@
       ]
     },
     {
-      "api": "color.luv2xyz",
-      "dtype": "float64",
+      "api": "color.xyz2luv",
+      "dtype": "float32",
       "size": 512,
       "threads": 1,
       "workload": "D50/10",
@@ -2440,36 +950,36 @@
       },
       "channels": 3,
       "backend": "native",
-      "max_abs_error": 1.7763568394002505e-15,
+      "max_abs_error": 0.00018310546875,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 13.1798,
-      "cpp_ms": 0.92035,
-      "speedup": 14.320421578747215,
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 8.06725,
+      "cpp_ms": 3.934625,
+      "speedup": 2.050322457667503,
       "samples_ms": [
         [
-          12.3917,
-          13.2025,
-          15.1842,
-          11.6701,
-          13.1798,
-          14.0884,
-          12.9321
+          6.3475,
+          9.58665,
+          7.0422,
+          8.1644,
+          14.0453,
+          8.00095,
+          8.06725
         ],
         [
-          0.9269785714285714,
-          0.8315214285714285,
-          0.8503214285714286,
-          0.7857214285714286,
-          0.92035,
-          1.0023642857142856,
-          0.9593928571428572
+          4.568375,
+          3.18315,
+          3.934625,
+          4.154475,
+          4.53325,
+          2.980025,
+          3.860725
         ]
       ],
       "loops": [
-        1,
-        14
+        2,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -2477,8 +987,8 @@
       ]
     },
     {
-      "api": "color.luv2xyz",
-      "dtype": "float64",
+      "api": "color.xyz2luv",
+      "dtype": "float32",
       "size": 512,
       "threads": 4,
       "workload": "D50/10",
@@ -2488,36 +998,132 @@
       },
       "channels": 3,
       "backend": "native",
-      "max_abs_error": 1.7763568394002505e-15,
+      "max_abs_error": 0.00018310546875,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-13,
-      "reference_ms": 13.7414,
-      "cpp_ms": 0.3196894736842105,
-      "speedup": 42.98358604566932,
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 9.8248,
+      "cpp_ms": 1.3669625,
+      "speedup": 7.187322256462777,
       "samples_ms": [
         [
-          16.3724,
-          11.9605,
-          16.271,
-          14.3378,
-          13.7414,
-          11.8955,
-          12.1304
+          9.8248,
+          9.3287,
+          10.3736,
+          11.4295,
+          9.1985,
+          12.508,
+          9.7319
         ],
         [
-          0.3196894736842105,
-          0.33366315789473683,
-          0.27002105263157894,
-          0.3062157894736842,
-          0.3541947368421053,
-          0.3532894736842105,
-          0.2804052631578947
+          1.7449125,
+          1.238175,
+          1.3951,
+          1.2923,
+          1.3669625,
+          1.249475,
+          1.4485125
         ]
       ],
       "loops": [
         1,
-        19
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 8.2144,
+      "cpp_ms": 3.4265666666666665,
+      "speedup": 2.3972684027744,
+      "samples_ms": [
+        [
+          8.2144,
+          7.4265,
+          9.8092,
+          7.2073,
+          10.2874,
+          7.0319,
+          15.3603
+        ],
+        [
+          3.9536666666666664,
+          2.4828333333333337,
+          2.6777,
+          3.4265666666666665,
+          2.8278,
+          4.265433333333333,
+          4.5163
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 11.5628,
+      "cpp_ms": 1.2559,
+      "speedup": 9.20678397961621,
+      "samples_ms": [
+        [
+          12.4854,
+          13.2858,
+          9.8,
+          11.5628,
+          15.0393,
+          10.0897,
+          9.2226
+        ],
+        [
+          1.840475,
+          1.2559,
+          0.978875,
+          1.78405,
+          1.42145,
+          1.0891,
+          1.10645
+        ]
+      ],
+      "loops": [
+        1,
+        4
       ],
       "sample_labels": [
         "scikit-image",
@@ -2526,7 +1132,7 @@
     },
     {
       "api": "color.rgb2luv",
-      "dtype": "float64",
+      "dtype": "float32",
       "size": 512,
       "threads": 1,
       "workload": "dark-sRGB",
@@ -2535,34 +1141,34 @@
       "backend": "native",
       "max_abs_error": 0.0,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 11.5321,
-      "cpp_ms": 1.9943142857142857,
-      "speedup": 5.782488789558888,
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 14.8113,
+      "cpp_ms": 0.47514782608695655,
+      "speedup": 31.17198308993082,
       "samples_ms": [
         [
-          10.7644,
-          12.3289,
-          11.5321,
-          10.1043,
-          11.1496,
-          16.9798,
-          15.4496
+          13.3838,
+          12.3752,
+          15.9793,
+          14.0142,
+          15.7597,
+          14.8113,
+          15.1217
         ],
         [
-          1.8055714285714286,
-          1.916857142857143,
-          2.0659,
-          1.9943142857142857,
-          1.9305714285714286,
-          2.113485714285714,
-          2.386228571428571
+          0.45054782608695654,
+          0.5217826086956522,
+          0.5010478260869565,
+          0.4640086956521739,
+          0.47514782608695655,
+          0.497395652173913,
+          0.4461652173913043
         ]
       ],
       "loops": [
         1,
-        7
+        23
       ],
       "sample_labels": [
         "scikit-image",
@@ -2571,7 +1177,7 @@
     },
     {
       "api": "color.rgb2luv",
-      "dtype": "float64",
+      "dtype": "float32",
       "size": 512,
       "threads": 4,
       "workload": "dark-sRGB",
@@ -2580,34 +1186,1428 @@
       "backend": "native",
       "max_abs_error": 0.0,
       "parity_contract": "base dtype/API tolerance",
-      "rtol": 2e-13,
-      "atol": 2e-12,
-      "reference_ms": 19.2059,
-      "cpp_ms": 1.1682333333333332,
-      "speedup": 16.440123263046768,
+      "rtol": 2e-06,
+      "atol": 0.00025,
+      "reference_ms": 11.0957,
+      "cpp_ms": 0.36268181818181816,
+      "speedup": 30.593482892593062,
       "samples_ms": [
         [
-          22.9817,
-          21.1244,
-          19.2059,
-          19.2711,
-          11.8694,
-          9.782,
-          10.2057
+          16.7645,
+          15.2242,
+          14.8889,
+          11.0957,
+          7.0229,
+          7.6861,
+          6.2447
         ],
         [
-          1.575311111111111,
-          1.581411111111111,
-          1.2679666666666667,
-          0.9850111111111112,
-          1.0465111111111112,
-          1.0137666666666667,
-          1.1682333333333332
+          0.41298181818181817,
+          0.34173636363636367,
+          0.36268181818181816,
+          0.41958181818181817,
+          0.36265454545454545,
+          0.4019090909090909,
+          0.18037272727272727
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "low-lightness",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.9802322387695312e-08,
+      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "xyz_max_abs_error": 0.0,
+      "rgb_max_propagated_bound": 0.0,
+      "reference_ms": 26.6906,
+      "cpp_ms": 8.5501,
+      "speedup": 3.1216710915661805,
+      "samples_ms": [
+        [
+          27.0221,
+          26.6906,
+          25.053,
+          25.1803,
+          27.0888,
+          27.186,
+          26.5033
+        ],
+        [
+          10.8924,
+          8.0451,
+          12.0757,
+          8.1625,
+          7.5461,
+          8.9219,
+          8.5501
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "low-lightness",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.9802322387695312e-08,
+      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "xyz_max_abs_error": 0.0,
+      "rgb_max_propagated_bound": 0.0,
+      "reference_ms": 32.5688,
+      "cpp_ms": 4.114566666666667,
+      "speedup": 7.915487252606593,
+      "samples_ms": [
+        [
+          29.922,
+          29.9966,
+          34.432,
+          30.1653,
+          38.0831,
+          32.5688,
+          35.1807
+        ],
+        [
+          3.9092,
+          2.9268333333333336,
+          4.114566666666667,
+          3.7333,
+          4.167333333333334,
+          4.2638,
+          4.6525
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "Luv-midtones",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.1138617992401123e-06,
+      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "xyz_max_abs_error": 0.0,
+      "rgb_max_propagated_bound": 0.0,
+      "reference_ms": 52.0309,
+      "cpp_ms": 12.1291,
+      "speedup": 4.289757690183114,
+      "samples_ms": [
+        [
+          60.4012,
+          46.0337,
+          73.987,
+          54.1753,
+          52.0309,
+          42.1667,
+          44.803
+        ],
+        [
+          12.1291,
+          11.7561,
+          37.1964,
+          14.4643,
+          11.9927,
+          16.7646,
+          11.536
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2rgb",
+      "dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "Luv-midtones",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.1138617992401123e-06,
+      "parity_contract": "float32 Luv: one-ULP Y, exact remaining XYZ, base RGB stage and propagated direct bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "xyz_max_abs_error": 0.0,
+      "rgb_max_propagated_bound": 0.0,
+      "reference_ms": 42.4364,
+      "cpp_ms": 5.135225,
+      "speedup": 8.263785910062364,
+      "samples_ms": [
+        [
+          43.0756,
+          44.7241,
+          40.5797,
+          44.8244,
+          41.586,
+          42.4364,
+          37.3267
+        ],
+        [
+          5.135225,
+          3.438625,
+          5.727125,
+          5.298525,
+          5.53965,
+          4.631225,
+          5.0527
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2hsv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "grayscale",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 41.7496,
+      "cpp_ms": 2.30005,
+      "speedup": 18.15160539988261,
+      "samples_ms": [
+        [
+          39.7239,
+          41.7496,
+          65.3487,
+          49.3537,
+          37.6574,
+          37.8828,
+          48.5664
+        ],
+        [
+          2.42165,
+          2.07875,
+          2.8718,
+          2.1784,
+          2.30005,
+          2.00985,
+          2.8299
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2hsv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "grayscale",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 42.8187,
+      "cpp_ms": 1.5569555555555554,
+      "speedup": 27.501555742688726,
+      "samples_ms": [
+        [
+          53.8605,
+          60.316,
+          43.0363,
+          35.993,
+          36.3223,
+          42.8187,
+          36.1556
+        ],
+        [
+          1.6296555555555554,
+          2.0411777777777775,
+          1.4471,
+          1.1583777777777777,
+          1.1069333333333333,
+          1.5569555555555554,
+          2.0673333333333335
         ]
       ],
       "loops": [
         1,
         9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.hsv2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "wrapped-hue",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 76.862,
+      "cpp_ms": 3.7116833333333337,
+      "speedup": 20.708124346096334,
+      "samples_ms": [
+        [
+          53.2364,
+          66.033,
+          126.7924,
+          76.862,
+          80.5999,
+          73.7489,
+          88.7903
+        ],
+        [
+          2.30175,
+          3.7116833333333337,
+          3.8232333333333335,
+          3.9097333333333335,
+          3.2416833333333335,
+          3.50595,
+          7.849883333333333
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.hsv2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "wrapped-hue",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 86.1205,
+      "cpp_ms": 1.9749333333333332,
+      "speedup": 43.60678841479882,
+      "samples_ms": [
+        [
+          90.0018,
+          102.7631,
+          104.3061,
+          80.9305,
+          78.5313,
+          86.1205,
+          70.3102
+        ],
+        [
+          2.79115,
+          2.1373,
+          1.7319666666666667,
+          1.9749333333333332,
+          0.8661,
+          2.04235,
+          1.77565
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.2737367544323206e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 37.6636,
+      "cpp_ms": 8.4204,
+      "speedup": 4.472899149684101,
+      "samples_ms": [
+        [
+          40.3594,
+          45.3257,
+          43.8725,
+          34.4735,
+          37.6636,
+          36.9981,
+          32.3182
+        ],
+        [
+          8.8877,
+          8.3559,
+          11.7451,
+          8.3631,
+          8.6241,
+          8.314,
+          8.4204
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.2737367544323206e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 29.6968,
+      "cpp_ms": 3.939975,
+      "speedup": 7.537306708798914,
+      "samples_ms": [
+        [
+          23.3641,
+          27.4134,
+          29.6968,
+          36.5544,
+          38.418,
+          24.6832,
+          34.35
+        ],
+        [
+          2.594025,
+          3.79245,
+          3.989625,
+          3.9782,
+          4.4023,
+          3.5214,
+          3.939975
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 22.0423,
+      "cpp_ms": 1.2339,
+      "speedup": 17.863927384715133,
+      "samples_ms": [
+        [
+          22.0423,
+          18.6015,
+          17.5603,
+          18.8847,
+          23.998,
+          26.3157,
+          22.6323
+        ],
+        [
+          1.25658,
+          1.1929,
+          1.13329,
+          1.2339,
+          1.11454,
+          1.41122,
+          1.24544
+        ]
+      ],
+      "loops": [
+        1,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 27.614,
+      "cpp_ms": 1.3620333333333332,
+      "speedup": 20.274099997552682,
+      "samples_ms": [
+        [
+          29.144,
+          25.814,
+          26.3085,
+          28.6738,
+          27.614,
+          23.716,
+          27.6196
+        ],
+        [
+          2.079683333333333,
+          2.1050333333333335,
+          2.035066666666667,
+          1.3235,
+          1.1715833333333332,
+          1.3620333333333332,
+          1.3533666666666668
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.2737367544323206e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 36.6465,
+      "cpp_ms": 11.9049,
+      "speedup": 3.0782702920646123,
+      "samples_ms": [
+        [
+          49.0262,
+          36.6465,
+          43.215,
+          33.059,
+          35.3692,
+          41.6285,
+          34.5994
+        ],
+        [
+          13.8291,
+          11.9049,
+          13.7101,
+          11.5359,
+          11.6443,
+          11.9448,
+          11.6658
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.2737367544323206e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 46.3552,
+      "cpp_ms": 4.64145,
+      "speedup": 9.987223820142413,
+      "samples_ms": [
+        [
+          48.446,
+          48.8672,
+          51.3712,
+          46.3552,
+          38.2424,
+          38.7992,
+          39.1433
+        ],
+        [
+          5.1575,
+          6.7763,
+          4.76865,
+          4.64145,
+          3.09825,
+          3.61425,
+          4.0635
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 6.661338147750939e-16,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 33.4885,
+      "cpp_ms": 7.4044,
+      "speedup": 4.522783750202582,
+      "samples_ms": [
+        [
+          41.3757,
+          36.7044,
+          32.7409,
+          33.4885,
+          36.0055,
+          33.0184,
+          32.3146
+        ],
+        [
+          7.1713,
+          7.4044,
+          7.4499,
+          7.4861,
+          7.418,
+          7.1028,
+          7.1299
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 6.661338147750939e-16,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 32.7372,
+      "cpp_ms": 2.3121166666666664,
+      "speedup": 14.158974100211209,
+      "samples_ms": [
+        [
+          32.8173,
+          32.9694,
+          32.458,
+          32.7372,
+          31.3072,
+          32.2129,
+          33.376
+        ],
+        [
+          2.3121166666666664,
+          1.7640166666666668,
+          2.2631166666666664,
+          2.42855,
+          2.6079666666666665,
+          2.8979,
+          2.2996666666666665
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 7.105427357601002e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 10.9883,
+      "cpp_ms": 4.191,
+      "speedup": 2.621880219518015,
+      "samples_ms": [
+        [
+          8.7801,
+          10.5607,
+          8.6014,
+          10.9883,
+          12.8063,
+          13.8006,
+          13.3261
+        ],
+        [
+          4.079066666666667,
+          4.127166666666667,
+          4.191,
+          4.170566666666667,
+          5.420566666666667,
+          5.1013,
+          6.122266666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2lch",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 7.105427357601002e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 9.9888,
+      "cpp_ms": 2.62555,
+      "speedup": 3.804460017901011,
+      "samples_ms": [
+        [
+          14.9123,
+          14.55,
+          9.9888,
+          9.0027,
+          8.9333,
+          12.2737,
+          9.6348
+        ],
+        [
+          3.136825,
+          3.15905,
+          3.0633,
+          2.5871,
+          2.534325,
+          2.62555,
+          1.68015
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 3.552713678800501e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 8.7173,
+      "cpp_ms": 3.208125,
+      "speedup": 2.71725696473797,
+      "samples_ms": [
+        [
+          8.0084,
+          8.7173,
+          8.4914,
+          8.2634,
+          8.7419,
+          9.0599,
+          9.6728
+        ],
+        [
+          3.208125,
+          3.329875,
+          3.277425,
+          3.181125,
+          3.02945,
+          3.255525,
+          3.106875
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lch2lab",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "four-channels",
+      "options": {},
+      "channels": 4,
+      "backend": "native",
+      "max_abs_error": 3.552713678800501e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 9.6085,
+      "cpp_ms": 1.5902222222222222,
+      "speedup": 6.0422372833985465,
+      "samples_ms": [
+        [
+          10.0818,
+          9.2791,
+          9.6085,
+          8.7943,
+          11.094,
+          12.9667,
+          8.4236
+        ],
+        [
+          1.5782222222222222,
+          1.6397333333333333,
+          1.510888888888889,
+          1.5902222222222222,
+          1.869011111111111,
+          1.7877,
+          1.3729555555555555
+        ]
+      ],
+      "loops": [
+        1,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 13.6994,
+      "cpp_ms": 1.0858666666666668,
+      "speedup": 12.616097740667977,
+      "samples_ms": [
+        [
+          13.491,
+          16.0464,
+          11.8815,
+          12.2673,
+          13.6994,
+          15.9876,
+          14.7531
+        ],
+        [
+          1.143425,
+          1.0422833333333335,
+          1.0551416666666666,
+          1.079875,
+          1.0858666666666668,
+          1.1341833333333333,
+          1.1593416666666667
+        ]
+      ],
+      "loops": [
+        1,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 13.0538,
+      "cpp_ms": 0.3298764705882353,
+      "speedup": 39.57178266374222,
+      "samples_ms": [
+        [
+          12.8844,
+          13.0552,
+          14.2481,
+          12.4845,
+          11.8133,
+          13.0538,
+          15.3364
+        ],
+        [
+          0.3298764705882353,
+          0.3874235294117647,
+          0.29658823529411765,
+          0.3381,
+          0.322064705882353,
+          0.351335294117647,
+          0.32691176470588235
+        ]
+      ],
+      "loops": [
+        1,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.7755575615628914e-17,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 25.0082,
+      "cpp_ms": 3.055675,
+      "speedup": 8.18418189107153,
+      "samples_ms": [
+        [
+          23.1781,
+          22.1298,
+          28.859,
+          24.0836,
+          25.0082,
+          25.1126,
+          25.3961
+        ],
+        [
+          3.013225,
+          2.980575,
+          3.194025,
+          2.99295,
+          3.055675,
+          3.635375,
+          3.088025
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.lab2rgb",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "negative-Z",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 2.7755575615628914e-17,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 24.6872,
+      "cpp_ms": 0.984375,
+      "speedup": 25.079060317460318,
+      "samples_ms": [
+        [
+          24.5444,
+          24.6872,
+          24.3377,
+          28.2835,
+          26.2246,
+          28.615,
+          23.2364
+        ],
+        [
+          1.8506375,
+          0.8227,
+          0.984375,
+          1.467125,
+          0.9635375,
+          1.3816625,
+          0.9195875
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 5.684341886080801e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 14.0414,
+      "cpp_ms": 3.610675,
+      "speedup": 3.8888573466180145,
+      "samples_ms": [
+        [
+          14.0414,
+          15.3296,
+          13.3828,
+          14.4884,
+          13.205,
+          13.861,
+          16.4119
+        ],
+        [
+          4.3396,
+          4.328825,
+          3.528375,
+          3.556775,
+          3.610675,
+          3.5083,
+          3.901975
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.xyz2luv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 5.684341886080801e-13,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 13.4616,
+      "cpp_ms": 1.39192,
+      "speedup": 9.671245473877809,
+      "samples_ms": [
+        [
+          14.0931,
+          14.602,
+          15.8257,
+          12.767,
+          10.7605,
+          13.4616,
+          8.1714
+        ],
+        [
+          1.36883,
+          1.66127,
+          1.48818,
+          1.39192,
+          1.55335,
+          1.05715,
+          0.92032
+        ]
+      ],
+      "loops": [
+        1,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.7763568394002505e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 12.1267,
+      "cpp_ms": 0.81537,
+      "speedup": 14.87263450948649,
+      "samples_ms": [
+        [
+          12.5452,
+          11.7606,
+          12.8666,
+          11.5824,
+          12.3986,
+          11.6414,
+          12.1267
+        ],
+        [
+          0.81537,
+          0.78576,
+          1.15659,
+          1.20786,
+          0.86131,
+          0.75449,
+          0.80937
+        ]
+      ],
+      "loops": [
+        1,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.luv2xyz",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "D50/10",
+      "options": {
+        "illuminant": "D50",
+        "observer": "10"
+      },
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 1.7763568394002505e-15,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 11.2892,
+      "cpp_ms": 0.31639411764705877,
+      "speedup": 35.68081506683772,
+      "samples_ms": [
+        [
+          11.0415,
+          12.4702,
+          11.2892,
+          11.1873,
+          12.8856,
+          11.0919,
+          12.1702
+        ],
+        [
+          0.3488823529411764,
+          0.7078705882352941,
+          0.4934764705882353,
+          0.2976058823529412,
+          0.31639411764705877,
+          0.3025294117647059,
+          0.3135117647058823
+        ]
+      ],
+      "loops": [
+        1,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "dark-sRGB",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 12.2001,
+      "cpp_ms": 1.7994375,
+      "speedup": 6.779952068354695,
+      "samples_ms": [
+        [
+          11.6673,
+          11.4578,
+          13.0531,
+          12.2001,
+          12.5288,
+          12.3504,
+          10.6441
+        ],
+        [
+          1.7486875,
+          1.7994375,
+          2.027025,
+          1.83385,
+          1.7553625,
+          1.781975,
+          1.80205
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.rgb2luv",
+      "dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "dark-sRGB",
+      "options": {},
+      "channels": 3,
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype/API tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-12,
+      "reference_ms": 13.0088,
+      "cpp_ms": 1.0322454545454547,
+      "speedup": 12.602428950126379,
+      "samples_ms": [
+        [
+          19.3351,
+          16.8598,
+          16.1133,
+          12.5207,
+          11.1964,
+          11.0074,
+          13.0088
+        ],
+        [
+          1.0917090909090907,
+          1.0322454545454547,
+          0.9122636363636364,
+          1.082118181818182,
+          1.053809090909091,
+          0.9576181818181818,
+          1.0117545454545454
+        ]
+      ],
+      "loops": [
+        1,
+        11
       ],
       "sample_labels": [
         "scikit-image",
@@ -2627,27 +2627,27 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 24.4028,
-      "cpp_ms": 6.0786,
-      "speedup": 4.014542822360412,
+      "reference_ms": 27.1888,
+      "cpp_ms": 6.2848,
+      "speedup": 4.32612016293279,
       "samples_ms": [
         [
-          28.0123,
-          29.127,
-          25.2304,
-          23.5321,
-          24.3065,
-          24.3809,
-          24.4028
+          28.2557,
+          28.3008,
+          26.1142,
+          25.8112,
+          27.1268,
+          27.1888,
+          29.1099
         ],
         [
-          8.23285,
-          6.59695,
-          6.0786,
-          6.05975,
-          5.9548,
-          6.19685,
-          5.9648
+          6.98535,
+          6.1563,
+          6.1248,
+          6.49425,
+          6.2848,
+          6.31375,
+          6.12745
         ]
       ],
       "loops": [
@@ -2672,27 +2672,27 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 24.5015,
-      "cpp_ms": 1.750525,
-      "speedup": 13.996658145413518,
+      "reference_ms": 31.6633,
+      "cpp_ms": 2.8424875,
+      "speedup": 11.139292609026425,
       "samples_ms": [
         [
-          26.0996,
-          27.1686,
-          24.5015,
-          24.3133,
-          27.3565,
-          23.6292,
-          23.5237
+          33.8924,
+          31.6633,
+          28.1335,
+          36.8869,
+          34.5885,
+          29.7208,
+          29.2257
         ],
         [
-          1.669,
-          1.67915,
-          2.22525,
-          2.9523125,
-          1.7607125,
-          1.750525,
-          1.563425
+          1.9664125,
+          2.4544875,
+          1.63505,
+          3.5407125,
+          2.8424875,
+          3.2862875,
+          3.018725
         ]
       ],
       "loops": [
@@ -2717,32 +2717,32 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 28.7236,
-      "cpp_ms": 6.4717,
-      "speedup": 4.438339230804889,
+      "reference_ms": 38.2289,
+      "cpp_ms": 7.9941,
+      "speedup": 4.782139327754219,
       "samples_ms": [
         [
-          29.1204,
-          29.6193,
-          28.2037,
-          28.7236,
-          29.4395,
-          28.2396,
-          27.3592
+          44.3382,
+          41.4586,
+          42.8935,
+          38.2289,
+          31.5444,
+          30.0096,
+          29.4066
         ],
         [
-          6.98505,
-          6.678,
-          6.4717,
-          6.2076,
-          6.5528,
-          6.23965,
-          6.38625
+          7.5618,
+          8.1479,
+          8.5435,
+          8.4429,
+          7.9941,
+          6.6785,
+          6.1584
         ]
       ],
       "loops": [
         1,
-        2
+        1
       ],
       "sample_labels": [
         "scikit-image",
@@ -2762,27 +2762,27 @@
       "parity_contract": "base dtype/API tolerance",
       "rtol": 2e-13,
       "atol": 2e-13,
-      "reference_ms": 28.1495,
-      "cpp_ms": 1.779475,
-      "speedup": 15.818991556498405,
+      "reference_ms": 30.4818,
+      "cpp_ms": 1.8217,
+      "speedup": 16.732612395015643,
       "samples_ms": [
         [
-          29.1141,
-          28.1112,
-          28.1495,
-          30.3422,
-          29.1643,
-          27.3575,
-          26.9809
+          30.4818,
+          28.6939,
+          28.8068,
+          35.5953,
+          31.0464,
+          30.3711,
+          31.276
         ],
         [
-          1.8371,
-          1.6666,
-          1.779475,
-          2.1454125,
-          1.775925,
-          1.891425,
-          1.66535
+          1.87755,
+          3.0617625,
+          1.7695375,
+          1.7458375,
+          1.8217,
+          1.76555,
+          2.096
         ]
       ],
       "loops": [
