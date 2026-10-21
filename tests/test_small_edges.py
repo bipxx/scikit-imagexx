@@ -113,11 +113,29 @@ def test_laplace_kernel_metadata(ksize):
     check('laplace',image,ksize=ksize)
 
 
-@pytest.mark.parametrize('name',NAMES[1:])
+@pytest.mark.parametrize('name',NAMES[1:2])
 def test_underflow_warning_mode_uses_explicit_fallback(name):
     image=np.full((5,7),np.finfo(np.float32).tiny,dtype=np.float32)
     with np.errstate(under='warn'):
         with pytest.raises(NotImplementedError):getattr(xx.filters,name)(image)
+
+
+@pytest.mark.parametrize('name',NAMES[2:])
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('policy',['warn','raise','call','print','log'])
+def test_directional_convolution_honors_underflow_policies(name,dtype,policy):
+    # scipy.ndimage does not replay convolution's floating status as a NumPy
+    # underflow warning. Directional Roberts has no squaring stage afterwards.
+    minimum=np.nextafter(dtype(0),dtype(1))
+    image=np.zeros((5,7),dtype=dtype);image[1::2,1::2]=minimum
+    with np.errstate(under=policy):
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            expected=getattr(original,name)(image)
+            actual=getattr(xx.filters,name)(image)
+        assert not notices
+    np.testing.assert_array_equal(actual,expected)
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
 
 
 @pytest.mark.parametrize('dtype',REAL)

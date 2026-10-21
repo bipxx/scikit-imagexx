@@ -1,5 +1,6 @@
 """scikit-image signatures with native dispatch for supported calls."""
 import numpy as np
+from math import isfinite as _isfinite
 from functools import lru_cache as _lru_cache
 from . import _core
 from ._compat import fallback, module_attribute, native_image
@@ -290,6 +291,7 @@ _SMALL_EDGES = {'laplace':0,'roberts':1,'roberts_pos_diag':2,'roberts_neg_diag':
 _SMALL_EDGE_DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                                 'int32','uint64','int64','float16','float32','float64'))
 _SMALL_EDGE_TYPES = {dtype.type for dtype in _SMALL_EDGE_DTYPES}
+_SMALL_EDGE_MAX = {dtype:np.sqrt(np.finfo(dtype).max)/16 for dtype in (np.float32,np.float64)}
 
 
 @_lru_cache(maxsize=64)
@@ -310,7 +312,7 @@ def _small_edge(name,image,mask,options):
     if name!='laplace' and (image.ndim!=2 or not image.size):return forwarded()
     if name=='laplace' and (not isinstance(options['ksize'],(int,np.integer)) or options['ksize']<3):return forwarded()
     if mask is not None and (type(mask) not in (np.ndarray,np.memmap) or mask.dtype.type not in _SMALL_EDGE_TYPES):return forwarded()
-    if name!='laplace' and image.dtype.type in (np.float32,np.float64) and np.geterr()['under']!='ignore':return forwarded()
+    if name=='roberts' and image.dtype.type in (np.float32,np.float64) and np.geterr()['under']!='ignore':return forwarded()
     native=image if image.dtype.isnative else _core.edge_native(image)
     if native.dtype==np.float16:prepared=_core.edge_half(native)
     elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
@@ -318,8 +320,8 @@ def _small_edge(name,image,mask,options):
     if image.dtype.kind=='f' and prepared.size:
         if not prepared.flags.c_contiguous or not prepared.flags.aligned:prepared=prepared.copy(order='C')
         low,high=_core.intensity_bounds(prepared)
-        if not (np.isfinite(low) and np.isfinite(high)):return forwarded()
-        if max(abs(low),abs(high))>np.sqrt(np.finfo(prepared.dtype).max)/16:return forwarded()
+        if not (_isfinite(low) and _isfinite(high)):return forwarded()
+        if max(abs(low),abs(high))>_SMALL_EDGE_MAX[prepared.dtype.type]:return forwarded()
     if name=='laplace' and (prepared.ndim!=2 or not prepared.size):result=_core.laplace_nd(prepared)
     else:result=_core.small_edge(prepared,_SMALL_EDGES[name])
     if mask is not None:

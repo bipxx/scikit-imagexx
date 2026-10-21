@@ -18,7 +18,7 @@
 
 namespace py = pybind11;
 namespace {
-bool dtype_matches(const py::dtype& a,const py::dtype& b) {return a.is(b) || a.equal(b);}
+bool dtype_matches(const py::dtype& a,const py::dtype& b) {return a.is(b) || (a.itemsize()==b.itemsize() && a.kind()==b.kind() && a.equal(b));}
 struct RawRows {
     std::size_t rows=0,columns=1;
     std::ptrdiff_t image_step=0,alpha_step=0;
