@@ -2,6 +2,7 @@
 #include "color_detail.hpp"
 #include "perceptual_detail.hpp"
 #include "distance_detail.hpp"
+#include "distance_metrics.hpp"
 #include "simd_math.hpp"
 #include <cstring>
 #include <climits>
@@ -603,5 +604,102 @@ std::size_t delta_e76(const void* a,const void* b,float* out,std::size_t n,Pixel
 std::size_t delta_e76(const void* a,const void* b,double* out,std::size_t n,PixelType at,PixelType bt,
     std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
     return distance_run(a,b,out,n,at,bt,ap,ac,bp,bc);
+}
+namespace {
+template<class T> struct VectorDistanceMath {
+    using R=__m256d;
+    using Wide=VectorDistanceMath<double>;
+    static R round(R x){if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm256_cvtpd_ps(x));else return x;}
+    static R c(double x){return _mm256_set1_pd(T(x));}
+    static R add(R a,R b){
+        if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm_add_ps(_mm256_cvtpd_ps(a),_mm256_cvtpd_ps(b)));
+        else return _mm256_add_pd(a,b);
+    }
+    static R sub(R a,R b){
+        if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm_sub_ps(_mm256_cvtpd_ps(a),_mm256_cvtpd_ps(b)));
+        else return _mm256_sub_pd(a,b);
+    }
+    static R mul(R a,R b){
+        if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm_mul_ps(_mm256_cvtpd_ps(a),_mm256_cvtpd_ps(b)));
+        else return _mm256_mul_pd(a,b);
+    }
+    static R div(R a,R b){
+        if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm_div_ps(_mm256_cvtpd_ps(a),_mm256_cvtpd_ps(b)));
+        else return _mm256_div_pd(a,b);
+    }
+    static R square(R x){return mul(x,x);}
+    static R sqrt(R x){
+        if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm_sqrt_ps(_mm256_cvtpd_ps(x)));
+        else return _mm256_sqrt_pd(x);
+    }
+    static R power(R x,int n){
+        const auto x2=_mm256_mul_pd(x,x),x4=_mm256_mul_pd(x2,x2);
+        return round(n==4 ? x4 : _mm256_mul_pd(_mm256_mul_pd(x4,x2),x));
+    }
+    static R abs(R x){return _mm256_andnot_pd(_mm256_set1_pd(-0.),x);}
+    static R degrees(R x){return mul(x,c(T(180)/T(detail::distance_pi)));}
+    static R lt(R a,R b){return _mm256_cmp_pd(a,b,_CMP_LT_OQ);}
+    static R gt(R a,R b){return _mm256_cmp_pd(a,b,_CMP_GT_OQ);}
+    static R eq(R a,R b){return _mm256_cmp_pd(a,b,_CMP_EQ_OQ);}
+    static R le(R a,R b){return _mm256_cmp_pd(a,b,_CMP_LE_OQ);}
+    static R ge(R a,R b){return _mm256_cmp_pd(a,b,_CMP_GE_OQ);}
+    static R both(R a,R b){return _mm256_and_pd(a,b);}
+    static R choose(R no,R yes,R mask){return _mm256_blendv_pd(no,yes,mask);}
+    static R nonnegative(R x){return choose(x,c(0),le(x,c(0)));}
+    static R hypot(R a,R b){
+        const auto high=_mm256_max_pd(abs(a),abs(b)),low=_mm256_min_pd(abs(a),abs(b));
+        if(!all_finite(a) || !all_finite(b) || mask_bits(gt(high,_mm256_set1_pd(1e150))) ||
+           mask_bits(both(gt(high,c(0)),lt(high,_mm256_set1_pd(1e-150))))) {
+            double x[4],y[4]; _mm256_storeu_pd(x,a); _mm256_storeu_pd(y,b);
+            for(int j=0;j<4;++j) x[j]=std::hypot(T(x[j]),T(y[j]));
+            return _mm256_loadu_pd(x);
+        }
+        const auto ratio=_mm256_div_pd(low,choose(high,_mm256_set1_pd(1),eq(high,_mm256_setzero_pd())));
+        return round(_mm256_mul_pd(high,_mm256_sqrt_pd(_mm256_add_pd(_mm256_set1_pd(1),_mm256_mul_pd(ratio,ratio)))));
+    }
+    static R angle(R a,R b){
+        // Preserve the float atan2 rounding before the double 2*pi in-place add.
+        double x[4],y[4]; _mm256_storeu_pd(x,a); _mm256_storeu_pd(y,b);
+        for(int j=0;j<4;++j) {const auto h=std::atan2(T(y[j]),T(x[j]));x[j]=T(double(h)+(h<0?2*detail::distance_pi:0));}
+        return _mm256_loadu_pd(x);
+    }
+    static R sin(R x){R s,c; sincos4(x,s,c);return round(s);}
+    static R cos(R x){R s,c; sincos4(x,s,c);return round(c);}
+    static R exp(R x){return round(math::exp4(x));}
+    static R hue_squared(R a,R b,R x,R y){
+        // This cancellation-sensitive stage deliberately uses libm hypot in
+        // double, as the upstream implementation does, even for float32 Lab.
+        double aa[4],bb[4],xx[4],yy[4],ca[4],cb[4];
+        _mm256_storeu_pd(aa,a);_mm256_storeu_pd(bb,b);_mm256_storeu_pd(xx,x);_mm256_storeu_pd(yy,y);
+        for(int j=0;j<4;++j){ca[j]=std::hypot(aa[j],bb[j]);cb[j]=std::hypot(xx[j],yy[j]);}
+        return round(_mm256_mul_pd(_mm256_set1_pd(2),_mm256_sub_pd(_mm256_mul_pd(_mm256_loadu_pd(ca),_mm256_loadu_pd(cb)),
+            _mm256_add_pd(_mm256_mul_pd(a,x),_mm256_mul_pd(b,y)))));
+    }
+};
+template<class T,class Output> std::size_t metric_run(const void* a,const void* b,Output* out,std::size_t n,
+    PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    if(ap>INT_MAX/4 || ap< -INT_MAX/4 || bp>INT_MAX/4 || bp< -INT_MAX/4) return 0;
+    const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
+    std::size_t i=0;
+    for(;i+4<=n;i+=4) {
+        __m256d av[3],bv[3];
+        distance_load<double>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
+        distance_load<double>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
+        const auto result=detail::distance_metric<VectorDistanceMath<T>>(av,bv,metric,p,wide,scalar_cmc);
+        if constexpr(std::is_same_v<Output,float>) _mm_storeu_ps(out+i,_mm256_cvtpd_ps(result));
+        else _mm256_storeu_pd(out+i,result);
+    }
+    return i;
+}
+}
+std::size_t metric_distance(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,
+    DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    if(at==PixelType::float32 && bt==PixelType::float32) {
+        if(scalar_cmc) return metric_run<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
+        return metric_run<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
+    }
+    return metric_run<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
 }
 } // namespace skimagexx::simd

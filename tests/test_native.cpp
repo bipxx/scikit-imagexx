@@ -181,6 +181,15 @@ int main() {
         delta_e76_into(b,b,single,1,PixelType::float32,PixelType::float32);
         require(single[0]==0);
         delta_e76_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float64);
+        const double gray1[]={50,0,0},gray2[]={55,0,0};
+        double weighted;
+        delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::cie94);
+        require(weighted==5);
+        delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000);
+        require(std::abs(weighted-5/(1+.015*6.25/std::sqrt(26.25)))<1e-12);
+        delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::cmc);
+        require(std::abs(weighted-5/(.040975*50/(1+.01765*50)))<1e-12);
+        delta_e_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float32,DistanceMetric::cmc,{},true,true);
     }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }

@@ -88,6 +88,29 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("distance_metric",[](py::array first,py::array second,int operation,std::array<double,5> parameters,
+        bool wide_trig,bool promoted_cmc) -> py::array {
+        if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
+            throw py::value_error("distance inputs must have three channels");
+        if(first.ndim()!=second.ndim() || !std::equal(first.shape(),first.shape()+first.ndim(),second.shape()))
+            throw py::value_error("distance inputs must have matching broadcasted shapes");
+        const auto at=pixel_type(first.dtype()),bt=pixel_type(second.dtype());
+        auto prepare=[](py::array a,std::ptrdiff_t& pixels,std::ptrdiff_t& channels) {
+            if(!linear_color_view(a,pixels,channels)) {a=a.attr("copy")().cast<py::array>();pixels=3;channels=1;}
+            return a;
+        };
+        std::ptrdiff_t ap=3,ac=1,bp=3,bc=1;
+        first=prepare(first,ap,ac);second=prepare(second,bp,bc);
+        std::vector<py::ssize_t> dims(first.shape(),first.shape()+first.ndim()-1);
+        const auto dtype=at==skimagexx::PixelType::float32 && bt==skimagexx::PixelType::float32 && !promoted_cmc ?
+            py::dtype::of<float>() : py::dtype::of<double>();
+        py::array out(dtype,dims);
+        const skimagexx::DistanceParameters p{parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]};
+        {py::gil_scoped_release release;
+         skimagexx::delta_e_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,
+            static_cast<skimagexx::DistanceMetric>(operation),p,wide_trig,promoted_cmc,ap,ac,bp,bc);}
+        return out;
+    },py::arg("first"),py::arg("second"),py::arg("operation"),py::arg("parameters"),py::arg("wide_trigonometry"),py::arg("promoted_cmc"));
     m.def("delta_e76",[](py::array first,py::array second) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
             throw py::value_error("distance inputs must have three channels");

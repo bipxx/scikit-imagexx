@@ -77,6 +77,7 @@ def main():
                 ('color.rgb2luv','float32'),('color.luv2xyz','float64'),('color.luv2rgb','float32'),
                 ('color.rgb2hed','uint8'),('color.separate_stains','float32'),('color.combine_stains','float64'),
                 ('color.deltaE_cie76','float32'),('color.deltaE_cie76','float64'),('color.convert_colorspace','float32'),
+                ('color.deltaE_ciede94','float32'),('color.deltaE_ciede2000','float32'),('color.deltaE_cmc','float32'),
                 ('morphology.erosion','uint8'),('morphology.opening','float32'),
                 ('morphology.binary_dilation','float64')}
     for r in data[0][2]['results']:

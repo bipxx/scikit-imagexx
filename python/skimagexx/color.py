@@ -15,6 +15,7 @@ __all__ += ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
 __all__ += ['xyz2luv','luv2xyz','rgb2luv','luv2rgb']
 __all__ += ['separate_stains','combine_stains','rgb2hed','hed2rgb']
 __all__ += ['deltaE_cie76','convert_colorspace']
+__all__ += ['deltaE_ciede94','deltaE_ciede2000','deltaE_cmc']
 globals().update(_STAIN_MATRICES)
 _STAIN_LOG_ADJUST=-np.log(1e-6)
 
@@ -319,3 +320,56 @@ def convert_colorspace(arr,fromspace,tospace,*,channel_axis=-1):
     if tospace not in todict:
         raise ValueError(f'`tospace` has to be one of {todict.keys()}')
     return todict[tospace](fromdict[fromspace](arr,channel_axis=channel_axis),channel_axis=channel_axis)
+
+
+def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
+    a,b=np.asarray(lab1),np.asarray(lab2)
+    if any(x.dtype.type not in _COLOR_TYPES or not x.dtype.isnative for x in (a,b)):
+        return fallback('color',name,lab1,lab2,channel_axis=channel_axis,**options)
+    if any(type(v) not in (int,float,np.float32) for v in parameters):
+        return fallback('color',name,lab1,lab2,channel_axis=channel_axis,**options)
+    try:
+        valid=all(np.isfinite(float(v)) for v in parameters)
+    except OverflowError:
+        valid=False
+    if not valid:
+        return fallback('color',name,lab1,lab2,channel_axis=channel_axis,**options)
+    first_scalar=a.ndim==1
+    both_scalar=a.ndim==b.ndim==1
+    if name=='deltaE_ciede2000': channel_axis=channel_axis%a.ndim
+    a,b=np.moveaxis(a,channel_axis,-1),np.moveaxis(b,channel_axis,-1)
+    for x in (a,b):
+        if x.shape[-1]<3:
+            if name=='deltaE_ciede2000':
+                raise ValueError(f'not enough values to unpack (expected 3, got {x.shape[-1]})')
+            raise ValueError('Input image has less than 3 channels.')
+    single=a.dtype==b.dtype==np.float32
+    if single and any(abs(float(v))>np.finfo(np.float32).max for v in parameters):
+        return fallback('color',name,lab1,lab2,channel_axis=channel_axis,**options)
+    prepared=np.float32 if single else np.float64
+    probe=np.empty((),dtype=prepared) if first_scalar and name=='deltaE_cmc' else np.empty(0,dtype=prepared)
+    wide=np.result_type(probe,np.deg2rad(30))==np.float64
+    promote=single and both_scalar and name=='deltaE_cmc'
+    try:
+        a,b=np.broadcast_arrays(a[...,:3],b[...,:3])
+    except ValueError:
+        scalar=np.empty((),dtype=np.float64)
+        np.add(np.broadcast_to(scalar,a.shape[:-1]),np.broadcast_to(scalar,b.shape[:-1]))
+        raise
+    result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
+                                 parameters,bool(wide),promote)
+    return result[()] if result.ndim==0 else result
+
+
+def deltaE_ciede94(lab1,lab2,kH=1,kC=1,kL=1,k1=.045,k2=.015,*,channel_axis=-1):
+    return _weighted_distance('deltaE_ciede94',lab1,lab2,channel_axis,(kL,kC,kH,k1,k2),
+                              {'kH':kH,'kC':kC,'kL':kL,'k1':k1,'k2':k2})
+
+
+def deltaE_ciede2000(lab1,lab2,kL=1,kC=1,kH=1,*,channel_axis=-1):
+    return _weighted_distance('deltaE_ciede2000',lab1,lab2,channel_axis,(kL,kC,kH,.045,.015),
+                              {'kL':kL,'kC':kC,'kH':kH})
+
+
+def deltaE_cmc(lab1,lab2,kL=1,kC=1,*,channel_axis=-1):
+    return _weighted_distance('deltaE_cmc',lab1,lab2,channel_axis,(kL,kC,1,.045,.015),{'kL':kL,'kC':kC})

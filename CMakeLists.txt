@@ -46,6 +46,7 @@ if(BUILD_TESTING)
 endif()
 
 include(GNUInstallDirs)
+install(FILES LICENSE third_party/scikit-image-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)
 install(TARGETS skimagexx EXPORT skimagexxTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT skimagexxTargets NAMESPACE skimagexx:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/skimagexx)

@@ -12,6 +12,7 @@ from .color import (rgb2hsv,hsv2rgb,xyz2lab,lab2xyz,rgb2lab,lab2rgb,
 from .color import (xyz2luv,luv2xyz,rgb2luv,luv2rgb)
 from .color import (separate_stains,combine_stains,rgb2hed,hed2rgb)
 from .color import (deltaE_cie76,convert_colorspace)
+from .color import (deltaE_ciede94,deltaE_ciede2000,deltaE_cmc)
 from .util import (invert, img_as_float, img_as_float32, img_as_float64,
                    img_as_ubyte, img_as_uint, img_as_int, img_as_bool, dtype_limits)
 
