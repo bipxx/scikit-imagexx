@@ -108,6 +108,28 @@ def test_integer_coordinate_widths(dtype):
     check(np.arange(77).reshape(7,11),first.astype(dtype),last.astype(dtype))
 
 
+@pytest.mark.parametrize('layout',['fortran','reversed','stepped','readonly','unaligned','endian','zero-stride','tagged'])
+def test_integer_coordinate_storage(layout):
+    first,last=windows((7,11),33)
+    def storage(array):
+        if layout=='fortran':return np.asfortranarray(array)
+        if layout=='reversed':return array[::-1]
+        if layout=='stepped':return np.repeat(array,2,axis=0)[::2]
+        if layout=='readonly':array.flags.writeable=False;return array
+        if layout=='endian':return array.astype('>i8')
+        if layout=='zero-stride':return np.broadcast_to(array[:1],array.shape)
+        if layout=='tagged':return array.view(np.dtype(array.dtype,metadata={'coordinates':'pixels'}))
+        raw=np.empty(array.nbytes+1,dtype=np.uint8)
+        result=np.ndarray(array.shape,dtype=array.dtype,buffer=raw,offset=1);result[:]=array;return result
+    check(sample(np.float64,(7,11)),storage(first),storage(last))
+
+
+def test_integer_coordinate_broadcasting_ignores_unused_end_rows():
+    table=sample(np.float64,(7,11))
+    check(table,np.array([[1,2]]),np.array([[3,5],[4,6]]))
+    check(table,np.array([[1,2],[2,3]]),np.array([[4,6]]))
+
+
 def test_raw_integer_conversion_boundaries():
     unsigned=np.array([0,2**53-1,2**53,2**53+1,2**53+2,2**63-1025,2**63-1,2**63,2**63+1,2**63+1025,2**64-2049,2**64-1025,2**64-2,2**64-1],dtype=np.uint64)
     signed=np.array([-2**63,-2**63+1,-2**53-1,-1,0,1,2**53-1,2**53+1,2**63-1],dtype=np.int64)

@@ -3,6 +3,8 @@ from run import measure
 import argparse
 from datetime import datetime,timezone
 import json
+import hashlib
+import sys
 from pathlib import Path
 import platform
 import numpy as np
@@ -18,11 +20,23 @@ def main():
     parser.add_argument('--size',type=int,default=512)
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
     parser.add_argument('--repeat',type=int,default=7)
+    parser.add_argument('--baseline-dir',type=Path,help='Preserved _baseline package and checked source/binary manifest')
     parser.add_argument('--output',type=Path,default=Path('benchmarks/integrate-parameters.json'))
     args=parser.parse_args()
     if min([args.size,args.repeat,*args.threads])<1:parser.error('sizes, repeats and workers must be positive')
     root=Path(__file__).resolve().parents[1];fingerprint=source_fingerprint(root)
     xx.set_fallback_enabled(False);rows=[];rng=np.random.default_rng(882)
+    baseline=None;baseline_provenance=None
+    if args.baseline_dir:
+        sys.path.insert(0,str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        baseline.set_fallback_enabled(False)
+        baseline_provenance=json.loads((args.baseline_dir/'baseline-source.json').read_text(encoding='utf-8'))
+        binaries=[*Path(baseline.__file__).parent.glob('*.pyd'),*Path(baseline.__file__).parent.glob('*.so')]
+        assert binaries,'preserved baseline binary missing'
+        for file in binaries:
+            assert hashlib.sha256(file.read_bytes()).hexdigest()==baseline_provenance['binary_sha256'][file.name]
+        assert baseline.has_avx2()==xx.has_avx2(),'baseline/current ISA settings differ'
     real=(np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64)
 
     def add(table,label,count=257):
@@ -35,6 +49,7 @@ def main():
             first[1]-=np.array(table.shape);last[1]-=np.array(table.shape)
         def reference():return original.integrate(table,first,last)
         def native():return xx.transform.integrate(table,first,last)
+        def previous():return baseline.transform.integrate(table,first,last)
         expected=reference()
         for workers in args.threads:
             xx.set_num_threads(workers);actual=native()
@@ -43,7 +58,12 @@ def main():
             assert actual.dtype.metadata==expected.dtype.metadata
             np.testing.assert_array_equal(actual,expected,strict=True)
             np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
-            timing=measure(reference,native,args.repeat,15)
+            if baseline is not None:
+                baseline.set_num_threads(workers);old=previous()
+                assert old.dtype==expected.dtype and old.dtype.metadata==expected.dtype.metadata and old.strides==expected.strides
+                np.testing.assert_array_equal(old,expected,strict=True)
+                np.testing.assert_array_equal(np.signbit(old),np.signbit(expected))
+            timing=measure(reference,native,args.repeat,15,baseline=previous if baseline is not None else None)
             rows.append({'api':'transform.integrate','size':args.size,'shape':list(table.shape),
                          'dtype':str(table.dtype),'output_dtype':str(actual.dtype),'threads':workers,
                          'backend':'native','layout':label,'workload':label,'windows':count,
@@ -75,6 +95,7 @@ def main():
               'cpu':platform.processor(),'reference':skimage.__version__,'numpy':np.__version__,'scipy':scipy.__version__,
               'avx2':xx.has_avx2(),'fallback_enabled':False,'reference_thread_pools':1,'repeat':args.repeat,**fingerprint,
               'scope':'Public raw integral-table corner queries; no image copying or preprocessing; exact corner order, float64 conversion and signed zero checked before timing'}
+    if baseline_provenance is not None:metadata['baseline']=baseline_provenance
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps({'metadata':metadata,'results':rows},indent=2)+'\n',encoding='utf-8')
     lines=['# Integral-window performance','','Original scikit-image '+skimage.__version__+

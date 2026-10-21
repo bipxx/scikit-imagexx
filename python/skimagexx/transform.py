@@ -88,24 +88,28 @@ def integrate(ii,start,end):
     if ii.dtype.type not in _REAL_TYPES or ii.ndim>=_INDEX_BITS:return _integrate_fallback(ii,start,end)
     # Coordinate metadata follows upstream normalization and validation order.
     # See third_party/scikit-image-LICENSE.txt. No image pixels use NumPy math.
-    first=np.atleast_2d(np.array(start));last=np.atleast_2d(np.array(end));rows=first.shape[0]
-    shape=np.asarray(ii.shape,dtype=np.intp);total_shape=np.tile(shape,[rows,1])
+    if (type(start) is np.ndarray and type(end) is np.ndarray and start.ndim==end.ndim==2
+            and start.dtype.kind in 'biu' and end.dtype.kind in 'biu'):
+        first=start;last=end
+    else:first=np.atleast_2d(np.array(start));last=np.atleast_2d(np.array(end))
+    rows=first.shape[0]
+    shape=np.asarray(ii.shape,dtype=np.intp);total_shape=np.broadcast_to(shape,(rows,shape.size))
     first_negative=first<0;last_negative=last<0
     first=(first+total_shape)*first_negative+first*~first_negative
     last=(last+total_shape)*last_negative+last*~last_negative
-    if np.any((last-first)<0):raise IndexError('end coordinates must be greater or equal to start')
+    if ((last-first)<0).any():raise IndexError('end coordinates must be greater or equal to start')
     if not rows:return np.zeros(0)
     if first.ndim!=2 or last.ndim!=2:return _integrate_fallback(ii,start,end)
-    first,last=np.broadcast_arrays(first,last)
+    if first.shape!=last.shape:first,last=np.broadcast_arrays(first,last)
     if first.shape[1]!=ii.ndim or last.shape[1]!=ii.ndim:return _integrate_fallback(ii,start,end)
     lower=(first-1)[:rows];upper=last[:rows]
     if ii.ndim and (lower.dtype.kind not in 'iu' or upper.dtype.kind not in 'iu'):return _integrate_fallback(ii,start,end)
-    if lower.dtype.kind=='u' and np.any(lower>np.iinfo(np.int64).max):return _integrate_fallback(ii,start,end)
+    if lower.dtype.kind=='u' and (lower>np.iinfo(np.int64).max).any():return _integrate_fallback(ii,start,end)
     invalid=(upper < -shape) | (upper >= shape)
-    if np.any(invalid):
+    if invalid.any():
         row,axis=np.argwhere(invalid)[0];index=upper[row,axis]
         raise IndexError(f'index {index} is out of bounds for axis {axis} with size {ii.shape[axis]}')
-    if np.any(lower>=shape):return _integrate_fallback(ii,start,end)
+    if (lower>=shape).any():return _integrate_fallback(ii,start,end)
     upper=np.where(upper<0,upper+shape,upper)
     lower=np.ascontiguousarray(lower,dtype=np.int64);upper=np.ascontiguousarray(upper,dtype=np.int64)
     table=np.asarray(ii) if isinstance(ii,np.generic) else ii
