@@ -197,7 +197,8 @@ def main():
               'independent confirmation snapshots.','',
               'Integral images preserve ordered floating prefixes, modular integer overflow and physical '
               'output layout. The [dispatch experiment](integral-dispatch-tuning.md) and '
-              '[paired integer-prefix experiment](integral-integer-tuning.md) retain independent '
+              '[paired integer-prefix experiment](integral-integer-tuning.md) and '
+              '[native-call experiment](integral-binding-tuning.md) retain independent '
               'confirmation samples and rejected variants. All current integral workloads check exact '
               'values, dtype tags, strides and warnings before timing.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
