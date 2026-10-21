@@ -97,12 +97,12 @@ def main():
               'functions and parameter variants. Identity returns, copies and dtype metadata are '
               'excluded from this count and labeled separately in the full reports.','',
               f'{len(slower)} one-worker processing workloads remained slower:','',
-              '| Operation | Input | Shape | Layout | Reference / C++ |',
-              '|---|---|---:|---|---:|']
+              '| Operation | Input | Shape | Layout | Workload | Reference / C++ |',
+              '|---|---|---:|---|---|---:|']
     for r in slower:
         dtype = r.get('dtype',r.get('input_dtype',''))
         shape="×".join(map(str,r["shape"])) if "shape" in r else f'{r["size"]}²'
-        lines.append(f'| {r["api"]} | {dtype} | {shape or "scalar"} | {r.get("layout","standard")} | {r["speedup"]:.4f}x |')
+        lines.append(f'| {r["api"]} | {dtype} | {shape or "scalar"} | {r.get("layout","standard")} | {r.get("workload","default")} | {r["speedup"]:.4f}x |')
     lines += ['',
               'The color port fuses integer normalization, matrix arithmetic and sRGB transfer. '
               'Uniform floating layouts now avoid a full contiguous copy: planar input uses '

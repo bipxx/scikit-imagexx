@@ -66,31 +66,31 @@ The [fixed-workload tuning experiment](morphology-tuning.md) preserves separate 
 
 23 one-worker processing workloads remained slower:
 
-| Operation | Input | Shape | Layout | Reference / C++ |
-|---|---|---:|---|---:|
-| color.lch2lab | float32 | 256² | standard | 0.9421x |
-| util.invert | float64 | 256² | standard | 0.9535x |
-| util.img_as_bool | float64 | 256² | standard | 0.9604x |
-| util.invert | float32 | 1024² | standard | 0.9741x |
-| util.img_as_float64 | float32 | 1024² | standard | 0.9373x |
-| util.img_as_float32 | float64 | 1024² | standard | 0.9871x |
-| util.img_as_float64 | bool | 1024² | standard | 0.9037x |
-| util.img_as_int | uint16 | 1024² | standard | 0.6968x |
-| util.img_as_bool | uint16 | 1024² | standard | 0.9564x |
-| util.img_as_int | uint64 | 1024² | standard | 0.9695x |
-| util.img_as_bool | int64 | 1024² | standard | 0.9887x |
-| color.separate_stains | uint16 | 512² | strided | 0.8379x |
-| color.rgb2hed | uint16 | 512² | strided | 0.9524x |
-| color.separate_stains | uint16 | 512² | channel-first | 0.8931x |
-| color.rgb2hed | uint16 | 512² | channel-first | 0.8145x |
-| morphology.black_tophat | uint8 | 512² | rectangle-31 | 0.9871x |
-| morphology.black_tophat | float32 | 512² | rectangle-31 | 0.9909x |
-| filters.threshold_yen | float32/int64 | 257 | histogram-only | 0.9875x |
-| filters.threshold_yen | float32/int64 | 257 | histogram-only | 0.9981x |
-| filters.threshold_yen | float32/int64 | 257 | histogram-only | 0.9949x |
-| filters.threshold_isodata | float32/float32 | 257 | histogram-only | 0.9905x |
-| filters.threshold_yen | float32/float32 | 257 | histogram-only | 0.9618x |
-| filters.threshold_yen | float32/float64 | 257 | histogram-only | 0.9654x |
+| Operation | Input | Shape | Layout | Workload | Reference / C++ |
+|---|---|---:|---|---|---:|
+| color.lch2lab | float32 | 256² | standard | default | 0.9421x |
+| util.invert | float64 | 256² | standard | default | 0.9535x |
+| util.img_as_bool | float64 | 256² | standard | default | 0.9604x |
+| util.invert | float32 | 1024² | standard | default | 0.9741x |
+| util.img_as_float64 | float32 | 1024² | standard | default | 0.9373x |
+| util.img_as_float32 | float64 | 1024² | standard | default | 0.9871x |
+| util.img_as_float64 | bool | 1024² | standard | default | 0.9037x |
+| util.img_as_int | uint16 | 1024² | standard | default | 0.6968x |
+| util.img_as_bool | uint16 | 1024² | standard | default | 0.9564x |
+| util.img_as_int | uint64 | 1024² | standard | default | 0.9695x |
+| util.img_as_bool | int64 | 1024² | standard | default | 0.9887x |
+| color.separate_stains | uint16 | 512² | strided | default | 0.8379x |
+| color.rgb2hed | uint16 | 512² | strided | default | 0.9524x |
+| color.separate_stains | uint16 | 512² | channel-first | default | 0.8931x |
+| color.rgb2hed | uint16 | 512² | channel-first | default | 0.8145x |
+| morphology.black_tophat | uint8 | 512² | rectangle-31 | rectangle-31 | 0.9871x |
+| morphology.black_tophat | float32 | 512² | rectangle-31 | rectangle-31 | 0.9909x |
+| filters.threshold_yen | float32/int64 | 257 | histogram-only | supplied-histogram | 0.9875x |
+| filters.threshold_yen | float32/int64 | 257 | histogram-only | trimmed-histogram | 0.9981x |
+| filters.threshold_yen | float32/int64 | 257 | histogram-only | large-counts | 0.9949x |
+| filters.threshold_isodata | float32/float32 | 257 | histogram-only | supplied-histogram | 0.9905x |
+| filters.threshold_yen | float32/float32 | 257 | histogram-only | trimmed-histogram | 0.9618x |
+| filters.threshold_yen | float32/float64 | 257 | histogram-only | trimmed-histogram | 0.9654x |
 
 The color port fuses integer normalization, matrix arithmetic and sRGB transfer. Uniform floating layouts now avoid a full contiguous copy: planar input uses contiguous channel loads, other uniform strides use gathers, and scalar tails preserve the same arithmetic. General nonuniform layouts and unaligned arrays can still require copying. Simple matrix transforms remain sensitive to dispatch, shuffling and memory traffic; this run has no hardware-counter profiling to quantify their individual contribution. Further optimization remains necessary.
 
