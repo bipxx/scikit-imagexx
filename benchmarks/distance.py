@@ -39,7 +39,7 @@ def main():
         extra=np.concatenate((image,image[...,:1]),axis=-1)
         for label,first,second,axis in [('contiguous',image,other,-1),
                 ('channel-first',planar,np.ascontiguousarray(np.moveaxis(other,-1,0)),0),
-                ('strided',a[:,::2],other[:,::-1],-1),('broadcast',image,other[0,0],-1),
+                ('strided',a[:,::2],other[:,::-1],-1),('broadcast',image,other[0:1,0:1],-1),
                 ('extra-channels',extra,other,-1)]:
             for metric in METRICS:
                 cases.append((metric,(first,second),{'channel_axis':axis},label,'native'))
