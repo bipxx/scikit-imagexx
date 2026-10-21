@@ -189,7 +189,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 450 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 81 covered wrapper signatures have per-function parity tests. Tests also run
+All 92 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -354,7 +354,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all fourteen reports with their default workloads:
+To rebuild and reproduce all fifteen reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt
@@ -376,17 +376,18 @@ python benchmarks/perceptual.py --size 512 --threads 1 4
 python benchmarks/stains.py --size 512 --threads 1 4
 python benchmarks/distance.py --size 512 --threads 1 4
 python benchmarks/morphology.py --size 512 --threads 1 4
+python benchmarks/gaussian.py --size 512 --threads 1 4
 python benchmarks/summarize.py
 ```
 
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The full function benchmark covers 81 entries in 940 cases.
-[Additional conversion widths](benchmarks/conversion-widths.md) cover 112 cases
+performance. The published serial function benchmark covers 92 entries in 536 cases.
+[Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
-has 16,919 checks with SIMD enabled and disabled; inventory checks alone do not
+passes 29,425 checks in each SIMD mode on Windows and Linux; inventory checks alone do not
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
@@ -516,7 +517,7 @@ zero/subnormal ranges, overflowing typed window products and extreme arithmetic
 use explicit upstream fallback. Window metadata errors preserve upstream
 exception types, including NumPy's unsigned padding-width rejection.
 The [local threshold report](benchmarks/local-threshold-parameters.md) covers
-256 comparisons across all 11 native input types, window shapes/sizes, layouts,
+128 one-worker comparisons across all 11 native input types, window shapes/sizes, layouts,
 N-D volumes and scalar-promotion cases. Numerical parity is checked before timing.
 
 Alpha compositing uses SIMD with strict floating-point order and optional global workers.
@@ -526,7 +527,7 @@ unsupported alpha array casts, signaling NaNs in alpha/background metadata, and 
 explicit compatibility fallback. Native RGBA requires native byte order and finite
 input with magnitude at most `sqrt(finfo(input.dtype).max)/2`; quiet-NaN backgrounds follow upstream behavior.
 
-The [alpha report](benchmarks/alpha-parameters.md) records 184 one-worker
+The [alpha report](benchmarks/alpha-parameters.md) records 208 one-worker
 comparisons against original scikit-image. The [fixed grayscale experiment](benchmarks/alpha-tuning.md)
 preserves before/after and confirmation timings for reversed, stepped and endian storage.
 
@@ -549,3 +550,25 @@ Native dtype checks compare equivalent NumPy descriptors by storage semantics,
 so views created with `dtype.newbyteorder('=')` can swap backends consistently.
 The per-function descriptor suite also checks warnings, copy/identity behavior
 and rejection of opposite-endian data by typed low-level interfaces.
+
+
+Gaussian-family image arithmetic uses runtime-dispatched SIMD and the global
+optional worker limit. Convolution starts with the center coefficient and adds
+symmetric pairs in SciPy order, accumulating in double precision and rounding
+to the output dtype after each axis. Half input uses float32 working storage.
+Small NumPy coefficient arrays preserve typed-sigma rounding; image convolution,
+raw/normalized conversion, difference and sharpening run in C++.
+
+Explicit Gaussian float32/64 output buffers retain identity, including supported
+strided and endian storage. Partial input/output aliases and self-overlapping
+outputs require explicit fallback. Difference of Gaussians and unsharp masking
+currently require finite working ranges without exceptional arithmetic; unsupported
+precision, arithmetic and channel-loop cases also report fallback.
+
+The [Gaussian-family report](benchmarks/gaussian-parameters.md) covers 225
+one-worker comparisons against original scikit-image. The
+[fixed interior-span experiment](benchmarks/gaussian-tuning.md) preserves the
+initial implementation, optimized results and an independent confirmation,
+including slower observations. The native C++ interface in
+`include/skimagexx/gaussian_nd.hpp` accepts ordered axis kernels and caller-owned
+output buffers without requiring Python.
