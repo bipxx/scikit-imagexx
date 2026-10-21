@@ -372,7 +372,7 @@ PYBIND11_MODULE(_core, m) {
     },py::arg("image"),py::arg("dtype"));
     m.def("histogram_u8", [](py::array image, bool full_range, bool normalize, bool cumulative) -> py::tuple {
         if (!image.size()) throw py::value_error("image must be nonempty");
-        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("histogram requires uint8");
+        if (!dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) throw py::type_error("histogram requires uint8");
         auto input = py::array_t<std::uint8_t,py::array::c_style>::ensure(image);
         const auto* p = input.data(); const auto n = static_cast<std::size_t>(input.size());
         std::array<std::uint64_t,256> counts;
@@ -400,7 +400,7 @@ PYBIND11_MODULE(_core, m) {
     },py::arg("image"),py::arg("full_range")=false,py::arg("normalize")=false,py::arg("cumulative")=false);
     m.def("equalize_hist", [](py::array image) {
         if (!image.size()) throw py::value_error("image must be nonempty");
-        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("equalize_hist requires uint8");
+        if (!dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) throw py::type_error("equalize_hist requires uint8");
         return execute<std::uint8_t,false,true>(image,[](const auto* p, auto* out, auto h, auto w) {
             skimagexx::equalize_hist_into(p,out,h,w);
         });
@@ -425,12 +425,12 @@ PYBIND11_MODULE(_core, m) {
     m.def("rescale", [](py::array image, double imin, double imax, double omin, double omax, bool float_output) {
         if (!image.size()) throw py::value_error("image must be nonempty");
         auto fn = [=](const auto* p, auto* out, auto h, auto w) { skimagexx::rescale_into(p,out,h,w,imin,imax,omin,omax); };
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) {
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) {
             if (float_output) return execute<std::uint8_t,false,true>(image,fn);
             return execute<std::uint8_t,true,true>(image,fn);
         }
-        if (image.dtype().is(py::dtype::of<float>())) return execute<float,true,true>(image,fn);
-        if (image.dtype().is(py::dtype::of<double>())) return execute<double,true,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return execute<float,true,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return execute<double,true,true>(image,fn);
         throw py::type_error("unsupported dtype");
     },py::arg("image"),py::arg("imin"),py::arg("imax"),py::arg("omin"),py::arg("omax"),py::arg("float_output")=false);
     m.def("exposure", [](py::array image, const std::string& name, double parameter, double gain, bool inverse) {
@@ -441,9 +441,9 @@ PYBIND11_MODULE(_core, m) {
         else if (name == "sigmoid") transform = skimagexx::ExposureTransform::sigmoid;
         else throw py::value_error("unknown exposure transform");
         auto fn = [=](const auto* p, auto* out, auto h, auto w) { skimagexx::exposure_into(p,out,h,w,transform,parameter,gain,inverse); };
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return execute<std::uint8_t,true,true>(image,fn);
-        if (image.dtype().is(py::dtype::of<float>())) return execute<float,true,true>(image,fn);
-        if (image.dtype().is(py::dtype::of<double>())) return execute<double,true,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return execute<std::uint8_t,true,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return execute<float,true,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return execute<double,true,true>(image,fn);
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"),py::arg("name"),py::arg("parameter"),py::arg("gain"),py::arg("inverse")=false);
     m.def("histogram_edges", [](py::array image,py::array edges) -> py::array {
@@ -460,8 +460,8 @@ PYBIND11_MODULE(_core, m) {
             py::array_t<std::int64_t> output(py::ssize_t(counts.size()));
             std::copy(counts.begin(),counts.end(),output.mutable_data());return output;
         };
-        if(image.dtype().is(py::dtype::of<float>()))return run(float{});
-        if(image.dtype().is(py::dtype::of<double>()))return run(double{});
+        if(dtype_matches(image.dtype(),py::dtype::of<float>()))return run(float{});
+        if(dtype_matches(image.dtype(),py::dtype::of<double>()))return run(double{});
         throw py::type_error("floating image required");
     });
     m.def("threshold_logarithms", [](py::array_t<float,py::array::c_style|py::array::forcecast> values,bool numpy_log) {
@@ -542,9 +542,9 @@ PYBIND11_MODULE(_core, m) {
         throw py::type_error("prepared real image required");
     });
     m.def("edge_apply_mask", [](py::array image,py::array mask) {
-        const bool single=image.dtype().is(py::dtype::of<float>());
-        if((!single && !image.dtype().is(py::dtype::of<double>())) || !(image.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>() || !image.writeable())throw py::type_error("contiguous writable floating output required");
-        if(!mask.dtype().is(py::dtype::of<bool>()) || mask.ndim()!=image.ndim())throw py::type_error("broadcast boolean mask required");
+        const bool single=dtype_matches(image.dtype(),py::dtype::of<float>());
+        if((!single && !dtype_matches(image.dtype(),py::dtype::of<double>())) || !(image.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>() || !image.writeable())throw py::type_error("contiguous writable floating output required");
+        if(!dtype_matches(mask.dtype(),py::dtype::of<bool>()) || mask.ndim()!=image.ndim())throw py::type_error("broadcast boolean mask required");
         for(py::ssize_t axis=0;axis<image.ndim();++axis)if(image.shape(axis)!=mask.shape(axis))throw py::value_error("mask shape mismatch");
         const auto layout=raw_rows(image,&mask,int(image.ndim()));
         {py::gil_scoped_release release;skimagexx::edge_mask_rows_into(image.mutable_data(),single,static_cast<const unsigned char*>(mask.data()),layout.rows,layout.columns,layout.alpha.data(),layout.alpha_step);}
@@ -589,7 +589,7 @@ PYBIND11_MODULE(_core, m) {
     });
     m.def("threshold_otsu_result", [](py::array image) {
         shape(image,false);
-        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");
+        if (!dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");
         auto a = py::array_t<std::uint8_t,py::array::c_style>::ensure(image);
         bool constant = false;
         std::uint8_t result;
@@ -609,9 +609,9 @@ PYBIND11_MODULE(_core, m) {
     m.def("invert", [](py::array image, bool signed_float) {
         shape(image,false);
         auto fn = [=](const auto* p, auto* out, auto h, auto w) { skimagexx::invert_into(p,out,h,w,signed_float); };
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return execute<std::uint8_t,true>(image,fn);
-        if (image.dtype().is(py::dtype::of<float>())) return execute<float,true>(image,fn);
-        if (image.dtype().is(py::dtype::of<double>())) return execute<double,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return execute<std::uint8_t,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return execute<float,true>(image,fn);
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return execute<double,true>(image,fn);
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"),py::arg("signed_float")=false);
     m.def("gray2rgb", [](py::array image) -> py::array {
@@ -627,9 +627,9 @@ PYBIND11_MODULE(_core, m) {
             { py::gil_scoped_release release; skimagexx::gray2rgb_into(p,out,h,w); }
             return output;
         };
-        if (image.dtype().is(py::dtype::of<float>())) return make(float{});
-        if (image.dtype().is(py::dtype::of<double>())) return make(double{});
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return make(std::uint8_t{});
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return make(float{});
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return make(double{});
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return make(std::uint8_t{});
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"));
     m.def("threshold_mean", [](py::array image) {
@@ -643,9 +643,9 @@ PYBIND11_MODULE(_core, m) {
             py::gil_scoped_release release;
             return skimagexx::threshold_mean(p,h,w);
         };
-        if (image.dtype().is(py::dtype::of<float>())) return mean(float{});
-        if (image.dtype().is(py::dtype::of<double>())) return mean(double{});
-        if (image.dtype().is(py::dtype::of<std::uint8_t>())) return mean(std::uint8_t{});
+        if (dtype_matches(image.dtype(),py::dtype::of<float>())) return mean(float{});
+        if (dtype_matches(image.dtype(),py::dtype::of<double>())) return mean(double{});
+        if (dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) return mean(std::uint8_t{});
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"));
     m.def("set_num_threads", &skimagexx::set_num_threads, py::arg("count"),
@@ -676,7 +676,7 @@ PYBIND11_MODULE(_core, m) {
     },py::arg("image"));
     m.def("threshold_otsu", [](py::array image) {
         shape(image,false);
-        if (!image.dtype().is(py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");
+        if (!dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>())) throw py::type_error("threshold_otsu requires uint8");
         auto a = py::array_t<std::uint8_t,py::array::c_style>::ensure(image);
         const auto* data = a.data();
         const auto h = static_cast<std::size_t>(a.shape(0)), w = static_cast<std::size_t>(a.shape(1));
