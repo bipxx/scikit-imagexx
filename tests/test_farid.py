@@ -252,3 +252,17 @@ def test_high_dimensional_kernel_plans(shape,dtype,axis):
 @pytest.mark.parametrize('axis',[None,0,-1,(2,0)])
 def test_volume_constant_cancellation(dtype,level,axis):
     check('farid',np.full((3,5,7),level,dtype=dtype),axis=axis)
+
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('layout',['contiguous','fortran','reversed','endian'])
+def test_empty_axes_zero_allocation_contract(dtype,layout):
+    image=sample(dtype,(17,19),530)
+    if layout=='fortran':image=np.asfortranarray(image)
+    elif layout=='reversed':image=image[::-1,::-1]
+    elif layout=='endian':image=image.astype(image.dtype.newbyteorder('>'))
+    actual,expected=check('farid',image,axis=(),mode='unused-mode',cval=None)
+    assert actual.flags.owndata==expected.flags.owndata
+    assert actual.flags.c_contiguous==expected.flags.c_contiguous
+    assert actual.flags.writeable==expected.flags.writeable
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))

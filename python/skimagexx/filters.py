@@ -385,17 +385,23 @@ def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
         border=_FARID_MODES[mode];constant=float(cval)
     else:border=0;constant=0.0
     if len(axes)>1 and image.dtype.kind=='f' and np.geterr()['under']!='ignore':return forwarded()
-    native=image if image.dtype.isnative else _core.edge_native(image)
-    if native.dtype==np.float16:prepared=_core.edge_half(native)
-    elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
-    else:prepared=_core.convert(native,np.dtype(np.float64))[0]
-    if axes and border==1 and abs(constant)>_SMALL_EDGE_MAX[np.float32 if prepared.dtype==np.float32 else np.float64]/max(1,len(axes))**.5:return forwarded()
-    if axes and image.dtype.kind=='f' and prepared.size:
-        if not prepared.flags.c_contiguous or not prepared.flags.aligned:prepared=prepared.copy(order='C')
-        low,high=_core.intensity_bounds(prepared)
-        if not (_isfinite(low) and _isfinite(high)):return forwarded()
-        if max(abs(low),abs(high),abs(constant))>_SMALL_EDGE_MAX[prepared.dtype.type]/max(1,len(axes))**.5:return forwarded()
-    result=_core.farid(prepared,axes,border,constant,directional)
+    if not axes and image.dtype.type!=np.float16:
+        # No convolution or image arithmetic is requested. Use NumPy's owned
+        # zero allocation (which can use zeroed pages), and avoid reading/copying
+        # input storage solely to produce zeros. Signed scalar errors are above.
+        result=np.zeros(image.shape,dtype=np.float32 if image.dtype.type==np.float32 else np.float64)
+    else:
+        native=image if image.dtype.isnative else _core.edge_native(image)
+        if native.dtype==np.float16:prepared=_core.edge_half(native)
+        elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
+        else:prepared=_core.convert(native,np.dtype(np.float64))[0]
+        if axes and border==1 and abs(constant)>_SMALL_EDGE_MAX[np.float32 if prepared.dtype==np.float32 else np.float64]/max(1,len(axes))**.5:return forwarded()
+        if axes and image.dtype.kind=='f' and prepared.size:
+            if not prepared.flags.c_contiguous or not prepared.flags.aligned:prepared=prepared.copy(order='C')
+            low,high=_core.intensity_bounds(prepared)
+            if not (_isfinite(low) and _isfinite(high)):return forwarded()
+            if max(abs(low),abs(high),abs(constant))>_SMALL_EDGE_MAX[prepared.dtype.type]/max(1,len(axes))**.5:return forwarded()
+        result=_core.farid(prepared,axes,border,constant,directional)
     if mask is not None:
         if mask.dtype.type==np.float16 and mask.size:raise RuntimeError('data type not supported')
         if mask.ndim==0:eroded=np.asarray(bool(mask),dtype=bool)
