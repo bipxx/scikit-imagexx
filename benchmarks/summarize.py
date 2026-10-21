@@ -160,6 +160,12 @@ def main():
               'before division; strong window/weight/range metadata retains upstream promotion. '
               'The parameter report includes all eleven input types, noncontiguous layouts, '
               'large/anisotropic windows and singleton-depth N-D volumes.','',
+              'RGBA compositing fuses integer normalization, blending and clipping with strict SIMD arithmetic. '
+              'Grayscale RGB/RGBA expansion replicates raw storage and normalizes endian components directly. '
+              'Both use physical stride order and partition pixels across the global worker limit; '
+              'the alpha report includes planar, Fortran, negative and stepped layouts plus background/alpha options. '
+              'The [fixed grayscale expansion experiment](alpha-tuning.md) retains initial, optimized and '
+              'confirmation observations separately from this aggregate.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
@@ -168,7 +174,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all ten reports, including this summary. '
+              'to rebuild and reproduce all eleven reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

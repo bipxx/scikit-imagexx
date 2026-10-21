@@ -42,7 +42,7 @@ binary, skewed, and late-outlier input distributions. The older reports are
 historical source snapshots and should not be mixed as simultaneous samples.
 
 The current function benchmark covers 81 native image functions, two metadata
-helpers, and 964 per-function performance cases. The suite now has 20033 checks in both SIMD
+helpers, and 482 one-worker per-function performance cases. The suite now has 20081 checks in both SIMD
 modes; 450 inventory availability/signature checks still do not establish
 numerical parity for unported functions. `exposure-parameters.json` records
 24 additional one-thread measurements with non-default options. All checked-in
@@ -118,9 +118,9 @@ pixels without reassociating each cumulative sequence. All 11 supported real
 input types are included; additional cases cover anisotropic windows, size 127,
 Fortran/reversed/stepped storage, singleton-depth volumes and strong scalars.
 
-Alpha-family validation adds 972 dedicated parity cases and direct C++ byte-copy,
+Alpha-family validation adds 1020 dedicated parity cases and direct C++ byte-copy,
 compositing, reversed-stride and empty-buffer checks. `alpha-parameters.json`
-records 368 comparisons (184 with one worker) against original scikit-image,
+records 184 one-worker comparisons against original scikit-image,
 covering all eleven compositing numeric dtypes, float16 grayscale expansion,
 planar/Fortran/negative/stepped strides, endian storage, backgrounds and alpha
 broadcasting. `src/simd_alpha_avx2.cpp` uses the same runtime-dispatched AVX2
