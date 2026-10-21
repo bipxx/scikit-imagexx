@@ -601,3 +601,6 @@ allocation. The [window-query benchmark](benchmarks/integrate-parameters.md)
 covers 144 workloads, including single-window overhead and 65,539-window batches.
 `include/skimagexx/integrate.hpp` exposes the same corner calculation for C++
 callers with caller-owned output storage. The corner count grows as 2**ndim.
+The [coordinate experiment](benchmarks/integrate-metadata-tuning.md) preserves
+paired baseline/current measurements, an independent confirmation, diagnostic
+profiles, and all slower results against the preceding C++ version.

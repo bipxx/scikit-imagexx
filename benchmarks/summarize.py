@@ -205,7 +205,9 @@ def main():
               'Integral-window queries read only selected corners through the original byte strides. '
               'They preserve raw scalar-to-double conversion and ordered corner additions; SIMD '
               'operates across independent windows. The report includes single-window overhead '
-              'and large batches without charging either backend for table construction.','',
+              'and large batches without charging either backend for table construction. The '
+              '[coordinate experiment](integrate-metadata-tuning.md) retains paired baseline/current '
+              'and independent confirmation measurements, including adverse old/new results.','',
               'Measurements use ordinary system load without CPU affinity or frequency locking. '
               'Small differences near 1x can change between runs. These are measured comparisons '
               'on this machine, not universal speed guarantees. CI runs parity and benchmark smoke '
