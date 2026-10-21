@@ -1,0 +1,3952 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-21T07:32:06.799887+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "source_sha256": "718948c5461338d7bca310bbf7837e98f653860d4e9300e13474707175c570f4",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "command": [
+      "benchmarks/distance.py"
+    ]
+  },
+  "results": [
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.77805,
+      "cpp_ms": 0.6046466666666667,
+      "speedup": 4.594501471934022,
+      "samples_ms": [
+        [
+          3.372575,
+          2.84915,
+          2.6811,
+          2.77805,
+          2.3552,
+          3.1772,
+          2.57945
+        ],
+        [
+          0.6354333333333334,
+          0.68862,
+          0.5964933333333333,
+          0.5891733333333333,
+          0.63692,
+          0.6046466666666667,
+          0.5850466666666666
+        ]
+      ],
+      "loops": [
+        4,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 4,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.58835,
+      "cpp_ms": 0.20003714285714286,
+      "speedup": 17.938418579406683,
+      "samples_ms": [
+        [
+          3.342125,
+          3.58835,
+          4.982075,
+          4.527775,
+          3.0936,
+          2.8704,
+          4.008475
+        ],
+        [
+          0.2881228571428572,
+          0.2046257142857143,
+          0.19125142857142857,
+          0.18409142857142857,
+          0.18152285714285712,
+          0.20003714285714286,
+          0.31552857142857144
+        ]
+      ],
+      "loops": [
+        4,
+        35
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.342,
+      "cpp_ms": 0.5723117647058824,
+      "speedup": 4.092175182181657,
+      "samples_ms": [
+        [
+          3.0941,
+          2.0381666666666667,
+          2.342,
+          2.8045666666666667,
+          2.585,
+          2.0976,
+          1.9611
+        ],
+        [
+          0.5891470588235294,
+          0.5583882352941176,
+          0.5723117647058824,
+          0.6069764705882353,
+          0.6700117647058824,
+          0.564529411764706,
+          0.5587705882352941
+        ]
+      ],
+      "loops": [
+        3,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 4,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.09664,
+      "cpp_ms": 0.2128925,
+      "speedup": 14.545557029956433,
+      "samples_ms": [
+        [
+          4.08968,
+          2.50744,
+          2.66276,
+          3.45694,
+          5.20596,
+          2.50362,
+          3.09664
+        ],
+        [
+          0.19487,
+          0.225785,
+          0.193965,
+          0.2251975,
+          0.2128925,
+          0.207735,
+          0.222605
+        ]
+      ],
+      "loops": [
+        5,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 4.7078,
+      "cpp_ms": 1.450811111111111,
+      "speedup": 3.2449434415997183,
+      "samples_ms": [
+        [
+          5.49475,
+          5.7773,
+          4.98895,
+          4.32965,
+          4.02175,
+          4.7078,
+          4.0387
+        ],
+        [
+          1.5696222222222223,
+          1.5042666666666666,
+          1.450811111111111,
+          1.738388888888889,
+          1.401211111111111,
+          1.4100555555555554,
+          1.3539333333333332
+        ]
+      ],
+      "loops": [
+        2,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 4,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 5.84215,
+      "cpp_ms": 1.3660125,
+      "speedup": 4.276791024972319,
+      "samples_ms": [
+        [
+          7.6343,
+          5.39925,
+          8.76515,
+          4.34115,
+          5.84215,
+          4.87865,
+          6.1178
+        ],
+        [
+          1.73925,
+          2.277,
+          1.2944875,
+          1.0360375,
+          1.18705,
+          1.3660125,
+          1.37685
+        ]
+      ],
+      "loops": [
+        2,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 1,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.3665,
+      "cpp_ms": 1.1845,
+      "speedup": 2.8421274799493452,
+      "samples_ms": [
+        [
+          3.3739,
+          3.3665,
+          3.38705,
+          5.121675,
+          3.2022,
+          1.558675,
+          1.4887
+        ],
+        [
+          1.4626,
+          1.1845,
+          2.9481,
+          0.99505,
+          4.7975,
+          0.8804,
+          0.61025
+        ]
+      ],
+      "loops": [
+        4,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 4,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.1806571428571426,
+      "cpp_ms": 0.21238857142857143,
+      "speedup": 14.975651097718467,
+      "samples_ms": [
+        [
+          1.6928,
+          1.4965714285714287,
+          1.9369142857142856,
+          3.4135142857142857,
+          3.5676428571428573,
+          4.4787,
+          3.1806571428571426
+        ],
+        [
+          0.17483714285714286,
+          0.17100857142857143,
+          0.25740857142857143,
+          0.21168571428571428,
+          0.21238857142857143,
+          0.3465371428571428,
+          0.24016857142857143
+        ]
+      ],
+      "loops": [
+        7,
+        35
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 1,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 5.06325,
+      "cpp_ms": 0.73301,
+      "speedup": 6.907477387757329,
+      "samples_ms": [
+        [
+          7.8591,
+          4.7499,
+          4.87955,
+          4.3505,
+          5.06325,
+          6.22945,
+          6.7807
+        ],
+        [
+          0.58216,
+          0.567345,
+          0.566605,
+          0.73301,
+          0.75464,
+          0.88648,
+          0.8282
+        ]
+      ],
+      "loops": [
+        2,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint8",
+      "second_dtype": "uint8",
+      "size": 512,
+      "threads": 4,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 6.5007,
+      "cpp_ms": 0.3895,
+      "speedup": 16.689858793324774,
+      "samples_ms": [
+        [
+          6.55135,
+          6.0603,
+          7.6549,
+          4.87525,
+          6.2927,
+          8.1868,
+          6.5007
+        ],
+        [
+          0.3895,
+          0.5148,
+          0.21544117647058822,
+          0.33174117647058826,
+          0.24877058823529413,
+          0.5300588235294118,
+          0.8281352941176471
+        ]
+      ],
+      "loops": [
+        2,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "uint8",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 37.0465,
+      "cpp_ms": 2.139,
+      "speedup": 17.319541841982236,
+      "samples_ms": [
+        [
+          39.216,
+          35.7562,
+          37.0465,
+          37.0753,
+          35.4744,
+          38.4233,
+          36.1413
+        ],
+        [
+          2.04948,
+          2.3499,
+          2.139,
+          2.09708,
+          2.07712,
+          2.41406,
+          2.20394
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "uint8",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 36.7021,
+      "cpp_ms": 0.7569863636363636,
+      "speedup": 48.48449293550382,
+      "samples_ms": [
+        [
+          41.1743,
+          33.9464,
+          33.9999,
+          33.8908,
+          36.7021,
+          37.3558,
+          37.2532
+        ],
+        [
+          1.0664090909090909,
+          0.7267181818181818,
+          0.7977181818181818,
+          0.7191090909090909,
+          0.6166272727272727,
+          1.15735,
+          0.7569863636363636
+        ]
+      ],
+      "loops": [
+        1,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 44.3422,
+      "cpp_ms": 6.37765,
+      "speedup": 6.952749053334692,
+      "samples_ms": [
+        [
+          47.3512,
+          44.3422,
+          44.6122,
+          48.6407,
+          44.0359,
+          43.7259,
+          44.2108
+        ],
+        [
+          6.09685,
+          6.39785,
+          6.22805,
+          6.47415,
+          5.8997,
+          6.37765,
+          6.7526
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 45.8846,
+      "cpp_ms": 1.784,
+      "speedup": 25.72006726457399,
+      "samples_ms": [
+        [
+          45.8846,
+          45.91,
+          42.9417,
+          46.3398,
+          46.993,
+          41.5805,
+          45.7131
+        ],
+        [
+          2.07648,
+          1.784,
+          1.97106,
+          1.71536,
+          1.73342,
+          1.83194,
+          1.73762
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 2.112893193739751e-15,
+      "reference_ms": 48.3449,
+      "cpp_ms": 6.2593,
+      "speedup": 7.7236911475724135,
+      "samples_ms": [
+        [
+          52.9112,
+          48.3449,
+          46.7532,
+          46.6404,
+          49.0854,
+          48.0611,
+          48.5997
+        ],
+        [
+          7.30895,
+          6.0893,
+          6.85245,
+          6.25245,
+          6.11335,
+          6.42975,
+          6.2593
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 2.112893193739751e-15,
+      "reference_ms": 50.3092,
+      "cpp_ms": 1.8031333333333333,
+      "speedup": 27.900987170481013,
+      "samples_ms": [
+        [
+          50.3092,
+          50.8791,
+          50.918,
+          49.3838,
+          49.0786,
+          50.3447,
+          46.1963
+        ],
+        [
+          2.3632333333333335,
+          2.005333333333333,
+          1.8031333333333333,
+          1.7447,
+          1.6582,
+          1.8048333333333333,
+          1.7171333333333332
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.67852,
+      "cpp_ms": 0.7128272727272728,
+      "speedup": 3.757600336687454,
+      "samples_ms": [
+        [
+          3.98402,
+          2.46554,
+          2.5041,
+          2.39238,
+          2.94508,
+          2.67852,
+          2.72256
+        ],
+        [
+          0.7128272727272728,
+          0.9742181818181818,
+          0.6659,
+          0.6325454545454546,
+          0.803690909090909,
+          0.7118545454545454,
+          0.7189545454545454
+        ]
+      ],
+      "loops": [
+        5,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.76955,
+      "cpp_ms": 0.403275,
+      "speedup": 9.347343624077864,
+      "samples_ms": [
+        [
+          3.75195,
+          2.8872,
+          2.95025,
+          4.24545,
+          4.53685,
+          3.9991,
+          3.76955
+        ],
+        [
+          0.612375,
+          0.54771875,
+          0.45290625,
+          0.28013125,
+          0.30005625,
+          0.403275,
+          0.31505
+        ]
+      ],
+      "loops": [
+        2,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.084525,
+      "cpp_ms": 0.7649666666666666,
+      "speedup": 4.0322345200226595,
+      "samples_ms": [
+        [
+          2.892275,
+          3.084525,
+          3.201925,
+          3.043075,
+          3.518225,
+          3.070925,
+          3.19995
+        ],
+        [
+          0.7239444444444445,
+          1.177111111111111,
+          0.6231444444444445,
+          1.015388888888889,
+          0.9984,
+          0.6218111111111111,
+          0.7649666666666666
+        ]
+      ],
+      "loops": [
+        4,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.27226,
+      "cpp_ms": 0.3969,
+      "speedup": 8.244545225497607,
+      "samples_ms": [
+        [
+          3.12254,
+          3.1689,
+          2.8814,
+          3.27226,
+          3.30922,
+          3.57732,
+          3.68398
+        ],
+        [
+          0.5579111111111111,
+          0.36343333333333333,
+          0.34357777777777776,
+          0.3969,
+          0.40857777777777776,
+          0.36644444444444446,
+          0.7233333333333334
+        ]
+      ],
+      "loops": [
+        5,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.1444272727272726,
+      "cpp_ms": 0.5712153846153846,
+      "speedup": 2.0034951850917806,
+      "samples_ms": [
+        [
+          1.0241818181818183,
+          1.3311636363636365,
+          1.3418454545454546,
+          1.0333727272727273,
+          1.0431454545454546,
+          1.1444272727272726,
+          1.1547909090909092
+        ],
+        [
+          0.5712153846153846,
+          0.6096615384615385,
+          0.3860923076923077,
+          0.5173384615384615,
+          0.6436076923076922,
+          0.6244769230769232,
+          0.47166923076923073
+        ]
+      ],
+      "loops": [
+        11,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.086711111111111,
+      "cpp_ms": 0.154848,
+      "speedup": 7.017921517301553,
+      "samples_ms": [
+        [
+          1.170711111111111,
+          0.9486333333333333,
+          1.086711111111111,
+          1.2477666666666667,
+          0.9650444444444445,
+          1.2418777777777779,
+          0.9473333333333334
+        ],
+        [
+          0.154848,
+          0.185984,
+          0.159356,
+          0.143612,
+          0.172768,
+          0.13992,
+          0.142156
+        ]
+      ],
+      "loops": [
+        9,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "uint8",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 0.0009417999999999999,
+      "cpp_ms": 0.0009233183856502242,
+      "speedup": 1.0200165128703254,
+      "samples_ms": [
+        [
+          0.0009417999999999999,
+          0.0006402000000000001,
+          0.001323,
+          0.0016894000000000002,
+          0.0020061,
+          0.0008981,
+          0.0007324
+        ],
+        [
+          0.0006838565022421525,
+          0.001092152466367713,
+          0.000582847533632287,
+          0.0009233183856502242,
+          0.0046402466367713,
+          0.0007004484304932736,
+          0.002034304932735426
+        ]
+      ],
+      "loops": [
+        1000,
+        892
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "uint8",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 0.0007434272300469484,
+      "cpp_ms": 0.0008702634880803011,
+      "speedup": 0.854255337871133,
+      "samples_ms": [
+        [
+          0.0006348591549295775,
+          0.0012679577464788734,
+          0.0005711267605633802,
+          0.0012639671361502347,
+          0.0005733568075117371,
+          0.0007434272300469484,
+          0.001027699530516432
+        ],
+        [
+          0.0007913425345043915,
+          0.0008702634880803011,
+          0.0012939774153074026,
+          0.001090840652446675,
+          0.0005836888331242157,
+          0.0006480552070263489,
+          0.0010767879548306148
+        ]
+      ],
+      "loops": [
+        852,
+        797
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.876025,
+      "cpp_ms": 0.253455,
+      "speedup": 3.4563334714249083,
+      "samples_ms": [
+        [
+          0.8643625,
+          0.722775,
+          0.9246125,
+          0.64775,
+          0.876025,
+          2.2874125,
+          1.1511875
+        ],
+        [
+          0.26195,
+          0.248195,
+          0.25784,
+          0.253455,
+          0.198155,
+          0.5007,
+          0.229215
+        ]
+      ],
+      "loops": [
+        8,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.3171,
+      "cpp_ms": 0.20069166666666666,
+      "speedup": 6.562803637420587,
+      "samples_ms": [
+        [
+          3.37345,
+          1.228025,
+          1.3858,
+          1.170725,
+          1.709875,
+          1.3171,
+          1.144525
+        ],
+        [
+          0.2894458333333333,
+          0.2141375,
+          0.12987916666666668,
+          0.23900833333333335,
+          0.14878333333333335,
+          0.182325,
+          0.20069166666666666
+        ]
+      ],
+      "loops": [
+        4,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.527575,
+      "cpp_ms": 0.2870294117647059,
+      "speedup": 1.838052054513782,
+      "samples_ms": [
+        [
+          0.4907833333333333,
+          0.5198416666666666,
+          0.7588083333333334,
+          0.527575,
+          0.690875,
+          0.6138416666666666,
+          0.4634416666666667
+        ],
+        [
+          0.2870294117647059,
+          0.2595176470588235,
+          0.49321764705882354,
+          0.2908294117647059,
+          0.29201764705882355,
+          0.26233529411764706,
+          0.2508529411764706
+        ]
+      ],
+      "loops": [
+        12,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.486165,
+      "cpp_ms": 0.2276027777777778,
+      "speedup": 2.1360240184532016,
+      "samples_ms": [
+        [
+          0.5101,
+          0.64467,
+          0.536235,
+          0.431205,
+          0.434275,
+          0.486165,
+          0.43994
+        ],
+        [
+          0.13600277777777778,
+          0.29043888888888886,
+          0.2276027777777778,
+          0.29694444444444446,
+          0.20544722222222223,
+          0.25804444444444447,
+          0.17818888888888887
+        ]
+      ],
+      "loops": [
+        20,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.238675,
+      "cpp_ms": 2.02975,
+      "speedup": 0.6102598842221949,
+      "samples_ms": [
+        [
+          1.3151625,
+          1.0499125,
+          1.758075,
+          1.2768375,
+          1.176425,
+          1.238675,
+          1.11825
+        ],
+        [
+          2.01435,
+          1.36825,
+          3.21885,
+          2.578,
+          2.7023,
+          2.02975,
+          1.95655
+        ]
+      ],
+      "loops": [
+        8,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.7010666666666667,
+      "cpp_ms": 1.4519555555555554,
+      "speedup": 1.1715693776975116,
+      "samples_ms": [
+        [
+          1.4380333333333333,
+          1.6050333333333333,
+          1.7010666666666667,
+          2.2144666666666666,
+          1.8184,
+          2.5206,
+          1.1984
+        ],
+        [
+          1.638711111111111,
+          1.4519555555555554,
+          1.1767222222222222,
+          1.6351333333333333,
+          1.1834555555555555,
+          1.6087444444444445,
+          1.374011111111111
+        ]
+      ],
+      "loops": [
+        3,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.76594,
+      "cpp_ms": 0.20399,
+      "speedup": 3.754791901563802,
+      "samples_ms": [
+        [
+          1.81512,
+          0.95102,
+          0.76594,
+          0.74086,
+          0.62256,
+          0.69852,
+          0.76652
+        ],
+        [
+          0.20332333333333336,
+          0.20002333333333333,
+          0.2545,
+          0.21470333333333333,
+          0.20399,
+          0.18298,
+          0.24989666666666666
+        ]
+      ],
+      "loops": [
+        5,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.7997785714285714,
+      "cpp_ms": 0.21490645161290323,
+      "speedup": 3.7215195980675335,
+      "samples_ms": [
+        [
+          0.9745357142857143,
+          0.9804642857142857,
+          0.7997785714285714,
+          0.7041285714285714,
+          0.7374142857142857,
+          0.94225,
+          0.7115214285714285
+        ],
+        [
+          0.17939032258064516,
+          0.3022064516129032,
+          0.21490645161290323,
+          0.1649741935483871,
+          0.2316032258064516,
+          0.2720129032258064,
+          0.17489354838709678
+        ]
+      ],
+      "loops": [
+        14,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.8235333333333333,
+      "cpp_ms": 0.3394538461538461,
+      "speedup": 2.4260539176807394,
+      "samples_ms": [
+        [
+          0.6928888888888889,
+          0.7723777777777777,
+          0.7927111111111111,
+          1.133488888888889,
+          0.8663777777777778,
+          0.8235333333333333,
+          1.6957555555555555
+        ],
+        [
+          0.3394538461538461,
+          0.2954538461538461,
+          0.5777615384615385,
+          0.3182538461538461,
+          0.3173615384615384,
+          0.3428,
+          0.3424
+        ]
+      ],
+      "loops": [
+        9,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.06665,
+      "cpp_ms": 0.2912692307692307,
+      "speedup": 3.6620757955895957,
+      "samples_ms": [
+        [
+          0.82335,
+          1.06665,
+          1.26038,
+          0.72802,
+          1.15754,
+          1.39789,
+          0.77055
+        ],
+        [
+          0.5554461538461539,
+          0.28546923076923075,
+          0.5118692307692307,
+          0.39043846153846157,
+          0.17773846153846154,
+          0.2912692307692307,
+          0.2739538461538461
+        ]
+      ],
+      "loops": [
+        10,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 33.2294,
+      "cpp_ms": 0.41388571428571425,
+      "speedup": 80.28641446914263,
+      "samples_ms": [
+        [
+          35.7882,
+          33.6869,
+          33.2294,
+          33.4431,
+          31.8049,
+          31.7485,
+          31.8324
+        ],
+        [
+          0.41388571428571425,
+          0.4138,
+          0.38552857142857144,
+          0.42392857142857143,
+          0.4347952380952381,
+          0.43846666666666667,
+          0.3863714285714286
+        ]
+      ],
+      "loops": [
+        1,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 33.8836,
+      "cpp_ms": 0.2718833333333333,
+      "speedup": 124.62551339422548,
+      "samples_ms": [
+        [
+          35.4973,
+          33.8836,
+          34.325,
+          33.8117,
+          34.4225,
+          32.0867,
+          33.6528
+        ],
+        [
+          0.2394,
+          0.397075,
+          0.2718833333333333,
+          0.14943333333333333,
+          0.2733611111111111,
+          0.4475444444444444,
+          0.15845277777777778
+        ]
+      ],
+      "loops": [
+        1,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 29.6656,
+      "cpp_ms": 5.33915,
+      "speedup": 5.55624022550406,
+      "samples_ms": [
+        [
+          31.1441,
+          29.6656,
+          28.6888,
+          31.0833,
+          29.2518,
+          31.0945,
+          28.3058
+        ],
+        [
+          6.38975,
+          5.1666,
+          6.58965,
+          5.33915,
+          7.18945,
+          5.0862,
+          5.1512
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.1920928955078125e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 29.4399,
+      "cpp_ms": 2.4410333333333334,
+      "speedup": 12.060425229752427,
+      "samples_ms": [
+        [
+          28.5552,
+          28.9273,
+          32.7068,
+          29.4399,
+          30.467,
+          30.0401,
+          29.2336
+        ],
+        [
+          1.6258666666666668,
+          2.1201666666666665,
+          3.3200666666666665,
+          3.0162333333333335,
+          3.2033666666666667,
+          1.4405666666666668,
+          2.4410333333333334
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "route_rgb_max_abs_error": 1.132891469524111e-06,
+      "reference_ms": 43.1171,
+      "cpp_ms": 5.40015,
+      "speedup": 7.984426358527078,
+      "samples_ms": [
+        [
+          45.7503,
+          40.236,
+          43.1171,
+          42.454,
+          45.5402,
+          42.3643,
+          45.1593
+        ],
+        [
+          5.495,
+          5.40015,
+          6.2561,
+          5.237,
+          7.6334,
+          5.36915,
+          5.1441
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "route_rgb_max_abs_error": 1.132891469524111e-06,
+      "reference_ms": 40.7914,
+      "cpp_ms": 1.7015222222222222,
+      "speedup": 23.973474731776125,
+      "samples_ms": [
+        [
+          40.5174,
+          40.7914,
+          40.0933,
+          39.8657,
+          41.2995,
+          41.4925,
+          40.8896
+        ],
+        [
+          1.4986666666666668,
+          2.3055555555555554,
+          1.7015222222222222,
+          1.4249555555555555,
+          1.6224777777777777,
+          2.0827,
+          2.7143
+        ]
+      ],
+      "loops": [
+        1,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.0517578125e-05,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.8272333333333333,
+      "cpp_ms": 0.4722421052631579,
+      "speedup": 3.8692723773859674,
+      "samples_ms": [
+        [
+          1.6681,
+          1.8272333333333333,
+          1.6577666666666668,
+          3.575,
+          2.6823666666666663,
+          3.6191333333333335,
+          1.7428333333333332
+        ],
+        [
+          0.38350526315789474,
+          0.4722421052631579,
+          0.4023263157894737,
+          0.4486210526315789,
+          0.8937578947368421,
+          1.011242105263158,
+          0.7198526315789474
+        ]
+      ],
+      "loops": [
+        3,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.0517578125e-05,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.84728,
+      "cpp_ms": 0.34677,
+      "speedup": 5.327104420797647,
+      "samples_ms": [
+        [
+          2.64684,
+          3.0703,
+          1.66914,
+          1.99768,
+          1.51632,
+          1.84728,
+          1.53462
+        ],
+        [
+          0.53271,
+          0.34677,
+          0.20016,
+          0.79147,
+          0.70543,
+          0.27943,
+          0.34037
+        ]
+      ],
+      "loops": [
+        5,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.4901161193847656e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 2.0452333333333335,
+      "cpp_ms": 0.5359166666666666,
+      "speedup": 3.8163271652931123,
+      "samples_ms": [
+        [
+          2.5084166666666663,
+          2.0452333333333335,
+          2.2337666666666665,
+          3.32455,
+          1.8756,
+          1.9255166666666668,
+          1.8110666666666668
+        ],
+        [
+          1.0728833333333332,
+          0.4467333333333333,
+          0.5359166666666666,
+          1.0294166666666666,
+          1.54155,
+          0.41076666666666667,
+          0.4463333333333333
+        ]
+      ],
+      "loops": [
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.4901161193847656e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 1.858442857142857,
+      "cpp_ms": 0.20371785714285712,
+      "speedup": 9.12263108991778,
+      "samples_ms": [
+        [
+          1.858442857142857,
+          2.1366,
+          1.8052,
+          1.9829285714285714,
+          2.0377857142857145,
+          1.834657142857143,
+          1.7984
+        ],
+        [
+          0.24196428571428572,
+          0.20164285714285712,
+          0.1965535714285714,
+          0.1771464285714286,
+          0.21087142857142857,
+          0.2080142857142857,
+          0.20371785714285712
+        ]
+      ],
+      "loops": [
+        7,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.7881393432617188e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.7173631578947368,
+      "cpp_ms": 0.2659666666666667,
+      "speedup": 2.6971919710292145,
+      "samples_ms": [
+        [
+          0.7944421052631578,
+          0.7694526315789474,
+          0.7173631578947368,
+          0.677478947368421,
+          0.7589578947368422,
+          0.6743526315789474,
+          0.6216157894736841
+        ],
+        [
+          0.6859111111111111,
+          0.3597666666666667,
+          0.2659666666666667,
+          0.21674444444444443,
+          0.25730555555555557,
+          0.32566666666666666,
+          0.20990555555555557
+        ]
+      ],
+      "loops": [
+        19,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.7881393432617188e-07,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.6375266666666666,
+      "cpp_ms": 0.08827692307692307,
+      "speedup": 7.221894969211107,
+      "samples_ms": [
+        [
+          0.68806,
+          0.6177733333333334,
+          0.64738,
+          0.6153266666666666,
+          0.6375266666666666,
+          0.5994066666666666,
+          0.7073333333333334
+        ],
+        [
+          0.08275128205128204,
+          0.08827692307692307,
+          0.07748461538461539,
+          0.1133051282051282,
+          0.08386410256410257,
+          0.13496923076923079,
+          0.10405641025641026
+        ]
+      ],
+      "loops": [
+        15,
+        39
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.0012880382775119618,
+      "cpp_ms": 0.0015760736196319019,
+      "speedup": 0.8172449950737632,
+      "samples_ms": [
+        [
+          0.002180701754385965,
+          0.0008031897926634769,
+          0.0012880382775119618,
+          0.006614035087719299,
+          0.0009921850079744816,
+          0.0012224880382775121,
+          0.0015931419457735246
+        ],
+        [
+          0.0010646625766871165,
+          0.0027130061349693252,
+          0.0015760736196319019,
+          0.0016757055214723926,
+          0.0025301840490797546,
+          0.0006161963190184049,
+          0.0014801226993865029
+        ]
+      ],
+      "loops": [
+        627,
+        815
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "reference_ms": 0.00157626582278481,
+      "cpp_ms": 0.0017365325077399383,
+      "speedup": 0.9077087907995963,
+      "samples_ms": [
+        [
+          0.001053481012658228,
+          0.001929113924050633,
+          0.0033680379746835443,
+          0.0019253164556962026,
+          0.0012930379746835443,
+          0.00157626582278481,
+          0.0014509493670886078
+        ],
+        [
+          0.0012411764705882353,
+          0.001115170278637771,
+          0.008713622291021671,
+          0.006110526315789473,
+          0.0017492260061919506,
+          0.0017365325077399383,
+          0.0016362229102167183
+        ]
+      ],
+      "loops": [
+        316,
+        323
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.47382,
+      "cpp_ms": 0.6832083333333334,
+      "speedup": 3.6208867475757756,
+      "samples_ms": [
+        [
+          2.61698,
+          1.94044,
+          2.44646,
+          2.6796,
+          2.30496,
+          2.47382,
+          3.13034
+        ],
+        [
+          0.586875,
+          0.4781666666666667,
+          0.6832083333333334,
+          0.6986833333333333,
+          0.833175,
+          0.6216083333333333,
+          0.8369083333333334
+        ]
+      ],
+      "loops": [
+        5,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "contiguous",
+      "layout": "contiguous",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.9777,
+      "cpp_ms": 0.2895642857142857,
+      "speedup": 6.8299168701744,
+      "samples_ms": [
+        [
+          2.5232,
+          1.66445,
+          2.017333333333333,
+          1.6479833333333334,
+          2.2698666666666667,
+          1.63515,
+          1.9777
+        ],
+        [
+          0.21875,
+          0.2601357142857143,
+          0.2895642857142857,
+          0.3134,
+          0.22297142857142857,
+          0.42781428571428576,
+          0.41291428571428573
+        ]
+      ],
+      "loops": [
+        6,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.4289125,
+      "cpp_ms": 0.6531133333333333,
+      "speedup": 2.187847693611114,
+      "samples_ms": [
+        [
+          1.508975,
+          1.2377375,
+          1.996925,
+          1.1932375,
+          1.503825,
+          1.1163375,
+          1.4289125
+        ],
+        [
+          0.6531133333333333,
+          0.6834666666666667,
+          0.6055133333333333,
+          0.5981066666666667,
+          0.67638,
+          0.9341333333333334,
+          0.49932
+        ]
+      ],
+      "loops": [
+        8,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "channel-first",
+      "layout": "channel-first",
+      "options": {
+        "channel_axis": 0
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.3961857142857144,
+      "cpp_ms": 0.3289894736842105,
+      "speedup": 4.243861357174854,
+      "samples_ms": [
+        [
+          1.151642857142857,
+          1.6645571428571428,
+          1.4818285714285713,
+          1.3961857142857144,
+          1.2614857142857143,
+          1.264242857142857,
+          1.5649857142857144
+        ],
+        [
+          0.38942631578947373,
+          0.2758842105263158,
+          0.2340263157894737,
+          0.39635263157894735,
+          0.3289894736842105,
+          0.3030105263157895,
+          0.5324578947368421
+        ]
+      ],
+      "loops": [
+        7,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.19945,
+      "cpp_ms": 1.7490428571428571,
+      "speedup": 1.8292576347880065,
+      "samples_ms": [
+        [
+          3.415975,
+          3.19945,
+          3.274775,
+          3.27015,
+          2.77465,
+          2.667775,
+          2.647225
+        ],
+        [
+          2.2124714285714284,
+          1.7087428571428571,
+          1.7490428571428571,
+          2.0937,
+          2.183957142857143,
+          1.6837714285714287,
+          1.6921714285714287
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "strided",
+      "layout": "strided",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.4249,
+      "cpp_ms": 1.7003666666666668,
+      "speedup": 2.014212620807277,
+      "samples_ms": [
+        [
+          3.83805,
+          3.4249,
+          3.32485,
+          3.5936,
+          3.0302,
+          4.22595,
+          2.9916
+        ],
+        [
+          1.7003666666666668,
+          2.3220166666666664,
+          1.3214833333333333,
+          1.6219333333333332,
+          2.057183333333333,
+          1.7974833333333333,
+          1.5544333333333333
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.547875,
+      "cpp_ms": 0.4367227272727273,
+      "speedup": 3.54429688069193,
+      "samples_ms": [
+        [
+          1.833125,
+          1.3166125,
+          1.4232375,
+          1.3328,
+          1.7779625,
+          1.547875,
+          1.6325625
+        ],
+        [
+          0.4367227272727273,
+          0.6099227272727273,
+          0.3865590909090909,
+          0.3537045454545455,
+          0.3580090909090909,
+          0.5791772727272727,
+          0.5348545454545454
+        ]
+      ],
+      "loops": [
+        8,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "broadcast",
+      "layout": "broadcast",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.3722,
+      "cpp_ms": 0.195972,
+      "speedup": 7.002020696834242,
+      "samples_ms": [
+        [
+          1.2461333333333333,
+          1.3722,
+          1.3881166666666667,
+          1.1836166666666668,
+          1.2861,
+          1.6270833333333332,
+          1.8169666666666668
+        ],
+        [
+          0.236016,
+          0.177444,
+          0.256224,
+          0.147264,
+          0.195972,
+          0.181692,
+          0.303628
+        ]
+      ],
+      "loops": [
+        6,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.15904,
+      "cpp_ms": 0.5723846153846154,
+      "speedup": 3.772009138556646,
+      "samples_ms": [
+        [
+          2.9764,
+          2.4837,
+          2.084,
+          2.15904,
+          2.01456,
+          1.84464,
+          2.5384
+        ],
+        [
+          0.5723846153846154,
+          0.5255769230769232,
+          0.9375,
+          0.6529538461538461,
+          0.6979384615384615,
+          0.5431923076923078,
+          0.5393846153846154
+        ]
+      ],
+      "loops": [
+        5,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "extra-channels",
+      "layout": "extra-channels",
+      "options": {
+        "channel_axis": -1
+      },
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.39505,
+      "cpp_ms": 0.7218666666666667,
+      "speedup": 3.317856483191725,
+      "samples_ms": [
+        [
+          3.21515,
+          2.270775,
+          2.937275,
+          2.371625,
+          2.595,
+          2.39505,
+          2.388
+        ],
+        [
+          0.8605666666666666,
+          0.8051,
+          1.0023333333333333,
+          0.5934333333333334,
+          0.6832333333333334,
+          0.7218666666666667,
+          0.6797
+        ]
+      ],
+      "loops": [
+        4,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 35.1688,
+      "cpp_ms": 1.0161692307692307,
+      "speedup": 34.60919592436148,
+      "samples_ms": [
+        [
+          34.6342,
+          34.8175,
+          33.7122,
+          35.1688,
+          36.8031,
+          38.1334,
+          44.7713
+        ],
+        [
+          1.0161692307692307,
+          0.9272230769230769,
+          0.9310076923076922,
+          1.084276923076923,
+          1.6036076923076923,
+          0.9804769230769231,
+          2.3575615384615385
+        ]
+      ],
+      "loops": [
+        1,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB->HSV",
+      "layout": "RGB->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 34.3554,
+      "cpp_ms": 0.3948210526315789,
+      "speedup": 87.015116775088,
+      "samples_ms": [
+        [
+          32.5,
+          38.3825,
+          35.8709,
+          34.3554,
+          34.0671,
+          31.7983,
+          36.2806
+        ],
+        [
+          0.30430526315789475,
+          0.2942052631578947,
+          0.6586842105263159,
+          1.1899526315789475,
+          0.3948210526315789,
+          0.34883684210526317,
+          0.5243421052631578
+        ]
+      ],
+      "loops": [
+        1,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 46.1148,
+      "cpp_ms": 6.2693,
+      "speedup": 7.355653741247029,
+      "samples_ms": [
+        [
+          51.9608,
+          44.6944,
+          43.8199,
+          47.0291,
+          50.0044,
+          46.1148,
+          43.2167
+        ],
+        [
+          6.0116,
+          6.2693,
+          7.9771,
+          6.6348,
+          6.5531,
+          6.0728,
+          5.9849
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "HSV->XYZ",
+      "layout": "HSV->XYZ",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.220446049250313e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 49.6382,
+      "cpp_ms": 1.9948285714285714,
+      "speedup": 24.88344147008694,
+      "samples_ms": [
+        [
+          49.8054,
+          52.6104,
+          49.6382,
+          44.6817,
+          44.3661,
+          43.3008,
+          51.3746
+        ],
+        [
+          2.8389857142857142,
+          4.201871428571428,
+          1.807,
+          1.9948285714285714,
+          2.667828571428571,
+          1.748257142857143,
+          1.8051285714285714
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 2.112893193739751e-15,
+      "reference_ms": 48.3329,
+      "cpp_ms": 6.55355,
+      "speedup": 7.375071526119432,
+      "samples_ms": [
+        [
+          49.5912,
+          47.7437,
+          48.3329,
+          49.8423,
+          49.7518,
+          47.3245,
+          46.9815
+        ],
+        [
+          6.55355,
+          6.48835,
+          6.769,
+          6.55655,
+          6.56215,
+          6.4469,
+          6.3089
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "XYZ->HSV",
+      "layout": "XYZ->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 1.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 2.112893193739751e-15,
+      "reference_ms": 48.7578,
+      "cpp_ms": 2.4522333333333335,
+      "speedup": 19.8830182010956,
+      "samples_ms": [
+        [
+          55.8462,
+          51.6285,
+          48.3703,
+          51.1733,
+          45.4425,
+          47.6478,
+          48.7578
+        ],
+        [
+          3.4262666666666663,
+          3.0172,
+          2.1947,
+          2.3095833333333333,
+          2.6877833333333334,
+          2.4522333333333335,
+          1.6649166666666668
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.233675,
+      "cpp_ms": 0.88155,
+      "speedup": 3.668169701094663,
+      "samples_ms": [
+        [
+          4.78725,
+          2.890275,
+          2.537675,
+          2.9098,
+          3.711725,
+          4.26935,
+          3.233675
+        ],
+        [
+          0.73433,
+          0.95135,
+          0.70269,
+          0.67347,
+          0.94804,
+          0.88155,
+          1.05972
+        ]
+      ],
+      "loops": [
+        4,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YUV->YCbCr",
+      "layout": "YUV->YCbCr",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 5.684341886080802e-14,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.2898,
+      "cpp_ms": 0.5114928571428572,
+      "speedup": 6.431761370777416,
+      "samples_ms": [
+        [
+          3.2898,
+          3.046325,
+          3.04785,
+          4.272525,
+          3.48935,
+          3.748775,
+          2.7285
+        ],
+        [
+          0.30930714285714284,
+          0.6103571428571428,
+          0.5784785714285715,
+          0.9935571428571428,
+          0.28523571428571426,
+          0.26995,
+          0.5114928571428572
+        ]
+      ],
+      "loops": [
+        4,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.4688,
+      "cpp_ms": 0.6400153846153847,
+      "speedup": 5.41986971467032,
+      "samples_ms": [
+        [
+          3.724425,
+          3.566,
+          3.163425,
+          3.4688,
+          3.299125,
+          3.134075,
+          3.9894
+        ],
+        [
+          0.7528461538461538,
+          0.5778076923076922,
+          0.7257923076923077,
+          0.6386615384615385,
+          0.7557538461538461,
+          0.5886846153846154,
+          0.6400153846153847
+        ]
+      ],
+      "loops": [
+        4,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "YCbCr->YUV",
+      "layout": "YCbCr->YUV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.495925,
+      "cpp_ms": 0.66813,
+      "speedup": 5.232402376782962,
+      "samples_ms": [
+        [
+          3.495925,
+          3.31785,
+          2.794,
+          3.884,
+          3.282425,
+          3.71745,
+          3.752675
+        ],
+        [
+          0.66813,
+          0.48561,
+          0.42229,
+          0.90645,
+          0.43729,
+          0.68824,
+          1.36327
+        ]
+      ],
+      "loops": [
+        4,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.39909,
+      "cpp_ms": 0.8737,
+      "speedup": 1.6013391324253174,
+      "samples_ms": [
+        [
+          1.00152,
+          1.17441,
+          1.54525,
+          1.39909,
+          1.34752,
+          1.48747,
+          1.63535
+        ],
+        [
+          0.73355,
+          0.6679,
+          0.8737,
+          0.960725,
+          0.898325,
+          0.9573,
+          0.7136
+        ]
+      ],
+      "loops": [
+        10,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB CIE->RGB",
+      "layout": "RGB CIE->RGB",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 3.3306690738754696e-16,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 1.041753846153846,
+      "cpp_ms": 0.42998333333333333,
+      "speedup": 2.4227772692441865,
+      "samples_ms": [
+        [
+          1.041753846153846,
+          0.9636769230769231,
+          0.9440538461538461,
+          0.9663384615384615,
+          1.116923076923077,
+          1.3925384615384615,
+          1.2083461538461537
+        ],
+        [
+          0.3223583333333333,
+          0.15349583333333333,
+          0.4799375,
+          0.42998333333333333,
+          0.43074583333333333,
+          0.41080833333333333,
+          0.45016666666666666
+        ]
+      ],
+      "loops": [
+        13,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 0.0005956591639871383,
+      "cpp_ms": 0.0005975975975975976,
+      "speedup": 0.9967562894860155,
+      "samples_ms": [
+        [
+          0.0010453376205787782,
+          0.0005956591639871383,
+          0.0005863344051446946,
+          0.0005665594855305465,
+          0.0005853697749196142,
+          0.000607717041800643,
+          0.0011840836012861737
+        ],
+        [
+          0.0005914414414414415,
+          0.0010782282282282283,
+          0.0005888888888888889,
+          0.0005975975975975976,
+          0.0005972972972972972,
+          0.0006021021021021021,
+          0.0008010510510510511
+        ]
+      ],
+      "loops": [
+        622,
+        666
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "RGB-identity",
+      "layout": "RGB-identity",
+      "options": {},
+      "backend": "identity",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 0.001456273764258555,
+      "cpp_ms": 0.0011698830409356726,
+      "speedup": 1.2448028677241334,
+      "samples_ms": [
+        [
+          0.00158212927756654,
+          0.0021549429657794677,
+          0.0006005703422053231,
+          0.001456273764258555,
+          0.0038336501901140687,
+          0.0007047528517110267,
+          0.0006009505703422053
+        ],
+        [
+          0.0010149122807017544,
+          0.002565497076023392,
+          0.0014133040935672514,
+          0.0007577485380116959,
+          0.001276169590643275,
+          0.0011698830409356726,
+          0.0006040935672514619
+        ]
+      ],
+      "loops": [
+        526,
+        684
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint16/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.9361,
+      "cpp_ms": 0.66905,
+      "speedup": 5.883117853673118,
+      "samples_ms": [
+        [
+          5.4933,
+          4.43165,
+          2.8278,
+          3.0131,
+          2.8052,
+          5.99565,
+          3.9361
+        ],
+        [
+          0.5958357142857144,
+          0.66905,
+          0.5869571428571428,
+          0.8616785714285715,
+          0.8396428571428571,
+          0.72315,
+          0.5617071428571428
+        ]
+      ],
+      "loops": [
+        2,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "uint16/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.7703,
+      "cpp_ms": 0.2745366666666667,
+      "speedup": 13.73332038221974,
+      "samples_ms": [
+        [
+          4.9122,
+          4.4861,
+          3.7703,
+          2.7474,
+          2.9529,
+          3.6501,
+          4.54425
+        ],
+        [
+          0.25589333333333336,
+          0.3231066666666667,
+          0.2141,
+          0.23441666666666666,
+          0.2745366666666667,
+          0.39590333333333333,
+          0.5115533333333333
+        ]
+      ],
+      "loops": [
+        2,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.6831,
+      "cpp_ms": 0.5915916666666666,
+      "speedup": 6.225746925666634,
+      "samples_ms": [
+        [
+          5.68695,
+          3.6153,
+          5.0022,
+          3.6831,
+          2.86985,
+          3.29495,
+          3.90805
+        ],
+        [
+          0.7785083333333334,
+          0.982325,
+          0.9954666666666666,
+          0.5438333333333334,
+          0.5384833333333334,
+          0.5915916666666666,
+          0.5883
+        ]
+      ],
+      "loops": [
+        2,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32/float64",
+      "second_dtype": "float64",
+      "size": 512,
+      "threads": 4,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 2.51902,
+      "cpp_ms": 0.3522,
+      "speedup": 7.152243043725155,
+      "samples_ms": [
+        [
+          2.46404,
+          3.4787,
+          2.41948,
+          4.18132,
+          2.65452,
+          2.51902,
+          2.45094
+        ],
+        [
+          0.21691818181818182,
+          0.4383681818181818,
+          0.3414909090909091,
+          0.5319181818181817,
+          0.5749363636363637,
+          0.25884090909090907,
+          0.3522
+        ]
+      ],
+      "loops": [
+        5,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "int64/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 4.074775,
+      "cpp_ms": 1.714357142857143,
+      "speedup": 2.3768530477896754,
+      "samples_ms": [
+        [
+          2.8187,
+          4.62095,
+          3.71305,
+          4.074775,
+          4.167875,
+          4.775775,
+          3.6275
+        ],
+        [
+          1.810642857142857,
+          1.714357142857143,
+          1.6556714285714287,
+          1.7710714285714286,
+          1.625157142857143,
+          1.8329,
+          1.5114
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "int64/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 4.746,
+      "cpp_ms": 0.4735,
+      "speedup": 10.02323125659979,
+      "samples_ms": [
+        [
+          5.891766666666667,
+          4.5126,
+          4.746,
+          5.2164,
+          3.4479666666666664,
+          4.703866666666667,
+          4.7483
+        ],
+        [
+          0.4676235294117647,
+          0.4594058823529412,
+          0.4735,
+          0.4844941176470588,
+          0.43838823529411763,
+          0.49375882352941175,
+          0.4765294117647059
+        ]
+      ],
+      "loops": [
+        3,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "bool/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 3.92865,
+      "cpp_ms": 0.7229578947368421,
+      "speedup": 5.43413389438127,
+      "samples_ms": [
+        [
+          3.6518,
+          5.3636,
+          4.0829,
+          3.77245,
+          3.177,
+          4.75735,
+          3.92865
+        ],
+        [
+          0.619778947368421,
+          0.7289157894736842,
+          0.7229578947368421,
+          0.6840473684210526,
+          0.6032894736842106,
+          0.8380421052631578,
+          0.7615263157894737
+        ]
+      ],
+      "loops": [
+        2,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "bool/float32",
+      "second_dtype": "float32",
+      "size": 512,
+      "threads": 4,
+      "workload": "mixed-dtypes",
+      "layout": "mixed-dtypes",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 0.0,
+      "parity_contract": "base dtype tolerance",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "reference_ms": 5.058733333333333,
+      "cpp_ms": 0.3626,
+      "speedup": 13.951277808420665,
+      "samples_ms": [
+        [
+          7.023766666666667,
+          6.499833333333333,
+          6.1719,
+          4.295866666666667,
+          3.9079,
+          5.058733333333333,
+          3.6385
+        ],
+        [
+          0.5624222222222223,
+          0.5415055555555555,
+          0.24291666666666667,
+          0.23711666666666667,
+          0.3626,
+          0.6295,
+          0.27656111111111115
+        ]
+      ],
+      "loops": [
+        3,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "out-of-gamut-YUV->HSV",
+      "layout": "out-of-gamut-YUV->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 13383920.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "route_rgb_max_abs_error": 3.0517578125e-05,
+      "reference_ms": 34.5166,
+      "cpp_ms": 0.619,
+      "speedup": 55.761873990306945,
+      "samples_ms": [
+        [
+          34.5049,
+          34.7979,
+          34.5166,
+          31.9885,
+          40.2034,
+          31.5171,
+          41.5187
+        ],
+        [
+          0.606375,
+          0.61020625,
+          0.56231875,
+          0.7070875,
+          0.75558125,
+          0.619,
+          0.70883125
+        ]
+      ],
+      "loops": [
+        1,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float32",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "out-of-gamut-YUV->HSV",
+      "layout": "out-of-gamut-YUV->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 13383920.0,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "route_rgb_max_abs_error": 3.0517578125e-05,
+      "reference_ms": 32.3531,
+      "cpp_ms": 0.231732,
+      "speedup": 139.6142958244869,
+      "samples_ms": [
+        [
+          33.4166,
+          32.3531,
+          35.6267,
+          30.9418,
+          36.0415,
+          31.9932,
+          30.496
+        ],
+        [
+          0.231732,
+          0.223556,
+          0.205248,
+          0.262304,
+          0.215532,
+          0.435876,
+          0.387276
+        ]
+      ],
+      "loops": [
+        1,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 1,
+      "workload": "out-of-gamut-YUV->HSV",
+      "layout": "out-of-gamut-YUV->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.7214991860091686e-07,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 41.2559,
+      "cpp_ms": 1.7939625,
+      "speedup": 22.997080485238683,
+      "samples_ms": [
+        [
+          38.5998,
+          36.1196,
+          34.0234,
+          41.2559,
+          41.7889,
+          43.6915,
+          41.5224
+        ],
+        [
+          1.3970125,
+          1.2446375,
+          1.5597,
+          1.8988875,
+          2.2545,
+          1.8134625,
+          1.7939625
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "color.convert_colorspace",
+      "dtype": "float64",
+      "second_dtype": null,
+      "size": 512,
+      "threads": 4,
+      "workload": "out-of-gamut-YUV->HSV",
+      "layout": "out-of-gamut-YUV->HSV",
+      "options": {},
+      "backend": "native",
+      "max_abs_error": 2.7214991860091686e-07,
+      "parity_contract": "RGB stage tolerance and HSV ratio/wrapped-hue propagated bound",
+      "rtol": 2e-13,
+      "atol": 2e-13,
+      "route_rgb_max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 36.188,
+      "cpp_ms": 0.595,
+      "speedup": 60.820168067226895,
+      "samples_ms": [
+        [
+          35.2301,
+          37.6929,
+          42.1621,
+          36.188,
+          36.416,
+          34.748,
+          35.559
+        ],
+        [
+          0.6849846153846154,
+          0.8075769230769231,
+          0.595,
+          0.9119230769230768,
+          0.5901384615384615,
+          0.45653846153846156,
+          0.5542846153846154
+        ]
+      ],
+      "loops": [
+        1,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
