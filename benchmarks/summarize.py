@@ -17,7 +17,8 @@ def main():
                ('Histogram threshold parameters','threshold-parameters'),
                ('Local threshold windows and dtypes','local-threshold-parameters'),
                ('Alpha and grayscale layouts','alpha-parameters'),
-               ('Laplace and Roberts layouts','edge-parameters')]
+               ('Laplace and Roberts layouts','edge-parameters'),
+               ('Farid derivatives and boundaries','farid-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)
@@ -181,7 +182,7 @@ def main():
               f'metadata helpers, {len(inventory)-len(covered)} inventoried entries still pending. '
               'See the [inventory](../coverage/README.md), [roadmap](../coverage/ROADMAP.md) and '
               '[documented input contracts](../README.md). Run `python benchmarks/verify.py` '
-              'to rebuild and reproduce all twelve reports, including this summary. '
+              'to rebuild and reproduce all thirteen reports, including this summary. '
               'Use `--threads 1` for serial-only verification. The summary rejects mixed source '
               'hashes, missing APIs and absent one-worker comparisons.']
     (root/'benchmarks/STATUS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **85 partially native
+The reference is scikit-image **0.26.0**. There are currently **88 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 450 public callable names across 17
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 363 remain pending native implementation and dedicated parity tests.
+export list; 360 remain pending native implementation and dedicated parity tests.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
@@ -40,6 +40,7 @@ This is not full scikit-image coverage.
 | `gaussian` | 2D grayscale; same dtypes; scalar nonnegative sigma; `mode='nearest'` or `'reflect'`; `preserve_range`; nonnegative `truncate` | Separable axis-0 then axis-1 convolution; same kernel radius rounding and border conventions |
 | `sobel`, `prewitt`, `scharr` | 2D grayscale; same dtypes; reflected borders; magnitude or axis 0/1 | Same normalization; uint8 normalized to float64 |
 | `sobel_h/v`, `prewitt_h/v`, `scharr_h/v` | 2D grayscale; same dtypes; reflected borders | Signed directional gradients |
+| `farid`, `farid_h`, `farid_v` | All 12 real image dtypes, endian/native storage, arrays/memmaps and eroded numeric masks; generic N-D images up to eight dimensions, ordered/repeated/negative axes, all five boundary modes and grid aliases; directional nonempty 2D images | Ordered full convolution with float64 accumulation, float32 gradient rounding before magnitude stages, upstream dimension normalization and signed zeros; optional global workers and runtime AVX2 |
 | `laplace` | One or more dimensions, including empty; all 12 real image dtypes (including float16), native/endian storage, arrays/memmaps; integer `ksize` ≥3; eroded numeric masks and mask broadcasting | Sparse reflected Laplacian in upstream coefficient order, including singleton axes; float64 convolution accumulation; float16/32 output is float32, otherwise float64 |
 | `roberts`, `roberts_pos_diag`, `roberts_neg_diag` | Nonempty 2D arrays; same real dtypes/storage and masks | Fused cross differences with upstream gradient rounding, magnitude/sqrt(2) stages, signed zero and mask semantics |
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
@@ -69,6 +70,14 @@ fallback. Degenerate constant/empty cases preserve upstream results, warnings
 and errors; ISODATA can legitimately have no fixed point and raise IndexError.
 The current arithmetic-warning checks cover ordinary finite and degenerate
 histograms; extreme underflow/overflow warning modes need broader validation.
+
+Farid preserves the reference's full coefficient summation order, including its
+negative-axis weighting and repeated-axis behavior. Empty axis sequences produce
+zeros without consuming boundary options. Nonfinite images, oversized full-kernel
+plans, unsupported metadata/classes and extreme constant-fill values use explicit
+fallback. Floating magnitude calls with nondefault NumPy underflow policies also
+use fallback; directional convolution retains SciPy's warning behavior. Scalar
+signed-integer inputs preserve the reference conversion error.
 
 Spatial/exposure float32 outputs are checked with `rtol=atol=2e-6`, float64 with
 `rtol=atol=2e-13`; dtype conversion values are checked exactly. Spatial filters
@@ -323,8 +332,8 @@ OpenMP is optional via `-DSKIMAGEXX_OPENMP=OFF`; those builds accept one worker.
 ## Benchmarks and validation
 
 [Verification summary and remaining slower workloads](benchmarks/STATUS.md)
-records 1,838 current comparisons against original scikit-image, including one-worker
-measurements and optional parallel execution.
+records current comparisons against original scikit-image. Each covered API
+has one-worker measurements; recipes also support optional parallel execution.
 
 [Current per-function performance](benchmarks/function-coverage.md) compares
 **every native public function** with original scikit-image. Its raw JSON records
@@ -333,7 +342,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all ten reports with their default workloads:
+To rebuild and reproduce all thirteen reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt

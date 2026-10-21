@@ -354,3 +354,71 @@ def roberts_neg_diag(image,mask=None):
 
 
 __all__ += list(_SMALL_EDGES)
+
+
+_FARID_MODES = {'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,
+                'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
+
+
+def _farid(name,image,mask,axis=None,mode='reflect',cval=0.0):
+    directional=name!='farid'
+    def forwarded():
+        if directional:return fallback('filters',name,image,mask=mask)
+        return fallback('filters',name,image,mask=mask,axis=axis,mode=mode,cval=cval)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _SMALL_EDGE_TYPES:return forwarded()
+    if directional and (image.ndim!=2 or not image.size):return forwarded()
+    if image.ndim==0 and image.dtype.kind=='i':raise TypeError('return arrays must be of ArrayType')
+    if mask is not None and (type(mask) not in (np.ndarray,np.memmap) or mask.dtype.type not in _SMALL_EDGE_TYPES):return forwarded()
+    if directional:axes=(0 if name=='farid_h' else 1,)
+    elif axis is None:axes=tuple(range(image.ndim))
+    elif isinstance(axis,(int,np.integer)):axes=(int(axis),)
+    elif isinstance(axis,(tuple,list,np.ndarray)):
+        if any(not isinstance(a,(int,np.integer)) for a in axis):return forwarded()
+        axes=tuple(int(a) for a in axis)
+    else:return forwarded()
+    if any(a < -image.ndim or a>=image.ndim for a in axes):return forwarded()
+    if axes:
+        # The ordered full-kernel plan preserves upstream cancellation. Larger
+        # plans and nonfinite warning stages are explicit compatibility paths.
+        if image.ndim>8 or not isinstance(mode,str) or mode not in _FARID_MODES:return forwarded()
+        if not isinstance(cval,(int,float,np.integer,np.floating)) or not _isfinite(cval):return forwarded()
+        border=_FARID_MODES[mode];constant=float(cval)
+    else:border=0;constant=0.0
+    if len(axes)>1 and image.dtype.kind=='f' and np.geterr()['under']!='ignore':return forwarded()
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:prepared=_core.edge_half(native)
+    elif native.dtype in (np.uint8,np.float32,np.float64):prepared=native
+    else:prepared=_core.convert(native,np.dtype(np.float64))[0]
+    if axes and border==1 and abs(constant)>_SMALL_EDGE_MAX[np.float32 if prepared.dtype==np.float32 else np.float64]/max(1,len(axes))**.5:return forwarded()
+    if axes and image.dtype.kind=='f' and prepared.size:
+        if not prepared.flags.c_contiguous or not prepared.flags.aligned:prepared=prepared.copy(order='C')
+        low,high=_core.intensity_bounds(prepared)
+        if not (_isfinite(low) and _isfinite(high)):return forwarded()
+        if max(abs(low),abs(high),abs(constant))>_SMALL_EDGE_MAX[prepared.dtype.type]/max(1,len(axes))**.5:return forwarded()
+    result=_core.farid(prepared,axes,border,constant,directional)
+    if mask is not None:
+        if mask.dtype.type==np.float16 and mask.size:raise RuntimeError('data type not supported')
+        if mask.ndim==0:eroded=np.asarray(bool(mask),dtype=bool)
+        else:
+            native_mask=mask if mask.dtype.isnative else _core.edge_native(mask)
+            prepared_mask=_core.edge_half(native_mask) if native_mask.dtype==np.float16 else native_mask
+            eroded=_core.morphology(prepared_mask,_edge_mask_plans(mask.ndim),6,6,0.,None)[0]
+        try:broadcast=np.broadcast_to(eroded,result.shape)
+        except ValueError:return forwarded()
+        _core.edge_apply_mask(result,broadcast)
+    return result
+
+
+def farid(image,mask=None,*,axis=None,mode='reflect',cval=0.0):
+    return _farid('farid',image,mask,axis,mode,cval)
+
+
+def farid_h(image,*,mask=None):
+    return _farid('farid_h',image,mask)
+
+
+def farid_v(image,*,mask=None):
+    return _farid('farid_v',image,mask)
+
+
+__all__ += ['farid','farid_h','farid_v']

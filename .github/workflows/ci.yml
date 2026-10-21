@@ -21,6 +21,7 @@ jobs:
       - run: python benchmarks/color.py --size 32 --threads 1 --output build/ci-color-layouts.json
       - run: python benchmarks/perceptual.py --size 32 --threads 1 --output build/ci-perceptual.json
       - run: python benchmarks/stains.py --size 32 --threads 1 --repeat 1 --output build/ci-stains.json
+      - run: python benchmarks/farid.py --size 32 --threads 1 --repeat 1 --output build/ci-farid.json
       - run: python benchmarks/edges.py --size 32 --threads 1 --repeat 1 --output build/ci-edges.json
       - run: python benchmarks/alpha.py --size 32 --threads 1 --repeat 1 --output build/ci-alpha.json
       - run: python benchmarks/local_thresholds.py --size 32 --threads 1 --repeat 1 --output build/ci-local-thresholds.json

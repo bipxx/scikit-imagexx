@@ -9,6 +9,9 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t farid_row(const void* const*,const std::ptrdiff_t*,const double*,std::size_t,void*,PixelType,std::size_t,std::size_t,std::size_t,double,bool,bool);
+std::size_t farid_finish(float*,std::size_t,double);
+std::size_t farid_finish(double*,std::size_t,double);
 std::size_t laplace_nd(const float* const*,const float* const*,const float*,float*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);
 std::size_t laplace_nd(const double* const*,const double* const*,const double*,double*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);
 std::size_t laplace_nd(const std::uint8_t* const*,const std::uint8_t* const*,const std::uint8_t*,double*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t);

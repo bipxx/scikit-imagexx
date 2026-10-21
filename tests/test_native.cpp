@@ -1,3 +1,4 @@
+#include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
 #include "skimagexx/local_threshold.hpp"
@@ -29,6 +30,49 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        {
+            // Reference impulse responses pin derivative sign and border rules.
+            const double impulse[]={0,0,1,0,0};
+            const double expected[][5]={
+                {.109603762960254,.276690988455557,0,-.276690988455557,-.109603762960254},
+                {.013030075106301248,.2492900477154935,0,-.2492900477154935,-.013030075106301244},
+                {.109603762960254,.276690988455557,0,-.276690988455557,-.109603762960254},
+                {0,.276690988455557,0,-.276690988455557,0},
+                {.109603762960254,.276690988455557,0,-.276690988455557,-.109603762960254}};
+            double result[5];
+            for(int border=0;border<5;++border) {
+                farid_into(impulse,result,PixelType::float64,{5},{0},FaridBorder(border),.25);
+                for(int j=0;j<5;++j)require(std::abs(result[j]-expected[border][j])<1e-16);
+            }
+            const std::uint8_t bytes[]={0,0,255,0,0};
+            farid_into(bytes,result,PixelType::uint8,{5},{0});
+            for(int j=0;j<5;++j)require(result[j]==expected[0][j]);
+            const std::uint16_t half[]={0,0,0x3c00,0,0};float single[5];
+            farid_half_into(half,single,{5},{0});
+            for(int j=0;j<5;++j)require(single[j]==float(expected[0][j]));
+            const std::int16_t signed_pixels[]={0,0,32767,0,0};
+            farid_into(signed_pixels,result,PixelType::int16,{5},{0});
+            for(int j=0;j<5;++j)require(result[j]==expected[0][j]);
+            // Enough interior pixels for SIMD and enough rows for worker splits.
+            constexpr std::size_t height=513,width=517;
+            std::vector<float> ramp(height*width),gradient(height*width);
+            for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x)ramp[y*width+x]=float(y+2*x);
+            farid_into(ramp.data(),gradient.data(),PixelType::float32,{height,width},{0,1});
+            const double slope=2*(.276690988455557+2*.109603762960254);
+            const double smoothing=2*(.0376593171958126+.249153396177344)+.426374573253687;
+            const double magnitude=slope*smoothing*std::sqrt(2.5);
+            for(std::size_t y=2;y+2<height;++y)for(std::size_t x=2;x+2<width;++x)
+                require(std::abs(gradient[y*width+x]-magnitude)<1e-6);
+            farid_into(nullptr,result,PixelType::float64,{5},{});
+            for(auto value:result)require(value==0 && !std::signbit(value));
+            farid_into(nullptr,nullptr,PixelType::float32,{0,7},{0,1});
+            bool bad_axis=false;
+            try {farid_into(impulse,result,PixelType::float64,{5},{1});}
+            catch(const std::invalid_argument&){bad_axis=true;}require(bad_axis);
+            bool overflow=false;
+            try {farid_into(impulse,result,PixelType::float64,{std::numeric_limits<std::size_t>::max()},{0});}
+            catch(const std::overflow_error&){overflow=true;}require(overflow);
+        }
         const float log_inputs[]={.001f,.1f,.2f,.5f,.7f,.9f,1.f,1.1f,2.f,3.f,7.f,10.973364f,10.973365f,13.f,100.f,1e10f,0.f,-1.f,std::numeric_limits<float>::denorm_min()};
         float log_results[19];
         for(bool numpy_log : {false,true}) {

@@ -1,3 +1,4 @@
+#include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
 #include <cstring>
@@ -522,6 +523,17 @@ PYBIND11_MODULE(_core, m) {
         if(reinterpret_cast<std::uintptr_t>(input.data())%2)input=input.attr("copy")().cast<py::array>();
         py::array_t<float> output(std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
         {py::gil_scoped_release release;skimagexx::edge_half_to_float(static_cast<const std::uint16_t*>(input.data()),output.mutable_data(),std::size_t(input.size()));}
+        return output;
+    });
+    m.def("farid", [](py::array image,const std::vector<std::ptrdiff_t>& axes,int border,double cval,bool directional) -> py::array {
+        const auto type=pixel_type(image.dtype());
+        if(type!=skimagexx::PixelType::uint8 && type!=skimagexx::PixelType::float32 && type!=skimagexx::PixelType::float64)throw py::type_error("prepared real image required");
+        auto input=py::array::ensure(image,py::array::c_style);
+        if(reinterpret_cast<std::uintptr_t>(input.data())%std::size_t(input.itemsize()))input=input.attr("copy")().cast<py::array>();
+        const std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());
+        const std::vector<std::size_t> shape_values(dimensions.begin(),dimensions.end());
+        py::array output(type==skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>(),dimensions);
+        {py::gil_scoped_release release;skimagexx::farid_into(input.data(),output.mutable_data(),type,shape_values,axes,static_cast<skimagexx::FaridBorder>(border),cval,directional);}
         return output;
     });
     m.def("laplace_nd", [](py::array image) -> py::array {
