@@ -17,7 +17,8 @@ def difference(a,b):
 def main():
     lib=ctypes.CDLL('ucrtbase' if platform.system()=='Windows' else ctypes.util.find_library('m'))
     def function(name):
-        f=getattr(lib,name);f.argtypes=[ctypes.c_float,ctypes.c_float];f.restype=ctypes.c_float
+        f=getattr(lib,name,None) or getattr(lib,'_'+name)
+        f.argtypes=[ctypes.c_float,ctypes.c_float];f.restype=ctypes.c_float
         return f
     hypotf,atan2f,powf=map(function,('hypotf','atan2f','powf'))
     a=(np.random.default_rng(32).random((67,3))*200-100).astype(np.float32)
