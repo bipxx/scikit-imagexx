@@ -692,6 +692,27 @@ PYBIND11_MODULE(_core, m) {
         {py::gil_scoped_release release;supported=skimagexx::integrate_windows_into(view,lower.data(),upper.data(),static_cast<double*>(output.mutable_data()),std::size_t(lower.shape(0)));}
         return supported;
     });
+    m.def("integral_line", [](py::array image,py::array result) {
+        const auto source=image.dtype();
+        if(source.itemsize()!=8 || (source.kind()!='i' && source.kind()!='u'))throw py::type_error("64-bit integer integral line required");
+        const auto target=pixel_type(result.dtype());
+        if(target!=skimagexx::PixelType::int64 && target!=skimagexx::PixelType::uint64)throw py::type_error("64-bit integer integral output required");
+        if(image.ndim()!=result.ndim())throw py::value_error("integral line shape mismatch");
+        py::ssize_t stride=0;bool axis_found=false;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            if(image.shape(axis)!=result.shape(axis))throw py::value_error("integral line shape mismatch");
+            if(image.size() && image.shape(axis)>1) {
+                if(axis_found)throw py::value_error("only one nonsingleton integral axis allowed");
+                axis_found=true;stride=image.strides(axis);
+            }
+        }
+        if(!result.writeable() || !(result.flags()&py::array::c_style) || !result.attr("flags").attr("aligned").cast<bool>())throw py::type_error("contiguous aligned writable integral line output required");
+        const bool swap=!source.attr("isnative").cast<bool>();
+        const auto* input=image.data();auto* output=static_cast<std::uint64_t*>(result.mutable_data());
+        const auto count=std::size_t(image.size());
+        py::gil_scoped_release release;
+        skimagexx::integral_line_u64_into(input,output,count,stride,swap);
+    });
     m.def("integral_image", [](py::array image,py::array result) {
         const auto source=pixel_type(image.dtype()),target=pixel_type(result.dtype());
         auto dense=[](const py::array& array) {

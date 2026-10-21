@@ -13,6 +13,8 @@ std::size_t integrate_add(const double*,double*,std::size_t);
 std::size_t gaussian_difference(const void*,const void*,void*,std::size_t,bool);
 std::size_t gaussian_unsharp(const void*,const void*,void*,std::size_t,bool,bool,double,bool,bool,double);
 std::size_t integral_prefix_u64(const std::uint64_t*,std::uint64_t*,std::size_t);
+std::size_t integral_strided_prefix_u64(const void*,std::uint64_t*,std::size_t,std::ptrdiff_t,bool);
+std::size_t integral_offset_u64(std::uint64_t*,std::size_t,std::uint64_t);
 std::size_t integral_cast_u64(const void*,std::uint64_t*,std::size_t,PixelType);
 std::size_t integral_add(const void*,void*,std::size_t,PixelType);
 std::size_t gaussian_prepare(const void*,double*,std::size_t,PixelType,bool);

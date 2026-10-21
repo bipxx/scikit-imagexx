@@ -3,6 +3,7 @@
 #include "execution.hpp"
 #include "simd.hpp"
 #include <algorithm>
+#include <cstring>
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
@@ -81,6 +82,58 @@ template<class T> void accumulate(T* output,const std::vector<std::size_t>& shap
         }
     }
 }
+}
+void integral_line_u64_into(const void* input,std::uint64_t* output,std::size_t count,std::ptrdiff_t stride,bool swap) {
+    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());
+    if(count>limit/sizeof(std::uint64_t))throw std::overflow_error("integral line output span overflow");
+    if(!count)return;
+    if(!input || !output)throw std::invalid_argument("nonnull integral line storage required");
+    if(count>1) {
+        if(stride==std::numeric_limits<std::ptrdiff_t>::min())throw std::overflow_error("integral line stride overflow");
+        const auto magnitude=std::size_t(stride<0 ? -stride : stride);
+        if(magnitude>(limit-7)/(count-1))throw std::overflow_error("integral line input span overflow");
+    }
+    const auto workers=detail::active_workers(count);
+    struct Segment {std::size_t begin=0,end=0;std::uint64_t offset=0;};
+    std::vector<Segment> segments(workers>1 ? std::size_t(workers) : 0,Segment{});
+    const auto* bytes=static_cast<const unsigned char*>(input);
+    const bool vectorized=has_avx2();(void)vectorized;
+    detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
+        if(workers>1) {segments[worker].begin=begin;segments[worker].end=end;}
+        if(begin==end)return;
+        std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+        if(vectorized)done=simd::integral_strided_prefix_u64(bytes+std::ptrdiff_t(begin)*stride,output+begin,end-begin,stride,swap);
+#endif
+        std::uint64_t sum=done ? output[begin+done-1] : 0;
+        for(auto i=begin+done;i<end;++i) {
+            std::uint64_t value;std::memcpy(&value,bytes+std::ptrdiff_t(i)*stride,8);
+            if(swap) {
+                std::uint64_t reversed=0;
+                for(unsigned b=0;b<8;++b)reversed|=((value>>(8*b))&255)<<(8*(7-b));
+                value=reversed;
+            }
+            sum+=value;output[i]=sum;
+        }
+    });
+    if(workers==1)return;
+    std::uint64_t carry=0;
+    for(auto& segment:segments) {
+        segment.offset=carry;
+        if(segment.end>segment.begin)carry+=output[segment.end-1];
+    }
+    // Schedule stored segments rather than assuming both OpenMP teams match:
+    // dynamic teams or thread limits can change actual team sizes per region.
+    detail::partition(segments.size(),workers,[&](auto first,auto last,auto) {
+        for(auto s=first;s<last;++s) {
+            const auto& segment=segments[s];if(!segment.offset || segment.begin==segment.end)continue;
+            auto i=segment.begin;
+#ifdef SKIMAGEXX_AVX2
+            if(vectorized)i+=simd::integral_offset_u64(output+i,segment.end-i,segment.offset);
+#endif
+            for(;i<segment.end;++i)output[i]+=segment.offset;
+        }
+    });
 }
 void integral_image_into(const void* input,void* output,PixelType source,PixelType target,const std::vector<std::size_t>& shape,
     const std::vector<std::size_t>& strides) {

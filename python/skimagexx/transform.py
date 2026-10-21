@@ -65,6 +65,12 @@ def integral_image(image,*,dtype=None):
     if target.type not in _TARGET_TYPES:return _integral_fallback(image,dtype)
     if target.kind in 'iu' and source.kind=='f':return _integral_fallback(image,dtype)
     if target.type==np.float32 and source.type!=np.float32:return _integral_fallback(image,dtype)
+    if source.type in (np.int64,np.uint64) and target.type in (np.int64,np.uint64) and image.size in image.shape:
+        # Singleton axes do not change a prefix. Read the line's raw strides
+        # directly instead of copying strided/endian/unaligned 64-bit inputs.
+        result=np.empty_like(image,dtype=target,order='K',subok=False)
+        _core.integral_line(image,result)
+        return result
     native=_integral_storage(image)
     # Keep-order allocation matches upstream strides, including singleton and
     # empty dimensions. All conversion and prefix arithmetic remain native.

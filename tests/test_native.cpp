@@ -49,6 +49,38 @@ int main() {
         set_num_threads(threads);
         require(get_num_threads() == threads);
         {
+            // A strided modular prefix is exact across arbitrary chunk splits.
+            constexpr std::size_t count=262145;
+            std::vector<std::uint64_t> input(count*3),output(count);
+            for(std::size_t i=0;i<count;++i)input[3*i]=std::uint64_t(i)*UINT64_C(0x9e3779b97f4a7c15);
+            for(int direction:{1,-1}) {
+                const auto* first=direction>0 ? input.data() : input.data()+3*(count-1);
+                integral_line_u64_into(first,output.data(),count,direction*std::ptrdiff_t(24));
+                std::uint64_t sum=0;
+                for(std::size_t i=0;i<count;++i) {sum+=input[3*(direction>0 ? i : count-1-i)];require(output[i]==sum);}
+            }
+            const std::uint64_t swapped[]={UINT64_C(0x0102030405060708),1};
+            integral_line_u64_into(swapped,output.data(),2,8,true);
+            require(output[0]==UINT64_C(0x0807060504030201) && output[1]==UINT64_C(0x0907060504030201));
+            const std::uint64_t repeating=std::numeric_limits<std::uint64_t>::max();
+            integral_line_u64_into(&repeating,output.data(),33,0);
+            for(std::size_t i=0;i<33;++i)require(output[i]==std::uint64_t(0)-std::uint64_t(i+1));
+            for(std::size_t length:{1,2,3,4,7,8,15,16,17,31,32,33,65}) {
+                auto inplace=input;
+                integral_line_u64_into(inplace.data(),inplace.data(),length,8);
+                std::uint64_t sum=0;
+                for(std::size_t i=0;i<length;++i) {sum+=input[i];require(inplace[i]==sum);}
+            }
+            integral_line_u64_into(nullptr,nullptr,0,0);
+            bool rejected=false;
+            try {integral_line_u64_into(nullptr,output.data(),1,8);}catch(const std::invalid_argument&){rejected=true;}
+            require(rejected);rejected=false;
+            try {integral_line_u64_into(input.data(),output.data(),2,std::numeric_limits<std::ptrdiff_t>::min());}catch(const std::overflow_error&){rejected=true;}
+            require(rejected);rejected=false;
+            try {integral_line_u64_into(input.data(),output.data(),std::numeric_limits<std::size_t>::max(),8);}catch(const std::overflow_error&){rejected=true;}
+            require(rejected);
+        }
+        {
             const double table[]={1,3,6,5,12,21};
             IntegralTableView view{table,PixelType::float64,false,false,{2,3},{24,8}};
             const std::int64_t lower[]={-1,-1,0,0,-1,1},upper[]={1,2,1,2,1,2};

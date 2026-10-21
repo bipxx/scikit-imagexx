@@ -52,6 +52,30 @@ std::size_t integral_prefix_u64(const std::uint64_t* input,std::uint64_t* output
     }
     return i;
 }
+std::size_t integral_strided_prefix_u64(const void* input,std::uint64_t* output,std::size_t count,std::ptrdiff_t stride,bool swap) {
+    if(count<4)return 0;
+    const auto* bytes=static_cast<const unsigned char*>(input);
+    // The caller validates the full span before these signed multiplications.
+    const auto offsets=_mm256_setr_epi64x(0,stride,2*stride,3*stride);
+    const auto reverse=_mm256_setr_epi8(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8,
+                                      7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
+    auto carry=_mm256_setzero_si256();std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto* current=bytes+std::ptrdiff_t(i)*stride;
+        auto value=stride==8 ? _mm256_loadu_si256(reinterpret_cast<const __m256i*>(current))
+                            : _mm256_i64gather_epi64(reinterpret_cast<const long long*>(current),offsets,1);
+        if(swap)value=_mm256_shuffle_epi8(value,reverse);
+        value=_mm256_add_epi64(prefix_four(value),carry);
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),value);carry=last_word(value);
+    }
+    return i;
+}
+std::size_t integral_offset_u64(std::uint64_t* output,std::size_t count,std::uint64_t offset) {
+    const auto value=_mm256_set1_epi64x(static_cast<long long>(offset));std::size_t i=0;
+    for(;i+4<=count;i+=4)_mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),
+        _mm256_add_epi64(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(output+i)),value));
+    return i;
+}
 std::size_t integral_add(const void* previous,void* current,std::size_t count,PixelType type) {
     std::size_t i=0;
     if(type==PixelType::float32) {

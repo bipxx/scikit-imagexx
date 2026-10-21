@@ -43,6 +43,10 @@ jobs:
       - run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build build/native --config Release
       - run: ctest --test-dir build/native -C Release --output-on-failure
+      - run: ctest --test-dir build/native -C Release --output-on-failure
+        env:
+          OMP_DYNAMIC: 'TRUE'
+          OMP_THREAD_LIMIT: '2'
       - run: cmake -S . -B build/portable -DCMAKE_BUILD_TYPE=Release -DSKIMAGEXX_AVX2=OFF -DSKIMAGEXX_OPENMP=OFF
       - run: cmake --build build/portable --config Release
       - run: ctest --test-dir build/portable -C Release --output-on-failure
