@@ -184,3 +184,15 @@ def test_longdouble_falls_back(api):
     with pytest.raises(NotImplementedError):getattr(xx.feature,api)(elements)
     xx.set_fallback_enabled(True)
     with pytest.raises(TypeError):getattr(xx.feature,api)(elements)
+
+
+@pytest.mark.parametrize('api',APIS)
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('diagonal',[0,3,5])
+def test_signed_zero_in_inactive_simd_lane(api,dtype,diagonal):
+    elements=[np.zeros((1,1,17),dtype=dtype) for _ in range(6)]
+    elements[diagonal][0,0,0]=-0.
+    for i,a in enumerate(elements):a[0,0,1:]=np.arange(1,17)*(i+1)*.01
+    expected=getattr(reference,api)(elements)
+    actual=compare(api,elements)
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))

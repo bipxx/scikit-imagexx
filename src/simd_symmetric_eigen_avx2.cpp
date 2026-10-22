@@ -75,11 +75,14 @@ template<class T> std::size_t run(const void* const* fields,T* output,std::size_
                 t=_mm256_and_pd(t,active);
                 const auto c=_mm256_div_pd(one,_mm256_sqrt_pd(_mm256_add_pd(one,_mm256_mul_pd(t,t)))),s=_mm256_mul_pd(t,c);
                 const auto shift=_mm256_mul_pd(t,off);
-                matrix[p*n+p].value=_mm256_sub_pd(matrix[p*n+p].value,shift);matrix[q*n+q].value=_mm256_add_pd(matrix[q*n+q].value,shift);
-                matrix[p*n+q].value=matrix[q*n+p].value=zero;
+                // Inactive lanes must retain their original values: adding a
+                // zero shift can change the sign of a zero eigenvalue.
+                matrix[p*n+p].value=_mm256_blendv_pd(matrix[p*n+p].value,_mm256_sub_pd(matrix[p*n+p].value,shift),active);
+                matrix[q*n+q].value=_mm256_blendv_pd(matrix[q*n+q].value,_mm256_add_pd(matrix[q*n+q].value,shift),active);
+                matrix[p*n+q].value=matrix[q*n+p].value=_mm256_blendv_pd(off,zero,active);
                 for(std::size_t k=0;k<n;++k)if(k!=p && k!=q){const auto a=matrix[k*n+p].value,b=matrix[k*n+q].value;
-                    matrix[k*n+p].value=matrix[p*n+k].value=_mm256_sub_pd(_mm256_mul_pd(c,a),_mm256_mul_pd(s,b));
-                    matrix[k*n+q].value=matrix[q*n+k].value=_mm256_add_pd(_mm256_mul_pd(s,a),_mm256_mul_pd(c,b));
+                    matrix[k*n+p].value=matrix[p*n+k].value=_mm256_blendv_pd(a,_mm256_sub_pd(_mm256_mul_pd(c,a),_mm256_mul_pd(s,b)),active);
+                    matrix[k*n+q].value=matrix[q*n+k].value=_mm256_blendv_pd(b,_mm256_add_pd(_mm256_mul_pd(s,a),_mm256_mul_pd(c,b)),active);
                 }
             }
             auto maximum=zero;

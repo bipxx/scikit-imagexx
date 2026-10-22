@@ -25,6 +25,19 @@ template<class T> void check(std::size_t n,const std::vector<T>& upper,const std
     fields[0][17]=std::numeric_limits<T>::quiet_NaN();
     require(!skimagexx::symmetric_eigenvalues_into(pointers.data(),output.data(),pixels,n,sizeof(T)==4,pair));
 }
+template<class T> void check_inactive_lane(){
+    constexpr std::size_t count=17;
+    for(std::size_t diagonal:{0,3,5}){
+        std::vector<std::vector<T>> fields(6,std::vector<T>(count));
+        fields[diagonal][0]=-T(0);
+        for(std::size_t f=0;f<6;++f)for(std::size_t p=1;p<count;++p)fields[f][p]=T((f+1)*p*.01);
+        std::vector<const void*> pointers;for(auto& field:fields)pointers.push_back(field.data());
+        std::vector<T> output(3*count);
+        require(skimagexx::symmetric_eigenvalues_into(pointers.data(),output.data(),count,3,sizeof(T)==4,false));
+        const auto negative=diagonal==0 ? 2 : diagonal==3 ? 1 : 0;
+        for(std::size_t d=0;d<3;++d){require(output[d*count]==0);require(std::signbit(output[d*count])==(d==negative));}
+    }
+}
 }
 int main(){
     require(skimagexx::get_num_threads()==1);
@@ -34,6 +47,7 @@ int main(){
     check<double>(3,{2,1,0,2,0,5},{5,3,1},false);
     std::vector<double> eigenvalues;for(int k=1;k<=4;++k)eigenvalues.push_back(2+2*std::cos(k*std::acos(-1.)/5));
     check<double>(4,{2,1,0,0,2,1,0,2,1,2},eigenvalues,false);
+    check_inactive_lane<float>();check_inactive_lane<double>();
     require(skimagexx::symmetric_eigenvalues_into(nullptr,nullptr,0,3,false,false));
     bool rejected=false;try{skimagexx::symmetric_eigenvalues_into(nullptr,nullptr,1,0,false);}catch(const std::invalid_argument&){rejected=true;}
     require(rejected);skimagexx::set_num_threads(1);
