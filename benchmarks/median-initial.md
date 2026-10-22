@@ -1965,3 +1965,5 @@ Integration checks pass 12,691 targeted cases on Windows and minimum NumPy in ea
 | Windows | 4.331394x | 1.001818x |
 
 Raw samples: [Linux](median-integrated-linux.json), [Windows](median-integrated-windows.json). These near-unity paired results establish the API-integrated baseline, without claiming a kernel speedup. The numerical C++ source is unchanged. Absolute upstream ratios changed again while paired native controls stayed close, reinforcing the use of same-run controls for optimization decisions. Earlier adverse cases and failed decisions remain recorded above.
+
+Full API-integrated source CI completed successfully in [run 39837034999](https://github.com/bipxx/scikit-imagexx/actions/runs/39837034999), including minimum NumPy and both OS jobs, SIMD enabled/disabled and native/portable checks.
