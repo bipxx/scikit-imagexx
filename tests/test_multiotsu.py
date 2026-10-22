@@ -32,6 +32,7 @@ def compare(image=None,**options):
     else:
         assert type(actual) is type(expected) and actual.dtype==expected.dtype
         np.testing.assert_array_equal(actual,expected)
+        assert actual.dtype.metadata==expected.dtype.metadata
 
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
@@ -115,3 +116,23 @@ def test_histogram_buffer_contract(dtype,layout,classes):
 def test_more_classes(classes):
     counts=np.random.default_rng(classes).integers(1,99,classes+3).astype(np.float32)
     compare(hist=counts,classes=classes)
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('supplied',[False,True])
+def test_dtype_metadata(dtype,supplied):
+    tagged=np.dtype(dtype,metadata={'units':'linear','source':'parity'})
+    image=np.random.default_rng(533).integers(0,256,(17,19),dtype=np.uint8).astype(tagged)
+    if supplied:
+        centers=np.arange(17,dtype=dtype).astype(tagged)
+        compare(hist=(np.arange(1,18,dtype=np.float32),centers))
+    else:compare(image)
+
+
+@pytest.mark.parametrize('dtype',['bool','uint16','float16','complex64','S5','U5','datetime64[D]','timedelta64[D]',object])
+@pytest.mark.parametrize('gaps',[False,True])
+def test_supplied_center_indexing(dtype,gaps):
+    centers=np.arange(17).astype(dtype)
+    counts=np.arange(1,18,dtype=np.float32)
+    if gaps:counts[::3]=0
+    compare(hist=(counts,centers[::-1]))
