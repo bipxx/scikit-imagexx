@@ -1109,7 +1109,10 @@ int main() {
         for(std::size_t i=0;i<dense.size();++i)dense[i]=std::uint16_t(dense.size()-1-i);
         require(rank_order_into(dense.data(),dense.size(),PixelType::uint16,dense_ranks.data(),PixelType::uint16,representatives));
         require(dense==dense_ranks && representatives.size()==dense.size());
-        const auto previous_workers=get_num_threads();set_num_threads(4);
+        const auto previous_workers=get_num_threads();
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
         const std::size_t n=262145,highest=(n-1)/3;
         std::vector<std::uint64_t> wide(n);std::vector<std::uint32_t> wide_ranks(n);
         for(std::size_t i=0;i<n;++i)wide[i]=7+std::uint64_t((n-1-i)/3)*(UINT64_C(1)<<40);

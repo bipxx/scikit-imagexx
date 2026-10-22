@@ -428,6 +428,82 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
     return flags;
 }
 
+namespace {
+template<class Entry>
+#if defined(_MSC_VER)
+__declspec(noinline)
+#elif defined(__GNUC__) || defined(__clang__)
+__attribute__((noinline))
+#endif
+void rank_sort_and_emit(std::vector<Entry>& entries,int workers,PixelType label_type,void* output,
+    std::vector<std::size_t>& representatives,const std::vector<std::pair<std::uint64_t,std::uint64_t>>& bounds) {
+    const auto count=entries.size();std::uint64_t low=UINT64_MAX,high=0;
+    for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
+    const auto span=high-low;
+    auto emit_sorted=[&](const auto& sorted,auto key,auto position) {
+        // Record actual first-pass segments: OpenMP may resize its next team.
+        std::vector<std::pair<std::size_t,std::size_t>> segments(std::size_t(workers),{0,0});
+        std::vector<std::size_t> groups(std::size_t(workers),0),prefix(std::size_t(workers),0);
+        detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
+            segments[worker]={begin,end};std::size_t total=0;
+            for(auto i=begin;i<end;++i)total+=!i || key(sorted[i])!=key(sorted[i-1]);
+            groups[worker]=total;
+        });
+        std::size_t total=0;
+        for(std::size_t worker=0;worker<groups.size();++worker){prefix[worker]=total;total+=groups[worker];}
+        representatives.resize(total);
+        auto assign=[&](auto* labels) {
+            using U=std::remove_pointer_t<decltype(labels)>;
+            detail::partition(std::size_t(workers),workers,[&](auto begin,auto end,auto) {
+                for(auto worker=begin;worker<end;++worker) {
+                    auto rank=prefix[worker];
+                    for(auto i=segments[worker].first;i<segments[worker].second;++i) {
+                        const auto original=position(sorted[i]);
+                        if(!i || key(sorted[i])!=key(sorted[i-1]))representatives[rank++]=original;
+                        labels[original]=U(rank-1);
+                    }
+                }
+            });
+        };
+        switch(label_type) {
+        case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
+        case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
+        case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
+        case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
+        default:throw std::invalid_argument("unsigned rank labels required");
+        }
+    };
+    if(count>=4096 && count<=UINT32_MAX) {
+        if(span<=UINT32_MAX) {
+            // A relative 32-bit key plus a 32-bit original position halves
+            // record traffic and needs only four stable radix passes.
+            std::vector<std::uint64_t> packed(count);
+            detail::partition(count,workers,[&](auto begin,auto end,auto) {
+                for(auto i=begin;i<end;++i)packed[i]=((entries[i].key-low)<<32)|std::uint64_t(entries[i].position);
+            });
+            std::vector<Entry>().swap(entries);
+            radix_sort(packed,workers,[](auto value){return value>>32;},4);
+            emit_sorted(packed,[](auto value){return value>>32;},[](auto value){return std::size_t(value&UINT32_MAX);});
+        } else {
+            // Standard, alignment-safe 12-byte records keep the full key.
+            // memcpy round-trips the native representation on either endian.
+            struct Packed {std::uint32_t words[3];};
+            std::vector<Packed> packed(count);
+            detail::partition(count,workers,[&](auto begin,auto end,auto) {
+                for(auto i=begin;i<end;++i){std::memcpy(packed[i].words,&entries[i].key,8);packed[i].words[2]=std::uint32_t(entries[i].position);}
+            });
+            std::vector<Entry>().swap(entries);
+            auto key=[](const Packed& value){std::uint64_t result;std::memcpy(&result,value.words,8);return result;};
+            radix_sort(packed,workers,key);
+            emit_sorted(packed,key,[](const Packed& value){return std::size_t(value.words[2]);});
+        }
+        return;
+    }
+    radix_sort(entries,workers,[](const auto& entry){return entry.key;});
+    emit_sorted(entries,[](const auto& entry){return entry.key;},[](const auto& entry){return entry.position;});
+}
+}
+
 bool rank_order_into(const void* input,std::size_t count,PixelType type,void* output,
     PixelType label_type,std::vector<std::size_t>& representatives) {
     if(!count || !input || !output)throw std::invalid_argument("nonempty rank-order buffers required");
@@ -496,39 +572,6 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
         default:throw std::invalid_argument("unsigned rank labels required");
         }
     };
-    auto emit_sorted=[&](const auto& sorted,auto key,auto position) {
-        // Record actual first-pass segments: OpenMP may resize its next team.
-        std::vector<std::pair<std::size_t,std::size_t>> segments(std::size_t(workers),{0,0});
-        std::vector<std::size_t> groups(std::size_t(workers),0),prefix(std::size_t(workers),0);
-        detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
-            segments[worker]={begin,end};std::size_t total=0;
-            for(auto i=begin;i<end;++i)total+=!i || key(sorted[i])!=key(sorted[i-1]);
-            groups[worker]=total;
-        });
-        std::size_t total=0;
-        for(std::size_t worker=0;worker<groups.size();++worker){prefix[worker]=total;total+=groups[worker];}
-        representatives.resize(total);
-        auto assign=[&](auto* labels) {
-            using U=std::remove_pointer_t<decltype(labels)>;
-            detail::partition(std::size_t(workers),workers,[&](auto begin,auto end,auto) {
-                for(auto worker=begin;worker<end;++worker) {
-                    auto rank=prefix[worker];
-                    for(auto i=segments[worker].first;i<segments[worker].second;++i) {
-                        const auto original=position(sorted[i]);
-                        if(!i || key(sorted[i])!=key(sorted[i-1]))representatives[rank++]=original;
-                        labels[original]=U(rank-1);
-                    }
-                }
-            });
-        };
-        switch(label_type) {
-        case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
-        case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
-        case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
-        case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
-        default:throw std::invalid_argument("unsigned rank labels required");
-        }
-    };
     if(count>=4096) {
         std::uint64_t low=UINT64_MAX,high=0;
         for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
@@ -561,35 +604,9 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
             return true;
         }
         }
-        if(count<=UINT32_MAX) {
-            if(span<=UINT32_MAX) {
-                // A relative 32-bit key plus a 32-bit original position halves
-                // record traffic and needs only four stable radix passes.
-                std::vector<std::uint64_t> packed(count);
-                detail::partition(count,workers,[&](auto begin,auto end,auto) {
-                    for(auto i=begin;i<end;++i)packed[i]=((entries[i].key-low)<<32)|std::uint64_t(entries[i].position);
-                });
-                std::vector<Entry>().swap(entries);
-                radix_sort(packed,workers,[](auto value){return value>>32;},4);
-                emit_sorted(packed,[](auto value){return value>>32;},[](auto value){return std::size_t(value&UINT32_MAX);});
-            } else {
-                // Standard, alignment-safe 12-byte records keep the full key.
-                // memcpy round-trips the native representation on either endian.
-                struct Packed {std::uint32_t words[3];};
-                std::vector<Packed> packed(count);
-                detail::partition(count,workers,[&](auto begin,auto end,auto) {
-                    for(auto i=begin;i<end;++i){std::memcpy(packed[i].words,&entries[i].key,8);packed[i].words[2]=std::uint32_t(entries[i].position);}
-                });
-                std::vector<Entry>().swap(entries);
-                auto key=[](const Packed& value){std::uint64_t result;std::memcpy(&result,value.words,8);return result;};
-                radix_sort(packed,workers,key);
-                emit_sorted(packed,key,[](const Packed& value){return std::size_t(value.words[2]);});
-            }
-            return true;
-        }
+
     }
-    radix_sort(entries,workers,[](const auto& entry){return entry.key;});
-    emit_sorted(entries,[](const auto& entry){return entry.key;},[](const auto& entry){return entry.position;});
+    rank_sort_and_emit(entries,workers,label_type,output,representatives,bounds);
     return true;
 }
 }
