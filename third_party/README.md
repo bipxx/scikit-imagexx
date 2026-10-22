@@ -24,3 +24,8 @@ Yen's compatibility logarithm has an optional eight-lane AVX2/FMA path in
 checks and a separate FMA CPU-feature check. CPUs without FMA and builds with
 SIMD disabled use scalar `std::fma`; the library has no hardware FMA requirement.
 Only this translation unit uses the additional `-mfma` flag on GCC/Clang.
+
+Median selection models the first-pivot Hoare comparison order and numeric cast
+stages in SciPy's `ndimage/src/ni_filters.c` (v1.18.1). The existing
+`scipy-ndimage-LICENSE.txt` retains its BSD notice. The generalized median
+kernel and SIMD networks are implemented in C++ without Python image arithmetic.

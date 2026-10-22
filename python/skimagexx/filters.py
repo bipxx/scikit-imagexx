@@ -962,3 +962,92 @@ def correlate_sparse(image,kernel,mode='reflect'):
 
 
 __all__.append('correlate_sparse')
+
+
+@_lru_cache(maxsize=8)
+def _median_alias_failure(dtype):
+    # This fixed-size protocol probe checks a dispatch rejection, not pixels
+    # from the caller. SciPy versions disagree on TypeError vs SystemError.
+    from scipy.ndimage import _rank_filter_1d
+    a=np.zeros(3,dtype=dtype)
+    try:_rank_filter_1d.rank_filter(a,1,3,np.zeros_like(a),0,dtype.type(0),0)
+    except Exception as error:
+        cause=error.__cause__
+        return type(error),str(error),type(cause) if cause is not None else None,str(cause)
+    return None
+
+
+def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndimage'):
+    original=image,footprint,out,mode,cval,behavior
+    def delegated():return fallback('filters','median',*original)
+    if type(behavior) not in (str,np.str_,int,float,bool,type(None)):return delegated()
+    if behavior=='rank':return delegated()
+    if isinstance(image,np.generic):image=np.asarray(image)
+    if type(image) not in (np.ndarray,np.memmap) or not _hysteresis_dtype(image.dtype) or image.ndim>16:return delegated()
+    if footprint is None:mask=np.ones((3,)*image.ndim,dtype=bool)
+    elif type(footprint) in (np.ndarray,np.memmap,list,tuple,bool,np.bool_):
+        if np.asarray(footprint).dtype.kind=='O':return delegated()
+        mask=np.asarray(footprint,dtype=bool)
+    else:return delegated()
+    if len([n for n in mask.shape if n>0])!=image.ndim:
+        raise RuntimeError(f'footprint.ndim ({mask.ndim}) must match len(axes) ({image.ndim})')
+    count=int(np.count_nonzero(mask));rank=count//2
+    if not count:raise RuntimeError('rank not within filter footprint size')
+    if out is None:target=np.empty(image.shape,dtype=image.dtype.name)
+    elif type(out) in (np.ndarray,np.memmap):
+        target=np.asarray(out)
+        if target.shape!=image.shape:raise RuntimeError('output shape not correct')
+        if not target.flags.writeable:return delegated()
+    elif isinstance(out,(type,np.dtype,str)):
+        dtype=np.dtype(out)
+        if isinstance(out,str) and not issubclass(dtype.type,np.number):raise RuntimeError('output must have numeric dtype')
+        target=np.empty(image.shape,dtype=dtype)
+    else:return delegated()
+    if not _hysteresis_dtype(target.dtype):return delegated()
+    # A one-element full footprint performs only the upstream output copy.
+    if all(w==1 for w in mask.shape):
+        np.copyto(target,image,casting='unsafe');return target
+    modes={'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
+    if type(mode) not in (str,np.str_):return delegated()
+    if mode not in modes:raise RuntimeError('boundary mode not supported')
+    if type(cval) not in (int,float,bool,np.ndarray,*_HYSTERESIS_SCALARS):return delegated()
+    profile=_adaptive_rank_profile()
+    fast=image.ndim==1 and count>2 and profile>0 and (profile==1 or image.size>=(mask.size-1)//2 or image.size==1)
+    window=mask.shape;integer_cval=0
+    if fast:
+        # Direct 1-D upstream outputs are interpreted as the input type. A
+        # mismatched output dtype can overrun its storage; never emulate it.
+        direct=image.dtype.kind=='f' and image.dtype.itemsize in (4,8) or image.dtype.kind=='i' and image.dtype.itemsize==8
+        if direct and target.dtype.newbyteorder('=')!=image.dtype.newbyteorder('='):return delegated()
+        working=np.dtype(np.float32 if image.dtype.kind=='f' and image.dtype.itemsize<=4 else np.float64 if image.dtype.kind=='f' else np.int64)
+        source=np.asarray(image).astype(working,copy=False)
+        scalar=working.type(cval)
+        if working.kind=='i':integer_cval=int(scalar);constant=0.
+        else:constant=float(scalar)
+        if direct and source.dtype.num!=working.num:
+            failure=_median_alias_failure(source.dtype)
+            if failure:
+                kind,message,cause,detail=failure
+                if cause is not None:raise kind(message) from cause(detail)
+                raise kind(message)
+        if profile==1 and image.size<(mask.size-1)//2:
+            if not direct and image.size:return delegated()
+            if out is None or np.may_share_memory(image,target):target.fill(0)
+            return target
+        coordinates=[[k] for k in range(mask.size)]
+        dtype=working
+    else:
+        constant=float(cval)
+        if image.size and (image.dtype==np.float16 or target.dtype==np.float16):raise RuntimeError('array type not supported')
+        if not image.size:return target
+        source=np.asarray(image) if image.dtype.isnative else _core.edge_native(image)
+        coordinates=np.argwhere(mask).tolist();dtype=target.dtype.newbyteorder('=')
+    if not source.flags.c_contiguous or not source.flags.aligned:source=source.copy(order='C')
+    zero_strides=not fast and all(stride==0 for stride in image.strides)
+    result,unsupported=_core.median_filter(source,dtype,window,coordinates,rank,modes[mode],constant,integer_cval,count>2 and not fast,fast,zero_strides,not fast and not(count<=2 and count==mask.size))
+    if unsupported:return delegated()
+    np.copyto(target,result,casting='unsafe')
+    return target
+
+
+__all__.append('median')

@@ -1,5 +1,5 @@
 """Median contract cases; native coverage is registered only after these pass."""
-import inspect,re,warnings
+import inspect,warnings
 import numpy as np
 import pytest
 from skimage.filters import median as reference
@@ -128,3 +128,44 @@ def test_rank_behavior_explicit_fallback():
     xx.set_fallback_enabled(True)
     with pytest.warns(xx.FallbackWarning):actual=xx.filters.median(a,footprint,behavior='rank')
     np.testing.assert_array_equal(actual,reference(a,footprint,behavior='rank'))
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('target',REAL)
+@pytest.mark.parametrize('kind',['dense','one','two'])
+def test_nd_output_dtypes(dtype,target,kind):
+    footprint=np.ones((3,3),dtype=bool)
+    if kind!='dense':
+        footprint[:]=False;footprint[0,0]=True
+        if kind=='two':footprint[-1,-1]=True
+    compare(sample(dtype,(7,9)),footprint,out=target,mode='constant',cval=300)
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('mode',['nearest','constant'])
+@pytest.mark.parametrize('value',[-300.,300.,1e12+1,np.inf])
+def test_one_dimensional_constant_casts(dtype,mode,value):
+    compare(sample(dtype,(33,)),mode=mode,cval=value)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('kind',['sparse','one','two'])
+def test_nonfinite_sparse_footprints(dtype,mode,kind):
+    a=sample(dtype,(9,13));a[0,0]=np.nan;a[2,4]=-np.inf;a[7,9]=np.inf
+    footprint=np.zeros((3,3),dtype=bool);footprint[0,0]=True
+    if kind!='one':footprint[-1,-1]=True
+    if kind=='sparse':footprint[1,0]=True;footprint[0,1]=True
+    compare(a,footprint,mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',MODES)
+def test_one_dimensional_infinities(dtype,mode):
+    a=sample(dtype,(33,));a[0]=np.inf;a[9]=-np.inf;a[-1]=np.inf
+    compare(a,mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',['nearest','reflect','mirror','wrap','grid-mirror','grid-wrap'])
+def test_unused_nan_constant_is_supported(dtype,mode):
+    compare(sample(dtype,(33,)),mode=mode,cval=np.nan)
+
+@pytest.mark.parametrize('footprint',[np.array([[1,0,0],[0,0,0],[0,0,0]],dtype=bool),np.ones((1,2),dtype=bool)])
+def test_fractional_constant_and_different_output(footprint):
+    compare(np.ones((7,9),dtype=np.float32),footprint,out=np.float64,mode='constant',cval=300.3)

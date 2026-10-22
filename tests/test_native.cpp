@@ -21,6 +21,7 @@
 #include "skimagexx/rank_order.hpp"
 #include "skimagexx/hysteresis.hpp"
 #include "skimagexx/sparse.hpp"
+#include "skimagexx/median.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <cstring>
@@ -1177,6 +1178,22 @@ int main() {
         const auto parallel_flags=correlate_sparse_into(volume.data(),parallel.data(),PixelType::float32,{65,65,65},{3,3,3},coordinates,taps);
         require(serial==parallel && serial_flags==parallel_flags && (serial_flags[4]&1));
         set_num_threads(previous);
+    }
+    {
+        const std::uint8_t image[]={9,1,7,2,5,3,8,4,6};std::uint8_t result[9]{};
+        std::vector<std::vector<std::size_t>> footprint;
+        for(std::size_t y=0;y<3;++y)for(std::size_t x=0;x<3;++x)footprint.push_back({y,x});
+        median_filter_into(image,result,PixelType::uint8,PixelType::uint8,{3,3},{3,3},footprint,4,GaussianBorder::nearest,0);
+        require(std::all_of(result,result+9,[](auto x){return x==5;}));
+        const std::int64_t wide[]={INT64_MAX,0,1,2};std::int64_t ordered[4]{};
+        median_filter_into(wide,ordered,PixelType::int64,PixelType::int64,{4},{3},{{0},{1},{2}},1,GaussianBorder::nearest,0,0,false,true);
+        require(ordered[0]==INT64_MAX && ordered[1]==1 && ordered[2]==1 && ordered[3]==2);
+        const std::uint8_t one=1;std::uint16_t casted=0;
+        median_filter_into(&one,&casted,PixelType::uint8,PixelType::uint16,{1,1},{3,3},{{0,0}},0,GaussianBorder::constant,300,0,false,false,false,true);
+        require(casted==44);
+        std::vector<float> constant(7*9,2),filtered(constant.size());
+        median_filter_into(constant.data(),filtered.data(),PixelType::float32,PixelType::float32,{7,9},{3,3},footprint,4,GaussianBorder::reflect,0);
+        require(std::all_of(filtered.begin(),filtered.end(),[](auto x){return x==2;}));
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

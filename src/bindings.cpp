@@ -6,6 +6,7 @@
 #include "skimagexx/rank_order.hpp"
 #include "skimagexx/hysteresis.hpp"
 #include "skimagexx/sparse.hpp"
+#include "skimagexx/median.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -320,6 +321,16 @@ PYBIND11_MODULE(_core, m) {
         if(!weak || !strong || weak.dtype().kind()!='b' || strong.dtype().kind()!='b')throw py::type_error("boolean hysteresis masks required");
         const auto shape=hysteresis_shape(weak,strong);std::vector<py::ssize_t> dimensions(weak.shape(),weak.shape()+weak.ndim());py::array output(py::dtype::of<bool>(),dimensions);
         {py::gil_scoped_release release;skimagexx::hysteresis_connect_into(static_cast<const std::uint8_t*>(weak.data()),static_cast<const std::uint8_t*>(strong.data()),static_cast<std::uint8_t*>(output.mutable_data()),shape);}return output;});
+    m.def("median_filter",[](py::array image,py::dtype dtype,const std::vector<std::size_t>& window,
+        const std::vector<std::vector<std::size_t>>& coordinates,std::size_t rank,int border,double cval,
+        std::int64_t integer_cval,bool nd_rank,bool fast_1d,bool zero_strides,bool source_cval){
+        if(!(image.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>())throw py::type_error("aligned contiguous median storage required");
+        const auto source=pixel_type(image.dtype()),target=pixel_type(dtype);
+        std::vector<std::size_t> shape(image.shape(),image.shape()+image.ndim());
+        std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());py::array output(dtype,dimensions);skimagexx::MedianInfo info;
+        {py::gil_scoped_release release;info=skimagexx::median_filter_into(image.data(),output.mutable_data(),source,target,shape,window,coordinates,rank,skimagexx::GaussianBorder(border),cval,integer_cval,nd_rank,fast_1d,zero_strides,source_cval);}
+        return py::make_tuple(output,info.unsupported_nan);
+    });
     m.def("correlate_sparse",[](py::array image,const std::vector<std::size_t>& kernel,
         const std::vector<std::vector<std::size_t>>& coordinates,py::array weights,int border,bool valid){
         const auto type=pixel_type(image.dtype());
