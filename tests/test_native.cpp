@@ -798,6 +798,18 @@ int main() {
         const auto original_histogram=histogram;
         require(threshold_minimum(histogram.data(),histogram.size())==3);
         require(histogram==original_histogram);
+        for(std::size_t size:{9,15,16,17,31,32,33,63,64,65,127,128,129,257}) {
+            std::vector<float> guarded(size+2,1);
+            guarded.front()=-9999;guarded.back()=-9999;
+            guarded[3]=9;guarded[size-2]=9;
+            const auto saved=guarded;
+            // After one smoothing step the two peak plateaus end at3 and
+            // n-2. Their first intervening minimum is4, independently of n.
+            require(threshold_minimum(guarded.data()+1,size)==4);
+            require(guarded==saved);
+            std::vector<float> exact(guarded.begin()+1,guarded.end()-1);
+            require(threshold_minimum(exact.data(),size)==4);
+        }
         bool failed=false;
         try {threshold_minimum(histogram.data(),histogram.size(),1);}
         catch(const std::runtime_error& error) {
