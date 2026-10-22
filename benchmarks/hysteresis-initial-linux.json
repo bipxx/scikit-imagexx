@@ -1,0 +1,2791 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T14:15:31.908242+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "logical_cpus": 4,
+    "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit_image": "0.26.0",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "seed": 1934,
+    "command": [
+      "benchmarks/hysteresis.py",
+      "--size",
+      "512",
+      "--threads",
+      "1",
+      "4",
+      "--repeat",
+      "7",
+      "--output",
+      "build/hysteresis-performance.json"
+    ],
+    "source_sha256": "1d2108d5d6cd1a234ca14eace05b00872c0fe46742df7be8507e4c9d42e07c0c",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "binary_sha256": {
+      "_core.cpython-313-x86_64-linux-gnu.so": "7f4438b188acad0d1a302508665b78c70877c33133118d7a7cec1bd33c082cb3"
+    }
+  },
+  "results": [
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.910029,
+      "cpp_ms": 6.26278,
+      "speedup": 0.7840015137047764,
+      "samples_ms": [
+        [
+          4.885894,
+          4.864329,
+          5.1231805,
+          4.910029,
+          5.006784,
+          4.878701,
+          4.949177
+        ],
+        [
+          6.235649,
+          6.33267,
+          6.26278,
+          6.188902,
+          6.3719785,
+          6.333246,
+          6.210427
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.781920333333333,
+      "cpp_ms": 3.3195353333333335,
+      "speedup": 1.4405390674156602,
+      "samples_ms": [
+        [
+          4.779584,
+          4.805868333333333,
+          4.805237,
+          4.779642666666667,
+          4.781920333333333,
+          4.775702,
+          4.78911
+        ],
+        [
+          3.3038463333333334,
+          3.302036,
+          3.2631,
+          3.3196923333333337,
+          3.3195353333333335,
+          3.8216176666666666,
+          3.3554826666666666
+        ]
+      ],
+      "loops": [
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.908797,
+      "cpp_ms": 8.701825,
+      "speedup": 0.9088664734121865,
+      "samples_ms": [
+        [
+          7.983877,
+          7.908797,
+          7.762134,
+          7.895682,
+          8.22175,
+          8.026616,
+          7.700198
+        ],
+        [
+          8.690864,
+          8.685453,
+          8.701825,
+          8.742249,
+          7.734652,
+          9.210252,
+          8.713255
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 8.0099105,
+      "cpp_ms": 5.405382,
+      "speedup": 1.4818398588665889,
+      "samples_ms": [
+        [
+          7.877228,
+          8.0099105,
+          7.9038325,
+          8.121523,
+          8.062839,
+          8.0330825,
+          7.8976455
+        ],
+        [
+          5.405382,
+          5.411994,
+          5.387584,
+          5.3102095,
+          4.7639415,
+          5.5220795,
+          5.42037
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.556207,
+      "cpp_ms": 3.2551605,
+      "speedup": 0.7852783295938864,
+      "samples_ms": [
+        [
+          2.6440728,
+          2.5367607999999997,
+          2.556207,
+          2.551294,
+          2.5761704,
+          2.541746,
+          2.5573934
+        ],
+        [
+          3.2551605,
+          3.26083375,
+          3.2219485,
+          3.26597575,
+          3.2251245,
+          3.25348225,
+          3.28777875
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.555682,
+      "cpp_ms": 3.259283,
+      "speedup": 0.7841239929150061,
+      "samples_ms": [
+        [
+          2.555682,
+          2.565819,
+          2.5596616,
+          2.5289402,
+          2.5524702,
+          2.5455614,
+          2.5777794
+        ],
+        [
+          3.28803925,
+          3.31839575,
+          3.259283,
+          3.22229925,
+          3.2273985,
+          3.25288875,
+          3.2957135
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.981933,
+      "cpp_ms": 0.9857221818181817,
+      "speedup": 4.039609814456296,
+      "samples_ms": [
+        [
+          4.015231666666667,
+          4.058869666666666,
+          3.990716,
+          3.92302,
+          3.9181876666666664,
+          3.9395806666666666,
+          3.981933
+        ],
+        [
+          0.976781,
+          0.988604909090909,
+          1.0014624545454547,
+          0.9859717272727273,
+          0.9768091818181818,
+          0.9577237272727273,
+          0.9857221818181817
+        ]
+      ],
+      "loops": [
+        3,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.9398713333333335,
+      "cpp_ms": 0.7215318666666667,
+      "speedup": 5.460425956700642,
+      "samples_ms": [
+        [
+          3.9640933333333335,
+          3.8797793333333335,
+          3.9398713333333335,
+          3.96048,
+          3.9119293333333336,
+          3.9945633333333337,
+          3.8979496666666664
+        ],
+        [
+          0.7354577333333333,
+          0.7215318666666667,
+          0.7147671999999999,
+          0.7212953333333334,
+          0.7140338,
+          0.7307162666666667,
+          0.7237325333333333
+        ]
+      ],
+      "loops": [
+        3,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.872785,
+      "cpp_ms": 1.9433178333333332,
+      "speedup": 2.507456534601863,
+      "samples_ms": [
+        [
+          4.872785,
+          4.871502,
+          4.8272345,
+          4.9100335,
+          4.895051,
+          4.9605535,
+          4.7848055
+        ],
+        [
+          1.9802815,
+          1.9748731666666668,
+          1.9411455,
+          1.9215138333333333,
+          1.9433178333333332,
+          2.1939948333333334,
+          1.9394105
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.9003255,
+      "cpp_ms": 1.0646128181818182,
+      "speedup": 4.602917996393225,
+      "samples_ms": [
+        [
+          4.8211285,
+          4.9155945,
+          4.9003255,
+          4.971774,
+          4.899234,
+          4.784205,
+          4.901493
+        ],
+        [
+          1.0694455454545455,
+          1.1370897272727274,
+          1.0549739090909092,
+          1.0646128181818182,
+          1.0407355454545455,
+          1.0773555454545454,
+          1.052627818181818
+        ]
+      ],
+      "loops": [
+        2,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.6767615,
+      "cpp_ms": 2.100078,
+      "speedup": 3.1792921501010913,
+      "samples_ms": [
+        [
+          6.9087885,
+          6.726729,
+          6.67633,
+          6.6487085,
+          6.76469,
+          6.5943725,
+          6.6767615
+        ],
+        [
+          2.1039805,
+          2.16291275,
+          2.100078,
+          2.0910765,
+          1.92894425,
+          2.09355075,
+          2.10827075
+        ]
+      ],
+      "loops": [
+        2,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.8917765,
+      "cpp_ms": 1.1200384285714287,
+      "speedup": 6.1531607525200975,
+      "samples_ms": [
+        [
+          6.6920095,
+          6.8917765,
+          6.782799,
+          6.9277585,
+          6.9060785,
+          6.851692,
+          8.9091555
+        ],
+        [
+          1.1200384285714287,
+          1.12699,
+          1.1040701428571429,
+          1.1314152857142856,
+          1.0142141428571427,
+          1.131579857142857,
+          1.105917857142857
+        ]
+      ],
+      "loops": [
+        2,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.781124,
+      "cpp_ms": 6.0288285,
+      "speedup": 0.7930436236492712,
+      "samples_ms": [
+        [
+          4.8217345,
+          4.7830825,
+          4.747762,
+          4.781124,
+          4.754905,
+          4.7809735,
+          4.8146615
+        ],
+        [
+          6.024966,
+          6.003261,
+          6.0571665,
+          6.0245255,
+          6.0288285,
+          6.0309675,
+          6.1375115
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.7564325,
+      "cpp_ms": 3.2532195,
+      "speedup": 1.4620693439222283,
+      "samples_ms": [
+        [
+          4.812142,
+          4.7750875,
+          4.801036,
+          4.7564325,
+          4.6964505,
+          4.731465,
+          4.6915605
+        ],
+        [
+          3.44205375,
+          3.29610675,
+          3.24379675,
+          3.241182,
+          3.22942,
+          3.27887225,
+          3.2532195
+        ]
+      ],
+      "loops": [
+        2,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.5730506666666666,
+      "cpp_ms": 1.5789175714285713,
+      "speedup": 2.2629747944560816,
+      "samples_ms": [
+        [
+          3.5869866666666663,
+          3.592871,
+          3.6307446666666667,
+          3.5730506666666666,
+          3.5419493333333336,
+          3.5013643333333335,
+          3.5648156666666666
+        ],
+        [
+          1.5889042857142857,
+          1.5789175714285713,
+          1.6076484285714285,
+          1.592173857142857,
+          1.559776142857143,
+          1.560363142857143,
+          1.571269142857143
+        ]
+      ],
+      "loops": [
+        3,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.55116,
+      "cpp_ms": 1.40222775,
+      "speedup": 2.5325129958382293,
+      "samples_ms": [
+        [
+          3.6335373333333334,
+          3.5647483333333336,
+          3.5572413333333337,
+          3.496131,
+          3.5442636666666667,
+          3.5497943333333333,
+          3.55116
+        ],
+        [
+          1.455897875,
+          1.418322625,
+          1.3794815,
+          1.38648225,
+          1.3913875,
+          1.40222775,
+          1.52737475
+        ]
+      ],
+      "loops": [
+        3,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.046036,
+      "cpp_ms": 1.0966057142857144,
+      "speedup": 5.513409169072358,
+      "samples_ms": [
+        [
+          6.1653685,
+          6.022416,
+          6.015068,
+          6.151227,
+          6.043967,
+          6.046036,
+          6.1173955
+        ],
+        [
+          1.109144857142857,
+          1.087015,
+          1.114751,
+          1.0610594285714285,
+          0.9823412857142857,
+          1.10277,
+          1.0966057142857144
+        ]
+      ],
+      "loops": [
+        2,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.1498345,
+      "cpp_ms": 1.351860142857143,
+      "speedup": 4.549164743478852,
+      "samples_ms": [
+        [
+          6.0112005,
+          6.1000155,
+          6.140712,
+          6.1498345,
+          6.406363,
+          6.337304,
+          6.50406
+        ],
+        [
+          1.3159174285714286,
+          1.339728857142857,
+          1.356530142857143,
+          1.407231857142857,
+          1.2320824285714287,
+          1.3677312857142856,
+          1.351860142857143
+        ]
+      ],
+      "loops": [
+        2,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.106232,
+      "cpp_ms": 0.09722539622641509,
+      "speedup": 1.0926363288107424,
+      "samples_ms": [
+        [
+          0.106232,
+          0.10733436507936507,
+          0.10566031746031745,
+          0.10939773015873017,
+          0.1097113492063492,
+          0.10504933333333333,
+          0.10321415873015873
+        ],
+        [
+          0.09863367924528302,
+          0.09654315094339622,
+          0.0983605283018868,
+          0.09722539622641509,
+          0.09928015094339622,
+          0.09714637735849058,
+          0.0956607924528302
+        ]
+      ],
+      "loops": [
+        63,
+        53
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.10538573529411766,
+      "cpp_ms": 0.09480743023255814,
+      "speedup": 1.1115767512695096,
+      "samples_ms": [
+        [
+          0.10318955882352941,
+          0.10408270588235294,
+          0.10532486764705883,
+          0.10538573529411766,
+          0.10888414705882353,
+          0.10832975,
+          0.10578882352941177
+        ],
+        [
+          0.09298077906976744,
+          0.09767824418604652,
+          0.09480743023255814,
+          0.09793303488372093,
+          0.09427970930232558,
+          0.09642998837209302,
+          0.09218651162790698
+        ]
+      ],
+      "loops": [
+        68,
+        86
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.7343005,
+      "cpp_ms": 6.2747015,
+      "speedup": 0.7545060908475089,
+      "samples_ms": [
+        [
+          4.7303175,
+          4.7343005,
+          4.762728,
+          4.7253185,
+          4.872092,
+          4.661755,
+          4.772301
+        ],
+        [
+          6.235659,
+          6.2571195,
+          6.22261,
+          6.2747015,
+          6.288793,
+          6.3348085,
+          6.365106
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.700288666666667,
+      "cpp_ms": 3.33115,
+      "speedup": 1.4110108120819138,
+      "samples_ms": [
+        [
+          4.732899,
+          4.700288666666667,
+          4.663443333333333,
+          4.810344,
+          4.81674,
+          4.673442,
+          4.668579333333333
+        ],
+        [
+          3.314063,
+          3.26206575,
+          3.33115,
+          3.302771,
+          3.3463205,
+          3.3322395,
+          3.35337625
+        ]
+      ],
+      "loops": [
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.6867545,
+      "cpp_ms": 9.972541,
+      "speedup": 0.7707919676640086,
+      "samples_ms": [
+        [
+          7.5717,
+          7.459295,
+          7.6867545,
+          7.798227,
+          7.7936685,
+          7.704062,
+          7.582244
+        ],
+        [
+          9.787907,
+          10.2941,
+          10.064953,
+          9.849601,
+          8.168126,
+          10.085932,
+          9.972541
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.8224935,
+      "cpp_ms": 5.191673,
+      "speedup": 1.1215062081144171,
+      "samples_ms": [
+        [
+          5.9049475,
+          5.845041,
+          6.613178,
+          5.8224935,
+          5.7938305,
+          5.79088,
+          5.7892725
+        ],
+        [
+          5.4117385,
+          5.191673,
+          5.09065,
+          5.076789,
+          5.268506,
+          5.1542335,
+          5.2202765
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.5681594,
+      "cpp_ms": 3.32630325,
+      "speedup": 0.7720761478978202,
+      "samples_ms": [
+        [
+          2.5453832000000003,
+          2.5681594,
+          2.5662157999999997,
+          2.5873852000000004,
+          2.5926288,
+          2.54595,
+          2.643037
+        ],
+        [
+          3.332352,
+          3.32630325,
+          3.35496425,
+          3.31458625,
+          3.39191575,
+          3.32330775,
+          3.31983625
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.6221122,
+      "cpp_ms": 3.361346,
+      "speedup": 0.7800780401660525,
+      "samples_ms": [
+        [
+          2.6410814,
+          2.6221122,
+          2.6090818,
+          2.6487496,
+          2.6206636000000003,
+          2.6048798,
+          2.6656592000000003
+        ],
+        [
+          3.37338075,
+          3.38186925,
+          3.35008025,
+          3.361346,
+          3.3299675,
+          3.36245325,
+          3.32287675
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.034521,
+      "cpp_ms": 1.1562354444444445,
+      "speedup": 3.4893593855692018,
+      "samples_ms": [
+        [
+          4.034641333333333,
+          3.9931873333333336,
+          4.034521,
+          4.049649333333334,
+          4.020982,
+          4.268410333333333,
+          3.9928233333333334
+        ],
+        [
+          1.1562354444444445,
+          1.1587032222222222,
+          1.149226888888889,
+          1.1639163333333333,
+          1.1261472222222222,
+          1.1548985555555555,
+          1.1740186666666668
+        ]
+      ],
+      "loops": [
+        3,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.9851056666666667,
+      "cpp_ms": 0.7910491538461538,
+      "speedup": 5.037747208616198,
+      "samples_ms": [
+        [
+          3.9841166666666665,
+          3.9756246666666666,
+          3.96979,
+          4.073741,
+          4.046710333333333,
+          3.9851056666666667,
+          3.9875166666666666
+        ],
+        [
+          0.7959183076923078,
+          0.8008868461538461,
+          0.8070983846153846,
+          0.7910491538461538,
+          0.7863019230769231,
+          0.7892898461538461,
+          0.7886956923076922
+        ]
+      ],
+      "loops": [
+        3,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.998498,
+      "cpp_ms": 2.0575255,
+      "speedup": 2.429373536318262,
+      "samples_ms": [
+        [
+          4.998498,
+          4.8784595,
+          5.009589,
+          5.0322655,
+          5.0247165,
+          4.9268945,
+          4.9060255
+        ],
+        [
+          2.076845,
+          2.053730333333333,
+          2.048081166666667,
+          2.080086,
+          2.0575255,
+          2.050611,
+          2.069304166666667
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.9031905,
+      "cpp_ms": 1.0131908,
+      "speedup": 4.83935552908692,
+      "samples_ms": [
+        [
+          4.9161445,
+          4.9031905,
+          4.7938165,
+          4.8540985,
+          4.997932,
+          4.9449985,
+          4.9030005
+        ],
+        [
+          1.0133,
+          0.9975535999999999,
+          1.0060084,
+          1.0131908,
+          0.9976649000000001,
+          1.0450382,
+          1.0318236
+        ]
+      ],
+      "loops": [
+        2,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.02409,
+      "cpp_ms": 3.1754896666666665,
+      "speedup": 2.2119706682507445,
+      "samples_ms": [
+        [
+          6.971948,
+          6.9909785,
+          7.072616,
+          7.02409,
+          7.03468,
+          7.0553085,
+          6.9061155
+        ],
+        [
+          3.1754896666666665,
+          3.1321556666666663,
+          3.1987333333333337,
+          3.233371,
+          2.822101,
+          3.1709853333333333,
+          3.1785926666666664
+        ]
+      ],
+      "loops": [
+        2,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.884735,
+      "cpp_ms": 2.7529245,
+      "speedup": 2.500880427341905,
+      "samples_ms": [
+        [
+          6.841038,
+          6.835608,
+          6.947352,
+          6.8029375,
+          6.9759395,
+          6.884735,
+          6.923883
+        ],
+        [
+          2.7529245,
+          2.76239775,
+          2.89506025,
+          2.70471975,
+          2.458864,
+          2.76924,
+          2.7207875
+        ]
+      ],
+      "loops": [
+        2,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.3939795,
+      "cpp_ms": 7.584079,
+      "speedup": 0.9749343987582408,
+      "samples_ms": [
+        [
+          7.5550405,
+          7.5519685,
+          7.4441575,
+          7.369739,
+          7.3318385,
+          7.3673095,
+          7.3939795
+        ],
+        [
+          7.584079,
+          7.671662,
+          7.483972,
+          7.664098,
+          6.214425,
+          7.333442,
+          7.694736
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.9092875,
+      "cpp_ms": 3.4537786666666666,
+      "speedup": 1.421425045959324,
+      "samples_ms": [
+        [
+          4.884706,
+          4.9577525,
+          4.9720895,
+          5.0242315,
+          4.9092875,
+          4.9061565,
+          4.832409
+        ],
+        [
+          3.4537786666666666,
+          3.50798,
+          3.533728,
+          3.4550416666666663,
+          3.4447956666666664,
+          3.3823356666666666,
+          3.3513313333333334
+        ]
+      ],
+      "loops": [
+        2,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.515499,
+      "cpp_ms": 1.715745857142857,
+      "speedup": 2.0489625461513157,
+      "samples_ms": [
+        [
+          3.5324905,
+          3.530562,
+          3.4980515,
+          3.52195075,
+          3.515499,
+          3.5019985,
+          3.5056255
+        ],
+        [
+          1.699799,
+          1.731659857142857,
+          1.723181,
+          1.751237857142857,
+          1.715745857142857,
+          1.7105902857142856,
+          1.7121592857142858
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.5898823333333336,
+      "cpp_ms": 1.473006,
+      "speedup": 2.437113177633583,
+      "samples_ms": [
+        [
+          3.5898823333333336,
+          3.5895653333333333,
+          3.6961506666666666,
+          3.566766,
+          3.58675,
+          3.6256663333333337,
+          3.622039
+        ],
+        [
+          1.500585,
+          1.473006,
+          1.44666825,
+          1.4648985,
+          1.475118875,
+          1.449581,
+          1.47964975
+        ]
+      ],
+      "loops": [
+        3,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.323559,
+      "cpp_ms": 1.180768875,
+      "speedup": 5.355458747165909,
+      "samples_ms": [
+        [
+          6.2973705,
+          6.3095975,
+          6.2811495,
+          6.323559,
+          6.3725205,
+          6.380139,
+          6.3437815
+        ],
+        [
+          1.177740625,
+          1.181773125,
+          1.174432,
+          1.180768875,
+          1.14244125,
+          1.198334,
+          1.206524
+        ]
+      ],
+      "loops": [
+        2,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.713311,
+      "cpp_ms": 1.5207332,
+      "speedup": 4.414522547413314,
+      "samples_ms": [
+        [
+          6.6020885,
+          6.7612455,
+          6.713311,
+          6.747645,
+          6.6752845,
+          6.6512795,
+          6.769871
+        ],
+        [
+          1.530425,
+          1.5522518,
+          1.4602762,
+          1.5566358,
+          1.3219322,
+          1.5186232,
+          1.5207332
+        ]
+      ],
+      "loops": [
+        2,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09913982558139535,
+      "cpp_ms": 0.0869418,
+      "speedup": 1.1403010471533295,
+      "samples_ms": [
+        [
+          0.09812874418604652,
+          0.09913982558139535,
+          0.09999733720930232,
+          0.10065904651162791,
+          0.10028555813953488,
+          0.09803229069767441,
+          0.09913912790697675
+        ],
+        [
+          0.0869418,
+          0.0863603,
+          0.08686694285714286,
+          0.08861619999999999,
+          0.0875395,
+          0.08821172857142857,
+          0.08519367142857143
+        ]
+      ],
+      "loops": [
+        86,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.10013518390804597,
+      "cpp_ms": 0.08654991666666667,
+      "speedup": 1.1569645328914737,
+      "samples_ms": [
+        [
+          0.09921991954022988,
+          0.10108005747126438,
+          0.09934855172413792,
+          0.10013518390804597,
+          0.10034396551724138,
+          0.09833701149425288,
+          0.10097849425287357
+        ],
+        [
+          0.08689735714285715,
+          0.088245,
+          0.08699576190476191,
+          0.08654991666666667,
+          0.08491270238095239,
+          0.08489385714285715,
+          0.08401471428571429
+        ]
+      ],
+      "loops": [
+        87,
+        84
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nan-background",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.24210425,
+      "cpp_ms": 1.0523097,
+      "speedup": 3.0809411430874394,
+      "samples_ms": [
+        [
+          3.323393,
+          3.247682,
+          3.2137965,
+          3.24210425,
+          3.230049,
+          3.2478,
+          3.21336575
+        ],
+        [
+          1.0639013,
+          1.0523097,
+          1.0678538,
+          1.0390822,
+          1.0530923,
+          1.0350766999999998,
+          1.046515
+        ]
+      ],
+      "loops": [
+        4,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nan-background",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.236819,
+      "cpp_ms": 0.7425449285714285,
+      "speedup": 4.359088420719901,
+      "samples_ms": [
+        [
+          3.21299525,
+          3.24559825,
+          3.24434825,
+          3.236819,
+          3.25977975,
+          3.2197575,
+          3.21744325
+        ],
+        [
+          0.7500153571428572,
+          0.7409527857142857,
+          0.7436420714285715,
+          0.7368472857142857,
+          0.7425449285714285,
+          0.7383049285714285,
+          0.7525114285714285
+        ]
+      ],
+      "loops": [
+        4,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.760435,
+      "cpp_ms": 6.22496,
+      "speedup": 0.7647334280059631,
+      "samples_ms": [
+        [
+          4.763607,
+          4.706928,
+          4.768794,
+          4.760435,
+          4.746676,
+          4.765397333333333,
+          4.677730666666667
+        ],
+        [
+          6.162228,
+          6.232444,
+          6.2420565,
+          6.22496,
+          6.270721,
+          6.163966,
+          6.207553
+        ]
+      ],
+      "loops": [
+        3,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "random",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.739028333333333,
+      "cpp_ms": 3.26535225,
+      "speedup": 1.451306925105349,
+      "samples_ms": [
+        [
+          4.742722,
+          4.656915333333333,
+          4.786053,
+          4.730339,
+          4.804717,
+          4.699471666666667,
+          4.739028333333333
+        ],
+        [
+          3.26088425,
+          3.283291,
+          3.26535225,
+          3.35267,
+          3.2556645,
+          3.24891925,
+          3.27409625
+        ]
+      ],
+      "loops": [
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.9882475,
+      "cpp_ms": 9.219398,
+      "speedup": 0.8664608578564457,
+      "samples_ms": [
+        [
+          8.1790465,
+          8.0372835,
+          7.9705155,
+          7.9882475,
+          7.987902,
+          7.910537,
+          8.1241305
+        ],
+        [
+          9.251998,
+          9.098161,
+          9.242952,
+          9.310227,
+          8.318549,
+          9.120824,
+          9.219398
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.9025975,
+      "cpp_ms": 5.440873,
+      "speedup": 1.0848622086933475,
+      "samples_ms": [
+        [
+          5.9081095,
+          5.8074915,
+          5.920092,
+          5.8959015,
+          5.7455565,
+          5.909485,
+          5.9025975
+        ],
+        [
+          5.445457,
+          5.440873,
+          5.318079,
+          5.513854,
+          5.4430525,
+          5.3197255,
+          5.2799105
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.575515,
+      "cpp_ms": 3.359878,
+      "speedup": 0.7665501544996575,
+      "samples_ms": [
+        [
+          2.6708586000000003,
+          2.5481256,
+          2.5812896000000003,
+          2.575515,
+          2.6055428,
+          2.5559784,
+          2.5641718
+        ],
+        [
+          3.376196,
+          3.368702,
+          3.35504375,
+          3.359878,
+          3.2957735,
+          3.38774,
+          3.31658225
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.570321,
+      "cpp_ms": 3.33785925,
+      "speedup": 0.7700507443505893,
+      "samples_ms": [
+        [
+          2.551905,
+          2.5623582000000003,
+          2.5774344,
+          2.5926647999999997,
+          2.6023188,
+          2.570321,
+          2.5580884
+        ],
+        [
+          3.33785925,
+          3.30641825,
+          3.357694,
+          3.33392225,
+          3.318193,
+          3.366796,
+          3.34523575
+        ]
+      ],
+      "loops": [
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.8862703333333335,
+      "cpp_ms": 1.0690126000000002,
+      "speedup": 3.635383094019035,
+      "samples_ms": [
+        [
+          3.9642293333333334,
+          3.847959,
+          3.8258676666666664,
+          3.856832,
+          3.8862703333333335,
+          3.9420846666666667,
+          3.9118846666666665
+        ],
+        [
+          1.0759173,
+          1.0795362,
+          1.0843511000000001,
+          1.0690126000000002,
+          1.052133,
+          1.0621878,
+          1.0469584
+        ]
+      ],
+      "loops": [
+        3,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "all-weak",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.9460086666666667,
+      "cpp_ms": 0.7028167692307693,
+      "speedup": 5.614562485447752,
+      "samples_ms": [
+        [
+          3.9582916666666663,
+          3.976462,
+          3.9460086666666667,
+          3.912633,
+          3.9208683333333334,
+          4.004678,
+          3.925741
+        ],
+        [
+          0.7179241538461538,
+          0.7098083076923077,
+          0.7028167692307693,
+          0.6991961538461539,
+          0.6970229230769232,
+          0.7044867692307692,
+          0.7001626153846153
+        ]
+      ],
+      "loops": [
+        3,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.781252666666667,
+      "cpp_ms": 1.9498395,
+      "speedup": 2.452126273299247,
+      "samples_ms": [
+        [
+          4.8056383333333335,
+          4.781252666666667,
+          4.892928,
+          4.8028933333333335,
+          4.778087,
+          4.740633666666667,
+          4.749420333333333
+        ],
+        [
+          1.9561378333333332,
+          1.962438,
+          1.9498395,
+          1.9687646666666667,
+          1.9313198333333332,
+          1.9497325,
+          1.9309023333333333
+        ]
+      ],
+      "loops": [
+        3,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "no-seeds",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.758637333333333,
+      "cpp_ms": 0.92488725,
+      "speedup": 5.1450999387583,
+      "samples_ms": [
+        [
+          4.791916,
+          4.805518,
+          4.758637333333333,
+          4.701507333333333,
+          4.742116333333333,
+          4.849483333333333,
+          4.734268333333333
+        ],
+        [
+          0.947476,
+          0.9635919166666667,
+          0.92488725,
+          0.91593475,
+          0.905441,
+          0.93139275,
+          0.9228409166666667
+        ]
+      ],
+      "loops": [
+        3,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.1759065,
+      "cpp_ms": 1.9895635,
+      "speedup": 3.6067742999909274,
+      "samples_ms": [
+        [
+          7.123364,
+          7.235994,
+          7.220971,
+          7.1740535,
+          7.1759065,
+          7.175571,
+          7.2005575
+        ],
+        [
+          2.009851333333333,
+          1.9885281666666668,
+          2.0054463333333334,
+          1.9895635,
+          1.9414186666666668,
+          2.0110016666666666,
+          1.9713261666666668
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "equal",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.179879,
+      "cpp_ms": 0.924701,
+      "speedup": 7.764541186826877,
+      "samples_ms": [
+        [
+          7.253326,
+          7.053814,
+          7.081561,
+          7.179879,
+          7.168207,
+          7.251087,
+          7.2565375
+        ],
+        [
+          0.9275321666666666,
+          0.924701,
+          0.93544275,
+          0.9210459166666666,
+          0.9053006666666666,
+          0.9241800833333333,
+          0.9266146666666666
+        ]
+      ],
+      "loops": [
+        2,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.0661775,
+      "cpp_ms": 6.2421605,
+      "speedup": 0.811606414157406,
+      "samples_ms": [
+        [
+          4.994609,
+          5.3359105,
+          5.0382555,
+          5.0661775,
+          5.043911,
+          5.0723945,
+          5.143657
+        ],
+        [
+          6.2421605,
+          6.341035,
+          6.2347265,
+          6.1898425,
+          6.334773,
+          6.1900635,
+          6.310177
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "threshold-fields",
+      "threshold_fields": true,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.100246,
+      "cpp_ms": 3.4682376666666666,
+      "speedup": 1.470558390221816,
+      "samples_ms": [
+        [
+          5.0055895,
+          5.100246,
+          5.0999505,
+          5.1412225,
+          5.141894,
+          5.263701,
+          5.0782945
+        ],
+        [
+          3.4324676666666667,
+          3.4248933333333333,
+          3.4536903333333333,
+          3.4917146666666663,
+          3.4682376666666666,
+          3.470298,
+          3.545859
+        ]
+      ],
+      "loops": [
+        2,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.545662,
+      "cpp_ms": 1.6882566666666667,
+      "speedup": 2.100191321619738,
+      "samples_ms": [
+        [
+          3.5173423333333336,
+          3.5125636666666664,
+          3.5278186666666667,
+          3.564928,
+          3.545662,
+          3.5988243333333334,
+          3.5656793333333336
+        ],
+        [
+          1.661313,
+          1.6730483333333332,
+          1.6882566666666667,
+          1.690925,
+          1.6897493333333333,
+          1.7003541666666668,
+          1.684947
+        ]
+      ],
+      "loops": [
+        3,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "snake",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.52692425,
+      "cpp_ms": 1.3729113333333332,
+      "speedup": 2.5689381130221087,
+      "samples_ms": [
+        [
+          3.543628,
+          3.5100605,
+          3.49115525,
+          3.44995075,
+          3.53879425,
+          3.52692425,
+          3.53568075
+        ],
+        [
+          1.4186924444444444,
+          1.3830323333333332,
+          1.3474304444444445,
+          1.361566888888889,
+          1.351584888888889,
+          1.3801737777777778,
+          1.3729113333333332
+        ]
+      ],
+      "loops": [
+        4,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.53146,
+      "cpp_ms": 1.0664156,
+      "speedup": 6.124685347813742,
+      "samples_ms": [
+        [
+          6.527312,
+          6.55032,
+          6.5715545,
+          6.6030135,
+          6.53146,
+          6.4540655,
+          6.4973415
+        ],
+        [
+          1.0781616,
+          1.0653816999999999,
+          1.0813855,
+          1.0630223,
+          1.0664156,
+          1.0560733999999998,
+          1.0681168
+        ]
+      ],
+      "loops": [
+        2,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "checkerboard",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.207927,
+      "cpp_ms": 1.3420978333333333,
+      "speedup": 4.6255398420408245,
+      "samples_ms": [
+        [
+          6.233269,
+          6.084271,
+          6.289834,
+          6.207927,
+          6.3018465,
+          6.0260775,
+          6.1246615
+        ],
+        [
+          1.3261646666666667,
+          1.3393291666666667,
+          1.3516838333333332,
+          1.3763215,
+          1.1562895,
+          1.343654,
+          1.3420978333333333
+        ]
+      ],
+      "loops": [
+        2,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09860511111111112,
+      "cpp_ms": 0.07978451041666668,
+      "speedup": 1.2358929145037767,
+      "samples_ms": [
+        [
+          0.09836688888888889,
+          0.09855650617283951,
+          0.09679222222222222,
+          0.09860511111111112,
+          0.09926981481481481,
+          0.10439318518518519,
+          0.09911729629629629
+        ],
+        [
+          0.07959301041666667,
+          0.0798613125,
+          0.08118859375,
+          0.07978451041666668,
+          0.07674832291666667,
+          0.08200416666666667,
+          0.07830289583333333
+        ]
+      ],
+      "loops": [
+        81,
+        96
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09922970666666667,
+      "cpp_ms": 0.08200125675675676,
+      "speedup": 1.2100998276284383,
+      "samples_ms": [
+        [
+          0.09930652000000001,
+          0.09881988,
+          0.10493848,
+          0.09783270666666667,
+          0.09922970666666667,
+          0.0998742,
+          0.09849602666666667
+        ],
+        [
+          0.08208929729729729,
+          0.07798813513513514,
+          0.08433741891891892,
+          0.08281537837837838,
+          0.07928,
+          0.0801668918918919,
+          0.08200125675675676
+        ]
+      ],
+      "loops": [
+        75,
+        74
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nan-background",
+      "threshold_fields": false,
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.27601475,
+      "cpp_ms": 0.9753254545454546,
+      "speedup": 3.3588939309768855,
+      "samples_ms": [
+        [
+          3.287221,
+          3.27601475,
+          3.32130175,
+          3.25778375,
+          3.285921,
+          3.24606675,
+          3.24095225
+        ],
+        [
+          0.9584923636363637,
+          0.9753254545454546,
+          0.987469909090909,
+          0.9853606363636364,
+          0.9763456363636364,
+          0.9736131818181818,
+          0.9620745454545454
+        ]
+      ],
+      "loops": [
+        4,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.apply_hysteresis_threshold",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nan-background",
+      "threshold_fields": false,
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.24322875,
+      "cpp_ms": 0.6692308125,
+      "speedup": 4.846203565978217,
+      "samples_ms": [
+        [
+          3.29470475,
+          3.254778,
+          3.28275775,
+          3.19196825,
+          3.24322875,
+          3.1950015,
+          3.18714175
+        ],
+        [
+          0.679848125,
+          0.68574225,
+          0.674989,
+          0.6692308125,
+          0.6548351875,
+          0.666969625,
+          0.656621
+        ]
+      ],
+      "loops": [
+        4,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
