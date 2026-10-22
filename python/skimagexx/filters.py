@@ -490,6 +490,13 @@ def rank_order(image):
 __all__.append('rank_order')
 
 
+def _hysteresis_dtype(dtype):
+    return dtype.kind=='b' or dtype.kind in 'iu' and dtype.itemsize in (1,2,4,8) or dtype.kind=='f' and dtype.itemsize in (2,4,8)
+
+
+_HYSTERESIS_SCALARS={t for t in np.ScalarType if _hysteresis_dtype(np.dtype(t))}
+
+
 def _hysteresis_probe(value,empty=False):
     a=np.asarray(value)
     return value if a.ndim==0 else np.zeros(0 if empty else 1,dtype=a.dtype)
@@ -523,11 +530,11 @@ def _hysteresis_compare(image,bound,shape):
 def apply_hysteresis_threshold(image,low,high):
     original=image,low,high
     def delegated():return fallback('filters','apply_hysteresis_threshold',*original)
-    if type(image) in _GAUSSIAN_TYPES:image=np.asarray(image)
-    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return delegated()
+    if type(image) in _HYSTERESIS_SCALARS:image=np.asarray(image)
+    if type(image) not in (np.ndarray,np.memmap) or not _hysteresis_dtype(image.dtype):return delegated()
     for value in (low,high):
-        if type(value) not in (int,float,bool,list,tuple,np.ndarray,np.memmap,*_GAUSSIAN_TYPES):return delegated()
-        if np.asarray(value).dtype.type not in _GAUSSIAN_TYPES:return delegated()
+        if type(value) not in (list,tuple,np.ndarray,np.memmap,*_HYSTERESIS_SCALARS):return delegated()
+        if not _hysteresis_dtype(np.asarray(value).dtype):return delegated()
     if np.geterr()['under']!='ignore' or any(v not in ('warn','ignore','raise') for v in np.geterr().values()):return delegated()
     low=low if np.asarray(low).ndim==0 else np.asarray(low)
     high=high if np.asarray(high).ndim==0 else np.asarray(high)

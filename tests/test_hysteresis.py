@@ -155,3 +155,18 @@ def test_explicit_fallback_for_complex():
     xx.set_fallback_enabled(True)
     with pytest.warns(xx.FallbackWarning):actual=xx.filters.apply_hysteresis_threshold(a,0,1)
     np.testing.assert_array_equal(actual,reference(a,0,1))
+
+@pytest.mark.parametrize('dtype,integer,bits',[(np.float16,np.uint16,0x7c01),(np.float32,np.uint32,0x7f800001),(np.float64,np.uint64,0x7ff0000000000001)])
+@pytest.mark.parametrize('image_dtype',[np.uint64,np.float32,np.float64])
+@pytest.mark.parametrize('role',[1,2])
+@pytest.mark.parametrize('policy',['warn','raise','ignore'])
+def test_signaling_threshold_fields_with_mixed_images(dtype,integer,bits,image_dtype,role,policy):
+    field=np.zeros(3,dtype=dtype) if role==1 else np.ones(3,dtype=dtype)
+    field.view(integer)[1]=bits
+    args=[np.array([0,1,2],dtype=image_dtype),0,1];args[role]=field
+    with np.errstate(invalid=policy):compare(*args)
+
+@pytest.mark.parametrize('dtype',[np.longlong,np.ulonglong])
+@pytest.mark.parametrize('shape',[(),(17,19)])
+def test_platform_integer_aliases(dtype,shape):
+    compare(sample(dtype,shape),0,2**63)
