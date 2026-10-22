@@ -1,5 +1,12 @@
 # Last completed whole-library performance checkpoint
 
+The [rank lookup-table checkpoint](rank-tables.md) avoids sorting every pixel
+for bounded-cardinality data. Against the retained uniform package, the fixed
+one-worker corpus improves 1.91x on Linux and 2.10x on Windows; current geometric
+means are 5.67x/3.43x over scikit-image. Dense SIMD and bounded sparse tables
+retain exact ranks and representative bytes. Wide-range sorting remains an
+outstanding bottleneck, and every adverse sample is retained in the report.
+
 The [rank-order port](rank-order.md) and [retained uniform fast path](rank-uniform.md)
 add exact ranks, original-value bytes and reconstruction tests for real dtypes,
 layouts, label-width boundaries and memmap results. The paired one-worker corpus
