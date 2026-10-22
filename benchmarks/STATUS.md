@@ -1,5 +1,13 @@
 # Last completed whole-library performance checkpoint
 
+The [adaptive-threshold initial checkpoint](adaptive.md) adds native Gaussian,
+mean and median `threshold_local` paths with 252 measured Windows/Linux cases.
+One-worker Gaussian geometric means are 2.61x/1.68x original/current and median
+5.96x/5.46x (Linux/Windows). Mean is 1.28x on Linux and 0.78x on Windows, so its
+Windows throughput, layout costs and tiny-call overhead remain optimization
+targets. All adverse cases and exact initial packages are retained. This is a
+source-specific partial port, not a whole-library refresh.
+
 The [Li constant-image fast path](li-uniform.md) is retained after paired
 one-worker geometric-mean gains of 34% on Linux and 17% on Windows. It records
 the remaining per-case regressions and all raw samples against the exact initial
