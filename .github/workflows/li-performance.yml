@@ -1,0 +1,38 @@
+name: li-performance
+on:
+  workflow_dispatch:
+jobs:
+  measure:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CMAKE_BUILD_PARALLEL_LEVEL: '4'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
+      - run: python -m pip install "numpy>=2.3" "scikit-image==0.26.0" "pytest>=8"
+      - name: Install exact wheel
+        shell: bash
+        run: python -m pip install --no-deps build/wheels/*.whl
+      - name: Preserve exact package
+        shell: bash
+        run: python tools/preserve_baseline.py --wheel build/wheels/*.whl --source-root . --output build/exact-package
+      - run: python -m pytest -q tests/test_threshold_li.py tests/test_api.py
+      - run: python benchmarks/li.py --size 512 --threads 1 4 --repeat 7 --output build/li-performance.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: li-performance-${{ matrix.os }}
+          path: |
+            build/li-performance.json
+            build/wheels/*.whl
+            build/exact-package/
