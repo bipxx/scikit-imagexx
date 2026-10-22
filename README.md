@@ -91,7 +91,7 @@ assignment, RGB/grayscale overlays and region averages against original
 scikit-image. Native overlay labels are nonnegative; supported floating underlays
 are bounded to [0,1] for overlays and absolute magnitude <=1e6 for averages.
 Average mode retains raw integer scale and image dtype. Grayscale means reproduce
-NumPy's buffer-sized reductions before2.3, including the current `setbufsize`
+NumPy's buffer-sized reductions before 2.3, including the current `setbufsize`
 setting; newer versions use a whole contiguous reduction. Unsupported casting,
 palette objects, scalar-average indexing and exceptional floating policies use
 explicit whole-call fallback. Native kernels are also exposed through

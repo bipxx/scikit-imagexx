@@ -1,0 +1,926 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T03:53:24.882865+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "seed": 4129,
+    "repeat": 7,
+    "suite": "cardinality",
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "current_binary_sha256": {
+      "_core.cp313-win_amd64.pyd": "9148e4dc2563265bc151a0a087c6fc4ff2a0bce8f6c404aacaf1b9061dd98049"
+    },
+    "source_sha256": "99238ee25c5da20552cbd07e1df3c1ef2d58b4a12ff85d1316b7f68348ca049f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "scope": "Warmed allocation-inclusive public calls; rank construction, copies, HSV, compositing and grouped averages included",
+    "baseline": {
+      "revision": "87bda8f9a6700d79b754e7c663a4dccd6e6d375e",
+      "source_sha256": "d98e1f7c9f194024bccafbbf6f235942c34a4657a9c854d46431628c69e7c08f",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "b636f05d1ff0d20d7830a63db66c770811d98dc87cabb4000055a3ec5e78ba1c"
+      },
+      "prepared_at_utc": "2026-10-22T03:35:18.937425+00:00",
+      "snapshot_kind": "Exact measured package; product fingerprint, Python sources and binary hashes checked",
+      "measurement_sha256": "fa21e6e9f91d8b052fcee350bf3e9d0e62b50ee196e18249c7131c09d23d922a",
+      "measurement_report": "initial-measurement.json"
+    }
+  },
+  "results": [
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-31",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5401166666666666,
+      "cpp_ms": 0.2026560975609756,
+      "speedup": 2.6651883321899805,
+      "samples_ms": [
+        [
+          0.4963166666666667,
+          0.5236333333333333,
+          0.5401166666666666,
+          0.5139666666666667,
+          0.5517583333333334,
+          0.5930416666666666,
+          0.6313083333333334
+        ],
+        [
+          0.22089512195121952,
+          0.1976292682926829,
+          0.2026560975609756,
+          0.20041463414634147,
+          0.20197073170731708,
+          0.2397341463414634,
+          0.2292439024390244
+        ],
+        [
+          0.802,
+          0.8133,
+          0.772225,
+          0.76229375,
+          0.7860375,
+          0.84628125,
+          0.83586875
+        ]
+      ],
+      "loops": [
+        12,
+        41,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.802,
+      "improvement": 3.9574432235313943
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-512",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.030875,
+      "cpp_ms": 0.4063380952380953,
+      "speedup": 2.536988316086768,
+      "samples_ms": [
+        [
+          1.0385625,
+          1.4835,
+          1.030875,
+          0.9467875,
+          0.970875,
+          0.9514625,
+          1.1105
+        ],
+        [
+          0.5158190476190476,
+          0.3751333333333333,
+          0.3978285714285714,
+          0.37042380952380954,
+          0.41105714285714284,
+          0.4063380952380953,
+          0.44283809523809525
+        ],
+        [
+          1.5670777777777778,
+          1.7005444444444444,
+          1.5345333333333333,
+          1.4317777777777778,
+          1.4149444444444446,
+          1.444888888888889,
+          1.4102666666666668
+        ]
+      ],
+      "loops": [
+        8,
+        21,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.444888888888889,
+      "improvement": 3.555878481052216
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-513",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.0319916666666666,
+      "cpp_ms": 1.4701,
+      "speedup": 0.7019873931478584,
+      "samples_ms": [
+        [
+          1.0073666666666665,
+          1.0319916666666666,
+          1.0683833333333332,
+          1.1016083333333333,
+          1.0989,
+          0.9537833333333334,
+          0.9986583333333334
+        ],
+        [
+          1.4701,
+          1.477611111111111,
+          1.393488888888889,
+          1.4121222222222223,
+          1.4821777777777778,
+          1.441511111111111,
+          1.6489444444444445
+        ],
+        [
+          1.400725,
+          1.440225,
+          1.399925,
+          1.46605,
+          1.3916,
+          1.3853125,
+          1.6145875
+        ]
+      ],
+      "loops": [
+        12,
+        9,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.400725,
+      "improvement": 0.9528093326984559
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-4096",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.4794,
+      "cpp_ms": 1.9415,
+      "speedup": 1.2770538243626062,
+      "samples_ms": [
+        [
+          2.15758,
+          2.6568,
+          2.28388,
+          2.10254,
+          2.5595,
+          2.59284,
+          2.4794
+        ],
+        [
+          2.189114285714286,
+          1.9076,
+          1.8972,
+          1.9415,
+          2.017442857142857,
+          1.9159714285714287,
+          2.129857142857143
+        ],
+        [
+          1.8578142857142856,
+          1.8980857142857144,
+          1.7966142857142857,
+          1.8083714285714287,
+          2.2121714285714287,
+          2.320414285714286,
+          2.0136714285714286
+        ]
+      ],
+      "loops": [
+        5,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.8980857142857144,
+      "improvement": 0.9776387918030978
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "uint64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-17157",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 4.8547,
+      "cpp_ms": 2.05725,
+      "speedup": 2.359800704824402,
+      "samples_ms": [
+        [
+          5.655766666666667,
+          5.230433333333333,
+          4.262966666666667,
+          4.043266666666667,
+          4.2798,
+          5.052566666666667,
+          4.8547
+        ],
+        [
+          1.9841833333333332,
+          2.11965,
+          2.046483333333333,
+          2.05725,
+          2.3050333333333333,
+          2.8759333333333337,
+          1.9825166666666667
+        ],
+        [
+          2.3656571428571427,
+          1.973242857142857,
+          2.100557142857143,
+          1.9493142857142858,
+          2.0511857142857144,
+          2.323285714285714,
+          2.1048
+        ]
+      ],
+      "loops": [
+        3,
+        6,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.100557142857143,
+      "improvement": 1.0210509869277642
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-31",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.5715714285714285,
+      "cpp_ms": 0.23737142857142857,
+      "speedup": 2.4079200770341838,
+      "samples_ms": [
+        [
+          0.9409142857142857,
+          0.5838142857142857,
+          0.5125285714285714,
+          0.5715714285714285,
+          0.5910071428571428,
+          0.5710071428571428,
+          0.5567857142857143
+        ],
+        [
+          0.31968214285714286,
+          0.26715,
+          0.32473928571428573,
+          0.22421785714285714,
+          0.2133642857142857,
+          0.23737142857142857,
+          0.20009285714285713
+        ],
+        [
+          1.0735333333333332,
+          0.84808,
+          0.8789066666666666,
+          0.7744333333333334,
+          0.8360133333333334,
+          0.7794466666666666,
+          0.7812533333333334
+        ]
+      ],
+      "loops": [
+        14,
+        28,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.8360133333333334,
+      "improvement": 3.521962766811106
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-512",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9864666666666666,
+      "cpp_ms": 0.44293076923076924,
+      "speedup": 2.2271351082243562,
+      "samples_ms": [
+        [
+          0.9455444444444445,
+          1.173,
+          1.0714,
+          0.9864666666666666,
+          0.9353333333333333,
+          0.9642444444444445,
+          1.061411111111111
+        ],
+        [
+          0.42380384615384614,
+          0.44293076923076924,
+          0.4512269230769231,
+          0.43394615384615387,
+          0.39613076923076923,
+          0.4681,
+          0.4746653846153846
+        ],
+        [
+          1.56648,
+          1.48151,
+          1.43083,
+          1.59632,
+          1.50398,
+          1.41994,
+          1.44817
+        ]
+      ],
+      "loops": [
+        9,
+        26,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.48151,
+      "improvement": 3.3447890797311617
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-513",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.15682,
+      "cpp_ms": 1.5240142857142858,
+      "speedup": 0.759061126161172,
+      "samples_ms": [
+        [
+          0.99852,
+          0.98624,
+          1.65592,
+          1.3138,
+          1.08066,
+          1.15682,
+          1.8807
+        ],
+        [
+          1.5148142857142857,
+          1.6359714285714286,
+          1.407757142857143,
+          1.5240142857142858,
+          1.8733142857142857,
+          1.4309142857142856,
+          1.8255
+        ],
+        [
+          1.4122428571428571,
+          1.4586142857142856,
+          1.5215714285714286,
+          1.5288142857142857,
+          1.524042857142857,
+          1.4444428571428571,
+          1.6127142857142858
+        ]
+      ],
+      "loops": [
+        5,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.5215714285714286,
+      "improvement": 0.9983970903909787
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-4096",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.2509333333333337,
+      "cpp_ms": 1.91115,
+      "speedup": 1.1777899868316635,
+      "samples_ms": [
+        [
+          2.2509333333333337,
+          2.2279666666666667,
+          2.0734,
+          3.3581333333333334,
+          4.252366666666667,
+          4.1803333333333335,
+          2.0698333333333334
+        ],
+        [
+          1.78505,
+          2.3734666666666664,
+          1.9925,
+          1.8664,
+          2.1833833333333335,
+          1.7707666666666668,
+          1.91115
+        ],
+        [
+          1.78182,
+          2.15048,
+          2.02476,
+          2.3604,
+          2.28238,
+          1.76582,
+          1.82066
+        ]
+      ],
+      "loops": [
+        3,
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.02476,
+      "improvement": 1.0594458833686524
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "int64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-17157",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.383066666666667,
+      "cpp_ms": 2.152542857142857,
+      "speedup": 2.965361012667189,
+      "samples_ms": [
+        [
+          6.383066666666667,
+          4.685533333333333,
+          5.719333333333333,
+          6.112966666666667,
+          7.9683,
+          7.354033333333333,
+          9.176833333333335
+        ],
+        [
+          2.1571428571428575,
+          1.9869,
+          2.1287428571428575,
+          2.0505,
+          2.152542857142857,
+          2.462142857142857,
+          2.6432571428571427
+        ],
+        [
+          2.42935,
+          2.1087666666666665,
+          2.023,
+          2.1556,
+          2.4534333333333334,
+          2.6358666666666664,
+          2.40525
+        ]
+      ],
+      "loops": [
+        3,
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.40525,
+      "improvement": 1.1173993549157808
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-31",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6281,
+      "cpp_ms": 0.25994117647058823,
+      "speedup": 2.416315908576601,
+      "samples_ms": [
+        [
+          0.49015,
+          1.1322214285714287,
+          0.6281,
+          0.5737928571428571,
+          0.5896428571428571,
+          0.6363785714285715,
+          0.8075714285714285
+        ],
+        [
+          0.31058823529411766,
+          0.2249764705882353,
+          0.23160588235294116,
+          0.2615705882352941,
+          0.21106470588235296,
+          0.3090294117647059,
+          0.25994117647058823
+        ],
+        [
+          0.9005230769230769,
+          0.7965769230769231,
+          0.9581384615384615,
+          0.7892307692307693,
+          0.7927538461538461,
+          0.8998384615384615,
+          0.9004307692307693
+        ]
+      ],
+      "loops": [
+        14,
+        17,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.8998384615384615,
+      "improvement": 3.4617003498877223
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-512",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.074925,
+      "cpp_ms": 0.5794666666666666,
+      "speedup": 3.5807495398067193,
+      "samples_ms": [
+        [
+          2.7221,
+          2.2265,
+          2.15765,
+          2.074925,
+          1.2095,
+          1.5119,
+          1.78555
+        ],
+        [
+          0.8329583333333334,
+          0.5794666666666666,
+          0.6292166666666666,
+          0.5490666666666666,
+          0.7585,
+          0.42636666666666667,
+          0.553725
+        ],
+        [
+          1.8142333333333334,
+          1.8393166666666667,
+          1.8993,
+          1.7737833333333333,
+          1.9485166666666667,
+          2.0567,
+          1.9281833333333334
+        ]
+      ],
+      "loops": [
+        4,
+        12,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.8993,
+      "improvement": 3.2776691210308333
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-513",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.37728,
+      "cpp_ms": 1.5410222222222223,
+      "speedup": 0.8937444120785626,
+      "samples_ms": [
+        [
+          1.05828,
+          1.37728,
+          1.26297,
+          1.5581,
+          2.0581,
+          2.02727,
+          1.33568
+        ],
+        [
+          1.5410222222222223,
+          1.6414333333333333,
+          1.539311111111111,
+          1.5833444444444444,
+          1.523088888888889,
+          1.5692111111111111,
+          1.5037777777777777
+        ],
+        [
+          1.4583222222222223,
+          1.5564555555555555,
+          1.6453222222222224,
+          1.7447666666666668,
+          1.8759444444444444,
+          1.7150555555555556,
+          1.4689777777777777
+        ]
+      ],
+      "loops": [
+        10,
+        9,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6453222222222224,
+      "improvement": 1.0676823464943905
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-4096",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.99954,
+      "cpp_ms": 2.2090666666666663,
+      "speedup": 1.3578313616610336,
+      "samples_ms": [
+        [
+          3.8612,
+          3.00688,
+          3.08598,
+          2.41998,
+          2.99954,
+          2.6635,
+          2.66284
+        ],
+        [
+          2.35085,
+          2.0902833333333333,
+          2.2163166666666667,
+          2.3560666666666665,
+          1.91965,
+          1.8764833333333333,
+          2.2090666666666663
+        ],
+        [
+          1.9324,
+          2.01495,
+          2.1973166666666666,
+          2.0991166666666663,
+          1.8945333333333332,
+          1.9695,
+          1.8025333333333333
+        ]
+      ],
+      "loops": [
+        5,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.9695,
+      "improvement": 0.8915529937228394
+    },
+    {
+      "api": "color.label2rgb",
+      "backend": "native",
+      "dtype": "float64",
+      "shape": [
+        129,
+        133
+      ],
+      "threads": 1,
+      "workload": "sparse-groups-17157",
+      "kind": "overlay",
+      "parameters": {},
+      "output_dtype": "float64",
+      "max_abs_error": 0.0,
+      "reference_ms": 4.415233333333333,
+      "cpp_ms": 2.11005,
+      "speedup": 2.092478061341358,
+      "samples_ms": [
+        [
+          5.037666666666667,
+          4.141,
+          4.954133333333333,
+          4.798233333333333,
+          4.415233333333333,
+          4.257866666666667,
+          4.2881
+        ],
+        [
+          2.001733333333333,
+          2.2540833333333334,
+          2.2588333333333335,
+          1.9866,
+          2.3862833333333335,
+          1.9664833333333334,
+          2.11005
+        ],
+        [
+          2.00892,
+          2.28388,
+          2.01876,
+          2.06478,
+          2.489,
+          2.11416,
+          2.15334
+        ]
+      ],
+      "loops": [
+        3,
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.11416,
+      "improvement": 1.001947821141679
+    }
+  ]
+}

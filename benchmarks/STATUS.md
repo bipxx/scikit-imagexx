@@ -1,6 +1,6 @@
 # Last completed whole-library performance checkpoint
 
-These 19 reports were refreshed at `0dcaf50`, covering the 96 reviewed entries before the minimum-threshold port. That port changes the source fingerprint; its dedicated measurements remain separate until the next complete refresh.
+These 19 reports were refreshed at `0dcaf50`, covering the 96 reviewed entries before the minimum-threshold and label-color ports. Those ports change the source fingerprint; their [minimum-threshold](minimum-tuning.md) and [label-color](label-color-tuning.md) measurements remain separate until the next complete refresh. The current registry has 98 reviewed entries, including two metadata helpers.
 
 Reference: original scikit-image 0.26.0. 3069 comparisons on Windows-11-10.0.26200-SP0; CPU: Intel64 Family 6 Model 151 Stepping 2, GenuineIntel. Individual reports record timestamps, CPU, versions, raw samples and options. All reports match the recorded checkpoint source/build SHA-256 (POSIX relative paths and LF line endings):
 `acb2ae0434191c9257218d9191ea4e23d9fba4e2a701d233147951ec4aeb87a0`.
