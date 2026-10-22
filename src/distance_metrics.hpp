@@ -1,14 +1,15 @@
 #pragma once
 #include "distance_detail.hpp"
+#include "distance_svml.hpp"
 #include <limits>
 
 namespace skimagexx::detail {
 constexpr double distance_pi=3.141592653589793238462643383279502884;
 // R is physically double in both implementations. The float implementation
 // rounds each ordinary operation to float, while Wide retains promoted stages.
-template<class T> struct ScalarDistanceMath {
+template<class T,bool Svml=false> struct ScalarDistanceMath {
     using R=double;
-    using Wide=ScalarDistanceMath<double>;
+    using Wide=ScalarDistanceMath<double,Svml>;
     static R round(R x){return T(x);}
     static R c(double x){return T(x);}
     static R add(R a,R b){return T(T(a)+T(b));}
@@ -19,7 +20,13 @@ template<class T> struct ScalarDistanceMath {
     static R sqrt(R x){return std::sqrt(T(x));}
     static R power(R x,int n){return std::pow(T(x),T(n));}
     static R hypot(R a,R b){return std::hypot(T(a),T(b));}
-    static R angle(R a,R b){const auto h=std::atan2(T(b),T(a));return T(double(h)+(h<0?2*distance_pi:0));}
+    static R angle(R a,R b){
+        const auto h=[](T x,T y){
+            if constexpr(Svml && std::is_same_v<T,double>)return svml_atan2(y,x);
+            else return std::atan2(y,x);
+        }(T(a),T(b));
+        return T(double(h)+(h<0?2*distance_pi:0));
+    }
     static R sin(R x){return std::sin(T(x));}
     static R cos(R x){return std::cos(T(x));}
     static R exp(R x){return std::exp(T(x));}

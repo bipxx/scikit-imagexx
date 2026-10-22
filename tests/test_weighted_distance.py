@@ -161,7 +161,12 @@ def test_ciede2000_sharma_reference_pairs_and_reversed_pairs(dtype):
     # Published values have four decimal places; float32 itself can select
     # another side of the formula's 180-degree discontinuity on these inputs.
     if dtype==np.float64:
-        np.testing.assert_allclose(xx.color.deltaE_ciede2000(a,b),data[:,6],rtol=0,atol=5e-5)
+        # Public dispatch above must match the current NumPy provider, including
+        # SVML's different branch on published pair10. Check the standalone
+        # C++ libm profile separately against every published value.
+        from skimagexx import _core
+        canonical=_core.distance_metric(a,b,1,(1.,1.,1.,.045,.015),True,False)
+        np.testing.assert_allclose(canonical,data[:,6],rtol=0,atol=5e-5)
 
 
 @pytest.mark.parametrize('name',NAMES)

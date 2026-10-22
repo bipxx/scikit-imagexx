@@ -55,12 +55,10 @@ def main():
     radius=.5*(np.hypot(first[:,1],first[:,2])+np.hypot(second[:,1],second[:,2]))
     c7=radius**7
     scale=1+.5*(1-np.sqrt(c7/(c7+25**7)))
-    angles=[]
     for lab in (first,second):
         x,y=lab[:,1]*scale,lab[:,2]
         array=np.arctan2(y,x)
         scalar=np.array([math.atan2(yy,xxx) for xxx,yy in zip(x,y)])
-        angles.append(array)
         result.setdefault('double_atan2',[]).append([
             {'index':int(i),'x':float(x[i]).hex(),'y':float(y[i]).hex(),
              'numpy':float(array[i]).hex(),'libm':float(scalar[i]).hex()}

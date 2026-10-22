@@ -460,6 +460,13 @@ def _distance_metadata(result,a,b,first_scalar,second_scalar,reverse):
 
 
 _LEGACY_SCALAR_POWER = np.asarray(np.float32(1) ** 2).dtype == np.float64
+# A fixed, tiny probe selects the runtime angle provider without dispatching
+# image arithmetic through NumPy. AVX-512 NumPy1 wheels can use SVML instead
+# of libm, changing the CIEDE2000 branch at antipodal hues.
+_SVML_DOUBLE_ANGLES = bool(np.arctan2(
+    np.full(8,float.fromhex('0x1.3eb851eb851ecp+1')),
+    np.full(8,float.fromhex('-0x1.892cd53d31f11p-10')))[0]
+    == float.fromhex('0x1.92472ef8b710dp+0'))
 _LEGACY_CIEDE2000 = np.result_type(np.empty(0,dtype=np.float32),25**7) == np.float64
 
 
@@ -543,7 +550,8 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
         raise
     result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
                                  parameters,bool(wide),promote,legacy94,parameter_mask,
-                                 single and name=='deltaE_ciede2000' and _LEGACY_CIEDE2000)
+                                 single and name=='deltaE_ciede2000' and _LEGACY_CIEDE2000,
+                                 name=='deltaE_ciede2000' and _SVML_DOUBLE_ANGLES)
     result=_distance_metadata(result,a,b,first_scalar,second_scalar,name=='deltaE_ciede2000')
     return result[()] if result.ndim==0 else result
 

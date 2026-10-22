@@ -6,6 +6,9 @@
 #include "simd_math.hpp"
 #include <cstring>
 #include <climits>
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
 
 namespace skimagexx::simd {
 namespace {
@@ -606,9 +609,21 @@ std::size_t delta_e76(const void* a,const void* b,double* out,std::size_t n,Pixe
     return distance_run(a,b,out,n,at,bt,ap,ac,bp,bc);
 }
 namespace {
-template<class T> struct VectorDistanceMath {
+bool distance_fma_available() {
+    static const bool available=[] {
+#if defined(_MSC_VER)
+        int regs[4];__cpuidex(regs,1,0);return (regs[2]&(1<<12))!=0;
+#elif defined(__GNUC__) || defined(__clang__)
+        return bool(__builtin_cpu_supports("fma"));
+#else
+        return false;
+#endif
+    }();
+    return available;
+}
+template<class T,bool Svml=false> struct VectorDistanceMath {
     using R=__m256d;
-    using Wide=VectorDistanceMath<double>;
+    using Wide=VectorDistanceMath<double,Svml>;
     static R round(R x){if constexpr(std::is_same_v<T,float>) return _mm256_cvtps_pd(_mm256_cvtpd_ps(x));else return x;}
     static R c(double x){return _mm256_set1_pd(T(x));}
     static R add(R a,R b){
@@ -660,7 +675,10 @@ template<class T> struct VectorDistanceMath {
     static R angle(R a,R b){
         // Preserve the float atan2 rounding before the double 2*pi in-place add.
         double x[4],y[4]; _mm256_storeu_pd(x,a); _mm256_storeu_pd(y,b);
-        for(int j=0;j<4;++j) {const auto h=std::atan2(T(y[j]),T(x[j]));x[j]=T(double(h)+(h<0?2*detail::distance_pi:0));}
+        if constexpr(Svml && std::is_same_v<T,double>) {
+            if(distance_fma_available())distance_svml_angles(x,y,x);
+            else for(int j=0;j<4;++j){const auto h=detail::svml_atan2(y[j],x[j]);x[j]=h+(h<0?2*detail::distance_pi:0);}
+        } else for(int j=0;j<4;++j) {const auto h=std::atan2(T(y[j]),T(x[j]));x[j]=T(double(h)+(h<0?2*detail::distance_pi:0));}
         return _mm256_loadu_pd(x);
     }
     static R sin(R x){R s,c; sincos4(x,s,c);return round(s);}
@@ -676,7 +694,7 @@ template<class T> struct VectorDistanceMath {
             _mm256_add_pd(_mm256_mul_pd(a,x),_mm256_mul_pd(b,y)))));
     }
 };
-template<class T,class Output> std::size_t metric_run(const void* a,const void* b,Output* out,std::size_t n,
+template<class T,class Output,bool Svml=false> std::size_t metric_run(const void* a,const void* b,Output* out,std::size_t n,
     PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
     std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
     if(ap>INT_MAX/4 || ap< -INT_MAX/4 || bp>INT_MAX/4 || bp< -INT_MAX/4) return 0;
@@ -686,7 +704,7 @@ template<class T,class Output> std::size_t metric_run(const void* a,const void* 
         __m256d av[3],bv[3];
         distance_load<double>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
         distance_load<double>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
-        const auto result=detail::distance_metric<VectorDistanceMath<T>>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000);
+        const auto result=detail::distance_metric<VectorDistanceMath<T,Svml>>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000);
         if constexpr(std::is_same_v<Output,float>) _mm_storeu_ps(out+i,_mm256_cvtpd_ps(result));
         else _mm256_storeu_pd(out+i,result);
     }
@@ -695,7 +713,12 @@ template<class T,class Output> std::size_t metric_run(const void* a,const void* 
 }
 std::size_t metric_distance(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,
     DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
-    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles) {
+    if(svml_angles) {
+        if(at==PixelType::float32 && bt==PixelType::float32)
+            return metric_run<float,float,true>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
+        return metric_run<double,double,true>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
+    }
     if(at==PixelType::float32 && bt==PixelType::float32) {
         if(scalar_cmc) return metric_run<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
         return metric_run<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);

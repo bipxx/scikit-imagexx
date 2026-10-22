@@ -707,6 +707,24 @@ int main() {
         };
         for(int workers:distance_workers) {
             set_num_threads(workers);
+            for(std::size_t count:{1u,3u,4u,5u,9u,262149u}) {
+                std::vector<double> first(count*3),second(count*3),output(count);
+                for(std::size_t i=0;i<count;++i) {
+                    first[3*i]=second[3*i]=50;
+                    first[3*i+1]=2.49;first[3*i+2]=-.001;
+                    second[3*i+1]=-2.49;second[3*i+2]=.001;
+                }
+                delta_e_compatible_into(first.data(),second.data(),output.data(),count,PixelType::float64,
+                    PixelType::float64,DistanceMetric::ciede2000,{},true,false,3,1,3,1,false,true);
+                for(auto value:output)require(std::abs(value-7.219470093152853)<2e-13);
+                // A zero-chroma lane also exercises the mixed SIMD slow path.
+                first[1]=first[2]=0;
+                delta_e_compatible_into(first.data(),second.data(),output.data(),count,PixelType::float64,
+                    PixelType::float64,DistanceMetric::ciede2000,{},true,false,3,1,3,1,false,true);
+                double canonical;
+                delta_e_into(first.data(),second.data(),&canonical,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000);
+                require(std::abs(output[0]-canonical)<2e-13);
+            }
             for(std::size_t count:{1u,3u,4u,5u,7u,8u,9u,17u,262149u}) {
                 std::vector<float> first(count*3),second(count*3),output(count);
                 for(std::size_t i=0;i<count;++i) {

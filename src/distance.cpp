@@ -37,7 +37,7 @@ template<class T> void execute_distance(const void* a,const void* b,T* out,std::
 namespace {
 template<class T,class Output> void execute_metric(const void* a,const void* b,Output* out,std::size_t n,
     PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& parameters,bool wide_trig,bool scalar_cmc,
-    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles) {
     const auto ar=detail::distance_reader<T>(at),br=detail::distance_reader<T>(bt);
     const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
     const bool vectorized=has_avx2();
@@ -47,7 +47,7 @@ template<class T,class Output> void execute_metric(const void* a,const void* b,O
         std::size_t consumed=0;
 #ifdef SKIMAGEXX_AVX2
         if(vectorized) consumed=simd::metric_distance(first,second,out+begin,end-begin,at,bt,metric,parameters,
-            wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
+            wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
 #else
         (void)vectorized;
 #endif
@@ -55,7 +55,9 @@ template<class T,class Output> void execute_metric(const void* a,const void* b,O
             const auto* pa=first+std::ptrdiff_t(j)*ap*ab;
             const auto* pb=second+std::ptrdiff_t(j)*bp*bb;
             double av[]={ar(pa,0),ar(pa,ac),ar(pa,2*ac)},bv[]={br(pb,0),br(pb,bc),br(pb,2*bc)};
-            out[begin+j]=Output(detail::distance_metric<detail::ScalarDistanceMath<T>>(av,bv,metric,parameters,wide_trig,scalar_cmc,legacy_ciede2000));
+            out[begin+j]=Output(svml_angles ?
+                detail::distance_metric<detail::ScalarDistanceMath<T,true>>(av,bv,metric,parameters,wide_trig,scalar_cmc,legacy_ciede2000) :
+                detail::distance_metric<detail::ScalarDistanceMath<T>>(av,bv,metric,parameters,wide_trig,scalar_cmc,legacy_ciede2000));
         }
     });
 }
@@ -82,23 +84,29 @@ double delta_e94_scalar32(const float* a,const float* b,DistanceParameters p,boo
     squared+=dh2/std::pow(p.kH*sh,2);
     return std::sqrt(squared<=0 ? 0 : squared);
 }
-void delta_e_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
-    DistanceParameters p,bool wide_trig,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
+void delta_e_compatible_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
+    DistanceParameters p,bool wide_trig,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles) {
     if(int(metric)<0 || int(metric)>2) throw std::invalid_argument("unknown color distance metric");
     for(auto v:{p.kL,p.kC,p.kH,p.k1,p.k2}) if(!std::isfinite(v))
         throw std::invalid_argument("distance parameters must be finite");
     const bool single=at==PixelType::float32 && bt==PixelType::float32;
     if(scalar_cmc && (!single || metric!=DistanceMetric::cmc))
         throw std::invalid_argument("CMC scalar promotion requires float32 CMC inputs");
+    if(svml_angles && metric!=DistanceMetric::ciede2000)
+        throw std::invalid_argument("SVML angles require CIEDE2000 inputs");
     if(legacy_ciede2000 && (!single || metric!=DistanceMetric::ciede2000))
         throw std::invalid_argument("legacy CIEDE2000 requires float32 CIEDE2000 inputs");
     validate_distance(n,at,ap,ac); validate_distance(n,bt,bp,bc);
     (void)detail::distance_reader<double>(at); (void)detail::distance_reader<double>(bt);
     if(!n) return;
     if(!a || !b || !out) throw std::invalid_argument("distance buffers must be nonnull");
-    if(single && !scalar_cmc) execute_metric<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
-    else if(single) execute_metric<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
-    else execute_metric<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
+    if(single && !scalar_cmc) execute_metric<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
+    else if(single) execute_metric<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
+    else execute_metric<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
+}
+void delta_e_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
+    DistanceParameters p,bool wide,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy) {
+    delta_e_compatible_into(a,b,out,n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy,false);
 }
 void delta_e76_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,
     std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
