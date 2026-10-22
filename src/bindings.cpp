@@ -1,4 +1,6 @@
 #include "skimagexx/clahe.hpp"
+#include "skimagexx/gabor.hpp"
+#include <complex>
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
 #include "skimagexx/contrast.hpp"
@@ -856,6 +858,15 @@ PYBIND11_MODULE(_core, m) {
         if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
         py::gil_scoped_release release;
         return std::find(image.data(),image.data()+image.size(),0.f)!=image.data()+image.size();
+    });
+    m.def("gabor_kernel", [](std::size_t height,std::size_t width,double ct,double st,
+            double sx2,double sy2,double frequency,double offset,double normalization,bool single) {
+        if(height>std::size_t(PY_SSIZE_T_MAX) || width>std::size_t(PY_SSIZE_T_MAX))throw py::value_error("Gabor dimensions overflow");
+        py::array output(single ? py::dtype::of<std::complex<float>>() : py::dtype::of<std::complex<double>>(),
+                         std::vector<py::ssize_t>{py::ssize_t(height),py::ssize_t(width)});
+        {py::gil_scoped_release release;
+            skimagexx::gabor_kernel_into(output.mutable_data(),single,height,width,{ct,st,sx2,sy2,frequency,offset,normalization});}
+        return output;
     });
     m.def("clahe", [](py::array_t<std::uint16_t,py::array::c_style|py::array::forcecast> image,
             const std::vector<std::size_t>& kernel,std::size_t clip_count,std::size_t bins,bool single) {
