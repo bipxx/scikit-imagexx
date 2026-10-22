@@ -2422,11 +2422,15 @@
       "api": "filters.threshold_local",
       "kind": "callable",
       "signature": "(image, block_size=3, method='gaussian', offset=0, mode='reflect', param=None, cval=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.threshold_mean",
