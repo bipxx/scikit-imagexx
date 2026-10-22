@@ -1,0 +1,4725 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T20:42:29.204652+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "logical_cpus": 4,
+    "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit_image": "0.26.0",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "seed": 6603,
+    "command": [
+      "benchmarks/clahe.py",
+      "--size",
+      "512",
+      "--threads",
+      "1",
+      "4",
+      "--repeat",
+      "7",
+      "--baseline-dir",
+      "build/initial/exact-package",
+      "--output",
+      "build/clahe-performance.json"
+    ],
+    "source_sha256": "79a8698f6790d73cff3d912d4f9fb55e604a19f1bfbd581c008218d9cab4133b",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "binary_sha256": {
+      "_core.cpython-313-x86_64-linux-gnu.so": "b7a648c513cabad4dcdac79343b87ea40f3152ba1def123b217a232028668c7d"
+    },
+    "baseline": {
+      "revision": "d7a79ef25fdd78fb89eb7518ceba3f7bfa117584",
+      "source_sha256": "d5fd0c66a4cd128fcbf546febc4f63c02b067491d4abb92d7196cb98f23fe408",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cpython-313-x86_64-linux-gnu.so": "b7a648c513cabad4dcdac79343b87ea40f3152ba1def123b217a232028668c7d"
+      },
+      "prepared_at_utc": "2026-10-22T20:17:55.418684+00:00",
+      "python_sha256": {
+        "color.py": "e0104c6bfa2cfc51523584851008d6cebbfa6565809b1b41c0fa0bdeb2cdd34b",
+        "feature.py": "43089b2455b0d89aadd9c40168d90711ec48dea089f838c6e9872330e09597ab",
+        "draw.py": "f4d842e0681621da913ec36c406b925e4e672b9ebc3ec6b543561084dfb8418d",
+        "metrics.py": "700923a5b3c851419e66349f5677fe78434fb24af99a611e2cb6050ac72a529c",
+        "_whitepoints.py": "13865b87745a2ddb7a030a78b9c5f7650b0b58482f6d683d140ed6ad2b72a7c5",
+        "restoration.py": "28feedb0e6f55186ac0959716eeb85a7356e47db400bdddf34f9576c35dc16cd",
+        "future.py": "e75ab5ed02dae8ba3ed26cbcc5f8e68f044402436b48f13f00d8735bcf44fbfe",
+        "filters.py": "708893a9a868e7856acc441146b0ac9706b465dcb0cb2e346412a83f62f28c9d",
+        "coverage.py": "2349698ddc1beae5b3546273f6d198bd7aacf2fd18b89b597726bab0e92ba00d",
+        "_rgb_colors.py": "c08e5b96975a9238c00e95b3dbc33e9b479cf4095d879f823822d300e4ae528a",
+        "_namespace.py": "fb2c4baecfe5cdff53f3a5c2be5cde315e5139a6f3389bc0561419c1fd751fbd",
+        "morphology.py": "198e51e332e4421a1862415d3d0f01f2c9a703ab0e78c6773ac4ba9d602692b0",
+        "exposure.py": "001be7b41889a3228de2a105129ae736690e4c0c6ddcf972041eb862b20d5f13",
+        "util.py": "0e61563d2007bf0efd2a2985c9f2598056fecda3d0d12d8c2a5a0cd792a54c97",
+        "transform.py": "6c3c29a6abce5c64fceae76cf7bc612ca9ecccad6c5ce5b59a0faf56d30b1869",
+        "__init__.py": "4987e9d1d2e348a8c1d5ac2bb8479f645da977a4c4fee9739aea2b90c9ed4c27",
+        "graph.py": "5f82e0a0b0ae0dcc8554206b9dad7f4fffd013f533988d1bd053f2b41a503d45",
+        "segmentation.py": "2ce76e414fa203cb1a0676dc817c17939eba721181ac071e7aa6c47b6774f1b7",
+        "io.py": "548a24f5f96f082fbe4389e7033e571ddc8d6bdc5a0d0e19e7d51b998054d289",
+        "_stain_matrices.py": "a1611e41073b7108a789cb4f4254c81b2afdc6785616f9757c94e5f6b5d03a0b",
+        "_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+        "measure.py": "3161fd130175b618020a46b50985be51a5bb9b931c0f579c52f8091173a302f5",
+        "registration.py": "75f1dea25b8ff33ca86b68af42ad1003ec80921d13994159a2a110ea72da778c",
+        "data.py": "9c32900ddc5e4175ffea7d8c7f9327f9fc0109d55fd93c533d6d2634bd27c71e"
+      }
+    }
+  },
+  "results": [
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 18.87678,
+      "cpp_ms": 3.3063643333333337,
+      "speedup": 5.70922563181936,
+      "samples_ms": [
+        [
+          19.419148,
+          18.87678,
+          19.28656,
+          18.735695,
+          18.666856,
+          18.796459,
+          19.305074
+        ],
+        [
+          3.3063643333333337,
+          3.024555,
+          3.355206,
+          2.9370103333333333,
+          3.3415973333333335,
+          2.949013,
+          3.4065523333333334
+        ],
+        [
+          2.891499,
+          3.23147025,
+          2.90572575,
+          2.931379,
+          3.21747125,
+          3.19051575,
+          2.905836
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.931379,
+      "improvement": 0.8865868078865679
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.256024,
+      "cpp_ms": 2.2122288333333335,
+      "speedup": 7.800288894164279,
+      "samples_ms": [
+        [
+          17.256024,
+          17.127664,
+          17.60441,
+          17.368666,
+          17.229255,
+          17.584692,
+          17.014281
+        ],
+        [
+          2.2138755,
+          2.1844466666666666,
+          2.2417443333333336,
+          2.2438116666666663,
+          2.2122288333333335,
+          2.1699111666666666,
+          2.2000678333333337
+        ],
+        [
+          2.245398,
+          2.2075608,
+          2.2436307999999996,
+          2.218828,
+          2.215013,
+          2.2206674,
+          2.21143
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.218828,
+      "improvement": 1.002983039804577
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.461515,
+      "cpp_ms": 1.680614,
+      "speedup": 5.03477598068325,
+      "samples_ms": [
+        [
+          8.367407,
+          8.461515,
+          8.261189,
+          8.415929,
+          8.506949,
+          8.485641,
+          8.618911
+        ],
+        [
+          1.680614,
+          1.6614925714285713,
+          1.6868815714285714,
+          1.6838502857142856,
+          1.6759297142857144,
+          1.6959987142857142,
+          1.6724415714285714
+        ],
+        [
+          1.6598781666666667,
+          1.687777,
+          1.6931973333333332,
+          1.6950056666666669,
+          1.7082655,
+          1.702104,
+          1.6828696666666667
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6931973333333332,
+      "improvement": 1.0074873429195124
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.35435,
+      "cpp_ms": 1.669861857142857,
+      "speedup": 5.003018641490704,
+      "samples_ms": [
+        [
+          8.394054,
+          8.195963,
+          8.35435,
+          8.27976,
+          8.166768,
+          8.437116,
+          8.361644
+        ],
+        [
+          1.717786142857143,
+          1.669861857142857,
+          1.6645547142857142,
+          1.647265142857143,
+          1.6762022857142858,
+          1.647801857142857,
+          1.6791205714285713
+        ],
+        [
+          1.663457,
+          1.6933817142857144,
+          1.6630032857142856,
+          1.6664527142857144,
+          1.6796501428571429,
+          1.6794284285714287,
+          1.666461142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.666461142857143,
+      "improvement": 0.9979634756784417
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.515135,
+      "cpp_ms": 3.26186125,
+      "speedup": 5.369675058986645,
+      "samples_ms": [
+        [
+          17.660178,
+          17.099113,
+          17.857718,
+          17.558035,
+          17.310932,
+          17.515135,
+          17.144488
+        ],
+        [
+          3.2438725,
+          3.2953915,
+          3.2654675,
+          3.2327715,
+          3.27444475,
+          3.23118075,
+          3.26186125
+        ],
+        [
+          3.239136,
+          3.27474775,
+          3.2805585,
+          3.261766,
+          3.258868,
+          3.26648225,
+          3.260551
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.261766,
+      "improvement": 0.9999707988805472
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.331971,
+      "cpp_ms": 2.6258665,
+      "speedup": 6.600476833075863,
+      "samples_ms": [
+        [
+          17.131183,
+          20.195579,
+          17.066903,
+          17.370843,
+          17.378748,
+          17.294681,
+          17.331971
+        ],
+        [
+          2.6183775,
+          2.53841475,
+          2.6267105,
+          2.68471475,
+          2.6258665,
+          2.582275,
+          2.6735185
+        ],
+        [
+          3.22743125,
+          2.90262625,
+          2.5969545,
+          2.5754945,
+          2.61261175,
+          2.639898,
+          2.61758375
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.61758375,
+      "improvement": 0.9968457078834739
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.8610385,
+      "cpp_ms": 0.088012484375,
+      "speedup": 21.145164952628345,
+      "samples_ms": [
+        [
+          1.8431665,
+          1.8610385,
+          1.8591083333333334,
+          1.8996411666666668,
+          1.8818926666666667,
+          1.8590565,
+          1.8716385
+        ],
+        [
+          0.089555859375,
+          0.086637875,
+          0.0894440625,
+          0.08929003125,
+          0.0875693125,
+          0.088012484375,
+          0.087749796875
+        ],
+        [
+          0.08728707462686566,
+          0.08943886567164179,
+          0.08713737313432836,
+          0.08882234328358209,
+          0.08995132835820895,
+          0.08880680597014926,
+          0.08863826865671642
+        ]
+      ],
+      "loops": [
+        6,
+        64,
+        67
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08880680597014926,
+      "improvement": 1.0090251013908986
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.8552808333333333,
+      "cpp_ms": 0.08786082089552238,
+      "speedup": 21.116133612494885,
+      "samples_ms": [
+        [
+          1.9271778333333331,
+          1.850492,
+          1.8648338333333332,
+          1.8398823333333332,
+          1.8392426666666668,
+          1.8552808333333333,
+          1.8769851666666668
+        ],
+        [
+          0.0891079552238806,
+          0.08516189552238806,
+          0.0909270447761194,
+          0.08759467164179105,
+          0.08786082089552238,
+          0.08841186567164179,
+          0.08775376119402985
+        ],
+        [
+          0.08941894915254238,
+          0.08954816949152541,
+          0.08707759322033898,
+          0.08905352542372881,
+          0.0892917627118644,
+          0.08816235593220338,
+          0.0882844406779661
+        ]
+      ],
+      "loops": [
+        6,
+        67,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08905352542372881,
+      "improvement": 1.0135749303961625
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 20.2179,
+      "cpp_ms": 2.964187,
+      "speedup": 6.820723523853252,
+      "samples_ms": [
+        [
+          20.435419,
+          20.486275,
+          20.149382,
+          20.26062,
+          19.919881,
+          20.2179,
+          20.123572
+        ],
+        [
+          2.96879075,
+          2.966033,
+          2.964187,
+          2.93271275,
+          2.959388,
+          2.95259025,
+          2.96483575
+        ],
+        [
+          2.91310375,
+          2.96775875,
+          2.9123645,
+          2.9580855,
+          2.94965475,
+          2.93745675,
+          2.98461025
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.94965475,
+      "improvement": 0.9950973909540796
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 21.29314,
+      "cpp_ms": 2.2446818,
+      "speedup": 9.486039402110357,
+      "samples_ms": [
+        [
+          20.98344,
+          21.552307,
+          21.232676,
+          21.274967,
+          21.29314,
+          21.445786,
+          21.700346
+        ],
+        [
+          2.2836008,
+          2.2392574,
+          2.2328716,
+          2.2129362,
+          2.2852416,
+          2.2568528,
+          2.2446818
+        ],
+        [
+          2.4397417999999997,
+          2.233206,
+          2.232477,
+          2.2529712,
+          2.2505406,
+          2.2598762000000003,
+          2.2257804
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.2505406,
+      "improvement": 1.0026100804131792
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.429382,
+      "cpp_ms": 2.880387,
+      "speedup": 4.662353357378714,
+      "samples_ms": [
+        [
+          13.031935,
+          13.67397,
+          13.350212,
+          13.429382,
+          13.325747,
+          13.431515,
+          14.048784
+        ],
+        [
+          2.84356075,
+          2.888958,
+          2.8831625,
+          2.884392,
+          2.8590545,
+          2.880387,
+          2.85850875
+        ],
+        [
+          2.8811785,
+          2.893509,
+          2.8719815,
+          2.877925,
+          2.869479,
+          2.878937,
+          2.87953325
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.878937,
+      "improvement": 0.9994965954227679
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.318012,
+      "cpp_ms": 2.1981884,
+      "speedup": 6.058630825274122,
+      "samples_ms": [
+        [
+          13.339983,
+          13.184661,
+          13.286453,
+          13.319345,
+          13.318012,
+          13.101917,
+          13.476019
+        ],
+        [
+          2.2742472,
+          2.1863802000000003,
+          2.1981884,
+          2.176748,
+          2.2264936,
+          2.2091428,
+          2.186206
+        ],
+        [
+          2.1716626,
+          2.1786956,
+          2.1979078,
+          2.1988574,
+          2.2178434,
+          2.2355404,
+          2.2540472
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1988574,
+      "improvement": 1.0003043415204995
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 313.525176,
+      "cpp_ms": 3.6734326666666663,
+      "speedup": 85.34937331095766,
+      "samples_ms": [
+        [
+          312.87527,
+          313.009509,
+          314.121778,
+          313.136085,
+          313.525176,
+          313.998797,
+          313.809592
+        ],
+        [
+          3.6734326666666663,
+          3.631043,
+          3.692542,
+          4.932019666666667,
+          3.6475876666666665,
+          3.6685973333333335,
+          3.6790236666666667
+        ],
+        [
+          3.663454,
+          3.6703403333333333,
+          3.654364,
+          3.6145853333333333,
+          3.6980456666666663,
+          3.6538226666666667,
+          4.005880666666666
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.663454,
+      "improvement": 0.9972835580308266
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 313.293861,
+      "cpp_ms": 2.5915814,
+      "speedup": 120.88906835031305,
+      "samples_ms": [
+        [
+          312.884264,
+          313.293861,
+          317.44592,
+          313.808599,
+          312.897639,
+          312.725426,
+          313.927784
+        ],
+        [
+          2.6145046,
+          2.5604832,
+          2.661529,
+          2.5915814,
+          2.5573272,
+          2.6005924,
+          2.557744
+        ],
+        [
+          2.5775954,
+          2.5539967999999997,
+          2.548148,
+          2.5848708,
+          2.5502678,
+          2.5506748,
+          2.5926374
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.5539967999999997,
+      "improvement": 0.9854974263976427
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 35.872316,
+      "cpp_ms": 2.8112102,
+      "speedup": 12.76045313153744,
+      "samples_ms": [
+        [
+          35.604463,
+          35.872316,
+          35.839503,
+          36.088161,
+          35.79006,
+          35.985177,
+          35.936215
+        ],
+        [
+          2.777082,
+          2.7643622000000003,
+          2.8481654,
+          2.8609456,
+          2.8259497999999996,
+          2.7943726,
+          2.8112102
+        ],
+        [
+          2.80115875,
+          2.7943335,
+          2.8003195,
+          2.8282495,
+          2.86354575,
+          2.835661,
+          2.8059425
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8059425,
+      "improvement": 0.9981261806747855
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 36.052677,
+      "cpp_ms": 2.1717123333333337,
+      "speedup": 16.601037092543102,
+      "samples_ms": [
+        [
+          36.112066,
+          36.05096,
+          35.886252,
+          35.805651,
+          36.142152,
+          36.055702,
+          36.052677
+        ],
+        [
+          2.1592321666666665,
+          2.1578713333333335,
+          2.1717123333333337,
+          2.1538236666666664,
+          2.2064741666666663,
+          2.1916975,
+          2.230858
+        ],
+        [
+          2.1550376,
+          2.1788263999999997,
+          2.1687332,
+          2.1910272,
+          2.2009722000000003,
+          2.1522498,
+          2.1981522
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1788263999999997,
+      "improvement": 1.0032757868330318
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 55.382338,
+      "cpp_ms": 9.361209,
+      "speedup": 5.916152283321523,
+      "samples_ms": [
+        [
+          54.598356,
+          57.63203,
+          55.382338,
+          55.967816,
+          54.934807,
+          53.928556,
+          55.681417
+        ],
+        [
+          9.383992,
+          9.302941,
+          9.523365,
+          9.361209,
+          9.301848,
+          9.312529,
+          9.433397
+        ],
+        [
+          9.500101,
+          9.602905,
+          9.541329,
+          9.428827,
+          9.480174,
+          9.483521,
+          9.556237
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 9.500101,
+      "improvement": 1.0148369724466146
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 55.326001,
+      "cpp_ms": 5.0595465,
+      "speedup": 10.934972333982898,
+      "samples_ms": [
+        [
+          55.326001,
+          56.151693,
+          54.343775,
+          55.752914,
+          55.064738,
+          54.724994,
+          55.682842
+        ],
+        [
+          5.0595465,
+          5.1402085,
+          5.0113765,
+          4.8494565,
+          5.203868,
+          4.8533845,
+          5.176561
+        ],
+        [
+          5.174843,
+          5.2679235,
+          4.940328,
+          4.9677685,
+          5.0994765,
+          5.1413,
+          4.9444505
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 5.0994765,
+      "improvement": 1.0078920116654724
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 112.085795,
+      "cpp_ms": 9.055756,
+      "speedup": 12.377298482865482,
+      "samples_ms": [
+        [
+          111.399194,
+          112.61148,
+          112.303824,
+          111.821065,
+          112.865088,
+          112.085795,
+          111.807951
+        ],
+        [
+          9.154943,
+          8.084263,
+          9.236435,
+          8.069385,
+          9.401024,
+          8.052212,
+          9.055756
+        ],
+        [
+          8.095634,
+          9.16954,
+          7.914923,
+          7.986949,
+          9.24941,
+          9.231177,
+          7.931796
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.095634,
+      "improvement": 0.893976604493319
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint8",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 110.996768,
+      "cpp_ms": 4.322270333333333,
+      "speedup": 25.68020032064939,
+      "samples_ms": [
+        [
+          111.11416,
+          110.996768,
+          109.974729,
+          112.697273,
+          110.838844,
+          110.798457,
+          111.629358
+        ],
+        [
+          4.322270333333333,
+          4.302196,
+          4.467964666666667,
+          4.321272,
+          4.456389,
+          4.259199,
+          4.363030333333333
+        ],
+        [
+          4.403669666666667,
+          4.404605,
+          4.320243666666667,
+          4.308942,
+          4.362138666666667,
+          4.408999666666667,
+          4.318971333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.362138666666667,
+      "improvement": 1.0092239333171433
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.963164,
+      "cpp_ms": 2.85508675,
+      "speedup": 6.291635096551794,
+      "samples_ms": [
+        [
+          18.493131,
+          18.015684,
+          17.658011,
+          17.963164,
+          17.926106,
+          18.169632,
+          17.799385
+        ],
+        [
+          2.87649675,
+          2.85508675,
+          2.853712,
+          2.8667935,
+          2.8223,
+          2.86413875,
+          2.83456325
+        ],
+        [
+          2.8132474,
+          2.8473474,
+          2.8045712000000003,
+          2.8174832000000003,
+          2.8247526,
+          2.8445722,
+          2.864097
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8247526,
+      "improvement": 0.9893754016405982
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 14.182274,
+      "cpp_ms": 2.164697,
+      "speedup": 6.551620850400772,
+      "samples_ms": [
+        [
+          14.23346,
+          14.099979,
+          14.278763,
+          14.300426,
+          13.964756,
+          14.182274,
+          14.023867
+        ],
+        [
+          2.164697,
+          2.1312946,
+          2.1747482000000002,
+          2.1574518,
+          2.1844522000000004,
+          2.1315028,
+          2.1881614
+        ],
+        [
+          2.1671256,
+          2.1543218,
+          2.1562714,
+          2.1440304,
+          2.1309058,
+          2.1743973999999997,
+          2.1296454
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1543218,
+      "improvement": 0.9952070890290882
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.108528,
+      "cpp_ms": 1.6565001428571429,
+      "speedup": 4.894975732398281,
+      "samples_ms": [
+        [
+          8.108528,
+          10.986211,
+          8.121194,
+          7.984468,
+          7.940627,
+          8.099805,
+          8.159606
+        ],
+        [
+          1.6565001428571429,
+          2.1658877142857142,
+          1.6681637142857144,
+          1.638284857142857,
+          1.672264142857143,
+          1.626596,
+          1.6496948571428571
+        ],
+        [
+          1.6604207142857144,
+          2.183957285714286,
+          1.7761115714285713,
+          1.607714857142857,
+          1.651161857142857,
+          1.653891142857143,
+          1.630884
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.653891142857143,
+      "improvement": 0.9984249925897984
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.33754,
+      "cpp_ms": 1.660286,
+      "speedup": 5.021749264885689,
+      "samples_ms": [
+        [
+          8.343892,
+          8.341968,
+          8.333743,
+          8.320648,
+          8.18851,
+          8.33754,
+          8.386421
+        ],
+        [
+          1.6519492857142857,
+          1.667088857142857,
+          1.6582237142857144,
+          1.6700458571428571,
+          1.660286,
+          1.6665135714285713,
+          1.6499695714285714
+        ],
+        [
+          1.65625,
+          1.6750352857142856,
+          1.648136142857143,
+          1.663482,
+          1.684566,
+          1.6620767142857142,
+          1.6404404285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6620767142857142,
+      "improvement": 1.0010785577218109
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.619154,
+      "cpp_ms": 3.27211225,
+      "speedup": 4.162190340505586,
+      "samples_ms": [
+        [
+          13.619154,
+          13.52078,
+          13.573128,
+          13.770567,
+          13.780847,
+          13.847893,
+          13.524678
+        ],
+        [
+          3.27510575,
+          3.2644905,
+          3.27211225,
+          3.287609,
+          3.2798795,
+          3.2521825,
+          3.22252225
+        ],
+        [
+          3.238249,
+          3.29321225,
+          3.2564205,
+          3.26252225,
+          3.27833925,
+          3.27902825,
+          3.26621425
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.26621425,
+      "improvement": 0.9981974946000095
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 18.476765,
+      "cpp_ms": 2.5490614,
+      "speedup": 7.248458197201527,
+      "samples_ms": [
+        [
+          18.476765,
+          18.885831,
+          18.440938,
+          18.45873,
+          18.576822,
+          18.477256,
+          18.201089
+        ],
+        [
+          2.60903,
+          2.526966,
+          2.5341274,
+          2.5394274,
+          2.5604967999999997,
+          2.5490614,
+          2.6292756
+        ],
+        [
+          2.5802758,
+          2.6436866,
+          2.567476,
+          2.5204,
+          2.5995802,
+          2.6232562,
+          2.5679224
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.5802758,
+      "improvement": 1.0122454484619319
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.9546715,
+      "cpp_ms": 0.08726661538461539,
+      "speedup": 22.398846241315294,
+      "samples_ms": [
+        [
+          1.935693,
+          1.9377133333333332,
+          1.971822,
+          1.9443421666666667,
+          1.9624211666666667,
+          1.9774626666666668,
+          1.9546715
+        ],
+        [
+          0.08803453846153847,
+          0.08726661538461539,
+          0.09032738461538461,
+          0.08554721153846154,
+          0.08777123076923077,
+          0.08645663461538461,
+          0.08646028846153847
+        ],
+        [
+          0.08741569696969698,
+          0.0865310303030303,
+          0.10744106060606061,
+          0.08539707575757575,
+          0.08560427272727272,
+          0.08521522727272728,
+          0.08289465151515152
+        ]
+      ],
+      "loops": [
+        6,
+        52,
+        66
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08560427272727272,
+      "improvement": 0.9809509896766808
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.9706766666666669,
+      "cpp_ms": 0.08647512698412699,
+      "speedup": 22.788942154758512,
+      "samples_ms": [
+        [
+          1.9706766666666669,
+          1.9744921666666668,
+          1.9497005,
+          1.9410793333333332,
+          1.982529,
+          1.9592585,
+          1.9757963333333333
+        ],
+        [
+          0.09083698412698413,
+          0.08525522222222222,
+          0.0838535396825397,
+          0.08647512698412699,
+          0.08742515873015873,
+          0.08754222222222222,
+          0.08613896825396826
+        ],
+        [
+          0.085478828125,
+          0.08466621875,
+          0.08600453125,
+          0.084541921875,
+          0.08500309375,
+          0.0860996875,
+          0.083556796875
+        ]
+      ],
+      "loops": [
+        6,
+        63,
+        64
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08500309375,
+      "improvement": 0.982977379907205
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 22.363457,
+      "cpp_ms": 2.93118325,
+      "speedup": 7.629498087504423,
+      "samples_ms": [
+        [
+          22.863666,
+          22.250574,
+          22.135128,
+          22.483142,
+          22.362686,
+          22.606023,
+          22.363457
+        ],
+        [
+          2.948065,
+          2.909305,
+          2.967434,
+          2.9837195,
+          2.93118325,
+          2.91797625,
+          2.928844
+        ],
+        [
+          2.9217685,
+          2.919221,
+          2.95325475,
+          2.962823,
+          2.9437695,
+          2.934452,
+          2.93577975
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.93577975,
+      "improvement": 1.0015681380548282
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 22.027727,
+      "cpp_ms": 2.187519,
+      "speedup": 10.06973059433998,
+      "samples_ms": [
+        [
+          22.782735,
+          22.353019,
+          22.000887,
+          21.708086,
+          21.889987,
+          22.058353,
+          22.027727
+        ],
+        [
+          2.2677858,
+          2.2412638,
+          2.187519,
+          2.1587267999999997,
+          2.1818986000000002,
+          2.189044,
+          2.1503012000000004
+        ],
+        [
+          2.217209,
+          2.2624296,
+          2.2087268,
+          2.1419492,
+          2.1668944,
+          2.2071098,
+          2.2489847999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.2087268,
+      "improvement": 1.0096949100784953
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 18.117353,
+      "cpp_ms": 2.8363025,
+      "speedup": 6.387665984146614,
+      "samples_ms": [
+        [
+          18.129583,
+          18.117353,
+          18.044394,
+          18.003427,
+          18.173436,
+          18.310584,
+          18.098565
+        ],
+        [
+          2.80418475,
+          2.85173675,
+          2.8092345,
+          2.8363025,
+          2.8439195,
+          2.8525855,
+          2.82037025
+        ],
+        [
+          2.80570525,
+          2.8570565,
+          2.8374775,
+          2.8258105,
+          2.82713575,
+          2.84302525,
+          2.8320745
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8320745,
+      "improvement": 0.9985093268436636
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.990122,
+      "cpp_ms": 2.1446085,
+      "speedup": 8.388534317568917,
+      "samples_ms": [
+        [
+          18.089178,
+          17.896255,
+          18.031811,
+          18.112461,
+          17.988499,
+          17.990122,
+          17.810674
+        ],
+        [
+          2.1639746666666664,
+          2.1613098333333336,
+          2.1658548333333334,
+          2.1446085,
+          2.13478,
+          2.1275348333333337,
+          2.1009748333333333
+        ],
+        [
+          2.150149,
+          2.226087,
+          2.194342,
+          2.0952318,
+          2.1404128,
+          2.1572182,
+          2.1261238
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.150149,
+      "improvement": 1.0025834552087245
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 317.916414,
+      "cpp_ms": 3.6474033333333336,
+      "speedup": 87.16239607903704,
+      "samples_ms": [
+        [
+          318.908297,
+          318.127172,
+          316.605893,
+          317.371172,
+          318.289838,
+          317.916414,
+          317.394045
+        ],
+        [
+          3.654086,
+          3.673245,
+          3.6303883333333333,
+          3.6474033333333336,
+          3.6811066666666665,
+          3.6348096666666665,
+          3.6434963333333337
+        ],
+        [
+          3.634586,
+          3.6274793333333335,
+          3.661273,
+          3.6456403333333336,
+          3.6898663333333337,
+          3.6708036666666666,
+          3.6711313333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.661273,
+      "improvement": 1.0038026139143736
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 316.678549,
+      "cpp_ms": 2.619617,
+      "speedup": 120.88734689078593,
+      "samples_ms": [
+        [
+          316.620309,
+          318.201913,
+          316.952566,
+          316.241058,
+          318.800715,
+          316.678549,
+          315.396854
+        ],
+        [
+          2.6210375,
+          2.51855,
+          2.68631025,
+          2.52271525,
+          2.619617,
+          2.5771025,
+          2.68245525
+        ],
+        [
+          2.5422095,
+          2.56790525,
+          2.5427255,
+          2.5151235,
+          2.5659365,
+          2.59714575,
+          2.7238155
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.5659365,
+      "improvement": 0.9795082639943167
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 36.573662,
+      "cpp_ms": 2.7813796,
+      "speedup": 13.14946798344246,
+      "samples_ms": [
+        [
+          37.297527,
+          36.616517,
+          36.641685,
+          36.424949,
+          36.222368,
+          36.296817,
+          36.573662
+        ],
+        [
+          2.7959007999999996,
+          2.7756247999999997,
+          2.7985238,
+          2.7813796,
+          2.7787187999999996,
+          2.7728154,
+          2.8032224
+        ],
+        [
+          2.752822,
+          2.8024512,
+          2.8170764,
+          2.7839766,
+          2.7812774,
+          2.7525733999999997,
+          2.7929467999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.7839766,
+      "improvement": 1.0009337093002335
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 36.455657,
+      "cpp_ms": 2.1095353333333335,
+      "speedup": 17.281368282367396,
+      "samples_ms": [
+        [
+          36.28706,
+          36.455657,
+          36.280228,
+          37.672951,
+          36.333548,
+          36.803972,
+          36.719092
+        ],
+        [
+          2.1108041666666666,
+          2.0375031666666668,
+          2.0895325,
+          2.1095353333333335,
+          2.094879333333333,
+          2.1222773333333333,
+          2.1150236666666666
+        ],
+        [
+          2.0471096666666666,
+          2.08898,
+          2.0707571666666666,
+          2.0695716666666666,
+          2.0686466666666665,
+          2.1798556666666666,
+          2.1431616666666664
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.0707571666666666,
+      "improvement": 0.9816176737815562
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 54.784445,
+      "cpp_ms": 9.429892,
+      "speedup": 5.809657735210541,
+      "samples_ms": [
+        [
+          53.914614,
+          54.123634,
+          55.963117,
+          55.970231,
+          55.306335,
+          53.804064,
+          54.784445
+        ],
+        [
+          9.356285,
+          9.474686,
+          9.541643,
+          9.401779,
+          9.452284,
+          9.319996,
+          9.429892
+        ],
+        [
+          9.473043,
+          9.341376,
+          9.341998,
+          9.601916,
+          9.489895,
+          9.38545,
+          9.342958
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 9.38545,
+      "improvement": 0.995287114635035
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 54.415902,
+      "cpp_ms": 4.925832,
+      "speedup": 11.047047889574797,
+      "samples_ms": [
+        [
+          54.003941,
+          54.415902,
+          54.134857,
+          54.974873,
+          54.043736,
+          55.10693,
+          54.793683
+        ],
+        [
+          4.925832,
+          4.818961,
+          5.022764,
+          4.834771,
+          5.0126705,
+          4.820655,
+          5.7976235
+        ],
+        [
+          4.807675,
+          5.0085325,
+          4.8997385,
+          4.9316535,
+          5.1159135,
+          5.2297525,
+          4.8293865
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.9316535,
+      "improvement": 1.0011818308054357
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 108.63616,
+      "cpp_ms": 6.4967755,
+      "speedup": 16.72155055996625,
+      "samples_ms": [
+        [
+          109.173627,
+          109.28217,
+          109.613613,
+          107.889936,
+          108.023848,
+          108.0291,
+          108.63616
+        ],
+        [
+          6.526768,
+          6.5361945,
+          6.4967755,
+          6.534763,
+          6.4415225,
+          6.3266965,
+          6.4690285
+        ],
+        [
+          6.474249,
+          6.6078495,
+          6.5653995,
+          6.5333495,
+          6.3898855,
+          6.517896,
+          6.520441
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.520441,
+      "improvement": 1.0036426531900324
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "uint16",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 107.961682,
+      "cpp_ms": 4.145438666666666,
+      "speedup": 26.043487958974346,
+      "samples_ms": [
+        [
+          107.725929,
+          108.567852,
+          108.480126,
+          108.29049,
+          107.759846,
+          107.329512,
+          107.961682
+        ],
+        [
+          4.210300333333333,
+          4.220817,
+          4.193636333333333,
+          4.145438666666666,
+          4.129225,
+          4.142861,
+          4.102224666666666
+        ],
+        [
+          4.135773666666666,
+          4.208731,
+          4.207194666666667,
+          4.161071,
+          4.1383486666666665,
+          4.018280333333333,
+          4.576515333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.161071,
+      "improvement": 1.0037709720467058
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 14.321017,
+      "cpp_ms": 2.8819305,
+      "speedup": 4.969244400584954,
+      "samples_ms": [
+        [
+          14.285972,
+          14.207514,
+          14.323972,
+          14.321017,
+          14.429732,
+          14.617194,
+          14.272406
+        ],
+        [
+          2.85236975,
+          2.855899,
+          2.88774375,
+          2.8389045,
+          2.89759975,
+          2.9169835,
+          2.8819305
+        ],
+        [
+          2.8719165,
+          2.84399925,
+          2.822421,
+          2.8865465,
+          2.89679825,
+          2.887889,
+          2.8719115
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8719165,
+      "improvement": 0.996525245837816
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.058677,
+      "cpp_ms": 2.3037047999999998,
+      "speedup": 5.668554842616988,
+      "samples_ms": [
+        [
+          13.058677,
+          13.079315,
+          13.069887,
+          13.050391,
+          12.9328,
+          12.967074,
+          13.118349
+        ],
+        [
+          2.3287017999999997,
+          2.294265,
+          2.3079888,
+          2.2562637999999997,
+          2.3037047999999998,
+          2.2842762000000003,
+          2.3280586000000003
+        ],
+        [
+          2.2624834,
+          2.329311,
+          2.3072854,
+          2.2641244,
+          2.3774112,
+          2.3255717999999996,
+          2.238937
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.3072854,
+      "improvement": 1.0015542790031084
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.072121,
+      "cpp_ms": 1.6765172857142856,
+      "speedup": 4.814815253491911,
+      "samples_ms": [
+        [
+          8.072121,
+          7.955733,
+          8.094533,
+          8.169985,
+          8.191675,
+          7.988665,
+          8.015975
+        ],
+        [
+          1.6566972857142857,
+          1.691972142857143,
+          1.6935622857142856,
+          1.671551,
+          1.6847971428571429,
+          1.6591647142857142,
+          1.6765172857142856
+        ],
+        [
+          1.7030987142857144,
+          1.727317,
+          1.7322204285714287,
+          1.718053857142857,
+          1.7520492857142858,
+          1.706807142857143,
+          1.7139764285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.718053857142857,
+      "improvement": 1.0247755103884149
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.101196,
+      "cpp_ms": 1.672532857142857,
+      "speedup": 4.843669268081857,
+      "samples_ms": [
+        [
+          8.173031,
+          8.101196,
+          7.966423,
+          8.148033,
+          8.165537,
+          7.877766,
+          8.079204
+        ],
+        [
+          1.672532857142857,
+          1.6499832857142858,
+          1.666595857142857,
+          1.64292,
+          1.676463,
+          1.674435,
+          1.682900857142857
+        ],
+        [
+          1.7614516666666666,
+          1.7083268333333332,
+          1.7467375,
+          1.7132845,
+          1.7661103333333332,
+          1.7192975,
+          1.7203026666666668
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.7203026666666668,
+      "improvement": 1.0285613578948838
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.28417,
+      "cpp_ms": 3.9281443333333335,
+      "speedup": 3.381792743019541,
+      "samples_ms": [
+        [
+          13.170777,
+          13.227003,
+          13.3053,
+          13.28417,
+          13.509703,
+          13.373148,
+          13.259073
+        ],
+        [
+          3.84416,
+          3.9140076666666666,
+          3.8901363333333334,
+          3.9317813333333334,
+          3.9281443333333335,
+          3.956695,
+          3.9377926666666667
+        ],
+        [
+          4.8895885,
+          4.885466,
+          4.926162,
+          5.0456015,
+          5.111956,
+          4.857233,
+          4.8830715
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.8895885,
+      "improvement": 1.2447578513111324
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 15.490194,
+      "cpp_ms": 3.2853605,
+      "speedup": 4.714914542863713,
+      "samples_ms": [
+        [
+          15.490194,
+          15.421895,
+          15.6697,
+          15.241717,
+          15.481357,
+          15.537081,
+          15.562389
+        ],
+        [
+          3.3252555,
+          3.2853605,
+          3.40870975,
+          3.26364725,
+          3.27877825,
+          3.26180125,
+          3.35770875
+        ],
+        [
+          4.319516333333333,
+          4.408740333333333,
+          4.242154,
+          4.287101666666667,
+          4.256481333333333,
+          4.281474666666667,
+          4.279043666666667
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.281474666666667,
+      "improvement": 1.3031978276559504
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 2.0077676666666666,
+      "cpp_ms": 0.09469608823529412,
+      "speedup": 21.20222391528896,
+      "samples_ms": [
+        [
+          2.0286518333333334,
+          1.9976603333333331,
+          2.0077676666666666,
+          1.9894415,
+          2.0158928333333335,
+          2.009247,
+          1.9996055
+        ],
+        [
+          0.09506060294117648,
+          0.0924797205882353,
+          0.09326929411764706,
+          0.090115,
+          0.0953850294117647,
+          0.09469608823529412,
+          0.09494361764705883
+        ],
+        [
+          0.09575084285714285,
+          0.09596338571428571,
+          0.09388061428571429,
+          0.09400312857142858,
+          0.09738447142857143,
+          0.0985136,
+          0.09717451428571429
+        ]
+      ],
+      "loops": [
+        6,
+        68,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09596338571428571,
+      "improvement": 1.0133827859482718
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 2.009145166666667,
+      "cpp_ms": 0.09717590566037737,
+      "speedup": 20.675342853901267,
+      "samples_ms": [
+        [
+          2.0082351666666667,
+          2.010908333333333,
+          2.009145166666667,
+          2.0178648333333333,
+          2.402247,
+          1.9845506666666668,
+          2.0064468333333334
+        ],
+        [
+          0.0998187924528302,
+          0.09489388679245284,
+          0.0973787358490566,
+          0.09283701886792453,
+          0.10129477358490566,
+          0.0955691320754717,
+          0.09717590566037737
+        ],
+        [
+          0.09639614285714286,
+          0.09944657142857144,
+          0.09766669387755102,
+          0.09519655102040817,
+          0.10071977551020408,
+          0.09412740816326531,
+          0.09260516326530613
+        ]
+      ],
+      "loops": [
+        6,
+        53,
+        49
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09639614285714286,
+      "improvement": 0.991975759855949
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 22.757272,
+      "cpp_ms": 2.979541,
+      "speedup": 7.637844889531642,
+      "samples_ms": [
+        [
+          22.602071,
+          22.338746,
+          22.97419,
+          22.757272,
+          22.627538,
+          22.802357,
+          23.008124
+        ],
+        [
+          2.9770265,
+          2.97179925,
+          3.02969025,
+          3.013793,
+          2.929209,
+          2.979541,
+          2.996676
+        ],
+        [
+          2.96205575,
+          2.983659,
+          2.980498,
+          3.00969275,
+          2.97492475,
+          2.96123925,
+          2.99769275
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.980498,
+      "improvement": 1.0003211904115432
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 21.291238,
+      "cpp_ms": 2.340664,
+      "speedup": 9.096238503262322,
+      "samples_ms": [
+        [
+          21.653429,
+          21.463543,
+          21.177636,
+          21.330743,
+          21.291238,
+          21.232148,
+          21.157428
+        ],
+        [
+          2.4066338,
+          2.2994388,
+          2.3811362000000003,
+          2.297469,
+          2.3438542,
+          2.340664,
+          2.3383977999999996
+        ],
+        [
+          2.3435676,
+          2.3037368,
+          2.301675,
+          2.3329158,
+          2.3164126,
+          2.3957878,
+          2.3075037999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.3164126,
+      "improvement": 0.9896390938639634
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 15.037152,
+      "cpp_ms": 2.856643,
+      "speedup": 5.263924123525411,
+      "samples_ms": [
+        [
+          14.867654,
+          15.017997,
+          15.133223,
+          14.980306,
+          15.173138,
+          15.037152,
+          15.054255
+        ],
+        [
+          2.83508975,
+          2.85261775,
+          2.868465,
+          2.84326,
+          2.87017325,
+          2.888961,
+          2.856643
+        ],
+        [
+          2.861379,
+          2.8530035,
+          2.84611825,
+          2.843964,
+          2.86541675,
+          2.84724,
+          2.87071175
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8530035,
+      "improvement": 0.9987259521053208
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 15.436854,
+      "cpp_ms": 2.2821743999999997,
+      "speedup": 6.764099185408443,
+      "samples_ms": [
+        [
+          15.603706,
+          15.639002,
+          15.436854,
+          15.150345,
+          15.431493,
+          15.221087,
+          15.487929
+        ],
+        [
+          2.3287258,
+          2.2599306,
+          2.4050708,
+          2.2773592000000002,
+          2.3564217999999997,
+          2.2821743999999997,
+          2.2478038
+        ],
+        [
+          2.291023,
+          2.3426058,
+          2.271268,
+          2.267619,
+          2.2465616,
+          2.5791422,
+          2.2902432000000004
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.2902432000000004,
+      "improvement": 1.0035355755458482
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 317.129107,
+      "cpp_ms": 3.6439106666666663,
+      "speedup": 87.02987971165045,
+      "samples_ms": [
+        [
+          317.129107,
+          317.778066,
+          316.679975,
+          318.197212,
+          316.299942,
+          316.68272,
+          318.332337
+        ],
+        [
+          3.6748086666666664,
+          3.6439106666666663,
+          3.6509833333333335,
+          3.6850173333333336,
+          3.640397,
+          3.6183426666666665,
+          3.5732946666666665
+        ],
+        [
+          3.653061,
+          3.6666896666666666,
+          3.651695,
+          3.6422476666666666,
+          3.6736996666666664,
+          3.66495,
+          3.6101803333333335
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.653061,
+      "improvement": 1.002511129983794
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 317.698877,
+      "cpp_ms": 2.65583075,
+      "speedup": 119.62316386313398,
+      "samples_ms": [
+        [
+          318.500103,
+          317.725247,
+          318.736418,
+          317.698877,
+          316.200273,
+          316.610132,
+          317.622044
+        ],
+        [
+          2.713241,
+          2.6422125,
+          2.650894,
+          2.65583075,
+          2.6744505,
+          2.644682,
+          2.74030175
+        ],
+        [
+          2.6695765,
+          2.71809525,
+          2.647395,
+          2.62909775,
+          2.70457225,
+          2.6983855,
+          2.66779825
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.6695765,
+      "improvement": 1.0051756874943933
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 35.192441,
+      "cpp_ms": 2.8239645,
+      "speedup": 12.462069193858492,
+      "samples_ms": [
+        [
+          35.309426,
+          35.494635,
+          35.096391,
+          35.276991,
+          34.8029,
+          35.192441,
+          34.868854
+        ],
+        [
+          2.85923,
+          2.861362,
+          2.8380105,
+          2.81478425,
+          2.80697475,
+          2.80786675,
+          2.8239645
+        ],
+        [
+          2.8681995,
+          2.9099985,
+          2.837382,
+          2.8257375,
+          2.8358565,
+          2.84037,
+          2.78694725
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.837382,
+      "improvement": 1.0047512991045036
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 35.104937,
+      "cpp_ms": 2.2726727999999996,
+      "speedup": 15.446542502730708,
+      "samples_ms": [
+        [
+          35.161834,
+          35.104937,
+          34.860929,
+          35.285416,
+          35.157838,
+          34.905743,
+          34.706819
+        ],
+        [
+          2.2726727999999996,
+          2.3756782000000003,
+          2.2988277999999998,
+          2.2522644,
+          2.2934436000000002,
+          2.2354287999999998,
+          2.2448946000000003
+        ],
+        [
+          2.2430432000000002,
+          2.2609268,
+          2.2416464,
+          2.2710017999999996,
+          2.2797742000000003,
+          2.2598646000000002,
+          2.2294254
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.2598646000000002,
+      "improvement": 0.9943642569225102
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 53.690501,
+      "cpp_ms": 9.371665,
+      "speedup": 5.729024778414508,
+      "samples_ms": [
+        [
+          53.690501,
+          54.1054,
+          54.76568,
+          52.931235,
+          53.568641,
+          52.965639,
+          53.720696
+        ],
+        [
+          9.33766,
+          9.412502,
+          9.400439,
+          9.522898,
+          9.32655,
+          9.303286,
+          9.371665
+        ],
+        [
+          9.595295,
+          9.364922,
+          9.339705,
+          9.331199,
+          9.25721,
+          9.590245,
+          9.638284
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 9.364922,
+      "improvement": 0.9992804907132297
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 52.89689,
+      "cpp_ms": 5.075594,
+      "speedup": 10.421812698178774,
+      "samples_ms": [
+        [
+          52.971811,
+          52.775183,
+          52.483934,
+          52.89689,
+          52.925137,
+          52.638696,
+          53.368697
+        ],
+        [
+          5.1835115,
+          5.0044405,
+          5.075594,
+          4.8785945,
+          5.0859885,
+          4.8536175,
+          5.1929295
+        ],
+        [
+          4.9264395,
+          5.0640375,
+          4.9529235,
+          4.974594,
+          5.0789255,
+          5.200413,
+          5.0053675
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 5.0053675,
+      "improvement": 0.9861638854486786
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 89.253297,
+      "cpp_ms": 4.357748,
+      "speedup": 20.481518665145394,
+      "samples_ms": [
+        [
+          89.253297,
+          98.092422,
+          89.786347,
+          89.369625,
+          88.303223,
+          88.834831,
+          89.220486
+        ],
+        [
+          4.458477,
+          4.257065666666667,
+          4.404301666666667,
+          4.258705333333333,
+          4.374469666666667,
+          4.3073,
+          4.357748
+        ],
+        [
+          4.26288,
+          6.040737333333333,
+          4.300994666666667,
+          4.350611333333333,
+          4.389160666666667,
+          4.426383333333333,
+          4.351766666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.351766666666667,
+      "improvement": 0.9986274256030104
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float32",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 86.290714,
+      "cpp_ms": 3.211755,
+      "speedup": 26.867153316488956,
+      "samples_ms": [
+        [
+          86.123079,
+          86.216134,
+          86.150923,
+          86.392304,
+          86.638057,
+          86.290714,
+          86.764274
+        ],
+        [
+          3.26015075,
+          3.176594,
+          3.211755,
+          3.16768025,
+          3.2928795,
+          3.1604585,
+          3.261348
+        ],
+        [
+          3.19253125,
+          3.31282925,
+          3.12373725,
+          3.21702975,
+          3.34581125,
+          3.23042,
+          3.20077175
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.21702975,
+      "improvement": 1.0016423263916456
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.514702,
+      "cpp_ms": 3.0435435,
+      "speedup": 5.754707300881357,
+      "samples_ms": [
+        [
+          17.984234,
+          17.514702,
+          17.219198,
+          17.485089,
+          17.809227,
+          17.010937,
+          17.615393
+        ],
+        [
+          3.061846,
+          3.02179575,
+          3.03754525,
+          3.0435435,
+          3.07091975,
+          3.06498425,
+          3.02332825
+        ],
+        [
+          2.999509,
+          3.052794,
+          3.014432,
+          3.05654275,
+          3.070297,
+          3.0277565,
+          3.0416025
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.0416025,
+      "improvement": 0.9993622565276298
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "contiguous",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.409476,
+      "cpp_ms": 2.3774474,
+      "speedup": 7.322759695966355,
+      "samples_ms": [
+        [
+          17.409476,
+          17.396452,
+          17.606386,
+          17.485008,
+          17.454923,
+          17.044482,
+          17.010347
+        ],
+        [
+          2.4236958,
+          2.338536,
+          2.3704318,
+          2.378976,
+          2.3951868,
+          2.3339974,
+          2.3774474
+        ],
+        [
+          2.4235496000000003,
+          2.3940264,
+          2.3828892,
+          2.3795287999999997,
+          2.4266454,
+          2.3889484,
+          2.390794
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.390794,
+      "improvement": 1.0056138360831874
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.323183,
+      "cpp_ms": 1.7560308571428571,
+      "speedup": 4.739770355483503,
+      "samples_ms": [
+        [
+          8.339161,
+          8.225067,
+          8.346605,
+          8.522706,
+          8.323183,
+          8.143425,
+          8.302141
+        ],
+        [
+          1.7602747142857142,
+          1.7430422857142858,
+          1.7636522857142858,
+          1.7324792857142857,
+          1.7560308571428571,
+          1.7346207142857144,
+          1.7874697142857143
+        ],
+        [
+          1.8319532857142857,
+          1.8716192857142857,
+          1.8281004285714286,
+          1.8390337142857143,
+          1.8264474285714287,
+          1.8455317142857144,
+          1.875405
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.8390337142857143,
+      "improvement": 1.0472673112805697
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "reversed",
+      "shape": [
+        512,
+        257
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 8.456692,
+      "cpp_ms": 1.7596404285714287,
+      "speedup": 4.805920495283005,
+      "samples_ms": [
+        [
+          8.353919,
+          8.508449,
+          8.456692,
+          8.494974,
+          8.492459,
+          8.230868,
+          8.351084
+        ],
+        [
+          1.7569397142857144,
+          1.812715857142857,
+          1.772051,
+          1.7596404285714287,
+          1.7858067142857144,
+          1.7503715714285715,
+          1.7351687142857144
+        ],
+        [
+          1.8242302857142856,
+          1.8226474285714287,
+          1.8217914285714287,
+          1.824248857142857,
+          1.861541857142857,
+          1.8552957142857143,
+          1.803165
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.8242302857142856,
+      "improvement": 1.0367062816323755
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 16.088755,
+      "cpp_ms": 5.07957,
+      "speedup": 3.1673458580155405,
+      "samples_ms": [
+        [
+          16.422303,
+          16.088755,
+          16.063017,
+          16.509026,
+          16.085901,
+          16.034794,
+          16.189855
+        ],
+        [
+          5.112903,
+          4.934698,
+          5.07957,
+          5.065764,
+          5.10878,
+          5.0385125,
+          5.13283
+        ],
+        [
+          6.9763775,
+          6.9945815,
+          6.975165,
+          7.0517035,
+          7.127035,
+          7.156145,
+          7.1220555
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 7.0517035,
+      "improvement": 1.3882481194274319
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "fortran",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 14.5635,
+      "cpp_ms": 4.431436333333333,
+      "speedup": 3.28640623593148,
+      "samples_ms": [
+        [
+          14.5635,
+          14.486476,
+          14.464626,
+          14.724825,
+          14.893612,
+          14.435841,
+          14.966568
+        ],
+        [
+          4.431436333333333,
+          4.360519666666667,
+          4.413826333333333,
+          4.429051333333333,
+          4.462464,
+          4.459956,
+          4.500212
+        ],
+        [
+          6.4638995,
+          6.4529295,
+          6.4350055,
+          6.4395335,
+          6.590878,
+          6.6569265,
+          6.632161
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.4638995,
+      "improvement": 1.458646590808142
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.9799503333333333,
+      "cpp_ms": 0.0928824647887324,
+      "speedup": 21.316729027775775,
+      "samples_ms": [
+        [
+          2.0416576666666666,
+          2.1245301666666667,
+          1.9605253333333332,
+          2.001615833333333,
+          1.9799503333333333,
+          1.9622501666666667,
+          1.9764101666666667
+        ],
+        [
+          0.0913998309859155,
+          0.09266078873239438,
+          0.0933659014084507,
+          0.09403491549295775,
+          0.09166398591549296,
+          0.09293791549295775,
+          0.0928824647887324
+        ],
+        [
+          0.0979024861111111,
+          0.09365434722222223,
+          0.09174841666666667,
+          0.09645044444444444,
+          0.09716122222222222,
+          0.09661590277777778,
+          0.09437419444444443
+        ]
+      ],
+      "loops": [
+        6,
+        71,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09645044444444444,
+      "improvement": 1.038413920903452
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 1.982612,
+      "cpp_ms": 0.09248028571428571,
+      "speedup": 21.4382123139758,
+      "samples_ms": [
+        [
+          1.9763704285714285,
+          2.022124857142857,
+          1.982612,
+          1.9686,
+          2.0093837142857143,
+          1.981016,
+          1.987773142857143
+        ],
+        [
+          0.09251573626373627,
+          0.09029971428571429,
+          0.09145472527472528,
+          0.09251330769230769,
+          0.0931412967032967,
+          0.08955720879120879,
+          0.09248028571428571
+        ],
+        [
+          0.09676919718309858,
+          0.09544064788732394,
+          0.09279428169014085,
+          0.09520697183098592,
+          0.09582884507042254,
+          0.0959664366197183,
+          0.09514798591549296
+        ]
+      ],
+      "loops": [
+        7,
+        91,
+        71
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09544064788732394,
+      "improvement": 1.0320107377499261
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.01244,
+      "cpp_ms": 3.11905575,
+      "speedup": 5.454355857537975,
+      "samples_ms": [
+        [
+          16.785566,
+          17.036255,
+          17.205383,
+          17.041205,
+          16.967266,
+          16.858522,
+          17.01244
+        ],
+        [
+          3.10871575,
+          3.08211575,
+          3.14869825,
+          3.11905575,
+          3.08891375,
+          3.11938575,
+          3.11906275
+        ],
+        [
+          3.08633125,
+          3.141913,
+          3.14820825,
+          3.138334,
+          3.1050115,
+          3.1085935,
+          3.14878375
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.138334,
+      "improvement": 1.006180796864564
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "large-kernel",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 127
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 17.009326,
+      "cpp_ms": 2.4048806000000003,
+      "speedup": 7.072835965328174,
+      "samples_ms": [
+        [
+          17.225039,
+          16.799091,
+          17.034822,
+          17.210443,
+          17.009326,
+          16.944183,
+          16.90037
+        ],
+        [
+          2.4298216,
+          2.4123566000000003,
+          2.5236476,
+          2.4048806000000003,
+          2.4016846000000003,
+          2.3899984,
+          2.3717023999999998
+        ],
+        [
+          2.415362,
+          2.4067902,
+          2.400853,
+          2.4484323999999997,
+          2.387526,
+          2.4325368,
+          2.3961783999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.4067902,
+      "improvement": 1.0007940518959653
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.507699,
+      "cpp_ms": 3.01903775,
+      "speedup": 4.474173600512283,
+      "samples_ms": [
+        [
+          13.507699,
+          13.524038,
+          13.878626,
+          13.810417,
+          13.176418,
+          13.314685,
+          13.499262
+        ],
+        [
+          3.02045775,
+          2.997086,
+          3.0333995,
+          3.02995325,
+          2.9970085,
+          3.01903775,
+          2.9822635
+        ],
+        [
+          2.98406175,
+          3.025993,
+          3.035606,
+          3.019849,
+          3.00342075,
+          3.0364955,
+          2.98359825
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.019849,
+      "improvement": 1.0002687114462216
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "unclipped",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "clip_limit": 0.0
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 13.481639,
+      "cpp_ms": 2.3511598,
+      "speedup": 5.734037728954025,
+      "samples_ms": [
+        [
+          13.498051,
+          13.481639,
+          13.358048,
+          13.785511,
+          13.166117,
+          13.506507,
+          13.455341
+        ],
+        [
+          2.380687,
+          2.3499652,
+          2.3511598,
+          2.3538384,
+          2.3489334,
+          2.348288,
+          2.359451
+        ],
+        [
+          2.3536242,
+          2.4307352,
+          2.3360692000000003,
+          2.406231,
+          2.356656,
+          2.3593432,
+          2.3778897999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.3593432,
+      "improvement": 1.0034805800949813
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 318.819868,
+      "cpp_ms": 3.8083423333333335,
+      "speedup": 83.71617887642628,
+      "samples_ms": [
+        [
+          318.516711,
+          319.359394,
+          320.33749,
+          318.723651,
+          318.030385,
+          318.819868,
+          324.860214
+        ],
+        [
+          3.810209,
+          3.8083423333333335,
+          3.8490956666666665,
+          3.8065223333333336,
+          3.7838,
+          4.927828,
+          3.7913303333333337
+        ],
+        [
+          3.744723,
+          3.8336666666666663,
+          3.878718,
+          3.7657223333333336,
+          3.7669683333333337,
+          5.177868,
+          3.8009816666666665
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.8009816666666665,
+      "improvement": 0.9980672255741714
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "low-clip",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "kernel_size": 31,
+        "clip_limit": 0.0001
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 317.426022,
+      "cpp_ms": 2.74357025,
+      "speedup": 115.69815717312142,
+      "samples_ms": [
+        [
+          317.426022,
+          317.638412,
+          318.610095,
+          317.471637,
+          317.211449,
+          315.98158,
+          316.838889
+        ],
+        [
+          2.81819775,
+          2.71027,
+          2.74357025,
+          2.71094875,
+          2.83542275,
+          2.74337475,
+          2.81795
+        ],
+        [
+          2.77620875,
+          2.75811975,
+          2.7246545,
+          2.71207375,
+          2.79899425,
+          2.816577,
+          2.701431
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.75811975,
+      "improvement": 1.0053031264645038
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 34.632036,
+      "cpp_ms": 2.9750295,
+      "speedup": 11.640905073378264,
+      "samples_ms": [
+        [
+          34.490191,
+          34.356729,
+          34.834336,
+          34.710435,
+          34.536707,
+          34.697381,
+          34.632036
+        ],
+        [
+          2.9750295,
+          2.99572325,
+          3.007881,
+          2.96618525,
+          2.964327,
+          2.97556025,
+          2.95801225
+        ],
+        [
+          3.0073605,
+          3.00389875,
+          2.96723225,
+          3.02114625,
+          3.010476,
+          3.004189,
+          2.946681
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.004189,
+      "improvement": 1.0098014154145363
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "bins64",
+      "shape": [
+        512,
+        513
+      ],
+      "options": {
+        "nbins": 64
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 34.336791,
+      "cpp_ms": 2.3587056,
+      "speedup": 14.557472115214377,
+      "samples_ms": [
+        [
+          34.777258,
+          34.336791,
+          34.648627,
+          34.398598,
+          34.229381,
+          34.152646,
+          34.059522
+        ],
+        [
+          2.394062,
+          2.3587056,
+          2.3496786000000003,
+          2.336033,
+          2.3634082000000003,
+          2.3582666,
+          2.3642217999999997
+        ],
+        [
+          2.365444,
+          2.3904672000000002,
+          2.3456487999999998,
+          2.3253768,
+          2.365971,
+          2.4151196,
+          2.3003058
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.365444,
+      "improvement": 1.0028568211310476
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 49.099336,
+      "cpp_ms": 9.59008,
+      "speedup": 5.119804631452501,
+      "samples_ms": [
+        [
+          49.099336,
+          48.672994,
+          49.397576,
+          49.828125,
+          49.164708,
+          48.211618,
+          48.30254
+        ],
+        [
+          9.632128,
+          9.519507,
+          9.630525,
+          9.556597,
+          9.59008,
+          9.434016,
+          9.935277
+        ],
+        [
+          9.508968,
+          9.596081,
+          9.415171,
+          9.42003,
+          9.747126,
+          9.566845,
+          9.608424
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 9.566845,
+      "improvement": 0.9975771839233876
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "volume",
+      "shape": [
+        65,
+        67,
+        69
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 50.572173,
+      "cpp_ms": 5.2157255,
+      "speedup": 9.696095586318721,
+      "samples_ms": [
+        [
+          51.133375,
+          50.909555,
+          50.546322,
+          51.102838,
+          50.572173,
+          50.534932,
+          50.405879
+        ],
+        [
+          5.234756,
+          5.098164,
+          5.316534,
+          4.9914635,
+          5.2542375,
+          5.01366,
+          5.2157255
+        ],
+        [
+          5.0490315,
+          5.3145405,
+          5.011531,
+          5.1310955,
+          5.2328525,
+          5.2284835,
+          5.020318
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 5.1310955,
+      "improvement": 0.9837740693983992
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 102.950025,
+      "cpp_ms": 6.218182,
+      "speedup": 16.55629008607339,
+      "samples_ms": [
+        [
+          102.99032,
+          101.880564,
+          102.968688,
+          102.678534,
+          102.950025,
+          102.888568,
+          103.854712
+        ],
+        [
+          6.1113215,
+          6.3215165,
+          6.2548365,
+          6.191512,
+          6.218182,
+          6.205378,
+          6.2815265
+        ],
+        [
+          6.2195345,
+          6.234744,
+          6.2931435,
+          6.3151695,
+          6.169476,
+          6.153546,
+          6.129551
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.2195345,
+      "improvement": 1.0002175073035817
+    },
+    {
+      "api": "exposure.equalize_adapthist",
+      "dtype": "float64",
+      "layout": "rgb",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "options": {},
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "reference_ms": 102.9215,
+      "cpp_ms": 4.219894666666667,
+      "speedup": 24.389589819145563,
+      "samples_ms": [
+        [
+          102.9215,
+          102.745409,
+          104.203268,
+          103.74763,
+          102.838795,
+          103.068115,
+          102.811503
+        ],
+        [
+          4.219894666666667,
+          4.201367,
+          4.224500333333333,
+          4.104404333333333,
+          4.226213,
+          4.129334666666667,
+          4.22961
+        ],
+        [
+          4.225992666666667,
+          4.151112333333334,
+          4.089496666666666,
+          4.20868,
+          4.257034333333333,
+          4.210667333333333,
+          4.175304333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.20868,
+      "improvement": 0.9973424297162552
+    }
+  ]
+}

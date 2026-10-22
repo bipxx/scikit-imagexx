@@ -34,3 +34,30 @@ Source fingerprint and exact package hashes belong to this initial source only. 
 ## Retained source
 
 [Full source CI39847405130](https://github.com/bipxx/scikit-imagexx/actions/runs/39847405130) passes all three jobs, including minimum NumPy, both OSes, SIMD enabled/disabled and native/portable checks. Source `d7a79ef` is merged as [1ddd03f](https://github.com/bipxx/scikit-imagexx/commit/1ddd03f). The merged product fingerprint equals the exact measured source. The validated Windows wheel is installed in the workspace environment, with its Python sources and binary hash checked and numerical smoke checks at worker caps one/four. Earlier merge-gate language records the chronological trial state.
+
+
+## Float-buffer reuse trial (`2b6e454`)
+
+[Paired run39850919881](https://github.com/bipxx/scikit-imagexx/actions/runs/39850919881) compares the preserved initial package against the current adapter, retaining all40 case definitions and80 rows per OS. Both packages pass timed-case parity. No C++ source, public headers or build configuration changed. The candidate makes one contiguous grayscale float preparation serve bounds and conversion, releasing that temporary before the core.
+
+| OS | one-worker upstream/current geometric mean | paired initial/current geometric mean | float32 Fortran initial/current | float64 Fortran initial/current |
+|---|---:|---:|---:|---:|
+| Linux | 9.785597x | 1.011057x | 1.244758x | 1.388248x |
+| Windows | 14.073307x | 1.013340x | 1.192723x | 1.359699x |
+
+Raw reports: [Linux](clahe-layout-linux.json), [Windows](clahe-layout-windows.json). The minimum paired corpus score is1.011057x, passing the fixed performance gate; full candidate CI remains pending. Dedicated parity passes882 cases per SIMD mode on both runtimes, and minimum API/metadata4729 cases pass.
+
+Fortran float targets improve19–39% against same-run controls. Several other controls, including unchanged integer/RGB paths, are slower in this trial; no claim is made that the change improves every case. The largest recorded native-control regression is about11% in Linux uint8 contiguous data. All samples remain in the raw reports. The table shows the five lowest native-control ratios per OS:
+
+| OS | dtype | case | initial/current |
+|---|---|---|---:|
+| Linux | uint8 | contiguous | 0.886587x |
+| Linux | uint8 | rgb | 0.893977x |
+| Linux | uint16 | tiny | 0.980951x |
+| Linux | uint16 | contiguous | 0.989375x |
+| Linux | uint8 | large-kernel | 0.995097x |
+| Windows | float32 | rgb | 0.932583x |
+| Windows | uint16 | rgb | 0.966118x |
+| Windows | uint16 | fortran | 0.971907x |
+| Windows | uint16 | low-clip | 0.980550x |
+| Windows | float64 | bins64 | 0.981356x |
