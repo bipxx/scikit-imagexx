@@ -9,6 +9,29 @@ void adaptive_mean4(const double* input,double* output,std::size_t length,std::s
     for(std::size_t x=1;x<length;++x){const auto difference=_mm256_sub_pd(_mm256_loadu_pd(input+4*(x+window-1)),_mm256_loadu_pd(input+4*(x-1)));total=_mm256_add_pd(total,difference);_mm256_storeu_pd(output+4*x,_mm256_div_pd(total,divisor));}
 }
 namespace {
+template<class T> std::size_t mean_columns(const T* input,T* output,std::size_t length,std::size_t pitch,
+    std::size_t window,const std::ptrdiff_t* mapping,std::size_t begin,std::size_t end,double cval) {
+    const auto divisor=_mm256_set1_pd(double(window)),constant=_mm256_set1_pd(cval);
+    auto load=[&](std::ptrdiff_t row,std::size_t column){
+        if(row<0)return constant;
+        const auto* p=input+std::size_t(row)*pitch+column;
+        if constexpr(std::is_same_v<T,float>)return _mm256_cvtps_pd(_mm_loadu_ps(p));
+        else return _mm256_loadu_pd(p);
+    };
+    auto save=[&](std::size_t row,std::size_t column,__m256d value){
+        auto* p=output+row*pitch+column;
+        if constexpr(std::is_same_v<T,float>)_mm_storeu_ps(p,_mm256_cvtpd_ps(value));
+        else _mm256_storeu_pd(p,value);
+    };
+    auto column=begin;
+    for(;column+4<=end;column+=4) {
+        auto total=_mm256_setzero_pd();
+        for(std::size_t k=0;k<window;++k)total=_mm256_add_pd(total,load(mapping[k],column));
+        save(0,column,_mm256_div_pd(total,divisor));
+        for(std::size_t x=1;x<length;++x){const auto difference=_mm256_sub_pd(load(mapping[x+window-1],column),load(mapping[x-1],column));total=_mm256_add_pd(total,difference);save(x,column,_mm256_div_pd(total,divisor));}
+    }
+    return column;
+}
 template<class T> struct V;
 template<>struct V<float>{using R=__m256;static constexpr std::size_t lanes=8;static R load(const float* p){return _mm256_loadu_ps(p);}static void store(float* p,R x){_mm256_storeu_ps(p,x);}static R low(R a,R b){return _mm256_min_ps(a,b);}static R high(R a,R b){return _mm256_max_ps(a,b);}};
 template<>struct V<double>{using R=__m256d;static constexpr std::size_t lanes=4;static R load(const double* p){return _mm256_loadu_pd(p);}static void store(double* p,R x){_mm256_storeu_pd(p,x);}static R low(R a,R b){return _mm256_min_pd(a,b);}static R high(R a,R b){return _mm256_max_pd(a,b);}};
@@ -29,6 +52,11 @@ template<class T> std::size_t median9(const T* input,T* output,std::size_t count
         M::store(output+x,values[4]);
     }return x;
 }
+}
+std::size_t adaptive_mean_columns(const void* input,void* output,std::size_t length,std::size_t pitch,
+    std::size_t window,const std::ptrdiff_t* mapping,std::size_t begin,std::size_t end,double cval,bool single) {
+    return single ? mean_columns(static_cast<const float*>(input),static_cast<float*>(output),length,pitch,window,mapping,begin,end,cval)
+                  : mean_columns(static_cast<const double*>(input),static_cast<double*>(output),length,pitch,window,mapping,begin,end,cval);
 }
 std::size_t adaptive_median9(const void* input,void* output,std::size_t count,std::size_t pitch,bool single) {
     return single ? median9(static_cast<const float*>(input),static_cast<float*>(output),count,pitch) : median9(static_cast<const double*>(input),static_cast<double*>(output),count,pitch);

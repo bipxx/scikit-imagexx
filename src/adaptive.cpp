@@ -36,6 +36,22 @@ template<class T> void mean_axis(const T* input,T* output,std::size_t count,cons
     const auto padded=length+window-1,lines=count/length,groups=(lines+3)/4;
     std::vector<std::ptrdiff_t> mapping(padded);
     for(std::size_t x=0;x<padded;++x)mapping[x]=mapped(std::ptrdiff_t(x)-std::ptrdiff_t(window/2),length,border);
+    if(axis==0) {
+        // Independent first-axis lines already occupy adjacent memory lanes.
+        // Stream them directly instead of packing and scattering full lines.
+        detail::partition(groups,std::min(workers,int(std::min(groups,std::size_t(std::numeric_limits<int>::max())))),[&](auto begin,auto end,auto) {
+            auto column=begin*4;const auto stop=std::min(end*4,lines);
+#ifdef SKIMAGEXX_AVX2
+            if(has_avx2())column=simd::adaptive_mean_columns(input,output,length,step,window,mapping.data(),column,stop,cval,std::is_same_v<T,float>);
+#endif
+            for(;column<stop;++column) {
+                auto load=[&](std::ptrdiff_t row){return row<0 ? cval : double(input[std::size_t(row)*step+column]);};
+                double total=0;for(std::size_t k=0;k<window;++k)total+=load(mapping[k]);
+                output[column]=T(total/double(window));
+                for(std::size_t x=1;x<length;++x){total+=load(mapping[x+window-1])-load(mapping[x-1]);output[x*step+column]=T(total/double(window));}
+            }
+        });return;
+    }
     const auto team=groups<std::size_t(workers) ? int(groups) : workers;
     const auto capacity=std::min(std::size_t(4),lines);
     detail::partition(groups,team,[&](auto begin,auto end,auto) {
