@@ -1,6 +1,7 @@
 """Explicit fallback policy. Native coverage is deliberately distinct from API availability."""
 import importlib
 import warnings
+from functools import lru_cache
 
 _fallback_enabled = True
 
@@ -29,6 +30,22 @@ def fallback(module, name, *args, **kwargs):
     return function(*args, **kwargs)
 
 
+@lru_cache(maxsize=1)
+def _native_aliases():
+    """Map pinned upstream function identities to their native public wrappers."""
+    from .coverage import native_functions
+    aliases = {}
+    for api in native_functions():
+        module, name = api.rsplit('.', 1)
+        native_namespace = importlib.import_module(f'{__package__}.{module}')
+        original_namespace = importlib.import_module(f'skimage.{module}')
+        original = getattr(original_namespace, name, None)
+        native = vars(native_namespace).get(name)
+        if original is not None and native is not None:
+            aliases.setdefault(original, {})[name] = native
+    return aliases
+
+
 def module_attribute(module, name):
     if name.startswith("_"):
         raise AttributeError(name)
@@ -39,8 +56,19 @@ def module_attribute(module, name):
     import inspect
     import functools
     if inspect.ismodule(original) and original.__name__.startswith('skimage.'):
-        return importlib.import_module(f'skimagexx.{module}.{name}')
+        relative = original.__name__.split('.', 1)[1]
+        if not any(part.startswith('_') for part in relative.split('.')):
+            target = f'{__package__}.{relative}'
+            try:
+                return importlib.import_module(target)
+            except ModuleNotFoundError as error:
+                if error.name is None or not (target == error.name or target.startswith(error.name + '.')):
+                    raise
     if inspect.isfunction(original):
+        if '.' in module:
+            aliases = _native_aliases().get(original)
+            if aliases:
+                return aliases.get(name, next(iter(aliases.values())))
         @functools.wraps(original)
         def call(*args, **kwargs):
             return fallback(module, name, *args, **kwargs)
