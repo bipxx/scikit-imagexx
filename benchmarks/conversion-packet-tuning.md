@@ -30,7 +30,7 @@ A GCC 13 sanitizer fixture issue was isolated in a minimal program with no libra
 
 An expanded NumPy 1.24 audit separately exposed 16 preexisting CIE76/CIE94 scalar dtype failures, reproduced with the archived pre-change wheel and tracked in the roadmap. These remain unresolved; no dtype checks were relaxed. Minimum-version CI now includes the complete conversion packet/alias suite.
 
-Word-lane [source CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39728802450) is running; its terminal result will be recorded when available. The 21-report whole-library checkpoint at `984141f` predates these changes and remains separate.
+Word-lane [source CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39728802450) passed: Linux recorded 41,229 Python tests in each SIMD mode; Windows recorded 41,227 passed and two skipped in each mode. Native C++ tests passed in SIMD, forced-scalar and portable builds on both platforms. Minimum-NumPy CI passed 9,071 selected image-processing tests and 3,272 conversion tests. This selected minimum-version suite does not cover the unresolved scalar distance promotion failures above. The 21-report whole-library checkpoint at `984141f` predates these changes and remains separate.
 
 Final one-worker cases slower than original or initial C++:
 
