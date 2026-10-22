@@ -1068,7 +1068,12 @@ def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndima
     else:
         constant=float(cval)
         half=lambda d:d.kind=='f' and d.itemsize==2
-        if image.size and (half(image.dtype) or half(dtype)):raise RuntimeError('array type not supported')
+        if half(image.dtype) or half(dtype):
+            if count==2 and count==mask.size:
+                # Line buffers report the canonical type-number descriptor,
+                # independent of array byte order or dtype metadata.
+                raise RuntimeError(f'array type {np.dtype(np.float16)!r} not supported')
+            if image.size:raise RuntimeError('array type not supported')
         if not image.size:return np.empty(image.shape,dtype=dtype) if target is None else target
         source=np.asarray(image) if image.dtype.isnative else _core.edge_native(image)
         native_dtype=dtype.newbyteorder('=')

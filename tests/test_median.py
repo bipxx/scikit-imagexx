@@ -284,3 +284,48 @@ def test_signed_zero_asymmetric_rank(dtype,count,mode):
 def test_nd_signed_zero_extrema_and_selection(dtype,mode,mask):
     a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),(11,13))
     compare(a,mask,mode=mode,cval=-0.)
+
+PAIR_AXES=[((17,),0),((9,13),0),((9,13),1),((5,7,11),0),((5,7,11),1),((5,7,11),2)]
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('shape,axis',PAIR_AXES)
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('layout',['C','reverse','broadcast'])
+@pytest.mark.parametrize('cval',[-0.,1e-50,300.3])
+def test_dense_pair_axes_padding_and_storage(dtype,shape,axis,mode,layout,cval):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),shape)
+    if layout=='reverse':a=a[::-1]
+    elif layout=='broadcast':a=np.broadcast_to(a[:1],shape)
+    window=[1]*len(shape);window[axis]=2
+    compare(a,np.ones(window,dtype=bool),mode=mode,cval=cval)
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('target',[None,np.float16,np.float64,np.uint16])
+@pytest.mark.parametrize('axis',[0,1])
+@pytest.mark.parametrize('mode',MODES)
+def test_dense_pair_zero_stride_is_not_general_rank(dtype,target,axis,mode):
+    a=np.broadcast_to(np.array(2,dtype=dtype),(9,13))
+    window=[1,1];window[axis]=2
+    compare(a,np.ones(window,dtype=bool),out=target,mode=mode,cval=300.3)
+
+@pytest.mark.parametrize('shape,axis',[((513,515),0),((513,515),1),
+    ((65,65,65),0),((65,65,65),1),((65,65,65),2)])
+@pytest.mark.parametrize('mode',['nearest','constant'])
+def test_dense_pair_parallel_segments(shape,axis,mode):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=np.float32),shape)
+    window=[1]*len(shape);window[axis]=2
+    compare(a,np.ones(window,dtype=bool),mode=mode,cval=1e-50)
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('target',[None,np.float16,np.float64])
+@pytest.mark.parametrize('shape,axis',[((0,),0),((0,3),0),((0,3),1),((2,0),0),((2,0),1)])
+@pytest.mark.parametrize('mode',['nearest','constant'])
+def test_empty_pair_dtype_initialization(dtype,target,shape,axis,mode):
+    window=[1]*len(shape);window[axis]=2
+    compare(np.empty(shape,dtype=dtype),np.ones(window,dtype=bool),out=target,mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('empty',[False,True])
+def test_pair_half_endian_rejection(dtype,empty):
+    a=sample(dtype,(0,3) if empty else (5,7)).astype(np.dtype(dtype).newbyteorder('>'))
+    compare(a,np.ones((1,2),dtype=bool),out=np.dtype('>f2'))

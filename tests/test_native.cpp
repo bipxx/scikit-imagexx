@@ -1222,6 +1222,26 @@ int main() {
                 require(zero_result[i]==(mode==0 && (i<2 || i>30) ? -1. : 0.));
             }
         }
+        // Byte-wise hashes of SciPy 1.18 two-tap outputs, including zero signs
+        // and nonzero constant padding; exercise SIMD tails on both axes.
+        std::vector<double> pair_input(5*19),pair_output(pair_input.size());
+        for(std::size_t i=0;i<pair_input.size();++i)pair_input[i]=i%4==0 ? -1. : i%4==1 ? -0. : i%4==2 ? 0. : 1.;
+        const std::uint64_t hashes[2][5]={
+            {0x2ada4faeea018f9aULL,0x2ada4faeea018f9aULL,0xafbbfa8b394a211aULL,0x2ada4faeea018f9aULL,0x20e6e14532882becULL},
+            {0xd93972c3ed90795aULL,0xd93972c3ed90795aULL,0xe4f5e1f6d462f603ULL,0x51fdbbbc5473ba23ULL,0xb082c0de26ec71c2ULL}};
+        for(std::size_t axis=0;axis<2;++axis)for(std::size_t mode=0;mode<5;++mode) {
+            std::vector<std::size_t> window(2,1);window[axis]=2;
+            std::vector<std::vector<std::size_t>> coordinates{{0,0},{0,0}};coordinates[1][axis]=1;
+            auto info=median_filter_into(pair_input.data(),pair_output.data(),PixelType::float64,PixelType::float64,
+                {5,19},window,coordinates,1,borders[mode],1e-50,0,false,false,false,false);
+            require(!info.unsupported_nan);
+            std::uint64_t hash=1469598103934665603ULL;
+            for(const auto value:pair_output) {
+                std::uint64_t bits;std::memcpy(&bits,&value,sizeof(bits));
+                for(unsigned byte=0;byte<8;++byte){hash^=(bits>>(8*byte))&255;hash*=1099511628211ULL;}
+            }
+            require(hash==hashes[axis][mode]);
+        }
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

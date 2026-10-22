@@ -144,6 +144,67 @@ template<class T,class W,class Store> void sliding_rank(const T* input,std::size
     });
 }
 
+template<class T> T later_maximum(T current,T previous) {
+    // State the zero representative explicitly; scalar min/max lowering can
+    // otherwise pick a different zero operand from the SIMD comparison/blend.
+    if(current==T(0) && previous==T(0))return std::copysign(T(0),current);
+    return current>=previous ? current : previous;
+}
+
+template<class T> void pair_span(const T* current,const T* previous,T* output,std::size_t count,
+                                double constant,bool vectorize) {
+    if(!previous) {
+        // NI compares in double before converting the output. Rounding the
+        // constant to float first could change a signed-zero representative.
+        for(std::size_t i=0;i<count;++i)output[i]=T(later_maximum(double(current[i]),constant));
+        return;
+    }
+    std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+    if(vectorize) {
+        // Morphology keeps its first sample on equality. Reversing the two
+        // pointers gives the later representative required by separable max.
+        const void* pointers[]={current,previous};
+        constexpr auto type=std::is_same_v<T,float> ? PixelType::float32 : PixelType::float64;
+        i=simd::morphology_line(pointers,2,output,count,type,false,0.,false);
+    }
+#else
+    (void)vectorize;
+#endif
+    for(;i<count;++i)output[i]=later_maximum(current[i],previous[i]);
+}
+
+template<class T> void pair_max_into(const T* input,T* output,std::size_t n,
+    std::size_t length,std::size_t inner,int workers,GaussianBorder border,double constant) {
+    const auto before=mapped(-1,length,border);
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorize=has_avx2();
+#else
+    const bool vectorize=false;
+#endif
+    detail::partition(n,workers,[&](auto begin,auto end,auto){
+        for(auto position=begin;position<end;) {
+            if(inner==1) {
+                const auto x=position%length;
+                if(!x) {
+                    const double previous=before<0 ? constant : double(input[position+std::size_t(before)]);
+                    output[position]=T(later_maximum(double(input[position]),previous));
+                    ++position;continue;
+                }
+                const auto count=std::min(end-position,length-x);
+                pair_span(input+position,input+position-1,output+position,count,constant,vectorize);
+                position+=count;
+            } else {
+                const auto plane=position/inner,offset=position%inner;
+                const auto x=plane%length,count=std::min(end-position,inner-offset);
+                const auto* previous=x ? input+position-inner : before<0 ? nullptr : input+position+std::size_t(before)*inner;
+                pair_span(input+position,previous,output+position,count,constant,vectorize);
+                position+=count;
+            }
+        }
+    });
+}
+
 template<class T,class W> MedianInfo run(const T* input,void* output,PixelType target,
     const std::vector<std::size_t>& shape,const std::vector<std::size_t>& window,
     const std::vector<std::vector<std::size_t>>& coordinates,std::size_t rank,GaussianBorder border,
@@ -173,15 +234,31 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
         const bool safe=border==GaussianBorder::reflect ? n>left : border==GaussianBorder::mirror ? n>left+1 :
             border==GaussianBorder::wrap ? n>=tail+(window[0]%2==0 ? 2 : 0) : n>=tail;
         if(!safe)return {true};
-        if(target==PixelType::float32)detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
-            [&](auto i,W value){static_cast<float*>(output)[i]=float(value);});
-        else if(target==PixelType::float64)detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
-            [&](auto i,W value){static_cast<double*>(output)[i]=double(value);});
-        else detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
+        detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
             [&](auto i,W value){write(output,i,double(value),target);});
         return {};
     }
     const auto workers=detail::active_workers(n);
+    if(!nd_rank && !source_cval && coordinates.size()==2) {
+        std::size_t axis=shape.size();bool dense=true;
+        for(std::size_t d=0;d<window.size();++d) {
+            if(window[d]==2 && axis==shape.size())axis=d;
+            else if(window[d]!=1)dense=false;
+        }
+        if(dense && axis<shape.size() && coordinates[0][axis]==0 && coordinates[1][axis]==1) {
+            // This route uses NI line buffers, not the general rank filter's
+            // zero-stride coordinate sentinel. This distinction applies to
+            // integer and different-output routes too.
+            zero_strides=false;
+            if constexpr(std::is_floating_point_v<T>) {
+                constexpr auto type=std::is_same_v<T,float> ? PixelType::float32 : PixelType::float64;
+                if(rank==1 && target==type && !unordered) {
+                    pair_max_into(input,static_cast<T*>(output),n,shape[axis],pitches(shape)[axis],workers,border,double(constant));
+                    return {};
+                }
+            }
+        }
+    }
     bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
     if(dense_line)for(std::size_t t=0;t<coordinates.size();++t)if(coordinates[t][0]!=t){dense_line=false;break;}
     if(dense_line) {
