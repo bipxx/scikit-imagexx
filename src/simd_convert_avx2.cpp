@@ -91,6 +91,21 @@ std::size_t convert(const void* source, void* destination, std::size_t n,
                     PixelType input, PixelType output, bool unscaled, ConversionInfo& info) {
     std::size_t i = 0;
     const auto outsize = pixel_size(output);
+    if(input==PixelType::uint16 && output==PixelType::int16) {
+        const auto* p=static_cast<const std::uint16_t*>(source);
+        auto* out=static_cast<std::int16_t*>(destination);
+        for(;i+16<=n;i+=16) {
+            auto values=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p+i));
+            if(!unscaled)values=_mm256_srli_epi16(values,1);
+            _mm256_storeu_si256(reinterpret_cast<__m256i*>(out+i),values);
+        }
+        if(i+8<=n) {
+            auto values=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p+i));
+            if(!unscaled)values=_mm_srli_epi16(values,1);
+            _mm_storeu_si128(reinterpret_cast<__m128i*>(out+i),values);i+=8;
+        }
+        return i;
+    }
     if (output == PixelType::boolean && input != PixelType::boolean && input != PixelType::uint8 &&
         input != PixelType::float32 && input != PixelType::float64) {
         const auto* p = static_cast<const unsigned char*>(source);
