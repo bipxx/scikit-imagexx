@@ -80,15 +80,19 @@ def main():
             timing=measure(lambda:call(original.threshold_minimum),lambda:call(xx.filters.threshold_minimum),args.repeat,15,
                            baseline=(lambda:call(baseline.filters.threshold_minimum)) if baseline is not None else None)
             source=image if image is not None else options['hist'][0]
-            row={'api':'filters.threshold_minimum','dtype':str(source.dtype),
+            descriptor=str(source.dtype) if image is not None else str(source.dtype)+'/'+str(options['hist'][1].dtype)
+            row={'api':'filters.threshold_minimum','dtype':descriptor,
                  'shape':list(source.shape),'workload':workload,'threads':workers,
+                 'layout':workload if workload in ('fortran','reversed','stepped','broadcast') else 'contiguous' if image is not None else 'histogram-only',
                  'backend':'native','warnings':actual_notices,'outcome':actual[0],
                  'max_num_iter':options.get('max_num_iter',10000),
                  'nbins':options.get('nbins',256),'max_abs_error':0.,**timing}
-            if actual[0]=='value':row['output_dtype']=str(np.asarray(actual[1]).dtype)
+            if actual[0]=='value':
+                row['output_dtype']=str(np.asarray(actual[1]).dtype)
+                row['threshold']=np.asarray(actual[1]).item()
             else:row['exception']={'type':actual[1],'message':actual[2]}
             rows.append(row)
-            print(f'{str(source.dtype):8} {workload:24} workers={workers}: {timing["speedup"]:.2f}x',flush=True)
+            print(f'{descriptor:16} {workload:24} workers={workers}: {timing["speedup"]:.2f}x',flush=True)
 
     rng=np.random.default_rng(9371)
     for dtype in (np.uint8,np.float32,np.float64):
@@ -114,6 +118,7 @@ def main():
             elif workload=='large-histogram':counts*=np.float32(1e20)
             add(None,workload,hist=(counts,centers))
     assert len(rows)==39*len(args.threads)
+    assert len({(r['dtype'],r['workload'],r['threads']) for r in rows})==len(rows), 'duplicate workload key'
     assert source_fingerprint(root)==fingerprint, 'source changed during timing'
     assert binary_hashes(xx)==current_binaries, 'native binary changed during timing'
     if baseline is not None:
