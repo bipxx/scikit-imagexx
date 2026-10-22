@@ -459,6 +459,9 @@ def _distance_metadata(result,a,b,first_scalar,second_scalar,reverse):
     return result
 
 
+_LEGACY_SCALAR_POWER = np.asarray(np.float32(1) ** 2).dtype == np.float64
+
+
 def deltaE_cie76(lab1,lab2,channel_axis=-1):
     a,b=np.asarray(lab1),np.asarray(lab2)
     first_scalar=a.ndim==1;second_scalar=b.ndim==1
@@ -476,7 +479,9 @@ def deltaE_cie76(lab1,lab2,channel_axis=-1):
         scalar=np.empty((),dtype=np.float64)
         np.subtract(np.broadcast_to(scalar,b.shape[:-1]),np.broadcast_to(scalar,a.shape[:-1]))
         raise
-    result=_core.delta_e76(a,b)
+    legacy=(_LEGACY_SCALAR_POWER and first_scalar and second_scalar
+            and a.dtype.type is b.dtype.type is np.float32)
+    result=_core.delta_e76(a,b,legacy)
     result=_distance_metadata(result,a,b,first_scalar,second_scalar,True)
     return result[()] if result.ndim==0 else result
 
@@ -526,6 +531,9 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
     probe=np.empty((),dtype=prepared) if first_scalar and name=='deltaE_cmc' else np.empty(0,dtype=prepared)
     wide=np.result_type(probe,np.deg2rad(30))==np.float64
     promote=single and both_scalar and name=='deltaE_cmc'
+    legacy94=single and both_scalar and name=='deltaE_ciede94' and _LEGACY_SCALAR_POWER
+    parameter_mask=(int(type(parameters[3]) is np.float32) |
+                    (int(type(parameters[4]) is np.float32)<<1)) if legacy94 else 0
     try:
         a,b=np.broadcast_arrays(a[...,:3],b[...,:3])
     except ValueError:
@@ -533,7 +541,7 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
         np.add(np.broadcast_to(scalar,a.shape[:-1]),np.broadcast_to(scalar,b.shape[:-1]))
         raise
     result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
-                                 parameters,bool(wide),promote)
+                                 parameters,bool(wide),promote,legacy94,parameter_mask)
     result=_distance_metadata(result,a,b,first_scalar,second_scalar,name=='deltaE_ciede2000')
     return result[()] if result.ndim==0 else result
 

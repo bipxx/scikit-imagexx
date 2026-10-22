@@ -60,6 +60,28 @@ template<class T,class Output> void execute_metric(const void* a,const void* b,O
     });
 }
 }
+double delta_e76_scalar32(const float* a,const float* b,std::ptrdiff_t ac,std::ptrdiff_t bc) {
+    validate_distance(1,PixelType::float32,0,ac);validate_distance(1,PixelType::float32,0,bc);
+    if(!a || !b) throw std::invalid_argument("distance buffers must be nonnull");
+    const double x=float(b[0]-a[0]),y=float(b[bc]-a[ac]),z=float(b[2*bc]-a[2*ac]);
+    return std::sqrt(std::pow(x,2)+std::pow(y,2)+std::pow(z,2));
+}
+double delta_e94_scalar32(const float* a,const float* b,DistanceParameters p,bool k1_float32,bool k2_float32,
+    std::ptrdiff_t ac,std::ptrdiff_t bc) {
+    validate_distance(1,PixelType::float32,0,ac);validate_distance(1,PixelType::float32,0,bc);
+    if(!a || !b) throw std::invalid_argument("distance buffers must be nonnull");
+    for(auto v:{p.kL,p.kC,p.kH,p.k1,p.k2}) if(!std::isfinite(v))
+        throw std::invalid_argument("distance parameters must be finite");
+    const float c1=std::hypot(a[ac],a[2*ac]),c2=std::hypot(b[bc],b[2*bc]);
+    const double dl=float(a[0]-b[0]),dc=float(c1-c2);
+    const double dh2=detail::ScalarDistanceMath<float>::hue_squared(a[ac],a[2*ac],b[bc],b[2*bc]);
+    const double sc=1+(k1_float32 ? double(float(float(p.k1)*c1)) : p.k1*double(c1));
+    const double sh=1+(k2_float32 ? double(float(float(p.k2)*c1)) : p.k2*double(c1));
+    double squared=std::pow(dl/p.kL,2);
+    squared+=std::pow(dc/(p.kC*sc),2);
+    squared+=dh2/std::pow(p.kH*sh,2);
+    return std::sqrt(squared<=0 ? 0 : squared);
+}
 void delta_e_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
     DistanceParameters p,bool wide_trig,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
     if(int(metric)<0 || int(metric)>2) throw std::invalid_argument("unknown color distance metric");

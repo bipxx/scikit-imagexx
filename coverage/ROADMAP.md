@@ -49,14 +49,18 @@ case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
 
-- Correct a verified minimum-NumPy compatibility gap: on NumPy 1.24.4,
-  `deltaE_cie76` and `deltaE_ciede94` return float32 for two scalar float32
-  colors where upstream returns float64. The existing metadata parity test
-  reproduces 16 failures across tags and worker settings on both the preserved
-  pre-conversion wheel and the conversion candidate. These remain unresolved;
-  the minimum-version CI currently validates selected algorithms and conversions,
-  rather than the full metadata/color suite. Preserve the failing oracles and
-  implement the scalar promotion instead of relaxing dtype checks.
+- Correct eight verified NumPy 1.24.4 CIEDE2000 float32 failures across
+  Sharma/reversed pairs, hue/lightness branch boundaries and zero chroma/hue
+  weights (each with one/four workers). They also fail with the preserved
+  pre-conversion wheel. Preserve these oracles and investigate branch and
+  nonfinite arithmetic; the minimum-version CI still covers selected algorithms,
+  not the complete color suite.
+
+  The previous CIE76/CIE94 scalar promotion gap is fixed with dedicated native
+  one-color paths: float32 differences/chroma remain rounded before promoted
+  float64 arithmetic. A runtime scalar-power probe selects the NumPy behavior;
+  CIE94 also preserves NumPy-float32 weight-product rounding. Minimum-version CI
+  now runs the full dtype-metadata suite and the new scalar-promotion oracles.
 
 - Port remaining color conversions with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.

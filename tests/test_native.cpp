@@ -603,6 +603,15 @@ int main() {
         float single[1];
         delta_e76_into(b,b,single,1,PixelType::float32,PixelType::float32);
         require(single[0]==0);
+        const float scalar_a[]={20,10,5},scalar_b[]={25,15,10};
+        require(delta_e76_scalar32(scalar_a,scalar_b)==std::sqrt(75.));
+        require(std::abs(delta_e94_scalar32(scalar_a,scalar_b)-6.930755904024281)<1e-13);
+        require(delta_e76_scalar32(scalar_a+2,scalar_b+2,-1,-1)==std::sqrt(75.));
+        const float large_a[]={16777216,2,3},large_b[]={-1,0,0};
+        require(delta_e76_scalar32(large_a,large_b)==std::sqrt(16777216.*16777216.+13.));
+        bool null_caught=false;
+        try {delta_e76_scalar32(nullptr,scalar_b);}catch(const std::invalid_argument&){null_caught=true;}
+        require(null_caught);
         delta_e76_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float64);
         {
             const float origin[]={0,0,0};

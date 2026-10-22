@@ -6,6 +6,14 @@ enum class DistanceMetric { cie94, ciede2000, cmc };
 struct DistanceParameters {
     double kL=1,kC=1,kH=1,k1=0.045,k2=0.015;
 };
+// NumPy 1.x promotes scalar float32 powers and Python-scalar arithmetic.
+// These one-color paths retain float32 subtraction/hypot before promotion.
+// Input pointers address three channels; channel strides may be signed/zero.
+double delta_e76_scalar32(const float* first,const float* second,
+    std::ptrdiff_t first_channels=1,std::ptrdiff_t second_channels=1);
+double delta_e94_scalar32(const float* first,const float* second,
+    DistanceParameters parameters={},bool k1_float32=false,bool k2_float32=false,
+    std::ptrdiff_t first_channels=1,std::ptrdiff_t second_channels=1);
 // Weighted Lab distances with NumPy-compatible intermediate rounding. Float32
 // inputs produce float32 unless cmc_scalar_result requests the upstream CMC
 // promotion for two scalar colors (the output is then float64).
