@@ -39,8 +39,8 @@ results before replaying upstream's warnings/errors exactly once. NumPy 1.24's
 wider scalar powers remain native. The ordinary Python scalar path avoids an
 error-state context. Updated dedicated parity passes 440 cases per SIMD mode on
 both runtimes, plus 4,755 API/metadata/namespace checks on each. C++ is unchanged.
-This correction has fresh performance results below; full CI remains pending
-before retention and merge. The initial source, exact packages, failure probes and raw
+This correction has passed fresh performance and full CI validation and is
+retained for merge. The initial source, exact packages, failure probes and raw
 measurements remain preserved; the initial timing is not attributed to the
 corrected adapter.
 
@@ -62,4 +62,5 @@ The maximum absolute complex error remains 6.939e-18, with exact complex64
 outputs in this corpus. These are independent upstream comparisons; the two
 runs do not establish a paired performance change between native revisions.
 [Final-source CI 39858776366](https://github.com/bipxx/scikit-imagexx/actions/runs/39858776366)
-has passed minimum NumPy and Linux; Windows remains in progress at this report.
+has passed all three jobs: minimum NumPy, Linux and Windows. Corrected source
+`c2a57c8` is retained; source and exact measured packages remain preserved.
