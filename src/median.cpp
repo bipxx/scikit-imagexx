@@ -92,7 +92,8 @@ template<class T> class RankWindow {
         }
     }
 public:
-    RankWindow(const T* first,std::size_t count,std::size_t rank):values(first,first+count),position(count) {
+    template<class Load> RankWindow(std::size_t count,std::size_t rank,Load load):values(count),position(count) {
+        for(std::size_t i=0;i<count;++i)values[i]=load(i);
         std::vector<Index> indices(count);std::iota(indices.begin(),indices.end(),Index(0));
         std::nth_element(indices.begin(),indices.begin()+rank,indices.end(),[&](auto a,auto b){return values[a]<values[b];});
         lower.assign(indices.begin(),indices.begin()+rank+1);upper.assign(indices.begin()+rank+1,indices.end());
@@ -112,20 +113,31 @@ public:
     }
     T value() const {return values[lower[0]];}
 };
-template<class W,class Store> void sliding_rank(const std::vector<W>& padded,std::size_t n,std::size_t window,std::size_t rank,int workers,Store store) {
+template<class T,class W,class Store> void sliding_rank(const T* input,std::size_t n,std::size_t window,std::size_t rank,int workers,GaussianBorder border,W constant,Store store) {
+    const auto left=window/2,right=window-left-1;
     detail::partition(n,workers,[&](auto begin,auto end,auto){
         if(begin==end)return;
-        RankWindow<W> state(padded.data()+begin,window,rank);
+        RankWindow<W> state(window,rank,[&](auto k){
+            const auto x=mapped(std::ptrdiff_t(begin)+std::ptrdiff_t(k)-std::ptrdiff_t(left),n,border);
+            return x<0 ? constant : W(input[std::size_t(x)]);
+        });
         store(begin,state.value());
         std::uint32_t slot=0;const auto width=std::uint32_t(window);
-        const auto* incoming=padded.data()+begin+window;
-        for(auto i=begin+1;i<end;++i){
-            state.replace(slot,*incoming++);
+        auto i=begin+1;const auto interior_end=std::min(end,n>right ? n-right : std::size_t(0));
+        for(;i<interior_end;++i){
+            state.replace(slot,W(input[i+right]));
+            if(++slot==width)slot=0;
+            store(i,state.value());
+        }
+        for(;i<end;++i){
+            const auto x=mapped(std::ptrdiff_t(i)+std::ptrdiff_t(right),n,border);
+            state.replace(slot,x<0 ? constant : W(input[std::size_t(x)]));
             if(++slot==width)slot=0;
             store(i,state.value());
         }
     });
 }
+
 template<class T,class W> MedianInfo run(const T* input,void* output,PixelType target,
     const std::vector<std::size_t>& shape,const std::vector<std::size_t>& window,
     const std::vector<std::vector<std::size_t>>& coordinates,std::size_t rank,GaussianBorder border,
@@ -141,9 +153,19 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     }
     if constexpr(std::is_floating_point_v<W>){if(border==GaussianBorder::constant){unordered|=std::isnan(constant);negative_zero|=constant==0 && std::signbit(constant);}}
     if(fast_1d && unordered)return {true};
+    const auto workers=detail::active_workers(n);
+    bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
+    if(dense_line)for(std::size_t t=0;t<coordinates.size();++t)if(coordinates[t][0]!=t){dense_line=false;break;}
+    if(dense_line) {
+        if constexpr(std::is_same_v<W,std::int64_t>)sliding_rank<T,W>(input,n,window[0],rank,workers,border,constant,[&](auto i,W value){static_cast<std::int64_t*>(output)[i]=value;});
+        else if(target==PixelType::float32)sliding_rank<T,W>(input,n,window[0],rank,workers,border,constant,[&](auto i,W value){static_cast<float*>(output)[i]=float(value);});
+        else if(target==PixelType::float64)sliding_rank<T,W>(input,n,window[0],rank,workers,border,constant,[&](auto i,W value){static_cast<double*>(output)[i]=double(value);});
+        else sliding_rank<T,W>(input,n,window[0],rank,workers,border,constant,[&](auto i,W value){write(output,i,double(value),target);});
+        return {};
+    }
     const bool vectorize=!unordered && !negative_zero && !zero_strides && coordinates.size()<=32;
     auto padded_shape=shape;for(std::size_t d=0;d<shape.size();++d){if(window[d]-1>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())-shape[d])throw std::overflow_error("median padding overflow");padded_shape[d]+=window[d]-1;}
-    const auto padded_count=product(padded_shape);const auto ip=pitches(shape),pp=pitches(padded_shape);const auto workers=detail::active_workers(n);
+    const auto padded_count=product(padded_shape);const auto ip=pitches(shape),pp=pitches(padded_shape);
     std::vector<W> padded(padded_count);
     const auto width=padded_shape.back(),left=window.back()/2,right=window.back()-left-1;
     std::vector<std::ptrdiff_t> before(left),after(right);
@@ -162,15 +184,6 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     });
     std::vector<std::size_t> offsets(coordinates.size(),0);
     for(std::size_t t=0;t<coordinates.size();++t)for(std::size_t d=0;d<shape.size();++d)offsets[t]+=coordinates[t][d]*pp[d];
-    bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
-    if(dense_line)for(std::size_t t=0;t<offsets.size();++t)if(offsets[t]!=t){dense_line=false;break;}
-    if(dense_line) {
-        if constexpr(std::is_same_v<W,std::int64_t>)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<std::int64_t*>(output)[i]=value;});
-        else if(target==PixelType::float32)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<float*>(output)[i]=float(value);});
-        else if(target==PixelType::float64)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<double*>(output)[i]=double(value);});
-        else sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){write(output,i,double(value),target);});
-        return {};
-    }
     detail::partition(n,workers,[&](auto begin,auto end,auto){
         std::vector<W> values(coordinates.size()),selected(std::min(std::size_t(1024),end-begin));
         for(auto position=begin;position<end;){const auto span=std::min({end-position,shape.back()-position%shape.back(),selected.size()});

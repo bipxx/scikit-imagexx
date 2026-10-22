@@ -1199,6 +1199,14 @@ int main() {
         for(std::size_t i=0;i<31;++i)line.push_back({i});
         median_filter_into(ascending.data(),rolling.data(),PixelType::int64,PixelType::int64,{65},{31},line,15,GaussianBorder::nearest,0,0,false,true,false,false);
         require(ascending==rolling);
+        ascending.resize(256*1024+17);rolling.resize(ascending.size());
+        for(std::size_t i=0;i<ascending.size();++i)ascending[i]=INT64_MAX-std::int64_t(ascending.size())+std::int64_t(i);
+        const auto previous=get_num_threads();
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        median_filter_into(ascending.data(),rolling.data(),PixelType::int64,PixelType::int64,{ascending.size()},{31},line,15,GaussianBorder::nearest,0,0,false,true,false,false);
+        require(ascending==rolling);set_num_threads(previous);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

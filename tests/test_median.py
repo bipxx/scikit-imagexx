@@ -227,3 +227,8 @@ def test_requested_dtype_metadata(dtype):
 def test_extended_float_requires_explicit_fallback():
     with pytest.raises(NotImplementedError,match='outside native coverage'):
         xx.filters.median(np.ones((7,9),dtype=np.longdouble))
+
+@pytest.mark.parametrize('dtype',[np.int64,np.float32,np.float64])
+@pytest.mark.parametrize('mode',['nearest','constant','wrap','mirror'])
+def test_streaming_heap_worker_boundaries(dtype,mode):
+    compare(sample(dtype,(256*1024+17,)),np.ones(31,dtype=bool),mode=mode,cval=3)
