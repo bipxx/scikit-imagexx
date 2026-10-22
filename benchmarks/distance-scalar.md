@@ -8,7 +8,7 @@ The NumPy 1.24 scalar paths preserve float32 differences and chroma before promo
 
 Validation: 2,066 scalar-promotion/metadata tests passed on NumPy 1.24.4 in each SIMD mode. On Windows/NumPy 2.5.4, 4,784 scoped distance/metadata tests passed in each mode (the final SIMD build was rechecked after removing a redundant alignment pass). Portable C++ tests passed with address/undefined-behavior sanitizers, including independent double-precision golden values and signed strides. The previous 16 scalar metadata failures and six existing scalar distance failures are fixed. Eight separate NumPy 1.24 CIEDE2000 failures remained at this checkpoint, reproduced with the preserved pre-change wheel; the subsequent [mixed-precision correction](ciede2000.md) fixes them. Failing logs and unchanged oracles are retained.
 
-Source CI: [39731363740](https://github.com/bipxx/scikit-imagexx/actions/runs/39731363740) (running when this report was published).
+Source [CI 39731363740](https://github.com/bipxx/scikit-imagexx/actions/runs/39731363740) passed: Linux recorded 41,283 Python tests in each SIMD mode; Windows recorded 41,281 passed and two skipped in each mode. Native C++ SIMD, forced-scalar and portable checks passed on both platforms. The selected minimum-NumPy suite passed 14,409 tests, including all scalar-promotion and dtype-metadata cases.
 
 | Environment | One-thread cases faster | Geometric mean original/C++ |
 |---|---:|---:|
