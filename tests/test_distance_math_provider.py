@@ -60,6 +60,24 @@ def test_actual_upstream_array_choice_is_accepted(monkeypatch):
     a=np.zeros((2,3))
     _assert_runtime_reference(np.array([1.,0.]),a,a,(2e-13,2e-13))
 
+
+@pytest.mark.parametrize('workers',[1,4])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('layout',['scalar','reversed-row','nd-singletons','broadcast'])
+def test_single_color_angle_iteration_stride(workers,dtype,layout):
+    colors=_antipodal_colors(dtype)
+    previous=xx.get_num_threads();xx.set_num_threads(workers)
+    fallback=xx.set_fallback_enabled(False)
+    try:
+        for index in (100,107,124,125,131,138,149,173,220,330,440,549,556,562,640,734):
+            a=colors[index].copy();b=a.copy();b[1:]*=-1
+            if layout=='reversed-row':a=a[None,:][::-1];b=b[None,:][::-1]
+            if layout=='nd-singletons':a=a[None,None,:][::-1,::-1];b=b[None,None,:][::-1,::-1]
+            if layout=='broadcast':a=np.broadcast_to(a,(1,3));b=np.broadcast_to(b,(1,3))
+            actual=xx.color.deltaE_ciede2000(a,b)
+            _assert_runtime_reference(actual,a,b,(2e-6,2.5e-4) if dtype==np.float32 else (2e-13,2e-13))
+    finally:xx.set_num_threads(previous);xx.set_fallback_enabled(fallback)
+
 @pytest.mark.parametrize('workers',[1,4])
 @pytest.mark.parametrize('repeat',[1,19,1025])
 @pytest.mark.parametrize('layout',['contiguous','reversed','planar','broadcast'])
