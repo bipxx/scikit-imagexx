@@ -1,0 +1,7000 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T22:16:56.796797+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "logical_cpus": 4,
+    "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit_image": "0.26.0",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "seed": 7041,
+    "command": [
+      "benchmarks/gabor.py",
+      "--size",
+      "192",
+      "--threads",
+      "1",
+      "4",
+      "--repeat",
+      "7",
+      "--output",
+      "build/gabor-performance.json"
+    ],
+    "source_sha256": "73fdf99699a89e3b17febb25b7c61625ee0fa134b32f753a371ed488f65ac38e",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "case_spec_sha256": "7c24664667fdfbdfea362e552dceae5c0f530b3dbeda92c1d516bee51e91df34",
+    "binary_sha256": {
+      "_core.cpython-313-x86_64-linux-gnu.so": "bba4d1abfa4a3e80ae3f0edbf58026a89ee3f97845ddc8e333caa47daf456848"
+    }
+  },
+  "results": [
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.830972,
+      "cpp_ms": 2.62851075,
+      "speedup": 8.305452812015321,
+      "samples_ms": [
+        [
+          21.764417,
+          21.863754,
+          21.769247,
+          21.909338,
+          21.838886,
+          21.699587,
+          21.830972
+        ],
+        [
+          2.55342575,
+          2.64894375,
+          2.6053625,
+          2.6843825,
+          2.576043,
+          2.679934,
+          2.62851075
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.699988,
+      "cpp_ms": 1.425213,
+      "speedup": 15.22578590007248,
+      "samples_ms": [
+        [
+          21.729823,
+          21.699988,
+          21.669852,
+          21.734432,
+          21.575827,
+          21.786158,
+          21.657739
+        ],
+        [
+          1.425213,
+          1.4163637142857144,
+          1.4145417142857144,
+          1.4458285714285715,
+          1.386324857142857,
+          1.5463094285714287,
+          1.4927975714285713
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.741641,
+      "cpp_ms": 1.410066375,
+      "speedup": 8.32701297483248,
+      "samples_ms": [
+        [
+          11.774371,
+          11.770244,
+          11.802193,
+          11.710213,
+          11.741641,
+          11.694193,
+          11.701156
+        ],
+        [
+          1.4159235,
+          1.411104625,
+          1.410066375,
+          1.402576125,
+          1.355263,
+          1.40550425,
+          1.419987375
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.781715,
+      "cpp_ms": 0.8550383333333333,
+      "speedup": 13.779165846365563,
+      "samples_ms": [
+        [
+          13.460934,
+          12.50331,
+          11.781715,
+          11.65214,
+          11.594533,
+          11.935088,
+          11.719426
+        ],
+        [
+          0.8613874444444445,
+          0.8642405555555555,
+          0.8550383333333333,
+          0.8484048888888889,
+          0.8254185555555555,
+          0.8709446666666666,
+          0.8504921111111111
+        ]
+      ],
+      "loops": [
+        1,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.733183,
+      "cpp_ms": 2.637975,
+      "speedup": 8.238585657559302,
+      "samples_ms": [
+        [
+          21.953804,
+          21.727973,
+          21.71027,
+          21.785039,
+          21.598371,
+          21.805056,
+          21.733183
+        ],
+        [
+          2.64667875,
+          2.696787,
+          2.6449705,
+          2.59740675,
+          2.5784715,
+          2.637975,
+          2.6033955
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.796721,
+      "cpp_ms": 1.5022603333333333,
+      "speedup": 14.50928345530879,
+      "samples_ms": [
+        [
+          21.909069,
+          21.699971,
+          21.793675,
+          21.796721,
+          21.691515,
+          21.867022,
+          21.814592
+        ],
+        [
+          1.528556,
+          1.4990391666666667,
+          1.5039973333333332,
+          1.4944506666666668,
+          1.4211308333333332,
+          1.5022603333333333,
+          1.5586838333333333
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4576826363636364,
+      "cpp_ms": 0.048394485714285715,
+      "speedup": 9.457330305475933,
+      "samples_ms": [
+        [
+          0.4721605,
+          0.4579605,
+          0.4576826363636364,
+          0.4604072727272727,
+          0.45474268181818184,
+          0.4538742272727273,
+          0.45442068181818185
+        ],
+        [
+          0.04862197142857143,
+          0.04852100952380952,
+          0.0478878380952381,
+          0.049374990476190476,
+          0.048394485714285715,
+          0.0479621619047619,
+          0.0478656
+        ]
+      ],
+      "loops": [
+        22,
+        105
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4647135,
+      "cpp_ms": 0.0483962700729927,
+      "speedup": 9.602258589331475,
+      "samples_ms": [
+        [
+          0.463892,
+          0.4677205909090909,
+          0.46842995454545455,
+          0.4647135,
+          0.4621997727272727,
+          0.4608094545454545,
+          0.4675237272727273
+        ],
+        [
+          0.0483962700729927,
+          0.04920171532846715,
+          0.04865859124087591,
+          0.047174058394160584,
+          0.04762161313868613,
+          0.04730759854014598,
+          0.04917362773722628
+        ]
+      ],
+      "loops": [
+        22,
+        137
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.596438,
+      "cpp_ms": 6.10806,
+      "speedup": 9.757015811894448,
+      "samples_ms": [
+        [
+          59.648544,
+          59.31344,
+          59.464872,
+          59.509484,
+          59.596438,
+          59.801839,
+          59.713685
+        ],
+        [
+          6.10806,
+          6.178978,
+          6.244089,
+          6.0509595,
+          6.0148215,
+          6.239345,
+          6.1078655
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.65022,
+      "cpp_ms": 3.3623506666666665,
+      "speedup": 17.74063026541352,
+      "samples_ms": [
+        [
+          59.578514,
+          59.521878,
+          59.65022,
+          59.667371,
+          59.760592,
+          59.586068,
+          60.792377
+        ],
+        [
+          3.3623506666666665,
+          3.2710303333333335,
+          3.3864386666666664,
+          3.4553173333333334,
+          3.1787386666666664,
+          3.2788416666666667,
+          3.399236
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.1690525,
+      "cpp_ms": 0.5473918947368421,
+      "speedup": 5.7893668694592515,
+      "samples_ms": [
+        [
+          3.152456,
+          3.21410375,
+          3.180118,
+          3.1690525,
+          3.1379495,
+          3.1392795,
+          3.20965025
+        ],
+        [
+          0.5561904736842106,
+          0.5473918947368421,
+          0.5454107894736842,
+          0.5439638947368421,
+          0.5426082631578947,
+          0.551326052631579,
+          0.5495686315789474
+        ]
+      ],
+      "loops": [
+        4,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "bool",
+      "output_dtype": "bool",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.14688825,
+      "cpp_ms": 0.40679095454545455,
+      "speedup": 7.735885507868068,
+      "samples_ms": [
+        [
+          3.14688825,
+          3.18031075,
+          3.1404715,
+          3.13115675,
+          3.12342925,
+          3.18097175,
+          3.17878
+        ],
+        [
+          0.5687216818181817,
+          0.4067725,
+          0.41389604545454545,
+          0.41333090909090914,
+          0.4044702727272727,
+          0.4027124545454545,
+          0.40679095454545455
+        ]
+      ],
+      "loops": [
+        4,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.647306,
+      "cpp_ms": 2.593582,
+      "speedup": 8.732057054683445,
+      "samples_ms": [
+        [
+          22.589137,
+          22.647306,
+          22.763661,
+          22.68844,
+          22.580739,
+          22.756818,
+          22.538481
+        ],
+        [
+          2.71406575,
+          2.58083575,
+          2.5580405,
+          2.6001165,
+          2.55260825,
+          2.593582,
+          2.6500725
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.656843,
+      "cpp_ms": 1.4940968333333333,
+      "speedup": 15.16424002415729,
+      "samples_ms": [
+        [
+          22.593844,
+          22.767869,
+          22.573268,
+          22.656843,
+          22.633068,
+          22.672451,
+          22.740577
+        ],
+        [
+          1.5187976666666667,
+          1.470172,
+          1.4867331666666668,
+          1.5184421666666668,
+          1.3934941666666667,
+          1.5147686666666667,
+          1.4940968333333333
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.326125,
+      "cpp_ms": 1.431633,
+      "speedup": 8.609835760980642,
+      "samples_ms": [
+        [
+          12.428526,
+          12.187848,
+          12.326125,
+          12.260374,
+          12.361803,
+          12.239334,
+          12.355651
+        ],
+        [
+          1.4057145714285713,
+          1.4398954285714287,
+          1.4355902857142857,
+          1.4294645714285714,
+          1.3585592857142856,
+          1.431633,
+          1.4515584285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.309194,
+      "cpp_ms": 0.8527148181818183,
+      "speedup": 14.435299747981391,
+      "samples_ms": [
+        [
+          12.235457,
+          12.224717,
+          12.309194,
+          12.368656,
+          12.440258,
+          12.307801,
+          12.336316
+        ],
+        [
+          0.847343090909091,
+          0.8446335454545454,
+          0.8954518181818182,
+          0.8527148181818183,
+          0.8256453636363636,
+          0.8890741818181818,
+          0.8583818181818182
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.640461,
+      "cpp_ms": 2.6489655,
+      "speedup": 8.546906707543,
+      "samples_ms": [
+        [
+          22.640461,
+          22.49961,
+          22.599486,
+          23.201106,
+          22.587141,
+          22.6937,
+          22.675998
+        ],
+        [
+          2.67628825,
+          2.6489655,
+          2.62530375,
+          2.67649125,
+          2.57262025,
+          2.714099,
+          2.60056725
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.641053,
+      "cpp_ms": 1.4730085714285714,
+      "speedup": 15.370618636687206,
+      "samples_ms": [
+        [
+          22.723627,
+          22.641053,
+          22.586981,
+          22.628221,
+          22.646073,
+          22.58038,
+          22.747904
+        ],
+        [
+          1.4730085714285714,
+          1.619861,
+          1.444951857142857,
+          1.4325847142857142,
+          1.370576142857143,
+          1.478762142857143,
+          1.5223762857142857
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4673675,
+      "cpp_ms": 0.052479962616822425,
+      "speedup": 8.90563706023269,
+      "samples_ms": [
+        [
+          0.4755177272727273,
+          0.4657062727272727,
+          0.4643482727272727,
+          0.4655437272727273,
+          0.4673675,
+          0.4709337272727273,
+          0.47009945454545454
+        ],
+        [
+          0.05313194392523365,
+          0.05282772897196261,
+          0.05301657943925234,
+          0.052479962616822425,
+          0.05034440186915888,
+          0.05116070093457944,
+          0.052307495327102806
+        ]
+      ],
+      "loops": [
+        22,
+        107
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.47295509999999996,
+      "cpp_ms": 0.0521496261682243,
+      "speedup": 9.069194445888089,
+      "samples_ms": [
+        [
+          0.4764231,
+          0.4739354,
+          0.47295509999999996,
+          0.4706864,
+          0.47075805,
+          0.4667806,
+          0.4759377
+        ],
+        [
+          0.05274795327102804,
+          0.05129739252336448,
+          0.0521496261682243,
+          0.05138044859813084,
+          0.051010037383177574,
+          0.053438495327102806,
+          0.05252248598130841
+        ]
+      ],
+      "loops": [
+        20,
+        107
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.27713,
+      "cpp_ms": 6.162748,
+      "speedup": 9.78088508567931,
+      "samples_ms": [
+        [
+          60.619479,
+          60.30324,
+          60.200618,
+          60.434444,
+          60.184798,
+          60.27713,
+          60.154862
+        ],
+        [
+          6.164927,
+          6.192323,
+          6.1481955,
+          6.162748,
+          5.9170295,
+          6.1102,
+          6.2040195
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.200848,
+      "cpp_ms": 3.3392846666666665,
+      "speedup": 18.028067089019267,
+      "samples_ms": [
+        [
+          60.137179,
+          60.196812,
+          60.233159,
+          60.200848,
+          60.192734,
+          60.371576,
+          60.22803
+        ],
+        [
+          3.334422,
+          3.3392846666666665,
+          3.3937896666666667,
+          3.3508896666666663,
+          3.1696386666666667,
+          3.462548,
+          3.3247006666666663
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.8651483333333334,
+      "cpp_ms": 0.5536794210526316,
+      "speedup": 6.980841595999864,
+      "samples_ms": [
+        [
+          3.847138,
+          3.8983066666666666,
+          3.9001303333333337,
+          3.859815,
+          3.9040406666666665,
+          3.852768,
+          3.8651483333333334
+        ],
+        [
+          0.5693412631578947,
+          0.5536794210526316,
+          0.5539293684210526,
+          0.5503906842105263,
+          0.5474858421052632,
+          0.5569402631578947,
+          0.5528083684210526
+        ]
+      ],
+      "loops": [
+        3,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint8",
+      "output_dtype": "uint8",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.8763756666666667,
+      "cpp_ms": 0.41814228571428574,
+      "speedup": 9.270470361649508,
+      "samples_ms": [
+        [
+          3.9080213333333336,
+          3.8488343333333335,
+          3.8763756666666667,
+          3.840479,
+          3.8460326666666664,
+          3.9471576666666666,
+          3.961007
+        ],
+        [
+          0.42227619047619047,
+          0.41814228571428574,
+          0.41305090476190476,
+          0.42750595238095235,
+          0.4104670476190476,
+          0.4169534285714286,
+          0.43577328571428575
+        ]
+      ],
+      "loops": [
+        3,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.140972,
+      "cpp_ms": 2.539171,
+      "speedup": 8.71976404897504,
+      "samples_ms": [
+        [
+          22.130623,
+          22.237342,
+          22.147214,
+          22.062235,
+          22.015018,
+          22.200694,
+          22.140972
+        ],
+        [
+          2.539171,
+          2.567544,
+          2.5311924,
+          2.566446,
+          2.4719417999999997,
+          2.5359412000000003,
+          2.5845938
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.085829,
+      "cpp_ms": 1.4258892857142857,
+      "speedup": 15.489161200153287,
+      "samples_ms": [
+        [
+          22.111767,
+          22.293938,
+          22.077694,
+          22.127547,
+          22.085829,
+          22.071583,
+          22.076753
+        ],
+        [
+          1.4458722857142856,
+          1.510633142857143,
+          1.4258892857142857,
+          1.5119182857142857,
+          1.354011,
+          1.412935142857143,
+          1.4207427142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.9795,
+      "cpp_ms": 1.4011347142857142,
+      "speedup": 8.54985596877959,
+      "samples_ms": [
+        [
+          12.127897,
+          11.931521,
+          11.9795,
+          11.787953,
+          12.072374,
+          12.117518,
+          11.800185
+        ],
+        [
+          1.406645,
+          1.3945967142857143,
+          1.4084795714285714,
+          1.3805077142857143,
+          1.3617255714285714,
+          1.414022857142857,
+          1.4011347142857142
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.018544,
+      "cpp_ms": 0.8277584545454546,
+      "speedup": 14.519385376256556,
+      "samples_ms": [
+        [
+          12.108971,
+          11.842103,
+          12.018544,
+          12.06554,
+          12.051465,
+          11.993216,
+          11.965415
+        ],
+        [
+          0.828651,
+          0.829222,
+          0.8705828181818183,
+          0.8217481818181818,
+          0.7944627272727273,
+          0.8277584545454546,
+          0.8201934545454546
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.08115,
+      "cpp_ms": 2.5416676000000002,
+      "speedup": 8.687662383546927,
+      "samples_ms": [
+        [
+          22.028132,
+          21.969532,
+          22.258712,
+          22.147405,
+          22.032008,
+          22.08115,
+          22.224487
+        ],
+        [
+          2.5576616000000003,
+          2.527832,
+          2.5416676000000002,
+          2.5486348,
+          2.4825798,
+          2.5329696,
+          2.5722508
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.044642,
+      "cpp_ms": 1.424888857142857,
+      "speedup": 15.47113088118552,
+      "samples_ms": [
+        [
+          22.044642,
+          22.06428,
+          22.004206,
+          22.036347,
+          22.178612,
+          24.212404,
+          21.936941
+        ],
+        [
+          1.4514985714285713,
+          1.424888857142857,
+          1.4210215714285714,
+          1.4216585714285714,
+          1.3535845714285715,
+          1.8730764285714285,
+          1.596004
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.46622142857142856,
+      "cpp_ms": 0.051327375,
+      "speedup": 9.083289931959866,
+      "samples_ms": [
+        [
+          0.470894,
+          0.4661375238095238,
+          0.46365852380952377,
+          0.46729533333333334,
+          0.47298504761904764,
+          0.4643331904761905,
+          0.46622142857142856
+        ],
+        [
+          0.05118158823529412,
+          0.05110363970588235,
+          0.051327375,
+          0.052616830882352944,
+          0.05101722794117647,
+          0.05221033823529412,
+          0.05190749264705882
+        ]
+      ],
+      "loops": [
+        21,
+        136
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4630214166666667,
+      "cpp_ms": 0.05267227272727273,
+      "speedup": 8.790610176707313,
+      "samples_ms": [
+        [
+          0.46079770833333333,
+          0.4653065,
+          0.460391125,
+          0.4630214166666667,
+          0.4594869166666667,
+          0.4646490833333333,
+          0.4680537083333333
+        ],
+        [
+          0.05263129545454546,
+          0.052112931818181815,
+          0.05267227272727273,
+          0.053132897727272727,
+          0.05109228409090909,
+          0.05328352272727273,
+          0.052696068181818184
+        ]
+      ],
+      "loops": [
+        24,
+        88
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.663506,
+      "cpp_ms": 6.083079,
+      "speedup": 9.808109676037414,
+      "samples_ms": [
+        [
+          59.797827,
+          60.042043,
+          59.504158,
+          59.485833,
+          59.545635,
+          60.045588,
+          59.663506
+        ],
+        [
+          6.083079,
+          6.377393,
+          6.1391635,
+          6.257274,
+          5.9135475,
+          6.071848,
+          6.037749
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.727464,
+      "cpp_ms": 3.2613195,
+      "speedup": 18.313895342054035,
+      "samples_ms": [
+        [
+          59.727464,
+          59.64411,
+          59.773171,
+          59.757402,
+          59.55319,
+          59.70961,
+          59.790202
+        ],
+        [
+          3.2613195,
+          3.32436925,
+          3.28412925,
+          3.1866875,
+          3.07205175,
+          3.24274175,
+          3.2902605
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.25934325,
+      "cpp_ms": 0.4951789545454545,
+      "speedup": 6.582152209986161,
+      "samples_ms": [
+        [
+          3.34286625,
+          3.226116,
+          3.25934325,
+          3.2247835,
+          3.22215375,
+          3.3630415,
+          3.335688
+        ],
+        [
+          0.4854604090909091,
+          0.4931747272727273,
+          0.4951789545454545,
+          0.4967213181818182,
+          0.4905347727272727,
+          0.4960432727272727,
+          0.4971695
+        ]
+      ],
+      "loops": [
+        4,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int8",
+      "output_dtype": "int8",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.2529333333333335,
+      "cpp_ms": 0.3784739615384616,
+      "speedup": 8.594866923236834,
+      "samples_ms": [
+        [
+          3.1791693333333333,
+          3.4921396666666666,
+          3.2529333333333335,
+          3.2511133333333335,
+          3.2780133333333334,
+          3.2511903333333336,
+          5.251789333333333
+        ],
+        [
+          0.3918130384615384,
+          0.3894555769230769,
+          0.37208353846153847,
+          0.37902846153846154,
+          0.3784739615384616,
+          0.37247892307692304,
+          0.37556161538461535
+        ]
+      ],
+      "loops": [
+        3,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.782247,
+      "cpp_ms": 2.621066,
+      "speedup": 8.691977615214574,
+      "samples_ms": [
+        [
+          22.782247,
+          22.974215,
+          22.973182,
+          22.69356,
+          22.895668,
+          22.746862,
+          22.710473
+        ],
+        [
+          2.6213235,
+          2.54595075,
+          2.664549,
+          2.596287,
+          2.5280395,
+          2.639881,
+          2.621066
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.914001,
+      "cpp_ms": 1.4735735,
+      "speedup": 15.549954583195204,
+      "samples_ms": [
+        [
+          22.915395,
+          22.952645,
+          22.933429,
+          22.83795,
+          22.689544,
+          22.85342,
+          22.914001
+        ],
+        [
+          1.4735735,
+          1.5930671666666667,
+          1.4541055,
+          1.4979205,
+          1.3696798333333333,
+          1.481343,
+          1.4276211666666667
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.362555,
+      "cpp_ms": 1.4242348571428571,
+      "speedup": 8.68013792669026,
+      "samples_ms": [
+        [
+          12.502444,
+          12.450599,
+          12.362555,
+          12.255043,
+          12.287284,
+          12.525698,
+          12.332248
+        ],
+        [
+          1.4722587142857144,
+          1.4242348571428571,
+          1.5164867142857144,
+          1.418116142857143,
+          1.3846425714285713,
+          1.433882857142857,
+          1.413420142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.377291,
+      "cpp_ms": 0.8355557272727273,
+      "speedup": 14.813244163138892,
+      "samples_ms": [
+        [
+          12.420322,
+          12.401438,
+          12.331897,
+          12.218657,
+          12.438585,
+          12.253892,
+          12.377291
+        ],
+        [
+          0.8355557272727273,
+          0.8468713636363636,
+          0.8094433636363636,
+          0.8485617272727273,
+          0.7935591818181817,
+          0.8262228181818182,
+          0.8503140909090909
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.849942,
+      "cpp_ms": 2.60322725,
+      "speedup": 8.777544104149953,
+      "samples_ms": [
+        [
+          23.056649,
+          22.78861,
+          22.878547,
+          22.819477,
+          22.920035,
+          22.849942,
+          22.750117
+        ],
+        [
+          2.67442775,
+          2.60322725,
+          2.59549825,
+          2.66365275,
+          2.525643,
+          2.586897,
+          2.682498
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.929052,
+      "cpp_ms": 1.47352,
+      "speedup": 15.560733481730821,
+      "samples_ms": [
+        [
+          22.696818,
+          22.78951,
+          22.834623,
+          22.932437,
+          22.94441,
+          22.929052,
+          22.959326
+        ],
+        [
+          1.4764505,
+          1.4570576666666668,
+          1.4588726666666667,
+          1.47352,
+          1.357509,
+          1.546608,
+          1.4933103333333333
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.47096785714285716,
+      "cpp_ms": 0.05060551552795031,
+      "speedup": 9.306650712464995,
+      "samples_ms": [
+        [
+          0.47337904761904764,
+          0.4622908095238095,
+          0.4654313333333333,
+          0.47096785714285716,
+          0.4628260476190476,
+          0.4742697619047619,
+          0.4719602857142857
+        ],
+        [
+          0.05088255279503106,
+          0.05049692546583851,
+          0.05060551552795031,
+          0.05136295031055901,
+          0.049604142857142854,
+          0.05198149689440994,
+          0.05030507453416149
+        ]
+      ],
+      "loops": [
+        21,
+        161
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.47414568181818184,
+      "cpp_ms": 0.05168003149606299,
+      "speedup": 9.174639954588699,
+      "samples_ms": [
+        [
+          0.4760136818181818,
+          0.47650231818181815,
+          0.4623878181818182,
+          0.4708702727272727,
+          0.47414568181818184,
+          0.46865863636363636,
+          0.47621586363636365
+        ],
+        [
+          0.05119211811023622,
+          0.052506456692913386,
+          0.052139149606299215,
+          0.052168968503937006,
+          0.050295094488188974,
+          0.0513920157480315,
+          0.05168003149606299
+        ]
+      ],
+      "loops": [
+        22,
+        127
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.336558,
+      "cpp_ms": 6.152108,
+      "speedup": 9.807460792300784,
+      "samples_ms": [
+        [
+          60.343021,
+          60.200869,
+          60.445652,
+          60.313086,
+          60.336558,
+          60.64004,
+          60.254848
+        ],
+        [
+          6.219072,
+          6.152108,
+          6.1191765,
+          6.134585,
+          6.0246355,
+          6.271125,
+          6.177223
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.39085,
+      "cpp_ms": 3.332345,
+      "speedup": 18.122628359308536,
+      "samples_ms": [
+        [
+          60.39085,
+          60.415276,
+          60.43263,
+          60.310662,
+          60.377917,
+          60.399858,
+          60.2028
+        ],
+        [
+          3.4736453333333337,
+          3.332345,
+          3.261513,
+          3.4171963333333335,
+          3.1435096666666666,
+          3.39937,
+          3.3004456666666666
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.8428333333333335,
+      "cpp_ms": 0.5398346111111111,
+      "speedup": 7.118538260123497,
+      "samples_ms": [
+        [
+          3.8507883333333335,
+          3.8428333333333335,
+          3.8409796666666667,
+          3.8455216666666665,
+          3.8764126666666665,
+          3.811772,
+          3.817225
+        ],
+        [
+          0.5440502222222222,
+          0.5394566666666666,
+          0.5559574444444445,
+          0.5390392222222222,
+          0.5269672777777777,
+          0.5429866111111111,
+          0.5398346111111111
+        ]
+      ],
+      "loops": [
+        3,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint16",
+      "output_dtype": "uint16",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.8364076666666667,
+      "cpp_ms": 0.4107425714285714,
+      "speedup": 9.34017541284693,
+      "samples_ms": [
+        [
+          3.8582786666666666,
+          3.8510386666666667,
+          3.8364076666666667,
+          3.827107,
+          3.8520703333333337,
+          3.8351833333333336,
+          3.809184
+        ],
+        [
+          0.4068063333333333,
+          0.42899966666666667,
+          0.40748485714285715,
+          0.4109775238095238,
+          0.3991683333333333,
+          0.41213009523809524,
+          0.4107425714285714
+        ]
+      ],
+      "loops": [
+        3,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.047678,
+      "cpp_ms": 2.543936,
+      "speedup": 8.666758125990592,
+      "samples_ms": [
+        [
+          22.033893,
+          22.015628,
+          22.047678,
+          22.124531,
+          22.027651,
+          22.160779,
+          22.126505
+        ],
+        [
+          2.5604327999999996,
+          2.5232414,
+          2.5494604,
+          2.573593,
+          2.4766947999999998,
+          2.543936,
+          2.5434932000000003
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.051675,
+      "cpp_ms": 1.4089275,
+      "speedup": 15.651390862908132,
+      "samples_ms": [
+        [
+          22.051675,
+          21.954072,
+          22.034023,
+          22.06513,
+          23.173718,
+          22.083635,
+          22.041717
+        ],
+        [
+          1.402511875,
+          1.428832,
+          1.420201,
+          1.4089275,
+          1.350035375,
+          1.430885875,
+          1.39640925
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.896696,
+      "cpp_ms": 1.399700375,
+      "speedup": 8.49945903600976,
+      "samples_ms": [
+        [
+          12.132866,
+          11.896696,
+          11.993225,
+          11.894873,
+          11.885375,
+          11.838778,
+          12.09724
+        ],
+        [
+          1.4073885,
+          1.427484625,
+          1.416951375,
+          1.399700375,
+          1.3659425,
+          1.394419125,
+          1.385506375
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.021317,
+      "cpp_ms": 0.840331,
+      "speedup": 14.305454636327827,
+      "samples_ms": [
+        [
+          12.021317,
+          11.942031,
+          11.959403,
+          12.018032,
+          12.050073,
+          12.036056,
+          12.021628
+        ],
+        [
+          0.8406130769230769,
+          0.841215,
+          0.844895,
+          0.840331,
+          0.7952208461538461,
+          0.8265260769230769,
+          0.8342304615384615
+        ]
+      ],
+      "loops": [
+        1,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.131234,
+      "cpp_ms": 2.6077635,
+      "speedup": 8.486672200143916,
+      "samples_ms": [
+        [
+          21.998136,
+          22.131234,
+          21.949755,
+          22.146541,
+          22.361822,
+          22.013415,
+          22.172229
+        ],
+        [
+          2.639385,
+          2.64486775,
+          2.5885575,
+          2.6251285,
+          2.52530225,
+          2.6077635,
+          2.57935575
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.028593,
+      "cpp_ms": 1.4340042857142856,
+      "speedup": 15.361594954388462,
+      "samples_ms": [
+        [
+          21.966407,
+          22.028593,
+          22.201165,
+          22.102029,
+          22.064509,
+          22.02185,
+          22.000351
+        ],
+        [
+          1.4718805714285714,
+          1.4382995714285713,
+          1.4318505714285714,
+          1.426031142857143,
+          1.3601454285714287,
+          1.4340042857142856,
+          1.447327857142857
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4711353333333333,
+      "cpp_ms": 0.051402197368421054,
+      "speedup": 9.165665233268323,
+      "samples_ms": [
+        [
+          0.47444966666666666,
+          0.46705538095238097,
+          0.46425009523809524,
+          0.4753536666666667,
+          0.4679737619047619,
+          0.47325261904761906,
+          0.4711353333333333
+        ],
+        [
+          0.05136634210526316,
+          0.05103961184210526,
+          0.051402197368421054,
+          0.05279076973684211,
+          0.051645276315789475,
+          0.05074551315789474,
+          0.05169511184210526
+        ]
+      ],
+      "loops": [
+        21,
+        152
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4689198095238095,
+      "cpp_ms": 0.05228583838383838,
+      "speedup": 8.968390371430923,
+      "samples_ms": [
+        [
+          0.4705309523809524,
+          0.4646394761904762,
+          0.46937014285714285,
+          0.4689951904761905,
+          0.46103795238095235,
+          0.4589689047619047,
+          0.4689198095238095
+        ],
+        [
+          0.05361449494949495,
+          0.05228583838383838,
+          0.05182114141414142,
+          0.052646616161616165,
+          0.051556505050505054,
+          0.05206867676767677,
+          0.05286125252525252
+        ]
+      ],
+      "loops": [
+        21,
+        99
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.668866,
+      "cpp_ms": 6.206785,
+      "speedup": 9.613490075779973,
+      "samples_ms": [
+        [
+          59.792725,
+          59.839122,
+          59.566976,
+          59.780623,
+          59.668866,
+          59.659068,
+          59.616229
+        ],
+        [
+          6.2202085,
+          6.206785,
+          6.130227,
+          6.2393655,
+          5.947522,
+          6.207862,
+          6.1980035
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.700144,
+      "cpp_ms": 3.29609675,
+      "speedup": 18.11237610061052,
+      "samples_ms": [
+        [
+          59.820618,
+          59.643679,
+          59.868607,
+          59.86616,
+          59.619474,
+          59.695386,
+          59.700144
+        ],
+        [
+          3.31963275,
+          3.29609675,
+          3.2976695,
+          3.288748,
+          3.09608375,
+          3.2954155,
+          3.29896525
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.24428075,
+      "cpp_ms": 0.497611,
+      "speedup": 6.519712687219535,
+      "samples_ms": [
+        [
+          3.29176425,
+          3.19044025,
+          3.34955675,
+          3.216762,
+          3.24428075,
+          3.29852175,
+          3.17087125
+        ],
+        [
+          0.49472804761904765,
+          0.49123576190476187,
+          0.5026919047619047,
+          0.48971580952380955,
+          0.497611,
+          0.5007568571428571,
+          0.5000230952380953
+        ]
+      ],
+      "loops": [
+        4,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int16",
+      "output_dtype": "int16",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.21905375,
+      "cpp_ms": 0.38039988888888887,
+      "speedup": 8.462288880794743,
+      "samples_ms": [
+        [
+          3.21905375,
+          3.2238375,
+          3.25298725,
+          3.184061,
+          3.271892,
+          3.197045,
+          3.162766
+        ],
+        [
+          0.37847148148148146,
+          0.38039988888888887,
+          0.4369840740740741,
+          0.3780971111111111,
+          0.37520577777777775,
+          0.38946533333333333,
+          0.38915755555555553
+        ]
+      ],
+      "loops": [
+        4,
+        27
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.813229,
+      "cpp_ms": 2.8183515,
+      "speedup": 8.094529372933078,
+      "samples_ms": [
+        [
+          22.827115,
+          22.886405,
+          22.813229,
+          22.917436,
+          22.781991,
+          22.755842,
+          22.726975
+        ],
+        [
+          2.8183515,
+          2.82005975,
+          2.9669035,
+          2.8500505,
+          2.75690975,
+          2.8086885,
+          2.80830025
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.841051,
+      "cpp_ms": 1.472407857142857,
+      "speedup": 15.512720126556552,
+      "samples_ms": [
+        [
+          22.900592,
+          22.841051,
+          22.698334,
+          22.734943,
+          22.657068,
+          22.897286,
+          22.96333
+        ],
+        [
+          1.4623747142857144,
+          1.4832321428571429,
+          1.5659915714285713,
+          1.442094,
+          1.3973792857142857,
+          1.472407857142857,
+          1.493786142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.398884,
+      "cpp_ms": 1.504814,
+      "speedup": 8.23947943068047,
+      "samples_ms": [
+        [
+          12.447255,
+          12.349883,
+          12.482841,
+          12.398884,
+          12.313646,
+          12.421757,
+          12.279392
+        ],
+        [
+          1.54740225,
+          1.49804775,
+          1.504814,
+          1.5358245,
+          1.491736,
+          1.5715685,
+          1.50037325
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 12.377354,
+      "cpp_ms": 0.8709235454545454,
+      "speedup": 14.211757237014544,
+      "samples_ms": [
+        [
+          12.585983,
+          12.301813,
+          12.3005,
+          12.285694,
+          12.377354,
+          12.471139,
+          12.521182
+        ],
+        [
+          0.8820698181818183,
+          0.8853158181818183,
+          0.8709235454545454,
+          0.8682686363636364,
+          0.817606,
+          0.9017291818181817,
+          0.8613994545454546
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.823178,
+      "cpp_ms": 2.82247675,
+      "speedup": 8.086223562337581,
+      "samples_ms": [
+        [
+          22.796027,
+          22.91018,
+          22.859545,
+          22.876197,
+          22.823178,
+          22.768376,
+          22.80295
+        ],
+        [
+          2.8539455,
+          2.82247675,
+          2.845089,
+          2.8624765,
+          2.72540575,
+          2.8116315,
+          2.776814
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 22.832364,
+      "cpp_ms": 1.5330546666666667,
+      "speedup": 14.89337888364059,
+      "samples_ms": [
+        [
+          22.921511,
+          22.768486,
+          22.722901,
+          22.907144,
+          22.717331,
+          22.845078,
+          22.832364
+        ],
+        [
+          1.5220008333333332,
+          1.5170731666666668,
+          1.6273806666666668,
+          1.546453,
+          1.556647,
+          1.493232,
+          1.5330546666666667
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4677237727272727,
+      "cpp_ms": 0.052107556701030934,
+      "speedup": 8.976121743931603,
+      "samples_ms": [
+        [
+          0.47665222727272727,
+          0.465603,
+          0.4668808181818182,
+          0.4596095,
+          0.4758457272727273,
+          0.4677237727272727,
+          0.46980763636363637
+        ],
+        [
+          0.05209732989690721,
+          0.05268812371134021,
+          0.052107556701030934,
+          0.05237485567010309,
+          0.05069243298969072,
+          0.05227828865979381,
+          0.05161487628865979
+        ]
+      ],
+      "loops": [
+        22,
+        97
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4670046,
+      "cpp_ms": 0.05194053448275862,
+      "speedup": 8.99113966867283,
+      "samples_ms": [
+        [
+          0.4670046,
+          0.46830605,
+          0.4653621,
+          0.4665132,
+          0.4629831,
+          0.46806205,
+          0.46940509999999996
+        ],
+        [
+          0.054241284482758625,
+          0.051246224137931035,
+          0.05295276724137931,
+          0.05206965517241379,
+          0.05114275862068965,
+          0.05194053448275862,
+          0.051205456896551725
+        ]
+      ],
+      "loops": [
+        20,
+        116
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.230433,
+      "cpp_ms": 6.3160545,
+      "speedup": 9.536085067030374,
+      "samples_ms": [
+        [
+          60.41097,
+          60.2668,
+          60.209404,
+          60.200689,
+          60.203784,
+          60.249629,
+          60.230433
+        ],
+        [
+          6.314171,
+          6.3865805,
+          6.353134,
+          6.206851,
+          6.106584,
+          6.3160545,
+          6.6286475
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 60.241264,
+      "cpp_ms": 3.3250286666666664,
+      "speedup": 18.117517182308003,
+      "samples_ms": [
+        [
+          60.241264,
+          60.354105,
+          60.302007,
+          60.191992,
+          60.194738,
+          60.554668,
+          60.155635
+        ],
+        [
+          3.3701026666666665,
+          3.4827526666666664,
+          3.3379526666666663,
+          3.2890216666666667,
+          3.1391853333333333,
+          3.315925,
+          3.3250286666666664
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.840443,
+      "cpp_ms": 0.7736190769230769,
+      "speedup": 4.964255813435513,
+      "samples_ms": [
+        [
+          3.8501743333333334,
+          3.858166,
+          3.8101863333333337,
+          3.822309,
+          3.8435516666666665,
+          3.827198,
+          3.840443
+        ],
+        [
+          0.7884220769230769,
+          0.770219,
+          0.7889862307692308,
+          0.7736190769230769,
+          0.7681627692307692,
+          0.7674121538461539,
+          0.7827707692307693
+        ]
+      ],
+      "loops": [
+        3,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint32",
+      "output_dtype": "uint32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 3.8341976666666664,
+      "cpp_ms": 0.45807222222222227,
+      "speedup": 8.37029071107176,
+      "samples_ms": [
+        [
+          3.8819503333333336,
+          3.8341976666666664,
+          3.864214,
+          3.7918386666666666,
+          3.8014903333333336,
+          3.851757,
+          3.8075676666666665
+        ],
+        [
+          0.45826761111111114,
+          0.45807222222222227,
+          0.44860405555555555,
+          0.4798311666666667,
+          0.43600388888888886,
+          0.4955395,
+          0.44547261111111114
+        ]
+      ],
+      "loops": [
+        3,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.298265,
+      "cpp_ms": 2.57135375,
+      "speedup": 8.282899620482013,
+      "samples_ms": [
+        [
+          21.406285,
+          21.18804,
+          21.341003,
+          21.366762,
+          21.210631,
+          21.298265,
+          21.107108
+        ],
+        [
+          2.562988,
+          2.57135375,
+          2.55540125,
+          2.6257325,
+          2.459575,
+          2.60400925,
+          2.5920395
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.322649,
+      "cpp_ms": 1.3962285714285714,
+      "speedup": 15.271603400998607,
+      "samples_ms": [
+        [
+          21.396267,
+          21.322649,
+          21.346655,
+          21.271463,
+          21.352536,
+          21.296611,
+          21.283417
+        ],
+        [
+          1.3962285714285714,
+          1.4130084285714286,
+          1.3939985714285714,
+          1.3814352857142858,
+          1.3431882857142856,
+          1.4392044285714287,
+          1.4082092857142856
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.647223,
+      "cpp_ms": 1.377863111111111,
+      "speedup": 8.453106049560802,
+      "samples_ms": [
+        [
+          11.577643,
+          11.713436,
+          11.647223,
+          11.660999,
+          11.514085,
+          11.682197,
+          11.588744
+        ],
+        [
+          1.3911177777777777,
+          1.377863111111111,
+          1.376860111111111,
+          1.395180888888889,
+          1.3652262222222222,
+          1.4166476666666667,
+          1.3587953333333334
+        ]
+      ],
+      "loops": [
+        1,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.626945,
+      "cpp_ms": 0.852898,
+      "speedup": 13.632280765109073,
+      "samples_ms": [
+        [
+          11.754823,
+          11.498265,
+          11.525957,
+          11.729326,
+          11.626945,
+          11.562895,
+          11.684372
+        ],
+        [
+          0.8561089000000001,
+          0.852898,
+          0.8394749,
+          0.834642,
+          0.813757,
+          0.8541641999999999,
+          0.8645718
+        ]
+      ],
+      "loops": [
+        1,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.34432,
+      "cpp_ms": 2.5819355,
+      "speedup": 8.26679055305603,
+      "samples_ms": [
+        [
+          21.31203,
+          21.422286,
+          21.536458,
+          21.361272,
+          21.258029,
+          21.250636,
+          21.34432
+        ],
+        [
+          2.5510055,
+          2.6258825,
+          2.595849,
+          2.5819355,
+          2.4808325,
+          2.653537,
+          2.52081175
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.342107,
+      "cpp_ms": 1.4528167142857142,
+      "speedup": 14.6901579463814,
+      "samples_ms": [
+        [
+          21.298365,
+          21.526269,
+          21.342107,
+          21.259182,
+          21.406714,
+          21.40873,
+          21.178341
+        ],
+        [
+          1.4532047142857143,
+          1.4788604285714286,
+          1.433558142857143,
+          1.4654037142857144,
+          1.3705335714285714,
+          1.4528167142857142,
+          1.4240947142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.46176153846153845,
+      "cpp_ms": 0.05138342857142857,
+      "speedup": 8.986584805637085,
+      "samples_ms": [
+        [
+          0.4679007307692308,
+          0.4621438461538461,
+          0.45669442307692304,
+          0.46204634615384615,
+          0.45585523076923073,
+          0.46176153846153845,
+          0.4580492692307693
+        ],
+        [
+          0.05212209285714286,
+          0.05142872857142857,
+          0.05138342857142857,
+          0.05063853571428572,
+          0.04976749285714285,
+          0.05082782857142858,
+          0.05236454285714286
+        ]
+      ],
+      "loops": [
+        26,
+        140
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4650283333333333,
+      "cpp_ms": 0.052118529914529914,
+      "speedup": 8.922514393555256,
+      "samples_ms": [
+        [
+          0.46593290476190474,
+          0.4645221904761905,
+          0.4650283333333333,
+          0.46310380952380953,
+          0.461539,
+          0.465389,
+          0.4674132380952381
+        ],
+        [
+          0.051762222222222216,
+          0.053116572649572646,
+          0.052338333333333334,
+          0.052118529914529914,
+          0.05142741025641026,
+          0.05283533333333334,
+          0.051349829059829065
+        ]
+      ],
+      "loops": [
+        21,
+        117
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 58.939717,
+      "cpp_ms": 6.1772405,
+      "speedup": 9.54143148546669,
+      "samples_ms": [
+        [
+          59.042928,
+          58.866989,
+          58.650345,
+          58.952541,
+          59.01246,
+          58.939717,
+          58.844979
+        ],
+        [
+          6.227875,
+          6.1939615,
+          6.152049,
+          6.1772405,
+          6.009483,
+          6.1357285,
+          6.3253365
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 58.940297,
+      "cpp_ms": 3.337061,
+      "speedup": 17.662337308188253,
+      "samples_ms": [
+        [
+          59.06497,
+          58.89968,
+          58.980022,
+          59.125863,
+          58.940297,
+          58.919117,
+          58.936839
+        ],
+        [
+          3.3512506666666666,
+          3.322347,
+          3.3785783333333335,
+          3.337061,
+          3.1014483333333334,
+          3.3108256666666667,
+          3.3390446666666667
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 2.93086125,
+      "cpp_ms": 0.4907234285714286,
+      "speedup": 5.97253173448879,
+      "samples_ms": [
+        [
+          3.0227925,
+          2.93980025,
+          2.96592925,
+          2.93086125,
+          2.92228025,
+          2.92704375,
+          2.8846375
+        ],
+        [
+          0.4916546666666667,
+          0.48983938095238094,
+          0.4907234285714286,
+          0.4986257142857143,
+          0.47188490476190476,
+          0.49455809523809524,
+          0.48973633333333333
+        ]
+      ],
+      "loops": [
+        4,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int32",
+      "output_dtype": "int32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 2.92553625,
+      "cpp_ms": 0.38363518181818185,
+      "speedup": 7.625828882885184,
+      "samples_ms": [
+        [
+          2.9474445,
+          2.9865775,
+          2.92553625,
+          2.90140875,
+          2.95881825,
+          2.905892,
+          2.92325475
+        ],
+        [
+          0.3735950909090909,
+          0.3921860909090909,
+          0.38363518181818185,
+          0.389507,
+          0.37341931818181817,
+          0.3847777272727273,
+          0.3788052727272727
+        ]
+      ],
+      "loops": [
+        4,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 83.985773,
+      "cpp_ms": 2.8295675,
+      "speedup": 29.68148771852942,
+      "samples_ms": [
+        [
+          83.896927,
+          83.985773,
+          84.145301,
+          84.1831,
+          83.783315,
+          84.06373,
+          83.874866
+        ],
+        [
+          2.85685825,
+          2.81626,
+          2.87126275,
+          2.8295675,
+          2.75286175,
+          2.8093995,
+          2.8619775
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 83.706944,
+      "cpp_ms": 1.5129153333333332,
+      "speedup": 55.32824088415611,
+      "samples_ms": [
+        [
+          84.242933,
+          83.718135,
+          83.706944,
+          83.619199,
+          83.863503,
+          83.577842,
+          83.507071
+        ],
+        [
+          1.5261501666666668,
+          1.6089661666666668,
+          1.5582395,
+          1.4613941666666668,
+          1.416676,
+          1.5129153333333332,
+          1.5126446666666666
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 41.005101,
+      "cpp_ms": 1.53957,
+      "speedup": 26.634125762388198,
+      "samples_ms": [
+        [
+          41.005101,
+          41.101253,
+          40.879295,
+          40.761154,
+          40.87602,
+          41.151433,
+          41.038915
+        ],
+        [
+          1.5259095,
+          1.54269325,
+          1.534520625,
+          1.54423375,
+          1.484632625,
+          1.53957,
+          1.56313525
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 41.124384,
+      "cpp_ms": 0.890581090909091,
+      "speedup": 46.17702354091179,
+      "samples_ms": [
+        [
+          41.135884,
+          41.162824,
+          41.000301,
+          41.124384,
+          41.183622,
+          41.09616,
+          40.907517
+        ],
+        [
+          0.899434,
+          0.8896867272727272,
+          0.8961040909090909,
+          0.901495909090909,
+          0.8340620909090909,
+          0.890581090909091,
+          0.8823758181818182
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 82.892886,
+      "cpp_ms": 2.86498575,
+      "speedup": 28.933088410649162,
+      "samples_ms": [
+        [
+          82.784614,
+          82.933842,
+          82.78694,
+          82.808337,
+          82.999485,
+          83.01779,
+          82.892886
+        ],
+        [
+          2.86498575,
+          2.86235125,
+          2.89718075,
+          2.897952,
+          2.799554,
+          2.94047875,
+          2.86407425
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 83.164562,
+      "cpp_ms": 1.6072828333333333,
+      "speedup": 51.74233201229777,
+      "samples_ms": [
+        [
+          83.297218,
+          83.214866,
+          82.956115,
+          83.103257,
+          83.192585,
+          83.011787,
+          83.164562
+        ],
+        [
+          1.6396116666666667,
+          1.6188676666666668,
+          1.5850515,
+          1.6072828333333333,
+          1.4625498333333333,
+          1.5776225,
+          1.6100715
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.47644295238095236,
+      "cpp_ms": 0.052514582608695654,
+      "speedup": 9.072583817929086,
+      "samples_ms": [
+        [
+          0.48327804761904763,
+          0.47771009523809527,
+          0.47619961904761904,
+          0.47536138095238095,
+          0.475951,
+          0.47644295238095236,
+          0.4781761904761905
+        ],
+        [
+          0.053693660869565216,
+          0.052798504347826083,
+          0.052712086956521735,
+          0.052514582608695654,
+          0.052050426086956515,
+          0.05233817391304348,
+          0.05241414782608696
+        ]
+      ],
+      "loops": [
+        21,
+        115
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4768558695652174,
+      "cpp_ms": 0.052273138686131385,
+      "speedup": 9.122388315506532,
+      "samples_ms": [
+        [
+          0.4825295652173913,
+          0.4758849130434783,
+          0.47137786956521743,
+          0.47129247826086956,
+          0.48112247826086957,
+          0.4768558695652174,
+          0.47892365217391303
+        ],
+        [
+          0.052273138686131385,
+          0.05166353284671533,
+          0.051633109489051095,
+          0.052363459854014596,
+          0.053346087591240876,
+          0.05229997810218978,
+          0.05196818978102189
+        ]
+      ],
+      "loops": [
+        23,
+        137
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 192.02439,
+      "cpp_ms": 6.3316075,
+      "speedup": 30.3279048803957,
+      "samples_ms": [
+        [
+          192.1983,
+          191.857905,
+          191.789583,
+          191.974077,
+          192.02439,
+          192.325202,
+          193.379725
+        ],
+        [
+          6.2712155,
+          6.3316075,
+          6.469184,
+          6.288472,
+          6.138623,
+          6.38646,
+          6.3518205
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 192.501911,
+      "cpp_ms": 3.4269583333333333,
+      "speedup": 56.17281923960753,
+      "samples_ms": [
+        [
+          192.55438,
+          192.501911,
+          192.575157,
+          192.50178,
+          192.469631,
+          192.439054,
+          192.516638
+        ],
+        [
+          3.420583,
+          3.4269583333333333,
+          3.4044026666666665,
+          3.5361186666666664,
+          3.196258,
+          3.4719386666666665,
+          3.4406033333333337
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 20.619777,
+      "cpp_ms": 0.8002574285714286,
+      "speedup": 25.766429980923995,
+      "samples_ms": [
+        [
+          20.429301,
+          20.656566,
+          20.64822,
+          20.709424,
+          20.619777,
+          20.433911,
+          20.403303
+        ],
+        [
+          0.8002574285714286,
+          0.7976260714285714,
+          0.806776,
+          0.8057362142857143,
+          0.7913702142857143,
+          0.7999733571428571,
+          0.8095375714285715
+        ]
+      ],
+      "loops": [
+        1,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "uint64",
+      "output_dtype": "uint64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 20.490656,
+      "cpp_ms": 0.4668082380952381,
+      "speedup": 43.89523219129544,
+      "samples_ms": [
+        [
+          20.490656,
+          20.552662,
+          20.445963,
+          20.413442,
+          20.521531,
+          20.539337,
+          20.476851
+        ],
+        [
+          0.4881652380952381,
+          0.4657906666666667,
+          0.4668082380952381,
+          0.467115,
+          0.45309414285714283,
+          0.46929147619047623,
+          0.464306
+        ]
+      ],
+      "loops": [
+        1,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.306889,
+      "cpp_ms": 2.6304935,
+      "speedup": 8.099958810010365,
+      "samples_ms": [
+        [
+          21.226018,
+          21.259019,
+          21.306889,
+          21.3081,
+          21.303211,
+          21.341603,
+          21.360037
+        ],
+        [
+          2.6304935,
+          2.62323775,
+          2.63593375,
+          2.6432195,
+          2.5218785,
+          2.710167,
+          2.6047755
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.389543,
+      "cpp_ms": 1.446205857142857,
+      "speedup": 14.790109509207394,
+      "samples_ms": [
+        [
+          21.431379,
+          21.360548,
+          21.532295,
+          21.389543,
+          21.401333,
+          21.302951,
+          21.185451
+        ],
+        [
+          1.461223857142857,
+          1.41854,
+          1.4517632857142857,
+          1.4276598571428571,
+          1.3527932857142857,
+          1.5230791428571429,
+          1.446205857142857
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.698116,
+      "cpp_ms": 1.4241934285714286,
+      "speedup": 8.213853375053189,
+      "samples_ms": [
+        [
+          11.637783,
+          11.547987,
+          11.745033,
+          11.488336,
+          11.698116,
+          11.749432,
+          11.765081
+        ],
+        [
+          1.4456605714285713,
+          1.3949874285714285,
+          1.4241934285714286,
+          1.452899857142857,
+          1.3782862857142857,
+          1.401672857142857,
+          1.4367295714285713
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 11.526697,
+      "cpp_ms": 0.859504909090909,
+      "speedup": 13.410856503648931,
+      "samples_ms": [
+        [
+          11.538077,
+          11.47474,
+          11.467586,
+          11.530584,
+          11.671116,
+          11.473468,
+          11.526697
+        ],
+        [
+          0.859504909090909,
+          0.8601742727272728,
+          0.8437765454545454,
+          0.8699839090909091,
+          0.805946,
+          0.8612992727272727,
+          0.8429813636363637
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.269377,
+      "cpp_ms": 2.69160475,
+      "speedup": 7.902117500721455,
+      "samples_ms": [
+        [
+          21.456958,
+          21.269377,
+          21.225757,
+          21.39861,
+          21.338366,
+          21.241977,
+          21.218393
+        ],
+        [
+          2.72859875,
+          2.69160475,
+          2.65056575,
+          2.6705255,
+          2.6090635,
+          2.71294975,
+          2.71216325
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 21.328659,
+      "cpp_ms": 1.5077777142857143,
+      "speedup": 14.145758222792217,
+      "samples_ms": [
+        [
+          21.307369,
+          21.353004,
+          21.268826,
+          21.348315,
+          21.328659,
+          21.357933,
+          21.265881
+        ],
+        [
+          1.5070765714285714,
+          1.5362952857142858,
+          1.509903142857143,
+          1.506338,
+          1.4257405714285714,
+          1.5077777142857143,
+          1.5186135714285713
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.46185573913043476,
+      "cpp_ms": 0.053125830188679245,
+      "speedup": 8.693619233621936,
+      "samples_ms": [
+        [
+          0.46206482608695654,
+          0.463065347826087,
+          0.46185573913043476,
+          0.4584358695652174,
+          0.46530304347826085,
+          0.461776,
+          0.46157695652173913
+        ],
+        [
+          0.06913150943396226,
+          0.05464393396226415,
+          0.05299974528301887,
+          0.053125830188679245,
+          0.051352141509433964,
+          0.05333933962264151,
+          0.052781028301886794
+        ]
+      ],
+      "loops": [
+        23,
+        106
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 0.4641294285714286,
+      "cpp_ms": 0.052339757575757574,
+      "speedup": 8.867626639264401,
+      "samples_ms": [
+        [
+          0.46346538095238093,
+          0.4775897619047619,
+          0.4641294285714286,
+          0.47132571428571424,
+          0.47238814285714287,
+          0.462141,
+          0.46324590476190475
+        ],
+        [
+          0.05260146212121212,
+          0.052339757575757574,
+          0.053530772727272725,
+          0.05296426515151515,
+          0.051301007575757576,
+          0.051833674242424244,
+          0.05203798484848485
+        ]
+      ],
+      "loops": [
+        21,
+        132
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 59.018869,
+      "cpp_ms": 6.208117,
+      "speedup": 9.506726274649786,
+      "samples_ms": [
+        [
+          58.885446,
+          59.072596,
+          58.916114,
+          59.046447,
+          59.018869,
+          59.123771,
+          58.876741
+        ],
+        [
+          6.1308985,
+          6.2795055,
+          6.208117,
+          6.3037505,
+          5.99483,
+          6.184518,
+          6.228355
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 58.995251,
+      "cpp_ms": 3.3822146666666666,
+      "speedup": 17.442787290063592,
+      "samples_ms": [
+        [
+          59.033262,
+          58.911044,
+          58.787805,
+          59.019647,
+          58.995251,
+          59.061355,
+          58.869166
+        ],
+        [
+          3.3822146666666666,
+          3.482802,
+          3.3967603333333334,
+          3.3279036666666664,
+          3.0783516666666664,
+          3.3712173333333335,
+          3.421498
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 2.89436525,
+      "cpp_ms": 0.5520358947368421,
+      "speedup": 5.243074368161795,
+      "samples_ms": [
+        [
+          2.9674915,
+          2.87524225,
+          2.8920335,
+          2.89436525,
+          2.87866875,
+          2.97081025,
+          2.910002
+        ],
+        [
+          0.5520358947368421,
+          0.5479677894736842,
+          0.5399691578947369,
+          0.5570494210526316,
+          0.5302273157894737,
+          0.5527983684210526,
+          0.5614913684210526
+        ]
+      ],
+      "loops": [
+        4,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "int64",
+      "output_dtype": "int64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "verified",
+      "reference_ms": 2.9221745,
+      "cpp_ms": 0.4090952692307693,
+      "speedup": 7.143017091091345,
+      "samples_ms": [
+        [
+          2.9614305,
+          2.9360655,
+          2.91362875,
+          2.9221745,
+          2.9292605,
+          2.9074145,
+          2.87750875
+        ],
+        [
+          0.411788,
+          0.39856488461538464,
+          0.40945053846153845,
+          0.4090952692307693,
+          0.3997356923076923,
+          0.4116646923076923,
+          0.4020868076923077
+        ]
+      ],
+      "loops": [
+        4,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.443583,
+      "cpp_ms": 2.609597,
+      "speedup": 8.217200970111477,
+      "samples_ms": [
+        [
+          21.375365,
+          21.443583,
+          21.473699,
+          21.40961,
+          21.534492,
+          21.392667,
+          21.536115
+        ],
+        [
+          2.58957975,
+          2.65723825,
+          2.61657975,
+          2.614704,
+          2.5482475,
+          2.609597,
+          2.597369
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.37771,
+      "cpp_ms": 1.4936957142857143,
+      "speedup": 14.311957780653355,
+      "samples_ms": [
+        [
+          21.441028,
+          21.428454,
+          21.451638,
+          21.259199,
+          21.259469,
+          21.344188,
+          21.37771
+        ],
+        [
+          1.5283904285714287,
+          1.4936957142857143,
+          1.4752012857142858,
+          1.521237142857143,
+          1.4246527142857144,
+          1.5123705714285713,
+          1.4820282857142857
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.689279,
+      "cpp_ms": 1.4378802857142856,
+      "speedup": 8.129521710629199,
+      "samples_ms": [
+        [
+          11.827166,
+          11.768978,
+          11.689279,
+          11.720187,
+          11.687988,
+          11.663141,
+          11.525474
+        ],
+        [
+          1.4425204285714286,
+          1.4378802857142856,
+          1.495157,
+          1.4126432857142857,
+          1.3635302857142857,
+          1.4487778571428571,
+          1.4096304285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.716571,
+      "cpp_ms": 0.8789525,
+      "speedup": 13.330152653300377,
+      "samples_ms": [
+        [
+          11.716571,
+          11.698797,
+          11.526316,
+          11.745484,
+          11.739022,
+          11.790889,
+          11.554889
+        ],
+        [
+          0.8801507,
+          0.9050336,
+          0.8682615,
+          0.8741425,
+          0.8694377,
+          0.8843715,
+          0.8789525
+        ]
+      ],
+      "loops": [
+        1,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.486833,
+      "cpp_ms": 2.68647275,
+      "speedup": 7.998157807481948,
+      "samples_ms": [
+        [
+          21.486963,
+          21.493736,
+          21.406894,
+          21.486833,
+          21.539762,
+          21.255181,
+          21.479479
+        ],
+        [
+          2.68647275,
+          2.68884475,
+          2.668697,
+          2.715036,
+          2.585993,
+          2.69066325,
+          2.63148775
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.357232,
+      "cpp_ms": 1.551265,
+      "speedup": 13.767623197841763,
+      "samples_ms": [
+        [
+          21.570298,
+          21.230235,
+          21.269418,
+          21.357512,
+          21.348565,
+          21.357232,
+          21.412093
+        ],
+        [
+          1.5791203333333332,
+          1.5495151666666667,
+          1.5708466666666667,
+          1.551265,
+          1.4518881666666668,
+          1.5446728333333333,
+          1.553247
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.4779266842105263,
+      "cpp_ms": 0.04964681884057971,
+      "speedup": 9.62653187800795,
+      "samples_ms": [
+        [
+          0.48021357894736844,
+          0.47254242105263156,
+          0.4833994736842105,
+          0.4775422631578947,
+          0.482009,
+          0.4779266842105263,
+          0.47632315789473684
+        ],
+        [
+          0.050225362318840575,
+          0.05094627536231884,
+          0.04921819565217391,
+          0.04917035507246377,
+          0.04956666666666666,
+          0.0504101231884058,
+          0.04964681884057971
+        ]
+      ],
+      "loops": [
+        19,
+        138
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.4738195789473684,
+      "cpp_ms": 0.04971763366336634,
+      "speedup": 9.530211798806809,
+      "samples_ms": [
+        [
+          0.4748756842105263,
+          0.47117984210526315,
+          0.479903,
+          0.4738195789473684,
+          0.47463578947368423,
+          0.465686,
+          0.4708413684210526
+        ],
+        [
+          0.05009854455445545,
+          0.04975730693069307,
+          0.049034069306930696,
+          0.04971763366336634,
+          0.04836233663366337,
+          0.04903775247524752,
+          0.05039482178217822
+        ]
+      ],
+      "loops": [
+        19,
+        101
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 59.074099,
+      "cpp_ms": 6.2167735,
+      "speedup": 9.502372734023524,
+      "samples_ms": [
+        [
+          59.072065,
+          59.105026,
+          58.85489,
+          59.084407,
+          59.074099,
+          59.124523,
+          58.929439
+        ],
+        [
+          6.1593665,
+          6.2849405,
+          6.180536,
+          6.25241,
+          5.983569,
+          6.2167735,
+          6.232548
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 58.972109,
+      "cpp_ms": 3.3922633333333336,
+      "speedup": 17.38429573568876,
+      "samples_ms": [
+        [
+          58.880688,
+          60.675644,
+          58.784478,
+          58.956469,
+          58.985052,
+          59.226884,
+          58.972109
+        ],
+        [
+          3.3832056666666666,
+          3.470172,
+          3.3123576666666663,
+          3.4025726666666665,
+          3.1759836666666663,
+          3.3922633333333336,
+          3.440517
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.96107725,
+      "cpp_ms": 0.55146295,
+      "speedup": 5.369494451077811,
+      "samples_ms": [
+        [
+          2.95624575,
+          2.94385275,
+          2.96107725,
+          2.99297925,
+          3.14683325,
+          3.00890625,
+          2.9400655
+        ],
+        [
+          0.54229535,
+          0.55146295,
+          0.5392471999999999,
+          0.5734992,
+          0.5834175500000001,
+          0.5601666999999999,
+          0.54288845
+        ]
+      ],
+      "loops": [
+        4,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.97447975,
+      "cpp_ms": 0.4619078947368421,
+      "speedup": 6.439551659307791,
+      "samples_ms": [
+        [
+          2.99344,
+          2.9464925,
+          3.02799925,
+          2.963995,
+          2.97447975,
+          2.966585,
+          2.97726475
+        ],
+        [
+          0.45437384210526316,
+          0.47012557894736845,
+          0.46682126315789474,
+          0.45931194736842107,
+          0.4691713684210526,
+          0.4589861052631579,
+          0.4619078947368421
+        ]
+      ],
+      "loops": [
+        4,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.294492,
+      "cpp_ms": 2.54266225,
+      "speedup": 8.374880305081811,
+      "samples_ms": [
+        [
+          21.282021,
+          21.353995,
+          21.220516,
+          21.436158,
+          21.417343,
+          21.180632,
+          21.294492
+        ],
+        [
+          2.59198175,
+          2.6133965,
+          2.59828575,
+          2.5208165,
+          2.49329775,
+          2.54266225,
+          2.504927
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.306527,
+      "cpp_ms": 1.412953857142857,
+      "speedup": 15.079421661429244,
+      "samples_ms": [
+        [
+          21.332816,
+          21.183106,
+          21.409489,
+          21.268225,
+          21.23806,
+          21.540994,
+          21.306527
+        ],
+        [
+          1.412953857142857,
+          1.4248045714285713,
+          1.4178471428571429,
+          1.390502,
+          1.330807857142857,
+          1.43463,
+          1.3856057142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.620201,
+      "cpp_ms": 1.393688,
+      "speedup": 8.337734844527613,
+      "samples_ms": [
+        [
+          11.610503,
+          11.500738,
+          11.620201,
+          11.650267,
+          11.8398,
+          11.660376,
+          11.575097
+        ],
+        [
+          1.3730595714285714,
+          1.4339144285714287,
+          1.4378717142857143,
+          1.393688,
+          1.3549842857142858,
+          1.429101,
+          1.39254
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.612316,
+      "cpp_ms": 0.8253721818181817,
+      "speedup": 14.069187520252573,
+      "samples_ms": [
+        [
+          11.635961,
+          11.609862,
+          11.656428,
+          11.612316,
+          11.771332,
+          11.536945,
+          11.516368
+        ],
+        [
+          0.8424940909090909,
+          0.8253721818181817,
+          0.8276218181818182,
+          0.8215414545454546,
+          0.8172592727272727,
+          0.8194484545454546,
+          0.8660258181818182
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.215227,
+      "cpp_ms": 2.57789775,
+      "speedup": 8.229661940625844,
+      "samples_ms": [
+        [
+          21.312768,
+          21.198215,
+          21.215227,
+          21.196272,
+          21.377599,
+          21.345068,
+          21.204296
+        ],
+        [
+          2.65803975,
+          2.60576975,
+          2.53339725,
+          2.51802625,
+          2.50481925,
+          2.57789775,
+          2.58434
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 21.341552,
+      "cpp_ms": 1.42315,
+      "speedup": 14.995996205600253,
+      "samples_ms": [
+        [
+          21.383269,
+          21.243389,
+          21.341552,
+          21.412664,
+          21.390634,
+          21.295787,
+          21.226949
+        ],
+        [
+          1.4546844285714287,
+          1.447793,
+          1.388966142857143,
+          1.4261642857142858,
+          1.3489745714285715,
+          1.42315,
+          1.4088775714285713
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.4772670526315789,
+      "cpp_ms": 0.048622678832116795,
+      "speedup": 9.815729287139341,
+      "samples_ms": [
+        [
+          0.4808784736842105,
+          0.47429784210526316,
+          0.4735005789473684,
+          0.48337789473684206,
+          0.4837248947368421,
+          0.4772670526315789,
+          0.4632397894736842
+        ],
+        [
+          0.048622678832116795,
+          0.048878708029197075,
+          0.04955887591240876,
+          0.04877178832116789,
+          0.04709076642335767,
+          0.04812744525547445,
+          0.04830054744525548
+        ]
+      ],
+      "loops": [
+        19,
+        137
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.46972057692307695,
+      "cpp_ms": 0.04932053271028037,
+      "speedup": 9.523834214896231,
+      "samples_ms": [
+        [
+          0.47162411538461535,
+          0.46972057692307695,
+          0.47371534615384614,
+          0.4599531538461539,
+          0.46951596153846153,
+          0.4628605,
+          0.4713852307692308
+        ],
+        [
+          0.04968157943925234,
+          0.04811127102803739,
+          0.049914074766355135,
+          0.04820968224299065,
+          0.04932053271028037,
+          0.04878271028037383,
+          0.049330364485981305
+        ]
+      ],
+      "loops": [
+        26,
+        107
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 59.021444,
+      "cpp_ms": 6.14248,
+      "speedup": 9.608731977963298,
+      "samples_ms": [
+        [
+          59.199442,
+          59.0534,
+          58.948033,
+          58.895696,
+          59.021444,
+          59.087856,
+          58.946183
+        ],
+        [
+          5.99517,
+          6.2495995,
+          6.14248,
+          6.171645,
+          5.99476,
+          6.1061785,
+          6.209365
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 58.974485,
+      "cpp_ms": 3.3436466666666664,
+      "speedup": 17.637774226543076,
+      "samples_ms": [
+        [
+          59.026612,
+          59.147958,
+          58.869461,
+          59.071607,
+          58.974485,
+          58.880301,
+          58.913611
+        ],
+        [
+          3.3910376666666666,
+          3.3445846666666665,
+          3.2218623333333336,
+          3.3436466666666664,
+          3.096302,
+          3.3221063333333336,
+          3.3805386666666664
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.876512,
+      "cpp_ms": 0.47140075,
+      "speedup": 6.1020522347493085,
+      "samples_ms": [
+        [
+          2.9541295,
+          2.876512,
+          2.873301,
+          2.87778475,
+          2.89894575,
+          2.8562745,
+          2.85721375
+        ],
+        [
+          0.480384,
+          0.47140075,
+          0.46787415000000004,
+          0.46334375,
+          0.46176375,
+          0.4804045,
+          0.47935754999999997
+        ]
+      ],
+      "loops": [
+        4,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float32",
+      "output_dtype": "float32",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.88999225,
+      "cpp_ms": 0.3869364782608696,
+      "speedup": 7.468906170308372,
+      "samples_ms": [
+        [
+          2.95656875,
+          2.88999225,
+          2.92104525,
+          2.887217,
+          2.856753,
+          2.89051825,
+          2.87233425
+        ],
+        [
+          0.3908943043478261,
+          0.38977226086956523,
+          0.3869364782608696,
+          0.3865370869565217,
+          0.3806208260869565,
+          0.39200160869565215,
+          0.38062391304347826
+        ]
+      ],
+      "loops": [
+        4,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 5.551115123125783e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 20.672826,
+      "cpp_ms": 2.5240275,
+      "speedup": 8.190412346933622,
+      "samples_ms": [
+        [
+          20.737236,
+          20.672826,
+          20.77433,
+          20.870394,
+          20.580314,
+          20.596745,
+          20.575024
+        ],
+        [
+          2.589149,
+          2.49743775,
+          2.51181225,
+          2.5240275,
+          2.456181,
+          2.583069,
+          2.60062775
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "contiguous",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 5.551115123125783e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 20.782401,
+      "cpp_ms": 1.4354708333333333,
+      "speedup": 14.477759155677726,
+      "samples_ms": [
+        [
+          20.782401,
+          20.777962,
+          20.676994,
+          20.799162,
+          20.801747,
+          20.54649,
+          20.826995
+        ],
+        [
+          1.444531,
+          1.4801556666666666,
+          1.4354693333333333,
+          1.393683,
+          1.3525865,
+          1.4369285,
+          1.4354708333333333
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 4.163336342344337e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.232559,
+      "cpp_ms": 1.3619865,
+      "speedup": 8.24718820634419,
+      "samples_ms": [
+        [
+          11.228721,
+          11.232559,
+          11.198025,
+          11.283695,
+          11.266011,
+          11.253828,
+          11.171595
+        ],
+        [
+          1.34599525,
+          1.360776625,
+          1.393892125,
+          1.378876625,
+          1.3228685,
+          1.381620375,
+          1.3619865
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "strided",
+      "shape": [
+        192,
+        97
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 4.163336342344337e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 11.256204,
+      "cpp_ms": 0.8458311818181817,
+      "speedup": 13.307861239879914,
+      "samples_ms": [
+        [
+          11.241445,
+          11.058775,
+          11.185512,
+          11.256204,
+          11.334499,
+          11.315072,
+          11.350198
+        ],
+        [
+          0.8551997272727273,
+          0.8287157272727272,
+          0.8525839090909091,
+          0.8230622727272727,
+          0.8458311818181817,
+          0.8294353636363636,
+          0.8506811818181818
+        ]
+      ],
+      "loops": [
+        1,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 5.551115123125783e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 20.608226,
+      "cpp_ms": 2.60152675,
+      "speedup": 7.921589120696144,
+      "samples_ms": [
+        [
+          20.706378,
+          20.600011,
+          20.618615,
+          20.543185,
+          20.608226,
+          20.49266,
+          20.612655
+        ],
+        [
+          2.62582975,
+          2.62416175,
+          2.60152675,
+          2.58042275,
+          2.46016125,
+          2.55487025,
+          2.6043175
+        ]
+      ],
+      "loops": [
+        1,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "fortran",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 5.551115123125783e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 20.651928,
+      "cpp_ms": 1.451120857142857,
+      "speedup": 14.231707785292278,
+      "samples_ms": [
+        [
+          20.769005,
+          20.708142,
+          20.651928,
+          20.520123,
+          20.612975,
+          20.685861,
+          20.630708
+        ],
+        [
+          1.474792,
+          1.528462142857143,
+          1.4371777142857143,
+          1.4238545714285713,
+          1.3956015714285714,
+          1.451120857142857,
+          1.4678934285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 1,
+      "max_abs_error": 2.7755575615628914e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.46561969565217387,
+      "cpp_ms": 0.049442836538461536,
+      "speedup": 9.417333799001778,
+      "samples_ms": [
+        [
+          0.462963,
+          0.467109,
+          0.45845852173913043,
+          0.46401413043478257,
+          0.46699834782608696,
+          0.46561969565217387,
+          0.46837873913043476
+        ],
+        [
+          0.049442836538461536,
+          0.049913134615384616,
+          0.04944670192307692,
+          0.049346221153846154,
+          0.0483335673076923,
+          0.04945564423076924,
+          0.048979576923076924
+        ]
+      ],
+      "loops": [
+        23,
+        104
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "tiny",
+      "shape": [
+        7,
+        9
+      ],
+      "options": {
+        "frequency": 0.2,
+        "theta": 0.37
+      },
+      "threads": 4,
+      "max_abs_error": 2.7755575615628914e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 0.4696405,
+      "cpp_ms": 0.047648055555555555,
+      "speedup": 9.856446281473536,
+      "samples_ms": [
+        [
+          0.4774711111111111,
+          0.4639353333333333,
+          0.4696405,
+          0.4669015,
+          0.46986361111111113,
+          0.4753566666666667,
+          0.4695302777777777
+        ],
+        [
+          0.04684572222222222,
+          0.048240826388888894,
+          0.05061052083333334,
+          0.047648055555555555,
+          0.04667290972222222,
+          0.04766607638888889,
+          0.04686611805555555
+        ]
+      ],
+      "loops": [
+        18,
+        144
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 1,
+      "max_abs_error": 2.7755575615628914e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 58.397009,
+      "cpp_ms": 6.1199485,
+      "speedup": 9.54207523151543,
+      "samples_ms": [
+        [
+          58.535127,
+          58.387201,
+          58.462711,
+          58.286341,
+          58.535547,
+          58.388221,
+          58.397009
+        ],
+        [
+          6.121621,
+          6.151737,
+          6.0265245,
+          6.102105,
+          5.886293,
+          6.1199485,
+          6.2280195
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "large-kernel",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.1,
+        "theta": 0.71
+      },
+      "threads": 4,
+      "max_abs_error": 2.7755575615628914e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 58.540575,
+      "cpp_ms": 3.3323616666666664,
+      "speedup": 17.567293366016195,
+      "samples_ms": [
+        [
+          58.557128,
+          58.579989,
+          58.609604,
+          58.540575,
+          58.392879,
+          58.327397,
+          58.38766
+        ],
+        [
+          3.3323616666666664,
+          3.371037,
+          3.4284543333333333,
+          3.2416293333333335,
+          3.0840823333333334,
+          3.3798503333333336,
+          3.270984
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 1,
+      "max_abs_error": 8.326672684688674e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.683898,
+      "cpp_ms": 0.46414190476190476,
+      "speedup": 5.782494475211809,
+      "samples_ms": [
+        [
+          2.7601325,
+          2.6296745,
+          2.67053575,
+          2.68498025,
+          2.720118,
+          2.65485625,
+          2.683898
+        ],
+        [
+          0.4636314285714286,
+          0.4717240952380953,
+          0.4779480952380953,
+          0.4566455238095238,
+          0.4537257619047619,
+          0.46414190476190476,
+          0.47169738095238095
+        ]
+      ],
+      "loops": [
+        4,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.gabor",
+      "dtype": "float64",
+      "output_dtype": "float64",
+      "case": "constant",
+      "shape": [
+        192,
+        193
+      ],
+      "options": {
+        "frequency": 0.6,
+        "theta": 0.37,
+        "mode": "constant",
+        "cval": -0.3
+      },
+      "threads": 4,
+      "max_abs_error": 8.326672684688674e-17,
+      "integer_byte_parity": "not-applicable",
+      "reference_ms": 2.6686846,
+      "cpp_ms": 0.38525813636363637,
+      "speedup": 6.9270038660029485,
+      "samples_ms": [
+        [
+          2.715057,
+          2.673113,
+          2.6593572,
+          2.6686846,
+          2.7408913999999998,
+          2.66303,
+          2.6669272000000004
+        ],
+        [
+          0.3880119090909091,
+          0.38521168181818183,
+          0.38525813636363637,
+          0.3887827272727273,
+          0.3722001818181818,
+          0.39020327272727273,
+          0.38382136363636365
+        ]
+      ],
+      "loops": [
+        5,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
