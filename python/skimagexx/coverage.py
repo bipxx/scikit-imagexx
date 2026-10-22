@@ -12,7 +12,7 @@ NATIVE_FUNCTIONS = {
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
               'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace',
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
-    'filters': ('gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
+    'filters': ('gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
@@ -45,6 +45,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='filters.gabor_kernel':
+        import numpy as np
+        return (.2,),{'dtype':np.complex64 if image.dtype==np.float32 else np.complex128}
     if api=='exposure.match_histograms':return (image,image[...,::2]),{}
     if api=='transform.downscale_local_mean':return (image,2),{}
     if api=='transform.integrate':

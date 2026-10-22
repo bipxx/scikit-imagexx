@@ -7,9 +7,11 @@
 namespace skimagexx::detail { struct ColorSpec; }
 namespace skimagexx::detail { struct LiScan; }
 namespace skimagexx { struct PerceptualInfo; }
+namespace skimagexx { struct GaborParameters; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t gabor_kernel_row(void*,bool,std::size_t,std::size_t,double,const GaborParameters&);
 std::size_t hysteresis_map(const void*,const void*,void*,std::size_t,PixelType,std::ptrdiff_t,std::ptrdiff_t,bool);
 std::size_t li_scan(const void*,std::size_t,bool,double,detail::LiScan&);
 std::size_t li_shift(const void*,void*,std::size_t,bool,double);

@@ -969,6 +969,63 @@ def correlate_sparse(image,kernel,mode='reflect'):
 __all__.append('correlate_sparse')
 
 
+def gabor_kernel(frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None,
+                 n_stds=3, offset=0, dtype=np.complex128):
+    import math
+    def delegated():
+        return fallback('filters','gabor_kernel',frequency,theta,bandwidth,sigma_x,
+                        sigma_y,n_stds,offset,dtype=dtype)
+    numbers=(int,float,bool,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,
+             np.int64,np.uint64,np.float16,np.float32,np.float64,np.bool_)
+    if any(type(v) not in numbers for v in (frequency,theta,bandwidth,n_stds,offset)):
+        return delegated()
+    if any(v is not None and type(v) not in numbers for v in (sigma_x,sigma_y)):
+        return delegated()
+    # Keep unsupported scalar arithmetic (including warning/error policies) in
+    # the original implementation, before doing any observable calculation.
+    values=(frequency,theta,bandwidth,n_stds,offset,*[v for v in (sigma_x,sigma_y) if v is not None])
+    if any(not math.isfinite(float(v)) or abs(float(v))>1e6 for v in values):return delegated()
+    if np.geterr()['under']!='ignore':return delegated()
+    if (sigma_x is None or sigma_y is None) and (not frequency or abs(float(bandwidth))<1e-6 or abs(float(bandwidth))>100):
+        return delegated()
+    if any(v is not None and not 1e-8<=abs(float(v))<=1e6 for v in (sigma_x,sigma_y)):
+        return delegated()
+    sx=sigma_x;sy=sigma_y
+    if sx is None:
+        sx=(1.0/np.pi*math.sqrt(math.log(2)/2.0)*(2.0**bandwidth+1)/(2.0**bandwidth-1))/frequency
+    if sy is None:
+        sy=(1.0/np.pi*math.sqrt(math.log(2)/2.0)*(2.0**bandwidth+1)/(2.0**bandwidth-1))/frequency
+    kind=np.dtype(dtype)
+    if kind.kind!='c':raise ValueError('dtype must be complex')
+    if kind.type not in (np.complex64,np.complex128) or not kind.isnative:return delegated()
+    ct=math.cos(theta);st=math.sin(theta)
+    x0=math.ceil(max(abs(n_stds*sx*ct),abs(n_stds*sy*st),1))
+    y0=math.ceil(max(abs(n_stds*sy*ct),abs(n_stds*sx*st),1))
+    # Avoid introducing scalar overflow or NumPy buffer casts outside the
+    # finite core. Very large requests remain explicit compatibility calls.
+    if (2*x0+1)*(2*y0+1)>16*1024*1024 or not 1e-8<=abs(float(sx))<=1e6 or not 1e-8<=abs(float(sy))<=1e6:
+        return delegated()
+    # NumPy scalar powers can wrap integers or overflow narrow floats. Plan
+    # these pure scalar operations silently, then let the original replay its
+    # warning/error policy exactly once when the finite core cannot represent
+    # them. No image or kernel calculation occurs in this compatibility probe.
+    if type(sx) in (float,int) and type(sy) in (float,int):
+        # The bounds above make all Python scalar intermediates finite. Keep
+        # the ordinary path free of a per-call NumPy error-state context.
+        sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
+    else:
+        with np.errstate(all='ignore'):
+            sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
+        if (not all(math.isfinite(float(v)) for v in (sx2,sy2,normalization))
+                or sx2<=0 or sy2<=0 or normalization==0):return delegated()
+    result=_core.gabor_kernel(2*y0+1,2*x0+1,ct,st,float(sx2),float(sy2),
+                              float(2*np.pi*frequency),float(offset),float(normalization),kind.type==np.complex64)
+    return result.view(kind) if kind.metadata else result
+
+
+__all__.append('gabor_kernel')
+
+
 @_lru_cache(maxsize=17)
 def _median_default_mask(ndim):
     mask=np.ones((3,)*ndim,dtype=bool);mask.flags.writeable=False

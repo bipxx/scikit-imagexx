@@ -1,4 +1,5 @@
 #include "skimagexx/clahe.hpp"
+#include "skimagexx/gabor.hpp"
 #include "skimagexx/integral.hpp"
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
@@ -1327,6 +1328,28 @@ int main() {
 #endif
         clahe_into(input.data(),parallel.data(),true,{513,517},{11,13},4,256);
         require(serial==parallel);set_num_threads(1);
+    }
+    {
+        // Constants from pinned scikit-image 0.26.0, independent of the native
+        // scalar/SIMD implementation. Test both components, tails and center.
+        constexpr double pi=3.14159265358979323846;
+        const GaborParameters p{std::cos(.53),std::sin(.53),4.,9.,2*pi*.2,.2,1/(2*pi*2*3)};
+        std::vector<double> kernel(2*17*13);
+        gabor_kernel_into(kernel.data(),false,17,13,p);
+        const std::size_t indices[]={0,5,110,218};
+        const double real[]={1.0681385187049803e-7,.00012793839959761923,.02599707340376524,-6.177211712918747e-6};
+        const double imag[]={2.5837252601604366e-7,4.193993475402762e-5,.005269867672798817,-1.21581715214562e-6};
+        for(std::size_t i=0;i<4;++i){require(std::abs(kernel[2*indices[i]]-real[i])<1e-15);require(std::abs(kernel[2*indices[i]+1]-imag[i])<1e-15);}
+        std::vector<float> serial(2*513*517),parallel(serial.size());
+        set_num_threads(1);gabor_kernel_into(serial.data(),true,513,517,p);
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        gabor_kernel_into(parallel.data(),true,513,517,p);
+        require(serial==parallel);set_num_threads(1);
+        bool rejected=false;
+        try{gabor_kernel_into(kernel.data(),false,2,3,p);}catch(const std::invalid_argument&){rejected=true;}
+        require(rejected);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
