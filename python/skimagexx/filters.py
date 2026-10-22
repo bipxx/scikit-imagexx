@@ -971,10 +971,14 @@ __all__.append('correlate_sparse')
 
 def gabor_kernel(frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None,
                  n_stds=3, offset=0, dtype=np.complex128):
-    import math
     def delegated():
         return fallback('filters','gabor_kernel',frequency,theta,bandwidth,sigma_x,
                         sigma_y,n_stds,offset,dtype=dtype)
+    return _gabor_kernel_impl(frequency,theta,bandwidth,sigma_x,sigma_y,n_stds,offset,dtype,delegated)
+
+
+def _gabor_kernel_impl(frequency,theta,bandwidth,sigma_x,sigma_y,n_stds,offset,dtype,delegated,accurate=False):
+    import math
     numbers=(int,float,bool,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,
              np.int64,np.uint64,np.float16,np.float32,np.float64,np.bool_)
     if any(type(v) not in numbers for v in (frequency,theta,bandwidth,n_stds,offset)):
@@ -1018,12 +1022,62 @@ def gabor_kernel(frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None,
             sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
         if (not all(math.isfinite(float(v)) for v in (sx2,sy2,normalization))
                 or sx2<=0 or sy2<=0 or normalization==0):return delegated()
-    result=_core.gabor_kernel(2*y0+1,2*x0+1,ct,st,float(sx2),float(sy2),
+    generate=_core.gabor_kernel_accurate if accurate else _core.gabor_kernel
+    result=generate(2*y0+1,2*x0+1,ct,st,float(sx2),float(sy2),
                               float(2*np.pi*frequency),float(offset),float(normalization),kind.type==np.complex64)
     return result.view(kind) if kind.metadata else result
 
 
 __all__.append('gabor_kernel')
+
+
+def gabor(image, frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None,
+          n_stds=3, offset=0, mode='reflect', cval=0):
+    def delegated():
+        return fallback('filters','gabor',image,frequency,theta,bandwidth,sigma_x,
+                        sigma_y,n_stds,offset,mode,cval)
+    if type(image) not in (np.ndarray,np.memmap):return delegated()
+    if not image.size:raise ValueError('The parameter `image` cannot be an empty array')
+    if image.ndim!=2:raise ValueError('The parameter `image` must be a 2-dimensional array')
+    if image.dtype.type not in (np.bool_,np.uint8,np.int8,np.uint16,np.int16,
+            np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64):return delegated()
+    borders={'reflect':0,'constant':1,'nearest':2,'mirror':3,'wrap':4,
+             'grid-mirror':0,'grid-constant':1,'grid-wrap':4}
+    if type(mode) is not str or mode not in borders:return delegated()
+    if type(cval) not in (int,float,bool,np.bool_,np.uint8,np.int8,np.uint16,np.int16,
+            np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64):return delegated()
+    native=image
+    if image.dtype.kind=='f':
+        native=image.astype(np.float64 if image.dtype.type==np.float64 else np.float32,copy=False)
+    kernel_dtype=np.complex64 if native.dtype.type==np.float32 else np.complex128
+    def prepared_fallback():
+        # Floating preparation precedes kernel construction upstream. Reuse it
+        # if planning delegates, so cast warnings/errors are never replayed.
+        return fallback('filters','gabor',native,frequency,theta,bandwidth,sigma_x,
+                        sigma_y,n_stds,offset,mode,cval)
+    kernel=_gabor_kernel_impl(frequency,theta,bandwidth,sigma_x,sigma_y,n_stds,
+                               offset,kernel_dtype,prepared_fallback,accurate=native.dtype.kind in 'biu')
+    if not isinstance(kernel,np.ndarray):return kernel
+    constant=float(cval)
+    if native.dtype.kind in 'biu' and not _isfinite(constant):return prepared_fallback()
+    collision=native.flags.aligned and native.dtype.isnative and all(stride==0 for stride in native.strides)
+    copied=not (native.flags.aligned and native.dtype.isnative)
+    if borders[mode]==0 and any(size>1 and k//2>=4*size and (stride!=0 or copied)
+            for size,k,stride in zip(native.shape,kernel.shape,native.strides)):
+        # Legacy ndimage reflection can map distant negative multiples of the
+        # period to -1. That reference call can read before the image buffer;
+        # retain explicit upstream dispatch instead of inventing its bytes.
+        return prepared_fallback()
+    if native.shape[0]*(native.shape[1]+kernel.shape[1]-1)>128*1024*1024:return prepared_fallback()
+    # In ndimage, all-zero byte strides make the constant-border sentinel 1;
+    # valid mapped coordinate 1 then collides with it even in other modes.
+    if collision:
+        if native.shape[1]*kernel.shape[1]>128*1024*1024:return prepared_fallback()
+    else:native=np.require(native,dtype=native.dtype.newbyteorder('='),requirements=['A','C'])
+    return _core.gabor_filter(native,kernel,borders[mode],constant,collision)
+
+
+__all__.append('gabor')
 
 
 @_lru_cache(maxsize=17)

@@ -5,7 +5,7 @@ on:
       benchmark:
         description: Fixed kernel corpus to measure
         type: choice
-        options: [li, ciede2000, adaptive, rank-order, hysteresis, correlate-sparse, median, multiotsu, clahe, gabor-kernel]
+        options: [li, ciede2000, adaptive, rank-order, hysteresis, correlate-sparse, median, multiotsu, clahe, gabor-kernel, gabor]
         default: li
       paired:
         description: Also compare the preserved initial package
@@ -24,7 +24,7 @@ jobs:
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
-      - if: inputs.paired && inputs.benchmark == 'gabor-kernel'
+      - if: inputs.paired && (inputs.benchmark == 'gabor-kernel' || inputs.benchmark == 'gabor')
         run: python -c "raise SystemExit('Gabor initial benchmark has no preserved native baseline yet')"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -52,6 +52,12 @@ jobs:
         run: python -m pytest -q tests/test_clahe.py tests/test_api.py
       - if: inputs.benchmark == 'gabor-kernel'
         run: python -m pytest -q tests/test_gabor_kernel.py tests/test_api.py
+      - if: inputs.benchmark == 'gabor'
+        run: python -m pytest -q tests/test_gabor.py tests/test_gabor_kernel.py tests/test_api.py
+      - if: inputs.benchmark == 'gabor'
+        run: python -m pytest -q tests/test_gabor.py tests/test_gabor_kernel.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - if: inputs.benchmark == 'gabor-kernel'
         run: python -m pytest -q tests/test_gabor_kernel.py
         env:
@@ -158,6 +164,10 @@ jobs:
         run: python benchmarks/clahe.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/clahe-performance.json
       - if: inputs.benchmark == 'gabor-kernel' && !inputs.paired
         run: python benchmarks/gabor_kernel.py --threads 1 4 --repeat 7 --output build/gabor-kernel-performance.json
+      - if: inputs.benchmark == 'gabor' && !inputs.paired
+        run: python benchmarks/gabor.py --size 192 --threads 1 4 --repeat 7 --output build/gabor-performance.json
+      - if: inputs.benchmark == 'gabor' && !inputs.paired
+        run: python benchmarks/gabor_kernel.py --threads 1 4 --repeat 7 --output build/gabor-kernel-control-performance.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,6 +1,7 @@
 #include "simd.hpp"
 #include "simd_math.hpp"
 #include "skimagexx/gabor.hpp"
+#include "gabor_math_detail.hpp"
 #include <immintrin.h>
 #include <cmath>
 
@@ -29,7 +30,8 @@ void sincos4(__m256d phase,__m256d& sine,__m256d& cosine) {
     cosine=_mm256_xor_pd(_mm256_blendv_pd(c,s,odd),sign_c);
 }
 }
-std::size_t gabor_kernel_row(void* output,bool single,std::size_t start,std::size_t width,double y,const GaborParameters& p) {
+namespace {
+std::size_t kernel_row(void* output,bool single,std::size_t start,std::size_t width,double y,const GaborParameters& p,bool accurate) {
     const auto ct=_mm256_set1_pd(p.cosine),st=_mm256_set1_pd(p.sine);
     const auto ys=_mm256_set1_pd(y*p.sine),yc=_mm256_set1_pd(y*p.cosine);
     const auto sx=_mm256_set1_pd(p.sigma_x_squared),sy=_mm256_set1_pd(p.sigma_y_squared);
@@ -40,8 +42,14 @@ std::size_t gabor_kernel_row(void* output,bool single,std::size_t start,std::siz
         const auto rx=_mm256_add_pd(_mm256_mul_pd(coord,ct),ys);
         const auto ry=_mm256_add_pd(_mm256_mul_pd(_mm256_sub_pd(_mm256_setzero_pd(),coord),st),yc);
         const auto exponent=_mm256_mul_pd(_mm256_set1_pd(-.5),_mm256_add_pd(_mm256_div_pd(_mm256_mul_pd(rx,rx),sx),_mm256_div_pd(_mm256_mul_pd(ry,ry),sy)));
-        const auto magnitude=math::exp4(exponent);__m256d s,c;
-        sincos4(_mm256_add_pd(_mm256_mul_pd(frequency,rx),offset),s,c);
+        const auto phase=_mm256_add_pd(_mm256_mul_pd(frequency,rx),offset);
+        __m256d magnitude,s,c;
+        if(accurate){
+            alignas(32) double ex[4],ph[4],mag[4],sn[4],cs[4];
+            _mm256_store_pd(ex,exponent);_mm256_store_pd(ph,phase);
+            for(int j=0;j<4;++j){mag[j]=std::exp(ex[j]);sn[j]=std::sin(ph[j]);cs[j]=std::cos(ph[j]);}
+            magnitude=_mm256_load_pd(mag);s=_mm256_load_pd(sn);c=_mm256_load_pd(cs);
+        }else{magnitude=math::exp4(exponent);sincos4(phase,s,c);}
         s=_mm256_mul_pd(magnitude,s);c=_mm256_mul_pd(magnitude,c);
         if(single){
             const auto norm=_mm_set1_ps(float(p.normalization));
@@ -57,5 +65,12 @@ std::size_t gabor_kernel_row(void* output,bool single,std::size_t start,std::siz
         }
     }
     return i;
+}
+}
+std::size_t gabor_kernel_row(void* output,bool single,std::size_t start,std::size_t width,double y,const GaborParameters& p) {
+    return kernel_row(output,single,start,width,y,p,false);
+}
+std::size_t gabor_kernel_accurate_row(void* output,bool single,std::size_t start,std::size_t width,double y,const GaborParameters& p) {
+    return kernel_row(output,single,start,width,y,p,true);
 }
 }

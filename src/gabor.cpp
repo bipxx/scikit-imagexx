@@ -1,13 +1,15 @@
 #include "skimagexx/gabor.hpp"
 #include "execution.hpp"
 #include "simd.hpp"
+#include "gabor_math_detail.hpp"
 #include <cmath>
 #include <limits>
 #include <stdexcept>
 
 namespace skimagexx {
-void gabor_kernel_into(void* output,bool single,std::size_t height,std::size_t width,
-                       const GaborParameters& p) {
+namespace {
+void kernel_into(void* output,bool single,std::size_t height,std::size_t width,
+                       const GaborParameters& p,bool accurate) {
     const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(2*sizeof(double));
     if(!output || !height || !width || height%2!=1 || width%2!=1 || width>limit || height>limit/width)
         throw std::invalid_argument("nonempty odd Gabor dimensions and a valid output buffer required");
@@ -21,7 +23,8 @@ void gabor_kernel_into(void* output,bool single,std::size_t height,std::size_t w
         for(auto row=begin;row<end;++row){
             const auto y=double(row)-double(height/2);std::size_t x=0;
 #ifdef SKIMAGEXX_AVX2
-            if(has_avx2())x=simd::gabor_kernel_row(output,single,row*width,width,y,p);
+            if(has_avx2())x=accurate ? simd::gabor_kernel_accurate_row(output,single,row*width,width,y,p)
+                                   : simd::gabor_kernel_row(output,single,row*width,width,y,p);
 #endif
             for(;x<width;++x){
                 const auto coordinate=double(x)-double(width/2);
@@ -40,5 +43,12 @@ void gabor_kernel_into(void* output,bool single,std::size_t height,std::size_t w
             }
         }
     });
+}
+}
+void gabor_kernel_into(void* output,bool single,std::size_t height,std::size_t width,const GaborParameters& p) {
+    kernel_into(output,single,height,width,p,false);
+}
+void gabor_kernel_accurate_into(void* output,bool single,std::size_t height,std::size_t width,const GaborParameters& p) {
+    kernel_into(output,single,height,width,p,true);
 }
 }
