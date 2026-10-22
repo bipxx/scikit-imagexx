@@ -28,7 +28,7 @@ Validation passed 5,284 selected Windows tests in each SIMD mode and 4,132 conve
 
 A GCC 13 sanitizer fixture issue was isolated in a minimal program with no library calls: selecting between two arrays directly inside a subscript constructed the wrong input values. Selecting an explicit pointer before indexing fixes the fixture; literal expected outputs and input-immutability checks remain intact. Failed probes and validation logs are archived locally.
 
-An expanded NumPy 1.24 audit separately exposed 16 preexisting CIE76/CIE94 scalar dtype failures, reproduced with the archived pre-change wheel and tracked in the roadmap. These remain unresolved; no dtype checks were relaxed. Minimum-version CI now includes the complete conversion packet/alias suite.
+An expanded NumPy 1.24 audit separately exposed 16 preexisting CIE76/CIE94 scalar dtype failures, reproduced with the archived pre-change wheel. They were unresolved at this conversion checkpoint and subsequently fixed by the native [scalar-distance correction](distance-scalar.md); no dtype checks were relaxed. Minimum-version CI includes the complete conversion packet/alias suite.
 
 Word-lane [source CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39728802450) passed: Linux recorded 41,229 Python tests in each SIMD mode; Windows recorded 41,227 passed and two skipped in each mode. Native C++ tests passed in SIMD, forced-scalar and portable builds on both platforms. Minimum-NumPy CI passed 9,071 selected image-processing tests and 3,272 conversion tests. This selected minimum-version suite does not cover the unresolved scalar distance promotion failures above. The 21-report whole-library checkpoint at `984141f` predates these changes and remains separate.
 
