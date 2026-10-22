@@ -47,7 +47,12 @@ struct NumpyDistanceMath {
         powers{select(power_owner,NPY_DOUBLE),select(power_owner,NPY_FLOAT)},
         hypots{select(hypot_owner,NPY_DOUBLE),select(hypot_owner,NPY_FLOAT)} {}
     template<class T> static double run(const Loop& loop,double a,double b) {
-        T first=T(a),second=T(b),result;
+        // NumPy1's conservative overlap test treats adjacent scalar buffers
+        // as overlapping and silently selects libm instead of SIMD/SVML.
+        // Keep each scalar on a distinct cache line to retain its array path.
+        alignas(64) T first=T(a);
+        alignas(64) T second=T(b);
+        alignas(64) T result;
         char* args[]={reinterpret_cast<char*>(&first),reinterpret_cast<char*>(&second),reinterpret_cast<char*>(&result)};
         const npy_intp count=1,steps[]={sizeof(T),sizeof(T),sizeof(T)};
         // Builtin fff/ddd loops use no Python API and retain NumPy's selected
