@@ -1,6 +1,8 @@
 """Allocation-inclusive minimum thresholding against original scikit-image."""
 import argparse
+from run import measure
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import platform
@@ -11,7 +13,6 @@ import skimage
 from skimage import filters as original
 import skimagexx as xx
 from provenance import source_fingerprint
-from run import measure
 
 
 def main():
@@ -85,6 +86,8 @@ def main():
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),
         'platform':platform.platform(),'cpu':platform.processor(),'reference':skimage.__version__,
         'numpy':np.__version__,'avx2':xx.has_avx2(),'fallback_enabled':False,
+        'current_binary_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(Path(xx.__file__).parent.iterdir()) if p.suffix in ('.pyd','.so')},
         'reference_thread_pools':1,'repeat':args.repeat,
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'scope':'Warmed allocation-inclusive exact public calls; unsuccessful convergence separately identified'},'results':rows}
