@@ -214,11 +214,14 @@ For compatibility during migration, install `pip install ".[compat]"` and leave
 fallback enabled (the default). Unsupported calls warn and execute original
 scikit-image. `filters`, `color`, `exposure`, `morphology`, `transform`, and `util` expose native wrappers.
 Unported operations in these modules and processing namespaces such as `measure`
-expose upstream-only objects, reported with warnings. Public nested imports such
-as `from skimagexx.filters.rank import mean` and
-`from skimagexx.color.colorconv import rgb2gray` use compatibility namespaces;
-their functions warn on upstream execution and reject calls when fallback is
-disabled. Native functions in the main namespaces retain priority. Classes and
+expose upstream-only objects, reported with warnings. Public nested imports use compatibility namespaces. Aliases of native public
+functions, such as `from skimagexx.color.colorconv import rgb2gray`, resolve to
+the same native wrapper as the main namespace. Unported nested functions, such
+as `from skimagexx.filters.rank import mean`, warn on upstream execution and
+reject calls when fallback is disabled. Root wildcard imports expose upstream
+module names and native convenience aliases without requiring scikit-image to
+be installed; accessing unported operations still requires the compatibility
+extra. Classes and
 constants remain original upstream objects and require fallback to be enabled.
 Private upstream import paths are outside the compatibility contract. Change
 the imports as shown above; existing scikit-image imports remain unchanged.

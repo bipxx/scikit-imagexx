@@ -2,6 +2,7 @@
 import importlib
 import inspect
 import sys
+import subprocess
 
 import numpy as np
 import pytest
@@ -13,6 +14,65 @@ def strict():
     previous = xx.set_fallback_enabled(False)
     yield
     xx.set_fallback_enabled(previous)
+
+
+def test_root_wildcard_keeps_upstream_modules_and_native_aliases():
+    import skimage
+    namespace = {}
+    exec('from skimagexx import *', namespace)
+    assert set(skimage.__all__) <= namespace.keys()
+    assert namespace['__version__'] == xx.__version__
+    assert namespace['threshold_li'] is xx.filters.threshold_li
+    assert namespace['rank_order'] is xx.filters.rank_order
+    assert namespace['label2rgb'] is xx.color.label2rgb
+    for name in skimage.__all__:
+        if name != '__version__':
+            assert namespace[name] is getattr(xx, name)
+
+
+def test_root_discovery_before_lazy_module_access():
+    # A fresh process avoids earlier tests populating lazy module globals.
+    result = subprocess.run([sys.executable, '-c',
+        'import skimagexx as x; assert set(x.__all__) <= set(dir(x))'],
+        capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize('path,name,public', [
+    ('color.colorconv', 'rgb2gray', 'color'),
+    ('filters.thresholding', 'threshold_li', 'filters'),
+    ('util.dtype', 'img_as_float32', 'util'),
+    ('morphology.gray', 'erosion', 'morphology'),
+    ('transform.integral', 'integral_image', 'transform'),
+    ('filters.thresholding', 'histogram', 'exposure'),
+])
+def test_nested_native_alias_uses_the_public_wrapper(path, name, public):
+    namespace = importlib.import_module('skimagexx.' + path)
+    public_namespace = importlib.import_module('skimagexx.' + public)
+    assert getattr(namespace, name) is getattr(public_namespace, name)
+
+
+def test_imported_module_alias_uses_its_canonical_namespace():
+    namespace = importlib.import_module('skimagexx.color.colorconv')
+    assert namespace.dtype is importlib.import_module('skimagexx.util.dtype')
+
+
+def test_native_wildcard_import_does_not_require_upstream():
+    script = '''
+import importlib.abc
+import sys
+class NoUpstream(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname == 'skimage' or fullname.startswith('skimage.'):
+            raise ModuleNotFoundError('upstream is unavailable', name=fullname)
+sys.meta_path.insert(0, NoUpstream())
+namespace = {}
+exec('from skimagexx import *', namespace)
+assert 'threshold_li' in namespace and 'morphology' in namespace
+assert not any(name == 'skimage' or name.startswith('skimage.') for name in sys.modules)
+'''
+    result = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
 
 
 @pytest.mark.parametrize('path', ['filters.rank', 'filters.rank.generic',
