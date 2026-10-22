@@ -10,4 +10,16 @@ unsigned match_histograms_into(const void* source,const void* reference,void* ou
     std::size_t source_count,std::size_t reference_count,std::size_t channels,
     PixelType source_type,PixelType reference_type,PixelType output_type,
     bool unsigned_source=false,bool half_round=false,bool swap_output=false,unsigned* channel_flags=nullptr);
+// Linear spatial/channel views, with strides measured in input elements.
+// Strides may be negative or zero; pointers address the logical first element.
+// Output remains contiguous channel-last. The original entry point above keeps
+// its ABI and forwards with interleaved contiguous input strides.
+struct HistogramMatchingStrides {
+    std::ptrdiff_t source_pixels,source_channels,reference_pixels,reference_channels;
+};
+unsigned match_histograms_strided_into(const void* source,const void* reference,void* output,
+    std::size_t source_count,std::size_t reference_count,std::size_t channels,
+    PixelType source_type,PixelType reference_type,PixelType output_type,
+    HistogramMatchingStrides strides,bool unsigned_source=false,bool half_round=false,
+    bool swap_output=false,unsigned* channel_flags=nullptr);
 }

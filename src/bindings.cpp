@@ -117,6 +117,28 @@ py::array aligned_distance_view(py::array a) {
     for(int axis=0;axis<a.ndim();++axis) aligned=aligned && a.strides(axis)%bytes==0;
     return aligned ? a : a.attr("copy")().cast<py::array>();
 }
+bool linear_histogram_input(const py::array& a,bool multichannel,std::ptrdiff_t& pixels,std::ptrdiff_t& channels) {
+    pixels=channels=0;
+    if(!a.size())return true;
+    const auto bytes=a.itemsize();
+    if(reinterpret_cast<std::uintptr_t>(a.data())%std::size_t(bytes))return false;
+    py::ssize_t span=1,step=0;bool found=false;
+    for(int axis=int(a.ndim())-(multichannel ? 2 : 1);axis>=0;--axis) {
+        if(a.shape(axis)<=1)continue;
+        const auto stride=a.strides(axis);
+        if(stride%bytes)return false;
+        if(!found){step=stride;found=true;}
+        else if(stride%span || stride/span!=step)return false;
+        span*=a.shape(axis);
+    }
+    pixels=found ? step/bytes : 0;
+    if(multichannel && a.shape(a.ndim()-1)>1) {
+        const auto stride=a.strides(a.ndim()-1);
+        if(stride%bytes)return false;
+        channels=stride/bytes;
+    }
+    return true;
+}
 struct DistanceRowLayout {
     std::size_t columns=1;
     std::ptrdiff_t ap=3,ac=1,bp=3,bc=1;
@@ -211,11 +233,21 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 PYBIND11_MODULE(_core, m) {
     m.def("match_histograms",[](py::array first,py::array reference,py::dtype output_dtype,
         bool multichannel,bool unsigned_source,bool half_round) {
-        if(!(first.flags()&py::array::c_style) || !(reference.flags()&py::array::c_style))
-            throw py::value_error("contiguous histogram-matching buffers required");
+        if(multichannel && (!first.ndim() || !reference.ndim()))
+            throw py::value_error("histogram-matching channel axis requires non-scalar inputs");
         const auto channels=multichannel ? std::size_t(first.shape(first.ndim()-1)) : 1;
         if(multichannel && (!reference.ndim() || std::size_t(reference.shape(reference.ndim()-1))!=channels))
             throw py::value_error("histogram-matching channel counts must match");
+        skimagexx::HistogramMatchingStrides strides{};
+        auto prepare=[&](py::array a,std::ptrdiff_t& pixels,std::ptrdiff_t& component) {
+            if(!linear_histogram_input(a,multichannel,pixels,component)) {
+                a=a.attr("copy")().cast<py::array>();
+                pixels=multichannel ? std::ptrdiff_t(channels) : 1;component=1;
+            }
+            return a;
+        };
+        first=prepare(first,strides.source_pixels,strides.source_channels);
+        reference=prepare(reference,strides.reference_pixels,strides.reference_channels);
         std::vector<py::ssize_t> dims(first.shape(),first.shape()+first.ndim());
         py::array out(output_dtype,dims);
         const auto st=pixel_type(first.dtype()),rt=pixel_type(reference.dtype()),
@@ -223,9 +255,9 @@ PYBIND11_MODULE(_core, m) {
         std::vector<unsigned> flags(channels,0);
         const bool swap=!output_dtype.attr("isnative").cast<bool>();
         {py::gil_scoped_release release;
-         skimagexx::match_histograms_into(first.data(),reference.data(),out.mutable_data(),
+         skimagexx::match_histograms_strided_into(first.data(),reference.data(),out.mutable_data(),
             channels ? std::size_t(first.size())/channels : 0,channels ? std::size_t(reference.size())/channels : 0,
-            channels,st,rt,ot,unsigned_source,half_round,swap,flags.data());}
+            channels,st,rt,ot,strides,unsigned_source,half_round,swap,flags.data());}
         return py::make_tuple(out,flags);
     });
     if(_import_array()<0)throw py::error_already_set();

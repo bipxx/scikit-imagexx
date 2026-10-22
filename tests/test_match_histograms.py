@@ -137,3 +137,32 @@ def test_tiny_sparse_ranges(dtype):
     a=np.array([-32768,0,32767],dtype)
     b=np.array([-30000,30000,0],dtype)
     compare(a,b)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int16,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['planar','reverse-pixels','reverse-channels','zero-pixels','zero-channels','nonlinear'])
+def test_linear_view_input_copy_policy(dtype,layout):
+    class Observed(np.ndarray):
+        copies=0
+        def copy(self,*args,**kwargs):
+            type(self).copies+=1
+            return np.asarray(self).copy(*args,**kwargs)
+    a=(np.arange(17*19*3).reshape(17,19,3)%31).astype(dtype)
+    b=(np.arange(11*13*3).reshape(11,13,3)%37).astype(dtype)
+    if layout=='planar':a,b=np.moveaxis(np.ascontiguousarray(np.moveaxis(a,-1,0)),0,-1),np.moveaxis(np.ascontiguousarray(np.moveaxis(b,-1,0)),0,-1)
+    elif layout=='reverse-pixels':a,b=a[::-1,::-1],b[::-1,::-1]
+    elif layout=='reverse-channels':a,b=a[...,::-1],b[...,::-1]
+    elif layout=='zero-pixels':a,b=np.broadcast_to(a[:1,:1],a.shape),np.broadcast_to(b[:1,:1],b.shape)
+    elif layout=='zero-channels':a,b=np.broadcast_to(a[...,:1],a.shape),np.broadcast_to(b[...,:1],b.shape)
+    else:a,b=a[:,::2],b[:,::2]
+    expected=reference(a,b,channel_axis=-1)
+    actual,flags=xx._core.match_histograms(a.view(Observed),b.view(Observed),expected.dtype,True,np.dtype(dtype).kind=='u',False)
+    np.testing.assert_array_equal(actual,expected)
+    assert actual.strides==expected.strides
+    assert not any(flags)
+    assert Observed.copies==(2 if layout=='nonlinear' else 0)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+def test_negative_and_zero_grayscale_views(dtype):
+    a=(np.arange(357)%31).astype(dtype)[::-2]
+    b=np.broadcast_to(np.array([3],dtype),(191,))
+    compare(a,b)

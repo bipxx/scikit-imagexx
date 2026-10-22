@@ -605,6 +605,28 @@ int main() {
         match_histograms_into(color,palette,colored,4,2,2,PixelType::uint8,PixelType::uint8,PixelType::uint8,true);
         const std::uint8_t expected[]={0,10,0,10,1,15,3,20};
         require(std::equal(colored,colored+8,expected));
+        const float planes[]={0,1,2,3,10,11,12,13},template_planes[]={0,3,10,20};
+        float strided[8];
+        match_histograms_strided_into(planes,template_planes,strided,4,2,2,
+            PixelType::float32,PixelType::float32,PixelType::float32,{1,4,1,2});
+        const float plane_expected[]={0,10,0,10,1.5f,15,3,20};
+        require(std::equal(strided,strided+8,plane_expected));
+        match_histograms_strided_into(planes+3,template_planes+1,strided,4,2,2,
+            PixelType::float32,PixelType::float32,PixelType::float32,{-1,4,-1,2});
+        for(int i=0;i<4;++i)for(int c=0;c<2;++c)require(strided[2*i+c]==plane_expected[2*(3-i)+c]);
+        const float broadcast_pixel[]={1,2};
+        match_histograms_strided_into(broadcast_pixel,template_planes,strided,4,2,2,
+            PixelType::float32,PixelType::float32,PixelType::float32,{0,1,1,2});
+        for(int i=0;i<4;++i)require(strided[2*i]==3 && strided[2*i+1]==20);
+        const auto extreme=std::numeric_limits<std::ptrdiff_t>::min();
+        match_histograms_strided_into(planes,template_planes,strided,1,1,1,
+            PixelType::float32,PixelType::float32,PixelType::float32,{extreme,extreme,extreme,extreme});
+        require(strided[0]==0);
+        bool stride_overflow=false;
+        try {match_histograms_strided_into(planes,template_planes,strided,2,2,1,
+            PixelType::float32,PixelType::float32,PixelType::float32,{extreme,0,1,0});}
+        catch(const std::overflow_error&){stride_overflow=true;}
+        require(stride_overflow);
         const float half_input[]={0,1};const double precise[]={1.00048828125+0x1p-40,1.5};
         float rounded[2];
         match_histograms_into(half_input,precise,rounded,2,2,1,PixelType::float32,PixelType::float64,PixelType::float32,false,true);

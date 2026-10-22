@@ -16,7 +16,7 @@
 namespace skimagexx {
 namespace {
 constexpr auto sign64=UINT64_C(1)<<63;
-template<class T> std::uint64_t read_key(const void* p,std::size_t i) {
+template<class T> std::uint64_t read_key(const void* p,std::ptrdiff_t i) {
     const auto value=static_cast<const T*>(p)[i];
     if constexpr(std::is_floating_point_v<T>) {
         if(std::isnan(value))return sizeof(T)==4 ? UINT32_MAX : UINT64_MAX;
@@ -28,8 +28,8 @@ template<class T> std::uint64_t read_key(const void* p,std::size_t i) {
     } else if constexpr(std::is_signed_v<T>)return std::uint64_t(std::int64_t(value))^sign64;
     else return std::uint64_t(value);
 }
-std::uint64_t read_bool(const void* p,std::size_t i){return static_cast<const unsigned char*>(p)[i]!=0;}
-using KeyReader=std::uint64_t(*)(const void*,std::size_t);
+std::uint64_t read_bool(const void* p,std::ptrdiff_t i){return static_cast<const unsigned char*>(p)[i]!=0;}
+using KeyReader=std::uint64_t(*)(const void*,std::ptrdiff_t);
 KeyReader reader(PixelType type) {
     switch(type) {
     case PixelType::boolean:return read_bool;
@@ -110,7 +110,7 @@ template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,K
         values.swap(temporary);
     }
 }
-Distribution distribution(const void* input,std::size_t count,std::size_t channels,std::size_t channel,
+Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pixels,std::ptrdiff_t component,std::size_t channel,
     PixelType type,bool source,bool require_nonnegative,int workers) {
     Distribution result;
     result.keys.resize(count);
@@ -118,10 +118,11 @@ Distribution distribution(const void* input,std::size_t count,std::size_t channe
     detail::partition(count,workers,[&](auto begin,auto end,auto) {
         auto i=begin;
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2())i+=simd::histogram_keys(static_cast<const unsigned char*>(input)+(begin*channels+channel)*pixel_size(type),
-            result.keys.data()+begin,end-begin,type,channels);
+        if(has_avx2() && pixels>=0)i+=simd::histogram_keys(static_cast<const unsigned char*>(input)+
+            (std::ptrdiff_t(begin)*pixels+std::ptrdiff_t(channel)*component)*std::ptrdiff_t(pixel_size(type)),
+            result.keys.data()+begin,end-begin,type,std::size_t(pixels));
 #endif
-        for(;i<end;++i)result.keys[i]=read(input,i*channels+channel);
+        for(;i<end;++i)result.keys[i]=read(input,std::ptrdiff_t(i)*pixels+std::ptrdiff_t(channel)*component);
     });
     if(!count)return result;
     const bool small=type==PixelType::boolean || type==PixelType::uint8 || type==PixelType::int8 || type==PixelType::uint16 || type==PixelType::int16;
@@ -308,8 +309,26 @@ template<class T> void apply_floating(const Distribution& source,const T* mapped
     }
 }
 }
+namespace {
+void validate_histogram_view(std::size_t count,std::size_t channels,PixelType type,
+    std::ptrdiff_t pixels,std::ptrdiff_t component) {
+    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/pixel_size(type);
+    const auto magnitude=[](std::ptrdiff_t value){return value<0 ? std::size_t(-(value+1))+1 : std::size_t(value);};
+    const auto p=count>1 ? magnitude(pixels) : 0,c=channels>1 ? magnitude(component) : 0;
+    if((count>1 && p>limit/(count-1)) || (channels>1 && c>(limit-(count-1)*p)/(channels-1)))
+        throw std::overflow_error("histogram-matching strides overflow");
+}
+}
 unsigned match_histograms_into(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
     std::size_t channels,PixelType st,PixelType rt,PixelType ot,bool unsigned_source,bool half_round,bool swap_output,unsigned* channel_flags) {
+    if(channels>std::size_t(std::numeric_limits<std::ptrdiff_t>::max()))
+        throw std::overflow_error("histogram-matching dimensions overflow");
+    return match_histograms_strided_into(source,reference,output,count,reference_count,channels,st,rt,ot,
+        {std::ptrdiff_t(channels),1,std::ptrdiff_t(channels),1},unsigned_source,half_round,swap_output,channel_flags);
+}
+unsigned match_histograms_strided_into(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
+    std::size_t channels,PixelType st,PixelType rt,PixelType ot,HistogramMatchingStrides strides,
+    bool unsigned_source,bool half_round,bool swap_output,unsigned* channel_flags) {
     (void)reader(st);(void)reader(rt);const auto write=writer(ot);
     const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());
     const auto bytes=std::max({pixel_size(st),pixel_size(rt),pixel_size(ot)});
@@ -317,12 +336,14 @@ unsigned match_histograms_into(const void* source,const void* reference,void* ou
         throw std::overflow_error("histogram-matching dimensions overflow");
     if(!channels || !count)return 0;
     if(!reference_count)throw std::invalid_argument("array of sample points is empty");
+    validate_histogram_view(count,channels,st,strides.source_pixels,strides.source_channels);
+    validate_histogram_view(reference_count,channels,rt,strides.reference_pixels,strides.reference_channels);
     if(!source || !reference || !output)throw std::invalid_argument("histogram-matching buffers must be nonnull");
     const int workers=detail::active_workers(std::max(count,reference_count));
     unsigned flags=0;
     for(std::size_t channel=0;channel<channels;++channel) {
-        auto a=distribution(source,count,channels,channel,st,true,false,workers);
-        auto b=distribution(reference,reference_count,channels,channel,rt,false,unsigned_source,workers);
+        auto a=distribution(source,count,strides.source_pixels,strides.source_channels,channel,st,true,false,workers);
+        auto b=distribution(reference,reference_count,strides.reference_pixels,strides.reference_channels,channel,rt,false,unsigned_source,workers);
         std::vector<std::uint64_t>().swap(b.keys);
         std::vector<std::uint64_t>().swap(b.hash_keys);
         std::vector<std::size_t>().swap(b.hash_positions);

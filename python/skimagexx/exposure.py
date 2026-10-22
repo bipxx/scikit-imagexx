@@ -60,7 +60,7 @@ def match_histograms(image,reference,*,channel_axis=None):
     output_dtype=(np.empty(0,dtype=image.dtype).astype(target,copy=False).dtype if image.dtype.kind=='f' else image.dtype) if color else target
     def prepare(value):
         dtype=np.float32 if value.dtype.type is np.float16 else value.dtype.newbyteorder('=')
-        return np.require(value,dtype=dtype,requirements=['C','A'])
+        return np.require(value,dtype=dtype,requirements=['A'])
     output,flags=_core.match_histograms(prepare(image),prepare(reference),output_dtype,color,unsigned,
                                        color and image.dtype.type is np.float16)
     for notice in flags:
