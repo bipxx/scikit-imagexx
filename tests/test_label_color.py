@@ -38,7 +38,13 @@ def check(labels,**options):
     else:
         assert actual[1].dtype==expected[1].dtype
         assert actual[1].shape==expected[1].shape
-        np.testing.assert_array_equal(actual[1],expected[1])
+        underlay=options.get('image')
+        if underlay is not None and options.get('kind','overlay')=='overlay' and underlay.ndim==labels.ndim+1:
+            # RGB desaturation inherits the separately tested HSV roundoff
+            # budget. Palette-only calls and average colors stay exact.
+            single=underlay.dtype==np.float32
+            np.testing.assert_allclose(actual[1],expected[1],rtol=2e-6 if single else 2e-13,atol=2e-6 if single else 2e-13)
+        else:np.testing.assert_array_equal(actual[1],expected[1])
         np.testing.assert_array_equal(np.signbit(actual[1]),np.signbit(expected[1]))
     np.testing.assert_array_equal(labels,saved)
 
@@ -103,6 +109,48 @@ def test_packet_tails(size):
 
 def test_large_parallel_labels():
     check(np.random.default_rng(17).integers(0,256,(513,517),dtype=np.uint8))
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('rgb',[False,True])
+@pytest.mark.parametrize('axis',[-1,0,1])
+@pytest.mark.parametrize('saturation',[0,.5,1])
+@pytest.mark.parametrize('alpha',[0,.3,1])
+def test_overlay_underlay(dtype,rgb,axis,saturation,alpha):
+    rng=np.random.default_rng(911)
+    labels=rng.integers(0,19,(13,17),dtype=np.uint8)
+    image=rng.integers(0,256,(*labels.shape,3) if rgb else labels.shape,dtype=np.uint8)
+    if dtype!=np.uint8:image=(image/255).astype(dtype)
+    image=np.moveaxis(image,-1,axis)
+    saved=image.copy()
+    check(labels,image=image,channel_axis=axis,saturation=saturation,alpha=alpha,image_alpha=.7)
+    np.testing.assert_array_equal(image,saved)
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('rgb',[False,True])
+@pytest.mark.parametrize('axis',[-1,0,1])
+@pytest.mark.parametrize('background',[0,2,400])
+def test_average_underlay(dtype,rgb,axis,background):
+    rng=np.random.default_rng(701)
+    labels=rng.integers(0,19,(13,17),dtype=np.uint8)
+    image=rng.integers(0,256,(*labels.shape,3) if rgb else labels.shape,dtype=np.uint8)
+    if dtype!=np.uint8:image=(image/255).astype(dtype)
+    image=np.moveaxis(image,-1,axis)
+    saved=image.copy()
+    check(labels,image=image,kind='avg',channel_axis=axis,bg_label=background)
+    np.testing.assert_array_equal(image,saved)
+
+
+def test_average_ignores_overlay_controls():
+    labels=np.array([[0,1,2],[1,2,3]],dtype=np.uint8)
+    image=np.arange(18,dtype=np.float32).reshape(2,3,3)/18
+    check(labels,image=image,kind='avg',colors=object(),alpha=object(),image_alpha=object(),saturation=object())
+
+
+@pytest.mark.parametrize('kind',['','invalid','Overlay'])
+def test_invalid_kind(kind):
+    check(np.array([[0,1,2]],dtype=np.uint8),kind=kind)
 
 
 def test_reference_contract_ignores_both_opacities():
