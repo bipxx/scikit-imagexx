@@ -12,6 +12,35 @@
 #include <stdexcept>
 
 namespace skimagexx {
+std::size_t threshold_minimum(const float* counts,std::size_t bins,std::size_t max_iterations) {
+    if(!counts || !bins || !max_iterations)throw std::invalid_argument("nonempty histogram and positive iteration limit required");
+    std::vector<float> current(counts,counts+bins),next(bins);
+    for(std::size_t iteration=0;iteration<max_iterations;++iteration) {
+        // Preserve ndimage's rolling double accumulator rather than reassociate
+        // each three-bin window: rounding can change a plateau's chosen edge.
+        double sum=double(current[0])+double(current[0])+double(current[std::min(std::size_t(1),bins-1)]);
+        next[0]=float(sum/3.0);
+        for(std::size_t i=1;i<bins;++i) {
+            sum+=double(current[std::min(i+1,bins-1)])-double(current[i<2 ? 0 : i-2]);
+            next[i]=float(sum/3.0);
+        }
+        current.swap(next);
+        std::size_t peaks=0,first=0,second=0;
+        bool rising=true;
+        for(std::size_t i=0;i+1<bins;++i) {
+            if(rising && current[i+1]<current[i]) {
+                if(peaks==0)first=i;
+                else if(peaks==1)second=i;
+                ++peaks;rising=false;
+            } else if(!rising && current[i+1]>current[i])rising=true;
+        }
+        if(peaks>=3)continue;
+        if(peaks!=2)throw std::runtime_error("Unable to find two maxima in histogram");
+        if(iteration==max_iterations-1)throw std::runtime_error("Maximum iteration reached for histogramsmoothing");
+        return std::size_t(std::min_element(current.begin()+first,current.begin()+second+1)-current.begin());
+    }
+    throw std::runtime_error("Unable to find two maxima in histogram");
+}
 namespace {
 // NumPy's float32 add.reduce uses eight accumulators and 128-element blocks.
 float pairwise_sum(const float* a,std::size_t n) {

@@ -11,6 +11,9 @@ std::vector<std::size_t> threshold_indices(const double* counts, const double* c
     double bin_width=std::numeric_limits<double>::quiet_NaN());
 float threshold_log(float value, bool numpy_log=true);
 void threshold_logs(const float* input, float* output, std::size_t count, bool numpy_log=true);
+// Reflect-padded, float32 histogram smoothing with ordered double accumulation.
+// Returns the first minimum between the two peaks; throws if not converged.
+std::size_t threshold_minimum(const float* counts, std::size_t bins, std::size_t max_iterations=10000);
 template<class T> std::vector<std::uint64_t> histogram_edges(const T* image,
     std::size_t count, const T* edges, std::size_t bins);
 }

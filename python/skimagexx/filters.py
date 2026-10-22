@@ -181,6 +181,25 @@ def threshold_isodata(image=None,nbins=256,return_all=False,*,hist=None):
 __all__ += ['threshold_yen','threshold_triangle','threshold_isodata']
 
 
+def threshold_minimum(image=None, nbins=256, max_num_iter=10000, *, hist=None):
+    import operator
+    if image is None and hist is None:raise Exception('Either image or hist must be provided.')
+    # Keep unusual iteration objects and empty-loop errors in the explicit
+    # compatibility path rather than narrowing Python's range contract.
+    try:iterations=operator.index(max_num_iter)
+    except TypeError:return fallback('filters','threshold_minimum',image,nbins,max_num_iter,hist=hist)
+    if not 0<iterations<=np.iinfo(np.intp).max:
+        return fallback('filters','threshold_minimum',image,nbins,max_num_iter,hist=hist)
+    prepared=_threshold_histogram(image,hist,nbins)
+    if prepared is None:return fallback('filters','threshold_minimum',image,nbins,max_num_iter,hist=hist)
+    counts,centers,_=prepared
+    counts=counts.astype(np.float32,copy=False)
+    return centers[_core.threshold_minimum(counts,iterations)]
+
+
+__all__ += ['threshold_minimum']
+
+
 _LOCAL_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64}
 
 

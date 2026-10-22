@@ -533,6 +533,12 @@ PYBIND11_MODULE(_core, m) {
         skimagexx::threshold_logs(values.data(),output.mutable_data(),std::size_t(values.size()),numpy_log);
         return output;
     });
+    m.def("threshold_minimum", [](py::array_t<float,py::array::c_style|py::array::forcecast> counts,std::size_t iterations) {
+        if(counts.ndim()!=1)throw py::value_error("one-dimensional histogram required");
+        if(reinterpret_cast<std::uintptr_t>(counts.data())%alignof(float))counts=decltype(counts)::ensure(counts.attr("copy")());
+        py::gil_scoped_release release;
+        return skimagexx::threshold_minimum(counts.data(),std::size_t(counts.size()),iterations);
+    });
     m.def("threshold_indices", [](py::array_t<double,py::array::c_style|py::array::forcecast> counts,
             py::array_t<double,py::array::c_style|py::array::forcecast> centers,
             const std::string& method,bool float_centers,bool numpy_log,double bin_width) {
