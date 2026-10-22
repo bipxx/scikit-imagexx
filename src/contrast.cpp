@@ -124,13 +124,9 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
     const bool endpoint_queries=std::all_of(wanted.begin(),wanted.end(),[&](const Query& q) {
         return q.weight==0 && (q.lower==0 || q.lower==p.count-1);
     });
-    const bool needs_scratch=sizeof(Value)>=4 && vectorized && !endpoint_queries;
-    const auto buffers=std::size_t(needs_scratch ? 2 : 1);
-    if(p.count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(Value)/buffers)
-        throw std::overflow_error("contrast selection storage overflow");
-    // Preparation overwrites every value. One allocation holds the working
-    // values and (when needed) the disjoint SIMD partition workspace.
-    std::unique_ptr<Value[]> storage(new Value[p.count*buffers]);
+    // Preparation overwrites every value. Keep working storage uninitialized
+    // and allocate partition storage separately only when selection needs it.
+    std::unique_ptr<Value[]> storage(new Value[p.count]);
     auto* values=storage.get();
     const auto workers=detail::active_workers(p.count);std::vector<unsigned char> valid(std::size_t(workers),1);
     detail::partition(p.count,workers,[&](auto begin,auto end,auto worker) {
@@ -215,7 +211,8 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
                     : std::is_same_v<Value,double> ? PixelType::float64
                     : sizeof(Value)==4 ? (std::is_unsigned_v<Value> ? PixelType::uint32 : PixelType::int32)
                     : (std::is_unsigned_v<Value> ? PixelType::uint64 : PixelType::int64);
-                vector_selected=simd::contrast_select(values,values+p.count,p.count,type,ranks.data(),ranks.size());
+                std::unique_ptr<Value[]> scratch(new Value[p.count]);
+                vector_selected=simd::contrast_select(values,scratch.get(),p.count,type,ranks.data(),ranks.size());
             }
         }
 #endif
