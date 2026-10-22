@@ -67,5 +67,6 @@ interior-region offsets. Distant negative reflection periods that can address
 before a nonzero-stride reference buffer retain explicit upstream fallback.
 
 [Full source CI39863482376](https://github.com/bipxx/scikit-imagexx/actions/runs/39863482376)
-remains pending. This image-filter increment is on `feature/gabor-image` and has
-not yet been retained on main; the separately validated kernel port is merged.
+has passed all three jobs: Windows, Linux, and minimum NumPy. Source `2244f39`
+is retained after both performance and full CI validation; its exact packages,
+source, failed probes, and raw samples remain preserved.

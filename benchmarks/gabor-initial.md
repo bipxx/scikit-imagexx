@@ -39,8 +39,8 @@ results before replaying upstream's warnings/errors exactly once. NumPy 1.24's
 wider scalar powers remain native. The ordinary Python scalar path avoids an
 error-state context. Updated dedicated parity passes 440 cases per SIMD mode on
 both runtimes, plus 4,755 API/metadata/namespace checks on each. C++ is unchanged.
-This correction has passed fresh performance and full CI validation and is
-retained for merge. The initial source, exact packages, failure probes and raw
+This correction has passed fresh performance and full CI validation and was
+merged into main at `cdbc978`. The initial source, exact packages, failure probes and raw
 measurements remain preserved; the initial timing is not attributed to the
 corrected adapter.
 

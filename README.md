@@ -9,7 +9,7 @@ reported upstream fallback. Fallback is compatibility, not a native rewrite.
 Every native public function has parity tests and a benchmark against original
 scikit-image, including **one-worker** runs. Allocation, conversion and Python
 dispatch are included. Published results identify measured revisions; the Gabor
-image-filter increment has passed its first measurements and awaits full CI.
+image-filter increment has passed its measurements and full CI.
 See the [Gabor image-filter report](benchmarks/gabor-image-initial.md) and the
 [current verification report](benchmarks/STATUS.md) for measured
 speedups, raw reports and remaining regressions on an i7-12700K.
