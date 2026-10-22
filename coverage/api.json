@@ -2036,11 +2036,15 @@
       "api": "filters.correlate_sparse",
       "kind": "callable",
       "signature": "(image, kernel, mode='reflect')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.difference_of_gaussians",
