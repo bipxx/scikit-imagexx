@@ -28,5 +28,6 @@ void label_overlay(const std::uint64_t*,std::size_t,const void* image,PixelType,
     double label_background,bool remove_background,std::uint64_t background,
     void* output,bool output_single);
 void label_average(const std::uint64_t*,std::size_t,std::size_t regions,
-    const void* image,PixelType,bool rgb,const void* background_rgb,bool has_background,void* output);
+    const void* image,PixelType,bool rgb,const void* background_rgb,bool has_background,void* output,
+    std::size_t reduction_block=0);
 }

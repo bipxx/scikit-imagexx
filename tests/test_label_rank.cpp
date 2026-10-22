@@ -107,7 +107,15 @@ int main() {
         std::vector<std::uint8_t> image(3*count),result(3*count);const std::uint8_t bg[]={100,101,102};
         for(std::size_t i=0;i<count;++i)input[i]=std::uint8_t(i%7);
         for(std::size_t i=0;i<count;++i)for(int c=0;c<3;++c)image[3*i+c]=std::uint8_t(input[i]+10*c);
-        for(int workers:{1,4}) {
+#ifdef _OPENMP
+        const int worker_counts[]={1,4};
+#else
+        const int worker_counts[]={1};
+        bool rejected=false;
+        try {set_num_threads(4);} catch(const std::invalid_argument&) {rejected=true;}
+        check(rejected && get_num_threads()==1);
+#endif
+        for(int workers:worker_counts) {
             set_num_threads(workers);
             check(label_ranks(input.data(),count,PixelType::uint8,false,0,true,ranks.data(),summary));
             for(std::size_t i=0;i<count;++i)check(ranks[i]==input[i]);

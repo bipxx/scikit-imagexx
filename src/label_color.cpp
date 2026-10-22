@@ -183,7 +183,7 @@ template<class F,class Reader> F indexed_pairwise(std::size_t begin,std::size_t 
     return indexed_pairwise<F>(begin,half,read)+indexed_pairwise<F>(begin+half,n-half,read);
 }
 template<class Input> void average(const std::uint64_t* ranks,std::size_t n,std::size_t regions,
-    const void* image,bool rgb,const void* background,bool has_background,void* output) {
+    const void* image,bool rgb,const void* background,bool has_background,void* output,std::size_t reduction_block) {
     using Acc=std::conditional_t<std::is_same_v<Input,float>,float,double>;
     const int workers=detail::active_workers(n);
     const auto* pixels=static_cast<const unsigned char*>(image);
@@ -211,7 +211,14 @@ template<class Input> void average(const std::uint64_t* ranks,std::size_t n,std:
                     for(std::size_t c=0;c<3;++c)sum[c]+=Acc(load<Input>(pixels+(3*indices[j]+c)*sizeof(Input),false));
             } else {
                 auto read=[&](std::size_t j){return Acc(load<Input>(pixels+indices[j]*sizeof(Input),false));};
-                sum[0]=Acc(Acc(0)+indexed_pairwise<Acc>(offsets[region],counts[region],read));
+                // NumPy before2.3 bounds contiguous reduction inner loops by
+                // its current ufunc buffer size. Newer iterators grow the loop.
+                const auto block=reduction_block ? reduction_block : counts[region];
+                for(auto start=offsets[region];start<offsets[region+1];) {
+                    const auto length=std::min(block,offsets[region+1]-start);
+                    sum[0]+=indexed_pairwise<Acc>(start,length,read);
+                    start+=length;
+                }
                 sum[1]=sum[2]=sum[0];
             }
             for(std::size_t c=0;c<3;++c)means[3*region+c]=Input(sum[c]/Acc(counts[region]));
@@ -249,12 +256,12 @@ void label_overlay(const std::uint64_t* ranks,std::size_t n,const void* image,Pi
 #undef OVERLAY_CASE
 }
 void label_average(const std::uint64_t* ranks,std::size_t n,std::size_t regions,const void* image,
-    PixelType type,bool rgb,const void* background,bool has_background,void* output) {
+    PixelType type,bool rgb,const void* background,bool has_background,void* output,std::size_t reduction_block) {
     if((n && (!ranks || !image || !output)) || !background || !regions)throw std::invalid_argument("label average storage required");
     if(n>std::numeric_limits<std::size_t>::max()/24 || regions>std::numeric_limits<std::size_t>::max()/3-1)throw std::overflow_error("label average too large");
-    if(type==PixelType::uint8)average<std::uint8_t>(ranks,n,regions,image,rgb,background,has_background,output);
-    else if(type==PixelType::float32)average<float>(ranks,n,regions,image,rgb,background,has_background,output);
-    else if(type==PixelType::float64)average<double>(ranks,n,regions,image,rgb,background,has_background,output);
+    if(type==PixelType::uint8)average<std::uint8_t>(ranks,n,regions,image,rgb,background,has_background,output,reduction_block);
+    else if(type==PixelType::float32)average<float>(ranks,n,regions,image,rgb,background,has_background,output,reduction_block);
+    else if(type==PixelType::float64)average<double>(ranks,n,regions,image,rgb,background,has_background,output,reduction_block);
     else throw std::invalid_argument("unsupported average underlay");
 }
 }

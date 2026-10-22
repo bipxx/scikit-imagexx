@@ -189,6 +189,17 @@ def test_large_grouped_average(dtype,rgb,seed):
     check(labels,image=image,kind='avg')
 
 
+@pytest.mark.parametrize('buffer_size',[16,1024,8192,16384,32768])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_grayscale_average_reduction_buffer(dtype,buffer_size):
+    rng=np.random.default_rng(19)
+    labels=rng.integers(0,3,(129,131),dtype=np.uint8)
+    image=(rng.integers(0,256,labels.shape,dtype=np.uint8)/255).astype(dtype)
+    previous=np.setbufsize(buffer_size)
+    try:check(labels,image=image,kind='avg')
+    finally:np.setbufsize(previous)
+
+
 @pytest.mark.parametrize('kind',['','invalid','Overlay'])
 def test_invalid_kind(kind):
     check(np.array([[0,1,2]],dtype=np.uint8),kind=kind)

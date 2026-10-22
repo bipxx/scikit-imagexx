@@ -11,6 +11,7 @@ from . import _rgb_colors as _LABEL_COLORS
 _LABEL_COLOR_DICT={k:v for k,v in vars(_LABEL_COLORS).items() if isinstance(v,tuple)}
 _LABEL_DEFAULT_COLORS=('red','blue','yellow','magenta','green','indigo','darkorange','cyan','pink','yellowgreen')
 _LABEL_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64}
+_LABEL_BUFFERED_REDUCE=np.lib.NumpyVersion(np.__version__)<'2.3.0'
 
 
 def _label_rgb_vector(value):
@@ -70,7 +71,8 @@ def label2rgb(label,image=None,colors=None,alpha=0.3,bg_label=0,bg_color=(0,0,0)
     if not overlay:
         probe=np.zeros((1,3),dtype=moved.dtype)
         if present:probe[...]=bg_color
-        result=_core.label_average(ranks,regions,moved,moved.ndim==label.ndim+1,probe,present)
+        result=_core.label_average(ranks,regions,moved,moved.ndim==label.ndim+1,probe,present,
+                                   np.getbufsize() if _LABEL_BUFFERED_REDUCE else 0)
         return np.moveaxis(result,-1,channel_axis)
     if image is not None and moved.ndim==label.ndim+1:
         hsv=rgb2hsv(moved)

@@ -247,14 +247,14 @@ PYBIND11_MODULE(_core, m) {
         return output;
     });
     m.def("label_average",[](py::array_t<std::uint64_t,py::array::c_style> ranks,std::size_t regions,py::array image,
-        bool rgb,py::array background,bool has_background) {
+        bool rgb,py::array background,bool has_background,std::size_t reduction_block) {
         if(reinterpret_cast<std::uintptr_t>(ranks.data())%alignof(std::uint64_t))ranks=decltype(ranks)::ensure(ranks.attr("copy")());
         auto input=py::array::ensure(image,py::array::c_style),bg=py::array::ensure(background,py::array::c_style);
         if(input.size()!=ranks.size()*(rgb ? 3 : 1) || bg.size()!=3 || pixel_type(bg.dtype())!=pixel_type(input.dtype()))throw py::value_error("matching average storage required");
         const auto type=pixel_type(input.dtype());
         std::vector<py::ssize_t> shape(ranks.shape(),ranks.shape()+ranks.ndim());shape.push_back(3);
         py::array output(input.dtype(),shape);
-        {py::gil_scoped_release release;skimagexx::label_average(ranks.data(),std::size_t(ranks.size()),regions,input.data(),type,rgb,bg.data(),has_background,output.mutable_data());}
+        {py::gil_scoped_release release;skimagexx::label_average(ranks.data(),std::size_t(ranks.size()),regions,input.data(),type,rgb,bg.data(),has_background,output.mutable_data(),reduction_block);}
         return output;
     });
     m.def("contrast",[](py::array image,py::object ranks) -> py::object {
