@@ -95,10 +95,6 @@ def test_storage(dtype,layout,mode):
 @pytest.mark.parametrize('shape',[(0,),(0,3),(2,0),(1,1),(1,2),(2,1)])
 @pytest.mark.parametrize('mode',MODES)
 def test_empty_and_singletons(dtype,shape,mode):
-    # Legacy SciPy's fast 1-D empty filter reads outside its input. Do not
-    # execute that reference path in-process; its semantics are undefined.
-    if shape==(0,) and xx.filters._adaptive_rank_profile()==1:
-        pytest.skip('legacy upstream empty 1-D path is unsafe')
     compare(sample(dtype,shape),mode=mode)
 
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
