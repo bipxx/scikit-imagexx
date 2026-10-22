@@ -232,3 +232,13 @@ def test_extended_float_requires_explicit_fallback():
 @pytest.mark.parametrize('mode',['nearest','constant','wrap','mirror'])
 def test_streaming_heap_worker_boundaries(dtype,mode):
     compare(sample(dtype,(256*1024+17,)),np.ones(31,dtype=bool),mode=mode,cval=3)
+
+@pytest.mark.parametrize('dtype',[np.int64,np.float32,np.float64])
+@pytest.mark.parametrize('window',[10,11,31,63])
+@pytest.mark.parametrize('pattern',['ascending','descending','alternating','ties'])
+def test_heap_repairs_across_median(dtype,window,pattern):
+    a=np.arange(257,dtype=dtype)
+    if pattern=='descending':a=a[::-1]
+    elif pattern=='alternating':a[::2]=1000-a[::2]
+    elif pattern=='ties':a%=3
+    compare(a,np.ones(window,dtype=bool),mode='reflect')

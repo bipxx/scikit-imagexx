@@ -75,21 +75,26 @@ template<class T> class RankWindow {
     bool better(Index a,Index b,bool maximum) const {
         return maximum ? values[a]>values[b] : values[a]<values[b];
     }
-    void exchange(std::vector<Index>& heap,Index a,Index b,bool maximum) {
-        std::swap(heap[a],heap[b]);
-        position[heap[a]]=maximum ? -std::int32_t(a)-1 : std::int32_t(a)+1;
-        position[heap[b]]=maximum ? -std::int32_t(b)-1 : std::int32_t(b)+1;
-    }
     void repair(std::vector<Index>& heap,Index i,bool maximum) {
         const auto length=Index(heap.size());
-        if(i && better(heap[i],heap[(i-1)/2],maximum)) {
-            do {const auto parent=(i-1)/2;if(!better(heap[i],heap[parent],maximum))break;exchange(heap,i,parent,maximum);i=parent;}while(i);
+        const auto item=heap[i];
+        // Keep the changed item in a register. Each hop moves one heap entry
+        // and updates its location; the replacement is stored only once.
+        const auto move=[&](Index from){
+            heap[i]=heap[from];
+            position[heap[i]]=maximum ? -std::int32_t(i)-1 : std::int32_t(i)+1;
+            i=from;
+        };
+        if(i && better(item,heap[(i-1)/2],maximum)) {
+            do {const auto parent=(i-1)/2;if(!better(item,heap[parent],maximum))break;move(parent);}while(i);
         } else {
             while(2*i+1<length){auto child=2*i+1;
                 if(child+1<length && better(heap[child+1],heap[child],maximum))++child;
-                if(!better(heap[child],heap[i],maximum))break;exchange(heap,i,child,maximum);i=child;
+                if(!better(heap[child],item,maximum))break;move(child);
             }
         }
+        heap[i]=item;
+        position[item]=maximum ? -std::int32_t(i)-1 : std::int32_t(i)+1;
     }
 public:
     template<class Load> RankWindow(std::size_t count,std::size_t rank,Load load):values(count),position(count) {
