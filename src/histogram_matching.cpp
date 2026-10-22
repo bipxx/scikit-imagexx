@@ -448,8 +448,9 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
     for(std::size_t i=1;i<count;++i)if(std::memcmp(input,static_cast<const unsigned char*>(input)+i*bytes,bytes)){uniform=false;break;}
     if(uniform){std::memset(output,0,count*pixel_size(label_type));representatives.assign(1,0);return true;}
     std::vector<Entry> entries(count);std::vector<unsigned> notices(std::size_t(workers),0);
+    std::vector<std::pair<std::uint64_t,std::uint64_t>> bounds(std::size_t(workers),{UINT64_MAX,0});
     detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
-        unsigned flags=0;auto i=begin;
+        unsigned flags=0;auto i=begin;std::uint64_t low=UINT64_MAX,high=0;
 #ifdef SKIMAGEXX_AVX2
         if(has_avx2()) {
             std::uint64_t keys[1024];
@@ -457,12 +458,12 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
                 const auto n=std::min(std::size_t(1024),end-i);
                 const auto done=simd::histogram_keys(static_cast<const unsigned char*>(input)+i*pixel_size(type),keys,n,type,1);
                 if(!done)break;
-                for(std::size_t k=0;k<done;++k)entries[i+k]={keys[k],i+k};
+                for(std::size_t k=0;k<done;++k){entries[i+k]={keys[k],i+k};low=std::min(low,keys[k]);high=std::max(high,keys[k]);}
                 i+=done;
             }
         }
 #endif
-        for(;i<end;++i)entries[i]={read(input,std::ptrdiff_t(i)),i};
+        for(;i<end;++i){const auto key=read(input,std::ptrdiff_t(i));entries[i]={key,i};low=std::min(low,key);high=std::max(high,key);}
         if(type==PixelType::float32 || type==PixelType::float64)for(auto k=begin;k<end;++k) {
             const auto value=type==PixelType::float32 ? double(static_cast<const float*>(input)[k]) : static_cast<const double*>(input)[k];
             if(std::isnan(value))flags|=1;
@@ -470,9 +471,62 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
         }
         if(type==PixelType::boolean)for(auto k=begin;k<end;++k)if(static_cast<const unsigned char*>(input)[k]>1)flags|=8;
         notices[worker]=flags;
+        bounds[worker]={low,high};
     });
     unsigned flags=0;for(auto notice:notices)flags|=notice;
     if((flags&9) || (flags&6)==6)return false;
+    representatives.clear();
+    auto emit_table=[&](auto rank_at,const std::size_t* dense=nullptr,std::uint64_t low=0) {
+        auto assign=[&](auto* labels) {
+            using U=std::remove_pointer_t<decltype(labels)>;
+            detail::partition(count,workers,[&](auto begin,auto end,auto) {
+#ifdef SKIMAGEXX_AVX2
+                if(dense && sizeof(Entry)==16 && sizeof(std::size_t)==8 && has_avx2())begin+=simd::rank_dense_labels(entries.data()+begin,labels+begin,end-begin,low,dense,label_type);
+#else
+                (void)dense;(void)low;
+#endif
+                for(auto i=begin;i<end;++i)labels[i]=U(rank_at(i));
+            });
+        };
+        switch(label_type) {
+        case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
+        case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
+        case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
+        case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
+        default:throw std::invalid_argument("unsigned rank labels required");
+        }
+    };
+    if(count>=4096) {
+        std::uint64_t low=UINT64_MAX,high=0;
+        for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
+        const auto span=high-low;
+        if(span<65536) {
+            std::vector<std::size_t> table(std::size_t(span)+1,count);
+            for(const auto& entry:entries)if(table[std::size_t(entry.key-low)]==count)table[std::size_t(entry.key-low)]=entry.position;
+            for(auto& position:table)if(position!=count){const auto original=position;position=representatives.size();representatives.push_back(original);}
+            emit_table([&](auto i){return table[std::size_t(entries[i].key-low)];},table.data(),low);
+            return true;
+        }
+        // Bound sparse discovery independently of image size. High-cardinality
+        // images abandon this table and retain the general radix path.
+        std::vector<std::uint64_t> keys(8192);std::vector<std::size_t> positions(8192,0);
+        std::size_t unique_count=0;bool complete=true;
+        for(const auto& entry:entries) {
+            const auto slot=hash_slot(entry.key,keys,positions);
+            if(!positions[slot]) {
+                if(unique_count==4096){complete=false;break;}
+                keys[slot]=entry.key;positions[slot]=entry.position+1;++unique_count;
+            }
+        }
+        if(complete) {
+            std::vector<Entry> unique;unique.reserve(unique_count);
+            for(std::size_t slot=0;slot<keys.size();++slot)if(positions[slot])unique.push_back({keys[slot],positions[slot]-1});
+            std::sort(unique.begin(),unique.end(),[](const auto& a,const auto& b){return a.key<b.key;});
+            for(std::size_t rank=0;rank<unique.size();++rank){const auto& entry=unique[rank];representatives.push_back(entry.position);positions[hash_slot(entry.key,keys,positions)]=rank+1;}
+            emit_table([&](auto i){return positions[hash_slot(entries[i].key,keys,positions)]-1;});
+            return true;
+        }
+    }
     radix_sort(entries,workers,[](const auto& entry){return entry.key;});
     std::vector<std::size_t> starts;representatives.clear();
     for(std::size_t i=0;i<count;++i)if(!i || entries[i].key!=entries[i-1].key){starts.push_back(i);representatives.push_back(entries[i].position);}

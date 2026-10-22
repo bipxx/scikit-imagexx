@@ -112,3 +112,21 @@ def test_noncanonical_boolean_storage_explicit_fallback(values):
     with pytest.warns(xx.FallbackWarning):actual=xx.filters.rank_order(a)
     expected=reference(a)
     for value,original in zip(actual,expected):assert value.tobytes()==original.tobytes()
+
+@pytest.mark.parametrize('dtype',[np.uint16,np.uint64,np.int64,np.float32,np.float64])
+@pytest.mark.parametrize('size',[4095,4096,4097,65535,65536,262145])
+def test_dense_table_size_and_label_boundaries(dtype,size):
+    values=np.arange(257,dtype=dtype)
+    if np.dtype(dtype).kind=='f':values=values*np.nextafter(dtype(0),dtype(1))
+    compare(np.resize(values[::-1],size))
+
+@pytest.mark.parametrize('dtype',[np.uint64,np.int64,np.float32,np.float64])
+@pytest.mark.parametrize('unique',[4095,4096,4097])
+@pytest.mark.parametrize('size',[65535,65536,262145])
+def test_sparse_table_capacity_and_radix_fallback(dtype,unique,size):
+    if dtype==np.uint64:
+        values=np.arange(unique,dtype=dtype)*np.uint64(257)
+        values+=np.uint64(np.iinfo(dtype).max-int(values[-1]))
+    elif dtype==np.int64:values=np.arange(unique,dtype=dtype)*257+np.iinfo(dtype).min
+    else:values=np.arange(unique,dtype=dtype)*dtype(.125)
+    compare(np.resize(values[np.random.default_rng(407).permutation(unique)],size))

@@ -5,6 +5,25 @@
 #include <type_traits>
 
 namespace skimagexx::simd {
+std::size_t rank_dense_labels(const void* input,void* output,std::size_t count,std::uint64_t low,const std::size_t* table,PixelType type) {
+    if(sizeof(std::size_t)!=8)return 0;
+    if(type!=PixelType::uint16 && type!=PixelType::uint32 && type!=PixelType::uint64)return 0;
+    const auto offsets=_mm256_set_epi64x(48,32,16,0),base=_mm256_set1_epi64x(static_cast<long long>(low));
+    const auto* entries=static_cast<const unsigned char*>(input);std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto keys=_mm256_i64gather_epi64(reinterpret_cast<const long long*>(entries+i*16),offsets,1);
+        const auto ranks=_mm256_i64gather_epi64(reinterpret_cast<const long long*>(table),_mm256_sub_epi64(keys,base),8);
+        if(type==PixelType::uint64)_mm256_storeu_si256(reinterpret_cast<__m256i*>(static_cast<std::uint64_t*>(output)+i),ranks);
+        else {
+            const auto first=_mm_shuffle_epi32(_mm256_castsi256_si128(ranks),_MM_SHUFFLE(2,0,2,0));
+            const auto second=_mm_shuffle_epi32(_mm256_extracti128_si256(ranks,1),_MM_SHUFFLE(2,0,2,0));
+            const auto packed=_mm_unpacklo_epi64(first,second);
+            if(type==PixelType::uint32)_mm_storeu_si128(reinterpret_cast<__m128i*>(static_cast<std::uint32_t*>(output)+i),packed);
+            else _mm_storel_epi64(reinterpret_cast<__m128i*>(static_cast<std::uint16_t*>(output)+i),_mm_packus_epi32(packed,_mm_setzero_si128()));
+        }
+    }
+    return i;
+}
 bool rank_uniform_bits(const void* input,std::size_t count,std::size_t bytes) {
     const auto* source=static_cast<const unsigned char*>(input);
     std::uint64_t first=0;std::memcpy(&first,source,bytes);
