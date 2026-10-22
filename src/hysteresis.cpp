@@ -99,6 +99,36 @@ void hysteresis_connect_into(const std::uint8_t* weak,const std::uint8_t* strong
         detail::partition(n,workers,[&](auto begin,auto end,auto){for(auto i=begin;i<end;++i)out[i]=weak[i] ? counts.seeds && (counts.seeds==counts.weak || counts.weak==n) : counts.background;});return;
     }
     const auto pitch=pitches(shape);
+    if(workers==1 && shape.size()==2) {
+        // Flood whole horizontal runs. Each selected pixel is written once,
+        // while the queue holds runs instead of every seed and reached pixel.
+        const auto width=shape[1];
+        using Run=std::pair<std::size_t,std::size_t>;
+        std::vector<Run> queue;
+        for(std::size_t i=0;i<n;++i)out[i]=!weak[i] && counts.background;
+        auto discover=[&](std::size_t seed,std::size_t row_begin) {
+            auto left=seed,right=seed+1;const auto row_end=row_begin+width;
+            while(left>row_begin && weak[left-1] && !out[left-1])--left;
+            while(right<row_end && weak[right] && !out[right])++right;
+            std::fill(out+left,out+right,std::uint8_t(1));
+            queue.emplace_back(left,right);return right;
+        };
+        for(std::size_t seed=0;seed<n;++seed)if(weak[seed] && strong[seed] && !out[seed]) {
+            queue.clear();discover(seed,seed-seed%width);
+            for(std::size_t head=0;head<queue.size();++head) {
+                // discover may reallocate the queue; keep this run by value.
+                const auto run=queue[head];const auto row_begin=run.first-run.first%width;
+                auto scan=[&](std::size_t begin,std::size_t end,std::size_t adjacent_row) {
+                    for(auto i=begin;i<end;) {
+                        if(weak[i] && !out[i])i=discover(i,adjacent_row);
+                        else ++i;
+                    }
+                };
+                if(row_begin)scan(run.first-width,run.second-width,row_begin-width);
+                if(row_begin<n-width)scan(run.first+width,run.second+width,row_begin+width);
+            }
+        }return;
+    }
     if(workers==1) {
         std::vector<std::size_t> queue;queue.reserve(counts.weak);
         for(std::size_t i=0;i<n;++i){out[i]=weak[i] ? strong[i]!=0 : counts.background;if(weak[i] && strong[i])queue.push_back(i);}

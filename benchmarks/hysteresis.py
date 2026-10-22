@@ -15,9 +15,20 @@ def main():
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
     parser.add_argument('--repeat',type=int,default=7)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--baseline-dir',type=Path)
     args=parser.parse_args()
     if args.size<3 or min(args.threads+[args.repeat])<1:parser.error('size >=3 and positive workers/repeats required')
-    xx.set_fallback_enabled(False);rng=np.random.default_rng(1934);cases=[]
+    xx.set_fallback_enabled(False);baseline=None;snapshot=None
+    if args.baseline_dir:
+        sys.path.insert(0,str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        snapshot=json.loads((args.baseline_dir/'snapshot.json').read_bytes())
+        package=Path(baseline.__file__).parent
+        for group,pattern in [('binary_sha256','_core.*'),('python_sha256','*.py')]:
+            assert {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob(pattern)}==snapshot[group]
+        assert baseline.has_avx2()==xx.has_avx2()
+        baseline.set_fallback_enabled(False)
+    rng=np.random.default_rng(1934);cases=[]
     for dtype in (np.uint8,np.float32,np.float64):
         a=rng.integers(0,256,(args.size,args.size+1),dtype=np.uint8).astype(dtype)
         scale=1 if dtype==np.uint8 else 1/255
@@ -39,15 +50,22 @@ def main():
         'reference_thread_pools':1,'repeat':args.repeat,'target_ms':15,'cooldown_ms':20,'seed':1934,'command':sys.argv,
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'binary_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob('_core.*')}},'results':[]}
+    if snapshot:report['metadata']['baseline']=snapshot
     for label,image,low,high in cases:
         expected=reference(image,low,high)
         for workers in args.threads:
             xx.set_num_threads(workers);actual=xx.filters.apply_hysteresis_threshold(image,low,high)
             assert type(actual) is type(expected) and actual.dtype==expected.dtype and actual.shape==expected.shape
             np.testing.assert_array_equal(actual,expected)
+            old=None
+            if baseline:
+                baseline.set_num_threads(workers);old=lambda:baseline.filters.apply_hysteresis_threshold(image,low,high)
+                previous=old()
+                assert type(previous) is type(expected) and previous.dtype==expected.dtype and previous.shape==expected.shape
+                np.testing.assert_array_equal(previous,expected)
             row={'api':'filters.apply_hysteresis_threshold','dtype':image.dtype.name,'shape':list(image.shape),
                  'layout':label,'threshold_fields':np.ndim(low)>0,'threads':workers,'max_abs_error':0.,
-                 **measure(lambda:reference(image,low,high),lambda:xx.filters.apply_hysteresis_threshold(image,low,high),args.repeat,15)}
+                 **measure(lambda:reference(image,low,high),lambda:xx.filters.apply_hysteresis_threshold(image,low,high),args.repeat,15,old)}
             report['results'].append(row);args.output.parent.mkdir(parents=True,exist_ok=True)
             args.output.write_bytes((json.dumps(report,indent=2)+'\n').encode('utf-8'))
             print(f'{image.dtype.name} {label} t={workers}: {row["speedup"]:.3f}x',flush=True)
