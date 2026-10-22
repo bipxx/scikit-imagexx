@@ -9,6 +9,7 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t label_lookup(const std::uint64_t*,std::uint64_t*,std::size_t,std::uint64_t,const std::uint64_t*);
 bool contrast_finite(const void*,std::size_t,bool);
 unsigned char contrast_truth(const unsigned char*,std::size_t);
 std::size_t contrast_widen16(const void*,std::int32_t*,std::size_t,bool,bool);

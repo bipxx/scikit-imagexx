@@ -1,5 +1,6 @@
 #include "skimagexx/label_color.hpp"
 #include "execution.hpp"
+#include "simd.hpp"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -60,7 +61,10 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
             } else if constexpr(std::is_signed_v<T>)if(value<0)return false;
             values[i]=std::uint64_t(value);
             low=std::min(low,values[i]);high=std::max(high,values[i]);
-        } else values[i]=ordered_key(value);
+        } else {
+            values[i]=ordered_key(value);
+            low=std::min(low,values[i]);high=std::max(high,values[i]);
+        }
     }
     if constexpr(std::is_floating_point_v<T>)if(overlay && background && !has_zero)return false;
     if(!overlay) {
@@ -83,12 +87,36 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
             else {
                 if(background>std::uint64_t(std::numeric_limits<T>::max()) || background>UINT64_C(9007199254740992))return false;
                 for(auto& value:values)value-=offset;
-                high-=offset;background-=offset;bg_key=background;
+                low-=offset;high-=offset;background-=offset;bg_key=background;
             }
         }
         if(high<=UINT8_MAX)mask=UINT8_MAX;
         else if(high<=UINT16_MAX)mask=UINT16_MAX;
         else if(high<=UINT32_MAX)mask=UINT32_MAX;
+    }
+    // Dense categorical labels need neither an N-element sort nor a binary
+    // search per pixel. Bound the auxiliary table independently of label width.
+    const auto span=high-low;
+    if(span<65536 && span/2<=count+128) {
+        constexpr auto absent=std::numeric_limits<std::uint64_t>::max();
+        std::vector<std::uint64_t> table(std::size_t(span)+1,absent);
+        for(auto value:values)table[std::size_t(value-low)]=0;
+        const bool present=can_match && bg_key>=low && bg_key<=high && table[std::size_t(bg_key-low)]!=absent;
+        std::size_t regions=0;std::uint64_t next=1;
+        for(std::size_t i=0;i<table.size();++i)if(table[i]!=absent) {
+            ++regions;
+            table[i]=(present && low+i==bg_key ? 0 : next++)&mask;
+        }
+        summary={regions+(present ? 0 : 1),background,present};
+        const bool vectorized=has_avx2();(void)vectorized;
+        detail::partition(count,workers,[&](std::size_t begin,std::size_t end,std::size_t) {
+            auto i=begin;
+#ifdef SKIMAGEXX_AVX2
+            if(vectorized)i+=simd::label_lookup(values.data()+i,output+i,end-i,low,table.data());
+#endif
+            for(;i<end;++i)output[i]=table[std::size_t(values[i]-low)];
+        });
+        return true;
     }
     auto unique=values;
     std::sort(unique.begin(),unique.end());

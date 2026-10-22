@@ -76,6 +76,15 @@ int main() {
         check(rank==99);
     }
     check(label_ranks(nullptr,0,PixelType::uint8,false,0,false,nullptr,summary));
+    // Dense lookup with high unsigned keys, every SIMD tail, absent background
+    // and a nonzero key offset. ASan checks that gathers never read past input.
+    for(std::size_t count=1;count<34;++count) {
+        std::vector<std::uint64_t> input(count),ranks(count);
+        for(std::size_t i=0;i<count;++i)input[i]=UINT64_MAX-(i%3);
+        check(label_ranks(input.data(),count,PixelType::uint64,false,0,true,ranks.data(),summary));
+        check(!summary.has_background && summary.regions==std::min(count,std::size_t(3))+1);
+        for(std::size_t i=0;i<count;++i)check(ranks[i]==std::min(count,std::size_t(3))-(i%3));
+    }
     {
         const std::uint64_t ranks[]={0,1,2};
         const double palette[]={0,0,0,1,0,0,0,0,1};double output[9];
