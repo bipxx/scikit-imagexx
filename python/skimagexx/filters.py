@@ -184,6 +184,12 @@ __all__ += ['threshold_yen','threshold_triangle','threshold_isodata']
 def threshold_minimum(image=None, nbins=256, max_num_iter=10000, *, hist=None):
     import operator
     if image is None and hist is None:raise Exception('Either image or hist must be provided.')
+    # range() invokes custom __index__ only after upstream constructs its
+    # histogram. Delegating before invoking it preserves mutation/error order
+    # and ensures an effectful conversion is never evaluated twice.
+    if type(max_num_iter) not in (int,bool,np.int8,np.uint8,np.int16,np.uint16,
+                                  np.int32,np.uint32,np.int64,np.uint64):
+        return fallback('filters','threshold_minimum',image,nbins,max_num_iter,hist=hist)
     # Keep unusual iteration objects and empty-loop errors in the explicit
     # compatibility path rather than narrowing Python's range contract.
     try:iterations=operator.index(max_num_iter)

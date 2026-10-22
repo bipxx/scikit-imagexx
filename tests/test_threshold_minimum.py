@@ -150,6 +150,36 @@ def test_missing_input():
     check()
 
 
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('shape',[(),(0,),(2,0,3),(1,),(1,1,1)])
+def test_scalar_and_empty_image(dtype,shape):
+    check(np.full(shape,7,dtype=dtype))
+
+
+@pytest.mark.parametrize('raises',[False,True])
+def test_effectful_iteration_metadata(raises):
+    def make_call():
+        image=np.repeat(np.arange(9,dtype=np.uint8),[9,5,1,0,1,5,9,5,1])
+        calls=[]
+        class Iterations:
+            def __index__(self):
+                calls.append('index')
+                image[:]=0
+                if raises:raise TypeError('iteration conversion sentinel')
+                return 10000
+        return image,Iterations(),calls
+    expected_image,expected_iterations,expected_calls=make_call()
+    actual_image,actual_iterations,actual_calls=make_call()
+    expected,notices=outcome(reference.threshold_minimum,expected_image,max_num_iter=expected_iterations)
+    xx.set_fallback_enabled(True)
+    actual,actual_notices=outcome(xx.filters.threshold_minimum,actual_image,max_num_iter=actual_iterations)
+    assert actual_notices==[(xx.FallbackWarning,'skimage.filters.threshold_minimum executed by scikit-image fallback'),*notices]
+    assert actual[:3]==expected[:3]
+    if actual[0]=='value':np.testing.assert_array_equal(actual[3],expected[3])
+    assert actual_calls==expected_calls==['index']
+    np.testing.assert_array_equal(actual_image,expected_image)
+
+
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 @pytest.mark.parametrize('nbins',[2,7,256])
 def test_edges_neighbors(dtype,nbins):
