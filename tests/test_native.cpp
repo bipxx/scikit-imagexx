@@ -20,6 +20,7 @@
 #include "skimagexx/histogram_matching.hpp"
 #include "skimagexx/rank_order.hpp"
 #include "skimagexx/hysteresis.hpp"
+#include "skimagexx/sparse.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <cstring>
@@ -1144,6 +1145,20 @@ int main() {
         set_num_threads(4);
 #endif
         hysteresis_connect_into(w.data(),s.data(),parallel.data(),{65,65,65});require(serial==parallel);set_num_threads(previous);
+    }
+    {
+        const double image[]={1,2,3,4},weights[]={0,1};double out[4]{};
+        auto flags=correlate_sparse_into(image,out,PixelType::float64,{4},{3},{{0},{2}},weights,GaussianBorder::reflect,true);
+        require(out[0]==3 && out[1]==4 && flags==std::vector<unsigned>(4,0));
+        const double identity[]={1};
+        correlate_sparse_into(image,out,PixelType::float64,{2,2},{1,1},{{0,0}},identity);
+        require(std::equal(image,image+4,out));
+        const float huge=std::numeric_limits<float>::max(),two=2;float result=0;
+        flags=correlate_sparse_into(&huge,&result,PixelType::float32,{1},{1},{{0}},&two);
+        require(std::isinf(result) && (flags[0]&1));
+        const float tiny=std::numeric_limits<float>::min();
+        flags=correlate_sparse_into(&tiny,&result,PixelType::float32,{1},{1},{{0}},&tiny);
+        require(result==0 && (flags[0]&2));
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

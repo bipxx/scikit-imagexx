@@ -894,3 +894,48 @@ def unsharp_mask(image,radius=1.0,amount=1.0,preserve_range=False,*,channel_axis
 
 
 __all__ += ['difference_of_gaussians','unsharp_mask']
+
+
+def _sparse_float_status(flags,dtype,addition):
+    if not flags:return
+    maximum=np.finfo(dtype).max
+    operation=np.add if addition else np.multiply
+    if flags&1:operation(np.array([maximum],dtype=dtype),np.array([maximum],dtype=dtype))
+    if flags&2:np.multiply(np.array([np.finfo(dtype).tiny],dtype=dtype),np.array([np.finfo(dtype).tiny],dtype=dtype))
+    if flags&4:operation(np.array([np.inf],dtype=dtype),np.array([-np.inf if addition else 0],dtype=dtype))
+
+
+def correlate_sparse(image,kernel,mode='reflect'):
+    original=image,kernel,mode
+    def delegated():return fallback('filters','correlate_sparse',*original)
+    if type(image) not in (np.ndarray,np.memmap) or not _hysteresis_dtype(image.dtype):return delegated()
+    if type(kernel) not in (list,tuple,np.ndarray,np.memmap):return delegated()
+    if type(mode) not in (str,np.str_) or mode not in ('reflect','mirror','nearest','edge','symmetric','constant','wrap','valid'):return delegated()
+    if any(p not in ('warn','raise','ignore') for p in np.geterr().values()):return delegated()
+    kernel=np.asarray(kernel)
+    if not _hysteresis_dtype(kernel.dtype) or not 1<=image.ndim<=16 or kernel.ndim!=image.ndim:return delegated()
+    dtype=np.dtype(np.float32 if image.dtype.kind=='f' and image.dtype.itemsize<=4 else np.float64)
+    native=image.astype(dtype,copy=False)
+    if mode!='valid' and any(w%2==0 for w in kernel.shape):
+        raise ValueError(f'Window size for `threshold_sauvola` or `threshold_niblack` must not be even on any dimension. Got {kernel.shape}')
+    if any(w==0 for w in kernel.shape) or mode=='valid' and any(w>n+1 for w,n in zip(kernel.shape,image.shape)):return delegated()
+    if not native.size and mode!='valid':
+        # Zero-byte storage probes only NumPy padding validation, not pixels.
+        np.pad(np.empty(image.shape,dtype='V0'),[(w//2,w//2) for w in kernel.shape],mode={'reflect':'symmetric','mirror':'reflect','nearest':'edge'}.get(mode,mode))
+    indices=np.nonzero(kernel)
+    weights=kernel[indices].astype(dtype,copy=False)
+    coordinates=list(zip(*(a.tolist() for a in indices)))
+    corner=(0,)*image.ndim
+    if not coordinates or coordinates[0]!=corner:
+        coordinates.insert(0,corner);weights=np.concatenate((np.zeros(1,dtype=dtype),weights))
+    preserve_map=type(image) is np.memmap and mode=='valid' and weights[0]==1
+    native=np.asarray(native)
+    if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
+    if not weights.flags.aligned:weights=weights.copy()
+    borders={'reflect':0,'symmetric':0,'constant':1,'nearest':2,'edge':2,'mirror':3,'wrap':4,'valid':0}
+    result,flags=_core.correlate_sparse(native,kernel.shape,coordinates,weights,borders[mode],mode=='valid')
+    for i,flag in enumerate(flags):_sparse_float_status(flag,dtype,i%2)
+    return result.view(np.memmap) if preserve_map else result
+
+
+__all__.append('correlate_sparse')

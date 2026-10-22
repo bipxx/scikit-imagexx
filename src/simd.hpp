@@ -105,6 +105,8 @@ double sum(const std::uint8_t*, std::size_t);
 void otsu_scores(const float*, const float*, const double*, const double*, double*, std::size_t);
 bool uniform(const std::uint8_t*, std::size_t);
 bool li_uniform(const void*,std::size_t,bool);
+std::size_t sparse_product(const void*,void*,std::size_t,const void*,bool);
+std::size_t sparse_add(const void*,void*,std::size_t,bool);
 void adaptive_mean4(const double*,double*,std::size_t,std::size_t);
 std::size_t adaptive_mean_columns(const void*,void*,std::size_t,std::size_t,std::size_t,const std::ptrdiff_t*,std::size_t,std::size_t,double,bool);
 std::size_t adaptive_median9(const void*,void*,std::size_t,std::size_t,bool);

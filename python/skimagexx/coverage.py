@@ -15,7 +15,7 @@ NATIVE_FUNCTIONS = {
     'filters': ('gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li',
-                'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
+                'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
@@ -50,6 +50,10 @@ def default_call(api, image):
     if api=='transform.integrate':
         return (image,tuple(n//4 for n in image.shape),tuple(3*n//4 for n in image.shape)), {}
     if api=='filters.difference_of_gaussians':return (image,1.), {}
+    if api=='filters.correlate_sparse':
+        import numpy as np
+        kernel=np.zeros((3,)*image.ndim);kernel.flat[0]=.25;kernel.flat[-1]=1
+        return (image,kernel),{}
     if api=='filters.apply_hysteresis_threshold':return (image,63 if str(image.dtype)=='uint8' else .25,191 if str(image.dtype)=='uint8' else .75),{}
     if api=='color.rgba2rgb':
         import numpy as np

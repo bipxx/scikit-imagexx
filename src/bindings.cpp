@@ -5,6 +5,7 @@
 #include "skimagexx/histogram_matching.hpp"
 #include "skimagexx/rank_order.hpp"
 #include "skimagexx/hysteresis.hpp"
+#include "skimagexx/sparse.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -319,6 +320,20 @@ PYBIND11_MODULE(_core, m) {
         if(!weak || !strong || weak.dtype().kind()!='b' || strong.dtype().kind()!='b')throw py::type_error("boolean hysteresis masks required");
         const auto shape=hysteresis_shape(weak,strong);std::vector<py::ssize_t> dimensions(weak.shape(),weak.shape()+weak.ndim());py::array output(py::dtype::of<bool>(),dimensions);
         {py::gil_scoped_release release;skimagexx::hysteresis_connect_into(static_cast<const std::uint8_t*>(weak.data()),static_cast<const std::uint8_t*>(strong.data()),static_cast<std::uint8_t*>(output.mutable_data()),shape);}return output;});
+    m.def("correlate_sparse",[](py::array image,const std::vector<std::size_t>& kernel,
+        const std::vector<std::vector<std::size_t>>& coordinates,py::array weights,int border,bool valid){
+        const auto type=pixel_type(image.dtype());
+        if(type!=skimagexx::PixelType::float32 && type!=skimagexx::PixelType::float64)throw py::type_error("floating sparse input required");
+        if(!dtype_matches(image.dtype(),weights.dtype()) || weights.ndim()!=1 || std::size_t(weights.size())!=coordinates.size())throw py::type_error("matching sparse weights required");
+        if(!(image.flags()&py::array::c_style) || !(weights.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>() || !weights.attr("flags").attr("aligned").cast<bool>())throw py::type_error("aligned contiguous sparse storage required");
+        std::vector<std::size_t> shape(image.shape(),image.shape()+image.ndim());
+        if(shape.empty() || kernel.size()!=shape.size())throw py::value_error("sparse rank mismatch");
+        std::vector<py::ssize_t> dimensions;
+        for(std::size_t d=0;d<shape.size();++d){if(!kernel[d] || (valid && kernel[d]>shape[d]+1))throw py::value_error("invalid sparse kernel shape");dimensions.push_back(valid ? py::ssize_t(shape[d]+1-kernel[d]) : py::ssize_t(shape[d]));}
+        py::array output(image.dtype(),dimensions);std::vector<unsigned> flags;
+        {py::gil_scoped_release release;flags=skimagexx::correlate_sparse_into(image.data(),output.mutable_data(),type,shape,kernel,coordinates,weights.data(),skimagexx::GaussianBorder(border),valid);}
+        return py::make_tuple(output,flags);
+    });
     m.def("rank_order",[](py::array image,py::array original)->py::object {
         auto input=py::array::ensure(image,py::array::c_style);
         auto source=py::array::ensure(original,py::array::c_style);
