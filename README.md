@@ -231,7 +231,7 @@ Unknown options retain upstream behavior through fallback.
 
 All 455 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 96 covered wrapper signatures have per-function parity tests. Tests also run
+All covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -274,8 +274,28 @@ cmake --build build/native --config Release
 ctest --test-dir build/native -C Release --output-on-failure
 ```
 
+An installed C++ package can also be consumed without Python:
+
+```sh
+cmake --install build/native --config Release --prefix /absolute/path/to/skimagexx
+```
+
+Set `CMAKE_PREFIX_PATH` to that installation prefix in the consuming project:
+
+```cmake
+find_package(skimagexx 0.1 CONFIG REQUIRED)
+target_link_libraries(your_application PRIVATE skimagexx::skimagexx)
+```
+
+The package discovers OpenMP when it was built with that option; portable builds
+have no OpenMP dependency. The config and exported target support relocating the
+installation. Package version compatibility stays within the same minor version.
+CI compiles and runs an independent consumer after copying the install to a path
+with spaces, with Python discovery disabled.
+
 Include `skimagexx/image.hpp` and link `skimagexx::skimagexx` after
-`add_subdirectory(...)`. The public functions return owning `std::vector`s.
+`add_subdirectory(...)` when building from source. Convenience image functions
+such as `sobel` return owning `std::vector`s.
 For example, `skimagexx::sobel(image.data(), height, width)` accepts float or
 double pixels. RGB conversion additionally accepts uint8 directly. For repeated
 work, `rgb2gray_into`, `gaussian_into`, and `sobel_into` write to caller-owned

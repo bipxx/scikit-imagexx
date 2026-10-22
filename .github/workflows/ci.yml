@@ -77,9 +77,11 @@ jobs:
         env:
           OMP_DYNAMIC: 'TRUE'
           OMP_THREAD_LIMIT: '2'
+      - run: python tools/check_cmake_install.py --build-dir build/native --work-dir build/install-native --openmp ON
       - run: cmake -S . -B build/portable -DCMAKE_BUILD_TYPE=Release -DSKIMAGEXX_AVX2=OFF -DSKIMAGEXX_OPENMP=OFF
       - run: cmake --build build/portable --config Release
       - run: ctest --test-dir build/portable -C Release --output-on-failure
+      - run: python tools/check_cmake_install.py --build-dir build/portable --work-dir build/install-portable --openmp OFF
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -87,6 +89,8 @@ jobs:
           path: |
             build/wheels/scikit_imagexx*.whl
             build/ci-*.json
+            build/install-*/*.log
+            build/install-*/commands.json
   numpy-minimum:
     runs-on: ubuntu-latest
     env:

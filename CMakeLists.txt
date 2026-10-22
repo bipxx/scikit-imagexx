@@ -52,6 +52,15 @@ if(BUILD_TESTING)
 endif()
 
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+configure_package_config_file(cmake/skimagexxConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/skimagexx)
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfigVersion.cmake
+    VERSION ${PROJECT_VERSION} COMPATIBILITY SameMinorVersion)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/skimagexx)
 install(FILES LICENSE third_party/scikit-image-LICENSE.txt third_party/svml-LICENSE.txt third_party/numpy-LICENSE.txt third_party/scipy-ndimage-LICENSE.txt third_party/scipy-rank1d-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)
 install(TARGETS skimagexx EXPORT skimagexxTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
