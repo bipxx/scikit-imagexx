@@ -40,9 +40,9 @@ CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting an
 color-space routing composes the native kernels for all nine upstream spaces.
 Label-to-RGB overlays and region averages use native ranks, palette compositing,
 typed group reductions and optional global workers.
-There are 97 partial native image entries, two metadata helpers,
-and 356 pending entries in the current
-455-name inventory. The `future` namespace is available through explicit
+Current implementation and pending counts are generated in the
+[API implementation inventory](README.md), which is the authoritative per-entry
+coverage record for all 455 names. The `future` namespace is available through explicit
 compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.

@@ -1,0 +1,6694 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T17:18:58.175045+00:00",
+    "platform": "Windows-2025Server-10.0.26100-SP0",
+    "cpu": "AMD64 Family 26 Model 2 Stepping 1, AuthenticAMD",
+    "logical_cpus": 4,
+    "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit_image": "0.26.0",
+    "avx2": true,
+    "fallback_enabled": false,
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "seed": 5227,
+    "signed_zero_seed": 5228,
+    "command": [
+      "benchmarks/median.py",
+      "--size",
+      "512",
+      "--threads",
+      "1",
+      "4",
+      "--repeat",
+      "7",
+      "--baseline-dir",
+      "build/initial/exact-package",
+      "--output",
+      "build/median-performance.json"
+    ],
+    "source_sha256": "11b70cf84b4638d968db8bc27e41dbe063336a5caae42706e3c8365c2bec85e7",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "binary_sha256": {
+      "_core.cp313-win_amd64.pyd": "cd6abc037ba016d2d525c354c6cc1159d375716fa8d272ad12b33f744ae97978"
+    },
+    "baseline": {
+      "revision": "68d8516b77403bbe21f79d525581569ad7b7457e",
+      "source_sha256": "c7d5e93fb11ee01823f6d75049729ae3496ad63e145642eed4fd66dbd67e6b1d",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "c39d00981f4ab18f7df0960044af18d5bbffbbe6b80128c0e7735c38d4efe1ac"
+      },
+      "prepared_at_utc": "2026-10-22T17:12:08.948525+00:00",
+      "python_sha256": {
+        "color.py": "28aeb2f1416aae9ec6ffc640861764767881ca5327d0be9f55e8e458e1d94dc6",
+        "coverage.py": "a2615bf8d7e2a5fd6d5244ada25ab1189aebdeb7284ba3dbf4e7f180a73c751a",
+        "data.py": "bb93f31a21bad91cd91cc7b875b1b1af662341e9172dbc141a31648ec3a11c4d",
+        "draw.py": "4b814e23d5e4fefb421c3d024e04e000e1e94275875d273939be984229b65082",
+        "exposure.py": "fb91ce3977992f082e1abd69962b04171428e09a8e4b84c7a3b6b9f9239ff787",
+        "feature.py": "10ce096cfeb721e82c5c69f3197e511284aeedb1470ff1641da824cbba2b4306",
+        "filters.py": "d4f23d6b6d7321319762ee0284fb8780e1ae3960090963952f30f3ae44c41a30",
+        "future.py": "02f168a2334e93a20ab8a25db7cc0c034d32b1dc54e41274503f799875d4ca5b",
+        "graph.py": "a8ab2e62dbfef6a1ec513a4b38c197ff9d43914026982cc9c253ee8e3431269f",
+        "io.py": "c39c3fe1ac1a8e318246a0f452c573d9211fea00d9cb46d79a4128f4a759fe19",
+        "measure.py": "96827422bbcc52b0fb7a0aad0e1ad2bde89b256ff375458aca93c55dbf55e0fc",
+        "metrics.py": "db7cf34a3b6d766833e52fab35cd07edf17d09a86c091000e14601a53eed6188",
+        "morphology.py": "bcbbadd1e4f91ed5eca8f3994140b38f4745f68fbd1dd86a6b613ae861388936",
+        "registration.py": "694fb38523278368bf07870da1a73770267525a4668591bf6ac47af48c8e5e52",
+        "restoration.py": "716dd553e0584bcaabba2b3a21698374ed59cbd0e380371111c51aa261a76576",
+        "segmentation.py": "a4efb4eb29a024b90ee0b9082349363d07b20c223e2606b21f50865a29b923f9",
+        "transform.py": "ae7f174c362a57f16ccae2c1a5d3e3611a4d11b1e5f2dd2d77fc2e2154e8cdc7",
+        "util.py": "b92a9e04c5530142f5df2aa75f4ab5c4c022010a0a6364717f5c52aa1e50465e",
+        "_compat.py": "e246b8534bf63f5e75d1e5de468c236409b8dc77298d9c210b3fcc040f0662e1",
+        "_namespace.py": "ab06cc4c47b39631df07df43d5d2d757bd69f5c416c01f9a997828647e1855d9",
+        "_rgb_colors.py": "e394583316402d9a25824ce9dfe28ab0b9b6c833f6c96f93bce33e0afd7c467e",
+        "_stain_matrices.py": "882d26897fca08ad84965660715cdefe55f275573100aa85330502a4cc235223",
+        "_whitepoints.py": "1b42bf251dc1ff142ad82381eb4f10b6a5e9545e353cf8dee6efdeeb34ca7055",
+        "__init__.py": "45e203cb18b0553c648fdfe8959ac7d2e8b5714935fb4dafc3e681714f007f73"
+      }
+    }
+  },
+  "results": [
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.8814,
+      "cpp_ms": 1.642525,
+      "speedup": 15.148262583522321,
+      "samples_ms": [
+        [
+          24.6839,
+          25.8484,
+          35.1379,
+          25.4649,
+          24.83,
+          24.5016,
+          24.8814
+        ],
+        [
+          2.425025,
+          1.6711625,
+          4.1979125,
+          1.609825,
+          1.635575,
+          1.63035,
+          1.642525
+        ],
+        [
+          1.6527,
+          1.7734625,
+          1.996075,
+          1.6200625,
+          1.6337875,
+          1.6385375,
+          1.6614125
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6527,
+      "improvement": 1.0061947306738102
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.4649,
+      "cpp_ms": 1.0067307692307692,
+      "speedup": 24.301333333333336,
+      "samples_ms": [
+        [
+          24.2721,
+          24.4359,
+          32.456,
+          24.1724,
+          24.4649,
+          24.6186,
+          24.5095
+        ],
+        [
+          1.0321307692307693,
+          1.0258153846153846,
+          1.7896076923076922,
+          0.9808692307692307,
+          1.0067307692307692,
+          0.9853461538461539,
+          0.9918923076923077
+        ],
+        [
+          1.0767357142857144,
+          0.9910357142857144,
+          1.1280714285714286,
+          0.9843857142857143,
+          1.0017714285714285,
+          1.05045,
+          1.0040571428571428
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.0040571428571428,
+      "improvement": 0.9973442488743348
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5674,
+      "cpp_ms": 1.6225,
+      "speedup": 15.141694915254236,
+      "samples_ms": [
+        [
+          24.3668,
+          24.0239,
+          24.2193,
+          24.5674,
+          24.7681,
+          24.6263,
+          25.0108
+        ],
+        [
+          1.6225,
+          1.670825,
+          1.6231625,
+          1.5967,
+          1.6204125,
+          1.6200875,
+          1.683025
+        ],
+        [
+          1.658,
+          1.6270625,
+          1.6510875,
+          1.6190875,
+          1.6578125,
+          1.6424,
+          1.6600125
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6510875,
+      "improvement": 1.0176194144838213
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.1138,
+      "cpp_ms": 1.005323076923077,
+      "speedup": 24.980825146145136,
+      "samples_ms": [
+        [
+          24.6984,
+          25.1749,
+          25.5848,
+          25.5324,
+          25.0185,
+          25.0721,
+          25.1138
+        ],
+        [
+          0.9997,
+          1.0117307692307693,
+          1.0041076923076921,
+          1.025623076923077,
+          1.003053846153846,
+          1.0125538461538461,
+          1.005323076923077
+        ],
+        [
+          1.0147285714285714,
+          1.01375,
+          1.0261142857142858,
+          1.1484214285714287,
+          1.7964714285714287,
+          1.024392857142857,
+          1.012857142857143
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.024392857142857,
+      "improvement": 1.018968807796739
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.2782,
+      "cpp_ms": 1.6441,
+      "speedup": 14.766863329481176,
+      "samples_ms": [
+        [
+          24.6902,
+          24.1781,
+          24.2782,
+          24.2064,
+          24.1628,
+          24.6216,
+          24.4233
+        ],
+        [
+          1.655125,
+          1.61635,
+          1.6173125,
+          1.5954625,
+          1.7749125,
+          1.6441,
+          1.6745875
+        ],
+        [
+          1.60715,
+          1.6310625,
+          1.6162,
+          1.6258625,
+          1.615225,
+          1.6449875,
+          1.6189
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6189,
+      "improvement": 0.9846724651785171
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.2756,
+      "cpp_ms": 0.9878076923076923,
+      "speedup": 24.575228750535373,
+      "samples_ms": [
+        [
+          24.3451,
+          24.2298,
+          24.2581,
+          24.9491,
+          23.9828,
+          24.2756,
+          24.3032
+        ],
+        [
+          0.9913307692307692,
+          1.3912846153846155,
+          1.0345230769230769,
+          0.9878076923076923,
+          0.9805692307692307,
+          0.9824615384615385,
+          0.9815384615384615
+        ],
+        [
+          0.9943,
+          0.9911142857142857,
+          0.9909857142857144,
+          1.061757142857143,
+          0.9909928571428571,
+          0.9950642857142857,
+          1.3800785714285713
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.9943,
+      "improvement": 1.0065724409142234
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5491,
+      "cpp_ms": 1.6297625,
+      "speedup": 15.06299230716132,
+      "samples_ms": [
+        [
+          24.3657,
+          24.5491,
+          24.8078,
+          24.5977,
+          25.1543,
+          24.3063,
+          24.2304
+        ],
+        [
+          1.6612375,
+          1.628425,
+          1.631175,
+          1.6305,
+          1.6297625,
+          1.6212,
+          1.6177125
+        ],
+        [
+          1.62875,
+          1.6292125,
+          1.620125,
+          1.6873125,
+          1.6464,
+          1.634925,
+          1.6250875
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6292125,
+      "improvement": 0.9996625275155122
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.4973,
+      "cpp_ms": 1.0086142857142857,
+      "speedup": 24.288075577525035,
+      "samples_ms": [
+        [
+          24.6481,
+          24.1694,
+          24.4973,
+          24.6528,
+          24.0157,
+          25.0116,
+          24.3111
+        ],
+        [
+          1.018,
+          1.0052714285714286,
+          1.017342857142857,
+          1.01775,
+          1.0086142857142857,
+          1.0045142857142857,
+          0.9907142857142857
+        ],
+        [
+          1.0166307692307692,
+          1.0127384615384616,
+          1.0028692307692308,
+          1.0039384615384614,
+          1.0071230769230768,
+          1.0166692307692307,
+          0.9880153846153846
+        ]
+      ],
+      "loops": [
+        1,
+        14,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.0071230769230768,
+      "improvement": 0.998521527195946
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.7737,
+      "cpp_ms": 1.6206125,
+      "speedup": 15.286627741054694,
+      "samples_ms": [
+        [
+          24.9986,
+          24.7883,
+          24.66,
+          24.173,
+          24.6352,
+          25.4619,
+          24.7737
+        ],
+        [
+          1.61715,
+          1.7173,
+          1.6269125,
+          1.613775,
+          1.71055,
+          1.6047,
+          1.6206125
+        ],
+        [
+          1.6201375,
+          1.671325,
+          1.6219125,
+          1.6112375,
+          1.601275,
+          1.6326625,
+          1.6432
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6219125,
+      "improvement": 1.000802165847789
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.6851,
+      "cpp_ms": 0.98595,
+      "speedup": 25.036867995334447,
+      "samples_ms": [
+        [
+          23.9832,
+          24.7147,
+          24.6851,
+          24.1612,
+          24.2135,
+          24.7821,
+          25.3661
+        ],
+        [
+          0.9972285714285715,
+          0.9857928571428571,
+          1.0032,
+          0.98595,
+          0.9774214285714286,
+          0.9783857142857143,
+          0.9954357142857143
+        ],
+        [
+          0.9953785714285714,
+          1.0067071428571428,
+          0.9954785714285714,
+          1.354307142857143,
+          0.9906071428571428,
+          1.00355,
+          0.9878142857142856
+        ]
+      ],
+      "loops": [
+        1,
+        14,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.9954785714285714,
+      "improvement": 1.0096643556251041
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.9845,
+      "cpp_ms": 1.8336625,
+      "speedup": 13.625462701015046,
+      "samples_ms": [
+        [
+          24.2295,
+          24.3821,
+          25.2278,
+          25.0824,
+          24.9512,
+          24.9845,
+          25.0351
+        ],
+        [
+          1.8336625,
+          1.808825,
+          1.838825,
+          1.8334375,
+          1.905725,
+          1.8273375,
+          1.8648625
+        ],
+        [
+          1.8140125,
+          1.81325,
+          1.8348375,
+          1.8418,
+          1.85155,
+          1.83725,
+          1.909425
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.83725,
+      "improvement": 1.0019564669070782
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.9169,
+      "cpp_ms": 1.20655,
+      "speedup": 20.651361319464588,
+      "samples_ms": [
+        [
+          24.9169,
+          25.025,
+          24.1357,
+          24.1385,
+          24.4161,
+          24.9344,
+          25.3539
+        ],
+        [
+          1.23048,
+          1.20655,
+          1.20454,
+          1.18567,
+          1.3134,
+          1.17743,
+          1.22445
+        ],
+        [
+          1.23258,
+          1.53955,
+          1.19274,
+          1.19549,
+          1.1885,
+          1.19953,
+          1.21911
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.19953,
+      "improvement": 0.9941817579047698
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 12.3435,
+      "cpp_ms": 0.8881666666666667,
+      "speedup": 13.897729405141678,
+      "samples_ms": [
+        [
+          12.3086,
+          12.3146,
+          12.1475,
+          12.8224,
+          12.3775,
+          12.3435,
+          12.5222
+        ],
+        [
+          0.8956733333333333,
+          0.8869666666666667,
+          0.8881666666666667,
+          0.8978866666666666,
+          0.8986533333333334,
+          0.8715066666666667,
+          0.8855466666666666
+        ],
+        [
+          0.890925,
+          0.88299375,
+          0.8779,
+          0.88873125,
+          0.90360625,
+          0.88198125,
+          0.88136875
+        ]
+      ],
+      "loops": [
+        1,
+        15,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.88299375,
+      "improvement": 0.9941757365359355
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 12.4122,
+      "cpp_ms": 0.8970933333333334,
+      "speedup": 13.836018548794625,
+      "samples_ms": [
+        [
+          12.609,
+          12.8044,
+          12.1869,
+          12.4827,
+          12.3391,
+          12.307,
+          12.4122
+        ],
+        [
+          0.8847333333333334,
+          0.9322733333333334,
+          0.8777733333333334,
+          0.8565933333333333,
+          0.8970933333333334,
+          0.9172066666666666,
+          0.9118666666666666
+        ],
+        [
+          0.8872933333333334,
+          0.90592,
+          0.8867933333333333,
+          0.8805733333333333,
+          0.8931333333333333,
+          0.95884,
+          0.9269666666666666
+        ]
+      ],
+      "loops": [
+        1,
+        15,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.8931333333333333,
+      "improvement": 0.9955857435866947
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 82.6148,
+      "cpp_ms": 18.6423,
+      "speedup": 4.431577648680689,
+      "samples_ms": [
+        [
+          84.6432,
+          82.6148,
+          81.5855,
+          83.137,
+          81.4187,
+          83.4528,
+          81.9467
+        ],
+        [
+          26.6181,
+          19.3309,
+          19.377,
+          18.511,
+          18.4862,
+          18.6248,
+          18.6423
+        ],
+        [
+          19.1052,
+          19.0744,
+          18.8427,
+          18.7262,
+          18.9909,
+          19.1021,
+          18.8097
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 18.9909,
+      "improvement": 1.0186994094076376
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 82.7483,
+      "cpp_ms": 8.4338,
+      "speedup": 9.811508454077641,
+      "samples_ms": [
+        [
+          81.4441,
+          82.8684,
+          84.2821,
+          82.7483,
+          81.7608,
+          81.7346,
+          83.4135
+        ],
+        [
+          8.2739,
+          8.4638,
+          8.6416,
+          8.0368,
+          12.481,
+          7.9103,
+          8.4338
+        ],
+        [
+          8.2116,
+          8.3907,
+          8.1905,
+          8.427,
+          8.2123,
+          8.0361,
+          9.8564
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.2123,
+      "improvement": 0.9737366311745597
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.7057,
+      "cpp_ms": 1.6060125,
+      "speedup": 15.38325511165075,
+      "samples_ms": [
+        [
+          24.7057,
+          24.8131,
+          24.78,
+          24.5633,
+          24.2749,
+          24.8246,
+          24.4472
+        ],
+        [
+          1.8250125,
+          1.5736375,
+          1.603975,
+          1.616775,
+          1.6060125,
+          1.60915,
+          1.5968875
+        ],
+        [
+          1.8372,
+          1.6206375,
+          1.6085375,
+          1.6491625,
+          1.6326375,
+          1.6662375,
+          1.618625
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6326375,
+      "improvement": 1.0165783267564854
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.6257,
+      "cpp_ms": 0.9791714285714285,
+      "speedup": 25.149528756091158,
+      "samples_ms": [
+        [
+          24.6257,
+          25.0131,
+          24.6771,
+          24.7384,
+          24.1423,
+          24.2757,
+          24.0459
+        ],
+        [
+          0.997,
+          0.9820214285714285,
+          0.9791714285714285,
+          0.9755285714285715,
+          0.9884285714285714,
+          0.9643071428571428,
+          0.9736071428571429
+        ],
+        [
+          0.9910785714285715,
+          1.0067142857142857,
+          1.1983142857142857,
+          0.9903785714285714,
+          0.9872928571428572,
+          0.9948,
+          0.9717714285714285
+        ]
+      ],
+      "loops": [
+        1,
+        14,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.9910785714285715,
+      "improvement": 1.012160427183333
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.7678,
+      "cpp_ms": 1.1787454545454545,
+      "speedup": 8.286606715922938,
+      "samples_ms": [
+        [
+          13.7108,
+          9.7678,
+          9.7441,
+          9.6346,
+          13.0489,
+          9.9515,
+          9.764
+        ],
+        [
+          1.934,
+          1.1781181818181818,
+          1.1787454545454545,
+          1.1772545454545453,
+          1.2274636363636364,
+          1.1822363636363635,
+          1.176809090909091
+        ],
+        [
+          1.185875,
+          1.1973666666666667,
+          1.176225,
+          1.1799,
+          1.1727,
+          1.1813833333333332,
+          1.1743083333333333
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.1799,
+      "improvement": 1.0009794696981382
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.7108,
+      "cpp_ms": 0.7634529411764706,
+      "speedup": 12.719579002519515,
+      "samples_ms": [
+        [
+          9.7108,
+          9.745,
+          9.4536,
+          9.3861,
+          9.7845,
+          9.6991,
+          9.7596
+        ],
+        [
+          0.7754058823529412,
+          0.7634529411764706,
+          0.7562647058823528,
+          0.7587941176470588,
+          0.7698941176470588,
+          0.7516,
+          0.7683764705882353
+        ],
+        [
+          0.7837444444444445,
+          0.77015,
+          0.9702888888888889,
+          0.7483777777777777,
+          0.74955,
+          0.7649611111111111,
+          0.77305
+        ]
+      ],
+      "loops": [
+        1,
+        17,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.77015,
+      "improvement": 1.0087720649988057
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.33795,
+      "cpp_ms": 1.1017846153846156,
+      "speedup": 5.752440097184985,
+      "samples_ms": [
+        [
+          6.2875,
+          6.25535,
+          6.3757,
+          6.2817,
+          6.4284,
+          6.53885,
+          6.33795
+        ],
+        [
+          1.1017846153846156,
+          1.1035923076923078,
+          1.0880307692307694,
+          1.0738846153846155,
+          1.1065153846153846,
+          1.0951692307692307,
+          1.1043692307692308
+        ],
+        [
+          1.0927692307692307,
+          1.1127692307692307,
+          1.1352,
+          1.094223076923077,
+          1.1208,
+          1.1734615384615386,
+          1.1209615384615386
+        ]
+      ],
+      "loops": [
+        2,
+        13,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.1208,
+      "improvement": 1.017258713136729
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.41375,
+      "cpp_ms": 0.7356052631578948,
+      "speedup": 8.7190104818803,
+      "samples_ms": [
+        [
+          6.41375,
+          6.42605,
+          6.46015,
+          6.28055,
+          6.39835,
+          6.4491,
+          6.3637
+        ],
+        [
+          0.7411,
+          0.7403263157894737,
+          0.7317736842105262,
+          0.932678947368421,
+          0.7356052631578948,
+          0.7220947368421052,
+          0.7333684210526316
+        ],
+        [
+          0.7475857142857143,
+          0.8174428571428571,
+          0.7454142857142857,
+          0.7299428571428571,
+          0.7595428571428572,
+          0.7586285714285714,
+          0.7273714285714286
+        ]
+      ],
+      "loops": [
+        2,
+        19,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.7475857142857143,
+      "improvement": 1.0162865217635726
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.013811904761904761,
+      "cpp_ms": 0.005863754427390791,
+      "speedup": 2.3554712143787166,
+      "samples_ms": [
+        [
+          0.014073469387755102,
+          0.013786054421768707,
+          0.013831292517006802,
+          0.01347857142857143,
+          0.013870408163265307,
+          0.013811904761904761,
+          0.013775850340136054
+        ],
+        [
+          0.00603211334120425,
+          0.005845572609208973,
+          0.005984061393152302,
+          0.005863754427390791,
+          0.005886894923258559,
+          0.005803423848878394,
+          0.005806729634002361
+        ],
+        [
+          0.0058671999999999995,
+          0.0058573,
+          0.0061706999999999994,
+          0.005848399999999999,
+          0.0058097,
+          0.005795600000000001,
+          0.0058303
+        ]
+      ],
+      "loops": [
+        294,
+        847,
+        1000
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.005848399999999999,
+      "improvement": 0.9973814682076269
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.013525,
+      "cpp_ms": 0.005673211963589077,
+      "speedup": 2.384011048204094,
+      "samples_ms": [
+        [
+          0.013518131868131868,
+          0.013525,
+          0.013510989010989011,
+          0.013912912087912087,
+          0.013695329670329671,
+          0.013439010989010989,
+          0.013891758241758242
+        ],
+        [
+          0.0056719115734720415,
+          0.00566553966189857,
+          0.0056602080624187255,
+          0.005673211963589077,
+          0.005697529258777633,
+          0.005764759427828349,
+          0.00592483745123537
+        ],
+        [
+          0.005701953601953602,
+          0.005668253968253968,
+          0.005557020757020757,
+          0.005815995115995116,
+          0.005773382173382173,
+          0.005642857142857143,
+          0.0058407814407814415
+        ]
+      ],
+      "loops": [
+        364,
+        769,
+        819
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.005701953601953602,
+      "improvement": 1.0050662021001489
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.00721532738095238,
+      "cpp_ms": 0.008072853828306265,
+      "speedup": 0.8937765422746669,
+      "samples_ms": [
+        [
+          0.00721532738095238,
+          0.007233333333333333,
+          0.00713125,
+          0.006946279761904761,
+          0.006942410714285714,
+          0.007378720238095239,
+          0.007297916666666667
+        ],
+        [
+          0.008383758700696055,
+          0.008060788863109049,
+          0.008072853828306265,
+          0.00792737819025522,
+          0.008019025522041763,
+          0.008291647331786542,
+          0.008159164733178655
+        ],
+        [
+          0.008110576923076923,
+          0.00809173076923077,
+          0.007909230769230769,
+          0.00806076923076923,
+          0.007937692307692307,
+          0.008315,
+          0.008320384615384615
+        ]
+      ],
+      "loops": [
+        672,
+        431,
+        520
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.00809173076923077,
+      "improvement": 1.0023383231414789
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.007399823943661971,
+      "cpp_ms": 0.008275635276532137,
+      "speedup": 0.8941698971009787,
+      "samples_ms": [
+        [
+          0.007399823943661971,
+          0.007419718309859155,
+          0.007432570422535211,
+          0.0073683098591549295,
+          0.00734612676056338,
+          0.00737112676056338,
+          0.007492957746478873
+        ],
+        [
+          0.008365171898355755,
+          0.00818998505231689,
+          0.008273991031390135,
+          0.008275635276532137,
+          0.008269506726457399,
+          0.008552615844544096,
+          0.008296562032884904
+        ],
+        [
+          0.00834638403990025,
+          0.008243516209476309,
+          0.00826072319201995,
+          0.008072568578553617,
+          0.008250623441396508,
+          0.00824925187032419,
+          0.008394389027431422
+        ]
+      ],
+      "loops": [
+        568,
+        669,
+        802
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.008250623441396508,
+      "improvement": 0.9969776537631428
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.308775,
+      "cpp_ms": 1.2696333333333332,
+      "speedup": 2.6060870592559535,
+      "samples_ms": [
+        [
+          3.5141,
+          3.3875,
+          3.308775,
+          3.189475,
+          3.22575,
+          3.311925,
+          3.224475
+        ],
+        [
+          1.3453333333333333,
+          1.2794777777777777,
+          1.2696333333333332,
+          1.2415444444444446,
+          1.3757666666666668,
+          1.2580666666666667,
+          1.2594666666666667
+        ],
+        [
+          1.3176555555555556,
+          1.2712555555555556,
+          1.2748777777777778,
+          1.2233333333333332,
+          1.2664555555555554,
+          1.282511111111111,
+          1.2723666666666666
+        ]
+      ],
+      "loops": [
+        4,
+        9,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2723666666666666,
+      "improvement": 1.0021528525296017
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.32035,
+      "cpp_ms": 1.0942538461538462,
+      "speedup": 3.0343507694038085,
+      "samples_ms": [
+        [
+          3.32035,
+          3.279875,
+          3.208,
+          3.33715,
+          3.221875,
+          3.433625,
+          3.4775
+        ],
+        [
+          1.1124,
+          1.0611307692307692,
+          1.0942538461538462,
+          1.0523307692307693,
+          1.0657153846153844,
+          1.0956461538461537,
+          1.1140846153846156
+        ],
+        [
+          1.0778384615384615,
+          1.0845923076923079,
+          1.1688538461538462,
+          1.134523076923077,
+          1.0929923076923078,
+          1.0856615384615385,
+          1.0943153846153846
+        ]
+      ],
+      "loops": [
+        4,
+        13,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.0929923076923078,
+      "improvement": 0.998847124489466
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 7.4805,
+      "cpp_ms": 7.389,
+      "speedup": 1.0123832724319934,
+      "samples_ms": [
+        [
+          7.7347,
+          7.4293,
+          7.4305,
+          7.6577,
+          7.734,
+          7.4805,
+          7.4727
+        ],
+        [
+          7.4338,
+          7.389,
+          7.3844,
+          7.2813,
+          7.5082,
+          7.6276,
+          7.344
+        ],
+        [
+          7.4512,
+          7.2682,
+          7.3575,
+          7.2682,
+          7.6654,
+          7.281,
+          7.4263
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 7.3575,
+      "improvement": 0.9957369062119367
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 7.546,
+      "cpp_ms": 2.57086,
+      "speedup": 2.9352045618975753,
+      "samples_ms": [
+        [
+          7.546,
+          7.4576,
+          7.4678,
+          7.782,
+          7.4711,
+          7.7921,
+          7.7002
+        ],
+        [
+          2.57886,
+          2.54566,
+          2.58002,
+          2.57086,
+          2.51412,
+          2.63318,
+          2.52768
+        ],
+        [
+          2.54532,
+          2.56282,
+          2.57044,
+          2.69624,
+          2.72532,
+          2.63106,
+          2.52182
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.57044,
+      "improvement": 0.9998366305438646
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 13.7572,
+      "cpp_ms": 3.0835,
+      "speedup": 4.461553429544349,
+      "samples_ms": [
+        [
+          13.7039,
+          14.5362,
+          13.6742,
+          13.6695,
+          13.7572,
+          13.9105,
+          13.9736
+        ],
+        [
+          3.168425,
+          3.200925,
+          3.081525,
+          3.06095,
+          3.0835,
+          3.084325,
+          3.07745
+        ],
+        [
+          3.33985,
+          3.34045,
+          3.1913,
+          3.166625,
+          3.174225,
+          3.1581,
+          3.190725
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.190725,
+      "improvement": 1.0347737960110264
+    },
+    {
+      "api": "filters.median",
+      "dtype": "uint8",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 14.44,
+      "cpp_ms": 3.2621,
+      "speedup": 4.426596364305202,
+      "samples_ms": [
+        [
+          13.573,
+          14.396,
+          14.5141,
+          14.3474,
+          14.5942,
+          14.668,
+          14.44
+        ],
+        [
+          3.10745,
+          3.27675,
+          3.220725,
+          3.2424,
+          3.32885,
+          3.589975,
+          3.2621
+        ],
+        [
+          3.22985,
+          3.3936,
+          3.4335,
+          3.356725,
+          3.413225,
+          3.4016,
+          3.353975
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.3936,
+      "improvement": 1.040311455810674
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.6672,
+      "cpp_ms": 2.20365,
+      "speedup": 11.64758468903864,
+      "samples_ms": [
+        [
+          25.1705,
+          27.6275,
+          25.6672,
+          26.4411,
+          35.7135,
+          24.1662,
+          24.2389
+        ],
+        [
+          2.20365,
+          2.16765,
+          2.17975,
+          2.339,
+          4.573733333333333,
+          2.2416333333333336,
+          2.09985
+        ],
+        [
+          2.1813166666666666,
+          2.1942333333333335,
+          2.1998333333333333,
+          2.3346666666666667,
+          2.19065,
+          2.1573166666666665,
+          2.12335
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.19065,
+      "improvement": 0.9941006965715972
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.6757,
+      "cpp_ms": 1.37556,
+      "speedup": 17.938657710314345,
+      "samples_ms": [
+        [
+          24.3533,
+          23.0268,
+          25.0445,
+          24.6757,
+          24.78,
+          24.6236,
+          25.2627
+        ],
+        [
+          1.37556,
+          1.32594,
+          1.3584,
+          1.36161,
+          1.40843,
+          1.3828,
+          1.41313
+        ],
+        [
+          1.34085,
+          1.36884,
+          1.33617,
+          1.34905,
+          1.44248,
+          1.40583,
+          1.39905
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.36884,
+      "improvement": 0.9951147169152929
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.7852,
+      "cpp_ms": 2.0545833333333334,
+      "speedup": 12.06337051308051,
+      "samples_ms": [
+        [
+          24.2486,
+          24.9952,
+          24.4514,
+          24.7852,
+          25.2535,
+          24.8405,
+          24.0626
+        ],
+        [
+          2.0784833333333332,
+          2.0678666666666667,
+          2.0471333333333335,
+          2.04495,
+          2.0884833333333335,
+          2.0164166666666667,
+          2.0545833333333334
+        ],
+        [
+          2.1763666666666666,
+          2.14725,
+          2.11995,
+          2.12885,
+          2.1734833333333334,
+          2.0927,
+          2.13635
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.13635,
+      "improvement": 1.0397972013790306
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5222,
+      "cpp_ms": 1.3835555555555554,
+      "speedup": 17.72404433022808,
+      "samples_ms": [
+        [
+          24.5222,
+          24.4768,
+          24.5974,
+          24.5771,
+          24.2311,
+          24.3705,
+          24.6514
+        ],
+        [
+          1.3828777777777777,
+          1.3980333333333332,
+          1.4014555555555555,
+          1.3835555555555554,
+          2.1685666666666665,
+          1.3795777777777778,
+          1.3632222222222223
+        ],
+        [
+          1.3867666666666667,
+          1.3727555555555555,
+          1.393488888888889,
+          1.386,
+          1.4004222222222222,
+          1.367711111111111,
+          1.3369777777777778
+        ]
+      ],
+      "loops": [
+        1,
+        9,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.386,
+      "improvement": 1.0017667844522968
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.2025,
+      "cpp_ms": 2.0479285714285713,
+      "speedup": 11.818039133619337,
+      "samples_ms": [
+        [
+          25.0547,
+          25.0277,
+          25.4051,
+          24.2025,
+          23.3569,
+          23.6181,
+          24.044
+        ],
+        [
+          2.1267428571428573,
+          2.0834714285714284,
+          2.069657142857143,
+          2.0479285714285713,
+          1.9936142857142858,
+          1.981,
+          2.0076
+        ],
+        [
+          2.1664333333333334,
+          2.1900833333333334,
+          2.13145,
+          2.086333333333333,
+          2.0841333333333334,
+          2.049316666666667,
+          2.042066666666667
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.086333333333333,
+      "improvement": 1.0187529792008185
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5677,
+      "cpp_ms": 1.39531,
+      "speedup": 17.607341737678365,
+      "samples_ms": [
+        [
+          24.275,
+          24.5019,
+          24.5677,
+          26.7769,
+          41.9108,
+          25.2216,
+          24.5163
+        ],
+        [
+          1.39531,
+          1.33446,
+          1.40412,
+          1.38858,
+          1.4218,
+          1.39477,
+          1.41555
+        ],
+        [
+          1.37213,
+          1.34785,
+          1.37143,
+          1.39254,
+          2.34542,
+          1.38571,
+          1.44954
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.38571,
+      "improvement": 0.9931198085013366
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.0738,
+      "cpp_ms": 2.1194333333333333,
+      "speedup": 11.830426371828947,
+      "samples_ms": [
+        [
+          25.3649,
+          25.5272,
+          25.0738,
+          24.1388,
+          24.7565,
+          25.4032,
+          24.7959
+        ],
+        [
+          2.1092166666666663,
+          2.08085,
+          2.1194333333333333,
+          2.1340666666666666,
+          2.1314833333333336,
+          2.1708333333333334,
+          2.1180166666666667
+        ],
+        [
+          2.1409166666666666,
+          2.1629166666666664,
+          2.1741,
+          2.1627833333333335,
+          2.1227333333333336,
+          2.23715,
+          2.1533833333333336
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1627833333333335,
+      "improvement": 1.0204535803595303
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.8228,
+      "cpp_ms": 1.39974,
+      "speedup": 17.733864860616972,
+      "samples_ms": [
+        [
+          23.8343,
+          24.9369,
+          25.8826,
+          24.9063,
+          24.8228,
+          24.1097,
+          24.5503
+        ],
+        [
+          1.39974,
+          1.41487,
+          1.41009,
+          1.38552,
+          1.40848,
+          1.3717,
+          1.36447
+        ],
+        [
+          1.36903,
+          1.41777,
+          2.06627,
+          1.41015,
+          1.37336,
+          1.37103,
+          1.43591
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.41015,
+      "improvement": 1.0074370954605856
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.909,
+      "cpp_ms": 2.1044285714285715,
+      "speedup": 11.836467313827981,
+      "samples_ms": [
+        [
+          24.7696,
+          24.909,
+          24.8108,
+          26.2674,
+          25.0325,
+          24.9439,
+          24.6782
+        ],
+        [
+          2.067871428571429,
+          2.1227285714285715,
+          2.115385714285714,
+          2.6542285714285714,
+          2.090457142857143,
+          2.1044285714285715,
+          2.079842857142857
+        ],
+        [
+          2.1419333333333337,
+          2.1483333333333334,
+          2.1562833333333336,
+          2.1629333333333336,
+          2.19205,
+          2.1692333333333336,
+          2.5804833333333335
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1629333333333336,
+      "improvement": 1.0278007829294233
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.7393,
+      "cpp_ms": 1.38944,
+      "speedup": 17.805230884385075,
+      "samples_ms": [
+        [
+          25.0107,
+          25.1372,
+          24.4858,
+          24.6537,
+          24.7393,
+          24.9798,
+          24.5126
+        ],
+        [
+          1.42459,
+          1.38053,
+          1.38944,
+          1.39894,
+          2.03247,
+          1.34412,
+          1.37527
+        ],
+        [
+          1.4049,
+          1.393157142857143,
+          1.3883714285714286,
+          1.3815,
+          1.4102428571428571,
+          1.3794285714285714,
+          1.3826285714285713
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.3883714285714286,
+      "improvement": 0.9992309337369217
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.0917,
+      "cpp_ms": 2.49468,
+      "speedup": 10.058083601904855,
+      "samples_ms": [
+        [
+          24.7351,
+          25.9358,
+          25.0113,
+          25.5962,
+          25.0917,
+          25.1021,
+          24.9735
+        ],
+        [
+          2.49684,
+          2.5758,
+          2.51462,
+          2.47994,
+          2.4743,
+          2.49266,
+          2.49468
+        ],
+        [
+          2.50904,
+          2.59648,
+          2.5445,
+          2.56502,
+          2.54566,
+          2.55364,
+          2.52306
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.54566,
+      "improvement": 1.020435486715731
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.0175,
+      "cpp_ms": 1.8322,
+      "speedup": 13.654349961794562,
+      "samples_ms": [
+        [
+          24.8919,
+          24.9557,
+          24.8534,
+          25.3391,
+          25.3318,
+          25.0175,
+          40.2317
+        ],
+        [
+          1.8427857142857142,
+          1.7982857142857143,
+          1.8322,
+          2.172385714285714,
+          1.8205,
+          2.394485714285714,
+          1.829157142857143
+        ],
+        [
+          1.7883125,
+          1.791725,
+          1.854875,
+          1.834825,
+          1.7989625,
+          1.8275875,
+          1.812325
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.812325,
+      "improvement": 0.9891523851107957
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 12.5009,
+      "cpp_ms": 1.0528461538461538,
+      "speedup": 11.873434646014466,
+      "samples_ms": [
+        [
+          12.6344,
+          12.3428,
+          12.3334,
+          12.4078,
+          12.7447,
+          12.5009,
+          12.5082
+        ],
+        [
+          1.0528461538461538,
+          1.0341076923076922,
+          1.0427076923076923,
+          1.0628,
+          1.0608,
+          1.0643384615384615,
+          1.046776923076923
+        ],
+        [
+          1.1007833333333332,
+          1.0850333333333333,
+          1.38095,
+          1.0741166666666668,
+          1.08305,
+          1.1397083333333333,
+          1.0818583333333334
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.0850333333333333,
+      "improvement": 1.030571588612065
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 12.3911,
+      "cpp_ms": 1.0360692307692307,
+      "speedup": 11.95972202629762,
+      "samples_ms": [
+        [
+          12.3263,
+          12.6373,
+          12.3911,
+          12.4226,
+          12.2367,
+          13.0419,
+          12.347
+        ],
+        [
+          1.052176923076923,
+          1.0224615384615385,
+          1.0251076923076923,
+          1.0196307692307693,
+          1.0378846153846153,
+          1.0360692307692307,
+          1.0455923076923077
+        ],
+        [
+          1.0667923076923078,
+          1.0711923076923078,
+          1.0608692307692307,
+          1.0594461538461537,
+          1.0655615384615384,
+          1.0649153846153845,
+          1.0779076923076922
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.0655615384615384,
+      "improvement": 1.0284655762534431
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 82.6382,
+      "cpp_ms": 18.9879,
+      "speedup": 4.3521505801062785,
+      "samples_ms": [
+        [
+          82.5232,
+          82.6382,
+          81.3763,
+          88.8714,
+          84.4556,
+          82.1568,
+          83.3019
+        ],
+        [
+          18.8798,
+          18.976,
+          19.0211,
+          18.9879,
+          19.0098,
+          18.7083,
+          19.0956
+        ],
+        [
+          19.2942,
+          19.5356,
+          19.3497,
+          19.2462,
+          19.6163,
+          19.2924,
+          19.8028
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 19.3497,
+      "improvement": 1.0190542398053497
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 84.1866,
+      "cpp_ms": 8.5944,
+      "speedup": 9.795518011728568,
+      "samples_ms": [
+        [
+          85.1264,
+          83.8214,
+          84.3949,
+          84.1866,
+          78.6052,
+          78.8123,
+          84.7581
+        ],
+        [
+          8.6195,
+          8.5944,
+          8.6331,
+          8.5302,
+          8.2113,
+          8.6964,
+          8.4493
+        ],
+        [
+          9.0917,
+          8.7644,
+          13.458,
+          8.5872,
+          8.3153,
+          8.2815,
+          8.3596
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.5872,
+      "improvement": 0.9991622451829096
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.0192,
+      "cpp_ms": 2.0881,
+      "speedup": 11.981801637852595,
+      "samples_ms": [
+        [
+          24.6008,
+          25.0192,
+          24.6348,
+          25.0619,
+          25.7277,
+          24.9905,
+          28.8044
+        ],
+        [
+          2.1420333333333335,
+          1.99775,
+          2.0881,
+          2.0583,
+          2.1192833333333336,
+          2.0799,
+          2.1114
+        ],
+        [
+          2.1948833333333333,
+          2.1136833333333334,
+          2.1099833333333335,
+          2.1350833333333337,
+          2.1173666666666664,
+          2.17435,
+          2.1019833333333335
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.1173666666666664,
+      "improvement": 1.0140159315486168
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.4806,
+      "cpp_ms": 1.36785,
+      "speedup": 17.89713784406185,
+      "samples_ms": [
+        [
+          24.9251,
+          24.8585,
+          24.0143,
+          24.159,
+          24.2712,
+          24.9293,
+          24.4806
+        ],
+        [
+          1.39737,
+          1.36785,
+          1.33628,
+          1.58544,
+          1.41207,
+          1.36736,
+          1.35252
+        ],
+        [
+          1.42197,
+          1.36755,
+          1.33218,
+          1.34239,
+          1.34859,
+          1.38205,
+          1.34681
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.34859,
+      "improvement": 0.9859195087180611
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.4563,
+      "cpp_ms": 1.6505555555555556,
+      "speedup": 5.729161898350724,
+      "samples_ms": [
+        [
+          9.3453,
+          9.538,
+          9.6769,
+          9.2467,
+          9.4563,
+          9.3846,
+          9.7361
+        ],
+        [
+          1.663,
+          1.618311111111111,
+          1.6605666666666667,
+          1.6295444444444445,
+          1.6512222222222221,
+          1.6505555555555556,
+          1.6410777777777779
+        ],
+        [
+          1.761875,
+          1.6893875,
+          1.7278375,
+          1.668675,
+          1.7166125,
+          1.7032375,
+          1.712325
+        ]
+      ],
+      "loops": [
+        1,
+        9,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.712325,
+      "improvement": 1.037423426455739
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.4932,
+      "cpp_ms": 1.2325083333333333,
+      "speedup": 7.70234143109242,
+      "samples_ms": [
+        [
+          9.5498,
+          9.4224,
+          9.3195,
+          9.7444,
+          9.421,
+          9.5672,
+          9.4932
+        ],
+        [
+          1.2325083333333333,
+          1.2154916666666666,
+          1.2337916666666668,
+          1.506175,
+          1.2398583333333333,
+          1.2288666666666668,
+          1.22245
+        ],
+        [
+          1.245618181818182,
+          1.2117090909090908,
+          1.2161363636363636,
+          1.309709090909091,
+          1.2403090909090908,
+          1.241509090909091,
+          1.2262090909090908
+        ]
+      ],
+      "loops": [
+        1,
+        12,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2403090909090908,
+      "improvement": 1.0063291722780163
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.2479,
+      "cpp_ms": 1.5890375,
+      "speedup": 3.931877001014765,
+      "samples_ms": [
+        [
+          6.1979,
+          6.264,
+          6.204,
+          6.29995,
+          6.2479,
+          6.21195,
+          6.32215
+        ],
+        [
+          1.5835375,
+          1.5865375,
+          1.5890375,
+          1.5756375,
+          1.592475,
+          1.60445,
+          1.67075
+        ],
+        [
+          1.763325,
+          1.670075,
+          1.6493125,
+          1.673525,
+          1.7262875,
+          1.6817,
+          1.6996875
+        ]
+      ],
+      "loops": [
+        2,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.6817,
+      "improvement": 1.0583136017872454
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.35775,
+      "cpp_ms": 1.2393636363636364,
+      "speedup": 5.129850363089562,
+      "samples_ms": [
+        [
+          6.2726,
+          6.2891,
+          6.40885,
+          6.29785,
+          6.35775,
+          6.42225,
+          6.4776
+        ],
+        [
+          1.2393636363636364,
+          1.2571272727272726,
+          1.2328181818181818,
+          1.228,
+          1.2139909090909091,
+          1.2874545454545454,
+          1.302481818181818
+        ],
+        [
+          1.2713727272727273,
+          1.2548636363636365,
+          1.2747090909090908,
+          1.2604363636363636,
+          1.274581818181818,
+          1.2826363636363636,
+          1.2691272727272727
+        ]
+      ],
+      "loops": [
+        2,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2713727272727273,
+      "improvement": 1.0258270373358762
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.1681065573770492,
+      "cpp_ms": 0.15914430379746836,
+      "speedup": 1.0563152646103278,
+      "samples_ms": [
+        [
+          0.1681065573770492,
+          0.17373770491803278,
+          0.1792049180327869,
+          0.16644426229508197,
+          0.16781967213114754,
+          0.17188852459016393,
+          0.16644918032786885
+        ],
+        [
+          0.162473417721519,
+          0.17024303797468354,
+          0.15899240506329113,
+          0.1592987341772152,
+          0.15866962025316456,
+          0.15914430379746836,
+          0.1587
+        ],
+        [
+          0.1645,
+          0.17591029411764705,
+          0.1621029411764706,
+          0.1571264705882353,
+          0.1626264705882353,
+          0.15909558823529413,
+          0.1602720588235294
+        ]
+      ],
+      "loops": [
+        61,
+        79,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.1621029411764706,
+      "improvement": 1.0185909096863905
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.18359850746268658,
+      "cpp_ms": 0.17495531914893617,
+      "speedup": 1.049402260850341,
+      "samples_ms": [
+        [
+          0.18359850746268658,
+          0.1841089552238806,
+          0.18236119402985074,
+          0.18462835820895523,
+          0.18108358208955225,
+          0.1828358208955224,
+          0.18436567164179105
+        ],
+        [
+          0.17495531914893617,
+          0.17487446808510637,
+          0.17628936170212767,
+          0.17686382978723406,
+          0.1740595744680851,
+          0.17649148936170211,
+          0.17389787234042553
+        ],
+        [
+          0.17457887323943663,
+          0.18461971830985915,
+          0.17149295774647888,
+          0.17532112676056338,
+          0.1744183098591549,
+          0.17394788732394367,
+          0.17375915492957747
+        ]
+      ],
+      "loops": [
+        67,
+        47,
+        71
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.1744183098591549,
+      "improvement": 0.996930591808277
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.00728405315614618,
+      "cpp_ms": 0.008845472061657032,
+      "speedup": 0.8234781711335426,
+      "samples_ms": [
+        [
+          0.00726578073089701,
+          0.007309468438538206,
+          0.007289700996677741,
+          0.007311627906976744,
+          0.007202325581395349,
+          0.007261794019933554,
+          0.00728405315614618
+        ],
+        [
+          0.009035067437379576,
+          0.008819845857418112,
+          0.008845472061657032,
+          0.008778420038535645,
+          0.008792292870905587,
+          0.008848362235067438,
+          0.00889364161849711
+        ],
+        [
+          0.008952808988764046,
+          0.00892808988764045,
+          0.009013258426966294,
+          0.008787640449438203,
+          0.008880898876404496,
+          0.00946314606741573,
+          0.008932808988764045
+        ]
+      ],
+      "loops": [
+        602,
+        519,
+        445
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.008932808988764045,
+      "improvement": 1.0098736309942797
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.007544841269841269,
+      "cpp_ms": 0.009139873417721519,
+      "speedup": 0.8254864071982,
+      "samples_ms": [
+        [
+          0.007669444444444444,
+          0.007607936507936508,
+          0.007411111111111111,
+          0.007685714285714285,
+          0.0074253968253968254,
+          0.007535714285714285,
+          0.007544841269841269
+        ],
+        [
+          0.009465822784810127,
+          0.009194303797468354,
+          0.009101898734177216,
+          0.008781012658227848,
+          0.009139873417721519,
+          0.010477215189873417,
+          0.00899367088607595
+        ],
+        [
+          0.009116058394160584,
+          0.00972992700729927,
+          0.00911021897810219,
+          0.00925109489051095,
+          0.008964233576642337,
+          0.009481751824817518,
+          0.008954744525547445
+        ]
+      ],
+      "loops": [
+        252,
+        158,
+        137
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.009116058394160584,
+      "improvement": 0.9973943814676077
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.33215,
+      "cpp_ms": 1.5771125,
+      "speedup": 2.1128169360143936,
+      "samples_ms": [
+        [
+          3.331225,
+          3.306525,
+          3.3812,
+          3.402525,
+          3.33215,
+          3.36345,
+          3.3074
+        ],
+        [
+          1.577425,
+          1.5596875,
+          1.5934875,
+          1.569675,
+          1.5771125,
+          1.567525,
+          1.684775
+        ],
+        [
+          1.633725,
+          1.6263625,
+          1.6129,
+          1.6825,
+          1.6941625,
+          1.6279375,
+          1.641025
+        ]
+      ],
+      "loops": [
+        4,
+        8,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.633725,
+      "improvement": 1.0358962978227617
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.308175,
+      "cpp_ms": 1.2908454545454546,
+      "speedup": 2.562797109716676,
+      "samples_ms": [
+        [
+          3.33065,
+          3.56505,
+          3.29255,
+          3.308175,
+          3.323975,
+          3.28215,
+          3.27135
+        ],
+        [
+          1.3044636363636364,
+          1.2911454545454546,
+          1.274890909090909,
+          1.2562090909090908,
+          1.2908454545454546,
+          1.2636909090909092,
+          1.927481818181818
+        ],
+        [
+          1.3419272727272726,
+          1.3718181818181818,
+          1.3201818181818181,
+          1.3437272727272727,
+          1.3179,
+          1.3572272727272727,
+          1.3483909090909092
+        ]
+      ],
+      "loops": [
+        4,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.3437272727272727,
+      "improvement": 1.0409668082229404
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 8.0736,
+      "cpp_ms": 8.3292,
+      "speedup": 0.9693127791384527,
+      "samples_ms": [
+        [
+          8.1092,
+          8.1501,
+          7.9865,
+          8.184,
+          8.0736,
+          7.9355,
+          7.98
+        ],
+        [
+          8.2548,
+          8.3659,
+          8.3292,
+          8.4466,
+          8.2854,
+          8.3366,
+          8.2983
+        ],
+        [
+          8.2279,
+          8.5113,
+          8.2243,
+          8.3564,
+          8.3276,
+          8.296,
+          8.3442
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.3276,
+      "improvement": 0.9998079047207415
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 7.9351,
+      "cpp_ms": 2.81054,
+      "speedup": 2.8233364406839967,
+      "samples_ms": [
+        [
+          7.9074,
+          7.8677,
+          8.3326,
+          8.0271,
+          7.8932,
+          8.0368,
+          7.9351
+        ],
+        [
+          2.81054,
+          2.78922,
+          2.92318,
+          2.79726,
+          2.9346,
+          2.82418,
+          2.79544
+        ],
+        [
+          2.79268,
+          2.82196,
+          4.50642,
+          2.83298,
+          2.7852,
+          2.8085,
+          2.7933
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.8085,
+      "improvement": 0.9992741608374192
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 14.3886,
+      "cpp_ms": 3.351925,
+      "speedup": 4.292637812600223,
+      "samples_ms": [
+        [
+          14.3156,
+          14.3886,
+          14.6104,
+          14.4442,
+          14.3989,
+          14.2182,
+          14.3802
+        ],
+        [
+          3.351425,
+          3.3586,
+          3.351925,
+          3.311075,
+          3.3647,
+          3.199825,
+          3.35825
+        ],
+        [
+          3.438225,
+          3.396525,
+          3.488375,
+          3.4648,
+          3.366525,
+          3.342725,
+          3.39595
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.396525,
+      "improvement": 1.0133057869731572
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 14.4046,
+      "cpp_ms": 3.34375,
+      "speedup": 4.307917757009346,
+      "samples_ms": [
+        [
+          14.4496,
+          14.4018,
+          14.5855,
+          14.4033,
+          14.4416,
+          14.338,
+          14.4046
+        ],
+        [
+          3.3776,
+          3.35305,
+          3.357,
+          3.317675,
+          3.34375,
+          3.2988,
+          3.29715
+        ],
+        [
+          3.403525,
+          3.409525,
+          3.510475,
+          3.439225,
+          3.442,
+          3.429275,
+          3.344075
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.429275,
+      "improvement": 1.025577570093458
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 2.3568333333333333,
+      "cpp_ms": 4.587666666666667,
+      "speedup": 0.5137324711182154,
+      "samples_ms": [
+        [
+          2.2996166666666666,
+          2.3568333333333333,
+          2.3950833333333335,
+          2.4034833333333334,
+          2.4225166666666667,
+          2.3535166666666667,
+          2.28695
+        ],
+        [
+          4.404466666666667,
+          4.6258333333333335,
+          4.613633333333333,
+          4.587666666666667,
+          4.560233333333333,
+          4.5989,
+          4.3984
+        ],
+        [
+          4.397866666666667,
+          4.615933333333333,
+          4.552233333333333,
+          4.587333333333333,
+          4.680433333333333,
+          4.4858,
+          4.431866666666667
+        ]
+      ],
+      "loops": [
+        6,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.552233333333333,
+      "improvement": 0.9922763932282204
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 2.36834,
+      "cpp_ms": 4.583466666666667,
+      "speedup": 0.5167136956015824,
+      "samples_ms": [
+        [
+          2.40478,
+          2.36834,
+          2.43108,
+          2.38166,
+          2.32164,
+          2.2936,
+          2.3082
+        ],
+        [
+          4.590966666666667,
+          4.6856,
+          4.583466666666667,
+          4.628366666666667,
+          4.396933333333333,
+          4.402,
+          4.5085
+        ],
+        [
+          4.595033333333333,
+          4.4648,
+          4.670433333333333,
+          4.691166666666667,
+          4.5088,
+          4.412966666666667,
+          4.5158
+        ]
+      ],
+      "loops": [
+        5,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.5158,
+      "improvement": 0.9852367931114729
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 5.1037,
+      "cpp_ms": 7.8167,
+      "speedup": 0.6529225888162524,
+      "samples_ms": [
+        [
+          5.2412,
+          5.09425,
+          5.1037,
+          5.08525,
+          5.0563,
+          5.12295,
+          5.3441
+        ],
+        [
+          7.9155,
+          7.805,
+          7.8167,
+          7.7393,
+          7.8103,
+          8.328,
+          8.2401
+        ],
+        [
+          8.1437,
+          7.8948,
+          7.8681,
+          7.9326,
+          8.1093,
+          8.3871,
+          8.2926
+        ]
+      ],
+      "loops": [
+        2,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.1093,
+      "improvement": 1.0374326761932784
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 5.3027,
+      "cpp_ms": 8.1549,
+      "speedup": 0.6502470907062012,
+      "samples_ms": [
+        [
+          5.2848,
+          5.3315,
+          5.3027,
+          5.40805,
+          5.2708,
+          5.18405,
+          5.4397
+        ],
+        [
+          8.0883,
+          8.2344,
+          8.09,
+          8.3445,
+          8.1549,
+          8.2839,
+          7.9132
+        ],
+        [
+          8.2315,
+          8.2176,
+          8.314,
+          8.3503,
+          8.2504,
+          8.5758,
+          7.9472
+        ]
+      ],
+      "loops": [
+        2,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.2504,
+      "improvement": 1.011710750591669
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "signed-zero-pair",
+      "kernel_shape": [
+        1,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "signed-zero-mismatch-unmeasured",
+      "baseline_signbit_mismatches": 32708,
+      "reference_ms": 1.4469555555555556,
+      "cpp_ms": 5.5691,
+      "speedup": 0.2598185623450029,
+      "samples_ms": [
+        [
+          1.4514333333333334,
+          1.4287777777777777,
+          1.4469555555555556,
+          1.4389333333333332,
+          1.4377333333333333,
+          1.5533666666666668,
+          2.5688444444444447
+        ],
+        [
+          5.5128,
+          5.60735,
+          5.72335,
+          5.5691,
+          5.4836,
+          5.4519,
+          7.34195
+        ]
+      ],
+      "loops": [
+        9,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float32",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "signed-zero-pair",
+      "kernel_shape": [
+        1,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "signed-zero-mismatch-unmeasured",
+      "baseline_signbit_mismatches": 32708,
+      "reference_ms": 1.4390222222222222,
+      "cpp_ms": 3.485625,
+      "speedup": 0.4128448189986651,
+      "samples_ms": [
+        [
+          1.4423555555555556,
+          1.4492444444444446,
+          1.4390222222222222,
+          1.4329444444444446,
+          1.442388888888889,
+          1.427011111111111,
+          1.4192
+        ],
+        [
+          3.5089,
+          3.4413,
+          3.82325,
+          3.441825,
+          3.401175,
+          3.485625,
+          3.71905
+        ]
+      ],
+      "loops": [
+        9,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 23.4419,
+      "cpp_ms": 1.891742857142857,
+      "speedup": 12.391694733503497,
+      "samples_ms": [
+        [
+          23.8096,
+          23.3328,
+          23.7359,
+          23.4419,
+          23.3147,
+          24.4752,
+          23.3946
+        ],
+        [
+          1.858657142857143,
+          1.9143714285714286,
+          1.872542857142857,
+          1.891742857142857,
+          1.9428,
+          1.9280285714285714,
+          1.8771714285714287
+        ],
+        [
+          1.8520142857142856,
+          1.8788857142857143,
+          1.8789142857142858,
+          1.9055142857142857,
+          1.901557142857143,
+          1.9716857142857143,
+          1.8459857142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.8789142857142858,
+      "improvement": 0.9932186494691215
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "nearest",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.135,
+      "cpp_ms": 1.2768818181818182,
+      "speedup": 18.901514342467802,
+      "samples_ms": [
+        [
+          23.9255,
+          23.8919,
+          23.6493,
+          24.6823,
+          24.4593,
+          24.135,
+          25.0749
+        ],
+        [
+          1.2882454545454547,
+          1.233209090909091,
+          1.2727,
+          1.2268272727272727,
+          1.2768818181818182,
+          1.3038545454545454,
+          1.3399454545454546
+        ],
+        [
+          1.2694818181818182,
+          1.240490909090909,
+          1.2249727272727273,
+          1.4076272727272727,
+          1.2774636363636365,
+          1.3078909090909092,
+          1.3100727272727273
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2774636363636365,
+      "improvement": 1.0004556554675097
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 25.4314,
+      "cpp_ms": 2.001742857142857,
+      "speedup": 12.704628823453849,
+      "samples_ms": [
+        [
+          24.0945,
+          25.5043,
+          25.1167,
+          25.6194,
+          24.8312,
+          28.8989,
+          25.4314
+        ],
+        [
+          2.016642857142857,
+          2.0185714285714287,
+          2.003757142857143,
+          1.983142857142857,
+          1.992557142857143,
+          1.9804285714285714,
+          2.001742857142857
+        ],
+        [
+          1.9909428571428571,
+          2.0204,
+          1.9764857142857144,
+          2.0278,
+          2.043685714285714,
+          2.010885714285714,
+          2.0392
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.0204,
+      "improvement": 1.0093204493227332
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "reflect",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "reflect",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.1584,
+      "cpp_ms": 1.27366,
+      "speedup": 18.967699386021387,
+      "samples_ms": [
+        [
+          24.8627,
+          24.2921,
+          23.5146,
+          23.8999,
+          23.4829,
+          24.8668,
+          24.1584
+        ],
+        [
+          1.56114,
+          1.25529,
+          1.25622,
+          1.2693,
+          1.27366,
+          1.31036,
+          1.32299
+        ],
+        [
+          1.33584,
+          1.27174,
+          1.26968,
+          1.25043,
+          1.25627,
+          1.61741,
+          1.27645
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.27174,
+      "improvement": 0.998492533329146
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.3822,
+      "cpp_ms": 1.9311714285714285,
+      "speedup": 12.625601041558788,
+      "samples_ms": [
+        [
+          24.7666,
+          28.5163,
+          24.2,
+          23.7785,
+          24.7385,
+          23.6788,
+          24.3822
+        ],
+        [
+          1.9311714285714285,
+          2.3961,
+          1.9340857142857144,
+          1.9072142857142858,
+          1.8916714285714287,
+          1.8918,
+          1.9333285714285713
+        ],
+        [
+          1.9010857142857143,
+          3.622042857142857,
+          2.0418857142857143,
+          1.9076,
+          1.9101285714285714,
+          1.9239285714285714,
+          1.9404571428571429
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.9239285714285714,
+      "improvement": 0.9962495006731665
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "mirror",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "mirror",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5196,
+      "cpp_ms": 1.2928090909090908,
+      "speedup": 18.966141383456744,
+      "samples_ms": [
+        [
+          23.9175,
+          24.3304,
+          24.5753,
+          25.4117,
+          24.3251,
+          24.7459,
+          24.5196
+        ],
+        [
+          1.3119636363636364,
+          1.2928,
+          1.2896181818181818,
+          1.274581818181818,
+          1.2928090909090908,
+          1.3137909090909092,
+          1.3113454545454546
+        ],
+        [
+          1.3078272727272726,
+          1.2782909090909091,
+          1.3158636363636365,
+          1.6367363636363634,
+          1.2875909090909092,
+          1.3287454545454547,
+          1.2871909090909093
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.3078272727272726,
+      "improvement": 1.011616704990542
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.6505,
+      "cpp_ms": 1.9374142857142858,
+      "speedup": 12.72340158827303,
+      "samples_ms": [
+        [
+          24.6505,
+          24.7557,
+          24.6127,
+          28.7535,
+          23.4294,
+          24.2709,
+          25.0211
+        ],
+        [
+          2.007271428571429,
+          1.9307,
+          1.9374142857142858,
+          1.9038285714285714,
+          2.367242857142857,
+          1.891057142857143,
+          1.9687
+        ],
+        [
+          1.9895285714285713,
+          1.965942857142857,
+          1.9353142857142858,
+          1.9213,
+          1.8528285714285713,
+          1.8701571428571429,
+          1.9334714285714287
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.9334714285714287,
+      "improvement": 0.9979648869258733
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "wrap",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "wrap",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 23.8184,
+      "cpp_ms": 1.265518181818182,
+      "speedup": 18.82106503264922,
+      "samples_ms": [
+        [
+          23.8676,
+          23.8184,
+          23.6107,
+          23.643,
+          23.9319,
+          23.5554,
+          23.8884
+        ],
+        [
+          1.265518181818182,
+          1.2553545454545454,
+          1.3133272727272727,
+          1.3584636363636364,
+          1.2470727272727273,
+          1.225681818181818,
+          1.2883363636363636
+        ],
+        [
+          1.2396090909090909,
+          1.3032090909090908,
+          1.2334,
+          1.2405454545454546,
+          1.2589545454545454,
+          1.2648545454545455,
+          1.6575090909090908
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2589545454545454,
+      "improvement": 0.9948134792072236
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.0769,
+      "cpp_ms": 1.9312166666666668,
+      "speedup": 12.467218420166905,
+      "samples_ms": [
+        [
+          24.6243,
+          24.0769,
+          25.237,
+          23.895,
+          24.0648,
+          24.5406,
+          23.4831
+        ],
+        [
+          2.019066666666667,
+          1.9148333333333332,
+          1.9653833333333333,
+          1.9282833333333333,
+          1.9312166666666668,
+          1.9502666666666668,
+          1.91395
+        ],
+        [
+          1.9096857142857142,
+          1.9322,
+          1.911,
+          1.9466571428571429,
+          1.9112714285714287,
+          1.9708,
+          1.911742857142857
+        ]
+      ],
+      "loops": [
+        1,
+        6,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.911742857142857,
+      "improvement": 0.989916299988534
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "constant",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "constant",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 23.8672,
+      "cpp_ms": 1.2505181818181819,
+      "speedup": 19.08584804844537,
+      "samples_ms": [
+        [
+          23.8672,
+          24.2439,
+          24.4593,
+          24.6108,
+          23.7387,
+          23.8359,
+          23.5406
+        ],
+        [
+          1.2665636363636366,
+          1.234590909090909,
+          1.266118181818182,
+          1.2672090909090907,
+          1.2505181818181819,
+          1.2366,
+          1.2435727272727273
+        ],
+        [
+          1.256590909090909,
+          1.2956,
+          1.2417,
+          1.3373090909090908,
+          1.590918181818182,
+          1.257309090909091,
+          1.2450090909090907
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.257309090909091,
+      "improvement": 1.0054304760935466
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.4774,
+      "cpp_ms": 3.2901333333333334,
+      "speedup": 7.439637704652293,
+      "samples_ms": [
+        [
+          24.601,
+          24.1452,
+          24.5847,
+          23.3281,
+          24.3894,
+          24.4774,
+          24.541
+        ],
+        [
+          3.7129666666666665,
+          3.2901333333333334,
+          3.4359,
+          3.0331666666666663,
+          3.1096666666666666,
+          3.2793666666666663,
+          3.7322333333333333
+        ],
+        [
+          3.6380333333333335,
+          3.2334,
+          3.6114666666666664,
+          3.0130333333333335,
+          3.1995333333333336,
+          3.3672666666666666,
+          3.2735333333333334
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.2735333333333334,
+      "improvement": 0.9949546117685201
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "fortran",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.4986,
+      "cpp_ms": 3.1632333333333333,
+      "speedup": 7.744796990421193,
+      "samples_ms": [
+        [
+          24.061,
+          24.4986,
+          24.247,
+          25.2899,
+          24.9542,
+          23.9117,
+          24.5408
+        ],
+        [
+          3.137,
+          3.1941666666666664,
+          3.4906333333333337,
+          3.2713333333333336,
+          3.1333,
+          3.0490333333333335,
+          3.1632333333333333
+        ],
+        [
+          3.27375,
+          3.3777,
+          2.897275,
+          3.17095,
+          3.1394,
+          3.036075,
+          2.91115
+        ]
+      ],
+      "loops": [
+        1,
+        3,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.1394,
+      "improvement": 0.9924655152428423
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 12.3677,
+      "cpp_ms": 1.21297,
+      "speedup": 10.19621260212536,
+      "samples_ms": [
+        [
+          12.604,
+          12.1765,
+          12.5234,
+          12.2806,
+          12.3677,
+          12.4674,
+          12.0355
+        ],
+        [
+          1.25476,
+          1.21297,
+          1.20301,
+          1.22122,
+          1.21375,
+          1.19618,
+          1.19317
+        ],
+        [
+          1.21237,
+          1.21065,
+          1.20954,
+          1.22744,
+          1.21551,
+          1.20755,
+          1.17715
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.21065,
+      "improvement": 0.9980873393406267
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        257
+      ],
+      "layout": "strided",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 11.8079,
+      "cpp_ms": 1.2098545454545455,
+      "speedup": 9.759768266658652,
+      "samples_ms": [
+        [
+          11.596,
+          11.959,
+          11.6095,
+          12.7083,
+          11.935,
+          11.8079,
+          11.7702
+        ],
+        [
+          1.1740636363636365,
+          1.1917272727272727,
+          1.2309181818181818,
+          1.2336545454545453,
+          1.1787545454545454,
+          1.2138090909090908,
+          1.2098545454545455
+        ],
+        [
+          1.2649363636363635,
+          1.1774363636363636,
+          1.2451090909090907,
+          1.3004454545454547,
+          1.2408727272727273,
+          1.1820636363636365,
+          1.2140090909090908
+        ]
+      ],
+      "loops": [
+        1,
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2408727272727273,
+      "improvement": 1.0256379429533227
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 81.2363,
+      "cpp_ms": 18.6707,
+      "speedup": 4.351004515095846,
+      "samples_ms": [
+        [
+          81.2363,
+          83.1971,
+          82.3202,
+          81.1052,
+          81.5252,
+          80.6288,
+          80.9457
+        ],
+        [
+          18.5412,
+          18.8437,
+          18.6707,
+          18.504,
+          19.5041,
+          18.8435,
+          18.2975
+        ],
+        [
+          18.9733,
+          19.1504,
+          19.2385,
+          19.0979,
+          19.0099,
+          19.5772,
+          18.3055
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 19.0979,
+      "improvement": 1.022880770404966
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "dense5",
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 81.4765,
+      "cpp_ms": 8.4083,
+      "speedup": 9.690008681897648,
+      "samples_ms": [
+        [
+          81.3763,
+          80.1661,
+          81.0976,
+          81.4765,
+          81.8955,
+          83.1494,
+          85.2101
+        ],
+        [
+          8.226,
+          8.2474,
+          8.3095,
+          8.4083,
+          8.6336,
+          8.4911,
+          8.875
+        ],
+        [
+          9.0977,
+          8.3509,
+          8.2227,
+          8.4997,
+          8.4416,
+          8.5808,
+          9.4549
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.4997,
+      "improvement": 1.0108702115766564
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.7767,
+      "cpp_ms": 1.9519142857142857,
+      "speedup": 12.693538943454778,
+      "samples_ms": [
+        [
+          24.7767,
+          24.3815,
+          25.1503,
+          24.6647,
+          24.9338,
+          24.4053,
+          24.8496
+        ],
+        [
+          1.9473142857142858,
+          1.9519857142857142,
+          1.9968857142857144,
+          1.9386714285714286,
+          1.9519142857142857,
+          1.9284428571428571,
+          1.957657142857143
+        ],
+        [
+          1.9482142857142857,
+          1.9621142857142857,
+          1.923542857142857,
+          1.9417142857142857,
+          1.930757142857143,
+          1.9421714285714287,
+          1.9428857142857143
+        ]
+      ],
+      "loops": [
+        1,
+        7,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.9421714285714287,
+      "improvement": 0.995008563022381
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "sparse7",
+      "kernel_shape": [
+        7,
+        7
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 24.5568,
+      "cpp_ms": 1.29755,
+      "speedup": 18.925513467689107,
+      "samples_ms": [
+        [
+          23.6209,
+          24.2845,
+          24.5568,
+          24.4041,
+          41.091,
+          25.2569,
+          24.7984
+        ],
+        [
+          1.27836,
+          1.2757,
+          1.29755,
+          1.28886,
+          1.3145,
+          1.32998,
+          1.35632
+        ],
+        [
+          1.3146909090909091,
+          1.2859454545454545,
+          1.2867545454545455,
+          1.3240818181818181,
+          2.2224636363636363,
+          1.3303090909090909,
+          1.3169181818181819
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.3169181818181819,
+      "improvement": 1.0149267325484042
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.5287,
+      "cpp_ms": 1.60022,
+      "speedup": 5.954618739923261,
+      "samples_ms": [
+        [
+          19.6557,
+          9.8737,
+          9.6706,
+          9.2015,
+          9.3754,
+          9.4175,
+          9.5287
+        ],
+        [
+          1.7291,
+          1.60022,
+          1.5739,
+          1.52516,
+          1.6124,
+          1.57264,
+          1.60998
+        ],
+        [
+          1.717,
+          1.6832,
+          1.8021,
+          1.61645,
+          1.5832,
+          1.6282,
+          1.62825
+        ]
+      ],
+      "loops": [
+        1,
+        5,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.62825,
+      "improvement": 1.0175163415030433
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "cross",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 9.5785,
+      "cpp_ms": 1.21533,
+      "speedup": 7.881398467905836,
+      "samples_ms": [
+        [
+          9.5157,
+          9.3923,
+          10.6432,
+          9.5785,
+          9.6738,
+          9.6915,
+          9.5724
+        ],
+        [
+          1.21533,
+          1.28499,
+          2.96636,
+          1.18982,
+          1.44814,
+          1.21414,
+          1.21015
+        ],
+        [
+          1.1699636363636365,
+          1.2151727272727273,
+          1.8481272727272726,
+          1.2004454545454546,
+          1.1987818181818182,
+          1.1990909090909092,
+          1.1846909090909092
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.1990909090909092,
+      "improvement": 0.9866381222309243
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.1686,
+      "cpp_ms": 1.4546777777777777,
+      "speedup": 4.240526729859992,
+      "samples_ms": [
+        [
+          6.1406,
+          6.2191,
+          6.1686,
+          6.2891,
+          6.1423,
+          6.1552,
+          6.1898
+        ],
+        [
+          1.4717222222222222,
+          1.4873222222222222,
+          1.562488888888889,
+          1.4361333333333333,
+          1.4546777777777777,
+          1.4416444444444445,
+          1.447711111111111
+        ],
+        [
+          1.4856444444444445,
+          1.4883333333333333,
+          1.479811111111111,
+          1.4711444444444446,
+          1.500288888888889,
+          1.4491222222222222,
+          1.4938666666666667
+        ]
+      ],
+      "loops": [
+        2,
+        9,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.4856444444444445,
+      "improvement": 1.0212876467488028
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "even",
+      "kernel_shape": [
+        2,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 6.17645,
+      "cpp_ms": 1.123125,
+      "speedup": 5.499343350027824,
+      "samples_ms": [
+        [
+          6.22105,
+          6.17645,
+          5.90285,
+          6.1622,
+          6.16135,
+          6.26685,
+          6.29265
+        ],
+        [
+          1.1204666666666667,
+          1.089,
+          1.091325,
+          1.1289666666666667,
+          1.123125,
+          1.2131666666666667,
+          1.7355416666666668
+        ],
+        [
+          1.0990692307692307,
+          1.0856538461538463,
+          1.0761615384615384,
+          1.107676923076923,
+          1.1536461538461538,
+          1.103223076923077,
+          1.1107692307692307
+        ]
+      ],
+      "loops": [
+        2,
+        12,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.103223076923077,
+      "improvement": 0.9822798681563292
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.2915860465116279,
+      "cpp_ms": 0.2810918367346939,
+      "speedup": 1.0373337408116867,
+      "samples_ms": [
+        [
+          0.2885953488372093,
+          0.29635581395348837,
+          0.2894372093023256,
+          0.2948581395348837,
+          0.2915860465116279,
+          0.2893325581395349,
+          0.3004139534883721
+        ],
+        [
+          0.3069,
+          0.2786918367346939,
+          0.2782428571428572,
+          0.3184612244897959,
+          0.2810918367346939,
+          0.278669387755102,
+          0.2833408163265306
+        ],
+        [
+          0.36977450980392157,
+          0.282956862745098,
+          0.27935490196078433,
+          0.31448627450980393,
+          0.2869509803921569,
+          0.28882745098039214,
+          0.2800294117647059
+        ]
+      ],
+      "loops": [
+        43,
+        49,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2869509803921569,
+      "improvement": 1.0208442327088747
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "identity",
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.29,
+      "cpp_ms": 0.282742,
+      "speedup": 1.0256700454831613,
+      "samples_ms": [
+        [
+          0.2876173913043478,
+          0.30769347826086957,
+          0.2886739130434783,
+          0.28773478260869567,
+          0.29,
+          0.2930217391304348,
+          0.3158739130434783
+        ],
+        [
+          0.280528,
+          0.28793,
+          0.281452,
+          0.281836,
+          0.448506,
+          0.282742,
+          0.301048
+        ],
+        [
+          0.2963196078431372,
+          0.28031372549019606,
+          0.2846901960784314,
+          0.2799529411764706,
+          0.2818509803921569,
+          0.28493725490196076,
+          0.311243137254902
+        ]
+      ],
+      "loops": [
+        46,
+        50,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2846901960784314,
+      "improvement": 1.0068903667599132
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.00730855614973262,
+      "cpp_ms": 0.008864763779527558,
+      "speedup": 0.8244501863220686,
+      "samples_ms": [
+        [
+          0.007493761140819965,
+          0.007643850267379679,
+          0.007268092691622104,
+          0.007197860962566845,
+          0.00730855614973262,
+          0.007262032085561497,
+          0.00741301247771836
+        ],
+        [
+          0.008970472440944883,
+          0.010292519685039369,
+          0.008741338582677165,
+          0.008782874015748031,
+          0.00892716535433071,
+          0.00885216535433071,
+          0.008864763779527558
+        ],
+        [
+          0.009290714285714286,
+          0.009065,
+          0.008815,
+          0.008832857142857142,
+          0.008816785714285715,
+          0.00917892857142857,
+          0.0092325
+        ]
+      ],
+      "loops": [
+        561,
+        508,
+        280
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.009065,
+      "improvement": 1.022587879999112
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        3,
+        7
+      ],
+      "layout": "tiny",
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 0.007329182879377432,
+      "cpp_ms": 0.008691483516483517,
+      "speedup": 0.8432602864030676,
+      "samples_ms": [
+        [
+          0.007451750972762646,
+          0.007384046692607004,
+          0.007184824902723735,
+          0.007329182879377432,
+          0.007217898832684825,
+          0.007158365758754864,
+          0.0074354085603112845
+        ],
+        [
+          0.008947802197802198,
+          0.008841758241758242,
+          0.008544505494505495,
+          0.008637087912087912,
+          0.008664285714285713,
+          0.008802197802197802,
+          0.008691483516483517
+        ],
+        [
+          0.00890044543429844,
+          0.008835412026726058,
+          0.008747438752783965,
+          0.008775055679287306,
+          0.008727171492204899,
+          0.008825835189309577,
+          0.008929398663697104
+        ]
+      ],
+      "loops": [
+        257,
+        364,
+        449
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.008825835189309577,
+      "improvement": 1.0154578528016833
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.2526,
+      "cpp_ms": 1.4572,
+      "speedup": 2.2320889376887183,
+      "samples_ms": [
+        [
+          3.256925,
+          3.2526,
+          3.2976,
+          3.535925,
+          3.245225,
+          3.240725,
+          3.248975
+        ],
+        [
+          1.4572,
+          1.4314777777777778,
+          1.4914444444444446,
+          1.4584,
+          1.4532222222222222,
+          1.4550222222222222,
+          1.4843333333333333
+        ],
+        [
+          1.45017,
+          1.46271,
+          1.44589,
+          1.51072,
+          1.44287,
+          1.48142,
+          1.43692
+        ]
+      ],
+      "loops": [
+        4,
+        9,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.45017,
+      "improvement": 0.9951756793851221
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 3.262025,
+      "cpp_ms": 1.1427615384615386,
+      "speedup": 2.854510665796081,
+      "samples_ms": [
+        [
+          3.2065,
+          3.27105,
+          3.247325,
+          3.2532,
+          3.262025,
+          3.264475,
+          3.3522
+        ],
+        [
+          1.1552692307692307,
+          1.1100538461538463,
+          1.122423076923077,
+          1.1189384615384614,
+          1.1427615384615386,
+          1.161123076923077,
+          1.3207153846153845
+        ],
+        [
+          1.2651076923076923,
+          1.1233538461538461,
+          1.104223076923077,
+          1.150276923076923,
+          1.1108384615384614,
+          1.1887153846153846,
+          1.2282615384615385
+        ]
+      ],
+      "loops": [
+        4,
+        13,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.150276923076923,
+      "improvement": 1.0065765116889585
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 8.277,
+      "cpp_ms": 8.72,
+      "speedup": 0.9491972477064219,
+      "samples_ms": [
+        [
+          8.277,
+          8.1803,
+          8.347,
+          9.0713,
+          8.2804,
+          8.0853,
+          8.2667
+        ],
+        [
+          8.7454,
+          8.6585,
+          8.6522,
+          8.8414,
+          9.5076,
+          8.5292,
+          8.72
+        ],
+        [
+          8.7663,
+          8.8386,
+          8.7131,
+          8.8917,
+          8.9475,
+          8.7231,
+          8.8371
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.8371,
+      "improvement": 1.0134288990825686
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "one-dimensional31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 8.1418,
+      "cpp_ms": 2.945875,
+      "speedup": 2.7637968345567954,
+      "samples_ms": [
+        [
+          8.1449,
+          8.2321,
+          8.2051,
+          8.0399,
+          7.93,
+          8.1418,
+          8.1021
+        ],
+        [
+          3.161475,
+          4.039425,
+          3.103675,
+          2.945875,
+          2.827875,
+          2.80525,
+          2.866025
+        ],
+        [
+          2.994375,
+          3.031375,
+          3.155125,
+          2.96955,
+          2.84075,
+          2.8412,
+          2.856475
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 2.96955,
+      "improvement": 1.0080366614333602
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 14.432,
+      "cpp_ms": 3.3099,
+      "speedup": 4.3602525756065145,
+      "samples_ms": [
+        [
+          14.2916,
+          14.3452,
+          14.453,
+          14.4055,
+          14.432,
+          14.6308,
+          14.7657
+        ],
+        [
+          3.263725,
+          3.46715,
+          3.315125,
+          3.265175,
+          3.331175,
+          3.29815,
+          3.3099
+        ],
+        [
+          3.4009,
+          3.354875,
+          3.3584,
+          3.32905,
+          3.35555,
+          3.35715,
+          3.415125
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.35715,
+      "improvement": 1.014275355750929
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        33,
+        35,
+        37
+      ],
+      "layout": "three-dimensional",
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 14.4113,
+      "cpp_ms": 3.266225,
+      "speedup": 4.4122189989973135,
+      "samples_ms": [
+        [
+          14.307,
+          14.5869,
+          14.4925,
+          14.3431,
+          14.4404,
+          14.1653,
+          14.4113
+        ],
+        [
+          3.2699,
+          3.294075,
+          3.24715,
+          3.2017,
+          3.256425,
+          3.266225,
+          3.274325
+        ],
+        [
+          3.33165,
+          3.28215,
+          3.368425,
+          3.346225,
+          3.363425,
+          3.352775,
+          3.358075
+        ]
+      ],
+      "loops": [
+        1,
+        4,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 3.352775,
+      "improvement": 1.0264984806619262
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 2.5228,
+      "cpp_ms": 4.88955,
+      "speedup": 0.5159575012015422,
+      "samples_ms": [
+        [
+          2.54566,
+          2.51216,
+          2.53368,
+          2.49576,
+          2.48812,
+          2.61248,
+          2.5228
+        ],
+        [
+          4.89545,
+          4.93645,
+          4.8415,
+          4.8231,
+          4.88955,
+          4.94945,
+          4.85655
+        ],
+        [
+          4.9111,
+          4.9566,
+          4.94845,
+          4.85235,
+          4.8836,
+          5.03945,
+          4.86445
+        ]
+      ],
+      "loops": [
+        5,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.9111,
+      "improvement": 1.0044073585503779
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero3",
+      "kernel_shape": [
+        3
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 2.55002,
+      "cpp_ms": 4.9333,
+      "speedup": 0.5168994385097196,
+      "samples_ms": [
+        [
+          2.52922,
+          2.50634,
+          2.63208,
+          2.55002,
+          3.3075,
+          4.14258,
+          2.49068
+        ],
+        [
+          4.949133333333333,
+          4.847933333333333,
+          5.023233333333333,
+          4.9333,
+          6.239033333333333,
+          4.912866666666667,
+          4.836633333333333
+        ],
+        [
+          4.9972,
+          4.96605,
+          5.0955,
+          4.98875,
+          4.93155,
+          4.97865,
+          4.85845
+        ]
+      ],
+      "loops": [
+        5,
+        3,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 4.97865,
+      "improvement": 1.0091926296799303
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 5.4233,
+      "cpp_ms": 8.5644,
+      "speedup": 0.633237588155621,
+      "samples_ms": [
+        [
+          5.65345,
+          5.49135,
+          5.35725,
+          5.4015,
+          5.42045,
+          5.4233,
+          5.53675
+        ],
+        [
+          8.6422,
+          8.5644,
+          8.3017,
+          8.2948,
+          8.5019,
+          8.6452,
+          8.638
+        ],
+        [
+          8.6178,
+          8.6601,
+          8.4896,
+          8.3348,
+          8.5496,
+          8.5393,
+          8.5642
+        ]
+      ],
+      "loops": [
+        2,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.5496,
+      "improvement": 0.9982719163047032
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        262656
+      ],
+      "layout": "signed-zero31",
+      "kernel_shape": [
+        31
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "verified",
+      "baseline_signbit_mismatches": 0,
+      "reference_ms": 5.44765,
+      "cpp_ms": 8.5803,
+      "speedup": 0.6349020430521078,
+      "samples_ms": [
+        [
+          5.4722,
+          5.41375,
+          5.3659,
+          5.59775,
+          5.44765,
+          5.42425,
+          5.46785
+        ],
+        [
+          8.6342,
+          8.563,
+          8.7265,
+          8.5803,
+          8.4818,
+          8.4626,
+          8.8319
+        ],
+        [
+          8.6367,
+          8.5949,
+          8.4823,
+          8.5818,
+          8.5749,
+          8.5213,
+          11.8272
+        ]
+      ],
+      "loops": [
+        2,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.5818,
+      "improvement": 1.0001748190622706
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "signed-zero-pair",
+      "kernel_shape": [
+        1,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 1,
+      "max_abs_error": 0.0,
+      "baseline_parity": "signed-zero-mismatch-unmeasured",
+      "baseline_signbit_mismatches": 32708,
+      "reference_ms": 1.694075,
+      "cpp_ms": 5.84485,
+      "speedup": 0.28984062892974155,
+      "samples_ms": [
+        [
+          1.7494875,
+          1.66665,
+          1.704925,
+          1.9505,
+          1.694075,
+          1.6814625,
+          1.657875
+        ],
+        [
+          5.9188,
+          5.8019,
+          5.83435,
+          9.58915,
+          12.09485,
+          5.84485,
+          5.8111
+        ]
+      ],
+      "loops": [
+        8,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.median",
+      "dtype": "float64",
+      "shape": [
+        512,
+        513
+      ],
+      "layout": "signed-zero-pair",
+      "kernel_shape": [
+        1,
+        2
+      ],
+      "mode": "nearest",
+      "threads": 4,
+      "max_abs_error": 0.0,
+      "baseline_parity": "signed-zero-mismatch-unmeasured",
+      "baseline_signbit_mismatches": 32708,
+      "reference_ms": 1.697275,
+      "cpp_ms": 3.78005,
+      "speedup": 0.449008610997209,
+      "samples_ms": [
+        [
+          1.6713125,
+          1.65405,
+          1.697275,
+          2.217875,
+          1.7228,
+          1.730925,
+          1.6715
+        ],
+        [
+          3.69795,
+          3.9676,
+          3.773925,
+          4.28795,
+          5.7822,
+          3.78005,
+          3.68555
+        ]
+      ],
+      "loops": [
+        8,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
