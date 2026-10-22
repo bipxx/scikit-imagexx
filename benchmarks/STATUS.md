@@ -1,9 +1,21 @@
 # Last completed whole-library performance checkpoint
 
+The [CLAHE experiments](clahe-initial.md) retain the initial native port and the
+validated float-buffer reuse optimization. The latest paired run measures
+one-worker geometric means of 9.786x on Linux and 14.073x on Windows over
+scikit-image 0.26.0. Same-run improvement over the initial native package is
+1.011x/1.013x across 40 fixed cases, with adverse controls retained.
+
+The [multi-Otsu experiments](multiotsu-initial.md) retain one-worker geometric
+means of 3.770x/5.444x over upstream after optimizing two-class thresholds.
+Both ports are merged on main after full source CI.
+
 The [median experiments](median-initial.md) preserve initial and paired trials,
 including severe large-window regressions and their subsequent improvement.
-The port remains on its feature branch while long 1-D and tiny-call costs are
-addressed; these trials do not yet increase main native coverage.
+The port is retained on main. The integrated paired run measures 6.999x/4.331x
+over upstream on Linux/Windows; signed-zero 1-D and some tiny Windows calls
+remain slower. These scoped measurements do not replace the older whole-library
+checkpoint below or prove performance for every possible call.
 
 The [retained sparse-correlation port](sparse.md) adds exact ordered products,
 native row padding and optional global workers. One-worker geometric means are
