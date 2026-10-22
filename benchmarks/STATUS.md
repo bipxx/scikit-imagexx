@@ -1,9 +1,12 @@
 # Last completed whole-library performance checkpoint
 
 The newer [Li threshold checkpoint](li.md) records source-specific Windows/Linux
-one-worker and four-worker results, including regressions. Full CI currently has
-eight Linux CIEDE2000 antipodal layout failures; the Li and minimum-NumPy checks
-pass. The whole-library reports below remain historical.
+one-worker and four-worker results, including regressions. The subsequent
+[runtime angle-layout correction](distance-layout.md) addresses the eight Linux
+CIEDE2000 failures recorded at that checkpoint and retains paired measurements
+against the exact previous package. Its full CI gates are still running; its
+focused parity and both paired performance jobs pass. The whole-library reports
+below remain historical.
 
 These 21 reports were measured at `984141f`, before the conversion layout optimization, legacy color-distance corrections and histogram-matching port/tuning. The [conversion experiment](conversion-packet-tuning.md), [scalar-distance report](distance-scalar.md), [CIEDE2000 report](ciede2000.md), [histogram-matching port](match-histograms.md) and [rank-storage tuning](match-memory.md) record their separate source-specific measurements; the whole-library source set remains historical until the next full refresh.
 

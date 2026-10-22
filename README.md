@@ -701,3 +701,9 @@ It records per-function parity, one/four-worker timings and regressions against
 the previous exact build. The actual AVX-512/SVML confirmation passes both
 SIMD modes and measures 2.34× geometric-mean speedup over original scikit-image
 with one worker. Exact measured CI wheels and raw samples are retained.
+
+The subsequent [NumPy 2.5 angle-layout correction](benchmarks/distance-layout.md)
+preserves runtime atan2 dispatch for positive and negative strides. Paired isolated
+one-worker measurements are 2.26× faster than scikit-image on Linux and 2.87× on
+Windows; the report retains the approximately 1.7% regression against the prior
+C++ package along with every raw sample.
