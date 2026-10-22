@@ -160,13 +160,28 @@ def test_explicit_fallback_for_complex():
 @pytest.mark.parametrize('image_dtype',[np.uint64,np.float32,np.float64])
 @pytest.mark.parametrize('role',[1,2])
 @pytest.mark.parametrize('policy',['warn','raise','ignore'])
-def test_signaling_threshold_fields_with_mixed_images(dtype,integer,bits,image_dtype,role,policy):
-    field=np.zeros(3,dtype=dtype) if role==1 else np.ones(3,dtype=dtype)
+@pytest.mark.parametrize('size',[3,33])
+def test_signaling_threshold_fields_with_mixed_images(dtype,integer,bits,image_dtype,role,policy,size):
+    field=np.zeros(size,dtype=dtype) if role==1 else np.ones(size,dtype=dtype)
     field.view(integer)[1]=bits
-    args=[np.array([0,1,2],dtype=image_dtype),0,1];args[role]=field
+    args=[np.resize(np.array([0,1,2],dtype=image_dtype),size),0,1];args[role]=field
     with np.errstate(invalid=policy):compare(*args)
 
 @pytest.mark.parametrize('dtype',[np.longlong,np.ulonglong])
 @pytest.mark.parametrize('shape',[(),(17,19)])
 def test_platform_integer_aliases(dtype,shape):
     compare(sample(dtype,shape),0,2**63)
+
+def test_python_scalar_image_explicit_fallback():
+    a=2**63+1
+    with pytest.raises(NotImplementedError,match='outside native coverage'):xx.filters.apply_hysteresis_threshold(a,0,float(2**63))
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning):actual=xx.filters.apply_hysteresis_threshold(a,0,float(2**63))
+    np.testing.assert_array_equal(actual,reference(a,0,float(2**63)))
+
+@pytest.mark.parametrize('shape',[(513,515),(65,65,65)])
+def test_large_broadcast_fields_across_worker_boundaries(shape):
+    a=np.random.default_rng(211).random(shape,dtype=np.float32)
+    low=np.linspace(.1,.4,shape[0]*shape[-1],dtype=np.float32).reshape((shape[0],)+(1,)*(len(shape)-2)+(shape[-1],)) if len(shape)>2 else np.linspace(.1,.4,shape[0],dtype=np.float32)[:,None]
+    high=np.linspace(.6,.9,shape[1],dtype=np.float32).reshape((1,shape[1])+(1,)*(len(shape)-2))
+    compare(a,low,high)

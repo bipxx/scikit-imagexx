@@ -495,6 +495,7 @@ def _hysteresis_dtype(dtype):
 
 
 _HYSTERESIS_SCALARS={t for t in np.ScalarType if _hysteresis_dtype(np.dtype(t))}
+_HYSTERESIS_EXACT_MIXED=np.greater.resolve_dtypes((np.dtype(np.int64),np.dtype(np.uint64),None))[0].kind!='f'
 
 
 def _hysteresis_probe(value,empty=False):
@@ -519,7 +520,7 @@ def _hysteresis_compare(image,bound,shape):
     if type(bound) is int and dtype.kind in 'iu':
         limits=np.iinfo(dtype)
         if bound<limits.min or bound>limits.max:dtype=np.result_type(image.dtype,other.dtype)
-    if image.dtype.kind in 'biu' and other.dtype.kind in 'biu' and dtype.kind=='f':
+    if _HYSTERESIS_EXACT_MIXED and image.dtype.kind in 'biu' and other.dtype.kind in 'biu' and dtype.kind=='f':
         # NumPy has exact qQ/Qq comparison loops rather than float64 coercion.
         at=np.int64 if image.dtype.kind=='i' else np.uint64
         bt=np.int64 if other.dtype.kind=='i' else np.uint64
@@ -530,7 +531,7 @@ def _hysteresis_compare(image,bound,shape):
 def apply_hysteresis_threshold(image,low,high):
     original=image,low,high
     def delegated():return fallback('filters','apply_hysteresis_threshold',*original)
-    if type(image) in _HYSTERESIS_SCALARS:image=np.asarray(image)
+    if type(image) in _HYSTERESIS_SCALARS and isinstance(image,np.generic):image=np.asarray(image)
     if type(image) not in (np.ndarray,np.memmap) or not _hysteresis_dtype(image.dtype):return delegated()
     for value in (low,high):
         if type(value) not in (list,tuple,np.ndarray,np.memmap,*_HYSTERESIS_SCALARS):return delegated()
