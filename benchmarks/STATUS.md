@@ -1,5 +1,11 @@
 # Last completed whole-library performance checkpoint
 
+The [Gabor image filter](gabor-image-initial.md) is retained after full CI.
+One-worker geometric means are 8.977x Linux /9.006x Windows over scikit-image
+0.26.0; all 72 cases per OS are faster, including every real dtype. Integer and
+boolean result bytes and float32 outputs are exact in this corpus. Shared
+kernel controls also pass, at 3.443x/3.648x over upstream across 36 cases per OS.
+
 The [CLAHE experiments](clahe-initial.md) retain the initial native port and the
 validated float-buffer reuse optimization. The latest paired run measures
 one-worker geometric means of 9.786x on Linux and 14.073x on Windows over
