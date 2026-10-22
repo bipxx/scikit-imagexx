@@ -197,7 +197,7 @@ def threshold_minimum(image=None, nbins=256, max_num_iter=10000, *, hist=None):
     return centers[_core.threshold_minimum(counts,iterations)]
 
 
-__all__ += ['threshold_minimum']
+# Added to the reviewed export registry after its benchmark confirmation.
 
 
 _LOCAL_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64}
