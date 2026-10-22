@@ -1,14 +1,18 @@
 # Last completed whole-library performance checkpoint
 
-The [row-span trial](hysteresis-spans-trial.md) remains unretained: paired overall
-gains coexist with equal-threshold and other control regressions. All raw cases
-and exact packages are preserved while traversal isolation is investigated.
+The [retained row-span helper](hysteresis-spans.md) improves the paired one-worker
+corpus 1.150x on Linux and 1.136x on Windows against the exact initial package.
+Current geometric means are 2.104x/1.828x over scikit-image. The earlier inline
+trial and every residual control regression remain preserved. Exact-source
+scoped and minimum-runtime checks pass; full follow-up CI is in progress.
 
 The [hysteresis parity checkpoint](hysteresis.md) adds native broadcast thresholds,
 SIMD masks and optional parallel connectivity. Retained-source one-worker geometric
 means are 1.73x/1.63x over scikit-image on Linux/Windows, with slower random,
 strided and Fortran cases retained. Exact final-source timings and scoped SIMD,
-scalar, minimum-NumPy and sanitizer checks are recorded; full CI remains pending.
+scalar, minimum-NumPy and sanitizer checks are recorded. Full retained compatibility
+CI passes all three jobs, including Linux 50,845 and Windows 50,843 plus two skips
+in each SIMD mode, and normal/dynamic/portable native checks 2/2 on both OSes.
 
 The [packed wide-range rank checkpoint](rank-packed.md) reduces sort-record
 traffic and removes the full group-start array. Against the exact table package,

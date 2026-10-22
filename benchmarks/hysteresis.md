@@ -8,7 +8,7 @@ Native clipping and comparison use AVX2 where supported; connectivity uses seria
 
 Windows one-worker geometric mean across all 32 cases: **1.667x** upstream/native. [Raw data](hysteresis-initial-windows.json).
 Linux one-worker geometric mean across all 32 cases: **1.733x** upstream/native. [Raw data](hysteresis-initial-linux.json).
-The retained compatibility correction `cef6663` additionally matches legacy NumPy mixed integer comparisons and explicitly delegates ordinary Python scalar images. Its minimum-NumPy SIMD/scalar checks each pass 2,156 cases; modern Windows scoped SIMD/scalar checks each pass 6,300 cases. Native normal/dynamic/portable and ASan/UBSan normal/dynamic checks pass 2/2 each. Full CI remains pending. Final-source measurements are recorded in a separate section below; initial-source numbers must not be attributed to the corrected fingerprint.
+The retained compatibility correction `cef6663` additionally matches legacy NumPy mixed integer comparisons and explicitly delegates ordinary Python scalar images. Its minimum-NumPy SIMD/scalar checks each pass 2,156 cases; modern Windows scoped SIMD/scalar checks each pass 6,300 cases. Native normal/dynamic/portable and ASan/UBSan normal/dynamic checks pass 2/2 each. Full CI passes all three jobs: Linux 50,845 tests and Windows 50,843 plus two skips in each SIMD mode, with native normal/dynamic/portable checks 2/2 on both OSes. Final-source measurements are recorded in a separate section below; initial-source numbers must not be attributed to the corrected fingerprint.
 
 ## Bottlenecks
 
