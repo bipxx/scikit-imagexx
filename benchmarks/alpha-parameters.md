@@ -4,211 +4,211 @@ Original scikit-image 0.26.0. Reference thread pools use one worker; native work
 
 | API | Input | Layout / workload | Workers | Original ms | C++ ms | Speedup |
 |---|---|---|---:|---:|---:|---:|
-| color.rgba2rgb | bool | contiguous | 1 | 14.3089 | 0.5491 | 26.06x |
-| color.rgba2rgb | bool | reversed | 1 | 15.1842 | 2.0612 | 7.37x |
-| color.rgba2rgb | bool | strided | 1 | 14.5832 | 2.1232 | 6.87x |
-| color.rgba2rgb | bool | fortran | 1 | 12.2051 | 2.0558 | 5.94x |
-| color.rgba2rgb | bool | planar | 1 | 8.5086 | 2.0561 | 4.14x |
-| color.rgba2rgb | uint8 | contiguous | 1 | 14.5427 | 0.5894 | 24.67x |
-| color.rgba2rgb | uint8 | reversed | 1 | 15.1795 | 2.0498 | 7.41x |
-| color.rgba2rgb | uint8 | strided | 1 | 15.2253 | 2.0584 | 7.40x |
-| color.rgba2rgb | uint8 | fortran | 1 | 11.5524 | 2.0732 | 5.57x |
-| color.rgba2rgb | uint8 | planar | 1 | 11.7638 | 2.0669 | 5.69x |
-| color.rgba2rgb | int8 | contiguous | 1 | 17.5158 | 1.9186 | 9.13x |
-| color.rgba2rgb | int8 | reversed | 1 | 16.6573 | 2.5939 | 6.42x |
-| color.rgba2rgb | int8 | strided | 1 | 17.6414 | 3.4177 | 5.16x |
-| color.rgba2rgb | int8 | fortran | 1 | 12.9366 | 2.4743 | 5.23x |
-| color.rgba2rgb | int8 | planar | 1 | 9.3619 | 3.2758 | 2.86x |
-| color.rgba2rgb | uint16 | contiguous | 1 | 15.3792 | 0.7015 | 21.92x |
-| color.rgba2rgb | uint16 | reversed | 1 | 17.9278 | 2.1937 | 8.17x |
-| color.rgba2rgb | uint16 | strided | 1 | 16.4948 | 2.2536 | 7.32x |
-| color.rgba2rgb | uint16 | fortran | 1 | 13.1984 | 2.1824 | 6.05x |
-| color.rgba2rgb | uint16 | planar | 1 | 9.3974 | 2.0879 | 4.50x |
-| color.rgba2rgb | int16 | contiguous | 1 | 15.2909 | 0.7412 | 20.63x |
-| color.rgba2rgb | int16 | reversed | 1 | 16.1655 | 2.4626 | 6.56x |
-| color.rgba2rgb | int16 | strided | 1 | 15.5906 | 2.4532 | 6.36x |
-| color.rgba2rgb | int16 | fortran | 1 | 15.6787 | 2.5254 | 6.21x |
-| color.rgba2rgb | int16 | planar | 1 | 9.9412 | 2.4177 | 4.11x |
-| color.rgba2rgb | uint32 | contiguous | 1 | 14.6333 | 2.1174 | 6.91x |
-| color.rgba2rgb | uint32 | reversed | 1 | 16.2216 | 1.9054 | 8.51x |
-| color.rgba2rgb | uint32 | strided | 1 | 16.3078 | 2.1896 | 7.45x |
-| color.rgba2rgb | uint32 | fortran | 1 | 11.7275 | 1.9352 | 6.06x |
-| color.rgba2rgb | uint32 | planar | 1 | 8.5783 | 1.8236 | 4.70x |
-| color.rgba2rgb | int32 | contiguous | 1 | 14.2473 | 2.3886 | 5.96x |
-| color.rgba2rgb | int32 | reversed | 1 | 14.6819 | 2.4053 | 6.10x |
-| color.rgba2rgb | int32 | strided | 1 | 14.2113 | 2.5124 | 5.66x |
-| color.rgba2rgb | int32 | fortran | 1 | 11.3797 | 2.4520 | 4.64x |
-| color.rgba2rgb | int32 | planar | 1 | 9.6106 | 2.4673 | 3.90x |
-| color.rgba2rgb | uint64 | contiguous | 1 | 19.3550 | 4.7207 | 4.10x |
-| color.rgba2rgb | uint64 | reversed | 1 | 19.1218 | 4.6093 | 4.15x |
-| color.rgba2rgb | uint64 | strided | 1 | 18.0646 | 4.3033 | 4.20x |
-| color.rgba2rgb | uint64 | fortran | 1 | 15.8176 | 4.6197 | 3.42x |
-| color.rgba2rgb | uint64 | planar | 1 | 12.1570 | 4.6063 | 2.64x |
-| color.rgba2rgb | int64 | contiguous | 1 | 15.3418 | 2.6801 | 5.72x |
-| color.rgba2rgb | int64 | reversed | 1 | 15.9488 | 2.6684 | 5.98x |
-| color.rgba2rgb | int64 | strided | 1 | 16.2582 | 2.8487 | 5.71x |
-| color.rgba2rgb | int64 | fortran | 1 | 13.9032 | 2.5863 | 5.38x |
-| color.rgba2rgb | int64 | planar | 1 | 10.6122 | 2.5961 | 4.09x |
-| color.rgba2rgb | float32 | contiguous | 1 | 9.4226 | 0.5915 | 15.93x |
-| color.rgba2rgb | float32 | reversed | 1 | 7.0162 | 1.6527 | 4.25x |
-| color.rgba2rgb | float32 | strided | 1 | 9.9629 | 2.4221 | 4.11x |
-| color.rgba2rgb | float32 | fortran | 1 | 7.2835 | 0.5624 | 12.95x |
-| color.rgba2rgb | float32 | planar | 1 | 3.8601 | 0.5888 | 6.56x |
-| color.rgba2rgb | float64 | contiguous | 1 | 12.2623 | 1.1001 | 11.15x |
-| color.rgba2rgb | float64 | reversed | 1 | 12.8674 | 4.6298 | 2.78x |
-| color.rgba2rgb | float64 | strided | 1 | 12.9438 | 6.0564 | 2.14x |
-| color.rgba2rgb | float64 | fortran | 1 | 12.0099 | 1.5303 | 7.85x |
-| color.rgba2rgb | float64 | planar | 1 | 8.1580 | 1.0681 | 7.64x |
-| color.gray2rgb | bool | contiguous | 1 | 0.2913 | 0.0843 | 3.45x |
-| color.gray2rgba | bool | contiguous | 1 | 0.2670 | 0.0681 | 3.92x |
-| color.gray2rgb | bool | reversed | 1 | 0.3499 | 0.2506 | 1.40x |
-| color.gray2rgba | bool | reversed | 1 | 0.2518 | 0.0725 | 3.47x |
-| color.gray2rgb | bool | strided | 1 | 0.3614 | 0.2582 | 1.40x |
-| color.gray2rgba | bool | strided | 1 | 0.2861 | 0.0854 | 3.35x |
-| color.gray2rgb | bool | fortran | 1 | 0.3366 | 0.2364 | 1.42x |
-| color.gray2rgba | bool | fortran | 1 | 0.4731 | 0.0683 | 6.93x |
-| color.gray2rgb | uint8 | contiguous | 1 | 0.3424 | 0.2307 | 1.48x |
-| color.gray2rgba | uint8 | contiguous | 1 | 0.2583 | 0.0735 | 3.52x |
-| color.gray2rgb | uint8 | reversed | 1 | 0.3359 | 0.2324 | 1.45x |
-| color.gray2rgba | uint8 | reversed | 1 | 0.2467 | 0.0723 | 3.41x |
-| color.gray2rgb | uint8 | strided | 1 | 0.3638 | 0.2497 | 1.46x |
-| color.gray2rgba | uint8 | strided | 1 | 0.3199 | 0.0919 | 3.48x |
-| color.gray2rgb | uint8 | fortran | 1 | 0.3703 | 0.2623 | 1.41x |
-| color.gray2rgba | uint8 | fortran | 1 | 0.5058 | 0.0788 | 6.42x |
-| color.gray2rgb | int8 | contiguous | 1 | 0.3823 | 0.2569 | 1.49x |
-| color.gray2rgba | int8 | contiguous | 1 | 0.2705 | 0.0770 | 3.51x |
-| color.gray2rgb | int8 | reversed | 1 | 0.3925 | 0.2754 | 1.43x |
-| color.gray2rgba | int8 | reversed | 1 | 0.2850 | 0.0819 | 3.48x |
-| color.gray2rgb | int8 | strided | 1 | 0.3806 | 0.2513 | 1.51x |
-| color.gray2rgba | int8 | strided | 1 | 0.4090 | 0.2259 | 1.81x |
-| color.gray2rgb | int8 | fortran | 1 | 0.4669 | 0.2622 | 1.78x |
-| color.gray2rgba | int8 | fortran | 1 | 0.5000 | 0.0971 | 5.15x |
-| color.gray2rgb | uint16 | contiguous | 1 | 0.1933 | 0.1430 | 1.35x |
-| color.gray2rgba | uint16 | contiguous | 1 | 1.0256 | 0.6521 | 1.57x |
-| color.gray2rgb | uint16 | reversed | 1 | 1.1094 | 0.7456 | 1.49x |
-| color.gray2rgba | uint16 | reversed | 1 | 0.4259 | 0.2640 | 1.61x |
-| color.gray2rgb | uint16 | strided | 1 | 0.9431 | 0.5942 | 1.59x |
-| color.gray2rgba | uint16 | strided | 1 | 0.4377 | 0.1925 | 2.27x |
-| color.gray2rgb | uint16 | fortran | 1 | 0.6079 | 0.4940 | 1.23x |
-| color.gray2rgba | uint16 | fortran | 1 | 0.6116 | 0.1345 | 4.55x |
-| color.gray2rgb | int16 | contiguous | 1 | 0.1999 | 0.1923 | 1.04x |
-| color.gray2rgba | int16 | contiguous | 1 | 0.3416 | 0.1422 | 2.40x |
-| color.gray2rgb | int16 | reversed | 1 | 0.6575 | 0.5167 | 1.27x |
-| color.gray2rgba | int16 | reversed | 1 | 0.6471 | 0.3099 | 2.09x |
-| color.gray2rgb | int16 | strided | 1 | 0.4546 | 0.3833 | 1.19x |
-| color.gray2rgba | int16 | strided | 1 | 0.4909 | 0.3030 | 1.62x |
-| color.gray2rgb | int16 | fortran | 1 | 0.1978 | 0.1458 | 1.36x |
-| color.gray2rgba | int16 | fortran | 1 | 0.6522 | 0.1416 | 4.60x |
-| color.gray2rgb | uint32 | contiguous | 1 | 0.3731 | 0.2434 | 1.53x |
-| color.gray2rgba | uint32 | contiguous | 1 | 0.5299 | 0.2288 | 2.32x |
-| color.gray2rgb | uint32 | reversed | 1 | 1.0619 | 0.7347 | 1.45x |
-| color.gray2rgba | uint32 | reversed | 1 | 0.6063 | 0.2657 | 2.28x |
-| color.gray2rgb | uint32 | strided | 1 | 1.5776 | 0.8875 | 1.78x |
-| color.gray2rgba | uint32 | strided | 1 | 0.6908 | 0.3272 | 2.11x |
-| color.gray2rgb | uint32 | fortran | 1 | 1.2216 | 0.9557 | 1.28x |
-| color.gray2rgba | uint32 | fortran | 1 | 1.0269 | 0.2512 | 4.09x |
-| color.gray2rgb | int32 | contiguous | 1 | 0.3018 | 0.1516 | 1.99x |
-| color.gray2rgba | int32 | contiguous | 1 | 0.5542 | 0.2408 | 2.30x |
-| color.gray2rgb | int32 | reversed | 1 | 0.3154 | 0.1491 | 2.12x |
-| color.gray2rgba | int32 | reversed | 1 | 0.4964 | 0.2185 | 2.27x |
-| color.gray2rgb | int32 | strided | 1 | 0.3658 | 0.1931 | 1.89x |
-| color.gray2rgba | int32 | strided | 1 | 0.6235 | 0.2838 | 2.20x |
-| color.gray2rgb | int32 | fortran | 1 | 0.3016 | 0.1579 | 1.91x |
-| color.gray2rgba | int32 | fortran | 1 | 0.8982 | 0.2377 | 3.78x |
-| color.gray2rgb | uint64 | contiguous | 1 | 2.2887 | 1.6405 | 1.40x |
-| color.gray2rgba | uint64 | contiguous | 1 | 3.8963 | 2.1897 | 1.78x |
-| color.gray2rgb | uint64 | reversed | 1 | 2.0225 | 1.4687 | 1.38x |
-| color.gray2rgba | uint64 | reversed | 1 | 3.4422 | 2.1147 | 1.63x |
-| color.gray2rgb | uint64 | strided | 1 | 2.6021 | 1.6188 | 1.61x |
-| color.gray2rgba | uint64 | strided | 1 | 4.2439 | 2.3983 | 1.77x |
-| color.gray2rgb | uint64 | fortran | 1 | 2.4866 | 1.8510 | 1.34x |
-| color.gray2rgba | uint64 | fortran | 1 | 8.4668 | 2.8136 | 3.01x |
-| color.gray2rgb | int64 | contiguous | 1 | 2.8028 | 1.9010 | 1.47x |
-| color.gray2rgba | int64 | contiguous | 1 | 3.8099 | 2.8035 | 1.36x |
-| color.gray2rgb | int64 | reversed | 1 | 2.1671 | 0.4780 | 4.53x |
-| color.gray2rgba | int64 | reversed | 1 | 3.5589 | 2.2447 | 1.59x |
-| color.gray2rgb | int64 | strided | 1 | 2.4705 | 1.7775 | 1.39x |
-| color.gray2rgba | int64 | strided | 1 | 9.4363 | 5.2624 | 1.79x |
-| color.gray2rgb | int64 | fortran | 1 | 6.7562 | 4.5335 | 1.49x |
-| color.gray2rgba | int64 | fortran | 1 | 12.4533 | 3.7477 | 3.32x |
-| color.gray2rgb | float32 | contiguous | 1 | 0.3926 | 0.1815 | 2.16x |
-| color.gray2rgba | float32 | contiguous | 1 | 0.5840 | 0.2663 | 2.19x |
-| color.gray2rgb | float32 | reversed | 1 | 0.3164 | 0.1659 | 1.91x |
-| color.gray2rgba | float32 | reversed | 1 | 0.5505 | 0.3105 | 1.77x |
-| color.gray2rgb | float32 | strided | 1 | 0.4339 | 0.2025 | 2.14x |
-| color.gray2rgba | float32 | strided | 1 | 0.6904 | 0.3111 | 2.22x |
-| color.gray2rgb | float32 | fortran | 1 | 0.3167 | 0.1615 | 1.96x |
-| color.gray2rgba | float32 | fortran | 1 | 0.9036 | 0.2600 | 3.48x |
-| color.gray2rgb | float64 | contiguous | 1 | 2.3074 | 1.7576 | 1.31x |
-| color.gray2rgba | float64 | contiguous | 1 | 3.7042 | 2.2449 | 1.65x |
-| color.gray2rgb | float64 | reversed | 1 | 2.9240 | 1.7933 | 1.63x |
-| color.gray2rgba | float64 | reversed | 1 | 3.9733 | 2.5585 | 1.55x |
-| color.gray2rgb | float64 | strided | 1 | 3.5673 | 2.2012 | 1.62x |
-| color.gray2rgba | float64 | strided | 1 | 3.3835 | 2.2571 | 1.50x |
-| color.gray2rgb | float64 | fortran | 1 | 2.1425 | 0.4492 | 4.77x |
-| color.gray2rgba | float64 | fortran | 1 | 5.1573 | 2.0977 | 2.46x |
-| color.gray2rgb | float16 | contiguous | 1 | 0.1969 | 0.1391 | 1.42x |
-| color.gray2rgba | float16 | contiguous | 1 | 0.7025 | 0.5273 | 1.33x |
-| color.gray2rgb | float16 | reversed | 1 | 0.4587 | 0.1500 | 3.06x |
-| color.gray2rgba | float16 | reversed | 1 | 0.8039 | 0.6089 | 1.32x |
-| color.gray2rgb | float16 | strided | 1 | 0.5533 | 0.4910 | 1.13x |
-| color.gray2rgba | float16 | strided | 1 | 0.9604 | 0.7135 | 1.35x |
-| color.gray2rgb | float16 | fortran | 1 | 0.5397 | 0.4221 | 1.28x |
-| color.gray2rgba | float16 | fortran | 1 | 1.0428 | 0.5524 | 1.89x |
-| color.rgba2rgb | uint8 | background-black | 1 | 14.4853 | 0.6241 | 23.21x |
-| color.rgba2rgb | uint8 | background-color | 1 | 14.2866 | 0.6165 | 23.17x |
-| color.rgba2rgb | uint8 | background-nan | 1 | 14.8547 | 0.6141 | 24.19x |
-| color.gray2rgba | uint8 | alpha-scalar | 1 | 0.2722 | 0.0736 | 3.70x |
-| color.gray2rgba | uint8 | alpha-typed-scalar | 1 | 0.2591 | 0.0662 | 3.92x |
-| color.gray2rgba | uint8 | alpha-array | 1 | 0.2956 | 0.0608 | 4.86x |
-| color.gray2rgba | uint8 | alpha-broadcast | 1 | 0.2779 | 0.0619 | 4.49x |
-| color.rgba2rgb | float32 | background-black | 1 | 8.9147 | 0.6365 | 14.01x |
-| color.rgba2rgb | float32 | background-color | 1 | 8.5757 | 0.6248 | 13.73x |
-| color.rgba2rgb | float32 | background-nan | 1 | 9.4272 | 0.7406 | 12.73x |
-| color.gray2rgba | float32 | alpha-scalar | 1 | 0.5262 | 0.2288 | 2.30x |
-| color.gray2rgba | float32 | alpha-typed-scalar | 1 | 0.5425 | 0.2271 | 2.39x |
-| color.gray2rgba | float32 | alpha-array | 1 | 0.6746 | 0.6777 | 1.00x |
-| color.gray2rgba | float32 | alpha-broadcast | 1 | 0.6477 | 0.2397 | 2.70x |
-| color.rgba2rgb | float64 | background-black | 1 | 12.4038 | 1.1317 | 10.96x |
-| color.rgba2rgb | float64 | background-color | 1 | 13.5681 | 1.4525 | 9.34x |
-| color.rgba2rgb | float64 | background-nan | 1 | 12.8691 | 1.2467 | 10.32x |
-| color.gray2rgba | float64 | alpha-scalar | 1 | 3.7982 | 2.1967 | 1.73x |
-| color.gray2rgba | float64 | alpha-typed-scalar | 1 | 3.2383 | 2.2361 | 1.45x |
-| color.gray2rgba | float64 | alpha-array | 1 | 4.6556 | 2.6939 | 1.73x |
-| color.gray2rgba | float64 | alpha-broadcast | 1 | 3.8229 | 2.2565 | 1.69x |
-| color.gray2rgb | >u2 | endian-contiguous | 1 | 0.2213 | 0.1412 | 1.57x |
-| color.gray2rgba | >u2 | endian-contiguous | 1 | 0.3039 | 0.1243 | 2.45x |
-| color.gray2rgb | >u2 | endian-reversed | 1 | 0.5544 | 0.5652 | 0.98x |
-| color.gray2rgba | >u2 | endian-reversed | 1 | 0.3036 | 0.1222 | 2.48x |
-| color.gray2rgb | >f4 | endian-contiguous | 1 | 0.2987 | 0.2018 | 1.48x |
-| color.gray2rgba | >f4 | endian-contiguous | 1 | 0.5208 | 0.3699 | 1.41x |
-| color.gray2rgb | >f4 | endian-reversed | 1 | 0.2950 | 0.1977 | 1.49x |
-| color.gray2rgba | >f4 | endian-reversed | 1 | 0.5167 | 0.3659 | 1.41x |
-| color.gray2rgb | >f8 | endian-contiguous | 1 | 0.8350 | 0.6407 | 1.30x |
-| color.gray2rgba | >f8 | endian-contiguous | 1 | 4.4502 | 2.8121 | 1.58x |
-| color.gray2rgb | >f8 | endian-reversed | 1 | 0.9473 | 0.5551 | 1.71x |
-| color.gray2rgba | >f8 | endian-reversed | 1 | 5.1572 | 2.8833 | 1.79x |
-| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-contiguous | 1 | 1.1854 | 0.2456 | 4.83x |
-| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-contiguous | 1 | 4.4057 | 2.8301 | 1.56x |
-| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-reversed | 1 | 1.1069 | 0.2238 | 4.95x |
-| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-reversed | 1 | 8.6465 | 3.6618 | 2.36x |
-| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-strided | 1 | 1.9668 | 0.9136 | 2.15x |
-| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-strided | 1 | 9.0453 | 2.9009 | 3.12x |
-| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-fortran | 1 | 1.1343 | 0.2085 | 5.44x |
-| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-fortran | 1 | 5.6156 | 2.3934 | 2.35x |
-| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-contiguous | 1 | 13.0989 | 7.8370 | 1.67x |
-| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-contiguous | 1 | 26.0455 | 16.9726 | 1.53x |
-| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-reversed | 1 | 13.6832 | 7.2551 | 1.89x |
-| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-reversed | 1 | 26.3664 | 17.2508 | 1.53x |
-| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-strided | 1 | 12.8274 | 7.5227 | 1.71x |
-| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-strided | 1 | 34.0746 | 16.5207 | 2.06x |
-| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-fortran | 1 | 11.6183 | 6.6587 | 1.74x |
-| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-fortran | 1 | 25.3053 | 16.1584 | 1.57x |
-| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-contiguous | 1 | 19.7773 | 9.2947 | 2.13x |
-| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-contiguous | 1 | 35.4384 | 19.1956 | 1.85x |
-| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-reversed | 1 | 17.2701 | 7.3448 | 2.35x |
-| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-reversed | 1 | 34.0244 | 18.0591 | 1.88x |
-| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-strided | 1 | 17.4680 | 8.7613 | 1.99x |
-| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-strided | 1 | 43.8515 | 20.3525 | 2.15x |
-| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-fortran | 1 | 16.7537 | 8.0395 | 2.08x |
-| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-fortran | 1 | 35.2596 | 17.5816 | 2.01x |
+| color.rgba2rgb | bool | contiguous | 1 | 15.5717 | 0.5673 | 27.45x |
+| color.rgba2rgb | bool | reversed | 1 | 14.9060 | 2.0457 | 7.29x |
+| color.rgba2rgb | bool | strided | 1 | 14.5157 | 2.1273 | 6.82x |
+| color.rgba2rgb | bool | fortran | 1 | 11.8127 | 2.0630 | 5.73x |
+| color.rgba2rgb | bool | planar | 1 | 8.0416 | 2.1765 | 3.69x |
+| color.rgba2rgb | uint8 | contiguous | 1 | 14.0673 | 0.5778 | 24.35x |
+| color.rgba2rgb | uint8 | reversed | 1 | 15.1272 | 2.0380 | 7.42x |
+| color.rgba2rgb | uint8 | strided | 1 | 15.3685 | 2.1478 | 7.16x |
+| color.rgba2rgb | uint8 | fortran | 1 | 12.2645 | 2.1212 | 5.78x |
+| color.rgba2rgb | uint8 | planar | 1 | 8.1528 | 2.0826 | 3.91x |
+| color.rgba2rgb | int8 | contiguous | 1 | 15.2759 | 0.7333 | 20.83x |
+| color.rgba2rgb | int8 | reversed | 1 | 15.8302 | 3.2290 | 4.90x |
+| color.rgba2rgb | int8 | strided | 1 | 15.9456 | 3.4525 | 4.62x |
+| color.rgba2rgb | int8 | fortran | 1 | 13.3251 | 2.6265 | 5.07x |
+| color.rgba2rgb | int8 | planar | 1 | 10.8929 | 3.3135 | 3.29x |
+| color.rgba2rgb | uint16 | contiguous | 1 | 15.2110 | 0.7067 | 21.52x |
+| color.rgba2rgb | uint16 | reversed | 1 | 14.5103 | 2.0730 | 7.00x |
+| color.rgba2rgb | uint16 | strided | 1 | 14.8077 | 2.0991 | 7.05x |
+| color.rgba2rgb | uint16 | fortran | 1 | 12.2244 | 2.0619 | 5.93x |
+| color.rgba2rgb | uint16 | planar | 1 | 11.1138 | 2.2335 | 4.98x |
+| color.rgba2rgb | int16 | contiguous | 1 | 15.5638 | 0.7433 | 20.94x |
+| color.rgba2rgb | int16 | reversed | 1 | 15.3775 | 2.3336 | 6.59x |
+| color.rgba2rgb | int16 | strided | 1 | 15.2470 | 2.4176 | 6.31x |
+| color.rgba2rgb | int16 | fortran | 1 | 13.9338 | 2.3849 | 5.84x |
+| color.rgba2rgb | int16 | planar | 1 | 9.6242 | 2.2863 | 4.21x |
+| color.rgba2rgb | uint32 | contiguous | 1 | 14.8033 | 2.1460 | 6.90x |
+| color.rgba2rgb | uint32 | reversed | 1 | 15.2282 | 1.8513 | 8.23x |
+| color.rgba2rgb | uint32 | strided | 1 | 14.7731 | 2.2600 | 6.54x |
+| color.rgba2rgb | uint32 | fortran | 1 | 12.4341 | 1.9566 | 6.36x |
+| color.rgba2rgb | uint32 | planar | 1 | 8.1617 | 1.9893 | 4.10x |
+| color.rgba2rgb | int32 | contiguous | 1 | 14.6868 | 2.2429 | 6.55x |
+| color.rgba2rgb | int32 | reversed | 1 | 15.5028 | 2.2604 | 6.86x |
+| color.rgba2rgb | int32 | strided | 1 | 15.1085 | 2.4275 | 6.22x |
+| color.rgba2rgb | int32 | fortran | 1 | 12.0139 | 2.2549 | 5.33x |
+| color.rgba2rgb | int32 | planar | 1 | 8.5479 | 2.2444 | 3.81x |
+| color.rgba2rgb | uint64 | contiguous | 1 | 17.8858 | 4.6366 | 3.86x |
+| color.rgba2rgb | uint64 | reversed | 1 | 20.0946 | 4.6887 | 4.29x |
+| color.rgba2rgb | uint64 | strided | 1 | 20.5072 | 4.3999 | 4.66x |
+| color.rgba2rgb | uint64 | fortran | 1 | 16.9541 | 4.7573 | 3.56x |
+| color.rgba2rgb | uint64 | planar | 1 | 15.7406 | 4.8059 | 3.28x |
+| color.rgba2rgb | int64 | contiguous | 1 | 15.7323 | 2.4351 | 6.46x |
+| color.rgba2rgb | int64 | reversed | 1 | 16.5271 | 2.4623 | 6.71x |
+| color.rgba2rgb | int64 | strided | 1 | 16.7276 | 2.8466 | 5.88x |
+| color.rgba2rgb | int64 | fortran | 1 | 13.1847 | 2.4561 | 5.37x |
+| color.rgba2rgb | int64 | planar | 1 | 10.5914 | 2.4069 | 4.40x |
+| color.rgba2rgb | float32 | contiguous | 1 | 9.6661 | 0.5766 | 16.76x |
+| color.rgba2rgb | float32 | reversed | 1 | 7.5458 | 1.7424 | 4.33x |
+| color.rgba2rgb | float32 | strided | 1 | 9.6958 | 2.7157 | 3.57x |
+| color.rgba2rgb | float32 | fortran | 1 | 4.8540 | 0.6466 | 7.51x |
+| color.rgba2rgb | float32 | planar | 1 | 3.6572 | 0.6036 | 6.06x |
+| color.rgba2rgb | float64 | contiguous | 1 | 12.1357 | 1.1605 | 10.46x |
+| color.rgba2rgb | float64 | reversed | 1 | 12.2049 | 4.4939 | 2.72x |
+| color.rgba2rgb | float64 | strided | 1 | 12.9294 | 6.0766 | 2.13x |
+| color.rgba2rgb | float64 | fortran | 1 | 10.3847 | 0.9936 | 10.45x |
+| color.rgba2rgb | float64 | planar | 1 | 6.7239 | 0.9909 | 6.79x |
+| color.gray2rgb | bool | contiguous | 1 | 0.3323 | 0.2190 | 1.52x |
+| color.gray2rgba | bool | contiguous | 1 | 0.2583 | 0.0774 | 3.34x |
+| color.gray2rgb | bool | reversed | 1 | 0.3557 | 0.2525 | 1.41x |
+| color.gray2rgba | bool | reversed | 1 | 0.2500 | 0.0691 | 3.62x |
+| color.gray2rgb | bool | strided | 1 | 0.3425 | 0.2430 | 1.41x |
+| color.gray2rgba | bool | strided | 1 | 0.2898 | 0.0865 | 3.35x |
+| color.gray2rgb | bool | fortran | 1 | 0.3392 | 0.2188 | 1.55x |
+| color.gray2rgba | bool | fortran | 1 | 0.4883 | 0.0644 | 7.58x |
+| color.gray2rgb | uint8 | contiguous | 1 | 0.3280 | 0.2096 | 1.56x |
+| color.gray2rgba | uint8 | contiguous | 1 | 0.2610 | 0.0632 | 4.13x |
+| color.gray2rgb | uint8 | reversed | 1 | 0.3119 | 0.2142 | 1.46x |
+| color.gray2rgba | uint8 | reversed | 1 | 0.2558 | 0.0649 | 3.94x |
+| color.gray2rgb | uint8 | strided | 1 | 0.3289 | 0.2408 | 1.37x |
+| color.gray2rgba | uint8 | strided | 1 | 0.2822 | 0.0924 | 3.05x |
+| color.gray2rgb | uint8 | fortran | 1 | 0.1922 | 0.0719 | 2.67x |
+| color.gray2rgba | uint8 | fortran | 1 | 0.4863 | 0.0686 | 7.08x |
+| color.gray2rgb | int8 | contiguous | 1 | 0.2037 | 0.0751 | 2.71x |
+| color.gray2rgba | int8 | contiguous | 1 | 0.2713 | 0.0615 | 4.41x |
+| color.gray2rgb | int8 | reversed | 1 | 0.3154 | 0.2116 | 1.49x |
+| color.gray2rgba | int8 | reversed | 1 | 0.2537 | 0.0648 | 3.91x |
+| color.gray2rgb | int8 | strided | 1 | 0.3399 | 0.2307 | 1.47x |
+| color.gray2rgba | int8 | strided | 1 | 0.2875 | 0.0873 | 3.29x |
+| color.gray2rgb | int8 | fortran | 1 | 0.3199 | 0.2065 | 1.55x |
+| color.gray2rgba | int8 | fortran | 1 | 0.4750 | 0.0701 | 6.77x |
+| color.gray2rgb | uint16 | contiguous | 1 | 0.2007 | 0.1389 | 1.45x |
+| color.gray2rgba | uint16 | contiguous | 1 | 0.3013 | 0.1538 | 1.96x |
+| color.gray2rgb | uint16 | reversed | 1 | 0.5132 | 0.4593 | 1.12x |
+| color.gray2rgba | uint16 | reversed | 1 | 0.2734 | 0.1195 | 2.29x |
+| color.gray2rgb | uint16 | strided | 1 | 0.6179 | 0.5359 | 1.15x |
+| color.gray2rgba | uint16 | strided | 1 | 0.4053 | 0.1602 | 2.53x |
+| color.gray2rgb | uint16 | fortran | 1 | 0.6329 | 0.5508 | 1.15x |
+| color.gray2rgba | uint16 | fortran | 1 | 0.6665 | 0.1673 | 3.98x |
+| color.gray2rgb | int16 | contiguous | 1 | 0.2077 | 0.1488 | 1.40x |
+| color.gray2rgba | int16 | contiguous | 1 | 0.3004 | 0.1262 | 2.38x |
+| color.gray2rgb | int16 | reversed | 1 | 0.1856 | 0.1392 | 1.33x |
+| color.gray2rgba | int16 | reversed | 1 | 0.2732 | 0.1140 | 2.40x |
+| color.gray2rgb | int16 | strided | 1 | 0.2263 | 0.1653 | 1.37x |
+| color.gray2rgba | int16 | strided | 1 | 0.3279 | 0.1427 | 2.30x |
+| color.gray2rgb | int16 | fortran | 1 | 0.1862 | 0.1362 | 1.37x |
+| color.gray2rgba | int16 | fortran | 1 | 0.5953 | 0.1164 | 5.12x |
+| color.gray2rgb | uint32 | contiguous | 1 | 0.3025 | 0.1531 | 1.98x |
+| color.gray2rgba | uint32 | contiguous | 1 | 0.4918 | 0.2190 | 2.25x |
+| color.gray2rgb | uint32 | reversed | 1 | 0.3441 | 0.1846 | 1.86x |
+| color.gray2rgba | uint32 | reversed | 1 | 0.4969 | 0.2248 | 2.21x |
+| color.gray2rgb | uint32 | strided | 1 | 1.0409 | 0.8327 | 1.25x |
+| color.gray2rgba | uint32 | strided | 1 | 0.6522 | 0.2935 | 2.22x |
+| color.gray2rgb | uint32 | fortran | 1 | 1.0341 | 0.8136 | 1.27x |
+| color.gray2rgba | uint32 | fortran | 1 | 0.8894 | 0.2352 | 3.78x |
+| color.gray2rgb | int32 | contiguous | 1 | 0.3104 | 0.1535 | 2.02x |
+| color.gray2rgba | int32 | contiguous | 1 | 0.4866 | 0.2120 | 2.30x |
+| color.gray2rgb | int32 | reversed | 1 | 0.2988 | 0.1648 | 1.81x |
+| color.gray2rgba | int32 | reversed | 1 | 0.4939 | 0.2297 | 2.15x |
+| color.gray2rgb | int32 | strided | 1 | 0.3613 | 0.1917 | 1.88x |
+| color.gray2rgba | int32 | strided | 1 | 0.5517 | 0.2903 | 1.90x |
+| color.gray2rgb | int32 | fortran | 1 | 0.2920 | 0.1561 | 1.87x |
+| color.gray2rgba | int32 | fortran | 1 | 0.8657 | 0.2215 | 3.91x |
+| color.gray2rgb | uint64 | contiguous | 1 | 1.9427 | 1.4935 | 1.30x |
+| color.gray2rgba | uint64 | contiguous | 1 | 3.0417 | 2.0401 | 1.49x |
+| color.gray2rgb | uint64 | reversed | 1 | 2.0327 | 1.6077 | 1.26x |
+| color.gray2rgba | uint64 | reversed | 1 | 3.2493 | 2.1601 | 1.50x |
+| color.gray2rgb | uint64 | strided | 1 | 2.3130 | 1.6509 | 1.40x |
+| color.gray2rgba | uint64 | strided | 1 | 3.6169 | 2.3621 | 1.53x |
+| color.gray2rgb | uint64 | fortran | 1 | 2.0569 | 1.5396 | 1.34x |
+| color.gray2rgba | uint64 | fortran | 1 | 4.9549 | 2.1231 | 2.33x |
+| color.gray2rgb | int64 | contiguous | 1 | 2.0097 | 1.4317 | 1.40x |
+| color.gray2rgba | int64 | contiguous | 1 | 3.4013 | 2.3245 | 1.46x |
+| color.gray2rgb | int64 | reversed | 1 | 2.0620 | 0.4647 | 4.44x |
+| color.gray2rgba | int64 | reversed | 1 | 3.1608 | 2.2618 | 1.40x |
+| color.gray2rgb | int64 | strided | 1 | 2.1442 | 0.8711 | 2.46x |
+| color.gray2rgba | int64 | strided | 1 | 3.9609 | 2.3300 | 1.70x |
+| color.gray2rgb | int64 | fortran | 1 | 0.6942 | 0.3251 | 2.14x |
+| color.gray2rgba | int64 | fortran | 1 | 5.8278 | 2.4739 | 2.36x |
+| color.gray2rgb | float32 | contiguous | 1 | 0.3404 | 0.2015 | 1.69x |
+| color.gray2rgba | float32 | contiguous | 1 | 1.0304 | 0.2882 | 3.58x |
+| color.gray2rgb | float32 | reversed | 1 | 0.3670 | 0.1727 | 2.12x |
+| color.gray2rgba | float32 | reversed | 1 | 0.6105 | 0.2609 | 2.34x |
+| color.gray2rgb | float32 | strided | 1 | 0.4644 | 0.2503 | 1.86x |
+| color.gray2rgba | float32 | strided | 1 | 0.9030 | 0.3828 | 2.36x |
+| color.gray2rgb | float32 | fortran | 1 | 0.3020 | 0.1708 | 1.77x |
+| color.gray2rgba | float32 | fortran | 1 | 0.9929 | 0.2693 | 3.69x |
+| color.gray2rgb | float64 | contiguous | 1 | 2.8320 | 1.9137 | 1.48x |
+| color.gray2rgba | float64 | contiguous | 1 | 3.9992 | 2.3719 | 1.69x |
+| color.gray2rgb | float64 | reversed | 1 | 2.1613 | 1.5568 | 1.39x |
+| color.gray2rgba | float64 | reversed | 1 | 3.3674 | 2.3450 | 1.44x |
+| color.gray2rgb | float64 | strided | 1 | 2.1266 | 1.2418 | 1.71x |
+| color.gray2rgba | float64 | strided | 1 | 3.5906 | 2.2692 | 1.58x |
+| color.gray2rgb | float64 | fortran | 1 | 0.8753 | 0.4805 | 1.82x |
+| color.gray2rgba | float64 | fortran | 1 | 4.9622 | 2.3487 | 2.11x |
+| color.gray2rgb | float16 | contiguous | 1 | 0.1905 | 0.1396 | 1.37x |
+| color.gray2rgba | float16 | contiguous | 1 | 0.9532 | 0.6841 | 1.39x |
+| color.gray2rgb | float16 | reversed | 1 | 0.2128 | 0.1640 | 1.30x |
+| color.gray2rgba | float16 | reversed | 1 | 0.8415 | 0.6404 | 1.31x |
+| color.gray2rgb | float16 | strided | 1 | 0.3816 | 0.2047 | 1.86x |
+| color.gray2rgba | float16 | strided | 1 | 0.9239 | 0.5825 | 1.59x |
+| color.gray2rgb | float16 | fortran | 1 | 0.2122 | 0.1438 | 1.48x |
+| color.gray2rgba | float16 | fortran | 1 | 1.0459 | 0.5784 | 1.81x |
+| color.rgba2rgb | uint8 | background-black | 1 | 15.7069 | 0.6341 | 24.77x |
+| color.rgba2rgb | uint8 | background-color | 1 | 15.7628 | 0.6726 | 23.44x |
+| color.rgba2rgb | uint8 | background-nan | 1 | 15.8950 | 0.6914 | 22.99x |
+| color.gray2rgba | uint8 | alpha-scalar | 1 | 0.2795 | 0.0798 | 3.50x |
+| color.gray2rgba | uint8 | alpha-typed-scalar | 1 | 0.2610 | 0.0603 | 4.33x |
+| color.gray2rgba | uint8 | alpha-array | 1 | 0.2939 | 0.0598 | 4.91x |
+| color.gray2rgba | uint8 | alpha-broadcast | 1 | 0.2761 | 0.0649 | 4.25x |
+| color.rgba2rgb | float32 | background-black | 1 | 9.7072 | 0.6567 | 14.78x |
+| color.rgba2rgb | float32 | background-color | 1 | 9.2751 | 0.6178 | 15.01x |
+| color.rgba2rgb | float32 | background-nan | 1 | 8.5767 | 0.6138 | 13.97x |
+| color.gray2rgba | float32 | alpha-scalar | 1 | 0.5047 | 0.2094 | 2.41x |
+| color.gray2rgba | float32 | alpha-typed-scalar | 1 | 0.4922 | 0.2124 | 2.32x |
+| color.gray2rgba | float32 | alpha-array | 1 | 0.6907 | 0.5750 | 1.20x |
+| color.gray2rgba | float32 | alpha-broadcast | 1 | 0.5175 | 0.2279 | 2.27x |
+| color.rgba2rgb | float64 | background-black | 1 | 12.0606 | 0.8945 | 13.48x |
+| color.rgba2rgb | float64 | background-color | 1 | 13.1151 | 1.5585 | 8.42x |
+| color.rgba2rgb | float64 | background-nan | 1 | 12.6310 | 1.0767 | 11.73x |
+| color.gray2rgba | float64 | alpha-scalar | 1 | 3.1198 | 2.1141 | 1.48x |
+| color.gray2rgba | float64 | alpha-typed-scalar | 1 | 2.7960 | 2.1711 | 1.29x |
+| color.gray2rgba | float64 | alpha-array | 1 | 3.7052 | 2.4042 | 1.54x |
+| color.gray2rgba | float64 | alpha-broadcast | 1 | 2.8562 | 2.0164 | 1.42x |
+| color.gray2rgb | >u2 | endian-contiguous | 1 | 0.2219 | 0.1411 | 1.57x |
+| color.gray2rgba | >u2 | endian-contiguous | 1 | 0.3079 | 0.1213 | 2.54x |
+| color.gray2rgb | >u2 | endian-reversed | 1 | 0.5227 | 0.4544 | 1.15x |
+| color.gray2rgba | >u2 | endian-reversed | 1 | 0.3000 | 0.1173 | 2.56x |
+| color.gray2rgb | >f4 | endian-contiguous | 1 | 0.2919 | 0.2016 | 1.45x |
+| color.gray2rgba | >f4 | endian-contiguous | 1 | 0.4951 | 0.3624 | 1.37x |
+| color.gray2rgb | >f4 | endian-reversed | 1 | 0.2914 | 0.1941 | 1.50x |
+| color.gray2rgba | >f4 | endian-reversed | 1 | 0.4976 | 0.3717 | 1.34x |
+| color.gray2rgb | >f8 | endian-contiguous | 1 | 2.0299 | 1.6010 | 1.27x |
+| color.gray2rgba | >f8 | endian-contiguous | 1 | 2.9604 | 2.3399 | 1.27x |
+| color.gray2rgb | >f8 | endian-reversed | 1 | 1.9844 | 1.6614 | 1.19x |
+| color.gray2rgba | >f8 | endian-reversed | 1 | 3.6189 | 2.4303 | 1.49x |
+| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-contiguous | 1 | 1.0465 | 0.1894 | 5.53x |
+| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-contiguous | 1 | 3.5790 | 1.6186 | 2.21x |
+| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-reversed | 1 | 1.0449 | 0.1865 | 5.60x |
+| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-reversed | 1 | 3.4010 | 1.6419 | 2.07x |
+| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-strided | 1 | 1.2310 | 0.4539 | 2.71x |
+| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-strided | 1 | 3.5691 | 1.6929 | 2.11x |
+| color.gray2rgb | [('x', '>i2'), ('y', '>f4')] | record-6-fortran | 1 | 1.0308 | 0.2188 | 4.71x |
+| color.gray2rgba | [('x', '>i2'), ('y', '>f4')] | record-6-fortran | 1 | 2.7923 | 1.4836 | 1.88x |
+| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-contiguous | 1 | 8.6194 | 6.1292 | 1.41x |
+| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-contiguous | 1 | 17.4332 | 14.3436 | 1.22x |
+| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-reversed | 1 | 8.3659 | 6.1566 | 1.36x |
+| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-reversed | 1 | 18.2790 | 14.6565 | 1.25x |
+| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-strided | 1 | 8.6473 | 6.7049 | 1.29x |
+| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-strided | 1 | 19.4198 | 14.7934 | 1.31x |
+| color.gray2rgb | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-fortran | 1 | 7.8219 | 6.0255 | 1.30x |
+| color.gray2rgba | [('record', [('a', '>i2'), ('b', '>u4')]), ('vec', '>f4', (3,))] | record-18-fortran | 1 | 18.7926 | 14.5350 | 1.29x |
+| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-contiguous | 1 | 12.2777 | 6.5261 | 1.88x |
+| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-contiguous | 1 | 25.2495 | 13.8666 | 1.82x |
+| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-reversed | 1 | 12.4362 | 6.6711 | 1.86x |
+| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-reversed | 1 | 29.3266 | 15.1163 | 1.94x |
+| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-strided | 1 | 15.6118 | 7.6693 | 2.04x |
+| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-strided | 1 | 28.2980 | 15.8954 | 1.78x |
+| color.gray2rgb | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-fortran | 1 | 11.6343 | 6.3897 | 1.82x |
+| color.gray2rgba | [('z', '>c16'), ('when', '>M8[ns]'), ('dt', '>m8[ms]')] | record-32-fortran | 1 | 25.3515 | 13.7133 | 1.85x |
