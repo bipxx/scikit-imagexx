@@ -121,21 +121,34 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
     // Sparse categorical labels may have a huge numeric span but few groups.
     // A bounded open-addressed table avoids sorting N repeated values. Stop
     // early for high-cardinality input, retaining the general sorted path.
-    std::array<std::uint64_t,1024> keys,positions{};
+    std::array<std::uint64_t,1024> small_keys,small_positions{};
+    std::vector<std::uint64_t> large_keys,large_positions;
+    auto* keys=small_keys.data();auto* positions=small_positions.data();
+    std::size_t hash_mask=1023;
     auto slot=[&](std::uint64_t key) {
         auto hash=key;hash^=hash>>33;hash*=UINT64_C(0xff51afd7ed558ccd);
         hash^=hash>>33;hash*=UINT64_C(0xc4ceb9fe1a85ec53);hash^=hash>>33;
-        auto index=std::size_t(hash)&1023;
-        while(positions[index] && keys[index]!=key)index=(index+1)&1023;
+        auto index=std::size_t(hash)&hash_mask;
+        while(positions[index] && keys[index]!=key)index=(index+1)&hash_mask;
         return index;
     };
     std::vector<std::uint64_t> unique;
     bool hashed=count>=4096;
     if(hashed) {
         for(auto value:values) {
-            const auto index=slot(value);
+            auto index=slot(value);
             if(positions[index])continue;
-            if(unique.size()==512) {hashed=false;break;}
+            if(unique.size()==512 && hash_mask==1023) {
+                // Keep the small common case in L1; grow only on the first
+                // additional group instead of falling off a 512-key cliff.
+                large_keys.resize(8192);large_positions.assign(8192,0);
+                keys=large_keys.data();positions=large_positions.data();hash_mask=8191;
+                for(auto key:unique) {
+                    const auto target=slot(key);keys[target]=key;positions[target]=1;
+                }
+                index=slot(value);
+            }
+            if(unique.size()==4096) {hashed=false;break;}
             keys[index]=value;positions[index]=1;unique.push_back(value);
         }
     }

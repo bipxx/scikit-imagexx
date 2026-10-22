@@ -226,12 +226,13 @@ def test_grayscale_average_reduction_buffer(dtype,buffer_size):
     finally:np.setbufsize(previous)
 
 
-@pytest.mark.parametrize('groups',[31,512,513])
+@pytest.mark.parametrize('groups',[31,512,513,4096,4097])
 @pytest.mark.parametrize('dtype',[np.uint64,np.int64,np.float64])
 @pytest.mark.parametrize('kind',['overlay','avg'])
 def test_large_sparse_rank_groups(groups,dtype,kind):
     rng=np.random.default_rng(411)
-    raw=rng.integers(0,groups,(129,131),dtype=np.uint64)
+    raw=(np.arange(129*131,dtype=np.uint64)%groups).reshape(129,131)
+    rng.shuffle(raw,axis=0)
     labels=np.where(raw==0,0,raw*10000000019+2**50).astype(dtype)
     image=rng.random((*labels.shape,3))
     check(labels,image=image,kind=kind)
