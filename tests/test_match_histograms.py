@@ -97,3 +97,25 @@ def test_public_signature_and_keyword_axes():
     expected=reference(image=a,reference=b,channel_axis=0)
     actual=xx.exposure.match_histograms(image=a,reference=b,channel_axis=0)
     np.testing.assert_array_equal(actual,expected)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int8,np.uint16,np.int16,np.float32,np.float64])
+@pytest.mark.parametrize('length',range(18))
+def test_simd_packet_boundaries(dtype,length):
+    a=(np.arange(length*3).reshape(length,3)%13).astype(dtype)
+    b=(np.arange((length+3)*3).reshape(length+3,3)%17).astype(dtype)
+    compare(a,b,channel_axis=-1)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('groups',[256,4095,4096,4097,262149])
+def test_large_hash_and_radix_boundaries(dtype,groups):
+    rng=np.random.default_rng(871)
+    a=(np.arange(262149)%groups).astype(dtype);rng.shuffle(a)
+    b=(np.arange(262153)%groups).astype(dtype);rng.shuffle(b)
+    compare(a,b)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_continuous_large_radix(dtype):
+    rng=np.random.default_rng(882)
+    a=rng.normal(size=(513,517,3)).astype(dtype)
+    b=rng.normal(size=(519,511,3)).astype(dtype)
+    compare(a,b,channel_axis=-1)

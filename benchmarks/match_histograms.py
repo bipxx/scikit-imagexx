@@ -24,7 +24,7 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--baseline-dir',type=Path)
     args=parser.parse_args()
-    if min([args.size,args.repeat]+args.threads)<1:parser.error('size, repeats and workers must be positive')
+    if args.size<2 or min([args.repeat]+args.threads)<1:parser.error('size must be at least two; repeats and workers must be positive')
     xx.set_fallback_enabled(False)
     baseline=None
     if args.baseline_dir:
@@ -33,6 +33,8 @@ def main():
         baseline.set_fallback_enabled(False)
         snapshot=json.loads((args.baseline_dir/'snapshot.json').read_text())
         assert binary_hashes(baseline)==snapshot['binary_sha256']
+        assert {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(baseline.__file__).parent.glob('*.py')}==snapshot['python_sha256']
+        assert baseline.has_avx2()==xx.has_avx2()
     rng=np.random.default_rng(904)
     cases=[]
     for dtype in (np.uint8,np.uint16,np.int16,np.float32,np.float64):

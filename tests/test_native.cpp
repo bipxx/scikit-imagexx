@@ -610,6 +610,28 @@ int main() {
         match_histograms_into(half_input,precise,rounded,2,2,1,PixelType::float32,PixelType::float64,PixelType::float32,false,true);
         require(rounded[0]==1.0009765625f && rounded[1]==1.5f);
         require(match_histograms_into(nullptr,nullptr,nullptr,0,0,1,PixelType::float32,PixelType::float32,PixelType::float32)==0);
+        for(auto type:{PixelType::float32,PixelType::float64}) {
+            const std::size_t count=262149;
+            std::vector<float> fsource(count),ftemplate(count),fout(count);
+            std::vector<double> dsource(count),dtemplate(count),dout(count);
+            for(std::size_t i=0;i<count;++i){fsource[i]=float(count-1-i);ftemplate[i]=float(i);dsource[i]=double(count-1-i);dtemplate[i]=double(i);}
+            const int workers[]={1
+#ifdef _OPENMP
+                ,4
+#endif
+            };
+            for(auto worker:workers) {
+                set_num_threads(worker);
+                if(type==PixelType::float32) {
+                    match_histograms_into(fsource.data(),ftemplate.data(),fout.data(),count,count,1,type,type,type);
+                    require(fout==fsource);
+                } else {
+                    match_histograms_into(dsource.data(),dtemplate.data(),dout.data(),count,count,1,type,type,type);
+                    require(dout==dsource);
+                }
+            }
+        }
+        set_num_threads(1);
     }
     {
         const std::int16_t a[]={-100,20,30,0,0,0};
