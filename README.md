@@ -651,3 +651,10 @@ explicit upstream fallback. This preserves exact classifications when native
 and upstream grayscale conversion differ by a rounding bit. Complex inputs,
 unsupported subclasses/color widths, exceptional floating policies/ranges and
 percentile parameters wider than float64 also retain explicit fallback.
+The [independent contrast confirmation](benchmarks/contrast-tuning.md) measures
+all 126 cases faster than original scikit-image at both worker limits: 9.42×
+geometric-mean speedup with one worker and 10.37× with four. The one-worker
+result is 7.08× faster than the exact measured initial C++ package. The
+[parameter report](benchmarks/contrast-parameters.md) and optimization history
+retain every case and sample, including the rejected allocation experiment and
+remaining individual regressions against the initial C++ build.
