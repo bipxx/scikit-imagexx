@@ -1,6 +1,6 @@
 # Median performance experiments
 
-These exact-source trials remain unretained while the native median port is being improved. The initial source passes 8,656 scoped Windows cases and 4,460 minimum-NumPy cases in each SIMD mode, plus five native configurations. Its generic selection path is much too slow for long 1-D windows. The second source adds sliding heaps, bitonic SIMD through 32 taps and bounded footprint plans; it passes 9,296 scoped Windows and 5,100 minimum-NumPy cases in each mode, with native normal/dynamic/portable/ASan+UBSan normal/dynamic checks 2/2. Full rolling-source CI passes all three jobs: Linux 59,573 tests and Windows 59,571 plus two skips in each SIMD mode, with native normal/dynamic/portable checks 2/2 on both OSes. Later adapter and heap-layout changes have separate measurements and must not inherit these fingerprints.
+The direct two-tap compatibility baseline is retained; earlier trial decisions and raw samples remain below. The initial source passes 8,656 scoped Windows cases and 4,460 minimum-NumPy cases in each SIMD mode, plus five native configurations. Its generic selection path is much too slow for long 1-D windows. The second source adds sliding heaps, bitonic SIMD through 32 taps and bounded footprint plans; it passes 9,296 scoped Windows and 5,100 minimum-NumPy cases in each mode, with native normal/dynamic/portable/ASan+UBSan normal/dynamic checks 2/2. Full rolling-source CI passes all three jobs: Linux 59,573 tests and Windows 59,571 plus two skips in each SIMD mode, with native normal/dynamic/portable checks 2/2 on both OSes. Later adapter and heap-layout changes have separate measurements and must not inherit these fingerprints.
 
 All trials use 48 cases per OS at global worker limits one/four (96 rows/OS), seven randomized samples, seed 5227 and size 512. Reference pools are fixed at one; allocation, casting, dispatch and output handling are timed. All timed outputs match scikit-image 0.26.0 exactly with fallback disabled. The worker setting is a cap: small images remain serial below the activation threshold. Exact wheels, extracted packages, binary/source hashes and every raw sample are retained in the linked artifacts.
 
@@ -1935,3 +1935,21 @@ The expanded pair preflight found two additional baseline contract gaps: dense t
 | Windows | float64 | signed-zero31 | 4 | 8.26330 | 11.80930 | 0.700x | 1.008x |
 | Windows | float64 | signed-zero-pair | 1 | 2.42202 | 8.37580 | 0.289x | 0.998x |
 | Windows | float64 | signed-zero-pair | 4 | 2.43530 | 5.07070 | 0.480x | 0.999x |
+
+
+## Retained compatibility baseline: direct two-tap path (`a4e9036`)
+
+[Paired benchmark run](https://github.com/bipxx/scikit-imagexx/actions/runs/39829432396); [full source CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39829432885). The fixed corpus contains 54 cases at worker limits one/four, with seven raw samples. All timed current and baseline outputs pass value and signed-zero parity.
+
+| OS | one-worker upstream/current geometric mean | same-run baseline/current geometric mean | float32 pair upstream/current | float64 pair upstream/current |
+|---|---:|---:|---:|---:|
+| Linux | 6.173506x | 1.035853x | 1.231x | 1.189x |
+| Windows | 3.964366x | 1.019025x | 0.717x | 0.709x |
+
+Raw reports: [Linux](median-pair-linux.json), [Windows](median-pair-windows.json). Their fingerprints identify the measured pre-integration source and binaries; API integration has separate source and wheel archives.
+
+The pair path improves 2.5-4.4x against the same-run previous native implementation. Windows pair cases still trail upstream, and signed-zero rolling windows remain slower than upstream. Windows float32 signed-zero 31-tap regresses about 7% against the native control. Every adverse sample remains in the raw reports.
+
+The original experiment gate compared absolute upstream/current corpus scores across runs. This candidate failed that gate: the Windows score is below the earlier 4.227715x. That failed score remains recorded. The unchanged native control also shifted relative to upstream between runs, and that older control fails subsequently added broadcast-pair and half-dtype error parity tests. This version is retained as a correctness baseline; subsequent optimization decisions use same-run paired native controls. It does not pass the original gate or win every operation.
+
+Integration checks pass 12,691 targeted cases on Windows and minimum NumPy in each SIMD mode. Fresh Windows wheels additionally pass 4,016 pair cases and 2,623 API/inventory cases per mode. Mandatory broadcast-pair, half-dtype error, signed-zero and output-type checks are included.
