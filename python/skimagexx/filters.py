@@ -98,7 +98,14 @@ def _threshold_histogram(image,hist,nbins):
         if counts.dtype.itemsize>8:return None
         if counts.dtype.kind not in 'iuf' or centers.dtype not in (np.dtype('int64'),np.dtype('float32'),np.dtype('float64')):return None
         if not np.isfinite(counts).all() or not np.isfinite(centers).all() or (counts<0).any():return None
-        if np.sum(counts,dtype=np.float64)>np.finfo(np.float32).max:return None
+        # This sum only guards the native float32 arithmetic. Float64 counts
+        # may overflow this private validation before upstream's actual cast;
+        # keep that event from leaking an extra warning, callback or exception.
+        # Narrow floats/integers cannot overflow float64 for any ndarray size.
+        if counts.dtype.kind=='f' and counts.dtype.itemsize==8:
+            with np.errstate(over='ignore'):total=np.sum(counts,dtype=np.float64)
+        else:total=np.sum(counts,dtype=np.float64)
+        if total>np.finfo(np.float32).max:return None
         if counts[0]==0 or counts[-1]==0:
             valid=counts>0;start=valid.argmax();stop=counts.size-valid[::-1].argmax()
             counts,centers=counts[start:stop],centers[start:stop]

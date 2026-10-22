@@ -180,6 +180,35 @@ def test_effectful_iteration_metadata(raises):
     np.testing.assert_array_equal(actual_image,expected_image)
 
 
+@pytest.mark.parametrize('name',['threshold_minimum','threshold_yen','threshold_isodata'])
+@pytest.mark.parametrize('policy',['warn','raise','call','print','log'])
+@pytest.mark.parametrize('byteorder',['=','>'])
+def test_private_histogram_guard_overflow(name,policy,byteorder,capfd):
+    """Compatibility validation must not fire before upstream's actual cast."""
+    counts=np.array([1e308,1e308,1e308],dtype=np.dtype('float64').newbyteorder(byteorder))
+    def observed(function):
+        events=[]
+        class Log:
+            def write(self,message):events.append(message)
+        callback=(lambda error,flags:events.append((error,flags))) if policy=='call' else Log()
+        previous=np.geterrcall()
+        np.seterrcall(callback)
+        try:
+            with np.errstate(over=policy):result,notices=outcome(function,hist=counts)
+        finally:np.seterrcall(previous)
+        return result,notices,events,capfd.readouterr().err
+    expected,expected_notices,expected_events,expected_stderr=observed(getattr(reference,name))
+    xx.set_fallback_enabled(True)
+    actual,actual_notices,actual_events,actual_stderr=observed(getattr(xx.filters,name))
+    assert [w for w in actual_notices if w[0] is xx.FallbackWarning]==[
+        (xx.FallbackWarning,f'skimage.filters.{name} executed by scikit-image fallback')]
+    assert [w for w in actual_notices if w[0] is not xx.FallbackWarning]==expected_notices
+    assert actual[:3]==expected[:3]
+    if actual[0]=='value':np.testing.assert_array_equal(actual[3],expected[3])
+    assert actual_events==expected_events
+    assert actual_stderr==expected_stderr
+
+
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 @pytest.mark.parametrize('nbins',[2,7,256])
 def test_edges_neighbors(dtype,nbins):
