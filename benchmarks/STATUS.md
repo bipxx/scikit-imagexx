@@ -1,5 +1,14 @@
 # Last completed whole-library performance checkpoint
 
+The [rank-order port](rank-order.md) and [retained uniform fast path](rank-uniform.md)
+add exact ranks, original-value bytes and reconstruction tests for real dtypes,
+layouts, label-width boundaries and memmap results. The paired one-worker corpus
+improves 1.91x on Linux and 1.58x on Windows against the initial native package;
+current geometric means are 2.55x/1.67x over scikit-image. Constant images improve
+strongly, while floating sorts, layout normalization and several controls remain
+slower. Reports retain all cases and raw samples. Full follow-up CI remains in
+progress; scoped SIMD/scalar, minimum-runtime and native sanitizer checks pass.
+
 The [streaming adaptive-mean checkpoint](adaptive-stream.md) removes first-axis
 packing and scattering. Paired one-worker mean workloads improve 25% on Linux
 and 24% on Windows against the exact initial native package. Current mean
