@@ -1,0 +1,4962 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T02:09:05.966617+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "reference": "0.26.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "avx2": true,
+    "fallback_enabled": false,
+    "current_binary_sha256": {
+      "_core.cp313-win_amd64.pyd": "c2533e7986b9d1598339fe1deec90fa56c36cb02dadfe66a4420609ea61ee126"
+    },
+    "reference_thread_pools": 1,
+    "repeat": 7,
+    "seed": 9371,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "source_sha256": "9ffd9f6a3a6e58683785b29adfefdc21497ff95873a2f91bb2088c2e29b8675d",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "scope": "Warmed allocation-inclusive exact public calls; unsuccessful convergence separately identified",
+    "baseline": {
+      "revision": "6af9f0c24388533b44b0cfa3f3fa9be50d2ee642",
+      "source_sha256": "7df6ce66ab683044e3d6f371b1da2df6412703ffbd005f56c65f2af50ba20e1a",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "8b882948d1d411ca9d321e3edf8bd4c975d7216824b44a6e407fe23872dd5995"
+      },
+      "prepared_at_utc": "2026-10-22T01:56:47.315806+00:00",
+      "snapshot_kind": "Exact measured package; product fingerprint, Python sources and binary hashes checked",
+      "measurement_sha256": "b869f5e0ac62eb8347854ebbf0760bc9d2e49fb93f1a5cd1a592fcf9f8860195",
+      "measurement_report": "initial-measurement.json"
+    }
+  },
+  "results": [
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.2135833333333337,
+      "cpp_ms": 0.08789183673469388,
+      "speedup": 25.185312033188602,
+      "samples_ms": [
+        [
+          2.0229,
+          2.3663166666666666,
+          2.4069666666666665,
+          2.3883333333333336,
+          1.98585,
+          2.2135833333333337,
+          1.9095166666666668
+        ],
+        [
+          0.09080612244897959,
+          0.08789183673469388,
+          0.08856530612244898,
+          0.08356122448979592,
+          0.08650612244897958,
+          0.08637959183673469,
+          0.08848673469387755
+        ],
+        [
+          0.09402613636363637,
+          0.10801818181818182,
+          0.08989545454545454,
+          0.08864545454545454,
+          0.09651704545454545,
+          0.09981931818181818,
+          0.09503522727272729
+        ]
+      ],
+      "loops": [
+        6,
+        98,
+        88
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09503522727272729,
+      "improvement": 1.0812747895984482,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.2345,
+      "cpp_ms": 0.06163214285714286,
+      "speedup": 36.25543257808426,
+      "samples_ms": [
+        [
+          2.2345,
+          2.2493,
+          2.0061,
+          2.2690833333333336,
+          2.4356166666666663,
+          2.22755,
+          2.054133333333333
+        ],
+        [
+          0.059939285714285716,
+          0.069075,
+          0.0664,
+          0.0698,
+          0.06163214285714286,
+          0.052153571428571424,
+          0.05624642857142857
+        ],
+        [
+          0.08862112676056337,
+          0.08160140845070422,
+          0.06811830985915493,
+          0.0708056338028169,
+          0.07205915492957746,
+          0.07296478873239437,
+          0.07532253521126761
+        ]
+      ],
+      "loops": [
+        6,
+        28,
+        71
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.07296478873239437,
+      "improvement": 1.1838755777406516,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 1,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.0824833333333332,
+      "cpp_ms": 0.1539590909090909,
+      "speedup": 13.526212197258225,
+      "samples_ms": [
+        [
+          2.16855,
+          2.14065,
+          2.055,
+          2.3938333333333337,
+          2.020833333333333,
+          2.0824833333333332,
+          2.060916666666667
+        ],
+        [
+          0.16094545454545456,
+          0.1539590909090909,
+          0.14955909090909092,
+          0.1565909090909091,
+          0.16340909090909092,
+          0.14650227272727273,
+          0.151325
+        ],
+        [
+          0.15012166666666665,
+          0.16574166666666665,
+          0.15425666666666665,
+          0.151705,
+          0.14999666666666667,
+          0.14939166666666664,
+          0.17508833333333335
+        ]
+      ],
+      "loops": [
+        6,
+        44,
+        60
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.151705,
+      "improvement": 0.9853591568008031,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 4,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.11825,
+      "cpp_ms": 0.14484528301886793,
+      "speedup": 14.624224937473949,
+      "samples_ms": [
+        [
+          2.4505,
+          2.062325,
+          2.06785,
+          2.11825,
+          2.304775,
+          2.0556,
+          2.2715
+        ],
+        [
+          0.13778679245283018,
+          0.15233962264150944,
+          0.14887169811320755,
+          0.1326811320754717,
+          0.14143018867924528,
+          0.14484528301886793,
+          0.1462735849056604
+        ],
+        [
+          0.14869322033898305,
+          0.14704237288135594,
+          0.1498593220338983,
+          0.14397457627118643,
+          0.13884237288135592,
+          0.16168474576271186,
+          0.15711186440677968
+        ]
+      ],
+      "loops": [
+        4,
+        53,
+        59
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.14869322033898305,
+      "improvement": 1.026565844878869,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 1,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.0628,
+      "cpp_ms": 0.14782153846153848,
+      "speedup": 13.954664668415136,
+      "samples_ms": [
+        [
+          2.06234,
+          2.08138,
+          1.97842,
+          2.09806,
+          2.0628,
+          1.94342,
+          3.22032
+        ],
+        [
+          0.14775384615384615,
+          0.14825692307692306,
+          0.14782153846153848,
+          0.1399276923076923,
+          0.14767076923076922,
+          0.16537230769230768,
+          0.153
+        ],
+        [
+          0.15275,
+          0.1758962962962963,
+          0.14855,
+          0.15910740740740742,
+          0.16769814814814815,
+          0.15882037037037036,
+          0.1720722222222222
+        ]
+      ],
+      "loops": [
+        5,
+        65,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.15910740740740742,
+      "improvement": 1.07634793321276,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 4,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.31246,
+      "cpp_ms": 0.1491086956521739,
+      "speedup": 15.50855226709433,
+      "samples_ms": [
+        [
+          2.31246,
+          2.16974,
+          2.66084,
+          2.27998,
+          2.42108,
+          2.01522,
+          2.56368
+        ],
+        [
+          0.13926739130434784,
+          0.13823478260869565,
+          0.17914565217391307,
+          0.15249565217391306,
+          0.15458478260869565,
+          0.13359565217391306,
+          0.1491086956521739
+        ],
+        [
+          0.14321,
+          0.13478,
+          0.15446,
+          0.13013333333333332,
+          0.13526666666666665,
+          0.149865,
+          0.14714166666666667
+        ]
+      ],
+      "loops": [
+        5,
+        46,
+        60
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.14321,
+      "improvement": 0.9604402974194489,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 1,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.45493684210526314,
+      "cpp_ms": 0.04311509433962264,
+      "speedup": 10.55168379133471,
+      "samples_ms": [
+        [
+          0.4671947368421053,
+          0.4212947368421053,
+          0.4104473684210526,
+          0.4535157894736842,
+          0.4609052631578947,
+          0.6001315789473685,
+          0.45493684210526314
+        ],
+        [
+          0.0437811320754717,
+          0.04301132075471698,
+          0.04311509433962264,
+          0.04008301886792453,
+          0.08034150943396226,
+          0.04279433962264151,
+          0.044433962264150945
+        ],
+        [
+          0.04254722222222222,
+          0.04870648148148148,
+          0.04395185185185185,
+          0.04137685185185185,
+          0.042230555555555556,
+          0.04086018518518518,
+          0.0518962962962963
+        ]
+      ],
+      "loops": [
+        19,
+        53,
+        108
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.04254722222222222,
+      "improvement": 0.9868289255515197,
+      "output_dtype": "int64",
+      "threshold": 209
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 4,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.44404166666666667,
+      "cpp_ms": 0.04187227722772277,
+      "speedup": 10.604669630260181,
+      "samples_ms": [
+        [
+          0.4423666666666667,
+          0.4189083333333333,
+          0.4533583333333333,
+          0.447125,
+          0.44404166666666667,
+          0.4908708333333333,
+          0.4094458333333333
+        ],
+        [
+          0.04187227722772277,
+          0.048004950495049506,
+          0.04226930693069307,
+          0.0398990099009901,
+          0.041226732673267326,
+          0.03996138613861386,
+          0.041946534653465345
+        ],
+        [
+          0.04315272727272727,
+          0.040998181818181816,
+          0.04299636363636364,
+          0.04673454545454546,
+          0.03995909090909091,
+          0.04502363636363636,
+          0.04595727272727273
+        ]
+      ],
+      "loops": [
+        24,
+        101,
+        110
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.04315272727272727,
+      "improvement": 1.0305798998712385,
+      "output_dtype": "int64",
+      "threshold": 209
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 1,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.4671,
+      "cpp_ms": 0.08505757575757576,
+      "speedup": 5.491574334675264,
+      "samples_ms": [
+        [
+          0.4190714285714286,
+          0.42179285714285714,
+          0.44218571428571424,
+          0.4671,
+          0.4842714285714286,
+          0.61895,
+          0.6872142857142857
+        ],
+        [
+          0.09461717171717171,
+          0.07447070707070706,
+          0.08505757575757576,
+          0.0829030303030303,
+          0.08222020202020203,
+          0.10123939393939393,
+          0.08871414141414141
+        ],
+        [
+          0.0734236559139785,
+          0.0762989247311828,
+          0.0889967741935484,
+          0.08398387096774194,
+          0.07386666666666668,
+          0.08550645161290323,
+          0.07976666666666667
+        ]
+      ],
+      "loops": [
+        14,
+        99,
+        93
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.07976666666666667,
+      "improvement": 0.9377961452135808,
+      "output_dtype": "int64",
+      "threshold": 214
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 4,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.4478058823529412,
+      "cpp_ms": 0.071834,
+      "speedup": 6.2338987436720945,
+      "samples_ms": [
+        [
+          0.4621941176470588,
+          0.4380705882352941,
+          0.4134470588235294,
+          0.4478058823529412,
+          0.5468117647058824,
+          0.5947176470588235,
+          0.4260529411764706
+        ],
+        [
+          0.071834,
+          0.071902,
+          0.07341,
+          0.073137,
+          0.063639,
+          0.069055,
+          0.071605
+        ],
+        [
+          0.06734285714285715,
+          0.06504603174603174,
+          0.0707174603174603,
+          0.06443015873015873,
+          0.06325396825396826,
+          0.07515714285714285,
+          0.06236666666666667
+        ]
+      ],
+      "loops": [
+        17,
+        100,
+        63
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.06504603174603174,
+      "improvement": 0.9055047992041616,
+      "output_dtype": "int64",
+      "threshold": 214
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.1139,
+      "cpp_ms": 0.0876625,
+      "speedup": 24.11407386282618,
+      "samples_ms": [
+        [
+          2.22372,
+          2.1139,
+          2.22936,
+          1.81944,
+          2.37832,
+          2.02986,
+          1.9169
+        ],
+        [
+          0.08744625,
+          0.1208625,
+          0.08075,
+          0.10430625,
+          0.0920675,
+          0.0808925,
+          0.0876625
+        ],
+        [
+          0.09484772727272728,
+          0.10310454545454546,
+          0.087175,
+          0.09485340909090909,
+          0.09319431818181817,
+          0.09282272727272728,
+          0.08826590909090909
+        ]
+      ],
+      "loops": [
+        5,
+        80,
+        88
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09319431818181817,
+      "improvement": 1.0631035868452094,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.97795,
+      "cpp_ms": 0.06017196261682243,
+      "speedup": 32.871621831510936,
+      "samples_ms": [
+        [
+          1.96585,
+          2.30965,
+          2.1718,
+          2.42035,
+          1.913825,
+          1.97795,
+          1.966275
+        ],
+        [
+          0.06017196261682243,
+          0.07090280373831775,
+          0.06505794392523365,
+          0.05618971962616823,
+          0.062404672897196256,
+          0.05984859813084112,
+          0.05875514018691589
+        ],
+        [
+          0.0856125,
+          0.05575875,
+          0.0706025,
+          0.06290625,
+          0.06275625,
+          0.06336,
+          0.06081
+        ]
+      ],
+      "loops": [
+        4,
+        107,
+        80
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.06290625,
+      "improvement": 1.0454412198682903,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.008657142857143,
+      "cpp_ms": 0.09326279069767442,
+      "speedup": 21.537604952960415,
+      "samples_ms": [
+        [
+          1.961757142857143,
+          1.9074857142857142,
+          2.432,
+          1.9642714285714287,
+          2.065057142857143,
+          2.073642857142857,
+          2.008657142857143
+        ],
+        [
+          0.08360348837209303,
+          0.09334302325581395,
+          0.09781046511627907,
+          0.09326279069767442,
+          0.08581976744186046,
+          0.08143837209302325,
+          0.1009127906976744
+        ],
+        [
+          0.0924234693877551,
+          0.09033673469387754,
+          0.08981122448979592,
+          0.10208775510204081,
+          0.09836836734693877,
+          0.11474489795918368,
+          0.09374081632653061
+        ]
+      ],
+      "loops": [
+        7,
+        86,
+        98
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09374081632653061,
+      "improvement": 1.0051255771490453,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.29892,
+      "cpp_ms": 0.06606730769230769,
+      "speedup": 34.79663513316839,
+      "samples_ms": [
+        [
+          1.9644,
+          2.0323,
+          2.0451,
+          2.35226,
+          2.29892,
+          2.53986,
+          2.46778
+        ],
+        [
+          0.06899519230769231,
+          0.056281730769230764,
+          0.06606730769230769,
+          0.0593048076923077,
+          0.06802307692307692,
+          0.0720153846153846,
+          0.06366538461538462
+        ],
+        [
+          0.06633473684210527,
+          0.07081894736842105,
+          0.06679578947368421,
+          0.06861263157894737,
+          0.09158421052631578,
+          0.0758,
+          0.06917684210526316
+        ]
+      ],
+      "loops": [
+        5,
+        104,
+        95
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.06917684210526316,
+      "improvement": 1.0470661590667107,
+      "output_dtype": "int64",
+      "threshold": 96
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9230666666666666,
+      "cpp_ms": 0.12919583333333332,
+      "speedup": 7.144709259199536,
+      "samples_ms": [
+        [
+          0.9076333333333334,
+          0.9230666666666666,
+          1.0145666666666666,
+          1.1411083333333332,
+          0.9283416666666666,
+          0.804525,
+          0.8226416666666666
+        ],
+        [
+          0.11166041666666666,
+          0.12273125,
+          0.12821041666666666,
+          0.14665625,
+          0.12919583333333332,
+          0.13327916666666667,
+          0.13098125
+        ],
+        [
+          0.10838947368421052,
+          0.11665438596491227,
+          0.1300701754385965,
+          0.1177,
+          0.12482456140350878,
+          0.1270280701754386,
+          0.11358947368421052
+        ]
+      ],
+      "loops": [
+        12,
+        48,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.1177,
+      "improvement": 0.9110200922372369,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6649692307692308,
+      "cpp_ms": 0.08277466666666668,
+      "speedup": 8.0334872678746,
+      "samples_ms": [
+        [
+          0.6455769230769232,
+          0.6682230769230769,
+          0.7094230769230768,
+          0.8208,
+          0.6649692307692308,
+          0.6485230769230769,
+          0.6564615384615385
+        ],
+        [
+          0.07952266666666667,
+          0.09237333333333334,
+          0.08629733333333332,
+          0.07928133333333333,
+          0.09387466666666668,
+          0.08277466666666668,
+          0.06359733333333334
+        ],
+        [
+          0.07487142857142856,
+          0.07736363636363637,
+          0.10023376623376623,
+          0.07567402597402598,
+          0.08328311688311688,
+          0.08101818181818182,
+          0.08284155844155845
+        ]
+      ],
+      "loops": [
+        13,
+        75,
+        77
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08101818181818182,
+      "improvement": 0.9787799224180725,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.373184,
+      "cpp_ms": 0.09295270270270271,
+      "speedup": 4.014772988296866,
+      "samples_ms": [
+        [
+          0.3338,
+          0.363144,
+          0.373184,
+          0.39566,
+          0.3392,
+          0.502884,
+          0.383728
+        ],
+        [
+          0.1014,
+          0.09295270270270271,
+          0.08927567567567568,
+          0.09463108108108108,
+          0.09196621621621622,
+          0.11267297297297298,
+          0.09228513513513513
+        ],
+        [
+          0.08971492537313433,
+          0.12479104477611941,
+          0.12151641791044776,
+          0.11383731343283582,
+          0.10980149253731343,
+          0.08844925373134328,
+          0.08915223880597015
+        ]
+      ],
+      "loops": [
+        25,
+        74,
+        67
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.10980149253731343,
+      "improvement": 1.1812619681269452,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "uint8",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3643705882352941,
+      "cpp_ms": 0.07812361111111112,
+      "speedup": 4.664026445437461,
+      "samples_ms": [
+        [
+          0.33611176470588233,
+          0.4587705882352941,
+          0.48613529411764705,
+          0.3392764705882353,
+          0.3643705882352941,
+          0.3993470588235294,
+          0.3318470588235294
+        ],
+        [
+          0.07182777777777778,
+          0.08623888888888889,
+          0.08147222222222222,
+          0.07812361111111112,
+          0.06117777777777778,
+          0.0884625,
+          0.07090277777777779
+        ],
+        [
+          0.07749285714285714,
+          0.0914047619047619,
+          0.06079047619047619,
+          0.08268809523809524,
+          0.10703095238095238,
+          0.06825357142857144,
+          0.07005952380952382
+        ]
+      ],
+      "loops": [
+        17,
+        72,
+        84
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.07749285714285714,
+      "improvement": 0.9919262056722278,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.486666666666667,
+      "cpp_ms": 0.6999368421052632,
+      "speedup": 6.4101021646063305,
+      "samples_ms": [
+        [
+          4.512333333333333,
+          4.486666666666667,
+          4.3521,
+          4.245333333333333,
+          5.075666666666667,
+          4.890766666666667,
+          4.254466666666667
+        ],
+        [
+          0.6999368421052632,
+          0.8598526315789474,
+          0.7097736842105263,
+          0.7003894736842106,
+          0.5990052631578947,
+          0.6705842105263159,
+          0.5986684210526316
+        ],
+        [
+          0.6254,
+          0.6865105263157895,
+          0.6614052631578947,
+          0.6520578947368422,
+          0.692921052631579,
+          0.6626684210526316,
+          0.6778052631578947
+        ]
+      ],
+      "loops": [
+        3,
+        19,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6626684210526316,
+      "improvement": 0.9467545943994946,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4928,
+      "cpp_ms": 0.2766466666666667,
+      "speedup": 16.240210135672456,
+      "samples_ms": [
+        [
+          4.3435,
+          4.702466666666667,
+          4.432133333333333,
+          4.149866666666666,
+          4.4928,
+          5.6403,
+          4.886066666666667
+        ],
+        [
+          0.2791,
+          0.2657133333333333,
+          0.2736133333333333,
+          0.34714666666666666,
+          0.3077333333333333,
+          0.27034,
+          0.2766466666666667
+        ],
+        [
+          0.355684,
+          0.332528,
+          0.336224,
+          0.280172,
+          0.287948,
+          0.349992,
+          0.255892
+        ]
+      ],
+      "loops": [
+        3,
+        30,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.332528,
+      "improvement": 1.2019953249632502,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 1,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6603666666666665,
+      "cpp_ms": 0.8617222222222223,
+      "speedup": 5.408200631809683,
+      "samples_ms": [
+        [
+          5.1909,
+          4.954266666666667,
+          5.3639,
+          4.6315,
+          4.6603666666666665,
+          4.299733333333333,
+          4.535833333333333
+        ],
+        [
+          0.9801555555555556,
+          1.0044444444444445,
+          0.8299777777777777,
+          1.0253444444444444,
+          0.8617222222222223,
+          0.8288888888888889,
+          0.8337666666666667
+        ],
+        [
+          0.9248625,
+          1.0341125,
+          1.008325,
+          1.180425,
+          0.839175,
+          1.1020625,
+          0.8390875
+        ]
+      ],
+      "loops": [
+        3,
+        9,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.008325,
+      "improvement": 1.1701276513442072,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 4,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.46355,
+      "cpp_ms": 0.5226416666666667,
+      "speedup": 8.540363856689574,
+      "samples_ms": [
+        [
+          4.90245,
+          4.6658,
+          4.5669,
+          4.2005,
+          4.328,
+          4.29375,
+          4.46355
+        ],
+        [
+          0.4745333333333333,
+          0.539625,
+          0.5226416666666667,
+          0.44655,
+          0.5698833333333334,
+          0.5564833333333333,
+          0.4295416666666667
+        ],
+        [
+          0.5753666666666666,
+          0.6117,
+          0.6183666666666666,
+          0.55105,
+          0.5426333333333334,
+          0.4930666666666667,
+          0.57585
+        ]
+      ],
+      "loops": [
+        2,
+        12,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5753666666666666,
+      "improvement": 1.1008817386035683,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 1,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.512833333333333,
+      "cpp_ms": 0.7598384615384615,
+      "speedup": 5.939200977265748,
+      "samples_ms": [
+        [
+          4.512833333333333,
+          4.155166666666666,
+          3.9105,
+          4.773233333333333,
+          4.2514,
+          5.4016,
+          4.698366666666667
+        ],
+        [
+          0.7776461538461539,
+          0.7380461538461539,
+          0.7807846153846154,
+          0.7213461538461539,
+          0.7759769230769231,
+          0.7455,
+          0.7598384615384615
+        ],
+        [
+          0.7715357142857143,
+          0.7451785714285715,
+          0.7201214285714285,
+          0.7960857142857143,
+          0.7988,
+          0.8335928571428571,
+          0.77215
+        ]
+      ],
+      "loops": [
+        3,
+        13,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.77215,
+      "improvement": 1.0162028366353173,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 4,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.6592,
+      "cpp_ms": 0.426824,
+      "speedup": 10.915974734316721,
+      "samples_ms": [
+        [
+          4.272033333333333,
+          4.193066666666667,
+          5.1787,
+          4.919133333333333,
+          4.6729,
+          4.3888,
+          4.6592
+        ],
+        [
+          0.426824,
+          0.4356,
+          0.44296,
+          0.417764,
+          0.512876,
+          0.393272,
+          0.387924
+        ],
+        [
+          0.5290318181818182,
+          0.4090090909090909,
+          0.4425818181818182,
+          0.51015,
+          0.39739090909090913,
+          0.39711363636363634,
+          0.4133590909090909
+        ]
+      ],
+      "loops": [
+        3,
+        25,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.4133590909090909,
+      "improvement": 0.96845325218144,
+      "output_dtype": "float32",
+      "threshold": 0.18242186307907104
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 1,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 31.0212,
+      "cpp_ms": 0.44443529411764704,
+      "speedup": 69.79913704105674,
+      "samples_ms": [
+        [
+          32.721,
+          31.8947,
+          31.0212,
+          30.7316,
+          30.7609,
+          29.8508,
+          31.2045
+        ],
+        [
+          0.44443529411764704,
+          0.4833176470588236,
+          0.5751941176470587,
+          0.46624117647058827,
+          0.43911176470588237,
+          0.43611764705882355,
+          0.4425
+        ],
+        [
+          0.6641947368421053,
+          0.6564421052631578,
+          0.6214421052631579,
+          0.6004842105263158,
+          0.6021684210526316,
+          0.5912421052631579,
+          0.594221052631579
+        ]
+      ],
+      "loops": [
+        1,
+        17,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6021684210526316,
+      "improvement": 1.3549068425092963,
+      "output_dtype": "float32",
+      "threshold": 0.5386718511581421
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 4,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 31.3027,
+      "cpp_ms": 0.4807904761904762,
+      "speedup": 65.1067389022047,
+      "samples_ms": [
+        [
+          30.4849,
+          32.026,
+          32.2964,
+          33.7726,
+          30.5531,
+          31.3027,
+          30.5092
+        ],
+        [
+          0.4564761904761905,
+          0.5155666666666667,
+          0.4807904761904762,
+          0.5163571428571428,
+          0.4618714285714286,
+          0.5494333333333333,
+          0.44274285714285716
+        ],
+        [
+          0.597870588235294,
+          0.7429882352941176,
+          0.6463941176470588,
+          0.6079882352941176,
+          0.6526294117647059,
+          0.6085411764705881,
+          0.6137823529411766
+        ]
+      ],
+      "loops": [
+        1,
+        21,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6137823529411766,
+      "improvement": 1.2766108800749467,
+      "output_dtype": "float32",
+      "threshold": 0.5386718511581421
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 1,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 29.4777,
+      "cpp_ms": 0.8391692307692308,
+      "speedup": 35.127241227587724,
+      "samples_ms": [
+        [
+          29.0355,
+          29.8024,
+          29.8481,
+          29.2305,
+          29.1245,
+          29.4777,
+          29.9516
+        ],
+        [
+          0.8318615384615385,
+          0.8895692307692308,
+          0.8496846153846154,
+          0.8391692307692308,
+          0.8000923076923078,
+          0.8239153846153846,
+          0.8977769230769231
+        ],
+        [
+          1.034775,
+          0.9552333333333334,
+          1.018575,
+          1.0719833333333333,
+          1.0716333333333332,
+          0.97665,
+          0.981975
+        ]
+      ],
+      "loops": [
+        1,
+        13,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.018575,
+      "improvement": 1.213789737102629,
+      "output_dtype": "float32",
+      "threshold": 0.5242723226547241
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 4,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 31.0329,
+      "cpp_ms": 0.5703,
+      "speedup": 54.41504471330879,
+      "samples_ms": [
+        [
+          28.3223,
+          28.5543,
+          31.2499,
+          30.411,
+          32.0678,
+          35.3651,
+          31.0329
+        ],
+        [
+          0.5652157894736841,
+          0.5055105263157895,
+          0.5747947368421052,
+          0.5703,
+          0.5646578947368421,
+          0.5882421052631579,
+          0.612521052631579
+        ],
+        [
+          0.736970588235294,
+          0.6513882352941176,
+          0.6717411764705882,
+          0.8775352941176471,
+          0.7896588235294119,
+          0.7720529411764706,
+          0.6810941176470588
+        ]
+      ],
+      "loops": [
+        1,
+        19,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.736970588235294,
+      "improvement": 1.2922507245928354,
+      "output_dtype": "float32",
+      "threshold": 0.5242723226547241
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.0160857142857145,
+      "cpp_ms": 1.2285,
+      "speedup": 1.6410954125239843,
+      "samples_ms": [
+        [
+          2.091457142857143,
+          2.2099714285714285,
+          2.0160857142857145,
+          2.0053,
+          2.0387714285714287,
+          1.9929285714285714,
+          1.7620285714285713
+        ],
+        [
+          1.1330333333333333,
+          1.2285,
+          1.2168166666666667,
+          1.33545,
+          1.3220666666666667,
+          1.1539666666666668,
+          1.2710666666666668
+        ],
+        [
+          1.1450636363636364,
+          1.2487727272727274,
+          1.1763363636363635,
+          1.3119909090909092,
+          1.2551181818181818,
+          1.1074636363636365,
+          1.1030909090909091
+        ]
+      ],
+      "loops": [
+        7,
+        6,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.1763363636363635,
+      "improvement": 0.9575387575387575,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.6042285714285713,
+      "cpp_ms": 0.4098652173913043,
+      "speedup": 3.9140393069680535,
+      "samples_ms": [
+        [
+          1.7005428571428571,
+          1.900842857142857,
+          1.550442857142857,
+          1.6693714285714287,
+          1.5994857142857144,
+          1.582557142857143,
+          1.6042285714285713
+        ],
+        [
+          0.4098652173913043,
+          0.3515,
+          0.38839565217391303,
+          0.38388695652173915,
+          0.4277347826086957,
+          0.43311304347826085,
+          0.4134434782608696
+        ],
+        [
+          0.4359166666666667,
+          0.394925,
+          0.38605,
+          0.3659041666666667,
+          0.4011208333333333,
+          0.4063,
+          0.4275875
+        ]
+      ],
+      "loops": [
+        7,
+        23,
+        24
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.4011208333333333,
+      "improvement": 0.978665220450696,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 19.4893,
+      "cpp_ms": 0.7862714285714285,
+      "speedup": 24.786987408928216,
+      "samples_ms": [
+        [
+          18.7763,
+          21.3231,
+          18.5607,
+          19.9983,
+          19.4893,
+          18.9249,
+          19.576
+        ],
+        [
+          0.7852071428571429,
+          0.8067857142857143,
+          0.7573285714285715,
+          0.7778142857142857,
+          0.8352071428571428,
+          0.7862714285714285,
+          0.7974714285714285
+        ],
+        [
+          0.8701466666666666,
+          0.85444,
+          1.0915933333333332,
+          0.9838666666666667,
+          0.8677533333333334,
+          0.85958,
+          0.8626533333333334
+        ]
+      ],
+      "loops": [
+        1,
+        14,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.8677533333333334,
+      "improvement": 1.1036307587952787,
+      "output_dtype": "float32",
+      "threshold": 0.18431371450424194
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 19.4509,
+      "cpp_ms": 0.3858615384615384,
+      "speedup": 50.40901479207369,
+      "samples_ms": [
+        [
+          18.894,
+          19.4043,
+          19.9541,
+          19.4591,
+          19.157,
+          20.0658,
+          19.4509
+        ],
+        [
+          0.36242307692307696,
+          0.4103538461538461,
+          0.3858615384615384,
+          0.37473076923076926,
+          0.37448846153846155,
+          0.38956538461538465,
+          0.4083076923076923
+        ],
+        [
+          0.4388714285714286,
+          0.5585428571428571,
+          0.48145238095238096,
+          0.5060904761904762,
+          0.4445047619047619,
+          0.6008095238095238,
+          0.5068333333333334
+        ]
+      ],
+      "loops": [
+        1,
+        26,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5060904761904762,
+      "improvement": 1.3115857004258584,
+      "output_dtype": "float32",
+      "threshold": 0.18431371450424194
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.6056,
+      "cpp_ms": 0.5684684210526316,
+      "speedup": 2.8244312973918837,
+      "samples_ms": [
+        [
+          1.5757166666666667,
+          1.6056,
+          1.5779833333333333,
+          1.6263666666666667,
+          1.5882666666666667,
+          1.7781333333333333,
+          2.01585
+        ],
+        [
+          0.5513052631578947,
+          0.5684684210526316,
+          0.5999894736842105,
+          0.5547526315789474,
+          0.5766894736842105,
+          0.5537842105263159,
+          0.5724736842105262
+        ],
+        [
+          0.5887473684210526,
+          0.5547052631578947,
+          0.5805052631578947,
+          0.5420263157894737,
+          0.5538578947368421,
+          0.5466105263157894,
+          0.5948684210526316
+        ]
+      ],
+      "loops": [
+        6,
+        19,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5547052631578947,
+      "improvement": 0.9757890546158189,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.2800333333333334,
+      "cpp_ms": 0.33876666666666666,
+      "speedup": 6.730394568532914,
+      "samples_ms": [
+        [
+          2.2800333333333334,
+          2.5468833333333336,
+          3.0240833333333335,
+          2.3055166666666667,
+          1.6765166666666667,
+          1.6844666666666668,
+          1.9823833333333332
+        ],
+        [
+          0.35751428571428573,
+          0.4065809523809524,
+          0.4379,
+          0.33485714285714285,
+          0.33876666666666666,
+          0.22166190476190475,
+          0.3203761904761905
+        ],
+        [
+          0.29624285714285714,
+          0.36706428571428573,
+          0.36310714285714285,
+          0.369075,
+          0.34238214285714286,
+          0.24435714285714286,
+          0.25063214285714286
+        ]
+      ],
+      "loops": [
+        6,
+        21,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.34238214285714286,
+      "improvement": 1.0106724673535654,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.5609625,
+      "cpp_ms": 0.6254222222222222,
+      "speedup": 2.495853912023877,
+      "samples_ms": [
+        [
+          1.4146,
+          1.4077625,
+          1.7100125,
+          1.5786375,
+          1.5609625,
+          1.616475,
+          1.47415
+        ],
+        [
+          0.6008722222222223,
+          0.6840444444444445,
+          0.6673944444444445,
+          0.6254222222222222,
+          0.6768166666666666,
+          0.6248222222222223,
+          0.6127111111111111
+        ],
+        [
+          0.6836090909090909,
+          0.6184636363636363,
+          0.7202545454545454,
+          0.6459818181818182,
+          0.6317090909090909,
+          0.6386909090909091,
+          0.6438454545454546
+        ]
+      ],
+      "loops": [
+        8,
+        18,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6438454545454546,
+      "improvement": 1.0294572716936277,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.534425,
+      "cpp_ms": 0.26494375,
+      "speedup": 5.791512349319431,
+      "samples_ms": [
+        [
+          1.6749625,
+          1.4791625,
+          1.534425,
+          1.413225,
+          1.6870625,
+          1.6992375,
+          1.4064125
+        ],
+        [
+          0.294125,
+          0.23824375,
+          0.36090625,
+          0.247225,
+          0.26355,
+          0.26494375,
+          0.2703
+        ],
+        [
+          0.27578823529411767,
+          0.2718264705882353,
+          0.2425,
+          0.2817617647058823,
+          0.25515882352941177,
+          0.3274764705882353,
+          0.22385588235294118
+        ]
+      ],
+      "loops": [
+        8,
+        16,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2718264705882353,
+      "improvement": 1.0259780447292504,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.6633,
+      "cpp_ms": 0.6251428571428571,
+      "speedup": 9.05920932358318,
+      "samples_ms": [
+        [
+          6.314533333333333,
+          6.277433333333333,
+          5.218666666666667,
+          5.721466666666667,
+          5.6633,
+          4.589766666666667,
+          4.895066666666667
+        ],
+        [
+          0.6251428571428571,
+          0.6073857142857143,
+          0.7003214285714285,
+          0.6248214285714285,
+          0.6233428571428572,
+          0.6579357142857143,
+          0.7306285714285715
+        ],
+        [
+          0.6584375,
+          0.71999375,
+          0.637175,
+          0.63945625,
+          0.65305625,
+          0.709475,
+          0.67513125
+        ]
+      ],
+      "loops": [
+        3,
+        14,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6584375,
+      "improvement": 1.0532592550274225,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "bimodal",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.70515,
+      "cpp_ms": 0.30217222222222223,
+      "speedup": 15.571087128385209,
+      "samples_ms": [
+        [
+          4.49285,
+          6.0776,
+          4.6245,
+          5.39,
+          4.70515,
+          4.4843,
+          5.81685
+        ],
+        [
+          0.3126666666666667,
+          0.25755555555555554,
+          0.35792777777777773,
+          0.27316111111111113,
+          0.24845,
+          0.30217222222222223,
+          0.3104388888888889
+        ],
+        [
+          0.3667086956521739,
+          0.28551304347826084,
+          0.3101695652173913,
+          0.30217826086956523,
+          0.2981608695652174,
+          0.24019565217391306,
+          0.28985652173913046
+        ]
+      ],
+      "loops": [
+        2,
+        18,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2981608695652174,
+      "improvement": 0.9867249457031335,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 1,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 7.5442,
+      "cpp_ms": 1.29648,
+      "speedup": 5.818986795014192,
+      "samples_ms": [
+        [
+          7.63875,
+          7.5442,
+          8.02905,
+          8.05375,
+          7.4468,
+          6.5611,
+          6.09585
+        ],
+        [
+          1.29648,
+          1.02274,
+          2.83782,
+          3.62532,
+          1.19006,
+          1.09088,
+          2.59456
+        ],
+        [
+          1.6146,
+          3.384625,
+          1.564525,
+          4.046875,
+          1.5135,
+          1.400025,
+          1.4500875
+        ]
+      ],
+      "loops": [
+        2,
+        5,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.564525,
+      "improvement": 1.2067482722448475,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "fortran",
+      "threads": 4,
+      "layout": "fortran",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.46785,
+      "cpp_ms": 0.7357571428571429,
+      "speedup": 7.431596217696057,
+      "samples_ms": [
+        [
+          5.21095,
+          7.67845,
+          6.4062,
+          5.2681,
+          5.46785,
+          6.08955,
+          5.06045
+        ],
+        [
+          1.1007857142857143,
+          1.102157142857143,
+          0.6206571428571428,
+          0.7806571428571428,
+          0.7357571428571429,
+          0.6897428571428572,
+          0.7216
+        ],
+        [
+          2.37608,
+          0.84394,
+          1.70792,
+          0.79704,
+          1.24742,
+          1.27454,
+          0.6531
+        ]
+      ],
+      "loops": [
+        2,
+        7,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.24742,
+      "improvement": 1.6954235675591711,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 1,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.673566666666667,
+      "cpp_ms": 1.0718363636363635,
+      "speedup": 4.360335985253291,
+      "samples_ms": [
+        [
+          5.525066666666667,
+          4.673566666666667,
+          5.1519,
+          4.663933333333333,
+          5.696866666666667,
+          4.6106,
+          4.665
+        ],
+        [
+          1.4868,
+          1.4690636363636365,
+          0.9365363636363636,
+          1.2126727272727273,
+          0.8522090909090909,
+          1.0718363636363635,
+          0.8090363636363637
+        ],
+        [
+          0.8800916666666666,
+          1.273075,
+          0.9811416666666666,
+          1.1661666666666668,
+          0.8421916666666667,
+          0.84925,
+          0.939125
+        ]
+      ],
+      "loops": [
+        3,
+        11,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.939125,
+      "improvement": 0.8761831860358604,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "reversed",
+      "threads": 4,
+      "layout": "reversed",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.01935,
+      "cpp_ms": 0.4945785714285714,
+      "speedup": 10.148741352666773,
+      "samples_ms": [
+        [
+          6.55525,
+          4.68295,
+          5.01935,
+          4.73245,
+          4.79765,
+          5.64475,
+          5.22055
+        ],
+        [
+          0.60685,
+          0.5113714285714286,
+          0.4945785714285714,
+          0.7062214285714286,
+          0.4237785714285714,
+          0.4301214285714286,
+          0.46959285714285715
+        ],
+        [
+          0.5550444444444445,
+          0.5224777777777777,
+          0.6795555555555555,
+          0.5441,
+          0.7276555555555555,
+          0.5807444444444445,
+          0.5603666666666667
+        ]
+      ],
+      "loops": [
+        2,
+        14,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5603666666666667,
+      "improvement": 1.1330184909711492,
+      "output_dtype": "float64",
+      "threshold": -0.18838082107843135
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 1,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 12.8762,
+      "cpp_ms": 0.3674529411764706,
+      "speedup": 35.04176605247571,
+      "samples_ms": [
+        [
+          13.513,
+          12.565,
+          13.0668,
+          12.8762,
+          13.5331,
+          12.0059,
+          12.5436
+        ],
+        [
+          0.3500235294117647,
+          0.43243529411764703,
+          0.4131058823529412,
+          0.33308235294117644,
+          0.35375882352941174,
+          0.3674529411764706,
+          0.38394117647058823
+        ],
+        [
+          0.42407894736842106,
+          0.4250578947368421,
+          0.40358421052631577,
+          0.4227789473684211,
+          0.4064842105263158,
+          0.4285842105263158,
+          0.41843157894736843
+        ]
+      ],
+      "loops": [
+        1,
+        17,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.4227789473684211,
+      "improvement": 1.1505662358146154,
+      "output_dtype": "float64",
+      "threshold": 0.5739506740196079
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        257,
+        259
+      ],
+      "workload": "stepped",
+      "threads": 4,
+      "layout": "stepped",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 13.2488,
+      "cpp_ms": 0.38568571428571424,
+      "speedup": 34.35128528039114,
+      "samples_ms": [
+        [
+          13.5773,
+          13.9322,
+          13.6187,
+          12.6503,
+          13.1035,
+          12.6244,
+          13.2488
+        ],
+        [
+          0.43331904761904766,
+          0.4689714285714286,
+          0.36796666666666666,
+          0.38921428571428573,
+          0.38568571428571424,
+          0.3411619047619047,
+          0.3277761904761905
+        ],
+        [
+          0.5079,
+          0.5722266666666667,
+          0.5469266666666667,
+          0.4600933333333333,
+          0.55784,
+          0.4127866666666667,
+          0.4030866666666667
+        ]
+      ],
+      "loops": [
+        1,
+        21,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5079,
+      "improvement": 1.3168753240980815,
+      "output_dtype": "float64",
+      "threshold": 0.5739506740196079
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 1,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 27.6462,
+      "cpp_ms": 0.96488,
+      "speedup": 28.652474919160934,
+      "samples_ms": [
+        [
+          27.6462,
+          28.8061,
+          26.7839,
+          28.2677,
+          26.0413,
+          26.5649,
+          28.0602
+        ],
+        [
+          1.0391,
+          0.88139,
+          0.89146,
+          0.96488,
+          0.90847,
+          1.15888,
+          1.05515
+        ],
+        [
+          1.2329,
+          1.15193,
+          1.04999,
+          1.07056,
+          1.10264,
+          1.05065,
+          1.08341
+        ]
+      ],
+      "loops": [
+        1,
+        10,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.08341,
+      "improvement": 1.1228442915181163,
+      "output_dtype": "float64",
+      "threshold": 0.5026731004901961
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "broadcast",
+      "threads": 4,
+      "layout": "broadcast",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 27.4323,
+      "cpp_ms": 0.6466125,
+      "speedup": 42.42463608420808,
+      "samples_ms": [
+        [
+          26.9487,
+          26.4285,
+          27.9343,
+          26.9719,
+          27.9837,
+          28.7067,
+          27.4323
+        ],
+        [
+          0.6306125,
+          0.6517625,
+          0.6156375,
+          0.583625,
+          0.76765,
+          0.6466125,
+          0.753675
+        ],
+        [
+          0.6894333333333333,
+          0.8102583333333334,
+          0.7274666666666666,
+          0.74545,
+          0.7268583333333334,
+          0.782725,
+          0.985875
+        ]
+      ],
+      "loops": [
+        1,
+        8,
+        12
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.74545,
+      "improvement": 1.1528542983626204,
+      "output_dtype": "float64",
+      "threshold": 0.5026731004901961
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.562575,
+      "cpp_ms": 1.19964,
+      "speedup": 2.1361200026674667,
+      "samples_ms": [
+        [
+          2.562575,
+          2.73475,
+          2.522425,
+          2.4455,
+          3.213175,
+          3.545525,
+          2.526175
+        ],
+        [
+          1.19964,
+          1.11317,
+          1.08254,
+          1.37202,
+          1.18931,
+          1.25125,
+          1.60565
+        ],
+        [
+          1.1436,
+          1.2448777777777777,
+          1.195111111111111,
+          1.1967666666666668,
+          1.539311111111111,
+          1.5063333333333333,
+          1.2946555555555554
+        ]
+      ],
+      "loops": [
+        4,
+        10,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 1.2448777777777777,
+      "improvement": 1.0377094609864441,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "seven-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 7,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.09068,
+      "cpp_ms": 0.5200777777777777,
+      "speedup": 5.942726515264811,
+      "samples_ms": [
+        [
+          3.09068,
+          3.0901,
+          2.65632,
+          4.56448,
+          3.67832,
+          3.47148,
+          2.75758
+        ],
+        [
+          0.4579166666666667,
+          0.41952222222222224,
+          0.5200777777777777,
+          0.52085,
+          0.5349888888888888,
+          0.5216388888888889,
+          0.4313388888888889
+        ],
+        [
+          0.4757875,
+          0.5414375,
+          0.45673125,
+          0.5676875,
+          0.54521875,
+          0.50905625,
+          0.44336875
+        ]
+      ],
+      "loops": [
+        5,
+        18,
+        16
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.50905625,
+      "improvement": 0.9788079240284573,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 19.4368,
+      "cpp_ms": 0.8318428571428571,
+      "speedup": 23.365951673564723,
+      "samples_ms": [
+        [
+          19.1276,
+          19.4368,
+          20.6352,
+          20.3067,
+          18.8046,
+          21.8886,
+          19.0986
+        ],
+        [
+          0.95245,
+          0.9800714285714285,
+          0.7858214285714286,
+          0.8906428571428572,
+          0.8318428571428571,
+          0.8235857142857144,
+          0.8312928571428572
+        ],
+        [
+          0.9695384615384615,
+          0.8494846153846154,
+          0.9406692307692307,
+          0.9151384615384615,
+          0.8683769230769232,
+          0.9163615384615384,
+          0.8785307692307692
+        ]
+      ],
+      "loops": [
+        1,
+        14,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.9151384615384615,
+      "improvement": 1.100133821767372,
+      "output_dtype": "float64",
+      "threshold": 0.18431372549019615
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "513-bins",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 513,
+      "max_abs_error": 0.0,
+      "reference_ms": 19.335,
+      "cpp_ms": 0.4205916666666667,
+      "speedup": 45.97095361692853,
+      "samples_ms": [
+        [
+          18.8409,
+          19.9524,
+          19.2735,
+          20.0617,
+          19.335,
+          20.0348,
+          18.3949
+        ],
+        [
+          0.4205916666666667,
+          0.4414458333333333,
+          0.4336125,
+          0.5352625,
+          0.35605416666666667,
+          0.405275,
+          0.39621666666666666
+        ],
+        [
+          0.5446684210526316,
+          0.4714210526315789,
+          0.6030157894736842,
+          0.536721052631579,
+          0.4605315789473684,
+          0.564778947368421,
+          0.5731842105263159
+        ]
+      ],
+      "loops": [
+        1,
+        24,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.5446684210526316,
+      "improvement": 1.2950052609679972,
+      "output_dtype": "float64",
+      "threshold": 0.18431372549019615
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.55926,
+      "cpp_ms": 0.6072,
+      "speedup": 4.214855072463768,
+      "samples_ms": [
+        [
+          2.59134,
+          3.06688,
+          2.5038,
+          2.45712,
+          2.26538,
+          2.63382,
+          2.55926
+        ],
+        [
+          0.63019375,
+          0.6072,
+          0.68031875,
+          0.6876625,
+          0.60556875,
+          0.5881375,
+          0.6019
+        ],
+        [
+          0.8035611111111112,
+          0.6110944444444445,
+          0.7030333333333334,
+          0.5944,
+          0.61665,
+          0.5964222222222223,
+          0.5992055555555555
+        ]
+      ],
+      "loops": [
+        5,
+        16,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6110944444444445,
+      "improvement": 1.0064137754355147,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "constant-failed",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.6782833333333333,
+      "cpp_ms": 0.2887966666666667,
+      "speedup": 9.273941296644697,
+      "samples_ms": [
+        [
+          2.8408,
+          2.9865,
+          2.6782833333333333,
+          2.9892,
+          2.2411833333333333,
+          2.55485,
+          2.5373333333333337
+        ],
+        [
+          0.3105233333333333,
+          0.2829833333333333,
+          0.2831433333333333,
+          0.30511,
+          0.32879,
+          0.2813733333333333,
+          0.2887966666666667
+        ],
+        [
+          0.284796,
+          0.310184,
+          0.290572,
+          0.353636,
+          0.291076,
+          0.252472,
+          0.3053
+        ]
+      ],
+      "loops": [
+        6,
+        30,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.291076,
+      "improvement": 1.0078925195350823,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 1,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.44925,
+      "cpp_ms": 0.6410176470588235,
+      "speedup": 3.8208776485918534,
+      "samples_ms": [
+        [
+          3.33045,
+          2.824125,
+          2.763625,
+          2.03405,
+          2.2889,
+          2.123525,
+          2.44925
+        ],
+        [
+          0.7916058823529412,
+          0.6672470588235294,
+          0.6372235294117647,
+          0.6076823529411765,
+          0.6301529411764706,
+          0.6410176470588235,
+          0.7168764705882353
+        ],
+        [
+          0.7226533333333334,
+          0.71876,
+          0.7015866666666666,
+          0.6750666666666666,
+          0.84254,
+          0.72122,
+          0.7081066666666667
+        ]
+      ],
+      "loops": [
+        4,
+        17,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.71876,
+      "improvement": 1.1212795830159765,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float64",
+      "shape": [
+        513,
+        517
+      ],
+      "workload": "iteration-limit",
+      "threads": 4,
+      "layout": "contiguous",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "error",
+      "max_num_iter": 1,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.13926,
+      "cpp_ms": 0.2969842105263158,
+      "speedup": 7.203278572314672,
+      "samples_ms": [
+        [
+          2.62562,
+          2.18816,
+          1.8384,
+          2.04706,
+          2.56114,
+          2.13926,
+          1.97902
+        ],
+        [
+          0.29951578947368424,
+          0.32559473684210527,
+          0.3201157894736842,
+          0.2748894736842105,
+          0.27573157894736844,
+          0.2569421052631579,
+          0.2969842105263158
+        ],
+        [
+          0.2924818181818182,
+          0.2731590909090909,
+          0.2838772727272727,
+          0.2980090909090909,
+          0.30005454545454546,
+          0.2791681818181818,
+          0.27785
+        ]
+      ],
+      "loops": [
+        5,
+        19,
+        22
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2838772727272727,
+      "improvement": 0.9558665500236024,
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Unable to find two maxima in histogram"
+      }
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.981866666666667,
+      "cpp_ms": 0.051760919540229884,
+      "speedup": 96.24764611831587,
+      "samples_ms": [
+        [
+          5.127933333333333,
+          4.901366666666667,
+          4.981866666666667,
+          4.6467,
+          4.541133333333333,
+          4.983233333333333,
+          4.989733333333333
+        ],
+        [
+          0.056080459770114936,
+          0.0530183908045977,
+          0.0461816091954023,
+          0.04797011494252874,
+          0.051760919540229884,
+          0.045187356321839074,
+          0.05308735632183908
+        ],
+        [
+          0.07731228070175439,
+          0.06996491228070176,
+          0.06903684210526316,
+          0.07634912280701754,
+          0.06874736842105263,
+          0.08401403508771929,
+          0.07071754385964912
+        ]
+      ],
+      "loops": [
+        3,
+        87,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.07071754385964912,
+      "improvement": 1.366234303559574,
+      "output_dtype": "int64",
+      "threshold": 28
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.91795,
+      "cpp_ms": 0.05003932584269663,
+      "speedup": 98.28169978668463,
+      "samples_ms": [
+        [
+          5.1367,
+          4.94675,
+          5.2433,
+          4.91795,
+          4.677,
+          4.8152,
+          4.66125
+        ],
+        [
+          0.05003932584269663,
+          0.04558539325842696,
+          0.051435955056179775,
+          0.06559101123595505,
+          0.057540449438202246,
+          0.04437078651685394,
+          0.04714831460674157
+        ],
+        [
+          0.07984512195121951,
+          0.06898780487804877,
+          0.06935731707317074,
+          0.07127682926829268,
+          0.07216829268292682,
+          0.06655853658536585,
+          0.06676219512195122
+        ]
+      ],
+      "loops": [
+        2,
+        89,
+        82
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.06935731707317074,
+      "improvement": 1.3860561849134827,
+      "output_dtype": "int64",
+      "threshold": 28
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 47.7723,
+      "cpp_ms": 0.3761962962962963,
+      "speedup": 126.98769357998681,
+      "samples_ms": [
+        [
+          50.8753,
+          47.5333,
+          47.7723,
+          46.3473,
+          46.8479,
+          51.0222,
+          49.919
+        ],
+        [
+          0.3761962962962963,
+          0.3600407407407407,
+          0.3816481481481481,
+          0.3736925925925926,
+          0.3640666666666667,
+          0.4164555555555556,
+          0.38398518518518515
+        ],
+        [
+          0.66106,
+          0.61642,
+          0.59235,
+          0.59873,
+          0.600515,
+          0.66222,
+          0.64947
+        ]
+      ],
+      "loops": [
+        1,
+        27,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.61642,
+      "improvement": 1.6385594596989357,
+      "output_dtype": "int64",
+      "threshold": 48
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 47.5485,
+      "cpp_ms": 0.38536296296296296,
+      "speedup": 123.38627364293403,
+      "samples_ms": [
+        [
+          48.4919,
+          49.1145,
+          47.5485,
+          47.4646,
+          48.0287,
+          45.3509,
+          47.3804
+        ],
+        [
+          0.38284814814814816,
+          0.38536296296296296,
+          0.4530148148148148,
+          0.37747777777777775,
+          0.37655925925925926,
+          0.4239,
+          0.3959
+        ],
+        [
+          0.6830222222222222,
+          0.6260666666666667,
+          0.6479277777777778,
+          0.6128777777777777,
+          0.6011944444444445,
+          0.6229888888888889,
+          0.6040777777777777
+        ]
+      ],
+      "loops": [
+        1,
+        27,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.6229888888888889,
+      "improvement": 1.6166288636014148,
+      "output_dtype": "int64",
+      "threshold": 48
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.40345,
+      "cpp_ms": 0.05585094339622641,
+      "speedup": 96.74769433465086,
+      "samples_ms": [
+        [
+          5.70925,
+          6.44455,
+          5.33045,
+          5.40345,
+          5.7848,
+          5.0823,
+          5.204
+        ],
+        [
+          0.05238679245283019,
+          0.07516981132075472,
+          0.07121509433962264,
+          0.05065849056603773,
+          0.05610943396226415,
+          0.05123018867924529,
+          0.05585094339622641
+        ],
+        [
+          0.07636388888888888,
+          0.07612916666666668,
+          0.07602777777777778,
+          0.09842916666666666,
+          0.08143055555555556,
+          0.08791666666666667,
+          0.081
+        ]
+      ],
+      "loops": [
+        2,
+        53,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.081,
+      "improvement": 1.4502888415931896,
+      "output_dtype": "int64",
+      "threshold": 163
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.3757,
+      "cpp_ms": 0.05371212121212122,
+      "speedup": 100.08355430183356,
+      "samples_ms": [
+        [
+          5.27765,
+          5.2338,
+          5.5395,
+          6.7286,
+          5.69235,
+          5.1684,
+          5.3757
+        ],
+        [
+          0.05210757575757576,
+          0.05371212121212122,
+          0.06148030303030303,
+          0.05212272727272727,
+          0.05921515151515151,
+          0.06407575757575758,
+          0.05169848484848485
+        ],
+        [
+          0.085008,
+          0.07857,
+          0.07837,
+          0.079102,
+          0.087432,
+          0.083094,
+          0.114638
+        ]
+      ],
+      "loops": [
+        2,
+        66,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.083094,
+      "improvement": 1.5470251057827926,
+      "output_dtype": "int64",
+      "threshold": 163
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 22.4808,
+      "cpp_ms": 0.1826468085106383,
+      "speedup": 123.08345370672382,
+      "samples_ms": [
+        [
+          22.4808,
+          22.146,
+          22.7125,
+          22.9062,
+          23.28,
+          22.3238,
+          22.1937
+        ],
+        [
+          0.17029574468085107,
+          0.18017021276595743,
+          0.19972553191489362,
+          0.1826468085106383,
+          0.21284893617021278,
+          0.17167872340425533,
+          0.19424893617021277
+        ],
+        [
+          0.28716111111111114,
+          0.2896694444444444,
+          0.2839611111111111,
+          0.30348888888888886,
+          0.2980527777777778,
+          0.2765388888888889,
+          0.2932944444444444
+        ]
+      ],
+      "loops": [
+        1,
+        47,
+        36
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2896694444444444,
+      "improvement": 1.5859540432515828,
+      "output_dtype": "int64",
+      "threshold": 42
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/int64",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 22.934,
+      "cpp_ms": 0.1771093023255814,
+      "speedup": 129.49065745762044,
+      "samples_ms": [
+        [
+          22.1502,
+          23.0725,
+          24.4703,
+          23.5873,
+          22.4024,
+          22.934,
+          21.6962
+        ],
+        [
+          0.18968837209302328,
+          0.17656976744186045,
+          0.17261860465116277,
+          0.23275581395348838,
+          0.17365813953488374,
+          0.18366976744186045,
+          0.1771093023255814
+        ],
+        [
+          0.28596176470588236,
+          0.3065117647058824,
+          0.2947294117647059,
+          0.29606764705882355,
+          0.3206735294117647,
+          0.29396470588235296,
+          0.30426176470588234
+        ]
+      ],
+      "loops": [
+        1,
+        43,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.29606764705882355,
+      "improvement": 1.6716662714562565,
+      "output_dtype": "int64",
+      "threshold": 42
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 6.1367,
+      "cpp_ms": 0.05676122448979592,
+      "speedup": 108.1142990687808,
+      "samples_ms": [
+        [
+          5.76405,
+          5.6469,
+          6.20585,
+          6.2662,
+          6.65665,
+          5.7491,
+          6.1367
+        ],
+        [
+          0.05411428571428572,
+          0.054469387755102044,
+          0.059957142857142855,
+          0.05735102040816326,
+          0.06087142857142857,
+          0.05676122448979592,
+          0.05478163265306123
+        ],
+        [
+          0.09191805555555556,
+          0.08856388888888889,
+          0.08356527777777778,
+          0.08374166666666667,
+          0.08908194444444444,
+          0.08270972222222221,
+          0.07875972222222222
+        ]
+      ],
+      "loops": [
+        2,
+        49,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08374166666666667,
+      "improvement": 1.4753322786706458,
+      "output_dtype": "float32",
+      "threshold": -5.615384578704834
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.8025,
+      "cpp_ms": 0.05690819672131148,
+      "speedup": 101.96246471164372,
+      "samples_ms": [
+        [
+          5.79705,
+          5.7375,
+          5.8025,
+          5.66845,
+          6.2481,
+          5.9152,
+          5.94935
+        ],
+        [
+          0.06361967213114754,
+          0.05690819672131148,
+          0.054488524590163935,
+          0.05981475409836065,
+          0.06074098360655738,
+          0.05467704918032787,
+          0.05447540983606558
+        ],
+        [
+          0.08903676470588234,
+          0.0795264705882353,
+          0.0810764705882353,
+          0.08083088235294117,
+          0.08038235294117647,
+          0.08200735294117648,
+          0.1041264705882353
+        ]
+      ],
+      "loops": [
+        2,
+        61,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.0810764705882353,
+      "improvement": 1.4246888016023371,
+      "output_dtype": "float32",
+      "threshold": -5.615384578704834
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 17.268,
+      "cpp_ms": 0.1466901960784314,
+      "speedup": 117.71747847938832,
+      "samples_ms": [
+        [
+          17.268,
+          16.463,
+          17.0424,
+          18.2462,
+          17.8118,
+          17.0741,
+          19.5978
+        ],
+        [
+          0.14012745098039217,
+          0.1414686274509804,
+          0.16425686274509804,
+          0.1467078431372549,
+          0.1466901960784314,
+          0.20049411764705882,
+          0.13693333333333335
+        ],
+        [
+          0.2347945945945946,
+          0.23774864864864864,
+          0.22993243243243242,
+          0.29493243243243245,
+          0.22911351351351353,
+          0.24814054054054052,
+          0.2599972972972973
+        ]
+      ],
+      "loops": [
+        1,
+        51,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.23774864864864864,
+      "improvement": 1.6207534995830988,
+      "output_dtype": "float32",
+      "threshold": 5.076923370361328
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 17.3192,
+      "cpp_ms": 0.14198666666666665,
+      "speedup": 121.97765048361349,
+      "samples_ms": [
+        [
+          17.3788,
+          18.4708,
+          16.7895,
+          17.8587,
+          16.0216,
+          17.3192,
+          16.3383
+        ],
+        [
+          0.14198666666666665,
+          0.14955,
+          0.16837,
+          0.13984,
+          0.14090333333333335,
+          0.13682666666666665,
+          0.14231
+        ],
+        [
+          0.25964615384615386,
+          0.2337576923076923,
+          0.2503423076923077,
+          0.2292,
+          0.2404923076923077,
+          0.2254576923076923,
+          0.24542307692307694
+        ]
+      ],
+      "loops": [
+        1,
+        30,
+        26
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2404923076923077,
+      "improvement": 1.6937668397899408,
+      "output_dtype": "float32",
+      "threshold": 5.076923370361328
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.8523,
+      "cpp_ms": 0.0550609756097561,
+      "speedup": 106.28761904761905,
+      "samples_ms": [
+        [
+          5.73665,
+          5.8523,
+          5.93325,
+          5.5344,
+          5.8224,
+          6.49105,
+          6.2353
+        ],
+        [
+          0.05192926829268293,
+          0.06477560975609756,
+          0.060221951219512196,
+          0.05184024390243903,
+          0.05312073170731707,
+          0.05913658536585366,
+          0.0550609756097561
+        ],
+        [
+          0.0925,
+          0.08774130434782608,
+          0.08860869565217391,
+          0.08705652173913044,
+          0.0899195652173913,
+          0.08373478260869564,
+          0.09768478260869565
+        ]
+      ],
+      "loops": [
+        2,
+        82,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.08860869565217391,
+      "improvement": 1.6092830661081419,
+      "output_dtype": "float32",
+      "threshold": 6.84615421295166
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.84985,
+      "cpp_ms": 0.055904,
+      "speedup": 104.64099170005724,
+      "samples_ms": [
+        [
+          5.5475,
+          6.12665,
+          5.8564,
+          5.6765,
+          5.59315,
+          5.84985,
+          6.3387
+        ],
+        [
+          0.053048,
+          0.053572,
+          0.055904,
+          0.058,
+          0.062106,
+          0.05519,
+          0.059534
+        ],
+        [
+          0.0942888888888889,
+          0.09346666666666667,
+          0.08434444444444444,
+          0.09681333333333333,
+          0.0989088888888889,
+          0.08836,
+          0.08675111111111111
+        ]
+      ],
+      "loops": [
+        2,
+        50,
+        45
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.09346666666666667,
+      "improvement": 1.671913756916619,
+      "output_dtype": "float32",
+      "threshold": 6.84615421295166
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 23.4622,
+      "cpp_ms": 0.18914186046511627,
+      "speedup": 124.04551769927826,
+      "samples_ms": [
+        [
+          23.6723,
+          22.1571,
+          22.4795,
+          23.5425,
+          26.9014,
+          23.2293,
+          23.4622
+        ],
+        [
+          0.2163139534883721,
+          0.18658139534883722,
+          0.18914186046511627,
+          0.17845581395348836,
+          0.19103255813953487,
+          0.22378372093023255,
+          0.178
+        ],
+        [
+          0.3268892857142857,
+          0.2930357142857143,
+          0.301,
+          0.33769642857142856,
+          0.28805714285714284,
+          0.2976857142857143,
+          0.31805
+        ]
+      ],
+      "loops": [
+        1,
+        43,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.301,
+      "improvement": 1.5913981138803162,
+      "output_dtype": "float32",
+      "threshold": 6.538461685180664
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float32",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 23.5458,
+      "cpp_ms": 0.19943555555555556,
+      "speedup": 118.06219775811735,
+      "samples_ms": [
+        [
+          23.1269,
+          24.9581,
+          23.5458,
+          26.9048,
+          22.4319,
+          23.5309,
+          25.472
+        ],
+        [
+          0.20122666666666666,
+          0.18784666666666666,
+          0.18869555555555556,
+          0.1774777777777778,
+          0.19943555555555556,
+          0.20182444444444445,
+          0.20669555555555555
+        ],
+        [
+          0.30136451612903226,
+          0.30866129032258066,
+          0.3794483870967742,
+          0.3111838709677419,
+          0.34077096774193544,
+          0.3049935483870968,
+          0.2862064516129032
+        ]
+      ],
+      "loops": [
+        1,
+        45,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.30866129032258066,
+      "improvement": 1.5476743325068671,
+      "output_dtype": "float32",
+      "threshold": 6.538461685180664
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.609633333333333,
+      "cpp_ms": 0.04221290322580645,
+      "speedup": 109.1996281012787,
+      "samples_ms": [
+        [
+          4.704233333333333,
+          4.819766666666667,
+          4.533,
+          4.225633333333333,
+          4.460866666666667,
+          4.609633333333333,
+          5.220666666666667
+        ],
+        [
+          0.04221290322580645,
+          0.04217258064516129,
+          0.045843548387096776,
+          0.04201935483870967,
+          0.04176612903225807,
+          0.04260483870967742,
+          0.043290322580645156
+        ],
+        [
+          0.07542857142857143,
+          0.07862857142857144,
+          0.06926103896103895,
+          0.06582987012987014,
+          0.0666948051948052,
+          0.07961298701298701,
+          0.06246493506493507
+        ]
+      ],
+      "loops": [
+        3,
+        62,
+        77
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.06926103896103895,
+      "improvement": 1.6407551641389329,
+      "output_dtype": "float64",
+      "threshold": 2.8461538461538467
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "bimodal-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4011,
+      "cpp_ms": 0.04495135135135135,
+      "speedup": 97.90806878306877,
+      "samples_ms": [
+        [
+          5.210333333333333,
+          4.307166666666667,
+          4.7705,
+          4.204766666666667,
+          4.4011,
+          4.5155,
+          4.372633333333333
+        ],
+        [
+          0.04400135135135135,
+          0.0439527027027027,
+          0.04237432432432433,
+          0.04495135135135135,
+          0.0464,
+          0.04631891891891892,
+          0.04917162162162162
+        ],
+        [
+          0.07139333333333332,
+          0.07263,
+          0.10639,
+          0.07303,
+          0.06939666666666668,
+          0.07850666666666667,
+          0.06938333333333332
+        ]
+      ],
+      "loops": [
+        3,
+        74,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.07263,
+      "improvement": 1.6157467532467533,
+      "output_dtype": "float64",
+      "threshold": 2.8461538461538467
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 14.8895,
+      "cpp_ms": 0.14032777777777777,
+      "speedup": 106.10515063937606,
+      "samples_ms": [
+        [
+          14.6548,
+          16.6672,
+          14.6971,
+          14.8841,
+          16.2579,
+          14.8895,
+          16.0865
+        ],
+        [
+          0.14032777777777777,
+          0.1333777777777778,
+          0.12568888888888888,
+          0.17328148148148148,
+          0.14126111111111112,
+          0.1438814814814815,
+          0.13396851851851851
+        ],
+        [
+          0.23496,
+          0.2182175,
+          0.2221225,
+          0.2105125,
+          0.236355,
+          0.24926,
+          0.2152725
+        ]
+      ],
+      "loops": [
+        1,
+        54,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.2221225,
+      "improvement": 1.5828833287145176,
+      "output_dtype": "float64",
+      "threshold": 0.384615384615385
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "random-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 15.4171,
+      "cpp_ms": 0.12624262295081967,
+      "speedup": 122.12277945148556,
+      "samples_ms": [
+        [
+          15.4171,
+          14.1881,
+          14.5277,
+          16.2525,
+          15.6425,
+          14.9665,
+          15.7988
+        ],
+        [
+          0.12331803278688525,
+          0.14484262295081968,
+          0.1371672131147541,
+          0.12417868852459016,
+          0.12624262295081967,
+          0.16005409836065573,
+          0.12080819672131148
+        ],
+        [
+          0.2214340909090909,
+          0.21347727272727274,
+          0.20314772727272726,
+          0.22965,
+          0.19832045454545455,
+          0.203975,
+          0.24837727272727272
+        ]
+      ],
+      "loops": [
+        1,
+        61,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.21347727272727274,
+      "improvement": 1.6910079000056666,
+      "output_dtype": "float64",
+      "threshold": 0.384615384615385
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 13.7975,
+      "cpp_ms": 0.1246903846153846,
+      "speedup": 110.65408164839063,
+      "samples_ms": [
+        [
+          16.5821,
+          13.7461,
+          13.743,
+          13.1338,
+          13.7975,
+          15.7527,
+          13.8542
+        ],
+        [
+          0.1296846153846154,
+          0.14073846153846153,
+          0.1120846153846154,
+          0.1246903846153846,
+          0.11785,
+          0.11606346153846153,
+          0.13162692307692306
+        ],
+        [
+          0.18877380952380954,
+          0.19266666666666665,
+          0.20382380952380952,
+          0.18062857142857142,
+          0.20161190476190477,
+          0.20543809523809523,
+          0.19720476190476188
+        ]
+      ],
+      "loops": [
+        1,
+        52,
+        42
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.19720476190476188,
+      "improvement": 1.5815554865200911,
+      "output_dtype": "float64",
+      "threshold": 0.5384615384615383
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "trimmed-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 14.5195,
+      "cpp_ms": 0.115925,
+      "speedup": 125.24908345913306,
+      "samples_ms": [
+        [
+          15.4658,
+          14.5195,
+          16.3309,
+          14.8486,
+          14.4168,
+          13.8176,
+          13.7258
+        ],
+        [
+          0.12490625,
+          0.115925,
+          0.12605,
+          0.11227291666666667,
+          0.11465208333333334,
+          0.11495416666666668,
+          0.15575
+        ],
+        [
+          0.19245744680851062,
+          0.20942553191489363,
+          0.18207872340425532,
+          0.19675957446808512,
+          0.18741702127659574,
+          0.18995319148936168,
+          0.1981723404255319
+        ]
+      ],
+      "loops": [
+        1,
+        48,
+        47
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.19245744680851062,
+      "improvement": 1.6601893190296366,
+      "output_dtype": "float64",
+      "threshold": 0.5384615384615383
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 1,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.034,
+      "cpp_ms": 0.20850909090909092,
+      "speedup": 124.85786536449248,
+      "samples_ms": [
+        [
+          24.843,
+          26.2056,
+          25.831,
+          26.034,
+          27.5545,
+          25.1105,
+          26.6276
+        ],
+        [
+          0.20606818181818182,
+          0.20292954545454545,
+          0.24859772727272728,
+          0.20908409090909091,
+          0.21957727272727273,
+          0.19839772727272725,
+          0.20850909090909092
+        ],
+        [
+          0.31223,
+          0.33893666666666666,
+          0.3537166666666667,
+          0.3171566666666667,
+          0.3237166666666667,
+          0.3206,
+          0.3050333333333333
+        ]
+      ],
+      "loops": [
+        1,
+        44,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.3206,
+      "improvement": 1.5375828392047435,
+      "output_dtype": "float64",
+      "threshold": 0.1538461538461542
+    },
+    {
+      "api": "filters.threshold_minimum",
+      "dtype": "float32/float64",
+      "shape": [
+        257
+      ],
+      "workload": "large-histogram",
+      "threads": 4,
+      "layout": "histogram-only",
+      "backend": "native",
+      "warnings": [],
+      "outcome": "value",
+      "max_num_iter": 10000,
+      "nbins": 256,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.4883,
+      "cpp_ms": 0.20573488372093024,
+      "speedup": 128.7496778423349,
+      "samples_ms": [
+        [
+          24.1595,
+          25.077,
+          28.6912,
+          28.4985,
+          24.717,
+          26.6358,
+          26.4883
+        ],
+        [
+          0.19956976744186045,
+          0.20573488372093024,
+          0.21673023255813953,
+          0.20133953488372092,
+          0.21323255813953487,
+          0.21853488372093022,
+          0.1968720930232558
+        ],
+        [
+          0.31413125,
+          0.316734375,
+          0.32,
+          0.339190625,
+          0.323253125,
+          0.408628125,
+          0.320671875
+        ]
+      ],
+      "loops": [
+        1,
+        43,
+        32
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.320671875,
+      "improvement": 1.5586655466506907,
+      "output_dtype": "float64",
+      "threshold": 0.1538461538461542
+    }
+  ]
+}

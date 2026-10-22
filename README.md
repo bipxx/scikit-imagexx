@@ -80,6 +80,11 @@ and errors; ISODATA can legitimately have no fixed point and raise IndexError.
 The current arithmetic-warning checks cover ordinary finite and degenerate
 histograms; extreme underflow/overflow warning modes need broader validation.
 
+The [minimum-threshold experiment](benchmarks/minimum-tuning.md) records its
+initial C++ build, AVX2 optimization and independent confirmation, including
+successful thresholds and matching convergence errors. Those measurements are
+separate from the last complete 96-entry performance checkpoint.
+
 Farid preserves the reference's full coefficient summation order, including its
 negative-axis weighting and repeated-axis behavior. Empty axis sequences produce
 zeros without consuming boundary options. Nonfinite images, oversized full-kernel
@@ -282,6 +287,10 @@ worker limit as the other kernels.
 `delta_e76_rows_into` accepts per-row element offsets, preserving nonuniform
 ND views without a temporary image copy. `delta_e_into` provides CIE94,
 CIEDE2000 and CMC with scalar weights and explicit intermediate-promotion flags.
+
+`skimagexx/threshold.hpp` also exposes `threshold_minimum` for float32 histogram
+counts. It returns the selected bin index and preserves the first minimum
+between plateau-aware peaks, with convergence errors matching the Python API.
 
 ## CPU execution
 
