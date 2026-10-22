@@ -49,7 +49,10 @@ def test_antipodal_ulp_neighborhoods(workers,dtype,layout):
     if layout=='reversed':a=a[::-1];b=b[::-1]
     if layout=='planar':a=np.ascontiguousarray(a.T).T;b=np.ascontiguousarray(b.T).T
     previous=xx.get_num_threads();xx.set_num_threads(workers)
+    fallback=xx.set_fallback_enabled(False)
     try:actual=xx.color.deltaE_ciede2000(a,b)
-    finally:xx.set_num_threads(previous)
+    finally:
+        xx.set_num_threads(previous)
+        xx.set_fallback_enabled(fallback)
     tol=(2e-6,2.5e-4) if dtype==np.float32 else (2e-13,2e-13)
     np.testing.assert_allclose(actual,deltaE_ciede2000(a,b),rtol=tol[0],atol=tol[1])

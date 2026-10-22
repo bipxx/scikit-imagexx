@@ -1,7 +1,16 @@
 name: parity-and-native
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      minimum_only:
+        description: Run only the minimum-NumPy parity and performance job
+        type: boolean
+        default: false
 jobs:
   check:
+    if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
@@ -86,4 +95,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: numpy-minimum-ciede2000
-          path: build/ci-ciede2000.json
+          path: |
+            build/ci-ciede2000.json
+            build/wheels/*.whl
