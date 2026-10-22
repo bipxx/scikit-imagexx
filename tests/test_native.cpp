@@ -1,3 +1,4 @@
+#include "skimagexx/clahe.hpp"
 #include "skimagexx/integral.hpp"
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
@@ -1264,6 +1265,68 @@ int main() {
         const std::vector<std::vector<std::size_t>> expected={{4},{2,5},{2,4,6},{1,3,5,7}};
         for(std::size_t classes=2;classes<=5;++classes)
             require(threshold_multiotsu(counts,9,classes)==expected[classes-2]);
+    }
+    {
+        // Byte-wise hashes from scikit-image 0.26.0 for both output precisions.
+        const auto hash=[](const auto& values) {
+            using Value=typename std::decay_t<decltype(values)>::value_type;
+            using Bits=std::conditional_t<sizeof(Value)==4,std::uint32_t,std::uint64_t>;
+            std::uint64_t result=1469598103934665603ULL;
+            for(const auto value:values) {
+                Bits bits;std::memcpy(&bits,&value,sizeof(bits));
+                for(std::size_t b=0;b<sizeof(bits);++b) {result^=(bits>>(8*b))&255;result*=1099511628211ULL;}
+            }
+            return result;
+        };
+        {
+            std::vector<std::uint16_t> input(17);std::vector<double> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*3101)%65536);
+            clahe_into(input.data(),output.data(),false,{17},{4},2,32);
+            require(hash(output)==0xef57113cc42795acULL);
+        }
+        {
+            std::vector<std::uint16_t> input(17);std::vector<float> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*3101)%65536);
+            clahe_into(input.data(),output.data(),true,{17},{4},2,32);
+            require(hash(output)==0xd7211c9b5074a65fULL);
+        }
+        {
+            std::vector<std::uint16_t> input(35);std::vector<double> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*1307)%65536);
+            clahe_into(input.data(),output.data(),false,{5,7},{3,5},1,7);
+            require(hash(output)==0x3bf05b9bc1d6a616ULL);
+        }
+        {
+            std::vector<std::uint16_t> input(35);std::vector<float> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*1307)%65536);
+            clahe_into(input.data(),output.data(),true,{5,7},{3,5},1,7);
+            require(hash(output)==0xb02bb60ff6784b2ULL);
+        }
+        {
+            std::vector<std::uint16_t> input(105);std::vector<double> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*1307)%65536);
+            clahe_into(input.data(),output.data(),false,{3,5,7},{2,3,4},1,17);
+            require(hash(output)==0x1ec4ba9c2f068b95ULL);
+        }
+        {
+            std::vector<std::uint16_t> input(105);std::vector<float> output(input.size());
+            for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*1307)%65536);
+            clahe_into(input.data(),output.data(),true,{3,5,7},{2,3,4},1,17);
+            require(hash(output)==0xf853ec7c3ee21d90ULL);
+        }
+    }
+    {
+        // Exercise tile and row partition boundaries under sanitizers as well
+        // as the Python parity suite; output must not depend on worker count.
+        std::vector<std::uint16_t> input(513*517);
+        for(std::size_t i=0;i<input.size();++i)input[i]=std::uint16_t((i*117+(i/37)*1307)%65536);
+        std::vector<float> serial(input.size()),parallel(input.size());
+        set_num_threads(1);clahe_into(input.data(),serial.data(),true,{513,517},{11,13},4,256);
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        clahe_into(input.data(),parallel.data(),true,{513,517},{11,13},4,256);
+        require(serial==parallel);set_num_threads(1);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

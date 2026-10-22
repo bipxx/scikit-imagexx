@@ -240,3 +240,73 @@ def equalize_hist(image, nbins=256, mask=None):
 
 def __getattr__(name):
     return module_attribute('exposure', name)
+
+
+def equalize_adapthist(image, kernel_size=None, clip_limit=0.01, nbins=256):
+    import math
+    def delegated():return fallback('exposure','equalize_adapthist',image,kernel_size,clip_limit,nbins)
+    integer=(int,bool,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64)
+    real=integer+(float,np.float16,np.float32,np.float64)
+    if (type(image) not in (np.ndarray,np.memmap) or image.dtype.kind not in 'biuf'
+            or image.dtype.itemsize>8 or not 1<=image.ndim<=8
+            or type(nbins) not in integer or not 1<=nbins<=65536 or type(clip_limit) not in real):
+        return delegated()
+    logical_shape=image.shape[:2] if image.ndim==3 and image.shape[-1] in (3,4) else image.shape
+    if kernel_size is not None and type(kernel_size) not in real:
+        if type(kernel_size) not in (tuple,list,np.ndarray):return delegated()
+        if not (type(kernel_size) is np.ndarray and kernel_size.ndim==0):
+            if len(kernel_size)==len(logical_shape) and any(type(k) not in real for k in kernel_size):return delegated()
+    kernel_error=None
+    try:
+        if kernel_size is None:kernel=[max(s//8,1) for s in logical_shape]
+        elif type(kernel_size) in real:kernel=[int(kernel_size)]*len(logical_shape)
+        else:
+            if len(kernel_size)!=len(logical_shape):raise ValueError(f'Incorrect value of `kernel_size`: {kernel_size}')
+            kernel=[int(k) for k in kernel_size]
+    except (ValueError,TypeError,OverflowError) as error:
+        kernel_error=error
+    if kernel_error is None and all(k>0 for k in kernel):
+        elements=math.prod(kernel)
+        # Delegate before image conversion or RGB adaptation: those can emit
+        # warnings, and an unsupported call must not perform them twice.
+        if elements>2**31 or any(k+s>2**62 for k,s in zip(kernel,logical_shape)):return delegated()
+    if not image.size:raise ValueError('zero-size array to reduction operation minimum which has no identity')
+    if image.dtype.kind=='f':
+        prepared=np.require(image,dtype=np.float32 if image.dtype.itemsize==2 else image.dtype.newbyteorder('='),requirements=['A'])
+        low,high=_core.intensity_bounds(prepared)
+        if not np.isfinite(low) or not np.isfinite(high):return delegated()
+    if image.ndim==3 and image.shape[-1] in (3,4):
+        from .color import rgb2hsv,hsv2rgb
+        color_input=prepared if image.dtype.type is np.float16 else np.require(image,dtype=image.dtype.newbyteorder('='),requirements=['A'])
+        hsv=rgb2hsv(np.asarray(color_input[...,:3]))
+        hsv[...,2]=equalize_adapthist(hsv[...,2].copy(),kernel_size,clip_limit,nbins)
+        return hsv2rgb(hsv)
+    from .util import img_as_uint
+    if image.dtype.type is np.float16:
+        if low < -1 or high > 1:raise ValueError('Images of type float must be between -1 and 1.')
+        zero=_core.clahe_has_zero(prepared)
+        # The reference computes in half precision: 65535 casts to infinity.
+        # Replay only scalar warning/errstate metadata; all converted pixels
+        # are zero (negative infinities clip to zero, positive/NaN cast to zero).
+        samples=([0.] if zero else [])+([1.] if high>0 else [])+([-1.] if low<0 else [])
+        probe=np.array(samples,dtype=np.float16)
+        probe=np.multiply(probe,65535,dtype=np.float16)
+        np.rint(probe,out=probe)
+        np.clip(probe,0,65535,out=probe)
+        probe.astype(np.uint16)
+        converted=np.zeros(image.shape,dtype=np.uint16)
+    else:
+        if not image.dtype.isnative and image.dtype.kind not in 'f' and image.dtype.type is not np.uint16:return delegated()
+        converted=img_as_uint(np.require(image,dtype=image.dtype.newbyteorder('='),requirements=['A']))
+    if kernel_error is not None:raise kernel_error
+    if any(k==0 for k in kernel):raise ZeroDivisionError('integer modulo by zero')
+    if any(k<0 for k in kernel):raise ValueError("index can't contain negative values")
+    elements=math.prod(kernel)
+    # Preserve runtime scalar promotion/casting of the reference uint16 LUT.
+    probe=np.zeros(1,dtype=np.uint16)
+    probe//=1+16384//nbins
+    limit=min(int(np.clip(clip_limit*elements,1,None)),elements) if clip_limit>0 else elements
+    if type(nbins) is bool:np.bincount(np.zeros(1,dtype=np.uint16),minlength=nbins)
+    return _core.clahe(converted,kernel,limit,int(nbins),image.dtype.kind=='f' and image.dtype.itemsize<=4)
+
+__all__.append('equalize_adapthist')

@@ -1,3 +1,4 @@
+#include "skimagexx/clahe.hpp"
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
 #include "skimagexx/contrast.hpp"
@@ -850,6 +851,20 @@ PYBIND11_MODULE(_core, m) {
         if(reinterpret_cast<std::uintptr_t>(values.data())%alignof(float))values=decltype(values)::ensure(values.attr("copy")());
         skimagexx::threshold_logs(values.data(),output.mutable_data(),std::size_t(values.size()),numpy_log);
         return output;
+    });
+    m.def("clahe_has_zero", [](py::array_t<float,py::array::c_style|py::array::forcecast> image) {
+        if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
+        py::gil_scoped_release release;
+        return std::find(image.data(),image.data()+image.size(),0.f)!=image.data()+image.size();
+    });
+    m.def("clahe", [](py::array_t<std::uint16_t,py::array::c_style|py::array::forcecast> image,
+            const std::vector<std::size_t>& kernel,std::size_t clip_count,std::size_t bins,bool single) {
+        if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(std::uint16_t))image=decltype(image)::ensure(image.attr("copy")());
+        std::vector<py::ssize_t> dimensions(image.shape(),image.shape()+image.ndim());
+        std::vector<std::size_t> shape(dimensions.begin(),dimensions.end());
+        py::array result(single ? py::dtype::of<float>() : py::dtype::of<double>(),dimensions);
+        {py::gil_scoped_release release;skimagexx::clahe_into(image.data(),result.mutable_data(),single,shape,kernel,clip_count,bins);}
+        return result;
     });
     m.def("threshold_multiotsu", [](py::array_t<float,py::array::c_style|py::array::forcecast> counts,std::size_t classes) {
         if(counts.ndim()!=1)throw py::value_error("one-dimensional histogram required");
