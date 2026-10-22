@@ -5,7 +5,7 @@ NATIVE_FUNCTIONS = {
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist','is_low_contrast'),
-    'color': ('rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
+    'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
               'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
               'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb',
               'rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
@@ -40,7 +40,7 @@ def execution_kind(api):
 
 def needs_color_input(api):
     """Default parity/benchmark sample layout, reviewed alongside the registry."""
-    return api.startswith('color.') and api not in ('color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')
+    return api.startswith('color.') and api not in ('color.label2rgb','color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')
 
 
 def default_call(api, image):
@@ -70,7 +70,7 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
-    if api in ('transform.integral_image','transform.integrate','filters.threshold_minimum'):return (0.,0.)
+    if api in ('color.label2rgb','transform.integral_image','transform.integrate','filters.threshold_minimum'):return (0.,0.)
     name = str(dtype)
     single = name == 'float32'
     if api=='color.deltaE_ciede2000' and single:

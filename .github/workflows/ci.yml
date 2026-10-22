@@ -38,6 +38,7 @@ jobs:
       - run: python benchmarks/local_thresholds.py --size 32 --threads 1 --repeat 1 --output build/ci-local-thresholds.json
       - run: python benchmarks/thresholds.py --size 32 --threads 1 --repeat 1 --output build/ci-thresholds.json
       - run: python benchmarks/minimum.py --size 32 --threads 1 --repeat 1 --output build/ci-minimum.json
+      - run: python benchmarks/label_colors.py --size 32 --threads 1 --repeat 1 --output build/ci-label-colors.json
       - run: python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output build/ci-distance.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
       - run: python -m pytest -q

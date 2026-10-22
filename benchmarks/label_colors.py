@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
     parser.add_argument('--baseline-dir',type=Path)
     parser.add_argument('--output',type=Path,default=Path('benchmarks/label-color-parameters.json'))
+    parser.add_argument('--suite',choices=('core','cardinality'),default='core')
     args=parser.parse_args()
     if min(args.size,args.repeat,*args.threads)<1 or 1 not in args.threads:parser.error('positive sizes/repeat/workers and worker1 required')
     root=Path(__file__).resolve().parents[1];fingerprint=source_fingerprint(root)
@@ -69,33 +70,41 @@ def main():
                 'max_abs_error':float(np.max(np.abs(actual.astype(np.float64)-expected.astype(np.float64)))),**timing})
             print(f'{descriptor:18} {workload:24} workers={workers}: {timing["speedup"]:.2f}x',flush=True)
     rng=np.random.default_rng(4129);shape=(args.size,args.size+4)
-    for dtype in (np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64):
-        labels=rng.integers(0,32,shape,dtype=np.uint8).astype(dtype);labels.flat[0]=0
-        add(labels,'labels-only');add(np.asfortranarray(labels),'fortran')
-        add(labels[::-1,::-1],'reversed');add(labels[::2,::2],'stepped')
-        add(np.broadcast_to(labels[:1],shape),'broadcast')
-        add(labels,'custom-background',bg_label=2,bg_color=None);add(labels,'channel-first',channel_axis=0)
-        if np.dtype(dtype).kind in 'iu' and np.dtype(dtype).itemsize>=2:
-            width=np.dtype(dtype).itemsize;base=0 if width==2 else 2**28 if width==4 else 2**50
-            wide=np.where(labels==0,0,labels.astype(np.uint64)*1024+base).astype(dtype)
-            add(wide,'sparse-wide')
-    labels=rng.integers(0,19,shape,dtype=np.uint8);labels.flat[0]=0
-    for dtype in (np.uint8,np.float32,np.float64):
-        for rgb in (False,True):
-            image=rng.integers(0,256,(*shape,3) if rgb else shape,dtype=np.uint8)
-            if dtype!=np.uint8:image=(image/255).astype(dtype)
-            add(labels,'overlay-rgb' if rgb else 'overlay-gray',image=image,image_alpha=.7)
-            add(labels,'average-rgb' if rgb else 'average-gray',image=image,kind='avg')
-            if rgb:
-                for saturation in (.5,1):add(labels,'saturation-'+str(saturation),image=image,saturation=saturation,image_alpha=.7)
-    assert len(rows)==101*len(args.threads)
+    if args.suite=='cardinality':
+        for dtype in (np.uint64,np.int64,np.float64):
+            for groups in (31,512,513,4096,shape[0]*shape[1]):
+                raw=rng.integers(0,groups,shape,dtype=np.uint64)
+                labels=np.where(raw==0,0,raw*10000000019+2**50).astype(dtype)
+                labels.flat[0]=0
+                add(labels,'sparse-groups-'+str(groups))
+    else:
+        for dtype in (np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64):
+            labels=rng.integers(0,32,shape,dtype=np.uint8).astype(dtype);labels.flat[0]=0
+            add(labels,'labels-only');add(np.asfortranarray(labels),'fortran')
+            add(labels[::-1,::-1],'reversed');add(labels[::2,::2],'stepped')
+            add(np.broadcast_to(labels[:1],shape),'broadcast')
+            add(labels,'custom-background',bg_label=2,bg_color=None);add(labels,'channel-first',channel_axis=0)
+            if np.dtype(dtype).kind in 'iu' and np.dtype(dtype).itemsize>=2:
+                width=np.dtype(dtype).itemsize;base=0 if width==2 else 2**28 if width==4 else 2**50
+                wide=np.where(labels==0,0,labels.astype(np.uint64)*1024+base).astype(dtype)
+                add(wide,'sparse-wide')
+        labels=rng.integers(0,19,shape,dtype=np.uint8);labels.flat[0]=0
+        for dtype in (np.uint8,np.float32,np.float64):
+            for rgb in (False,True):
+                image=rng.integers(0,256,(*shape,3) if rgb else shape,dtype=np.uint8)
+                if dtype!=np.uint8:image=(image/255).astype(dtype)
+                add(labels,'overlay-rgb' if rgb else 'overlay-gray',image=image,image_alpha=.7)
+                add(labels,'average-rgb' if rgb else 'average-gray',image=image,kind='avg')
+                if rgb:
+                    for saturation in (.5,1):add(labels,'saturation-'+str(saturation),image=image,saturation=saturation,image_alpha=.7)
+    assert len(rows)==(101 if args.suite=='core' else 15)*len(args.threads)
     assert len({(r['dtype'],r['workload'],r['threads']) for r in rows})==len(rows)
     assert source_fingerprint(root)==fingerprint and hashes(xx)==binaries,'source/build changed during timing'
     if baseline is not None:assert hashes(baseline)==provenance['binary_sha256']
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),'cpu':platform.processor(),
         'reference':skimage.__version__,'numpy':np.__version__,'scipy':scipy.__version__,'python':sys.version,
         'avx2':xx.has_avx2(),'fallback_enabled':False,'reference_thread_pools':1,'seed':4129,'repeat':args.repeat,
-        'target_ms':15,'cooldown_ms':20,'current_binary_sha256':binaries,**fingerprint,
+        'suite':args.suite,'target_ms':15,'cooldown_ms':20,'current_binary_sha256':binaries,**fingerprint,
         'scope':'Warmed allocation-inclusive public calls; rank construction, copies, HSV, compositing and grouped averages included'},'results':rows}
     if provenance is not None:report['metadata']['baseline']=provenance
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')

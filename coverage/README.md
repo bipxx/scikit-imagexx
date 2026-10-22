@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 95 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 96 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -21,7 +21,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.lab2lch` | native-partial | yes (partial input contract) | yes |
 | `color.lab2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.lab2xyz` | native-partial | yes (partial input contract) | yes |
-| `color.label2rgb` | upstream-only | pending | pending |
+| `color.label2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.lch2lab` | native-partial | yes (partial input contract) | yes |
 | `color.luv2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.luv2xyz` | native-partial | yes (partial input contract) | yes |

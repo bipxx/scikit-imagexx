@@ -13,17 +13,18 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **95 partially native
+The reference is scikit-image **0.26.0**. There are currently **96 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 358 remain pending native implementation and dedicated parity tests.
+export list; 357 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `label2rgb` | N-D bool, signed/unsigned integers and float32/64 labels; finite uint8/float32/64 grayscale or RGB underlays; ordinary palettes, backgrounds and channel axes; overlay and average kinds | Exact palette-only, grayscale and grouped-average values/dtype; RGB inherits HSV tolerance; bounded rank tables with AVX2 gathers, bounded sparse hashing, optional global workers; unusual casting, metadata or floating policies use explicit fallback |
 | `rgb2gray` | 3D RGB; uint8, float32, float64; arbitrary channel axis | Same luminance weights; uint8 normalized to float64 |
 | `gray2rgb`, `gray2rgba` | Arbitrary dimensions, including scalars and empty arrays; fixed object-free storage, including float16 and complex; arbitrary output channel axis; RGBA default alpha for real image dtypes, explicit scalar or same-dtype broadcast alpha for additional storage | Exact replication and NumPy stack dtype/endian normalization; alpha casting warnings and broadcast errors preserved |
 | `rgba2rgb` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions with four channels and any channel axis; RGB background | Fused normalization and alpha compositing; float32 output for float32 input, float64 otherwise; clipping preserves signed zero and background NaN |
@@ -84,6 +85,18 @@ The [minimum-threshold experiment](benchmarks/minimum-tuning.md) records its
 initial C++ build, AVX2 optimization and independent confirmation, including
 successful thresholds and matching convergence errors. Those measurements are
 separate from the last complete 96-entry performance checkpoint.
+
+The [label-color experiment](benchmarks/label-color-tuning.md) compares palette
+assignment, RGB/grayscale overlays and region averages against original
+scikit-image. Native overlay labels are nonnegative; supported floating underlays
+are bounded to [0,1] for overlays and absolute magnitude <=1e6 for averages.
+Average mode retains raw integer scale and image dtype. Grayscale means reproduce
+NumPy's buffer-sized reductions before2.3, including the current `setbufsize`
+setting; newer versions use a whole contiguous reduction. Unsupported casting,
+palette objects, scalar-average indexing and exceptional floating policies use
+explicit whole-call fallback. Native kernels are also exposed through
+`skimagexx/label_color.hpp`; dense rank lookups use runtime AVX2 dispatch and
+scalar tails, and optional workers follow the process-wide limit.
 
 Farid preserves the reference's full coefficient summation order, including its
 negative-axis weighting and repeated-axis behavior. Empty axis sequences produce
@@ -385,6 +398,7 @@ also be run after rebuilding/installing the extension:
 
 ```sh
 python tools/inventory.py
+python benchmarks/label_colors.py --threads 1 4
 python benchmarks/coverage.py --sizes 256 1024 --threads 1 4
 python benchmarks/conversions.py --size 1024 --threads 1 4
 python benchmarks/color.py --size 512 --threads 1

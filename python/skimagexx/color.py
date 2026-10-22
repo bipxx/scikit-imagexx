@@ -92,7 +92,7 @@ def label2rgb(label,image=None,colors=None,alpha=0.3,bg_label=0,bg_color=(0,0,0)
         0 if image is None else 1-alpha,bg_color is None and present,background,dtype)
     return np.moveaxis(result,-1,channel_axis)
 
-__all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
+__all__ = ['label2rgb','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
            'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',
            'ydbdr2rgb', 'rgb2rgbcie', 'rgbcie2rgb', 'rgb2xyz', 'xyz2rgb']
 __all__ += ['rgb2hsv','hsv2rgb','xyz2lab','lab2xyz','rgb2lab','lab2rgb',
@@ -190,7 +190,11 @@ def __getattr__(name):
     return module_attribute('color', name)
 
 
-_TRANSFORMS = {name: i for i, name in enumerate(__all__[2:16])}
+# IDs match ColorTransform in color.hpp, independently of public export order.
+_TRANSFORMS = {name: i for i, name in enumerate((
+    'rgb2yuv','yuv2rgb','rgb2yiq','yiq2rgb','rgb2ypbpr','ypbpr2rgb',
+    'rgb2ycbcr','ycbcr2rgb','rgb2ydbdr','ydbdr2rgb','rgb2rgbcie','rgbcie2rgb',
+    'rgb2xyz','xyz2rgb'))}
 _COLOR_TYPES = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32,
                 np.int32, np.uint64, np.int64, np.float32, np.float64}
 
