@@ -37,6 +37,7 @@ def check(labels,**options):
     if actual[0]=='error':assert actual[1:]==expected[1:]
     else:
         assert actual[1].dtype==expected[1].dtype
+        assert actual[1].dtype.metadata==expected[1].dtype.metadata
         assert actual[1].shape==expected[1].shape
         underlay=options.get('image')
         if underlay is not None and options.get('kind','overlay')=='overlay' and underlay.ndim==labels.ndim+1:
@@ -148,6 +149,14 @@ def test_average_ignores_overlay_controls():
     check(labels,image=image,kind='avg',colors=object(),alpha=object(),image_alpha=object(),saturation=object())
 
 
+@pytest.mark.parametrize('kind',['overlay','avg'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_underlay_dtype_metadata(kind,dtype):
+    labels=np.array([[0,1,2],[1,2,3]],dtype=np.uint8)
+    image=(np.arange(18,dtype=dtype).reshape(2,3,3)/18).view(np.dtype(dtype,metadata={'unit':'intensity'}))
+    check(labels,image=image,kind=kind)
+
+
 @pytest.mark.parametrize('kind',['','invalid','Overlay'])
 def test_invalid_kind(kind):
     check(np.array([[0,1,2]],dtype=np.uint8),kind=kind)
@@ -181,3 +190,18 @@ def test_reference_contract_does_not_mutate_labels():
     before=labels.copy()
     reference(labels,bg_label=2,bg_color=None)
     np.testing.assert_array_equal(labels,before)
+
+
+def test_reference_contract_desaturation_uses_hsv_value():
+    labels=np.ones((1,1),dtype=np.uint8)
+    image=np.array([[[.2,.8,.4]]],dtype=np.float64)
+    np.testing.assert_array_equal(reference(labels,image=image,alpha=0,saturation=0),
+                                  np.full((1,1,3),.8))
+
+
+def test_reference_contract_average_keeps_raw_integer_scale():
+    labels=np.ones((1,2),dtype=np.uint8)
+    image=np.array([[[0,2,4],[1,3,5]]],dtype=np.uint8)
+    result=reference(labels,image=image,kind='avg')
+    assert result.dtype==np.uint8
+    np.testing.assert_array_equal(result,np.array([[[0,2,4],[0,2,4]]],dtype=np.uint8))
