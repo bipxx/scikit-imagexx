@@ -1,5 +1,9 @@
 # Last completed whole-library performance checkpoint
 
+The [row-span trial](hysteresis-spans-trial.md) remains unretained: paired overall
+gains coexist with equal-threshold and other control regressions. All raw cases
+and exact packages are preserved while traversal isolation is investigated.
+
 The [hysteresis parity checkpoint](hysteresis.md) adds native broadcast thresholds,
 SIMD masks and optional parallel connectivity. Retained-source one-worker geometric
 means are 1.73x/1.63x over scikit-image on Linux/Windows, with slower random,
