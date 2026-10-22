@@ -5,6 +5,11 @@ one-worker geometric-mean gains of 34% on Linux and 17% on Windows. It records
 the remaining per-case regressions and all raw samples against the exact initial
 package. These are source-specific results, not a whole-library refresh.
 
+The [singleton-stride CIEDE2000 checkpoint](distance-singleton.md) follows with
+392 focused cases passing on four NumPy/runtime replicas and paired one-worker
+speedups of 2.26x over scikit-image on Linux and 2.47x on Windows. It records the
+2-3% cost against the initial C++ package; its full CI remains in progress.
+
 The newer [Li threshold checkpoint](li.md) records source-specific Windows/Linux
 one-worker and four-worker results, including regressions. The subsequent
 [runtime angle-layout correction](distance-layout.md) addresses the eight Linux
