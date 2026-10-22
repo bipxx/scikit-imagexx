@@ -37,6 +37,7 @@ jobs:
       - run: python benchmarks/alpha.py --size 32 --threads 1 --repeat 1 --output build/ci-alpha.json
       - run: python benchmarks/local_thresholds.py --size 32 --threads 1 --repeat 1 --output build/ci-local-thresholds.json
       - run: python benchmarks/thresholds.py --size 32 --threads 1 --repeat 1 --output build/ci-thresholds.json
+      - run: python benchmarks/minimum.py --size 32 --threads 1 --repeat 1 --output build/ci-minimum.json
       - run: python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output build/ci-distance.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
       - run: python -m pytest -q
@@ -70,4 +71,4 @@ jobs:
       - run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
       - run: python -m pip install --no-deps build/wheels/*.whl
       - run: python -c "import numpy,skimagexx; assert numpy.__version__ == '1.24.4'; assert skimagexx.get_num_threads() == 1"
-      - run: python -m pytest -q tests/test_integral.py tests/test_integral_singletons.py tests/test_downscale.py tests/test_downscale_allocation.py tests/test_low_contrast.py
+      - run: python -m pytest -q tests/test_integral.py tests/test_integral_singletons.py tests/test_downscale.py tests/test_downscale_allocation.py tests/test_low_contrast.py tests/test_threshold_minimum.py

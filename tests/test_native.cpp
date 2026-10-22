@@ -793,6 +793,30 @@ int main() {
     check_contrast_packets<std::int32_t>(PixelType::int32);
     check_contrast_packets<std::uint64_t>(PixelType::uint64);
     check_contrast_packets<std::int64_t>(PixelType::int64);
+    {
+        const std::vector<float> histogram={9,5,1,0,1,5,9,5,1};
+        const auto original_histogram=histogram;
+        require(threshold_minimum(histogram.data(),histogram.size())==3);
+        require(histogram==original_histogram);
+        bool failed=false;
+        try {threshold_minimum(histogram.data(),histogram.size(),1);}
+        catch(const std::runtime_error& error) {
+            failed=std::string(error.what())=="Maximum iteration reached for histogramsmoothing";
+        }
+        require(failed);
+        const float constant[]={7,7,7,7};failed=false;
+        try {threshold_minimum(constant,4);}
+        catch(const std::runtime_error& error) {
+            failed=std::string(error.what())=="Unable to find two maxima in histogram";
+        }
+        require(failed);
+        for(int invalid=0;invalid<3;++invalid) {
+            failed=false;
+            try {threshold_minimum(invalid==0 ? nullptr : histogram.data(),invalid==1 ? 0 : histogram.size(),invalid==2 ? 0 : 10000);}
+            catch(const std::invalid_argument&) {failed=true;}
+            require(failed);
+        }
+    }
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
