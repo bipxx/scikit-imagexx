@@ -6,9 +6,11 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import sys
 import warnings
 
 import numpy as np
+import scipy
 import skimage
 from skimage import filters as original
 import skimagexx as xx
@@ -20,10 +22,32 @@ def main():
     parser.add_argument('--size',type=int,default=513)
     parser.add_argument('--repeat',type=int,default=7)
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
+    parser.add_argument('--baseline-dir',type=Path,help='Exact measured initial _baseline package')
     parser.add_argument('--output',type=Path,default=Path('benchmarks/minimum-parameters.json'))
     args=parser.parse_args()
-    if min(args.size,args.repeat,*args.threads)<1:parser.error('positive dimensions, repeat and workers required')
+    if min(args.size,args.repeat,*args.threads)<1 or 1 not in args.threads:
+        parser.error('positive dimensions/repeat/workers and a one-worker comparison required')
+    root=Path(__file__).resolve().parents[1]
+    fingerprint=source_fingerprint(root)
+    def binary_hashes(package):
+        return {p.name:hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in sorted(Path(package.__file__).parent.iterdir()) if p.suffix in ('.pyd','.so')}
+    current_binaries=binary_hashes(xx)
+    assert current_binaries, 'native binary required'
     xx.set_fallback_enabled(False)
+    baseline=None;baseline_provenance=None
+    if args.baseline_dir:
+        directory=args.baseline_dir.resolve()
+        baseline_provenance=json.loads((directory/'baseline-source.json').read_text(encoding='utf-8'))
+        measurement=directory/baseline_provenance['measurement_report']
+        assert hashlib.sha256(measurement.read_bytes()).hexdigest()==baseline_provenance['measurement_sha256']
+        measured=json.loads(measurement.read_text(encoding='utf-8'))['metadata']
+        assert measured['source_sha256']==baseline_provenance['source_sha256']
+        sys.path.insert(0,str(directory))
+        import _baseline as baseline
+        assert binary_hashes(baseline)==baseline_provenance['binary_sha256']==measured['current_binary_sha256']
+        assert baseline.has_avx2()==xx.has_avx2()==measured['avx2']
+        baseline.set_fallback_enabled(False)
     rows=[]
 
     def add(image,workload,**options):
@@ -38,17 +62,23 @@ def main():
                 result=call(function)
             return result,[(type(w.message).__name__,str(w.message)) for w in notices]
         expected,expected_notices=checked(original.threshold_minimum)
+        def verify(result,notices):
+            assert notices==expected_notices
+            assert result[0]==expected[0]
+            if result[0]=='value':
+                assert type(result[1]) is type(expected[1])
+                assert np.asarray(result[1]).dtype==np.asarray(expected[1]).dtype
+                np.testing.assert_array_equal(result[1],expected[1])
+            else:assert result==expected
         for workers in args.threads:
             xx.set_num_threads(workers)
             actual,actual_notices=checked(xx.filters.threshold_minimum)
-            assert actual_notices==expected_notices
-            assert actual[0]==expected[0]
-            if actual[0]=='value':
-                assert type(actual[1]) is type(expected[1])
-                assert np.asarray(actual[1]).dtype==np.asarray(expected[1]).dtype
-                np.testing.assert_array_equal(actual[1],expected[1])
-            else:assert actual==expected
-            timing=measure(lambda:call(original.threshold_minimum),lambda:call(xx.filters.threshold_minimum),args.repeat,15)
+            verify(actual,actual_notices)
+            if baseline is not None:
+                baseline.set_num_threads(workers)
+                verify(*checked(baseline.filters.threshold_minimum))
+            timing=measure(lambda:call(original.threshold_minimum),lambda:call(xx.filters.threshold_minimum),args.repeat,15,
+                           baseline=(lambda:call(baseline.filters.threshold_minimum)) if baseline is not None else None)
             source=image if image is not None else options['hist'][0]
             row={'api':'filters.threshold_minimum','dtype':str(source.dtype),
                  'shape':list(source.shape),'workload':workload,'threads':workers,
@@ -83,14 +113,20 @@ def main():
             elif workload=='trimmed-histogram':counts[:31]=0;counts[-9:]=0
             elif workload=='large-histogram':counts*=np.float32(1e20)
             add(None,workload,hist=(counts,centers))
+    assert len(rows)==39*len(args.threads)
+    assert source_fingerprint(root)==fingerprint, 'source changed during timing'
+    assert binary_hashes(xx)==current_binaries, 'native binary changed during timing'
+    if baseline is not None:
+        assert binary_hashes(baseline)==baseline_provenance['binary_sha256'], 'baseline changed during timing'
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),
         'platform':platform.platform(),'cpu':platform.processor(),'reference':skimage.__version__,
-        'numpy':np.__version__,'avx2':xx.has_avx2(),'fallback_enabled':False,
-        'current_binary_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in sorted(Path(xx.__file__).parent.iterdir()) if p.suffix in ('.pyd','.so')},
+        'numpy':np.__version__,'scipy':scipy.__version__,'python':sys.version,
+        'avx2':xx.has_avx2(),'fallback_enabled':False,
+        'current_binary_sha256':current_binaries,
         'reference_thread_pools':1,'repeat':args.repeat,
-        **source_fingerprint(Path(__file__).resolve().parents[1]),
+        'seed':9371,'target_ms':15,'cooldown_ms':20,**fingerprint,
         'scope':'Warmed allocation-inclusive exact public calls; unsuccessful convergence separately identified'},'results':rows}
+    if baseline_provenance is not None:report['metadata']['baseline']=baseline_provenance
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     lines=['# Minimum threshold performance','',
@@ -98,10 +134,11 @@ def main():
            'Native calls run with explicit worker limits and fallback disabled. '
            'Exact output type, value, warnings and convergence exceptions are checked before timing. '
            'Every workload and raw sample is retained, including slowdowns and failed convergence.','',
-           '| Dtype | Workload | Outcome | Workers | Original ms | C++ ms | Speedup |',
-           '|---|---|---|---:|---:|---:|---:|']
+           '| Dtype | Workload | Outcome | Workers | Original ms | C++ ms | Speedup | Preserved/current |',
+           '|---|---|---|---:|---:|---:|---:|---:|']
     for row in rows:
-        lines.append(f'| {row["dtype"]} | {row["workload"]} | {row["outcome"]} | {row["threads"]} | {row["reference_ms"]:.4f} | {row["cpp_ms"]:.4f} | {row["speedup"]:.2f}x |')
+        paired=f'{row["improvement"]:.4f}x' if 'improvement' in row else '—'
+        lines.append(f'| {row["dtype"]} | {row["workload"]} | {row["outcome"]} | {row["threads"]} | {row["reference_ms"]:.4f} | {row["cpp_ms"]:.4f} | {row["speedup"]:.2f}x | {paired} |')
     args.output.with_suffix('.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 
 
