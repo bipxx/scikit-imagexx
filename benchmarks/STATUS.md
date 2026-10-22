@@ -7,6 +7,9 @@ One-worker Gaussian geometric means are 2.61x/1.68x original/current and median
 Windows throughput, layout costs and tiny-call overhead remain optimization
 targets. All adverse cases and exact initial packages are retained. This is a
 source-specific partial port, not a whole-library refresh.
+The [overflow-policy correction and exact paired follow-up](adaptive-final.md)
+records current one-worker speedups of 2.79x/1.69x Gaussian, 1.34x/0.79x mean,
+and 6.20x/5.55x median (Linux/Windows), with every per-case regression retained.
 
 The [Li constant-image fast path](li-uniform.md) is retained after paired
 one-worker geometric-mean gains of 34% on Linux and 17% on Windows. It records
