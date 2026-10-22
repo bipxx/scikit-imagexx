@@ -107,6 +107,7 @@ jobs:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: numpy-minimum-ciede2000
           path: |
