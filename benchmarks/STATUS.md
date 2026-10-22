@@ -8,7 +8,9 @@ package. These are source-specific results, not a whole-library refresh.
 The [singleton-stride CIEDE2000 checkpoint](distance-singleton.md) follows with
 392 focused cases passing on four NumPy/runtime replicas and paired one-worker
 speedups of 2.26x over scikit-image on Linux and 2.47x on Windows. It records the
-2-3% cost against the initial C++ package; its full CI remains in progress.
+2-3% cost against the initial C++ package. Full CI run 39767948656 passes all
+three jobs: Linux 44,419 tests and Windows 44,417 plus two skips in each SIMD
+mode, with normal/dynamic/portable native checks passing 2/2 on both OSes.
 
 The newer [Li threshold checkpoint](li.md) records source-specific Windows/Linux
 one-worker and four-worker results, including regressions. The subsequent
@@ -19,7 +21,7 @@ CI run 39763182640. A later AVX-512/NumPy 1.24 runner exposed two length-128
 antipodal failures. Two diagnostic runners prove that upstream itself returns
 multiple arrays for identical inputs as temporary allocation changes; the
 antipodal gate now requires one actually observed whole upstream array with
-unchanged numerical budgets. Its new cross-platform gates are running. Both
+unchanged numerical budgets. Its subsequent singleton-stride gates pass. Both
 paired performance jobs pass.
 The whole-library reports below remain historical.
 
