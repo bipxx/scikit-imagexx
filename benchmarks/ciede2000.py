@@ -21,10 +21,22 @@ def main():
     parser.add_argument('--threads', type=int, nargs='+', default=[1, 4])
     parser.add_argument('--repeat', type=int, default=7)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--baseline-dir',type=Path)
     args = parser.parse_args()
     if min([args.size, args.repeat] + args.threads) < 1:
         parser.error('size, repetitions and worker limits must be positive')
     xx.set_fallback_enabled(False)
+    baseline=None
+    snapshot=None
+    if args.baseline_dir:
+        sys.path.insert(0,str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        snapshot=json.loads((args.baseline_dir/'snapshot.json').read_text())
+        package=Path(baseline.__file__).parent
+        for group,pattern in [('binary_sha256','_core.*'),('python_sha256','*.py')]:
+            assert {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob(pattern)}==snapshot[group]
+        assert baseline.has_avx2()==xx.has_avx2()
+        baseline.set_fallback_enabled(False)
     rng = np.random.default_rng(386)
     cases = []
     for dtype in (np.float32, np.float64):
@@ -49,11 +61,13 @@ def main():
         'numpy': np.__version__, 'scikit_image': skimage.__version__,
         'python': sys.version, 'platform': platform.platform(),
         'avx2': xx.has_avx2(), 'reference_thread_pools': 1, 'fallback_enabled': False,
+        'svml_double_angles':xx.color._SVML_DOUBLE_ANGLES,
         'repeat': args.repeat, 'target_ms': 15, 'cooldown_ms': 20,
         'command': sys.argv, **source_fingerprint(root),
         'binary_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                           for p in Path(xx.__file__).parent.glob('_core.*')},
     }, 'results': []}
+    if snapshot:report['metadata']['baseline']=snapshot
     for label, a, b, options in cases:
         with warnings.catch_warnings():
             warnings.simplefilter('ignore', RuntimeWarning)
@@ -69,6 +83,11 @@ def main():
                 np.testing.assert_allclose(actual, expected, rtol=tol[0], atol=tol[1])
                 finite = np.isfinite(actual) & np.isfinite(expected)
                 error = np.abs(np.asarray(actual)[finite] - np.asarray(expected)[finite])
+                old=None
+                if baseline:
+                    baseline.set_num_threads(threads)
+                    old=lambda:baseline.color.deltaE_ciede2000(a,b,**options)
+                    np.testing.assert_allclose(old(),expected,rtol=tol[0],atol=tol[1])
                 row = {'api': 'color.deltaE_ciede2000', 'input_dtype': a.dtype.name,
                        'output_dtype': actual.dtype.name, 'shape': list(a.shape),
                        'second_shape': list(b.shape), 'layout': label, 'threads': threads,
@@ -76,7 +95,7 @@ def main():
                        'option_types': {k: type(v).__name__ for k, v in options.items()},
                        'max_abs_error': float(error.max()) if error.size else 0.,
                        **measure(lambda: reference(a, b, **options),
-                                 lambda: xx.color.deltaE_ciede2000(a, b, **options), args.repeat, 15)}
+                                 lambda: xx.color.deltaE_ciede2000(a, b, **options), args.repeat, 15,old)}
                 report['results'].append(row)
                 print(f'{a.dtype.name} {label} {options} t={threads}: {row["speedup"]:.3f}x', flush=True)
     args.output.parent.mkdir(parents=True, exist_ok=True)
