@@ -6,6 +6,7 @@ import json
 import re
 from pathlib import Path
 import skimage
+import numpy as np
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind
 
 MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'future',
@@ -14,7 +15,14 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 
 def signature_of(value):
-    try:return re.sub(r' at 0x[0-9a-fA-F]+', '', str(inspect.signature(value)))
+    try:
+        signature=inspect.signature(value)
+        text=re.sub(r' at 0x[0-9a-fA-F]+', '', str(signature))
+        # NumPy 1.24 exposes np.max as amax; later releases display max.
+        # Normalize only the identical default object, not arbitrary callables.
+        if any(parameter.default is np.max for parameter in signature.parameters.values()):
+            text=text.replace('<function amax>', '<function max>')
+        return text
     except (TypeError,ValueError):return None
 
 

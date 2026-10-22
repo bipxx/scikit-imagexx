@@ -2,7 +2,7 @@
 
 These exact-source trials remain unretained while the native median port is being improved. The initial source passes 8,656 scoped Windows cases and 4,460 minimum-NumPy cases in each SIMD mode, plus five native configurations. Its generic selection path is much too slow for long 1-D windows. The second source adds sliding heaps, bitonic SIMD through 32 taps and bounded footprint plans; it passes 9,296 scoped Windows and 5,100 minimum-NumPy cases in each mode, with native normal/dynamic/portable/ASan+UBSan normal/dynamic checks 2/2. Full rolling-source CI passes all three jobs: Linux 59,573 tests and Windows 59,571 plus two skips in each SIMD mode, with native normal/dynamic/portable checks 2/2 on both OSes. Later adapter and heap-layout changes have separate measurements and must not inherit these fingerprints.
 
-Both trials use 48 cases per OS at global worker limits one/four (96 rows/OS), seven randomized samples, seed 5227 and size 512. Reference pools are fixed at one; allocation, casting, dispatch and output handling are timed. All timed outputs match scikit-image 0.26.0 exactly with fallback disabled. The worker setting is a cap: small images remain serial below the activation threshold. Exact wheels, extracted packages, binary/source hashes and every raw sample are retained in the linked artifacts.
+All trials use 48 cases per OS at global worker limits one/four (96 rows/OS), seven randomized samples, seed 5227 and size 512. Reference pools are fixed at one; allocation, casting, dispatch and output handling are timed. All timed outputs match scikit-image 0.26.0 exactly with fallback disabled. The worker setting is a cap: small images remain serial below the activation threshold. Exact wheels, extracted packages, binary/source hashes and every raw sample are retained in the linked artifacts.
 
 Initial one-worker geometric means are 4.219x Linux / 3.537x Windows over upstream, but 31-element 1-D windows are only 0.084–0.100x. Those severe regressions prevent retaining the initial source. The second source improves one-worker corpus means 1.602x/1.423x against that exact initial package, reaching 6.882x/5.223x over upstream. Its 5x5/3-D cases improve about 10–13x on Linux and 4–5x on Windows versus the initial package. Long 1-D improves about 8–10x but still trails upstream at 0.755–0.921x, and Windows tiny calls remain 0.811–0.860x. These adverse cases remain open targets.
 
@@ -613,3 +613,208 @@ One-worker upstream/current geometric means are **8.193x Linux / 4.576x Windows*
 | Windows | float64 | one-dimensional31 | 4 | 12.17640 | 5.09155 | 2.391x | 7.621x |
 | Windows | float64 | three-dimensional | 1 | 18.92080 | 5.94680 | 3.182x | 3.164x |
 | Windows | float64 | three-dimensional | 4 | 18.98740 | 5.93845 | 3.197x | 3.180x |
+
+## Streaming inputs: `256fd39`
+
+[Paired benchmark run](https://github.com/bipxx/scikit-imagexx/actions/runs/39814966359), compared with exact compact source `6b0dd2a` from run `39813349869`. Product fingerprint: `159db3002e7a06e77642d38fb6edf3bced34ac7085f0b297ebce5e8f3134b838`. The candidate streams original 1-D inputs without constructing a full padded copy. Scoped validation passes 9,396 Windows and 5,200 minimum-NumPy cases per SIMD mode, plus all five native configurations (2/2 each). Full CI remains separately tracked.
+
+Linux: one-worker geometric mean **8.553786x upstream/native**, **0.996603x compact/current**. [All raw samples](median-stream-linux.json).
+
+Windows: one-worker geometric mean **4.739621x upstream/native**, **1.022931x compact/current**. [All raw samples](median-stream-windows.json).
+
+The streaming change is broadly neutral against compact. Long 1-D uint8 improves 1.057x Linux / 1.068x Windows against compact, but Linux float32 is 0.974x. Long 1-D upstream/native ratios remain 0.840-0.910x Linux and 0.898-1.038x Windows; Linux tiny floating cases are 0.972-0.990x. These adverse samples remain open optimization targets.
+
+| OS | dtype | layout | worker limit | upstream ms | native ms | upstream/native | compact/current |
+|---|---|---|---:|---:|---:|---:|---:|
+| Linux | uint8 | nearest | 1 | 29.35908 | 1.34606 | 21.811x | 1.004x |
+| Linux | uint8 | nearest | 4 | 33.09054 | 1.05930 | 31.238x | 1.016x |
+| Linux | uint8 | reflect | 1 | 29.03978 | 1.33844 | 21.697x | 1.015x |
+| Linux | uint8 | reflect | 4 | 29.32822 | 1.02271 | 28.677x | 1.004x |
+| Linux | uint8 | mirror | 1 | 29.51666 | 1.33490 | 22.112x | 0.992x |
+| Linux | uint8 | mirror | 4 | 29.72956 | 1.06390 | 27.944x | 0.982x |
+| Linux | uint8 | wrap | 1 | 32.93430 | 1.49897 | 21.971x | 1.009x |
+| Linux | uint8 | wrap | 4 | 29.77663 | 1.04976 | 28.365x | 0.997x |
+| Linux | uint8 | constant | 1 | 29.45611 | 1.34798 | 21.852x | 0.986x |
+| Linux | uint8 | constant | 4 | 29.76370 | 1.01579 | 29.301x | 1.031x |
+| Linux | uint8 | fortran | 1 | 29.24836 | 1.63422 | 17.897x | 1.008x |
+| Linux | uint8 | fortran | 4 | 29.16777 | 1.27237 | 22.924x | 1.017x |
+| Linux | uint8 | strided | 1 | 14.66544 | 0.70029 | 20.942x | 1.009x |
+| Linux | uint8 | strided | 4 | 14.69715 | 0.70479 | 20.853x | 0.993x |
+| Linux | uint8 | dense5 | 1 | 85.38487 | 7.70794 | 11.078x | 0.994x |
+| Linux | uint8 | dense5 | 4 | 85.58872 | 3.64075 | 23.509x | 1.014x |
+| Linux | uint8 | sparse7 | 1 | 29.70362 | 1.34197 | 22.134x | 0.995x |
+| Linux | uint8 | sparse7 | 4 | 29.63325 | 1.00272 | 29.553x | 1.040x |
+| Linux | uint8 | cross | 1 | 11.09873 | 0.87942 | 12.620x | 1.005x |
+| Linux | uint8 | cross | 4 | 11.28574 | 0.87957 | 12.831x | 0.992x |
+| Linux | uint8 | even | 1 | 7.29388 | 0.82331 | 8.859x | 1.013x |
+| Linux | uint8 | even | 4 | 7.47731 | 0.81070 | 9.223x | 1.000x |
+| Linux | uint8 | identity | 1 | 0.01857 | 0.00876 | 2.119x | 0.994x |
+| Linux | uint8 | identity | 4 | 0.01834 | 0.00918 | 1.997x | 0.976x |
+| Linux | uint8 | tiny | 1 | 0.00817 | 0.00788 | 1.037x | 0.999x |
+| Linux | uint8 | tiny | 4 | 0.00830 | 0.00795 | 1.043x | 1.012x |
+| Linux | uint8 | one-dimensional3 | 1 | 3.28651 | 0.75735 | 4.339x | 0.950x |
+| Linux | uint8 | one-dimensional3 | 4 | 3.34710 | 0.97009 | 3.450x | 0.979x |
+| Linux | uint8 | one-dimensional31 | 1 | 8.19417 | 9.00045 | 0.910x | 1.057x |
+| Linux | uint8 | one-dimensional31 | 4 | 8.16402 | 3.41953 | 2.387x | 1.124x |
+| Linux | uint8 | three-dimensional | 1 | 14.77587 | 1.57883 | 9.359x | 1.003x |
+| Linux | uint8 | three-dimensional | 4 | 14.88762 | 1.56043 | 9.541x | 1.009x |
+| Linux | float32 | nearest | 1 | 28.23946 | 1.47921 | 19.091x | 0.994x |
+| Linux | float32 | nearest | 4 | 28.43594 | 1.22664 | 23.182x | 0.987x |
+| Linux | float32 | reflect | 1 | 28.18729 | 1.46934 | 19.184x | 0.977x |
+| Linux | float32 | reflect | 4 | 28.30993 | 1.19977 | 23.596x | 0.997x |
+| Linux | float32 | mirror | 1 | 28.11013 | 1.45392 | 19.334x | 0.988x |
+| Linux | float32 | mirror | 4 | 28.23577 | 1.18351 | 23.858x | 1.005x |
+| Linux | float32 | wrap | 1 | 28.18596 | 1.47145 | 19.155x | 0.983x |
+| Linux | float32 | wrap | 4 | 28.55903 | 1.22792 | 23.258x | 0.983x |
+| Linux | float32 | constant | 1 | 28.11945 | 1.48079 | 18.989x | 0.990x |
+| Linux | float32 | constant | 4 | 29.22198 | 1.21822 | 23.987x | 1.033x |
+| Linux | float32 | fortran | 1 | 31.95981 | 1.91467 | 16.692x | 1.003x |
+| Linux | float32 | fortran | 4 | 29.11865 | 1.57344 | 18.506x | 0.998x |
+| Linux | float32 | strided | 1 | 14.31969 | 0.80199 | 17.855x | 1.008x |
+| Linux | float32 | strided | 4 | 14.27873 | 0.79902 | 17.870x | 0.992x |
+| Linux | float32 | dense5 | 1 | 81.54080 | 7.94915 | 10.258x | 1.002x |
+| Linux | float32 | dense5 | 4 | 82.17158 | 4.01604 | 20.461x | 0.990x |
+| Linux | float32 | sparse7 | 1 | 28.39370 | 1.47198 | 19.289x | 1.002x |
+| Linux | float32 | sparse7 | 4 | 29.02865 | 1.26439 | 22.959x | 0.983x |
+| Linux | float32 | cross | 1 | 10.98934 | 1.05738 | 10.393x | 0.979x |
+| Linux | float32 | cross | 4 | 11.33051 | 1.03695 | 10.927x | 0.986x |
+| Linux | float32 | even | 1 | 7.68961 | 1.01020 | 7.612x | 1.016x |
+| Linux | float32 | even | 4 | 7.32810 | 1.02688 | 7.136x | 0.982x |
+| Linux | float32 | identity | 1 | 0.07438 | 0.04398 | 1.691x | 1.015x |
+| Linux | float32 | identity | 4 | 0.07344 | 0.04555 | 1.612x | 1.014x |
+| Linux | float32 | tiny | 1 | 0.00862 | 0.00887 | 0.972x | 0.991x |
+| Linux | float32 | tiny | 4 | 0.00864 | 0.00880 | 0.982x | 1.010x |
+| Linux | float32 | one-dimensional3 | 1 | 3.12355 | 0.86146 | 3.626x | 0.985x |
+| Linux | float32 | one-dimensional3 | 4 | 3.13726 | 0.96233 | 3.260x | 0.935x |
+| Linux | float32 | one-dimensional31 | 1 | 8.12075 | 9.67167 | 0.840x | 0.973x |
+| Linux | float32 | one-dimensional31 | 4 | 8.16917 | 3.35411 | 2.436x | 1.024x |
+| Linux | float32 | three-dimensional | 1 | 14.47487 | 1.60468 | 9.020x | 0.988x |
+| Linux | float32 | three-dimensional | 4 | 16.14943 | 1.72201 | 9.378x | 1.005x |
+| Linux | float64 | nearest | 1 | 28.73120 | 1.59219 | 18.045x | 0.973x |
+| Linux | float64 | nearest | 4 | 28.73061 | 1.26841 | 22.651x | 0.974x |
+| Linux | float64 | reflect | 1 | 28.62308 | 1.61408 | 17.733x | 1.018x |
+| Linux | float64 | reflect | 4 | 29.01052 | 1.28925 | 22.502x | 0.978x |
+| Linux | float64 | mirror | 1 | 28.88635 | 1.67170 | 17.280x | 0.968x |
+| Linux | float64 | mirror | 4 | 28.85663 | 1.32305 | 21.811x | 0.949x |
+| Linux | float64 | wrap | 1 | 28.99662 | 1.62605 | 17.833x | 0.997x |
+| Linux | float64 | wrap | 4 | 29.03024 | 1.29446 | 22.427x | 0.962x |
+| Linux | float64 | constant | 1 | 28.62268 | 1.58766 | 18.028x | 0.974x |
+| Linux | float64 | constant | 4 | 29.14655 | 1.30086 | 22.406x | 0.966x |
+| Linux | float64 | fortran | 1 | 34.97071 | 2.57356 | 13.588x | 0.996x |
+| Linux | float64 | fortran | 4 | 34.41953 | 2.13015 | 16.158x | 0.961x |
+| Linux | float64 | strided | 1 | 16.08042 | 0.90892 | 17.692x | 0.985x |
+| Linux | float64 | strided | 4 | 16.11087 | 0.92432 | 17.430x | 0.957x |
+| Linux | float64 | dense5 | 1 | 82.96785 | 8.33888 | 9.950x | 0.990x |
+| Linux | float64 | dense5 | 4 | 82.84926 | 4.20997 | 19.679x | 0.986x |
+| Linux | float64 | sparse7 | 1 | 28.98031 | 1.62301 | 17.856x | 0.989x |
+| Linux | float64 | sparse7 | 4 | 29.19251 | 1.32110 | 22.097x | 0.942x |
+| Linux | float64 | cross | 1 | 10.73552 | 1.10345 | 9.729x | 0.977x |
+| Linux | float64 | cross | 4 | 10.87501 | 1.08665 | 10.008x | 0.961x |
+| Linux | float64 | even | 1 | 7.37750 | 1.02533 | 7.195x | 0.968x |
+| Linux | float64 | even | 4 | 7.41942 | 1.02287 | 7.254x | 0.944x |
+| Linux | float64 | identity | 1 | 0.24086 | 0.15805 | 1.524x | 0.999x |
+| Linux | float64 | identity | 4 | 0.24472 | 0.15877 | 1.541x | 1.002x |
+| Linux | float64 | tiny | 1 | 0.00848 | 0.00857 | 0.989x | 0.995x |
+| Linux | float64 | tiny | 4 | 0.00851 | 0.00879 | 0.969x | 0.987x |
+| Linux | float64 | one-dimensional3 | 1 | 3.55607 | 0.92517 | 3.844x | 1.029x |
+| Linux | float64 | one-dimensional3 | 4 | 3.29104 | 0.97949 | 3.360x | 0.941x |
+| Linux | float64 | one-dimensional31 | 1 | 8.50631 | 9.68831 | 0.878x | 1.053x |
+| Linux | float64 | one-dimensional31 | 4 | 8.37119 | 3.55693 | 2.353x | 1.105x |
+| Linux | float64 | three-dimensional | 1 | 14.33412 | 1.59207 | 9.003x | 1.008x |
+| Linux | float64 | three-dimensional | 4 | 14.54126 | 1.59674 | 9.107x | 1.007x |
+| Windows | uint8 | nearest | 1 | 43.48000 | 3.36780 | 12.911x | 1.036x |
+| Windows | uint8 | nearest | 4 | 40.96950 | 2.19274 | 18.684x | 1.046x |
+| Windows | uint8 | reflect | 1 | 40.96380 | 3.28483 | 12.471x | 1.020x |
+| Windows | uint8 | reflect | 4 | 43.46100 | 2.79927 | 15.526x | 1.026x |
+| Windows | uint8 | mirror | 1 | 44.99340 | 3.59017 | 12.532x | 1.063x |
+| Windows | uint8 | mirror | 4 | 43.51570 | 2.82282 | 15.416x | 1.025x |
+| Windows | uint8 | wrap | 1 | 44.27990 | 3.55037 | 12.472x | 0.975x |
+| Windows | uint8 | wrap | 4 | 40.55810 | 2.83543 | 14.304x | 0.827x |
+| Windows | uint8 | constant | 1 | 43.60900 | 3.39595 | 12.841x | 1.075x |
+| Windows | uint8 | constant | 4 | 47.57980 | 2.92488 | 16.267x | 0.983x |
+| Windows | uint8 | fortran | 1 | 41.97860 | 3.68962 | 11.377x | 1.045x |
+| Windows | uint8 | fortran | 4 | 42.22780 | 3.21950 | 13.116x | 1.005x |
+| Windows | uint8 | strided | 1 | 21.57370 | 1.88696 | 11.433x | 0.996x |
+| Windows | uint8 | strided | 4 | 20.24200 | 1.72487 | 11.735x | 1.061x |
+| Windows | uint8 | dense5 | 1 | 120.43280 | 31.54400 | 3.818x | 1.064x |
+| Windows | uint8 | dense5 | 4 | 115.63340 | 19.28500 | 5.996x | 0.921x |
+| Windows | uint8 | sparse7 | 1 | 41.26610 | 3.18728 | 12.947x | 1.060x |
+| Windows | uint8 | sparse7 | 4 | 40.29740 | 2.07880 | 19.385x | 1.012x |
+| Windows | uint8 | cross | 1 | 14.57610 | 2.52992 | 5.761x | 1.050x |
+| Windows | uint8 | cross | 4 | 14.40070 | 1.76246 | 8.171x | 1.017x |
+| Windows | uint8 | even | 1 | 9.47240 | 2.44530 | 3.874x | 1.010x |
+| Windows | uint8 | even | 4 | 9.43910 | 1.69466 | 5.570x | 1.009x |
+| Windows | uint8 | identity | 1 | 0.02831 | 0.01275 | 2.220x | 1.025x |
+| Windows | uint8 | identity | 4 | 0.02792 | 0.01239 | 2.253x | 1.012x |
+| Windows | uint8 | tiny | 1 | 0.01260 | 0.01191 | 1.057x | 1.064x |
+| Windows | uint8 | tiny | 4 | 0.01276 | 0.01188 | 1.075x | 1.005x |
+| Windows | uint8 | one-dimensional3 | 1 | 5.64390 | 3.18918 | 1.770x | 0.999x |
+| Windows | uint8 | one-dimensional3 | 4 | 5.64965 | 2.78420 | 2.029x | 0.989x |
+| Windows | uint8 | one-dimensional31 | 1 | 12.50100 | 12.04510 | 1.038x | 1.068x |
+| Windows | uint8 | one-dimensional31 | 4 | 12.46120 | 4.79720 | 2.598x | 1.223x |
+| Windows | uint8 | three-dimensional | 1 | 20.12680 | 5.47720 | 3.675x | 1.014x |
+| Windows | uint8 | three-dimensional | 4 | 20.16880 | 5.48655 | 3.676x | 1.014x |
+| Windows | float32 | nearest | 1 | 40.94970 | 3.94320 | 10.385x | 1.039x |
+| Windows | float32 | nearest | 4 | 40.91800 | 2.92817 | 13.974x | 1.042x |
+| Windows | float32 | reflect | 1 | 41.06720 | 3.93860 | 10.427x | 1.041x |
+| Windows | float32 | reflect | 4 | 40.91140 | 2.94790 | 13.878x | 1.033x |
+| Windows | float32 | mirror | 1 | 41.06200 | 3.94327 | 10.413x | 1.033x |
+| Windows | float32 | mirror | 4 | 40.75290 | 3.01250 | 13.528x | 1.015x |
+| Windows | float32 | wrap | 1 | 41.13580 | 3.99463 | 10.298x | 1.033x |
+| Windows | float32 | wrap | 4 | 41.51810 | 3.46177 | 11.993x | 1.018x |
+| Windows | float32 | constant | 1 | 41.60330 | 3.91347 | 10.631x | 1.036x |
+| Windows | float32 | constant | 4 | 41.38410 | 3.07470 | 13.460x | 1.054x |
+| Windows | float32 | fortran | 1 | 41.60030 | 4.77873 | 8.705x | 1.020x |
+| Windows | float32 | fortran | 4 | 41.75930 | 4.09987 | 10.186x | 1.023x |
+| Windows | float32 | strided | 1 | 21.03960 | 2.07277 | 10.150x | 1.031x |
+| Windows | float32 | strided | 4 | 21.49470 | 2.16178 | 9.943x | 1.024x |
+| Windows | float32 | dense5 | 1 | 119.66880 | 36.79470 | 3.252x | 0.943x |
+| Windows | float32 | dense5 | 4 | 125.85030 | 29.80780 | 4.222x | 0.925x |
+| Windows | float32 | sparse7 | 1 | 43.84510 | 4.22027 | 10.389x | 1.030x |
+| Windows | float32 | sparse7 | 4 | 43.87680 | 3.77783 | 11.614x | 1.042x |
+| Windows | float32 | cross | 1 | 15.86900 | 3.62377 | 4.379x | 1.027x |
+| Windows | float32 | cross | 4 | 15.83620 | 3.36340 | 4.708x | 1.059x |
+| Windows | float32 | even | 1 | 10.33870 | 3.39208 | 3.048x | 1.083x |
+| Windows | float32 | even | 4 | 10.01300 | 3.39880 | 2.946x | 0.991x |
+| Windows | float32 | identity | 1 | 0.48813 | 0.45879 | 1.064x | 1.000x |
+| Windows | float32 | identity | 4 | 0.50796 | 0.49732 | 1.021x | 0.946x |
+| Windows | float32 | tiny | 1 | 0.01432 | 0.01430 | 1.001x | 1.040x |
+| Windows | float32 | tiny | 4 | 0.01339 | 0.01318 | 1.016x | 1.082x |
+| Windows | float32 | one-dimensional3 | 1 | 4.69043 | 3.34623 | 1.402x | 1.016x |
+| Windows | float32 | one-dimensional3 | 4 | 4.67773 | 3.29110 | 1.421x | 1.041x |
+| Windows | float32 | one-dimensional31 | 1 | 11.63170 | 12.94880 | 0.898x | 0.992x |
+| Windows | float32 | one-dimensional31 | 4 | 11.43410 | 8.18230 | 1.397x | 1.051x |
+| Windows | float32 | three-dimensional | 1 | 20.54980 | 5.61005 | 3.663x | 1.069x |
+| Windows | float32 | three-dimensional | 4 | 21.28720 | 5.70370 | 3.732x | 0.987x |
+| Windows | float64 | nearest | 1 | 42.01280 | 4.31563 | 9.735x | 0.952x |
+| Windows | float64 | nearest | 4 | 42.01440 | 3.95360 | 10.627x | 0.963x |
+| Windows | float64 | reflect | 1 | 43.14320 | 4.34593 | 9.927x | 0.997x |
+| Windows | float64 | reflect | 4 | 43.68530 | 3.88480 | 11.245x | 0.961x |
+| Windows | float64 | mirror | 1 | 43.12840 | 4.47680 | 9.634x | 0.939x |
+| Windows | float64 | mirror | 4 | 43.07630 | 3.83098 | 11.244x | 1.008x |
+| Windows | float64 | wrap | 1 | 42.65030 | 4.36570 | 9.769x | 1.043x |
+| Windows | float64 | wrap | 4 | 43.05170 | 3.79137 | 11.355x | 1.006x |
+| Windows | float64 | constant | 1 | 43.43830 | 4.36330 | 9.955x | 0.993x |
+| Windows | float64 | constant | 4 | 44.74010 | 3.77535 | 11.851x | 1.023x |
+| Windows | float64 | fortran | 1 | 45.38920 | 5.50265 | 8.249x | 1.009x |
+| Windows | float64 | fortran | 4 | 42.68190 | 5.20053 | 8.207x | 0.958x |
+| Windows | float64 | strided | 1 | 20.89750 | 2.65982 | 7.857x | 1.008x |
+| Windows | float64 | strided | 4 | 22.12480 | 2.66776 | 8.293x | 1.076x |
+| Windows | float64 | dense5 | 1 | 122.15620 | 36.11680 | 3.382x | 1.064x |
+| Windows | float64 | dense5 | 4 | 120.75120 | 31.79750 | 3.798x | 1.028x |
+| Windows | float64 | sparse7 | 1 | 41.25790 | 4.04887 | 10.190x | 1.007x |
+| Windows | float64 | sparse7 | 4 | 41.02580 | 3.00955 | 13.632x | 0.975x |
+| Windows | float64 | cross | 1 | 15.15420 | 3.35665 | 4.515x | 1.022x |
+| Windows | float64 | cross | 4 | 15.23300 | 2.70492 | 5.632x | 0.974x |
+| Windows | float64 | even | 1 | 10.22920 | 3.32888 | 3.073x | 1.001x |
+| Windows | float64 | even | 4 | 10.00400 | 2.65218 | 3.772x | 0.971x |
+| Windows | float64 | identity | 1 | 0.73962 | 0.71593 | 1.033x | 0.998x |
+| Windows | float64 | identity | 4 | 0.74119 | 0.71056 | 1.043x | 1.004x |
+| Windows | float64 | tiny | 1 | 0.01346 | 0.01280 | 1.052x | 1.013x |
+| Windows | float64 | tiny | 4 | 0.01254 | 0.01272 | 0.986x | 0.996x |
+| Windows | float64 | one-dimensional3 | 1 | 4.93900 | 3.29533 | 1.499x | 1.015x |
+| Windows | float64 | one-dimensional3 | 4 | 4.89240 | 2.65156 | 1.845x | 0.977x |
+| Windows | float64 | one-dimensional31 | 1 | 11.71050 | 12.71910 | 0.921x | 1.062x |
+| Windows | float64 | one-dimensional31 | 4 | 11.70540 | 4.94230 | 2.368x | 1.164x |
+| Windows | float64 | three-dimensional | 1 | 20.12110 | 5.51475 | 3.649x | 1.006x |
+| Windows | float64 | three-dimensional | 4 | 20.26330 | 5.54455 | 3.655x | 0.995x |
