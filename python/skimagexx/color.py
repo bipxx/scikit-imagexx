@@ -6,6 +6,9 @@ from . import _core
 from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
 from ._stain_matrices import MATRICES as _STAIN_MATRICES
 from ._compat import retain_dtype_metadata, fallback, module_attribute, native_image
+
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
 from . import _rgb_colors as _LABEL_COLORS
 
 _LABEL_COLOR_DICT={k:v for k,v in vars(_LABEL_COLORS).items() if isinstance(v,tuple)}

@@ -1,5 +1,8 @@
 """Native integral images, window queries and raw local-block means."""
 from ._compat import module_attribute, fallback
+
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
 from . import _core
 import numpy as np
 import warnings

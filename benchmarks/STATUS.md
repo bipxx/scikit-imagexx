@@ -1,5 +1,10 @@
 # Last completed whole-library performance checkpoint
 
+The [median experiments](median-initial.md) preserve initial and paired trials,
+including severe large-window regressions and their subsequent improvement.
+The port remains on its feature branch while long 1-D and tiny-call costs are
+addressed; these trials do not yet increase main native coverage.
+
 The [retained sparse-correlation port](sparse.md) adds exact ordered products,
 native row padding and optional global workers. One-worker geometric means are
 1.938x over scikit-image on Linux and 2.258x on Windows; every one-worker case in

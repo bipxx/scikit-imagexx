@@ -4,6 +4,9 @@ import warnings
 from . import _core
 from ._compat import fallback, module_attribute, native_image
 
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
+
 __all__ = ['invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
            'img_as_ubyte', 'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits']
 

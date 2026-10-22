@@ -6,6 +6,9 @@ import numpy as np
 from . import _core
 from ._compat import fallback, module_attribute
 
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
+
 __all__ = ['erosion','dilation','opening','closing','white_tophat','black_tophat',
            'binary_erosion','binary_dilation','binary_opening','binary_closing']
 _DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
