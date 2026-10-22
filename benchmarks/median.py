@@ -45,11 +45,14 @@ def main():
             ('one-dimensional3',image.ravel(),np.ones(3,dtype=bool),'nearest'),
             ('one-dimensional31',image.ravel(),np.ones(31,dtype=bool),'nearest'),
             ('three-dimensional',volume,np.ones((3,3,3),dtype=bool),'nearest')])
+        if dtype!=np.uint8:
+            zeros=np.random.default_rng(5228).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),image.size)
+            for width in (3,31):cases.append((f'signed-zero{width}',zeros,np.ones(width,dtype=bool),'nearest'))
     package=Path(xx.__file__).parent
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),
         'cpu':platform.processor(),'logical_cpus':os.cpu_count(),'python':sys.version,'numpy':np.__version__,
         'scipy':scipy.__version__,'scikit_image':skimage.__version__,'avx2':xx.has_avx2(),'fallback_enabled':False,
-        'reference_thread_pools':1,'repeat':args.repeat,'target_ms':15,'cooldown_ms':20,'seed':5227,'command':sys.argv,
+        'reference_thread_pools':1,'repeat':args.repeat,'target_ms':15,'cooldown_ms':20,'seed':5227,'signed_zero_seed':5228,'command':sys.argv,
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'binary_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob('_core.*')}},'results':[]}
     if snapshot:report['metadata']['baseline']=snapshot
@@ -59,14 +62,23 @@ def main():
             xx.set_num_threads(workers);actual=xx.filters.median(image,kernel,mode=mode)
             assert type(actual) is type(expected) and actual.dtype==expected.dtype and actual.shape==expected.shape
             np.testing.assert_array_equal(actual,expected)
+            if actual.dtype.kind=='f':np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
             old=None
+            baseline_parity='not-requested'
+            baseline_signbit_mismatches=None
             if baseline:
                 baseline.set_num_threads(workers);old=lambda:baseline.filters.median(image,kernel,mode=mode)
                 previous=old()
                 assert type(previous) is type(expected) and previous.dtype==expected.dtype and previous.shape==expected.shape
                 np.testing.assert_array_equal(previous,expected)
+                baseline_parity='verified'
+                baseline_signbit_mismatches=int(np.count_nonzero(np.signbit(previous)!=np.signbit(expected))) if previous.dtype.kind=='f' else 0
+                if baseline_signbit_mismatches:
+                    # Preserve evidence of older tie-order failures, without
+                    # timing an incorrect baseline as an equivalent algorithm.
+                    baseline_parity='signed-zero-mismatch-unmeasured';old=None
             row={'api':'filters.median','dtype':image.dtype.name,'shape':list(image.shape),
-                 'layout':label,'kernel_shape':list(kernel.shape),'mode':mode,'threads':workers,'max_abs_error':0.,
+                 'layout':label,'kernel_shape':list(kernel.shape),'mode':mode,'threads':workers,'max_abs_error':0.,'baseline_parity':baseline_parity,'baseline_signbit_mismatches':baseline_signbit_mismatches,
                  **measure(lambda:reference(image,kernel,mode=mode),lambda:xx.filters.median(image,kernel,mode=mode),args.repeat,15,old)}
             report['results'].append(row);args.output.parent.mkdir(parents=True,exist_ok=True)
             args.output.write_bytes((json.dumps(report,indent=2)+'\n').encode('utf-8'))

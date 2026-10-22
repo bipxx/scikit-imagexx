@@ -1,6 +1,7 @@
 #include "skimagexx/median.hpp"
 #include "execution.hpp"
 #include "simd.hpp"
+#include "median_ties.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -158,6 +159,24 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     }
     if constexpr(std::is_floating_point_v<W>){if(border==GaussianBorder::constant){unordered|=std::isnan(constant);negative_zero|=constant==0 && std::signbit(constant);}}
     if(fast_1d && unordered)return {true};
+    if(fast_1d && negative_zero) {
+        // Numeric order alone cannot choose the sign of tied zeros. Replay
+        // the upstream mediator history serially so worker caps do not change
+        // the selected representation. Oversized reference windows have
+        // undefined boundary reads and remain explicit compatibility cases.
+        if(shape.size()!=1 || !rank || rank+1>=window[0] || window[0]>std::size_t(std::numeric_limits<std::int32_t>::max()))return {true};
+        const auto left=window[0]/2,tail=(window[0]-1)/2;
+        if(n==1 && tail>1) {
+            write(output,0,double(border==GaussianBorder::constant ? constant : W(input[0])),target);
+            return {};
+        }
+        const bool safe=border==GaussianBorder::reflect ? n>left : border==GaussianBorder::mirror ? n>left+1 :
+            border==GaussianBorder::wrap ? n>=tail+(window[0]%2==0 ? 2 : 0) : n>=tail;
+        if(!safe)return {true};
+        detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
+            [&](auto i,W value){write(output,i,double(value),target);});
+        return {};
+    }
     const auto workers=detail::active_workers(n);
     bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
     if(dense_line)for(std::size_t t=0;t<coordinates.size();++t)if(coordinates[t][0]!=t){dense_line=false;break;}

@@ -34,6 +34,7 @@ def compare(image,footprint=None,**options):
         assert actual.shape==expected.shape and actual.dtype==expected.dtype
         assert actual.dtype.metadata==expected.dtype.metadata
         np.testing.assert_array_equal(actual,expected)
+        if actual.dtype.kind=='f':np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
         assert not np.shares_memory(actual,image)
     np.testing.assert_array_equal(image,before)
 
@@ -242,3 +243,36 @@ def test_heap_repairs_across_median(dtype,window,pattern):
     elif pattern=='alternating':a[::2]=1000-a[::2]
     elif pattern=='ties':a%=3
     compare(a,np.ones(window,dtype=bool),mode='reflect')
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('window',[3,5,9,10,11,31,63])
+@pytest.mark.parametrize('mode',MODES)
+def test_signed_zero_heap_history(dtype,window,mode):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),257)
+    compare(a,np.ones(window,dtype=bool),mode=mode,cval=-0.)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_signed_zero_history_above_parallel_threshold(dtype):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),256*1024+17)
+    compare(a,np.ones(31,dtype=bool))
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('window',[5,31])
+def test_singleton_signed_zero(dtype,mode,window):
+    compare(np.array([-0.],dtype=dtype),np.ones(window,dtype=bool),mode=mode,cval=-0.)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',['nearest','constant'])
+@pytest.mark.parametrize('window',[3,4])
+def test_small_signed_zero_defined_padding(dtype,mode,window):
+    # These modes do not read outside the source when n is near the radius.
+    for n in (1,2,3):compare(np.resize(np.array([-0.,0.,1.],dtype=dtype),n),np.ones(window,dtype=bool),mode=mode,cval=-0.)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('count',[3,5,9])
+@pytest.mark.parametrize('mode',MODES)
+def test_signed_zero_asymmetric_rank(dtype,count,mode):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),257)
+    mask=np.zeros(11,dtype=bool);mask[:count]=True
+    compare(a,mask,mode=mode,cval=-0.)

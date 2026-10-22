@@ -1207,6 +1207,21 @@ int main() {
 #endif
         median_filter_into(ascending.data(),rolling.data(),PixelType::int64,PixelType::int64,{ascending.size()},{31},line,15,GaussianBorder::nearest,0,0,false,true,false,false);
         require(ascending==rolling);set_num_threads(previous);
+        // Fixed SciPy 1.18 rank-filter representatives for tied signed zeros.
+        // Values alone cannot detect a different heap insertion history.
+        std::vector<double> zeros(33),zero_result(33);line.resize(11);
+        for(std::size_t i=0;i<zeros.size();++i)zeros[i]=i%4==0 ? -1. : i%4==1 ? -0. : i%4==2 ? 0. : 1.;
+        const GaussianBorder borders[]={GaussianBorder::nearest,GaussianBorder::reflect,GaussianBorder::mirror,GaussianBorder::wrap,GaussianBorder::constant};
+        const char* signs[]={"110000100010110000001100110011111","111111111111110000001100110011111",
+            "001011011100000000001100110000000","111111001111111111000000000000001","111111011100000000001100110000001"};
+        for(std::size_t mode=0;mode<5;++mode) {
+            auto info=median_filter_into(zeros.data(),zero_result.data(),PixelType::float64,PixelType::float64,{33},{11},line,5,borders[mode],-0.,0,false,true,false,false);
+            require(!info.unsupported_nan);
+            for(std::size_t i=0;i<zeros.size();++i) {
+                require(bool(std::signbit(zero_result[i]))==(signs[mode][i]=='1'));
+                require(zero_result[i]==(mode==0 && (i<2 || i>30) ? -1. : 0.));
+            }
+        }
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
