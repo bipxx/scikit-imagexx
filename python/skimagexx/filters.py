@@ -1005,7 +1005,19 @@ def gabor_kernel(frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None,
     # finite core. Very large requests remain explicit compatibility calls.
     if (2*x0+1)*(2*y0+1)>16*1024*1024 or not 1e-8<=abs(float(sx))<=1e6 or not 1e-8<=abs(float(sy))<=1e6:
         return delegated()
-    sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
+    # NumPy scalar powers can wrap integers or overflow narrow floats. Plan
+    # these pure scalar operations silently, then let the original replay its
+    # warning/error policy exactly once when the finite core cannot represent
+    # them. No image or kernel calculation occurs in this compatibility probe.
+    if type(sx) in (float,int) and type(sy) in (float,int):
+        # The bounds above make all Python scalar intermediates finite. Keep
+        # the ordinary path free of a per-call NumPy error-state context.
+        sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
+    else:
+        with np.errstate(all='ignore'):
+            sx2=sx**2;sy2=sy**2;normalization=1/(2*np.pi*sx*sy)
+        if (not all(math.isfinite(float(v)) for v in (sx2,sy2,normalization))
+                or sx2<=0 or sy2<=0 or normalization==0):return delegated()
     result=_core.gabor_kernel(2*y0+1,2*x0+1,ct,st,float(sx2),float(sy2),
                               float(2*np.pi*frequency),float(offset),float(normalization),kind.type==np.complex64)
     return result.view(kind) if kind.metadata else result

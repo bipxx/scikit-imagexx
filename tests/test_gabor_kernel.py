@@ -77,8 +77,15 @@ def test_dtype_errors(options):
 
 @pytest.mark.parametrize('options',[{'frequency':0.},{'frequency':float('nan')},
     {'frequency':.2,'sigma_x':0.},{'frequency':.2,'dtype':np.clongdouble},
-    {'frequency':.2,'theta':[1.]},{'frequency':.2,'dtype':'>c16'}])
+    {'frequency':.2,'theta':[1.]},{'frequency':.2,'dtype':'>c16'},
+    {'frequency':.2,'sigma_x':np.float16(300),'sigma_y':1,'n_stds':1},
+    {'frequency':.2,'sigma_x':np.float16(200),'sigma_y':np.float16(200),'n_stds':1}])
 def test_explicit_unsupported_calls(options):
+    if (isinstance(options.get('sigma_x'),np.float16)
+            and type(np.float16(1)**2) is np.float64):
+        # NumPy 1.24 computes these scalar powers/products in float64. The
+        # same narrow values therefore stay inside the finite native core.
+        compare(options['frequency'],**{k:v for k,v in options.items() if k!='frequency'});return
     # Extended complex types are a separate API contract even on platforms
     # where their storage width happens to equal complex128.
     with pytest.raises(NotImplementedError):xx.filters.gabor_kernel(**options)
@@ -93,6 +100,34 @@ def test_explicit_unsupported_calls(options):
     assert aw==ew
     if isinstance(expected,Exception):assert (type(actual),str(actual))==(type(expected),str(expected))
     else:np.testing.assert_array_equal(actual,expected)
+
+
+@pytest.mark.parametrize('scalar',[np.int8(12),np.int16(200)])
+def test_wrapped_scalar_squares(scalar):
+    options=dict(sigma_x=scalar,sigma_y=1,n_stds=1)
+    if (scalar**2)>0:
+        # NumPy 1.24 promotes these powers; NumPy 2 preserves narrow width.
+        compare(.2,**options)
+    else:
+        with pytest.raises(NotImplementedError):xx.filters.gabor_kernel(.2,**options)
+        xx.set_fallback_enabled(True)
+        with pytest.warns(xx.FallbackWarning):actual=xx.filters.gabor_kernel(.2,**options)
+        np.testing.assert_array_equal(actual,reference(.2,**options))
+
+
+def test_scalar_overflow_raise_order():
+    options=dict(sigma_x=np.float16(300),sigma_y=1,n_stds=1)
+    # Older NumPy promotes this scalar power to float64 instead.
+    with np.errstate(over='ignore'):
+        if np.isfinite(options['sigma_x']**2):return
+    xx.set_fallback_enabled(True)
+    def outcome(function):
+        with warnings.catch_warnings(record=True) as caught,np.errstate(over='raise'):
+            warnings.simplefilter('always')
+            try:function(.2,**options)
+            except Exception as error:result=(type(error),str(error))
+        return result,[(w.category,str(w.message)) for w in caught if w.category is not xx.FallbackWarning]
+    assert outcome(xx.filters.gabor_kernel)==outcome(reference)
 
 
 @pytest.mark.parametrize('dtype',[np.complex64,np.complex128])
