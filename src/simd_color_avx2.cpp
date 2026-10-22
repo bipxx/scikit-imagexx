@@ -707,6 +707,29 @@ template<class T,class Output,bool Svml=false> std::size_t metric_run(const void
         const auto result=detail::distance_metric<VectorDistanceMath<T,Svml>>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000);
         if constexpr(std::is_same_v<Output,float>) _mm_storeu_ps(out+i,_mm256_cvtpd_ps(result));
         else _mm256_storeu_pd(out+i,result);
+        if(metric==DistanceMetric::ciede2000) {
+            // Chroma approximations are harmless away from the 180-degree
+            // discontinuity. Refine only near-antipodal lanes with libm hypot
+            // and power so the SVML angle provider sees the right inputs.
+            const auto xy=_mm256_mul_pd(av[1],bv[2]),yx=_mm256_mul_pd(av[2],bv[1]);
+            const auto cross=_mm256_sub_pd(xy,yx);
+            const auto dot=_mm256_add_pd(_mm256_mul_pd(av[1],bv[1]),_mm256_mul_pd(av[2],bv[2]));
+            const auto sign=_mm256_set1_pd(-0.);
+            const auto magnitude=_mm256_add_pd(_mm256_andnot_pd(sign,xy),_mm256_andnot_pd(sign,yx));
+            const auto bound=_mm256_mul_pd(magnitude,_mm256_set1_pd(32*std::numeric_limits<T>::epsilon()));
+            const auto near=_mm256_and_pd(_mm256_cmp_pd(dot,_mm256_setzero_pd(),_CMP_LT_OQ),
+                _mm256_cmp_pd(_mm256_andnot_pd(sign,cross),bound,_CMP_LE_OQ));
+            const auto mask=_mm256_movemask_pd(near);
+            if(mask) {
+                double aa[3][4],bb[3][4];
+                for(int channel=0;channel<3;++channel){_mm256_storeu_pd(aa[channel],av[channel]);_mm256_storeu_pd(bb[channel],bv[channel]);}
+                for(int lane=0;lane<4;++lane)if(mask&(1<<lane)) {
+                    double first[]={aa[0][lane],aa[1][lane],aa[2][lane]},second[]={bb[0][lane],bb[1][lane],bb[2][lane]};
+                    out[i+std::size_t(lane)]=Output(detail::distance_metric<detail::ScalarDistanceMath<T,Svml>>(
+                        first,second,metric,p,wide,scalar_cmc,legacy_ciede2000));
+                }
+            }
+        }
     }
     return i;
 }
