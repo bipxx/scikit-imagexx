@@ -31,3 +31,5 @@ stages in SciPy's `ndimage/src/ni_filters.c` (v1.18.1). The existing
 kernel and SIMD networks are implemented in C++ without Python image arithmetic.
 
 Multi-Otsu float32 moment initialization, objective accumulation order and first-maximum selection follow scikit-image 0.26.0 (`filters/_multiotsu.pyx`), covered by `scikit-image-LICENSE.txt`. Native candidate scoring, deterministic worker partitioning and bounded table storage are implemented in this repository.
+
+CLAHE clipping and redistribution, 14-bit quantization and interpolation order follow scikit-image 0.26.0 (`exposure/_adapthist.py`), adapted there from Karel Zuiderveld, Graphics Gems IV and relicensed with permission under the Modified BSD license. See `scikit-image-LICENSE.txt`. This implementation uses unpadded tile access, native histogram rows and runtime-dispatched AVX2 quantization/interpolation.

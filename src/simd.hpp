@@ -103,6 +103,8 @@ double sum(const float*, std::size_t);
 double sum(const double*, std::size_t);
 double sum(const std::uint8_t*, std::size_t);
 void otsu_scores(const float*, const float*, const double*, const double*, double*, std::size_t);
+std::size_t clahe_quantize(const std::uint16_t*,std::uint16_t*,std::size_t,std::uint16_t,std::uint16_t,std::size_t);
+std::size_t clahe_line(const std::uint16_t*,std::uint16_t*,std::size_t,const std::int32_t* const*,const double*,std::size_t,std::size_t,std::size_t);
 std::size_t multiotsu_scores(float,const float*,const float*,const float*,std::size_t,float*,std::size_t);
 std::size_t multiotsu_two_scores(const float*,const float*,const float*,float*,std::size_t,float,float);
 bool uniform(const std::uint8_t*, std::size_t);
