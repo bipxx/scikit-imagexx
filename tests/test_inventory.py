@@ -2,15 +2,14 @@
 
 Unported APIs remain explicitly pending native parity and benchmark coverage.
 """
-import inspect
 import json
-import re
 from pathlib import Path
 import warnings
 import pytest
 import skimage
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes
+from tools.inventory import signature_of
 
 INVENTORY = json.loads((Path(__file__).resolve().parents[1]/'coverage/api.json').read_text(encoding='utf-8'))
 
@@ -32,7 +31,7 @@ def test_api_availability_and_signature(entry):
                 target = getattr(target, name)
         assert callable(target)
         if entry['signature'] is not None:
-            assert re.sub(r' at 0x[0-9a-fA-F]+', '', str(inspect.signature(target))) == entry['signature']
+            assert signature_of(target) == entry['signature']
         if entry['implementation'] == 'upstream-only':
             assert entry['parity_test'] is None
             assert entry['benchmark'] is None
