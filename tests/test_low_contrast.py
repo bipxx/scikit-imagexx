@@ -254,3 +254,56 @@ def test_low_precision_percentile_index_overflow(length,upper):
     xx.set_fallback_enabled(True)
     check(image, allow_fallback=True, lower_percentile=np.float16(1.1),
           upper_percentile=np.float16(upper))
+
+
+@pytest.mark.parametrize('dtype', REAL)
+@pytest.mark.parametrize('length', [63,64,65,127,128,129,255,256,257,511,513])
+@pytest.mark.parametrize('percentiles', [(1,99),(49.25,50.75),(13.1,87.7)])
+def test_selection_packets_have_exact_decision_boundaries(dtype,length,percentiles):
+    image=sample(dtype,(length,),seed=139)
+    if image.dtype.kind=='b':
+        check(image)
+        return
+    limits=dtype_limits(image,clip_negative=False)
+    low,high=np.percentile(image,percentiles)
+    ratio=(high-low)/(limits[1]-limits[0])
+    for threshold in (ratio,np.nextafter(ratio,-np.inf),np.nextafter(ratio,np.inf)):
+        check(image,lower_percentile=percentiles[0],upper_percentile=percentiles[1],
+              fraction_threshold=threshold)
+
+
+@pytest.mark.parametrize('dtype', ['uint16','int16','uint32','int32','uint64','int64','float16','float32','float64'])
+@pytest.mark.parametrize('pattern', ['constant','ascending','descending','organ-pipe','alternating','one-outlier'])
+def test_duplicate_and_ordered_selection(dtype,pattern):
+    descriptor=np.dtype(dtype)
+    if pattern=='constant': image=np.full(513,7,dtype=dtype)
+    elif pattern=='ascending': image=(np.arange(513)%255).astype(dtype)
+    elif pattern=='descending': image=(np.arange(513)%255).astype(dtype)[::-1]
+    elif pattern=='organ-pipe': image=np.minimum(np.arange(513),np.arange(513)[::-1]).astype(dtype)
+    elif pattern=='alternating':
+        if descriptor.kind in 'iu':
+            info=np.iinfo(dtype);image=np.array([info.min]*257+[info.max]*256,dtype=dtype)
+        else:image=np.array([-7.]*257+[7.]*256,dtype=dtype)
+    else:
+        image=np.zeros(513,dtype=dtype);image[-1]=9
+    bounds=dtype_limits(image,clip_negative=False)
+    low,high=np.percentile(image,[49.75,50.25])
+    ratio=(high-low)/(bounds[1]-bounds[0])
+    for threshold in (ratio,np.nextafter(ratio,np.inf)):
+        check(image,lower_percentile=49.75,upper_percentile=50.25,
+              fraction_threshold=threshold)
+
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('percentiles',[(1.1,98.9),(49.9,50.1)])
+def test_parallel_copy_has_exact_decision_boundaries(dtype,percentiles):
+    image=sample(dtype,(262145,),seed=891)
+    if image.dtype.kind=='b':
+        check(image)
+        return
+    low,high=np.percentile(image,percentiles)
+    lower,upper=dtype_limits(image,clip_negative=False)
+    ratio=(high-low)/(upper-lower)
+    for threshold in (ratio,np.nextafter(ratio,-np.inf),np.nextafter(ratio,np.inf)):
+        check(image,lower_percentile=percentiles[0],upper_percentile=percentiles[1],
+              fraction_threshold=threshold)

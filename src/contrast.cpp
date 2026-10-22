@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #include <type_traits>
 
@@ -48,7 +49,8 @@ Plan plan(const ContrastView& view) {
         else {p.axes.push_back({length,step});p.count*=length;}
     }
     if(!p.origin)throw std::invalid_argument("nonnull contrast input required");
-    if(p.count>limit/(view.half ? sizeof(float) : bytes))throw std::overflow_error("contrast working storage overflow");
+    const auto working_bytes=view.half || view.type==PixelType::uint16 || view.type==PixelType::int16 ? sizeof(float) : bytes;
+    if(p.count>limit/working_bytes)throw std::overflow_error("contrast working storage overflow");
     auto magnitude=[](const Axis& axis){return std::size_t(axis.stride<0 ? -axis.stride : axis.stride);};
     std::sort(p.axes.begin(),p.axes.end(),[&](const auto& a,const auto& b){return magnitude(a)>magnitude(b);});
     std::size_t extent=bytes;
@@ -128,6 +130,10 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
 #ifdef SKIMAGEXX_AVX2
                     if(has_avx2() && !view.swap)done=simd::edge_half(reinterpret_cast<const std::uint16_t*>(source),values.data()+offset,count);
 #endif
+                } else if constexpr(sizeof(Input)==2 && sizeof(Value)==4) {
+#ifdef SKIMAGEXX_AVX2
+                    if(has_avx2())done=simd::contrast_widen16(source,values.data()+offset,count,std::is_signed_v<Input>,view.swap);
+#endif
                 } else if(view.swap && sizeof(Input)>1) {
 #ifdef SKIMAGEXX_AVX2
                     if(has_avx2())done=simd::edge_swap(source,reinterpret_cast<unsigned char*>(values.data()+offset),count,sizeof(Input));
@@ -192,12 +198,27 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
         std::vector<std::size_t> ranks;
         for(const auto& q:wanted) {ranks.push_back(q.lower);ranks.push_back(q.upper);}
         std::sort(ranks.begin(),ranks.end());ranks.erase(std::unique(ranks.begin(),ranks.end()),ranks.end());
-        select(values,ranks,0,ranks.size(),0,values.size());
+        bool vector_selected=false;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            if constexpr(sizeof(Value)>=4) {
+                const auto type=std::is_same_v<Value,float> ? PixelType::float32
+                    : std::is_same_v<Value,double> ? PixelType::float64
+                    : sizeof(Value)==4 ? (std::is_unsigned_v<Value> ? PixelType::uint32 : PixelType::int32)
+                    : (std::is_unsigned_v<Value> ? PixelType::uint64 : PixelType::int64);
+                std::unique_ptr<Value[]> scratch(new Value[values.size()]);
+                vector_selected=simd::contrast_select(values.data(),scratch.get(),values.size(),type,ranks.data(),ranks.size());
+            }
+        }
+#endif
+        if(!vector_selected)select(values,ranks,0,ranks.size(),0,values.size());
         for(std::size_t j=0;j<2;++j)picked[j]={values[wanted[j].lower],values[wanted[j].upper]};
     }
     for(std::size_t j=0;j<2;++j) {
         const auto& q=wanted[j];const auto lower=picked[j][0],upper=picked[j][1];
-        double delta=difference(lower,upper);
+        double delta;
+        if constexpr(Half)delta=difference(lower,upper);
+        else delta=difference(Input(lower),Input(upper));
         if constexpr(Half)delta=detail::decode_half(detail::encode_half(float(delta)));
         if(!std::isfinite(delta))return false;
         output[j]=q.weight>=.5 ? double(upper)-delta*(1-q.weight) : double(lower)+delta*q.weight;
@@ -230,8 +251,8 @@ bool contrast_percentiles(const ContrastView& view,const std::array<double,2>& p
     switch(view.type) {
     case PixelType::uint8:return run<std::uint8_t>(view,p,wanted,output);
     case PixelType::int8:return run<std::int8_t>(view,p,wanted,output);
-    case PixelType::uint16:return run<std::uint16_t>(view,p,wanted,output);
-    case PixelType::int16:return run<std::int16_t>(view,p,wanted,output);
+    case PixelType::uint16:return run<std::uint16_t,std::int32_t>(view,p,wanted,output);
+    case PixelType::int16:return run<std::int16_t,std::int32_t>(view,p,wanted,output);
     case PixelType::uint32:return run<std::uint32_t>(view,p,wanted,output);
     case PixelType::int32:return run<std::int32_t>(view,p,wanted,output);
     case PixelType::uint64:return run<std::uint64_t>(view,p,wanted,output);

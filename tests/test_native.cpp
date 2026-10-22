@@ -28,6 +28,46 @@
 void require(bool condition) {
     if (!condition) throw std::runtime_error("native check failed");
 }
+template<class T> void check_contrast_packets(skimagexx::PixelType type) {
+    const std::size_t sizes[]={63,64,65,127,128,129,255,256,257,511,513};
+    for(auto count:sizes)for(int pattern:{0,1,2,3}) {
+        std::vector<T> values(count);
+        for(std::size_t i=0;i<count;++i) {
+            const auto bits=std::uint64_t(i)*UINT64_C(0x9e3779b97f4a7c15)+UINT64_C(0x123456789abcdef);
+            if(pattern==1)values[i]=T(i%2 ? 7 : 19);
+            else if(pattern==2)values[i]=T(5);
+            else if(pattern==3)values[i]=T(std::min(i,count-1-i));
+            else if constexpr(std::is_floating_point_v<T>)values[i]=T(int(bits%2049)-1024)/T(8);
+            else if constexpr(std::is_signed_v<T>) {
+                if constexpr(sizeof(T)==8)values[i]=T(bits>>2)-T(UINT64_C(1)<<61);
+                else if constexpr(sizeof(T)==4)values[i]=T((bits>>33)&UINT64_C(0x7fffffff))-T(1<<30);
+                else values[i]=T(int(bits%8192)-4096);
+            } else values[i]=T(bits);
+        }
+        auto sorted=values;std::sort(sorted.begin(),sorted.end());
+        const std::size_t ranks[]={count/3,2*count/3};
+        const std::array<double,2> positions={double(ranks[0])+.25,double(ranks[1])+.75};
+        const auto first_delta=T(sorted[ranks[0]+1]-sorted[ranks[0]]);
+        const auto second_delta=T(sorted[ranks[1]+1]-sorted[ranks[1]]);
+        const std::array<double,2> expected={double(sorted[ranks[0]])+double(first_delta)*.25,
+                                          double(sorted[ranks[1]+1])-double(second_delta)*.25};
+        for(bool swap:{false,true})for(bool reverse:{false,true}) {
+            std::vector<unsigned char> bytes(count*sizeof(T)+2,0xa5);
+            for(std::size_t i=0;i<count;++i) {
+                const auto* raw=reinterpret_cast<const unsigned char*>(&values[i]);
+                for(std::size_t j=0;j<sizeof(T);++j)bytes[1+i*sizeof(T)+j]=raw[swap ? sizeof(T)-1-j : j];
+            }
+            const auto snapshot=bytes;
+            skimagexx::ContrastView view{bytes.data()+1+(reverse ? (count-1)*sizeof(T) : 0),
+                type,false,swap,{count},{std::ptrdiff_t(sizeof(T))*(reverse ? -1 : 1)}};
+            struct Guarded {std::uint64_t before=UINT64_C(0xa5a5a5a5a5a5a5a5);std::array<double,2> values{};
+                            std::uint64_t after=UINT64_C(0x5a5a5a5a5a5a5a5a);} output;
+            require(skimagexx::contrast_percentiles(view,positions,output.values));
+            require(output.values==expected && bytes==snapshot);
+            require(output.before==UINT64_C(0xa5a5a5a5a5a5a5a5) && output.after==UINT64_C(0x5a5a5a5a5a5a5a5a));
+        }
+    }
+}
 int main() {
     using namespace skimagexx;
     require(get_num_threads() == 1);
@@ -737,6 +777,22 @@ int main() {
             require(result[0]==1.5 && result[1]==3.5);
         }
     }
+    {
+        std::vector<std::int16_t> image(129,std::numeric_limits<std::int16_t>::max());
+        std::fill(image.begin(),image.begin()+65,std::numeric_limits<std::int16_t>::min());
+        ContrastView view{image.data(),PixelType::int16,false,false,{image.size()},{2}};
+        std::array<double,2> result;
+        require(contrast_percentiles(view,{63.25,64.75},result));
+        require(result[0]==-32768. && result[1]==32767.25);
+    }
+    check_contrast_packets<float>(PixelType::float32);
+    check_contrast_packets<double>(PixelType::float64);
+    check_contrast_packets<std::uint16_t>(PixelType::uint16);
+    check_contrast_packets<std::int16_t>(PixelType::int16);
+    check_contrast_packets<std::uint32_t>(PixelType::uint32);
+    check_contrast_packets<std::int32_t>(PixelType::int32);
+    check_contrast_packets<std::uint64_t>(PixelType::uint64);
+    check_contrast_packets<std::int64_t>(PixelType::int64);
     bool rejected = false;
     try { sobel<double>(nullptr,2,2); } catch (const std::invalid_argument&) { rejected = true; }
     require(rejected);
