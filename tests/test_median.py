@@ -1,0 +1,134 @@
+"""Median contract cases; native coverage is registered only after these pass."""
+import inspect,re,warnings
+import numpy as np
+import pytest
+from skimage.filters import median as reference
+import skimagexx as xx
+
+REAL=(np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64)
+MODES=('nearest','reflect','mirror','wrap','constant','grid-mirror','grid-wrap','grid-constant')
+
+@pytest.fixture(autouse=True,params=[1,4])
+def settings(request):
+    previous=xx.set_fallback_enabled(False);workers=xx.get_num_threads();xx.set_num_threads(request.param)
+    yield
+    xx.set_num_threads(workers);xx.set_fallback_enabled(previous)
+
+def compare(image,footprint=None,**options):
+    before=np.array(image,copy=True)
+    def captured(fn):
+        with warnings.catch_warnings(record=True) as messages:
+            warnings.simplefilter('always')
+            try:result=fn();error=None
+            except Exception as e:result=None;error=e
+        return result,error,[(type(m.message),str(m.message)) for m in messages]
+    expected,error,messages=captured(lambda:reference(image,footprint,**options))
+    actual,failure,reported=captured(lambda:xx.filters.median(image,footprint,**options))
+    assert reported==messages
+    if error:
+        assert type(failure) is type(error),(failure,error)
+        assert str(failure)==str(error)
+    else:
+        assert failure is None,repr(failure)
+        assert type(actual) is type(expected)
+        assert actual.shape==expected.shape and actual.dtype==expected.dtype
+        assert actual.dtype.metadata==expected.dtype.metadata
+        np.testing.assert_array_equal(actual,expected)
+        assert not np.shares_memory(actual,image)
+    np.testing.assert_array_equal(image,before)
+
+def sample(dtype,shape):
+    a=np.random.default_rng(3241).integers(0,31,shape).astype(dtype)
+    return a/np.dtype(dtype).type(8) if np.dtype(dtype).kind=='f' else a
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('shape',[(),(33,),(9,11),(3,5,7),(2,3,4,5)])
+@pytest.mark.parametrize('mode',MODES)
+def test_default_real_types_and_dimensions(dtype,shape,mode):
+    compare(sample(dtype,shape),mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int16,np.float32,np.float64])
+@pytest.mark.parametrize('shape',[(33,),(9,11),(3,5,7)])
+@pytest.mark.parametrize('kind',['dense','sparse','even','one','two','false'])
+@pytest.mark.parametrize('mode',MODES)
+def test_footprints(dtype,shape,kind,mode):
+    size=2 if kind=='even' else 3
+    footprint=np.ones((size,)*len(shape),dtype=bool)
+    if kind=='sparse':footprint.flat[1::2]=False
+    elif kind in ('one','two','false'):
+        footprint[:]=False
+        if kind!='false':footprint.flat[0]=True
+        if kind=='two':footprint.flat[-1]=True
+    compare(sample(dtype,shape),footprint,mode=mode)
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('mode',['nearest','constant'])
+@pytest.mark.parametrize('value',[-300.,300.,1e12+1,np.inf,np.nan])
+def test_constant_storage_casts(dtype,mode,value):
+    compare(sample(dtype,(3,5)),mode=mode,cval=value)
+
+@pytest.mark.parametrize('dtype',[np.int64,np.uint64,np.longlong,np.ulonglong])
+@pytest.mark.parametrize('shape',[(33,),(7,9)])
+@pytest.mark.parametrize('mode',['nearest','constant','reflect'])
+def test_full_width_integer_values(dtype,shape,mode):
+    limits=np.iinfo(dtype)
+    values=np.array([limits.min,limits.min+1,0,1,limits.max-1,limits.max],dtype=dtype)
+    compare(np.resize(values,shape),mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['F','reverse','strided','endian','unaligned','metadata','readonly','broadcast','zero-strides'])
+@pytest.mark.parametrize('mode',MODES)
+def test_storage(dtype,layout,mode):
+    a=sample(dtype,(9,13))
+    if layout=='F':a=np.asfortranarray(a)
+    elif layout=='reverse':a=a[::-1,::-1]
+    elif layout=='strided':a=a[:,::2]
+    elif layout=='endian':a=a.astype(a.dtype.newbyteorder('>'))
+    elif layout=='unaligned':a=np.ndarray(a.shape,dtype=a.dtype,buffer=bytearray(a.nbytes+1),offset=1);a[:]=sample(dtype,a.shape)
+    elif layout=='metadata':a=a.view(np.dtype(a.dtype,metadata={'unit':'raw'}))
+    elif layout=='readonly':a.flags.writeable=False
+    elif layout=='broadcast':a=np.broadcast_to(a[:1],a.shape)
+    else:a=np.broadcast_to(np.array(2,dtype=dtype),a.shape)
+    compare(a,mode=mode,cval=5)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.uint8])
+@pytest.mark.parametrize('shape',[(0,),(0,3),(2,0),(1,1),(1,2),(2,1)])
+@pytest.mark.parametrize('mode',MODES)
+def test_empty_and_singletons(dtype,shape,mode):
+    # Legacy SciPy's fast 1-D empty filter reads outside its input. Do not
+    # execute that reference path in-process; its semantics are undefined.
+    if shape==(0,) and xx.filters._adaptive_rank_profile()==1:
+        pytest.skip('legacy upstream empty 1-D path is unsafe')
+    compare(sample(dtype,shape),mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('value',[np.nan,np.inf,-np.inf])
+def test_nd_nonfinite_values(dtype,mode,value):
+    a=sample(dtype,(9,13));a[2,4]=value;a[7,9]=value
+    compare(a,mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int16,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['C','strided','alias'])
+def test_output_identity_and_aliasing(dtype,layout):
+    image=sample(dtype,(9,13));a=image.copy();b=image.copy()
+    if layout=='alias':out_a,out_b=a,b
+    elif layout=='strided':out_a=np.empty((9,26),dtype=dtype)[:,::2];out_b=np.empty((9,26),dtype=dtype)[:,::2]
+    else:out_a=np.empty_like(a);out_b=np.empty_like(b)
+    expected=reference(a,out=out_a);actual=xx.filters.median(b,out=out_b)
+    assert expected is out_a and actual is out_b
+    np.testing.assert_array_equal(out_b,out_a)
+
+@pytest.mark.parametrize('shape',[(513,515),(65,65,65)])
+def test_large_worker_boundaries(shape):
+    compare(sample(np.float32,shape))
+
+def test_signature():
+    assert inspect.signature(xx.filters.median)==inspect.signature(reference)
+
+def test_rank_behavior_explicit_fallback():
+    a=sample(np.uint8,(9,13));footprint=np.ones((3,3),dtype=bool)
+    with pytest.raises(NotImplementedError,match='outside native coverage'):xx.filters.median(a,footprint,behavior='rank')
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning):actual=xx.filters.median(a,footprint,behavior='rank')
+    np.testing.assert_array_equal(actual,reference(a,footprint,behavior='rank'))
