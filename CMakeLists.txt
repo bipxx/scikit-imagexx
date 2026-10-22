@@ -67,7 +67,7 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfigVers
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/skimagexxConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/skimagexx)
-install(FILES LICENSE third_party/scikit-image-LICENSE.txt third_party/svml-LICENSE.txt third_party/numpy-LICENSE.txt third_party/scipy-ndimage-LICENSE.txt third_party/scipy-rank1d-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)
+install(FILES LICENSE third_party/scikit-image-LICENSE.txt third_party/svml-LICENSE.txt third_party/numpy-LICENSE.txt third_party/scipy-ndimage-LICENSE.txt third_party/scipy-rank1d-LICENSE.txt third_party/lapack-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)
 install(TARGETS skimagexx EXPORT skimagexxTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT skimagexxTargets NAMESPACE skimagexx:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/skimagexx)

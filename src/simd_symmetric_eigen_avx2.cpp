@@ -63,6 +63,16 @@ template<class T> std::size_t run(const void* const* fields,T* output,std::size_
         if(n==1){store(output+i,matrix[0].value);continue;}
         scale=_mm256_blendv_pd(scale,one,_mm256_cmp_pd(scale,zero,_CMP_EQ_OQ));
         for(auto& x:matrix)x.value=_mm256_div_pd(x.value,scale);
+        if(n>32){
+            auto diagonal=_mm256_castsi256_pd(_mm256_set1_epi64x(-1));
+            for(std::size_t r=0;r<n;++r)for(std::size_t c=r+1;c<n;++c)
+                diagonal=_mm256_and_pd(diagonal,_mm256_cmp_pd(matrix[r*n+c].value,zero,_CMP_EQ_OQ));
+            for(std::size_t d=32;d<n;++d){
+                const auto value=matrix[d*n+d].value;
+                const auto clear=_mm256_and_pd(diagonal,_mm256_cmp_pd(value,zero,_CMP_EQ_OQ));
+                matrix[d*n+d].value=_mm256_blendv_pd(value,zero,clear);
+            }
+        }
         bool converged=false;
         for(int sweep=0;sweep<48 && !converged;++sweep){
             for(std::size_t p=0;p<n;++p)for(std::size_t q=p+1;q<n;++q){
@@ -90,12 +100,25 @@ template<class T> std::size_t run(const void* const* fields,T* output,std::size_
             converged=_mm256_movemask_pd(_mm256_cmp_pd(maximum,tolerance,_CMP_LE_OQ))==15;
         }
         if(!converged){supported=false;return i;}
-        for(std::size_t d=0;d<n;++d)values[d].value=matrix[(n-1-d)*n+n-1-d].value;
-        for(std::size_t pass=0;pass<n;++pass)for(std::size_t a=0;a+1<n-pass;++a){
-            const auto x=values[a].value,y=values[a+1].value;
-            const auto swap=_mm256_cmp_pd(x,y,_CMP_LT_OQ);
-            values[a].value=_mm256_blendv_pd(x,y,swap);
-            values[a+1].value=_mm256_blendv_pd(y,x,swap);
+        if(n>21){
+            // LAPACK's high-dimension tie ordering depends on scalar pivot
+            // positions. Keep the cubic rotations vectorized, sorting only
+            // the small final diagonal separately in each lane.
+            for(std::size_t d=0;d<n;++d)_mm256_store_pd(values[d].output,matrix[d*n+d].value);
+            for(std::size_t lane=0;lane<4;++lane){
+                double ordered[64];for(std::size_t d=0;d<n;++d)ordered[d]=values[d].output[lane];
+                detail::eigen_sort_descending(ordered,n);
+                for(std::size_t d=0;d<n;++d)values[d].output[lane]=ordered[d];
+            }
+            for(std::size_t d=0;d<n;++d)values[d].value=_mm256_load_pd(values[d].output);
+        }else{
+            for(std::size_t d=0;d<n;++d)values[d].value=matrix[(n-1-d)*n+n-1-d].value;
+            for(std::size_t pass=0;pass<n;++pass)for(std::size_t a=0;a+1<n-pass;++a){
+                const auto x=values[a].value,y=values[a+1].value;
+                const auto swap=_mm256_cmp_pd(x,y,_CMP_LT_OQ);
+                values[a].value=_mm256_blendv_pd(x,y,swap);
+                values[a+1].value=_mm256_blendv_pd(y,x,swap);
+            }
         }
         if(interleaved){
             for(std::size_t d=0;d<n;++d)_mm256_store_pd(values[d].output,_mm256_mul_pd(values[d].value,scale));

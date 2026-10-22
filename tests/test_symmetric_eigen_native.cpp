@@ -38,6 +38,24 @@ template<class T> void check_inactive_lane(){
         for(std::size_t d=0;d<3;++d){require(output[d*count]==0);require(std::signbit(output[d*count])==(d==negative));}
     }
 }
+template<class T> void check_large_zero_order(){
+    constexpr std::size_t count=17;
+    std::vector<T> zeros(count,T(0)),negative(count,-T(0));
+    for(std::size_t n:{22,64}){
+        std::vector<const void*> pointers(n*(n+1)/2,zeros.data());pointers[0]=negative.data();
+        std::vector<T> output(n*count);
+        require(skimagexx::symmetric_eigenvalues_into(pointers.data(),output.data(),count,n,sizeof(T)==4,false));
+        const auto negative_axis=n==22 ? 0 : 31;
+        for(std::size_t d=0;d<n;++d)for(std::size_t p=0;p<count;++p){
+            require(output[d*count+p]==0);require(std::signbit(output[d*count+p])==(d==negative_axis));
+        }
+        pointers[0]=zeros.data();pointers.back()=negative.data();
+        require(skimagexx::symmetric_eigenvalues_into(pointers.data(),output.data(),count,n,sizeof(T)==4,false));
+        for(std::size_t d=0;d<n;++d)for(std::size_t p=0;p<count;++p){
+            require(output[d*count+p]==0);require(std::signbit(output[d*count+p])==(n==22 && d==21));
+        }
+    }
+}
 }
 int main(){
     require(skimagexx::get_num_threads()==1);
@@ -48,6 +66,7 @@ int main(){
     std::vector<double> eigenvalues;for(int k=1;k<=4;++k)eigenvalues.push_back(2+2*std::cos(k*std::acos(-1.)/5));
     check<double>(4,{2,1,0,0,2,1,0,2,1,2},eigenvalues,false);
     check_inactive_lane<float>();check_inactive_lane<double>();
+    check_large_zero_order<float>();check_large_zero_order<double>();
     require(skimagexx::symmetric_eigenvalues_into(nullptr,nullptr,0,3,false,false));
     bool rejected=false;try{skimagexx::symmetric_eigenvalues_into(nullptr,nullptr,1,0,false);}catch(const std::invalid_argument&){rejected=true;}
     require(rejected);skimagexx::set_num_threads(1);

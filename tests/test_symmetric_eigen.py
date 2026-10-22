@@ -196,3 +196,50 @@ def test_signed_zero_in_inactive_simd_lane(api,dtype,diagonal):
     expected=getattr(reference,api)(elements)
     actual=compare(api,elements)
     np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('api',APIS)
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('n',[7,8,15,20,21,22,25,30,31,62])
+@pytest.mark.parametrize('length',[1,17])
+def test_high_dimension_zero_order(api,dtype,n,length):
+    try:np.empty((0,)*(n+2))
+    except ValueError:pytest.skip('reference intermediate exceeds this NumPy runtime rank limit')
+    shape=(1,)*(n-1)+(length,)
+    elements=[np.zeros(shape,dtype=dtype) for _ in range(n*(n+1)//2)]
+    position=0
+    for r in range(n):
+        for c in range(r,n):
+            if r==c and (length>1 or r==0):
+                elements[position].reshape(-1)[r%length]=-0.
+            position+=1
+    expected=getattr(reference,api)(elements)
+    actual=compare(api,elements)
+    np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
+
+
+@pytest.mark.parametrize('api',APIS)
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('n',[7,15,22,30,62])
+def test_high_dimension_random(api,dtype,n):
+    try:np.empty((0,)*(n+2))
+    except ValueError:pytest.skip('reference intermediate exceeds this NumPy runtime rank limit')
+    compare(api,fields(n,dtype,shape=(1,)*n))
+
+
+@pytest.mark.parametrize('api',APIS)
+@pytest.mark.parametrize('n',[31,63])
+def test_reference_rank_limit(api,n):
+    try:
+        field=np.zeros((1,)*n)
+        np.empty((0,)*(n+2))
+    except ValueError:
+        try:field=np.zeros((1,)*n)
+        except ValueError:pytest.skip('input itself exceeds this NumPy rank limit')
+    else:pytest.skip('reference supports this intermediate rank')
+    elements=[field]*(n*(n+1)//2)
+    with pytest.raises(ValueError) as expected:getattr(reference,api)(elements)
+    with pytest.raises(NotImplementedError):getattr(xx.feature,api)(elements)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning),pytest.raises(ValueError) as actual:getattr(xx.feature,api)(elements)
+    assert str(actual.value)==str(expected.value)
