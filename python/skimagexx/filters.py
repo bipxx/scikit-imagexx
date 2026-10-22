@@ -83,6 +83,55 @@ def __getattr__(name):
 
 _THRESHOLD_DTYPES = (np.dtype('uint8'),np.dtype('float32'),np.dtype('float64'))
 
+def threshold_li(image, *, tolerance=None, initial_guess=None, iter_callback=None):
+    original_image=image
+    def delegated():
+        return fallback('filters','threshold_li',original_image,tolerance=tolerance,
+                        initial_guess=initial_guess,iter_callback=iter_callback)
+    if type(image) in (np.bool_,np.uint8,np.float32,np.float64):image=np.asarray(image)
+    if type(image) is not np.ndarray or image.dtype.type not in (np.bool_,np.uint8,np.float32,np.float64):return delegated()
+    prepared=_core.li_prepare(image)
+    kind=prepared.kind
+    scalar=image.dtype.type
+    if kind==1:return np.nan
+    if kind==2:return scalar(prepared.value)
+    if kind==3:return 0.0
+    if kind==4:np.subtract(np.bool_(False),np.bool_(True))
+    if kind==5:return delegated()
+    policy=np.geterr()
+    if policy['under']!='ignore' or any(value not in ('ignore','warn','raise') for value in policy.values()):return delegated()
+    number_types=(int,float,bool,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64)
+    if tolerance is not None and type(tolerance) not in number_types:return delegated()
+    if not tolerance:
+        if image.dtype.kind in 'iu':resolved=.5
+        else:
+            spacing=prepared.spacing()
+            if np.isnan(spacing):np.empty(0,dtype=scalar).min()
+            resolved=scalar(spacing)/2
+    else:resolved=tolerance
+    if resolved<0:return delegated()
+    has_guess=initial_guess is not None
+    guess=0.
+    if has_guess:
+        if type(initial_guess) not in number_types:return delegated()
+        low=scalar(prepared.minimum);high=scalar(prepared.maximum)
+        shifted=initial_guess-float(low)
+        if not 0<shifted<high:
+            image_max=high+low
+            raise ValueError(f'The initial guess for threshold_li must be within the range of the image. Got {initial_guess} for image min {low} and max {image_max}.')
+        guess=scalar(shifted)
+    if iter_callback is not None:return delegated()
+    block=np.getbufsize() if np.lib.NumpyVersion(np.__version__)<'2.3.0' else 0
+    value,updated,status=prepared.run(float(resolved),has_guess,float(guess),reduction_block=block)
+    if status&32:return delegated()
+    # Scalar metadata reproduces NumPy warning/error policy and evaluation order.
+    unused_current=-2*resolved
+    if status&1:np.empty(0,dtype=scalar).mean()
+    if image.dtype.kind=='u':return scalar(value) if has_guess and not updated else np.float64(value)
+    return scalar(value)
+
+__all__.append('threshold_li')
+
 
 def _threshold_histogram(image,hist,nbins):
     # These arrays describe histogram metadata; all image scans run in C++.

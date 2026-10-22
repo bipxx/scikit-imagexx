@@ -15,6 +15,8 @@
 #include <cstring>
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
+#include "skimagexx/li.hpp"
+#include "li_detail.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
@@ -31,6 +33,31 @@
 
 namespace py = pybind11;
 namespace {
+struct NumpyLiLog {
+    struct Loop {PyUFuncGenericFunction function;void* data;};
+    py::object owner;
+    Loop loops[2];
+    static Loop select(const py::object& object,int type) {
+        if(!PyObject_TypeCheck(object.ptr(),&PyUFunc_Type))throw std::runtime_error("native logarithm ufunc required");
+        const auto* u=reinterpret_cast<PyUFuncObject*>(object.ptr());
+        if(u->nargs==2)for(int i=0;i<u->ntypes;++i)if(u->types[2*i]==type && u->types[2*i+1]==type)
+            return {u->functions[i],u->data ? u->data[i] : nullptr};
+        throw std::runtime_error("native floating logarithm unavailable");
+    }
+    NumpyLiLog():owner(py::module_::import("numpy").attr("log")),loops{select(owner,NPY_DOUBLE),select(owner,NPY_FLOAT)} {}
+    template<class T> static double run(const Loop& loop,double value) {
+        alignas(64) T input=T(value);
+        alignas(64) T output;
+        char* args[]={reinterpret_cast<char*>(&input),reinterpret_cast<char*>(&output)};
+        const npy_intp n=1,steps[]={sizeof(T),sizeof(T)};
+        loop.function(args,&n,steps,loop.data);return double(output);
+    }
+    static double logarithm(double value,bool single,void* context) {
+        const auto& loop=static_cast<NumpyLiLog*>(context)->loops[int(single)];
+        return single ? run<float>(loop,value) : run<double>(loop,value);
+    }
+    static void poll(void*) {py::gil_scoped_acquire acquire;if(PyErr_CheckSignals()<0)throw py::error_already_set();}
+};
 struct NumpyDistanceMath {
     struct Loop {PyUFuncGenericFunction function;void* data;};
     py::object power_owner,hypot_owner;
@@ -680,6 +707,45 @@ PYBIND11_MODULE(_core, m) {
         if (dtype_matches(image.dtype(),py::dtype::of<double>())) return execute<double,true,true>(image,fn);
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"),py::arg("name"),py::arg("parameter"),py::arg("gain"),py::arg("inverse")=false);
+    const auto li_log=std::make_shared<NumpyLiLog>();
+    py::class_<skimagexx::LiImage,std::shared_ptr<skimagexx::LiImage>>(m,"_LiImage")
+        .def_property_readonly("kind",[](const skimagexx::LiImage& image){return int(image.kind());})
+        .def_property_readonly("value",&skimagexx::LiImage::value)
+        .def_property_readonly("minimum",&skimagexx::LiImage::minimum)
+        .def_property_readonly("maximum",&skimagexx::LiImage::maximum)
+        .def("spacing",&skimagexx::LiImage::spacing,py::call_guard<py::gil_scoped_release>())
+        .def("run",[li_log](const skimagexx::LiImage& image,double tolerance,bool has_guess,double guess,py::object trace,py::object statistics,std::size_t reduction_block){
+            struct Call {NumpyLiLog* logarithms;py::object trace,statistics;};
+            Call context{li_log.get(),trace,statistics};
+            const skimagexx::LiMath math{
+                [](double value,bool single,void* data){return NumpyLiLog::logarithm(value,single,static_cast<Call*>(data)->logarithms);},
+                NumpyLiLog::poll,&context,
+                trace.is_none() ? nullptr : +[](double value,bool updated,void* data){py::gil_scoped_acquire acquire;static_cast<Call*>(data)->trace(value,updated);},
+                statistics.is_none() ? nullptr : +[](double pivot,double back,double fore,void* data){py::gil_scoped_acquire acquire;static_cast<Call*>(data)->statistics(pivot,back,fore);},reduction_block};
+            skimagexx::LiResult result;
+            {py::gil_scoped_release release;result=image.run(tolerance,has_guess,guess,&math);}
+            return py::make_tuple(result.value,result.updated,result.status);
+        },py::arg("tolerance"),py::arg("has_guess"),py::arg("guess"),py::arg("trace")=py::none(),py::arg("statistics")=py::none(),py::arg("reduction_block")=0);
+    m.def("_li_mean",[](py::array values,std::size_t block){
+        if(!dtype_matches(values.dtype(),py::dtype::of<float>()) && !dtype_matches(values.dtype(),py::dtype::of<double>()))throw py::type_error("floating mean probe required");
+        auto input=values.attr("copy")().cast<py::array>();
+        return skimagexx::detail::li_mean_probe(input.data(),std::size_t(input.size()),input.itemsize()==4,block);
+    },py::arg("values"),py::arg("block")=0);
+    m.def("li_prepare",[](py::array image){
+        auto prepare=[&](auto dummy){
+            using T=decltype(dummy);auto a=py::array_t<T,py::array::c_style>::ensure(image);
+            if(!a)throw py::type_error("Li input conversion failed");
+            if(reinterpret_cast<std::uintptr_t>(a.data())%alignof(T))a=py::array_t<T,py::array::c_style>::ensure(a.attr("copy")());
+            const auto type=pixel_type(a.dtype());const auto* data=a.data();const auto count=std::size_t(a.size());
+            py::gil_scoped_release release;
+            return std::make_shared<skimagexx::LiImage>(data,count,type);
+        };
+        if(dtype_matches(image.dtype(),py::dtype::of<bool>()))return prepare(bool{});
+        if(dtype_matches(image.dtype(),py::dtype::of<std::uint8_t>()))return prepare(std::uint8_t{});
+        if(image.dtype().kind()=='f' && image.itemsize()==4)return prepare(float{});
+        if(image.dtype().kind()=='f' && image.itemsize()==8)return prepare(double{});
+        throw py::type_error("Li input types are boolean, uint8, float32 and float64");
+    });
     m.def("histogram_edges", [](py::array image,py::array edges) -> py::array {
         auto run=[&](auto dummy) -> py::array {
             using T=decltype(dummy);

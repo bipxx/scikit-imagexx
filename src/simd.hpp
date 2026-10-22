@@ -5,10 +5,16 @@
 #include "skimagexx/distance.hpp"
 #include "skimagexx/local_threshold.hpp"
 namespace skimagexx::detail { struct ColorSpec; }
+namespace skimagexx::detail { struct LiScan; }
 namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t li_scan(const void*,std::size_t,bool,double,detail::LiScan&);
+std::size_t li_shift(const void*,void*,std::size_t,bool,double);
+double li_sum(const void*,std::size_t,bool);
+std::size_t li_count(const void*,std::size_t,bool,double,std::size_t&);
+std::size_t li_partition(const void*,std::size_t,bool,double,void*,void*,std::size_t,std::size_t,std::size_t&,std::size_t&);
 std::size_t label_lookup(const std::uint64_t*,std::uint64_t*,std::size_t,std::uint64_t,const std::uint64_t*);
 bool contrast_finite(const void*,std::size_t,bool);
 unsigned char contrast_truth(const unsigned char*,std::size_t);
