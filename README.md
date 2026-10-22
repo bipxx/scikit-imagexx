@@ -685,3 +685,11 @@ result is 7.08× faster than the exact measured initial C++ package. The
 [parameter report](benchmarks/contrast-parameters.md) and optimization history
 retain every case and sample, including the rejected allocation experiment and
 remaining individual regressions against the initial C++ build.
+
+Histogram matching retains aligned planar, reversed and broadcast input views
+when their spatial indices have a constant stride. Nonlinear layouts use a
+contiguous copy. The [input-layout report](benchmarks/match-layout.md) records
+paired one-worker improvements of 1.131× on Windows and 1.119× on Linux/NumPy
+1.24 over the exact previous build. It includes original scikit-image timings,
+four-worker results and every observed regression. The additive C++ interface
+is `match_histograms_strided_into` in `skimagexx/histogram_matching.hpp`.

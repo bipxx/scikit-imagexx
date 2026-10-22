@@ -1,0 +1,7705 @@
+{
+  "metric": "paired previous/current public-call latency, geometric mean of fixed 24 one-worker cases",
+  "previous_revision": "a0740f98a8ba4d411cce0242bf35805cad9f6728",
+  "retained_revision": "bb0d364f4931b23977bd9b418eca333f4546c602",
+  "decision": "keep",
+  "primary": {
+    "metadata": {
+      "timestamp_utc": "2026-10-22T08:11:48.048950+00:00",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+      "logical_cpus": 20,
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "numpy": "2.5.4",
+      "scikit_image": "0.26.0",
+      "avx2": true,
+      "fallback_enabled": false,
+      "reference_thread_pools": 1,
+      "repeat": 7,
+      "target_ms": 15,
+      "cooldown_ms": 20,
+      "seed": 904,
+      "command": [
+        "benchmarks/match_histograms.py",
+        "--threads",
+        "1",
+        "--baseline-dir",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/checkpoints/match-memory-trial",
+        "--output",
+        "build/layout-performance.json"
+      ],
+      "source_sha256": "34e8a3f35f168464771e72cced4468bdffcbe92057b3829341259af137e1bb87",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "d338311b056efc019f2047b4340b40a0e4e6b427a1e545d0d8df86b783b7bf75"
+      },
+      "baseline": {
+        "revision": "a0740f98a8ba4d411cce0242bf35805cad9f6728",
+        "source_sha256": "aaa1de1946731b099614b94f02163a21b2b400feb8c2e992e663a56982f50c4b",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "binary_sha256": {
+          "_core.cp313-win_amd64.pyd": "f4c011a7fb27733259310f8d28c311ee7055efcfc1e0378ce72c49af2a396db0"
+        },
+        "python_sha256": {
+          "color.py": "658d99cf470d0d6dce945d0839447197a50d9f89f8033717f0b6cc0cfab2d3b8",
+          "coverage.py": "95bc104412b3b294e634bf233601dc386a7c67a046f0c76c766ec3fcf94f0a65",
+          "data.py": "9aac15ec567659326d23558f178328c45ee5406ee459cf85676666bbfd245118",
+          "draw.py": "1716a3fa95a1444fbba0ee4ebed8ba309776768f874585077679c7013a21cd56",
+          "exposure.py": "44e77797a4f941856f946600e6d033d724902ce96506ab210cdf4deee08a1006",
+          "feature.py": "15806777253793b6b5da6de763f8eaa2586b2aa8ca9f30c6d170eb9df6b8751d",
+          "filters.py": "239d8a5a4a563ae94706ce5d3b974d46bda00391fa47107dcc6b16589269af3d",
+          "future.py": "6ddf5074f93358317213f3f00ab84b1ea28bebf5ed66626a2c970e6a148cc0b1",
+          "graph.py": "904cc8dfbd95a4e93c023cd5ec1106eb44dce7caa896f184388457a51bfcd3d5",
+          "io.py": "f1c41b536f9cee004ebf48b02262356cb17bf019a7f5c9483a4c3df6fb4c1c56",
+          "measure.py": "ac57f4a04d5c3f7369e8ea745c1f942bf874792276999ca7cd4d76686d2489a0",
+          "metrics.py": "b72af9ea41398bdda72c6b61cdbb964c57505d4802515840d464f643056b34bc",
+          "morphology.py": "374e40e022a3dab47c23cce5c935c150d05a9e034151f59d6b76835df80a002b",
+          "registration.py": "0aa71aff84df994f35dcfb4e0948e41e818ca1d65a2780705880e5a091e1649e",
+          "restoration.py": "f24cdb988bc46e5a81df017bb84d462fdcb487dbfedc6c7884d9a3d7270c1577",
+          "segmentation.py": "d9fd1488b715b874ed76547e9c118cf416be6ce4094d1b6a628a3fa5b5d22034",
+          "transform.py": "eb22b0c785b0e3792068a0d0736bf1482efdc2e88902c4e891dfaaff013a5201",
+          "util.py": "8943fb70a42569a6aefe28c560742fecbefc55d0835e0a21588efff545814da0",
+          "_compat.py": "63064dca0e70f7de97d7a3a4eaa95acbdcc424e146fb6e267a17ba9454760e1a",
+          "_rgb_colors.py": "e394583316402d9a25824ce9dfe28ab0b9b6c833f6c96f93bce33e0afd7c467e",
+          "_stain_matrices.py": "882d26897fca08ad84965660715cdefe55f275573100aa85330502a4cc235223",
+          "_whitepoints.py": "1b42bf251dc1ff142ad82381eb4f10b6a5e9545e353cf8dee6efdeeb34ca7055",
+          "__init__.py": "ea71e8845b0a03920e34694e574707edd88f8a5cdc0c7cc3ab01d61362e1e7be"
+        }
+      }
+    },
+    "results": [
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 1.11249,
+        "cpp_ms": 0.5334105263157894,
+        "speedup": 2.085616884398311,
+        "samples_ms": [
+          [
+            1.13146,
+            1.08966,
+            1.11249,
+            1.11424,
+            1.11833,
+            1.09309,
+            1.07224
+          ],
+          [
+            0.550478947368421,
+            0.5368105263157894,
+            0.5514421052631578,
+            0.5086052631578947,
+            0.5334105263157894,
+            0.4896684210526316,
+            0.49549473684210527
+          ],
+          [
+            0.5415666666666666,
+            0.5037111111111111,
+            0.5360055555555555,
+            0.5090888888888889,
+            0.5395166666666666,
+            0.5110944444444444,
+            0.48367777777777776
+          ]
+        ],
+        "loops": [
+          10,
+          19,
+          18
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.5110944444444444,
+        "improvement": 0.9581634017883376
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.8664333333333336,
+        "cpp_ms": 3.57755,
+        "speedup": 1.0807489296678827,
+        "samples_ms": [
+          [
+            3.8664333333333336,
+            3.8874666666666666,
+            3.8147,
+            3.8221666666666665,
+            3.7591,
+            4.349066666666667,
+            4.014266666666667
+          ],
+          [
+            3.740575,
+            3.6352,
+            3.695925,
+            3.57755,
+            3.535375,
+            3.554375,
+            3.475975
+          ],
+          [
+            3.6930666666666667,
+            3.8434,
+            3.5334666666666665,
+            3.6575,
+            3.7005333333333335,
+            3.616,
+            3.4807666666666663
+          ]
+        ],
+        "loops": [
+          3,
+          4,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.6575,
+        "improvement": 1.0223476960489721
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.9058,
+        "cpp_ms": 1.8207833333333332,
+        "speedup": 2.145120689812993,
+        "samples_ms": [
+          [
+            4.263,
+            4.0575,
+            3.8075666666666663,
+            4.068866666666667,
+            3.6877666666666666,
+            3.9058,
+            3.6100333333333334
+          ],
+          [
+            1.8700333333333332,
+            1.7428333333333332,
+            1.8911333333333333,
+            1.8207833333333332,
+            1.7439666666666667,
+            1.8522166666666668,
+            1.7107
+          ],
+          [
+            5.123,
+            5.7151,
+            5.023,
+            5.0178,
+            5.3389,
+            5.2264,
+            5.5111
+          ]
+        ],
+        "loops": [
+          3,
+          6,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.2264,
+        "improvement": 2.870412917517186
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.1380333333333335,
+        "cpp_ms": 2.54584,
+        "speedup": 0.8398144947574605,
+        "samples_ms": [
+          [
+            2.1150833333333336,
+            2.2675833333333335,
+            2.1380333333333335,
+            2.53435,
+            2.4273166666666666,
+            2.1361333333333334,
+            2.0766
+          ],
+          [
+            2.44426,
+            2.54584,
+            2.37342,
+            2.58122,
+            2.42122,
+            2.55538,
+            2.57936
+          ],
+          [
+            2.49112,
+            2.49282,
+            2.50634,
+            2.49226,
+            2.54216,
+            2.51228,
+            2.84592
+          ]
+        ],
+        "loops": [
+          6,
+          5,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.50634,
+        "improvement": 0.9844844923483014
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.56156,
+        "cpp_ms": 2.04758,
+        "speedup": 1.2510182752322254,
+        "samples_ms": [
+          [
+            2.51906,
+            2.56156,
+            2.53996,
+            2.4573,
+            2.5931,
+            2.92066,
+            2.6514
+          ],
+          [
+            2.18806,
+            2.03546,
+            1.89274,
+            1.92014,
+            2.04758,
+            2.23348,
+            2.14786
+          ],
+          [
+            2.0102333333333333,
+            1.9986666666666668,
+            1.9555,
+            2.0519166666666666,
+            1.9847833333333333,
+            2.2557,
+            2.1254
+          ]
+        ],
+        "loops": [
+          5,
+          5,
+          6
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.0102333333333333,
+        "improvement": 0.9817605824111064
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.3941,
+        "cpp_ms": 8.1504,
+        "speedup": 1.1525937377306636,
+        "samples_ms": [
+          [
+            8.9643,
+            10.7482,
+            10.1963,
+            9.3941,
+            8.5781,
+            12.1917,
+            9.3212
+          ],
+          [
+            8.1605,
+            8.1504,
+            8.0895,
+            8.261,
+            8.0261,
+            8.526,
+            8.127
+          ],
+          [
+            8.1841,
+            8.279,
+            7.6552,
+            8.2674,
+            7.9963,
+            8.6085,
+            8.7555
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 8.2674,
+        "improvement": 1.0143551236749118
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.7091,
+        "cpp_ms": 6.7384,
+        "speedup": 1.4408613320669594,
+        "samples_ms": [
+          [
+            9.3958,
+            8.4637,
+            9.7091,
+            10.2838,
+            9.5274,
+            10.831,
+            10.1045
+          ],
+          [
+            6.2425,
+            6.8781,
+            6.1432,
+            6.1329,
+            7.661,
+            6.7384,
+            7.6308
+          ],
+          [
+            9.8424,
+            10.0287,
+            9.839,
+            10.9955,
+            10.3935,
+            10.6312,
+            10.9365
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.3935,
+        "improvement": 1.5424284696663895
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 7.9315,
+        "cpp_ms": 6.70495,
+        "speedup": 1.1829320129158307,
+        "samples_ms": [
+          [
+            8.0403,
+            7.5996,
+            8.9106,
+            6.8077,
+            6.6262,
+            7.9315,
+            8.5272
+          ],
+          [
+            7.6477,
+            6.70495,
+            6.9103,
+            7.0409,
+            6.43015,
+            6.3448,
+            6.65185
+          ],
+          [
+            6.8802,
+            7.0965,
+            7.22345,
+            6.73275,
+            7.00915,
+            6.3081,
+            6.48345
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 6.8802,
+        "improvement": 1.026137405946353
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 24.7414,
+        "cpp_ms": 0.77718,
+        "speedup": 31.834838776087906,
+        "samples_ms": [
+          [
+            24.3891,
+            25.8509,
+            24.7414,
+            27.3755,
+            24.3249,
+            24.8635,
+            24.1937
+          ],
+          [
+            1.02745,
+            0.76962,
+            0.7685,
+            0.96302,
+            0.77718,
+            0.69728,
+            0.87047
+          ],
+          [
+            0.8142857142857143,
+            0.7710785714285715,
+            0.7550714285714285,
+            0.8280071428571428,
+            0.7892,
+            0.74675,
+            0.82565
+          ]
+        ],
+        "loops": [
+          1,
+          10,
+          14
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.7892,
+        "improvement": 1.0154661725726344
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 74.56,
+        "cpp_ms": 5.3288,
+        "speedup": 13.99189310914277,
+        "samples_ms": [
+          [
+            77.3008,
+            74.3305,
+            76.6293,
+            74.56,
+            75.206,
+            74.0883,
+            72.1713
+          ],
+          [
+            5.3288,
+            4.4212,
+            5.37755,
+            5.3474,
+            5.21085,
+            5.65855,
+            4.9012
+          ],
+          [
+            6.0136,
+            4.4046,
+            4.4045,
+            4.4181,
+            5.44995,
+            4.99275,
+            4.22755
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.4181,
+        "improvement": 0.8290984837111545
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 73.6554,
+        "cpp_ms": 2.49444,
+        "speedup": 29.527829893683553,
+        "samples_ms": [
+          [
+            76.1855,
+            72.2893,
+            73.7081,
+            71.514,
+            73.6554,
+            72.911,
+            76.3907
+          ],
+          [
+            2.5732,
+            2.1326,
+            2.4164,
+            2.49444,
+            2.7374,
+            2.34022,
+            2.55978
+          ],
+          [
+            6.272,
+            5.8206,
+            5.98,
+            6.108,
+            7.237,
+            6.7883,
+            6.2294
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 6.2294,
+        "improvement": 2.497314026394702
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 38.0171,
+        "cpp_ms": 3.254125,
+        "speedup": 11.682741136250144,
+        "samples_ms": [
+          [
+            38.0171,
+            39.0878,
+            37.3605,
+            38.3398,
+            36.9282,
+            37.0159,
+            39.6251
+          ],
+          [
+            3.608075,
+            3.254125,
+            3.164225,
+            3.28025,
+            3.03605,
+            3.233125,
+            4.097025
+          ],
+          [
+            3.5307333333333335,
+            3.4039666666666664,
+            3.5923333333333334,
+            3.1903,
+            3.1787333333333336,
+            3.2305,
+            3.6159666666666666
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.4039666666666664,
+        "improvement": 1.046046684336547
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 12.9087,
+        "cpp_ms": 10.4522,
+        "speedup": 1.235022291957674,
+        "samples_ms": [
+          [
+            13.3364,
+            12.5987,
+            12.9087,
+            13.4301,
+            12.2418,
+            12.3679,
+            13.5824
+          ],
+          [
+            10.9228,
+            10.521,
+            10.7695,
+            10.2514,
+            10.207,
+            10.4522,
+            10.2719
+          ],
+          [
+            12.0226,
+            10.2194,
+            10.4735,
+            10.0233,
+            10.584,
+            10.1322,
+            10.8571
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.4735,
+        "improvement": 1.0020378484912267
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 40.5041,
+        "cpp_ms": 32.941,
+        "speedup": 1.2295953371178774,
+        "samples_ms": [
+          [
+            37.9537,
+            40.5041,
+            38.8723,
+            36.7218,
+            43.3101,
+            41.7848,
+            41.1149
+          ],
+          [
+            32.2946,
+            32.5007,
+            35.9051,
+            32.5588,
+            35.7103,
+            36.1386,
+            32.941
+          ],
+          [
+            35.0571,
+            32.4516,
+            33.1136,
+            31.8812,
+            36.0545,
+            34.0787,
+            36.9871
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 34.0787,
+        "improvement": 1.0345375064509272
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 38.2135,
+        "cpp_ms": 32.4848,
+        "speedup": 1.176350169925627,
+        "samples_ms": [
+          [
+            39.463,
+            36.8613,
+            38.5052,
+            38.2135,
+            37.4326,
+            40.4117,
+            37.803
+          ],
+          [
+            34.2823,
+            35.4093,
+            32.253,
+            32.7307,
+            32.3659,
+            31.7114,
+            32.4848
+          ],
+          [
+            35.2852,
+            35.9504,
+            35.7862,
+            34.2625,
+            33.0142,
+            34.6859,
+            37.5335
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 35.2852,
+        "improvement": 1.0862064719499582
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 18.2632,
+        "cpp_ms": 19.2751,
+        "speedup": 0.9475022178873262,
+        "samples_ms": [
+          [
+            18.0233,
+            18.1796,
+            19.2908,
+            18.1546,
+            20.9169,
+            18.9698,
+            18.2632
+          ],
+          [
+            19.0358,
+            19.3596,
+            19.3094,
+            17.3775,
+            21.7454,
+            16.6972,
+            19.2751
+          ],
+          [
+            16.7406,
+            17.3437,
+            18.8552,
+            17.1922,
+            18.8681,
+            16.6063,
+            16.9247
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 17.1922,
+        "improvement": 0.8919383038220295
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 18.7102,
+        "cpp_ms": 20.5209,
+        "speedup": 0.911763129297448,
+        "samples_ms": [
+          [
+            17.3861,
+            18.9669,
+            18.7102,
+            23.4002,
+            14.3471,
+            15.0262,
+            21.3331
+          ],
+          [
+            20.7295,
+            20.7506,
+            20.5209,
+            23.1309,
+            15.4234,
+            19.9983,
+            18.091
+          ],
+          [
+            20.4202,
+            21.8632,
+            19.349,
+            18.5567,
+            17.4217,
+            22.1611,
+            21.9368
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 20.4202,
+        "improvement": 0.9950928078203198
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 51.8818,
+        "cpp_ms": 56.4776,
+        "speedup": 0.9186261455869229,
+        "samples_ms": [
+          [
+            61.2537,
+            53.6948,
+            54.2091,
+            45.6813,
+            46.0626,
+            45.2776,
+            51.8818
+          ],
+          [
+            71.1247,
+            56.1879,
+            50.1251,
+            48.7455,
+            56.9407,
+            61.8449,
+            56.4776
+          ],
+          [
+            55.9344,
+            63.5753,
+            59.6892,
+            55.8884,
+            51.2607,
+            57.819,
+            65.6064
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 57.819,
+        "improvement": 1.0237510092496849
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 50.8475,
+        "cpp_ms": 55.6277,
+        "speedup": 0.9140679913064894,
+        "samples_ms": [
+          [
+            63.3733,
+            52.3638,
+            50.8475,
+            46.5557,
+            45.7178,
+            51.1745,
+            46.9848
+          ],
+          [
+            58.8265,
+            60.0149,
+            53.2782,
+            55.7708,
+            55.4124,
+            55.6277,
+            54.5126
+          ],
+          [
+            65.8457,
+            60.8888,
+            66.3545,
+            57.3077,
+            52.2931,
+            53.8065,
+            68.4903
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 60.8888,
+        "improvement": 1.0945769823307454
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 24.4372,
+        "cpp_ms": 25.5891,
+        "speedup": 0.9549847395961563,
+        "samples_ms": [
+          [
+            24.8815,
+            28.9247,
+            22.1273,
+            27.0738,
+            23.0186,
+            24.4372,
+            21.9164
+          ],
+          [
+            25.5891,
+            25.4359,
+            24.9063,
+            26.1838,
+            30.5865,
+            25.1802,
+            26.4717
+          ],
+          [
+            27.5823,
+            25.5165,
+            29.4678,
+            27.3068,
+            30.7928,
+            32.5337,
+            28.1753
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 28.1753,
+        "improvement": 1.1010664697078054
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 5.6906,
+        "cpp_ms": 2.65456,
+        "speedup": 2.1437074317401,
+        "samples_ms": [
+          [
+            7.309,
+            4.9941,
+            5.4952,
+            5.6906,
+            5.2316,
+            6.2196,
+            6.3962
+          ],
+          [
+            2.73682,
+            2.60872,
+            2.84946,
+            2.65456,
+            2.63548,
+            2.65634,
+            2.56498
+          ],
+          [
+            3.15675,
+            2.541575,
+            2.680375,
+            2.606325,
+            3.221575,
+            2.919875,
+            2.753325
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.753325,
+        "improvement": 1.0372057892833464
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 16.97,
+        "cpp_ms": 8.9553,
+        "speedup": 1.8949672261119115,
+        "samples_ms": [
+          [
+            17.9638,
+            16.97,
+            18.9851,
+            16.305,
+            20.4504,
+            15.9186,
+            16.1647
+          ],
+          [
+            9.8151,
+            8.6393,
+            10.131,
+            8.9553,
+            8.7649,
+            8.9364,
+            9.4799
+          ],
+          [
+            9.9115,
+            9.3405,
+            8.4573,
+            8.556,
+            10.3853,
+            9.376,
+            8.6259
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 9.3405,
+        "improvement": 1.0430136343841079
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 6.7615,
+        "cpp_ms": 3.024975,
+        "speedup": 2.2352250845048305,
+        "samples_ms": [
+          [
+            6.98855,
+            6.1149,
+            7.22,
+            6.63365,
+            6.6327,
+            7.22735,
+            6.7615
+          ],
+          [
+            2.79365,
+            3.024975,
+            3.425725,
+            3.02495,
+            3.21355,
+            3.248275,
+            2.934025
+          ],
+          [
+            2.9445,
+            2.9645,
+            3.30775,
+            2.920775,
+            3.296725,
+            3.09335,
+            3.479125
+          ]
+        ],
+        "loops": [
+          2,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.09335,
+        "improvement": 1.0226034925908478
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 23.8394,
+        "cpp_ms": 10.0256,
+        "speedup": 2.3778526970954355,
+        "samples_ms": [
+          [
+            23.1184,
+            23.5054,
+            23.8394,
+            28.052,
+            28.2726,
+            23.7438,
+            24.3829
+          ],
+          [
+            9.4397,
+            15.6438,
+            10.4819,
+            10.8656,
+            10.0256,
+            9.9719,
+            9.8778
+          ],
+          [
+            12.6742,
+            11.4052,
+            11.3722,
+            11.3546,
+            11.6858,
+            9.6562,
+            11.9528
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 11.4052,
+        "improvement": 1.1376077242259814
+      }
+    ]
+  },
+  "independent_windows": {
+    "metadata": {
+      "timestamp_utc": "2026-10-22T08:12:27.225990+00:00",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+      "logical_cpus": 20,
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "numpy": "2.5.4",
+      "scikit_image": "0.26.0",
+      "avx2": true,
+      "fallback_enabled": false,
+      "reference_thread_pools": 1,
+      "repeat": 7,
+      "target_ms": 15,
+      "cooldown_ms": 20,
+      "seed": 904,
+      "command": [
+        "benchmarks/match_histograms.py",
+        "--threads",
+        "1",
+        "4",
+        "--baseline-dir",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/checkpoints/match-memory-trial",
+        "--output",
+        "benchmarks/match-layout-windows.json"
+      ],
+      "source_sha256": "34e8a3f35f168464771e72cced4468bdffcbe92057b3829341259af137e1bb87",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "d338311b056efc019f2047b4340b40a0e4e6b427a1e545d0d8df86b783b7bf75"
+      },
+      "baseline": {
+        "revision": "a0740f98a8ba4d411cce0242bf35805cad9f6728",
+        "source_sha256": "aaa1de1946731b099614b94f02163a21b2b400feb8c2e992e663a56982f50c4b",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "binary_sha256": {
+          "_core.cp313-win_amd64.pyd": "f4c011a7fb27733259310f8d28c311ee7055efcfc1e0378ce72c49af2a396db0"
+        },
+        "python_sha256": {
+          "color.py": "658d99cf470d0d6dce945d0839447197a50d9f89f8033717f0b6cc0cfab2d3b8",
+          "coverage.py": "95bc104412b3b294e634bf233601dc386a7c67a046f0c76c766ec3fcf94f0a65",
+          "data.py": "9aac15ec567659326d23558f178328c45ee5406ee459cf85676666bbfd245118",
+          "draw.py": "1716a3fa95a1444fbba0ee4ebed8ba309776768f874585077679c7013a21cd56",
+          "exposure.py": "44e77797a4f941856f946600e6d033d724902ce96506ab210cdf4deee08a1006",
+          "feature.py": "15806777253793b6b5da6de763f8eaa2586b2aa8ca9f30c6d170eb9df6b8751d",
+          "filters.py": "239d8a5a4a563ae94706ce5d3b974d46bda00391fa47107dcc6b16589269af3d",
+          "future.py": "6ddf5074f93358317213f3f00ab84b1ea28bebf5ed66626a2c970e6a148cc0b1",
+          "graph.py": "904cc8dfbd95a4e93c023cd5ec1106eb44dce7caa896f184388457a51bfcd3d5",
+          "io.py": "f1c41b536f9cee004ebf48b02262356cb17bf019a7f5c9483a4c3df6fb4c1c56",
+          "measure.py": "ac57f4a04d5c3f7369e8ea745c1f942bf874792276999ca7cd4d76686d2489a0",
+          "metrics.py": "b72af9ea41398bdda72c6b61cdbb964c57505d4802515840d464f643056b34bc",
+          "morphology.py": "374e40e022a3dab47c23cce5c935c150d05a9e034151f59d6b76835df80a002b",
+          "registration.py": "0aa71aff84df994f35dcfb4e0948e41e818ca1d65a2780705880e5a091e1649e",
+          "restoration.py": "f24cdb988bc46e5a81df017bb84d462fdcb487dbfedc6c7884d9a3d7270c1577",
+          "segmentation.py": "d9fd1488b715b874ed76547e9c118cf416be6ce4094d1b6a628a3fa5b5d22034",
+          "transform.py": "eb22b0c785b0e3792068a0d0736bf1482efdc2e88902c4e891dfaaff013a5201",
+          "util.py": "8943fb70a42569a6aefe28c560742fecbefc55d0835e0a21588efff545814da0",
+          "_compat.py": "63064dca0e70f7de97d7a3a4eaa95acbdcc424e146fb6e267a17ba9454760e1a",
+          "_rgb_colors.py": "e394583316402d9a25824ce9dfe28ab0b9b6c833f6c96f93bce33e0afd7c467e",
+          "_stain_matrices.py": "882d26897fca08ad84965660715cdefe55f275573100aa85330502a4cc235223",
+          "_whitepoints.py": "1b42bf251dc1ff142ad82381eb4f10b6a5e9545e353cf8dee6efdeeb34ca7055",
+          "__init__.py": "ea71e8845b0a03920e34694e574707edd88f8a5cdc0c7cc3ab01d61362e1e7be"
+        }
+      }
+    },
+    "results": [
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 1.16788,
+        "cpp_ms": 0.5734733333333334,
+        "speedup": 2.036502714453447,
+        "samples_ms": [
+          [
+            1.19755,
+            1.27988,
+            1.12506,
+            1.16788,
+            1.08535,
+            1.19591,
+            1.15819
+          ],
+          [
+            0.5734733333333334,
+            0.55078,
+            0.6083333333333334,
+            0.5774266666666666,
+            0.5422066666666666,
+            0.5607466666666666,
+            0.65114
+          ],
+          [
+            0.5826166666666667,
+            0.574925,
+            0.5614166666666667,
+            0.611425,
+            0.5688833333333334,
+            1.033,
+            0.5929166666666666
+          ]
+        ],
+        "loops": [
+          10,
+          15,
+          12
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.5826166666666667,
+        "improvement": 1.0159437811697143
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 1.1757,
+        "cpp_ms": 0.5371307692307693,
+        "speedup": 2.188852449625503,
+        "samples_ms": [
+          [
+            1.1347555555555555,
+            1.2641777777777778,
+            1.1599333333333333,
+            1.2525666666666668,
+            1.2256777777777776,
+            1.144688888888889,
+            1.1757
+          ],
+          [
+            0.5371307692307693,
+            0.5623307692307693,
+            0.4860384615384616,
+            0.5267461538461539,
+            0.5431076923076923,
+            0.49580769230769234,
+            0.5563461538461538
+          ],
+          [
+            0.48562,
+            0.4859266666666667,
+            0.5315866666666667,
+            0.6204866666666666,
+            0.56558,
+            0.5409666666666666,
+            0.5217533333333333
+          ]
+        ],
+        "loops": [
+          9,
+          13,
+          15
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.5315866666666667,
+        "improvement": 0.9896783001799684
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.56925,
+        "cpp_ms": 3.7020333333333335,
+        "speedup": 1.2342541486210281,
+        "samples_ms": [
+          [
+            5.3484,
+            4.0462,
+            5.57935,
+            3.8563,
+            4.85705,
+            4.56925,
+            4.4105
+          ],
+          [
+            3.5805333333333333,
+            3.8707,
+            3.7283666666666666,
+            3.6613666666666664,
+            3.8777,
+            3.6197333333333335,
+            3.7020333333333335
+          ],
+          [
+            3.5380333333333334,
+            3.8639666666666663,
+            3.9664333333333337,
+            3.6335666666666664,
+            4.0799,
+            4.2863,
+            3.8112
+          ]
+        ],
+        "loops": [
+          2,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.8639666666666663,
+        "improvement": 1.043741727519111
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.5675,
+        "cpp_ms": 1.9831166666666666,
+        "speedup": 2.3031927857665124,
+        "samples_ms": [
+          [
+            4.54775,
+            4.9981,
+            4.5675,
+            5.6937,
+            4.32495,
+            4.2274,
+            4.7038
+          ],
+          [
+            2.1366166666666664,
+            1.9831166666666666,
+            1.9781333333333333,
+            2.02585,
+            1.9600833333333332,
+            1.9774666666666667,
+            2.2316
+          ],
+          [
+            2.1332166666666663,
+            2.1418666666666666,
+            2.56165,
+            2.1779666666666664,
+            2.76515,
+            2.1635,
+            2.6902666666666666
+          ]
+        ],
+        "loops": [
+          2,
+          6,
+          6
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.1779666666666664,
+        "improvement": 1.0982544311563447
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.7419,
+        "cpp_ms": 2.1925666666666666,
+        "speedup": 2.1627164510391172,
+        "samples_ms": [
+          [
+            4.7295,
+            6.23875,
+            3.9843,
+            4.79815,
+            5.4032,
+            4.7419,
+            4.27055
+          ],
+          [
+            3.8316333333333334,
+            2.035833333333333,
+            1.902,
+            1.7874333333333332,
+            2.1925666666666666,
+            3.3405,
+            2.4181
+          ],
+          [
+            6.65745,
+            7.1102,
+            5.57765,
+            7.0636,
+            6.86825,
+            6.24855,
+            5.77955
+          ]
+        ],
+        "loops": [
+          2,
+          3,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 6.65745,
+        "improvement": 3.0363728963011387
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.6462,
+        "cpp_ms": 2.57208,
+        "speedup": 1.80639793474542,
+        "samples_ms": [
+          [
+            7.5325,
+            6.15115,
+            4.267,
+            3.8141,
+            5.39575,
+            4.2503,
+            4.6462
+          ],
+          [
+            2.81952,
+            2.38764,
+            2.71528,
+            2.57208,
+            1.82584,
+            2.32976,
+            2.75876
+          ],
+          [
+            5.9841,
+            5.35215,
+            4.7646,
+            5.20095,
+            3.74585,
+            4.6658,
+            4.4783
+          ]
+        ],
+        "loops": [
+          2,
+          5,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.7646,
+        "improvement": 1.8524307175515533
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.682525,
+        "cpp_ms": 3.1515666666666666,
+        "speedup": 0.8511719039208013,
+        "samples_ms": [
+          [
+            3.096525,
+            3.354625,
+            2.6046,
+            2.205775,
+            2.51125,
+            2.719375,
+            2.682525
+          ],
+          [
+            3.1515666666666666,
+            4.1014,
+            4.310966666666667,
+            4.152433333333334,
+            2.9061666666666666,
+            2.6791666666666667,
+            2.9091333333333336
+          ],
+          [
+            4.385166666666667,
+            4.0018,
+            4.472733333333333,
+            3.4628333333333337,
+            2.4949666666666666,
+            3.0976,
+            2.6924333333333337
+          ]
+        ],
+        "loops": [
+          4,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.4628333333333337,
+        "improvement": 1.0987656932530911
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.4953666666666665,
+        "cpp_ms": 2.889825,
+        "speedup": 0.8635009617076005,
+        "samples_ms": [
+          [
+            3.5256,
+            2.3407,
+            2.9876333333333336,
+            2.5712333333333337,
+            2.4322666666666666,
+            2.2694333333333336,
+            2.4953666666666665
+          ],
+          [
+            2.8602,
+            3.05685,
+            3.4032,
+            4.13945,
+            2.615475,
+            2.57345,
+            2.889825
+          ],
+          [
+            2.63215,
+            2.644375,
+            2.622825,
+            2.856325,
+            2.524075,
+            2.567025,
+            2.73875
+          ]
+        ],
+        "loops": [
+          3,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.63215,
+        "improvement": 0.9108337010026559
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.8752,
+        "cpp_ms": 2.20756,
+        "speedup": 1.3024334559423074,
+        "samples_ms": [
+          [
+            2.693825,
+            3.11425,
+            4.836125,
+            2.776625,
+            2.8752,
+            2.890825,
+            2.650225
+          ],
+          [
+            2.18202,
+            2.72872,
+            3.00076,
+            2.20756,
+            2.1886,
+            2.53728,
+            2.19108
+          ],
+          [
+            2.69582,
+            2.1272,
+            2.69004,
+            3.62884,
+            2.913,
+            2.47652,
+            2.16628
+          ]
+        ],
+        "loops": [
+          4,
+          5,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.69004,
+        "improvement": 1.2185580459874252
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.08692,
+        "cpp_ms": 2.536125,
+        "speedup": 1.217179752575287,
+        "samples_ms": [
+          [
+            2.76764,
+            2.8748,
+            3.27298,
+            3.39182,
+            2.70046,
+            3.08692,
+            4.14522
+          ],
+          [
+            2.536125,
+            2.344075,
+            2.405225,
+            2.99215,
+            2.04285,
+            2.994275,
+            2.817875
+          ],
+          [
+            2.8064333333333336,
+            2.3827,
+            2.6765333333333334,
+            3.6666,
+            2.0044,
+            3.0343333333333335,
+            3.7405
+          ]
+        ],
+        "loops": [
+          5,
+          4,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.8064333333333336,
+        "improvement": 1.1065832060065388
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 10.8661,
+        "cpp_ms": 8.674,
+        "speedup": 1.2527207747290754,
+        "samples_ms": [
+          [
+            12.9368,
+            10.8661,
+            10.9738,
+            10.0996,
+            11.5131,
+            9.1585,
+            10.814
+          ],
+          [
+            10.4509,
+            12.1203,
+            8.674,
+            8.0004,
+            8.2685,
+            8.6605,
+            9.6636
+          ],
+          [
+            9.1298,
+            9.7904,
+            10.6369,
+            8.9686,
+            8.59,
+            8.888,
+            9.4647
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 9.1298,
+        "improvement": 1.0525478441318885
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 11.1791,
+        "cpp_ms": 7.69555,
+        "speedup": 1.452670699300245,
+        "samples_ms": [
+          [
+            9.6066,
+            15.0756,
+            11.1791,
+            12.4974,
+            8.7188,
+            8.5869,
+            11.4478
+          ],
+          [
+            7.69555,
+            8.4637,
+            8.5595,
+            11.67865,
+            6.87485,
+            7.60185,
+            7.50395
+          ],
+          [
+            9.70775,
+            10.65715,
+            7.9649,
+            8.75185,
+            7.23875,
+            6.69495,
+            7.35665
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 7.9649,
+        "improvement": 1.0350007471850615
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 10.5016,
+        "cpp_ms": 8.708,
+        "speedup": 1.2059715204409738,
+        "samples_ms": [
+          [
+            9.5511,
+            11.4888,
+            10.5016,
+            13.5825,
+            10.0023,
+            11.4243,
+            10.1808
+          ],
+          [
+            8.1595,
+            9.5269,
+            8.36235,
+            8.708,
+            9.8125,
+            8.71905,
+            8.4181
+          ],
+          [
+            10.849,
+            11.0843,
+            12.2637,
+            13.6566,
+            14.2021,
+            16.2676,
+            14.9902
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 13.6566,
+        "improvement": 1.5682820395039043
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 11.6307,
+        "cpp_ms": 8.7477,
+        "speedup": 1.3295723447306147,
+        "samples_ms": [
+          [
+            12.3923,
+            11.0185,
+            11.6307,
+            10.9155,
+            10.3707,
+            13.3267,
+            11.8587
+          ],
+          [
+            10.5269,
+            8.6792,
+            10.4359,
+            8.7477,
+            8.2468,
+            6.7769,
+            10.2247
+          ],
+          [
+            10.8584,
+            10.8363,
+            10.061,
+            10.0586,
+            9.5255,
+            8.7968,
+            12.4592
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.061,
+        "improvement": 1.1501308915486357
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.2084,
+        "cpp_ms": 7.5566,
+        "speedup": 1.2185903713310218,
+        "samples_ms": [
+          [
+            10.0467,
+            8.208,
+            9.2084,
+            10.5009,
+            9.2301,
+            9.1167,
+            8.3863
+          ],
+          [
+            6.9221,
+            8.699,
+            6.3685,
+            7.7491,
+            7.5474,
+            8.0194,
+            7.5566
+          ],
+          [
+            6.8288,
+            9.6939,
+            6.9515,
+            8.1867,
+            10.7996,
+            10.6199,
+            6.619
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 8.1867,
+        "improvement": 1.0833840616150119
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.153,
+        "cpp_ms": 7.8121,
+        "speedup": 1.1716439881721945,
+        "samples_ms": [
+          [
+            7.2861,
+            6.7779,
+            10.3424,
+            10.7656,
+            10.6263,
+            8.9462,
+            9.153
+          ],
+          [
+            6.6202,
+            10.3969,
+            7.5467,
+            7.1826,
+            8.4692,
+            7.8121,
+            9.4568
+          ],
+          [
+            6.85865,
+            8.12785,
+            8.9572,
+            7.7612,
+            7.56895,
+            6.51555,
+            9.7164
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 7.7612,
+        "improvement": 0.9934844664046799
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 27.4866,
+        "cpp_ms": 0.7413222222222222,
+        "speedup": 37.077803923919724,
+        "samples_ms": [
+          [
+            27.4866,
+            26.3397,
+            26.2467,
+            30.41,
+            28.1194,
+            30.8199,
+            23.809
+          ],
+          [
+            0.8811,
+            0.7455666666666666,
+            0.7026777777777777,
+            0.6918222222222222,
+            0.9366,
+            0.7008777777777777,
+            0.7413222222222222
+          ],
+          [
+            0.8501416666666666,
+            0.7938333333333334,
+            0.9195083333333334,
+            0.968875,
+            0.7976333333333334,
+            0.6561583333333334,
+            0.737625
+          ]
+        ],
+        "loops": [
+          1,
+          9,
+          12
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.7976333333333334,
+        "improvement": 1.0759603711086798
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 24.532,
+        "cpp_ms": 1.06623,
+        "speedup": 23.008168969171756,
+        "samples_ms": [
+          [
+            24.9813,
+            27.7156,
+            24.406,
+            24.101,
+            24.532,
+            25.0745,
+            23.8452
+          ],
+          [
+            0.66309,
+            1.16658,
+            1.21339,
+            1.12836,
+            0.88164,
+            0.83607,
+            1.06623
+          ],
+          [
+            0.7364,
+            1.2286363636363635,
+            0.8065454545454546,
+            0.9089636363636363,
+            0.9000727272727272,
+            1.001609090909091,
+            1.2590363636363635
+          ]
+        ],
+        "loops": [
+          1,
+          10,
+          11
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.9089636363636363,
+        "improvement": 0.8525024022618349
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 84.5467,
+        "cpp_ms": 4.846266666666667,
+        "speedup": 17.445738300272374,
+        "samples_ms": [
+          [
+            75.1715,
+            75.3468,
+            89.2695,
+            85.5471,
+            86.7327,
+            74.9693,
+            84.5467
+          ],
+          [
+            4.846266666666667,
+            6.342133333333333,
+            4.825066666666667,
+            5.882233333333333,
+            5.307033333333333,
+            4.731433333333333,
+            4.504766666666667
+          ],
+          [
+            4.495633333333333,
+            5.968233333333333,
+            5.528333333333333,
+            6.528433333333333,
+            5.076633333333333,
+            4.497566666666667,
+            5.777833333333333
+          ]
+        ],
+        "loops": [
+          1,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.528333333333333,
+        "improvement": 1.1407406388422703
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 74.9702,
+        "cpp_ms": 3.3941333333333334,
+        "speedup": 22.088171747328726,
+        "samples_ms": [
+          [
+            81.3386,
+            74.9702,
+            82.3029,
+            85.2453,
+            74.5321,
+            74.5641,
+            74.4103
+          ],
+          [
+            3.6615,
+            2.8888666666666665,
+            3.8361,
+            4.0867,
+            2.5527333333333333,
+            3.3941333333333334,
+            2.9946333333333337
+          ],
+          [
+            2.6028333333333333,
+            3.6424333333333334,
+            4.2919,
+            3.9251666666666667,
+            3.8435333333333337,
+            3.5332,
+            3.4242333333333335
+          ]
+        ],
+        "loops": [
+          1,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.6424333333333334,
+        "improvement": 1.0731556411062224
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 84.4229,
+        "cpp_ms": 3.81138,
+        "speedup": 22.150218556008582,
+        "samples_ms": [
+          [
+            79.3736,
+            83.5829,
+            91.2742,
+            90.1841,
+            88.4476,
+            79.8234,
+            84.4229
+          ],
+          [
+            3.81138,
+            3.76866,
+            3.32246,
+            4.7347,
+            4.90316,
+            3.82556,
+            2.67004
+          ],
+          [
+            6.21075,
+            6.38625,
+            8.91485,
+            10.696,
+            7.9241,
+            8.052,
+            7.2729
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 7.9241,
+        "improvement": 2.0790632264429156
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 81.6954,
+        "cpp_ms": 3.12634,
+        "speedup": 26.13132288874531,
+        "samples_ms": [
+          [
+            82.0391,
+            82.0795,
+            74.7975,
+            76.3032,
+            81.6954,
+            87.5813,
+            78.7891
+          ],
+          [
+            3.53552,
+            3.0787,
+            2.62442,
+            3.09148,
+            4.0201,
+            3.12634,
+            3.63082
+          ],
+          [
+            5.027733333333333,
+            5.676733333333333,
+            4.657,
+            5.452766666666667,
+            4.405666666666667,
+            5.895633333333333,
+            4.486533333333333
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.027733333333333,
+        "improvement": 1.6081850769056893
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 43.7836,
+        "cpp_ms": 4.276525,
+        "speedup": 10.238125580933117,
+        "samples_ms": [
+          [
+            39.2191,
+            40.0039,
+            41.2759,
+            43.7836,
+            49.3939,
+            47.5172,
+            43.9352
+          ],
+          [
+            4.276525,
+            3.877725,
+            3.59685,
+            3.496275,
+            5.177775,
+            5.575575,
+            4.7196
+          ],
+          [
+            3.497325,
+            4.0173,
+            3.32875,
+            3.3054,
+            4.9152,
+            5.535125,
+            4.875025
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.0173,
+        "improvement": 0.9393841962808587
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 40.4318,
+        "cpp_ms": 4.072433333333334,
+        "speedup": 9.92816743470325,
+        "samples_ms": [
+          [
+            42.6419,
+            43.5882,
+            37.7819,
+            40.4231,
+            40.4318,
+            40.7052,
+            39.0267
+          ],
+          [
+            4.072433333333334,
+            3.7258,
+            5.301666666666667,
+            4.0987,
+            3.4334,
+            4.287166666666667,
+            3.5365
+          ],
+          [
+            4.966,
+            4.630333333333333,
+            3.3647333333333336,
+            4.278733333333333,
+            3.7065333333333337,
+            4.644233333333333,
+            3.1999
+          ]
+        ],
+        "loops": [
+          1,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.278733333333333,
+        "improvement": 1.0506576739541469
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 14.1458,
+        "cpp_ms": 11.2997,
+        "speedup": 1.2518739435560235,
+        "samples_ms": [
+          [
+            20.3397,
+            20.7375,
+            12.2504,
+            12.805,
+            12.7372,
+            18.1463,
+            14.1458
+          ],
+          [
+            11.4017,
+            10.7969,
+            10.145,
+            9.9287,
+            11.2997,
+            12.1337,
+            13.0865
+          ],
+          [
+            12.3834,
+            10.2777,
+            10.2231,
+            10.3559,
+            10.328,
+            14.8817,
+            13.2454
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.3559,
+        "improvement": 0.9164756586458048
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 13.5365,
+        "cpp_ms": 8.6088,
+        "speedup": 1.5724026577455625,
+        "samples_ms": [
+          [
+            13.044,
+            12.9965,
+            14.5638,
+            13.5365,
+            18.0165,
+            14.745,
+            12.3163
+          ],
+          [
+            8.3135,
+            10.2939,
+            11.439,
+            8.4421,
+            8.5316,
+            10.3566,
+            8.6088
+          ],
+          [
+            9.2493,
+            9.5406,
+            9.4054,
+            7.9513,
+            8.0901,
+            8.425,
+            9.0579
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 9.0579,
+        "improvement": 1.0521675494842486
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 67.9251,
+        "cpp_ms": 44.1321,
+        "speedup": 1.5391313805597286,
+        "samples_ms": [
+          [
+            64.4194,
+            109.1713,
+            71.862,
+            61.5593,
+            67.9251,
+            79.2295,
+            57.2227
+          ],
+          [
+            46.8275,
+            38.402,
+            49.3379,
+            44.1321,
+            46.1321,
+            40.8666,
+            41.0324
+          ],
+          [
+            39.5224,
+            54.6598,
+            41.2517,
+            39.5598,
+            49.151,
+            46.9547,
+            42.3433
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 42.3433,
+        "improvement": 0.9594671452298893
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 62.671,
+        "cpp_ms": 35.3786,
+        "speedup": 1.771438100998909,
+        "samples_ms": [
+          [
+            56.6579,
+            47.7823,
+            64.6844,
+            73.2259,
+            76.4239,
+            56.0063,
+            62.671
+          ],
+          [
+            30.6679,
+            49.2315,
+            34.9997,
+            34.8502,
+            35.3786,
+            39.825,
+            37.1133
+          ],
+          [
+            31.3883,
+            34.2021,
+            50.4678,
+            38.0166,
+            39.4404,
+            39.1546,
+            40.4047
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 39.1546,
+        "improvement": 1.1067311877801835
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 61.0663,
+        "cpp_ms": 44.7667,
+        "speedup": 1.3641009947125877,
+        "samples_ms": [
+          [
+            61.0663,
+            62.9982,
+            68.37,
+            46.901,
+            56.2539,
+            53.3627,
+            64.2513
+          ],
+          [
+            50.6096,
+            43.8959,
+            39.7706,
+            48.6954,
+            44.7667,
+            48.7034,
+            35.808
+          ],
+          [
+            45.3042,
+            52.8322,
+            48.5944,
+            48.1497,
+            52.1172,
+            44.0603,
+            48.9284
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 48.5944,
+        "improvement": 1.085503287041484
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 57.072,
+        "cpp_ms": 36.9469,
+        "speedup": 1.5447033445295817,
+        "samples_ms": [
+          [
+            60.7505,
+            57.072,
+            93.3744,
+            54.6143,
+            49.0493,
+            54.7301,
+            58.9767
+          ],
+          [
+            32.8763,
+            36.9469,
+            49.4583,
+            44.2457,
+            29.4374,
+            38.818,
+            31.8862
+          ],
+          [
+            34.2361,
+            37.6277,
+            38.5412,
+            36.6826,
+            37.7018,
+            33.2993,
+            38.061
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 37.6277,
+        "improvement": 1.0184264444378284
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 33.666,
+        "cpp_ms": 24.7317,
+        "speedup": 1.361248923446427,
+        "samples_ms": [
+          [
+            34.3388,
+            33.666,
+            32.2661,
+            33.6851,
+            29.1579,
+            24.1955,
+            37.7253
+          ],
+          [
+            24.7317,
+            31.3216,
+            21.898,
+            21.6701,
+            24.0779,
+            56.4951,
+            38.2931
+          ],
+          [
+            26.2949,
+            28.5434,
+            25.2763,
+            22.3414,
+            25.8396,
+            52.8299,
+            25.0416
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 25.8396,
+        "improvement": 1.044796758815609
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 26.2428,
+        "cpp_ms": 21.1197,
+        "speedup": 1.242574468387335,
+        "samples_ms": [
+          [
+            30.1771,
+            20.9089,
+            26.2979,
+            26.6948,
+            23.9339,
+            26.2428,
+            24.9042
+          ],
+          [
+            24.5881,
+            18.5332,
+            24.6327,
+            30.8603,
+            17.1109,
+            18.2605,
+            21.1197
+          ],
+          [
+            29.8289,
+            19.7568,
+            20.5371,
+            31.6601,
+            22.2135,
+            17.5984,
+            19.7827
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 20.5371,
+        "improvement": 0.972414380886092
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 16.9596,
+        "cpp_ms": 18.2346,
+        "speedup": 0.9300779836135696,
+        "samples_ms": [
+          [
+            16.8191,
+            21.1277,
+            15.7484,
+            16.9635,
+            16.9596,
+            14.6688,
+            19.3241
+          ],
+          [
+            23.0741,
+            21.9966,
+            16.0595,
+            16.5772,
+            15.5729,
+            18.2346,
+            19.1035
+          ],
+          [
+            23.2775,
+            19.708,
+            18.0824,
+            17.0088,
+            24.6211,
+            23.0931,
+            16.7672
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 19.708,
+        "improvement": 1.0808024305441304
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 17.7867,
+        "cpp_ms": 13.3692,
+        "speedup": 1.3304236603536488,
+        "samples_ms": [
+          [
+            17.6481,
+            14.7478,
+            17.7867,
+            21.859,
+            17.7863,
+            21.3051,
+            21.9077
+          ],
+          [
+            16.943,
+            13.4973,
+            10.7084,
+            12.4722,
+            14.8967,
+            13.3692,
+            11.8214
+          ],
+          [
+            13.5633,
+            14.366,
+            16.0545,
+            15.0195,
+            11.6954,
+            12.909,
+            13.3174
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 13.5633,
+        "improvement": 1.0145184453819227
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 62.1716,
+        "cpp_ms": 74.119,
+        "speedup": 0.8388078630310716,
+        "samples_ms": [
+          [
+            70.0605,
+            54.9254,
+            51.8655,
+            62.9535,
+            48.7318,
+            62.1716,
+            83.243
+          ],
+          [
+            79.3675,
+            73.7277,
+            57.6751,
+            83.6697,
+            65.2198,
+            82.1597,
+            74.119
+          ],
+          [
+            64.9272,
+            65.7816,
+            69.4223,
+            61.9556,
+            64.9135,
+            84.3136,
+            70.7215
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 65.7816,
+        "improvement": 0.8875133231694977
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 74.1315,
+        "cpp_ms": 45.9171,
+        "speedup": 1.6144638925367676,
+        "samples_ms": [
+          [
+            49.2684,
+            64.2149,
+            81.3721,
+            93.6818,
+            74.1315,
+            67.1276,
+            74.2046
+          ],
+          [
+            40.3401,
+            44.7086,
+            50.9454,
+            50.1728,
+            42.5047,
+            52.0837,
+            45.9171
+          ],
+          [
+            42.8744,
+            43.5942,
+            42.1452,
+            54.8169,
+            46.6667,
+            49.8475,
+            48.112
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 46.6667,
+        "improvement": 1.0163250727942315
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 47.6929,
+        "cpp_ms": 51.5049,
+        "speedup": 0.9259876244784477,
+        "samples_ms": [
+          [
+            54.7899,
+            48.5785,
+            49.9509,
+            47.6929,
+            40.8715,
+            43.5673,
+            44.6542
+          ],
+          [
+            57.8393,
+            55.8698,
+            46.0186,
+            53.7331,
+            51.5049,
+            49.746,
+            46.2767
+          ],
+          [
+            75.6971,
+            57.8133,
+            53.8992,
+            55.7204,
+            51.6206,
+            49.1642,
+            52.7856
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 53.8992,
+        "improvement": 1.0464868391162783
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 46.0495,
+        "cpp_ms": 34.6604,
+        "speedup": 1.3285911299350266,
+        "samples_ms": [
+          [
+            52.7268,
+            76.0384,
+            64.7586,
+            46.0495,
+            42.4787,
+            44.2194,
+            43.2174
+          ],
+          [
+            39.5582,
+            34.6604,
+            38.9314,
+            29.4295,
+            27.6039,
+            27.0411,
+            35.484
+          ],
+          [
+            51.2384,
+            36.741,
+            35.9033,
+            33.3316,
+            34.1587,
+            35.0643,
+            40.4859
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 35.9033,
+        "improvement": 1.0358593668855522
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 25.1552,
+        "cpp_ms": 25.6691,
+        "speedup": 0.979979820094978,
+        "samples_ms": [
+          [
+            24.1765,
+            26.4327,
+            25.1552,
+            22.6841,
+            22.1703,
+            26.6934,
+            27.9246
+          ],
+          [
+            27.0619,
+            27.3398,
+            23.779,
+            24.1439,
+            25.6691,
+            25.8333,
+            25.1452
+          ],
+          [
+            27.1618,
+            25.5918,
+            26.2381,
+            23.9979,
+            25.7339,
+            24.4013,
+            31.8581
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 25.7339,
+        "improvement": 1.002524435995029
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 21.4561,
+        "cpp_ms": 26.4787,
+        "speedup": 0.8103154611064742,
+        "samples_ms": [
+          [
+            21.4561,
+            22.3083,
+            20.3451,
+            20.7063,
+            22.8011,
+            20.8174,
+            23.621
+          ],
+          [
+            24.565,
+            28.7408,
+            36.0077,
+            24.8958,
+            28.5274,
+            26.4102,
+            26.4787
+          ],
+          [
+            25.0913,
+            29.3495,
+            29.1079,
+            29.4801,
+            27.7205,
+            27.3499,
+            28.7323
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 28.7323,
+        "improvement": 1.0851099185382969
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.91655,
+        "cpp_ms": 2.59164,
+        "speedup": 1.8970806130481086,
+        "samples_ms": [
+          [
+            5.3621,
+            5.67935,
+            4.67795,
+            6.84275,
+            4.47375,
+            4.91655,
+            4.86825
+          ],
+          [
+            2.6567,
+            2.50984,
+            2.59164,
+            2.87832,
+            2.61938,
+            2.48664,
+            2.51514
+          ],
+          [
+            2.70958,
+            2.70016,
+            2.48236,
+            2.64028,
+            2.8748,
+            2.57574,
+            2.6406
+          ]
+        ],
+        "loops": [
+          2,
+          5,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.6406,
+        "improvement": 1.0188915127100986
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 4.906066666666667,
+        "cpp_ms": 2.1533,
+        "speedup": 2.2783944023901297,
+        "samples_ms": [
+          [
+            4.4572,
+            4.5738,
+            4.906066666666667,
+            5.3794,
+            6.764133333333333,
+            4.5094,
+            4.992233333333333
+          ],
+          [
+            2.01472,
+            2.36284,
+            2.3522,
+            2.19712,
+            2.14258,
+            2.09582,
+            2.1533
+          ],
+          [
+            2.0274,
+            2.2222833333333334,
+            2.3662833333333335,
+            2.2721666666666667,
+            2.0784,
+            2.1496833333333334,
+            2.15535
+          ]
+        ],
+        "loops": [
+          3,
+          5,
+          6
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.15535,
+        "improvement": 1.0009520271211627
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 16.4649,
+        "cpp_ms": 8.3458,
+        "speedup": 1.9728366363919576,
+        "samples_ms": [
+          [
+            16.3785,
+            16.0019,
+            16.4649,
+            17.5201,
+            18.852,
+            18.2846,
+            15.3391
+          ],
+          [
+            9.5279,
+            8.5301,
+            8.1492,
+            8.1083,
+            10.9951,
+            8.2716,
+            8.3458
+          ],
+          [
+            8.8147,
+            8.6067,
+            10.238,
+            8.7646,
+            8.9442,
+            13.0721,
+            8.243
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 8.8147,
+        "improvement": 1.0561839488125764
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 15.4551,
+        "cpp_ms": 6.88735,
+        "speedup": 2.243983535031616,
+        "samples_ms": [
+          [
+            15.264,
+            15.4535,
+            15.8397,
+            15.4551,
+            14.805,
+            15.6415,
+            17.1213
+          ],
+          [
+            6.88735,
+            6.49325,
+            6.64455,
+            7.2669,
+            7.02185,
+            6.69725,
+            8.37745
+          ],
+          [
+            6.8674,
+            6.9634,
+            6.34815,
+            6.7293,
+            6.60235,
+            6.79675,
+            7.4406
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 6.79675,
+        "improvement": 0.9868454485397142
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 6.3307,
+        "cpp_ms": 2.94602,
+        "speedup": 2.148899192809282,
+        "samples_ms": [
+          [
+            6.8255,
+            5.9907,
+            6.3307,
+            7.3048,
+            6.9799,
+            6.1078,
+            5.7921
+          ],
+          [
+            2.82586,
+            2.97474,
+            2.84102,
+            2.94602,
+            3.0504,
+            2.82506,
+            2.97176
+          ],
+          [
+            2.954475,
+            2.79755,
+            2.958225,
+            2.949825,
+            2.86325,
+            2.8178,
+            2.9393
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.9393,
+        "improvement": 0.9977189564225633
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 6.146,
+        "cpp_ms": 2.317,
+        "speedup": 2.6525679758308156,
+        "samples_ms": [
+          [
+            5.91895,
+            6.65685,
+            5.7418,
+            6.8272,
+            7.3863,
+            6.146,
+            5.8479
+          ],
+          [
+            2.3753166666666665,
+            2.3283166666666664,
+            2.4174166666666665,
+            2.1843,
+            2.29695,
+            2.091416666666667,
+            2.317
+          ],
+          [
+            2.45654,
+            2.1581,
+            2.38954,
+            2.21058,
+            2.29166,
+            2.15038,
+            2.40714
+          ]
+        ],
+        "loops": [
+          2,
+          6,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.29166,
+        "improvement": 0.9890634441087611
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 21.3889,
+        "cpp_ms": 10.3155,
+        "speedup": 2.0734719596723377,
+        "samples_ms": [
+          [
+            19.94,
+            21.8274,
+            26.7379,
+            21.3889,
+            21.1935,
+            20.5309,
+            21.8111
+          ],
+          [
+            10.5372,
+            10.3155,
+            10.3156,
+            11.8515,
+            10.0287,
+            10.1139,
+            9.4579
+          ],
+          [
+            9.0412,
+            9.587,
+            10.9414,
+            10.5914,
+            9.8424,
+            9.8768,
+            10.6628
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 9.8768,
+        "improvement": 0.957471765789346
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 22.8106,
+        "cpp_ms": 8.6897,
+        "speedup": 2.6250158233310703,
+        "samples_ms": [
+          [
+            24.3692,
+            22.3787,
+            23.0302,
+            24.6833,
+            21.7102,
+            21.3827,
+            22.8106
+          ],
+          [
+            8.3271,
+            8.6897,
+            10.2647,
+            8.8169,
+            7.8384,
+            9.341,
+            7.9814
+          ],
+          [
+            8.1163,
+            8.3402,
+            8.5384,
+            7.9212,
+            9.1549,
+            8.4088,
+            8.668
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 8.4088,
+        "improvement": 0.9676743731083925
+      }
+    ]
+  },
+  "independent_numpy124": {
+    "metadata": {
+      "timestamp_utc": "2026-10-22T08:13:54.694887+00:00",
+      "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "cpu": "x86_64",
+      "logical_cpus": 18,
+      "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+      "numpy": "1.24.4",
+      "scikit_image": "0.26.0",
+      "avx2": true,
+      "fallback_enabled": false,
+      "reference_thread_pools": 1,
+      "repeat": 7,
+      "target_ms": 15,
+      "cooldown_ms": 20,
+      "seed": 904,
+      "command": [
+        "benchmarks/match_histograms.py",
+        "--threads",
+        "1",
+        "4",
+        "--baseline-dir",
+        "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/checkpoints/match-layout-linux-baseline",
+        "--output",
+        "benchmarks/match-layout-numpy124.json"
+      ],
+      "source_sha256": "34e8a3f35f168464771e72cced4468bdffcbe92057b3829341259af137e1bb87",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cpython-311-x86_64-linux-gnu.so": "f600249f9b0648e05bc85954ca9c57013ce81f9ea57e0c848428422d122dbd29"
+      },
+      "baseline": {
+        "revision": "a0740f98a8ba4d411cce0242bf35805cad9f6728",
+        "source_sha256": "aaa1de1946731b099614b94f02163a21b2b400feb8c2e992e663a56982f50c4b",
+        "source_hash_schema": "cpp-python-build-posix-lf-v2",
+        "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+        "binary_sha256": {
+          "_core.cpython-311-x86_64-linux-gnu.so": "d4c20a780afa9a9a00c23f97bbbb9132bcd9d5ba807ea2edeaec95448c62bc98"
+        },
+        "python_sha256": {
+          "color.py": "658d99cf470d0d6dce945d0839447197a50d9f89f8033717f0b6cc0cfab2d3b8",
+          "coverage.py": "95bc104412b3b294e634bf233601dc386a7c67a046f0c76c766ec3fcf94f0a65",
+          "data.py": "9aac15ec567659326d23558f178328c45ee5406ee459cf85676666bbfd245118",
+          "draw.py": "1716a3fa95a1444fbba0ee4ebed8ba309776768f874585077679c7013a21cd56",
+          "exposure.py": "44e77797a4f941856f946600e6d033d724902ce96506ab210cdf4deee08a1006",
+          "feature.py": "15806777253793b6b5da6de763f8eaa2586b2aa8ca9f30c6d170eb9df6b8751d",
+          "filters.py": "239d8a5a4a563ae94706ce5d3b974d46bda00391fa47107dcc6b16589269af3d",
+          "future.py": "6ddf5074f93358317213f3f00ab84b1ea28bebf5ed66626a2c970e6a148cc0b1",
+          "graph.py": "904cc8dfbd95a4e93c023cd5ec1106eb44dce7caa896f184388457a51bfcd3d5",
+          "io.py": "f1c41b536f9cee004ebf48b02262356cb17bf019a7f5c9483a4c3df6fb4c1c56",
+          "measure.py": "ac57f4a04d5c3f7369e8ea745c1f942bf874792276999ca7cd4d76686d2489a0",
+          "metrics.py": "b72af9ea41398bdda72c6b61cdbb964c57505d4802515840d464f643056b34bc",
+          "morphology.py": "374e40e022a3dab47c23cce5c935c150d05a9e034151f59d6b76835df80a002b",
+          "registration.py": "0aa71aff84df994f35dcfb4e0948e41e818ca1d65a2780705880e5a091e1649e",
+          "restoration.py": "f24cdb988bc46e5a81df017bb84d462fdcb487dbfedc6c7884d9a3d7270c1577",
+          "segmentation.py": "d9fd1488b715b874ed76547e9c118cf416be6ce4094d1b6a628a3fa5b5d22034",
+          "transform.py": "eb22b0c785b0e3792068a0d0736bf1482efdc2e88902c4e891dfaaff013a5201",
+          "util.py": "8943fb70a42569a6aefe28c560742fecbefc55d0835e0a21588efff545814da0",
+          "_compat.py": "63064dca0e70f7de97d7a3a4eaa95acbdcc424e146fb6e267a17ba9454760e1a",
+          "_rgb_colors.py": "e394583316402d9a25824ce9dfe28ab0b9b6c833f6c96f93bce33e0afd7c467e",
+          "_stain_matrices.py": "882d26897fca08ad84965660715cdefe55f275573100aa85330502a4cc235223",
+          "_whitepoints.py": "1b42bf251dc1ff142ad82381eb4f10b6a5e9545e353cf8dee6efdeeb34ca7055",
+          "__init__.py": "ea71e8845b0a03920e34694e574707edd88f8a5cdc0c7cc3ab01d61362e1e7be"
+        }
+      }
+    },
+    "results": [
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 0.9765796363636363,
+        "cpp_ms": 0.5084282,
+        "speedup": 1.9207818062877635,
+        "samples_ms": [
+          [
+            1.0066225454545454,
+            0.970519909090909,
+            0.9518939090909091,
+            0.9668708181818182,
+            1.022662,
+            1.0030763636363635,
+            0.9765796363636363
+          ],
+          [
+            0.5337055333333334,
+            0.5168699333333333,
+            0.47957493333333334,
+            0.46913679999999996,
+            0.49251740000000005,
+            0.5084282,
+            0.5228134666666667
+          ],
+          [
+            0.5476684705882353,
+            0.5032018235294118,
+            0.495616,
+            0.5171321176470588,
+            0.4858791176470588,
+            0.5629267647058824,
+            0.4783444705882353
+          ]
+        ],
+        "loops": [
+          11,
+          15,
+          17
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.5032018235294118,
+        "improvement": 0.9897205220509244
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 1.017512,
+        "cpp_ms": 0.6604859285714285,
+        "speedup": 1.5405506097620985,
+        "samples_ms": [
+          [
+            1.017512,
+            0.9888223636363637,
+            1.0067602727272726,
+            1.1016885454545453,
+            1.0482232727272727,
+            1.095051090909091,
+            0.9921400909090909
+          ],
+          [
+            0.6558477857142857,
+            0.6869488571428571,
+            0.6540552857142857,
+            0.7603260714285714,
+            0.670943,
+            0.6194620714285715,
+            0.6604859285714285
+          ],
+          [
+            0.628086625,
+            0.6314666875,
+            0.6225665,
+            0.66131725,
+            0.6693591875,
+            0.6486384375,
+            0.6038941875
+          ]
+        ],
+        "loops": [
+          11,
+          14,
+          16
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.6314666875,
+        "improvement": 0.9560638011862047
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.4297403333333336,
+        "cpp_ms": 3.29237225,
+        "speedup": 1.0417231324110856,
+        "samples_ms": [
+          [
+            3.3191296666666665,
+            3.2164376666666663,
+            3.4085846666666666,
+            3.527713,
+            3.457263,
+            3.4297403333333336,
+            3.7380413333333333
+          ],
+          [
+            3.289425,
+            3.25325675,
+            3.34354325,
+            3.31297325,
+            3.26600125,
+            3.29237225,
+            3.52226525
+          ],
+          [
+            3.27478675,
+            3.25430575,
+            3.29070975,
+            3.23637175,
+            3.26992975,
+            3.259707,
+            3.3484565
+          ]
+        ],
+        "loops": [
+          3,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.26992975,
+        "improvement": 0.9931834864663314
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.3441183333333333,
+        "cpp_ms": 2.195659,
+        "speedup": 1.5230590603246374,
+        "samples_ms": [
+          [
+            3.2201966666666664,
+            3.3102933333333335,
+            3.3876593333333336,
+            3.3441183333333333,
+            3.434297,
+            3.329173,
+            3.4356683333333335
+          ],
+          [
+            2.1726445,
+            2.3759263333333336,
+            2.1469875,
+            2.2388905,
+            2.3277361666666665,
+            2.195659,
+            2.1574751666666665
+          ],
+          [
+            2.4006456000000003,
+            2.1252668,
+            2.1836382000000003,
+            2.3326502000000002,
+            2.1104854,
+            2.2227414,
+            2.1889406
+          ]
+        ],
+        "loops": [
+          3,
+          6,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.1889406,
+        "improvement": 0.9969401441662845
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.3159515,
+        "cpp_ms": 1.7507215714285713,
+        "speedup": 1.8940484621402232,
+        "samples_ms": [
+          [
+            3.40035975,
+            3.19881225,
+            4.4791375,
+            3.3159515,
+            3.44248325,
+            3.2920235,
+            3.27765825
+          ],
+          [
+            1.7655122857142858,
+            1.8300084285714286,
+            1.7507215714285713,
+            1.714036142857143,
+            1.685449857142857,
+            1.712278857142857,
+            1.9854237142857143
+          ],
+          [
+            4.580245666666667,
+            4.887191666666667,
+            5.508974,
+            4.627672666666667,
+            4.899374666666667,
+            5.007294666666667,
+            5.018805333333333
+          ]
+        ],
+        "loops": [
+          4,
+          7,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.899374666666667,
+        "improvement": 2.798488775498908
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 3.7798756666666664,
+        "cpp_ms": 1.9797528,
+        "speedup": 1.909266483505752,
+        "samples_ms": [
+          [
+            3.660011,
+            3.746423,
+            3.4943226666666667,
+            3.805925,
+            4.124826333333334,
+            3.7798756666666664,
+            3.783103
+          ],
+          [
+            1.9797528,
+            2.1341036,
+            2.038704,
+            1.8939991999999999,
+            2.0265418,
+            1.871883,
+            1.896944
+          ],
+          [
+            3.821615,
+            3.8586236666666665,
+            3.896657,
+            4.025943333333333,
+            4.0985586666666665,
+            3.7958403333333335,
+            3.848067
+          ]
+        ],
+        "loops": [
+          3,
+          5,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.8586236666666665,
+        "improvement": 1.9490431667361028
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.053885833333333,
+        "cpp_ms": 2.5848266,
+        "speedup": 0.7945932749737771,
+        "samples_ms": [
+          [
+            1.9122676666666667,
+            2.0921445,
+            2.053885833333333,
+            1.9175495,
+            1.8928548333333333,
+            2.1553281666666666,
+            2.1282638333333335
+          ],
+          [
+            2.5191597999999997,
+            2.5848266,
+            2.795779,
+            2.6697622,
+            2.5341482,
+            2.53425,
+            2.6138926000000002
+          ],
+          [
+            2.533483,
+            2.5408162,
+            2.478776,
+            2.5498108,
+            2.5586157999999997,
+            2.6086633999999997,
+            2.5117436
+          ]
+        ],
+        "loops": [
+          6,
+          5,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.5408162,
+        "improvement": 0.9829735580715551
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint8",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint8",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 1.954481,
+        "cpp_ms": 2.504459,
+        "speedup": 0.78040047770796,
+        "samples_ms": [
+          [
+            2.019341333333333,
+            2.0980923333333337,
+            1.9522811666666668,
+            1.94053,
+            1.9895801666666668,
+            1.954481,
+            1.9364921666666668
+          ],
+          [
+            2.581543,
+            2.4945168,
+            2.4600612,
+            2.4860523999999997,
+            2.60568,
+            2.5700022000000002,
+            2.504459
+          ],
+          [
+            2.5525124,
+            2.6095236,
+            2.522457,
+            2.553607,
+            2.6084638,
+            2.79369,
+            2.551979
+          ]
+        ],
+        "loops": [
+          6,
+          5,
+          5
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.553607,
+        "improvement": 1.0196241982799479
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.4709456000000003,
+        "cpp_ms": 1.8271038333333331,
+        "speedup": 1.3523837862526151,
+        "samples_ms": [
+          [
+            2.394895,
+            2.4741966,
+            2.376279,
+            2.461147,
+            2.5049872,
+            2.6096586,
+            2.4709456000000003
+          ],
+          [
+            1.9201931666666667,
+            1.8271038333333331,
+            1.7788928333333331,
+            1.7544745,
+            2.2043235,
+            1.8792663333333333,
+            1.815463
+          ],
+          [
+            1.9236813333333334,
+            1.8383025,
+            1.7608121666666667,
+            1.8053336666666668,
+            1.8218513333333333,
+            1.8713395,
+            1.8250931666666668
+          ]
+        ],
+        "loops": [
+          5,
+          6,
+          6
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 1.8250931666666668,
+        "improvement": 0.998899533441951
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 2.5663054,
+        "cpp_ms": 1.9320035,
+        "speedup": 1.3283130180664786,
+        "samples_ms": [
+          [
+            2.492506,
+            2.6021864,
+            2.5291023999999998,
+            2.5663054,
+            2.5341617999999997,
+            2.6027992,
+            2.5835556
+          ],
+          [
+            1.8810083333333332,
+            2.0623323333333334,
+            1.7934288333333332,
+            1.8223071666666668,
+            2.001062166666667,
+            1.9693523333333331,
+            1.9320035
+          ],
+          [
+            2.2363581666666663,
+            1.9382638333333333,
+            1.8555273333333333,
+            1.7941335,
+            1.8963635,
+            1.9758765,
+            1.9775935
+          ]
+        ],
+        "loops": [
+          5,
+          6,
+          6
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 1.9382638333333333,
+        "improvement": 1.003240332294084
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 8.483887,
+        "cpp_ms": 6.8969165,
+        "speedup": 1.2300985520123378,
+        "samples_ms": [
+          [
+            10.186735,
+            8.664341,
+            8.397537,
+            8.382065,
+            8.483887,
+            9.193202,
+            8.164903
+          ],
+          [
+            6.965902,
+            6.9921125,
+            6.7162295,
+            6.8969165,
+            6.7255875,
+            6.9590205,
+            6.8612185
+          ],
+          [
+            7.2487385,
+            6.917496,
+            6.7596625,
+            6.87521,
+            7.0032765,
+            6.919127,
+            6.650079
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 6.917496,
+        "improvement": 1.0029838696756732
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.482529,
+        "cpp_ms": 6.168481,
+        "speedup": 1.537255120020634,
+        "samples_ms": [
+          [
+            10.040925,
+            9.076891,
+            12.030091,
+            9.482529,
+            8.512588,
+            10.328814,
+            8.24994
+          ],
+          [
+            5.741031,
+            6.2113145,
+            6.4655945,
+            6.168481,
+            6.467205,
+            5.7425125,
+            5.522179
+          ],
+          [
+            6.5653455,
+            5.936845,
+            6.0160345,
+            5.8980035,
+            6.5453345,
+            5.503762,
+            5.398117
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.936845,
+        "improvement": 0.962448453679277
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 9.372524,
+        "cpp_ms": 6.428901,
+        "speedup": 1.457873437466217,
+        "samples_ms": [
+          [
+            8.091925,
+            8.915476,
+            7.81829,
+            9.372524,
+            9.37618,
+            9.576389,
+            10.21829
+          ],
+          [
+            5.533884,
+            5.1638655,
+            5.612857,
+            6.428901,
+            6.7973445,
+            6.7226115,
+            7.0473245
+          ],
+          [
+            8.197725,
+            8.937428,
+            8.234001,
+            10.163106,
+            10.734414,
+            10.433146,
+            11.951189
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.163106,
+        "improvement": 1.5808465552666002
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 7.803545,
+        "cpp_ms": 5.609239,
+        "speedup": 1.3911949553228165,
+        "samples_ms": [
+          [
+            10.179436,
+            9.544564,
+            9.074451,
+            7.531862,
+            7.707696,
+            7.803545,
+            7.600716
+          ],
+          [
+            6.702681,
+            5.609239,
+            5.1344905,
+            5.1259495,
+            5.865946,
+            5.63227,
+            5.2985985
+          ],
+          [
+            10.113852,
+            8.53468,
+            7.575495,
+            6.992394,
+            6.886897,
+            7.472308,
+            6.914223
+          ]
+        ],
+        "loops": [
+          1,
+          2,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 7.472308,
+        "improvement": 1.33214291635639
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 6.5019765,
+        "cpp_ms": 5.85601,
+        "speedup": 1.1103082986538615,
+        "samples_ms": [
+          [
+            6.1450485,
+            6.085302,
+            6.950457,
+            6.7002265,
+            6.421467,
+            7.093376,
+            6.5019765
+          ],
+          [
+            5.705917,
+            5.682006,
+            6.143134,
+            6.0762845,
+            5.85601,
+            5.6841775,
+            6.088943
+          ],
+          [
+            5.555395,
+            5.3435045,
+            5.8034815,
+            5.9830065,
+            5.847436,
+            5.904294,
+            5.748452
+          ]
+        ],
+        "loops": [
+          2,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.8034815,
+        "improvement": 0.9910299845799443
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "uint16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "uint16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 6.559759,
+        "cpp_ms": 5.95295,
+        "speedup": 1.1019341670936258,
+        "samples_ms": [
+          [
+            6.6659235,
+            6.425818,
+            7.1894055,
+            6.397614,
+            6.559759,
+            6.5330005,
+            7.094908
+          ],
+          [
+            5.786844,
+            5.7796185,
+            6.0666755,
+            6.554089,
+            5.8399175,
+            6.0376215,
+            5.95295
+          ],
+          [
+            5.73047,
+            6.0293195,
+            5.7876445,
+            6.1417875,
+            5.803362,
+            5.9793695,
+            5.951581
+          ]
+        ],
+        "loops": [
+          2,
+          2,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.951581,
+        "improvement": 0.9997700299851333
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 24.864968,
+        "cpp_ms": 0.7300451111111111,
+        "speedup": 34.05949525797949,
+        "samples_ms": [
+          [
+            23.933209,
+            24.390731,
+            25.262876,
+            25.111048,
+            25.278604,
+            24.619376,
+            24.864968
+          ],
+          [
+            0.7300451111111111,
+            0.8845097777777777,
+            0.6850555555555555,
+            0.6696542222222223,
+            0.7456081111111111,
+            0.6661453333333334,
+            0.747156
+          ],
+          [
+            0.6496425,
+            0.6948769285714286,
+            0.7146706428571429,
+            0.6466967857142857,
+            0.6877776428571428,
+            0.666567,
+            0.6518682142857143
+          ]
+        ],
+        "loops": [
+          1,
+          9,
+          14
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.666567,
+        "improvement": 0.9130490566336388
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 24.921555,
+        "cpp_ms": 0.8432356923076922,
+        "speedup": 29.55467282438782,
+        "samples_ms": [
+          [
+            25.163555,
+            24.565538,
+            24.921555,
+            25.029541,
+            24.778891,
+            25.324203,
+            24.724441
+          ],
+          [
+            0.877843,
+            0.8432356923076922,
+            0.8617658461538461,
+            0.8471375384615385,
+            0.728309,
+            0.7727625384615385,
+            0.7631185384615385
+          ],
+          [
+            0.8251858888888889,
+            0.7821517777777778,
+            0.7975254444444445,
+            0.8136237777777777,
+            0.7989877777777777,
+            0.8901836666666666,
+            0.787873
+          ]
+        ],
+        "loops": [
+          1,
+          13,
+          9
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 0.7989877777777777,
+        "improvement": 0.9475260417300165
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 75.90187,
+        "cpp_ms": 4.442076333333333,
+        "speedup": 17.087025144172447,
+        "samples_ms": [
+          [
+            75.653895,
+            76.11143,
+            76.989686,
+            75.572235,
+            76.560139,
+            75.866613,
+            75.90187
+          ],
+          [
+            4.601638666666667,
+            4.272357,
+            4.442076333333333,
+            4.358026666666667,
+            4.474094333333333,
+            4.288439333333333,
+            4.443370333333333
+          ],
+          [
+            4.312016666666667,
+            4.590826333333333,
+            4.210320333333333,
+            4.356280666666667,
+            4.505813666666667,
+            4.316217666666667,
+            4.416749666666667
+          ]
+        ],
+        "loops": [
+          1,
+          3,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.356280666666667,
+        "improvement": 0.9806856838494973
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 71.614736,
+        "cpp_ms": 2.711239,
+        "speedup": 26.414025469536252,
+        "samples_ms": [
+          [
+            71.553319,
+            72.34983,
+            71.489774,
+            71.057987,
+            71.614736,
+            71.835797,
+            71.718343
+          ],
+          [
+            2.83430275,
+            2.6145,
+            2.80744525,
+            2.668331,
+            3.0265985,
+            2.616285,
+            2.711239
+          ],
+          [
+            3.0324025,
+            2.69786,
+            2.778587,
+            2.66448925,
+            2.88316825,
+            2.711041,
+            2.69357275
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.711041,
+        "improvement": 0.9999269706580644
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 71.525,
+        "cpp_ms": 2.261444,
+        "speedup": 31.62802174186051,
+        "samples_ms": [
+          [
+            72.581269,
+            71.157528,
+            72.209358,
+            69.9109,
+            70.295421,
+            71.525,
+            72.51255
+          ],
+          [
+            2.4962273333333336,
+            2.261444,
+            2.1780856666666666,
+            2.1764335,
+            2.2765113333333336,
+            2.4800036666666667,
+            2.2402718333333334
+          ],
+          [
+            5.8917765,
+            6.031209,
+            5.788893,
+            5.5899805,
+            6.1870695,
+            5.8932575,
+            5.6661035
+          ]
+        ],
+        "loops": [
+          1,
+          6,
+          2
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 5.8917765,
+        "improvement": 2.6053161166051426
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 71.211891,
+        "cpp_ms": 2.2187858,
+        "speedup": 32.09498230969388,
+        "samples_ms": [
+          [
+            71.522188,
+            71.98443,
+            71.791052,
+            70.494178,
+            71.211891,
+            71.085471,
+            70.473697
+          ],
+          [
+            2.2046048,
+            2.2187858,
+            2.2654294,
+            2.1953396,
+            2.1767734,
+            2.3985402000000002,
+            2.2577976
+          ],
+          [
+            4.234821666666667,
+            4.287762333333333,
+            4.570761,
+            4.365388,
+            4.275244666666667,
+            4.870072,
+            4.430337
+          ]
+        ],
+        "loops": [
+          1,
+          5,
+          3
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 4.365388,
+        "improvement": 1.9674670714045495
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 39.925484,
+        "cpp_ms": 3.21592175,
+        "speedup": 12.414942621038586,
+        "samples_ms": [
+          [
+            36.666855,
+            37.920764,
+            38.023494,
+            40.161312,
+            39.925484,
+            40.226896,
+            40.433569
+          ],
+          [
+            2.90812325,
+            3.08146575,
+            3.11993525,
+            3.21592175,
+            3.632749,
+            3.57265275,
+            3.395691
+          ],
+          [
+            3.13302175,
+            3.19913175,
+            3.17913875,
+            3.40720975,
+            3.4346685,
+            3.769309,
+            3.365461
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.365461,
+        "improvement": 1.0464996544147878
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "int16",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "int16",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 39.372991,
+        "cpp_ms": 3.213661,
+        "speedup": 12.251756174655634,
+        "samples_ms": [
+          [
+            39.669089,
+            39.522274,
+            39.019703,
+            40.17528,
+            38.959475,
+            39.045597,
+            39.372991
+          ],
+          [
+            3.6300196666666666,
+            3.201902,
+            3.2782983333333333,
+            3.213661,
+            3.358614,
+            3.125146,
+            3.1449113333333334
+          ],
+          [
+            3.31025,
+            3.41185425,
+            3.366666,
+            3.197756,
+            3.28610175,
+            3.2097665,
+            3.36353075
+          ]
+        ],
+        "loops": [
+          1,
+          3,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.31025,
+        "improvement": 1.0300557526136078
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 39.569604,
+        "cpp_ms": 11.660347,
+        "speedup": 3.393518563384091,
+        "samples_ms": [
+          [
+            39.599963,
+            39.645233,
+            39.569604,
+            39.696573,
+            38.540673,
+            39.255577,
+            39.166186
+          ],
+          [
+            11.761128,
+            9.495488,
+            11.683174,
+            9.054042,
+            11.869597,
+            9.33673,
+            11.660347
+          ],
+          [
+            9.059274,
+            11.715729,
+            9.036867,
+            9.0637,
+            11.484221,
+            11.650905,
+            9.050093
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 9.0637,
+        "improvement": 0.7773096289501505
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 39.367774,
+        "cpp_ms": 10.49215,
+        "speedup": 3.752116963634717,
+        "samples_ms": [
+          [
+            39.52751,
+            39.179495,
+            40.862333,
+            39.367774,
+            38.879544,
+            39.075248,
+            39.70915
+          ],
+          [
+            10.759338,
+            8.098057,
+            10.750739,
+            8.546816,
+            11.205274,
+            8.798836,
+            10.49215
+          ],
+          [
+            8.577308,
+            10.526255,
+            7.96738,
+            8.472048,
+            10.374232,
+            10.869937,
+            8.633581
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 8.633581,
+        "improvement": 0.8228609960780201
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 126.067926,
+        "cpp_ms": 39.035885,
+        "speedup": 3.2295393328471995,
+        "samples_ms": [
+          [
+            124.242802,
+            123.71266,
+            128.496116,
+            127.816081,
+            126.378883,
+            126.067926,
+            125.863819
+          ],
+          [
+            38.691073,
+            38.226635,
+            39.072043,
+            39.035885,
+            38.870871,
+            39.500511,
+            40.457903
+          ],
+          [
+            39.847064,
+            38.982875,
+            39.377016,
+            39.613154,
+            40.328212,
+            37.935861,
+            38.2658
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 39.377016,
+        "improvement": 1.0087389078023976
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 125.100349,
+        "cpp_ms": 34.088623,
+        "speedup": 3.669856333005883,
+        "samples_ms": [
+          [
+            124.943761,
+            126.305513,
+            125.100349,
+            124.137258,
+            124.647706,
+            125.957249,
+            125.678243
+          ],
+          [
+            35.023613,
+            36.597005,
+            34.088623,
+            34.054547,
+            32.724643,
+            34.867552,
+            32.787782
+          ],
+          [
+            32.98793,
+            34.952363,
+            35.467138,
+            34.243335,
+            34.485158,
+            34.697659,
+            35.785772
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 34.697659,
+        "improvement": 1.0178662540871775
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 150.794069,
+        "cpp_ms": 52.867095,
+        "speedup": 2.852323718562558,
+        "samples_ms": [
+          [
+            139.821965,
+            150.794069,
+            170.650531,
+            157.937231,
+            140.723484,
+            146.525282,
+            167.722187
+          ],
+          [
+            51.23987,
+            52.867095,
+            53.037155,
+            54.084543,
+            49.271401,
+            48.339071,
+            58.726959
+          ],
+          [
+            53.794735,
+            63.306437,
+            66.198611,
+            62.928662,
+            62.282731,
+            50.582241,
+            57.963667
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 62.282731,
+        "improvement": 1.1781001206894384
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 121.561257,
+        "cpp_ms": 33.846506,
+        "speedup": 3.591545224786275,
+        "samples_ms": [
+          [
+            121.724189,
+            120.00937,
+            122.232889,
+            120.226228,
+            121.561257,
+            119.450146,
+            125.512401
+          ],
+          [
+            33.70944,
+            32.661893,
+            34.334345,
+            36.104561,
+            33.65985,
+            33.846506,
+            35.675628
+          ],
+          [
+            37.744961,
+            35.847766,
+            37.316751,
+            36.317676,
+            39.204927,
+            36.335095,
+            42.176416
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 37.316751,
+        "improvement": 1.1025288991424993
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 54.318544,
+        "cpp_ms": 15.622838,
+        "speedup": 3.476867903258038,
+        "samples_ms": [
+          [
+            56.208396,
+            52.726574,
+            54.318544,
+            53.095468,
+            55.884868,
+            54.524503,
+            52.015962
+          ],
+          [
+            15.548682,
+            14.968101,
+            16.610464,
+            15.622838,
+            16.00806,
+            16.623515,
+            14.96645
+          ],
+          [
+            17.35107,
+            15.338257,
+            15.884155,
+            15.442468,
+            15.558493,
+            16.2133,
+            15.231634
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 15.558493,
+        "improvement": 0.9958813501106522
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 61.162832,
+        "cpp_ms": 17.762843,
+        "speedup": 3.4433019534091476,
+        "samples_ms": [
+          [
+            53.794313,
+            55.740768,
+            61.006322,
+            61.162832,
+            71.842081,
+            61.857211,
+            61.480209
+          ],
+          [
+            15.482168,
+            17.762843,
+            18.914788,
+            18.670405,
+            17.496793,
+            17.27389,
+            19.197492
+          ],
+          [
+            16.788176,
+            16.517394,
+            20.333992,
+            18.430199,
+            31.186698,
+            18.075822,
+            19.5518
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 18.430199,
+        "improvement": 1.037570337135784
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 43.070924,
+        "cpp_ms": 20.573196,
+        "speedup": 2.093545601762604,
+        "samples_ms": [
+          [
+            43.934667,
+            49.563471,
+            44.705455,
+            42.280278,
+            43.070924,
+            41.880396,
+            42.680787
+          ],
+          [
+            28.430879,
+            21.016625,
+            19.567229,
+            19.244845,
+            20.573196,
+            20.37064,
+            22.162183
+          ],
+          [
+            19.978997,
+            25.90511,
+            20.890257,
+            18.468933,
+            20.082674,
+            21.854737,
+            28.945113
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 20.890257,
+        "improvement": 1.0154113634070272
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 42.580174,
+        "cpp_ms": 13.834928,
+        "speedup": 3.0777300756462194,
+        "samples_ms": [
+          [
+            44.649966,
+            44.139036,
+            42.492344,
+            43.258072,
+            42.580174,
+            41.346672,
+            40.691288
+          ],
+          [
+            16.42099,
+            12.774271,
+            13.834928,
+            12.343904,
+            13.22595,
+            16.120977,
+            18.581496
+          ],
+          [
+            15.271202,
+            12.948584,
+            15.118204,
+            15.307335,
+            14.365416,
+            12.292135,
+            12.541553
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 14.365416,
+        "improvement": 1.0383441099223647
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 131.876916,
+        "cpp_ms": 68.455064,
+        "speedup": 1.9264742196428304,
+        "samples_ms": [
+          [
+            124.461281,
+            124.246449,
+            121.905582,
+            131.876916,
+            151.421103,
+            138.757646,
+            132.415297
+          ],
+          [
+            63.529355,
+            72.779066,
+            63.126035,
+            56.039588,
+            111.168839,
+            68.455064,
+            76.976181
+          ],
+          [
+            64.150677,
+            69.93025,
+            62.640727,
+            63.872233,
+            82.162586,
+            82.008315,
+            81.822906
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 69.93025,
+        "improvement": 1.0215496986461077
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 138.233916,
+        "cpp_ms": 51.831729,
+        "speedup": 2.666974817683585,
+        "samples_ms": [
+          [
+            131.320855,
+            138.710095,
+            141.767114,
+            138.233916,
+            130.45437,
+            139.433249,
+            135.042114
+          ],
+          [
+            50.54281,
+            52.680762,
+            51.831729,
+            55.613191,
+            55.580391,
+            49.33776,
+            49.48985
+          ],
+          [
+            50.933214,
+            57.523547,
+            50.243721,
+            59.824909,
+            55.079847,
+            53.381642,
+            51.106681
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 53.381642,
+        "improvement": 1.0299027840649497
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 134.368718,
+        "cpp_ms": 63.451933,
+        "speedup": 2.117645777631392,
+        "samples_ms": [
+          [
+            170.080935,
+            146.000649,
+            133.006606,
+            146.530492,
+            134.368718,
+            128.172452,
+            125.596931
+          ],
+          [
+            100.951273,
+            63.451933,
+            60.493427,
+            59.340507,
+            67.826295,
+            55.331488,
+            76.35252
+          ],
+          [
+            109.311264,
+            77.854207,
+            68.722219,
+            82.493227,
+            97.651015,
+            79.039942,
+            94.872026
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 82.493227,
+        "improvement": 1.3000900539940998
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "planar",
+        "shape": [
+          3,
+          512,
+          513
+        ],
+        "reference_shape": [
+          3,
+          515,
+          511
+        ],
+        "channel_axis": 0,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 131.899242,
+        "cpp_ms": 52.368136,
+        "speedup": 2.518692702753445,
+        "samples_ms": [
+          [
+            129.646907,
+            131.899242,
+            133.266185,
+            146.441032,
+            125.563486,
+            129.859352,
+            141.875365
+          ],
+          [
+            54.655815,
+            51.722916,
+            45.609853,
+            53.324935,
+            50.046117,
+            52.368136,
+            56.94729
+          ],
+          [
+            57.889225,
+            56.937775,
+            63.622736,
+            61.980353,
+            51.195735,
+            71.312724,
+            56.680473
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 57.889225,
+        "improvement": 1.105428404020338
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 70.150197,
+        "cpp_ms": 35.740321,
+        "speedup": 1.962774676813899,
+        "samples_ms": [
+          [
+            79.704129,
+            77.951162,
+            74.214769,
+            70.150197,
+            69.625291,
+            69.764498,
+            67.807279
+          ],
+          [
+            37.043027,
+            57.73393,
+            34.305793,
+            35.740321,
+            38.699711,
+            32.939546,
+            26.141348
+          ],
+          [
+            34.115422,
+            62.114058,
+            44.31594,
+            32.163974,
+            34.738507,
+            29.931729,
+            28.328656
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 34.115422,
+        "improvement": 0.9545359707317682
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "strided",
+        "shape": [
+          512,
+          257,
+          3
+        ],
+        "reference_shape": [
+          515,
+          256,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 61.826688,
+        "cpp_ms": 28.68131,
+        "speedup": 2.1556437973021456,
+        "samples_ms": [
+          [
+            60.728921,
+            62.472518,
+            69.633178,
+            63.761239,
+            60.258255,
+            61.826688,
+            61.505249
+          ],
+          [
+            26.061348,
+            28.68131,
+            34.467238,
+            31.622248,
+            28.73394,
+            28.652078,
+            28.326084
+          ],
+          [
+            27.503557,
+            31.275913,
+            34.357337,
+            26.92519,
+            26.324494,
+            25.439918,
+            29.602264
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 27.503557,
+        "improvement": 0.9589365687968925
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 25.26811,
+        "cpp_ms": 3.08788825,
+        "speedup": 8.182974238138314,
+        "samples_ms": [
+          [
+            24.225076,
+            25.26811,
+            32.327631,
+            24.426488,
+            25.612916,
+            26.888658,
+            23.371044
+          ],
+          [
+            2.775125,
+            3.08788825,
+            3.18758575,
+            3.8766955,
+            2.89820725,
+            3.304177,
+            2.938742
+          ],
+          [
+            3.29731125,
+            2.8592805,
+            3.47169,
+            3.1704935,
+            3.85947375,
+            3.13689425,
+            3.058539
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.1704935,
+        "improvement": 1.0267513728840414
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 25.014821,
+        "cpp_ms": 2.97510875,
+        "speedup": 8.408035840706663,
+        "samples_ms": [
+          [
+            23.819991,
+            23.588418,
+            26.257176,
+            25.014821,
+            30.563877,
+            25.712523,
+            22.902088
+          ],
+          [
+            2.50614175,
+            2.70207775,
+            3.347058,
+            3.23884225,
+            2.97510875,
+            2.70636925,
+            3.17649575
+          ],
+          [
+            2.7972945,
+            2.78578625,
+            3.383093,
+            3.47607375,
+            2.6781005,
+            2.81576775,
+            2.68386675
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.7972945,
+        "improvement": 0.9402326889731342
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 75.592948,
+        "cpp_ms": 11.189475,
+        "speedup": 6.755718923363251,
+        "samples_ms": [
+          [
+            75.837762,
+            74.32803,
+            72.804142,
+            75.592948,
+            73.473171,
+            81.029743,
+            80.833075
+          ],
+          [
+            10.679095,
+            11.189475,
+            10.389238,
+            9.435233,
+            13.860082,
+            14.422203,
+            16.94364
+          ],
+          [
+            10.895759,
+            9.835233,
+            10.616669,
+            11.507475,
+            13.102031,
+            11.950226,
+            14.76436
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 11.507475,
+        "improvement": 1.0284195639205593
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float32",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float32",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 79.633597,
+        "cpp_ms": 9.834518,
+        "speedup": 8.097356372727164,
+        "samples_ms": [
+          [
+            79.990781,
+            77.30376,
+            81.926981,
+            89.341203,
+            76.318308,
+            79.633597,
+            69.907788
+          ],
+          [
+            9.767546,
+            12.143098,
+            11.73051,
+            10.163852,
+            9.444806,
+            9.834518,
+            8.753227
+          ],
+          [
+            12.760242,
+            10.864669,
+            10.114492,
+            9.906006,
+            11.128394,
+            9.837875,
+            9.812941
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 10.114492,
+        "improvement": 1.0284685024726175
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 25.247634,
+        "cpp_ms": 2.99035325,
+        "speedup": 8.443027257732846,
+        "samples_ms": [
+          [
+            24.717503,
+            25.632259,
+            26.600328,
+            24.354207,
+            24.576766,
+            29.788367,
+            25.247634
+          ],
+          [
+            3.0442085,
+            2.82825975,
+            2.99035325,
+            4.037039,
+            2.87696075,
+            4.1221225,
+            2.91269
+          ],
+          [
+            3.44936025,
+            3.5904375,
+            2.63485675,
+            3.35134275,
+            4.65907325,
+            3.0925785,
+            4.0053355
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 3.44936025,
+        "improvement": 1.1534959122304362
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-mono",
+        "shape": [
+          512,
+          513
+        ],
+        "reference_shape": [
+          515,
+          511
+        ],
+        "channel_axis": null,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 25.199937,
+        "cpp_ms": 3.20269925,
+        "speedup": 7.8683432420324815,
+        "samples_ms": [
+          [
+            25.299023,
+            27.428378,
+            25.760952,
+            24.899935,
+            24.946534,
+            25.199937,
+            24.861955
+          ],
+          [
+            2.944948,
+            3.7132475,
+            3.9107575,
+            3.7612645,
+            2.97803225,
+            2.81152375,
+            3.20269925
+          ],
+          [
+            3.174094,
+            2.888311,
+            3.85642475,
+            2.524369,
+            2.87645175,
+            3.0665005,
+            2.83469625
+          ]
+        ],
+        "loops": [
+          1,
+          4,
+          4
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 2.888311,
+        "improvement": 0.9018364743426969
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 1,
+        "max_abs_error": 0.0,
+        "reference_ms": 84.059261,
+        "cpp_ms": 12.98917,
+        "speedup": 6.47148824751697,
+        "samples_ms": [
+          [
+            83.246102,
+            84.059261,
+            84.601694,
+            84.510185,
+            78.142089,
+            80.283838,
+            92.74186
+          ],
+          [
+            12.474944,
+            12.758161,
+            13.578335,
+            12.98917,
+            16.095792,
+            12.771378,
+            13.761058
+          ],
+          [
+            12.010897,
+            13.181353,
+            12.899805,
+            19.615891,
+            12.641791,
+            12.046262,
+            18.110289
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 12.899805,
+        "improvement": 0.9931200376929397
+      },
+      {
+        "api": "exposure.match_histograms",
+        "dtype": "float64",
+        "layout": "quantized-color",
+        "shape": [
+          512,
+          513,
+          3
+        ],
+        "reference_shape": [
+          515,
+          511,
+          3
+        ],
+        "channel_axis": -1,
+        "output_dtype": "float64",
+        "threads": 4,
+        "max_abs_error": 0.0,
+        "reference_ms": 81.967828,
+        "cpp_ms": 12.522233,
+        "speedup": 6.545783647373436,
+        "samples_ms": [
+          [
+            94.84032,
+            87.590373,
+            77.318789,
+            81.120193,
+            80.371656,
+            81.967828,
+            88.815017
+          ],
+          [
+            12.522233,
+            11.628746,
+            10.347496,
+            14.476551,
+            16.804272,
+            11.875864,
+            17.394789
+          ],
+          [
+            11.076037,
+            13.522644,
+            11.693951,
+            9.959106,
+            10.089891,
+            16.900329,
+            11.085392
+          ]
+        ],
+        "loops": [
+          1,
+          1,
+          1
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current",
+          "baseline"
+        ],
+        "baseline_ms": 11.085392,
+        "improvement": 0.8852568068330945
+      }
+    ]
+  }
+}
