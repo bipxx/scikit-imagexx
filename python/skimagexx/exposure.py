@@ -272,7 +272,8 @@ def equalize_adapthist(image, kernel_size=None, clip_limit=0.01, nbins=256):
         if elements>2**31 or any(k+s>2**62 for k,s in zip(kernel,logical_shape)):return delegated()
     if not image.size:raise ValueError('zero-size array to reduction operation minimum which has no identity')
     if image.dtype.kind=='f':
-        prepared=np.require(image,dtype=np.float32 if image.dtype.itemsize==2 else image.dtype.newbyteorder('='),requirements=['A'])
+        requirements=['A'] if image.ndim==3 and image.shape[-1] in (3,4) else ['A','C']
+        prepared=np.require(image,dtype=np.float32 if image.dtype.itemsize==2 else image.dtype.newbyteorder('='),requirements=requirements)
         low,high=_core.intensity_bounds(prepared)
         if not np.isfinite(low) or not np.isfinite(high):return delegated()
     if image.ndim==3 and image.shape[-1] in (3,4):
@@ -297,7 +298,8 @@ def equalize_adapthist(image, kernel_size=None, clip_limit=0.01, nbins=256):
         converted=np.zeros(image.shape,dtype=np.uint16)
     else:
         if not image.dtype.isnative and image.dtype.kind not in 'f' and image.dtype.type is not np.uint16:return delegated()
-        converted=img_as_uint(np.require(image,dtype=image.dtype.newbyteorder('='),requirements=['A']))
+        converted=img_as_uint(prepared if image.dtype.kind=='f' else np.require(image,dtype=image.dtype.newbyteorder('='),requirements=['A']))
+    if image.dtype.kind=='f':del prepared
     if kernel_error is not None:raise kernel_error
     if any(k==0 for k in kernel):raise ZeroDivisionError('integer modulo by zero')
     if any(k<0 for k in kernel):raise ValueError("index can't contain negative values")

@@ -187,3 +187,15 @@ def test_unsupported_kernel_delegates_before_conversion(color,monkeypatch):
 @pytest.mark.parametrize('dtype',[int,bool,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64])
 def test_bin_scalar_promotion(dtype):
     compare(np.arange(35,dtype=np.uint16).reshape(5,7),kernel_size=3,nbins=dtype(32))
+
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['fortran','transpose','reversed','readonly'])
+def test_float_preparation_layouts(dtype,layout):
+    image=(np.random.default_rng(21).integers(0,256,(17,23),dtype=np.uint8)/255).astype(dtype)
+    image[0,0]=0
+    if layout=='fortran':image=np.asfortranarray(image)
+    elif layout=='transpose':image=image.T
+    elif layout=='reversed':image=image[::-1,::2]
+    else:image.flags.writeable=False
+    compare(image,kernel_size=5)
