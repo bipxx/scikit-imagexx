@@ -6,25 +6,28 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has measured comparisons against original scikit-image,
-including **one-worker** runs. Allocation, conversion and Python dispatch are
-included. See the [current verification report](benchmarks/STATUS.md) for measured
+Every native public function has parity tests and a benchmark against original
+scikit-image, including **one-worker** runs. Allocation, conversion and Python
+dispatch are included. Published results identify measured revisions; the Gabor
+image-filter increment is awaiting its first measurements and full CI. See the
+[current verification report](benchmarks/STATUS.md) for measured
 speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **106 partially native
+The reference is scikit-image **0.26.0**. There are currently **107 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 347 remain pending native implementation and dedicated parity tests.
+export list; 346 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
-| `filters.gabor_kernel` | Finite ordinary scalar parameters; complex64/128 output, including dtype tags; rotated, anisotropic, signed-sigma and phase-offset kernels up to 16M values | Fused C++ generation with AVX2 exp/sin/cos and optional global workers; relative and maximum-envelope-scaled absolute budgets of 3e-7 (complex64) or 3e-14 (complex128). Extended/endian complex dtypes, unusual scalar protocols, extreme ranges and non-default underflow policies use explicit fallback. Image convolution through `gabor` remains pending |
+| `filters.gabor` | 2-D real arrays/memmaps; bool, all integer widths, float16/32/64; native/endian/unaligned/strided/broadcast storage; reflect, constant, nearest, mirror, wrap and grid aliases | Tuple of ordinary arrays; same dtype (half promotes to float32), stripped dtype tags, exact integer/bool bytes including full 64-bit magnitudes, floating budget 2e-6/2e-13, scalar warning/error order. Fused dual-response ordered float64 accumulation, epsilon tap cutoff, one input preparation, AVX2 and optional global workers. Native zero-stride sentinel compatibility. Extreme reflection offsets that can read outside the reference buffer and unsupported scalar protocols use explicit fallback |
+| `filters.gabor_kernel` | Finite ordinary scalar parameters; complex64/128 output, including dtype tags; rotated, anisotropic, signed-sigma and phase-offset kernels up to 16M values | Fused C++ generation with AVX2 exp/sin/cos and optional global workers; relative and maximum-envelope-scaled absolute budgets of 3e-7 (complex64) or 3e-14 (complex128). Extended/endian complex dtypes, unusual scalar protocols, extreme ranges and non-default underflow policies use explicit fallback. Gabor integer image filtering uses libm transcendental values with SIMD coordinate arithmetic to preserve integer casts |
 | `exposure.equalize_adapthist` | Finite real 1–8D images, ordinary/memmap layouts and RGB/RGBA adaptation; kernels and 1–65536 bins | Native clipping/redistribution and ordered interpolation, AVX2 quantization/gathers, optional global workers, no padded image copies; float16 reproduces upstream conversion quirks; exceptional protocols, nonfinite inputs and huge kernels use explicit fallback |
 | `filters.threshold_multiotsu` | uint8/float32/float64 images; supplied finite nonnegative histograms; 2–16 classes, up to 4096 bins for exhaustive search | Float32 moment and objective order with first-maximum ties; linear two-class prefix/suffix search, AVX2 candidate scoring and optional deterministic global workers; exact value-count shortcut; upstream read-only/contiguity errors; other dtypes, larger searches, all-zero rounded objectives and exceptional histogram ranges use explicit fallback |
 | `filters.median` | N-D real arrays/memmaps and NumPy scalars, bool, all integer widths and float16/32/64 with runtime restrictions; dense/sparse/even footprints, supported border modes/grid aliases, output dtype/aliasing/strides | Exact numerical order statistics and zero signs, N-D double/source cast stages and modern 1-D integer working semantics; SIMD small/medium-stencil networks, direct separable two-tap maxima, sliding 1-D rank heaps, serial insertion-history replay for signed-zero ties, and optional global workers; float16 follows runtime 1-D/empty/identity support; rank behavior, undefined fast-1-D NaN/oversized legacy or signed-zero boundary cases, unsafe direct-1-D output dtype mismatches and exotic protocols use explicit fallback |

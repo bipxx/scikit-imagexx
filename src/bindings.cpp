@@ -37,6 +37,7 @@
 #include <string>
 #include <type_traits>
 #include <memory>
+void bind_gabor(pybind11::module_&);
 
 namespace py = pybind11;
 namespace {
@@ -854,6 +855,7 @@ PYBIND11_MODULE(_core, m) {
         skimagexx::threshold_logs(values.data(),output.mutable_data(),std::size_t(values.size()),numpy_log);
         return output;
     });
+    bind_gabor(m);
     m.def("clahe_has_zero", [](py::array_t<float,py::array::c_style|py::array::forcecast> image) {
         if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
         py::gil_scoped_release release;
