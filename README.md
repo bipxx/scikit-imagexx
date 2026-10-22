@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **94 partially native
+The reference is scikit-image **0.26.0**. There are currently **95 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 359 remain pending native implementation and dedicated parity tests.
+export list; 358 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
@@ -49,6 +49,7 @@ This is not full scikit-image coverage.
 | `roberts`, `roberts_pos_diag`, `roberts_neg_diag` | Nonempty 2D arrays; same real dtypes/storage and masks | Fused cross differences with upstream gradient rounding, magnitude/sqrt(2) stages, signed zero and mask semantics |
 | `threshold_otsu` | 2D uint8 grayscale | Exact scalar threshold; integer histogram, first maximum wins ties |
 | `threshold_yen`, `threshold_triangle`, `threshold_isodata` | ND uint8/float32/float64 arrays; integer-bin and floating-bin histograms; supplied count/bin-center metadata for Yen and ISODATA; `return_all` for ISODATA | Exact threshold and dtype; SIMD floating bin assignment, global optional workers, upstream first-maximum and fixed-point rules |
+| `threshold_minimum` | ND uint8/float32/float64 arrays and supplied finite histograms with int64/float32/float64 centers; positive Python/NumPy integer iteration limits | Ordered double accumulation with float32 smoothing output; AVX2 plateau-aware peaks; exact threshold dtype, first minimum and convergence errors; unusual iteration objects use explicit fallback before effectful conversion |
 | `threshold_niblack`, `threshold_sauvola` | Nonempty N-D bool, signed/unsigned 8/16/32/64-bit integers, float32/64; odd scalar or per-axis windows; finite scalar weights and nonzero Sauvola range | Reflected padding, float64 integral images in upstream axis order, dtype-specific statistics and parameter promotion; SIMD prefix columns and output math; optional global workers |
 | `threshold_mean` | 2D grayscale; same dtypes | Double accumulation; output scalar dtype follows upstream; numerical tolerance applies |
 | `invert` | 2D grayscale; same dtypes; `signed_float` | Dtype-preserving inversion, including signed floating zero |
@@ -292,6 +293,7 @@ CIEDE2000 and CMC with scalar weights and explicit intermediate-promotion flags.
 | Gaussian | Register-resident AVX2 double accumulation; fused uint8 conversion | Independent rows in each pass |
 | Sobel | AVX2 fused derivatives and square root | Independent rows |
 | Yen / Triangle / ISODATA | AVX2 min/max and floating bin indices, with exact edge correction; uint8 uses the existing histogram kernel | Worker-local histograms and deterministic integer-count merge; 256-bin selector stays serial |
+| Minimum threshold | Shared histogram kernels and AVX2 adjacent-bin peak comparisons; third-peak early termination | Worker-local image histograms; ordered smoothing and small histogram selection stay serial |
 | Otsu | AVX2 constant-image detection and variance scoring | Per-thread eight-lane histograms, then reduction |
 | Prewitt/Scharr and directional edges | AVX2 fused gradient arithmetic | Independent rows |
 | Gray to RGB / invert | AVX2 replication / arithmetic | Independent pixel ranges |
