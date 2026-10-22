@@ -6,6 +6,9 @@ one-worker corpus improves 1.91x on Linux and 2.10x on Windows; current geometri
 means are 5.67x/3.43x over scikit-image. Dense SIMD and bounded sparse tables
 retain exact ranks and representative bytes. Wide-range sorting remains an
 outstanding bottleneck, and every adverse sample is retained in the report.
+Full lookup-table CI passes all three jobs, including Linux 48,585 tests and
+Windows 48,583 plus two skips in each SIMD mode, and normal/dynamic/portable
+native checks passing 2/2 on both OSes.
 
 The [rank-order port](rank-order.md) and [retained uniform fast path](rank-uniform.md)
 add exact ranks, original-value bytes and reconstruction tests for real dtypes,
@@ -16,7 +19,7 @@ strongly, while floating sorts, layout normalization and several controls remain
 slower. Reports retain all cases and raw samples. Full uniform-checkpoint CI
 passes all three jobs, with Linux 48,453 tests and Windows 48,451 plus two skips
 in each SIMD mode. Scoped SIMD/scalar, minimum-runtime and native sanitizer
-checks pass; the newer lookup-table full CI remains in progress.
+checks pass; the newer lookup-table full CI also passes all three jobs.
 
 The [streaming adaptive-mean checkpoint](adaptive-stream.md) removes first-axis
 packing and scattering. Paired one-worker mean workloads improve 25% on Linux
