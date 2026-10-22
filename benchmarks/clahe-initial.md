@@ -1,6 +1,6 @@
 # CLAHE performance experiments
 
-The initial native `equalize_adapthist` source is measured here; full final-source CI is still the merge gate. These results do not establish parity or performance for every possible input.
+The initial native `equalize_adapthist` source is retained on main after full final-source CI. These results do not establish parity or performance for every possible input.
 
 [Initial run 39847406392](https://github.com/bipxx/scikit-imagexx/actions/runs/39847406392) measures source `d7a79ef`, with 40 fixed cases per OS at worker limits one/four (80 rows per OS), size512, seed6603 and seven samples. Both libraries are warmed; allocation, dtype conversion, Python dispatch and output handling are timed. Reference pools are fixed to one and native fallback is disabled. All timed outputs, including RGB, are exactly equal in this run; the general RGB parity budget remains the established HSV budget. Downloaded measured binary hashes agree with both report and source manifests.
 
@@ -29,3 +29,8 @@ The lowest speedups are floating Fortran layouts. Their current validation/conve
 | Windows | float64 | volume | 83.794800 | 10.909700 | 7.680761x |
 
 Source fingerprint and exact package hashes belong to this initial source only. Later optimization candidates retain separate raw samples and use the same fixed corpus with paired native controls.
+
+
+## Retained source
+
+[Full source CI39847405130](https://github.com/bipxx/scikit-imagexx/actions/runs/39847405130) passes all three jobs, including minimum NumPy, both OSes, SIMD enabled/disabled and native/portable checks. Source `d7a79ef` is merged as [1ddd03f](https://github.com/bipxx/scikit-imagexx/commit/1ddd03f). The merged product fingerprint equals the exact measured source. The validated Windows wheel is installed in the workspace environment, with its Python sources and binary hash checked and numerical smoke checks at worker caps one/four. Earlier merge-gate language records the chronological trial state.
