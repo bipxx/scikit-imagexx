@@ -1159,6 +1159,10 @@ int main() {
         const float tiny=std::numeric_limits<float>::min();
         flags=correlate_sparse_into(&tiny,&result,PixelType::float32,{1},{1},{{0}},&tiny);
         require(result==0 && (flags[0]&2));
+        bool overflow=false;
+        try {correlate_sparse_into(nullptr,nullptr,PixelType::float32,{0,std::numeric_limits<std::size_t>::max()},{1,1},{{0,0}},nullptr);}
+        catch(const std::overflow_error&){overflow=true;}
+        require(overflow);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

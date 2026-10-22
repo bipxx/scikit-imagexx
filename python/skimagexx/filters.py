@@ -896,6 +896,16 @@ def unsharp_mask(image,radius=1.0,amount=1.0,preserve_range=False,*,channel_axis
 __all__ += ['difference_of_gaussians','unsharp_mask']
 
 
+@_lru_cache(maxsize=1)
+def _sparse_comparison_casts():
+    value=np.array([0x7f800001],dtype=np.uint32).view(np.float32)[0]
+    import warnings
+    with warnings.catch_warnings(record=True) as messages:
+        warnings.simplefilter('always')
+        with np.errstate(all='warn'):value==1
+    return any(issubclass(m.category,RuntimeWarning) for m in messages)
+
+
 def _sparse_float_status(flags,dtype,addition):
     if not flags:return
     maximum=np.finfo(dtype).max
@@ -928,21 +938,25 @@ def correlate_sparse(image,kernel,mode='reflect'):
     corner=(0,)*image.ndim
     if not coordinates or coordinates[0]!=corner:
         coordinates.insert(0,corner);weights=np.concatenate((np.zeros(1,dtype=dtype),weights))
-    with np.errstate(all='ignore'):identity=weights[0]==1
-    output_shape=tuple(n-w+1 for n,w in zip(image.shape,kernel.shape)) if mode=='valid' else image.shape
-    result_dtype=native.dtype if identity else np.multiply(dtype.type(.5),np.zeros(1 if all(output_shape) else 0,dtype=native.dtype)).dtype
+    identity=False
+    result_dtype=native.dtype
+    if native.dtype.metadata is not None or type(image) is np.memmap and mode=='valid':
+        with np.errstate(all='ignore'):identity=weights[0]==1
+        if not identity:result_dtype=np.multiply(dtype.type(.5),np.empty(0,dtype=native.dtype)).dtype
     preserve_map=type(image) is np.memmap and mode=='valid' and identity
     native=np.asarray(native)
     if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
     if not weights.flags.aligned:weights=weights.copy()
     borders={'reflect':0,'symmetric':0,'constant':1,'nearest':2,'edge':2,'mirror':3,'wrap':4,'valid':0}
     result,flags=_core.correlate_sparse(native,kernel.shape,coordinates,weights,borders[mode],mode=='valid')
-    for t,weight in enumerate(weights):
-        # Legacy NumPy may warn when a signaling float32 scalar is compared
-        # with the integer identity. Preserve this before its multiply/add.
-        weight==1
-        _sparse_float_status(flags[2*t],dtype,False)
-        if t:_sparse_float_status(flags[2*t+1],dtype,True)
+    if _sparse_comparison_casts():
+        for t,weight in enumerate(weights):
+            # Preserve legacy scalar-cast warnings before multiply/add.
+            weight==1
+            _sparse_float_status(flags[2*t],dtype,False)
+            if t:_sparse_float_status(flags[2*t+1],dtype,True)
+    elif any(flags):
+        for i,flag in enumerate(flags):_sparse_float_status(flag,dtype,i%2)
     if result.dtype.metadata!=result_dtype.metadata:result=result.view(result_dtype)
     return result.view(np.memmap) if preserve_map else result
 

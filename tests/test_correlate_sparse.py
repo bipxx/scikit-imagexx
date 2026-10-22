@@ -144,3 +144,10 @@ def test_metadata_depends_on_first_product(dtype,corner,mode):
     a=sample(dtype,(9,13)).view(np.dtype(dtype,metadata={'unit':'raw'}))
     k=np.zeros((3,3));k[0,0]=corner;k[-1,-1]=.125
     compare(a,k,mode)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('corner',[0,1,.25])
+@pytest.mark.parametrize('mode',['constant','valid'])
+def test_empty_metadata(dtype,corner,mode):
+    a=np.empty((0,3),dtype=np.dtype(dtype,metadata={'unit':'raw'}))
+    compare(a,np.array([[corner]]),mode)

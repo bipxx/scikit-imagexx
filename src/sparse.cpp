@@ -9,8 +9,8 @@
 #include <type_traits>
 namespace skimagexx { namespace {
 std::size_t product(const std::vector<std::size_t>& shape) {
-    std::size_t n=1;
-    for(auto d:shape){if(d && n>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double)/d)throw std::overflow_error("sparse dimensions overflow");n*=d;}
+    std::size_t n=1;const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double);
+    for(auto d:shape){if(d>limit || (d && n>limit/d))throw std::overflow_error("sparse dimensions overflow");n*=d;}
     return n;
 }
 std::vector<std::size_t> strides(const std::vector<std::size_t>& shape) {
@@ -45,16 +45,16 @@ template<class T> std::vector<unsigned> run(const T* input,T* output,const std::
     if(!valid && padded_shape!=shape){
         storage.resize(padded_count);padded=storage.data();
         const auto width=padded_shape.back(),radius=kernel.back()/2;
-        std::vector<std::ptrdiff_t> columns(width);
-        for(std::size_t x=0;x<width;++x)columns[x]=mapped(std::ptrdiff_t(x)-std::ptrdiff_t(radius),shape.back(),border);
+        std::vector<std::ptrdiff_t> left(radius),right(radius);
+        for(std::size_t x=0;x<radius;++x){left[x]=mapped(std::ptrdiff_t(x)-std::ptrdiff_t(radius),shape.back(),border);right[x]=mapped(std::ptrdiff_t(shape.back()+x),shape.back(),border);}
         detail::partition(padded_count/width,workers,[&](auto begin,auto end,auto){
             for(auto row=begin;row<end;++row){auto remainder=row*width;std::size_t source=0;bool constant=false;
                 for(std::size_t d=0;d+1<shape.size();++d){const auto c=remainder/pp[d];remainder%=pp[d];const auto x=mapped(std::ptrdiff_t(c)-std::ptrdiff_t(kernel[d]/2),shape[d],border);if(x<0){constant=true;break;}source+=std::size_t(x)*ip[d];}
                 auto* destination=storage.data()+row*width;
                 if(constant){std::fill_n(destination,width,T(0));continue;}
-                for(std::size_t x=0;x<radius;++x)destination[x]=columns[x]<0 ? T(0) : input[source+std::size_t(columns[x])];
+                for(std::size_t x=0;x<radius;++x)destination[x]=left[x]<0 ? T(0) : input[source+std::size_t(left[x])];
                 std::copy_n(input+source,shape.back(),destination+radius);
-                for(auto x=radius+shape.back();x<width;++x)destination[x]=columns[x]<0 ? T(0) : input[source+std::size_t(columns[x])];
+                for(std::size_t x=0;x<radius;++x)destination[radius+shape.back()+x]=right[x]<0 ? T(0) : input[source+std::size_t(right[x])];
             }
         });
     }
@@ -63,21 +63,27 @@ template<class T> std::vector<unsigned> run(const T* input,T* output,const std::
     std::vector<std::vector<unsigned>> statuses(std::size_t(workers),combined);
     detail::partition(n,workers,[&](auto begin,auto end,auto worker){
         const auto capacity=std::min(std::size_t(16384),end-begin);std::vector<T> temporary(capacity);auto& status=statuses[worker];
+        struct Span {std::size_t destination,source,length;};std::vector<Span> spans;
+        spans.reserve(capacity/out_shape.back()+2);
         for(auto block=begin;block<end;){const auto stop=block+std::min(capacity,end-block),length=stop-block;
+            // Row addresses depend on the output tile, not on the kernel tap.
+            spans.clear();
+            for(auto position=block;position<stop;){const auto span=std::min(stop-position,out_shape.back()-position%out_shape.back());
+                auto remainder=position;std::size_t source=0;for(std::size_t d=0;d<shape.size();++d){source+=(remainder/op[d])*pp[d];remainder%=op[d];}
+                spans.push_back({position-block,source,span});position+=span;
+            }
             for(std::size_t t=0;t<coordinates.size();++t){
                 const T weight=weights[t];const bool identity=weight==T(1);
                 std::feclearexcept(FE_ALL_EXCEPT);
-                for(auto position=block;position<stop;){const auto span=std::min(stop-position,out_shape.back()-position%out_shape.back());
-                    auto remainder=position;std::size_t source=offsets[t];for(std::size_t d=0;d<shape.size();++d){source+=(remainder/op[d])*pp[d];remainder%=op[d];}
-                    auto* destination=temporary.data()+position-block;const auto* values=padded+source;std::size_t done=0;
-                    if(identity)std::copy_n(values,span,destination);
+                for(const auto span:spans){
+                    auto* destination=temporary.data()+span.destination;const auto* values=padded+span.source+offsets[t];std::size_t done=0;
+                    if(identity)std::copy_n(values,span.length,destination);
                     else {
 #ifdef SKIMAGEXX_AVX2
-                        if(has_avx2())done=simd::sparse_product(values,destination,span,&weight,std::is_same_v<T,float>);
+                        if(has_avx2())done=simd::sparse_product(values,destination,span.length,&weight,std::is_same_v<T,float>);
 #endif
-                        for(auto k=done;k<span;++k)destination[k]=T(weight*values[k]);
+                        for(auto k=done;k<span.length;++k)destination[k]=T(weight*values[k]);
                     }
-                    position+=span;
                 }
                 status[2*t]|=flags();
                 if(!t)std::copy_n(temporary.data(),length,output+block);
