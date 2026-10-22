@@ -39,7 +39,27 @@ results before replaying upstream's warnings/errors exactly once. NumPy 1.24's
 wider scalar powers remain native. The ordinary Python scalar path avoids an
 error-state context. Updated dedicated parity passes 440 cases per SIMD mode on
 both runtimes, plus 4,755 API/metadata/namespace checks on each. C++ is unchanged.
-This correction still requires fresh full CI and performance results before
-retention and merge. The initial source, exact packages, failure probes and raw
+This correction has fresh performance results below; full CI remains pending
+before retention and merge. The initial source, exact packages, failure probes and raw
 measurements remain preserved; the initial timing is not attributed to the
 corrected adapter.
+
+## Corrected scalar planning
+
+[Run 39858777112](https://github.com/bipxx/scikit-imagexx/actions/runs/39858777112)
+measures corrected source `c2a57c8` on the same 36-case specification, with the
+same worker caps and seven samples. Both OS jobs pass; downloaded source and
+binary manifests match. All 144 timed rows satisfy parity and every one-worker
+case is faster than original scikit-image.
+
+| OS | one-worker upstream/native geometric mean | minimum one-worker speedup | cases slower than upstream |
+|---|---:|---:|---:|
+| Linux | 3.053686x | 2.667177x | 0 / 36 |
+| Windows | 3.582205x | 2.678664x | 0 / 36 |
+
+Raw reports: [Linux](gabor-corrected-linux.json), [Windows](gabor-corrected-windows.json).
+The maximum absolute complex error remains 6.939e-18, with exact complex64
+outputs in this corpus. These are independent upstream comparisons; the two
+runs do not establish a paired performance change between native revisions.
+[Final-source CI 39858776366](https://github.com/bipxx/scikit-imagexx/actions/runs/39858776366)
+has passed minimum NumPy and Linux; Windows remains in progress at this report.
