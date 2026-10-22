@@ -1105,6 +1105,10 @@ int main() {
         try{rank_order_into(uniform.data(),257,PixelType::int16,ranks,PixelType::uint8,representatives);}
         catch(const std::invalid_argument&){too_narrow=true;}
         require(too_narrow);
+        std::vector<std::uint16_t> dense(65535),dense_ranks(65535);
+        for(std::size_t i=0;i<dense.size();++i)dense[i]=std::uint16_t(dense.size()-1-i);
+        require(rank_order_into(dense.data(),dense.size(),PixelType::uint16,dense_ranks.data(),PixelType::uint16,representatives));
+        require(dense==dense_ranks && representatives.size()==dense.size());
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

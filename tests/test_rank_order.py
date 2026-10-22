@@ -130,3 +130,13 @@ def test_sparse_table_capacity_and_radix_fallback(dtype,unique,size):
     elif dtype==np.int64:values=np.arange(unique,dtype=dtype)*257+np.iinfo(dtype).min
     else:values=np.arange(unique,dtype=dtype)*dtype(.125)
     compare(np.resize(values[np.random.default_rng(407).permutation(unique)],size))
+
+@pytest.mark.parametrize('size',[65535,65536,262145])
+def test_dense_full_uint16_rank_range(size):
+    compare(np.resize(np.arange(min(size,65536),dtype=np.uint16)[::-1],size))
+
+@pytest.mark.parametrize('span',[65534,65535,65536])
+@pytest.mark.parametrize('size',[4096,65535,65536])
+def test_dense_span_limit_near_uint64_max(span,size):
+    values=np.array([np.iinfo(np.uint64).max-span,np.iinfo(np.uint64).max],dtype=np.uint64)
+    compare(np.resize(values,size))
