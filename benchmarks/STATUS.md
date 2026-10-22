@@ -1,5 +1,13 @@
 # Last completed whole-library performance checkpoint
 
+The [packed wide-range rank checkpoint](rank-packed.md) reduces sort-record
+traffic and removes the full group-start array. Against the exact table package,
+one-worker wide-range cases improve 1.56x on Linux and 1.23x on Windows; the
+whole fixed corpus improves 1.075x/1.064x. The report preserves the revised
+first trial and every control regression. General uint64/float64 sorting still
+trails upstream in some cases. Scoped SIMD/scalar, minimum-runtime, portable
+and sanitizer checks pass; full follow-up CI remains in progress.
+
 The [rank lookup-table checkpoint](rank-tables.md) avoids sorting every pixel
 for bounded-cardinality data. Against the retained uniform package, the fixed
 one-worker corpus improves 1.91x on Linux and 2.10x on Windows; current geometric
