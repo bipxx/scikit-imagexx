@@ -361,6 +361,112 @@ def threshold_sauvola(image,window_size=15,k=0.2,r=None):
 __all__ += ['threshold_niblack','threshold_sauvola']
 
 
+@_lru_cache(maxsize=1)
+def _adaptive_rank_profile():
+    try:from scipy import __version__ as scipy_version
+    except ImportError:return 2
+    version=np.lib.NumpyVersion(scipy_version)
+    return 0 if version<'1.15.0' else 1 if version<'1.16.1' else 2
+
+
+def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect',param=None,cval=0):
+    import math
+    original_image=image
+    def delegated():return fallback('filters','threshold_local',original_image,block_size,method,offset,mode,param,cval)
+    if type(image) in _GAUSSIAN_TYPES:image=np.asarray(image)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return delegated()
+    if not (np.isscalar(block_size) or type(block_size) in (tuple,list,np.ndarray)):return delegated()
+    if np.isscalar(block_size):block=(block_size,)*image.ndim
+    else:
+        if len(block_size)!=image.ndim:raise ValueError('len(block_size) must equal image.ndim.')
+        block=tuple(block_size)
+    if any(b%2==0 for b in block):raise ValueError(f'block_size must be odd! Given block_size {block} contains even values.')
+    if type(method) not in (str,np.str_):return delegated()
+    if method=='generic':return delegated()
+    if method not in ('gaussian','mean','median'):
+        raise ValueError('Invalid method specified. Please use `generic`, `gaussian`, `mean`, or `median`.')
+    if image.ndim>16:return delegated()
+    float_dtype=np.dtype(np.float32 if image.dtype.kind=='f' and image.dtype.itemsize<=4 else np.float64)
+    if method=='gaussian':
+        sigmas=tuple((b-1)/6. for b in block) if param is None else param
+        if np.any(np.asarray(sigmas)<0.):raise ValueError('Sigma values less than zero are not valid')
+        sigmas=_gaussian_sequence(sigmas,image.ndim)
+        active=[axis for axis,sigma in enumerate(sigmas) if sigma>1e-15]
+        # SciPy normalizes modes for the full input rank before axis selection.
+        modes=_gaussian_sequence(mode,image.ndim)
+        window=()
+    elif method=='mean':
+        modes=_gaussian_sequence(mode,image.ndim)
+        window=tuple(int(b) if b>1 else 1 for b in block)
+        active=[axis for axis,w in enumerate(window) if w>1]
+    else:
+        if math.prod(block)>4096:return delegated()
+        # Small footprint metadata also reproduces NumPy's shape/index errors.
+        footprint=np.empty(block,dtype=bool)
+        window=footprint.shape
+        active=[axis for axis,w in enumerate(window) if w>1]
+        modes=_gaussian_sequence(mode,image.ndim)
+        if not isinstance(mode,str) and np.iterable(mode) and active:
+            raise RuntimeError('A sequence of modes is not supported by non-separable rank filters')
+    codes=[]
+    for axis,m in enumerate(modes):
+        if axis in active and (not isinstance(m,str) or m not in _GAUSSIAN_MODES):
+            raise RuntimeError('boundary mode not supported')
+        codes.append(_GAUSSIAN_MODES.get(m,0) if isinstance(m,str) else 0)
+    if active:
+        if type(cval) not in (int,float,bool,np.bool_,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64):
+            if type(cval) in (str,list,tuple,dict):math.isfinite(cval)
+            return delegated()
+        constant=float(cval)
+        if not math.isfinite(constant):return delegated()
+    else:constant=0.
+    if type(offset) not in (int,float,bool,np.bool_,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64):return delegated()
+    if np.geterr()['under']!='ignore' or any(p not in ('warn','ignore','raise') for p in np.geterr().values()):return delegated()
+    try:value=float(offset)
+    except (ValueError,OverflowError):return delegated()
+    if not math.isfinite(value):return delegated()
+    probe=np.zeros((),dtype=float_dtype) if image.ndim==0 else np.empty(0,dtype=float_dtype)
+    target=np.result_type(probe,offset)
+    if target not in (np.dtype(np.float32),np.dtype(np.float64)) or abs(value)>np.finfo(target).max:return delegated()
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:native=_core.edge_half(native)
+    if native.dtype.type not in (np.float32,np.float64):native=_core.gaussian_nd(native,[],[],[],0.,True,float_dtype)[0]
+    if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
+    amplitude=0.
+    if native.size:
+        low,high=_core.intensity_bounds(native)
+        if not (math.isfinite(low) and math.isfinite(high)):return delegated()
+        amplitude=max(abs(low),abs(high))
+    if amplitude+abs(value)>np.finfo(target).max:return delegated()
+    if max(amplitude,abs(constant))>np.finfo(float_dtype).max/4:return delegated()
+    if method=='gaussian':
+        kernels=[];axes=[];borders=[]
+        for axis in active:
+            sigma=sigmas[axis];radius=int(4.*float(sigma)+.5)
+            if radius>100000:return delegated()
+            cache=type(sigma) in (int,float) and 1e-15<float(sigma)<1e154
+            kernels.append((_gaussian_cached_coefficients if cache else _gaussian_coefficients)(sigma,radius))
+            axes.append(axis);borders.append(codes[axis])
+        if max(amplitude,abs(constant))>np.finfo(np.float64).max/4:return delegated()
+        result,flags=_core.gaussian_nd(native,kernels,axes,borders,constant,True,float_dtype)
+        _gaussian_copy_flags(flags,native.dtype.type,float_dtype)
+    else:
+        if any(w>100000 for w in window):return delegated()
+        if method=='mean' and max(amplitude,abs(constant))>np.finfo(np.float64).max/(4*max((1,)+window)):return delegated()
+        if method=='median' and abs(constant)>np.finfo(float_dtype).max:return delegated()
+        zero_strides=image.dtype in (np.dtype(np.float32),np.dtype(np.float64)) and image.dtype.isnative and all(s==0 for s in image.strides)
+        if method=='median' and image.ndim==1:
+            profile=_adaptive_rank_profile()
+            if image.size and profile==1 and window[0]//2>image.size:return delegated()
+            if profile>0 and (image.size>=window[0]//2 or profile==2 and image.size==1):zero_strides=False
+        result=_core.adaptive_filter(native,window,codes,0 if method=='mean' else 1,constant,zero_strides)
+    if value!=0 or np.signbit(value) or result.dtype!=target:result=_core.adaptive_offset(result,value,target)
+    return result[()] if result.ndim==0 else result
+
+
+__all__.append('threshold_local')
+
+
 _SMALL_EDGES = {'laplace':0,'roberts':1,'roberts_pos_diag':2,'roberts_neg_diag':3}
 _SMALL_EDGE_DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                                 'int32','uint64','int64','float16','float32','float64'))

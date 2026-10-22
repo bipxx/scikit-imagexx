@@ -9,6 +9,7 @@
 #include <numpy/ufuncobject.h>
 #include "skimagexx/integral.hpp"
 #include "skimagexx/gaussian_nd.hpp"
+#include "skimagexx/adaptive.hpp"
 #include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
@@ -1133,6 +1134,25 @@ PYBIND11_MODULE(_core, m) {
         py::array result(dtype,dimensions);
         {py::gil_scoped_release release;skimagexx::gaussian_unsharp_into(image.data(),blur.data(),result.mutable_data(),std::size_t(image.size()),source,target,amount,wide,clip,lower);}
         return result;
+    });
+    m.def("adaptive_filter",[](py::array image,const std::vector<std::size_t>& window,const std::vector<int>& modes,int method,double cval,bool zero_strides) {
+        auto input=py::array::ensure(image,py::array::c_style);
+        if(!input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")().cast<py::array>();
+        const auto type=pixel_type(input.dtype());std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;
+        for(py::ssize_t d=0;d<input.ndim();++d){shape.push_back(std::size_t(input.shape(d)));dimensions.push_back(input.shape(d));}
+        std::vector<skimagexx::GaussianBorder> borders;for(auto m:modes)borders.push_back(static_cast<skimagexx::GaussianBorder>(m));
+        py::array output(type==skimagexx::PixelType::float32 ? py::dtype::of<float>() : py::dtype::of<double>(),dimensions);
+        {py::gil_scoped_release release;skimagexx::adaptive_filter_into(input.data(),output.mutable_data(),type,shape,window,borders,static_cast<skimagexx::AdaptiveMethod>(method),cval,zero_strides);}
+        return output;
+    });
+    m.def("adaptive_offset",[](py::array image,double value,py::dtype dtype) {
+        if(!(image.flags()&py::array::c_style) || !image.attr("flags").attr("aligned").cast<bool>())throw py::value_error("contiguous aligned adaptive output required");
+        const auto source=pixel_type(image.dtype()),target=pixel_type(dtype);
+        py::array output;
+        if(image.dtype().equal(dtype))output=image;
+        else {std::vector<py::ssize_t> shape(image.shape(),image.shape()+image.ndim());output=py::array(dtype,shape);}
+        {py::gil_scoped_release release;skimagexx::adaptive_offset_into(image.data(),output.mutable_data(),std::size_t(image.size()),source,target,value);}
+        return output;
     });
     m.def("gaussian_nd", [](py::array image,py::list kernels,const std::vector<std::size_t>& axes,
             const std::vector<int>& modes,double cval,bool preserve,py::dtype output_dtype) {

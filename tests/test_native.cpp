@@ -4,6 +4,7 @@
 #include "skimagexx/contrast.hpp"
 #include "../src/execution.hpp"
 #include "skimagexx/gaussian_nd.hpp"
+#include "skimagexx/adaptive.hpp"
 #include "skimagexx/farid.hpp"
 #include "skimagexx/small_edge.hpp"
 #include "skimagexx/alpha.hpp"
@@ -123,6 +124,25 @@ void check_conversion_packets() {
 }
 int main() {
     using namespace skimagexx;
+    {
+        const std::vector<std::size_t> shape{5,4},window{3,1};
+        const std::vector<GaussianBorder> modes(2,GaussianBorder::reflect);
+        double input[20],output[20];for(int row=0;row<5;++row)for(int col=0;col<4;++col)input[row*4+col]=row;
+        adaptive_filter_into(input,output,PixelType::float64,shape,window,modes,AdaptiveMethod::mean);
+        const double expected[]={1./3.,1.,2.,3.,11./3.};
+        for(int row=0;row<5;++row)for(int col=0;col<4;++col)require(output[row*4+col]==expected[row]);
+        adaptive_offset_into(output,output,20,PixelType::float64,PixelType::float64,.25);
+        for(int row=0;row<5;++row)for(int col=0;col<4;++col)require(output[row*4+col]==expected[row]-.25);
+        // Each tile contains one of all 512 binary 3x3 neighborhoods. SIMD
+        // spans multiple tiles; compare every tile center with its population.
+        std::vector<float> binary(3*1536),ranked(binary.size());
+        for(unsigned pattern=0;pattern<512;++pattern)for(unsigned k=0;k<9;++k)binary[(k/3)*1536+pattern*3+k%3]=float((pattern>>k)&1);
+        adaptive_filter_into(binary.data(),ranked.data(),PixelType::float32,{3,1536},{3,3},modes,AdaptiveMethod::median);
+        for(unsigned pattern=0;pattern<512;++pattern){unsigned ones=0;for(unsigned k=0;k<9;++k)ones+=(pattern>>k)&1;require(ranked[1536+pattern*3+1]==float(ones>=5));}
+        double constant[20];std::fill_n(constant,20,7.);
+        adaptive_filter_into(constant,output,PixelType::float64,{4,5},{3,3},modes,AdaptiveMethod::median,0.,true);
+        for(int row=0;row<4;++row)for(int col=0;col<5;++col)require(output[row*5+col]==(row==3 || col==4 ? 7. : 0.));
+    }
     {
         struct Counts {int powers=0,hypots=0,first=0,second=0;} counts;
         DistanceMathCallbacks math{
