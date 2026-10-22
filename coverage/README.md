@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 97 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 98 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -192,7 +192,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.sobel_h` | native-partial | yes (partial input contract) | yes |
 | `filters.sobel_v` | native-partial | yes (partial input contract) | yes |
 | `filters.threshold_isodata` | native-partial | yes (partial input contract) | yes |
-| `filters.threshold_li` | upstream-only | pending | pending |
+| `filters.threshold_li` | native-partial | yes (partial input contract) | yes |
 | `filters.threshold_local` | upstream-only | pending | pending |
 | `filters.threshold_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.threshold_minimum` | native-partial | yes (partial input contract) | yes |

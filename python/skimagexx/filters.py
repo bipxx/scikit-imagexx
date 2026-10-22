@@ -82,6 +82,7 @@ def __getattr__(name):
 
 
 _THRESHOLD_DTYPES = (np.dtype('uint8'),np.dtype('float32'),np.dtype('float64'))
+_LI_BUFFERED_REDUCE = np.lib.NumpyVersion(np.__version__)<'2.3.0'
 
 def threshold_li(image, *, tolerance=None, initial_guess=None, iter_callback=None):
     original_image=image
@@ -100,7 +101,7 @@ def threshold_li(image, *, tolerance=None, initial_guess=None, iter_callback=Non
     if kind==5:return delegated()
     policy=np.geterr()
     if policy['under']!='ignore' or any(value not in ('ignore','warn','raise') for value in policy.values()):return delegated()
-    number_types=(int,float,bool,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64)
+    number_types=(int,float,bool,np.bool_,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64)
     if tolerance is not None and type(tolerance) not in number_types:return delegated()
     if not tolerance:
         if image.dtype.kind in 'iu':resolved=.5
@@ -121,7 +122,7 @@ def threshold_li(image, *, tolerance=None, initial_guess=None, iter_callback=Non
             raise ValueError(f'The initial guess for threshold_li must be within the range of the image. Got {initial_guess} for image min {low} and max {image_max}.')
         guess=scalar(shifted)
     if iter_callback is not None:return delegated()
-    block=np.getbufsize() if np.lib.NumpyVersion(np.__version__)<'2.3.0' else 0
+    block=np.getbufsize() if _LI_BUFFERED_REDUCE else 0
     value,updated,status=prepared.run(float(resolved),has_guess,float(guess),reduction_block=block)
     if status&32:return delegated()
     # Scalar metadata reproduces NumPy warning/error policy and evaluation order.

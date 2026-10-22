@@ -153,21 +153,15 @@ template<class T> LiResult floating_run(const std::vector<T>& values,T low,doubl
         first=false;current=next;
         const auto left=partition_values(values,current,back,fore,workers),right=values.size()-left;
         const auto mean_fore=mean(fore.data(),right,workers,block),mean_back=mean(back.data(),left,workers,block);
-        if(math && math->statistics)math->statistics(double(current),double(mean_back),double(mean_fore),math->context);
         if(!right)result.status|=1;
         if(!std::isfinite(mean_back) || (!std::isfinite(mean_fore) && right))return {0,false,32};
         if(mean_back==0)break;
         const auto numerator=T(mean_back-mean_fore),denominator=T(logarithm(mean_back,math)-logarithm(mean_fore,math));
         next=T(numerator/denominator);result.updated=true;
         if(math && math->iteration)math->iteration(double(T(next+low)),true,math->context);
-        if(math && math->poll && (++iterations%1024)==0)math->poll(math->context);
+        if(math && math->poll && ((++iterations%1024)==0 || values.size()>=8192))math->poll(math->context);
     }
     result.value=double(T(next+low));return result;
-}
-}
-namespace detail {
-double li_mean_probe(const void* input,std::size_t n,bool single,std::size_t block) {
-    return single ? double(mean(static_cast<const float*>(input),n,1,block)) : mean(static_cast<const double*>(input),n,1,block);
 }
 }
 struct LiImage::Impl {
@@ -243,7 +237,6 @@ LiResult LiImage::run(double tolerance,bool has_guess,double guess,const LiMath*
         const auto back_weight=s.histogram_count[split],fore_weight=s.histogram_count[bins]-back_weight;
         const auto mean_back=s.histogram_sum[split]/back_weight;
         const auto mean_fore=(s.histogram_sum[bins]-s.histogram_sum[split])/fore_weight;
-        if(math && math->statistics)math->statistics(current,mean_back,mean_fore,math->context);
         if(mean_back==0)break;
         next=(mean_back-mean_fore)/(logarithm(mean_back,math)-logarithm(mean_fore,math));result.updated=true;
         if(math && math->iteration)math->iteration(next+s.low,true,math->context);

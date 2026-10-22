@@ -16,7 +16,6 @@
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
 #include "skimagexx/li.hpp"
-#include "li_detail.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
@@ -708,29 +707,23 @@ PYBIND11_MODULE(_core, m) {
         throw py::type_error("supported dtypes are uint8, float32, and float64");
     },py::arg("image"),py::arg("name"),py::arg("parameter"),py::arg("gain"),py::arg("inverse")=false);
     const auto li_log=std::make_shared<NumpyLiLog>();
-    py::class_<skimagexx::LiImage,std::shared_ptr<skimagexx::LiImage>>(m,"_LiImage")
+    py::class_<skimagexx::LiImage,std::shared_ptr<skimagexx::LiImage>>(m,"_LiImage",py::module_local())
         .def_property_readonly("kind",[](const skimagexx::LiImage& image){return int(image.kind());})
         .def_property_readonly("value",&skimagexx::LiImage::value)
         .def_property_readonly("minimum",&skimagexx::LiImage::minimum)
         .def_property_readonly("maximum",&skimagexx::LiImage::maximum)
         .def("spacing",&skimagexx::LiImage::spacing,py::call_guard<py::gil_scoped_release>())
-        .def("run",[li_log](const skimagexx::LiImage& image,double tolerance,bool has_guess,double guess,py::object trace,py::object statistics,std::size_t reduction_block){
-            struct Call {NumpyLiLog* logarithms;py::object trace,statistics;};
-            Call context{li_log.get(),trace,statistics};
+        .def("run",[li_log](const skimagexx::LiImage& image,double tolerance,bool has_guess,double guess,py::object trace,std::size_t reduction_block){
+            struct Call {NumpyLiLog* logarithms;py::object trace;};
+            Call context{li_log.get(),trace};
             const skimagexx::LiMath math{
                 [](double value,bool single,void* data){return NumpyLiLog::logarithm(value,single,static_cast<Call*>(data)->logarithms);},
                 NumpyLiLog::poll,&context,
-                trace.is_none() ? nullptr : +[](double value,bool updated,void* data){py::gil_scoped_acquire acquire;static_cast<Call*>(data)->trace(value,updated);},
-                statistics.is_none() ? nullptr : +[](double pivot,double back,double fore,void* data){py::gil_scoped_acquire acquire;static_cast<Call*>(data)->statistics(pivot,back,fore);},reduction_block};
+                trace.is_none() ? nullptr : +[](double value,bool updated,void* data){py::gil_scoped_acquire acquire;static_cast<Call*>(data)->trace(value,updated);},reduction_block};
             skimagexx::LiResult result;
             {py::gil_scoped_release release;result=image.run(tolerance,has_guess,guess,&math);}
             return py::make_tuple(result.value,result.updated,result.status);
-        },py::arg("tolerance"),py::arg("has_guess"),py::arg("guess"),py::arg("trace")=py::none(),py::arg("statistics")=py::none(),py::arg("reduction_block")=0);
-    m.def("_li_mean",[](py::array values,std::size_t block){
-        if(!dtype_matches(values.dtype(),py::dtype::of<float>()) && !dtype_matches(values.dtype(),py::dtype::of<double>()))throw py::type_error("floating mean probe required");
-        auto input=values.attr("copy")().cast<py::array>();
-        return skimagexx::detail::li_mean_probe(input.data(),std::size_t(input.size()),input.itemsize()==4,block);
-    },py::arg("values"),py::arg("block")=0);
+        },py::arg("tolerance"),py::arg("has_guess"),py::arg("guess"),py::arg("trace")=py::none(),py::arg("reduction_block")=0);
     m.def("li_prepare",[](py::array image){
         auto prepare=[&](auto dummy){
             using T=decltype(dummy);auto a=py::array_t<T,py::array::c_style>::ensure(image);

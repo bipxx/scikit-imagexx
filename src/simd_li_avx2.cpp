@@ -67,7 +67,7 @@ template<class T> std::size_t shift(const T* input,T* output,std::size_t n,T low
     for(;i+V::lanes<=n;i+=V::lanes)V::store(output+i,V::sub(V::load(input+i),offset));
     return i;
 }
-template<class T> double sum(const T* input,std::size_t n) {
+template<class T> double ordered_sum_block(const T* input,std::size_t n) {
     if(n<8){T total=-T(0);for(std::size_t i=0;i<n;++i)total=T(total+input[i]);return double(total);}
     using V=Vector<T>;auto first=V::load(input);typename V::R second{};
     if constexpr(std::is_same_v<T,double>)second=V::load(input+4);
@@ -109,7 +109,9 @@ std::size_t li_scan(const void* input,std::size_t n,bool single,double first,det
 std::size_t li_shift(const void* input,void* output,std::size_t n,bool single,double low) {
     return single ? shift(static_cast<const float*>(input),static_cast<float*>(output),n,float(low)) : shift(static_cast<const double*>(input),static_cast<double*>(output),n,low);
 }
-double li_sum(const void* input,std::size_t n,bool single) {return single ? sum(static_cast<const float*>(input),n) : sum(static_cast<const double*>(input),n);}
+double li_sum(const void* input,std::size_t n,bool single) {
+    return single ? ordered_sum_block(static_cast<const float*>(input),n) : ordered_sum_block(static_cast<const double*>(input),n);
+}
 std::size_t li_count(const void* input,std::size_t n,bool single,double pivot,std::size_t& out) {return single ? count(static_cast<const float*>(input),n,float(pivot),out) : count(static_cast<const double*>(input),n,pivot,out);}
 std::size_t li_partition(const void* input,std::size_t n,bool single,double pivot,void* low,void* high,std::size_t low_cap,std::size_t high_cap,std::size_t& left,std::size_t& right) {
     return single ? partition(static_cast<const float*>(input),n,float(pivot),static_cast<float*>(low),static_cast<float*>(high),low_cap,high_cap,left,right) : partition(static_cast<const double*>(input),n,pivot,static_cast<double*>(low),static_cast<double*>(high),low_cap,high_cap,left,right);

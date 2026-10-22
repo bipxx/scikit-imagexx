@@ -10,7 +10,8 @@ struct LiMath {
     void (*poll)(void*)=nullptr;
     void* context=nullptr;
     void (*iteration)(double,bool,void*)=nullptr;
-    void (*statistics)(double,double,double,void*)=nullptr;
+    // Zero selects a single full reduction tree; NumPy before2.3 uses its
+    // current ufunc buffer size and then accumulates the block sums in order.
     std::size_t reduction_block=0;
 };
 // Copies logical contiguous input, removes nonfinite samples in upstream order,

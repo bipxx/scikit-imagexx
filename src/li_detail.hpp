@@ -7,5 +7,4 @@ struct LiScan {
     double low=std::numeric_limits<double>::infinity(),high=-std::numeric_limits<double>::infinity();
     bool constant=true;
 };
-double li_mean_probe(const void*,std::size_t,bool,std::size_t);
 }

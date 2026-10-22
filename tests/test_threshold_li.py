@@ -61,11 +61,11 @@ def test_storage_and_no_mutation(dtype,layout):
     before=a.copy();compare(a);np.testing.assert_array_equal(a,before)
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
-@pytest.mark.parametrize('tolerance',[None,0,.001,.5,2,999,np.inf,np.nan,np.float32(.1),np.float64(.1),True,False])
+@pytest.mark.parametrize('tolerance',[None,0,.001,.5,2,999,np.inf,np.nan,np.float16(.1),np.float32(.1),np.float64(.1),True,False,np.bool_(True)])
 def test_tolerance(dtype,tolerance):compare(sample(dtype,(19,23)),tolerance=tolerance)
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
-@pytest.mark.parametrize('guess',[-100,0,.001,.5,1,2,3,7,200,255,999,np.inf,-np.inf,np.nan,np.float32(2.1)])
+@pytest.mark.parametrize('guess',[-100,0,.001,.5,1,2,3,7,200,255,999,np.inf,-np.inf,np.nan,np.float16(2.1),np.float32(2.1),np.bool_(True)])
 def test_numeric_guess(dtype,guess):compare(sample(dtype,(19,23)),initial_guess=guess)
 
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
@@ -86,12 +86,47 @@ def test_errstate_raise_on_empty_foreground(dtype):
     with np.errstate(invalid='raise'):compare(np.array([3,np.inf],dtype=dtype),tolerance=.5)
 
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
+def test_guess_rounding_to_maximum(dtype):
+    compare(np.array([0,.5,1],dtype=dtype),initial_guess=np.float64(1)-np.float64(1e-9))
+
+@pytest.mark.parametrize('size',[16,128,8192,16384])
+def test_numpy_reduction_buffer(size):
+    previous=np.getbufsize();np.setbufsize(size)
+    try:compare(sample(np.float32,(262149,)))
+    finally:np.setbufsize(previous)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
 @pytest.mark.parametrize('length',[9,129,8191,8192,8193,262149,1048583])
 @pytest.mark.parametrize('seed',[5,17,951])
 def test_continuous_float_reductions(dtype,length,seed):
     rng=np.random.default_rng(seed)
     a=(rng.standard_normal(length)*7-3).astype(dtype)
     a[::31]=np.nan;a[::67]=np.inf
+    # Some upstream float32/default-tolerance inputs enter a two-cycle. Check
+    # their exact bounded native iteration trace rather than hanging the suite.
+    class Cycle(Exception):pass
+    steps=[]
+    def observe(value):
+        steps.append(value)
+        if len(steps)==128:raise Cycle()
+    try:reference(a,iter_callback=observe)
+    except Cycle:
+        from skimagexx import _core
+        prepared=_core.li_prepare(a)
+        clean=a[np.isfinite(a)];clean-=clean.min()
+        spacing=np.min(np.diff(np.unique(clean)))
+        assert dtype(prepared.spacing())==spacing
+        tolerance=spacing/2
+        native=[]
+        def capture(value,updated):
+            native.append(dtype(value))
+            if len(native)==len(steps):raise Cycle()
+        block=np.getbufsize() if np.lib.NumpyVersion(np.__version__)<'2.3.0' else 0
+        with pytest.raises(Cycle):prepared.run(float(tolerance),False,0,capture,reduction_block=block)
+        np.testing.assert_array_equal(native,steps)
+        assert steps[-1]==steps[-3] and steps[-2]==steps[-4]
+        assert abs(steps[-1]-steps[-2])>tolerance
+        return
     compare(a)
 
 @pytest.mark.parametrize('options',[{'initial_guess':np.mean},{'iter_callback':lambda x:None}])

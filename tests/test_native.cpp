@@ -9,6 +9,7 @@
 #include "skimagexx/alpha.hpp"
 #include "skimagexx/local_threshold.hpp"
 #include "skimagexx/threshold.hpp"
+#include "skimagexx/li.hpp"
 #include "skimagexx/image.hpp"
 #include "skimagexx/convert.hpp"
 #include "skimagexx/color.hpp"
@@ -122,6 +123,29 @@ void check_conversion_packets() {
 }
 int main() {
     using namespace skimagexx;
+    {
+        LiImage empty(nullptr,0,PixelType::float32);require(empty.kind()==LiKind::empty);
+        const float nonfinite[]={NAN,INFINITY,-INFINITY};
+        LiImage infs(nonfinite,3,PixelType::float32);require(infs.kind()==LiKind::infinities);
+        const unsigned char boolean[]={128,255,1};
+        LiImage constant(boolean,3,PixelType::boolean);require(constant.kind()==LiKind::constant && constant.value()==1);
+        const float reduction[]={0,54.438114f,19.359095f,44.231182f};
+        LiImage order(reduction,4,PixelType::float32);
+        require(order.run(INFINITY).value==double(0x1.d81d14p+4f));
+        const float finite_and_inf[]={3,INFINITY};
+        LiImage single(finite_and_inf,2,PixelType::float32);
+        require(single.kind()==LiKind::ready && std::isnan(single.spacing()));
+        const auto result=single.run(.5);require(result.value==3 && result.status==1);
+        std::vector<float> image(262149);
+        for(std::size_t i=0;i<image.size();++i)image[i]=float((i*37)%256)*.03125f-3;
+        set_num_threads(1);LiImage first(image.data(),image.size(),PixelType::float32);
+        const auto spacing=first.spacing(),reference=first.run(spacing/2).value;
+#ifdef _OPENMP
+        set_num_threads(4);LiImage second(image.data(),image.size(),PixelType::float32);
+        require(second.spacing()==spacing && second.run(spacing/2).value==reference);
+#endif
+        set_num_threads(1);
+    }
     require(get_num_threads() == 1);
     {
         const auto length=std::size_t(std::numeric_limits<int>::max())+17;
