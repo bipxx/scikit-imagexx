@@ -85,6 +85,41 @@ std::size_t root(std::vector<std::size_t>& parents,std::size_t i) {
 void unite(std::vector<std::size_t>& parents,std::size_t a,std::size_t b) {
     a=root(parents,a);b=root(parents,b);if(a>b)std::swap(a,b);parents[b]=a;
 }
+#if defined(_MSC_VER)
+__declspec(noinline)
+#elif defined(__GNUC__) || defined(__clang__)
+__attribute__((noinline))
+#endif
+void flood_runs(const std::uint8_t* weak,const std::uint8_t* strong,std::uint8_t* out,
+    std::size_t n,std::size_t width,bool background) {
+    // Flood whole horizontal runs. Each selected pixel is written once,
+    // while the queue holds runs instead of every seed and reached pixel.
+    using Run=std::pair<std::size_t,std::size_t>;
+    std::vector<Run> queue;
+    for(std::size_t i=0;i<n;++i)out[i]=!weak[i] && background;
+    auto discover=[&](std::size_t seed,std::size_t row_begin) {
+        auto left=seed,right=seed+1;const auto row_end=row_begin+width;
+        while(left>row_begin && weak[left-1] && !out[left-1])--left;
+        while(right<row_end && weak[right] && !out[right])++right;
+        std::fill(out+left,out+right,std::uint8_t(1));
+        queue.emplace_back(left,right);return right;
+    };
+    for(std::size_t seed=0;seed<n;++seed)if(weak[seed] && strong[seed] && !out[seed]) {
+        queue.clear();discover(seed,seed-seed%width);
+        for(std::size_t head=0;head<queue.size();++head) {
+            // discover may reallocate the queue; keep this run by value.
+            const auto run=queue[head];const auto row_begin=run.first-run.first%width;
+            auto scan=[&](std::size_t begin,std::size_t end,std::size_t adjacent_row) {
+                for(auto i=begin;i<end;) {
+                    if(weak[i] && !out[i])i=discover(i,adjacent_row);
+                    else ++i;
+                }
+            };
+            if(row_begin)scan(run.first-width,run.second-width,row_begin-width);
+            if(row_begin<n-width)scan(run.first+width,run.second+width,row_begin+width);
+        }
+    }return;
+}
 }
 void hysteresis_minimum_into(const HysteresisView& a,const HysteresisView& b,void* out,const std::vector<std::size_t>& shape){dispatch(a,b,out,shape,true);}
 void hysteresis_greater_into(const HysteresisView& a,const HysteresisView& b,std::uint8_t* out,const std::vector<std::size_t>& shape){dispatch(a,b,out,shape,false);}
@@ -100,34 +135,7 @@ void hysteresis_connect_into(const std::uint8_t* weak,const std::uint8_t* strong
     }
     const auto pitch=pitches(shape);
     if(workers==1 && shape.size()==2) {
-        // Flood whole horizontal runs. Each selected pixel is written once,
-        // while the queue holds runs instead of every seed and reached pixel.
-        const auto width=shape[1];
-        using Run=std::pair<std::size_t,std::size_t>;
-        std::vector<Run> queue;
-        for(std::size_t i=0;i<n;++i)out[i]=!weak[i] && counts.background;
-        auto discover=[&](std::size_t seed,std::size_t row_begin) {
-            auto left=seed,right=seed+1;const auto row_end=row_begin+width;
-            while(left>row_begin && weak[left-1] && !out[left-1])--left;
-            while(right<row_end && weak[right] && !out[right])++right;
-            std::fill(out+left,out+right,std::uint8_t(1));
-            queue.emplace_back(left,right);return right;
-        };
-        for(std::size_t seed=0;seed<n;++seed)if(weak[seed] && strong[seed] && !out[seed]) {
-            queue.clear();discover(seed,seed-seed%width);
-            for(std::size_t head=0;head<queue.size();++head) {
-                // discover may reallocate the queue; keep this run by value.
-                const auto run=queue[head];const auto row_begin=run.first-run.first%width;
-                auto scan=[&](std::size_t begin,std::size_t end,std::size_t adjacent_row) {
-                    for(auto i=begin;i<end;) {
-                        if(weak[i] && !out[i])i=discover(i,adjacent_row);
-                        else ++i;
-                    }
-                };
-                if(row_begin)scan(run.first-width,run.second-width,row_begin-width);
-                if(row_begin<n-width)scan(run.first+width,run.second+width,row_begin+width);
-            }
-        }return;
+        flood_runs(weak,strong,out,n,shape[1],counts.background);return;
     }
     if(workers==1) {
         std::vector<std::size_t> queue;queue.reserve(counts.weak);
