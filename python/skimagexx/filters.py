@@ -1124,9 +1124,18 @@ def threshold_multiotsu(image=None, classes=3, nbins=256, *, hist=None):
         return centers[np.flatnonzero(prob)[:-1]]
     if prob.size>4096 or not np.isfinite(prob).all() or np.max(prob)>1e10:
         return fallback('filters','threshold_multiotsu',image,classes,nbins,hist=hist)
+    if not prob.flags.c_contiguous:
+        warn_rgb()
+        raise ValueError('ndarray is not C-contiguous')
+    if not prob.flags.writeable:
+        warn_rgb()
+        raise ValueError('buffer source array is read-only')
+    indices=_core.threshold_multiotsu(prob,int(classes))
+    # Upstream leaves its output indices unwritten if every objective rounds
+    # to zero. Do not present deterministic invented indices as native parity.
+    if indices.size!=classes-1:
+        return fallback('filters','threshold_multiotsu',image,classes,nbins,hist=hist)
     warn_rgb()
-    if not prob.flags.c_contiguous:raise ValueError('ndarray is not C-contiguous')
-    if not prob.flags.writeable:raise ValueError('buffer source array is read-only')
-    return centers[_core.threshold_multiotsu(prob,int(classes))]
+    return centers[indices]
 
 __all__.append('threshold_multiotsu')

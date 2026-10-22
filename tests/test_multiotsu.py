@@ -33,6 +33,7 @@ def compare(image=None,**options):
         assert type(actual) is type(expected) and actual.dtype==expected.dtype
         np.testing.assert_array_equal(actual,expected)
         assert actual.dtype.metadata==expected.dtype.metadata
+        if expected.dtype.kind=='f':np.testing.assert_array_equal(np.signbit(actual),np.signbit(expected))
 
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
@@ -136,3 +137,19 @@ def test_supplied_center_indexing(dtype,gaps):
     counts=np.arange(1,18,dtype=np.float32)
     if gaps:counts[::3]=0
     compare(hist=(counts,centers[::-1]))
+
+
+@pytest.mark.parametrize('classes',[2,3,4])
+def test_unwritten_upstream_objective_is_explicit_fallback(classes,monkeypatch):
+    # Never execute upstream's uninitialized-index path in this test.
+    counts=np.full(7,1e-40,dtype=np.float32)
+    with pytest.raises(NotImplementedError):xx.filters.threshold_multiotsu(hist=counts,classes=classes)
+    import skimage.filters as upstream
+    sentinel=np.array([-1,1],dtype=np.int64)
+    def delegated(image=None,classes=3,nbins=256,*,hist=None):
+        assert hist is counts
+        return sentinel
+    monkeypatch.setattr(upstream,'threshold_multiotsu',delegated)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning):
+        assert xx.filters.threshold_multiotsu(hist=counts,classes=classes) is sentinel

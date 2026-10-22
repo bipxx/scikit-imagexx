@@ -13,13 +13,32 @@ namespace skimagexx {
 std::vector<std::size_t> threshold_multiotsu(const float* prob,std::size_t n,std::size_t classes) {
     if(!prob || n<classes || classes<2 || classes>16 || n>4096)
         throw std::invalid_argument("multi-Otsu requires 2..16 classes and at most 4096 bins");
-    std::vector<float> mass(n),moment(n),lut(n*(n+1)/2,0),tail(n);
+    // Two classes need only prefix and suffix scores, rather than the whole
+    // triangular table. Keep the same prefix rounding and zero [0,0] score.
+    std::vector<float> mass(n),moment(n),first(n,0);
     mass[0]=moment[0]=prob[0];
     for(std::size_t i=1;i<n;++i) {
         mass[i]=mass[i-1]+prob[i];
         moment[i]=moment[i-1]+float(i)*prob[i];
-        if(mass[i]>0)lut[i]=(moment[i]*moment[i])/mass[i];
+        if(mass[i]>0)first[i]=(moment[i]*moment[i])/mass[i];
     }
+    if(classes==2) {
+        std::vector<float> scores(n-1);std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2())done=simd::multiotsu_two_scores(mass.data(),moment.data(),first.data(),
+            scores.data(),n-1,mass.back(),moment.back());
+#endif
+        for(std::size_t j=done;j+1<n;++j) {
+            const float w=mass.back()-mass[j],s=moment.back()-moment[j];
+            scores[j]=first[j]+(w>0 ? (s*s)/w : 0);
+        }
+        float best=0;std::size_t index=0;
+        for(std::size_t j=0;j+1<n;++j)if(scores[j]>best) {best=scores[j];index=j;}
+        if(!(best>0))return {};
+        return {index};
+    }
+    std::vector<float> lut(n*(n+1)/2,0),tail(n);
+    std::copy(first.begin(),first.end(),lut.begin());
     const auto row=[n](std::size_t i){return i*(2*n-i+1)/2;};
     const int workers=detail::active_workers(n*n);
     detail::partition(n-1,workers,[&](std::size_t begin,std::size_t end,std::size_t) {
@@ -40,10 +59,6 @@ std::vector<std::size_t> threshold_multiotsu(const float* prob,std::size_t n,std
         const auto consider=[&](std::size_t j,float score) {
             if(score>best.score) {best.score=score;current.back()=j;best.indices=current;}
         };
-        if(classes==2) {
-            for(std::size_t j=begin;j<end;++j)consider(j,lut[j]+tail[j+1]);
-            return;
-        }
         const auto visit=[&](auto&& self,std::size_t depth,std::size_t start)->void {
             if(depth==classes-2) {
                 const float first=lut[current[0]];
@@ -74,6 +89,7 @@ std::vector<std::size_t> threshold_multiotsu(const float* prob,std::size_t n,std
     // preserves upstream's first representative even when workers vary.
     Result best=results[0];
     for(std::size_t i=1;i<results.size();++i)if(results[i].score>best.score)best=results[i];
+    if(!(best.score>0))return {};
     return best.indices;
 }
 }

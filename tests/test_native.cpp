@@ -1257,6 +1257,9 @@ int main() {
             require(threshold_multiotsu(large_counts.data(),1024,3)==std::vector<std::size_t>({339,681}));
         }
         set_num_threads(1);
+        const float tiny_counts[7]={1e-40f,1e-40f,1e-40f,1e-40f,1e-40f,1e-40f,1e-40f};
+        require(threshold_multiotsu(tiny_counts,7,2).empty());
+        require(threshold_multiotsu(tiny_counts,7,3).empty());
         const float counts[]={1,9,2,4,8,3,1,7,4};
         const std::vector<std::vector<std::size_t>> expected={{4},{2,5},{2,4,6},{1,3,5,7}};
         for(std::size_t classes=2;classes<=5;++classes)
