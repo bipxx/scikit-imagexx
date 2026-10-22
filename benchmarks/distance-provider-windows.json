@@ -1,0 +1,2812 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-22T09:07:43.581913+00:00",
+    "numpy": "2.5.4",
+    "scikit_image": "0.26.0",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "avx2": true,
+    "reference_thread_pools": 1,
+    "fallback_enabled": false,
+    "svml_double_angles": false,
+    "repeat": 7,
+    "target_ms": 15,
+    "cooldown_ms": 20,
+    "command": [
+      "benchmarks/ciede2000.py",
+      "--threads",
+      "1",
+      "4",
+      "--baseline-dir",
+      "C:/Users/HEQ/Projects/scikit-imagexx/build/checkpoints/distance-provider-baseline/windows",
+      "--output",
+      "benchmarks/distance-provider-windows.json"
+    ],
+    "source_sha256": "7bdbb498c5999e364c0bdeaf9f4622a301923a5ecf105794055004f5382435fa",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "binary_sha256": {
+      "_core.cp313-win_amd64.pyd": "60c427283647e378919a9a39e76d769d66e8dfc675e6154269f10636a513f759"
+    },
+    "baseline": {
+      "revision": "bb0d364f4931b23977bd9b418eca333f4546c602",
+      "source_sha256": "34e8a3f35f168464771e72cced4468bdffcbe92057b3829341259af137e1bb87",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "d338311b056efc019f2047b4340b40a0e4e6b427a1e545d0d8df86b783b7bf75"
+      },
+      "python_sha256": {
+        "color.py": "658d99cf470d0d6dce945d0839447197a50d9f89f8033717f0b6cc0cfab2d3b8",
+        "coverage.py": "95bc104412b3b294e634bf233601dc386a7c67a046f0c76c766ec3fcf94f0a65",
+        "data.py": "9aac15ec567659326d23558f178328c45ee5406ee459cf85676666bbfd245118",
+        "draw.py": "1716a3fa95a1444fbba0ee4ebed8ba309776768f874585077679c7013a21cd56",
+        "exposure.py": "2a8a2e4e1f5e685e4ee282e2a923976c9ec3be069d281e30de230e8c3ce64be6",
+        "feature.py": "15806777253793b6b5da6de763f8eaa2586b2aa8ca9f30c6d170eb9df6b8751d",
+        "filters.py": "239d8a5a4a563ae94706ce5d3b974d46bda00391fa47107dcc6b16589269af3d",
+        "future.py": "6ddf5074f93358317213f3f00ab84b1ea28bebf5ed66626a2c970e6a148cc0b1",
+        "graph.py": "904cc8dfbd95a4e93c023cd5ec1106eb44dce7caa896f184388457a51bfcd3d5",
+        "io.py": "f1c41b536f9cee004ebf48b02262356cb17bf019a7f5c9483a4c3df6fb4c1c56",
+        "measure.py": "ac57f4a04d5c3f7369e8ea745c1f942bf874792276999ca7cd4d76686d2489a0",
+        "metrics.py": "b72af9ea41398bdda72c6b61cdbb964c57505d4802515840d464f643056b34bc",
+        "morphology.py": "374e40e022a3dab47c23cce5c935c150d05a9e034151f59d6b76835df80a002b",
+        "registration.py": "0aa71aff84df994f35dcfb4e0948e41e818ca1d65a2780705880e5a091e1649e",
+        "restoration.py": "f24cdb988bc46e5a81df017bb84d462fdcb487dbfedc6c7884d9a3d7270c1577",
+        "segmentation.py": "d9fd1488b715b874ed76547e9c118cf416be6ce4094d1b6a628a3fa5b5d22034",
+        "transform.py": "eb22b0c785b0e3792068a0d0736bf1482efdc2e88902c4e891dfaaff013a5201",
+        "util.py": "8943fb70a42569a6aefe28c560742fecbefc55d0835e0a21588efff545814da0",
+        "_compat.py": "63064dca0e70f7de97d7a3a4eaa95acbdcc424e146fb6e267a17ba9454760e1a",
+        "_rgb_colors.py": "e394583316402d9a25824ce9dfe28ab0b9b6c833f6c96f93bce33e0afd7c467e",
+        "_stain_matrices.py": "882d26897fca08ad84965660715cdefe55f275573100aa85330502a4cc235223",
+        "_whitepoints.py": "1b42bf251dc1ff142ad82381eb4f10b6a5e9545e353cf8dee6efdeeb34ca7055",
+        "__init__.py": "ea71e8845b0a03920e34694e574707edd88f8a5cdc0c7cc3ab01d61362e1e7be"
+      }
+    }
+  },
+  "results": [
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 40.4467,
+      "cpp_ms": 29.523,
+      "speedup": 1.3700064356603325,
+      "samples_ms": [
+        [
+          44.0535,
+          42.8369,
+          42.421,
+          40.4467,
+          39.918,
+          39.4172,
+          40.1437
+        ],
+        [
+          29.7192,
+          29.523,
+          29.0506,
+          29.1464,
+          29.7728,
+          29.0739,
+          33.2331
+        ],
+        [
+          30.4327,
+          29.6921,
+          30.25,
+          30.3979,
+          30.11,
+          30.3482,
+          30.1321
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 30.25,
+      "improvement": 1.024624868746401
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 40.3515,
+      "cpp_ms": 7.9675,
+      "speedup": 5.064512080326326,
+      "samples_ms": [
+        [
+          40.3515,
+          39.6228,
+          40.5463,
+          44.2498,
+          40.8344,
+          40.0179,
+          39.708
+        ],
+        [
+          8.303,
+          10.2585,
+          7.9675,
+          7.5264,
+          9.0725,
+          7.9081,
+          7.8711
+        ],
+        [
+          8.6515,
+          10.6379,
+          8.2333,
+          8.1541,
+          9.7893,
+          8.2822,
+          8.2527
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.2822,
+      "improvement": 1.0394979604643866
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 41.5738,
+      "cpp_ms": 30.3775,
+      "speedup": 1.3685721339807422,
+      "samples_ms": [
+        [
+          41.7485,
+          42.0274,
+          42.2498,
+          40.7188,
+          41.5738,
+          40.8616,
+          39.4095
+        ],
+        [
+          31.2332,
+          34.1363,
+          29.6555,
+          30.6006,
+          30.3775,
+          30.135,
+          29.3637
+        ],
+        [
+          30.3784,
+          31.1031,
+          31.0563,
+          31.0807,
+          31.1497,
+          29.9108,
+          29.5318
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 31.0563,
+      "improvement": 1.022345485968233
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 40.3843,
+      "cpp_ms": 8.5319,
+      "speedup": 4.7333302078083435,
+      "samples_ms": [
+        [
+          48.1255,
+          41.9087,
+          40.0917,
+          40.3843,
+          39.2884,
+          44.7556,
+          38.6471
+        ],
+        [
+          8.5319,
+          9.1405,
+          7.6283,
+          7.7284,
+          7.6127,
+          16.6578,
+          12.7784
+        ],
+        [
+          8.0101,
+          8.1394,
+          10.9278,
+          9.1102,
+          8.088,
+          9.5574,
+          8.3044
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.3044,
+      "improvement": 0.9733353649245771
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 1,
+      "options": {
+        "channel_axis": 0.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 41.7694,
+      "cpp_ms": 29.6445,
+      "speedup": 1.4090101030545295,
+      "samples_ms": [
+        [
+          38.6509,
+          39.0249,
+          42.7982,
+          41.7694,
+          42.3329,
+          41.432,
+          44.8762
+        ],
+        [
+          29.2362,
+          29.6445,
+          28.6714,
+          31.8195,
+          31.2081,
+          28.75,
+          30.4256
+        ],
+        [
+          27.9076,
+          31.3337,
+          27.9599,
+          29.638,
+          28.7136,
+          28.7956,
+          29.0738
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 28.7956,
+      "improvement": 0.9713639966941591
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 4,
+      "options": {
+        "channel_axis": 0.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 40.8149,
+      "cpp_ms": 7.9335,
+      "speedup": 5.1446272137139974,
+      "samples_ms": [
+        [
+          40.3083,
+          41.1445,
+          40.4546,
+          40.7031,
+          41.2224,
+          40.8149,
+          41.2836
+        ],
+        [
+          7.9035,
+          10.3939,
+          7.9335,
+          7.6596,
+          8.5477,
+          7.9554,
+          7.731
+        ],
+        [
+          7.9996,
+          8.3,
+          8.9328,
+          7.9199,
+          8.8445,
+          7.77,
+          8.8119
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.3,
+      "improvement": 1.0461965084767126
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 1,
+      "options": {
+        "channel_axis": 0.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 40.1793,
+      "cpp_ms": 28.9399,
+      "speedup": 1.3883703813765769,
+      "samples_ms": [
+        [
+          40.0575,
+          41.5168,
+          40.6243,
+          40.1793,
+          38.6685,
+          40.9841,
+          40.1196
+        ],
+        [
+          28.2434,
+          27.5962,
+          32.0279,
+          28.1767,
+          28.9399,
+          29.8657,
+          29.9692
+        ],
+        [
+          29.287,
+          30.1271,
+          27.5569,
+          27.8033,
+          28.9308,
+          28.0071,
+          27.9157
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 28.0071,
+      "improvement": 0.9677676840624881
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 4,
+      "options": {
+        "channel_axis": 0.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 39.8072,
+      "cpp_ms": 7.8836,
+      "speedup": 5.0493683088944135,
+      "samples_ms": [
+        [
+          39.4783,
+          39.7805,
+          39.6049,
+          39.8072,
+          40.7973,
+          40.2023,
+          40.8473
+        ],
+        [
+          8.8711,
+          7.9789,
+          7.3816,
+          8.0925,
+          7.5896,
+          7.8836,
+          7.7694
+        ],
+        [
+          8.1443,
+          7.6722,
+          8.8481,
+          7.1329,
+          8.1925,
+          7.3594,
+          14.7748
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.1443,
+      "improvement": 1.033068648840631
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 22.5903,
+      "cpp_ms": 15.9924,
+      "speedup": 1.4125647182411645,
+      "samples_ms": [
+        [
+          22.5903,
+          21.9335,
+          22.1744,
+          22.5437,
+          24.5661,
+          24.4522,
+          27.2886
+        ],
+        [
+          15.6811,
+          15.858,
+          15.9924,
+          15.3763,
+          16.0387,
+          17.3341,
+          16.571
+        ],
+        [
+          16.8154,
+          16.2622,
+          17.0929,
+          17.3184,
+          15.9393,
+          16.9462,
+          16.5297
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 16.8154,
+      "improvement": 1.0514619444236013
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 23.2498,
+      "cpp_ms": 16.3881,
+      "speedup": 1.4187001543803124,
+      "samples_ms": [
+        [
+          26.4556,
+          24.8999,
+          21.9043,
+          21.8728,
+          21.4587,
+          23.9402,
+          23.2498
+        ],
+        [
+          16.6266,
+          15.9562,
+          17.001,
+          16.3501,
+          16.1315,
+          16.7581,
+          16.3881
+        ],
+        [
+          17.2959,
+          16.8284,
+          16.8422,
+          16.3941,
+          16.0867,
+          16.627,
+          16.7231
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 16.7231,
+      "improvement": 1.0204416619376253
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 20.0413,
+      "cpp_ms": 15.7156,
+      "speedup": 1.2752487973733106,
+      "samples_ms": [
+        [
+          19.9294,
+          21.5044,
+          19.916,
+          21.3778,
+          19.5424,
+          20.0413,
+          21.1227
+        ],
+        [
+          15.4345,
+          15.6441,
+          15.6848,
+          16.7772,
+          15.8554,
+          16.9302,
+          15.7156
+        ],
+        [
+          16.2448,
+          16.0372,
+          16.2957,
+          16.8694,
+          15.9532,
+          16.1308,
+          16.2631
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 16.2448,
+      "improvement": 1.0336735473033165
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 1.52587890625e-05,
+      "reference_ms": 21.1916,
+      "cpp_ms": 15.9716,
+      "speedup": 1.3268301234691577,
+      "samples_ms": [
+        [
+          21.1916,
+          20.5568,
+          21.2773,
+          23.1418,
+          21.6822,
+          20.5665,
+          20.1392
+        ],
+        [
+          15.8869,
+          18.1366,
+          15.9716,
+          16.0583,
+          15.4883,
+          16.6811,
+          15.1412
+        ],
+        [
+          16.2721,
+          16.2097,
+          16.0029,
+          19.7279,
+          16.7081,
+          17.1017,
+          16.0899
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 16.2721,
+      "improvement": 1.0188146459966438
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1216719298245614,
+      "cpp_ms": 0.018801923076923077,
+      "speedup": 6.47124920822051,
+      "samples_ms": [
+        [
+          0.1216719298245614,
+          0.09628421052631579,
+          0.13784035087719299,
+          0.2309017543859649,
+          0.08923157894736843,
+          0.1267122807017544,
+          0.09249824561403508
+        ],
+        [
+          0.018801923076923077,
+          0.0163,
+          0.018878846153846152,
+          0.01579423076923077,
+          0.01645673076923077,
+          0.027072115384615382,
+          0.02464519230769231
+        ],
+        [
+          0.016245132743362832,
+          0.01622654867256637,
+          0.016894690265486727,
+          0.020424778761061944,
+          0.03980973451327434,
+          0.016386725663716815,
+          0.039808849557522126
+        ]
+      ],
+      "loops": [
+        57,
+        104,
+        113
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.016894690265486727,
+      "improvement": 0.8985618224458523
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.10286206896551725,
+      "cpp_ms": 0.018044444444444446,
+      "speedup": 5.700484117547138,
+      "samples_ms": [
+        [
+          0.09061379310344828,
+          0.09478965517241379,
+          0.10286206896551725,
+          0.0854448275862069,
+          0.13740344827586207,
+          0.1216655172413793,
+          0.12255862068965517
+        ],
+        [
+          0.017005050505050506,
+          0.016428282828282827,
+          0.0278979797979798,
+          0.018044444444444446,
+          0.016079797979797982,
+          0.04187676767676767,
+          0.020471717171717172
+        ],
+        [
+          0.01661574074074074,
+          0.017066666666666667,
+          0.01735185185185185,
+          0.015992592592592593,
+          0.023455555555555556,
+          0.03196666666666667,
+          0.016606481481481482
+        ]
+      ],
+      "loops": [
+        29,
+        99,
+        108
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.017066666666666667,
+      "improvement": 0.9458128078817734
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.126336,
+      "cpp_ms": 0.03528333333333333,
+      "speedup": 3.5806140765233825,
+      "samples_ms": [
+        [
+          0.084864,
+          0.084824,
+          0.098904,
+          0.126336,
+          0.150508,
+          0.147236,
+          0.244484
+        ],
+        [
+          0.01721041666666667,
+          0.01767916666666667,
+          0.03528333333333333,
+          0.03944583333333333,
+          0.05046041666666667,
+          0.04856666666666667,
+          0.019627083333333333
+        ],
+        [
+          0.017541860465116278,
+          0.017641860465116278,
+          0.03198837209302326,
+          0.05565581395348838,
+          0.03205348837209302,
+          0.06641627906976744,
+          0.018448837209302325
+        ]
+      ],
+      "loops": [
+        25,
+        48,
+        43
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.03198837209302326,
+      "improvement": 0.9066142303171447
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09907931034482757,
+      "cpp_ms": 0.016536036036036036,
+      "speedup": 5.991720756347513,
+      "samples_ms": [
+        [
+          0.08487586206896552,
+          0.12628103448275863,
+          0.09907931034482757,
+          0.1095896551724138,
+          0.11462586206896552,
+          0.08833620689655172,
+          0.08186034482758621
+        ],
+        [
+          0.015664864864864864,
+          0.015745945945945947,
+          0.015764864864864864,
+          0.017184684684684686,
+          0.0243018018018018,
+          0.01890990990990991,
+          0.016536036036036036
+        ],
+        [
+          0.0215348623853211,
+          0.015398165137614678,
+          0.01686697247706422,
+          0.015537614678899083,
+          0.015941284403669723,
+          0.016038532110091742,
+          0.016411009174311927
+        ]
+      ],
+      "loops": [
+        58,
+        111,
+        109
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.016038532110091742,
+      "improvement": 0.969913954900672
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 1,
+      "options": {
+        "kC": 0.0
+      },
+      "option_types": {
+        "kC": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 40.9084,
+      "cpp_ms": 29.8302,
+      "speedup": 1.3713753176311254,
+      "samples_ms": [
+        [
+          44.8898,
+          42.9687,
+          39.5263,
+          41.1437,
+          39.6494,
+          40.9084,
+          40.3018
+        ],
+        [
+          33.7485,
+          29.8302,
+          29.7698,
+          30.0665,
+          29.954,
+          29.0746,
+          29.6917
+        ],
+        [
+          33.5741,
+          30.83,
+          31.9944,
+          30.3813,
+          30.9881,
+          30.3766,
+          31.2612
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 30.9881,
+      "improvement": 1.0388163673056163
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 4,
+      "options": {
+        "kC": 0.0
+      },
+      "option_types": {
+        "kC": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 41.3894,
+      "cpp_ms": 8.2169,
+      "speedup": 5.037106451338095,
+      "samples_ms": [
+        [
+          40.1368,
+          42.0467,
+          43.0367,
+          43.314,
+          40.2719,
+          40.3705,
+          41.3894
+        ],
+        [
+          9.3413,
+          8.857,
+          7.6274,
+          7.5436,
+          8.5913,
+          8.2169,
+          7.9733
+        ],
+        [
+          9.4586,
+          8.7327,
+          8.9674,
+          8.2337,
+          10.3304,
+          8.1182,
+          8.3834
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.7327,
+      "improvement": 1.0627730652679233
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 1,
+      "options": {
+        "kH": 0.0
+      },
+      "option_types": {
+        "kH": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 39.7884,
+      "cpp_ms": 29.9909,
+      "speedup": 1.3266824270028577,
+      "samples_ms": [
+        [
+          39.3324,
+          41.2067,
+          39.7884,
+          41.5113,
+          38.9431,
+          39.4594,
+          40.4986
+        ],
+        [
+          30.1994,
+          30.7114,
+          29.9658,
+          29.9909,
+          29.8793,
+          31.0381,
+          29.8317
+        ],
+        [
+          31.2271,
+          30.0857,
+          30.8794,
+          30.0976,
+          30.4742,
+          30.8529,
+          29.3955
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 30.4742,
+      "improvement": 1.0161148881827489
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 4,
+      "options": {
+        "kH": 0.0
+      },
+      "option_types": {
+        "kH": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 40.7876,
+      "cpp_ms": 8.3033,
+      "speedup": 4.912215625112907,
+      "samples_ms": [
+        [
+          40.7876,
+          40.8272,
+          44.915,
+          40.0775,
+          40.9801,
+          40.5326,
+          39.3906
+        ],
+        [
+          8.118,
+          10.2869,
+          7.9755,
+          8.0627,
+          9.1948,
+          8.3033,
+          8.841
+        ],
+        [
+          8.1108,
+          10.2207,
+          8.8607,
+          8.2001,
+          7.8249,
+          9.5712,
+          8.5471
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.5471,
+      "improvement": 1.0293618199992773
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 1,
+      "options": {
+        "kL": 2.0,
+        "kC": 0.699999988079071
+      },
+      "option_types": {
+        "kL": "float32",
+        "kC": "float32"
+      },
+      "max_abs_error": 2.288818359375e-05,
+      "reference_ms": 41.2374,
+      "cpp_ms": 29.7557,
+      "speedup": 1.385865565253044,
+      "samples_ms": [
+        [
+          43.7407,
+          48.3998,
+          45.3929,
+          40.0328,
+          40.1246,
+          41.2374,
+          40.1893
+        ],
+        [
+          29.4327,
+          29.8683,
+          28.8592,
+          29.8152,
+          30.1927,
+          29.526,
+          29.7557
+        ],
+        [
+          30.8786,
+          30.7252,
+          30.1778,
+          30.9571,
+          30.6426,
+          30.7404,
+          29.8346
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 30.7252,
+      "improvement": 1.0325819926938369
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "weight-control",
+      "threads": 4,
+      "options": {
+        "kL": 2.0,
+        "kC": 0.699999988079071
+      },
+      "option_types": {
+        "kL": "float32",
+        "kC": "float32"
+      },
+      "max_abs_error": 2.288818359375e-05,
+      "reference_ms": 41.698,
+      "cpp_ms": 8.1912,
+      "speedup": 5.090585018068171,
+      "samples_ms": [
+        [
+          41.9357,
+          44.8124,
+          46.611,
+          41.3559,
+          40.9854,
+          39.9412,
+          41.698
+        ],
+        [
+          8.5442,
+          7.7883,
+          7.6119,
+          8.1938,
+          8.5453,
+          8.0221,
+          8.1912
+        ],
+        [
+          8.1788,
+          8.1291,
+          7.9573,
+          8.2545,
+          10.8052,
+          9.1815,
+          7.829
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 8.1788,
+      "improvement": 0.9984861802910441
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 62.8391,
+      "cpp_ms": 22.9382,
+      "speedup": 2.7394956884149586,
+      "samples_ms": [
+        [
+          63.5403,
+          60.8079,
+          63.5677,
+          62.8391,
+          62.4194,
+          69.0396,
+          59.6003
+        ],
+        [
+          22.3145,
+          23.0452,
+          22.9382,
+          22.3105,
+          23.9583,
+          22.2958,
+          25.0118
+        ],
+        [
+          24.4113,
+          22.4124,
+          22.9994,
+          21.7919,
+          24.8226,
+          22.3546,
+          21.9286
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 22.4124,
+      "improvement": 0.9770775387781083
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 59.9824,
+      "cpp_ms": 6.23405,
+      "speedup": 9.62173867710397,
+      "samples_ms": [
+        [
+          67.4177,
+          64.2781,
+          57.6847,
+          57.6363,
+          62.5476,
+          59.9824,
+          58.6529
+        ],
+        [
+          7.1519,
+          5.8832,
+          6.13895,
+          5.88145,
+          7.32965,
+          6.23405,
+          6.64
+        ],
+        [
+          7.26925,
+          6.25325,
+          5.73915,
+          6.0787,
+          6.2005,
+          6.0166,
+          6.4435
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.2005,
+      "improvement": 0.9946182658143582
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 58.197,
+      "cpp_ms": 22.356,
+      "speedup": 2.6031937734836283,
+      "samples_ms": [
+        [
+          56.6115,
+          57.531,
+          57.4047,
+          63.0611,
+          68.0226,
+          58.197,
+          62.0724
+        ],
+        [
+          22.2147,
+          22.0082,
+          22.356,
+          25.0557,
+          23.9495,
+          22.0845,
+          22.5958
+        ],
+        [
+          21.9421,
+          22.0137,
+          22.2842,
+          22.1472,
+          36.9445,
+          22.1032,
+          22.6758
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 22.1472,
+      "improvement": 0.9906602254428342
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "second_shape": [
+        512,
+        513,
+        3
+      ],
+      "layout": "contiguous",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 60.4909,
+      "cpp_ms": 6.58395,
+      "speedup": 9.187630525748222,
+      "samples_ms": [
+        [
+          62.6742,
+          58.9888,
+          59.1552,
+          59.6443,
+          60.5435,
+          60.4909,
+          63.2273
+        ],
+        [
+          6.19435,
+          6.7301,
+          6.2405,
+          6.5707,
+          7.9987,
+          7.2688,
+          6.58395
+        ],
+        [
+          6.729,
+          7.07045,
+          6.2628,
+          6.4416,
+          5.9022,
+          6.05325,
+          6.7065
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.4416,
+      "improvement": 0.9783792404255804
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 1,
+      "options": {
+        "channel_axis": 0.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 57.8615,
+      "cpp_ms": 22.0073,
+      "speedup": 2.6291957668591786,
+      "samples_ms": [
+        [
+          56.8053,
+          57.5639,
+          56.0534,
+          59.8679,
+          61.6905,
+          57.8615,
+          61.1809
+        ],
+        [
+          22.4217,
+          22.4627,
+          21.3898,
+          22.614,
+          22.0073,
+          21.8293,
+          21.6319
+        ],
+        [
+          21.6033,
+          22.2207,
+          22.5703,
+          22.3688,
+          22.9496,
+          23.6527,
+          22.2343
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 22.3688,
+      "improvement": 1.0164263676143825
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 4,
+      "options": {
+        "channel_axis": 0.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 57.8454,
+      "cpp_ms": 6.1201,
+      "speedup": 9.451708305419846,
+      "samples_ms": [
+        [
+          59.5865,
+          56.7545,
+          57.976,
+          54.8384,
+          55.378,
+          61.9714,
+          57.8454
+        ],
+        [
+          8.28715,
+          6.1201,
+          6.05705,
+          5.9418,
+          8.00955,
+          7.6994,
+          5.86785
+        ],
+        [
+          6.16705,
+          6.30485,
+          7.0361,
+          8.7101,
+          7.709,
+          7.2947,
+          6.6024
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 7.0361,
+      "improvement": 1.1496707570137743
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 1,
+      "options": {
+        "channel_axis": 0.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 61.485,
+      "cpp_ms": 22.0972,
+      "speedup": 2.7824792281375013,
+      "samples_ms": [
+        [
+          61.485,
+          57.8807,
+          59.4644,
+          77.4465,
+          70.8371,
+          64.477,
+          60.1096
+        ],
+        [
+          21.8396,
+          22.0972,
+          22.6683,
+          22.2438,
+          21.8624,
+          22.3439,
+          21.9783
+        ],
+        [
+          21.5341,
+          21.8399,
+          22.0584,
+          21.3313,
+          22.3155,
+          21.7739,
+          26.3523
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 21.8399,
+      "improvement": 0.9883559908042647
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3,
+        512,
+        513
+      ],
+      "second_shape": [
+        3,
+        512,
+        513
+      ],
+      "layout": "channel-first",
+      "threads": 4,
+      "options": {
+        "channel_axis": 0.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 56.9025,
+      "cpp_ms": 6.2702,
+      "speedup": 9.075069375777488,
+      "samples_ms": [
+        [
+          58.1652,
+          56.9025,
+          57.4349,
+          57.0196,
+          56.6124,
+          56.8546,
+          56.0668
+        ],
+        [
+          7.15315,
+          6.4517,
+          6.4625,
+          6.2702,
+          5.6578,
+          5.7868,
+          5.9445
+        ],
+        [
+          6.399,
+          6.1696,
+          6.82315,
+          5.91515,
+          6.12665,
+          5.60655,
+          5.8014
+        ]
+      ],
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 6.12665,
+      "improvement": 0.9771059934292367
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 31.0039,
+      "cpp_ms": 13.8706,
+      "speedup": 2.235224143151702,
+      "samples_ms": [
+        [
+          31.7338,
+          29.4716,
+          31.1457,
+          31.0039,
+          30.0822,
+          31.6345,
+          30.0154
+        ],
+        [
+          13.7596,
+          12.9357,
+          13.9696,
+          16.1474,
+          13.8706,
+          14.938,
+          12.8723
+        ],
+        [
+          16.9216,
+          12.937,
+          14.0391,
+          12.4644,
+          13.5222,
+          13.7364,
+          13.4681
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 13.5222,
+      "improvement": 0.9748821247819128
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 30.379,
+      "cpp_ms": 13.2308,
+      "speedup": 2.2960818695770477,
+      "samples_ms": [
+        [
+          31.9859,
+          30.182,
+          30.379,
+          29.5128,
+          30.719,
+          30.509,
+          30.262
+        ],
+        [
+          13.2308,
+          12.0528,
+          13.6898,
+          12.2696,
+          13.6411,
+          12.4339,
+          13.5813
+        ],
+        [
+          12.2743,
+          14.0605,
+          13.3491,
+          12.6285,
+          13.0386,
+          12.9387,
+          14.9142
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 13.0386,
+      "improvement": 0.985473289597001
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 29.758,
+      "cpp_ms": 13.2353,
+      "speedup": 2.2483812229416786,
+      "samples_ms": [
+        [
+          29.1787,
+          30.3964,
+          29.758,
+          31.9191,
+          28.9513,
+          29.6989,
+          31.1396
+        ],
+        [
+          13.2505,
+          12.3302,
+          12.8044,
+          13.2353,
+          13.4777,
+          15.9527,
+          12.9286
+        ],
+        [
+          12.5988,
+          13.3682,
+          12.0476,
+          13.0878,
+          14.7574,
+          12.7814,
+          12.4065
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 12.7814,
+      "improvement": 0.9657053485754006
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        512,
+        257,
+        3
+      ],
+      "second_shape": [
+        512,
+        257,
+        3
+      ],
+      "layout": "strided",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 5.684341886080802e-14,
+      "reference_ms": 30.443,
+      "cpp_ms": 13.2103,
+      "speedup": 2.304489678508437,
+      "samples_ms": [
+        [
+          28.7768,
+          31.4854,
+          30.8123,
+          34.7078,
+          30.1251,
+          30.443,
+          29.8517
+        ],
+        [
+          13.4723,
+          13.2103,
+          13.3248,
+          14.6532,
+          12.4771,
+          12.6548,
+          13.1237
+        ],
+        [
+          13.093,
+          13.0048,
+          12.7508,
+          16.109,
+          14.3046,
+          12.0773,
+          14.3203
+        ]
+      ],
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 13.093,
+      "improvement": 0.9911205650136635
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.11080163934426229,
+      "cpp_ms": 0.022985858585858585,
+      "speedup": 4.820426390877996,
+      "samples_ms": [
+        [
+          0.11882622950819671,
+          0.11618032786885246,
+          0.15559016393442623,
+          0.08808196721311476,
+          0.08185409836065574,
+          0.08483770491803279,
+          0.11080163934426229
+        ],
+        [
+          0.013934343434343435,
+          0.042806060606060604,
+          0.07436565656565657,
+          0.022985858585858585,
+          0.01395858585858586,
+          0.037756565656565655,
+          0.018973737373737375
+        ],
+        [
+          0.02657304347826087,
+          0.03168347826086956,
+          0.02943130434782609,
+          0.02623913043478261,
+          0.01727217391304348,
+          0.023314782608695652,
+          0.015512173913043478
+        ]
+      ],
+      "loops": [
+        61,
+        99,
+        115
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.02623913043478261,
+      "improvement": 1.1415336232393558
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0
+      },
+      "option_types": {
+        "channel_axis": "int"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09813731343283581,
+      "cpp_ms": 0.019770642201834863,
+      "speedup": 4.963789867368494,
+      "samples_ms": [
+        [
+          0.18755074626865673,
+          0.07512089552238806,
+          0.1087,
+          0.07958059701492537,
+          0.11554179104477612,
+          0.07700597014925373,
+          0.09813731343283581
+        ],
+        [
+          0.014307339449541285,
+          0.024536697247706424,
+          0.013708256880733944,
+          0.014347706422018349,
+          0.019770642201834863,
+          0.03185963302752294,
+          0.024928440366972476
+        ],
+        [
+          0.013806299212598426,
+          0.01394251968503937,
+          0.02780157480314961,
+          0.013482677165354331,
+          0.023603937007874012,
+          0.023188188976377956,
+          0.01834724409448819
+        ]
+      ],
+      "loops": [
+        67,
+        109,
+        127
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.01834724409448819,
+      "improvement": 0.9280044576794491
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 1,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.08597954545454546,
+      "cpp_ms": 0.015090566037735849,
+      "speedup": 5.697569278683308,
+      "samples_ms": [
+        [
+          0.08483863636363637,
+          0.075675,
+          0.08597954545454546,
+          0.09155909090909091,
+          0.08273863636363636,
+          0.13066363636363637,
+          0.09826590909090908
+        ],
+        [
+          0.013567924528301887,
+          0.020474528301886792,
+          0.015090566037735849,
+          0.014933962264150943,
+          0.014521698113207547,
+          0.015943396226415094,
+          0.039993396226415096
+        ],
+        [
+          0.013998245614035088,
+          0.014219298245614034,
+          0.02328157894736842,
+          0.014218421052631578,
+          0.018142105263157893,
+          0.01715175438596491,
+          0.024187719298245616
+        ]
+      ],
+      "loops": [
+        44,
+        106,
+        114
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.01715175438596491,
+      "improvement": 1.136587875038935
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float64",
+      "output_dtype": "float64",
+      "shape": [
+        3
+      ],
+      "second_shape": [
+        3
+      ],
+      "layout": "scalar",
+      "threads": 4,
+      "options": {
+        "channel_axis": -1.0,
+        "kL": 2.0,
+        "kC": 0.5
+      },
+      "option_types": {
+        "channel_axis": "int",
+        "kL": "int",
+        "kC": "float"
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.109125,
+      "cpp_ms": 0.021793975903614458,
+      "speedup": 5.007117585272818,
+      "samples_ms": [
+        [
+          0.14962083333333334,
+          0.15583333333333335,
+          0.158375,
+          0.08134583333333333,
+          0.09349166666666667,
+          0.109125,
+          0.0845375
+        ],
+        [
+          0.0347710843373494,
+          0.02247831325301205,
+          0.01893975903614458,
+          0.021793975903614458,
+          0.021540963855421688,
+          0.014732530120481927,
+          0.022701204819277107
+        ],
+        [
+          0.030514925373134327,
+          0.04336268656716418,
+          0.017282089552238804,
+          0.016107462686567164,
+          0.014276119402985074,
+          0.01484776119402985,
+          0.033711940298507465
+        ]
+      ],
+      "loops": [
+        24,
+        83,
+        67
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.017282089552238804,
+      "improvement": 0.7929755281308092
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        2210,
+        3
+      ],
+      "second_shape": [
+        2210,
+        3
+      ],
+      "layout": "Sharma-boundaries",
+      "threads": 1,
+      "options": {},
+      "option_types": {},
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2889541666666667,
+      "cpp_ms": 0.21683076923076922,
+      "speedup": 1.3326252897213946,
+      "samples_ms": [
+        [
+          0.33770833333333333,
+          0.278275,
+          0.2635,
+          0.357325,
+          0.2602791666666667,
+          0.2889541666666667,
+          0.305725
+        ],
+        [
+          0.21683076923076922,
+          0.21506538461538463,
+          0.2206423076923077,
+          0.2163423076923077,
+          0.22546153846153846,
+          0.21536153846153847,
+          0.2507576923076923
+        ],
+        [
+          0.20404,
+          0.2243257142857143,
+          0.23254285714285713,
+          0.2286085714285714,
+          0.21096,
+          0.2075057142857143,
+          0.20311714285714286
+        ]
+      ],
+      "loops": [
+        24,
+        26,
+        35
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.21096,
+      "improvement": 0.9729246487867178
+    },
+    {
+      "api": "color.deltaE_ciede2000",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "shape": [
+        2210,
+        3
+      ],
+      "second_shape": [
+        2210,
+        3
+      ],
+      "layout": "Sharma-boundaries",
+      "threads": 4,
+      "options": {},
+      "option_types": {},
+      "max_abs_error": 0.0,
+      "reference_ms": 0.30959333333333333,
+      "cpp_ms": 0.24805365853658537,
+      "speedup": 1.2480901719402437,
+      "samples_ms": [
+        [
+          0.30959333333333333,
+          0.43793333333333334,
+          0.25728,
+          0.3106166666666667,
+          0.28152,
+          0.3006,
+          0.38811
+        ],
+        [
+          0.21744634146341463,
+          0.22066097560975612,
+          0.24805365853658537,
+          0.26241951219512194,
+          0.2184439024390244,
+          0.2827560975609756,
+          0.30540487804878047
+        ],
+        [
+          0.21634,
+          0.2812,
+          0.217096,
+          0.260312,
+          0.282312,
+          0.226056,
+          0.249508
+        ]
+      ],
+      "loops": [
+        30,
+        41,
+        25
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current",
+        "baseline"
+      ],
+      "baseline_ms": 0.249508,
+      "improvement": 1.0058630115435292
+    }
+  ]
+}

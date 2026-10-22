@@ -693,3 +693,10 @@ paired one-worker improvements of 1.131× on Windows and 1.119× on Linux/NumPy
 1.24 over the exact previous build. It includes original scikit-image timings,
 four-worker results and every observed regression. The additive C++ interface
 is `match_histograms_strided_into` in `skimagexx/histogram_matching.hpp`.
+
+The [CIEDE2000 runtime-math report](benchmarks/distance-provider.md) checks
+NumPy's libm and SVML providers, including the 180-degree hue discontinuity.
+It records per-function parity, one/four-worker timings and regressions against
+the previous exact build. The actual AVX-512/SVML confirmation passes both
+SIMD modes and measures 2.34× geometric-mean speedup over original scikit-image
+with one worker. Exact measured CI wheels and raw samples are retained.
