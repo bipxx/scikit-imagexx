@@ -124,6 +124,17 @@ void check_conversion_packets() {
 int main() {
     using namespace skimagexx;
     {
+        struct Counts {int powers=0,hypots=0,first=0,second=0;} counts;
+        DistanceMathCallbacks math{
+            [](double a,double b,bool single,void* data){++static_cast<Counts*>(data)->powers;return single ? double(std::pow(float(a),float(b))) : std::pow(a,b);},
+            [](double a,double b,bool single,void* data){++static_cast<Counts*>(data)->hypots;return single ? double(std::hypot(float(a),float(b))) : std::hypot(a,b);},&counts,
+            [](double y,double x,bool single,bool second,void* data){auto& c=*static_cast<Counts*>(data);++(second ? c.second : c.first);return single ? double(std::atan2(float(y),float(x))) : std::atan2(y,x);}};
+        const double a[]={50,20,5},b[]={50,-20,-5};double expected=0,actual=0;
+        delta_e_into(a,b,&expected,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000);
+        delta_e_compatible_into(a,b,&actual,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000,{},true,false,3,1,3,1,false,false,&math);
+        require(actual==expected && counts.powers==2 && counts.hypots==4 && counts.first==1 && counts.second==1);
+    }
+    {
         LiImage empty(nullptr,0,PixelType::float32);require(empty.kind()==LiKind::empty);
         const float nonfinite[]={NAN,INFINITY,-INFINITY};
         LiImage infs(nonfinite,3,PixelType::float32);require(infs.kind()==LiKind::infinities);

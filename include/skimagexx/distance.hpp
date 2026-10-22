@@ -27,8 +27,8 @@ void delta_e_into(const void* first,const void* second,void* output,std::size_t 
     std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1,bool legacy_ciede2000=false);
 // NumPy-compatible double angle provider for platforms using SVML atan2.
 // The original entry point retains its ABI and platform-libm behavior.
-// Optional elementary-math hooks for the SVML profile are used only during
-// scalar refinement/tails;
+// Optional elementary-math hooks are used only during scalar refinement/tails,
+// with either the platform-libm or SVML vector profile;
 // callbacks must be thread-safe, must not require a Python interpreter lock,
 // and their context must remain alive for the duration of the call.
 struct DistanceMathCallbacks {
