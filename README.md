@@ -13,11 +13,11 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **93 partially native
+The reference is scikit-image **0.26.0**. There are currently **94 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 360 remain pending native implementation and dedicated parity tests.
+export list; 359 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
@@ -56,6 +56,7 @@ This is not full scikit-image coverage.
 | `rescale_intensity` | Nonempty arrays of any dimension; same dtypes; `'image'`, `'dtype'`, or finite range pairs | Native min/max and SIMD scaling; output dtype follows input unless a pair requests floating output |
 | `histogram`, `cumulative_distribution` | Nonempty uint8 arrays of any dimension; image/dtype histogram range; normalization; no channel axis | Exact integer counts/bin centers; float64 probabilities/CDF |
 | `equalize_hist` | Nonempty uint8 arrays of any dimension; mask=None | Float64 output using native histogram and CDF lookup |
+| `is_low_contrast` | N-D real grayscale arrays and scalars, all 12 real dtypes; positive/negative/zero/unaligned/endian strides; ordinary RGB/RGBA routes for uint8 and bounded float32/64 inputs | Exact scalar/array decisions and input-precision percentile interpolation; boolean inputs ignore other options; ambiguous color decisions and exceptional floating policies use explicit fallback |
 | `img_as_float`, `img_as_float32`, `img_as_float64`, `img_as_ubyte`, `img_as_uint`, `img_as_int`, `img_as_bool` | Boolean; signed/unsigned 8/16/32/64-bit integers; float32/64; arbitrary dimensions; `force_copy` | Exact values, dtype, identity, warnings and copy behavior; float16 identity supported |
 | `dtype_limits` | Boolean, integer, float16/32/64; `clip_negative` | Metadata only; no pixel processing |
 | `erosion`, `dilation`, `opening`, `closing`, `white_tophat`, `black_tophat` | ND arrays, including empty; bool, signed/unsigned 8/16/32/64-bit integers, float32/64; all eight modes, constant fill, flat footprints/sequences; same-dtype output buffers, overlapping/strided views | Exact values on the documented domain; upstream footprint mirroring/centering, integer buffering and wrapping; grayscale NaN inputs/constant fill require fallback |
@@ -194,7 +195,7 @@ shown above. Unknown options retain upstream behavior through fallback.
 
 All 455 inventoried names have availability/signature checks. These checks do
 not invoke the algorithms and do not establish numerical parity for pending ports.
-All 95 covered wrapper signatures have per-function parity tests. Tests also run
+All 96 covered wrapper signatures have per-function parity tests. Tests also run
 the same pipeline with `skimage` and `skimagexx`, verify unsupported-call warnings,
 and assert that strict mode never silently falls back. Adding a native function
 requires updating the registry, per-function tests, and benchmark coverage.
@@ -385,6 +386,7 @@ python benchmarks/gaussian.py --size 512 --threads 1 4
 python benchmarks/integral.py --size 512 --threads 1 4
 python benchmarks/integrate.py --size 512 --threads 1 4
 python benchmarks/downscale.py --size 513 --threads 1 4
+python benchmarks/contrast.py --size 513 --threads 1 4
 python benchmarks/summarize.py
 ```
 
@@ -635,3 +637,17 @@ speedup with one worker and 5.52× with four. The
 port, intermediate regressions and paired confirmation against its measured
 binary. The final one-worker aggregate is 1.87× faster than that initial C++
 build; individual regressions against it remain follow-up targets.
+
+Low-contrast detection uses raw typed percentile selection and compresses
+broadcast dimensions. Eight-bit histograms and endpoint scans avoid sorting;
+AVX2 partitions other inputs into less/equal/greater groups, with scalar
+selection for small ranges or portable builds. Separate temporary buffers
+avoid clearing storage that preparation overwrites. Boolean prefixes can prove
+mixed truth values before worker setup. The standalone C++ percentile and
+boolean-predicate interface is `include/skimagexx/contrast.hpp`.
+Floating RGB/RGBA routes require finite values within [-1, 1]; uint8 uses its
+normal conversion. Decisions within a conservative color-rounding margin use
+explicit upstream fallback. This preserves exact classifications when native
+and upstream grayscale conversion differ by a rounding bit. Complex inputs,
+unsupported subclasses/color widths, exceptional floating policies/ranges and
+percentile parameters wider than float64 also retain explicit fallback.

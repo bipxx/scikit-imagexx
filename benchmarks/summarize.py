@@ -23,7 +23,8 @@ def main():
                ('Gaussian families and output precision','gaussian-parameters'),
                ('Integral-image dtypes and layouts','integral-parameters'),
                ('Integral-window batches and layouts','integrate-parameters'),
-               ('Raw local-block means and layouts','downscale-parameters')]
+               ('Raw local-block means and layouts','downscale-parameters'),
+               ('Low-contrast percentiles and layouts','contrast-parameters')]
     data = [(label,name,json.loads((root/'benchmarks'/f'{name}.json').read_text(encoding='utf-8')))
             for label,name in reports]
     fingerprint = source_fingerprint(root)

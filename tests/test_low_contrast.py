@@ -332,3 +332,54 @@ def test_large_boolean_prefix_requires_whole_image_proof(value):
     check(image)
     image[-1]=not value
     check(image)
+
+
+@pytest.mark.parametrize('dtype',['uint8','float32','float64'])
+@pytest.mark.parametrize('channels',[3,4])
+@pytest.mark.parametrize('layout',['C','F','reverse'])
+@pytest.mark.parametrize('seed',[917,2,3])
+def test_color_decision_boundary(dtype,channels,layout,seed):
+    image=np.random.default_rng(seed).random((17,19,channels))
+    image=(image*255).astype(dtype) if dtype=='uint8' else image.astype(dtype)
+    if layout=='F':image=np.asfortranarray(image)
+    elif layout=='reverse':image=image[::-1,::-1]
+    gray=skimage.color.rgba2rgb(image) if channels==4 else image
+    gray=skimage.color.rgb2gray(gray)
+    low,high=np.percentile(gray,[1,99])
+    ratio=(high-low)/2
+    xx.set_fallback_enabled(True)
+    for threshold in (ratio,np.nextafter(ratio,-np.inf),np.nextafter(ratio,np.inf)):
+        check(image,allow_fallback=True,fraction_threshold=threshold)
+
+
+@pytest.mark.parametrize('dtype',['uint8','float32','float64'])
+@pytest.mark.parametrize('threshold',[np.nan,np.inf,-np.inf,np.float32(.05),np.float16(.05),
+                                    np.array([0,.1,1],dtype=np.float32)])
+def test_color_threshold_metadata(dtype,threshold):
+    image=np.random.default_rng(98).random((11,13,4))
+    image=(image*255).astype(dtype) if dtype=='uint8' else image.astype(dtype)
+    check(image,fraction_threshold=threshold)
+
+
+@pytest.mark.parametrize('dtype',['float32','float64'])
+@pytest.mark.parametrize('value',[2.,np.inf,np.nan])
+def test_color_working_range_uses_explicit_fallback(dtype,value):
+    image=np.full((7,9,3),.5,dtype=dtype)
+    image[-1,-1,-1]=value
+    with pytest.raises(NotImplementedError,match='outside native coverage'):
+        xx.exposure.is_low_contrast(image)
+    xx.set_fallback_enabled(True)
+    check(image,allow_fallback=True)
+
+
+@pytest.mark.parametrize('dtype',['uint8','float32','float64'])
+def test_color_array_thresholds_near_decision_boundary(dtype):
+    image=np.random.default_rng(2).random((17,19,3))
+    image=(image*255).astype(dtype) if dtype=='uint8' else image.astype(dtype)
+    gray=skimage.color.rgb2gray(image)
+    low,high=np.percentile(gray,[1,99])
+    ratio=(high-low)/2
+    xx.set_fallback_enabled(True)
+    for threshold_dtype in (np.float16,np.float32,np.float64):
+        check(image,allow_fallback=True,
+              fraction_threshold=np.array([ratio,np.nextafter(ratio,np.inf)],dtype=threshold_dtype))

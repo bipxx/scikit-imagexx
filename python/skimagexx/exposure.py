@@ -5,7 +5,7 @@ from . import _core
 from ._compat import module_attribute, native_array, fallback
 
 __all__ = ['adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
-           'histogram', 'cumulative_distribution', 'equalize_hist']
+           'histogram', 'cumulative_distribution', 'equalize_hist','is_low_contrast']
 
 
 def _finite_scalar(value):
@@ -14,6 +14,7 @@ def _finite_scalar(value):
 
 _CONTRAST_REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,
                np.uint64,np.int64,np.float16,np.float32,np.float64}
+_CONTRAST_FRACTIONS=_CONTRAST_REAL|{int,float,bool,np.longdouble}
 
 
 def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
@@ -32,12 +33,26 @@ def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
     if (any(value in ('call','log','print') for value in np.geterr().values())
             or np.geterr()['under']!='ignore'):
         return upstream()
-    if image.ndim==3:
+    color_error=None
+    if image.ndim==3 and image.shape[2] in (3,4):
         from . import color
-        if image.shape[2] in (3,4) and image.dtype.type not in (np.uint8,np.float32,np.float64):
+        if (image.dtype.type not in (np.uint8,np.float32,np.float64)
+                or not image.dtype.isnative or not image.size):
             return upstream()
+        if type(fraction_threshold) not in _CONTRAST_FRACTIONS and type(fraction_threshold) not in (np.ndarray,np.memmap):
+            return upstream()
+        color_threshold=np.asarray(fraction_threshold)
+        if color_threshold.dtype.kind not in 'biuf':return upstream()
+        # Native color kernels permit ordinary rounding differences. Bound
+        # them for normalized inputs and delegate ambiguous final decisions.
+        if image.dtype.type!=np.uint8:
+            if not image.flags.c_contiguous or not image.flags.aligned:
+                image=np.array(image,copy=True,order='C')
+            low,high=_core.intensity_bounds(image)
+            if not (-1<=low and high<=1):return upstream()
         if image.shape[2]==4:image=color.rgba2rgb(image)
         if image.shape[2]==3:image=color.rgb2gray(image)
+        color_error=64*float(np.finfo(image.dtype).eps)
     from .util import dtype_limits
     lower_limit,upper_limit=dtype_limits(image,clip_negative=False)
     # Only the two percentile parameters and their virtual ranks use NumPy.
@@ -63,7 +78,17 @@ def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
     if values is None:return upstream()
     for notice in notices:warnings.warn(notice.message,stacklevel=2)
     span=np.float64(values[1])-np.float64(values[0])
-    return span/(upper_limit-lower_limit)<fraction_threshold
+    ratio=span/(upper_limit-lower_limit)
+    if color_error is not None:
+        # This probe is scalar/threshold metadata, not image processing. Account
+        # for old NumPy's value-based promotion with narrow threshold arrays.
+        with np.errstate(all='ignore'):
+            error=color_error
+            if color_threshold.dtype.kind=='f':
+                error=error+np.finfo(color_threshold.dtype).eps*np.maximum(1,np.abs(color_threshold))
+            uncertain=np.any((np.abs(ratio-color_threshold)<=error)&np.isfinite(color_threshold))
+        if uncertain:return upstream()
+    return ratio<fraction_threshold
 
 
 def adjust_gamma(image, gamma=1, gain=1):
