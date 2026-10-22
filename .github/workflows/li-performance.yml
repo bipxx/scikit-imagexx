@@ -24,8 +24,6 @@ jobs:
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
-      - if: inputs.benchmark == 'clahe' && inputs.paired
-        run: python -c "raise SystemExit('clahe has no preserved baseline yet; use paired=false for its initial measurement')"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -105,6 +103,13 @@ jobs:
           run-id: 39838846191
           github-token: ${{ github.token }}
           path: build/initial
+      - uses: actions/download-artifact@v4
+        if: inputs.paired && inputs.benchmark == 'clahe'
+        with:
+          name: clahe-performance-${{ matrix.os }}
+          run-id: 39847406392
+          github-token: ${{ github.token }}
+          path: build/initial
       - if: inputs.paired
         run: python tools/pair_snapshot.py --package-root build/initial/exact-package
       - if: inputs.benchmark == 'li' && !inputs.paired
@@ -139,8 +144,10 @@ jobs:
         run: python benchmarks/multiotsu.py --size 512 --threads 1 4 --repeat 7 --output build/multiotsu-performance.json
       - if: inputs.benchmark == 'multiotsu' && inputs.paired
         run: python benchmarks/multiotsu.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/multiotsu-performance.json
-      - if: inputs.benchmark == 'clahe'
+      - if: inputs.benchmark == 'clahe' && !inputs.paired
         run: python benchmarks/clahe.py --size 512 --threads 1 4 --repeat 7 --output build/clahe-performance.json
+      - if: inputs.benchmark == 'clahe' && inputs.paired
+        run: python benchmarks/clahe.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/clahe-performance.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
