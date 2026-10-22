@@ -1,6 +1,6 @@
 # Multi-Otsu performance experiments
 
-The initial native feature is measured here; it is not yet merged to main. Values below apply only to the exact pinned source and the fixed timed cases, not to full API parity.
+The linear source is retained on main; the initial trial and later candidate retain separate scores below. Values below apply only to the exact pinned source and the fixed timed cases, not to full API parity.
 
 [Initial run 39838846191](https://github.com/bipxx/scikit-imagexx/actions/runs/39838846191) measures source `4352556`, with 33 cases per OS at global worker limits one/four (66 rows per OS). Both versions are warmed, reference pools are fixed to one, allocation and Python dispatch are included, and all seven raw samples are retained. Timed outputs match scikit-image 0.26.0 with native fallback disabled.
 
@@ -74,3 +74,8 @@ Adverse one-worker native controls are retained below; the largest measured regr
 | Windows | float32 | tiny | 3 | 0.975907x |
 | Windows | float64 | reversed | 3 | 0.989002x |
 | Windows | float32 | histogram-random-1024 | 3 | 0.986933x |
+
+
+## Retained source and merge
+
+[Full source CI 39840448922](https://github.com/bipxx/scikit-imagexx/actions/runs/39840448922) passes minimum NumPy and both OS jobs, including SIMD enabled/disabled and native/portable checks. The candidate is retained and merged as [863eb5e](https://github.com/bipxx/scikit-imagexx/commit/863eb5e2f7771b883b1f7f48bc0a5afc2c66ca3f). Its merged product fingerprint matches the exact measured `bb06801` source. Earlier pending-CI notes describe the trial's chronological state; the full gate now passes. Remaining three-class control regressions stay explicit above.
