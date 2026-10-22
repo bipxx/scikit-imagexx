@@ -119,3 +119,15 @@ def test_continuous_large_radix(dtype):
     a=rng.normal(size=(513,517,3)).astype(dtype)
     b=rng.normal(size=(519,511,3)).astype(dtype)
     compare(a,b,channel_axis=-1)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('axis',[None,-1])
+@pytest.mark.parametrize('policy',['warn','raise'])
+@pytest.mark.parametrize('values',[[1e-50,2e-50,3e-50,4e-50],
+                                  [1e100,2e100,3e100,4e100],
+                                  [-np.inf,0,np.inf,np.nan]])
+def test_floating_cast_policies(dtype,axis,policy,values):
+    a=np.array([[0,1],[2,3]],dtype)
+    b=np.array(values,np.float64).reshape(2,2)
+    with np.errstate(over=policy,under=policy,invalid=policy):
+        compare(a,b,channel_axis=axis)

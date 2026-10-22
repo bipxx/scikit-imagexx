@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <memory>
 #include <numeric>
 #include <stdexcept>
 #include <type_traits>
@@ -141,10 +142,13 @@ Distribution distribution(const void* input,std::size_t count,std::size_t channe
     if(span<65536) {
         result.dense=true;
         std::vector<std::size_t> histogram(std::size_t(span)+1);
+        const auto capacity=std::min(count,histogram.size());
+        result.counts.reserve(capacity);
+        if(source)result.ends.reserve(capacity);else result.values.reserve(capacity);
         for(auto key:result.keys)++histogram[std::size_t(key-result.low)];
         for(std::size_t i=0;i<histogram.size();++i)if(histogram[i]) {
-            result.counts.push_back(histogram[i]);result.values.push_back(value_from_key(result.low+i,type));
-            result.ends.push_back(i);
+            result.counts.push_back(histogram[i]);
+            if(source)result.ends.push_back(i);else result.values.push_back(value_from_key(result.low+i,type));
         }
         return result;
     }
@@ -164,17 +168,20 @@ Distribution distribution(const void* input,std::size_t count,std::size_t channe
             std::vector<std::uint64_t> unique;
             for(std::size_t i=0;i<result.hash_keys.size();++i)if(result.hash_positions[i])unique.push_back(result.hash_keys[i]);
             std::sort(unique.begin(),unique.end());
-            auto previous=std::move(result.counts);result.counts.reserve(unique.size());
+            auto previous=std::move(result.counts);result.counts.clear();result.counts.reserve(unique.size());
+            if(!source)result.values.reserve(unique.size());
             for(std::size_t i=0;i<unique.size();++i) {
                 const auto slot=hash_slot(unique[i],result.hash_keys,result.hash_positions);
                 result.counts.push_back(previous[result.hash_positions[slot]-1]);
-                result.values.push_back(value_from_key(unique[i],type));result.hash_positions[slot]=i+1;
+                if(!source)result.values.push_back(value_from_key(unique[i],type));
+                result.hash_positions[slot]=i+1;
             }
             return result;
         }
         result.hash_keys.clear();result.hash_positions.clear();result.counts.clear();
     }
     if(source) {
+        result.counts.reserve(count);result.ends.reserve(count);
         if(count<=UINT32_MAX && span<=UINT32_MAX) {
             std::vector<std::uint64_t> packed(count);
             for(std::size_t i=0;i<count;++i)packed[i]=((result.keys[i]-result.low)<<32)|std::uint64_t(i);
@@ -184,7 +191,7 @@ Distribution distribution(const void* input,std::size_t count,std::size_t channe
             for(std::size_t i=0;i<count;) {
                 const auto start=i,key=packed[i]>>32;
                 while(i<count && (packed[i]>>32)==key){result.order[i]=std::size_t(packed[i]&UINT32_MAX);++i;}
-                result.counts.push_back(i-start);result.values.push_back(value_from_key(result.low+key,type));result.ends.push_back(i);
+                result.counts.push_back(i-start);result.ends.push_back(i);
             }
         } else {
             struct Entry{std::uint64_t key;std::size_t index;};
@@ -196,10 +203,11 @@ Distribution distribution(const void* input,std::size_t count,std::size_t channe
             for(std::size_t i=0;i<count;) {
                 const auto start=i,key=entries[i].key;
                 while(i<count && entries[i].key==key){result.order[i]=entries[i].index;++i;}
-                result.counts.push_back(i-start);result.values.push_back(value_from_key(key,type));result.ends.push_back(i);
+                result.counts.push_back(i-start);result.ends.push_back(i);
             }
         }
     } else {
+        result.counts.reserve(count);result.values.reserve(count);
         radix_sort(result.keys,workers,[](auto key){return key;},result.high<=UINT32_MAX ? 4 : 8);
         for(std::size_t i=0;i<count;) {
             const auto start=i,key=result.keys[i];
@@ -267,6 +275,38 @@ Writer writer(PixelType type) {
     default:throw std::invalid_argument("unsupported histogram-matching output type");
     }
 }
+template<class T> void apply_floating(const Distribution& source,const T* mapped,std::size_t groups,
+    T* output,std::size_t count,std::size_t channels,std::size_t channel,int workers) {
+    if(source.dense) {
+        // Only populated bins are read by source.keys; no image-sized cast
+        // callback or zero-filled lookup table is needed for native floats.
+        std::unique_ptr<double[]> table(new double[std::size_t(source.high-source.low)+1]);
+        for(std::size_t i=0;i<groups;++i)table[source.ends[i]]=double(mapped[i]);
+        detail::partition(count,workers,[&](auto begin,auto end,auto) {
+            auto i=begin;
+#ifdef SKIMAGEXX_AVX2
+            if(has_avx2())i+=simd::histogram_lookup(source.keys.data()+begin,output+begin*channels+channel,
+                end-begin,source.low,table.get(),std::is_same_v<T,double> ? PixelType::float64 : PixelType::float32,channels);
+#endif
+            for(;i<end;++i)output[i*channels+channel]=T(table[std::size_t(source.keys[i]-source.low)]);
+        });
+    } else if(!source.hash_positions.empty()) {
+        detail::partition(count,workers,[&](auto begin,auto end,auto) {
+            for(auto i=begin;i<end;++i) {
+                const auto slot=hash_slot(source.keys[i],source.hash_keys,source.hash_positions);
+                output[i*channels+channel]=mapped[source.hash_positions[slot]-1];
+            }
+        });
+    } else {
+        detail::partition(groups,workers,[&](auto begin,auto end,auto) {
+            for(auto group=begin;group<end;++group) {
+                const auto value=mapped[group];
+                for(auto i=group ? source.ends[group-1] : 0;i<source.ends[group];++i)
+                    output[source.order[i]*channels+channel]=value;
+            }
+        });
+    }
+}
 }
 unsigned match_histograms_into(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
     std::size_t channels,PixelType st,PixelType rt,PixelType ot,bool unsigned_source,bool half_round,bool swap_output,unsigned* channel_flags) {
@@ -283,8 +323,12 @@ unsigned match_histograms_into(const void* source,const void* reference,void* ou
     for(std::size_t channel=0;channel<channels;++channel) {
         auto a=distribution(source,count,channels,channel,st,true,false,workers);
         auto b=distribution(reference,reference_count,channels,channel,rt,false,unsigned_source,workers);
+        std::vector<std::uint64_t>().swap(b.keys);
+        std::vector<std::uint64_t>().swap(b.hash_keys);
+        std::vector<std::size_t>().swap(b.hash_positions);
         std::vector<double> cdf(b.counts.size());std::size_t total=0;
         for(std::size_t i=0;i<cdf.size();++i){total+=b.counts[i];cdf[i]=double(total)/double(reference_count);}
+        std::vector<std::size_t>().swap(b.counts);
         std::vector<double> mapped(a.counts.size());std::size_t position=0;total=0;
         for(std::size_t i=0;i<mapped.size();++i) {
             total+=a.counts[i];const double q=double(total)/double(count);
@@ -300,6 +344,23 @@ unsigned match_histograms_into(const void* source,const void* reference,void* ou
                 }
                 mapped[i]=value;
             }
+        }
+        std::vector<std::size_t>().swap(a.counts);
+        std::vector<double>().swap(b.values);std::vector<double>().swap(cdf);
+        if(!half_round && !swap_output && (ot==PixelType::float64 || ot==PixelType::float32)) {
+            unsigned channel_notice=0;
+            if(ot==PixelType::float64)
+                apply_floating(a,mapped.data(),mapped.size(),static_cast<double*>(output),count,channels,channel,workers);
+            else {
+                const auto groups=mapped.size();
+                std::unique_ptr<float[]> converted(new float[groups]);
+                for(std::size_t i=0;i<groups;++i)channel_notice|=write(converted.get(),i,mapped[i],false,false);
+                std::vector<double>().swap(mapped);
+                apply_floating(a,converted.get(),groups,static_cast<float*>(output),count,channels,channel,workers);
+            }
+            if(channel_flags)channel_flags[channel]=channel_notice;
+            flags|=channel_notice;
+            continue;
         }
         std::vector<unsigned> notices(std::size_t(workers),0);
         unsigned mapped_notices=0;
