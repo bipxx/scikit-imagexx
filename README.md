@@ -84,7 +84,8 @@ histograms; extreme underflow/overflow warning modes need broader validation.
 The [minimum-threshold experiment](benchmarks/minimum-tuning.md) records its
 initial C++ build, AVX2 optimization and independent confirmation, including
 successful thresholds and matching convergence errors. Those measurements are
-separate from the last complete 96-entry performance checkpoint.
+retained as historical observations alongside the current 98-entry performance
+checkpoint.
 
 The [label-color experiment](benchmarks/label-color-tuning.md) compares palette
 assignment, RGB/grayscale overlays and region averages against original
@@ -384,7 +385,7 @@ disabled during timing and parity verification. These results include Python
 dispatch and allocation costs. Ratios below one are retained as regressions;
 CI checks benchmark coverage and execution, not hardware-dependent speed ratios.
 
-To rebuild and reproduce all seventeen reports with their default workloads:
+To rebuild and reproduce all 21 reports with their default workloads:
 
 ```sh
 python -m pip install -r benchmarks/requirements.txt
@@ -418,10 +419,10 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The last completed whole-library checkpoint covers 95 entries in 554
-serial default cases and 277 dtype-tagged cases. All 18 reports share one source
-fingerprint: 2,934 one-thread comparisons, including 2,868 of 2,895 native image
-workloads faster than original scikit-image. The 27 slower cases remain listed.
+performance. The current whole-library checkpoint covers 98 reviewed entries in
+572 serial default cases and 286 dtype-tagged cases. All 21 reports share one
+source fingerprint: 3,227 one-thread comparisons, including 3,157 of 3,188 native
+image workloads faster than original scikit-image. All 31 slower cases remain listed.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite
@@ -429,12 +430,12 @@ runs per-function reference checks in each SIMD mode on Windows and Linux; inven
 establish numerical parity for pending ports.
 [Color layouts and integer inputs](benchmarks/color-layouts.md) add 120 one-worker
 comparisons with strided and contiguous channel-first inputs, including copy costs.
-[Perceptual parameters](benchmarks/perceptual-parameters.md) add 60 comparisons
+[Perceptual parameters](benchmarks/perceptual-parameters.md) add 30 one-worker comparisons
 with alternate white points, wrapped hues, extra channels, negative-Z warnings,
 and Luv low-lightness/midtone branches.
-[Stain parameters](benchmarks/stain-parameters.md) add 156 comparisons across all
+[Stain parameters](benchmarks/stain-parameters.md) add 78 one-worker comparisons across all
 11 standard matrix families, three input dtypes and custom output widths.
-[Lab distance and color routes](benchmarks/color-distance.md) add 246 comparisons
+[Lab distance and color routes](benchmarks/color-distance.md) add 123 one-worker comparisons
 over broadcast/strided/planar inputs, extra channels, mixed dtypes, representative
 color routes, all four Lab distance metrics, scalar pairs, non-default weights,
 out-of-gamut HSV and identity calls. Identity rows are labeled separately.
@@ -445,7 +446,7 @@ the measured change from full input copies to row-strided C++ processing.
 The [linear-color experiment](benchmarks/linear-color-tuning.md) retains a separate
 16-case before/after comparison for skipping unused nonlinear SIMD work.
 [Morphology footprints and output reuse](benchmarks/morphology-parameters.md) add
-240 comparisons across ten APIs, four dtypes, rectangles, disks and even/asymmetric
+120 one-worker comparisons across ten APIs, four dtypes, rectangles, disks and even/asymmetric
 footprints. Every case checks exact output values, dtype and warning parity.
 The [boolean rectangle tuning experiment](benchmarks/morphology-tuning.md) retains
 before/after C++ snapshots and 18 fixed one-worker workloads; it is historical

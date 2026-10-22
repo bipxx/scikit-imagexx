@@ -15,7 +15,7 @@ A follow-up correctness check found that very large float64 supplied counts coul
 
 The preserved baseline is the exact installed package identified by the initial measurement; it was not rebuilt. The paired harness validates its measurement hash, source fingerprint, binary map and ISA before measuring all three backends in randomized order. Separate-session absolute times vary; before/after claims use paired preserved/current ratios.
 
-Independent confirmation includes separate one- and four-worker limits. Image histograms use optional global workers; ordered histogram smoothing and selection remain serial. [Parameter results](minimum-parameters.md) record every case.
+Independent confirmation includes separate one- and four-worker limits, retained in the [tuning JSON](minimum-tuning.json). Image histograms use optional global workers; ordered histogram smoothing and selection remain serial. The [parameter report](minimum-parameters.md) is refreshed with the whole-library checkpoint and can use a different worker subset and rebuilt binary.
 
 | Worker limit | Successful thresholds | Original/current for successful thresholds | Matching convergence errors | Original/current for errors |
 |---:|---:|---:|---:|---:|

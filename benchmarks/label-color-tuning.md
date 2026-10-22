@@ -14,7 +14,7 @@ Dense labels use a bounded rank table instead of sorting N repeated values and b
 
 The preserved baseline is the exact measured initial package, not a rebuild. Paired measurements validate its source/measurement/binary hashes and ISA, then randomize the order of all three backends. Absolute timings across sessions vary; before/after claims use paired ratios.
 
-Independent confirmation is recorded in the [parameter report](label-color-parameters.md).
+The paired one- and four-worker confirmation is retained in the [tuning JSON](label-color-tuning.json). The [parameter report](label-color-parameters.md) is refreshed with the whole-library checkpoint and can use a different worker subset and rebuilt binary.
 
 | Worker limit | Cases | Original/current | Initial/current,paired | Faster than original |
 |---:|---:|---:|---:|---:|
@@ -25,7 +25,7 @@ The separate [cardinality audit](label-color-cardinality.md) checks 15 wide-labe
 
 Parity covers 11 real label dtypes, strides, endian/unaligned storage, scalar/empty behavior, channels, custom colors/backgrounds, ignored controls, typed means, large groups, explicit fallback and warnings. Grayscale and average results are exact; RGB overlays inherit the documented HSV error budget. NumPy before 2.3 uses buffer-sized contiguous reductions; native averages preserve that ordering and the caller's current buffer size. Raw C++ contracts passed address/undefined-behavior sanitizers in AVX2, disabled-SIMD and portable OpenMP-disabled builds. The pre-growth checkpoint passed 8,062 shared API/color tests in each SIMD mode. The adaptive source passed 1,480 dedicated parity tests in each SIMD mode and 1,480 minimum-NumPy cases; raw C++ growth boundaries also passed the sanitizer matrix. Export registration also corrected operation IDs to be independent of public export order.
 
-Final source [CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39720117307) was still running when this report was prepared.
+Final source [CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39720117307) passed its complete matrix: 39,313 Python tests per SIMD mode on Linux, 39,311 plus two platform skips per mode on Windows, 9,071 minimum-NumPy tests, and native, portable and constrained-thread C++ checks on both operating systems.
 
 Cases slower than original or the preserved comparator in independent confirmation (initial comparator for core cases; pre-growth comparator for stress cases):
 
