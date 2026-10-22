@@ -1163,6 +1163,20 @@ int main() {
         try {correlate_sparse_into(nullptr,nullptr,PixelType::float32,{0,std::numeric_limits<std::size_t>::max()},{1,1},{{0,0}},nullptr);}
         catch(const std::overflow_error&){overflow=true;}
         require(overflow);
+        // Exercise tiled row boundaries, team-size changes and exception
+        // aggregation under native sanitizers, beyond the small scalar cases.
+        std::vector<float> volume(65*65*65),serial(volume.size()),parallel(volume.size());
+        for(std::size_t i=0;i<volume.size();++i)volume[i]=float(i%31);
+        volume.back()=huge;const float taps[]={.25f,1.f,2.f};
+        const std::vector<std::vector<std::size_t>> coordinates={{0,0,0},{1,1,1},{2,2,2}};
+        const auto previous=get_num_threads();set_num_threads(1);
+        const auto serial_flags=correlate_sparse_into(volume.data(),serial.data(),PixelType::float32,{65,65,65},{3,3,3},coordinates,taps);
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        const auto parallel_flags=correlate_sparse_into(volume.data(),parallel.data(),PixelType::float32,{65,65,65},{3,3,3},coordinates,taps);
+        require(serial==parallel && serial_flags==parallel_flags && (serial_flags[4]&1));
+        set_num_threads(previous);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
