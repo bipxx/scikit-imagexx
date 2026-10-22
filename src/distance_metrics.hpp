@@ -19,16 +19,20 @@ template<class T,bool Svml=false> struct ScalarDistanceMath {
     static R square(R a){return mul(a,a);}
     static R sqrt(R x){return std::sqrt(T(x));}
     static R power(R x,int n){
-        if constexpr(Svml)if(distance_math_callbacks && distance_math_callbacks->power)
+        if(distance_math_callbacks && distance_math_callbacks->power)
             return T(distance_math_callbacks->power(T(x),T(n),std::is_same_v<T,float>,distance_math_callbacks->context));
         return std::pow(T(x),T(n));
     }
     static R hypot(R a,R b){
-        if constexpr(Svml)if(distance_math_callbacks && distance_math_callbacks->hypot)
+        if(distance_math_callbacks && distance_math_callbacks->hypot)
             return T(distance_math_callbacks->hypot(T(a),T(b),std::is_same_v<T,float>,distance_math_callbacks->context));
         return std::hypot(T(a),T(b));
     }
-    static R angle(R a,R b){
+    static R angle(R a,R b,bool second=false){
+        if(distance_math_callbacks && distance_math_callbacks->angle) {
+            const auto h=T(distance_math_callbacks->angle(T(b),T(a),std::is_same_v<T,float>,second,distance_math_callbacks->context));
+            return T(double(h)+(h<0?2*distance_pi:0));
+        }
         const auto h=[](T x,T y){
             if constexpr(Svml && std::is_same_v<T,double>)return svml_atan2(y,x);
             else return std::atan2(y,x);
@@ -66,7 +70,7 @@ template<class M,class C,class W> typename M::R ciede2000_distance(
     const auto G=C::mul(C::c(.5),C::sub(one,C::sqrt(C::div(c7,C::add(c7,C::c(6103515625.))))));
     const auto scale=C::add(one,G),a1=C::mul(a[1],scale),a2=C::mul(b[1],scale);
     auto C1=C::hypot(a1,a[2]),C2=C::hypot(a2,b[2]);
-    const auto h1=C::angle(a1,a[2]),h2=C::angle(a2,b[2]);
+    const auto h1=C::angle(a1,a[2]),h2=C::angle(a2,b[2],true);
     const auto Lbar=M::mul(M::c(.5),M::add(L1,L2)),tmp=M::square(M::sub(Lbar,M::c(50)));
     const auto SL=M::add(one,M::div(M::mul(M::c(.015),tmp),M::sqrt(M::add(M::c(20),tmp))));
     const auto Lterm=M::div(M::sub(L2,L1),M::mul(M::c(p.kL),SL));

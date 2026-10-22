@@ -551,7 +551,8 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
     result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
                                  parameters,bool(wide),promote,legacy94,parameter_mask,
                                  single and name=='deltaE_ciede2000' and _LEGACY_CIEDE2000,
-                                 name=='deltaE_ciede2000' and _SVML_DOUBLE_ANGLES)
+                                 name=='deltaE_ciede2000' and _SVML_DOUBLE_ANGLES,
+                                 runtime_math=name=='deltaE_ciede2000')
     result=_distance_metadata(result,a,b,first_scalar,second_scalar,name=='deltaE_ciede2000')
     return result[()] if result.ndim==0 else result
 

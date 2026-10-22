@@ -12,6 +12,7 @@ jobs:
   check:
     if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -25,7 +26,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: python -m pip install ".[test]" cmake
+      - run: python -m pip wheel ".[test]" cmake --wheel-dir build/wheels
+      - run: python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake
       - run: python tools/diagnose_color_precision.py
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/inventory.py
@@ -65,6 +67,13 @@ jobs:
       - run: cmake -S . -B build/portable -DCMAKE_BUILD_TYPE=Release -DSKIMAGEXX_AVX2=OFF -DSKIMAGEXX_OPENMP=OFF
       - run: cmake --build build/portable --config Release
       - run: ctest --test-dir build/portable -C Release --output-on-failure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-package-${{ matrix.os }}
+          path: |
+            build/wheels/scikit_imagexx*.whl
+            build/ci-*.json
   numpy-minimum:
     runs-on: ubuntu-latest
     env:

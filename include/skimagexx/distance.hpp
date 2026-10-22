@@ -35,6 +35,10 @@ struct DistanceMathCallbacks {
     using Binary=double(*)(double,double,bool,void*);
     Binary power=nullptr,hypot=nullptr;
     void* context=nullptr;
+    // atan2(y,x), precision, second input color, context. Hosts can preserve
+    // their per-layout elementary-math dispatch at hue discontinuities.
+    using Angle=double(*)(double,double,bool,bool,void*);
+    Angle angle=nullptr;
 };
 void delta_e_compatible_into(const void* first,const void* second,void* output,std::size_t count,
     PixelType first_type,PixelType second_type,DistanceMetric metric,

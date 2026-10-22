@@ -59,8 +59,8 @@ struct NumpyLiLog {
 };
 struct NumpyDistanceMath {
     struct Loop {PyUFuncGenericFunction function;void* data;};
-    py::object power_owner,hypot_owner;
-    Loop powers[2],hypots[2];
+    py::object power_owner,hypot_owner,angle_owner;
+    Loop powers[2],hypots[2],angles[2];
     static Loop select(const py::object& object,int type) {
         if(!PyObject_TypeCheck(object.ptr(),&PyUFunc_Type))throw std::runtime_error("numeric math ufunc required");
         const auto* u=reinterpret_cast<PyUFuncObject*>(object.ptr());
@@ -69,10 +69,11 @@ struct NumpyDistanceMath {
                 return {u->functions[i],u->data ? u->data[i] : nullptr};
         throw std::runtime_error("native floating math loop unavailable");
     }
-    NumpyDistanceMath():power_owner(py::module_::import("numpy").attr("power")),hypot_owner(py::module_::import("numpy").attr("hypot")),
+    NumpyDistanceMath():power_owner(py::module_::import("numpy").attr("power")),hypot_owner(py::module_::import("numpy").attr("hypot")),angle_owner(py::module_::import("numpy").attr("arctan2")),
         powers{select(power_owner,NPY_DOUBLE),select(power_owner,NPY_FLOAT)},
-        hypots{select(hypot_owner,NPY_DOUBLE),select(hypot_owner,NPY_FLOAT)} {}
-    template<class T> static double run(const Loop& loop,double a,double b) {
+        hypots{select(hypot_owner,NPY_DOUBLE),select(hypot_owner,NPY_FLOAT)},
+        angles{select(angle_owner,NPY_DOUBLE),select(angle_owner,NPY_FLOAT)} {}
+    template<class T> static double run(const Loop& loop,double a,double b,std::ptrdiff_t first_step=sizeof(T),std::ptrdiff_t second_step=sizeof(T)) {
         // NumPy1's conservative overlap test treats adjacent scalar buffers
         // as overlapping and silently selects libm instead of SIMD/SVML.
         // Keep each scalar on a distinct cache line to retain its array path.
@@ -80,7 +81,7 @@ struct NumpyDistanceMath {
         alignas(64) T second=T(b);
         alignas(64) T result;
         char* args[]={reinterpret_cast<char*>(&first),reinterpret_cast<char*>(&second),reinterpret_cast<char*>(&result)};
-        const npy_intp count=1,steps[]={sizeof(T),sizeof(T),sizeof(T)};
+        const npy_intp count=1,steps[]={first_step,second_step,sizeof(T)};
         // Builtin fff/ddd loops use no Python API and retain NumPy's selected
         // native math provider, including masked SVML tails, without the GIL.
         loop.function(args,&count,steps,loop.data);
@@ -431,7 +432,7 @@ PYBIND11_MODULE(_core, m) {
     });
     const auto distance_math=std::make_shared<NumpyDistanceMath>();
     m.def("distance_metric",[distance_math](py::array first,py::array second,int operation,std::array<double,5> parameters,
-        bool wide_trig,bool promoted_cmc,bool legacy94,unsigned scalar_parameter_mask,bool legacy_ciede2000,bool svml_angles) -> py::array {
+        bool wide_trig,bool promoted_cmc,bool legacy94,unsigned scalar_parameter_mask,bool legacy_ciede2000,bool svml_angles,bool runtime_math) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
             throw py::value_error("distance inputs must have three channels");
         if(first.ndim()!=second.ndim() || !std::equal(first.shape(),first.shape()+first.ndim(),second.shape()))
@@ -439,6 +440,12 @@ PYBIND11_MODULE(_core, m) {
         const auto at=pixel_type(first.dtype()),bt=pixel_type(second.dtype());
         if(legacy94 && (operation!=0 || first.ndim()!=1 || at!=skimagexx::PixelType::float32 || bt!=at))
             throw py::value_error("legacy CIE94 requires two scalar float32 colors");
+        auto angle_step=[](const py::array& a) {
+            std::ptrdiff_t step=a.itemsize();
+            for(int axis=int(a.ndim())-2;axis>=0;--axis)if(a.shape(axis)>1) {step=a.strides(axis);break;}
+            return step;
+        };
+        const auto first_angle_step=angle_step(first),second_angle_step=angle_step(second);
         auto prepare=[](py::array a,std::ptrdiff_t& pixels,std::ptrdiff_t& channels) {
             if(!linear_color_view(a,pixels,channels)) {a=a.attr("copy")().cast<py::array>();pixels=3;channels=1;}
             return a;
@@ -450,7 +457,20 @@ PYBIND11_MODULE(_core, m) {
             py::dtype::of<float>() : py::dtype::of<double>();
         py::array out(dtype,dims);
         const skimagexx::DistanceParameters p{parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]};
-        const skimagexx::DistanceMathCallbacks math{NumpyDistanceMath::power,NumpyDistanceMath::hypot,distance_math.get()};
+        struct Call {NumpyDistanceMath* math;std::ptrdiff_t first_step,second_step;skimagexx::PixelType at,bt;};
+        Call context{distance_math.get(),first_angle_step,second_angle_step,at,bt};
+        skimagexx::DistanceMathCallbacks math{
+            [](double a,double b,bool single,void* data){return NumpyDistanceMath::power(a,b,single,static_cast<Call*>(data)->math);},
+            [](double a,double b,bool single,void* data){return NumpyDistanceMath::hypot(a,b,single,static_cast<Call*>(data)->math);},&context,
+            [](double y,double x,bool single,bool second,void* data){
+                const auto& call=*static_cast<Call*>(data);
+                const auto type=second ? call.bt : call.at;
+                auto step=second ? call.second_step : call.first_step;
+                if(type!=(single ? skimagexx::PixelType::float32 : skimagexx::PixelType::float64))step=single ? sizeof(float) : sizeof(double);
+                const auto& loop=call.math->angles[int(single)];
+                return single ? NumpyDistanceMath::run<float>(loop,y,x,step) : NumpyDistanceMath::run<double>(loop,y,x,step);
+            }};
+        if(!runtime_math)math.angle=nullptr;
         if(legacy94) {
             *static_cast<double*>(out.mutable_data())=skimagexx::delta_e94_scalar32(
                 static_cast<const float*>(first.data()),static_cast<const float*>(second.data()),p,
@@ -460,9 +480,9 @@ PYBIND11_MODULE(_core, m) {
         {py::gil_scoped_release release;
          skimagexx::delta_e_compatible_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,
             static_cast<skimagexx::DistanceMetric>(operation),p,wide_trig,promoted_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles,
-            svml_angles ? &math : nullptr);}
+            (svml_angles || (runtime_math && operation==1)) ? &math : nullptr);}
         return out;
-    },py::arg("first"),py::arg("second"),py::arg("operation"),py::arg("parameters"),py::arg("wide_trigonometry"),py::arg("promoted_cmc"),py::arg("legacy94")=false,py::arg("scalar_parameter_mask")=0,py::arg("legacy_ciede2000")=false,py::arg("svml_angles")=false);
+    },py::arg("first"),py::arg("second"),py::arg("operation"),py::arg("parameters"),py::arg("wide_trigonometry"),py::arg("promoted_cmc"),py::arg("legacy94")=false,py::arg("scalar_parameter_mask")=0,py::arg("legacy_ciede2000")=false,py::arg("svml_angles")=false,py::arg("runtime_math")=false);
     m.def("delta_e76",[](py::array first,py::array second,bool legacy_scalar) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
             throw py::value_error("distance inputs must have three channels");

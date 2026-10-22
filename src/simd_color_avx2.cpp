@@ -672,7 +672,7 @@ template<class T,bool Svml=false> struct VectorDistanceMath {
         const auto ratio=_mm256_div_pd(low,choose(high,_mm256_set1_pd(1),eq(high,_mm256_setzero_pd())));
         return round(_mm256_mul_pd(high,_mm256_sqrt_pd(_mm256_add_pd(_mm256_set1_pd(1),_mm256_mul_pd(ratio,ratio)))));
     }
-    static R angle(R a,R b){
+    static R angle(R a,R b,bool =false){
         // Preserve the float atan2 rounding before the double 2*pi in-place add.
         double x[4],y[4]; _mm256_storeu_pd(x,a); _mm256_storeu_pd(y,b);
         if constexpr(Svml && std::is_same_v<T,double>) {
