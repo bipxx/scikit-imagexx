@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 107 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 109 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -146,7 +146,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `feature.haar_like_feature_coord` | upstream-only | pending | pending |
 | `feature.hessian_matrix` | upstream-only | pending | pending |
 | `feature.hessian_matrix_det` | upstream-only | pending | pending |
-| `feature.hessian_matrix_eigvals` | upstream-only | pending | pending |
+| `feature.hessian_matrix_eigvals` | native-partial | yes (partial input contract) | yes |
 | `feature.hog` | upstream-only | pending | pending |
 | `feature.learn_gmm` | upstream-only | pending | pending |
 | `feature.local_binary_pattern` | upstream-only | pending | pending |
@@ -158,7 +158,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `feature.plot_matched_features` | upstream-only | pending | pending |
 | `feature.shape_index` | upstream-only | pending | pending |
 | `feature.structure_tensor` | upstream-only | pending | pending |
-| `feature.structure_tensor_eigenvalues` | upstream-only | pending | pending |
+| `feature.structure_tensor_eigenvalues` | native-partial | yes (partial input contract) | yes |
 | `filters.LPIFilter2D` | upstream-only | pending | pending |
 | `filters.apply_hysteresis_threshold` | native-partial | yes (partial input contract) | yes |
 | `filters.butterworth` | upstream-only | pending | pending |
