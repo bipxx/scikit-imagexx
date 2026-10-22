@@ -24,8 +24,6 @@ jobs:
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
-      - if: inputs.paired && inputs.benchmark != 'ciede2000'
-        run: python -c "raise ValueError('Paired measurements currently require the ciede2000 corpus')"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -51,8 +49,10 @@ jobs:
           path: build/initial
       - if: inputs.paired
         run: python tools/pair_snapshot.py --package-root build/initial/exact-package
-      - if: inputs.benchmark == 'li'
+      - if: inputs.benchmark == 'li' && !inputs.paired
         run: python benchmarks/li.py --size 512 --threads 1 4 --repeat 7 --output build/li-performance.json
+      - if: inputs.benchmark == 'li' && inputs.paired
+        run: python benchmarks/li.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/li-performance.json
       - if: inputs.benchmark == 'ciede2000' && !inputs.paired
         run: python benchmarks/ciede2000.py --size 512 --threads 1 4 --repeat 7 --output build/ciede2000-performance.json
       - if: inputs.benchmark == 'ciede2000' && inputs.paired

@@ -14,6 +14,15 @@
 
 namespace skimagexx {
 namespace {
+template<class T> bool constant_input(const T* input,std::size_t n) {
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2()) {
+        if constexpr(std::is_same_v<T,std::uint8_t>)return simd::uniform(input,n);
+        else return simd::li_uniform(input,n,std::is_same_v<T,float>);
+    }
+#endif
+    return std::all_of(input,input+n,[first=input[0]](T value){return value==first;});
+}
 template<class T> T pairwise(const T* values,std::size_t n) {
     if(n<=128) {
 #ifdef SKIMAGEXX_AVX2
@@ -172,6 +181,7 @@ struct LiImage::Impl {
     std::vector<float> single;
     std::vector<double> wide;
     template<class T> void prepare(const T* input,std::size_t n,std::vector<T>& values) {
+        if(!std::isnan(input[0]) && constant_input(input,n)){kind=LiKind::constant;early=double(input[0]);return;}
         std::size_t first=0;while(first<n && std::isnan(input[first]))++first;
         if(first==n){kind=LiKind::empty;return;}
         const auto stats=scan(input,n,input[first]);
@@ -195,6 +205,7 @@ LiImage::LiImage(const void* source,std::size_t n,PixelType type):impl_(new Impl
         for(std::size_t i=1;i<n;++i)if((values[i]!=0)!=first){s.kind=LiKind::boolean_error;break;}
     } else if(type==PixelType::uint8) {
         const auto* values=static_cast<const std::uint8_t*>(source);
+        if(constant_input(values,n)){s.kind=LiKind::constant;s.early=double(values[0]);return;}
         const auto counts=histogram_u8(values,1,n);
         std::size_t low=0,high=255;while(!counts[low])++low;while(!counts[high])--high;
         if(low==high){s.kind=LiKind::constant;s.early=double(low);return;}

@@ -101,6 +101,7 @@ double sum(const double*, std::size_t);
 double sum(const std::uint8_t*, std::size_t);
 void otsu_scores(const float*, const float*, const double*, const double*, double*, std::size_t);
 bool uniform(const std::uint8_t*, std::size_t);
+bool li_uniform(const void*,std::size_t,bool);
 void lookup(const std::uint8_t*, std::uint8_t*, std::size_t, const std::int32_t*);
 void lookup(const std::uint8_t*, double*, std::size_t, const double*);
 void bounds(const float*, std::size_t, double&, double&);

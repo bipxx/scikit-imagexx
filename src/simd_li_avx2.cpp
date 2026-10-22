@@ -46,6 +46,14 @@ LI_VECTOR(float,__m256,ps,8)
 LI_VECTOR(double,__m256d,pd,4)
 #undef LI_VECTOR
 
+template<class T> bool constant_input(const T* input,std::size_t n) {
+    using V=Vector<T>;const auto first=V::set(input[0]);std::size_t i=0;
+    constexpr auto all=unsigned((std::size_t{1}<<V::lanes)-1);
+    for(;i+V::lanes<=n;i+=V::lanes)if(V::bits(V::eq(V::load(input+i),first))!=all)return false;
+    for(;i<n;++i)if(input[i]!=input[0])return false;
+    return true;
+}
+
 template<class T> std::size_t scan(const T* input,std::size_t n,T first,detail::LiScan& out) {
     using V=Vector<T>;static constexpr auto order=make_order<V::lanes>();
     const auto inf=V::set(std::numeric_limits<T>::infinity()),negative_inf=V::set(-std::numeric_limits<T>::infinity());
@@ -102,6 +110,9 @@ template<class T> std::size_t partition(const T* input,std::size_t n,T pivot,T* 
     }
     return i;
 }
+}
+bool li_uniform(const void* input,std::size_t n,bool single) {
+    return single ? constant_input(static_cast<const float*>(input),n) : constant_input(static_cast<const double*>(input),n);
 }
 std::size_t li_scan(const void* input,std::size_t n,bool single,double first,detail::LiScan& out) {
     return single ? scan(static_cast<const float*>(input),n,float(first),out) : scan(static_cast<const double*>(input),n,first,out);

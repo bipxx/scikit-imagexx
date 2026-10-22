@@ -41,6 +41,16 @@ def test_signature():
     assert inspect.signature(xx.filters.threshold_li)==inspect.signature(reference)
 
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('size',[1,7,8,9,31,32,33,127,128,129,262149])
+@pytest.mark.parametrize('change',['none','first','last','nan'])
+def test_uniform_scan_and_late_mismatch(dtype,size,change):
+    a=np.full(size,7,dtype=dtype)
+    if change=='first':a[0]=9
+    if change=='last':a[-1]=9
+    if change=='nan' and dtype!=np.uint8:a[-1]=np.nan
+    compare(a)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
 @pytest.mark.parametrize('shape',[(),(0,),(2,0,3),(1,),(7,),(8,),(127,),(128,),(129,),(13,17),(3,7,11),(262149,)])
 def test_shapes_and_reduction_boundaries(dtype,shape):compare(sample(dtype,shape))
 
