@@ -24,7 +24,8 @@ def main():
     a=(np.random.default_rng(32).random((67,3))*200-100).astype(np.float32)
     x,y=a[:,1],a[:,2]
     c=np.hypot(x,y)
-    cpu=np._core._multiarray_umath.__cpu_features__
+    core=getattr(np,'_core',None) or np.core
+    cpu=core._multiarray_umath.__cpu_features__
     result={'numpy':np.__version__,'platform':platform.platform(),
             'cpu_features':[name for name,on in cpu.items() if on and ('AVX' in name or name.startswith('X86_V'))],
             'hypotf':difference(c,[hypotf(xx,yy) for xx,yy in zip(x,y)]),
@@ -39,10 +40,33 @@ def main():
             if address:
                 old=ctypes.CFUNCTYPE(ctypes.c_float,ctypes.c_float,ctypes.c_float)(address)
                 result['legacy_hypotf']=difference(c,[old(xx,yy) for xx,yy in zip(x,y)])
-            binary=np._core._multiarray_umath.__file__
+            binary=core._multiarray_umath.__file__
             symbols=subprocess.check_output(['readelf','-Ws',binary],text=True)
             result['hypot_symbols']=sorted({line.split()[-1] for line in symbols.splitlines() if 'hypot' in line})
         except (OSError,subprocess.SubprocessError):pass
+    # The 180-degree CIEDE2000 branch amplifies one-ulp angle differences.
+    # Include double primitives and exact representations on every CI host.
+    import math
+    from pathlib import Path
+    from skimage.color import deltaE_ciede2000
+    import skimagexx as xx
+    data=np.loadtxt(Path(__file__).parent.parent/'tests/data/ciede2000-sharma.txt')
+    first,second=data[:,:3],data[:,3:6]
+    radius=.5*(np.hypot(first[:,1],first[:,2])+np.hypot(second[:,1],second[:,2]))
+    c7=radius**7
+    scale=1+.5*(1-np.sqrt(c7/(c7+25**7)))
+    angles=[]
+    for lab in (first,second):
+        x,y=lab[:,1]*scale,lab[:,2]
+        array=np.arctan2(y,x)
+        scalar=np.array([math.atan2(yy,xxx) for xxx,yy in zip(x,y)])
+        angles.append(array)
+        result.setdefault('double_atan2',[]).append([
+            {'index':int(i),'x':float(x[i]).hex(),'y':float(y[i]).hex(),
+             'numpy':float(array[i]).hex(),'libm':float(scalar[i]).hex()}
+            for i in np.flatnonzero(array!=scalar)])
+    result['sharma_native']=xx.color.deltaE_ciede2000(first,second).tolist()
+    result['sharma_original']=deltaE_ciede2000(first,second).tolist()
     print(json.dumps(result),flush=True)
 
 
