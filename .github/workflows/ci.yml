@@ -1,7 +1,13 @@
 name: parity-and-native
 on:
   push:
+    paths-ignore:
+      - '**/*.md'
+      - 'benchmarks/*.json'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'benchmarks/*.json'
   workflow_dispatch:
     inputs:
       minimum_only:
