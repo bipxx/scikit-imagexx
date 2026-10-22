@@ -224,7 +224,11 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
                         if(c<0 || c==1){missing=true;break;}}
                     values[t]=missing ? constant : W(input[0]);
                 }} else for(std::size_t t=0;t<offsets.size();++t)values[t]=padded[base+k+offsets[t]];
-                selected[k]=select(values.data(),values.size(),rank);
+                // Dense two-tap footprints use NI's separable maximum, whose
+                // deque replaces an equal value with the later sample. Sparse
+                // extrema and general rank selection retain their own order.
+                selected[k]=values.size()==2 && !nd_rank && !source_cval && values[1]==values[0]
+                    ? values[1] : select(values.data(),values.size(),rank);
             }
             for(std::size_t k=0;k<span;++k){
                 if constexpr(std::is_same_v<W,std::int64_t>)static_cast<std::int64_t*>(output)[position+k]=selected[k];

@@ -276,3 +276,11 @@ def test_signed_zero_asymmetric_rank(dtype,count,mode):
     a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),257)
     mask=np.zeros(11,dtype=bool);mask[:count]=True
     compare(a,mask,mode=mode,cval=-0.)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('mask',[np.ones((1,2),bool),np.ones((2,1),bool),
+    np.array([[1,0,1]],bool),np.array([[1,0],[0,1]],bool),np.ones((3,3),bool),np.ones((2,2),bool)])
+def test_nd_signed_zero_extrema_and_selection(dtype,mode,mask):
+    a=np.random.default_rng(43).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),(11,13))
+    compare(a,mask,mode=mode,cval=-0.)

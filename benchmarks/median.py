@@ -48,6 +48,7 @@ def main():
         if dtype!=np.uint8:
             zeros=np.random.default_rng(5228).choice(np.array([-1.,-0.,0.,1.],dtype=dtype),image.size)
             for width in (3,31):cases.append((f'signed-zero{width}',zeros,np.ones(width,dtype=bool),'nearest'))
+            cases.append(('signed-zero-pair',zeros.reshape(image.shape),np.ones((1,2),dtype=bool),'nearest'))
     package=Path(xx.__file__).parent
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),
         'cpu':platform.processor(),'logical_cpus':os.cpu_count(),'python':sys.version,'numpy':np.__version__,
