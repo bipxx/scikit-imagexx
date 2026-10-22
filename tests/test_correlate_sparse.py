@@ -136,3 +136,11 @@ def test_full_width_integer_conversion(dtype,mode):
 @pytest.mark.parametrize('mode',MODES[:-1])
 def test_even_kernel_error(mode):
     compare(np.ones((3,4)),np.ones((2,3)),mode)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('corner',[0,1,.25])
+@pytest.mark.parametrize('mode',MODES)
+def test_metadata_depends_on_first_product(dtype,corner,mode):
+    a=sample(dtype,(9,13)).view(np.dtype(dtype,metadata={'unit':'raw'}))
+    k=np.zeros((3,3));k[0,0]=corner;k[-1,-1]=.125
+    compare(a,k,mode)

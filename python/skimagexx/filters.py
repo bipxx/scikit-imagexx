@@ -928,13 +928,22 @@ def correlate_sparse(image,kernel,mode='reflect'):
     corner=(0,)*image.ndim
     if not coordinates or coordinates[0]!=corner:
         coordinates.insert(0,corner);weights=np.concatenate((np.zeros(1,dtype=dtype),weights))
-    preserve_map=type(image) is np.memmap and mode=='valid' and weights[0]==1
+    with np.errstate(all='ignore'):identity=weights[0]==1
+    output_shape=tuple(n-w+1 for n,w in zip(image.shape,kernel.shape)) if mode=='valid' else image.shape
+    result_dtype=native.dtype if identity else np.multiply(dtype.type(.5),np.zeros(1 if all(output_shape) else 0,dtype=native.dtype)).dtype
+    preserve_map=type(image) is np.memmap and mode=='valid' and identity
     native=np.asarray(native)
     if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
     if not weights.flags.aligned:weights=weights.copy()
     borders={'reflect':0,'symmetric':0,'constant':1,'nearest':2,'edge':2,'mirror':3,'wrap':4,'valid':0}
     result,flags=_core.correlate_sparse(native,kernel.shape,coordinates,weights,borders[mode],mode=='valid')
-    for i,flag in enumerate(flags):_sparse_float_status(flag,dtype,i%2)
+    for t,weight in enumerate(weights):
+        # Legacy NumPy may warn when a signaling float32 scalar is compared
+        # with the integer identity. Preserve this before its multiply/add.
+        weight==1
+        _sparse_float_status(flags[2*t],dtype,False)
+        if t:_sparse_float_status(flags[2*t+1],dtype,True)
+    if result.dtype.metadata!=result_dtype.metadata:result=result.view(result_dtype)
     return result.view(np.memmap) if preserve_map else result
 
 
