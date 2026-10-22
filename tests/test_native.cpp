@@ -1243,5 +1243,27 @@ int main() {
             require(hash==hashes[axis][mode]);
         }
     }
+    {
+        std::vector<float> large_counts(1024);
+        for(std::size_t i=0;i<large_counts.size();++i)large_counts[i]=float(1+i*17%43);
+        const int worker_limits[]={1,
+#ifdef _OPENMP
+            4,
+#endif
+        };
+        for(const int workers:worker_limits) {
+            set_num_threads(workers);
+            require(threshold_multiotsu(large_counts.data(),1024,2)==std::vector<std::size_t>{510});
+            require(threshold_multiotsu(large_counts.data(),1024,3)==std::vector<std::size_t>({339,681}));
+        }
+        set_num_threads(1);
+        const float tiny_counts[7]={1e-40f,1e-40f,1e-40f,1e-40f,1e-40f,1e-40f,1e-40f};
+        require(threshold_multiotsu(tiny_counts,7,2).empty());
+        require(threshold_multiotsu(tiny_counts,7,3).empty());
+        const float counts[]={1,9,2,4,8,3,1,7,4};
+        const std::vector<std::vector<std::size_t>> expected={{4},{2,5},{2,4,6},{1,3,5,7}};
+        for(std::size_t classes=2;classes<=5;++classes)
+            require(threshold_multiotsu(counts,9,classes)==expected[classes-2]);
+    }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

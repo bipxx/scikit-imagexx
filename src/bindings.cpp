@@ -851,6 +851,14 @@ PYBIND11_MODULE(_core, m) {
         skimagexx::threshold_logs(values.data(),output.mutable_data(),std::size_t(values.size()),numpy_log);
         return output;
     });
+    m.def("threshold_multiotsu", [](py::array_t<float,py::array::c_style|py::array::forcecast> counts,std::size_t classes) {
+        if(counts.ndim()!=1)throw py::value_error("one-dimensional histogram required");
+        if(reinterpret_cast<std::uintptr_t>(counts.data())%alignof(float))counts=decltype(counts)::ensure(counts.attr("copy")());
+        std::vector<std::size_t> indices;
+        {py::gil_scoped_release release;indices=skimagexx::threshold_multiotsu(counts.data(),std::size_t(counts.size()),classes);}
+        py::array_t<py::ssize_t> result(py::ssize_t(indices.size()));
+        std::copy(indices.begin(),indices.end(),result.mutable_data());return result;
+    });
     m.def("threshold_minimum", [](py::array_t<float,py::array::c_style|py::array::forcecast> counts,std::size_t iterations) {
         if(counts.ndim()!=1)throw py::value_error("one-dimensional histogram required");
         if(reinterpret_cast<std::uintptr_t>(counts.data())%alignof(float))counts=decltype(counts)::ensure(counts.attr("copy")());
