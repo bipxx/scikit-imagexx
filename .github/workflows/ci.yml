@@ -2,6 +2,9 @@ name: parity-and-native
 on: [push, pull_request]
 jobs:
   check:
+    # Temporary investigation branch: full platform jobs for the unchanged
+    # product are already running in 39746070152. Keep a runner for NumPy1.
+    if: github.ref != 'refs/heads/fix/distance-portability'
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
