@@ -369,6 +369,9 @@ def _adaptive_rank_profile():
     return 0 if version<'1.15.0' else 1 if version<'1.16.1' else 2
 
 
+_ADAPTIVE_FLOAT_MAX={np.dtype(t):float(np.finfo(t).max) for t in (np.float32,np.float64)}
+
+
 def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect',param=None,cval=0):
     import math
     original_image=image
@@ -427,7 +430,9 @@ def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect'
     if not math.isfinite(value):return delegated()
     probe=np.zeros((),dtype=float_dtype) if image.ndim==0 else np.empty(0,dtype=float_dtype)
     target=np.result_type(probe,offset)
-    if target not in (np.dtype(np.float32),np.dtype(np.float64)) or abs(value)>np.finfo(target).max:return delegated()
+    if target not in _ADAPTIVE_FLOAT_MAX:return delegated()
+    maximum=_ADAPTIVE_FLOAT_MAX[target];working_maximum=_ADAPTIVE_FLOAT_MAX[float_dtype]
+    if abs(value)>maximum:return delegated()
     native=image if image.dtype.isnative else _core.edge_native(image)
     if native.dtype==np.float16:native=_core.edge_half(native)
     if native.dtype.type not in (np.float32,np.float64):native=_core.gaussian_nd(native,[],[],[],0.,True,float_dtype)[0]
@@ -437,8 +442,8 @@ def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect'
         low,high=_core.intensity_bounds(native)
         if not (math.isfinite(low) and math.isfinite(high)):return delegated()
         amplitude=max(abs(low),abs(high))
-    if max(amplitude,abs(constant))+abs(value)>np.finfo(target).max:return delegated()
-    if max(amplitude,abs(constant))>np.finfo(float_dtype).max/4:return delegated()
+    if max(amplitude,abs(constant))+abs(value)>maximum:return delegated()
+    if max(amplitude,abs(constant))>working_maximum/4:return delegated()
     if method=='gaussian':
         kernels=[];axes=[];borders=[]
         for axis in active:
@@ -447,13 +452,13 @@ def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect'
             cache=type(sigma) in (int,float) and 1e-15<float(sigma)<1e154
             kernels.append((_gaussian_cached_coefficients if cache else _gaussian_coefficients)(sigma,radius))
             axes.append(axis);borders.append(codes[axis])
-        if max(amplitude,abs(constant))>np.finfo(np.float64).max/4:return delegated()
+        if max(amplitude,abs(constant))>_ADAPTIVE_FLOAT_MAX[np.dtype(np.float64)]/4:return delegated()
         result,flags=_core.gaussian_nd(native,kernels,axes,borders,constant,True,float_dtype)
         _gaussian_copy_flags(flags,native.dtype.type,float_dtype)
     else:
         if any(w>100000 for w in window):return delegated()
-        if method=='mean' and max(amplitude,abs(constant))>np.finfo(np.float64).max/(4*max((1,)+window)):return delegated()
-        if method=='median' and abs(constant)>np.finfo(float_dtype).max:return delegated()
+        if method=='mean' and max(amplitude,abs(constant))>_ADAPTIVE_FLOAT_MAX[np.dtype(np.float64)]/(4*max((1,)+window)):return delegated()
+        if method=='median' and abs(constant)>working_maximum:return delegated()
         zero_strides=image.dtype in (np.dtype(np.float32),np.dtype(np.float64)) and image.dtype.isnative and all(s==0 for s in image.strides)
         if method=='median' and image.ndim==1:
             profile=_adaptive_rank_profile()
