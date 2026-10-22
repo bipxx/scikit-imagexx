@@ -140,3 +140,11 @@ def test_dense_full_uint16_rank_range(size):
 def test_dense_span_limit_near_uint64_max(span,size):
     values=np.array([np.iinfo(np.uint64).max-span,np.iinfo(np.uint64).max],dtype=np.uint64)
     compare(np.resize(values,size))
+
+@pytest.mark.parametrize('span',[(1<<32)-2,(1<<32)-1,1<<32,(1<<32)+1])
+@pytest.mark.parametrize('size',[65535,65536,262145])
+@pytest.mark.parametrize('near_max',[False,True])
+def test_packed_relative_key_width_and_original_positions(span,size,near_max):
+    values=np.arange(4097,dtype=np.uint64)*np.uint64(span)//np.uint64(4096)
+    if near_max:values+=np.uint64(np.iinfo(np.uint64).max-span)
+    compare(np.resize(values[np.random.default_rng(917).permutation(len(values))],size))

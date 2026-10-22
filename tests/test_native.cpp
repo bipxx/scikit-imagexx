@@ -1109,6 +1109,20 @@ int main() {
         for(std::size_t i=0;i<dense.size();++i)dense[i]=std::uint16_t(dense.size()-1-i);
         require(rank_order_into(dense.data(),dense.size(),PixelType::uint16,dense_ranks.data(),PixelType::uint16,representatives));
         require(dense==dense_ranks && representatives.size()==dense.size());
+        const auto previous_workers=get_num_threads();set_num_threads(4);
+        const std::size_t n=262145,highest=(n-1)/3;
+        std::vector<std::uint64_t> wide(n);std::vector<std::uint32_t> wide_ranks(n);
+        for(std::size_t i=0;i<n;++i)wide[i]=7+std::uint64_t((n-1-i)/3)*(UINT64_C(1)<<40);
+        require(rank_order_into(wide.data(),n,PixelType::uint64,wide_ranks.data(),PixelType::uint32,representatives));
+        require(representatives.size()==highest+1);
+        for(std::size_t i=0;i<n;++i)require(wide_ranks[i]==(n-1-i)/3);
+        for(std::size_t i=0;i<representatives.size();++i)require(wide[representatives[i]]==7+std::uint64_t(i)*(UINT64_C(1)<<40));
+        for(std::size_t i=0;i<n;++i)wide[i]=UINT64_MAX-std::uint64_t((n-1-i)/3);
+        require(rank_order_into(wide.data(),n,PixelType::uint64,wide_ranks.data(),PixelType::uint32,representatives));
+        require(representatives.size()==highest+1);
+        for(std::size_t i=0;i<n;++i)require(wide_ranks[i]==highest-(n-1-i)/3);
+        for(std::size_t i=0;i<representatives.size();++i)require(wide[representatives[i]]==UINT64_MAX-highest+i);
+        set_num_threads(previous_workers);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
