@@ -1,5 +1,10 @@
 # Last completed whole-library performance checkpoint
 
+The [Gabor kernel port](gabor-initial.md) is retained on main after full CI.
+Corrected-source one-worker geometric means are 3.054x on Linux and 3.582x on
+Windows over scikit-image 0.26.0; all 36 cases per OS are faster. Both exact
+packages, the original trial and every raw sample remain available.
+
 The [CLAHE experiments](clahe-initial.md) retain the initial native port and the
 validated float-buffer reuse optimization. The latest paired run measures
 one-worker geometric means of 9.786x on Linux and 14.073x on Windows over
