@@ -11,15 +11,11 @@ namespace skimagexx { namespace detail {
 // A separate rank node, with negative max-heap and positive min-heap indices,
 // retains upstream's insertion history and strict-comparison tie ordering.
 template<class T> class MedianTies {
-    std::vector<T> storage;
-    std::vector<std::int32_t> indices;
-    T* values;
-    std::int32_t* positions;
-    std::int32_t* heap;
-    std::ptrdiff_t below,above;
-    const std::size_t count;
+    std::vector<T> values;
+    std::vector<std::int32_t> slots,positions;
+    std::ptrdiff_t rank,below,above;
     std::size_t next=0;
-    auto& at(std::ptrdiff_t p) {return heap[p];}
+    auto& at(std::ptrdiff_t p) {return slots[std::size_t(p+rank)];}
     bool less(std::ptrdiff_t a,std::ptrdiff_t b) {return values[at(a)]<values[at(b)];}
     bool exchange_if_less(std::ptrdiff_t a,std::ptrdiff_t b) {
         if(!less(a,b))return false;
@@ -47,16 +43,13 @@ template<class T> class MedianTies {
         return p==0;
     }
 public:
-    MedianTies(std::size_t length,std::size_t selected):storage(length),indices(2*length),
-        values(storage.data()),positions(indices.data()),heap(positions+length+selected),
-        below(std::ptrdiff_t(selected)),above(std::ptrdiff_t(length-selected-1)),count(length) {
-        for(std::size_t i=0;i<count;++i){positions[i]=std::int32_t(std::ptrdiff_t(i)-below);at(positions[i])=std::int32_t(i);}
+    MedianTies(std::size_t count,std::size_t selected):values(count),slots(count),positions(count),
+        rank(std::ptrdiff_t(selected)),below(rank),above(std::ptrdiff_t(count)-rank-1) {
+        for(std::size_t i=0;i<count;++i){positions[i]=std::int32_t(std::ptrdiff_t(i)-rank);at(positions[i])=std::int32_t(i);}
     }
-    MedianTies(const MedianTies&)=delete;
-    MedianTies& operator=(const MedianTies&)=delete;
     void insert(T value) {
         const auto p=positions[next];const auto old=values[next];values[next]=value;
-        if(++next==count)next=0;
+        if(++next==values.size())next=0;
         if(p>0) {
             if(value>old){down_min(p);return;}
             if(up_min(p) && exchange_if_less(0,-1))down_max(-1);

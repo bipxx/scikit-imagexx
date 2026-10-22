@@ -173,7 +173,11 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
         const bool safe=border==GaussianBorder::reflect ? n>left : border==GaussianBorder::mirror ? n>left+1 :
             border==GaussianBorder::wrap ? n>=tail+(window[0]%2==0 ? 2 : 0) : n>=tail;
         if(!safe)return {true};
-        detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
+        if(target==PixelType::float32)detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
+            [&](auto i,W value){static_cast<float*>(output)[i]=float(value);});
+        else if(target==PixelType::float64)detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
+            [&](auto i,W value){static_cast<double*>(output)[i]=double(value);});
+        else detail::median_tie_line<T,W>(input,n,window[0],rank,border,constant,
             [&](auto i,W value){write(output,i,double(value),target);});
         return {};
     }
