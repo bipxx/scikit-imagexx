@@ -4,9 +4,11 @@ The newer [Li threshold checkpoint](li.md) records source-specific Windows/Linux
 one-worker and four-worker results, including regressions. The subsequent
 [runtime angle-layout correction](distance-layout.md) addresses the eight Linux
 CIEDE2000 failures recorded at that checkpoint and retains paired measurements
-against the exact previous package. Its full CI gates are still running; its
-focused parity and both paired performance jobs pass. The whole-library reports
-below remain historical.
+against the exact previous package. The first correction passes all gates in
+CI run 39763182640. A later AVX-512/NumPy 1.24 runner exposed two length-128
+antipodal failures, currently under investigation; the prior green run does not
+settle that additional portability case. Both paired performance jobs pass.
+The whole-library reports below remain historical.
 
 These 21 reports were measured at `984141f`, before the conversion layout optimization, legacy color-distance corrections and histogram-matching port/tuning. The [conversion experiment](conversion-packet-tuning.md), [scalar-distance report](distance-scalar.md), [CIEDE2000 report](ciede2000.md), [histogram-matching port](match-histograms.md) and [rank-storage tuning](match-memory.md) record their separate source-specific measurements; the whole-library source set remains historical until the next full refresh.
 
