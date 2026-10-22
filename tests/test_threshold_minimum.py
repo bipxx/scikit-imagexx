@@ -29,9 +29,13 @@ def outcome(function, *args, **kwargs):
     return result, [(type(w.message), str(w.message)) for w in notices]
 
 
-def check(*args, **kwargs):
+def check(*args, _fallback_warning=False, **kwargs):
     expected, expected_notices=outcome(reference.threshold_minimum,*args,**kwargs)
     actual, actual_notices=outcome(xx.filters.threshold_minimum,*args,**kwargs)
+    diagnostics=[notice for notice in actual_notices if notice[0] is xx.FallbackWarning]
+    assert diagnostics==([(xx.FallbackWarning,'skimage.filters.threshold_minimum executed by scikit-image fallback')]
+                         if _fallback_warning else [])
+    actual_notices=[notice for notice in actual_notices if notice[0] is not xx.FallbackWarning]
     assert actual_notices==expected_notices
     assert actual[:3]==expected[:3]
     if expected[0]=='value':np.testing.assert_array_equal(actual[3],expected[3])
@@ -154,16 +158,16 @@ def test_edges_neighbors(dtype,nbins):
     check(np.clip(image,edges[0],edges[-1]),nbins)
 
 
-@pytest.mark.parametrize('kwargs',[
-    {'image':np.arange(9,dtype=np.int16)},
-    {'image':np.array([np.nan,1.,2.])},
-    {'hist':np.array([1.,np.inf,2.])},
-    {'hist':np.array([2,0,3,0,2]),'max_num_iter':0},
-    {'hist':np.array([2,0,3,0,2]),'max_num_iter':-1},
-    {'hist':np.array([2,0,3,0,2]),'max_num_iter':1.5},
+@pytest.mark.parametrize('kwargs,delegated',[
+    ({'image':np.arange(9,dtype=np.int16)},True),
+    ({'image':np.array([np.nan,1.,2.])},False),
+    ({'hist':np.array([1.,np.inf,2.])},True),
+    ({'hist':np.array([2,0,3,0,2]),'max_num_iter':0},True),
+    ({'hist':np.array([2,0,3,0,2]),'max_num_iter':-1},True),
+    ({'hist':np.array([2,0,3,0,2]),'max_num_iter':1.5},True),
 ])
-def test_explicit_compatibility(kwargs):
+def test_explicit_compatibility(kwargs,delegated):
     # Unsupported domains stay visibly delegated until their native contract is
     # implemented. This test is not counted as native coverage.
     xx.set_fallback_enabled(True)
-    check(**kwargs)
+    check(**kwargs,_fallback_warning=delegated)
