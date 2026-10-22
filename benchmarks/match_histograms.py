@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import os
 import sys
 import numpy as np
 import skimage
@@ -53,7 +54,8 @@ def main():
         b=rng.integers(0,256,(args.size+3,args.size-1,3)).astype(dtype)
         cases.extend([('quantized-mono',a[...,0].copy(),b[...,0].copy(),None),('quantized-color',a,b,-1)])
     report={'metadata':{'timestamp_utc':datetime.now(timezone.utc).isoformat(),
-        'platform':platform.platform(),'python':sys.version,'numpy':np.__version__,'scikit_image':skimage.__version__,
+        'platform':platform.platform(),'cpu':platform.processor(),'logical_cpus':os.cpu_count(),
+        'python':sys.version,'numpy':np.__version__,'scikit_image':skimage.__version__,
         'avx2':xx.has_avx2(),'fallback_enabled':False,'reference_thread_pools':1,
         'repeat':args.repeat,'target_ms':15,'cooldown_ms':20,'seed':904,'command':sys.argv,
         **source_fingerprint(Path(__file__).resolve().parents[1]),'binary_sha256':binary_hashes(xx)},'results':[]}

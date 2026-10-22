@@ -66,6 +66,11 @@ Next work:
   their native contracts remain partial.
 - Extend exposure coverage to adaptive equalization and broaden histogram matching, with
   per-function parity and one-worker performance checks against scikit-image.
+- Optimize histogram-matching layout preparation, continuous float64 ranks and
+  per-pixel storage/casting. The independent Windows one-worker suite retains
+  13/24 cases slower than original scikit-image (3/24 on NumPy 1.24); its native
+  initial/current paired improvement is 2.117×. Keep the fixed workloads and
+  preserved packages when checking improvements; see `benchmarks/match-histograms.md`.
 - Broaden distance parameter-array, strong-scalar and float16 contracts;
   extend direct nonuniform-row processing to the weighted distance kernels.
 - Broaden local-threshold exceptional arithmetic, float16, array parameters
