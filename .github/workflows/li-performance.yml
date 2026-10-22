@@ -24,6 +24,8 @@ jobs:
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
+      - if: inputs.paired && inputs.benchmark != 'ciede2000'
+        run: python -c "raise ValueError('Paired measurements currently require the ciede2000 corpus')"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:

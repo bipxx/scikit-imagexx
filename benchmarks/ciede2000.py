@@ -97,6 +97,9 @@ def main():
                        **measure(lambda: reference(a, b, **options),
                                  lambda: xx.color.deltaE_ciede2000(a, b, **options), args.repeat, 15,old)}
                 report['results'].append(row)
+                # Preserve completed samples even if a later parity check fails.
+                args.output.parent.mkdir(parents=True, exist_ok=True)
+                args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
                 print(f'{a.dtype.name} {label} {options} t={threads}: {row["speedup"]:.3f}x', flush=True)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
