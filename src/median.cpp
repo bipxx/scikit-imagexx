@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <numeric>
 #include <stdexcept>
 #include <type_traits>
 namespace skimagexx { namespace {
@@ -66,6 +67,47 @@ template<class T> T select(T* values,std::size_t count,std::size_t rank) {
         if(rank<=std::size_t(right))high=right;else low=right+1;
     }return values[rank];
 }
+template<class T> class RankWindow {
+    std::vector<T> values;
+    std::vector<std::size_t> lower,upper,position;
+    std::vector<unsigned char> side;
+    bool better(std::size_t a,std::size_t b,bool maximum) const {
+        return maximum ? values[a]>values[b] : values[a]<values[b];
+    }
+    void exchange(std::vector<std::size_t>& heap,std::size_t a,std::size_t b) {
+        std::swap(heap[a],heap[b]);position[heap[a]]=a;position[heap[b]]=b;
+    }
+    void repair(std::vector<std::size_t>& heap,std::size_t i,bool maximum) {
+        if(i && better(heap[i],heap[(i-1)/2],maximum)) {
+            do {const auto parent=(i-1)/2;if(!better(heap[i],heap[parent],maximum))break;exchange(heap,i,parent);i=parent;}while(i);
+        } else {
+            while(2*i+1<heap.size()){auto child=2*i+1;
+                if(child+1<heap.size() && better(heap[child+1],heap[child],maximum))++child;
+                if(!better(heap[child],heap[i],maximum))break;exchange(heap,i,child);i=child;
+            }
+        }
+    }
+public:
+    RankWindow(const T* first,std::size_t count,std::size_t rank):values(first,first+count),position(count),side(count) {
+        std::vector<std::size_t> indices(count);std::iota(indices.begin(),indices.end(),std::size_t(0));
+        std::nth_element(indices.begin(),indices.begin()+rank,indices.end(),[&](auto a,auto b){return values[a]<values[b];});
+        lower.assign(indices.begin(),indices.begin()+rank+1);upper.assign(indices.begin()+rank+1,indices.end());
+        std::make_heap(lower.begin(),lower.end(),[&](auto a,auto b){return values[a]<values[b];});
+        std::make_heap(upper.begin(),upper.end(),[&](auto a,auto b){return values[a]>values[b];});
+        for(std::size_t i=0;i<lower.size();++i){position[lower[i]]=i;side[lower[i]]=0;}
+        for(std::size_t i=0;i<upper.size();++i){position[upper[i]]=i;side[upper[i]]=1;}
+    }
+    void replace(std::size_t slot,T value) {
+        values[slot]=value;
+        if(side[slot])repair(upper,position[slot],false);else repair(lower,position[slot],true);
+        if(!upper.empty() && values[lower[0]]>values[upper[0]]) {
+            const auto a=lower[0],b=upper[0];lower[0]=b;upper[0]=a;
+            position[a]=position[b]=0;side[a]=1;side[b]=0;
+            repair(lower,0,true);repair(upper,0,false);
+        }
+    }
+    T value() const {return values[lower[0]];}
+};
 template<class T,class W> MedianInfo run(const T* input,void* output,PixelType target,
     const std::vector<std::size_t>& shape,const std::vector<std::size_t>& window,
     const std::vector<std::vector<std::size_t>>& coordinates,std::size_t rank,GaussianBorder border,
@@ -81,7 +123,7 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     }
     if constexpr(std::is_floating_point_v<W>){if(border==GaussianBorder::constant){unordered|=std::isnan(constant);negative_zero|=constant==0 && std::signbit(constant);}}
     if(fast_1d && unordered)return {true};
-    const bool vectorize=!unordered && !negative_zero && !zero_strides && coordinates.size()<=9;
+    const bool vectorize=!unordered && !negative_zero && !zero_strides && coordinates.size()<=32;
     auto padded_shape=shape;for(std::size_t d=0;d<shape.size();++d){if(window[d]-1>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())-shape[d])throw std::overflow_error("median padding overflow");padded_shape[d]+=window[d]-1;}
     const auto padded_count=product(padded_shape);const auto ip=pitches(shape),pp=pitches(padded_shape);const auto workers=detail::active_workers(n);
     std::vector<W> padded(padded_count);
@@ -102,6 +144,21 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     });
     std::vector<std::size_t> offsets(coordinates.size(),0);
     for(std::size_t t=0;t<coordinates.size();++t)for(std::size_t d=0;d<shape.size();++d)offsets[t]+=coordinates[t][d]*pp[d];
+    bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9;
+    if(dense_line)for(std::size_t t=0;t<offsets.size();++t)if(offsets[t]!=t){dense_line=false;break;}
+    if(dense_line) {
+        // The rank partition retains k elements in fixed slots. Updating one
+        // slot repairs only its heap and, if necessary, exchanges the roots.
+        detail::partition(n,workers,[&](auto begin,auto end,auto){
+            if(begin==end)return;
+            RankWindow<W> state(padded.data()+begin,window[0],rank);
+            for(auto i=begin;i<end;++i){
+                if(i!=begin)state.replace((i-begin-1)%window[0],padded[i+window[0]-1]);
+                if constexpr(std::is_same_v<W,std::int64_t>)static_cast<std::int64_t*>(output)[i]=state.value();
+                else write(output,i,double(state.value()),target);
+            }
+        });return {};
+    }
     detail::partition(n,workers,[&](auto begin,auto end,auto){
         std::vector<W> values(coordinates.size()),selected(std::min(std::size_t(1024),end-begin));
         for(auto position=begin;position<end;){const auto span=std::min({end-position,shape.back()-position%shape.back(),selected.size()});

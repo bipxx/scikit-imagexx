@@ -169,3 +169,37 @@ def test_unused_nan_constant_is_supported(dtype,mode):
 @pytest.mark.parametrize('footprint',[np.array([[1,0,0],[0,0,0],[0,0,0]],dtype=bool),np.ones((1,2),dtype=bool)])
 def test_fractional_constant_and_different_output(footprint):
     compare(np.ones((7,9),dtype=np.float32),footprint,out=np.float64,mode='constant',cval=300.3)
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.int64,np.uint64,np.float32,np.float64])
+@pytest.mark.parametrize('window',[11,31,63])
+@pytest.mark.parametrize('mode',MODES)
+@pytest.mark.parametrize('reverse',[False,True])
+def test_sliding_rank_windows(dtype,window,mode,reverse):
+    a=sample(dtype,(257,))
+    if reverse:a=a[::-1]
+    compare(a,np.ones(window,dtype=bool),mode=mode,cval=3.25)
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('window',[11,31,63])
+@pytest.mark.parametrize('mode',MODES)
+def test_sliding_rank_infinities(dtype,window,mode):
+    a=sample(dtype,(257,));a[0]=np.inf;a[129]=-np.inf;a[-1]=np.inf
+    compare(a,np.ones(window,dtype=bool),mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.int64,np.uint64])
+@pytest.mark.parametrize('window',[11,31,63])
+def test_sliding_rank_full_width(dtype,window):
+    limits=np.iinfo(dtype)
+    a=np.resize(np.array([limits.min,limits.min+1,0,1,2**53+1,limits.max-1,limits.max],dtype=dtype),257)
+    compare(a,np.ones(window,dtype=bool))
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('taps',[10,12,16,17,25,27,31,32])
+def test_medium_simd_order_statistics(dtype,taps):
+    mask=np.zeros((6,6),dtype=bool);mask.flat[:taps]=True
+    compare(sample(dtype,(17,21)),mask)
+
+@pytest.mark.parametrize('shape',[(3,3),(5,5)])
+def test_mutated_footprint_does_not_use_stale_plan(shape):
+    a=sample(np.float32,(17,21));mask=np.ones(shape,dtype=bool)
+    compare(a,mask);mask.flat[::2]=False;compare(a,mask)

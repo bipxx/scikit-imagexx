@@ -1194,6 +1194,11 @@ int main() {
         std::vector<float> constant(7*9,2),filtered(constant.size());
         median_filter_into(constant.data(),filtered.data(),PixelType::float32,PixelType::float32,{7,9},{3,3},footprint,4,GaussianBorder::reflect,0);
         require(std::all_of(filtered.begin(),filtered.end(),[](auto x){return x==2;}));
+        std::vector<std::int64_t> ascending(65),rolling(65);std::vector<std::vector<std::size_t>> line;
+        for(std::size_t i=0;i<ascending.size();++i)ascending[i]=INT64_MAX-64+std::int64_t(i);
+        for(std::size_t i=0;i<31;++i)line.push_back({i});
+        median_filter_into(ascending.data(),rolling.data(),PixelType::int64,PixelType::int64,{65},{31},line,15,GaussianBorder::nearest,0,0,false,true,false,false);
+        require(ascending==rolling);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

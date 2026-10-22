@@ -964,6 +964,25 @@ def correlate_sparse(image,kernel,mode='reflect'):
 __all__.append('correlate_sparse')
 
 
+@_lru_cache(maxsize=17)
+def _median_default_mask(ndim):
+    mask=np.ones((3,)*ndim,dtype=bool);mask.flags.writeable=False
+    return mask
+
+
+def _median_plan(shape,raw):
+    coordinates=tuple(map(tuple,np.argwhere(np.frombuffer(raw,dtype=bool).reshape(shape)).tolist()))
+    return len(coordinates),coordinates
+
+
+_median_cached_plan=_lru_cache(maxsize=128)(_median_plan)
+
+
+@_lru_cache(maxsize=128)
+def _median_line(window):
+    return tuple((k,) for k in range(window))
+
+
 @_lru_cache(maxsize=8)
 def _median_alias_failure(dtype):
     # This fixed-size protocol probe checks a dispatch rejection, not pixels
@@ -984,14 +1003,15 @@ def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndima
     if behavior=='rank':return delegated()
     if isinstance(image,np.generic):image=np.asarray(image)
     if type(image) not in (np.ndarray,np.memmap) or not _hysteresis_dtype(image.dtype) or image.ndim>16:return delegated()
-    if footprint is None:mask=np.ones((3,)*image.ndim,dtype=bool)
+    if footprint is None:mask=_median_default_mask(image.ndim)
     elif type(footprint) in (np.ndarray,np.memmap,list,tuple,bool,np.bool_):
         if np.asarray(footprint).dtype.kind=='O':return delegated()
         mask=np.asarray(footprint,dtype=bool)
     else:return delegated()
     if len([n for n in mask.shape if n>0])!=image.ndim:
         raise RuntimeError(f'footprint.ndim ({mask.ndim}) must match len(axes) ({image.ndim})')
-    count=int(np.count_nonzero(mask));rank=count//2
+    count,coordinates=(_median_cached_plan if mask.size<=256 else _median_plan)(mask.shape,mask.tobytes())
+    rank=count//2
     if not count:raise RuntimeError('rank not within filter footprint size')
     if out is None:target=np.empty(image.shape,dtype=image.dtype.name)
     elif type(out) in (np.ndarray,np.memmap):
@@ -1021,7 +1041,7 @@ def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndima
         if direct and target.dtype.newbyteorder('=')!=image.dtype.newbyteorder('='):return delegated()
         working=np.dtype(np.float32 if image.dtype.kind=='f' and image.dtype.itemsize<=4 else np.float64 if image.dtype.kind=='f' else np.int64)
         source=np.asarray(image).astype(working,copy=False)
-        scalar=working.type(cval)
+        scalar=source.dtype.type(cval)
         if working.kind=='i':integer_cval=int(scalar);constant=0.
         else:constant=float(scalar)
         if direct and source.dtype.num!=working.num:
@@ -1034,14 +1054,14 @@ def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndima
             if not direct and image.size:return delegated()
             if out is None or np.may_share_memory(image,target):target.fill(0)
             return target
-        coordinates=[[k] for k in range(mask.size)]
+        coordinates=(_median_line if mask.size<=256 else _median_line.__wrapped__)(mask.size)
         dtype=working
     else:
         constant=float(cval)
         if image.size and (image.dtype==np.float16 or target.dtype==np.float16):raise RuntimeError('array type not supported')
         if not image.size:return target
         source=np.asarray(image) if image.dtype.isnative else _core.edge_native(image)
-        coordinates=np.argwhere(mask).tolist();dtype=target.dtype.newbyteorder('=')
+        dtype=target.dtype.newbyteorder('=')
     if not source.flags.c_contiguous or not source.flags.aligned:source=source.copy(order='C')
     zero_strides=not fast and all(stride==0 for stride in image.strides)
     result,unsupported=_core.median_filter(source,dtype,window,coordinates,rank,modes[mode],constant,integer_cval,count>2 and not fast,fast,zero_strides,not fast and not(count<=2 and count==mask.size))
