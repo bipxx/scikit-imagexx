@@ -50,3 +50,32 @@ def test_boolean_packet_order_and_tail(dtype,count):
 def test_uint16_signed_packet_and_downcast_boundary(count,maximum):
     image=np.resize(np.array([0,1,2,maximum,127,255,maximum//2],dtype=np.uint16),count)
     checked('img_as_int',image)
+
+@pytest.mark.parametrize('dtype',[*DTYPES,np.bool_])
+@pytest.mark.parametrize('shape',[(17,19),(3,7,11)])
+@pytest.mark.parametrize('unaligned',[False,True])
+def test_fortran_boolean_output_layout(dtype,shape,unaligned):
+    image=np.asfortranarray(np.resize(np.array([0,1,0,1,1],dtype=dtype),np.prod(shape)).reshape(shape))
+    if unaligned:
+        storage=np.empty(image.nbytes+1,dtype=np.uint8)
+        raw=np.ndarray(shape,dtype=dtype,buffer=storage,offset=1,order='F')
+        raw[:]=image;image=raw
+    image.flags.writeable=False
+    checked('img_as_bool',image)
+    expected=reference.img_as_bool(image)
+    actual=xx.util.img_as_bool(image)
+    assert actual.strides==expected.strides
+
+@pytest.mark.parametrize('maximum',[32766,65535])
+@pytest.mark.parametrize('unaligned',[False,True])
+def test_fortran_signed_conversion_output_layout(maximum,unaligned):
+    image=np.asfortranarray(np.resize(np.array([0,1,maximum],dtype=np.uint16),17*19).reshape(17,19))
+    if unaligned:
+        storage=np.empty(image.nbytes+1,dtype=np.uint8)
+        raw=np.ndarray(image.shape,dtype=np.uint16,buffer=storage,offset=1,order='F')
+        raw[:]=image;image=raw
+    checked('img_as_int',image)
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore')
+        expected=reference.img_as_int(image);actual=xx.util.img_as_int(image)
+    assert actual.strides==expected.strides

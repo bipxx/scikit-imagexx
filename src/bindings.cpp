@@ -469,15 +469,26 @@ PYBIND11_MODULE(_core, m) {
     },py::arg("image"),py::arg("operation"));
     m.def("convert", [](py::array image, py::dtype dtype) {
         const auto source_type = pixel_type(image.dtype()), target_type = pixel_type(dtype);
-        auto input = py::array::ensure(image,py::array::c_style);
+        const bool physical_fortran = (image.flags()&py::array::f_style) && !(image.flags()&py::array::c_style)
+            && (target_type==skimagexx::PixelType::boolean ||
+                (source_type==skimagexx::PixelType::uint16 && target_type==skimagexx::PixelType::int16));
+        auto input = physical_fortran ? image : py::array::ensure(image,py::array::c_style);
         if (!input) throw py::type_error("unable to make input contiguous");
         if ((reinterpret_cast<std::uintptr_t>(input.data()) % skimagexx::pixel_size(source_type)) != 0)
-            input = py::array::ensure(input.attr("copy")(),py::array::c_style);
-        py::array output(dtype,std::vector<py::ssize_t>(input.shape(),input.shape()+input.ndim()));
+            input = input.attr("copy")(py::arg("order")=physical_fortran ? "F" : "C").cast<py::array>();
+        // Allocate in the input's physical order without reading any pixels.
+        // Boolean comparison and unscaled narrowing preserve upstream F order.
+        py::array output = physical_fortran
+            ? py::module_::import("numpy").attr("empty_like")(input,py::arg("dtype")=dtype,
+                py::arg("order")="F",py::arg("subok")=false).cast<py::array>()
+            : py::array(dtype,std::vector<py::ssize_t>(input.shape(),input.shape()+input.ndim()));
         const auto* source = input.data(); auto* destination = output.mutable_data();
         const auto n = static_cast<std::size_t>(input.size());
         skimagexx::ConversionInfo info;
         { py::gil_scoped_release release; info = skimagexx::convert_into(source,destination,n,source_type,target_type); }
+        // Upstream's scaled uint16 -> int16 branch explicitly allocates C order.
+        if(physical_fortran && target_type==skimagexx::PixelType::int16 && !info.downcast_without_scaling)
+            output=output.attr("copy")(py::arg("order")="C").cast<py::array>();
         const bool unsigned_input = input.dtype().kind() == 'u';
         py::object maximum = unsigned_input ? py::object(py::int_(info.maximum_unsigned)) : py::object(py::int_(info.maximum_signed));
         return py::make_tuple(output,info.downcast_without_scaling,info.nan_to_integer,info.floating_overflow,info.floating_underflow,info.invalid_float_cast,maximum);
