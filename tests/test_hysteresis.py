@@ -193,10 +193,10 @@ def test_exhaustive_connectivity_masks(shape):
     from scipy.ndimage import label
     positions=np.arange(6)
     for weak_bits in range(64):
-        weak=((weak_bits>>positions)&1).astype(np.uint8).reshape(shape)
+        weak=((weak_bits>>positions)&1).astype(bool).reshape(shape)
         labels,count=label(weak)
         for strong_bits in range(64):
-            strong=((strong_bits>>positions)&1).astype(np.uint8).reshape(shape)
+            strong=((strong_bits>>positions)&1).astype(bool).reshape(shape)
             selected=np.zeros(count+1,dtype=bool)
             selected[labels[strong!=0]]=True
             actual=xx._core.hysteresis_connect(weak,strong)
