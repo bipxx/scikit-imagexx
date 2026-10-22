@@ -2,6 +2,7 @@
 #include "skimagexx/downscale.hpp"
 #include "skimagexx/contrast.hpp"
 #include "skimagexx/label_color.hpp"
+#include "skimagexx/histogram_matching.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -208,6 +209,25 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("match_histograms",[](py::array first,py::array reference,py::dtype output_dtype,
+        bool multichannel,bool unsigned_source,bool half_round) {
+        if(!(first.flags()&py::array::c_style) || !(reference.flags()&py::array::c_style))
+            throw py::value_error("contiguous histogram-matching buffers required");
+        const auto channels=multichannel ? std::size_t(first.shape(first.ndim()-1)) : 1;
+        if(multichannel && (!reference.ndim() || std::size_t(reference.shape(reference.ndim()-1))!=channels))
+            throw py::value_error("histogram-matching channel counts must match");
+        std::vector<py::ssize_t> dims(first.shape(),first.shape()+first.ndim());
+        py::array out(output_dtype,dims);
+        const auto st=pixel_type(first.dtype()),rt=pixel_type(reference.dtype()),
+            ot=pixel_type(output_dtype.attr("newbyteorder")("=").cast<py::dtype>());
+        std::vector<unsigned> flags(channels,0);
+        const bool swap=!output_dtype.attr("isnative").cast<bool>();
+        {py::gil_scoped_release release;
+         skimagexx::match_histograms_into(first.data(),reference.data(),out.mutable_data(),
+            channels ? std::size_t(first.size())/channels : 0,channels ? std::size_t(reference.size())/channels : 0,
+            channels,st,rt,ot,unsigned_source,half_round,swap,flags.data());}
+        return py::make_tuple(out,flags);
+    });
     if(_import_array()<0)throw py::error_already_set();
     m.def("label_ranks",[](py::array labels,std::uint64_t background,bool overlay)->py::object {
         auto input=py::array::ensure(labels,py::array::c_style);

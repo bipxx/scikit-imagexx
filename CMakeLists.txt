@@ -4,7 +4,7 @@ option(SKIMAGEXX_BUILD_PYTHON "Build the NumPy bindings" OFF)
 option(SKIMAGEXX_OPENMP "Enable CPU parallelism" ON)
 option(SKIMAGEXX_AVX2 "Build runtime-dispatched AVX2 kernels on x86" ON)
 
-add_library(skimagexx STATIC src/image.cpp src/convert.cpp src/color.cpp src/perceptual.cpp src/stain.cpp src/distance.cpp src/morphology.cpp src/morphology_boolean.cpp src/threshold.cpp src/local_threshold.cpp src/alpha.cpp src/small_edge.cpp src/farid.cpp src/gaussian_nd.cpp src/integral.cpp src/integrate.cpp src/downscale.cpp src/contrast.cpp src/label_color.cpp)
+add_library(skimagexx STATIC src/image.cpp src/convert.cpp src/color.cpp src/perceptual.cpp src/stain.cpp src/distance.cpp src/morphology.cpp src/morphology_boolean.cpp src/threshold.cpp src/local_threshold.cpp src/alpha.cpp src/small_edge.cpp src/farid.cpp src/gaussian_nd.cpp src/integral.cpp src/integrate.cpp src/downscale.cpp src/contrast.cpp src/label_color.cpp src/histogram_matching.cpp)
 add_library(skimagexx::skimagexx ALIAS skimagexx)
 set_target_properties(skimagexx PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_compile_features(skimagexx PUBLIC cxx_std_17)

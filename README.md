@@ -13,17 +13,18 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **96 partially native
+The reference is scikit-image **0.26.0**. There are currently **97 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 357 remain pending native implementation and dedicated parity tests.
+export list; 356 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `exposure.match_histograms` | N-D bool, signed/unsigned integers, float16/32/64; independent reference shape/dtype; grayscale or channel axes, strided/endian/unaligned storage | Native empirical CDFs and interpolation; grayscale floating output, channel-wise source-dtype casting, binary16 storage rounding, dtype tags and NumPy-version-specific unsigned input errors; unusual array subclasses and callback error policies use explicit fallback |
 | `label2rgb` | N-D bool, signed/unsigned integers and float32/64 labels; finite uint8/float32/64 grayscale or RGB underlays; ordinary palettes, backgrounds and channel axes; overlay and average kinds | Exact palette-only, grayscale and grouped-average values/dtype; RGB inherits HSV tolerance; bounded rank tables with AVX2 gathers, bounded sparse hashing, optional global workers; unusual casting, metadata or floating policies use explicit fallback |
 | `rgb2gray` | 3D RGB; uint8, float32, float64; arbitrary channel axis | Same luminance weights; uint8 normalized to float64 |
 | `gray2rgb`, `gray2rgba` | Arbitrary dimensions, including scalars and empty arrays; fixed object-free storage, including float16 and complex; arbitrary output channel axis; RGBA default alpha for real image dtypes, explicit scalar or same-dtype broadcast alpha for additional storage | Exact replication and NumPy stack dtype/endian normalization; alpha casting warnings and broadcast errors preserved |

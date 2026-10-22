@@ -41,6 +41,7 @@ jobs:
       - run: python benchmarks/label_colors.py --size 32 --threads 1 --repeat 1 --output build/ci-label-colors.json
       - run: python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output build/ci-distance.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
+      - run: python benchmarks/match_histograms.py --size 32 --threads 1 --repeat 1 --output build/ci-match-histograms.json
       - run: python -m pytest -q
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
@@ -76,3 +77,4 @@ jobs:
       - run: python -m pytest -q tests/test_conversion_packets.py tests/test_convert.py tests/test_dtype_aliases.py
       - run: python -m pytest -q tests/test_distance_scalar_promotion.py tests/test_dtype_metadata.py
       - run: python -m pytest -q tests/test_ciede2000_promotion.py tests/test_color_distance.py tests/test_weighted_distance.py
+      - run: python -m pytest -q tests/test_match_histograms.py

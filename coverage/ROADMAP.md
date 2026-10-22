@@ -40,8 +40,8 @@ CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting an
 color-space routing composes the native kernels for all nine upstream spaces.
 Label-to-RGB overlays and region averages use native ranks, palette compositing,
 typed group reductions and optional global workers.
-There are 96 partial native image entries, two metadata helpers,
-and 357 pending entries in the current
+There are 97 partial native image entries, two metadata helpers,
+and 356 pending entries in the current
 455-name inventory. The `future` namespace is available through explicit
 compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
@@ -64,7 +64,7 @@ Next work:
 - Broaden color conversion input/option parity and address CIE76 scalar dispatch
   overhead. The current inventory has no entirely upstream-only color entries;
   their native contracts remain partial.
-- Extend exposure coverage to histogram matching and adaptive equalization, with
+- Extend exposure coverage to adaptive equalization and broaden histogram matching, with
   per-function parity and one-worker performance checks against scikit-image.
 - Broaden distance parameter-array, strong-scalar and float16 contracts;
   extend direct nonuniform-row processing to the weighted distance kernels.

@@ -1,11 +1,76 @@
 """Native exposure transforms and explicit upstream compatibility fallback."""
 import numpy as np
 import warnings
+from functools import wraps
 from . import _core
 from ._compat import module_attribute, native_array, fallback
 
 __all__ = ['adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
-           'histogram', 'cumulative_distribution', 'equalize_hist','is_low_contrast']
+           'histogram', 'cumulative_distribution', 'equalize_hist','is_low_contrast','match_histograms']
+
+
+def _histogram_channel_axis(function):
+    # Match the upstream channel decorator, including its positional-image
+    # handling and single-element axis sequences. Axis movement is metadata.
+    @wraps(function)
+    def call(*args,**kwargs):
+        axis=kwargs.get('channel_axis',None)
+        if axis is None:return function(*args,**kwargs)
+        if np.isscalar(axis):axis=(axis,)
+        if len(axis)>1:raise ValueError('only a single channel axis is currently supported')
+        if axis==(-1,) or axis==-1:return function(*args,**kwargs)
+        moved=tuple(np.moveaxis(value,axis[0],-1) if index<2 else value for index,value in enumerate(args))
+        kwargs['channel_axis']=-1
+        return np.moveaxis(function(*moved,**kwargs),-1,axis[0])
+    return call
+
+
+_MATCH_BINCOUNT_DTYPES=set()
+def _match_bincount_dtype(dtype):
+    key=dtype.str
+    if key not in _MATCH_BINCOUNT_DTYPES:
+        # A single synthetic integer validates NumPy-version-specific dtype
+        # acceptance (notably uint64); no image pixels are histogrammed here.
+        np.bincount(np.zeros(1,dtype=dtype))
+        _MATCH_BINCOUNT_DTYPES.add(key)
+
+
+@_histogram_channel_axis
+def match_histograms(image,reference,*,channel_axis=None):
+    if image.ndim!=reference.ndim:
+        raise ValueError('Image and reference must have the same number of channels.')
+    color=channel_axis is not None
+    if color and image.shape[-1]!=reference.shape[-1]:
+        raise ValueError('Number of channels in the input image and reference image must match!')
+    if any(type(value) not in (np.ndarray,np.memmap) or value.dtype.type not in _CONTRAST_REAL for value in (image,reference)):
+        return fallback('exposure','match_histograms',image,reference,channel_axis=channel_axis)
+    if color and not image.shape[-1]:
+        output=np.empty(image.shape,dtype=image.dtype)
+        return output.astype(np.float32 if image.dtype.itemsize<=4 else np.float64,copy=False) if image.dtype.kind=='f' else output
+    unsigned=image.dtype.kind=='u'
+    if unsigned:
+        _match_bincount_dtype(image.dtype);_match_bincount_dtype(reference.dtype)
+    if not image.size and not reference.size:
+        # Empty interpolation changed between NumPy1/2; this zero-length probe
+        # reproduces its exception without doing image arithmetic in Python.
+        np.interp([],[],[])
+    if any(mode in ('call','log','print') for mode in np.geterr().values()):
+        return fallback('exposure','match_histograms',image,reference,channel_axis=channel_axis)
+    target=np.dtype(np.float32 if image.dtype.kind=='f' and image.dtype.itemsize<=4 else np.float64)
+    output_dtype=(np.empty(0,dtype=image.dtype).astype(target,copy=False).dtype if image.dtype.kind=='f' else image.dtype) if color else target
+    def prepare(value):
+        dtype=np.float32 if value.dtype.type is np.float16 else value.dtype.newbyteorder('=')
+        return np.require(value,dtype=dtype,requirements=['C','A'])
+    output,flags=_core.match_histograms(prepare(image),prepare(reference),output_dtype,color,unsigned,
+                                       color and image.dtype.type is np.float16)
+    for notice in flags:
+        for bit,kind in ((2,'over'),(4,'under'),(1,'invalid')):
+            if notice&bit:
+                text={'over':'overflow','under':'underflow','invalid':'invalid value'}[kind]+' encountered in cast'
+                mode=np.geterr()[kind]
+                if mode=='raise':raise FloatingPointError(text)
+                if mode=='warn':warnings.warn(text,RuntimeWarning,stacklevel=2)
+    return output
 
 
 def _finite_scalar(value):

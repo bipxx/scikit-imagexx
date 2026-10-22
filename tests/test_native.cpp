@@ -15,6 +15,7 @@
 #include "skimagexx/perceptual.hpp"
 #include "skimagexx/stain.hpp"
 #include "skimagexx/distance.hpp"
+#include "skimagexx/histogram_matching.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <cstring>
@@ -594,6 +595,22 @@ int main() {
     }
     set_num_threads(1);
     require(get_num_threads() == 1);
+    {
+        const std::uint8_t first[]={0,0,1,2},reference[]={10,20};
+        double output[4];
+        require(match_histograms_into(first,reference,output,4,2,1,PixelType::uint8,PixelType::uint8,PixelType::float64,true)==0);
+        require(output[0]==10 && output[1]==10 && output[2]==15 && output[3]==20);
+        const std::uint8_t color[]={0,0,1,1,2,2,3,3},palette[]={0,10,3,20};
+        std::uint8_t colored[8];
+        match_histograms_into(color,palette,colored,4,2,2,PixelType::uint8,PixelType::uint8,PixelType::uint8,true);
+        const std::uint8_t expected[]={0,10,0,10,1,15,3,20};
+        require(std::equal(colored,colored+8,expected));
+        const float half_input[]={0,1};const double precise[]={1.00048828125+0x1p-40,1.5};
+        float rounded[2];
+        match_histograms_into(half_input,precise,rounded,2,2,1,PixelType::float32,PixelType::float64,PixelType::float32,false,true);
+        require(rounded[0]==1.0009765625f && rounded[1]==1.5f);
+        require(match_histograms_into(nullptr,nullptr,nullptr,0,0,1,PixelType::float32,PixelType::float32,PixelType::float32)==0);
+    }
     {
         const std::int16_t a[]={-100,20,30,0,0,0};
         const float b[]={-97,24,30,0,0,12};
