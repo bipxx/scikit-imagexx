@@ -185,3 +185,19 @@ def test_large_broadcast_fields_across_worker_boundaries(shape):
     low=np.linspace(.1,.4,shape[0]*shape[-1],dtype=np.float32).reshape((shape[0],)+(1,)*(len(shape)-2)+(shape[-1],)) if len(shape)>2 else np.linspace(.1,.4,shape[0],dtype=np.float32)[:,None]
     high=np.linspace(.6,.9,shape[1],dtype=np.float32).reshape((1,shape[1])+(1,)*(len(shape)-2))
     compare(a,low,high)
+
+@pytest.mark.parametrize('shape',[(2,3),(3,2),(1,6),(6,1)])
+def test_exhaustive_connectivity_masks(shape):
+    # Independent masks include strong pixels outside weak: upstream selects
+    # the entire label-zero background when any such pixel is present.
+    from scipy.ndimage import label
+    positions=np.arange(6)
+    for weak_bits in range(64):
+        weak=((weak_bits>>positions)&1).astype(bool).reshape(shape)
+        labels,count=label(weak)
+        for strong_bits in range(64):
+            strong=((strong_bits>>positions)&1).astype(bool).reshape(shape)
+            selected=np.zeros(count+1,dtype=bool)
+            selected[labels[strong!=0]]=True
+            actual=xx._core.hysteresis_connect(weak,strong)
+            np.testing.assert_array_equal(actual,selected[labels])
