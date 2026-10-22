@@ -62,9 +62,12 @@ def test_every_native_function(native, original, name, dtype, shape):
     args, options = default_call(api,a)
     try:
         expected = getattr(original, name)(*args,**options)
-    except (IndexError,ValueError) as error:
-        with pytest.raises(type(error)):
+    except (IndexError,ValueError,RuntimeError) as error:
+        # Some valid images have no converged threshold. Match the reference's
+        # algorithm failure just as we match its successful numerical output.
+        with pytest.raises(type(error)) as actual_error:
             getattr(native, name)(*args,**options)
+        assert str(actual_error.value)==str(error)
         return
     actual = getattr(native, name)(*args,**options)
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
