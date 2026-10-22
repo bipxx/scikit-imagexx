@@ -33,10 +33,13 @@ def module_attribute(module, name):
     if name.startswith("_"):
         raise AttributeError(name)
     original = getattr(importlib.import_module(f"skimage.{module}"), name)
-    # Classes, modules, and constants retain their original identity. Functions
+    # Public submodules use the same policy-aware namespace as nested imports.
+    # Classes and constants retain their original identity. Functions
     # are wrapped so strict mode cannot silently execute an upstream algorithm.
     import inspect
     import functools
+    if inspect.ismodule(original) and original.__name__.startswith('skimage.'):
+        return importlib.import_module(f'skimagexx.{module}.{name}')
     if inspect.isfunction(original):
         @functools.wraps(original)
         def call(*args, **kwargs):

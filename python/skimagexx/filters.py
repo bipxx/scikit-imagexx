@@ -5,6 +5,9 @@ from functools import lru_cache as _lru_cache
 from . import _core
 from ._compat import fallback, module_attribute, native_image, retain_dtype_metadata
 
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
+
 __all__ = ["gaussian", "sobel", "sobel_h", "sobel_v", "prewitt", "prewitt_h", "prewitt_v",
            "scharr", "scharr_h", "scharr_v", "threshold_otsu", "threshold_mean"]
 

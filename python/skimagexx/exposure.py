@@ -5,6 +5,9 @@ from functools import wraps
 from . import _core
 from ._compat import module_attribute, native_array, fallback
 
+# Public compatibility submodules are resolved by the policy-aware importer.
+__path__ = []
+
 __all__ = ['adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
            'histogram', 'cumulative_distribution', 'equalize_hist','is_low_contrast','match_histograms']
 
