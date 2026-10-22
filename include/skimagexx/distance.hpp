@@ -27,11 +27,21 @@ void delta_e_into(const void* first,const void* second,void* output,std::size_t 
     std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1,bool legacy_ciede2000=false);
 // NumPy-compatible double angle provider for platforms using SVML atan2.
 // The original entry point retains its ABI and platform-libm behavior.
+// Optional elementary-math hooks for the SVML profile are used only during
+// scalar refinement/tails;
+// callbacks must be thread-safe, must not require a Python interpreter lock,
+// and their context must remain alive for the duration of the call.
+struct DistanceMathCallbacks {
+    using Binary=double(*)(double,double,bool,void*);
+    Binary power=nullptr,hypot=nullptr;
+    void* context=nullptr;
+};
 void delta_e_compatible_into(const void* first,const void* second,void* output,std::size_t count,
     PixelType first_type,PixelType second_type,DistanceMetric metric,
     DistanceParameters parameters={},bool wide_trigonometry=true,bool cmc_scalar_result=false,
     std::ptrdiff_t first_pixels=3,std::ptrdiff_t first_channels=1,
-    std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1,bool legacy_ciede2000=false, bool svml_double_angles=false);
+    std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1,bool legacy_ciede2000=false, bool svml_double_angles=false,
+    const DistanceMathCallbacks* math=nullptr);
 // Raw Lab values, without integer intensity normalization. The first three
 // channels participate; strides are in input elements and may be negative/zero.
 // Output is float32 when both inputs are float32, float64 otherwise. Buffers

@@ -18,8 +18,16 @@ template<class T,bool Svml=false> struct ScalarDistanceMath {
     static R div(R a,R b){return T(T(a)/T(b));}
     static R square(R a){return mul(a,a);}
     static R sqrt(R x){return std::sqrt(T(x));}
-    static R power(R x,int n){return std::pow(T(x),T(n));}
-    static R hypot(R a,R b){return std::hypot(T(a),T(b));}
+    static R power(R x,int n){
+        if constexpr(Svml)if(distance_math_callbacks && distance_math_callbacks->power)
+            return T(distance_math_callbacks->power(T(x),T(n),std::is_same_v<T,float>,distance_math_callbacks->context));
+        return std::pow(T(x),T(n));
+    }
+    static R hypot(R a,R b){
+        if constexpr(Svml)if(distance_math_callbacks && distance_math_callbacks->hypot)
+            return T(distance_math_callbacks->hypot(T(a),T(b),std::is_same_v<T,float>,distance_math_callbacks->context));
+        return std::hypot(T(a),T(b));
+    }
     static R angle(R a,R b){
         const auto h=[](T x,T y){
             if constexpr(Svml && std::is_same_v<T,double>)return svml_atan2(y,x);

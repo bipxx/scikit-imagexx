@@ -6,6 +6,7 @@
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
+#include <numpy/ufuncobject.h>
 #include "skimagexx/integral.hpp"
 #include "skimagexx/gaussian_nd.hpp"
 #include "skimagexx/farid.hpp"
@@ -26,9 +27,43 @@
 #include <pybind11/stl.h>
 #include <string>
 #include <type_traits>
+#include <memory>
 
 namespace py = pybind11;
 namespace {
+struct NumpyDistanceMath {
+    struct Loop {PyUFuncGenericFunction function;void* data;};
+    py::object power_owner,hypot_owner;
+    Loop powers[2],hypots[2];
+    static Loop select(const py::object& object,int type) {
+        if(!PyObject_TypeCheck(object.ptr(),&PyUFunc_Type))throw std::runtime_error("numeric math ufunc required");
+        const auto* u=reinterpret_cast<PyUFuncObject*>(object.ptr());
+        if(u->nargs==3)for(int i=0;i<u->ntypes;++i)
+            if(u->types[3*i]==type && u->types[3*i+1]==type && u->types[3*i+2]==type)
+                return {u->functions[i],u->data ? u->data[i] : nullptr};
+        throw std::runtime_error("native floating math loop unavailable");
+    }
+    NumpyDistanceMath():power_owner(py::module_::import("numpy").attr("power")),hypot_owner(py::module_::import("numpy").attr("hypot")),
+        powers{select(power_owner,NPY_DOUBLE),select(power_owner,NPY_FLOAT)},
+        hypots{select(hypot_owner,NPY_DOUBLE),select(hypot_owner,NPY_FLOAT)} {}
+    template<class T> static double run(const Loop& loop,double a,double b) {
+        T first=T(a),second=T(b),result;
+        char* args[]={reinterpret_cast<char*>(&first),reinterpret_cast<char*>(&second),reinterpret_cast<char*>(&result)};
+        const npy_intp count=1,steps[]={sizeof(T),sizeof(T),sizeof(T)};
+        // Builtin fff/ddd loops use no Python API and retain NumPy's selected
+        // native math provider, including masked SVML tails, without the GIL.
+        loop.function(args,&count,steps,loop.data);
+        return double(result);
+    }
+    static double power(double a,double b,bool single,void* data) {
+        const auto& loop=static_cast<NumpyDistanceMath*>(data)->powers[int(single)];
+        return single ? run<float>(loop,a,b) : run<double>(loop,a,b);
+    }
+    static double hypot(double a,double b,bool single,void* data) {
+        const auto& loop=static_cast<NumpyDistanceMath*>(data)->hypots[int(single)];
+        return single ? run<float>(loop,a,b) : run<double>(loop,a,b);
+    }
+};
 bool dtype_matches(const py::dtype& a,const py::dtype& b) {return a.is(b) || (a.itemsize()==b.itemsize() && a.kind()==b.kind() && a.equal(b));}
 struct RawRows {
     std::size_t rows=0,columns=1;
@@ -261,6 +296,7 @@ PYBIND11_MODULE(_core, m) {
         return py::make_tuple(out,flags);
     });
     if(_import_array()<0)throw py::error_already_set();
+    if(_import_umath()<0)throw py::error_already_set();
     m.def("label_ranks",[](py::array labels,std::uint64_t background,bool overlay)->py::object {
         auto input=py::array::ensure(labels,py::array::c_style);
         const auto native=py::dtype::from_args(input.dtype().attr("newbyteorder")("="));
@@ -362,7 +398,8 @@ PYBIND11_MODULE(_core, m) {
         py::gil_scoped_release release;
         return skimagexx::downscale_local_mean_into(view,factors,constant_data,output_data,output_strides);
     });
-    m.def("distance_metric",[](py::array first,py::array second,int operation,std::array<double,5> parameters,
+    const auto distance_math=std::make_shared<NumpyDistanceMath>();
+    m.def("distance_metric",[distance_math](py::array first,py::array second,int operation,std::array<double,5> parameters,
         bool wide_trig,bool promoted_cmc,bool legacy94,unsigned scalar_parameter_mask,bool legacy_ciede2000,bool svml_angles) -> py::array {
         if(first.ndim()<1 || second.ndim()<1 || first.shape(first.ndim()-1)!=3 || second.shape(second.ndim()-1)!=3)
             throw py::value_error("distance inputs must have three channels");
@@ -382,6 +419,7 @@ PYBIND11_MODULE(_core, m) {
             py::dtype::of<float>() : py::dtype::of<double>();
         py::array out(dtype,dims);
         const skimagexx::DistanceParameters p{parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]};
+        const skimagexx::DistanceMathCallbacks math{NumpyDistanceMath::power,NumpyDistanceMath::hypot,distance_math.get()};
         if(legacy94) {
             *static_cast<double*>(out.mutable_data())=skimagexx::delta_e94_scalar32(
                 static_cast<const float*>(first.data()),static_cast<const float*>(second.data()),p,
@@ -390,7 +428,8 @@ PYBIND11_MODULE(_core, m) {
         }
         {py::gil_scoped_release release;
          skimagexx::delta_e_compatible_into(first.data(),second.data(),out.mutable_data(),std::size_t(out.size()),at,bt,
-            static_cast<skimagexx::DistanceMetric>(operation),p,wide_trig,promoted_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);}
+            static_cast<skimagexx::DistanceMetric>(operation),p,wide_trig,promoted_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles,
+            svml_angles ? &math : nullptr);}
         return out;
     },py::arg("first"),py::arg("second"),py::arg("operation"),py::arg("parameters"),py::arg("wide_trigonometry"),py::arg("promoted_cmc"),py::arg("legacy94")=false,py::arg("scalar_parameter_mask")=0,py::arg("legacy_ciede2000")=false,py::arg("svml_angles")=false);
     m.def("delta_e76",[](py::array first,py::array second,bool legacy_scalar) -> py::array {

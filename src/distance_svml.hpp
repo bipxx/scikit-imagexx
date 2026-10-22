@@ -1,11 +1,18 @@
 #pragma once
 #include <cmath>
+#include "skimagexx/distance.hpp"
 
 // Copyright (C) 2021 Intel Corporation. SPDX-License-Identifier: BSD-3-Clause
 // Polynomial and evaluation order adapted from numpy/SVML, revision
 // 1c5260a61e7dce6be48073dfa96291edb0a11d79,
 // linux/avx512/svml_z0_atan2_d_la.s. See third_party/svml-LICENSE.txt.
 namespace skimagexx::detail {
+inline thread_local const DistanceMathCallbacks* distance_math_callbacks=nullptr;
+struct DistanceMathScope {
+    const DistanceMathCallbacks* previous;
+    explicit DistanceMathScope(const DistanceMathCallbacks* current):previous(distance_math_callbacks){distance_math_callbacks=current;}
+    ~DistanceMathScope(){distance_math_callbacks=previous;}
+};
 template<class M> typename M::R svml_atan_polynomial(typename M::R r) {
     const auto r2=M::mul(r,r),r4=M::mul(r2,r2),r8=M::mul(r4,r4);
     auto p1=M::fma(r8,M::c(-0x1.4fdb537abc7a3p-16),M::c(-0x1.2b2ec618e4badp-7));

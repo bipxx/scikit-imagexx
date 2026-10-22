@@ -37,11 +37,12 @@ template<class T> void execute_distance(const void* a,const void* b,T* out,std::
 namespace {
 template<class T,class Output> void execute_metric(const void* a,const void* b,Output* out,std::size_t n,
     PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& parameters,bool wide_trig,bool scalar_cmc,
-    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles) {
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles,const DistanceMathCallbacks* math) {
     const auto ar=detail::distance_reader<T>(at),br=detail::distance_reader<T>(bt);
     const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
     const bool vectorized=has_avx2();
     detail::partition(n,detail::active_workers(n),[&](auto begin,auto end,auto) {
+        detail::DistanceMathScope math_scope(math);
         const auto* first=static_cast<const unsigned char*>(a)+std::ptrdiff_t(begin)*ap*ab;
         const auto* second=static_cast<const unsigned char*>(b)+std::ptrdiff_t(begin)*bp*bb;
         std::size_t consumed=0;
@@ -85,7 +86,7 @@ double delta_e94_scalar32(const float* a,const float* b,DistanceParameters p,boo
     return std::sqrt(squared<=0 ? 0 : squared);
 }
 void delta_e_compatible_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
-    DistanceParameters p,bool wide_trig,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles) {
+    DistanceParameters p,bool wide_trig,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000,bool svml_angles,const DistanceMathCallbacks* math) {
     if(int(metric)<0 || int(metric)>2) throw std::invalid_argument("unknown color distance metric");
     for(auto v:{p.kL,p.kC,p.kH,p.k1,p.k2}) if(!std::isfinite(v))
         throw std::invalid_argument("distance parameters must be finite");
@@ -100,9 +101,9 @@ void delta_e_compatible_into(const void* a,const void* b,void* out,std::size_t n
     (void)detail::distance_reader<double>(at); (void)detail::distance_reader<double>(bt);
     if(!n) return;
     if(!a || !b || !out) throw std::invalid_argument("distance buffers must be nonnull");
-    if(single && !scalar_cmc) execute_metric<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
-    else if(single) execute_metric<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
-    else execute_metric<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles);
+    if(single && !scalar_cmc) execute_metric<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles,math);
+    else if(single) execute_metric<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles,math);
+    else execute_metric<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide_trig,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000,svml_angles,math);
 }
 void delta_e_into(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,DistanceMetric metric,
     DistanceParameters p,bool wide,bool scalar_cmc,std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy) {

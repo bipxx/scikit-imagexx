@@ -22,6 +22,7 @@
 #include <type_traits>
 #include <iostream>
 #include <stdexcept>
+#include <atomic>
 #include <limits>
 #include <algorithm>
 #include <array>
@@ -724,6 +725,25 @@ int main() {
                 double canonical;
                 delta_e_into(first.data(),second.data(),&canonical,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000);
                 require(std::abs(output[0]-canonical)<2e-13);
+                if(count==262149) {
+                    std::atomic<int> calls{0};
+                    const DistanceMathCallbacks callbacks{
+                        [](double a,double b,bool single,void* state) {
+                            static_cast<std::atomic<int>*>(state)->fetch_add(1,std::memory_order_relaxed);
+                            return single ? double(std::pow(float(a),float(b))) : std::pow(a,b);
+                        },
+                        [](double a,double b,bool single,void* state) {
+                            static_cast<std::atomic<int>*>(state)->fetch_add(1,std::memory_order_relaxed);
+                            return single ? double(std::hypot(float(a),float(b))) : std::hypot(a,b);
+                        },&calls};
+                    delta_e_compatible_into(first.data(),second.data(),output.data(),count,PixelType::float64,
+                        PixelType::float64,DistanceMetric::ciede2000,{},true,false,3,1,3,1,false,true,&callbacks);
+                    require(calls.load()>0);
+                    const auto before=calls.load();
+                    delta_e_into(first.data(),second.data(),&canonical,1,PixelType::float64,PixelType::float64,DistanceMetric::ciede2000);
+                    require(calls.load()==before);
+                    require(std::abs(output[0]-canonical)<2e-13);
+                }
             }
             for(std::size_t count:{1u,3u,4u,5u,7u,8u,9u,17u,262149u}) {
                 std::vector<float> first(count*3),second(count*3),output(count);
