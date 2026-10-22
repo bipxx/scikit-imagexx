@@ -203,3 +203,27 @@ def test_medium_simd_order_statistics(dtype,taps):
 def test_mutated_footprint_does_not_use_stale_plan(shape):
     a=sample(np.float32,(17,21));mask=np.ones(shape,dtype=bool)
     compare(a,mask);mask.flat[::2]=False;compare(a,mask)
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('mode',['nearest','constant'])
+def test_one_dimensional_endian_dispatch(dtype,mode):
+    compare(sample(dtype,(33,)).astype(np.dtype(dtype).newbyteorder('>')),mode=mode)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64,np.int64,np.longlong,np.uint64,np.ulonglong])
+def test_big_endian_one_dimensional_output_conversion(dtype):
+    a=sample(dtype,(33,)).astype(np.dtype(dtype).newbyteorder('>'))
+    compare(a,out=np.float32)
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+def test_half_endian_and_output_errors(dtype):
+    compare(sample(dtype,(7,9)).astype(np.dtype(dtype).newbyteorder('>')),out=np.float32)
+    compare(sample(dtype,(7,9)),out=np.dtype('>f2'))
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+def test_requested_dtype_metadata(dtype):
+    compare(sample(dtype,(33,)),out=np.dtype(dtype,metadata={'unit':'rank'}))
+    compare(sample(dtype,(7,9)),out=np.dtype(dtype,metadata={'unit':'rank'}))
+
+def test_extended_float_requires_explicit_fallback():
+    with pytest.raises(NotImplementedError,match='outside native coverage'):
+        xx.filters.median(np.ones((7,9),dtype=np.longdouble))

@@ -68,46 +68,64 @@ template<class T> T select(T* values,std::size_t count,std::size_t rank) {
     }return values[rank];
 }
 template<class T> class RankWindow {
+    using Index=std::uint32_t;
     std::vector<T> values;
-    std::vector<std::size_t> lower,upper,position;
-    std::vector<unsigned char> side;
-    bool better(std::size_t a,std::size_t b,bool maximum) const {
+    std::vector<Index> lower,upper;
+    std::vector<std::int32_t> position;
+    bool better(Index a,Index b,bool maximum) const {
         return maximum ? values[a]>values[b] : values[a]<values[b];
     }
-    void exchange(std::vector<std::size_t>& heap,std::size_t a,std::size_t b) {
-        std::swap(heap[a],heap[b]);position[heap[a]]=a;position[heap[b]]=b;
+    void exchange(std::vector<Index>& heap,Index a,Index b,bool maximum) {
+        std::swap(heap[a],heap[b]);
+        position[heap[a]]=maximum ? -std::int32_t(a)-1 : std::int32_t(a)+1;
+        position[heap[b]]=maximum ? -std::int32_t(b)-1 : std::int32_t(b)+1;
     }
-    void repair(std::vector<std::size_t>& heap,std::size_t i,bool maximum) {
+    void repair(std::vector<Index>& heap,Index i,bool maximum) {
+        const auto length=Index(heap.size());
         if(i && better(heap[i],heap[(i-1)/2],maximum)) {
-            do {const auto parent=(i-1)/2;if(!better(heap[i],heap[parent],maximum))break;exchange(heap,i,parent);i=parent;}while(i);
+            do {const auto parent=(i-1)/2;if(!better(heap[i],heap[parent],maximum))break;exchange(heap,i,parent,maximum);i=parent;}while(i);
         } else {
-            while(2*i+1<heap.size()){auto child=2*i+1;
-                if(child+1<heap.size() && better(heap[child+1],heap[child],maximum))++child;
-                if(!better(heap[child],heap[i],maximum))break;exchange(heap,i,child);i=child;
+            while(2*i+1<length){auto child=2*i+1;
+                if(child+1<length && better(heap[child+1],heap[child],maximum))++child;
+                if(!better(heap[child],heap[i],maximum))break;exchange(heap,i,child,maximum);i=child;
             }
         }
     }
 public:
-    RankWindow(const T* first,std::size_t count,std::size_t rank):values(first,first+count),position(count),side(count) {
-        std::vector<std::size_t> indices(count);std::iota(indices.begin(),indices.end(),std::size_t(0));
+    RankWindow(const T* first,std::size_t count,std::size_t rank):values(first,first+count),position(count) {
+        std::vector<Index> indices(count);std::iota(indices.begin(),indices.end(),Index(0));
         std::nth_element(indices.begin(),indices.begin()+rank,indices.end(),[&](auto a,auto b){return values[a]<values[b];});
         lower.assign(indices.begin(),indices.begin()+rank+1);upper.assign(indices.begin()+rank+1,indices.end());
         std::make_heap(lower.begin(),lower.end(),[&](auto a,auto b){return values[a]<values[b];});
         std::make_heap(upper.begin(),upper.end(),[&](auto a,auto b){return values[a]>values[b];});
-        for(std::size_t i=0;i<lower.size();++i){position[lower[i]]=i;side[lower[i]]=0;}
-        for(std::size_t i=0;i<upper.size();++i){position[upper[i]]=i;side[upper[i]]=1;}
+        for(std::size_t i=0;i<lower.size();++i)position[lower[i]]=-std::int32_t(i)-1;
+        for(std::size_t i=0;i<upper.size();++i)position[upper[i]]=std::int32_t(i)+1;
     }
     void replace(std::size_t slot,T value) {
-        values[slot]=value;
-        if(side[slot])repair(upper,position[slot],false);else repair(lower,position[slot],true);
+        values[slot]=value;const auto p=position[slot];
+        if(p<0)repair(lower,Index(-p-1),true);else repair(upper,Index(p-1),false);
         if(!upper.empty() && values[lower[0]]>values[upper[0]]) {
             const auto a=lower[0],b=upper[0];lower[0]=b;upper[0]=a;
-            position[a]=position[b]=0;side[a]=1;side[b]=0;
+            position[a]=1;position[b]=-1;
             repair(lower,0,true);repair(upper,0,false);
         }
     }
     T value() const {return values[lower[0]];}
 };
+template<class W,class Store> void sliding_rank(const std::vector<W>& padded,std::size_t n,std::size_t window,std::size_t rank,int workers,Store store) {
+    detail::partition(n,workers,[&](auto begin,auto end,auto){
+        if(begin==end)return;
+        RankWindow<W> state(padded.data()+begin,window,rank);
+        store(begin,state.value());
+        std::uint32_t slot=0;const auto width=std::uint32_t(window);
+        const auto* incoming=padded.data()+begin+window;
+        for(auto i=begin+1;i<end;++i){
+            state.replace(slot,*incoming++);
+            if(++slot==width)slot=0;
+            store(i,state.value());
+        }
+    });
+}
 template<class T,class W> MedianInfo run(const T* input,void* output,PixelType target,
     const std::vector<std::size_t>& shape,const std::vector<std::size_t>& window,
     const std::vector<std::vector<std::size_t>>& coordinates,std::size_t rank,GaussianBorder border,
@@ -144,20 +162,14 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
     });
     std::vector<std::size_t> offsets(coordinates.size(),0);
     for(std::size_t t=0;t<coordinates.size();++t)for(std::size_t d=0;d<shape.size();++d)offsets[t]+=coordinates[t][d]*pp[d];
-    bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9;
+    bool dense_line=fast_1d && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
     if(dense_line)for(std::size_t t=0;t<offsets.size();++t)if(offsets[t]!=t){dense_line=false;break;}
     if(dense_line) {
-        // The rank partition retains k elements in fixed slots. Updating one
-        // slot repairs only its heap and, if necessary, exchanges the roots.
-        detail::partition(n,workers,[&](auto begin,auto end,auto){
-            if(begin==end)return;
-            RankWindow<W> state(padded.data()+begin,window[0],rank);
-            for(auto i=begin;i<end;++i){
-                if(i!=begin)state.replace((i-begin-1)%window[0],padded[i+window[0]-1]);
-                if constexpr(std::is_same_v<W,std::int64_t>)static_cast<std::int64_t*>(output)[i]=state.value();
-                else write(output,i,double(state.value()),target);
-            }
-        });return {};
+        if constexpr(std::is_same_v<W,std::int64_t>)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<std::int64_t*>(output)[i]=value;});
+        else if(target==PixelType::float32)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<float*>(output)[i]=float(value);});
+        else if(target==PixelType::float64)sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){static_cast<double*>(output)[i]=double(value);});
+        else sliding_rank(padded,n,window[0],rank,workers,[&](auto i,W value){write(output,i,double(value),target);});
+        return {};
     }
     detail::partition(n,workers,[&](auto begin,auto end,auto){
         std::vector<W> values(coordinates.size()),selected(std::min(std::size_t(1024),end-begin));
@@ -165,7 +177,7 @@ template<class T,class W> MedianInfo run(const T* input,void* output,PixelType t
             auto remainder=position;std::size_t base=0;for(std::size_t d=0;d<shape.size();++d){base+=(remainder/ip[d])*pp[d];remainder%=ip[d];}
             std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-            if(vectorize && has_avx2())done=simd::median_small(padded.data()+base,selected.data(),span,offsets.data(),offsets.size(),rank,std::is_same_v<W,std::int64_t>);
+            if constexpr(sizeof(W)==8)if(vectorize && has_avx2())done=simd::median_small(padded.data()+base,selected.data(),span,offsets.data(),offsets.size(),rank,std::is_same_v<W,std::int64_t>);
 #endif
             for(auto k=done;k<span;++k){
                 if(zero_strides){for(std::size_t t=0;t<coordinates.size();++t){auto i=position+k;bool missing=false;
@@ -194,6 +206,9 @@ MedianInfo median_filter_into(const void* input,void* output,PixelType source,Pi
     if(shape.empty() || shape.size()!=window.size() || coordinates.empty() || rank>=coordinates.size() || unsigned(border)>4)throw std::invalid_argument("invalid median geometry");
     product(shape);product(window);for(auto w:window)if(!w)throw std::invalid_argument("empty median window");
     for(const auto& c:coordinates){if(c.size()!=shape.size())throw std::invalid_argument("median coordinate rank mismatch");for(std::size_t d=0;d<c.size();++d)if(c[d]>=window[d])throw std::invalid_argument("median coordinate outside window");}
+    bool float_line=fast_1d && source==PixelType::float32 && shape.size()==1 && coordinates.size()==window[0] && coordinates.size()>9 && window[0]<=std::size_t(std::numeric_limits<std::int32_t>::max());
+    if(float_line)for(std::size_t t=0;t<coordinates.size();++t)if(coordinates[t][0]!=t){float_line=false;break;}
+    if(float_line)return run<float,float>(static_cast<const float*>(input),output,target,shape,window,coordinates,rank,border,cval,integer_cval,nd_rank,fast_1d,zero_strides,source_cval);
     if(fast_1d && source==PixelType::int64){if(target!=source)throw std::invalid_argument("exact int64 median target required");return run<std::int64_t,std::int64_t>(static_cast<const std::int64_t*>(input),output,target,shape,window,coordinates,rank,border,cval,integer_cval,false,true,false,false);}
     switch(source){
 #define RUN(tag,T) case PixelType::tag:return run<T,double>(static_cast<const T*>(input),output,target,shape,window,coordinates,rank,border,cval,integer_cval,nd_rank,fast_1d,zero_strides,source_cval);
