@@ -437,7 +437,7 @@ def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect'
         low,high=_core.intensity_bounds(native)
         if not (math.isfinite(low) and math.isfinite(high)):return delegated()
         amplitude=max(abs(low),abs(high))
-    if amplitude+abs(value)>np.finfo(target).max:return delegated()
+    if max(amplitude,abs(constant))+abs(value)>np.finfo(target).max:return delegated()
     if max(amplitude,abs(constant))>np.finfo(float_dtype).max/4:return delegated()
     if method=='gaussian':
         kernels=[];axes=[];borders=[]

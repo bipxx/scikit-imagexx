@@ -129,3 +129,30 @@ def test_full_range_and_continuous_values(method,dtype):
         a=np.resize(data,(17,19))
     else:a=np.random.default_rng(1029).normal(-2,7,(17,19)).astype(dtype)
     compare(a,method=method,block_size=7,offset=.123)
+
+@pytest.mark.parametrize('method',['gaussian','mean','median'])
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('policy',['ignore','warn','raise'])
+def test_border_and_offset_overflow_uses_explicit_fallback(method,dtype,policy):
+    a=np.zeros((3,3),dtype=dtype)
+    maximum=float(np.finfo(dtype).max)
+    options=dict(method=method,block_size=5,mode='constant',cval=maximum/128,offset=dtype(-maximum))
+    with np.errstate(over=policy):
+        with pytest.raises(NotImplementedError,match='outside native coverage'):
+            xx.filters.threshold_local(a,**options)
+        xx.set_fallback_enabled(True)
+        if policy=='raise':
+            with pytest.raises(FloatingPointError,match='overflow encountered in subtract'):
+                reference(a,**options)
+            with pytest.warns(xx.FallbackWarning),pytest.raises(FloatingPointError,match='overflow encountered in subtract'):
+                xx.filters.threshold_local(a,**options)
+        else:
+            with warnings.catch_warnings(record=True) as expected_warnings:
+                warnings.simplefilter('always');expected=reference(a,**options)
+            with warnings.catch_warnings(record=True) as actual_warnings:
+                warnings.simplefilter('always');actual=xx.filters.threshold_local(a,**options)
+            assert any(isinstance(w.message,xx.FallbackWarning) for w in actual_warnings)
+            assert [(type(w.message),str(w.message)) for w in actual_warnings if not isinstance(w.message,xx.FallbackWarning)]==[(type(w.message),str(w.message)) for w in expected_warnings]
+            assert actual.dtype==expected.dtype
+            np.testing.assert_array_equal(actual,expected)
+    np.testing.assert_array_equal(a,np.zeros_like(a))
