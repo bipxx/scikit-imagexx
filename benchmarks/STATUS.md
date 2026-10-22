@@ -1,5 +1,10 @@
 # Last completed whole-library performance checkpoint
 
+The [Li constant-image fast path](li-uniform.md) is retained after paired
+one-worker geometric-mean gains of 34% on Linux and 17% on Windows. It records
+the remaining per-case regressions and all raw samples against the exact initial
+package. These are source-specific results, not a whole-library refresh.
+
 The newer [Li threshold checkpoint](li.md) records source-specific Windows/Linux
 one-worker and four-worker results, including regressions. The subsequent
 [runtime angle-layout correction](distance-layout.md) addresses the eight Linux

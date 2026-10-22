@@ -707,3 +707,9 @@ preserves runtime atan2 dispatch for positive and negative strides. Paired isola
 one-worker measurements are 2.26× faster than scikit-image on Linux and 2.87× on
 Windows; the report retains the approximately 1.7% regression against the prior
 C++ package along with every raw sample.
+
+The [Li constant-image fast path](benchmarks/li-uniform.md) improves the fixed
+one-worker corpus geometric mean by 34% on Linux and 17% on Windows against the
+initial C++ package. Constant uint8/float32/float64 cases all beat scikit-image on
+both runners. Remaining Linux float32 and tiny-input regressions are retained
+in the report for follow-up profiling.
