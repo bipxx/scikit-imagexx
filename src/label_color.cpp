@@ -48,18 +48,21 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
     std::vector<std::uint64_t> values(count);
     std::uint64_t low=std::numeric_limits<std::uint64_t>::max(),high=0,bg_key=background;
     bool can_match=true;
+    [[maybe_unused]] bool has_zero=false;
     for(std::size_t i=0;i<count;++i) {
         T value=load<T>(bytes+i*sizeof(T),swap);
         if constexpr(Boolean)value=T(value!=0);
         if(!finite(value))return false;
         if(overlay) {
             if constexpr(std::is_floating_point_v<T>) {
-                if(background || value<T(0) || double(value)>=18446744073709551616.0)return false;
+                if(value<T(0) || double(value)>=18446744073709551616.0)return false;
+                if(background && value==T(0))has_zero=true;
             } else if constexpr(std::is_signed_v<T>)if(value<0)return false;
             values[i]=std::uint64_t(value);
             low=std::min(low,values[i]);high=std::max(high,values[i]);
         } else values[i]=ordered_key(value);
     }
+    if constexpr(std::is_floating_point_v<T>)if(overlay && background && !has_zero)return false;
     if(!overlay) {
         if constexpr(std::is_floating_point_v<T>) {
             // Keep Python-int comparison promotion exact in both NumPy1/2.

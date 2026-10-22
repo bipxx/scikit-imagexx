@@ -69,9 +69,9 @@ def test_labels_without_underlay(dtype,layout,axis):
     check(labels,channel_axis=axis)
 
 
-@pytest.mark.parametrize('colors',[None,['red','blue','yellow'],[(.2,.3,.4)],[(1,0,0,9),(0,1,0,8)],np.array([[.1,.2,.3],[.4,.5,.6]],dtype=np.float32)])
+@pytest.mark.parametrize('colors',[None,['red','blue','yellow'],[(.2,.3,.4)],[(1,0,0,9),(0,1,0,8)],np.array([[.1,.2,.3],[.4,.5,.6]],dtype=np.float32),[(1,0,0,object())]])
 @pytest.mark.parametrize('background',[0,2,9,256])
-@pytest.mark.parametrize('background_color',[None,'cyan',(0,0,0),(.2,.4,.6)])
+@pytest.mark.parametrize('background_color',[None,'cyan',(0,0,0),(.2,.4,.6),(0,0,0,object())])
 def test_palette_and_background(colors,background,background_color):
     check(np.array([[0,1,2,9],[9,2,1,0]],dtype=np.uint8),colors=colors,bg_label=background,bg_color=background_color)
 
@@ -101,6 +101,12 @@ def test_sparse_labels(dtype):
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_fractional_labels_are_cast_before_ranking(dtype):
     check(np.array([0,.1,.9,1.,1.9,2.,2.9,4.1],dtype=dtype))
+
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('background',[2,9,256])
+def test_floating_labels_with_zero_and_explicit_background(dtype,background):
+    check(np.array([0,.1,.9,1.,1.9,2.,2.9,4.1],dtype=dtype),bg_label=background,bg_color=None)
 
 
 @pytest.mark.parametrize('size',[15,16,17,31,32,33,63,64,65,127,128,129,513])

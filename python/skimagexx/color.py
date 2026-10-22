@@ -18,7 +18,7 @@ def _label_rgb_vector(value):
     if type(value) not in (list,tuple,np.ndarray):return None
     if type(value) is np.ndarray:
         if value.ndim!=1 or value.dtype.kind not in 'biuf' or value.dtype.itemsize>8:return None
-    elif any(type(x) not in (int,float,bool,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64) for x in value):return None
+    elif any(type(x) not in (int,float,bool,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64) for x in value[:3]):return None
     result=np.array(value[:3])
     if result.shape!=(3,) or result.dtype.kind not in 'biuf' or result.dtype.itemsize>8:return None
     if not np.isfinite(result).all():return None
