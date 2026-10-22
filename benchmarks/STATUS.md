@@ -1,5 +1,10 @@
 # Last completed whole-library performance checkpoint
 
+The [sparse-correlation experiments](sparse-initial.md) preserve two initial
+sources, 360 measured rows, wider-test corrections and slower 1-D controls.
+The port remains on its feature branch pending revised exact-source validation
+and paired measurements; it does not yet increase main native coverage.
+
 The [retained row-span helper](hysteresis-spans.md) improves the paired one-worker
 corpus 1.150x on Linux and 1.136x on Windows against the exact initial package.
 Current geometric means are 2.104x/1.828x over scikit-image. The earlier inline
