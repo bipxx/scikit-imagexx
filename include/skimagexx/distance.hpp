@@ -18,11 +18,13 @@ double delta_e94_scalar32(const float* first,const float* second,
 // inputs produce float32 unless cmc_scalar_result requests the upstream CMC
 // promotion for two scalar colors (the output is then float64).
 // wide_trigonometry follows NumPy's radian-constant promotion; true for NumPy 2.
+// legacy_ciede2000 reproduces NumPy 1.x float32 array promotion at c7+25**7:
+// chroma/hue become double, while lightness and output accumulation stay float.
 void delta_e_into(const void* first,const void* second,void* output,std::size_t count,
     PixelType first_type,PixelType second_type,DistanceMetric metric,
     DistanceParameters parameters={},bool wide_trigonometry=true,bool cmc_scalar_result=false,
     std::ptrdiff_t first_pixels=3,std::ptrdiff_t first_channels=1,
-    std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1);
+    std::ptrdiff_t second_pixels=3,std::ptrdiff_t second_channels=1,bool legacy_ciede2000=false);
 // Raw Lab values, without integer intensity normalization. The first three
 // channels participate; strides are in input elements and may be negative/zero.
 // Output is float32 when both inputs are float32, float64 otherwise. Buffers

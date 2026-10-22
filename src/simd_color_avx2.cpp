@@ -678,7 +678,7 @@ template<class T> struct VectorDistanceMath {
 };
 template<class T,class Output> std::size_t metric_run(const void* a,const void* b,Output* out,std::size_t n,
     PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
-    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
     if(ap>INT_MAX/4 || ap< -INT_MAX/4 || bp>INT_MAX/4 || bp< -INT_MAX/4) return 0;
     const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
     std::size_t i=0;
@@ -686,7 +686,7 @@ template<class T,class Output> std::size_t metric_run(const void* a,const void* 
         __m256d av[3],bv[3];
         distance_load<double>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
         distance_load<double>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
-        const auto result=detail::distance_metric<VectorDistanceMath<T>>(av,bv,metric,p,wide,scalar_cmc);
+        const auto result=detail::distance_metric<VectorDistanceMath<T>>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000);
         if constexpr(std::is_same_v<Output,float>) _mm_storeu_ps(out+i,_mm256_cvtpd_ps(result));
         else _mm256_storeu_pd(out+i,result);
     }
@@ -695,11 +695,11 @@ template<class T,class Output> std::size_t metric_run(const void* a,const void* 
 }
 std::size_t metric_distance(const void* a,const void* b,void* out,std::size_t n,PixelType at,PixelType bt,
     DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
-    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc) {
+    std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
     if(at==PixelType::float32 && bt==PixelType::float32) {
-        if(scalar_cmc) return metric_run<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
-        return metric_run<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
+        if(scalar_cmc) return metric_run<float>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
+        return metric_run<float>(a,b,static_cast<float*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
     }
-    return metric_run<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc);
+    return metric_run<double>(a,b,static_cast<double*>(out),n,at,bt,metric,p,wide,scalar_cmc,ap,ac,bp,bc,legacy_ciede2000);
 }
 } // namespace skimagexx::simd

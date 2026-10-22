@@ -38,10 +38,58 @@ template<class T> struct ScalarDistanceMath {
     }
 };
 
+// M controls the lightness/accumulation dtype; C controls chroma/hue.
+// NumPy 1.x promotes c7 + 25**7 to double for float32 arrays. NumPy 2
+// keeps the weak Python integer in float32. In-place sums still round to M.
+template<class M,class C,class W> typename M::R ciede2000_distance(
+    typename M::R (&a)[3],typename M::R (&b)[3],const DistanceParameters& p,
+    typename M::R initial_c1,typename M::R initial_c2) {
+    const auto one=C::c(1),two=C::c(2),zero=C::c(0);
+    const auto L1=a[0],L2=b[0];
+    auto Cbar=M::mul(M::c(.5),M::add(initial_c1,initial_c2));
+    auto c7=M::power(Cbar,7);
+    const auto G=C::mul(C::c(.5),C::sub(one,C::sqrt(C::div(c7,C::add(c7,C::c(6103515625.))))));
+    const auto scale=C::add(one,G),a1=C::mul(a[1],scale),a2=C::mul(b[1],scale);
+    auto C1=C::hypot(a1,a[2]),C2=C::hypot(a2,b[2]);
+    const auto h1=C::angle(a1,a[2]),h2=C::angle(a2,b[2]);
+    const auto Lbar=M::mul(M::c(.5),M::add(L1,L2)),tmp=M::square(M::sub(Lbar,M::c(50)));
+    const auto SL=M::add(one,M::div(M::mul(M::c(.015),tmp),M::sqrt(M::add(M::c(20),tmp))));
+    const auto Lterm=M::div(M::sub(L2,L1),M::mul(M::c(p.kL),SL));
+    Cbar=C::mul(C::c(.5),C::add(C1,C2));
+    const auto SC=C::add(one,C::mul(C::c(.045),Cbar));
+    const auto Cterm=C::div(C::sub(C2,C1),C::mul(C::c(p.kC),SC));
+    const auto diff=C::sub(h2,h1),sum=C::add(h1,h2),CC=C::mul(C1,C2);
+    auto dH=C::choose(diff,C::sub(diff,C::c(2*distance_pi)),C::gt(diff,C::c(distance_pi)));
+    dH=C::choose(dH,C::add(dH,C::c(2*distance_pi)),C::lt(diff,C::c(-distance_pi)));
+    dH=C::choose(dH,zero,C::eq(CC,zero));
+    const auto dHterm=C::mul(C::mul(two,C::sqrt(CC)),C::sin(C::div(dH,two)));
+    const auto mask=C::both(C::gt(C::abs(diff),C::c(distance_pi)),C::gt(CC,zero));
+    auto Hbar=C::choose(sum,C::add(sum,C::c(2*distance_pi)),C::both(mask,C::lt(sum,C::c(2*distance_pi))));
+    Hbar=C::choose(Hbar,C::sub(Hbar,C::c(2*distance_pi)),C::both(mask,C::ge(sum,C::c(2*distance_pi))));
+    Hbar=C::choose(Hbar,C::mul(Hbar,two),C::eq(CC,zero));
+    Hbar=C::mul(Hbar,C::c(.5));
+    auto T=W::sub(W::c(1),W::mul(W::c(.17),W::cos(W::sub(Hbar,W::c(30*distance_pi/180)))));
+    T=W::add(T,C::mul(C::c(.24),C::cos(C::mul(two,Hbar))));
+    T=W::add(T,W::mul(W::c(.32),W::cos(W::add(C::mul(C::c(3),Hbar),W::c(6*distance_pi/180)))));
+    T=W::sub(T,W::mul(W::c(.20),W::cos(W::sub(C::mul(C::c(4),Hbar),W::c(63*distance_pi/180)))));
+    const auto SH=W::add(W::c(1),W::mul(C::mul(C::c(.015),Cbar),T));
+    const auto Hterm=W::div(dHterm,W::mul(W::c(p.kH),SH));
+    c7=C::power(Cbar,7);
+    const auto Rc=C::mul(two,C::sqrt(C::div(c7,C::add(c7,C::c(6103515625.)))));
+    const auto q=C::div(C::sub(C::degrees(Hbar),C::c(275)),C::c(25));
+    const auto dtheta=W::mul(W::c(30*distance_pi/180),C::exp(C::sub(zero,C::square(q))));
+    const auto rotation=W::mul(W::mul(W::mul(W::sub(W::c(0),W::sin(W::mul(W::c(2),dtheta))),Rc),Cterm),Hterm);
+    auto dE2=M::square(Lterm);
+    dE2=M::round(C::add(dE2,C::square(Cterm)));
+    dE2=M::round(W::add(dE2,W::square(Hterm)));
+    dE2=M::round(W::add(dE2,rotation));
+    return M::sqrt(M::nonnegative(dE2));
+}
+
 template<class M,class W> typename M::R weighted_distance(typename M::R (&a)[3],typename M::R (&b)[3],
-    DistanceMetric metric,const DistanceParameters& p,bool promoted_cmc) {
+    DistanceMetric metric,const DistanceParameters& p,bool promoted_cmc,bool legacy_ciede2000) {
     using R=typename M::R;
-    const auto one=M::c(1),two=M::c(2),zero=M::c(0);
+    const auto one=M::c(1);
     const auto L1=a[0],L2=b[0];
     auto C1=M::hypot(a[1],a[2]),C2=M::hypot(b[1],b[2]);
     if(metric==DistanceMetric::cie94 || metric==DistanceMetric::cmc) {
@@ -76,50 +124,13 @@ template<class M,class W> typename M::R weighted_distance(typename M::R (&a)[3],
         dE2=M::round(W::add(dE2,Hterm));
         return M::sqrt(M::nonnegative(dE2));
     }
-    // CIEDE2000: ordinary float32 stages and promoted trigonometric stages
-    // are kept separate, including each in-place accumulation into dE2.
-    auto Cbar=M::mul(M::c(.5),M::add(C1,C2));
-    auto c7=M::power(Cbar,7);
-    const auto G=M::mul(M::c(.5),M::sub(one,M::sqrt(M::div(c7,M::add(c7,M::c(6103515625.))))));
-    const auto scale=M::add(one,G),a1=M::mul(a[1],scale),a2=M::mul(b[1],scale);
-    C1=M::hypot(a1,a[2]); C2=M::hypot(a2,b[2]);
-    const auto h1=M::angle(a1,a[2]),h2=M::angle(a2,b[2]);
-    const auto Lbar=M::mul(M::c(.5),M::add(L1,L2)),tmp=M::square(M::sub(Lbar,M::c(50)));
-    const auto SL=M::add(one,M::div(M::mul(M::c(.015),tmp),M::sqrt(M::add(M::c(20),tmp))));
-    const auto Lterm=M::div(M::sub(L2,L1),M::mul(M::c(p.kL),SL));
-    Cbar=M::mul(M::c(.5),M::add(C1,C2));
-    const auto SC=M::add(one,M::mul(M::c(.045),Cbar));
-    const auto Cterm=M::div(M::sub(C2,C1),M::mul(M::c(p.kC),SC));
-    const auto diff=M::sub(h2,h1),sum=M::add(h1,h2),CC=M::mul(C1,C2);
-    auto dH=M::choose(diff,M::sub(diff,M::c(2*distance_pi)),M::gt(diff,M::c(distance_pi)));
-    dH=M::choose(dH,M::add(dH,M::c(2*distance_pi)),M::lt(diff,M::c(-distance_pi)));
-    dH=M::choose(dH,zero,M::eq(CC,zero));
-    const auto dHterm=M::mul(M::mul(two,M::sqrt(CC)),M::sin(M::div(dH,two)));
-    const auto mask=M::both(M::gt(M::abs(diff),M::c(distance_pi)),M::gt(CC,zero));
-    auto Hbar=M::choose(sum,M::add(sum,M::c(2*distance_pi)),M::both(mask,M::lt(sum,M::c(2*distance_pi))));
-    Hbar=M::choose(Hbar,M::sub(Hbar,M::c(2*distance_pi)),M::both(mask,M::ge(sum,M::c(2*distance_pi))));
-    Hbar=M::choose(Hbar,M::mul(Hbar,two),M::eq(CC,zero));
-    Hbar=M::mul(Hbar,M::c(.5));
-    auto T=W::sub(W::c(1),W::mul(W::c(.17),W::cos(W::sub(Hbar,W::c(30*distance_pi/180)))));
-    T=W::add(T,M::mul(M::c(.24),M::cos(M::mul(two,Hbar))));
-    T=W::add(T,W::mul(W::c(.32),W::cos(W::add(M::mul(M::c(3),Hbar),W::c(6*distance_pi/180)))));
-    T=W::sub(T,W::mul(W::c(.20),W::cos(W::sub(M::mul(M::c(4),Hbar),W::c(63*distance_pi/180)))));
-    const auto SH=W::add(W::c(1),W::mul(M::mul(M::c(.015),Cbar),T));
-    const auto Hterm=W::div(dHterm,W::mul(W::c(p.kH),SH));
-    c7=M::power(Cbar,7);
-    const auto Rc=M::mul(two,M::sqrt(M::div(c7,M::add(c7,M::c(6103515625.)))));
-    const auto q=M::div(M::sub(M::degrees(Hbar),M::c(275)),M::c(25));
-    const auto dtheta=W::mul(W::c(30*distance_pi/180),M::exp(M::sub(zero,M::square(q))));
-    const auto rotation=W::mul(W::mul(W::mul(W::sub(W::c(0),W::sin(W::mul(W::c(2),dtheta))),Rc),Cterm),Hterm);
-    auto dE2=M::square(Lterm);
-    dE2=M::add(dE2,M::square(Cterm));
-    dE2=M::round(W::add(dE2,W::square(Hterm)));
-    dE2=M::round(W::add(dE2,rotation));
-    return M::sqrt(M::nonnegative(dE2));
+    if(legacy_ciede2000)
+        return ciede2000_distance<M,typename M::Wide,typename M::Wide>(a,b,p,C1,C2);
+    return ciede2000_distance<M,M,W>(a,b,p,C1,C2);
 }
 template<class M> typename M::R distance_metric(typename M::R (&a)[3],typename M::R (&b)[3],
-    DistanceMetric metric,const DistanceParameters& p,bool wide_trig,bool promoted_cmc) {
-    return wide_trig ? weighted_distance<M,typename M::Wide>(a,b,metric,p,promoted_cmc) :
-                       weighted_distance<M,M>(a,b,metric,p,promoted_cmc);
+    DistanceMetric metric,const DistanceParameters& p,bool wide_trig,bool promoted_cmc,bool legacy_ciede2000=false) {
+    return wide_trig ? weighted_distance<M,typename M::Wide>(a,b,metric,p,promoted_cmc,legacy_ciede2000) :
+                       weighted_distance<M,M>(a,b,metric,p,promoted_cmc,legacy_ciede2000);
 }
 }

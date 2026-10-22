@@ -47,20 +47,19 @@ compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
+The NumPy 1.x color-distance promotion gaps are fixed in native code. CIE76/CIE94
+scalar paths preserve float32 differences/chroma before promoted double math;
+CIE94 also preserves NumPy-float32 weight-product rounding. CIEDE2000 selects a
+mixed-precision SIMD/scalar path when NumPy promotes `c7 + 25**7`: chroma/hue
+become double while lightness and in-place output accumulation remain float32.
+Runtime dtype probes select both behaviors. The eight existing NumPy 1.24
+CIEDE2000 failures now pass without relaxing tolerances or nonfinite masks.
+Minimum-version CI includes the complete dtype-metadata and distance test files,
+plus packet/tail, signed-layout, branch and zero-weight regression cases. Other
+color algorithms and the rest of the API still need complete minimum-version
+coverage; these scoped passes do not establish whole-library compatibility.
+
 Next work:
-
-- Correct eight verified NumPy 1.24.4 CIEDE2000 float32 failures across
-  Sharma/reversed pairs, hue/lightness branch boundaries and zero chroma/hue
-  weights (each with one/four workers). They also fail with the preserved
-  pre-conversion wheel. Preserve these oracles and investigate branch and
-  nonfinite arithmetic; the minimum-version CI still covers selected algorithms,
-  not the complete color suite.
-
-  The previous CIE76/CIE94 scalar promotion gap is fixed with dedicated native
-  one-color paths: float32 differences/chroma remain rounded before promoted
-  float64 arithmetic. A runtime scalar-power probe selects the NumPy behavior;
-  CIE94 also preserves NumPy-float32 weight-product rounding. Minimum-version CI
-  now runs the full dtype-metadata suite and the new scalar-promotion oracles.
 
 - Port remaining color conversions with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.

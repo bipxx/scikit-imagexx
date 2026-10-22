@@ -637,6 +637,28 @@ int main() {
         delta_e_into(gray1,gray2,&weighted,1,PixelType::float64,PixelType::float64,DistanceMetric::cmc);
         require(std::abs(weighted-5/(.040975*50/(1+.01765*50)))<1e-12);
         delta_e_into(nullptr,nullptr,nullptr,0,PixelType::float32,PixelType::float32,DistanceMetric::cmc,{},true,true);
+        // NumPy 1.x widens chroma stages: the tenth Sharma pair falls on the
+        // opposite side of the hue discontinuity from NumPy 2 float32 math.
+        const int distance_workers[]={1
+#ifdef _OPENMP
+            ,4
+#endif
+        };
+        for(int workers:distance_workers) {
+            set_num_threads(workers);
+            for(std::size_t count:{1u,3u,4u,5u,7u,8u,9u,17u,262149u}) {
+                std::vector<float> first(count*3),second(count*3),output(count);
+                for(std::size_t i=0;i<count;++i) {
+                    first[3*i]=second[3*i]=50;
+                    first[3*i+1]=2.49f;first[3*i+2]=-.001f;
+                    second[3*i+1]=-2.49f;second[3*i+2]=.001f;
+                }
+                delta_e_into(first.data(),second.data(),output.data(),count,PixelType::float32,
+                    PixelType::float32,DistanceMetric::ciede2000,{},false,false,3,1,3,1,true);
+                for(auto value:output) require(std::abs(value-7.219470f)<2.5e-4f);
+            }
+        }
+        set_num_threads(1);
     }
     {
         std::int16_t image[15];for(int i=0;i<15;++i)image[i]=std::int16_t(i);

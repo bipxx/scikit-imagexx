@@ -460,6 +460,7 @@ def _distance_metadata(result,a,b,first_scalar,second_scalar,reverse):
 
 
 _LEGACY_SCALAR_POWER = np.asarray(np.float32(1) ** 2).dtype == np.float64
+_LEGACY_CIEDE2000 = np.result_type(np.empty(0,dtype=np.float32),25**7) == np.float64
 
 
 def deltaE_cie76(lab1,lab2,channel_axis=-1):
@@ -541,7 +542,8 @@ def _weighted_distance(name,lab1,lab2,channel_axis,parameters,options):
         np.add(np.broadcast_to(scalar,a.shape[:-1]),np.broadcast_to(scalar,b.shape[:-1]))
         raise
     result=_core.distance_metric(a,b,{'deltaE_ciede94':0,'deltaE_ciede2000':1,'deltaE_cmc':2}[name],
-                                 parameters,bool(wide),promote,legacy94,parameter_mask)
+                                 parameters,bool(wide),promote,legacy94,parameter_mask,
+                                 single and name=='deltaE_ciede2000' and _LEGACY_CIEDE2000)
     result=_distance_metadata(result,a,b,first_scalar,second_scalar,name=='deltaE_ciede2000')
     return result[()] if result.ndim==0 else result
 
