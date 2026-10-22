@@ -10,6 +10,7 @@ namespace skimagexx { struct PerceptualInfo; }
 namespace skimagexx::detail { struct PerceptualSpec; }
 namespace skimagexx::detail { struct StainSpec; }
 namespace skimagexx::simd {
+std::size_t hysteresis_map(const void*,const void*,void*,std::size_t,PixelType,std::ptrdiff_t,std::ptrdiff_t,bool);
 std::size_t li_scan(const void*,std::size_t,bool,double,detail::LiScan&);
 std::size_t li_shift(const void*,void*,std::size_t,bool,double);
 double li_sum(const void*,std::size_t,bool);

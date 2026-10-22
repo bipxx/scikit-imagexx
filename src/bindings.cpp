@@ -4,6 +4,7 @@
 #include "skimagexx/label_color.hpp"
 #include "skimagexx/histogram_matching.hpp"
 #include "skimagexx/rank_order.hpp"
+#include "skimagexx/hysteresis.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -300,6 +301,24 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    auto hysteresis_view=[](const py::array& a){skimagexx::HysteresisView result{a.data(),pixel_type(a.dtype()),{}};
+        for(py::ssize_t d=0;d<a.ndim();++d)result.strides.push_back(a.strides(d)/a.itemsize());return result;};
+    auto hysteresis_shape=[](const py::array& a,const py::array& b){
+        if(a.ndim()!=b.ndim())throw py::value_error("hysteresis broadcast ranks differ");
+        std::vector<std::size_t> result;for(py::ssize_t d=0;d<a.ndim();++d){if(a.shape(d)!=b.shape(d))throw py::value_error("hysteresis broadcast shapes differ");result.push_back(std::size_t(a.shape(d)));}return result;};
+    m.def("hysteresis_minimum",[hysteresis_view,hysteresis_shape](py::array a,py::array b){
+        const auto shape=hysteresis_shape(a,b);std::vector<py::ssize_t> dimensions(a.shape(),a.shape()+a.ndim());py::array output(a.dtype(),dimensions);
+        const auto av=hysteresis_view(a),bv=hysteresis_view(b);
+        {py::gil_scoped_release release;skimagexx::hysteresis_minimum_into(av,bv,output.mutable_data(),shape);}return output;});
+    m.def("hysteresis_greater",[hysteresis_view,hysteresis_shape](py::array a,py::array b){
+        const auto shape=hysteresis_shape(a,b);std::vector<py::ssize_t> dimensions(a.shape(),a.shape()+a.ndim());py::array output(py::dtype::of<bool>(),dimensions);
+        const auto av=hysteresis_view(a),bv=hysteresis_view(b);
+        {py::gil_scoped_release release;skimagexx::hysteresis_greater_into(av,bv,static_cast<std::uint8_t*>(output.mutable_data()),shape);}return output;});
+    m.def("hysteresis_connect",[hysteresis_shape](py::array a,py::array b){
+        auto weak=py::array::ensure(a,py::array::c_style),strong=py::array::ensure(b,py::array::c_style);
+        if(!weak || !strong || weak.dtype().kind()!='b' || strong.dtype().kind()!='b')throw py::type_error("boolean hysteresis masks required");
+        const auto shape=hysteresis_shape(weak,strong);std::vector<py::ssize_t> dimensions(weak.shape(),weak.shape()+weak.ndim());py::array output(py::dtype::of<bool>(),dimensions);
+        {py::gil_scoped_release release;skimagexx::hysteresis_connect_into(static_cast<const std::uint8_t*>(weak.data()),static_cast<const std::uint8_t*>(strong.data()),static_cast<std::uint8_t*>(output.mutable_data()),shape);}return output;});
     m.def("rank_order",[](py::array image,py::array original)->py::object {
         auto input=py::array::ensure(image,py::array::c_style);
         auto source=py::array::ensure(original,py::array::c_style);

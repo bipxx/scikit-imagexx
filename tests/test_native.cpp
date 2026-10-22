@@ -19,6 +19,7 @@
 #include "skimagexx/distance.hpp"
 #include "skimagexx/histogram_matching.hpp"
 #include "skimagexx/rank_order.hpp"
+#include "skimagexx/hysteresis.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <cstring>
@@ -1126,6 +1127,23 @@ int main() {
         for(std::size_t i=0;i<n;++i)require(wide_ranks[i]==highest-(n-1-i)/3);
         for(std::size_t i=0;i<representatives.size();++i)require(wide[representatives[i]]==UINT64_MAX-highest+i);
         set_num_threads(previous_workers);
+    }
+    {
+        const std::uint8_t image[]={2,0,0,0,1,0,0,0,1},low=0,high=1;
+        std::uint8_t out[9]{};hysteresis_threshold_into(image,&low,&high,out,PixelType::uint8,{3,3});
+        require(out[0]==1 && std::all_of(out+1,out+9,[](auto value){return value==0;}));
+        const std::uint8_t weak[]={0,1,0,1,1},strong[]={1,0,0,0,1},expected[]={1,0,1,1,1};
+        hysteresis_connect_into(weak,strong,out,{5});require(std::equal(out,out+5,expected));
+        const std::uint64_t wide[]={UINT64_MAX,UINT64_MAX-1,0,UINT64_MAX},lo=UINT64_MAX-2,hi=UINT64_MAX-1;
+        hysteresis_threshold_into(wide,&lo,&hi,out,PixelType::uint64,{4});
+        require(out[0] && out[1] && !out[2] && out[3]);
+        std::vector<std::uint8_t> w(65*65*65),s(w.size()),serial(w.size()),parallel(w.size());
+        for(std::size_t i=0;i<w.size();++i){w[i]=(i*17%31)<19;s[i]=w[i] && (i%43==0);}
+        const auto previous=get_num_threads();set_num_threads(1);hysteresis_connect_into(w.data(),s.data(),serial.data(),{65,65,65});
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        hysteresis_connect_into(w.data(),s.data(),parallel.data(),{65,65,65});require(serial==parallel);set_num_threads(previous);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }

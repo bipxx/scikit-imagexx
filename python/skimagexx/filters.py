@@ -490,6 +490,72 @@ def rank_order(image):
 __all__.append('rank_order')
 
 
+def _hysteresis_probe(value,empty=False):
+    a=np.asarray(value)
+    return value if a.ndim==0 else np.zeros(0 if empty else 1,dtype=a.dtype)
+
+
+def _hysteresis_storage(value,dtype,shape):
+    dtype=np.dtype(dtype).newbyteorder('=')
+    if np.ndim(value)==0:
+        with np.errstate(all='ignore'):a=np.asarray(value).astype(dtype,copy=False)
+    else:a=np.asarray(value).astype(dtype,copy=False)
+    if a.dtype==np.float16:a=_core.edge_half(a)
+    if not a.flags.c_contiguous or not a.flags.aligned:a=a.copy(order='C')
+    return np.broadcast_to(a,shape)
+
+
+def _hysteresis_compare(image,bound,shape):
+    # A one-value probe checks scalar casting/errors without processing an image.
+    np.greater(_hysteresis_probe(image),_hysteresis_probe(bound))
+    dtype=np.result_type(image,bound);other=np.asarray(bound)
+    if type(bound) is int and dtype.kind in 'iu':
+        limits=np.iinfo(dtype)
+        if bound<limits.min or bound>limits.max:dtype=np.result_type(image.dtype,other.dtype)
+    if image.dtype.kind in 'biu' and other.dtype.kind in 'biu' and dtype.kind=='f':
+        # NumPy has exact qQ/Qq comparison loops rather than float64 coercion.
+        at=np.int64 if image.dtype.kind=='i' else np.uint64
+        bt=np.int64 if other.dtype.kind=='i' else np.uint64
+    else:at=bt=dtype
+    return _core.hysteresis_greater(_hysteresis_storage(image,at,shape),_hysteresis_storage(bound,bt,shape))
+
+
+def apply_hysteresis_threshold(image,low,high):
+    original=image,low,high
+    def delegated():return fallback('filters','apply_hysteresis_threshold',*original)
+    if type(image) in _GAUSSIAN_TYPES:image=np.asarray(image)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return delegated()
+    for value in (low,high):
+        if type(value) not in (int,float,bool,list,tuple,np.ndarray,np.memmap,*_GAUSSIAN_TYPES):return delegated()
+        if np.asarray(value).dtype.type not in _GAUSSIAN_TYPES:return delegated()
+    if np.geterr()['under']!='ignore' or any(v not in ('warn','ignore','raise') for v in np.geterr().values()):return delegated()
+    low=low if np.asarray(low).ndim==0 else np.asarray(low)
+    high=high if np.asarray(high).ndim==0 else np.asarray(high)
+    try:
+        clip_shape=np.broadcast_shapes(np.shape(low),np.shape(high))
+        shape=np.broadcast_shapes(image.shape,clip_shape)
+    except ValueError:return delegated()
+    if len(shape)>16:return delegated()
+    empty=0 in shape
+    if np.ndim(low)==0 and np.ndim(high)==0:clipped=np.clip(low,a_min=None,a_max=high)
+    else:
+        prototype=np.clip(_hysteresis_probe(low,empty),a_min=None,a_max=_hysteresis_probe(high,empty))
+        dtype=prototype.dtype
+        bound=high
+        if type(high) is int and dtype.kind in 'iu' and high>np.iinfo(dtype).max:bound=dtype.type(np.iinfo(dtype).max)
+        clipped=_core.hysteresis_minimum(_hysteresis_storage(low,dtype,clip_shape),_hysteresis_storage(bound,dtype,clip_shape))
+        if clipped.dtype!=dtype:
+            with np.errstate(all='ignore'):clipped=clipped.astype(dtype)
+    if empty:raise ValueError('zero-size array to reduction operation minimum which has no identity')
+    weak=_hysteresis_compare(image,clipped,shape)
+    strong=_hysteresis_compare(image,high,shape)
+    result=_core.hysteresis_connect(weak,strong)
+    return result[()] if result.ndim==0 else result
+
+
+__all__.append('apply_hysteresis_threshold')
+
+
 _SMALL_EDGES = {'laplace':0,'roberts':1,'roberts_pos_diag':2,'roberts_neg_diag':3}
 _SMALL_EDGE_DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                                 'int32','uint64','int64','float16','float32','float64'))
