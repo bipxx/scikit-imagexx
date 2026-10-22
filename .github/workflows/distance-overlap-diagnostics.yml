@@ -20,6 +20,7 @@ jobs:
       - run: python -m pip install --no-deps build/wheels/*.whl
       - run: python tools/diagnose_distance_precision.py > build/precision.json
       - run: python tools/diagnose_distance_overlap.py > build/overlap.json
+      - run: python -m pytest -q tests/test_distance_math_provider.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
