@@ -95,6 +95,38 @@ def test_smoothing_packet_edges(bins,seed):
     check(hist=counts)
 
 
+@pytest.mark.parametrize('layout',['reversed','stepped','endian','unaligned','readonly','tagged'])
+@pytest.mark.parametrize('dtype',[np.uint64,np.int64,np.float32,np.float64])
+def test_histogram_storage(dtype,layout):
+    counts=np.random.default_rng(711).integers(1,10000,129).astype(dtype)
+    centers=np.arange(counts.size,dtype=np.float64)/13-7
+    if layout=='reversed':counts=counts[::-1];centers=centers[::-1]
+    elif layout=='stepped':counts=counts[::2];centers=centers[::2]
+    elif layout=='endian':counts=counts.astype(counts.dtype.newbyteorder('>'))
+    elif layout=='unaligned':
+        storage=np.full(counts.nbytes+2,0xa5,dtype=np.uint8)
+        view=np.ndarray(counts.shape,dtype=counts.dtype,buffer=storage,offset=1)
+        view[:]=counts;counts=view
+    elif layout=='readonly':counts.flags.writeable=False;centers.flags.writeable=False
+    elif layout=='tagged':
+        counts=counts.view(np.dtype(counts.dtype,metadata={'source':'histogram'}))
+        centers=centers.view(np.dtype(centers.dtype,metadata={'unit':'intensity'}))
+    saved=counts.copy()
+    check(hist=(counts,centers))
+    np.testing.assert_array_equal(counts,saved)
+    if layout=='unaligned':assert storage[0]==storage[-1]==0xa5
+
+
+@pytest.mark.parametrize('seed',[3,17,59])
+@pytest.mark.parametrize('scale',[1.,1e-30,1e30])
+def test_histogram_dynamic_range(seed,scale):
+    rng=np.random.default_rng(seed)
+    # Wide count ratios and plateaus stress the ordered rolling accumulator;
+    # a reassociated three-term sum can change a selected plateau endpoint.
+    counts=np.ldexp(rng.uniform(.5,1.,257),rng.integers(-24,25,257))*scale
+    check(hist=counts)
+
+
 @pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
 def test_parallel_image_and_pipeline(dtype):
     image=np.random.default_rng(771).integers(0,48,(513,517),dtype=np.uint8)
