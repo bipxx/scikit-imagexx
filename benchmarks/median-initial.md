@@ -1953,3 +1953,15 @@ The pair path improves 2.5-4.4x against the same-run previous native implementat
 The original experiment gate compared absolute upstream/current corpus scores across runs. This candidate failed that gate: the Windows score is below the earlier 4.227715x. That failed score remains recorded. The unchanged native control also shifted relative to upstream between runs, and that older control fails subsequently added broadcast-pair and half-dtype error parity tests. This version is retained as a correctness baseline; subsequent optimization decisions use same-run paired native controls. It does not pass the original gate or win every operation.
 
 Integration checks pass 12,691 targeted cases on Windows and minimum NumPy in each SIMD mode. Fresh Windows wheels additionally pass 4,016 pair cases and 2,623 API/inventory cases per mode. Mandatory broadcast-pair, half-dtype error, signed-zero and output-type checks are included.
+
+
+## API-integrated baseline refresh (`cdd1847`)
+
+[Paired run 39837048226](https://github.com/bipxx/scikit-imagexx/actions/runs/39837048226) compares the integrated source against exact packages from run 39829432396. All 54 cases per OS at worker limits one/four pass exact value and zero-sign checks for both versions. Checked artifact binary hashes match the measured packages.
+
+| OS | one-worker upstream/current geometric mean | paired baseline/current geometric mean |
+|---|---:|---:|
+| Linux | 6.999370x | 0.999808x |
+| Windows | 4.331394x | 1.001818x |
+
+Raw samples: [Linux](median-integrated-linux.json), [Windows](median-integrated-windows.json). These near-unity paired results establish the API-integrated baseline, without claiming a kernel speedup. The numerical C++ source is unchanged. Absolute upstream ratios changed again while paired native controls stayed close, reinforcing the use of same-run controls for optimization decisions. Earlier adverse cases and failed decisions remain recorded above.
