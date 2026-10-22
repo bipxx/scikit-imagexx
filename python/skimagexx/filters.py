@@ -1089,3 +1089,38 @@ def median(image,footprint=None,out=None,mode='nearest',cval=0.0,behavior='ndima
 
 
 __all__.append('median')
+
+
+def threshold_multiotsu(image=None, classes=3, nbins=256, *, hist=None):
+    if (type(classes) not in (int,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64)
+            or not 2<=classes<=16 or (image is not None and type(image) is not np.ndarray)):
+        return fallback('filters','threshold_multiotsu',image,classes,nbins,hist=hist)
+    def warn_rgb():
+        if image is not None and image.ndim>2 and image.shape[-1] in (3,4):
+            import warnings
+            warnings.warn(f'threshold_multiotsu is expected to work correctly only for grayscale images; image shape {image.shape} looks like that of an RGB image.',stacklevel=3)
+    if image is None and hist is None:raise Exception('Either image or hist must be provided.')
+    try:prepared=_threshold_histogram(image,hist,nbins)
+    except Exception:
+        warn_rgb()
+        raise
+    if prepared is None:
+        return fallback('filters','threshold_multiotsu',image,classes,nbins,hist=hist)
+    counts,centers,_=prepared
+    if hist is None:counts=counts/counts.sum()
+    prob=counts.astype(np.float32,copy=False)
+    nvalues=np.count_nonzero(prob)
+    if nvalues<classes:
+        warn_rgb()
+        raise ValueError(f'After discretization into bins, the input image has only {nvalues} different values. It cannot be thresholded in {classes} classes. If there are more unique values before discretization, try increasing the number of bins (`nbins`).')
+    if nvalues==classes:
+        warn_rgb()
+        return centers[np.flatnonzero(prob)[:-1]]
+    if prob.size>4096 or not np.isfinite(prob).all() or np.max(prob)>1e10:
+        return fallback('filters','threshold_multiotsu',image,classes,nbins,hist=hist)
+    warn_rgb()
+    if not prob.flags.c_contiguous:raise ValueError('ndarray is not C-contiguous')
+    if not prob.flags.writeable:raise ValueError('buffer source array is read-only')
+    return centers[_core.threshold_multiotsu(prob,int(classes))]
+
+__all__.append('threshold_multiotsu')

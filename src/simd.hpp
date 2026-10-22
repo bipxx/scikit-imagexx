@@ -103,6 +103,7 @@ double sum(const float*, std::size_t);
 double sum(const double*, std::size_t);
 double sum(const std::uint8_t*, std::size_t);
 void otsu_scores(const float*, const float*, const double*, const double*, double*, std::size_t);
+std::size_t multiotsu_scores(float,const float*,const float*,const float*,std::size_t,float*,std::size_t);
 bool uniform(const std::uint8_t*, std::size_t);
 bool li_uniform(const void*,std::size_t,bool);
 std::size_t median_small(const void*,void*,std::size_t,const std::size_t*,std::size_t,std::size_t,bool);

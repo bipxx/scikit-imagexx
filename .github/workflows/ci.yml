@@ -61,6 +61,7 @@ jobs:
       - run: python benchmarks/hysteresis.py --size 32 --threads 1 --repeat 1 --output build/ci-hysteresis.json
       - run: python benchmarks/sparse.py --size 32 --threads 1 --repeat 1 --output build/ci-sparse.json
       - run: python benchmarks/median.py --size 32 --threads 1 --repeat 1 --output build/ci-median.json
+      - run: python benchmarks/multiotsu.py --size 32 --threads 1 --repeat 1 --output build/ci-multiotsu.json
       - run: python benchmarks/label_colors.py --size 32 --threads 1 --repeat 1 --output build/ci-label-colors.json
       - run: python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output build/ci-distance.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
@@ -118,11 +119,15 @@ jobs:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_threshold_local.py
       - run: python -m pytest -q tests/test_rank_order.py
-      - run: python -m pytest -q tests/test_median.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py
       - run: python -m pytest -q tests/test_correlate_sparse.py
       - run: python -m pytest -q tests/test_hysteresis.py
-      - run: python -m pytest -q tests/test_median.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_correlate_sparse.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_hysteresis.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'

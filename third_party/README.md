@@ -29,3 +29,5 @@ Median selection models the first-pivot Hoare comparison order and numeric cast
 stages in SciPy's `ndimage/src/ni_filters.c` (v1.18.1). The existing
 `scipy-ndimage-LICENSE.txt` retains its BSD notice. The generalized median
 kernel and SIMD networks are implemented in C++ without Python image arithmetic.
+
+Multi-Otsu float32 moment initialization, objective accumulation order and first-maximum selection follow scikit-image 0.26.0 (`filters/_multiotsu.pyx`), covered by `scikit-image-LICENSE.txt`. Native candidate scoring, deterministic worker partitioning and bounded table storage are implemented in this repository.

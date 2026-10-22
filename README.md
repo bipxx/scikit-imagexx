@@ -13,17 +13,18 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
-The reference is scikit-image **0.26.0**. There are currently **103 partially native
+The reference is scikit-image **0.26.0**. There are currently **104 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 350 remain pending native implementation and dedicated parity tests.
+export list; 349 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `filters.threshold_multiotsu` | uint8/float32/float64 images; supplied finite nonnegative histograms; 2–16 classes, up to 4096 bins for exhaustive search | Float32 moment and objective order with first-maximum ties; AVX2 candidate scoring and optional deterministic global workers; exact value-count shortcut; upstream read-only/contiguity errors; other dtypes, larger searches and exceptional histogram ranges use explicit fallback |
 | `filters.median` | N-D real arrays/memmaps and NumPy scalars, bool, all integer widths and float16/32/64 with runtime restrictions; dense/sparse/even footprints, supported border modes/grid aliases, output dtype/aliasing/strides | Exact numerical order statistics and zero signs, N-D double/source cast stages and modern 1-D integer working semantics; SIMD small/medium-stencil networks, direct separable two-tap maxima, sliding 1-D rank heaps, serial insertion-history replay for signed-zero ties, and optional global workers; float16 follows runtime 1-D/empty/identity support; rank behavior, undefined fast-1-D NaN/oversized legacy or signed-zero boundary cases, unsafe direct-1-D output dtype mismatches and exotic protocols use explicit fallback |
 | `filters.correlate_sparse` | N-D real arrays and memmaps; all integer widths, bool and float16/32/64; real sparse/dense kernels; reflect, mirror, nearest, constant, wrap and valid modes, plus edge/symmetric aliases | Exact ordered products and additions in promoted float32/64, inserted corner term, valid output shape, layout/metadata and memmap result class, floating warnings/errors; native row padding, tiled AVX2 operations and optional global workers; malformed/oversized valid stencils, complex/exotic types and callback policies use explicit fallback |
 | `filters.apply_hysteresis_threshold` | N-D real arrays, memmaps and NumPy scalars; all integer widths, bool and float16/32/64; scalar and broadcast threshold fields, native/endian/unaligned/strided storage | Exact boolean output, clipped lower bounds, NumPy-version promotion and runtime-matched mixed 64-bit comparisons; face connectivity, label-zero/background behavior, scalar/empty semantics and cast warnings; SIMD clipping/comparison, serial 2-D row-span flooding and optional parallel component merging; other image/threshold types and callback/underflow policies use explicit fallback |
