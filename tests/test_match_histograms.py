@@ -131,3 +131,9 @@ def test_floating_cast_policies(dtype,axis,policy,values):
     b=np.array(values,np.float64).reshape(2,2)
     with np.errstate(over=policy,under=policy,invalid=policy):
         compare(a,b,channel_axis=axis)
+
+@pytest.mark.parametrize('dtype',[np.int16,np.int64,np.float32,np.float64])
+def test_tiny_sparse_ranges(dtype):
+    a=np.array([-32768,0,32767],dtype)
+    b=np.array([-30000,30000,0],dtype)
+    compare(a,b)
