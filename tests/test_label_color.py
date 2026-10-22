@@ -169,6 +169,32 @@ def test_scalar_average_compatibility(value):
     else:np.testing.assert_array_equal(actual[1],expected[1])
 
 
+@pytest.mark.parametrize('labels,options',[
+    ([0,1,2],{}),
+    (np.array([0,1,2],dtype=np.float16),{}),
+    (np.array([-1,0,2],dtype=np.int16),{}),
+    (np.array([0,np.nan,2]),{}),
+    (np.array([0,1,2],dtype=np.uint8),{'bg_label':-1}),
+    (np.array([0,1,2],dtype=np.uint8),{'bg_label':np.int64(0)}),
+    (np.array([0,1,2],dtype=np.uint8),{'image':np.ones(3,dtype=np.uint16)}),
+    (np.array([0,1,2],dtype=np.uint8),{'image':np.array([0.,2.,1.])}),
+    (np.array([0,1,2],dtype=np.uint8),{'image':np.array([0.,np.inf,1.]),'kind':'avg'}),
+])
+def test_unsupported_domains_use_explicit_whole_call_fallback(labels,options):
+    expected,expected_notices=observed(reference,labels,**options)
+    with pytest.raises(NotImplementedError):xx.color.label2rgb(labels,**options)
+    xx.set_fallback_enabled(True)
+    actual,notices=observed(xx.color.label2rgb,labels,**options)
+    assert [n for n in notices if n[0] is xx.FallbackWarning]==[
+        (xx.FallbackWarning,'skimage.color.label2rgb executed by scikit-image fallback')]
+    assert [n for n in notices if n[0] is not xx.FallbackWarning]==expected_notices
+    assert actual[0]==expected[0]
+    if actual[0]=='error':assert actual[1:]==expected[1:]
+    else:
+        assert actual[1].dtype==expected[1].dtype
+        np.testing.assert_array_equal(actual[1],expected[1])
+
+
 @pytest.mark.parametrize('kind',['overlay','avg'])
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_underlay_dtype_metadata(kind,dtype):
@@ -198,6 +224,17 @@ def test_grayscale_average_reduction_buffer(dtype,buffer_size):
     previous=np.setbufsize(buffer_size)
     try:check(labels,image=image,kind='avg')
     finally:np.setbufsize(previous)
+
+
+@pytest.mark.parametrize('groups',[31,512,513])
+@pytest.mark.parametrize('dtype',[np.uint64,np.int64,np.float64])
+@pytest.mark.parametrize('kind',['overlay','avg'])
+def test_large_sparse_rank_groups(groups,dtype,kind):
+    rng=np.random.default_rng(411)
+    raw=rng.integers(0,groups,(129,131),dtype=np.uint64)
+    labels=np.where(raw==0,0,raw*10000000019+2**50).astype(dtype)
+    image=rng.random((*labels.shape,3))
+    check(labels,image=image,kind=kind)
 
 
 @pytest.mark.parametrize('kind',['','invalid','Overlay'])

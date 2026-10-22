@@ -85,6 +85,13 @@ int main() {
         check(!summary.has_background && summary.regions==std::min(count,std::size_t(3))+1);
         for(std::size_t i=0;i<count;++i)check(ranks[i]==std::min(count,std::size_t(3))-(i%3));
     }
+    for(std::size_t groups:{7,512,513,1000}) {
+        std::vector<std::uint64_t> input(4099),ranks(input.size());
+        for(std::size_t i=0;i<input.size();++i)input[i]=(i%groups)*UINT64_C(10000000019);
+        check(label_ranks(input.data(),input.size(),PixelType::uint64,false,0,true,ranks.data(),summary));
+        check(summary.has_background && summary.regions==groups);
+        for(std::size_t i=0;i<input.size();++i)check(ranks[i]==i%groups);
+    }
     {
         const std::uint64_t ranks[]={0,1,2};
         const double palette[]={0,0,0,1,0,0,0,0,1};double output[9];

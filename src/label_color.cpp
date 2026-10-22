@@ -118,9 +118,31 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
         });
         return true;
     }
-    auto unique=values;
+    // Sparse categorical labels may have a huge numeric span but few groups.
+    // A bounded open-addressed table avoids sorting N repeated values. Stop
+    // early for high-cardinality input, retaining the general sorted path.
+    std::array<std::uint64_t,1024> keys,positions{};
+    auto slot=[&](std::uint64_t key) {
+        auto hash=key;hash^=hash>>33;hash*=UINT64_C(0xff51afd7ed558ccd);
+        hash^=hash>>33;hash*=UINT64_C(0xc4ceb9fe1a85ec53);hash^=hash>>33;
+        auto index=std::size_t(hash)&1023;
+        while(positions[index] && keys[index]!=key)index=(index+1)&1023;
+        return index;
+    };
+    std::vector<std::uint64_t> unique;
+    bool hashed=count>=4096;
+    if(hashed) {
+        for(auto value:values) {
+            const auto index=slot(value);
+            if(positions[index])continue;
+            if(unique.size()==512) {hashed=false;break;}
+            keys[index]=value;positions[index]=1;unique.push_back(value);
+        }
+    }
+    if(!hashed)unique=values;
     std::sort(unique.begin(),unique.end());
-    unique.erase(std::unique(unique.begin(),unique.end()),unique.end());
+    if(!hashed)unique.erase(std::unique(unique.begin(),unique.end()),unique.end());
+    else for(std::size_t i=0;i<unique.size();++i)positions[slot(unique[i])]=i+1;
     const auto bg=std::lower_bound(unique.begin(),unique.end(),bg_key);
     const bool present=can_match && bg!=unique.end() && *bg==bg_key;
     const auto bg_rank=std::size_t(bg-unique.begin());
@@ -128,7 +150,8 @@ template<class T,bool Boolean=false> bool map(const void* source,std::size_t cou
     summary={unique.size()+(present ? 0 : 1),background,present};
     detail::partition(count,workers,[&](std::size_t begin,std::size_t end,std::size_t) {
         for(auto i=begin;i<end;++i) {
-            const auto position=std::size_t(std::lower_bound(unique.begin(),unique.end(),values[i])-unique.begin());
+            const auto position=hashed ? std::size_t(positions[slot(values[i])]-1)
+                : std::size_t(std::lower_bound(unique.begin(),unique.end(),values[i])-unique.begin());
             const auto rank=present && position==bg_rank ? 0 : position+(!present || position<bg_rank ? 1 : 0);
             output[i]=std::uint64_t(rank)&mask;
         }
