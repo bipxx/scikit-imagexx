@@ -6,6 +6,89 @@ from . import _core
 from ._whitepoints import ILLUMINANTS as _ILLUMINANTS
 from ._stain_matrices import MATRICES as _STAIN_MATRICES
 from ._compat import retain_dtype_metadata, fallback, module_attribute, native_image
+from . import _rgb_colors as _LABEL_COLORS
+
+_LABEL_COLOR_DICT={k:v for k,v in vars(_LABEL_COLORS).items() if isinstance(v,tuple)}
+_LABEL_DEFAULT_COLORS=('red','blue','yellow','magenta','green','indigo','darkorange','cyan','pink','yellowgreen')
+_LABEL_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float32,np.float64}
+
+
+def _label_rgb_vector(value):
+    if type(value) is str:value=_LABEL_COLOR_DICT[value]
+    if type(value) not in (list,tuple,np.ndarray):return None
+    if type(value) is np.ndarray:
+        if value.ndim!=1 or value.dtype.kind not in 'biuf' or value.dtype.itemsize>8:return None
+    elif any(type(x) not in (int,float,bool,np.float16,np.float32,np.float64,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64) for x in value):return None
+    result=np.array(value[:3])
+    if result.shape!=(3,) or result.dtype.kind not in 'biuf' or result.dtype.itemsize>8:return None
+    if not np.isfinite(result).all():return None
+    return result
+
+
+def label2rgb(label,image=None,colors=None,alpha=0.3,bg_label=0,bg_color=(0,0,0),
+              image_alpha=1,kind='overlay',*,saturation=0,channel_axis=-1):
+    def delegated():
+        return fallback('color','label2rgb',label,image,colors,alpha,bg_label,bg_color,image_alpha,kind,
+                        saturation=saturation,channel_axis=channel_axis)
+    if (type(label) is not np.ndarray or label.dtype.type not in _LABEL_TYPES
+            or type(bg_label) is not int or not 0<=bg_label<=2**64-1
+            or type(channel_axis) is not int or type(kind) is not str):return delegated()
+    if image is not None and (type(image) is not np.ndarray or image.dtype.type not in (np.uint8,np.float32,np.float64)
+                               or not image.dtype.isnative):return delegated()
+    if np.geterr()['under']!='ignore':return delegated()
+    overlay=kind=='overlay'
+    if kind not in ('overlay','avg'):
+        if image is not None:np.moveaxis(image,channel_axis,-1)
+        raise ValueError("`kind` must be either 'overlay' or 'avg'.")
+    vectors=None
+    if overlay:
+        if type(saturation) not in (int,float,bool) or not 0<=saturation<=1:return delegated()
+        choices=_LABEL_DEFAULT_COLORS if colors is None else colors
+        if type(choices) not in (list,tuple,np.ndarray):return delegated()
+        if type(choices) is np.ndarray and (choices.ndim!=2 or choices.dtype.kind not in 'biuf'):return delegated()
+        vectors=[_label_rgb_vector(c) for c in choices]
+        if not vectors or any(v is None for v in vectors):return delegated()
+    if image is not None:
+        moved=np.moveaxis(image,channel_axis,-1)
+        if overlay:
+            if moved.shape[:label.ndim]!=label.shape or moved.ndim>label.ndim+1:
+                raise ValueError('`image` and `label` must be the same shape')
+            if moved.ndim==label.ndim+1 and moved.shape[-1]!=3:
+                raise ValueError('`image` must be RGB (image.shape[-1] must be 3).')
+            if any(type(x) not in (int,float,bool) or not 0<=x<=1 for x in (alpha,image_alpha)):return delegated()
+        elif moved.shape not in (label.shape,label.shape+(3,)):return delegated()
+        if not moved.size and overlay:np.empty(0,dtype=moved.dtype).min()
+        if not _core.label_image_valid(moved,overlay):return delegated()
+    elif not overlay:return delegated()
+    # Upstream's 0D nonzero/indexing path differs between NumPy1 and NumPy2;
+    # retain that scalar/error contract before grouping any pixels.
+    if not overlay and label.ndim==0:return delegated()
+    if not label.size and overlay:np.empty(0,dtype=label.dtype).min()
+    mapped=_core.label_ranks(label,bg_label,overlay)
+    if mapped is None:return delegated()
+    ranks,regions,background,present=mapped
+    if not overlay:
+        probe=np.zeros((1,3),dtype=moved.dtype)
+        if present:probe[...]=bg_color
+        result=_core.label_average(ranks,regions,moved,moved.ndim==label.ndim+1,probe,present)
+        return np.moveaxis(result,-1,channel_axis)
+    if image is not None and moved.ndim==label.ndim+1:
+        hsv=rgb2hsv(moved)
+        moved=hsv2rgb(_core.label_saturation(hsv,float(saturation)))
+    background_vector=_label_rgb_vector((0,0,0) if bg_color is None else bg_color)
+    if background_vector is None:return delegated()
+    needed=max(0,regions-1)
+    palette=np.stack([background_vector,*vectors[:min(needed,len(vectors))]])
+    effective_alpha=1 if image is None else alpha
+    palette=palette*effective_alpha
+    if palette.shape[0]==1:palette=np.concatenate((palette,palette),axis=0)
+    dtype=np.result_type(palette.dtype,np.float64 if image is None or moved.dtype==np.uint8 else moved.dtype)
+    if dtype not in (np.dtype('float32'),np.dtype('float64')):return delegated()
+    result=_core.label_overlay(ranks,None if image is None else moved,palette,
+        image is not None and moved.ndim==label.ndim+1,
+        1 if image is None else image_alpha,0 if image is None else 1-image_alpha,
+        0 if image is None else 1-alpha,bg_color is None and present,background,dtype)
+    return np.moveaxis(result,-1,channel_axis)
 
 __all__ = ['rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
            'rgb2ypbpr', 'ypbpr2rgb', 'rgb2ycbcr', 'ycbcr2rgb', 'rgb2ydbdr',

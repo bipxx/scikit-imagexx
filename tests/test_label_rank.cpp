@@ -77,13 +77,42 @@ int main() {
     }
     check(label_ranks(nullptr,0,PixelType::uint8,false,0,false,nullptr,summary));
     {
+        const std::uint64_t ranks[]={0,1,2};
+        const double palette[]={0,0,0,1,0,0,0,0,1};double output[9];
+        label_overlay(ranks,3,nullptr,PixelType::float64,false,palette,3,1,0,0,false,0,output,false);
+        check(std::equal(output,output+9,palette));
+        const double image[]={.2,.4,.6};
+        const std::uint64_t shifted[]={1,2,0};
+        label_overlay(shifted,3,image,PixelType::float64,false,palette,3,1,0,.7,true,2,output,false);
+        check(output[3]==.4 && output[4]==.4 && output[5]==.4);
+    }
+    {
+        const std::uint64_t ranks[]={1,1};const std::uint8_t image[]={0,2,4,1,3,5},bg[]={0,0,0};
+        std::uint8_t result[6];
+        label_average(ranks,2,2,image,PixelType::uint8,true,bg,false,result);
+        const std::uint8_t expected[]={0,2,4,0,2,4};check(std::equal(result,result+6,expected));
+    }
+    {
+        const float image[]={1e6f,-1e6f,.01f,.01f,.01f,.01f,.01f,.01f},bg[]={0,0,0};
+        const std::uint64_t ranks[]={1,1,1,1,1,1,1,1};float result[24];
+        label_average(ranks,8,2,image,PixelType::float32,false,bg,false,result);
+        for(float value:result) {std::uint32_t bits;std::memcpy(&bits,&value,4);check(bits==1005961871u);}
+        float rgb[24];for(std::size_t i=0;i<8;++i)for(int c=0;c<3;++c)rgb[3*i+c]=image[i];
+        label_average(ranks,8,2,rgb,PixelType::float32,true,bg,false,result);
+        for(float value:result) {std::uint32_t bits;std::memcpy(&bits,&value,4);check(bits==1005961870u);}
+    }
+    {
         const auto count=std::size_t(513)*517;
         std::vector<std::uint8_t> input(count);std::vector<std::uint64_t> ranks(count);
+        std::vector<std::uint8_t> image(3*count),result(3*count);const std::uint8_t bg[]={100,101,102};
         for(std::size_t i=0;i<count;++i)input[i]=std::uint8_t(i%7);
+        for(std::size_t i=0;i<count;++i)for(int c=0;c<3;++c)image[3*i+c]=std::uint8_t(input[i]+10*c);
         for(int workers:{1,4}) {
             set_num_threads(workers);
             check(label_ranks(input.data(),count,PixelType::uint8,false,0,true,ranks.data(),summary));
             for(std::size_t i=0;i<count;++i)check(ranks[i]==input[i]);
+            label_average(ranks.data(),count,summary.regions,image.data(),PixelType::uint8,true,bg,true,result.data());
+            for(std::size_t i=0;i<count;++i)for(int c=0;c<3;++c)check(result[3*i+c]==(input[i]==0 ? bg[c] : image[3*i+c]));
         }
         set_num_threads(1);
     }

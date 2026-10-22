@@ -1,6 +1,7 @@
 #include "skimagexx/integrate.hpp"
 #include "skimagexx/downscale.hpp"
 #include "skimagexx/contrast.hpp"
+#include "skimagexx/label_color.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -208,6 +209,54 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 
 PYBIND11_MODULE(_core, m) {
     if(_import_array()<0)throw py::error_already_set();
+    m.def("label_ranks",[](py::array labels,std::uint64_t background,bool overlay)->py::object {
+        auto input=py::array::ensure(labels,py::array::c_style);
+        const auto native=py::dtype::from_args(input.dtype().attr("newbyteorder")("="));
+        const auto type=pixel_type(native);
+        const bool swap=!input.dtype().attr("isnative").cast<bool>();
+        std::vector<py::ssize_t> shape(input.shape(),input.shape()+input.ndim());
+        py::array_t<std::uint64_t> ranks(shape);skimagexx::LabelSummary info;bool ok;
+        {py::gil_scoped_release release;ok=skimagexx::label_ranks(input.data(),std::size_t(input.size()),type,swap,background,overlay,ranks.mutable_data(),info);}
+        if(!ok)return py::none();
+        return py::make_tuple(ranks,info.regions,info.background,info.has_background);
+    });
+    m.def("label_image_valid",[](py::array image,bool overlay) {
+        auto input=py::array::ensure(image,py::array::c_style);const auto type=pixel_type(input.dtype());
+        py::gil_scoped_release release;return skimagexx::label_image_valid(input.data(),std::size_t(input.size()),type,overlay);
+    });
+    m.def("label_saturation",[](py::array hsv,double value) {
+        auto input=py::array::ensure(hsv,py::array::c_style);const auto type=pixel_type(input.dtype());
+        if(input.size()%3)throw py::value_error("three HSV channels required");
+        {py::gil_scoped_release release;skimagexx::label_saturation(input.mutable_data(),std::size_t(input.size()/3),type,value);}
+        return input;
+    });
+    m.def("label_overlay",[](py::array_t<std::uint64_t,py::array::c_style> ranks,py::object image,
+        py::array_t<double,py::array::c_style|py::array::forcecast> palette,bool rgb,double alpha,double image_bg,double beta,
+        bool remove,std::uint64_t background,py::dtype dtype) {
+        if(reinterpret_cast<std::uintptr_t>(ranks.data())%alignof(std::uint64_t))ranks=decltype(ranks)::ensure(ranks.attr("copy")());
+        if(reinterpret_cast<std::uintptr_t>(palette.data())%alignof(double))palette=decltype(palette)::ensure(palette.attr("copy")());
+        if(palette.ndim()!=2 || palette.shape(1)!=3 || palette.shape(0)<2)throw py::value_error("RGB palette required");
+        py::array input;const void* data=nullptr;auto type=skimagexx::PixelType::float64;
+        if(!image.is_none()) {
+            input=py::array::ensure(image,py::array::c_style);type=pixel_type(input.dtype());data=input.data();
+            if(input.size()!=ranks.size()*(rgb ? 3 : 1))throw py::value_error("matching underlay storage required");
+        }
+        std::vector<py::ssize_t> shape(ranks.shape(),ranks.shape()+ranks.ndim());shape.push_back(3);
+        py::array output(dtype,shape);const bool single=pixel_type(dtype)==skimagexx::PixelType::float32;
+        {py::gil_scoped_release release;skimagexx::label_overlay(ranks.data(),std::size_t(ranks.size()),data,type,rgb,palette.data(),std::size_t(palette.shape(0)),alpha,image_bg,beta,remove,background,output.mutable_data(),single);}
+        return output;
+    });
+    m.def("label_average",[](py::array_t<std::uint64_t,py::array::c_style> ranks,std::size_t regions,py::array image,
+        bool rgb,py::array background,bool has_background) {
+        if(reinterpret_cast<std::uintptr_t>(ranks.data())%alignof(std::uint64_t))ranks=decltype(ranks)::ensure(ranks.attr("copy")());
+        auto input=py::array::ensure(image,py::array::c_style),bg=py::array::ensure(background,py::array::c_style);
+        if(input.size()!=ranks.size()*(rgb ? 3 : 1) || bg.size()!=3 || pixel_type(bg.dtype())!=pixel_type(input.dtype()))throw py::value_error("matching average storage required");
+        const auto type=pixel_type(input.dtype());
+        std::vector<py::ssize_t> shape(ranks.shape(),ranks.shape()+ranks.ndim());shape.push_back(3);
+        py::array output(input.dtype(),shape);
+        {py::gil_scoped_release release;skimagexx::label_average(ranks.data(),std::size_t(ranks.size()),regions,input.data(),type,rgb,bg.data(),has_background,output.mutable_data());}
+        return output;
+    });
     m.def("contrast",[](py::array image,py::object ranks) -> py::object {
         skimagexx::ContrastView view;view.data=image.data();
         const auto descriptor=image.dtype();view.half=descriptor.kind()=='f' && descriptor.itemsize()==2;

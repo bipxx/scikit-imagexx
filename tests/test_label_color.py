@@ -149,12 +149,38 @@ def test_average_ignores_overlay_controls():
     check(labels,image=image,kind='avg',colors=object(),alpha=object(),image_alpha=object(),saturation=object())
 
 
+@pytest.mark.parametrize('value',[0,1])
+def test_scalar_average_compatibility(value):
+    labels=np.array(value,dtype=np.uint8);image=np.array([.2,.4,.6])
+    expected,expected_notices=observed(reference,labels,image=image,kind='avg')
+    xx.set_fallback_enabled(True)
+    actual,notices=observed(xx.color.label2rgb,labels,image=image,kind='avg')
+    assert [n for n in notices if n[0] is xx.FallbackWarning]==[
+        (xx.FallbackWarning,'skimage.color.label2rgb executed by scikit-image fallback')]
+    assert [n for n in notices if n[0] is not xx.FallbackWarning]==expected_notices
+    assert actual[0]==expected[0]
+    if actual[0]=='error':assert actual[1:]==expected[1:]
+    else:np.testing.assert_array_equal(actual[1],expected[1])
+
+
 @pytest.mark.parametrize('kind',['overlay','avg'])
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
 def test_underlay_dtype_metadata(kind,dtype):
     labels=np.array([[0,1,2],[1,2,3]],dtype=np.uint8)
     image=(np.arange(18,dtype=dtype).reshape(2,3,3)/18).view(np.dtype(dtype,metadata={'unit':'intensity'}))
     check(labels,image=image,kind=kind)
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+@pytest.mark.parametrize('rgb',[False,True])
+@pytest.mark.parametrize('seed',[19,311])
+def test_large_grouped_average(dtype,rgb,seed):
+    rng=np.random.default_rng(seed)
+    labels=rng.integers(0,19,(513,517),dtype=np.uint8)
+    image=rng.integers(0,256,(*labels.shape,3) if rgb else labels.shape,dtype=np.uint8)
+    if dtype!=np.uint8:image=(image/255).astype(dtype)
+    image.flags.writeable=False
+    check(labels,image=image,kind='avg')
 
 
 @pytest.mark.parametrize('kind',['','invalid','Overlay'])
