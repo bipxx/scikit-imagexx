@@ -1094,6 +1094,17 @@ int main() {
         const float special[]={0.,-0.};ranks[0]=42;
         require(!rank_order_into(special,2,PixelType::float32,ranks,PixelType::uint8,representatives));
         require(ranks[0]==42);
+        std::vector<std::int16_t> uniform(258,-7);std::vector<std::uint16_t> labels(258,42);
+        require(rank_order_into(uniform.data(),uniform.size(),PixelType::int16,labels.data(),PixelType::uint16,representatives));
+        require(representatives.size()==1 && representatives[0]==0);
+        require(std::all_of(labels.begin(),labels.end(),[](auto value){return value==0;}));
+        uniform.back()=6;
+        require(rank_order_into(uniform.data(),uniform.size(),PixelType::int16,labels.data(),PixelType::uint16,representatives));
+        require(labels.back()==1 && labels.front()==0 && representatives.size()==2);
+        bool too_narrow=false;
+        try{rank_order_into(uniform.data(),257,PixelType::int16,ranks,PixelType::uint8,representatives);}
+        catch(const std::invalid_argument&){too_narrow=true;}
+        require(too_narrow);
     }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
