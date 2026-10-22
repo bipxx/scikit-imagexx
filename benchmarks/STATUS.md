@@ -1,9 +1,13 @@
 # Last completed whole-library performance checkpoint
 
-The [sparse-correlation experiments](sparse-initial.md) preserve two initial
-sources, 360 measured rows, wider-test corrections and slower 1-D controls.
-The port remains on its feature branch pending revised exact-source validation
-and paired measurements; it does not yet increase main native coverage.
+The [retained sparse-correlation port](sparse.md) adds exact ordered products,
+native row padding and optional global workers. One-worker geometric means are
+1.938x over scikit-image on Linux and 2.258x on Windows; every one-worker case in
+this corpus beats upstream. Against the exact initial native package, means
+improve 1.105x/1.053x, with slower reflect/strided controls retained explicitly.
+Initial experiments, corrected dtype/warning behavior, exact packages and all
+raw samples are preserved. Scoped SIMD/scalar, minimum-runtime and native
+sanitizer checks pass; full follow-up CI remains in progress.
 
 The [retained row-span helper](hysteresis-spans.md) improves the paired one-worker
 corpus 1.150x on Linux and 1.136x on Windows against the exact initial package.
