@@ -6,8 +6,11 @@ one-worker and four-worker results, including regressions. The subsequent
 CIEDE2000 failures recorded at that checkpoint and retains paired measurements
 against the exact previous package. The first correction passes all gates in
 CI run 39763182640. A later AVX-512/NumPy 1.24 runner exposed two length-128
-antipodal failures, currently under investigation; the prior green run does not
-settle that additional portability case. Both paired performance jobs pass.
+antipodal failures. Two diagnostic runners prove that upstream itself returns
+multiple arrays for identical inputs as temporary allocation changes; the
+antipodal gate now requires one actually observed whole upstream array with
+unchanged numerical budgets. Its new cross-platform gates are running. Both
+paired performance jobs pass.
 The whole-library reports below remain historical.
 
 These 21 reports were measured at `984141f`, before the conversion layout optimization, legacy color-distance corrections and histogram-matching port/tuning. The [conversion experiment](conversion-packet-tuning.md), [scalar-distance report](distance-scalar.md), [CIEDE2000 report](ciede2000.md), [histogram-matching port](match-histograms.md) and [rank-storage tuning](match-memory.md) record their separate source-specific measurements; the whole-library source set remains historical until the next full refresh.

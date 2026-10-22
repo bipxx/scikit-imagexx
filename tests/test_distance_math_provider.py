@@ -19,9 +19,11 @@ def _assert_runtime_reference(actual,a,b,tol):
     instability must itself be demonstrated with these unchanged inputs.
     """
     from skimage.color import deltaE_ciede2000
+    assert actual.dtype==a.dtype and actual.shape==a.shape[:-1]
     expected=deltaE_ciede2000(a,b)
     try:np.testing.assert_allclose(actual,expected,rtol=tol[0],atol=tol[1])
     except AssertionError as initial:
+        original_a=a.tobytes();original_b=b.tobytes()
         unstable=False;matched=False
         for attempt in range(64):
             # Change allocator occupancy without changing image values,
@@ -30,8 +32,33 @@ def _assert_runtime_reference(actual,a,b,tol):
             candidate=deltaE_ciede2000(a,b)
             unstable|=not np.allclose(candidate,expected,rtol=tol[0],atol=tol[1],equal_nan=True)
             matched|=np.allclose(actual,candidate,rtol=tol[0],atol=tol[1],equal_nan=True)
-            if unstable and matched:return
+            if unstable and matched:
+                assert a.tobytes()==original_a and b.tobytes()==original_b
+                return
         raise initial
+
+
+def test_stable_reference_mismatch_is_rejected():
+    from skimage.color import deltaE_ciede2000
+    a=np.array([[50.,20.,5.],[60.,10.,4.]])
+    b=a+1
+    with pytest.raises(AssertionError):_assert_runtime_reference(deltaE_ciede2000(a,b)+1,a,b,(2e-13,2e-13))
+
+
+def test_reference_choices_cannot_be_mixed_elementwise(monkeypatch):
+    import skimage.color
+    outputs=iter([np.array([0.,1.]),np.array([1.,0.])]*33)
+    monkeypatch.setattr(skimage.color,'deltaE_ciede2000',lambda a,b:next(outputs))
+    a=np.zeros((2,3))
+    with pytest.raises(AssertionError):_assert_runtime_reference(np.zeros(2),a,a,(2e-13,2e-13))
+
+
+def test_actual_upstream_array_choice_is_accepted(monkeypatch):
+    import skimage.color
+    outputs=iter([np.array([0.,1.]),np.array([1.,0.])])
+    monkeypatch.setattr(skimage.color,'deltaE_ciede2000',lambda a,b:next(outputs))
+    a=np.zeros((2,3))
+    _assert_runtime_reference(np.array([1.,0.]),a,a,(2e-13,2e-13))
 
 @pytest.mark.parametrize('workers',[1,4])
 @pytest.mark.parametrize('repeat',[1,19,1025])
