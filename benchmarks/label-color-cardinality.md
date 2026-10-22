@@ -4,18 +4,18 @@ Original scikit-image 0.26.0. Reference pools use one thread; native worker limi
 
 | Input | Workload | Workers | Original ms | Native ms | Original/native | Preserved/native |
 |---|---|---:|---:|---:|---:|---:|
-| uint64 | sparse-groups-31 | 1 | 0.5401 | 0.2027 | 2.6652x | 3.9574x |
-| uint64 | sparse-groups-512 | 1 | 1.0309 | 0.4063 | 2.5370x | 3.5559x |
-| uint64 | sparse-groups-513 | 1 | 1.0320 | 1.4701 | 0.7020x | 0.9528x |
-| uint64 | sparse-groups-4096 | 1 | 2.4794 | 1.9415 | 1.2771x | 0.9776x |
-| uint64 | sparse-groups-17157 | 1 | 4.8547 | 2.0572 | 2.3598x | 1.0211x |
-| int64 | sparse-groups-31 | 1 | 0.5716 | 0.2374 | 2.4079x | 3.5220x |
-| int64 | sparse-groups-512 | 1 | 0.9865 | 0.4429 | 2.2271x | 3.3448x |
-| int64 | sparse-groups-513 | 1 | 1.1568 | 1.5240 | 0.7591x | 0.9984x |
-| int64 | sparse-groups-4096 | 1 | 2.2509 | 1.9111 | 1.1778x | 1.0594x |
-| int64 | sparse-groups-17157 | 1 | 6.3831 | 2.1525 | 2.9654x | 1.1174x |
-| float64 | sparse-groups-31 | 1 | 0.6281 | 0.2599 | 2.4163x | 3.4617x |
-| float64 | sparse-groups-512 | 1 | 2.0749 | 0.5795 | 3.5807x | 3.2777x |
-| float64 | sparse-groups-513 | 1 | 1.3773 | 1.5410 | 0.8937x | 1.0677x |
-| float64 | sparse-groups-4096 | 1 | 2.9995 | 2.2091 | 1.3578x | 0.8916x |
-| float64 | sparse-groups-17157 | 1 | 4.4152 | 2.1101 | 2.0925x | 1.0019x |
+| uint64 | sparse-groups-31 | 1 | 0.5086 | 0.2107 | 2.4139x | 0.9717x |
+| uint64 | sparse-groups-512 | 1 | 0.9697 | 0.4022 | 2.4109x | 0.9732x |
+| uint64 | sparse-groups-513 | 1 | 0.9476 | 0.2421 | 3.9138x | 5.8296x |
+| uint64 | sparse-groups-4096 | 1 | 2.3205 | 0.6308 | 3.6787x | 2.9718x |
+| uint64 | sparse-groups-17157 | 1 | 4.3541 | 2.1835 | 1.9941x | 0.9659x |
+| int64 | sparse-groups-31 | 1 | 0.5438 | 0.2122 | 2.5621x | 0.9577x |
+| int64 | sparse-groups-512 | 1 | 1.0092 | 0.4439 | 2.2735x | 0.8925x |
+| int64 | sparse-groups-513 | 1 | 1.0778 | 0.2644 | 4.0769x | 5.7719x |
+| int64 | sparse-groups-4096 | 1 | 2.4338 | 0.6984 | 3.4847x | 2.8428x |
+| int64 | sparse-groups-17157 | 1 | 4.5954 | 2.3240 | 1.9774x | 0.9543x |
+| float64 | sparse-groups-31 | 1 | 0.5820 | 0.2376 | 2.4491x | 0.9879x |
+| float64 | sparse-groups-512 | 1 | 1.0763 | 0.4183 | 2.5728x | 1.0948x |
+| float64 | sparse-groups-513 | 1 | 1.0019 | 0.2923 | 3.4274x | 5.2582x |
+| float64 | sparse-groups-4096 | 1 | 2.0821 | 0.5765 | 3.6118x | 3.1862x |
+| float64 | sparse-groups-17157 | 1 | 4.1005 | 2.1028 | 1.9500x | 0.9607x |
