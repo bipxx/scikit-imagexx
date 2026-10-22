@@ -48,6 +48,7 @@ def is_low_contrast(image,fraction_threshold=0.05,lower_percentile=1,
     quantiles=np.true_divide([lower_percentile,upper_percentile],100)
     if not all(0<=value<=1 for value in quantiles):
         raise ValueError('Percentiles must be in the range [0, 100]')
+    if quantiles.dtype.itemsize>8:return upstream()
     if not image.size:
         np.percentile(image,[lower_percentile,upper_percentile])
     # Low-precision percentile parameters may overflow their virtual ranks.

@@ -307,3 +307,28 @@ def test_parallel_copy_has_exact_decision_boundaries(dtype,percentiles):
     for threshold in (ratio,np.nextafter(ratio,-np.inf),np.nextafter(ratio,np.inf)):
         check(image,lower_percentile=percentiles[0],upper_percentile=percentiles[1],
               fraction_threshold=threshold)
+
+
+def test_extended_percentile_precision_is_explicit_fallback():
+    if np.dtype(np.longdouble).itemsize<=8:
+        pytest.skip('this runtime has no extended long-double precision')
+    image=np.linspace(0,1,131)
+    low=np.longdouble('13.3333333333333333333')
+    high=np.longdouble('86.6666666666666666667')
+    values=np.percentile(image,[low,high])
+    threshold=(values[1]-values[0])/2
+    with pytest.raises(NotImplementedError,match='outside native coverage'):
+        xx.exposure.is_low_contrast(image,threshold,low,high)
+    xx.set_fallback_enabled(True)
+    expected=original.is_low_contrast(image,threshold,low,high)
+    with pytest.warns(xx.FallbackWarning):
+        actual=xx.exposure.is_low_contrast(image,threshold,low,high)
+    assert type(actual) is type(expected) and actual==expected
+
+
+@pytest.mark.parametrize('value',[False,True])
+def test_large_boolean_prefix_requires_whole_image_proof(value):
+    image=np.full(262145,value,dtype=bool)
+    check(image)
+    image[-1]=not value
+    check(image)

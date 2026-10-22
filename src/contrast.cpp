@@ -108,11 +108,11 @@ template<class T> double difference(T lower,T upper) {
     } else return double(T(upper-lower));
 }
 
-template<class T> void select(std::vector<T>& data,const std::vector<std::size_t>& ranks,
+template<class T> void select(T* data,const std::vector<std::size_t>& ranks,
                              std::size_t first,std::size_t last,std::size_t begin,std::size_t end) {
     if(first==last)return;
     const auto middle=first+(last-first)/2,rank=ranks[middle];
-    auto start=data.begin()+std::ptrdiff_t(begin),stop=data.begin()+std::ptrdiff_t(end),pivot=data.begin()+std::ptrdiff_t(rank);
+    auto start=data+begin,stop=data+end,pivot=data+rank;
     std::nth_element(start,pivot,stop);
     select(data,ranks,first,middle,begin,rank);
     select(data,ranks,middle+1,last,rank+1,end);
@@ -120,7 +120,18 @@ template<class T> void select(std::vector<T>& data,const std::vector<std::size_t
 
 template<class Input,class Value=Input,bool Half=false> bool run(const ContrastView& view,const Plan& p,
     const std::array<Query,2>& wanted,std::array<double,2>& output) {
-    std::vector<Value> values(p.count);
+    const bool vectorized=has_avx2();
+    const bool endpoint_queries=std::all_of(wanted.begin(),wanted.end(),[&](const Query& q) {
+        return q.weight==0 && (q.lower==0 || q.lower==p.count-1);
+    });
+    const bool needs_scratch=sizeof(Value)>=4 && vectorized && !endpoint_queries;
+    const auto buffers=std::size_t(needs_scratch ? 2 : 1);
+    if(p.count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(Value)/buffers)
+        throw std::overflow_error("contrast selection storage overflow");
+    // Preparation overwrites every value. One allocation holds the working
+    // values and (when needed) the disjoint SIMD partition workspace.
+    std::unique_ptr<Value[]> storage(new Value[p.count*buffers]);
+    auto* values=storage.get();
     const auto workers=detail::active_workers(p.count);std::vector<unsigned char> valid(std::size_t(workers),1);
     detail::partition(p.count,workers,[&](auto begin,auto end,auto worker) {
         chunks(p,sizeof(Input),begin,end,[&](const unsigned char* source,std::size_t count,std::ptrdiff_t stride,std::size_t offset) {
@@ -128,18 +139,18 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
             if(stride==std::ptrdiff_t(sizeof(Input))) {
                 if constexpr(Half) {
 #ifdef SKIMAGEXX_AVX2
-                    if(has_avx2() && !view.swap)done=simd::edge_half(reinterpret_cast<const std::uint16_t*>(source),values.data()+offset,count);
+                    if(vectorized && !view.swap)done=simd::edge_half(reinterpret_cast<const std::uint16_t*>(source),values+offset,count);
 #endif
                 } else if constexpr(sizeof(Input)==2 && sizeof(Value)==4) {
 #ifdef SKIMAGEXX_AVX2
-                    if(has_avx2())done=simd::contrast_widen16(source,values.data()+offset,count,std::is_signed_v<Input>,view.swap);
+                    if(vectorized)done=simd::contrast_widen16(source,values+offset,count,std::is_signed_v<Input>,view.swap);
 #endif
                 } else if(view.swap && sizeof(Input)>1) {
 #ifdef SKIMAGEXX_AVX2
-                    if(has_avx2())done=simd::edge_swap(source,reinterpret_cast<unsigned char*>(values.data()+offset),count,sizeof(Input));
+                    if(vectorized)done=simd::edge_swap(source,reinterpret_cast<unsigned char*>(values+offset),count,sizeof(Input));
 #endif
                 } else {
-                    std::memcpy(values.data()+offset,source,count*sizeof(Input));done=count;
+                    std::memcpy(values+offset,source,count*sizeof(Input));done=count;
                 }
             }
             for(auto i=done;i<count;++i) {
@@ -150,8 +161,8 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
         });
         if constexpr(std::is_floating_point_v<Value>) {
 #ifdef SKIMAGEXX_AVX2
-            if(has_avx2()) {
-                if(!simd::contrast_finite(values.data()+begin,end-begin,sizeof(Value)==4))valid[worker]=0;
+            if(vectorized) {
+                if(!simd::contrast_finite(values+begin,end-begin,sizeof(Value)==4))valid[worker]=0;
                 return;
             }
 #endif
@@ -161,7 +172,7 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
     if(std::find(valid.begin(),valid.end(),0)!=valid.end())return false;
     std::array<std::array<Value,2>,2> picked;bool selected=false;
     if constexpr(std::is_integral_v<Value> && sizeof(Value)==1) {
-        const auto counts=histogram_u8(reinterpret_cast<const std::uint8_t*>(values.data()),values.size(),1);
+        const auto counts=histogram_u8(reinterpret_cast<const std::uint8_t*>(values),p.count,1);
         auto value_at=[&](std::size_t rank) {
             std::uint64_t cumulative=0;
             for(std::size_t i=0;i<256;++i) {
@@ -174,15 +185,13 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
         for(std::size_t j=0;j<2;++j)picked[j]={value_at(wanted[j].lower),value_at(wanted[j].upper)};
         selected=true;
     }
-    if(!selected && std::all_of(wanted.begin(),wanted.end(),[&](const Query& q) {
-        return q.weight==0 && (q.lower==0 || q.lower==values.size()-1);
-    })) {
+    if(!selected && endpoint_queries) {
         Value lower,upper;
         if constexpr(std::is_floating_point_v<Value>) {
-            const auto bounds=intensity_bounds(values.data(),values.size(),1);
+            const auto bounds=intensity_bounds(values,p.count,1);
             lower=Value(bounds.first);upper=Value(bounds.second);
         } else {
-            const auto bounds=std::minmax_element(values.begin(),values.end());lower=*bounds.first;upper=*bounds.second;
+            const auto bounds=std::minmax_element(values,values+p.count);lower=*bounds.first;upper=*bounds.second;
         }
         // Endpoint neighbors are safe when the complete floating range is
         // safe. Otherwise preserve upstream arithmetic through explicit fallback.
@@ -200,18 +209,17 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
         std::sort(ranks.begin(),ranks.end());ranks.erase(std::unique(ranks.begin(),ranks.end()),ranks.end());
         bool vector_selected=false;
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2()) {
+        if(vectorized) {
             if constexpr(sizeof(Value)>=4) {
                 const auto type=std::is_same_v<Value,float> ? PixelType::float32
                     : std::is_same_v<Value,double> ? PixelType::float64
                     : sizeof(Value)==4 ? (std::is_unsigned_v<Value> ? PixelType::uint32 : PixelType::int32)
                     : (std::is_unsigned_v<Value> ? PixelType::uint64 : PixelType::int64);
-                std::unique_ptr<Value[]> scratch(new Value[values.size()]);
-                vector_selected=simd::contrast_select(values.data(),scratch.get(),values.size(),type,ranks.data(),ranks.size());
+                vector_selected=simd::contrast_select(values,values+p.count,p.count,type,ranks.data(),ranks.size());
             }
         }
 #endif
-        if(!vector_selected)select(values,ranks,0,ranks.size(),0,values.size());
+        if(!vector_selected)select(values,ranks,0,ranks.size(),0,p.count);
         for(std::size_t j=0;j<2;++j)picked[j]={values[wanted[j].lower],values[wanted[j].upper]};
     }
     for(std::size_t j=0;j<2;++j) {
@@ -230,12 +238,23 @@ template<class Input,class Value=Input,bool Half=false> bool run(const ContrastV
 
 bool contrast_boolean_constant(const ContrastView& view) {
     if(view.type!=PixelType::boolean || view.half)throw std::invalid_argument("boolean contrast storage required");
-    const auto p=plan(view);const auto workers=detail::active_workers(p.count);
+    const auto p=plan(view);const bool vectorized=has_avx2();(void)vectorized;
+    const auto prefix=std::min(p.count,std::size_t{64});unsigned char seen=0;
+#ifdef SKIMAGEXX_AVX2
+    if(p.dense && vectorized)seen=simd::contrast_truth(p.origin,prefix);
+    else
+#endif
+    {
+        for(std::size_t i=0;i<prefix && seen!=3;++i)seen|=*(p.dense ? p.origin+i : p.at(i)) ? 1 : 2;
+    }
+    if(seen==3)return false;
+    if(prefix==p.count)return true;
+    const auto workers=detail::active_workers(p.count);
     std::vector<unsigned char> flags(std::size_t(workers),0);
     detail::partition(p.count,workers,[&](auto begin,auto end,auto worker) {
         unsigned char found=0;
 #ifdef SKIMAGEXX_AVX2
-        if(p.dense && has_avx2()) {
+        if(p.dense && vectorized) {
             flags[worker]=simd::contrast_truth(p.origin+begin,end-begin);return;
         }
 #endif
