@@ -1,5 +1,12 @@
 # Last completed whole-library performance checkpoint
 
+The [streaming adaptive-mean checkpoint](adaptive-stream.md) removes first-axis
+packing and scattering. Paired one-worker mean workloads improve 25% on Linux
+and 24% on Windows against the exact initial native package. Current mean
+geometric means are 1.39x/1.11x original/current (Linux/Windows); every measured
+mean case improves against that native baseline. Tiny-call and layout costs
+remain, and the report retains all slower cases and Gaussian/median controls.
+
 The [adaptive-threshold initial checkpoint](adaptive.md) adds native Gaussian,
 mean and median `threshold_local` paths with 252 measured Windows/Linux cases.
 One-worker Gaussian geometric means are 2.61x/1.68x original/current and median
