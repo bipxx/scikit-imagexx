@@ -24,8 +24,6 @@ jobs:
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
-      - if: inputs.paired && inputs.benchmark == 'rank-order'
-        run: python -c "raise ValueError('No initial rank-order paired package is recorded yet')"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -47,7 +45,7 @@ jobs:
       - if: inputs.benchmark == 'rank-order'
         run: python -m pytest -q tests/test_rank_order.py tests/test_api.py
       - uses: actions/download-artifact@v4
-        if: inputs.paired && inputs.benchmark != 'adaptive'
+        if: inputs.paired && inputs.benchmark != 'adaptive' && inputs.benchmark != 'rank-order'
         with:
           name: li-performance-${{ matrix.os }}
           run-id: 39761807459
@@ -58,6 +56,13 @@ jobs:
         with:
           name: adaptive-performance-${{ matrix.os }}
           run-id: 39775834198
+          github-token: ${{ github.token }}
+          path: build/initial
+      - uses: actions/download-artifact@v4
+        if: inputs.paired && inputs.benchmark == 'rank-order'
+        with:
+          name: rank-order-performance-${{ matrix.os }}
+          run-id: 39780318912
           github-token: ${{ github.token }}
           path: build/initial
       - if: inputs.paired
@@ -74,8 +79,10 @@ jobs:
         run: python benchmarks/adaptive.py --size 512 --threads 1 4 --repeat 7 --output build/adaptive-performance.json
       - if: inputs.benchmark == 'adaptive' && inputs.paired
         run: python benchmarks/adaptive.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/adaptive-performance.json
-      - if: inputs.benchmark == 'rank-order'
+      - if: inputs.benchmark == 'rank-order' && !inputs.paired
         run: python benchmarks/rank_order.py --size 512 --threads 1 4 --repeat 7 --output build/rank-order-performance.json
+      - if: inputs.benchmark == 'rank-order' && inputs.paired
+        run: python benchmarks/rank_order.py --size 512 --threads 1 4 --repeat 7 --baseline-dir build/initial/exact-package --output build/rank-order-performance.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

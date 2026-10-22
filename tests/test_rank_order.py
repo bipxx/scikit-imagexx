@@ -95,3 +95,20 @@ def test_memmap(tmp_path):
     compare(a)
     labels,_=xx.filters.rank_order(a)
     assert labels.filename is None and labels._mmap is None and labels.mode is None and labels.offset is None
+
+@pytest.mark.parametrize('dtype',REAL)
+@pytest.mark.parametrize('size',[7,8,9,31,32,33,257,262145])
+@pytest.mark.parametrize('mismatch',[False,True])
+def test_uniform_and_late_mismatch(dtype,size,mismatch):
+    a=np.full(size,True if dtype==np.bool_ else 7,dtype=dtype)
+    if mismatch:a[-1]=0
+    compare(a)
+
+@pytest.mark.parametrize('values',[[2,2,2],[0,2,2],[1,255,0],[128,255,128],[0,0,128]])
+def test_noncanonical_boolean_storage_explicit_fallback(values):
+    a=np.array(values,np.uint8).view(bool)
+    with pytest.raises(NotImplementedError,match='outside native coverage'):xx.filters.rank_order(a)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning):actual=xx.filters.rank_order(a)
+    expected=reference(a)
+    for value,original in zip(actual,expected):assert value.tobytes()==original.tobytes()

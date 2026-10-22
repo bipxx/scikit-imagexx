@@ -5,6 +5,16 @@
 #include <type_traits>
 
 namespace skimagexx::simd {
+bool rank_uniform_bits(const void* input,std::size_t count,std::size_t bytes) {
+    const auto* source=static_cast<const unsigned char*>(input);
+    std::uint64_t first=0;std::memcpy(&first,source,bytes);
+    const auto pattern=bytes==1 ? _mm256_set1_epi8(char(first)) : bytes==2 ? _mm256_set1_epi16(short(first)) :
+        bytes==4 ? _mm256_set1_epi32(int(first)) : _mm256_set1_epi64x(static_cast<long long>(first));
+    const auto lanes=32/bytes;std::size_t i=0;
+    for(;i+lanes<=count;i+=lanes)if(_mm256_movemask_epi8(_mm256_cmpeq_epi8(pattern,_mm256_loadu_si256(reinterpret_cast<const __m256i*>(source+i*bytes))))!=-1)return false;
+    for(;i<count;++i)if(std::memcmp(source,source+i*bytes,bytes))return false;
+    return true;
+}
 namespace {
 template<class T> __m128i small_load(const unsigned char* input,std::size_t stride) {
     if(stride==1) {

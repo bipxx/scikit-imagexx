@@ -21,9 +21,20 @@ def main():
     parser.add_argument('--threads',type=int,nargs='+',default=[1,4])
     parser.add_argument('--repeat',type=int,default=7)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--baseline-dir',type=Path)
     args=parser.parse_args()
     if args.size<3 or min(args.threads+[args.repeat])<1:parser.error('size >=3 and positive workers/repeats required')
-    xx.set_fallback_enabled(False);rng=np.random.default_rng(3019);cases=[]
+    xx.set_fallback_enabled(False);baseline=None;snapshot=None
+    if args.baseline_dir:
+        sys.path.insert(0,str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        snapshot=json.loads((args.baseline_dir/'snapshot.json').read_bytes())
+        package=Path(baseline.__file__).parent
+        for group,pattern in [('binary_sha256','_core.*'),('python_sha256','*.py')]:
+            assert {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob(pattern)}==snapshot[group]
+        assert baseline.has_avx2()==xx.has_avx2()
+        baseline.set_fallback_enabled(False)
+    rng=np.random.default_rng(3019);cases=[]
     for dtype in (np.uint8,np.uint64,np.float16,np.float32,np.float64):
         image=rng.integers(0,256,(args.size,args.size+1),dtype=np.uint8).astype(dtype)
         if np.dtype(dtype).kind=='f':image=image/dtype(255)
@@ -41,12 +52,17 @@ def main():
         'reference_thread_pools':1,'repeat':args.repeat,'target_ms':15,'cooldown_ms':20,'seed':3019,'command':sys.argv,
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'binary_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob('_core.*')}},'results':[]}
+    if snapshot:report['metadata']['baseline']=snapshot
     for label,image in cases:
         expected=reference(image)
         for workers in args.threads:
             xx.set_num_threads(workers);check(xx.filters.rank_order(image),expected,image)
+            old=None
+            if baseline:
+                baseline.set_num_threads(workers);old=lambda:baseline.filters.rank_order(image)
+                check(old(),expected,image)
             row={'api':'filters.rank_order','dtype':image.dtype.name,'shape':list(image.shape),'layout':label,
-                 'threads':workers,'max_abs_error':0.,**measure(lambda:reference(image),lambda:xx.filters.rank_order(image),args.repeat,15)}
+                 'threads':workers,'max_abs_error':0.,**measure(lambda:reference(image),lambda:xx.filters.rank_order(image),args.repeat,15,old)}
             report['results'].append(row);args.output.parent.mkdir(parents=True,exist_ok=True)
             args.output.write_bytes((json.dumps(report,indent=2)+'\n').encode('utf-8'))
             print(f'{image.dtype.name} {label} t={workers}: {row["speedup"]:.3f}x',flush=True)

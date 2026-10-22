@@ -437,6 +437,16 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
     struct Entry {std::uint64_t key;std::size_t position;};
     if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(Entry))throw std::overflow_error("rank-order dimensions overflow");
     const auto read=reader(type);const auto workers=detail::active_workers(count);
+    if(type==PixelType::boolean && *static_cast<const unsigned char*>(input)>1)return false;
+    if(type==PixelType::float32 && std::isnan(*static_cast<const float*>(input)))return false;
+    if(type==PixelType::float64 && std::isnan(*static_cast<const double*>(input)))return false;
+    const auto bytes=pixel_size(type);bool uniform=true;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2())uniform=simd::rank_uniform_bits(input,count,bytes);
+    else
+#endif
+    for(std::size_t i=1;i<count;++i)if(std::memcmp(input,static_cast<const unsigned char*>(input)+i*bytes,bytes)){uniform=false;break;}
+    if(uniform){std::memset(output,0,count*pixel_size(label_type));representatives.assign(1,0);return true;}
     std::vector<Entry> entries(count);std::vector<unsigned> notices(std::size_t(workers),0);
     detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
         unsigned flags=0;auto i=begin;
@@ -458,10 +468,11 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
             if(std::isnan(value))flags|=1;
             if(value==0)flags|=std::signbit(value) ? 2u : 4u;
         }
+        if(type==PixelType::boolean)for(auto k=begin;k<end;++k)if(static_cast<const unsigned char*>(input)[k]>1)flags|=8;
         notices[worker]=flags;
     });
     unsigned flags=0;for(auto notice:notices)flags|=notice;
-    if((flags&1) || (flags&6)==6)return false;
+    if((flags&9) || (flags&6)==6)return false;
     radix_sort(entries,workers,[](const auto& entry){return entry.key;});
     std::vector<std::size_t> starts;representatives.clear();
     for(std::size_t i=0;i<count;++i)if(!i || entries[i].key!=entries[i-1].key){starts.push_back(i);representatives.push_back(entries[i].position);}
