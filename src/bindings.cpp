@@ -441,6 +441,11 @@ PYBIND11_MODULE(_core, m) {
         if(legacy94 && (operation!=0 || first.ndim()!=1 || at!=skimagexx::PixelType::float32 || bt!=at))
             throw py::value_error("legacy CIE94 requires two scalar float32 colors");
         auto angle_step=[](const py::array& a) {
+            // Upstream unrolls scalar colors with a zero-stride new axis.
+            // A one-dimensional channel view retains its signed stride even
+            // at length one; dropping that singleton can change atan2 dispatch.
+            if(a.ndim()==1)return std::ptrdiff_t(0);
+            if(a.ndim()==2)return std::ptrdiff_t(a.strides(0));
             std::ptrdiff_t step=a.itemsize();
             for(int axis=int(a.ndim())-2;axis>=0;--axis)if(a.shape(axis)>1) {step=a.strides(axis);break;}
             return step;

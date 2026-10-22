@@ -6,6 +6,7 @@ jobs:
     strategy:
       matrix:
         replica: [1, 2]
+        numpy: ['1.24.4', '2.5.4']
     runs-on: ubuntu-latest
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: '4'
@@ -16,7 +17,10 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
+      - if: matrix.numpy == '1.24.4'
+        run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
+      - if: matrix.numpy != '1.24.4'
+        run: python -m pip install "numpy==2.5.4" "scikit-image==0.26.0" "pytest>=8"
       - run: python -m pip install --no-deps build/wheels/*.whl
       - run: python tools/diagnose_distance_precision.py > build/precision.json
       - run: python tools/diagnose_distance_overlap.py > build/overlap.json
@@ -24,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: distance-overlap-${{ matrix.replica }}
+          name: distance-overlap-${{ matrix.numpy }}-${{ matrix.replica }}
           path: |
             build/precision.json
             build/overlap.json
