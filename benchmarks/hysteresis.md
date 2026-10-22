@@ -8,7 +8,7 @@ Native clipping and comparison use AVX2 where supported; connectivity uses seria
 
 Windows one-worker geometric mean across all 32 cases: **1.667x** upstream/native. [Raw data](hysteresis-initial-windows.json).
 Linux one-worker geometric mean across all 32 cases: **1.733x** upstream/native. [Raw data](hysteresis-initial-linux.json).
-The retained compatibility correction `cef6663` additionally matches legacy NumPy mixed integer comparisons and explicitly delegates ordinary Python scalar images. Its minimum-NumPy SIMD/scalar checks each pass 2,156 cases; modern Windows scoped SIMD/scalar checks each pass 6,300 cases. Native normal/dynamic/portable and ASan/UBSan normal/dynamic checks pass 2/2 each. Full CI and final-source timings remain pending; initial-source numbers below must not be attributed to the corrected fingerprint.
+The retained compatibility correction `cef6663` additionally matches legacy NumPy mixed integer comparisons and explicitly delegates ordinary Python scalar images. Its minimum-NumPy SIMD/scalar checks each pass 2,156 cases; modern Windows scoped SIMD/scalar checks each pass 6,300 cases. Native normal/dynamic/portable and ASan/UBSan normal/dynamic checks pass 2/2 each. Full CI remains pending. Final-source measurements are recorded in a separate section below; initial-source numbers must not be attributed to the corrected fingerprint.
 
 ## Bottlenecks
 
@@ -144,3 +144,138 @@ Random, strided, Fortran and threshold-field cases can trail upstream: graph tra
 | Windows | float64 | tiny | 4 | 0.05353 | 0.05349 | 1.001x |
 | Windows | float64 | nan-background | 1 | 6.93210 | 2.04840 | 3.384x |
 | Windows | float64 | nan-background | 4 | 6.87675 | 1.09783 | 6.264x |
+
+## Retained compatibility source measurements
+
+[Completed Linux/Windows run](https://github.com/bipxx/scikit-imagexx/actions/runs/39796003460) measures `cef6663`, product SHA256 `c86f0aa72ee750946dde1d48e0687ae645f4db739178e54ba8c39d6a879abfbd`. The same fixed corpus, reference, pool limits and seven-sample method apply. The exact wheels, package manifests and binary hashes are preserved in the run artifacts and checked against the local retained source fingerprint. One-worker geometric means are **1.728x Linux / 1.627x Windows**. These are separate runner measurements, not a paired comparison with the earlier source. Fortran, random and strided controls remain slower; all 128 rows and raw samples are retained.
+
+| OS | dtype | layout | workers | upstream ms | native ms | upstream/native |
+|---|---|---|---:|---:|---:|---:|
+| Linux | uint8 | random | 1 | 5.03544 | 6.30128 | 0.799x |
+| Linux | uint8 | random | 4 | 5.05953 | 3.38469 | 1.495x |
+| Linux | uint8 | fortran | 1 | 7.50423 | 9.66369 | 0.777x |
+| Linux | uint8 | fortran | 4 | 7.47932 | 5.97681 | 1.251x |
+| Linux | uint8 | strided | 1 | 2.68693 | 3.31795 | 0.810x |
+| Linux | uint8 | strided | 4 | 2.61560 | 3.30937 | 0.790x |
+| Linux | uint8 | all-weak | 1 | 4.07597 | 0.98410 | 4.142x |
+| Linux | uint8 | all-weak | 4 | 4.07269 | 0.76058 | 5.355x |
+| Linux | uint8 | no-seeds | 1 | 5.08307 | 2.02896 | 2.505x |
+| Linux | uint8 | no-seeds | 4 | 5.12134 | 1.10763 | 4.624x |
+| Linux | uint8 | equal | 1 | 7.06623 | 2.15968 | 3.272x |
+| Linux | uint8 | equal | 4 | 7.20135 | 1.16986 | 6.156x |
+| Linux | uint8 | threshold-fields | 1 | 4.84397 | 6.09666 | 0.795x |
+| Linux | uint8 | threshold-fields | 4 | 4.94324 | 3.35806 | 1.472x |
+| Linux | uint8 | snake | 1 | 3.70126 | 1.60835 | 2.301x |
+| Linux | uint8 | snake | 4 | 3.65930 | 1.44395 | 2.534x |
+| Linux | uint8 | checkerboard | 1 | 7.00244 | 1.18132 | 5.928x |
+| Linux | uint8 | checkerboard | 4 | 6.51503 | 1.36516 | 4.772x |
+| Linux | uint8 | tiny | 1 | 0.10972 | 0.09877 | 1.111x |
+| Linux | uint8 | tiny | 4 | 0.11035 | 0.09733 | 1.134x |
+| Linux | float32 | random | 1 | 4.94785 | 6.39108 | 0.774x |
+| Linux | float32 | random | 4 | 4.96471 | 3.46609 | 1.432x |
+| Linux | float32 | fortran | 1 | 6.02144 | 8.06073 | 0.747x |
+| Linux | float32 | fortran | 4 | 7.96539 | 7.31772 | 1.089x |
+| Linux | float32 | strided | 1 | 2.67283 | 3.39165 | 0.788x |
+| Linux | float32 | strided | 4 | 2.72310 | 3.45669 | 0.788x |
+| Linux | float32 | all-weak | 1 | 4.11890 | 1.17142 | 3.516x |
+| Linux | float32 | all-weak | 4 | 4.11520 | 0.81609 | 5.043x |
+| Linux | float32 | no-seeds | 1 | 5.01193 | 2.05265 | 2.442x |
+| Linux | float32 | no-seeds | 4 | 4.90922 | 1.03545 | 4.741x |
+| Linux | float32 | equal | 1 | 4.43941 | 2.92087 | 1.520x |
+| Linux | float32 | equal | 4 | 4.40568 | 2.49982 | 1.762x |
+| Linux | float32 | threshold-fields | 1 | 5.10712 | 6.29851 | 0.811x |
+| Linux | float32 | threshold-fields | 4 | 7.55897 | 4.19682 | 1.801x |
+| Linux | float32 | snake | 1 | 3.70527 | 1.76437 | 2.100x |
+| Linux | float32 | snake | 4 | 3.69317 | 1.48515 | 2.487x |
+| Linux | float32 | checkerboard | 1 | 6.81900 | 1.33086 | 5.124x |
+| Linux | float32 | checkerboard | 4 | 6.49227 | 1.45240 | 4.470x |
+| Linux | float32 | tiny | 1 | 0.10630 | 0.09138 | 1.163x |
+| Linux | float32 | tiny | 4 | 0.10536 | 0.08937 | 1.179x |
+| Linux | float32 | nan-background | 1 | 3.33228 | 1.05965 | 3.145x |
+| Linux | float32 | nan-background | 4 | 3.38099 | 0.77803 | 4.346x |
+| Linux | float64 | random | 1 | 5.04970 | 6.35593 | 0.794x |
+| Linux | float64 | random | 4 | 5.02457 | 3.39844 | 1.478x |
+| Linux | float64 | fortran | 1 | 6.12223 | 8.36640 | 0.732x |
+| Linux | float64 | fortran | 4 | 6.15122 | 5.51504 | 1.115x |
+| Linux | float64 | strided | 1 | 2.77661 | 3.53166 | 0.786x |
+| Linux | float64 | strided | 4 | 2.77245 | 3.46157 | 0.801x |
+| Linux | float64 | all-weak | 1 | 4.18141 | 1.07689 | 3.883x |
+| Linux | float64 | all-weak | 4 | 4.14036 | 0.71725 | 5.773x |
+| Linux | float64 | no-seeds | 1 | 5.06589 | 1.99657 | 2.537x |
+| Linux | float64 | no-seeds | 4 | 5.04074 | 0.94437 | 5.338x |
+| Linux | float64 | equal | 1 | 7.85469 | 2.01395 | 3.900x |
+| Linux | float64 | equal | 4 | 7.90673 | 0.95296 | 8.297x |
+| Linux | float64 | threshold-fields | 1 | 7.55542 | 8.32802 | 0.907x |
+| Linux | float64 | threshold-fields | 4 | 5.33261 | 3.59994 | 1.481x |
+| Linux | float64 | snake | 1 | 3.71584 | 1.66998 | 2.225x |
+| Linux | float64 | snake | 4 | 3.62153 | 1.37784 | 2.628x |
+| Linux | float64 | checkerboard | 1 | 6.94036 | 1.07637 | 6.448x |
+| Linux | float64 | checkerboard | 4 | 6.51335 | 1.41884 | 4.591x |
+| Linux | float64 | tiny | 1 | 0.10422 | 0.08280 | 1.259x |
+| Linux | float64 | tiny | 4 | 0.10299 | 0.08184 | 1.259x |
+| Linux | float64 | nan-background | 1 | 3.42094 | 0.95931 | 3.566x |
+| Linux | float64 | nan-background | 4 | 3.43710 | 0.67885 | 5.063x |
+| Windows | uint8 | random | 1 | 6.88715 | 8.34720 | 0.825x |
+| Windows | uint8 | random | 4 | 6.84085 | 4.98610 | 1.372x |
+| Windows | uint8 | fortran | 1 | 8.07300 | 10.53700 | 0.766x |
+| Windows | uint8 | fortran | 4 | 8.17650 | 7.29245 | 1.121x |
+| Windows | uint8 | strided | 1 | 3.62630 | 4.23393 | 0.856x |
+| Windows | uint8 | strided | 4 | 3.59130 | 4.23825 | 0.847x |
+| Windows | uint8 | all-weak | 1 | 5.85895 | 2.41160 | 2.429x |
+| Windows | uint8 | all-weak | 4 | 5.86370 | 1.68445 | 3.481x |
+| Windows | uint8 | no-seeds | 1 | 6.93595 | 3.27562 | 2.117x |
+| Windows | uint8 | no-seeds | 4 | 7.01790 | 2.37920 | 2.950x |
+| Windows | uint8 | equal | 1 | 6.91495 | 2.74085 | 2.523x |
+| Windows | uint8 | equal | 4 | 6.79210 | 1.77712 | 3.822x |
+| Windows | uint8 | threshold-fields | 1 | 6.76480 | 7.69380 | 0.879x |
+| Windows | uint8 | threshold-fields | 4 | 6.73810 | 4.41377 | 1.527x |
+| Windows | uint8 | snake | 1 | 5.79555 | 2.85890 | 2.027x |
+| Windows | uint8 | snake | 4 | 5.66180 | 2.88065 | 1.965x |
+| Windows | uint8 | checkerboard | 1 | 6.75935 | 1.90190 | 3.554x |
+| Windows | uint8 | checkerboard | 4 | 6.79610 | 2.45696 | 2.766x |
+| Windows | uint8 | tiny | 1 | 0.10416 | 0.09478 | 1.099x |
+| Windows | uint8 | tiny | 4 | 0.10730 | 0.09808 | 1.094x |
+| Windows | float32 | random | 1 | 6.71070 | 8.10800 | 0.828x |
+| Windows | float32 | random | 4 | 6.83925 | 4.93940 | 1.385x |
+| Windows | float32 | fortran | 1 | 7.90350 | 11.11420 | 0.711x |
+| Windows | float32 | fortran | 4 | 7.96980 | 7.97900 | 0.999x |
+| Windows | float32 | strided | 1 | 3.64887 | 4.14713 | 0.880x |
+| Windows | float32 | strided | 4 | 3.66553 | 4.17580 | 0.878x |
+| Windows | float32 | all-weak | 1 | 5.80180 | 2.27010 | 2.556x |
+| Windows | float32 | all-weak | 4 | 5.79125 | 1.57330 | 3.681x |
+| Windows | float32 | no-seeds | 1 | 6.82905 | 2.47478 | 2.759x |
+| Windows | float32 | no-seeds | 4 | 6.92485 | 1.59086 | 4.353x |
+| Windows | float32 | equal | 1 | 6.76120 | 3.61343 | 1.871x |
+| Windows | float32 | equal | 4 | 6.75835 | 3.60918 | 1.873x |
+| Windows | float32 | threshold-fields | 1 | 7.07925 | 7.86050 | 0.901x |
+| Windows | float32 | threshold-fields | 4 | 7.03160 | 4.69710 | 1.497x |
+| Windows | float32 | snake | 1 | 5.60335 | 2.64238 | 2.121x |
+| Windows | float32 | snake | 4 | 5.56405 | 2.73612 | 2.034x |
+| Windows | float32 | checkerboard | 1 | 6.59270 | 1.68511 | 3.912x |
+| Windows | float32 | checkerboard | 4 | 6.52895 | 2.32838 | 2.804x |
+| Windows | float32 | tiny | 1 | 0.09931 | 0.09070 | 1.095x |
+| Windows | float32 | tiny | 4 | 0.10011 | 0.08761 | 1.143x |
+| Windows | float32 | nan-background | 1 | 5.29370 | 2.11917 | 2.498x |
+| Windows | float32 | nan-background | 4 | 5.36305 | 1.49404 | 3.590x |
+| Windows | float64 | random | 1 | 6.65940 | 7.71870 | 0.863x |
+| Windows | float64 | random | 4 | 6.61660 | 4.43450 | 1.492x |
+| Windows | float64 | fortran | 1 | 7.95870 | 11.67930 | 0.681x |
+| Windows | float64 | fortran | 4 | 7.93790 | 8.51590 | 0.932x |
+| Windows | float64 | strided | 1 | 3.66850 | 4.39227 | 0.835x |
+| Windows | float64 | strided | 4 | 3.62190 | 4.34387 | 0.834x |
+| Windows | float64 | all-weak | 1 | 5.66210 | 1.77504 | 3.190x |
+| Windows | float64 | all-weak | 4 | 5.70475 | 1.06606 | 5.351x |
+| Windows | float64 | no-seeds | 1 | 6.72505 | 2.02422 | 3.322x |
+| Windows | float64 | no-seeds | 4 | 6.70960 | 1.11875 | 5.997x |
+| Windows | float64 | equal | 1 | 6.58580 | 2.00213 | 3.289x |
+| Windows | float64 | equal | 4 | 6.62960 | 1.11709 | 5.935x |
+| Windows | float64 | threshold-fields | 1 | 7.51180 | 8.22640 | 0.913x |
+| Windows | float64 | threshold-fields | 4 | 7.33345 | 4.72620 | 1.552x |
+| Windows | float64 | snake | 1 | 5.68735 | 2.17445 | 2.616x |
+| Windows | float64 | snake | 4 | 5.70970 | 2.30066 | 2.482x |
+| Windows | float64 | checkerboard | 1 | 6.63025 | 1.21191 | 5.471x |
+| Windows | float64 | checkerboard | 4 | 6.62520 | 1.86705 | 3.548x |
+| Windows | float64 | tiny | 1 | 0.09911 | 0.08183 | 1.211x |
+| Windows | float64 | tiny | 4 | 0.09946 | 0.08525 | 1.167x |
+| Windows | float64 | nan-background | 1 | 5.40140 | 1.70334 | 3.171x |
+| Windows | float64 | nan-background | 4 | 5.36605 | 0.98419 | 5.452x |

@@ -1,10 +1,10 @@
 # Last completed whole-library performance checkpoint
 
 The [hysteresis parity checkpoint](hysteresis.md) adds native broadcast thresholds,
-SIMD masks and optional parallel connectivity. Initial one-worker geometric means
-are 1.73x/1.67x over scikit-image on Linux/Windows, with slower random, strided
-and Fortran cases retained. These numbers identify the initial source; final
-legacy-NumPy compatibility measurements and full CI remain pending.
+SIMD masks and optional parallel connectivity. Retained-source one-worker geometric
+means are 1.73x/1.63x over scikit-image on Linux/Windows, with slower random,
+strided and Fortran cases retained. Exact final-source timings and scoped SIMD,
+scalar, minimum-NumPy and sanitizer checks are recorded; full CI remains pending.
 
 The [packed wide-range rank checkpoint](rank-packed.md) reduces sort-record
 traffic and removes the full group-start array. Against the exact table package,
@@ -13,7 +13,8 @@ whole fixed corpus improves 1.075x/1.064x. The report preserves the revised
 first trial and every control regression. General uint64/float64 sorting still
 trails upstream in some cases. Scoped SIMD/scalar, minimum-runtime, portable
 and sanitizer checks pass. All three follow-up CI jobs completed successfully;
-Linux passes 48,657 tests in each SIMD mode, with native checks passing 2/2.
+Linux passes 48,657 and Windows 48,655 plus two skips in each SIMD mode,
+with native normal/dynamic/portable checks passing 2/2 on both OSes.
 The parent run status still lags its completed jobs.
 
 The [rank lookup-table checkpoint](rank-tables.md) avoids sorting every pixel
