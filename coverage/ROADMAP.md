@@ -38,14 +38,25 @@ six grayscale and four binary morphology functions.
 Native stain separation/reconstruction and HED presets cover unbatched 3×K real matrices.
 CIE76, CIE94, CIEDE2000 and CMC support raw Lab dtype promotion, broadcasting and extra channels;
 color-space routing composes the native kernels for all nine upstream spaces.
-There are 95 partial native image entries, two metadata helpers,
-and 358 pending entries in the current
+Label-to-RGB overlays and region averages use native ranks, palette compositing,
+typed group reductions and optional global workers.
+There are 96 partial native image entries, two metadata helpers,
+and 357 pending entries in the current
 455-name inventory. The `future` namespace is available through explicit
 compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
 Next work:
+
+- Correct a verified minimum-NumPy compatibility gap: on NumPy 1.24.4,
+  `deltaE_cie76` and `deltaE_ciede94` return float32 for two scalar float32
+  colors where upstream returns float64. The existing metadata parity test
+  reproduces 16 failures across tags and worker settings on both the preserved
+  pre-conversion wheel and the conversion candidate. These remain unresolved;
+  the minimum-version CI currently validates selected algorithms and conversions,
+  rather than the full metadata/color suite. Preserve the failing oracles and
+  implement the scalar promotion instead of relaxing dtype checks.
 
 - Port remaining color conversions with the same
   native parity and one-worker performance requirements. Broaden RGB/gray parity.

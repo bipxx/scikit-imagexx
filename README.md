@@ -419,10 +419,10 @@ python benchmarks/summarize.py
 [Non-default exposure parameters](benchmarks/exposure-parameters.md) separately
 cover general gamma powers, inverse log, inverse sigmoid, and explicit rescale
 ranges. This prevents the default gamma=1 case from standing in for all gamma
-performance. The current whole-library checkpoint covers 98 reviewed entries in
+performance. The last completed whole-library checkpoint at `984141f` covers 98 reviewed entries in
 572 serial default cases and 286 dtype-tagged cases. All 21 reports share one
 source fingerprint: 3,227 one-thread comparisons, including 3,157 of 3,188 native
-image workloads faster than original scikit-image. All 31 slower cases remain listed.
+image workloads faster than original scikit-image. All 31 slower cases remain listed. The newer [conversion layout experiment](benchmarks/conversion-packet-tuning.md) has a separate source fingerprint and preserves its full 52-case history.
 [Additional conversion widths](benchmarks/conversion-widths.md) cover 56 one-worker cases
 across boolean and 8/16/32/64-bit integer inputs. Reports label identity returns,
 copies, and metadata separately from native image processing. The Python suite

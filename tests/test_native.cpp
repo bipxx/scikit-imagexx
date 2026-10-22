@@ -24,6 +24,7 @@
 #include <limits>
 #include <algorithm>
 #include <array>
+#include <memory>
 
 void require(bool condition) {
     if (!condition) throw std::runtime_error("native check failed");
@@ -68,6 +69,43 @@ template<class T> void check_contrast_packets(skimagexx::PixelType type) {
         }
     }
 }
+template<class T> void check_boolean_conversion_packets(const std::array<T,6>& pattern,skimagexx::PixelType type) {
+    const bool expected[]={false,true,false,true,false,false};
+    for(std::size_t sample=1;sample<=66;++sample) {
+        const auto count=sample==66 ? std::size_t(262149) : sample;
+        std::vector<T> input(count);
+        std::unique_ptr<bool[]> output(new bool[count]);
+        for(std::size_t i=0;i<count;++i)input[i]=pattern[i%6];
+        const auto saved=input;
+        skimagexx::convert_into(input.data(),output.get(),count,type,skimagexx::PixelType::boolean);
+        for(std::size_t i=0;i<count;++i)require(output[i]==expected[i%6]);
+        require(input==saved);
+    }
+}
+void check_conversion_packets() {
+    using namespace skimagexx;
+    check_boolean_conversion_packets<std::int8_t>({{-128,127,63,64,1,0}},PixelType::int8);
+    check_boolean_conversion_packets<std::uint8_t>({{0,255,127,128,1,0}},PixelType::uint8);
+    check_boolean_conversion_packets<std::int16_t>({{-32768,32767,16383,16384,1,0}},PixelType::int16);
+    check_boolean_conversion_packets<std::uint16_t>({{0,65535,32767,32768,1,0}},PixelType::uint16);
+    check_boolean_conversion_packets<std::int32_t>({{INT32_MIN,INT32_MAX,1073741823,1073741824,1,0}},PixelType::int32);
+    check_boolean_conversion_packets<std::uint32_t>({{0,UINT32_MAX,2147483647,UINT32_C(2147483648),1,0}},PixelType::uint32);
+    check_boolean_conversion_packets<std::int64_t>({{INT64_MIN,INT64_MAX,INT64_C(4611686018427387904),INT64_C(4611686018427387905),1,0}},PixelType::int64);
+    check_boolean_conversion_packets<std::uint64_t>({{0,UINT64_MAX,UINT64_C(9223372036854775808),UINT64_C(9223372036854775809),1,0}},PixelType::uint64);
+    check_boolean_conversion_packets<float>({{-1,1,.5f,std::nextafter(.5f,1.f),0,-0.f}},PixelType::float32);
+    check_boolean_conversion_packets<double>({{-1,1,.5,std::nextafter(.5,1.),0,-0.}},PixelType::float64);
+    const std::uint16_t full[]={65535,1,32767,32768,2,0},narrow[]={32767,1,16383,16384,2,0};
+    const std::int16_t scaled[]={32767,0,16383,16384,1,0};
+    for(std::size_t sample=1;sample<=66;++sample)for(bool unscaled:{false,true}) {
+        const auto count=sample==66 ? std::size_t(262149) : sample;
+        std::vector<std::uint16_t> input(count);
+        std::vector<std::int16_t> output(count);
+        for(std::size_t i=0;i<count;++i)input[i]=(unscaled ? narrow : full)[i%6];
+        const auto info=convert_into(input.data(),output.data(),count,PixelType::uint16,PixelType::int16);
+        require(info.downcast_without_scaling==unscaled);
+        for(std::size_t i=0;i<count;++i)require(output[i]==(unscaled ? std::int16_t(narrow[i%6]) : scaled[i%6]));
+    }
+}
 int main() {
     using namespace skimagexx;
     require(get_num_threads() == 1);
@@ -91,6 +129,7 @@ int main() {
     for (int threads : thread_counts) {
         set_num_threads(threads);
         require(get_num_threads() == threads);
+        check_conversion_packets();
         {
             // A strided modular prefix is exact across arbitrary chunk splits.
             constexpr std::size_t count=262145;
