@@ -13,8 +13,10 @@ layouts, label-width boundaries and memmap results. The paired one-worker corpus
 improves 1.91x on Linux and 1.58x on Windows against the initial native package;
 current geometric means are 2.55x/1.67x over scikit-image. Constant images improve
 strongly, while floating sorts, layout normalization and several controls remain
-slower. Reports retain all cases and raw samples. Full follow-up CI remains in
-progress; scoped SIMD/scalar, minimum-runtime and native sanitizer checks pass.
+slower. Reports retain all cases and raw samples. Full uniform-checkpoint CI
+passes all three jobs, with Linux 48,453 tests and Windows 48,451 plus two skips
+in each SIMD mode. Scoped SIMD/scalar, minimum-runtime and native sanitizer
+checks pass; the newer lookup-table full CI remains in progress.
 
 The [streaming adaptive-mean checkpoint](adaptive-stream.md) removes first-axis
 packing and scattering. Paired one-worker mean workloads improve 25% on Linux
