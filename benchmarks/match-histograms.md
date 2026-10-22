@@ -1,5 +1,7 @@
 # Native histogram matching: parity and measured performance
 
+The subsequent [rank-storage and floating-output experiment](match-memory.md) records later source-specific improvements and its remaining regressions. This page preserves the initial port and SIMD/hash/radix checkpoint.
+
 Retained source: `a5902e5fe0a8aaaedbece9ae030ef9e6034ce1ab`; source fingerprint `8d7f537bca4067c8e0ce89388b4a4d6bdb1e1446dd4cae162751665ac545b186`. Reference: scikit-image 0.26.0. Hardware: Intel Core i7-12700K, 12 cores/20 logical processors, verified after timing.
 
 The new `exposure.match_histograms(image, reference, *, channel_axis=None)` implements empirical counts, normalized CDFs, interpolation and output casting in C++. Dense value ranges use bounded direct histograms and AVX2 lookup gathers; repeated sparse values use bounded hashing; high-cardinality values use radix ranks with packed 32-bit source keys where possible. SIMD key extraction retains typed ordering, merged zeros and a single NaN group. Scalar tails and a portable path share the same contract. Optional OpenMP work obeys the global worker limit, which defaults to one; radix scattering remains correct when dynamic teams are smaller than requested.
