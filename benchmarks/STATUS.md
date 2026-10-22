@@ -7,13 +7,17 @@ this corpus beats upstream. Against the exact initial native package, means
 improve 1.105x/1.053x, with slower reflect/strided controls retained explicitly.
 Initial experiments, corrected dtype/warning behavior, exact packages and all
 raw samples are preserved. Scoped SIMD/scalar, minimum-runtime and native
-sanitizer checks pass; full follow-up CI remains in progress.
+sanitizer checks pass. Full sparse CI passes all three jobs: Linux 54,441 tests
+and Windows 54,439 plus two skips in each SIMD mode, with native normal/dynamic/
+portable checks passing 2/2 on both OSes.
 
 The [retained row-span helper](hysteresis-spans.md) improves the paired one-worker
 corpus 1.150x on Linux and 1.136x on Windows against the exact initial package.
 Current geometric means are 2.104x/1.828x over scikit-image. The earlier inline
 trial and every residual control regression remain preserved. Exact-source
-scoped and minimum-runtime checks pass; full follow-up CI is in progress.
+scoped and minimum-runtime checks pass. Full helper CI passes all three jobs:
+Linux 50,853 tests and Windows 50,851 plus two skips in each SIMD mode,
+with native normal/dynamic/portable checks passing 2/2 on both OSes.
 
 The [hysteresis parity checkpoint](hysteresis.md) adds native broadcast thresholds,
 SIMD masks and optional parallel connectivity. Retained-source one-worker geometric
