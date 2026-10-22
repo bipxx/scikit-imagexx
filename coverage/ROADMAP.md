@@ -61,8 +61,11 @@ coverage; these scoped passes do not establish whole-library compatibility.
 
 Next work:
 
-- Port remaining color conversions with the same
-  native parity and one-worker performance requirements. Broaden RGB/gray parity.
+- Broaden color conversion input/option parity and address CIE76 scalar dispatch
+  overhead. The current inventory has no entirely upstream-only color entries;
+  their native contracts remain partial.
+- Extend exposure coverage to histogram matching and adaptive equalization, with
+  per-function parity and one-worker performance checks against scikit-image.
 - Broaden distance parameter-array, strong-scalar and float16 contracts;
   extend direct nonuniform-row processing to the weighted distance kernels.
 - Broaden local-threshold exceptional arithmetic, float16, array parameters
