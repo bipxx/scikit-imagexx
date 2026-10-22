@@ -70,6 +70,12 @@ def test_every_native_function(native, original, name, dtype, shape):
         assert str(actual_error.value)==str(error)
         return
     actual = getattr(native, name)(*args,**options)
+    if name=='rank_order':
+        assert type(actual) is type(expected) is tuple and len(actual)==len(expected)==2
+        for value,reference in zip(actual,expected):
+            assert value.dtype==reference.dtype and value.shape==reference.shape
+            np.testing.assert_array_equal(value,reference)
+        return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
     rtol,atol = parity_tolerance(api,np.dtype(dtype))
     np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)

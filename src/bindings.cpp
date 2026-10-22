@@ -3,6 +3,7 @@
 #include "skimagexx/contrast.hpp"
 #include "skimagexx/label_color.hpp"
 #include "skimagexx/histogram_matching.hpp"
+#include "skimagexx/rank_order.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -299,6 +300,22 @@ template<class F> py::array dispatch(const py::array& image, F function) {
 }
 
 PYBIND11_MODULE(_core, m) {
+    m.def("rank_order",[](py::array image,py::array original)->py::object {
+        auto input=py::array::ensure(image,py::array::c_style);
+        auto source=py::array::ensure(original,py::array::c_style);
+        if(!input || !source || input.size()!=source.size())throw py::value_error("matching rank input storage required");
+        const auto count=std::size_t(input.size());const auto type=pixel_type(input.dtype());
+        const auto rank_type=count<=255 ? skimagexx::PixelType::uint8 : count<=65535 ? skimagexx::PixelType::uint16 : count<=UINT64_C(4294967295) ? skimagexx::PixelType::uint32 : skimagexx::PixelType::uint64;
+        const auto dtype=count<=255 ? py::dtype::of<std::uint8_t>() : count<=65535 ? py::dtype::of<std::uint16_t>() : count<=UINT64_C(4294967295) ? py::dtype::of<std::uint32_t>() : py::dtype::of<std::uint64_t>();
+        std::vector<py::ssize_t> shape(source.shape(),source.shape()+source.ndim());
+        py::array labels(dtype,shape);std::vector<std::size_t> representatives;bool ok;
+        {py::gil_scoped_release release;ok=skimagexx::rank_order_into(input.data(),count,type,labels.mutable_data(),rank_type,representatives);}
+        if(!ok)return py::none();
+        py::array values(source.dtype(),std::vector<py::ssize_t>{py::ssize_t(representatives.size())});
+        const auto bytes=std::size_t(source.itemsize());
+        {py::gil_scoped_release release;for(std::size_t i=0;i<representatives.size();++i)std::memcpy(static_cast<unsigned char*>(values.mutable_data())+i*bytes,static_cast<const unsigned char*>(source.data())+representatives[i]*bytes,bytes);}
+        return py::make_tuple(labels,values);
+    });
     m.def("match_histograms",[](py::array first,py::array reference,py::dtype output_dtype,
         bool multichannel,bool unsigned_source,bool half_round) {
         if(multichannel && (!first.ndim() || !reference.ndim()))

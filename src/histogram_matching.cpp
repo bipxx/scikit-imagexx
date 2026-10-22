@@ -1,4 +1,5 @@
 #include "skimagexx/histogram_matching.hpp"
+#include "skimagexx/rank_order.hpp"
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include "half.hpp"
@@ -425,5 +426,59 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
         flags|=channel_notice;
     }
     return flags;
+}
+
+bool rank_order_into(const void* input,std::size_t count,PixelType type,void* output,
+    PixelType label_type,std::vector<std::size_t>& representatives) {
+    if(!count || !input || !output)throw std::invalid_argument("nonempty rank-order buffers required");
+    const auto maximum=label_type==PixelType::uint8 ? UINT64_C(255) : label_type==PixelType::uint16 ? UINT64_C(65535) :
+        label_type==PixelType::uint32 ? UINT64_C(4294967295) : label_type==PixelType::uint64 ? UINT64_MAX : 0;
+    if(!maximum || count-1>maximum)throw std::invalid_argument("rank label type is too narrow");
+    struct Entry {std::uint64_t key;std::size_t position;};
+    if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(Entry))throw std::overflow_error("rank-order dimensions overflow");
+    const auto read=reader(type);const auto workers=detail::active_workers(count);
+    std::vector<Entry> entries(count);std::vector<unsigned> notices(std::size_t(workers),0);
+    detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
+        unsigned flags=0;auto i=begin;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            std::uint64_t keys[1024];
+            while(i<end) {
+                const auto n=std::min(std::size_t(1024),end-i);
+                const auto done=simd::histogram_keys(static_cast<const unsigned char*>(input)+i*pixel_size(type),keys,n,type,1);
+                if(!done)break;
+                for(std::size_t k=0;k<done;++k)entries[i+k]={keys[k],i+k};
+                i+=done;
+            }
+        }
+#endif
+        for(;i<end;++i)entries[i]={read(input,std::ptrdiff_t(i)),i};
+        if(type==PixelType::float32 || type==PixelType::float64)for(auto k=begin;k<end;++k) {
+            const auto value=type==PixelType::float32 ? double(static_cast<const float*>(input)[k]) : static_cast<const double*>(input)[k];
+            if(std::isnan(value))flags|=1;
+            if(value==0)flags|=std::signbit(value) ? 2u : 4u;
+        }
+        notices[worker]=flags;
+    });
+    unsigned flags=0;for(auto notice:notices)flags|=notice;
+    if((flags&1) || (flags&6)==6)return false;
+    radix_sort(entries,workers,[](const auto& entry){return entry.key;});
+    std::vector<std::size_t> starts;representatives.clear();
+    for(std::size_t i=0;i<count;++i)if(!i || entries[i].key!=entries[i-1].key){starts.push_back(i);representatives.push_back(entries[i].position);}
+    auto assign=[&](auto* labels) {
+        using U=std::remove_pointer_t<decltype(labels)>;
+        detail::partition(count,workers,[&](auto begin,auto end,auto) {
+            auto rank=std::size_t(std::upper_bound(starts.begin(),starts.end(),begin)-starts.begin()-1);
+            for(auto i=begin;i<end;++i){if(rank+1<starts.size() && i==starts[rank+1])++rank;labels[entries[i].position]=U(rank);}
+        });
+    };
+    switch(label_type) {
+    case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
+    case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
+    case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
+    case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
+    default:throw std::invalid_argument("unsigned rank labels required");
+    }
+    return true;
 }
 }

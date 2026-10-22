@@ -51,6 +51,7 @@ jobs:
       - run: python benchmarks/minimum.py --size 32 --threads 1 --repeat 1 --output build/ci-minimum.json
       - run: python benchmarks/li.py --size 32 --threads 1 --repeat 1 --output build/ci-li.json
       - run: python benchmarks/adaptive.py --size 32 --threads 1 --repeat 1 --output build/ci-adaptive.json
+      - run: python benchmarks/rank_order.py --size 32 --threads 1 --repeat 1 --output build/ci-rank-order.json
       - run: python benchmarks/label_colors.py --size 32 --threads 1 --repeat 1 --output build/ci-label-colors.json
       - run: python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output build/ci-distance.json
       - run: python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output build/ci-morphology.json
@@ -107,6 +108,10 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_threshold_local.py
+      - run: python -m pytest -q tests/test_rank_order.py
+      - run: python -m pytest -q tests/test_rank_order.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_threshold_local.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'

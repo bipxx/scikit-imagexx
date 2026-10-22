@@ -21,6 +21,16 @@ def dtype_metadata(value):
     return None if metadata is None else dict(metadata)
 
 
+def comparison_error(actual,expected,rtol,atol):
+    if isinstance(expected,(tuple,list)):
+        assert type(actual) is type(expected) and len(actual)==len(expected)
+        return max((comparison_error(a,e,rtol,atol) for a,e in zip(actual,expected)),default=0.)
+    a,e=np.asarray(actual),np.asarray(expected)
+    assert a.dtype==e.dtype and a.shape==e.shape
+    np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)
+    return float(np.max(np.abs(a.astype(float)-e.astype(float)))) if a.size else 0.
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dtype-metadata',action='store_true',help='Attach and verify custom NumPy dtype tags')
@@ -67,15 +77,14 @@ def main():
                     xx.set_num_threads(threads)
                     actual = native(*call_args,**options)
                     rtol,atol = parity_tolerance(api,np.dtype(dtype))
-                    assert np.asarray(actual).dtype == np.asarray(expected).dtype
-                    np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
+                    error=comparison_error(actual,expected,rtol,atol)
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     results.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name,
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
-                                    float(np.max(np.abs(np.asarray(actual, dtype=float)-np.asarray(expected, dtype=float)))),
+                                    error,
                                     **timing})
                     print(f'{api:24} {size} {np.dtype(dtype).name} t={threads}: {timing["speedup"]:.2f}x',flush=True)
     assert set(r['api'] for r in results) == set(apis)

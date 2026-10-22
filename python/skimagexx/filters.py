@@ -472,6 +472,24 @@ def threshold_local(image,block_size=3,method='gaussian',offset=0,mode='reflect'
 __all__.append('threshold_local')
 
 
+def rank_order(image):
+    original=image
+    if type(image) in _GAUSSIAN_TYPES:image=np.asarray(image)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:
+        return fallback('filters','rank_order',original)
+    if not image.size:raise IndexError('index -1 is out of bounds for axis 0 with size 0')
+    native=image if image.dtype.isnative else _core.edge_native(image)
+    if native.dtype==np.float16:native=_core.edge_half(native)
+    if not native.flags.c_contiguous or not native.flags.aligned:native=native.copy(order='C')
+    result=_core.rank_order(native,image)
+    if result is None:return fallback('filters','rank_order',original)
+    if type(image) is np.memmap:return (result[0].view(np.memmap),result[1])
+    return result
+
+
+__all__.append('rank_order')
+
+
 _SMALL_EDGES = {'laplace':0,'roberts':1,'roberts_pos_diag':2,'roberts_neg_diag':3}
 _SMALL_EDGE_DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                                 'int32','uint64','int64','float16','float32','float64'))

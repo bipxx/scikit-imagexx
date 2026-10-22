@@ -18,6 +18,7 @@
 #include "skimagexx/stain.hpp"
 #include "skimagexx/distance.hpp"
 #include "skimagexx/histogram_matching.hpp"
+#include "skimagexx/rank_order.hpp"
 #include "skimagexx/morphology.hpp"
 #include <cmath>
 #include <cstring>
@@ -1083,5 +1084,16 @@ int main() {
     try { sobel(&value,std::numeric_limits<std::size_t>::max(),2); }
     catch (const std::overflow_error&) { rejected = true; }
     require(rejected);
+    {
+        const std::uint64_t source[]={UINT64_MAX,0,UINT64_MAX-1,0,7};
+        std::uint8_t ranks[5]{};std::vector<std::size_t> representatives;
+        require(rank_order_into(source,5,PixelType::uint64,ranks,PixelType::uint8,representatives));
+        const std::uint8_t expected[]={3,0,2,0,1};
+        require(std::equal(ranks,ranks+5,expected));
+        require(representatives.size()==4 && source[representatives[0]]==0 && source[representatives[3]]==UINT64_MAX);
+        const float special[]={0.,-0.};ranks[0]=42;
+        require(!rank_order_into(special,2,PixelType::float32,ranks,PixelType::uint8,representatives));
+        require(ranks[0]==42);
+    }
     std::cout << "Native C++ checks passed; AVX2=" << has_avx2() << '\n';
 }
