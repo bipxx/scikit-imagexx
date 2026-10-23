@@ -3,6 +3,18 @@
 #include <algorithm>
 #include <cstring>
 namespace skimagexx::simd {
+std::size_t rank_histogram_normalized(const std::int64_t* counts,void* output,std::size_t count,double scale,bool narrow) {
+    std::size_t i=0;const auto factor=_mm256_set1_pd(scale);
+    const auto order=_mm256_setr_epi32(0,2,4,6,0,0,0,0);
+    for(;i+4<=count;i+=4) {
+        const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(counts+i));
+        const auto integers=_mm256_castsi256_si128(_mm256_permutevar8x32_epi32(words,order));
+        const auto values=_mm256_mul_pd(_mm256_cvtepi32_pd(integers),factor);
+        if(narrow)_mm_storeu_ps(reinterpret_cast<float*>(output)+i,_mm256_cvtpd_ps(values));
+        else _mm256_storeu_pd(reinterpret_cast<double*>(output)+i,values);
+    }
+    return i;
+}
 std::int64_t rank_count_prefix(const std::int64_t* data,std::size_t count) {
     auto sums=_mm256_setzero_si256();std::size_t i=0;
     for(;i+4<=count;i+=4)sums=_mm256_add_epi64(sums,_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i)));
