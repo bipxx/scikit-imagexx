@@ -5,6 +5,10 @@ preserve Python call contracts, and verify both parity and performance against
 the original library. The project remains incomplete until that work is done;
 upstream forwarding is a migration aid, not implementation progress.
 
+Follow the [parallel execution plan](EXECUTION_PLAN.md) and
+[task/evidence ledger](work_items.json) for current ownership, dependency gates
+and integration order.
+
 `api.json` is generated from exported names in scikit-image 0.26.0. It records
 455 callable names across 18 modules, including the experimental `future`
 namespace and four callable deprecated binary
