@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 155 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 163 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -206,12 +206,12 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.unsharp_mask` | native-partial | yes (partial input contract) | yes |
 | `filters.wiener` | upstream-only | pending | pending |
 | `filters.window` | upstream-only | pending | pending |
-| `filters.rank.autolevel` | upstream-only | pending | pending |
+| `filters.rank.autolevel` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.autolevel_percentile` | upstream-only | pending | pending |
-| `filters.rank.enhance_contrast` | upstream-only | pending | pending |
+| `filters.rank.enhance_contrast` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.enhance_contrast_percentile` | upstream-only | pending | pending |
 | `filters.rank.entropy` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.equalize` | upstream-only | pending | pending |
+| `filters.rank.equalize` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.geometric_mean` | upstream-only | pending | pending |
 | `filters.rank.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient_percentile` | upstream-only | pending | pending |
@@ -234,13 +234,13 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.sum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.sum_bilateral` | upstream-only | pending | pending |
 | `filters.rank.sum_percentile` | upstream-only | pending | pending |
-| `filters.rank.threshold` | upstream-only | pending | pending |
+| `filters.rank.threshold` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.threshold_percentile` | upstream-only | pending | pending |
 | `filters.rank.windowed_histogram` | upstream-only | pending | pending |
-| `filters.rank.generic.autolevel` | upstream-only | pending | pending |
-| `filters.rank.generic.enhance_contrast` | upstream-only | pending | pending |
+| `filters.rank.generic.autolevel` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.generic.enhance_contrast` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.entropy` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.equalize` | upstream-only | pending | pending |
+| `filters.rank.generic.equalize` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.geometric_mean` | upstream-only | pending | pending |
 | `filters.rank.generic.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.majority` | upstream-only | pending | pending |
@@ -254,7 +254,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.generic.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.subtract_mean` | upstream-only | pending | pending |
 | `filters.rank.generic.sum` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.threshold` | upstream-only | pending | pending |
+| `filters.rank.generic.threshold` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.windowed_histogram` | upstream-only | pending | pending |
 | `future.TrainableSegmenter` | upstream-only | pending | pending |
 | `future.fit_segmenter` | upstream-only | pending | pending |

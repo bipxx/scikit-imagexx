@@ -1,0 +1,82 @@
+{
+  "schema": "public-wave5-scoped-v1",
+  "main_merge_head": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+  "actual_cpp_python_product": "c44c475430a9187231309f75ebf81c7de9ca4850",
+  "product_diff_to_main_empty": true,
+  "image_api_paths": 163,
+  "metadata_helpers": 3,
+  "partial_transform_classes": 4,
+  "exception_metadata_providers": 1,
+  "upstream_only": 303,
+  "scope": "Supported partial API contracts only. Eight added paths represent four new rank algorithms and four identity aliases, not eight algorithms. No full scikit-image, all-input, pure-C++ provider, or universal speed claim.",
+  "evidence": {
+    "combined155": {
+      "path": "build/combined155-evidence/manifest.json",
+      "sha256": "3785b4c946fe1df3f75a6cbfdfc363288831e179458f48e26f9c41ab1df170ec"
+    },
+    "public_r3": {
+      "path": "build/main-core-wave5-evidence/manifest.json",
+      "sha256": "7d6ed7698e256453fd7dd6747ef2a5e536f95ec353007b18c3eb85d6b748d974"
+    },
+    "r3_benchmark": {
+      "path": "build/worktrees/rank-intensity-benchmark-public/build/rank-intensity-public-benchmark-proof.json",
+      "sha256": "22841f6005d0db9dec1fed52d13d7a2cdacab39699bed6efd6b311b7f427adf1"
+    },
+    "provider_reference": {
+      "path": "build/arraymap-provider-evidence/5983259/manifest.json",
+      "sha256": "e0778a9663fe66d99c099882b40b96e0ec29484e7d341cd1da20a63557ef0cae"
+    },
+    "provider_private": {
+      "path": "build/arraymap-live-provider-private-evidence/a12d81b/manifest.json",
+      "sha256": "5a186dd683927c1f66eb48c406853c001b273941cbd7246ae1aadcab92ff0931"
+    },
+    "provider_whole": {
+      "path": "build/arraymap-live-provider-whole-evidence/c44c475/manifest.json",
+      "sha256": "42273109ddd3201b379a63999184989e0be3b5dd576bf8bfa098221712ed066d"
+    },
+    "inventory": {
+      "path": "build/main-core-wave5-evidence/inventory-accepted-c44-v1.json",
+      "sha256": "4de44609975357f376da30d48c96659db0cc3ab71769eca8cc8b5042863aaede"
+    }
+  },
+  "rank_intensity": {
+    "algorithms": [
+      "autolevel",
+      "equalize",
+      "enhance_contrast",
+      "threshold"
+    ],
+    "new_public_tests_per_profile": 6076,
+    "profiles": 8,
+    "whole_mixed_tests_per_profile": 17865,
+    "installed_sdk_checks": 72,
+    "sdk_members": 59,
+    "declared_wheel_members": 104,
+    "public_r2_alias_admission": "unchanged",
+    "r3_overlaps": "pending outside declared domain"
+  },
+  "benchmark": {
+    "canonical_cases": 1428,
+    "actual_gates": 8,
+    "workers": [
+      1,
+      4
+    ],
+    "timing_eligible_canonical_cases_per_runtime": 384,
+    "generic_aliases": "identity/dispatch only; not timed",
+    "operations_timed": 0
+  },
+  "provider_fix": {
+    "frozen_reference_tests_per_runtime": 16,
+    "prior_provider_interposition_gaps": 13,
+    "private_tests_per_profile": 2841,
+    "private_profiles": 10,
+    "whole_tests_per_profile": 3896,
+    "whole_profiles": 8,
+    "scope": "Internal returned ArrayMap only, no image/class count increase. Explicit NumPy metadata/index providers, native ordinary scan/scatter; no upstream class forwarding."
+  },
+  "inheritance": "R3 and unrelated product code/21 binding objects/59 SDK members equal sealed883 product. Only consumer Python/binding changed in c44; genuine complete22-binding products and scoped whole gates validate that delta. Broader unchanged scopes inherit their exact prior proofs, not private bridges.",
+  "cache_authentication": "Prior591 packages have104 declared wheel members plus85 separately authenticated runtime pyc files. Fresh883/c44 proof packages report their own exact sets; no files deleted to manufacture a seal.",
+  "local_operation_timings": 0,
+  "remaining": "303 inventoried upstream-only paths, remaining class/runtime contracts, supported-domain expansion and measured performance bottlenecks remain active work."
+}

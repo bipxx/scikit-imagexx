@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "scope": "Two released, clean, merged source-only publication worktrees removed using git worktree remove.",
+  "preservation_index": {
+    "path": "build/checkpoints/published-reports-cleanup/preservation-index.json",
+    "sha256": "1c54fa8cfb118fe8c0c98cba72934481912ef1d720ecfeff507273de31592bf6"
+  },
+  "removed_worktrees": [
+    {
+      "name": "resize-controlled-publication",
+      "head": "3998d1442ddb536cf137406465cdb57c18588452",
+      "source_archive": "build/resize-controlled-publication-evidence/3998d14/recipe/source-36440f8.zip",
+      "source_archive_sha256": "cdf51b0d3b758d8ac409a6fa3211eb0a0b9407bed01aa8c65d79710d857950ff",
+      "tracked_and_untracked_source_clean": true,
+      "ancestor_of_main": true,
+      "dependency_release": "metrics_reductions explicitly released both publication worktrees; new task uses root reports/global inputs only.",
+      "ignored_files_preserved_or_byte_verified_in_retained_archives": 811,
+      "reproducible_or_preserved_bytes": 114120167,
+      "workspace_relative_worktree": "build/worktrees/resize-controlled-publication"
+    },
+    {
+      "name": "initial-campaign-publication",
+      "head": "102550f82a0e89539bf6bde679410f4acb9d92a5",
+      "source_archive": "build/rank-initial-publication-evidence/09f4da3/recipe/source-77a0e34.zip",
+      "source_archive_sha256": "7984e6c1dcb22c78cb549870f1cacf5fb564fcc73b3efa7b777f129149b85baa",
+      "tracked_and_untracked_source_clean": true,
+      "ancestor_of_main": true,
+      "dependency_release": "metrics_reductions explicitly released both publication worktrees; new task uses root reports/global inputs only.",
+      "ignored_files_preserved_or_byte_verified_in_retained_archives": 874,
+      "reproducible_or_preserved_bytes": 154310171,
+      "workspace_relative_worktree": "build/worktrees/initial-campaign-publication"
+    }
+  ],
+  "raw_results_and_runtime_packages": "Retained in root proof/download/runtime directories and public main.",
+  "active_producer_caches_and_other_worktrees": "Untouched; no parent build directory deletion."
+}

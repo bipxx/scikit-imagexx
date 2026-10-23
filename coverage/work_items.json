@@ -16434,7 +16434,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -16456,7 +16456,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -17598,12 +17598,12 @@
       "id": "combined-public-wave4",
       "kind": "integration",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "detached/591ce3f",
       "base_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
       "owns": [],
       "depends_on": [],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17636,22 +17636,23 @@
         "member_count": 104,
         "sdk_member_count": 59,
         "sdk_scope": "All59 SDK bytes equal the passed seven-client dynamic/scalar four-runtime SDK proof.",
-        "authoritative_handles": [
-          19104,
-          26922,
-          27059,
-          74006
-        ],
+        "authoritative_handles": [],
         "known_harness_gaps": "Initial identity counted155 images as155 total functions instead of158; corrected identity-v2 all8 pass. Two old nested import tests assumed rank mean/maximum were unported. Parent059fe76 supplies exact22-case module supplement; preserve original failures.",
-        "timing_calls": 0
+        "timing_calls": 0,
+        "lease": "released; all original and059 supplements terminal",
+        "scope": "Final proof supersedes pending checkpoint; initial failures retained."
       },
       "proofs": {
         "public_native": {
-          "status": "pending",
+          "status": "verified",
           "source_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "manifest": {
+            "path": "build/combined155-evidence/manifest.json",
+            "sha256": "3785b4c946fe1df3f75a6cbfdfc363288831e179458f48e26f9c41ab1df170ec"
+          },
+          "scope": "Eight scoped complete-production profiles:55941 mixed checks x6,55937+4skip x2,32 fixed corpora; source/RECORD/104 declared wheel members and59SDK preserved;85 caches authenticated. Supported domains only; original helper failures retained.",
+          "native_contract_checks": 55941,
+          "native_pending": 0
         }
       }
     },
@@ -17875,21 +17876,15 @@
       "id": "rank-intensity-public",
       "kind": "integration",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "feature/rank-intensity-public",
-      "base_sha": "1f662f5251e3b4255938bc078cbb1284d2afb2f4",
-      "owns": [
-        "python/skimagexx/_rank.py",
-        "python/skimagexx/coverage.py",
-        "tests/test_rank_public.py",
-        "tests/test_rank_intensity_public.py",
-        "coverage/contracts/rank-intensity-public.json"
-      ],
+      "base_sha": "883887119f4849689b9bd2b0f9adbbb1151d3001",
+      "owns": [],
       "depends_on": [
         "rank-intensity-native",
         "combined-public-wave4"
       ],
-      "state": "queued",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -17911,8 +17906,9 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "31be4ad77aae93a1c9825c85de93589cc8f9f359",
+        "main_commit": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+        "product_commit": "883887119f4849689b9bd2b0f9adbbb1151d3001"
       },
       "retention": {
         "active_paths": [],
@@ -17924,6 +17920,19 @@
         },
         "combined-public-wave4": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "883887119f4849689b9bd2b0f9adbbb1151d3001",
+          "manifest": {
+            "path": "build/main-core-wave5-evidence/manifest.json",
+            "sha256": "7d6ed7698e256453fd7dd6747ef2a5e536f95ec353007b18c3eb85d6b748d974"
+          },
+          "scope": "6076 new mixed public tests x8;14496 logical public rank union, exact22 guard supplements, whole144 metrics/868dense/2016private-alias/341registry, canonical Map764/profile and installedSDK72. No publicR2 alias or timing claim.",
+          "native_contract_checks": 6076,
+          "native_pending": 0
         }
       }
     },
@@ -18160,7 +18169,7 @@
       "depends_on": [
         "resize-controlled-comparison"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18175,31 +18184,91 @@
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
+        "raw_results": [
+          "benchmarks/resize-public-linux-minimum-controlled.json",
+          "benchmarks/resize-public-linux-modern-controlled.json",
+          "benchmarks/resize-public-windows-modern-controlled.json"
+        ],
+        "regressions": {
+          "complete_lists": "benchmarks/resize-public-controlled.json",
+          "counts_by_profile": {
+            "linux-minimum": 23,
+            "linux-modern": 34,
+            "windows-modern": 57
+          },
+          "all_samples_and_workload_specs_retained": true
+        },
         "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched.",
         "run_id": 40020239743,
         "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40020239743",
-        "observed_state": "queued",
+        "observed_state": "completed",
         "created_at": "2026-10-23T20:34:14Z",
         "workers": [
           1
         ],
-        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing."
+        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing.",
+        "conclusion": "success",
+        "summary": "benchmarks/resize-public-controlled.json",
+        "summary_sha256": "e808174b355f205513fac9e861b2702838e3bcbdcfd307b12a75d8ce6ffa6762",
+        "timed_cases_per_profile": 372,
+        "checks_per_profile": 373,
+        "repeat": 7,
+        "geometric_mean_speedup": {
+          "linux-minimum": 1.5567233475927142,
+          "linux-modern": 1.519974677995799,
+          "windows-modern": 1.2613183194615127
+        },
+        "current_vs_initial": {
+          "linux-minimum": 1.014474090611784,
+          "linux-modern": 1.012447915527137,
+          "windows-modern": 1.011907725311542
+        },
+        "initial_source": "66e5f78e4f5736597373bd5ccca0378f52d67980",
+        "evidence_boundary": "Complete archived runtime/product/SDK closure verified; default1 and measured worker1 recorded."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "3998d1442ddb536cf137406465cdb57c18588452",
+        "main_commit": "6a4b138d97c8a09e5a3cc3e9308beb5a77565047"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/resize-controlled-publication-evidence/3998d14",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
+        ]
       },
       "dependency_requirements": {
         "resize-controlled-comparison": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
+          "manifest": {
+            "path": "benchmarks/resize-public-controlled.json",
+            "sha256": "e808174b355f205513fac9e861b2702838e3bcbdcfd307b12a75d8ce6ffa6762"
+          },
+          "required_workers": [
+            1
+          ],
+          "completed_profiles": [
+            "linux-minimum",
+            "linux-modern",
+            "windows-modern"
+          ],
+          "timed_cases_per_profile": 372,
+          "checked_cases_per_profile": 373,
+          "all_raw_results_preserved": true,
+          "offline_verification": {
+            "path": "build/resize-controlled-publication-evidence/3998d14/manifest.json",
+            "sha256": "d22fbc82a5ade9b486ce590d4cc9f4316c434397449ebe7eef74ed9ccf009252"
+          },
+          "scope": "Complete archived runtime/product/SDK closure verified; default1 and measured worker1 recorded."
         }
       }
     },
@@ -18208,13 +18277,13 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": "feature/component-consumers-benchmark",
-      "base_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+      "branch": "main",
+      "base_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
       "owns": [],
       "depends_on": [
         "component-consumers-benchmark-tooling"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18230,30 +18299,108 @@
           1
         ],
         "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "raw_results": [
+          "benchmarks/component-consumers-public-linux-minimum-initial.json",
+          "benchmarks/component-consumers-public-linux-modern-initial.json",
+          "benchmarks/component-consumers-public-windows-modern-initial.json"
+        ],
+        "regressions": {
+          "complete_lists": "benchmarks/component-consumers-public-initial.json",
+          "counts_by_profile": {
+            "linux-minimum": 93,
+            "linux-modern": 101,
+            "windows-modern": 134
+          },
+          "all_samples_and_workload_specs_retained": true
+        },
         "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched.",
-        "run_id": 40020440164,
-        "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
-        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40020440164",
-        "observed_state": "queued",
-        "created_at": "2026-10-23T20:35:48Z",
+        "run_id": 40024754860,
+        "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40024754860",
+        "observed_state": "completed",
+        "created_at": "2026-10-23T21:10:07Z",
         "workers": [
           1
         ],
-        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing."
+        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing.",
+        "attempts": [
+          {
+            "reference": "scikit-image==0.26.0",
+            "required_workers": [
+              1
+            ],
+            "corpus_sha256": null,
+            "raw_results": [],
+            "regressions": [],
+            "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched.",
+            "run_id": 40020440164,
+            "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+            "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40020440164",
+            "observed_state": "completed",
+            "created_at": "2026-10-23T20:35:48Z",
+            "workers": [
+              1
+            ],
+            "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing.",
+            "conclusion": "failure",
+            "failure_scope": "Linux source text CRLF/LF integrity guard;4480 correctness checks perLinux passed, no measurement started",
+            "retained_failure": "build/component-consumers-performance-runs/40020440164"
+          }
+        ],
+        "conclusion": "success",
+        "summary": "benchmarks/component-consumers-public-initial.json",
+        "summary_sha256": "0aca5d0f2fe685be2047a05fe7dd9657a6e7ac40e6ae4d8a556a530ff1a5d5b7",
+        "timed_cases_per_profile": 205,
+        "checks_per_profile": 878,
+        "repeat": 7,
+        "geometric_mean_speedup": {
+          "linux-minimum": 1.230175495315936,
+          "linux-modern": 1.1007530813338997,
+          "windows-modern": 0.8823690684745966
+        },
+        "evidence_boundary": "Complete archived runtime/product/SDK closure verified; default1 and measured worker1 recorded."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "4c9ee50e590f6dd3a219b427b721fa4f10653a3f",
+        "main_commit": "6a4b138d97c8a09e5a3cc3e9308beb5a77565047"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/component-consumers-initial-publication-evidence/4c9ee50",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
+        ]
       },
       "dependency_requirements": {
         "component-consumers-benchmark-tooling": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+          "manifest": {
+            "path": "benchmarks/component-consumers-public-initial.json",
+            "sha256": "0aca5d0f2fe685be2047a05fe7dd9657a6e7ac40e6ae4d8a556a530ff1a5d5b7"
+          },
+          "required_workers": [
+            1
+          ],
+          "completed_profiles": [
+            "linux-minimum",
+            "linux-modern",
+            "windows-modern"
+          ],
+          "timed_cases_per_profile": 205,
+          "checked_cases_per_profile": 878,
+          "all_raw_results_preserved": true,
+          "offline_verification": {
+            "path": "build/component-consumers-initial-publication-evidence/4c9ee50/manifest.json",
+            "sha256": "2123cd94db3f081c0e16ee01760bd885f0697e04bb3a61718fac84ab1ef50d3e"
+          },
+          "scope": "Complete archived runtime/product/SDK closure verified; default1 and measured worker1 recorded."
         }
       }
     },
@@ -18342,9 +18489,10 @@
         "rank-intensity-public",
         "rank-alias-native",
         "arraymap-dense-native",
-        "metrics-stepped-half-optimization"
+        "metrics-stepped-half-optimization",
+        "arraymap-live-provider-fix"
       ],
-      "state": "queued",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -18385,15 +18533,22 @@
         },
         "metrics-stepped-half-optimization": {
           "evidence_scope": "native_private"
+        },
+        "arraymap-live-provider-fix": {
+          "evidence_scope": "public_native"
         }
       },
       "proofs": {
         "public_native": {
-          "status": "pending",
-          "source_sha": null,
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "status": "verified",
+          "source_sha": "c44c475430a9187231309f75ebf81c7de9ca4850",
+          "manifest": {
+            "path": "coverage/evidence/public-wave5.json",
+            "sha256": "08a77b12c72413fba0f12129e0437a92b90d266477fcfdf7e9194894314de7fb"
+          },
+          "scope": "Composite actual-product proof: root main product diff to c44 empty; inherited unchanged883/591 scopes and complete new consumer-module gates explicit.163 scoped image APIs/3metadata/4partialclasses/1exceptionprovider, all163 have test+benchmark links. Not full rewrite/performance acceptance.",
+          "native_contract_checks": 163,
+          "native_pending": 0
         }
       }
     },
@@ -18446,17 +18601,12 @@
       "id": "rank-intensity-benchmark-tooling",
       "kind": "tooling",
       "apis": [],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/rank-intensity-benchmark",
-      "base_sha": "225c461edbd6e4b1512409ef283c51f49ff18464",
-      "owns": [
-        "benchmarks/rank_intensity.py",
-        "tests/test_rank_intensity_benchmark.py",
-        "coverage/contracts/rank-intensity-benchmark.json",
-        ".github/workflows/rank-intensity-benchmark.yml"
-      ],
+      "base_sha": "071166b0e21aa5e50f0de1782678dc8aca0845da",
+      "owns": [],
       "depends_on": [],
-      "state": "contracting",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -18478,6 +18628,461 @@
         "regressions": []
       },
       "merge": {
+        "commit": "071166b0e21aa5e50f0de1782678dc8aca0845da",
+        "main_commit": "35ce49813078c55c572480aed4e6c6dfb7e7915d"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {},
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "071166b0e21aa5e50f0de1782678dc8aca0845da",
+          "manifest": {
+            "path": "build/worktrees/rank-intensity-benchmark/build/rank-intensity-benchmark-proof.json",
+            "sha256": "83224316a0aa8519d4214f6e06417b75f01cb79ed31623ef478412a241986ea7"
+          },
+          "scope": "1428 reference cases and40guards x3, actionlint; source LF/POSIX; no native count in Phase1."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "4ce562a1314bf746f4476a2bc575b53801f1d0e6",
+          "manifest": {
+            "path": "build/worktrees/rank-intensity-benchmark-public/build/rank-intensity-public-benchmark-proof.json",
+            "sha256": "22841f6005d0db9dec1fed52d13d7a2cdacab39699bed6efd6b311b7f427adf1"
+          },
+          "scope": "Actual strict1428 public cases x8 atworkers1/4; complete source/runtime/104wheel/59SDK capsule seals. Four generic aliases and24policy rows untimed; product equals883.6076public proof inherited explicitly.",
+          "native_contract_checks": 1428,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "arraymap-provider-audit",
+      "kind": "reference_contract",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/arraymap-provider-contracts",
+      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
+      "owns": [],
+      "depends_on": [],
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Read-only bounded cold-process audit of live NumPy zeros/max provider lookups versus captured binding objects; no production edits/builds, timing or all-contract acceptance claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "5983259647d9937b9216afcad63420a3869d9d14",
+        "main_commit": "35ce49813078c55c572480aed4e6c6dfb7e7915d"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {},
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "5983259647d9937b9216afcad63420a3869d9d14",
+          "manifest": {
+            "path": "build/arraymap-provider-evidence/5983259/manifest.json",
+            "sha256": "e0778a9663fe66d99c099882b40b96e0ec29484e7d341cd1da20a63557ef0cae"
+          },
+          "scope": "16 original tests/runtime,15 cold observations,13 provider-hook gaps and2 matching plain controls on0486; zero new native acceptance.",
+          "passing_contract_checks": 16
+        }
+      }
+    },
+    {
+      "id": "arraymap-live-provider-fix",
+      "kind": "binding",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/arraymap-live-providers",
+      "base_sha": "a12d81bd34f282a78c9b533ef024cf42d2bdc801",
+      "owns": [],
+      "depends_on": [
+        "arraymap-provider-audit"
+      ],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "a12d81bd34f282a78c9b533ef024cf42d2bdc801",
+        "main_commit": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+        "whole_staging": "c44c475430a9187231309f75ebf81c7de9ca4850"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "arraymap-provider-audit": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "a12d81bd34f282a78c9b533ef024cf42d2bdc801",
+          "manifest": {
+            "path": "build/arraymap-live-provider-private-evidence/a12d81b/manifest.json",
+            "sha256": "5a186dd683927c1f66eb48c406853c001b273941cbd7246ae1aadcab92ff0931"
+          },
+          "scope": "Ten private2841 profiles including Debug/ASan; native leak gates. Private bootstrap explicitly not whole production.",
+          "native_contract_checks": 82,
+          "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "c44c475430a9187231309f75ebf81c7de9ca4850",
+          "manifest": {
+            "path": "build/arraymap-live-provider-whole-evidence/c44c475/manifest.json",
+            "sha256": "42273109ddd3201b379a63999184989e0be3b5dd576bf8bfa098221712ed066d"
+          },
+          "scope": "Eight actual complete-product3896 profiles and8 identity/default1/shared-state gates;21 inherited883 objects+1 new binding,59 unchangedSDK. Live allocator/max ordering, fresh RHS/index attributes and safe typed/checked assignment; no new public class/image path.",
+          "native_contract_checks": 82,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "rank-r1-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave4"
+      ],
+      "state": "measured",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [
+          "benchmarks/rank-public-linux-minimum-initial.json",
+          "benchmarks/rank-public-linux-modern-initial.json",
+          "benchmarks/rank-public-windows-modern-initial.json"
+        ],
+        "regressions": {
+          "complete_lists": "benchmarks/rank-public-initial.json",
+          "counts_by_profile": {
+            "linux-minimum": 112,
+            "linux-modern": 155,
+            "windows-modern": 142
+          },
+          "all_samples_and_workload_specs_retained": true
+        },
+        "run_id": 40024802716,
+        "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40024802716",
+        "observed_state": "completed",
+        "created_at": "2026-10-23T21:10:29Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll exact authoritative run to terminal; never restart for observation timeout. All3 preparations before fresh artifact-only measurement hosts.",
+        "conclusion": "success",
+        "summary": "benchmarks/rank-public-initial.json",
+        "summary_sha256": "6dd3bbf8192b7f58477779cad547d69095d36d9a21fa21774477e000b21ecc25",
+        "timed_cases_per_profile": 480,
+        "checks_per_profile": 810,
+        "repeat": 7,
+        "geometric_mean_speedup": {
+          "linux-minimum": 2.4119573273235124,
+          "linux-modern": 2.219572480347991,
+          "windows-modern": 2.080902867489454
+        },
+        "evidence_boundary": "Rank reports seal complete product/59 SDK and runtime pins/freeze, without dependency-binary closure or independent initial-default telemetry; worker1 calls enforced."
+      },
+      "merge": {
+        "commit": "09f4da310d14b856a70f4a1cc9d0a1cf1afce6ab",
+        "main_commit": "6a4b138d97c8a09e5a3cc3e9308beb5a77565047"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/rank-initial-publication-evidence/09f4da3",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
+        ]
+      },
+      "dependency_requirements": {
+        "combined-public-wave4": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+          "manifest": {
+            "path": "benchmarks/rank-public-initial.json",
+            "sha256": "6dd3bbf8192b7f58477779cad547d69095d36d9a21fa21774477e000b21ecc25"
+          },
+          "required_workers": [
+            1
+          ],
+          "completed_profiles": [
+            "linux-minimum",
+            "linux-modern",
+            "windows-modern"
+          ],
+          "timed_cases_per_profile": 480,
+          "checked_cases_per_profile": 810,
+          "all_raw_results_preserved": true,
+          "offline_verification": {
+            "path": "build/rank-initial-publication-evidence/09f4da3/manifest.json",
+            "sha256": "b95bdf56c951029b2dc6014d44ffb217302c1d4430370166d93abaa97bec2b1d"
+          },
+          "scope": "Rank reports seal complete product/59 SDK and runtime pins/freeze, without dependency-binary closure or independent initial-default telemetry; worker1 calls enforced."
+        }
+      }
+    },
+    {
+      "id": "rank-r2-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave4"
+      ],
+      "state": "measured",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [
+          "benchmarks/rank-distribution-public-linux-minimum-initial.json",
+          "benchmarks/rank-distribution-public-linux-modern-initial.json",
+          "benchmarks/rank-distribution-public-windows-modern-initial.json"
+        ],
+        "regressions": {
+          "complete_lists": "benchmarks/rank-distribution-public-initial.json",
+          "counts_by_profile": {
+            "linux-minimum": 63,
+            "linux-modern": 64,
+            "windows-modern": 69
+          },
+          "all_samples_and_workload_specs_retained": true
+        },
+        "run_id": 40024807986,
+        "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40024807986",
+        "observed_state": "completed",
+        "created_at": "2026-10-23T21:10:31Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll exact authoritative run to terminal; never restart for observation timeout. All3 preparations before fresh artifact-only measurement hosts.",
+        "conclusion": "success",
+        "summary": "benchmarks/rank-distribution-public-initial.json",
+        "summary_sha256": "e0c4651673b3ba8ada9e3c934ef52edab8ce64591cd34b92d745d537ad0a4cf5",
+        "timed_cases_per_profile": 384,
+        "checks_per_profile": 648,
+        "repeat": 7,
+        "geometric_mean_speedup": {
+          "linux-minimum": 3.4111441668471025,
+          "linux-modern": 3.295401730002871,
+          "windows-modern": 2.5833030368476995
+        },
+        "evidence_boundary": "Rank reports seal complete product/59 SDK and runtime pins/freeze, without dependency-binary closure or independent initial-default telemetry; worker1 calls enforced."
+      },
+      "merge": {
+        "commit": "102550f82a0e89539bf6bde679410f4acb9d92a5",
+        "main_commit": "6a4b138d97c8a09e5a3cc3e9308beb5a77565047"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/rank-distribution-initial-publication-evidence/102550f",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
+        ]
+      },
+      "dependency_requirements": {
+        "combined-public-wave4": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+          "manifest": {
+            "path": "benchmarks/rank-distribution-public-initial.json",
+            "sha256": "e0c4651673b3ba8ada9e3c934ef52edab8ce64591cd34b92d745d537ad0a4cf5"
+          },
+          "required_workers": [
+            1
+          ],
+          "completed_profiles": [
+            "linux-minimum",
+            "linux-modern",
+            "windows-modern"
+          ],
+          "timed_cases_per_profile": 384,
+          "checked_cases_per_profile": 648,
+          "all_raw_results_preserved": true,
+          "offline_verification": {
+            "path": "build/rank-distribution-initial-publication-evidence/102550f/manifest.json",
+            "sha256": "f6a14bafdcff52eca99d9311e81dda30c05190b89873eae70fd0c1042c2a0fa9"
+          },
+          "scope": "Rank reports seal complete product/59 SDK and runtime pins/freeze, without dependency-binary closure or independent initial-default telemetry; worker1 calls enforced."
+        }
+      }
+    },
+    {
+      "id": "rank-intensity-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
+      "owns": [],
+      "depends_on": [
+        "rank-intensity-public",
+        "rank-intensity-benchmark-tooling"
+      ],
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": "94ff120b62a7b7814902429cbca5776ee1f0dc01dd33bc01ac296099ed79e0f9",
+        "raw_results": [],
+        "regressions": [],
+        "note": "One-worker primary,1428checked/384canonical rasters perruntime; aliases/errors metadata untimed. Dispatch only exact validated source; no local operation timing.",
+        "run_id": 40034423731,
+        "source_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731",
+        "observed_state": "in_progress",
+        "created_at": "2026-10-23T22:33:54Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll exact authoritative run to terminal; never cancel/restart for observation timeout. All3 preparation profiles precede fresh artifact-only measurement hosts."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/rank-intensity-performance-runs/40034423731"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-intensity-public": {
+          "evidence_scope": "public_native"
+        },
+        "rank-intensity-benchmark-tooling": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "metrics-leaf-classification",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/metrics-leaf-simd",
+      "base_sha": "211dc6bc55404e0acf477b07544d78902ba5fc48",
+      "owns": [],
+      "depends_on": [],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
         "commit": null,
         "main_commit": null
       },
@@ -18485,25 +19090,35 @@
         "active_paths": [],
         "protected_artifacts": []
       },
-      "dependency_requirements": {}
+      "dependency_requirements": {},
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "211dc6bc55404e0acf477b07544d78902ba5fc48",
+          "manifest": {
+            "path": "build/metrics-leaf-classification-evidence/211dc6b/manifest.json",
+            "sha256": "c952859d8ea3182c7b4bb2a19247c938c27119186a67f4e14209b84710598fe4"
+          },
+          "scope": "Finite/minmax SIMD classification only; all scalar sum/tree/buffer expressions retained.1231 corpus x3 workers1/4,7790 broad,3706x6 targeted,60x8 bytewise diagnostics with explicitly matched oldASan control, native10 leak/portable/dynamic gates. Removed sum trials and cross-build NaN variance retained; private only, whole/performance pending.",
+          "native_contract_checks": 60,
+          "native_pending": 0
+        }
+      }
     },
     {
-      "id": "arraymap-provider-audit",
-      "kind": "reference_contract",
+      "id": "rank-alias-public",
+      "kind": "integration",
       "apis": [],
-      "owner": "metrics_reductions",
-      "branch": "feature/arraymap-provider-contracts",
-      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
-      "owns": [
-        "tests/test_arraymap_provider_contracts.py",
-        "coverage/contracts/arraymap-providers.json"
-      ],
+      "owner": "resize_bench",
+      "branch": "feature/rank-alias-public",
+      "base_sha": "ba82013e28051ad3ae2a50e455ab7a0da18218f5",
+      "owns": [],
       "depends_on": [],
-      "state": "contracting",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Read-only bounded cold-process audit of live NumPy zeros/max provider lookups versus captured binding objects; no production edits/builds, timing or all-contract acceptance claim."
+          "Genuine cumulative whole-core rebuild required with safety1d, public aliasPython and metrics211; never overlay Python onto883 and claim new kernel support. R3 overlaps remain excluded."
         ]
       },
       "parity": {
@@ -18528,7 +19143,278 @@
         "active_paths": [],
         "protected_artifacts": []
       },
-      "dependency_requirements": {}
+      "dependency_requirements": {},
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ba82013e28051ad3ae2a50e455ab7a0da18218f5",
+          "manifest": {
+            "path": "build/rank-alias-public-evidence/manifest.json",
+            "sha256": "73efb80a1f744e3753744ebe6f2d0af4034cfb7889d0c15f692a042934a40607"
+          },
+          "scope": "Full private14132x8,1008 frozen observations workers1/4, native4families x6 and bindingASan2044. Safety1d guards misaligned sameuint16 feedback before writes and serializes possibly overlapping output stores. Public4062 collected only; whole acceptance pending.",
+          "native_contract_checks": 1008,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-contracts",
+      "kind": "reference_contract",
+      "apis": [
+        "filters.rank.geometric_mean",
+        "filters.rank.noise_filter",
+        "filters.rank.subtract_mean",
+        "filters.rank.windowed_histogram",
+        "filters.rank.generic.geometric_mean",
+        "filters.rank.generic.noise_filter",
+        "filters.rank.generic.subtract_mean",
+        "filters.rank.generic.windowed_histogram"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/rank-statistics-contracts",
+      "base_sha": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+      "owns": [
+        "tests/test_rank_statistics_contracts.py",
+        "coverage/contracts/rank-statistics.json"
+      ],
+      "depends_on": [],
+      "state": "contracted",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-statistics.json",
+        "uncovered_cases": [
+          "Source-safe bounded reference only. Preserve geometric helper rounding, centered-mean mid-bin arithmetic, noise copied-footprint/3D axis quirk, histogram2D channel/n_bins behavior. No native registration or unsafe original probe."
+        ],
+        "raw_sha256": "047c34e7f32591fe4d574075f85c7d780ba66e9c4342bb6acf695b2ca7459588",
+        "canonical_lf_sha256": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
+        "publication_derivation": "coverage/evidence/rank-statistics-reference-publication.json"
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "b362aae905ae8ea9312007f701ba7467e29d55f9",
+        "main_commit": "6a4b138d97c8a09e5a3cc3e9308beb5a77565047"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {},
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "b362aae905ae8ea9312007f701ba7467e29d55f9",
+          "manifest": {
+            "path": "build/worktrees/rank-statistics-contracts/build/rank-statistics-contract-proof.json",
+            "sha256": "4e672c3b9781b218facfe37032ea08398d5d6bbb357a6cb3ce0fc20e54ce1a0d"
+          },
+          "passing_contract_checks": 6257,
+          "scope": "Three runtimes: 1990 original canonical/generic checks,3980 strict-pending metadata,282 independent oracles,5 source checks each.995 canonical IDs;8 paths stay upstream-only. No native checks or timings."
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave6",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "validation/wave6-metrics-alias",
+      "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave5",
+        "metrics-leaf-classification",
+        "rank-alias-public"
+      ],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Actual frozen61da whole products only. Original runners retain130 obsolete admission-policy expectation failures/profile; four-function test-only supplement pending until original handles terminal. No source rebuild/restart or new public acceptance yet."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": [
+          {
+            "authoritative_runner": 67616
+          },
+          {
+            "authoritative_runner": 44045
+          },
+          {
+            "authoritative_runner": 39093
+          },
+          {
+            "authoritative_runner": 69288
+          }
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/core-rank9-validation",
+          "build/worktrees/wave6-metrics-alias",
+          "build/worktrees/wave6-alias-admission",
+          "build/main-core-release-wheel-windows",
+          "build/main-core-wave6-evidence"
+        ],
+        "protected_artifacts": [
+          "build/main-core-wave6-release-windows-package",
+          "build/main-core-wave6-release-modern-linux-package",
+          "build/main-core-wave6-release-minimum-linux-package",
+          "build/main-core-wave6-debug-modern-linux-package"
+        ]
+      },
+      "dependency_requirements": {
+        "combined-public-wave5": {
+          "evidence_scope": "public_native"
+        },
+        "metrics-leaf-classification": {
+          "evidence_scope": "native_private"
+        },
+        "rank-alias-public": {
+          "evidence_scope": "native_private"
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-statistics-native",
+      "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+      "owns": [
+        "src/rank.cpp",
+        "src/simd_rank_avx2.cpp",
+        "include/skimagexx/rank.hpp",
+        "src/bind_rank.cpp",
+        "tests/test_rank_statistics_native.cpp",
+        "tests/test_rank_statistics_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-statistics-contracts"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-statistics.json",
+        "uncovered_cases": [
+          "Private-only four algorithms; preserve RankView ABI, old opcode/capability values, separately version scalar bits13..15 and vector-depth bit16. No public registry or benchmark changes; no overlap admission in this packet. Native checks/public parity/performance pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/rank-statistics-native"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-statistics-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      }
+    },
+    {
+      "id": "consumer-layout-scan",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/consumer-layout-scan",
+      "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+      "owns": [
+        "src/component_consumers.cpp",
+        "src/simd_component_consumers_avx2.cpp",
+        "include/skimagexx/component_consumers.hpp",
+        "tests/test_consumer_layout_native.cpp",
+        "tests/test_consumer_layout_pipeline.py"
+      ],
+      "depends_on": [
+        "component-consumers-measurement",
+        "arraymap-live-provider-fix"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/component-consumers-benchmark.json",
+        "uncovered_cases": [
+          "Measured broadcast relabel/clear-border and object filtering regressions. Move raw-word output width dispatch outside loops and certify disjoint contiguous SIMD stores; preserve NaN/zero bits, generic strides/aliases/partial-error/provider order. Sorting/hash/layout conversion remain unresolved. Private/public parity and new measurements pending. No binding/Python/provider edits currently needed."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/consumer-layout-scan"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "component-consumers-measurement": {
+          "evidence_scope": "isolated_performance"
+        },
+        "arraymap-live-provider-fix": {
+          "evidence_scope": "public_native"
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -18706,28 +19592,20 @@
     "filters.prewitt_v",
     "filters.rank.autolevel_percentile",
     "filters.rank.enhance_contrast_percentile",
-    "filters.rank.generic.geometric_mean",
     "filters.rank.generic.majority",
-    "filters.rank.generic.noise_filter",
     "filters.rank.generic.otsu",
-    "filters.rank.generic.subtract_mean",
-    "filters.rank.generic.windowed_histogram",
-    "filters.rank.geometric_mean",
     "filters.rank.gradient_percentile",
     "filters.rank.majority",
     "filters.rank.mean_bilateral",
     "filters.rank.mean_percentile",
-    "filters.rank.noise_filter",
     "filters.rank.otsu",
     "filters.rank.percentile",
     "filters.rank.pop_bilateral",
     "filters.rank.pop_percentile",
-    "filters.rank.subtract_mean",
     "filters.rank.subtract_mean_percentile",
     "filters.rank.sum_bilateral",
     "filters.rank.sum_percentile",
     "filters.rank.threshold_percentile",
-    "filters.rank.windowed_histogram",
     "filters.rank_order",
     "filters.roberts",
     "filters.roberts_neg_diag",
@@ -18963,7 +19841,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Current executable snapshot. All474 inventoried paths and284 static class members remain in scope; proof is per contract/source/runtime. Isolated one-worker timing jobs are authoritative and must not be restarted after observation timeouts.",
+  "note": "Full implementation goal remains active. Accepted163 scoped image paths and303 upstream-only. All163 have parity-test and benchmark links. Four report families newly measured with all regressions retained; whole61da SIMD/alias candidate remains validating. Three independent workers continue consumer scans, private R4 kernels and cumulative whole-core validation.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -19252,15 +20130,15 @@
   ],
   "static_member_note": "Four public model classes have scoped partial member/state implementations;284 static member paths across29 classes remain tracked individually. Provider metadata and reference-only contracts do not imply native numerical coverage.",
   "evidence_note": "Proofs are scoped and hash-bearing. Contract/reference success, strict rejection, expected failures, private adapters and unvalidated fixes cannot satisfy public-native or measurement gates. A frozen interface permits independent implementation, never acceptance.",
-  "snapshot_base_sha": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
+  "snapshot_base_sha": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
   "inventory_snapshot": {
     "public_names": 474,
-    "native_partial_image_names": 155,
+    "native_partial_image_names": 163,
     "metadata_names": 3,
-    "upstream_only_names": 311,
+    "upstream_only_names": 303,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "155 partial image paths,3 metadata helpers,4 partial classes,1 exception metadata provider; all155 benchmark links. Nine public rank algorithms across18paths. R3 four algorithms are private-only; classification is not full parity or performance acceptance.",
+    "note": "163 partial image API paths,3metadata,4partialclasses,1exceptionprovider; all163 test and benchmark links.13 public rank algorithms across26 canonical/identity-alias paths.303upstream-only; no full-domain or all-case speed claim.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -19287,14 +20165,14 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-alias-native"
+        "consumer-layout-scan"
       ],
       "resize_api": [
-        "arraymap-dense-native"
+        "rank-statistics-native"
       ],
       "resize_bench": [
-        "combined-public-wave4",
-        "rank-intensity-public"
+        "combined-public-wave6",
+        "rank-alias-public"
       ]
     }
   },

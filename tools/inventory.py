@@ -30,6 +30,9 @@ for _names, _test, _benchmark in (
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
            for name in ('gradient','median','modal','entropy')),
      'tests/test_rank_public.py','benchmarks/rank_distribution.py'),
+    (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
+           for name in ('autolevel','equalize','enhance_contrast','threshold')),
+     'tests/test_rank_intensity_public.py','benchmarks/rank_intensity.py'),
 ):
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 

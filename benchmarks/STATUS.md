@@ -1,24 +1,43 @@
 # Performance verification
 
-The current API inventory has 155 partially native image paths, three metadata
-helpers, four partially native transform classes and 311 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 155 image paths; measured
+The current API inventory has 163 partially native image paths, three metadata
+helpers, four partially native transform classes and 303 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 163 image paths; measured
 acceptance remains specific to the source revision and workload in each report.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
 
 | Workload | Windows | Modern Linux | Minimum NumPy Linux | Scope |
 |---|---:|---:|---:|---|
-| Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 cases faster per runtime; providers and state are separate |
-| Metrics SIMD-load trial | 0.873x | 0.806x | 0.917x | 1,212 cases per runtime; slower overall |
+| Rank first five algorithms | 2.081x | 2.220x | 2.412x | 480 timed cases; 142/155/112 slower |
+| Rank next four algorithms | 2.583x | 3.295x | 3.411x | 384 timed cases; 69/64/63 slower |
+| Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
+| Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
+| Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
+| Metrics SIMD-load trial | 0.873x | 0.806x | 0.917x | 1,212 cases; slower overall |
 
-The [transform class report](transform-classes-public-initial.md) retains all
-296 checks and separates coordinate kernels, NumPy/SciPy providers and metadata.
-The [metrics trial](metrics-public-simd-load-trial.md) retains all 1,231 checks,
-raw paired samples and every regression. Half-precision stepped loads and signed
-min-max normalization remain measured bottlenecks. These runs use fresh hosted
-measurement jobs after all preparation gates; no local operation timing is used.
-Cross-run CPU changes prevent attributing differences to a patch alone.
+These geometric means apply to the exact source revisions and workloads in the
+[R1 rank](rank-public-initial.md), [R2 rank](rank-distribution-public-initial.md),
+[consumer](component-consumers-public-initial.md),
+[controlled resize](resize-public-controlled.md),
+[transform](transform-classes-public-initial.md) and
+[metrics](metrics-public-simd-load-trial.md) reports. Every slower case and raw
+sample remains available. Aliases, expected errors, providers and metadata do not
+inflate image-kernel timing counts.
+
+The controlled resize run compares complete current/initial/original products
+on each host: current/initial means are 1.012x/1.012x/1.014x, with mixed workload
+changes. It does not isolate an individual patch. Other reports compare against
+original; cross-run CPU changes prevent causal comparisons between patches.
+Rank artifacts verify complete product/SDK bytes and runtime pins/freeze text;
+they did not archive dependency-binary closures or separately record initial
+default worker state. Measured rank calls explicitly enforce one worker. Those
+evidence limits remain explicit in their reports.
+
+Measurements use fresh hosted jobs after all preparation gates, without local
+operation timing. Stepped-half and signed min-max metrics, relabeling, object
+filtering and sparse rank scans remain measured bottlenecks. Later optimization
+candidates await cumulative public parity and fresh measurements.
 
 ## Retained whole-library checkpoints
 

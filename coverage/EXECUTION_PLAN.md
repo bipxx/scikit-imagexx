@@ -6,21 +6,21 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 155 native-partial image entries,
+The current inventory contains 474 public paths: 163 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 311 upstream-only entries. The expansion adds 19
+provider, and 303 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-Three worker agents are executing returned-map provider compatibility,
-four-operation rank benchmark tooling, and cumulative-package validation followed
-by public rank intensity registration. The integrator handles shared wiring,
-hosted results, measured bottlenecks, prompt merges and cleanup. The earlier
-three-agent review and preserved checkpoints remain recorded in the ledger.
-Existing hosted measurement jobs retain their authoritative run.
+Three worker agents are executing private consumer output-scan optimization,
+the next four rank statistics kernels, and cumulative whole-core validation of
+SIMD metrics classification plus qualified R2 aliases. The integrator handles
+shared wiring, hosted measurements, verified reports, prompt merges and cleanup.
+All four completed report families are merged; live jobs keep their authoritative
+handles until terminal.
 
 ## What changed after review
 
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, hosted measurements, prompt merges and cleanup | Nine public rank algorithms; private thirteen-operation engine and alias480 merged; consumer0486 and stepped-half ae2fd75 merged. Fixing portable consumer source hashes while preserving all878 workloads; six obsolete source-only worktrees archived and removed |
-| Worker 1 | `metrics_reductions` | Returned-map allocation/max provider stages | Frozen5983259 reference audit confirms13 interposition gaps beyond the unchanged692/0486 scope. Implement a separate bounded fix with native ordinary scan/scatter and explicit checked providers; no upstream class forwarding |
-| Worker 2 | `resize_api` | Four-operation rank intensity benchmark tooling | Freeze1428 source-backed canonical cases, keep generic aliases untimed, preserve R1/R2 corpora, and validate reference/tooling independently. Actual native public gates wait for Worker3 packages |
-| Worker 3 | `resize_bench` | Cumulative155 proof, then public rank intensity registration | Complete authoritative591 runners and exact059 nested-test supplements before releasing source/cache lease. Then freeze product base a1665b5 once, append four wrappers/aliases, build whole packages/SDKs and run targeted cumulative checks |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Accepted c44 product: 163 image paths and 303 upstream-only. Controlled resize, R1/R2 rank and consumer reports verified and merged; all regressions retained |
+| Worker 1 | `metrics_reductions` | Measured consumer bottlenecks | New private branch from frozen 61da: fixed-width output stores and certified contiguous SIMD scan. Preserve provider/alias/partial-error behavior; sorting/hash/layout conversion remain unresolved |
+| Worker 2 | `resize_api` | Next rank statistics kernels | Reference contracts pass 6,257 checks on each of three runtimes. Implement geometric mean, noise filter, centered mean and vector histogram privately with unchanged RankView ABI; eight paths remain upstream-only |
+| Worker 3 | `resize_bench` | Cumulative metrics/alias actual-core validation | Frozen 61da packages: all authoritative original runners terminal, 538 migrated admission checks pass on each of eight profiles and all 72 SDK checks pass. Final data-only inventory supplement and evidence sealing remain; retain all original obsolete-policy failures |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -172,13 +172,12 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Active cumulative validation | Production155 image paths plus3 metadata functions,4 classes and1 exception provider at591 | Finish original normal/scalar runners and22 nested-test supplements on8 profiles, then seal and explicitly release the four cached-build/source leases |
-| Active public integration | Rank autolevel, equalize, enhance_contrast and threshold plus identity aliases | Private13-operation C++ proof is merged. Public wrappers, exact aliases/providers, whole packages, installed SDK9 clients and sole-core worker state remain acceptance gates |
-| Active independent tooling | New four-operation rank intensity benchmark corpus | Reference/tooling work is independent of public registration; actual native acceptance and timing wait for sealed public packages |
-| Active compatibility | Returned ArrayMap live allocation/max providers and attribute rebinding | Source-backed13-gap audit is separate from previously accepted dense contracts. Preserve Python evaluation order and native ordinary scan/scatter; validate changed binding/GIL boundaries |
-| Active measured bottleneck | Stepped-half metrics loads and remaining signed min-max normalization | ae2fd75 byte-safe SIMD delta passes private/native parity; cumulative actual-core gate and fresh same-corpus timing remain pending. Last measured1212-case ratios remain0.873/0.806/0.917, slower overall |
-| Live hosted campaign | Controlled old/current/original resize comparison40020239743 | All3 preparation profiles before fresh artifact-only hosts; retain this exact authoritative run to terminal |
-| Preparation correction | Consumer campaign40020440164 failed before measurement | Preserve failed run/logs. Canonical LF source-text fingerprints must pass while every878-case observation/classification and raw binary/capsule hash stays unchanged; dispatch a new exact corrected source only after validation |
+| Active cumulative validation | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Authoritative original jobs terminal; four-function admission migration passes 538 checks on each of eight profiles. Finish data-only 163-path inventory supplement and seal core/SDK/source identities before acceptance and release |
+| Active measured bottleneck | Consumer raster output scans | Private width dispatch and certified SIMD selects/fills; fixed 878-case corpus, provider/owner/partial-write contracts and all regressions remain unchanged |
+| Active independent kernels | Four R4 rank statistics algorithms | Separate scalar statistics and vector-depth capabilities preserve RankView ABI and old bits. Reference-only eight paths stay upstream-only until genuine public gates pass |
+| Ready measurement | Four public R3 intensity algorithms | All eight public-package profiles and 1,428-case corpus pass. One-worker hosted run [40034423731](https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731) uses exact fbdfb46; 384 canonical raster workloads, aliases/errors untimed. Poll the same run to terminal |
+| Verified reports | Controlled resize and initial R1/R2/consumer campaigns | Completed runs 40020239743, 40024802716, 40024807986 and 40024754860; all raw samples, source boundaries and slower cases retained |
+| Retained preparation failure | Consumer campaign 40020440164 | Preserve original failed source-text guards and logs. Corrected LF/CRLF-only provenance passed without changing any of 878 observations, followed by successful campaign 40024754860 |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
 claims them. Repeat the process for remaining transforms/pyramids, measurements,
