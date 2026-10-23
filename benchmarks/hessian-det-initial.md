@@ -1,8 +1,8 @@
 # Hessian determinant native port
 
 Candidate `feature.hessian_matrix_det` preserves the public scikit-image 0.26.0
-signature. It is not yet retained on main: full validation and isolated
-performance measurements are pending.
+signature. It is not yet retained on main: full CI is pending. Isolated
+performance measurements are verified below, including slower cases.
 
 The two upstream paths are implemented independently in C++:
 
