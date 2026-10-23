@@ -1,26 +1,16 @@
 #include "skimagexx/structure_tensor.hpp"
+#include "bind_numeric.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <vector>
 
 namespace py=pybind11;
-namespace {
-skimagexx::PixelType tensor_type(py::dtype dtype){
-    using P=skimagexx::PixelType;const auto bytes=dtype.itemsize();
-    if(dtype.kind()=='b')return P::boolean;
-    if(dtype.kind()=='f' && bytes==4)return P::float32;
-    if(dtype.kind()=='f' && bytes==8)return P::float64;
-    if(dtype.kind()=='i'){if(bytes==1)return P::int8;if(bytes==2)return P::int16;if(bytes==4)return P::int32;if(bytes==8)return P::int64;}
-    if(dtype.kind()=='u'){if(bytes==1)return P::uint8;if(bytes==2)return P::uint16;if(bytes==4)return P::uint32;if(bytes==8)return P::uint64;}
-    throw py::type_error("real structure tensor input required");
-}
-}
 void bind_structure_tensor(py::module_& module){
     module.def("structure_tensor",[](py::array image,py::list kernels,const std::vector<std::size_t>& axes,
         const std::vector<int>& modes,double cval,bool xy)->py::object{
         if(!image.dtype().attr("isnative").cast<bool>())throw py::type_error("native byte order required");
-        const auto type=tensor_type(image.dtype());
+        const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
         if(image.ndim()<2 || image.ndim()>5 || modes.size()!=std::size_t(image.ndim()) || axes.size()!=std::size_t(kernels.size()))throw py::value_error("invalid structure tensor plan");
         auto input=py::array::ensure(image,py::array::c_style);
         if(!input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")().cast<py::array>();

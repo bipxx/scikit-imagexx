@@ -114,3 +114,30 @@ def corner_foerstner(image,sigma=1):
 
 
 __all__+=['structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner']
+
+
+
+def corner_kitchen_rosenfeld(image,mode='constant',cval=0):
+    forwarded=lambda:fallback('feature','corner_kitchen_rosenfeld',image,mode=mode,cval=cval)
+    from .filters import _GAUSSIAN_TYPES,_GAUSSIAN_MODES
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES or image.ndim!=2:return forwarded()
+    if np.geterr()['under']!='ignore':return forwarded()
+    if type(mode) is str:modes=[mode,mode]
+    elif type(mode) in (tuple,list) and len(mode)==2:modes=list(mode)
+    else:return forwarded()
+    if any(type(value) is not str or value not in _GAUSSIAN_MODES for value in modes):return forwarded()
+    scalar_types=(bool,int,float,np.bool_,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64,np.float16,np.float32,np.float64)
+    if type(cval) not in scalar_types:return forwarded()
+    try:constant=float(cval)
+    except (ValueError,OverflowError):return forwarded()
+    if not np.isfinite(constant):return forwarded()
+    prepared=image if image.dtype.isnative else _core.edge_native(image)
+    if prepared.dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    result=_core.kitchen_rosenfeld(prepared,[_GAUSSIAN_MODES[value] for value in modes],constant)
+    if result is None:return forwarded()
+    if type(image) is np.memmap or not image.flags.c_contiguous:
+        out=np.zeros_like(image,dtype=result.dtype);out[...]=result;return out
+    return result
+
+
+__all__+=['corner_kitchen_rosenfeld']
