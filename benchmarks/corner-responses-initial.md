@@ -45,4 +45,6 @@ Raw samples: [Linux](corner-responses-initial-linux.json),
 [Windows](corner-responses-initial-windows.json). Exact packages, manifests,
 source archives and validation logs are preserved in ignored build checkpoints.
 The [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39881327501)
-is still running; retention awaits all three jobs.
+passed all three jobs: Windows, Linux and minimum NumPy. The implementation
+is retained; subsequent changes are reports and merge bookkeeping, and runtime
+sources match the measured revision.
