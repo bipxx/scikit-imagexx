@@ -22,17 +22,18 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **117 partially native
+The reference is scikit-image **0.26.0**. There are currently **118 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 336 remain pending native implementation and dedicated parity tests.
+export list; 335 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `filters.sato` | Nonempty real 2-D/3-D arrays/memmaps; all integer widths and float16/32/64; ordinary scale sequences, black/white ridges and ndimage border modes | C++ raw floating cast, Gaussian Hessians, eigenvalues and fused SIMD response. Optional global workers default one. Float32/64 error budgets include an explicit per-pixel conditioning allowance for 3-D near-zero eigenvalues; exact LAPACK parity is not claimed. Full CI and isolated measurements pass: one-worker 2-D/3-D means are 7.26×/5.54× Linux and 5.96×/4.50× Windows, all 240 cases faster per OS. See the [contract and trials](benchmarks/sato-initial.md) |
 | `feature.hessian_matrix_det` | Real arrays/memmaps, bool and all integer widths, float16/32/64; 2-D integral-box approximation for ordinary scalar sigma in [-1000,1000], and exact finite-difference Hessian determinants in 2–5 dimensions with scalar/anisotropic sigma | Ordered float64 integral image and AVX2 contiguous box responses preserve start-before-end clipping, negative sigma geometry and signed zeros. Exact mode uses double partial-pivot LU, signed log/exp reconstruction and float32 output rounding. Optional global workers, owned C outputs, empty approximation and small-axis exact errors. Unsafe arithmetic and unsupported protocols use explicit whole-function fallback. Verified one-worker approximation/exact means are 4.01×/5.57× Linux and 4.90×/4.33× Windows; all 240 cases faster per OS. The faster follow-up passes full CI on Windows, Linux and minimum NumPy; see the [report](benchmarks/hessian-det-initial.md) |
 | `feature.shape_index` | Real 2-D arrays/memmaps, all integer widths and float16/32/64, anisotropic sigma and ndimage borders | Native finite Hessian and eigenvalues feed an AVX2 arctangent polynomial response. Preserves float32 intermediate rounding, flat-region NaN masks, signed zero and exact serial/parallel output. Unsafe arithmetic and unsupported protocols use whole-function fallback. Production parity and isolated measurements pass. One-worker geometric means are 3.79× Linux / 2.69× Windows, all 120 cases faster per OS. Full CI passes; see the [report](benchmarks/shape-index-initial.md) |
 | `feature.hessian_matrix` | Real arrays/memmaps, all integer widths and float16/32/64; finite differences in 2–5 dimensions and Gaussian derivatives in 1–5 dimensions; anisotropic sigma, all ndimage borders and rc/xy ordering | C++ normalized input, native Gaussian smoothing and two finite differences or repeated first Gaussian derivatives. AVX2 and optional global workers preserve per-axis float32 rounding, owned C output lists, warning text and small-axis errors. Unsafe arithmetic and unsupported protocols use explicit whole-function fallback. Padded-line isolated measurements pass: one-worker finite/Gaussian means are 4.55×/4.66× Linux and 3.79×/4.58× Windows, all 240 cases faster per OS with zero numerical difference. Full CI passes on Windows, Linux and minimum NumPy; see the [trial report](benchmarks/hessian-initial.md) |

@@ -716,6 +716,50 @@ __all__ += ['farid','farid_h','farid_v']
 
 
 _GAUSSIAN_TYPES={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64}
+_RIDGE_SCALARS=_GAUSSIAN_TYPES|{bool,int,float}
+
+
+def sato(image,sigmas=range(1,10,2),black_ridges=True,mode='reflect',cval=0):
+    forwarded=lambda:fallback('filters','sato',image,sigmas=sigmas,black_ridges=black_ridges,mode=mode,cval=cval)
+    if type(image) not in (np.ndarray,np.memmap):return forwarded()
+    if not image.size:raise ValueError('The parameter `image` cannot be an empty array')
+    if image.ndim not in (2,3):raise ValueError('The parameter `image` must be a 2-or-3-dimensional array')
+    if image.dtype.type not in _GAUSSIAN_TYPES or type(black_ridges) not in _RIDGE_SCALARS:return forwarded()
+    if type(sigmas) not in (range,list,tuple,np.ndarray) or type(sigmas) is np.ndarray and sigmas.ndim!=1:return forwarded()
+    try:
+        if len(sigmas)>10000:return forwarded()
+    except OverflowError:return forwarded()
+    scales=list(sigmas)
+    for sigma in scales:
+        if type(sigma) not in _RIDGE_SCALARS:return forwarded()
+        try:value=float(sigma)
+        except (ValueError,OverflowError):return forwarded()
+        if not 0<=value<=1000:return forwarded()
+        if isinstance(sigma,np.integer) and value*value>np.iinfo(type(sigma)).max:return forwarded()
+        if type(sigma) is np.float16 and value*value>np.finfo(np.float16).max:return forwarded()
+    negative=not bool(black_ridges)
+    original_dtype=image.dtype
+    dtype=original_dtype if original_dtype.isnative and original_dtype.type in (np.float32,np.float64) else np.dtype(np.float32 if original_dtype.type in (np.float16,np.float32) else np.float64)
+    if not scales:return np.zeros_like(image,dtype=dtype,subok=not negative)
+    if np.geterr()['under']!='ignore':return forwarded()
+    prepared=image if original_dtype.isnative else _core.edge_native(image)
+    if original_dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    prepared=_core.ridge_prepare(prepared,negative)
+    from .feature import _hessian_matrix_impl
+    state=None
+    for sigma in scales:
+        fields=_hessian_matrix_impl(prepared,sigma,mode,cval,'rc',True,lambda:None)
+        if fields is None:return forwarded()
+        factor=sigma**2
+        value_dtype=np.result_type(prepared.dtype,factor)
+        output_dtype=state.dtype if state is not None else dtype
+        if value_dtype.itemsize>output_dtype.itemsize:output_dtype=value_dtype
+        state=_core.sato_accumulate(fields,state,output_dtype,float(factor),value_dtype.itemsize==4)
+        if state is None:return forwarded()
+    return state
+
+
+__all__+=['sato']
 _GAUSSIAN_MODES={'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
 
 

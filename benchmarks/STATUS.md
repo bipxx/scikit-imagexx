@@ -1,5 +1,18 @@
 # Last completed whole-library performance checkpoint
 
+Retained `filters.sato`, measured source `a5f4a68`:
+[full CI39905542928](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39905542679](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
+passed both OSes. One-worker geometric means for 2-D/3-D are
+**7.255148× / 5.537527× Linux** and **5.959401× / 4.501150× Windows**.
+All 240 one-worker cases per OS are faster. Measured 2-D outputs are exact;
+3-D comparisons use the explicit per-pixel conditioning allowance, with
+maximum input-scaled error 1.381438e-9. They are not exact LAPACK parity.
+The [scope, numerical limits and raw samples](sato-initial.md) are preserved.
+Native coverage is **118 + 2 metadata APIs**; **335 callable names** and
+29 classes/284 static member paths remain pending.
+
 Retained optimized `feature.hessian_matrix_det`, measured source `b93d108`:
 [full CI39899942360](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
 passed Windows, Linux and minimum NumPy; isolated
