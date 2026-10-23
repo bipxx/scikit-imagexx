@@ -1,8 +1,9 @@
 # Hessian determinant native port
 
 Candidate `feature.hessian_matrix_det` preserves the public scikit-image 0.26.0
-signature. It is not yet retained on main: full CI is pending. Isolated
-performance measurements are verified below, including slower cases.
+signature. This initial native port is retained on main after full CI and
+isolated measurements. The four slower tiny-image cases remain disclosed below;
+the subsequent optimization has separate validation and retention gates.
 
 The two upstream paths are implemented independently in C++:
 
@@ -97,7 +98,10 @@ Raw samples: [Linux](hessian-det-initial-linux.json),
 are within each runner; these are not paired candidate-to-candidate results.
 
 [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39898515905)
-is still running. Retention awaits this gate.
+passed Windows, Linux and minimum NumPy. The retained runtime matches measured
+source `f9c80e2272609267606740029d94477517dc7797`; later changes are reports and
+merge bookkeeping. Exact packages, source archives, CI logs and earlier failing
+parity trials remain preserved.
 
 ## Small-image follow-up
 
