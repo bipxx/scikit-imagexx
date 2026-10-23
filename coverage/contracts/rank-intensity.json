@@ -27,7 +27,8 @@
       "native_checks": 0,
       "native_pending": 253,
       "python_source_sha256": "0e1b14517f1e6da1165ef26786ed32f75ff8da2b047c9bceaf49447ca2e6afa4",
-      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "wide_arithmetic": "Masked uint16 centers outside a unit-span local range produce signed quotients beyond +/-2**31; float32/64 output makes this observable. Do not use signed32 multiply/divide or cvtt-to-int32 intermediates."
     },
     "enhance_contrast": {
       "aliases": [
@@ -85,7 +86,7 @@
     "output": "Frozen shape/strides/ownership/writeability/alias states, supplied output validation and partial mutation. Safe one/two-channel/oversized outputs retained; unsafe extents excluded."
   },
   "identity_generic_aliases": 4,
-  "independent_oracle_checks_per_profile": 240,
+  "independent_oracle_checks_per_profile": 248,
   "interface_proposal": {
     "capability_attribute": "rank_histogram_capabilities",
     "capability_bits_through_12": 8191,

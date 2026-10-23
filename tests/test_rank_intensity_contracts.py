@@ -179,3 +179,19 @@ def test_independent_histogram_intensity_definition(name,ndim,dtype,output,patte
     expected=intensity_oracle(name,image,footprint,mask,center,out_dtype)
     with warnings.catch_warnings():warnings.simplefilter('ignore');actual=getattr(reference,name)(image,footprint,**options)
     np.testing.assert_array_equal(actual,expected)
+
+
+@pytest.mark.parametrize('ndim',[2,3])
+@pytest.mark.parametrize('output',[np.float32,np.float64])
+@pytest.mark.parametrize('direction',['below','above'])
+def test_autolevel_signed_wide_quotient_is_observable_in_float_output(ndim,output,direction):
+    shape=(5,7) if ndim==2 else (3,4,5)
+    levels=np.asarray([1,2] if direction=='above' else [65533,65534],np.uint16)
+    image=np.resize(levels,int(np.prod(shape))).reshape(shape);position=tuple(n//2 for n in shape)
+    image[position]=65535 if direction=='above' else 0
+    footprint=np.ones((3,)*ndim,np.uint8);mask=np.ones(shape,np.uint8);mask[position]=0
+    expected=intensity_oracle('autolevel',image,footprint,mask,(1,)*ndim,output)
+    assert abs(float(expected[position]))>2**31
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore');actual=reference.autolevel(image,footprint,mask=mask,out=np.empty(shape,output))
+    np.testing.assert_array_equal(actual,expected)
