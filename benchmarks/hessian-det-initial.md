@@ -102,3 +102,52 @@ passed Windows, Linux and minimum NumPy. The retained runtime matches measured
 source `f9c80e2272609267606740029d94477517dc7797`; later changes are reports and
 merge bookkeeping. Exact packages, source archives, CI logs and earlier failing
 parity trials remain preserved.
+
+## Small-image follow-up
+
+Frozen source **b93d1082fdb79a415c45623eae5497f7e3f2dae0** addresses the four
+tiny approximation cases without changing the corpus. Python caches the
+ordinary scalar type sets, avoids repeated dtype/import work, and uses the
+finite interval check directly. Bindings read native dtype/alignment metadata
+without repeated Python attribute calls. Approximation hoists row clipping
+and row-pointer arithmetic out of scalar pixel loops, shares those pointers
+with the SIMD interior, and vectorizes the integral-image safety scan.
+The numerical expression and clipping order are unchanged.
+
+Local checks pass 1,080 dedicated cases per SIMD mode per runtime, including
+all short row widths around SIMD boundaries, negative/even/oversized box
+geometry, and the arithmetic safety threshold. Windows integration passes
+9,766 checks; the NumPy 1.24 Linux set passes 9,310 (Windows additionally ran
+the 456 inventory checks). All 480 untimed corpus rows pass per runtime.
+Native tests pass 10/10 and relocated SDK consumers 9/9 on Windows and Linux
+with acceleration enabled and portable Linux with it disabled. ASan/UBSan pass
+10/10 normally and with constrained dynamic teams. No local timings ran.
+
+The follow-up [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942605)
+passed both OSes. Frozen revision, source and binary hashes, exact wheel/package
+bytes, unchanged case hash, all 480 rows per OS and seven samples per
+implementation per row are verified.
+
+| One-worker result (120 cases per mode/OS) | Linux | Windows |
+|---|---:|---:|
+| Approximation geometric mean | 4.009510× | 4.895439× |
+| Approximation minimum | 1.770231× | 1.472212× |
+| Approximation cases faster | 120/120 | 120/120 |
+| Exact geometric mean | 5.571440× | 4.330357× |
+| Exact minimum | 3.816523× | 2.705763× |
+| Exact cases faster | 120/120 | 120/120 |
+
+All 240 one-worker cases are faster on each OS. The formerly slower tiny
+approximations now measure 1.770231× for Linux float64 and 1.678733× /
+1.472212× / 1.585138× for Windows bool / float16 / float32. No adverse cases
+were removed. Approximation has zero numerical difference across all timed
+rows; exact mode's maximum absolute error is 2.081668e-17 Linux /
+1.214307e-17 Windows. Raw samples: [Linux](hessian-det-small-linux.json),
+[Windows](hessian-det-small-windows.json). Comparisons are candidate versus
+upstream within each runner, not paired candidate-to-candidate measurements.
+
+The follow-up [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
+passed Windows, Linux and minimum NumPy. This follow-up is retained on `main`;
+runtime sources match measured revision `b93d1082fdb79a415c45623eae5497f7e3f2dae0`.
+Later retention changes are documentation and merge bookkeeping. Exact packages,
+raw samples, source archives and full CI logs remain preserved.

@@ -3,9 +3,7 @@
 #include <cmath>
 #include <limits>
 namespace skimagexx::simd {
-std::size_t hessian_det_boxes(const double* integral,double* output,std::size_t height,std::size_t width,std::size_t row,std::size_t begin,std::size_t end,const detail::DetBox* boxes,double weight){
- const double* top[8];const double* bottom[8];
- for(int j=0;j<8;++j){const auto r=std::clamp(std::ptrdiff_t(row)+boxes[j].row,std::ptrdiff_t(0),std::ptrdiff_t(height)-1),r2=std::clamp(r+boxes[j].rows,std::ptrdiff_t(0),std::ptrdiff_t(height)-1);top[j]=integral+r*width;bottom[j]=integral+r2*width;}
+std::size_t hessian_det_boxes(const double* const* top,const double* const* bottom,double* output,std::size_t begin,std::size_t end,const detail::DetBox* boxes,double weight){
  const auto zero=_mm256_setzero_pd(),negative=_mm256_set1_pd(-0.),w=_mm256_set1_pd(weight),three=_mm256_set1_pd(3.),correction=_mm256_set1_pd(.81);auto c=begin;
  for(;c+4<=end;c+=4){__m256d b[8];
   for(int j=0;j<8;++j){const auto x=std::ptrdiff_t(c)+boxes[j].column,y=x+boxes[j].columns;
@@ -15,7 +13,7 @@ std::size_t hessian_det_boxes(const double* integral,double* output,std::size_t 
   }
   const auto xy=_mm256_mul_pd(_mm256_xor_pd(negative,_mm256_sub_pd(_mm256_sub_pd(_mm256_add_pd(b[2],b[3]),b[0]),b[1])),w);
   const auto xx=_mm256_mul_pd(_mm256_xor_pd(negative,_mm256_sub_pd(b[4],_mm256_mul_pd(three,b[5]))),w),yy=_mm256_mul_pd(_mm256_xor_pd(negative,_mm256_sub_pd(b[6],_mm256_mul_pd(three,b[7]))),w);
-  _mm256_storeu_pd(output+row*width+c,_mm256_sub_pd(_mm256_mul_pd(xx,yy),_mm256_mul_pd(correction,_mm256_mul_pd(xy,xy))));
+  _mm256_storeu_pd(output+c,_mm256_sub_pd(_mm256_mul_pd(xx,yy),_mm256_mul_pd(correction,_mm256_mul_pd(xy,xy))));
  }return c-begin;
 }
 std::size_t hessian_det_fields(const void* const* fields,void* output,std::size_t begin,std::size_t end,std::size_t n,bool single,bool& valid){

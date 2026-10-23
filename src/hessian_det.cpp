@@ -3,6 +3,7 @@
 #include "skimagexx/integral.hpp"
 #include "skimagexx/image.hpp"
 #include "hessian_det_detail.hpp"
+#include "structure_tensor_detail.hpp"
 #include "execution.hpp"
 #include <atomic>
 #include <cmath>
@@ -48,7 +49,12 @@ bool hessian_det_approx_into(const void* input,PixelType type,double* output,std
  std::unique_ptr<double[]> integral(new double[count]);const std::vector<std::size_t> shape{height,width};
  if(type==PixelType::float32 || type==PixelType::float64)integral_image_into(input,integral.get(),type,PixelType::float64,shape);
  else{gaussian_nd_into(input,output,type,PixelType::float64,shape,{},false);integral_image_into(output,integral.get(),PixelType::float64,PixelType::float64,shape);}
- for(std::size_t i=0;i<count;++i)if(!std::isfinite(integral[i]) || std::abs(integral[i])>1e140)return false;
+ std::size_t checked=0;bool valid=true;
+#ifdef SKIMAGEXX_AVX2
+ if(has_avx2())checked=simd::structure_validate(integral.get(),count,false,1e140,valid);
+#endif
+ if(!valid)return false;
+ for(;checked<count;++checked)if(!std::isfinite(integral[checked]) || std::abs(integral[checked])>1e140)return false;
  if(!size){std::fill(output,output+count,std::numeric_limits<double>::quiet_NaN());return true;}
  detail::DetBox boxes[8];detail::det_boxes(std::ptrdiff_t(size),boxes);const double weight=1./double(size)/double(size);
  // An interior SIMD span uses contiguous loads; clipped edge coordinates are
@@ -57,10 +63,17 @@ bool hessian_det_approx_into(const void* input,PixelType type,double* output,std
  for(const auto& b:boxes){left=std::max({left,-b.column,-b.column-b.columns});right=std::min({right,std::ptrdiff_t(width)-b.column,std::ptrdiff_t(width)-b.column-b.columns});}
  detail::partition(height,detail::active_workers(count*16),[&](auto begin,auto end,auto){
   for(auto r=begin;r<end;++r){std::size_t c=0;const auto first=std::size_t(std::clamp(left,std::ptrdiff_t(0),std::ptrdiff_t(width)));
-   auto scalar=[&](std::size_t column){double values[8];for(int j=0;j<8;++j)values[j]=detail::det_box_value(integral.get(),height,width,r,column,boxes[j]);output[r*width+column]=detail::det_box_response(values,weight);};
+   // Row clipping and multiplication are invariant across every output column,
+   // including scalar borders and lines shorter than one SIMD block.
+   const double* top[8];const double* bottom[8];
+   for(int j=0;j<8;++j){const auto row=std::clamp(std::ptrdiff_t(r)+boxes[j].row,std::ptrdiff_t(0),std::ptrdiff_t(height)-1),last=std::clamp(row+boxes[j].rows,std::ptrdiff_t(0),std::ptrdiff_t(height)-1);top[j]=integral.get()+row*width;bottom[j]=integral.get()+last*width;}
+   auto scalar=[&](std::size_t column){double values[8];for(int j=0;j<8;++j){
+     const auto x=std::clamp(std::ptrdiff_t(column)+boxes[j].column,std::ptrdiff_t(0),std::ptrdiff_t(width)-1),y=std::clamp(x+boxes[j].columns,std::ptrdiff_t(0),std::ptrdiff_t(width)-1);
+     values[j]=std::max(0.,((top[j][x]+bottom[j][y])-top[j][y])-bottom[j][x]);
+    }output[r*width+column]=detail::det_box_response(values,weight);};
    for(;c<first;++c)scalar(c);
 #ifdef SKIMAGEXX_AVX2
-   if(has_avx2() && right>std::ptrdiff_t(c))c+=simd::hessian_det_boxes(integral.get(),output,height,width,r,c,std::size_t(right),boxes,weight);
+   if(has_avx2() && right>std::ptrdiff_t(c))c+=simd::hessian_det_boxes(top,bottom,output+r*width,c,std::size_t(right),boxes,weight);
 #endif
    for(;c<width;++c)scalar(c);
   }
