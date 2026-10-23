@@ -23,7 +23,7 @@ for _names, _test, _benchmark in (
     (('measure.label','morphology.label'),'tests/test_connected_components_contracts.py','benchmarks/components.py'),
     (('morphology.remove_small_objects','morphology.remove_small_holes',
       'segmentation.clear_border','segmentation.relabel_sequential'),
-     'tests/test_component_consumers_public.py',None),
+     'tests/test_component_consumers_public.py','benchmarks/component_consumers.py'),
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
            for name in ('minimum','maximum','mean','sum','pop')),
      'tests/test_rank_public.py','benchmarks/rank.py'),

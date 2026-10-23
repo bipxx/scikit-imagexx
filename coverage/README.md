@@ -373,8 +373,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.pad_footprint` | native-partial | yes (partial input contract) | yes |
 | `morphology.reconstruction` | upstream-only | pending | pending |
 | `morphology.remove_objects_by_distance` | upstream-only | pending | pending |
-| `morphology.remove_small_holes` | native-partial | yes (partial input contract) | pending |
-| `morphology.remove_small_objects` | native-partial | yes (partial input contract) | pending |
+| `morphology.remove_small_holes` | native-partial | yes (partial input contract) | yes |
+| `morphology.remove_small_objects` | native-partial | yes (partial input contract) | yes |
 | `morphology.skeletonize` | upstream-only | pending | pending |
 | `morphology.star` | upstream-only | pending | pending |
 | `morphology.thin` | upstream-only | pending | pending |
@@ -402,7 +402,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.active_contour` | upstream-only | pending | pending |
 | `segmentation.chan_vese` | upstream-only | pending | pending |
 | `segmentation.checkerboard_level_set` | upstream-only | pending | pending |
-| `segmentation.clear_border` | native-partial | yes (partial input contract) | pending |
+| `segmentation.clear_border` | native-partial | yes (partial input contract) | yes |
 | `segmentation.disk_level_set` | upstream-only | pending | pending |
 | `segmentation.expand_labels` | upstream-only | pending | pending |
 | `segmentation.felzenszwalb` | upstream-only | pending | pending |
@@ -416,7 +416,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.morphological_geodesic_active_contour` | upstream-only | pending | pending |
 | `segmentation.quickshift` | upstream-only | pending | pending |
 | `segmentation.random_walker` | upstream-only | pending | pending |
-| `segmentation.relabel_sequential` | native-partial | yes (partial input contract) | pending |
+| `segmentation.relabel_sequential` | native-partial | yes (partial input contract) | yes |
 | `segmentation.slic` | upstream-only | pending | pending |
 | `segmentation.watershed` | upstream-only | pending | pending |
 | `transform.AffineTransform` | native-class-partial | yes (partial input contract) | pending |

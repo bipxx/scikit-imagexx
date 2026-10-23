@@ -6099,7 +6099,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_component_consumers_public.py",
-      "benchmark": null
+      "benchmark": "benchmarks/component_consumers.py"
     },
     {
       "api": "morphology.remove_small_objects",
@@ -6111,7 +6111,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_component_consumers_public.py",
-      "benchmark": null
+      "benchmark": "benchmarks/component_consumers.py"
     },
     {
       "api": "morphology.skeletonize",
@@ -6399,7 +6399,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_component_consumers_public.py",
-      "benchmark": null
+      "benchmark": "benchmarks/component_consumers.py"
     },
     {
       "api": "segmentation.disk_level_set",
@@ -6541,7 +6541,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_component_consumers_public.py",
-      "benchmark": null
+      "benchmark": "benchmarks/component_consumers.py"
     },
     {
       "api": "segmentation.slic",
