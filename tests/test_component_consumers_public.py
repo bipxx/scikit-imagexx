@@ -3,6 +3,7 @@
 Sparse count safety checks are definition-level native evidence, separately
 named; they never allocate an impractical original bincount/dense map.
 """
+import importlib
 import importlib.util
 import inspect
 import os
@@ -63,6 +64,17 @@ def test_component_pipeline_can_swap_backend():
             np.testing.assert_array_equal(got.in_values,want.in_values)
             np.testing.assert_array_equal(got.out_values,want.out_values)
         np.testing.assert_array_equal(actual[2][actual[0]],expected[2][expected[0]])
+
+
+def test_public_import_aliases_resolve_to_same_native_functions():
+    misc=importlib.import_module('skimagexx.morphology.misc')
+    assert misc.remove_small_objects is xx.morphology.remove_small_objects
+    assert misc.remove_small_holes is xx.morphology.remove_small_holes
+    from skimagexx.segmentation import clear_border,relabel_sequential
+    assert clear_border is xx.segmentation.clear_border
+    assert relabel_sequential is xx.segmentation.relabel_sequential
+    image=np.array([0,2,2,0,3],np.int16)
+    np.testing.assert_array_equal(misc.remove_small_objects(image,max_size=1),[0,2,2,0,0])
 
 
 def test_public_consumers_and_returned_maps_never_forward_algorithms(monkeypatch):
