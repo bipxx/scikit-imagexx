@@ -1,4 +1,4 @@
-"""Direct candidate tests before public resize/rescale registration."""
+"""Native contracts for registered packages and private development candidates."""
 import importlib.util
 from pathlib import Path
 import sys
@@ -7,10 +7,16 @@ import numpy as np
 import pytest
 from skimage import transform as reference
 import skimagexx as xx
+from skimagexx.coverage import native_functions
 
 
 def candidate_module():
     name='skimagexx._resize'
+    if 'transform.resize' in native_functions():
+        # The registered package is authoritative. Replacing its private
+        # module here would leave public aliases pointing at a different set
+        # of function objects and make test collection order observable.
+        return importlib.import_module(name)
     path=Path(__file__).parents[1]/'python/skimagexx/_resize.py'
     loaded=sys.modules.get(name)
     if loaded is not None and Path(loaded.__file__).resolve()==path.resolve():return loaded
