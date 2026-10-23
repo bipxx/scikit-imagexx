@@ -45,4 +45,6 @@ Raw samples: [Linux](kitchen-initial-linux.json),
 [Windows](kitchen-initial-windows.json). Source archives, exact packages,
 manifests and validation logs remain in ignored build checkpoints.
 The [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39883029028)
-is still running; retention awaits all three jobs.
+passed Windows, Linux and minimum NumPy. The implementation is retained;
+subsequent changes are reports and merge bookkeeping, and runtime sources
+match the measured revision.
