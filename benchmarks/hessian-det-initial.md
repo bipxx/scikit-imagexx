@@ -53,5 +53,26 @@ SIMD checks caught subtraction-from-zero losing the sign of zero during
 negation. Explicit sign-bit negation fixed this; the second package passed
 590 dedicated checks with SIMD enabled as well. Initial packages and failing
 logs are preserved. Broader validation, additional amplitude/volume checks,
-minimum NumPy, native/SDK/sanitizer checks and benchmarks are in progress.
-No local performance timings have run.
+minimum NumPy, native/SDK/sanitizer checks and benchmarks were then run.
+
+Frozen runtime source **f9c80e2272609267606740029d94477517dc7797** passes
+609 dedicated checks per SIMD mode on Windows and NumPy 1.24 Linux, with
+two exact-mode scalar-overload cases intentionally skipped because they are
+supported rather than fallback cases. The Linux integration set passes
+8,820 checks; all 480 untimed corpus rows pass on each runtime. Windows's full
+run passes 73,847 checks with one inventory-snapshot failure: collection
+preceded inventory regeneration. All 456 inventory checks pass on rerun.
+The dedicated amplitude and large-volume worker checks added during that
+run pass separately. This is not described as a green full-suite run.
+
+Independent native tests pass 10/10 on Windows, Linux with OpenMP/AVX2,
+and portable Linux with both disabled. Relocated SDK consumers pass 9/9
+in all three configurations. ASan/UBSan pass 10/10 normally and with dynamic
+OpenMP teams constrained to two threads. Exact packages, wheel/source hashes,
+the original failing packages and logs remain preserved under ignored build
+checkpoints. No local performance timings have run.
+
+[Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39898515905)
+and [isolated performance](https://github.com/bipxx/scikit-imagexx/actions/runs/39898516081)
+are running against the frozen revision. Retention awaits these gates; no
+performance improvement is claimed before those results are verified.
