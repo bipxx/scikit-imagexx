@@ -92,6 +92,16 @@ def test_amplitude(dtype,approximate,scale):compare(image(dtype)*dtype(scale),si
 def test_size_rounding(sigma):compare(image(np.float64),sigma=sigma)
 
 @pytest.mark.parametrize('dtype',(np.float32,np.float64))
+@pytest.mark.parametrize('shape',[(h,w) for h in (1,3,7) for w in (1,2,3,4,5,6,7,8,9,12,15)])
+@pytest.mark.parametrize('sigma',(-3,-1,.34,1,1.5,3,20))
+def test_short_approx_rows(dtype,shape,sigma):compare(image(dtype,shape),sigma=sigma)
+
+@pytest.mark.parametrize('position',((0,0),(1,2),(2,4)))
+@pytest.mark.parametrize('value',(-1e140,1e140,np.nextafter(1e140,0)))
+def test_approx_validation_limit(position,value):
+    a=np.zeros((3,5));a[position]=value;compare(a)
+
+@pytest.mark.parametrize('dtype',(np.float32,np.float64))
 def test_volume_workers(dtype):
     a=image(dtype,(65,67,69));first,_=compare(a,approximate=False,sigma=(0,.7,1.3))
     xx.set_num_threads(4);actual=xx.feature.hessian_matrix_det(a,approximate=False,sigma=(0,.7,1.3))

@@ -25,6 +25,6 @@ inline double det_box_response(const double* b,double weight){
 }
 }
 namespace skimagexx::simd {
-std::size_t hessian_det_boxes(const double*,double*,std::size_t,std::size_t,std::size_t,std::size_t,std::size_t,const detail::DetBox*,double);
+std::size_t hessian_det_boxes(const double* const*,const double* const*,double*,std::size_t,std::size_t,const detail::DetBox*,double);
 std::size_t hessian_det_fields(const void* const*,void*,std::size_t,std::size_t,std::size_t,bool,bool&);
 }
