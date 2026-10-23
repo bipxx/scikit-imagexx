@@ -106,7 +106,8 @@ def test_delegated_contract(kwargs):
     actual,error_actual,warnings_actual=capture(xx.feature.hessian_matrix)
     assert error_actual==error and warnings_actual==warnings_expected
     if error is None:
-        for x,y in zip(actual,expected):np.testing.assert_array_equal(x,y)
+        for x,y in zip(actual,expected):
+            np.testing.assert_array_equal(x,y)
 
 @pytest.mark.parametrize('gaussian',(False,True))
 @pytest.mark.parametrize('value',(np.nan,np.inf,1e307))
@@ -173,7 +174,9 @@ def test_zero_tail_signed_zeros(dtype,value,mode,sigma):
 @pytest.mark.parametrize('mode',('constant','reflect','wrap'))
 def test_small_sigma_derivative_classification(sigma,mode):
     actual,expected=compare(image(np.float64)*1e100,sigma=sigma,mode=mode,cval=-1e99,use_gaussian_derivatives=True)
-    for x,y in zip(actual,expected):np.testing.assert_array_equal(x,y)
+    for x,y in zip(actual,expected):
+        np.testing.assert_array_equal(x,y)
+        zero=(x==0)&(y==0);np.testing.assert_array_equal(np.signbit(x[zero]),np.signbit(y[zero]))
 
 
 @pytest.mark.parametrize('dtype',(np.float32,np.float64))
@@ -209,3 +212,13 @@ def test_zero_sigma_independent_outputs(dtype,shape):
     saved=[x.copy() for x in actual];actual[0].flat[0]=2
     for x,y in zip(actual[1:],saved[1:]):np.testing.assert_array_equal(x,y)
     np.testing.assert_array_equal(a,original)
+
+
+@pytest.mark.parametrize('dtype',(np.float32,np.float64))
+@pytest.mark.parametrize('mode',('constant','reflect','wrap','nearest','mirror'))
+@pytest.mark.parametrize('length',(1,2,3,7,11,257))
+def test_padded_short_axis(dtype,mode,length):
+    actual,expected=compare(image(dtype,(3,5,length)),sigma=.8,mode=mode,cval=-.3,use_gaussian_derivatives=True)
+    for x,y in zip(actual,expected):
+        np.testing.assert_array_equal(x,y)
+        zero=(x==0)&(y==0);np.testing.assert_array_equal(np.signbit(x[zero]),np.signbit(y[zero]))
