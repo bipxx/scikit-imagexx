@@ -1,7 +1,7 @@
 {
   "schema": "rank-intensity-public-v1",
   "pinned_skimage": "0.26.0",
-  "status": "candidate-awaiting-actual-whole-production-proof",
+  "status": "validated-partial-public-contract",
   "operation_ids": {
     "autolevel": 9,
     "equalize": 10,
@@ -22,6 +22,10 @@
   "workers": "Shared sole-core global worker setter, default1, optional parallel; reference/BLAS/OMP ambient pools1 independently.",
   "excluded": "Undefined Cython buffer extents and unqualified overlap; arbitrary unrepresented subclass/array protocols and callback interleavings.",
   "private_implementation": "9b9fe85f96c75887adb7f4e8011aa5cfac70de96",
-  "public_parity_evidence": null,
+  "public_parity_evidence": {
+    "manifest": "build/main-core-wave5-evidence/manifest.json",
+    "compiled_python_product_source": "883887119f4849689b9bd2b0f9adbbb1151d3001",
+    "scope": "Actual complete production wheels/SDK, Win313/Linux313-modern/Linux311-minimum plusLinux313Debug, normal/scalar, workers1/4;6076new public pytest cases perprofile,1012frozen fixtures/248definition oracles; no performance claim"
+  },
   "performance_evidence": null
 }
