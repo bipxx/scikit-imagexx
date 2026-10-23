@@ -4,7 +4,9 @@
 #include <cstddef>
 #include <cstdint>
 namespace skimagexx {
-enum class RankOperation { minimum,maximum,mean,sum,pop };
+enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8 };
+// Capabilities come from the linked implementation, not just a header version.
+std::uint32_t rank_histogram_capabilities() noexcept;
 // Prepared C-order image/mask and binary footprint;2D uses a singleton plane.
 // Output spatial strides may include a larger destination and pixel vectors.
 // The Python bridge validates accessible shapes and retains all owners.

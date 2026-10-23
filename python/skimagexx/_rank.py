@@ -81,7 +81,7 @@ def _positive(footprint):
     return result
 
 
-def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z):
+def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=None):
     ndim=np.asanyarray(image).ndim
     if ndim not in (2,3):raise ValueError(f'`image` must have 2 or 3 dimensions, got {ndim}.')
     if np.asanyarray(image).size==0:raise ValueError('The parameter `image` cannot be an empty array')
@@ -96,7 +96,7 @@ def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z):
     image=np.ascontiguousarray(image)
     if mask is not None:mask=np.ascontiguousarray(_ubyte(mask))
     if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
-    if out is None:out=np.empty(image.shape+(1,),dtype=image.dtype)
+    if out is None:out=np.empty(image.shape+(1,),dtype=image.dtype if out_dtype is None else out_dtype)
     elif ndim==3 or len(out.shape)==2:out=out.reshape(out.shape+(1,))
     bins=256 if image.dtype in (np.uint8,np.int8) else _core.rank_bins(image)
     if bins>2**10:
@@ -120,4 +120,30 @@ def sum(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):return
 def pop(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):return _apply(4,image,footprint,out,mask,shift_x,shift_y,shift_z)
 
 
-__all__=['minimum','maximum','mean','sum','pop']
+def _require_operation(operation):
+    if not (getattr(_core,'rank_histogram_capabilities',0) & (1<<operation)):
+        raise NotImplementedError('rank-histogram-v2 backend required for this operation')
+
+
+def gradient(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(5)
+    return _apply(5,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def median(image,footprint=None,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(6)
+    if footprint is None:footprint=np.ones((3,)*image.ndim,bool)
+    return _apply(6,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def modal(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(7)
+    return _apply(7,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def entropy(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(8)
+    return _apply(8,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=np.float64)
+
+
+__all__=['minimum','maximum','mean','sum','pop','gradient','median','modal','entropy']

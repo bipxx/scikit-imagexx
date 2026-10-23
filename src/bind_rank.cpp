@@ -35,6 +35,7 @@ template<class T> void positive(const void* source,std::uint8_t* target,std::siz
 }
 }
 void bind_rank(py::module_& module) {
+    module.attr("rank_histogram_capabilities")=py::int_(skimagexx::rank_histogram_capabilities());
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
         const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
@@ -106,6 +107,7 @@ void bind_rank(py::module_& module) {
     });
     module.def("rank_shift",[](py::object value){return shift(value);});
     module.def("rank_run",[numpy](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation) {
+        if(operation<0 || operation>=32 || !(skimagexx::rank_histogram_capabilities() & (std::uint32_t{1}<<operation)))throw py::value_error("invalid rank operation");
         const int rank=int(requested_shifts.size());
         if((rank!=2 && rank!=3) || image.ndim()!=rank)throw py::type_error("Function call with ambiguous argument types");
         const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
