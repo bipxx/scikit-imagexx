@@ -16,6 +16,8 @@ from skimagexx.coverage import native_functions, native_dtypes, execution_kind, 
 
 def dtype_metadata(value):
     if isinstance(value,(tuple,list)):return [dtype_metadata(item) for item in value]
+    if type(value).__name__=='ArrayMap':
+        return {field:dtype_metadata(getattr(value,field)) for field in ('in_values','out_values')}
     dtype=getattr(value,'dtype',None)
     metadata=getattr(dtype,'metadata',None)
     return None if metadata is None else dict(metadata)
@@ -25,6 +27,10 @@ def comparison_error(actual,expected,rtol,atol):
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected) and len(actual)==len(expected)
         return max((comparison_error(a,e,rtol,atol) for a,e in zip(actual,expected)),default=0.)
+    if type(expected).__name__=='ArrayMap':
+        assert type(actual).__name__==type(expected).__name__
+        return max(comparison_error(getattr(actual,field),getattr(expected,field),rtol,atol)
+                   for field in ('in_values','out_values'))
     a,e=np.asarray(actual),np.asarray(expected)
     assert a.dtype==e.dtype and a.shape==e.shape
     np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)

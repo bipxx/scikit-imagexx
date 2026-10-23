@@ -24,6 +24,12 @@ for _names, _test, _benchmark in (
     (('morphology.remove_small_objects','morphology.remove_small_holes',
       'segmentation.clear_border','segmentation.relabel_sequential'),
      'tests/test_component_consumers_public.py',None),
+    (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
+           for name in ('minimum','maximum','mean','sum','pop')),
+     'tests/test_rank_public.py','benchmarks/rank.py'),
+    (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
+           for name in ('gradient','median','modal','entropy')),
+     'tests/test_rank_public.py',None),
 ):
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 
