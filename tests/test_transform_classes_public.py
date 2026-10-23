@@ -69,6 +69,7 @@ def test_public_array_state_layout_lifetime_and_pickle(name,layout):
     elif layout=='readonly':matrix.flags.writeable=False
     expected=getattr(original,name)(matrix);actual=getattr(xx.transform,name)(matrix)
     assert actual.params is matrix
+    assert str(actual)==str(expected)
     points=contract.points()
     for array,reference in [(actual(points),expected(points)),
                             (actual.residuals(points,points),expected.residuals(points,points)),
