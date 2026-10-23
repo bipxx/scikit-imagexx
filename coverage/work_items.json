@@ -19830,7 +19830,7 @@
       "apis": [],
       "owner": "metrics_reductions",
       "branch": "feature/rank-statistics-benchmark",
-      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "base_sha": "194a2dffb52bba6f5282a1dd3472733f8c9c91e3",
       "owns": [
         "benchmarks/rank_statistics.py",
         "tests/test_rank_statistics_benchmark.py",
@@ -19841,12 +19841,18 @@
       "depends_on": [
         "rank-statistics-contracts"
       ],
-      "state": "contracting",
+      "state": "parity_passed",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "coverage/contracts/rank-statistics-benchmark.json",
         "uncovered_cases": [
-          "Phase1original-only withall995 frozen IDs plusbalanced safe timingfixtures. Native0; aliases/errors untimed; future actualpublic version/capability/full-product/worker gates must pass before timers. No localtiming/dispatch."
-        ]
+          "Phase1 original-only/native0. All995 sourceIDs preserved;384 timingcandidates retain8definedreadonly errors untimed;4identityaliases untimed. Actualpublic1379-case qualification andfullproduct/runtime/SDK closure require futurewhole7. No timers/dispatch."
+        ],
+        "raw_sha256": "b409ad2feff7a3e39ab913298449893cdfa78e49c43635fa365a90d5b2135d96",
+        "canonical_cases": 1379,
+        "intended_timing_candidates": 384,
+        "eligible": 376,
+        "scalar_eligible": 282,
+        "vector_eligible": 94
       },
       "parity": {
         "source_sha": null,
@@ -19868,11 +19874,25 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/worktrees/rank-statistics-benchmark/build",
+          "build/rank-statistics-benchmark-evidence/194a2df/final-v2"
+        ]
       },
       "dependency_requirements": {
         "rank-statistics-contracts": {
           "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "194a2dffb52bba6f5282a1dd3472733f8c9c91e3",
+          "manifest": {
+            "path": "build/rank-statistics-benchmark-evidence/194a2df/final-v2/manifest.json",
+            "sha256": "379a9862e5f7be85b8cc4efe1fe2baf779dd71f4fc099559bee659f28021b2a1"
+          },
+          "scope": "1379referencechecks x3,30guardtests x3/actionlint,376eligible(94/API);native0.16pytest-current helperlinks explicitly excluded; all215regularinputs hashed, no unreadable/home byteclosure claim."
         }
       }
     },
