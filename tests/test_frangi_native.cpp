@@ -21,6 +21,23 @@ void constant_exp(const double* input,double* output,std::size_t count,void* con
  require(input!=output);static_cast<std::atomic<int>*>(context)->fetch_add(1);
  for(std::size_t i=0;i<count;++i){require(std::isfinite(input[i]));output[i]=.5;}
 }
+struct BoundaryContext {std::size_t count;int calls=0;};
+bool boundary_eigen(const void* const*,void* destination,std::size_t count,std::size_t n,bool single,void*){
+ require(n==3 && !single);auto* out=static_cast<double*>(destination);
+ for(std::size_t i=0;i<count;++i){out[i]=.02;out[count+i]=1e-10;out[2*count+i]=0.;}return true;
+}
+void boundary_exp(const double* input,double* output,std::size_t count,void* context){
+ auto& state=*static_cast<BoundaryContext*>(context);require(count==state.count && input!=output);++state.calls;
+ for(std::size_t i=0;i<count;++i)output[i]=input[i]<0 && input[i]>-0x1p-54 ? std::nextafter(1.,0.) : std::exp(input[i]);
+}
+void boundary_check(){
+ const std::size_t count=19;std::vector<double> zero(count),output(count);const void* fields[]={zero.data(),zero.data(),zero.data(),zero.data(),zero.data(),zero.data()};
+ BoundaryContext context{count};const FrangiEigenProvider eigen{&boundary_eigen,nullptr};const FrangiExpProvider exponential{&boundary_exp,&context};
+ FrangiParameters p;p.automatic_gamma=false;p.gamma_den=450;p.eigen_provider=&eigen;p.exp_provider=&exponential;
+ require(frangi_accumulate_into(fields,nullptr,output.data(),count,3,false,p));require(context.calls==3);
+ for(auto value:output)require(value>0 && value<1e-12);const auto original=output;
+ ridge_hessian_finish_into(output.data(),count,false);require(output==original);
+}
 template<class T> void check(std::size_t count,std::size_t n){
  std::vector<std::vector<T>> fields(n*(n+1)/2,std::vector<T>(count));std::vector<const void*> pointers;
  std::size_t field=0;
@@ -46,7 +63,7 @@ template<class T> void check(std::size_t count,std::size_t n){
   for(auto value:output)require(value==(n==2 ? .25 : .125));p.exp_provider=nullptr;}
  T repair[]={T(0),T(-0.),T(-1),T(.2),T(NAN)};ridge_hessian_finish_into(repair,5,single);require(repair[0]==1 && repair[1]==1 && repair[2]==1 && repair[3]==T(.2) && std::isnan(repair[4]));
 }
-int main(){check<float>(19,2);check<double>(19,2);check<float>(19,3);check<double>(19,3);check<float>(266247,3);check<double>(266247,3);
+int main(){boundary_check();check<float>(19,2);check<double>(19,2);check<float>(19,3);check<double>(19,3);check<float>(266247,3);check<double>(266247,3);
  FrangiParameters p;require(frangi_accumulate_into(nullptr,nullptr,nullptr,0,2,false,p));
  bool overflow=false;try{frangi_accumulate_into(nullptr,nullptr,nullptr,std::numeric_limits<std::size_t>::max(),3,false,p);}catch(const std::overflow_error&){overflow=true;}require(overflow);
  set_num_threads(1);std::cout<<"Frangi native checks passed\n";

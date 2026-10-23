@@ -34,7 +34,6 @@ template<bool Single> std::size_t response(const void* a,const void* b,const voi
    if constexpr(Single){if(!narrow){const auto wide=_mm256_div_pd(_mm256_cvtps_pd(numerator),_mm256_set1_pd(den));numerator=_mm256_cvtpd_ps(wide);}else numerator=M::div(numerator,M::c(den));}
    else numerator=M::div(numerator,M::c(den));
    M::store(lanes,numerator);for(auto& lane:lanes)if(!std::isfinite(lane)){valid=false;lane=T(0);}
-   if constexpr(!Single){if(p.exp_provider && p.exp_provider->evaluate){alignas(32) double out[4];p.exp_provider->evaluate(lanes,out,4,p.exp_provider->context);return M::load(out);}}
    for(auto& lane:lanes)lane=detail::frangi_exp(lane);return M::load(lanes);
   };
   const R plate=pair ? M::c(1) : M::sub(M::c(1),exponential(a,p.alpha_den,p.alpha_single));
@@ -45,6 +44,23 @@ template<bool Single> std::size_t response(const void* a,const void* b,const voi
 }
 }}
 namespace skimagexx::simd {
+std::size_t frangi_exp_arguments(double* values,std::size_t count,double denominator,bool& valid){
+ std::size_t i=0;for(;i+4<=count;i+=4){const auto v=_mm256_loadu_pd(values+i);
+  const auto x=_mm256_div_pd(_mm256_sub_pd(_mm256_set1_pd(-0.),_mm256_mul_pd(v,v)),_mm256_set1_pd(denominator));
+  alignas(32) double lanes[4];_mm256_store_pd(lanes,x);for(auto lane:lanes)if(!std::isfinite(lane)){valid=false;return i;}
+  _mm256_storeu_pd(values+i,x);
+ }return i;
+}
+std::size_t frangi_combine(const double* plate,const double* blob,const double* structure,const double* previous,double* output,std::size_t count,bool& valid){
+ std::size_t i=0;for(;i+4<=count;i+=4){const auto one=_mm256_set1_pd(1.);
+  const auto a=plate ? _mm256_sub_pd(one,_mm256_loadu_pd(plate+i)) : one;
+  const auto v=_mm256_mul_pd(_mm256_mul_pd(a,_mm256_loadu_pd(blob+i)),_mm256_sub_pd(one,_mm256_loadu_pd(structure+i)));
+  const auto old=previous ? _mm256_loadu_pd(previous+i) : _mm256_setzero_pd();
+  alignas(32) double lanes[4],priors[4];_mm256_store_pd(lanes,v);_mm256_store_pd(priors,old);
+  for(int lane=0;lane<4;++lane)if(!std::isfinite(lanes[lane]) || !std::isfinite(priors[lane])){valid=false;return i;}
+  _mm256_storeu_pd(output+i,_mm256_max_pd(old,v));
+ }return i;
+}
 std::size_t frangi_prepare(const void* e,void* a,void* b,void* s,std::size_t count,std::size_t n,std::size_t begin,std::size_t end,bool single,double& maximum,bool& valid){return single ? prepare<true>(e,a,b,s,count,n,begin,end,maximum,valid) : prepare<false>(e,a,b,s,count,n,begin,end,maximum,valid);}
 std::size_t frangi_response(const void* a,const void* b,const void* s,const void* previous,void* output,std::size_t count,bool single,bool pair,const FrangiParameters& p,bool& valid){return single ? response<true>(a,b,s,previous,output,count,pair,p,valid) : response<false>(a,b,s,previous,output,count,pair,p,valid);}
 std::size_t ridge_hessian_finish(void* output,std::size_t count,bool single){std::size_t i=0;

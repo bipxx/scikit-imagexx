@@ -35,11 +35,21 @@ and libm disagree on exp(x)==1 for five observed tiny negative exponents. All
 six Hessian fields are bit-identical in each failing image. The Python binding
 now also supplies a native double-exp math provider: the captured NumPy ufunc
 C loop evaluates separate input/output buffers without Python calls or the
-GIL, preserving host SIMD rounding for both vector blocks and scalar tails.
+GIL. Calls cover whole factor fields so NumPy's array-length dispatch and
+tails remain independent of the C++ worker partitions. SIMD exponent
+preparation and response combination reuse the existing scratch storage.
 The standalone C++ API defaults to libm and accepts an optional exp provider.
 This additional NumPy math dependency is recorded in benchmark metadata.
 The provider correction is awaiting validation; the preceding failure remains
 the latest hosted full-suite result.
+
+The first provider trial called the exp loop in four-element blocks. A hosted
+NumPy 1.24 run exposed length-dependent dispatch: 14 strict/worker checks
+failed, including discontinuous impulse responses and two last-bit worker
+differences. That trial is not eligible for retention. The whole-field
+correction adds a native regression with controlled near-one exponential
+rounding and requires exactly one provider call per factor, independent of
+pixel blocks. Its fresh hosted and performance gates remain pending.
 
 Float32 exponential rounding also matters: a one-ULP difference near exp(x)=1
 can change ridge-Hessian's final zero-to-one decision. The prototype uses
