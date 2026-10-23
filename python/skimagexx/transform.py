@@ -1,4 +1,4 @@
-"""Native integral images, window queries and raw local-block means."""
+"""Native resampling, integral images, window queries and local-block means."""
 from ._compat import module_attribute, fallback
 
 # Public compatibility submodules are resolved by the policy-aware importer.
@@ -60,6 +60,11 @@ def integral_image(image,*,dtype=None):
 
 
 __all__=['integral_image','integrate','downscale_local_mean']
+
+# Public signatures and metadata validation live with the native resampling
+# pipeline. Unsupported input protocols retain explicit whole-function fallback.
+from ._resize import resize,rescale
+__all__ += ['resize','rescale']
 
 
 

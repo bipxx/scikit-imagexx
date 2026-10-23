@@ -6,10 +6,11 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has parity tests and a benchmark against original
-scikit-image, including **one-worker** runs. Allocation, conversion and Python
-dispatch are included. Published results identify measured revisions; the Gabor
-image-filter increment has passed its measurements and full CI.
+Every native public function has parity tests and a benchmark harness against
+original scikit-image. Measurements include **one-worker** runs and allocation,
+conversion and Python dispatch costs. Published results identify measured
+revisions; resize/rescale performance is pending its first isolated run. The
+Gabor image-filter increment has passed its measurements and full CI.
 See the [Gabor image-filter report](benchmarks/gabor-image-initial.md) and the
 [current verification report](benchmarks/STATUS.md) for measured
 speedups, raw reports and remaining regressions on an i7-12700K.
@@ -22,17 +23,18 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **121 partially native
+The reference is scikit-image **0.26.0**. There are currently **123 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 332 remain pending native implementation and dedicated parity tests.
+export list; 330 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `transform.resize`, `transform.rescale` | Real arrays/memmaps and supported NumPy scalars; bool, all integer widths and float16/32/64; interpolation orders 0–5, five borders, anti-aliasing, clipping, preserve-range and rescale channel axes; native/endian/strided/unaligned storage | C++ B-spline preparation, typed grid sampling, per-axis typed Gaussian smoothing and clipping; AVX2 and optional global workers default one. Integer bounds retain all bits. Half identity uses raw-word SIMD without F16C. NumPy compiled reductions preserve exceptional zero-tie/NaN-bound ordering. Strict contract, scalar/SIMD, worker and sanitizer checks pass; isolated end-to-end performance is pending. Unsupported Python protocols/extended dtypes retain explicit fallback. |
 | `filters.frangi`, `filters.hessian` | Real 2-D/3-D arrays/memmaps; all integer widths and float16/32/64; ordinary scale sequences, legacy scale controls, ridge polarity and ndimage borders | C++ Gaussian Hessians and AVX2/FMA response; optional global workers default to one. Python uses native NumPy LAPACK in 3-D and whole-field double-exp loops; a float-exp provider preserves generic NumPy rounding when needed. Standalone defaults do not claim identical sensitive LAPACK/libm rounding. Full CI passes on Windows, Linux and minimum NumPy. Verified one-worker geometric means are 4.04× Linux and 3.23× Windows; all 576 cases are faster per OS. See the [scope, dependencies, parity and raw measurements](benchmarks/frangi-initial.md) |
 | `filters.meijering` | Real rank 1–5 arrays/memmaps; all integer widths and float16/32/64; ordinary scale sequences, alpha, black/white ridges and ndimage borders | C++ raw cast, Gaussian Hessians, eigenvalue projection, first-largest-magnitude selection, per-scale normalization and cross-scale maximum. AVX2 and optional global workers preserve strict serial/parallel output. Budgets 3e-6 float32 / 3e-13 float64; arbitrary LAPACK/BLAS bit equality is not claimed. Full CI and isolated measurements pass; all 600 one-worker cases per OS are faster (minimum 2.99× Linux / 2.07× Windows). See the [report](benchmarks/meijering-initial.md) |
 | `filters.sato` | Nonempty real 2-D/3-D arrays/memmaps; all integer widths and float16/32/64; ordinary scale sequences, black/white ridges and ndimage border modes | C++ raw floating cast, Gaussian Hessians, eigenvalues and fused SIMD response. Optional global workers default one. Float32/64 error budgets include an explicit per-pixel conditioning allowance for 3-D near-zero eigenvalues; exact LAPACK parity is not claimed. Full CI and isolated measurements pass: one-worker 2-D/3-D means are 7.26×/5.54× Linux and 5.96×/4.50× Windows, all 240 cases faster per OS. See the [contract and trials](benchmarks/sato-initial.md) |

@@ -1,7 +1,7 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
-    'transform': ('integral_image','integrate','downscale_local_mean'),
+    'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale'),
     'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -55,6 +55,8 @@ def default_call(api, image):
         return (.2,),{'dtype':np.complex64 if image.dtype==np.float32 else np.complex128}
     if api=='exposure.match_histograms':return (image,image[...,::2]),{}
     if api=='transform.downscale_local_mean':return (image,2),{}
+    if api=='transform.resize':return (image,tuple(max(1,(n+1)//2) for n in image.shape)),{}
+    if api=='transform.rescale':return (image,.5),{}
     if api=='transform.integrate':
         return (image,tuple(n//4 for n in image.shape),tuple(3*n//4 for n in image.shape)), {}
     if api=='filters.difference_of_gaussians':return (image,1.), {}
