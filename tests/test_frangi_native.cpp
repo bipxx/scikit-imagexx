@@ -21,6 +21,10 @@ void constant_exp(const double* input,double* output,std::size_t count,void* con
  require(input!=output);static_cast<std::atomic<int>*>(context)->fetch_add(1);
  for(std::size_t i=0;i<count;++i){require(std::isfinite(input[i]));output[i]=.5;}
 }
+void constant_float_exp(const float* input,float* output,std::size_t count,void* context){
+ require(input!=output);static_cast<std::atomic<int>*>(context)->fetch_add(1);
+ for(std::size_t i=0;i<count;++i){require(std::isfinite(input[i]));output[i]=.5f;}
+}
 struct BoundaryContext {std::size_t count;int calls=0;};
 bool boundary_eigen(const void* const*,void* destination,std::size_t count,std::size_t n,bool single,void*){
  require(n==3 && !single);auto* out=static_cast<double*>(destination);
@@ -61,6 +65,12 @@ template<class T> void check(std::size_t count,std::size_t n){
  if(!single){std::atomic<int> exp_calls{0};const FrangiExpProvider exponential{&constant_exp,&exp_calls};p.exp_provider=&exponential;
   require(frangi_accumulate_into(pointers.data(),nullptr,output.data(),count,n,single,p));require(exp_calls>0);
   for(auto value:output)require(value==(n==2 ? .25 : .125));p.exp_provider=nullptr;}
+ if(single){std::atomic<int> exp_calls{0};const FrangiFloatExpProvider exponential{&constant_float_exp,&exp_calls};p.float_exp_provider=&exponential;
+  require(frangi_accumulate_into(pointers.data(),nullptr,output.data(),count,n,single,p));require(exp_calls==int(n));
+  for(auto value:output)require(value==T(n==2 ? .25 : .125));
+  p.alpha_single=p.beta_single=p.gamma_single=false;
+  require(frangi_accumulate_into(pointers.data(),nullptr,output.data(),count,n,single,p));require(exp_calls==int(2*n));
+  for(auto value:output)require(value==T(n==2 ? .25 : .125));p.float_exp_provider=nullptr;}
  T repair[]={T(0),T(-0.),T(-1),T(.2),T(NAN)};ridge_hessian_finish_into(repair,5,single);require(repair[0]==1 && repair[1]==1 && repair[2]==1 && repair[3]==T(.2) && std::isnan(repair[4]));
 }
 int main(){boundary_check();check<float>(19,2);check<double>(19,2);check<float>(19,3);check<double>(19,3);check<float>(266247,3);check<double>(266247,3);

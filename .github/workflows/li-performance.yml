@@ -64,6 +64,8 @@ jobs:
       - if: inputs.benchmark == 'frangi'
         run: python -m pytest -q tests/test_frangi.py tests/test_meijering.py tests/test_sato.py tests/test_hessian_matrix.py tests/test_api.py
       - if: inputs.benchmark == 'frangi'
+        run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
+      - if: inputs.benchmark == 'frangi'
         run: python -m pytest -q tests/test_frangi.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
@@ -270,4 +272,5 @@ jobs:
             build/wheels/*.whl
             build/exact-package/
             build/frangi-reference/
+            build/frangi-generic-cpu/
             build/initial/exact-package/

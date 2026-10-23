@@ -10,6 +10,10 @@ struct FrangiExpProvider {
  void (*evaluate)(const double*,double*,std::size_t,void*)=nullptr;
  void* context=nullptr;
 };
+struct FrangiFloatExpProvider {
+ void (*evaluate)(const float*,float*,std::size_t,void*)=nullptr;
+ void* context=nullptr;
+};
 struct FrangiParameters {
  double alpha_den=0.5,beta_den=0.5,gamma_den=0.;
  bool alpha_single=false,beta_single=false,gamma_single=false;
@@ -20,6 +24,8 @@ struct FrangiParameters {
  const FrangiEigenProvider* eigen_provider=nullptr;
  // Null uses the C++ standard library exponential.
  const FrangiExpProvider* exp_provider=nullptr;
+ // Optional host float-exp rounding when the portable approximation differs.
+ const FrangiFloatExpProvider* float_exp_provider=nullptr;
 };
 // Homogeneous dense/aligned upper-triangle Hessian fields in rank2/3. Output
 // and previous (or null=zeros) match field precision, separate storage.

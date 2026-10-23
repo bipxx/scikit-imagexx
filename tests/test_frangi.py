@@ -13,10 +13,18 @@ def test_float_exp_vector_matches_portable(length):
     edge=np.array([0.,-0.,-87.,np.nextafter(np.float32(-87),np.float32(0)),
         np.nextafter(np.float32(-87),np.float32(-100)),-103.972084],dtype=np.float32)
     values[:min(length,len(edge))]=edge[:min(length,len(edge))]
-    actual=xx._core.frangi_exp_values(values)
+    actual=xx._core.frangi_exp_values_cpp(values)
     expected=xx._core.frangi_exp_values_portable(values)
     np.testing.assert_array_equal(actual.view(np.uint32),expected.view(np.uint32))
     if not xx.has_avx2():assert not xx._core.frangi_has_fma()
+
+def test_float_exp_matches_active_numpy_dispatch():
+    values=np.concatenate((np.linspace(-2e-6,0,1025,dtype=np.float32),np.array([-3e-8],dtype=np.float32)))
+    expected=np.exp(values)
+    actual=xx._core.frangi_exp_values(values)
+    np.testing.assert_array_equal(actual.view(np.uint32),expected.view(np.uint32))
+    if not np.array_equal(xx._core.frangi_exp_values_cpp(values),expected):
+        assert xx._core.frangi_float_exp_uses_numpy()
 
 @pytest.mark.parametrize('length',(1,3,4,7,8,9,693))
 def test_double_exp_host_rounding(length):

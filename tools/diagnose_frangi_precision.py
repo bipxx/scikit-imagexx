@@ -13,7 +13,10 @@ def main():
     xx.set_num_threads(1)
     numpy_core = np.core if np.__version__.startswith('1.') else np._core
     report = {'platform': platform.platform(), 'numpy': np.__version__,
-              'cpu_features': numpy_core._multiarray_umath.__cpu_features__, 'cases': []}
+              'cpu_features': numpy_core._multiarray_umath.__cpu_features__,
+              'cpp_fma': getattr(_core, 'frangi_has_fma', lambda: False)(),
+              'float_exp_uses_numpy': getattr(_core, 'frangi_float_exp_uses_numpy', lambda: False)(),
+              'cases': []}
     for dtype in (np.bool_, np.float64):
         for black in (True, False):
             rng = np.random.default_rng(4691)

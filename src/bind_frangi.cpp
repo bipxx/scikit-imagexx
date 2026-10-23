@@ -14,6 +14,32 @@
 #include <atomic>
 namespace py=pybind11;
 namespace {
+struct NumpyFrangiFloatExp {
+ py::object owner;
+ PyUFuncGenericFunction function=nullptr;void* data=nullptr;
+ skimagexx::FrangiFloatExpProvider provider;
+ bool required=false;
+ NumpyFrangiFloatExp():owner(py::module_::import("numpy").attr("exp")){
+  if(!PyObject_TypeCheck(owner.ptr(),&PyUFunc_Type))throw std::runtime_error("native float exponential loop unavailable");
+  const auto* u=reinterpret_cast<PyUFuncObject*>(owner.ptr());
+  if(u->nargs==2)for(int i=0;i<u->ntypes;++i)if(u->types[2*i]==NPY_FLOAT && u->types[2*i+1]==NPY_FLOAT){function=u->functions[i];data=u->data ? u->data[i] : nullptr;break;}
+  if(!function)throw std::runtime_error("native float exponential loop unavailable");
+  provider={&evaluate,this};
+  // Probe the active loop rather than guessing from CPU feature names or
+  // environment overrides. Near-one rounding controls ridge-Hessian's finish.
+  std::vector<float> inputs(1028),outputs(1028);
+  for(std::size_t i=0;i<1025;++i)inputs[i]=-2e-6f+2e-6f*(float(i)/1024.f);
+  inputs[1025]=-3e-8f;inputs[1026]=-2.98e-8f;inputs[1027]=-2.97e-8f;
+  evaluate(inputs.data(),outputs.data(),inputs.size(),this);
+  for(std::size_t i=0;i<inputs.size();++i)if(outputs[i]!=skimagexx::detail::frangi_exp(inputs[i])){required=true;break;}
+ }
+ static void evaluate(const float* input,float* output,std::size_t count,void* context){
+  const auto& self=*static_cast<const NumpyFrangiFloatExp*>(context);
+  char* args[]={reinterpret_cast<char*>(const_cast<float*>(input)),reinterpret_cast<char*>(output)};
+  const npy_intp dimensions[]={npy_intp(count)},steps[]={sizeof(float),sizeof(float)};
+  self.function(args,dimensions,steps,self.data);
+ }
+};
 struct NumpyFrangiExp {
  py::object owner;
  PyUFuncGenericFunction function=nullptr;void* data=nullptr;
@@ -69,6 +95,8 @@ void bind_frangi(py::module_& module){
  if(_import_array()<0 || _import_umath()<0)throw py::error_already_set();
  auto eigen=std::make_shared<NumpyFrangiEigen>();
  auto exponential=std::make_shared<NumpyFrangiExp>();
+ auto float_exponential=std::make_shared<NumpyFrangiFloatExp>();
+ module.def("frangi_float_exp_uses_numpy",[float_exponential](){return float_exponential->required;});
  module.def("frangi_has_fma",&skimagexx::detail::frangi_fma_available);
  module.def("frangi_exp_values_portable",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
   std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
@@ -80,12 +108,19 @@ void bind_frangi(py::module_& module){
   {py::gil_scoped_release release;exponential->provider.evaluate(values.data(),output.mutable_data(),values.size(),exponential->provider.context);}
   return output;
  });
- module.def("frangi_exp_values",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
+ module.def("frangi_exp_values_cpp",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
   std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
   {py::gil_scoped_release release;skimagexx::detail::frangi_exp_values_into(values.data(),output.mutable_data(),values.size());}
   return output;
  });
- module.def("frangi_accumulate",[eigen,exponential](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{
+ module.def("frangi_exp_values",[float_exponential](py::array_t<float,py::array::c_style|py::array::forcecast> values){
+  std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
+  {py::gil_scoped_release release;
+   if(float_exponential->required)float_exponential->provider.evaluate(values.data(),output.mutable_data(),values.size(),float_exponential->provider.context);
+   else skimagexx::detail::frangi_exp_values_into(values.data(),output.mutable_data(),values.size());}
+  return output;
+ });
+ module.def("frangi_accumulate",[eigen,exponential,float_exponential](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{
   std::vector<py::array> storage;std::vector<const void*> data;std::vector<py::ssize_t> shape;py::dtype field_dtype;
   for(auto entry:fields){auto a=py::array::ensure(entry,py::array::c_style);
    if(!a || !a.dtype().attr("isnative").cast<bool>() || a.dtype().kind()!='f' || (a.itemsize()!=4 && a.itemsize()!=8) || a.ndim()<2 || a.ndim()>3)throw py::value_error("native Frangi Hessian fields required");
@@ -100,6 +135,7 @@ void bind_frangi(py::module_& module){
   skimagexx::FrangiParameters p;p.alpha_den=alpha_den;p.beta_den=beta_den;p.alpha_single=alpha_single;p.beta_single=beta_single;p.gamma_single=gamma_single;p.gamma_compute_single=gamma_compute_single;p.automatic_gamma=gamma_den.is_none();if(!p.automatic_gamma)p.gamma_den=gamma_den.cast<double>();
   if(n==3)p.eigen_provider=&eigen->provider;
   if(dtype.itemsize()==8)p.exp_provider=&exponential->provider;
+  else if(float_exponential->required)p.float_exp_provider=&float_exponential->provider;
   py::array output(dtype,shape);bool valid;
   {py::gil_scoped_release release;valid=skimagexx::frangi_accumulate_into(data.data(),old,output.mutable_data(),output.size(),n,dtype.itemsize()==4,p);}
   return valid ? py::object(py::make_tuple(output,p.gamma_den)) : py::none();

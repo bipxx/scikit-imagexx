@@ -45,6 +45,24 @@ template<bool Single> std::size_t response(const void* a,const void* b,const voi
 }
 }}
 namespace skimagexx::simd {
+std::size_t frangi_exp_arguments(float* values,std::size_t count,double denominator,bool narrow,bool& valid){
+ std::size_t i=0;for(;i+4<=count;i+=4){const auto v=_mm_loadu_ps(values+i);
+  auto x=_mm_sub_ps(_mm_set1_ps(-0.f),_mm_mul_ps(v,v));
+  x=narrow ? _mm_div_ps(x,_mm_set1_ps(float(denominator))) : _mm256_cvtpd_ps(_mm256_div_pd(_mm256_cvtps_pd(x),_mm256_set1_pd(denominator)));
+  alignas(16) float lanes[4];_mm_store_ps(lanes,x);for(auto lane:lanes)if(!std::isfinite(lane)){valid=false;return i;}
+  _mm_storeu_ps(values+i,x);
+ }return i;
+}
+std::size_t frangi_combine(const float* plate,const float* blob,const float* structure,const float* previous,float* output,std::size_t count,bool& valid){
+ std::size_t i=0;for(;i+4<=count;i+=4){const auto one=_mm_set1_ps(1.f);
+  const auto a=plate ? _mm_sub_ps(one,_mm_loadu_ps(plate+i)) : one;
+  const auto v=_mm_mul_ps(_mm_mul_ps(a,_mm_loadu_ps(blob+i)),_mm_sub_ps(one,_mm_loadu_ps(structure+i)));
+  const auto old=previous ? _mm_loadu_ps(previous+i) : _mm_setzero_ps();
+  alignas(16) float lanes[4],priors[4];_mm_store_ps(lanes,v);_mm_store_ps(priors,old);
+  for(int lane=0;lane<4;++lane)if(!std::isfinite(lanes[lane]) || !std::isfinite(priors[lane])){valid=false;return i;}
+  _mm_storeu_ps(output+i,_mm_max_ps(old,v));
+ }return i;
+}
 std::size_t frangi_exp_arguments(double* values,std::size_t count,double denominator,bool& valid){
  std::size_t i=0;for(;i+4<=count;i+=4){const auto v=_mm256_loadu_pd(values+i);
   const auto x=_mm256_div_pd(_mm256_sub_pd(_mm256_set1_pd(-0.),_mm256_mul_pd(v,v)),_mm256_set1_pd(denominator));

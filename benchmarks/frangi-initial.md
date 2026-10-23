@@ -1,11 +1,34 @@
-# Frangi and ridge-Hessian candidate
+# Frangi and ridge-Hessian benchmarks
 
 `filters.frangi` and `filters.hessian` preserve scikit-image 0.26.0 signatures,
-module exports and root convenience aliases. They are native-partial candidates
-on the feature branch, not yet retained on main. Full CI and the new float32
-SIMD experiment remain pending. The initial whole-field measurements retain
-four slower Windows zero-sigma cases, so that baseline is not the final
-performance result.
+module exports and root convenience aliases. The measured SIMD-FMA source is
+`4dfa65855a327d2637009cdc8bd30bba6f37697a`. Native-partial scope, explicit math
+providers and initial rejected trials are documented below. Full
+[CI39917576345](https://github.com/bipxx/scikit-imagexx/actions/runs/39917576345)
+and verified paired measurements gate main retention.
+
+## Additional generic-dispatch compatibility gate
+
+After these measurements, a NumPy generic-dispatch probe found two float32
+ridge-Hessian mismatches on Linux in the measured `4dfa658` prototype. Its
+normal-dispatch full CI and performance results remain recorded; those jobs
+alone do not qualify generic NumPy dispatch. The correction is under validation
+before main retention.
+
+Bindings now probe the active NumPy float-exp C loop near one at initialization.
+When its rounding differs from the C++ approximation, a native float-exp
+provider evaluates whole factor fields, preserving the planned narrow/wide
+division and reusing scratch buffers. Matching runtimes keep the optimized C++
+FMA or portable helper. This is native math reuse without Python image calls.
+Standalone C++ exposes an optional `FrangiFloatExpProvider` as well. Benchmark
+metadata records the actual float32 math provider.
+
+The expanded untimed gate disables NumPy's AVX2/FMA/AVX-512 dispatch targets in
+fresh processes and tests both C++ SIMD and scalar modes. NumPy 2.5's actual
+exp dispatch target is recorded because hardware component bits can remain
+true after its feature groups are disabled. Local normal and generic-dispatch
+suites pass all 1,005 cases on Windows and both tested Linux NumPy runtimes;
+new hosted CI/SDK and measurement gates remain pending.
 
 ## Implementation and numerical scope
 
@@ -35,16 +58,71 @@ operations or GIL held during kernel execution:
   host vector/tail dispatch independently of C++ worker partitions.
 
 These are dependencies on NumPy's native math runtime, not rewritten LAPACK
-or a NumPy-free claim. Standalone C++ accepts optional eigenvalue and exp
-providers and defaults to its own Jacobi/formula solver and libm. Identical
-sensitive rounding is not claimed for those standalone defaults.
+or a NumPy-free claim. Standalone C++ accepts optional eigenvalue and per-precision exp providers.
+Its defaults use its own Jacobi/formula solver, libm double exp and the float32
+approximation. Identical sensitive rounding is not claimed without matching
+providers.
 
 The baseline's float32 exp uses NumPy's BSD-licensed approximation and explicit
 scalar FMA inside SIMD response arithmetic. A new candidate evaluates ordinary
 float32 exponents with vector FMA after runtime CPU checks, preserving the
 portable helper for subnormal/exceptional exponents and CPUs without FMA.
-Its speedup is not measured yet. The existing NumPy third-party license covers
-reused coefficients and evaluation order.
+The paired measurements below quantify its gains. The existing NumPy
+third-party license covers reused coefficients and evaluation order.
+
+## SIMD FMA paired measurements
+
+[Measurement39917576124](https://github.com/bipxx/scikit-imagexx/actions/runs/39917576124)
+passed both OS jobs. Each runner compares scikit-image, this candidate and the
+preserved whole-field baseline `841693b` in one process, using the same arrays,
+reference pools of one, global C++ caps one/four, seven samples per implementation
+and the unchanged case corpus. Candidate and baseline arrays must compare exactly
+before timing every case. Both native providers are disclosed in report metadata,
+and `frangi_fma=true` confirms the measured CPU dispatch. Exact source, current
+and baseline wheel/package bytes, binary hashes, samples, medians, loop counts,
+ratios, cases, dtypes and numerical bounds have been verified.
+
+[Raw SIMD-FMA Linux samples](frangi-fma-linux.json) and
+[raw SIMD-FMA Windows samples](frangi-fma-windows.json) retain all 1,152 rows per OS,
+including all three sets of seven timing samples in every row.
+
+| OS | API | Rank | One-worker geometric mean vs scikit-image | Minimum | Faster cases |
+|---|---|---:|---:|---:|---:|
+| Linux | Frangi | 2 | 6.066064x | 3.141553x | 144/144 |
+| Linux | Frangi | 3 | 2.791526x | 1.292099x | 144/144 |
+| Linux | Ridge-Hessian | 2 | 5.901990x | 3.058646x | 144/144 |
+| Linux | Ridge-Hessian | 3 | 2.787797x | 1.310107x | 144/144 |
+| Windows | Frangi | 2 | 4.952729x | 1.868207x | 144/144 |
+| Windows | Frangi | 3 | 2.398190x | 1.328340x | 144/144 |
+| Windows | Ridge-Hessian | 2 | 4.815697x | 1.857366x | 144/144 |
+| Windows | Ridge-Hessian | 3 | 2.388229x | 1.316755x | 144/144 |
+
+All 576 one-worker cases per OS are faster than scikit-image. Overall geometric
+means are 4.085565x Linux / 3.418738x Windows. Strict budgets remain 2e-6 float32 /
+2e-13 float64. Float32 outputs have zero recorded error; maximum absolute error
+for 3-D Frangi float64 is 2.220446049250313e-16 Linux /
+1.6653345369377348e-16 Windows; the other groups have zero recorded difference.
+
+Across 96 float32-output one-worker cases, same-runner geometric mean gains over
+the preserved C++ baseline are **1.253302x Linux / 1.179685x Windows**. Individual
+paired minima are 0.988563x / 0.908922x; aggregate gains do not imply improvement
+in every individual timing. The 480 unchanged float64-output controls measure
+0.998112x / 1.016309x. Across all 576 cases, paired geometric mean gains are
+1.036713x / 1.041875x.
+
+The four previously slower Windows cases remain in the corpus. Their new
+one-worker speedups and direct same-runner gains are:
+
+| 2-D zero-sigma case | Linux vs scikit-image | Linux paired gain | Windows vs scikit-image | Windows paired gain |
+|---|---:|---:|---:|---:|
+| Frangi float16 | 5.258650x | 4.090554x | 3.377179x | 2.365240x |
+| Frangi float32 | 5.276510x | 4.212234x | 3.265597x | 2.380186x |
+| Ridge-Hessian float16 | 5.164442x | 4.041797x | 3.309298x | 2.357224x |
+| Ridge-Hessian float32 | 5.222183x | 4.157446x | 3.265487x | 2.358065x |
+
+These paired measurements establish improvement over the preserved C++ package
+on the same runner. Separate runner trials below establish their own comparisons
+against scikit-image; their ratios alone do not prove paired code improvement.
 
 ## Initial measurements: whole-field baseline
 
@@ -114,7 +192,7 @@ in ignored checkpoints.
 The whole-field correction has a native controlled-rounding regression that
 requires one provider call per factor and verifies tiny positive responses
 survive the final transform. A same-host
-[audit39915622311](https://github.com/bipxx/scikit-imagexx/actions/runs/39915622311)
+[audit39917576333](https://github.com/bipxx/scikit-imagexx/actions/runs/39917576333)
 ran NumPy 1.24 and 2.5 on an actual AVX-512 CPU. Both expose five sensitive
 points with bit-identical Hessians, and the native final responses match the
 reference; both SIMD and scalar parity suites pass. Earlier successful AVX2
@@ -124,4 +202,5 @@ The new float32 vector-FMA candidate has additional bitwise comparisons with
 the portable helper over ordinary, subnormal and boundary exponents, including
 100,003 seeded values. It passes all 1,004 dedicated checks per SIMD mode and all 1,152 untimed
 corpus checks on Windows, minimum-NumPy Linux and modern-NumPy Linux. Its
-expanded hosted, SDK and performance gates remain pending before retention.
+local native/portable/SDK/sanitizer and hosted AVX-512 parity gates pass. The
+paired measurements above pass; full CI gates main retention.

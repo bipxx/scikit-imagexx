@@ -76,34 +76,44 @@ template<class T> bool run(const void* const* fields,const void* previous,void* 
  }
  for(const auto den:{parameters.alpha_den,parameters.beta_den,parameters.gamma_den})if(!(den>0) || !std::isfinite(den))return false;
  if(sizeof(T)==4 && ((parameters.alpha_single && (!std::isfinite(T(parameters.alpha_den)) || T(parameters.alpha_den)==0)) || (parameters.beta_single && (!std::isfinite(T(parameters.beta_den)) || T(parameters.beta_den)==0)) || (parameters.gamma_single && (!std::isfinite(T(parameters.gamma_den)) || T(parameters.gamma_den)==0))))return false;
- if constexpr(sizeof(T)==8){if(parameters.exp_provider && parameters.exp_provider->evaluate){
+ bool supplied_exp=false;
+ if constexpr(sizeof(T)==8)supplied_exp=parameters.exp_provider && parameters.exp_provider->evaluate;
+ else supplied_exp=parameters.float_exp_provider && parameters.float_exp_provider->evaluate;
+ if(supplied_exp){
   // Whole fields preserve the provider's SIMD/tail dispatch independently of
   // worker partitions. Reuse the now-dead eigenvalue buffer for exp outputs.
-  double* inputs[]={ra,rb,norm};const double denominators[]={parameters.alpha_den,parameters.beta_den,parameters.gamma_den};
+  T* inputs[]={ra,rb,norm};const double denominators[]={parameters.alpha_den,parameters.beta_den,parameters.gamma_den};
+  const bool narrows[]={parameters.alpha_single,parameters.beta_single,parameters.gamma_single};
   const std::size_t first_factor=n==2 ? 1 : 0;
   for(std::size_t f=first_factor;f<3;++f){
    detail::partition(blocks,workers,[&](auto first,auto last,auto){
     auto begin=first*4;const auto end=std::min(count,last*4);bool supported=true;
 #ifdef SKIMAGEXX_AVX2
-    if(has_avx2())begin+=simd::frangi_exp_arguments(inputs[f]+begin,end-begin,denominators[f],supported);
+    if(has_avx2()){
+     if constexpr(sizeof(T)==8)begin+=simd::frangi_exp_arguments(inputs[f]+begin,end-begin,denominators[f],supported);
+     else begin+=simd::frangi_exp_arguments(inputs[f]+begin,end-begin,denominators[f],narrows[f],supported);
+    }
 #endif
-    for(;supported && begin<end;++begin){const double v=inputs[f][begin];const double x=-(v*v)/denominators[f];if(!std::isfinite(x)){supported=false;break;}inputs[f][begin]=x;}
+    for(;supported && begin<end;++begin){const T v=inputs[f][begin],negative=-T(v*v);
+     const T x=narrows[f] ? T(negative/T(denominators[f])) : T(double(negative)/denominators[f]);
+     if(!std::isfinite(x)){supported=false;break;}inputs[f][begin]=x;}
     if(!supported)valid.store(false,std::memory_order_relaxed);
    });
    if(!valid.load(std::memory_order_relaxed))return false;
-   parameters.exp_provider->evaluate(inputs[f],eigen.get()+(f-first_factor)*count,count,parameters.exp_provider->context);
+   if constexpr(sizeof(T)==8)parameters.exp_provider->evaluate(inputs[f],eigen.get()+(f-first_factor)*count,count,parameters.exp_provider->context);
+   else parameters.float_exp_provider->evaluate(inputs[f],eigen.get()+(f-first_factor)*count,count,parameters.float_exp_provider->context);
   }
-  const double* plate=n==2 ? nullptr : eigen.get();const auto* blob=eigen.get()+(n==2 ? 0 : count);const auto* structure=blob+count;
+  const T* plate=n==2 ? nullptr : eigen.get();const auto* blob=eigen.get()+(n==2 ? 0 : count);const auto* structure=blob+count;
   detail::partition(blocks,workers,[&](auto first,auto last,auto){
    auto begin=first*4;const auto end=std::min(count,last*4);bool supported=true;
 #ifdef SKIMAGEXX_AVX2
    if(has_avx2())begin+=simd::frangi_combine(plate ? plate+begin : nullptr,blob+begin,structure+begin,old ? old+begin : nullptr,output+begin,end-begin,supported);
 #endif
-   for(;supported && begin<end;++begin){const double value=(plate ? 1-plate[begin] : 1)*blob[begin]*(1-structure[begin]);const double prior=old ? old[begin] : 0.;
+   for(;supported && begin<end;++begin){T value=T((plate ? T(T(1)-plate[begin]) : T(1))*blob[begin]);value=T(value*T(T(1)-structure[begin]));const T prior=old ? old[begin] : T(0);
     if(!std::isfinite(value) || !std::isfinite(prior)){supported=false;break;}output[begin]=value>=prior ? value : prior;}
    if(!supported)valid.store(false,std::memory_order_relaxed);
   });return valid.load(std::memory_order_relaxed);
- }}
+ }
  detail::partition(blocks,workers,[&](auto first,auto last,auto){
   auto begin=first*4;const auto end=std::min(count,last*4);bool supported=true;
 #ifdef SKIMAGEXX_AVX2

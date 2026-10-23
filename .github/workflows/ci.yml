@@ -38,6 +38,7 @@ jobs:
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/inventory.py
       - run: python -m pytest -q
+      - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
       - run: python benchmarks/coverage.py --sizes 64 --threads 1 --repeat 1 --output build/ci-performance.json
       - run: python benchmarks/integral.py --size 32 --threads 1 --repeat 1 --output build/ci-integral.json
       - run: python benchmarks/integrate.py --size 32 --threads 1 --repeat 1 --output build/ci-integrate.json
@@ -91,6 +92,7 @@ jobs:
             build/ci-*.json
             build/install-*/*.log
             build/install-*/commands.json
+            build/frangi-generic-cpu/
   numpy-minimum:
     runs-on: ubuntu-latest
     env:
@@ -142,6 +144,7 @@ jobs:
       - run: python -m pytest -q tests/test_threshold_local.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
       - run: python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json
       - uses: actions/upload-artifact@v4
         if: always()
@@ -150,3 +153,4 @@ jobs:
           path: |
             build/ci-ciede2000.json
             build/wheels/*.whl
+            build/frangi-generic-cpu/
