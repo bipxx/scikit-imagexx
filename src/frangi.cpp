@@ -9,6 +9,33 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+namespace skimagexx::detail {
+bool frangi_fma_available(){
+#ifdef SKIMAGEXX_AVX2
+ if(!has_avx2())return false;
+#ifdef _MSC_VER
+ static const bool supported=[]{int regs[4];__cpuidex(regs,1,0);return (regs[2]&(1<<12))!=0;}();
+ return supported;
+#elif defined(__GNUC__) || defined(__clang__)
+ return bool(__builtin_cpu_supports("fma"));
+#else
+ return false;
+#endif
+#else
+ return false;
+#endif
+}
+void frangi_exp_values_into(const float* input,float* output,std::size_t count){
+ std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+ if(frangi_fma_available())for(;i+4<=count;i+=4)simd::frangi_exp_float4(input+i,output+i);
+#endif
+ for(;i<count;++i)output[i]=frangi_exp(input[i]);
+}
+}
 namespace skimagexx { namespace {
 template<class T> T factor(T value,double denominator,bool narrow,bool& valid){
  const T square=T(value*value),negative=-square;

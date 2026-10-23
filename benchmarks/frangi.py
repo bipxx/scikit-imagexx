@@ -52,12 +52,25 @@ def main():
     parser.add_argument('--repeat', type=int, default=7)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--check-only', action='store_true')
+    parser.add_argument('--baseline-dir', type=Path, help='Preserved exact-package directory from whole-field source 841693b')
     args = parser.parse_args()
     if min(args.threads) <= 0 or args.repeat <= 0:
         parser.error('positive workers/repeats required')
     if not args.check_only and args.output is None:
         parser.error('--output required for measurements')
     assert skimage.__version__ == '0.26.0'
+    baseline = None
+    baseline_metadata = None
+    if args.baseline_dir:
+        sys.path.insert(0, str(args.baseline_dir.resolve()))
+        import _baseline as baseline
+        baseline_metadata = json.loads((args.baseline_dir/'baseline-source.json').read_bytes())
+        assert baseline_metadata['revision'] == '841693bfc8b859eee4c8fa9cc5fb331dc7491ac4'
+        assert baseline_metadata['source_sha256'] == 'd6a5ca905f499a53cdc18bec618771687c72c42560c9a71cfc65ab5b6afc794d'
+        assert len(baseline_metadata['binary_sha256']) == 1
+        for name, digest in baseline_metadata['binary_sha256'].items():
+            assert hashlib.sha256((args.baseline_dir/'_baseline'/name).read_bytes()).hexdigest() == digest
+        baseline.set_fallback_enabled(False)
     xx.set_fallback_enabled(False)
     cases = list(corpus())
     specs = [dict(api=name, case=label, dtype=a.dtype.name, shape=list(a.shape),
@@ -72,9 +85,11 @@ def main():
         'repeat': args.repeat, 'target_ms': 15, 'cooldown_ms': 20, 'seed': 4691, 'command': sys.argv,
         'eigen_provider_2d': 'C++ analytic symmetric eigenvalues',
         'eigen_provider_3d': 'NumPy native double eigvalsh_lo LAPACK gufunc C loop; C++ matrix packing',
-        'float32_exp': 'NumPy BSD-licensed scalar FMA approximation inside SIMD response',
+        'float32_exp': 'NumPy BSD-licensed FMA approximation; SIMD FMA with portable scalar fallback',
+        'frangi_fma': xx._core.frangi_has_fma(),
         'float64_exp': 'NumPy native double exp ufunc C loop; whole-field host SIMD dispatch, separate buffers',
         'scope': 'Warmed allocation-inclusive Python calls, input conversion and output destruction included',
+        'paired_baseline': baseline_metadata,
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'case_spec_sha256': hashlib.sha256(json.dumps(specs, sort_keys=True).encode()).hexdigest(),
         'binary_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in package.glob('_core.*')},
@@ -93,6 +108,10 @@ def main():
                 assert actual.strides == expected.strides
                 tolerance = 2e-6 if actual.dtype == np.float32 else 2e-13
                 np.testing.assert_allclose(actual, expected, rtol=tolerance, atol=tolerance)
+                if baseline:
+                    baseline.set_num_threads(workers)
+                    old = getattr(baseline.filters, name)(a, **options)
+                    np.testing.assert_array_equal(actual, old, strict=True)
                 zeros = (actual == 0) & (expected == 0)
                 np.testing.assert_array_equal(np.signbit(actual[zeros]), np.signbit(expected[zeros]))
                 if first is None:
@@ -106,7 +125,8 @@ def main():
                 row = dict(api='filters.'+name, rank=a.ndim, dtype=a.dtype.name,
                            output_dtype=actual.dtype.name, case=label, shape=list(a.shape),
                            options=serial_options(options), threads=workers, max_abs_error=error,
-                           **measure(lambda: ref(a, **options), lambda: native(a, **options), args.repeat, 15))
+                           **measure(lambda: ref(a, **options), lambda: native(a, **options), args.repeat, 15,
+                                     baseline=(lambda: getattr(baseline.filters, name)(a, **options)) if baseline else None))
                 report['results'].append(row)
                 args.output.parent.mkdir(parents=True, exist_ok=True)
                 args.output.write_bytes((json.dumps(report, indent=2)+'\n').encode())
@@ -114,6 +134,9 @@ def main():
     finally:
         xx.set_num_threads(1)
         xx.set_fallback_enabled(True)
+        if baseline:
+            baseline.set_num_threads(1)
+            baseline.set_fallback_enabled(True)
 
 
 if __name__ == '__main__':

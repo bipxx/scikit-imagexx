@@ -6,6 +6,18 @@ from skimage import filters as reference
 
 TYPES=(np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64)
 
+@pytest.mark.parametrize('length',(1,3,4,5,17,1027,100003))
+def test_float_exp_vector_matches_portable(length):
+    rng=np.random.default_rng(853)
+    values=rng.uniform(-105,0,length).astype(np.float32)
+    edge=np.array([0.,-0.,-87.,np.nextafter(np.float32(-87),np.float32(0)),
+        np.nextafter(np.float32(-87),np.float32(-100)),-103.972084],dtype=np.float32)
+    values[:min(length,len(edge))]=edge[:min(length,len(edge))]
+    actual=xx._core.frangi_exp_values(values)
+    expected=xx._core.frangi_exp_values_portable(values)
+    np.testing.assert_array_equal(actual.view(np.uint32),expected.view(np.uint32))
+    if not xx.has_avx2():assert not xx._core.frangi_has_fma()
+
 @pytest.mark.parametrize('length',(1,3,4,7,8,9,693))
 def test_double_exp_host_rounding(length):
     # Hosted AVX-512 NumPy and libm disagree on exp(x)==1 here. That single

@@ -9,6 +9,7 @@ on:
       - src/frangi.cpp
       - src/bind_frangi.cpp
       - src/simd_frangi_avx2.cpp
+      - src/simd_frangi_fma.cpp
       - tests/test_frangi.py
 jobs:
   diagnose:

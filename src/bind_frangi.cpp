@@ -1,5 +1,6 @@
 #include "skimagexx/frangi.hpp"
 #include "frangi_exp.hpp"
+#include "frangi_detail.hpp"
 #include "execution.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
@@ -68,6 +69,12 @@ void bind_frangi(py::module_& module){
  if(_import_array()<0 || _import_umath()<0)throw py::error_already_set();
  auto eigen=std::make_shared<NumpyFrangiEigen>();
  auto exponential=std::make_shared<NumpyFrangiExp>();
+ module.def("frangi_has_fma",&skimagexx::detail::frangi_fma_available);
+ module.def("frangi_exp_values_portable",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
+  std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
+  {py::gil_scoped_release release;for(py::ssize_t i=0;i<values.size();++i)output.mutable_data()[i]=skimagexx::detail::frangi_exp(values.data()[i]);}
+  return output;
+ });
  module.def("frangi_exp_values_double",[exponential](py::array_t<double,py::array::c_style|py::array::forcecast> values){
   std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<double> output(shape);
   {py::gil_scoped_release release;exponential->provider.evaluate(values.data(),output.mutable_data(),values.size(),exponential->provider.context);}
@@ -75,7 +82,7 @@ void bind_frangi(py::module_& module){
  });
  module.def("frangi_exp_values",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
   std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
-  {py::gil_scoped_release release;for(py::ssize_t i=0;i<values.size();++i)output.mutable_data()[i]=skimagexx::detail::frangi_exp(values.data()[i]);}
+  {py::gil_scoped_release release;skimagexx::detail::frangi_exp_values_into(values.data(),output.mutable_data(),values.size());}
   return output;
  });
  module.def("frangi_accumulate",[eigen,exponential](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{

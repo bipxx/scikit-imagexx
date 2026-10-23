@@ -34,6 +34,7 @@ template<bool Single> std::size_t response(const void* a,const void* b,const voi
    if constexpr(Single){if(!narrow){const auto wide=_mm256_div_pd(_mm256_cvtps_pd(numerator),_mm256_set1_pd(den));numerator=_mm256_cvtpd_ps(wide);}else numerator=M::div(numerator,M::c(den));}
    else numerator=M::div(numerator,M::c(den));
    M::store(lanes,numerator);for(auto& lane:lanes)if(!std::isfinite(lane)){valid=false;lane=T(0);}
+   if constexpr(Single){if(detail::frangi_fma_available()){alignas(16) float out[4];frangi_exp_float4(lanes,out);return M::load(out);}}
    for(auto& lane:lanes)lane=detail::frangi_exp(lane);return M::load(lanes);
   };
   const R plate=pair ? M::c(1) : M::sub(M::c(1),exponential(a,p.alpha_den,p.alpha_single));
