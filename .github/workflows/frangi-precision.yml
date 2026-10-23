@@ -1,0 +1,81 @@
+name: frangi-precision-diagnostics
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/frangi]
+    paths:
+      - tools/diagnose_frangi_precision.py
+      - tools/check_frangi_numpy_dispatch.py
+      - .github/workflows/frangi-precision.yml
+      - src/frangi.cpp
+      - src/bind_frangi.cpp
+      - src/simd_frangi_avx2.cpp
+      - src/simd_frangi_fma.cpp
+      - tests/test_frangi.py
+jobs:
+  diagnose:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: '3.11'
+            numpy: '1.24.4'
+            scipy: '1.15.3'
+          - python: '3.13'
+            numpy: '2.5.4'
+            scipy: '1.18.1'
+    runs-on: ubuntu-22.04
+    env:
+      CMAKE_BUILD_PARALLEL_LEVEL: '4'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
+      - run: python -m pip install numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0 pytest
+      - shell: bash
+        run: python -m pip install --no-deps build/wheels/*.whl
+      - shell: bash
+        run: python tools/diagnose_frangi_precision.py > build/frangi-precision.json
+      - run: python -m pytest -q tests/test_frangi.py
+      - run: python -m pytest -q tests/test_frangi.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-numpy-first
+      # Keep the second runtime on this exact CPU: separate matrix jobs can
+      # receive different AVX-512 capabilities even on the same hosted image.
+      - if: matrix.numpy == '1.24.4'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - if: matrix.numpy == '1.24.4'
+        run: python -m pip wheel . --no-deps --wheel-dir build/modern-wheels
+      - if: matrix.numpy == '1.24.4'
+        run: python -m pip install numpy==2.5.4 scipy==1.18.1 scikit-image==0.26.0 pytest
+      - if: matrix.numpy == '1.24.4'
+        shell: bash
+        run: python -m pip install --no-deps build/modern-wheels/*.whl
+      - if: matrix.numpy == '1.24.4'
+        shell: bash
+        run: python tools/diagnose_frangi_precision.py > build/frangi-precision-modern-same-host.json
+      - if: matrix.numpy == '1.24.4'
+        run: python -m pytest -q tests/test_frangi.py
+      - if: matrix.numpy == '1.24.4'
+        run: python -m pytest -q tests/test_frangi.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - if: matrix.numpy == '1.24.4'
+        run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-numpy-modern
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frangi-precision-numpy-${{ matrix.numpy }}
+          path: |
+            build/frangi-precision*.json
+            build/wheels/*.whl
+            build/modern-wheels/*.whl
+            build/frangi-generic-numpy-first/
+            build/frangi-generic-numpy-modern/

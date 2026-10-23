@@ -5,17 +5,26 @@ on:
       benchmark:
         description: Fixed kernel corpus to measure
         type: choice
-        options: [li, ciede2000, adaptive, rank-order, hysteresis, correlate-sparse, median, multiotsu, clahe, gabor-kernel, gabor, symmetric-eigen, structure-tensor, corner-responses, kitchen, hessian, shape-index, hessian-det, sato, meijering]
+        options: [li, ciede2000, adaptive, rank-order, hysteresis, correlate-sparse, median, multiotsu, clahe, gabor-kernel, gabor, symmetric-eigen, structure-tensor, corner-responses, kitchen, hessian, shape-index, hessian-det, sato, meijering, frangi]
         default: li
       paired:
         description: Also compare the preserved initial package
         type: boolean
         default: false
+      runner:
+        description: Hosted OS to measure (both by default)
+        type: choice
+        options: [both, ubuntu-latest, windows-latest]
+        default: both
 jobs:
   measure:
+    permissions:
+      contents: read
+      actions: read
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: ${{ fromJSON(inputs.runner == 'windows-latest' && '["windows-latest"]' || inputs.runner == 'ubuntu-latest' && '["ubuntu-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
     runs-on: ${{ matrix.os }}
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: '4'
@@ -32,12 +41,20 @@ jobs:
           python-version: '3.13'
       - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
       - run: python -m pip install "numpy>=2.3" "scikit-image==0.26.0" "pytest>=8"
+      - if: inputs.benchmark == 'frangi'
+        run: python -m pip install numpy==2.5.4 scipy==1.18.1
       - name: Install exact wheel
         shell: bash
         run: python -m pip install --no-deps build/wheels/*.whl
       - name: Preserve exact package
         shell: bash
         run: python tools/preserve_baseline.py --wheel build/wheels/*.whl --source-root . --output build/exact-package
+      - if: inputs.benchmark == 'frangi' && inputs.paired
+        name: Fetch preserved whole-field baseline
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 39914328727 --repo ${{ github.repository }} --name frangi-performance-${{ matrix.os }} --dir build/frangi-reference
       - if: inputs.benchmark == 'li'
         run: python -m pytest -q tests/test_threshold_li.py tests/test_api.py
       - if: inputs.benchmark == 'ciede2000'
@@ -50,6 +67,14 @@ jobs:
         run: python -m pytest -q tests/test_multiotsu.py tests/test_api.py
       - if: inputs.benchmark == 'clahe'
         run: python -m pytest -q tests/test_clahe.py tests/test_api.py
+      - if: inputs.benchmark == 'frangi'
+        run: python -m pytest -q tests/test_frangi.py tests/test_meijering.py tests/test_sato.py tests/test_hessian_matrix.py tests/test_api.py
+      - if: inputs.benchmark == 'frangi'
+        run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
+      - if: inputs.benchmark == 'frangi'
+        run: python -m pytest -q tests/test_frangi.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - if: inputs.benchmark == 'meijering'
         run: python -m pytest -q tests/test_meijering.py tests/test_sato.py tests/test_hessian_matrix.py tests/test_api.py
       - if: inputs.benchmark == 'meijering'
@@ -228,6 +253,10 @@ jobs:
         run: python benchmarks/structure_tensor.py --threads 1 4 --repeat 7 --output build/structure-tensor-performance.json
       - if: inputs.benchmark == 'corner-responses' && !inputs.paired
         run: python benchmarks/corner_responses.py --threads 1 4 --repeat 7 --output build/corner-responses-performance.json
+      - if: inputs.benchmark == 'frangi' && inputs.paired
+        run: python benchmarks/frangi.py --baseline-dir build/frangi-reference/exact-package --threads 1 4 --repeat 7 --output build/frangi-performance.json
+      - if: inputs.benchmark == 'frangi' && !inputs.paired
+        run: python benchmarks/frangi.py --threads 1 4 --repeat 7 --output build/frangi-performance.json
       - if: inputs.benchmark == 'meijering' && !inputs.paired
         run: python benchmarks/meijering.py --threads 1 4 --repeat 7 --output build/meijering-performance.json
       - if: inputs.benchmark == 'sato' && !inputs.paired
@@ -248,4 +277,6 @@ jobs:
             build/*-performance.json
             build/wheels/*.whl
             build/exact-package/
+            build/frangi-reference/
+            build/frangi-generic-cpu/
             build/initial/exact-package/

@@ -1,5 +1,15 @@
 # Last completed whole-library performance checkpoint
 
+The feature branch additionally registers `filters.frangi` and `filters.hessian`
+as native-partial candidates: **121 image APIs + 2 metadata**, with **332 callable
+names** pending. Dedicated/shared parity tests and a fixed isolated benchmark
+exist. Initial whole-field measurements verify 576/576 faster one-worker cases
+on Linux and 572/576 on Windows; four Windows zero-sigma cases remain slower.
+A vector-FMA trial, final hosted gates and retention are pending. These are
+baseline results, not a measured claim for the SIMD trial. See
+[candidate scope and raw samples](frangi-initial.md).
+The retained checkpoints below describe their original measured coverage.
+
 Retained `filters.meijering`, measured source `f8cb5b4`:
 [full CI39907246156](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
 passed Windows, Linux and minimum NumPy; isolated
