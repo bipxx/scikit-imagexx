@@ -18063,8 +18063,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "6920dff8bbcd836473cffc42868d48d5d5a0a45d",
+        "main_commit": "17077da1f4b9edebea50110978a209f8dfc44c81"
       },
       "retention": {
         "active_paths": [],
@@ -18087,24 +18087,18 @@
       "id": "arraymap-dense-native",
       "kind": "private_kernel",
       "apis": [],
-      "owner": "resize_api",
-      "branch": "feature/arraymap-dense-native",
-      "base_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
-      "owns": [
-        "python/skimagexx/_component_consumers.py",
-        "src/bind_component_consumers.cpp",
-        "src/component_consumers.cpp",
-        "include/skimagexx/component_consumers.hpp",
-        "tests/test_arraymap_dense_pipeline.py"
-      ],
+      "owner": "integrator",
+      "branch": "feature/arraymap-dense-native-overflow",
+      "base_sha": "0486cbb2b3ea5649fccb4c35b46b90a74cc22bfd",
+      "owns": [],
       "depends_on": [
         "arraymap-dense-contracts"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Preserve overflow/dtype/index/cast order, bool/vector/scalar distinctions, compact-key ownership and partial cache state. Actual whole bindings link immutable591 SDK; all candidate changes isolated."
+          "Contract692 excludes unsafe/massive allocations and unrepresented user protocols; final cumulative-main package integration is a separate pending gate."
         ]
       },
       "parity": {
@@ -18122,16 +18116,36 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "0486cbb2b3ea5649fccb4c35b46b90a74cc22bfd",
+        "main_commit": "17077da1f4b9edebea50110978a209f8dfc44c81",
+        "series": [
+          "b74e484a61f9d343dc025ae19a24968276dbc1ee",
+          "0486cbb2b3ea5649fccb4c35b46b90a74cc22bfd"
+        ]
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/worktrees/arraymap-dense-native-overflow/build",
+          "build/worktrees/arraymap-dense-native-overflow/build/snapshot1-evidence.zip"
+        ]
       },
       "dependency_requirements": {
         "arraymap-dense-contracts": {
           "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "0486cbb2b3ea5649fccb4c35b46b90a74cc22bfd",
+          "manifest": {
+            "path": "build/worktrees/arraymap-dense-native-overflow/build/arraymap-dense-final-proof.json",
+            "sha256": "207e3f7616db27196f8a5b802d06dea11224a3a41caf0b286451d0b71edb0d0d"
+          },
+          "native_contract_checks": 382,
+          "native_pending": 0,
+          "scope": "Actual whole-module/complete-package consumer scope:5689x8 normal/scalar Release/Debug,878x8 corpus,382x8 denseaudit0gaps,2360 private Debug ASan/UBSan. NumPy checked metadata/index providers explicit; Python leaks off, native unchanged-kernel leaks on. No new public API/class or performance count. Final cumulative main remains pending."
         }
       }
     },
@@ -18247,20 +18261,14 @@
       "id": "metrics-stepped-half-optimization",
       "kind": "private_kernel",
       "apis": [],
-      "owner": "metrics_reductions",
+      "owner": "integrator",
       "branch": "feature/metrics-load-optimization",
       "base_sha": "79ee04345b81af93adcc6f39d7c81cc5f3e5c7df",
-      "owns": [
-        "src/metrics.cpp",
-        "src/simd_metrics_avx2.cpp",
-        "src/bind_metrics.cpp",
-        "include/skimagexx/metrics.hpp",
-        "tests/test_metrics_native.cpp"
-      ],
+      "owns": [],
       "depends_on": [
         "metrics-simd-measurement"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "benchmarks/metrics_reductions.py",
         "uncovered_cases": [
@@ -18283,21 +18291,35 @@
         "note": "No local operation timing; performance pending a fresh isolated hosted trial."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "ae2fd75560365777f0fc680a9848b06edad3a135",
+        "main_commit": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1"
       },
       "retention": {
         "active_paths": [
           "build/worktrees/metrics-load-optimization"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/metrics-half-load-evidence/ae2fd75"
+        ]
       },
       "dependency_requirements": {
         "metrics-simd-measurement": {
           "evidence_scope": "isolated_performance"
         }
       },
-      "proofs": {},
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ae2fd75560365777f0fc680a9848b06edad3a135",
+          "manifest": {
+            "path": "build/metrics-half-load-evidence/ae2fd75/manifest.json",
+            "sha256": "618b518a28a9d498f5967bd0cc833ad4e97c4c960292584060f27dc81c46549e"
+          },
+          "native_contract_checks": 144,
+          "native_pending": 0,
+          "scope": "Six focused normal/scalar profiles and two ASan/UBSan binding profiles144 each; modern broad7874 includes7730 unchanged assertions. Fixed1231 corpus on three runtimes workers1/4. Ten native gates exercise all63488 finite half encodings at exact strided/unaligned allocations. Private binding only, not sole production core; no timing claim."
+        }
+      },
       "launch": {
         "tool": "collaboration.followup_task",
         "arguments": {
@@ -18307,6 +18329,206 @@
         "worktree": "build/worktrees/metrics-load-optimization",
         "requires_user_resume": false
       }
+    },
+    {
+      "id": "combined-public-wave5",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
+      "owns": [],
+      "depends_on": [
+        "rank-intensity-public",
+        "rank-alias-native",
+        "arraymap-dense-native",
+        "metrics-stepped-half-optimization"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Reuse agent3 once-built complete cumulative production wheels/SDKs after PhaseA lease release, then verify each new family in the shared sole-core package. Never move live source/caches or accept private-module state as production state."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-intensity-public": {
+          "evidence_scope": "public_native"
+        },
+        "rank-alias-native": {
+          "evidence_scope": "native_private"
+        },
+        "arraymap-dense-native": {
+          "evidence_scope": "public_native"
+        },
+        "metrics-stepped-half-optimization": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      }
+    },
+    {
+      "id": "metrics-stepped-half-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave5"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "note": "Same fixed1231 checks/1212 timed cases, one-worker primary; all3 preparation profiles before fresh artifact-only measurement hosts. No local timing or cross-host causal speed claim."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "combined-public-wave5": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "rank-intensity-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-intensity-benchmark",
+      "base_sha": "225c461edbd6e4b1512409ef283c51f49ff18464",
+      "owns": [
+        "benchmarks/rank_intensity.py",
+        "tests/test_rank_intensity_benchmark.py",
+        "coverage/contracts/rank-intensity-benchmark.json",
+        ".github/workflows/rank-intensity-benchmark.yml"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Phase1 original-reference/tooling only. Actual native public gate waits for rank-intensity-public complete-package proof; never time generic identity aliases or errors. Existing R1/R2 corpora unchanged."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {}
+    },
+    {
+      "id": "arraymap-provider-audit",
+      "kind": "reference_contract",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/arraymap-provider-contracts",
+      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
+      "owns": [
+        "tests/test_arraymap_provider_contracts.py",
+        "coverage/contracts/arraymap-providers.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Read-only bounded cold-process audit of live NumPy zeros/max provider lookups versus captured binding objects; no production edits/builds, timing or all-contract acceptance claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {}
     }
   ],
   "unassigned_inventoried_apis": [
