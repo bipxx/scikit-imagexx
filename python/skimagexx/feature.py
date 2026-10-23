@@ -161,8 +161,7 @@ from functools import lru_cache as _hessian_lru_cache
 _hessian_cached_coefficients=_hessian_lru_cache(maxsize=128,typed=True)(_hessian_coefficients)
 
 
-def hessian_matrix(image,sigma=1,mode='constant',cval=0,order='rc',use_gaussian_derivatives=None):
-    forwarded=lambda:fallback('feature','hessian_matrix',image,sigma=sigma,mode=mode,cval=cval,order=order,use_gaussian_derivatives=use_gaussian_derivatives)
+def _hessian_matrix_impl(image,sigma,mode,cval,order,use_gaussian_derivatives,forwarded):
     from .filters import _GAUSSIAN_TYPES,_GAUSSIAN_MODES
     if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
     if type(order) is not str or order not in ('rc','xy') or order=='xy' and image.ndim!=2:return forwarded()
@@ -208,14 +207,27 @@ def hessian_matrix(image,sigma=1,mode='constant',cval=0,order='rc',use_gaussian_
     if not gaussian and any(length<2 for length in image.shape):
         if use_gaussian_derivatives is None:
             import warnings
-            warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=2)
+            warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=3)
         raise ValueError('Shape of array too small to calculate a numerical gradient, at least (edge_order + 1) elements are required.')
     result=_core.hessian_matrix(prepared,plans,constant,gaussian,order=='xy')
     if result is None:return forwarded()
     if use_gaussian_derivatives is None:
         import warnings
-        warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=2)
+        warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=3)
     return result
 
 
-__all__+=['hessian_matrix']
+def hessian_matrix(image,sigma=1,mode='constant',cval=0,order='rc',use_gaussian_derivatives=None):
+    return _hessian_matrix_impl(image,sigma,mode,cval,order,use_gaussian_derivatives,lambda:fallback('feature','hessian_matrix',image,sigma=sigma,mode=mode,cval=cval,order=order,use_gaussian_derivatives=use_gaussian_derivatives))
+
+
+def shape_index(image,sigma=1,mode='constant',cval=0):
+    forwarded=lambda:fallback('feature','shape_index',image,sigma=sigma,mode=mode,cval=cval)
+    if type(image) not in (np.ndarray,np.memmap) or image.ndim!=2:return forwarded()
+    fields=_hessian_matrix_impl(image,sigma,mode,cval,'rc',False,lambda:None)
+    if fields is None:return forwarded()
+    result=_core.shape_index(fields)
+    return result if result is not None else forwarded()
+
+
+__all__+=['hessian_matrix','shape_index']

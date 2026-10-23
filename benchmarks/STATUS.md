@@ -1,5 +1,17 @@
 # Last completed whole-library performance checkpoint
 
+Retained `feature.shape_index`, measured source `fc32f93`:
+[full CI39891161029](https://github.com/bipxx/scikit-imagexx/actions/runs/39891161029)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39891161346](https://github.com/bipxx/scikit-imagexx/actions/runs/39891161346)
+passed both OSes. One-worker geometric means are **3.787195× Linux / 2.689617×
+Windows**, all 120 cases faster per OS; minima 2.321666× / 1.714554×.
+All 480 timed rows pass NaN-mask and numerical parity. Maximum finite absolute
+errors are 1.1920929e-7 float32 and 2.2204461e-16 float64. Native coverage is
+**116 + 2 metadata APIs**; **337 callable names** and 29 classes/284 static
+member paths remain pending. [Raw samples and scope](shape-index-initial.md)
+are preserved. The Hessian small-volume padding follow-up remains in progress.
+
 Retained `feature.hessian_matrix`, measured source `5f010a6`:
 [full CI39890585539](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585539)
 passed all three jobs; [measurement39890585030](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585030)
