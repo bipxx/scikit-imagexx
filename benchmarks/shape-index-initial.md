@@ -46,4 +46,6 @@ Raw samples: [Linux](shape-index-initial-linux.json),
 [Windows](shape-index-initial-windows.json). Exact packages, manifests,
 source archives, failed worker-boundary trial and validation logs remain in
 ignored build checkpoints. The [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39891161029)
-is still running; retention awaits all three jobs.
+passed Windows, Linux and minimum NumPy. The implementation is retained;
+subsequent retention changes are reports and merge bookkeeping, and runtime
+sources match the measured revision.
