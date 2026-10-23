@@ -3,6 +3,8 @@
 Finite real coordinate application uses C++ projective-coordinate-v1. Matrix
 inversion, composition, normalization, SVD/Umeyama and Euler construction retain
 runtime NumPy/SciPy numerical policy. No upstream transform classes are called.
+Failure exception identity uses an explicit lazy compatibility metadata provider
+when scikit-image is installed, and a standalone AttributeError subclass otherwise.
 
 Class/solver algorithms ported from scikit-image 0.26.0.
 Copyright: 2009-2022 the scikit-image team (BSD-3-Clause).
@@ -39,7 +41,6 @@ import textwrap
 import warnings
 from typing import Self
 import numpy as np
-from scipy import spatial
 from . import _core
 
 NP_COPY_IF_NEEDED = None if np.lib.NumpyVersion(np.__version__) >= '2.0.0' else False
@@ -105,6 +106,35 @@ class FailedEstimationAccessError(AttributeError):
     pass
 
 
+_StandaloneFailedEstimationAccessError = FailedEstimationAccessError
+_CANONICAL_FAILURE_ERROR = None
+
+
+def _canonical_failure_error():
+    """Use the compatibility exception identity, without importing algorithms.
+
+    Resolve lazily so valid native geometry needs neither scikit-image nor
+    SciPy. Exception metadata is independent of image-algorithm fallback.
+    """
+    global FailedEstimationAccessError, _CANONICAL_FAILURE_ERROR
+    if _CANONICAL_FAILURE_ERROR is not None:
+        return _CANONICAL_FAILURE_ERROR
+    try:
+        from skimage._shared.utils import FailedEstimationAccessError as canonical
+    except ModuleNotFoundError as error:
+        if error.name not in ('skimage','skimage._shared','skimage._shared.utils'):
+            raise
+        canonical = _StandaloneFailedEstimationAccessError
+    FailedEstimationAccessError = canonical
+    _CANONICAL_FAILURE_ERROR = canonical
+    return canonical
+
+
+class _FailureErrorClass:
+    def __get__(self, instance, owner):
+        return _canonical_failure_error()
+
+
 class _GeometricTransform(ABC):
     @abstractmethod
     def __call__(self, coords):
@@ -128,7 +158,7 @@ class _GeometricTransform(ABC):
         return _from_estimate(cls, src, dst, *args, **kwargs)
 
 class FailedEstimation:
-    error_cls = FailedEstimationAccessError
+    error_cls = _FailureErrorClass()
     hint = "You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
 
     def __init__(self, message):
@@ -220,6 +250,7 @@ def _umeyama(src, dst, estimate_scale):
     return T
 
 def _euler_rotation_matrix(angles, degrees=False):
+    from scipy import spatial
     return spatial.transform.Rotation.from_euler('XYZ', angles=angles, degrees=degrees).as_matrix()
 
 class _HMatrixTransform(_GeometricTransform):

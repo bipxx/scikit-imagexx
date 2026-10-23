@@ -95,4 +95,11 @@ def invert(image, signed_float=False):
 
 
 def __getattr__(name):
+    if name == 'FailedEstimationAccessError':
+        from ._geometric import _canonical_failure_error
+        return _canonical_failure_error()
     return module_attribute('util', name)
+
+
+def __dir__():
+    return sorted(set(globals()) | set(__all__) | {'FailedEstimationAccessError'})

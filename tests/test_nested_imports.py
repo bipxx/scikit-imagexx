@@ -130,8 +130,10 @@ def test_classes_constants_and_discovery_keep_policy():
     from skimage.color.colorconv import rgb_from_xyz
     assert actual is rgb_from_xyz
     xx.set_fallback_enabled(False)
+    from skimagexx import _geometric
+    assert xx.transform.AffineTransform is _geometric.AffineTransform
     with pytest.raises(NotImplementedError):
-        xx.transform.AffineTransform
+        xx.transform.EssentialMatrixTransform
 
 
 @pytest.mark.parametrize('path', ['filters.not_a_module', 'filters._median',

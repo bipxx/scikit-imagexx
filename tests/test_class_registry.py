@@ -30,3 +30,13 @@ def test_class_contract_keeps_members_state_providers_and_evidence_distinct(name
 
 def test_unknown_class_contract_is_explicit():
     with pytest.raises(KeyError):registry.class_contract('transform.UnportedClass')
+
+
+def test_exception_metadata_provider_does_not_inflate_native_classes():
+    assert registry.class_metadata_providers()==('util.FailedEstimationAccessError',)
+    assert len(registry.native_classes())==4
+    assert not set(registry.class_metadata_providers())&set(registry.native_classes())
+    contract=registry.class_contract('util.FailedEstimationAccessError')
+    assert contract['implementation']=='exception-metadata-provider'
+    assert 'Canonical' in contract['providers']['exception']
+    assert contract['parity_evidence'] is contract['performance_evidence'] is None
