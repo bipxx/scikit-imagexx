@@ -10,8 +10,7 @@ __m256d wide(__m256i value,bool is_signed) {
     const auto high=low32(_mm256_srli_epi64(value,32));
     return _mm256_add_pd(_mm256_mul_pd(is_signed ? _mm256_cvtepi32_pd(high):unsigned32(high),_mm256_set1_pd(4294967296.)),unsigned32(low32(value)));
 }
-__m128 half4(const unsigned char* p,bool swap) {
-    auto packed=_mm_loadl_epi64(reinterpret_cast<const __m128i*>(p));
+__m128 half4(__m128i packed,bool swap) {
     if(swap)packed=_mm_shuffle_epi8(packed,_mm_setr_epi8(1,0,3,2,5,4,7,6,-1,-1,-1,-1,-1,-1,-1,-1));
     const auto value=_mm_cvtepu16_epi32(packed),fraction=_mm_and_si128(value,_mm_set1_epi32(1023)),
                exponent=_mm_srli_epi32(_mm_and_si128(value,_mm_set1_epi32(0x7c00)),10),
@@ -58,9 +57,18 @@ __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t st
     const auto* p=static_cast<const unsigned char*>(view.data)+offset;
     if(step==0)return _mm256_set1_pd(detail::metric_read(view,offset));
     if(view.half && (step==2 || step==-2)) {
-        auto value=half4(step==2 ? p:p-6,view.swap);
+        auto value=half4(_mm_loadl_epi64(reinterpret_cast<const __m128i*>(step==2 ? p:p-6)),view.swap);
         if(step<0)value=_mm_shuffle_ps(value,value,_MM_SHUFFLE(0,1,2,3));
         return _mm256_cvtps_pd(value);
+    }
+    if(view.half) {
+        // AVX2 has no 16-bit gather, and widened gathers may cross the final
+        // element/allocation. Pack four exact byte-safe reads, then share the
+        // existing integer/float binary16 decoder (no F16C requirement).
+        std::uint16_t words[4];
+        for(int i=0;i<4;++i)std::memcpy(words+i,p+std::ptrdiff_t(i)*step,2);
+        const auto packed=_mm_setr_epi16(short(words[0]),short(words[1]),short(words[2]),short(words[3]),0,0,0,0);
+        return _mm256_cvtps_pd(half4(packed,view.swap));
     }
     const auto bytes=std::ptrdiff_t(pixel_size(view.type));
     if(!view.half && step==-bytes)
@@ -87,7 +95,7 @@ __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t st
             default:break;
         }
     }
-    if(view.half || step!=bytes) {
+    if(step!=bytes) {
         alignas(32) double values[4];for(int i=0;i<4;++i)values[i]=detail::metric_read(view,offset+std::ptrdiff_t(i)*step);return _mm256_load_pd(values);
     }
     switch(view.type) {
