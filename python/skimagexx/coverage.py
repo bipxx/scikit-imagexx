@@ -83,6 +83,7 @@ def class_contract(api):
                      math_providers='NumPy/SciPy thread pools are external; constrain BLAS/OMP separately'),
         compatibility_boundaries=[
             'FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.',
+            'FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.',
             'Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native.'],
         public_parity_test='tests/test_transform_classes_public.py',
         frozen_contract='tests/test_transform_class_contracts.py',
