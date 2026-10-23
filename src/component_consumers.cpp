@@ -12,6 +12,33 @@
 
 namespace skimagexx {
 namespace {
+template<class T> struct Width {using type=T;};
+template<class F> void output_width(std::size_t bytes,F call) {
+    switch(bytes) {
+        case 1:call(Width<std::uint8_t>{});break;case 2:call(Width<std::uint16_t>{});break;
+        case 4:call(Width<std::uint32_t>{});break;case 8:call(Width<std::uint64_t>{});break;
+        default:call(Width<void>{});break;
+    }
+}
+template<class T> void copy_word(void* out,const void* value,std::size_t bytes) {
+    if constexpr(std::is_void_v<T>)std::memcpy(out,value,bytes);
+    else std::memcpy(out,value,sizeof(T));
+}
+template<class T> void zero_word(void* out,std::size_t bytes) {
+    if constexpr(std::is_void_v<T>)std::memset(out,0,bytes);
+    else {const T zero=0;std::memcpy(out,&zero,sizeof(T));}
+}
+bool disjoint(const void* a,std::size_t a_bytes,const void* b,std::size_t b_bytes) {
+    const auto first=reinterpret_cast<std::uintptr_t>(a),second=reinterpret_cast<std::uintptr_t>(b),maximum=std::numeric_limits<std::uintptr_t>::max();
+    if(a_bytes>maximum-first || b_bytes>maximum-second)return false;
+    return first+a_bytes<=second || second+b_bytes<=first;
+}
+bool c_order(const ConsumerRaster& out) {
+    if(out.shape.size()!=out.strides.size())return false;
+    std::size_t stride=out.itemsize;
+    for(auto axis=out.shape.size();axis-->0;){if(out.shape[axis]>1 && out.strides[axis]!=std::ptrdiff_t(stride))return false;stride*=out.shape[axis];}
+    return true;
+}
 std::size_t count_of(const std::vector<std::size_t>& shape) {
     if(std::find(shape.begin(),shape.end(),0)!=shape.end())return 0;
     std::size_t count=1;
@@ -160,11 +187,30 @@ ConsumerCounts consumer_count(const std::intptr_t* input,std::size_t count) {
 void consumer_filter_into(const std::intptr_t* labels,const ConsumerCounts& counts,double threshold,const ConsumerRaster& out) {
     if(counts.keys.size()!=counts.sizes.size())throw std::invalid_argument("invalid consumer counts");
     const bool dense=!counts.keys.empty() && counts.keys.back()+1==counts.keys.size();
+    output_width(out.itemsize,[&](auto width) {
+    using T=typename decltype(width)::type;
+    const auto size_of=[&](std::uint64_t key) {
+        if(dense)return key<counts.sizes.size() ? counts.sizes[std::size_t(key)]:std::intptr_t{0};
+        const auto found=std::lower_bound(counts.keys.begin(),counts.keys.end(),key);
+        return found!=counts.keys.end() && *found==key ? counts.sizes[std::size_t(found-counts.keys.begin())]:std::intptr_t{0};
+    };
+#ifdef SKIMAGEXX_AVX2
+    if constexpr(!std::is_void_v<T>)if(dense && c_order(out) && has_avx2()) {
+        const auto n=count_of(out.shape);
+        if(n && out.data && disjoint(labels,n*sizeof(std::intptr_t),out.data,n*sizeof(T)) && disjoint(counts.sizes.data(),counts.sizes.size()*sizeof(std::intptr_t),out.data,n*sizeof(T))) {
+            detail::partition(n,detail::active_workers(n),[&](auto begin,auto end,auto) {
+                begin+=simd::consumer_filter_store(labels+begin,end-begin,counts.sizes.data(),counts.sizes.size(),threshold,static_cast<char*>(out.data)+begin*sizeof(T),sizeof(T));
+                for(auto i=begin;i<end;++i)if(double(size_of(std::uint64_t(labels[i])))<=threshold)zero_word<T>(static_cast<char*>(out.data)+i*sizeof(T),sizeof(T));
+            });return;
+        }
+    }
+#endif
     raster(out,[&](auto i,char* p) {
         const auto key=std::uint64_t(labels[i]);std::intptr_t size=0;
         if(dense) {if(key<counts.sizes.size())size=counts.sizes[std::size_t(key)];}
         else {const auto found=std::lower_bound(counts.keys.begin(),counts.keys.end(),key);if(found!=counts.keys.end() && *found==key)size=counts.sizes[std::size_t(found-counts.keys.begin())];}
-        if(double(size)<=threshold)std::memset(p,0,out.itemsize);
+        if(double(size)<=threshold)zero_word<T>(p,out.itemsize);
+    });
     });
 }
 void consumer_border_into(std::uint8_t* out,const std::vector<std::size_t>& shape,const std::vector<std::size_t>& stops,const std::vector<std::size_t>& starts) {
@@ -191,7 +237,20 @@ void consumer_clear_into(const std::intptr_t* labels,const std::uint8_t* remove,
     const auto count=count_of(out.shape);if(number>count || (count && (!labels || !remove || !value)))throw std::invalid_argument("invalid consumer clear storage");
     const auto workers=detail::active_workers(count);
     std::vector<std::uint8_t> invalid(std::size_t(workers),0);
-    raster(out,[&](auto i,char* p,auto id){if(labels[i]<0 || std::uint64_t(labels[i])>number)invalid[id]=1;else if(remove[std::size_t(labels[i])])std::memcpy(p,value,out.itemsize);},workers);
+    output_width(out.itemsize,[&](auto width) {
+        using T=typename decltype(width)::type;
+#ifdef SKIMAGEXX_AVX2
+        if constexpr(!std::is_void_v<T>)if(c_order(out) && has_avx2() && count && out.data
+            && disjoint(labels,count*sizeof(std::intptr_t),out.data,count*sizeof(T))
+            && disjoint(remove,number+1,out.data,count*sizeof(T)) && disjoint(value,sizeof(T),out.data,count*sizeof(T))) {
+            detail::partition(count,workers,[&](auto begin,auto end,auto id) {
+                begin+=simd::consumer_clear_store(labels+begin,end-begin,remove,number,value,static_cast<char*>(out.data)+begin*sizeof(T),sizeof(T),invalid[id]);
+                for(auto i=begin;i<end;++i){if(labels[i]<0 || std::uint64_t(labels[i])>number)invalid[id]=1;else if(remove[std::size_t(labels[i])])copy_word<T>(static_cast<char*>(out.data)+i*sizeof(T),value,sizeof(T));}
+            });return;
+        }
+#endif
+        raster(out,[&](auto i,char* p,auto id){if(labels[i]<0 || std::uint64_t(labels[i])>number)invalid[id]=1;else if(remove[std::size_t(labels[i])])copy_word<T>(p,value,out.itemsize);},workers);
+    });
     if(std::find(invalid.begin(),invalid.end(),1)!=invalid.end())throw std::invalid_argument("invalid consumer component labels");
 }
 std::vector<std::uint64_t> consumer_sorted_unique(const std::uint64_t* input,std::size_t count) {
@@ -206,7 +265,10 @@ void consumer_map_into(const std::uint64_t* index,std::size_t count,const std::u
     std::unordered_map<std::uint64_t,std::size_t> map;map.reserve(key_count);
     for(std::size_t k=0;k<key_count;++k)map[keys[k]&mask]=k;
     const auto& lookup=map;
-    detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto){for(auto i=begin;i<end;++i){auto* destination=static_cast<char*>(output)+i*bytes;const auto found=lookup.find(index[i]&mask);if(found==lookup.end())std::memset(destination,0,bytes);else std::memcpy(destination,static_cast<const char*>(values)+found->second*bytes,bytes);}});
+    output_width(bytes,[&](auto width) {
+        using T=typename decltype(width)::type;
+        detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto){for(auto i=begin;i<end;++i){auto* destination=static_cast<char*>(output)+i*bytes;const auto found=lookup.find(index[i]&mask);if(found==lookup.end())zero_word<T>(destination,bytes);else copy_word<T>(destination,static_cast<const char*>(values)+found->second*bytes,bytes);}});
+    });
 }
 void consumer_dense_into(const std::uint64_t* keys,const void* values,std::size_t key_count,std::size_t bytes,void* output,std::size_t length) {
     if(length)detail::partition(length,detail::active_workers(length),[&](auto begin,auto end,auto){std::memset(static_cast<char*>(output)+begin*bytes,0,(end-begin)*bytes);});
