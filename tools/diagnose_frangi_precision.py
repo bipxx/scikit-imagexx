@@ -11,8 +11,9 @@ from skimagexx import _core
 def main():
     xx.set_fallback_enabled(False)
     xx.set_num_threads(1)
+    numpy_core = np.core if np.__version__.startswith('1.') else np._core
     report = {'platform': platform.platform(), 'numpy': np.__version__,
-              'cpu_features': np._core._multiarray_umath.__cpu_features__, 'cases': []}
+              'cpu_features': numpy_core._multiarray_umath.__cpu_features__, 'cases': []}
     for dtype in (np.bool_, np.float64):
         for black in (True, False):
             rng = np.random.default_rng(4691)

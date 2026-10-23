@@ -12,7 +12,17 @@ on:
       - tests/test_frangi.py
 jobs:
   diagnose:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: '3.11'
+            numpy: '1.24.4'
+            scipy: '1.15.3'
+          - python: '3.13'
+            numpy: '2.5.4'
+            scipy: '1.18.1'
+    runs-on: ubuntu-22.04
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: '4'
       OPENBLAS_NUM_THREADS: '1'
@@ -21,9 +31,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ matrix.python }}
       - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - run: python -m pip install numpy==2.5.4 scipy==1.18.1 scikit-image==0.26.0 pytest
+      - run: python -m pip install numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0 pytest
       - shell: bash
         run: python -m pip install --no-deps build/wheels/*.whl
       - shell: bash
@@ -35,7 +45,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: frangi-precision-linux
+          name: frangi-precision-numpy-${{ matrix.numpy }}
           path: |
             build/frangi-precision.json
             build/wheels/*.whl
