@@ -90,13 +90,16 @@ def observe(provider,name,stage,dtype,ndim,hook,action,subclass=False):
             elif hook=='implementation':warnings._showwarnmsg_impl=lambda message:consume(str(message.message))
             else:
                 stream=Stream()
-                warnings.showwarning=lambda message,category,filename,lineno,file=None,line=None:warnings._showwarning_orig(message,category,filename,lineno,file=stream,line=line)
+                # Route the user-defined stream explicitly: pytest's global
+                # warning recorder may ignore file= on _showwarning_orig.
+                warnings.showwarning=lambda message,category,filename,lineno,file=None,line=None:stream.write(warnings.formatwarning(message,category,filename,lineno,line))
             try:
                 options=dict(mask=mask)
                 if out is not None:options['out']=out
                 value=getattr(provider,name)(image,fp,**options)
                 outcome=('return',record(value),None if out is None else (value is out,bool(np.shares_memory(value,out))))
             except Exception as error:outcome=('error',type(error).__name__,str(error))
+        assert changed==(action!='warning-error'),('downcast hook did not execute as specified',hook,action,events)
         return outcome,events,record(image),record(mask),None if out is None else record(out),tuple(np.geterr().items())
     finally:
         np.dtype=previous_dtype
