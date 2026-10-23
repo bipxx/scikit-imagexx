@@ -118,7 +118,11 @@ template<class T> MetricSums leaf(const MetricImageView& a,const MetricImageView
             std::feclearexcept(FE_ALL_EXCEPT);for(std::size_t i=0;i<n;++i)energy[i]=double(T(precise[i]*precise[i]));result.energy_flags=status();
         }
     }
-    for(std::size_t i=0;i<n;++i) {
+    bool classified=false;
+#ifdef SKIMAGEXX_AVX2
+    if(!flags && has_avx2())classified=simd::metric_leaf_classify(error,energy,values,n,mode,result);
+#endif
+    for(std::size_t i=0;!classified && i<n;++i) {
         const auto value=values[i];result.nonfinite|=!std::isfinite(error[i]) || !std::isfinite(value);
         if(need_energy)result.nonfinite|=!std::isfinite(energy[i]);
         if(need_range) {

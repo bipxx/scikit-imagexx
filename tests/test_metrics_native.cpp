@@ -107,7 +107,24 @@ void half_load_layouts() {
     }
 }
 }
+void leaf_order_regression() {
+    for(const auto n:{1u,3u,4u,7u,8u,9u,15u,16u,17u,31u,32u,33u,63u,64u,65u,127u,128u,129u,255u,256u,257u,8193u}) {
+        std::vector<double> a(n),b(n);
+        for(unsigned i=0;i<n;++i) {
+            a[i]=std::ldexp(double(int((i*7919u)%2003u)-1001)+.125,int(i%31)-15);
+            b[i]=std::ldexp(double(int((i*541u)%997u)-498)+.375,int(i%23)-11);
+        }
+        for(const auto block:{0u,32u,8192u})for(const auto mode:{MetricNormalization::none,MetricNormalization::euclidean,MetricNormalization::mean,MetricNormalization::min_max}) {
+            const auto expected=metric_sums(view(a,PixelType::float64),view(b,PixelType::float64),false,mode,true,false,block);
+            const auto actual=metric_sums(view(a,PixelType::float64),view(b,PixelType::float64),false,mode,false,false,block);
+            require(!std::memcmp(&actual.error,&expected.error,8) && !std::memcmp(&actual.energy,&expected.energy,8) && !std::memcmp(&actual.mean,&expected.mean,8));
+            require(!std::memcmp(&actual.low,&expected.low,8) && !std::memcmp(&actual.high,&expected.high,8));
+            require(actual.nonfinite==expected.nonfinite && actual.nan==expected.nan && actual.valid==expected.valid);
+        }
+    }
+}
 int main() {
+    leaf_order_regression();
     require(get_num_threads()==1);
     const std::vector<double> a{1.,2.,3.,4.},b(4,0.);
     const auto error=metric_sums(view(a,PixelType::float64),view(b,PixelType::float64),false,MetricNormalization::none);
