@@ -760,6 +760,80 @@ def sato(image,sigmas=range(1,10,2),black_ridges=True,mode='reflect',cval=0):
 
 
 __all__+=['sato']
+
+
+def _frangi_impl(image,sigmas,scale_range,scale_step,alpha,beta,gamma,black_ridges,mode,cval,finish,forwarded):
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if type(black_ridges) not in _RIDGE_SCALARS:return forwarded()
+    legacy=scale_range is not None and scale_step is not None
+    if legacy:
+        if type(scale_range) not in (tuple,list) or len(scale_range)!=2:return forwarded()
+        if any(type(v) not in _RIDGE_SCALARS for v in (*scale_range,scale_step)):return forwarded()
+        try:
+            bounds=[float(v) for v in (*scale_range,scale_step)]
+        except (ValueError,OverflowError):return forwarded()
+        if any(not _isfinite(v) for v in bounds) or bounds[2]==0 or abs((bounds[1]-bounds[0])/bounds[2])>10000:return forwarded()
+        scales=np.arange(scale_range[0],scale_range[1],scale_step)
+    else:
+        if type(sigmas) not in (range,list,tuple,np.ndarray) or type(sigmas) is np.ndarray and sigmas.ndim!=1:return forwarded()
+        try:
+            if len(sigmas)>10000:return forwarded()
+        except OverflowError:return forwarded()
+        scales=list(sigmas)
+    if not image.size or image.ndim not in (2,3):return forwarded()
+    dtype=image.dtype if image.dtype.isnative and image.dtype.type in (np.float32,np.float64) else np.dtype(np.float32 if image.dtype.type in (np.float16,np.float32) else np.float64)
+    if not len(scales):
+        output=np.zeros_like(image,dtype=dtype,subok=bool(black_ridges))
+        if finish:output=_core.ridge_hessian_finish(output)
+        if legacy:
+            import warnings
+            warnings.warn('Use keyword parameter `sigmas` instead of `scale_range` and `scale_range` which will be removed in version 0.17.',UserWarning,stacklevel=2 if finish else 3)
+        return output
+    def plan(value):
+        if type(value) not in _RIDGE_SCALARS:return None
+        try:magnitude=abs(float(value))
+        except (ValueError,OverflowError):return None
+        if not 1e-150<=magnitude<=1e150:return None
+        if isinstance(value,np.integer) and magnitude*magnitude>np.iinfo(type(value)).max/2:return None
+        if type(value) in (np.float16,np.float32) and magnitude*magnitude>np.finfo(type(value)).max/2:return None
+        denominator=2*value**2
+        if not _isfinite(float(denominator)) or not denominator>0:return None
+        return float(denominator),np.result_type(dtype,denominator).itemsize==4
+    plans=[plan(value) for value in (alpha,beta)]
+    gamma_plan=plan(gamma) if gamma is not None else (None,dtype.itemsize==4)
+    if any(p is None for p in (*plans,gamma_plan)):return forwarded()
+    for sigma in scales:
+        if type(sigma) not in _RIDGE_SCALARS:return forwarded()
+        try:value=float(sigma)
+        except (ValueError,OverflowError):return forwarded()
+        if not 0<=value<=1000:return forwarded()
+        if isinstance(sigma,np.integer) and value*value>np.iinfo(type(sigma)).max:return forwarded()
+        if type(sigma) is np.float16 and value*value>np.finfo(np.float16).max:return forwarded()
+    if np.geterr()['under']!='ignore':return forwarded()
+    prepared=image if image.dtype.isnative else _core.edge_native(image)
+    if image.dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    prepared=_core.ridge_prepare(prepared,not bool(black_ridges))
+    from .feature import _hessian_matrix_impl,_LEGACY_SCALARS
+    output=None;gamma_den,gamma_single=gamma_plan
+    for sigma in scales:
+        fields=_hessian_matrix_impl(prepared,sigma,mode,cval,'rc',True,lambda:None)
+        if fields is None:return forwarded()
+        result=_core.frangi_accumulate(fields,output,dtype,plans[0][0],plans[1][0],gamma_den,plans[0][1],plans[1][1],gamma_single,dtype.itemsize==4 and not _LEGACY_SCALARS)
+        if result is None:return forwarded()
+        output,gamma_den=result
+    if finish:output=_core.ridge_hessian_finish(output)
+    if legacy:
+        import warnings
+        warnings.warn('Use keyword parameter `sigmas` instead of `scale_range` and `scale_range` which will be removed in version 0.17.',UserWarning,stacklevel=2 if finish else 3)
+    return output
+
+
+def frangi(image,sigmas=range(1,10,2),scale_range=None,scale_step=None,alpha=.5,beta=.5,gamma=None,black_ridges=True,mode='reflect',cval=0):
+    return _frangi_impl(image,sigmas,scale_range,scale_step,alpha,beta,gamma,black_ridges,mode,cval,False,lambda:fallback('filters','frangi',image,sigmas=sigmas,scale_range=scale_range,scale_step=scale_step,alpha=alpha,beta=beta,gamma=gamma,black_ridges=black_ridges,mode=mode,cval=cval))
+
+
+def hessian(image,sigmas=range(1,10,2),scale_range=None,scale_step=None,alpha=.5,beta=.5,gamma=15,black_ridges=True,mode='reflect',cval=0):
+    return _frangi_impl(image,sigmas,scale_range,scale_step,alpha,beta,gamma,black_ridges,mode,cval,True,lambda:fallback('filters','hessian',image,sigmas=sigmas,scale_range=scale_range,scale_step=scale_step,alpha=alpha,beta=beta,gamma=gamma,black_ridges=black_ridges,mode=mode,cval=cval))
 _GAUSSIAN_MODES={'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
 
 

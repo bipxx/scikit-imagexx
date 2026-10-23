@@ -68,3 +68,7 @@ add_test(NAME installed_hessian_det_consumer COMMAND hessian_det_consumer)
 add_executable(sato_consumer ../test_sato_native.cpp)
 target_link_libraries(sato_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_sato_consumer COMMAND sato_consumer)
+
+add_executable(frangi_consumer ../test_frangi_native.cpp)
+target_link_libraries(frangi_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_frangi_consumer COMMAND frangi_consumer)
