@@ -64,12 +64,48 @@ py::array scalar(py::dtype dtype,py::handle value) {
     py::array output(dtype,std::vector<py::ssize_t>{});
     if(PyObject_SetItem(output.ptr(),py::tuple().ptr(),value.ptr())<0)throw py::error_already_set();return output;
 }
+bool disjoint_contiguous(const py::array& a,const py::array& b) {
+    const auto maximum=std::numeric_limits<std::uintptr_t>::max();
+    const auto start_a=reinterpret_cast<std::uintptr_t>(a.data()),start_b=reinterpret_cast<std::uintptr_t>(b.data());
+    if(std::size_t(a.size())>maximum/std::size_t(a.itemsize()) || std::size_t(b.size())>maximum/std::size_t(b.itemsize()))return false;
+    const auto size_a=std::size_t(a.size())*std::size_t(a.itemsize()),size_b=std::size_t(b.size())*std::size_t(b.itemsize());
+    if(size_a>maximum-start_a || size_b>maximum-start_b)return false;
+    return start_a+size_a<=start_b || start_b+size_b<=start_a;
+}
+py::object dense_assign(py::object output,py::object supplied_keys,py::object supplied_values) {
+    // Arbitrary allocator results and ndarray subclasses retain their own
+    // checked __setitem__ protocol, including readonly/strided destinations.
+    if(PyArray_CheckExact(output.ptr()) && PyArray_CheckExact(supplied_keys.ptr()) && PyArray_CheckExact(supplied_values.ptr())) {
+        auto out=py::reinterpret_borrow<py::array>(output),keys=py::reinterpret_borrow<py::array>(supplied_keys),values=py::reinterpret_borrow<py::array>(supplied_values);
+        const auto key_kind=keys.dtype().kind(),value_kind=values.dtype().kind();
+        const bool typed=out.ndim()==1 && out.writeable() && (out.flags()&py::array::c_style)
+            && keys.ndim()==1 && values.ndim()==1 && keys.size()==values.size() && (values.flags()&py::array::c_style)
+            && (key_kind=='i' || key_kind=='u') && (value_kind=='b' || value_kind=='i' || value_kind=='u' || value_kind=='f')
+            && PyArray_TYPE(array(keys))<NPY_USERDEF && PyArray_TYPE(array(values))<NPY_USERDEF
+            && values.itemsize()<=8 && PyArray_EquivTypes(PyArray_DESCR(array(values)),PyArray_DESCR(array(out)))
+            && disjoint_contiguous(out,values);
+        if(typed) {
+            // Snapshot keys before writes; overlapping values require the
+            // compiled NumPy assignment provider's copy/alias semantics.
+            auto old=words(keys);const auto count=std::size_t(out.size());bool in_bounds=true;
+            {py::gil_scoped_release release;for(py::ssize_t i=0;i<old.size();++i)if(old.data()[i]>=count){in_bounds=false;break;}}
+            if(in_bounds) {
+                const auto bytes=std::size_t(out.itemsize());
+                {py::gil_scoped_release release;consumer_scatter_into(old.data(),values.data(),std::size_t(old.size()),bytes,out.mutable_data(),count);}
+                return output;
+            }
+        }
+    }
+    if(PyObject_SetItem(output.ptr(),supplied_keys.ptr(),supplied_values.ptr())<0)throw py::error_already_set();
+    return output;
+}
 }
 void bind_component_consumers(py::module_& m) {
     // Each translation unit owns/imports its own NumPy API table. Headers2,
     // target1.23 intentionally support both NumPy1.24 and modern NumPy2.
     if(_import_array()<0)throw py::error_already_set();
     m.attr("component_consumers_interface_version")=component_consumers_interface_version;
+    m.attr("consumer_dense_assignment_version")=1;
     m.attr("_consumer_numpy_header_abi")=py::int_(NPY_ABI_VERSION);
     m.attr("_consumer_numpy_target_api")=py::int_(NPY_FEATURE_VERSION);
     m.attr("_consumer_numpy_runtime_abi")=py::int_(PyArray_GetNDArrayCVersion());
@@ -141,30 +177,11 @@ void bind_component_consumers(py::module_& m) {
         // map maxima retain consumer_max's C++ scan and scalar reconstruction.
         return maximum(keys,py::arg("axis")=py::none());
     });
+    m.def("consumer_dense_assign",&dense_assign);
     m.def("consumer_dense",[zeros](py::object supplied_keys,py::object supplied_values,py::handle length,py::object dtype){
         // Allocation is the shape/dtype authority, including object zeros.
         // No upstream ArrayMap or map_array implementation is called.
-        py::array out=zeros(length,py::arg("dtype")=dtype).cast<py::array>();
-        const bool array_keys=PyArray_Check(supplied_keys.ptr()),array_values=PyArray_Check(supplied_values.ptr());
-        py::array keys=array_keys ? py::reinterpret_borrow<py::array>(supplied_keys) : py::array();
-        py::array values=array_values ? py::reinterpret_borrow<py::array>(supplied_values) : py::array();
-        const auto key_kind=array_keys ? keys.dtype().kind() : '\0',value_kind=array_values ? values.dtype().kind() : '\0';
-        const bool typed=array_keys && array_values && out.ndim()==1 && keys.ndim()==1 && values.ndim()==1 && keys.size()==values.size()
-            && (key_kind=='i' || key_kind=='u') && (value_kind=='b' || value_kind=='i' || value_kind=='u' || value_kind=='f')
-            && values.itemsize()<=8 && PyArray_EquivTypes(PyArray_DESCR(array(values)),PyArray_DESCR(array(out)));
-        if(typed) {
-            auto old=words(keys);const auto count=std::size_t(out.size());bool in_bounds=true;
-            {py::gil_scoped_release release;for(py::ssize_t i=0;i<old.size();++i)if(old.data()[i]>=count){in_bounds=false;break;}}
-            if(in_bounds) {
-                auto source=contiguous(values);const auto bytes=std::size_t(out.itemsize());
-                {py::gil_scoped_release release;consumer_scatter_into(old.data(),source.data(),std::size_t(old.size()),bytes,out.mutable_data(),count);}
-                return out;
-            }
-        }
-        // Checked indexing preserves negative/bool indices, bounds messages,
-        // broadcast/cast warnings and the reference's partial-error ordering.
-        if(PyObject_SetItem(out.ptr(),supplied_keys.ptr(),supplied_values.ptr())<0)throw py::error_already_set();
-        return out;
+        return dense_assign(zeros(length,py::arg("dtype")=dtype),supplied_keys,supplied_values);
     });
     m.def("consumer_scatter",[](const py::array& cache,py::handle index,py::handle values){
         const auto kind=cache.dtype().kind();

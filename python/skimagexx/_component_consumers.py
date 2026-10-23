@@ -9,6 +9,21 @@ import numpy as np
 from . import _core
 from ._components import label as _label
 
+# Keep the native integer scan only when the live public provider is NumPy's
+# unchanged implementation. A replacement np.max remains a live call even if
+# it was installed before importing this module.
+if np.lib.NumpyVersion(np.__version__) >= '2.0.0':
+    from numpy._core.fromnumeric import max as _arraymap_numpy_max
+else:
+    from numpy.core.fromnumeric import amax as _arraymap_numpy_max
+_arraymap_integer_codes=frozenset(np.dtype(t).num for t in (np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64,np.longlong,np.ulonglong))
+
+
+def _arraymap_max(provider,keys):
+    if provider is _arraymap_numpy_max and type(keys) is np.ndarray and keys.dtype.num in _arraymap_integer_codes:
+        return _core.consumer_max(keys)
+    return provider(keys)
+
 try:
     # Identity of the deprecated sentinel is scalar API metadata, not an
     # upstream consumer implementation. Its explicit use remains compatible.
@@ -180,16 +195,21 @@ class ArrayMap:
         self._max_str_lines=4;self._array=None
 
     def __len__(self):
-        kind=getattr(getattr(self.in_values,'dtype',None),'kind',None)
-        maximum=_core.consumer_max(self.in_values) if kind in ('i','u') else _core.consumer_dense_max(self.in_values)
-        return maximum+1
+        provider=np.max
+        return _arraymap_max(provider,self.in_values)+1
 
     def __array__(self,dtype=None,copy=None):
         dtype=self.out_values.dtype if dtype is None else dtype
-        kind=getattr(getattr(self.in_values,'dtype',None),'kind',None)
-        maximum=_core.consumer_max(self.in_values) if kind in ('i','u') else _core.consumer_dense_max(self.in_values)
+        allocator=np.zeros
+        provider=np.max
+        maximum=_arraymap_max(provider,self.in_values)
         # The scalar size (and overflow warning) precedes dtype admission.
-        return _core.consumer_dense(self.in_values,self.out_values,maximum+1,dtype)
+        output=allocator(maximum+1,dtype=dtype)
+        # Python indexed assignment evaluates the RHS before the index. Both
+        # attributes are read after allocator callbacks have finished.
+        values=self.out_values
+        keys=self.in_values
+        return _core.consumer_dense_assign(output,keys,values)
 
     @property
     def dtype(self):return self.out_values.dtype
