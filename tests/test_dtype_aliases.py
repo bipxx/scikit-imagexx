@@ -39,9 +39,19 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
         warnings.simplefilter('always');actual=native(*arguments,**options)
     assert [(type(w.message),str(w.message)) for w in notices]==[(type(w.message),str(w.message)) for w in expected_notices]
     if expected is image:assert actual is image
+    if isinstance(expected,tuple):
+        assert type(actual) is type(expected) and len(actual)==len(expected)
     pairs=zip(actual,expected) if isinstance(expected,tuple) else [(actual,expected)]
     rtol,atol=parity_tolerance(api,np.dtype(dtype))
     for a,b in pairs:
+        if api=='segmentation.relabel_sequential' and type(b).__name__=='ArrayMap':
+            assert type(a).__name__==type(b).__name__
+            for field in ('in_values','out_values'):
+                value,reference=getattr(a,field),getattr(b,field)
+                assert value.shape==reference.shape and value.dtype==reference.dtype
+                np.testing.assert_array_equal(value,reference)
+                assert value.dtype.metadata==reference.dtype.metadata
+            continue
         assert np.asarray(a).dtype==np.asarray(b).dtype and np.asarray(a).shape==np.asarray(b).shape
         np.testing.assert_allclose(a,b,rtol=rtol,atol=atol)
 
