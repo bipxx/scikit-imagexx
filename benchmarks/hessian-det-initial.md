@@ -72,7 +72,29 @@ OpenMP teams constrained to two threads. Exact packages, wheel/source hashes,
 the original failing packages and logs remain preserved under ignored build
 checkpoints. No local performance timings have run.
 
+The [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39898516081)
+passed on both platforms against the frozen revision. Source and binary hashes,
+exact package bytes, the fixed case hash, all 480 rows per OS and seven samples
+per implementation per row were verified. Approximation has zero numerical
+difference across all timed rows; exact mode's maximum absolute error is
+1.214307e-17 Linux / 1.387779e-17 Windows.
+
+| One-worker result (120 cases per mode/OS) | Linux | Windows |
+|---|---:|---:|
+| Approximation geometric mean | 3.115030× | 2.472311× |
+| Approximation minimum | 0.907579× | 0.937262× |
+| Approximation cases faster | 119/120 | 117/120 |
+| Exact geometric mean | 5.686609× | 4.411284× |
+| Exact minimum | 3.997354× | 2.593907× |
+| Exact cases faster | 120/120 | 120/120 |
+
+The four slower cases are tiny 7×9 approximations: Linux float64 (0.907579×),
+Windows bool (0.937262×), float16 (0.966917×), and float32 (0.955755×).
+No cases were removed. A follow-up reduces scalar dispatch and boundary
+processing overhead; its correctness and performance gates remain separate.
+Raw samples: [Linux](hessian-det-initial-linux.json),
+[Windows](hessian-det-initial-windows.json). Candidate/upstream comparisons
+are within each runner; these are not paired candidate-to-candidate results.
+
 [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39898515905)
-and [isolated performance](https://github.com/bipxx/scikit-imagexx/actions/runs/39898516081)
-are running against the frozen revision. Retention awaits these gates; no
-performance improvement is claimed before those results are verified.
+is still running. Retention awaits this gate.
