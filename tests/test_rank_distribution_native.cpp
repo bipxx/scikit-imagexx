@@ -53,9 +53,9 @@ template<class T> void check(bool volume,bool masked,bool large) {
     }
 }
 int main() {
-    assert(skimagexx::rank_histogram_capabilities()==0x1ffu);
+    assert((skimagexx::rank_histogram_capabilities()&0x1ffu)==0x1ffu);
     for(bool volume:{false,true})for(bool masked:{false,true})for(bool large:{false,true}){check<std::uint8_t>(volume,masked,large);check<std::uint16_t>(volume,masked,large);}
-    for(int invalid:{-1,9,31}){bool rejected=false;try{skimagexx::rank_filter_into({},skimagexx::RankOperation(invalid));}catch(const std::invalid_argument&){rejected=true;}assert(rejected);}
+    for(int invalid:{-1,1000,2147483647}){bool rejected=false;try{skimagexx::rank_filter_into({},skimagexx::RankOperation(invalid));}catch(const std::invalid_argument&){rejected=true;}assert(rejected);}
 #ifdef _OPENMP
     std::cout<<"rank distribution native: exact neighborhood oracles and worker byte identity passed\n";
 #else

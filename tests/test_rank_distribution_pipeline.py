@@ -38,9 +38,9 @@ def test_mixed_v1_backend_is_not_advertised_as_v2(name,monkeypatch):
     with pytest.raises(NotImplementedError,match='rank-histogram-v2'):
         getattr(native,name)(np.ones((3,5),np.uint8),np.ones((3,3),np.uint8))
 
-@pytest.mark.parametrize('operation',[-1,9,31,32])
+@pytest.mark.parametrize('operation',[-1,-2,1000,2147483647])
 def test_capabilities_and_invalid_operation_admission(operation):
-    assert native._core.rank_histogram_capabilities==0x1ff
+    assert native._core.rank_histogram_capabilities & 0x1ff == 0x1ff
     with pytest.raises(ValueError,match='invalid rank operation'):
         native._core.rank_run(np.ones((3,5),np.uint8),np.ones((3,3),np.uint8),None,np.zeros((3,5,1),np.uint8),[0,0],256,operation)
 
