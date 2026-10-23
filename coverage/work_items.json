@@ -17228,7 +17228,7 @@
       "depends_on": [
         "metrics-simd-load-optimization"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17246,7 +17246,15 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae"
+        "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
+        "run_id": 40000634063,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40000634063",
+        "observed_state": "queued",
+        "created_at": "2026-10-23T18:06:51Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings."
       },
       "merge": {
         "commit": null,
@@ -17274,7 +17282,7 @@
       "depends_on": [
         "transform-class-performance-harness"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17292,7 +17300,15 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717"
+        "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+        "run_id": 40000631852,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40000631852",
+        "observed_state": "queued",
+        "created_at": "2026-10-23T18:06:50Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings."
       },
       "merge": {
         "commit": null,
