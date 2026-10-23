@@ -7,7 +7,8 @@ classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
 The current inventory contains 474 public paths: 133 native-partial image entries,
-three metadata entries, and 338 upstream-only entries. The expansion adds 19
+three metadata functions, four partial native classes, one exception metadata
+provider, and 333 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -15,7 +16,8 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The user has resumed implementation. Three worker agents are executing the
-rank, component-consumer and public transform-class lanes in parallel, with the integrator handling
+rank public integration, component-consumer public integration and measured
+metrics optimization lanes in parallel, with the integrator handling
 shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
 review and preserved checkpoints remain recorded in the ledger. Existing hosted
 measurement jobs retain their authoritative run.
@@ -40,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Public exports, registry/inventory, measured resize bottlenecks, prompt merges and cleanup | Public product `05c3506` validated across six profiles; publishing proof and launching isolated measurements; resize copy optimization under validation |
-| Worker 1 | `metrics_reductions` | Reusable rank histogram engine and five canonical/generic aliases | Rank contracts `eabc946` merged; private SIMD/serial-alias implementation running |
-| Worker 2 | `resize_api` | Component counts/filtering, clear_border, relabeling and returned ArrayMap | Contracts `a3714af` merged; own native consumers/ArrayMap implementation running |
-| Worker 3 | `resize_bench` | Public transform-class exports and separate class coverage/evidence | Whole-package wave validation complete; integrating four privately implemented classes without inflating image-function counts |
+| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Corrected combined `99b1a1d` Debug/Release packages under actual public gates; nine-operation rank core builds in parallel |
+| Worker 1 | `metrics_reductions` | Nine public rank algorithms and generic identity aliases | Native `8c6e154` validated; own nested public namespace source ready, actual combined-core gates pending |
+| Worker 2 | `resize_api` | Measured metrics SIMD bottlenecks | Rank benchmark and isolated CI tooling validated; endian/stepped typed load trial implementing against retained 1,212-case baseline |
+| Worker 3 | `resize_bench` | Four public component consumers and returned internal ArrayMap | Private `d1b55f7` validated; public candidate checks running on corrected shared Debug/Release packages |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -64,8 +66,10 @@ Performance run [39957875987](https://github.com/bipxx/scikit-imagexx/actions/ru
 uses source `66e5f78`; all six preparation/measurement jobs completed successfully. Observe this same run;
 do not restart it because of a queue or timeout. The [baseline report](../benchmarks/resize-public-initial.md) retains every sample
 and 49/52/61 slower cases across Windows/modern/minimum. Row-span normalization
-copies are the first measured-bottleneck trial; parity checks are running before
-remeasurement of the unchanged corpus.
+copies are the first measured-bottleneck trial. Actual complete packages pass
+10,918 public and 6,506 shared checks in each of six profiles; the unchanged
+373-case remeasurement is queued as
+[39987242238](https://github.com/bipxx/scikit-imagexx/actions/runs/39987242238).
 
 The private metrics baseline (`03581ae`, integrated as `99abcfc`) passed 4,082
 tests in each of six profiles through the actual shared `_core`. It is merged as
@@ -85,13 +89,24 @@ These public integrations are parity-passed with performance pending. The one-wo
 [metrics](https://github.com/bipxx/scikit-imagexx/actions/runs/39983272390),
 [footprint](https://github.com/bipxx/scikit-imagexx/actions/runs/39983468427) and
 [label](https://github.com/bipxx/scikit-imagexx/actions/runs/39983471905)
-measurement workflows are dispatched at recorded exact revisions. Poll these
-runs unchanged, including while queued.
+measurement workflows completed successfully. Their raw samples and every
+regression are retained in the three baseline reports. Metrics are slower
+overall (0.67–0.85x); footprint raster generation is 2.16–2.50x while decomposition
+and view setup remain slower. Labeling raster ratios are 0.82–1.40x with major
+large multivalued/high-connectivity regressions. These measurements leave
+optimization work, rather than proving completion of the performance objective.
 
-Transform class contracts (`6fa7f0a`, merged as `ad66094`) passed 228 reference and
-strict-rejection checks per runtime, with 224 public-native-pending cases. Four
-private class adapters are implemented; public exports and class-specific
-coverage are now a separate worker packet. Completed worktrees are removed only after
+Four public transform classes and canonical exception metadata now pass six
+7,520-check mixed public/state/shared profiles, supplementary standalone exception
+checks and a 296-case strict public corpus at workers one/four. Model classes
+remain partial: NumPy/SciPy matrix/fitting providers and external provider thread
+pools are explicit, with independent C++ solvers and performance still pending.
+Installed SDK foundations pass 26 native tests on Windows/Linux plus portable,
+sanitizer and external consumer gates. Private rank adds nine algorithms and
+component consumers add four wrappers; their public registration is separately
+gated by actual combined packages. Debug validation reproduced generic array
+dtype-reference access after GIL release; the four fixed bindings are undergoing
+full regression checks without disabling assertions. Completed worktrees are removed only after
 evidence archiving and clean/ancestor checks.
 
 ## Dependency and merge order

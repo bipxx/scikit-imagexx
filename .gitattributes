@@ -1,2 +1,5 @@
 
 benchmarks/resize-public-*.json -text
+benchmarks/metrics-public-*.json -text
+benchmarks/footprints-public-*.json -text
+benchmarks/components-public-*.json -text
