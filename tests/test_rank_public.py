@@ -43,7 +43,9 @@ def test_own_wrapper_identity_signature_and_registry(name):
     assert getattr(rank,name) is not getattr(reference,name)
     assert getattr(reference_generic,name) is getattr(reference,name)
     assert inspect.signature(getattr(rank,name))==inspect.signature(getattr(reference,name))
-    assert rank.__all__==generic.__all__==list(NAMES)
+    assert rank.__all__==generic.__all__==_rank.__all__
+    assert rank.__all__[:len(NAMES)]==list(NAMES)
+    assert tuple('filters.rank.'+n for n in rank.__all__)==RANK_CANONICAL_FUNCTIONS
     assert _rank._core is _core
     assert xx.set_num_threads is _core.set_num_threads
     assert xx.get_num_threads is _core.get_num_threads
@@ -95,7 +97,8 @@ def test_pending_r2_alias_is_explicit_safely_rejected(name):
 
 
 def test_unported_names_preserve_policy_and_are_not_native_aliases():
-    assert len(RANK_CANONICAL_FUNCTIONS)==9 and len(RANK_IDENTITY_ALIASES)==9
+    assert len(RANK_CANONICAL_FUNCTIONS)==len(RANK_IDENTITY_ALIASES)==len(rank.__all__)
+    assert set(RANK_IDENTITY_ALIASES.values())==set(RANK_CANONICAL_FUNCTIONS)
     assert 'majority' not in rank.__all__ and 'majority' not in generic.__all__
     image=np.arange(35,dtype=np.uint8).reshape(5,7);fp=np.ones((3,3),np.uint8)
     for module in (rank,generic):
