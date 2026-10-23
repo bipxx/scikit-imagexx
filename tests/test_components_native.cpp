@@ -52,7 +52,7 @@ void check(const std::vector<std::size_t>& shape,int connectivity,int workers,bo
 }
 }
 int main() {
-    for(const auto& shape:std::vector<std::vector<std::size_t>>{{67},{7,13},{3,5,7},{1,3,5},{3,5,1}})
+    for(const auto& shape:std::vector<std::vector<std::size_t>>{{1},{2},{3},{4},{7},{8},{31},{32},{33},{67},{7,13},{3,5,7},{1,3,5},{3,5,1}})
         for(int c=1;c<=int(shape.size());++c)for(bool boolean:{false,true})check(shape,c,1,boolean);
     for(int c=1;c<=4;++c)check({2,3,2,3},c,1,true);
     std::vector<std::uint8_t> raw{0,1,2,128,255,0},keys(6);
