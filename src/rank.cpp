@@ -69,11 +69,48 @@ struct Histogram {
         if(bits[word])summary[group]|=std::uint64_t{1}<<(word%64);else summary[group]&=~(std::uint64_t{1}<<(word%64));
         if(summary[group])root|=std::uint64_t{1}<<group;else root&=~(std::uint64_t{1}<<group);
     }
+    template<class F> void occupied(F visit)const {
+        auto groups=root;
+        while(groups) {
+            const auto group=first(groups);groups&=groups-1;
+            auto words=summary[group];
+            while(words) {
+                const auto word=group*64+first(words);words&=words-1;
+                auto values=bits[word];
+                while(values) {
+                    const auto index=word*64+first(values);values&=values-1;
+                    if(!visit(index,counts[index]))return;
+                }
+            }
+        }
+    }
+    double entropy()const {
+        double result=0.;
+        if(pop)occupied([&](std::size_t,std::int64_t count){
+            const double p=double(count)/double(pop);
+            // Pinned Cython uses natural C log, ascending bins, this literal
+            // and this operation order. Do not reassociate or use log2.
+            if(p>0)result-=p*std::log(p)/0.6931471805599453;
+            return true;
+        });
+        return result;
+    }
     std::int64_t integer(RankOperation op)const {
         if(op==RankOperation::pop)return pop;
         if(!pop)return 0.;
         if(op==RankOperation::sum)return sum;
         if(!root)return 0.;
+        if(op==RankOperation::gradient)return integer(RankOperation::maximum)-integer(RankOperation::minimum);
+        if(op==RankOperation::median) {
+            double remaining=double(pop)/2.;std::int64_t selected=0;
+            occupied([&](std::size_t index,std::int64_t count){remaining-=double(count);if(remaining<0){selected=std::int64_t(index);return false;}return true;});
+            return selected;
+        }
+        if(op==RankOperation::modal) {
+            std::int64_t maximum=0,selected=0;
+            occupied([&](std::size_t index,std::int64_t count){if(count>maximum){maximum=count;selected=std::int64_t(index);}return true;});
+            return selected;
+        }
         const auto group=op==RankOperation::minimum ? first(root):last(root);
         const auto word=group*64+(op==RankOperation::minimum ? first(summary[group]):last(summary[group]));
         return std::int64_t(word*64+(op==RankOperation::minimum ? first(bits[word]):last(bits[word])));
@@ -120,13 +157,14 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
 template<class T> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
-        Histogram hist(v.bins,op==RankOperation::minimum || op==RankOperation::maximum);
+        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
         update<T>(hist,v,prepared.initial,p,r,c,1);
         const auto write=[&](){
             auto* out=static_cast<unsigned char*>(v.output)+std::ptrdiff_t(p)*v.output_strides[0]+r*v.output_strides[1]+c*v.output_strides[2];
             const auto emit=[&](auto value){switch(v.output_type){case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;case PixelType::uint16:store<std::uint16_t>(out,value);break;case PixelType::float32:store<float>(out,value);break;case PixelType::float64:store<double>(out,value);break;default:break;}};
             if(op==RankOperation::mean)emit(hist.pop ? double(hist.sum)/double(hist.pop):0.);
+            else if(op==RankOperation::entropy)emit(hist.entropy());
             else emit(hist.integer(op));
         };
         write();bool east=true;
@@ -146,7 +184,8 @@ template<class T> void process(const RankView& v,RankOperation op,const Plan& pr
 }
 }
 void rank_filter_into(const RankView& view,RankOperation operation) {
-    if(int(operation)<0 || int(operation)>4)throw std::invalid_argument("invalid rank operation");
+    if(int(operation)<0 || int(operation)>8)throw std::invalid_argument("invalid rank operation");
+    if(int(operation)>=5 && view.serial_alias)throw std::invalid_argument("overlapping buffers are outside rank-histogram-v2 parity");
     for(int axis=0;axis<3;++axis)if(!view.shape[axis] || !view.footprint_shape[axis] || view.center[axis]<0 || std::size_t(view.center[axis])>=view.footprint_shape[axis])throw std::invalid_argument("invalid rank dimensions or center");
     if(!view.image || !view.output || !view.footprint || view.bins<1 || view.bins>65536)throw std::invalid_argument("invalid rank buffers or bins");
     std::size_t pixels=1,footprint_pixels=1,span=0;
@@ -171,6 +210,7 @@ void rank_filter_into(const RankView& view,RankOperation operation) {
     detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{run(begin,end);}catch(...){failures[id]=std::current_exception();}});
     for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
 }
+std::uint32_t rank_histogram_capabilities() noexcept {return 0x1ffu;}
 std::uint16_t rank_max_u16(const std::uint16_t* data,std::size_t count) {
 #ifdef SKIMAGEXX_AVX2
     if(has_avx2())return simd::rank_max_u16(data,count);
