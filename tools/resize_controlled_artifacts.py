@@ -134,6 +134,9 @@ def current_source(capsule, root):
                 wheels.append(path)
     assert len(wheels) == 1, 'one current product wheel required'
     with zipfile.ZipFile(wheels[0]) as archive:
+        headers = {n for n in archive.namelist() if n.startswith('include/skimagexx/') and not n.endswith('/')}
+        source_headers = {p.relative_to(root).as_posix() for p in (root / 'include/skimagexx').rglob('*') if p.is_file()}
+        assert headers == source_headers, 'complete current SDK header set differs from source'
         python = {n.removeprefix('skimagexx/'): archive.read(n).replace(b'\r\n', b'\n')
                   for n in archive.namelist() if n.startswith('skimagexx/') and n.endswith('.py')}
         assert python == {p.relative_to(root / 'python/skimagexx').as_posix(): p.read_bytes().replace(b'\r\n', b'\n')

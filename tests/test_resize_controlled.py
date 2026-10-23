@@ -262,6 +262,41 @@ def test_current_source_requires_complete_python_and_matching_sdk(tmp_path):
         helper.current_source(capsule, root)
 
 
+def test_omission_from_wheel_and_install_rejected_before_fixtures_or_timers(tmp_path, monkeypatch):
+    root = tmp_path / 'source'
+    for directory in ('src', 'include/skimagexx', 'python/skimagexx'):
+        (root / directory).mkdir(parents=True, exist_ok=True)
+    (root / 'CMakeLists.txt').write_text('# fixture'); (root / 'pyproject.toml').write_text('# fixture')
+    (root / 'python/skimagexx/__init__.py').write_bytes(b'python')
+    (root / 'include/skimagexx/image.hpp').write_bytes(b'image header')
+    (root / 'include/skimagexx/omitted.hpp').write_bytes(b'must be installed')
+    capsule = tmp_path / 'capsule'; (capsule / 'wheels').mkdir(parents=True)
+    installed = tmp_path / 'installed/include/skimagexx'; installed.mkdir(parents=True)
+    (installed / 'image.hpp').write_bytes(b'image header')
+    with zipfile.ZipFile(capsule / 'wheels/unit.whl', 'w') as archive:
+        archive.writestr('skimagexx/__init__.py', b'python')
+        archive.writestr('include/skimagexx/image.hpp', b'image header')
+    # Installed-vs-wheel checks alone accept this shared omission; source must not.
+    assert {p.name for p in installed.iterdir()} == {'image.hpp'}
+    (capsule / 'consumer-unused').write_bytes(b'fixture')
+    (capsule / 'current-runtime.json').write_text('{}')
+    manifest = dict(schema='resize-controlled-capsule-v1', profile='windows-modern',
+        initial_sha256=helper.PINS['windows-modern'], current_source={}, files_sha256=helper.tree(capsule))
+    (capsule / 'controlled-capsule.json').write_text(json.dumps(manifest))
+    monkeypatch.setattr(helper.artifacts, 'verify', lambda *args: None)
+    current_source = helper.current_source
+    monkeypatch.setattr(helper, 'current_source', lambda c, r: current_source(c, root))
+    monkeypatch.setattr(controlled.h, 'native_functions', lambda: controlled.h.APIS)
+    monkeypatch.setattr(controlled.h, 'corpus', forbidden)
+    monkeypatch.setattr(controlled.h, 'measure', forbidden)
+    monkeypatch.setattr(time, 'perf_counter_ns', forbidden)
+    output = tmp_path / 'omission.json'
+    assert controlled.main(['--capsule', str(capsule), '--check-only', '--output', str(output)]) == 1
+    report = json.loads(output.read_text())
+    assert not report['checks'] and not report['results']
+    assert 'complete current SDK header set' in report['failures'][0]['message']
+
+
 def test_export_rejects_source_path_escape(tmp_path):
     archive = tmp_path / 'escape.zip'
     with zipfile.ZipFile(archive, 'w') as z: z.writestr('../outside.py', '# unsafe')
