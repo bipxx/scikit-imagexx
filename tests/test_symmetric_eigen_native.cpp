@@ -13,7 +13,12 @@ template<class T> void check(std::size_t n,const std::vector<T>& upper,const std
     for(auto value:upper)fields.emplace_back(pixels,value);
     std::vector<const void*> pointers;for(auto& field:fields)pointers.push_back(field.data());
     std::vector<T> output(n*pixels),serial;
-    for(bool interleaved:{false,true})for(int workers:{1,4}){
+    const int worker_counts[]={1
+#ifdef _OPENMP
+        ,4
+#endif
+    };
+    for(bool interleaved:{false,true})for(int workers:worker_counts){
         skimagexx::set_num_threads(workers);
         require(skimagexx::symmetric_eigenvalues_into(pointers.data(),output.data(),pixels,n,sizeof(T)==4,pair,skimagexx::PairPrecision::native,interleaved));
         for(std::size_t p=0;p<pixels;++p)for(std::size_t d=0;d<n;++d){
