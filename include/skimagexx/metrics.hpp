@@ -30,6 +30,10 @@ struct MetricRawRange {std::uint64_t low=0,high=0;bool has_nan=false;};
 MetricSums metric_sums(const MetricImageView&,const MetricImageView&,bool single,
                        MetricNormalization,bool capture_underflow=false,bool scalar_power_double=false,
                        std::size_t reduction_block=0);
+// Materialized exceptional-policy boundaries. Output is writable native F32/F64.
+// operation: 0=convert, 1=subtract, 2=square, 3=multiply (first by itself).
+unsigned metric_stage_into(const MetricImageView&,const MetricImageView&,
+                           const MetricImageView& output,int operation,bool single);
 MetricRawRange metric_raw_range(const MetricImageView&);
 namespace detail {
 double metric_read(const MetricImageView&,std::ptrdiff_t byte_offset);
@@ -37,6 +41,8 @@ double metric_read(const MetricImageView&,std::ptrdiff_t byte_offset);
 }
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
+std::size_t metric_stage_values(const MetricImageView&,const MetricImageView&,
+    std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::size_t,bool,int,void*);
 std::size_t metric_values(const MetricImageView&,const MetricImageView&,
     std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::size_t,bool,
     MetricNormalization,double*,double*,double*);

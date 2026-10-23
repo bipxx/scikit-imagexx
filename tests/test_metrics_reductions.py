@@ -260,11 +260,117 @@ def test_runtime_reduction_buffer(block,name,options):
     finally:np.setbufsize(original)
 
 
+def _stateful_check(factory,name,options,policy,action,capfd):
+    def exercise(module):
+        a,b=factory();events=[];acted=False
+        def callback(*event):
+            nonlocal acted
+            events.append(event)
+            if acted:return
+            acted=True
+            if action=='mutate':a.fill(2);b.fill(1)
+            elif action=='policy':np.seterr(all='ignore')
+            elif action=='resize':a.resize((1,),refcheck=False)
+            elif action=='handler':np.seterrcall(lambda *args:events.append(('replacement',)+args))
+            elif action=='reentrant':
+                with np.errstate(all='ignore'):
+                    nested=module.mean_squared_error(np.asarray([1.,2.]),np.asarray([0.,0.]))
+                assert nested==2.5
+        class Sink:
+            def write(self,text):callback(text)
+        original=np.geterrcall()
+        try:
+            np.seterrcall(Sink() if policy=='log' else callback)
+            with np.errstate(all=policy):
+                result,error,notices=observe(getattr(module,name),a,b,**options)
+                after=np.geterr().copy()
+            captured=capfd.readouterr()
+        finally:np.seterrcall(original)
+        return result,error,notices,events,a.tobytes(),b.tobytes(),after,captured
+    expected=exercise(reference);actual=exercise(native)
+    assert actual[2:]==expected[2:]
+    if expected[1] is not None:
+        assert type(actual[1]) is type(expected[1])
+        assert str(actual[1])==str(expected[1])
+    else:
+        if actual[1] is not None:raise actual[1]
+        assert type(actual[0]) is type(expected[0])
+        np.testing.assert_allclose(actual[0],expected[0],rtol=3e-6,atol=0,equal_nan=True)
+        if actual[0]==expected[0]==0:assert np.signbit(actual[0])==np.signbit(expected[0])
+
+
 @pytest.mark.parametrize('policy',['call','log','print'])
 @pytest.mark.parametrize('name,options',FUNCTIONS)
-def test_stateful_status_policy_explicit_fallback(policy,name,options):
-    a=np.asarray([.2,.4],np.float32)
-    # The native fused implementation cannot honor mutations between stages.
-    # A disabled fallback must expose the unsupported policy explicitly.
-    with np.errstate(all=policy):
-        with pytest.raises(NotImplementedError):getattr(native,name)(a,a,**options)
+@pytest.mark.parametrize('scenario',['cast-first','cast-second','denominator','denominator-mean','denominator-reduce','subtract','square','scalar-over','scalar-under'])
+@pytest.mark.parametrize('action',['none','mutate','policy','handler','reentrant','resize'])
+def test_stateful_boundaries(policy,name,options,scenario,action,capfd):
+    def factory():
+        if scenario=='cast-first':
+            return np.asarray([0x7f800001,0x3f000000],np.uint32).view(np.float32),np.asarray([.3,.6],np.float64)
+        if scenario=='cast-second':
+            return np.asarray([.3,.6],np.float64),np.asarray([0x7f800001,0x3f000000],np.uint32).view(np.float32)
+        if scenario=='denominator-mean':return np.full(2,np.finfo(np.float32).max,np.float32),np.zeros(2,np.float32)
+        if scenario=='denominator-reduce':return np.asarray([1e154,1e154],np.float64),np.zeros(2,np.float64)
+        if scenario=='denominator':
+            return np.asarray([np.finfo(np.float32).max,-np.finfo(np.float32).max],np.float32),np.zeros(2,np.float32)
+        if scenario=='subtract':return np.asarray([np.finfo(np.float32).max,1e-30,np.inf],np.float32),np.asarray([-np.finfo(np.float32).max,0,np.inf],np.float32)
+        if scenario=='square':return np.asarray([1e30,1e-30],np.float32),np.zeros(2,np.float32)
+        return np.asarray(np.finfo(np.float64).max if scenario=='scalar-over' else np.finfo(np.float64).tiny),np.asarray(0.)
+    _stateful_check(factory,name,options,policy,action,capfd)
+
+
+@pytest.mark.parametrize('first',TYPES)
+@pytest.mark.parametrize('second',TYPES)
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_stateful_dtype_pairs(first,second,name,options,capfd):
+    _stateful_check(lambda:(sample(first),sample(second,seed=2371)),name,options,'call','none',capfd)
+
+
+@pytest.mark.parametrize('layout',['fortran','mixed-fortran','reverse','broadcast','permuted3d','endian','unaligned'])
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_stateful_layouts(layout,dtype,name,options,capfd):
+    def factory():
+        a,b=sample(dtype,shape=(17,19,23)),sample(dtype,shape=(17,19,23),seed=2371)
+        if layout=='fortran':a,b=np.asfortranarray(a),np.asfortranarray(b)
+        elif layout=='mixed-fortran':a=np.asfortranarray(a)
+        elif layout=='reverse':a,b=a[::-1,::-1,::-1],b[::-1,::-1,::-1]
+        elif layout=='broadcast':a,b=np.broadcast_to(a[:1],a.shape),np.broadcast_to(b[:1],b.shape)
+        elif layout=='permuted3d':a,b=a.transpose(1,2,0),b.transpose(1,2,0)
+        elif layout=='endian':a,b=a.astype(a.dtype.newbyteorder()),b.astype(b.dtype.newbyteorder())
+        elif layout=='unaligned':
+            aa=np.ndarray(a.shape,a.dtype,buffer=bytearray(a.nbytes+1),offset=1);aa[:]=a;a=aa
+            bb=np.ndarray(b.shape,b.dtype,buffer=bytearray(b.nbytes+1),offset=1);bb[:]=b;b=bb
+        return a,b
+    _stateful_check(factory,name,options,'call','none',capfd)
+
+@pytest.mark.parametrize('policy',['call','log'])
+@pytest.mark.parametrize('action',['none','mutate','policy'])
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_stateful_parallel_status(policy,action,name,options,capfd):
+    def factory():
+        a=np.full(257*1025,.7,np.float32);b=np.full(a.shape,.3,np.float32)
+        a[0]=np.finfo(np.float32).max;b[0]=-np.finfo(np.float32).max
+        a[len(a)//2]=1e-30;b[len(a)//2]=0
+        a[-1]=b[-1]=np.inf
+        return a,b
+    _stateful_check(factory,name,options,policy,action,capfd)
+
+
+@pytest.mark.parametrize('policy',['call','log','print'])
+@pytest.mark.parametrize('dtype',TYPES)
+def test_stateful_psnr_default_range(policy,dtype,capfd):
+    _stateful_check(lambda:(sample(dtype),sample(dtype,seed=2371)),
+                    'peak_signal_noise_ratio',{},policy,'none',capfd)
+
+
+@pytest.mark.parametrize('policy',['call','log'])
+@pytest.mark.parametrize('normalization',['euclidean','mean','min-max'])
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+def test_stateful_signaling_nan_range(policy,normalization,dtype,capfd):
+    def factory():
+        unsigned={np.float16:np.uint16,np.float32:np.uint32,np.float64:np.uint64}[dtype]
+        word={np.float16:0x7c01,np.float32:0x7f800001,np.float64:0x7ff0000000000001}[dtype]
+        a=np.ones(37,dtype);a.view(unsigned)[0]=word
+        return a,np.zeros_like(a)
+    _stateful_check(factory,'normalized_root_mse',{'normalization':normalization},policy,'mutate',capfd)
