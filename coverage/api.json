@@ -1850,11 +1850,15 @@
       "api": "feature.hessian_matrix",
       "kind": "callable",
       "signature": "(image, sigma=1, mode='constant', cval=0, order='rc', use_gaussian_derivatives=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "feature.hessian_matrix_det",

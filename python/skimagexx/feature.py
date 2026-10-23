@@ -141,3 +141,81 @@ def corner_kitchen_rosenfeld(image,mode='constant',cval=0):
 
 
 __all__+=['corner_kitchen_rosenfeld']
+
+
+
+def _hessian_coefficients(sigma,radius,derivative):
+    # Only small kernel metadata uses NumPy; all image processing is C++.
+    from .filters import _gaussian_coefficients
+    if not derivative:return _gaussian_coefficients(sigma,radius)
+    variance=sigma*sigma;positions=np.arange(-radius,radius+1)
+    phi=np.exp(-.5/variance*positions**2);phi=phi/phi.sum()
+    exponent=np.arange(2);q=np.array([1.,0.])
+    operator=np.diag(exponent[1:],1)+np.diag(np.ones(1)/-variance,-1)
+    q=operator.dot(q);polynomial=(positions[:,None]**exponent).dot(q)
+    result=np.ascontiguousarray((polynomial*phi)[::-1],dtype=np.float64)
+    result.flags.writeable=False;return result
+
+
+from functools import lru_cache as _hessian_lru_cache
+_hessian_cached_coefficients=_hessian_lru_cache(maxsize=128,typed=True)(_hessian_coefficients)
+
+
+def hessian_matrix(image,sigma=1,mode='constant',cval=0,order='rc',use_gaussian_derivatives=None):
+    forwarded=lambda:fallback('feature','hessian_matrix',image,sigma=sigma,mode=mode,cval=cval,order=order,use_gaussian_derivatives=use_gaussian_derivatives)
+    from .filters import _GAUSSIAN_TYPES,_GAUSSIAN_MODES
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if type(order) is not str or order not in ('rc','xy') or order=='xy' and image.ndim!=2:return forwarded()
+    if type(use_gaussian_derivatives) not in (bool,type(None)):return forwarded()
+    gaussian=use_gaussian_derivatives is True
+    if image.ndim not in range(1 if gaussian else 2,6):return forwarded()
+    if np.geterr()['under']!='ignore':return forwarded()
+    scalar_types=(bool,int,float,np.bool_,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.uint64,np.int64,np.float16,np.float32,np.float64)
+    if type(sigma) in scalar_types:sigmas=[sigma]*image.ndim
+    elif type(sigma) in (tuple,list) or type(sigma) is np.ndarray and sigma.ndim==1:
+        if len(sigma)!=image.ndim:return forwarded()
+        sigmas=list(sigma)
+    else:return forwarded()
+    if any(type(value) not in scalar_types for value in sigmas):return forwarded()
+    try:ordinary_sigmas=[float(value) for value in sigmas]
+    except (ValueError,OverflowError):return forwarded()
+    if any(not np.isfinite(value) or not 0<=value<=1000 for value in ordinary_sigmas):return forwarded()
+    if type(mode) is str:modes=[mode]*image.ndim
+    elif type(mode) in (tuple,list) and len(mode)==image.ndim:modes=list(mode)
+    else:return forwarded()
+    if any(type(value) is not str or value not in _GAUSSIAN_MODES for value in modes):return forwarded()
+    if type(cval) not in scalar_types:return forwarded()
+    try:constant=float(cval)
+    except (ValueError,OverflowError):return forwarded()
+    if not np.isfinite(constant):return forwarded()
+    truncate=(8 if all(value>1 for value in sigmas) else 100) if gaussian else 4
+    scaled=[(1/2**.5)*value for value in sigmas] if gaussian else sigmas
+    for value in scaled:
+        if type(value) is np.float16 and float(value)!=0 and not .003<=float(value)<=250:return forwarded()
+        if isinstance(value,np.integer) and float(value)**2>np.iinfo(type(value)).max:return forwarded()
+    plans=[]
+    for derivative_axis in (range(image.ndim) if gaussian else [None]):
+        passes=[]
+        for axis,value in enumerate(scaled):
+            if float(value)<=1e-15:continue
+            radius=int(truncate*float(value)+.5)
+            derivative=axis==derivative_axis
+            coefficients=(_hessian_cached_coefficients if type(value) in (int,float,np.float64) else _hessian_coefficients)(value,radius,derivative)
+            passes.append((axis,coefficients,_GAUSSIAN_MODES[modes[axis]],derivative))
+        plans.append(passes)
+    prepared=image if image.dtype.isnative else _core.edge_native(image)
+    if prepared.dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    if not gaussian and any(length<2 for length in image.shape):
+        if use_gaussian_derivatives is None:
+            import warnings
+            warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=2)
+        raise ValueError('Shape of array too small to calculate a numerical gradient, at least (edge_order + 1) elements are required.')
+    result=_core.hessian_matrix(prepared,plans,constant,gaussian,order=='xy')
+    if result is None:return forwarded()
+    if use_gaussian_derivatives is None:
+        import warnings
+        warnings.warn('use_gaussian_derivatives currently defaults to False, but will change to True in a future version. Please specify this argument explicitly to maintain the current behavior',FutureWarning,stacklevel=2)
+    return result
+
+
+__all__+=['hessian_matrix']

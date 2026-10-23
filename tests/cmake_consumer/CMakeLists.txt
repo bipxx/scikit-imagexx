@@ -52,3 +52,7 @@ add_test(NAME installed_corner_response_consumer COMMAND corner_response_consume
 add_executable(kitchen_consumer ../test_kitchen_native.cpp)
 target_link_libraries(kitchen_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_kitchen_consumer COMMAND kitchen_consumer)
+
+add_executable(hessian_consumer ../test_hessian_native.cpp)
+target_link_libraries(hessian_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_hessian_consumer COMMAND hessian_consumer)
