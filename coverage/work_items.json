@@ -11325,7 +11325,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave2-cleanup/component-consumers-native"
+        ]
       },
       "dependency_requirements": {
         "component-consumers": {
@@ -11342,7 +11344,8 @@
           "message": "Implement frozen component consumers using the versioned labeling interface. Keep all writes in the owned files; native tests and integration must verify deterministic label/count semantics.\nExclusive ownership: include/skimagexx/component_consumers.hpp, src/component_consumers.cpp, src/bind_component_consumers.cpp, python/skimagexx/_component_consumers.py, tests/test_component_consumers_native.cpp, tests/test_component_consumers_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/component-consumers-native",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "build": {
         "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
@@ -11367,7 +11370,8 @@
           ],
           "scope": "Frozen canonical native cases within1492 total per11 private adapter gates. Safety/protocol supplements and rejection checks are separately described in proof; public/actual combined core remain separate gates."
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave2-cleanup/component-consumers-native/manifest.json"
     },
     {
       "id": "connected-components-public-integration",
@@ -13483,7 +13487,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave2-cleanup/transform-public"
+        ]
       },
       "public_registration": true,
       "launch": {
@@ -13493,7 +13499,8 @@
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/transform.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/transform-public",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "proofs": {
         "public_native": {
@@ -13542,7 +13549,8 @@
         "compiled_core": "05c35069222b69b7a5451c44961c5e96c5e70770",
         "supplementary_tests": "6f4faa20d93fd2943ff1ecab64625f4aaf79603c",
         "combined_main_validation": "In progress on actual722 core; no performance claim."
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave2-cleanup/transform-public/manifest.json"
     },
     {
       "id": "resize-optimization",
@@ -13588,18 +13596,14 @@
         "main_commit": "722006f552d015639c7fc06389a8f74d88dab3d6"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/resize-optimization",
-          "build/resize-copy-harness",
-          "build/resize-copy-whole-wheel-windows",
-          "build/resize-copy-whole-*-wheels"
-        ],
+        "active_paths": [],
         "protected_artifacts": [
           "benchmarks/resize-public-*-initial.json",
           "build/resize-performance-runs/39957875987",
           "build/public-wave1-*-package",
           "build/resize-copy-harness/*failure*",
-          "build/resize-copy-harness/sanitize*.log"
+          "build/resize-copy-harness/sanitize*.log",
+          "build/checkpoints/public-wave2-cleanup/resize-optimization"
         ]
       },
       "dependency_requirements": {
@@ -13614,7 +13618,8 @@
           "message": "Inspect every one-worker original-library result and retain all slow cases. Fix measured bottlenecks without changing the corpus or parity assertions; preserve rejected trials and remeasure exact immutable packages remotely.\nExclusive ownership: src/resample.cpp, src/simd_resample_avx2.cpp, python/skimagexx/_resize.py, tests/test_resize_native_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/resize-optimization",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "build": {
         "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
@@ -13675,7 +13680,8 @@
           ],
           "scope": "Actual whole wheels:10918 public plus6506 shared checks per six profiles;373-case unchanged corpus workers1/4. Changed binding Debug/ASan440 normal/scalar. No module injection in public acceptance."
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave2-cleanup/resize-optimization/manifest.json"
     },
     {
       "id": "rank-neighborhoods-native",
@@ -16457,7 +16463,7 @@
           "status": "verified",
           "source_sha": "557db1a4cd87a32db13e0a87cc942195447f1ddf",
           "manifest": {
-            "path": "build/worktrees/rank-benchmark/build/rank-benchmark-proof.json",
+            "path": "build/checkpoints/public-wave2-cleanup/rank-benchmark/agent-evidence/build/rank-benchmark-proof.json",
             "sha256": "e9ac5d186cf4499be1939fc4d6f616b75e3d152d8d1d72345ed7e9da4866f3bc"
           },
           "scope": "Reference/tooling/data-flow tests and actionlint pass. Rank actual public/native performance gate and hosted CI correctness/performance are separate; no local timing/dispatch claim."
@@ -16833,7 +16839,7 @@
           "status": "verified",
           "source_sha": "4e199d8240f9862b89fd15dd80f8b22b7dead88d",
           "manifest": {
-            "path": "build/worktrees/ci-measurement-isolation/build/ci-measurement-isolation-proof.json",
+            "path": "build/checkpoints/public-wave2-cleanup/ci-measurement-isolation/agent-evidence/build/ci-measurement-isolation-proof.json",
             "sha256": "62797a0ee68614f49a2d09d8e814148600f7c542a73f5fe6e5adbebbd786e8e5"
           },
           "scope": "Reference/tooling/data-flow tests and actionlint pass. Rank actual public/native performance gate and hosted CI correctness/performance are separate; no local timing/dispatch claim."

@@ -1,0 +1,83 @@
+{
+  "policy": "Only clean worktrees whose commits are ancestors of main were removed with git worktree remove, after worker read-dependency checks and byte-verified evidence archival. Resolved removal targets stayed inside the workspace build/worktrees directory.",
+  "protected": "Active worktrees, environments, original baselines, whole public-wave1 packages/SDKs, raw timing samples and original failures retained. Protected downscale-local-mean and li-uniform worktrees untouched.",
+  "archive_index": {
+    "path": "build/checkpoints/public-wave2-cleanup/index.json",
+    "sha256": "ba9716268dbf40953434153197b635c9ee6f5e4d62b288928b60e81d297f039a"
+  },
+  "worktrees": [
+    {
+      "worktree": "component-consumers-native",
+      "commit": "d1b55f7e4dbd5c06f8541f3a4073a0acacbf2d55",
+      "archive": "build/checkpoints/public-wave2-cleanup/component-consumers-native",
+      "retained_files": 266,
+      "retained_bytes": 159414339,
+      "obsolete_cache_files": 732,
+      "obsolete_cache_bytes": 197305900,
+      "archive_manifest_sha256": "14b5f0dfb1eb4595a103c0ffc03a6820c9a2ba848a97755f65af3c4a3d5bd110"
+    },
+    {
+      "worktree": "rank-benchmark",
+      "commit": "557db1a4cd87a32db13e0a87cc942195447f1ddf",
+      "archive": "build/checkpoints/public-wave2-cleanup/rank-benchmark",
+      "retained_files": 25,
+      "retained_bytes": 24965041,
+      "obsolete_cache_files": 19,
+      "obsolete_cache_bytes": 446133,
+      "archive_manifest_sha256": "383a97c0d3e90a416ba280ce101a9de80623b3b8d8c5e121ba62d71d3f4a3310"
+    },
+    {
+      "worktree": "ci-measurement-isolation",
+      "commit": "4e199d8240f9862b89fd15dd80f8b22b7dead88d",
+      "archive": "build/checkpoints/public-wave2-cleanup/ci-measurement-isolation",
+      "retained_files": 12,
+      "retained_bytes": 13847,
+      "obsolete_cache_files": 10,
+      "obsolete_cache_bytes": 137054,
+      "archive_manifest_sha256": "8d8e0edd5fd70e610ab35a475e5957fc3124d918ec4b0e974319117d4a25e808"
+    },
+    {
+      "worktree": "resize-optimization",
+      "commit": "b5d59bbaa71f4840264e756599cb5700c08407f6",
+      "archive": "build/checkpoints/public-wave2-cleanup/resize-optimization",
+      "retained_files": 18,
+      "retained_bytes": 13566,
+      "obsolete_cache_files": 65,
+      "obsolete_cache_bytes": 3330744,
+      "archive_manifest_sha256": "7ffb9915062307fe0d790c205c09d6b46e2e7237747861c166080af4638104da"
+    },
+    {
+      "worktree": "transform-public",
+      "commit": "e9e22771cc7db0fc125c913c32b588827cc10146",
+      "archive": "build/checkpoints/public-wave2-cleanup/transform-public",
+      "retained_files": 0,
+      "retained_bytes": 0,
+      "obsolete_cache_files": 19,
+      "obsolete_cache_bytes": 212480,
+      "archive_manifest_sha256": "b4711ff7c10aa6a175f41b9f70e0aed9b62b2e26b9f6e4ce564809ac892c5873"
+    },
+    {
+      "worktree": "transform-public-exception",
+      "commit": "6f4faa20d93fd2943ff1ecab64625f4aaf79603c",
+      "archive": "build/checkpoints/public-wave2-cleanup/transform-public-exception",
+      "retained_files": 0,
+      "retained_bytes": 0,
+      "obsolete_cache_files": 12,
+      "obsolete_cache_bytes": 310810,
+      "archive_manifest_sha256": "d22811bcfc653a8b22834547cc9ce9c2858426b6a6f682a8931fc5a0608fbc13"
+    },
+    {
+      "worktree": "native-foundations-validation",
+      "commit": "77f39b55917af8e2c0c47ae8d6fb2d5491c4ab5a",
+      "archive": "build/checkpoints/public-wave2-cleanup/native-foundations-validation",
+      "retained_files": 0,
+      "retained_bytes": 0,
+      "obsolete_cache_files": 0,
+      "obsolete_cache_bytes": 0,
+      "archive_manifest_sha256": "d452f130fc1925444cf062a9233cc7eef920659a30ec513cdcd72ff2d25fc080"
+    }
+  ],
+  "removed_worktrees": 7,
+  "obsolete_cache_bytes_removed": 201743121,
+  "retained_evidence_bytes": 184406793
+}
