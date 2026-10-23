@@ -1,6 +1,11 @@
 name: frangi-precision-diagnostics
 on:
   workflow_dispatch:
+  push:
+    branches: [feature/frangi]
+    paths:
+      - tools/diagnose_frangi_precision.py
+      - .github/workflows/frangi-precision.yml
 jobs:
   diagnose:
     runs-on: ubuntu-latest
