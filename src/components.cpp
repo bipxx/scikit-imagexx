@@ -120,18 +120,23 @@ Mask available(std::size_t row,const std::vector<std::size_t>& shape,const RowPl
     return result;
 }
 template<class T> std::size_t equal_prefix(const T* input,std::size_t count,T value,bool vectorized) {
-    std::size_t n=0;
+    // Multivalued images mostly have single-pixel runs. Test those before
+    // paying for an out-of-line SIMD scan; keep vector scans for long runs.
+    if(!count || input[0]!=value)return 0;
+    if(count==1 || input[1]!=value)return 1;
+    std::size_t n=2;
 #ifdef SKIMAGEXX_AVX2
-    if(vectorized)n=simd::components_equal_prefix(input,count,&value,sizeof(T));
+    if(vectorized && count>=32/sizeof(T))n=simd::components_equal_prefix(input,count,&value,sizeof(T));
 #else
     (void)vectorized;
 #endif
     while(n<count && input[n]==value)++n;return n;
 }
 template<class T> void fill(T* output,std::size_t count,T value,bool vectorized) {
+    if(count==1){*output=value;return;}
     std::size_t n=0;
 #ifdef SKIMAGEXX_AVX2
-    if(vectorized)n=simd::components_fill(output,count,&value,sizeof(T));
+    if(vectorized && count>=32/sizeof(T))n=simd::components_fill(output,count,&value,sizeof(T));
 #else
     (void)vectorized;
 #endif
