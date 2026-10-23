@@ -762,6 +762,44 @@ def sato(image,sigmas=range(1,10,2),black_ridges=True,mode='reflect',cval=0):
 __all__+=['sato']
 
 
+def meijering(image,sigmas=range(1,10,2),alpha=None,black_ridges=True,mode='reflect',cval=0):
+    forwarded=lambda:fallback('filters','meijering',image,sigmas=sigmas,alpha=alpha,black_ridges=black_ridges,mode=mode,cval=cval)
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if type(black_ridges) not in _RIDGE_SCALARS or alpha is not None and type(alpha) not in _RIDGE_SCALARS:return forwarded()
+    if type(sigmas) not in (range,list,tuple,np.ndarray) or type(sigmas) is np.ndarray and sigmas.ndim!=1:return forwarded()
+    try:
+        if len(sigmas)>10000:return forwarded()
+    except OverflowError:return forwarded()
+    scales=list(sigmas)
+    if image.ndim not in range(1,6):return forwarded()
+    coefficient=1/(image.ndim+1) if alpha is None else float(alpha)
+    if not np.isfinite(coefficient) or abs(coefficient)>1e6:return forwarded()
+    for sigma in scales:
+        if type(sigma) not in _RIDGE_SCALARS:return forwarded()
+        try:value=float(sigma)
+        except (ValueError,OverflowError):return forwarded()
+        if not 0<=value<=1000:return forwarded()
+        if isinstance(sigma,np.integer) and value*value>np.iinfo(type(sigma)).max:return forwarded()
+        if type(sigma) is np.float16 and value*value>np.finfo(np.float16).max:return forwarded()
+    negative=not bool(black_ridges);original_dtype=image.dtype
+    dtype=original_dtype if original_dtype.isnative and original_dtype.type in (np.float32,np.float64) else np.dtype(np.float32 if original_dtype.type in (np.float16,np.float32) else np.float64)
+    if not scales:return np.zeros_like(image,dtype=dtype,subok=not negative)
+    if not image.size or np.geterr()['under']!='ignore':return forwarded()
+    prepared=image if original_dtype.isnative else _core.edge_native(image)
+    if original_dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    prepared=_core.ridge_prepare(prepared,negative)
+    from .feature import _hessian_matrix_impl
+    state=None
+    for sigma in scales:
+        fields=_hessian_matrix_impl(prepared,sigma,mode,cval,'rc',True,lambda:None)
+        if fields is None:return forwarded()
+        state=_core.meijering_accumulate(fields,state,dtype,coefficient)
+        if state is None:return forwarded()
+    return state
+
+
+__all__+=['meijering']
+
 def _frangi_impl(image,sigmas,scale_range,scale_step,alpha,beta,gamma,black_ridges,mode,cval,finish,forwarded):
     if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
     if type(black_ridges) not in _RIDGE_SCALARS:return forwarded()

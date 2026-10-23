@@ -71,7 +71,7 @@ both raw and scaled errors so input scaling does not hide the difference.
 [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
 and [isolated performance measurements](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
 ran against that frozen source. Measurements are verified below; full CI is
-still running. This candidate is not retained on main. Exact wheels, source archive, initial failures,
+complete and passed. This port is retained on main. Exact wheels, source archive, initial failures,
 and final validation logs are preserved in ignored checkpoints.
 
 ## Initial Linux measurements
@@ -95,7 +95,8 @@ In 3-D, 20/240 rows across both worker settings require the documented
 conditioning allowance. Maximum input-scaled error is 1.381438e-9 and raw
 error 2.033356e10 for raw integer magnitudes. These are numerical comparisons,
 not exact LAPACK parity. Raw samples: [Linux](sato-first-linux.json).
-Windows measurements and full CI are still running; retention is pending.
+At this historical checkpoint Windows measurements and full CI were pending;
+final results and retention are recorded below.
 
 ## Verified two-platform measurements
 
@@ -118,4 +119,9 @@ the conditioning allowance across both worker settings. Raw samples:
 [Linux](sato-first-linux.json), [Windows](sato-first-windows.json).
 These compare candidate versus upstream within each runner; they do not
 constitute a paired candidate-to-candidate experiment. No adverse cases were
-removed. Full CI remains the final retention gate.
+removed. [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
+passed Windows, Linux and minimum NumPy. This port is retained on `main`;
+runtime sources match measured revision `a5f4a68ee5cb9868b45068e6a8b33fff28142ab6`.
+Later retention changes are reports and merge bookkeeping. The 3-D conditioning
+contract above remains part of the supported parity surface. Exact packages,
+raw samples, source archives and complete CI logs remain preserved.

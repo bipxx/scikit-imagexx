@@ -1,5 +1,31 @@
 # Last completed whole-library performance checkpoint
 
+Retained `filters.meijering`, measured source `f8cb5b4`:
+[full CI39907246156](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39907246433](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246433)
+passed both OSes. One-worker geometric means for ranks 1–5 are
+**7.488270× / 7.688674× / 5.616934× / 5.387629× / 5.006351× Linux** and
+**5.322143× / 6.176978× / 3.810500× / 3.685129× / 3.682196× Windows**.
+All 600 one-worker cases per OS are faster; minima 2.993998× / 2.070080×.
+Rank 1 measured outputs are exact; maximum absolute errors are 2.384186e-7
+float32 and 2.109424e-15 float64. The [scope and raw samples](meijering-initial.md)
+are preserved. Native coverage is **119 + 2 metadata APIs**; **334 callable
+names** and 29 classes/284 static member paths remain pending.
+
+Retained `filters.sato`, measured source `a5f4a68`:
+[full CI39905542928](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39905542679](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
+passed both OSes. One-worker geometric means for 2-D/3-D are
+**7.255148× / 5.537527× Linux** and **5.959401× / 4.501150× Windows**.
+All 240 one-worker cases per OS are faster. Measured 2-D outputs are exact;
+3-D comparisons use the explicit per-pixel conditioning allowance, with
+maximum input-scaled error 1.381438e-9. They are not exact LAPACK parity.
+The [scope, numerical limits and raw samples](sato-initial.md) are preserved.
+Native coverage is **118 + 2 metadata APIs**; **335 callable names** and
+29 classes/284 static member paths remain pending.
+
 Retained optimized `feature.hessian_matrix_det`, measured source `b93d108`:
 [full CI39899942360](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
 passed Windows, Linux and minimum NumPy; isolated
