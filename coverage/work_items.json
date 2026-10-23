@@ -18679,12 +18679,12 @@
       "apis": [],
       "owner": "integrator",
       "branch": "main",
-      "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
+      "base_sha": "0d5ab290d1c6aa97aeef120a9c567387f93ecdd6",
       "owns": [],
       "depends_on": [
         "combined-public-wave6"
       ],
-      "state": "queued",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18702,14 +18702,26 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "note": "Next one-worker trial combines accepted byte-safe stepped-half loads and finite/minmax classification on exact public source. Fixed1231/1212 corpus unchanged; retain all regressions, no local timing."
+        "note": "Next one-worker trial combines accepted byte-safe stepped-half loads and finite/minmax classification on exact public source. Fixed1231/1212 corpus unchanged; retain all regressions, no local timing.",
+        "run_id": 40037037771,
+        "source_sha": "0d5ab290d1c6aa97aeef120a9c567387f93ecdd6",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40037037771",
+        "created_at": "2026-10-23T22:59:41Z",
+        "observed_state": "completed",
+        "conclusion": "success",
+        "workers": [
+          1
+        ],
+        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
       },
       "merge": {
         "commit": null,
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/metrics-performance-runs/40037037771"
+        ],
         "protected_artifacts": []
       },
       "dependency_requirements": {
@@ -19145,7 +19157,7 @@
         "rank-intensity-public",
         "rank-intensity-benchmark-tooling"
       ],
-      "state": "preparing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19167,12 +19179,14 @@
         "run_id": 40034423731,
         "source_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731",
-        "observed_state": "in_progress",
+        "observed_state": "completed",
         "created_at": "2026-10-23T22:33:54Z",
         "workers": [
           1
         ],
-        "observation_rule": "Poll exact authoritative run to terminal; never cancel/restart for observation timeout. All3 preparation profiles precede fresh artifact-only measurement hosts."
+        "observation_rule": "Poll exact authoritative run to terminal; never cancel/restart for observation timeout. All3 preparation profiles precede fresh artifact-only measurement hosts.",
+        "conclusion": "success",
+        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
       },
       "merge": {
         "commit": null,
@@ -19641,7 +19655,7 @@
         "footprint-setup-optimization",
         "combined-public-wave5"
       ],
-      "state": "preparing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19680,7 +19694,9 @@
             "conclusion": "failure",
             "retention": "Historical failed run andsource preserved; do not replace or erase it."
           }
-        ]
+        ],
+        "conclusion": "success",
+        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
       },
       "merge": {
         "commit": null,
@@ -19713,7 +19729,7 @@
         "components-short-run-optimization",
         "combined-public-wave5"
       ],
-      "state": "preparing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19734,7 +19750,7 @@
         "run_id": 40035393397,
         "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397",
-        "observed_state": "in_progress",
+        "observed_state": "completed",
         "created_at": "2026-10-23T22:43:05Z",
         "workers": [
           1
@@ -19752,7 +19768,9 @@
             "conclusion": "failure",
             "retention": "Historical failed run andsource preserved; do not replace or erase it."
           }
-        ]
+        ],
+        "conclusion": "success",
+        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
       },
       "merge": {
         "commit": null,
@@ -19779,7 +19797,7 @@
       "apis": [],
       "owner": "resize_bench",
       "branch": "feature/rank-statistics-public",
-      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "base_sha": "eae8dc62a526705a6bd244abe025e3825e7b091b",
       "owns": [
         "python/skimagexx/_rank.py",
         "tests/test_rank_statistics_public.py",
@@ -19788,7 +19806,7 @@
       "depends_on": [
         "rank-statistics-native"
       ],
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": "coverage/contracts/rank-statistics.json",
         "uncovered_cases": [
@@ -19822,7 +19840,20 @@
           "evidence_scope": "native_private"
         }
       },
-      "public_registration": true
+      "public_registration": true,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "eae8dc62a526705a6bd244abe025e3825e7b091b",
+          "manifest": {
+            "path": "build/rank-statistics-public-evidence/manifest.json",
+            "sha256": "edac4c93e2613eea4eddcd56cd736a4b4a3be003d103df047c78b5dc9e0f8961"
+          },
+          "native_contract_checks": 995,
+          "native_pending": 0,
+          "scope": "Privatef7 wrapper qualification only:995x1/4x8, expandedWindows3297x1/4xnormal/scalar,72capabilityguards and11providers.4660publictests collected, notexecuted/accepted; genuinewhole7 pending."
+        }
+      }
     },
     {
       "id": "rank-statistics-benchmark-tooling",
@@ -19912,18 +19943,20 @@
       ],
       "owner": "resize_api",
       "branch": "feature/rank-percentile-contracts",
-      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "base_sha": "b928ed6e533be268ce3b856fc260254679bf3709",
       "owns": [
         "tests/test_rank_percentile_contracts.py",
         "coverage/contracts/rank-percentile.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
           "Source-safe original-only nine actualalgorithms. equalize_percentile absent; rank.percentile isfunction, compiledmodule _percentile. Audit percentile bounds/NaN/empty/unsigned hazards before anyCython call; native0/no inventory inflation."
-        ]
+        ],
+        "raw_sha256": "2ea6bcd03081980e41b02f83224c0db17bac33bba5a25e466d4bcf4bfa7b57d5",
+        "canonical_cases": 1544
       },
       "parity": {
         "source_sha": null,
@@ -19947,7 +19980,19 @@
         "active_paths": [],
         "protected_artifacts": []
       },
-      "dependency_requirements": {}
+      "dependency_requirements": {},
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "b928ed6e533be268ce3b856fc260254679bf3709",
+          "manifest": {
+            "path": "build/worktrees/rank-percentile-contracts/build/rank-percentile-reference-proof.json",
+            "sha256": "e6e6c7e62f5fa38b8e86ba3dc40bd62a049fc9d2ee892c2b5f433c8d2c84f615"
+          },
+          "passing_contract_checks": 7908,
+          "scope": "Three healthyoriginal runtimes:1544canonical+1544privateidentity+3088strictpending+1676independentoracles+54providertraces+2facts each. Native0;9actualalgorithms, no inventedpercentilemodule/equalizealias. PriorEIO/readonly/UNC failures retained,14exactwheels/freshsourceorigins verified."
+        }
+      }
     },
     {
       "id": "temp-build-cleanup-20261023",
@@ -20003,6 +20048,185 @@
           "scope": "25obsolete caches,26clean mergedWTs,2duplicate source snapshots retired after lossless archive checks; activeWIP/env/rawbenchmark/product evidence retained. No numerical/native/performance count."
         }
       }
+    },
+    {
+      "id": "rank-percentile-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-percentile-native",
+      "base_sha": "bc5d847",
+      "owns": [
+        "src/rank.cpp",
+        "src/simd_rank_avx2.cpp",
+        "include/skimagexx/rank.hpp",
+        "src/bind_rank.cpp",
+        "tests/test_rank_percentile_native.cpp",
+        "tests/test_rank_percentile_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-percentile-contracts"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-percentile.json",
+        "uncovered_cases": [
+          "Nineprivatealgorithms, op17..25/separate rank-percentile-v1 cap0x3fe0000. RankView/oldcaps/entrysignatures unchanged; p0/p1providerconversion order follows54traces. No publicPython/registry orspeedclaim; source-safe exclusions retained."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-percentile-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave7",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "validation/wave7-rank-consumer",
+      "base_sha": "bc5d847",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave6",
+        "consumer-layout-scan",
+        "rank-statistics-native",
+        "rank-statistics-public",
+        "rank-statistics-benchmark-tooling"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Rootassembling consumer237+R4f7+publiceae8+sharedwiring; producer/caches notadvanced/leased. Candidate171metadata mustmatchactualnewpackages; allactualpublic/corpora/SDK/source gates pending. Nativeimagecount remains163 onacceptedmain."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/wave7-rank-consumer",
+          "build/main-core-wave7-evidence"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "combined-public-wave6": {
+          "evidence_scope": "public_native"
+        },
+        "consumer-layout-scan": {
+          "evidence_scope": "native_private"
+        },
+        "rank-statistics-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-statistics-public": {
+          "evidence_scope": "native_private"
+        },
+        "rank-statistics-benchmark-tooling": {
+          "evidence_scope": "tooling"
+        }
+      }
+    },
+    {
+      "id": "terminal-campaign-publication",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/terminal-campaign-publication",
+      "base_sha": "bc5d847",
+      "owns": [
+        "benchmarks/rank-intensity-public-windows-modern-initial.json",
+        "benchmarks/rank-intensity-public-linux-modern-initial.json",
+        "benchmarks/rank-intensity-public-linux-minimum-initial.json",
+        "benchmarks/rank-intensity-public-initial.json",
+        "benchmarks/rank-intensity-public-initial.md",
+        "benchmarks/metrics-public-windows-modern-leaf-classification-trial.json",
+        "benchmarks/metrics-public-linux-modern-leaf-classification-trial.json",
+        "benchmarks/metrics-public-linux-minimum-leaf-classification-trial.json",
+        "benchmarks/metrics-public-leaf-classification-trial.json",
+        "benchmarks/metrics-public-leaf-classification-trial.md",
+        "benchmarks/footprints-public-windows-modern-setup-trial.json",
+        "benchmarks/footprints-public-linux-modern-setup-trial.json",
+        "benchmarks/footprints-public-linux-minimum-setup-trial.json",
+        "benchmarks/footprints-public-setup-trial.json",
+        "benchmarks/footprints-public-setup-trial.md",
+        "benchmarks/components-public-windows-modern-short-run-trial.json",
+        "benchmarks/components-public-linux-modern-short-run-trial.json",
+        "benchmarks/components-public-linux-minimum-short-run-trial.json",
+        "benchmarks/components-public-short-run-trial.json",
+        "benchmarks/components-public-short-run-trial.md"
+      ],
+      "depends_on": [],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Offlineonly fourterminalcampaigns; streamedZIP source/product/SDK/RECORD/runtime-boundary checks plusallpairedsamples/classifications/regressions. No numericaloperations, binaryimports, timers ornative/readiness inflation."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {}
     }
   ],
   "unassigned_inventoried_apis": [
@@ -20420,7 +20644,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Full goal active: accepted163 partial imagepaths/303upstream-only. Whole6 finite/minmax SIMD andqualifiedR2 aliases acceptedwith1913 seals; newperformance pending. Consumer237 andR4f7 areprivate-only. Threeworkers nowexecute R4benchmark, R4publicwrappers andnextnine percentile referencecontracts. Livecampaigns retain exactauthoritative IDs.",
+  "note": "Fullgoalactive: accepted163partialimagepaths/303upstream-only; cleanupcomplete. Fourterminaloneworker campaigns underofflineverification. R4benchmarkPhase1 andR5nine-functionoriginalcontracts merged; R4public+consumerwhole7 assembling, privateR5kernels independent. No native/performancecount fromreference/tooling alone.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -20744,13 +20968,14 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-statistics-benchmark-tooling"
+        "terminal-campaign-publication"
       ],
       "resize_api": [
-        "rank-percentile-contracts"
+        "rank-percentile-native"
       ],
       "resize_bench": [
-        "rank-statistics-public"
+        "rank-statistics-public",
+        "combined-public-wave7"
       ]
     }
   },
