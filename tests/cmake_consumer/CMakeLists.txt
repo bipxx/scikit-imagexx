@@ -60,3 +60,7 @@ add_test(NAME installed_hessian_consumer COMMAND hessian_consumer)
 add_executable(shape_index_consumer ../test_shape_index_native.cpp)
 target_link_libraries(shape_index_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_shape_index_consumer COMMAND shape_index_consumer)
+
+add_executable(hessian_det_consumer ../test_hessian_det_native.cpp)
+target_link_libraries(hessian_det_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_hessian_det_consumer COMMAND hessian_det_consumer)

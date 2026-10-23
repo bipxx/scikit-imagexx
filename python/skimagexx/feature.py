@@ -231,3 +231,29 @@ def shape_index(image,sigma=1,mode='constant',cval=0):
 
 
 __all__+=['hessian_matrix','shape_index']
+
+
+def hessian_matrix_det(image,sigma=1,approximate=True):
+    forwarded=lambda:fallback('feature','hessian_matrix_det',image,sigma=sigma,approximate=approximate)
+    from .filters import _GAUSSIAN_TYPES
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if image.ndim==2:
+        if type(approximate) not in (bool,int,float,np.bool_,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64,np.float16,np.float32,np.float64):return forwarded()
+        if approximate:
+            # Preserve Pythran's restricted scalar overloads; do not silently
+            # accept numpy integer/float32 or boolean sigma objects.
+            if type(sigma) not in (int,float,np.float64):return forwarded()
+            try:value=float(sigma)
+            except (ValueError,OverflowError):return forwarded()
+            if not np.isfinite(value) or not -1000<=value<=1000 or np.geterr()['under']!='ignore':return forwarded()
+            prepared=image if image.dtype.isnative else _core.edge_native(image)
+            if prepared.dtype.type is np.float16:prepared=_core.edge_half(prepared)
+            result=_core.hessian_det_approx(prepared,int(3*value))
+            return result if result is not None else forwarded()
+    fields=_hessian_matrix_impl(image,sigma,'constant',0,'rc',False,lambda:None)
+    if fields is None:return forwarded()
+    result=_core.hessian_det_fields(fields)
+    return result if result is not None else forwarded()
+
+
+__all__+=['hessian_matrix_det']
