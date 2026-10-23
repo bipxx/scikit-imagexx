@@ -132,7 +132,9 @@ def class_contract(api):
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api.startswith('filters.rank.'):
-        return ('uint8','uint16','int8','int16','int32','int64','uint32','uint64','float16','float32','float64')
+        # Shared descriptor smoke tests use these three sample constructors;
+        # the frozen rank corpus separately covers full integer/half widths.
+        return ('uint8','float32','float64')
     if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):return ('float32','float64')
     if api in ('filters.threshold_otsu', 'exposure.histogram',
                'exposure.cumulative_distribution', 'exposure.equalize_hist'):
