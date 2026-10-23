@@ -36,6 +36,8 @@ template<class T> void positive(const void* source,std::uint8_t* target,std::siz
 }
 void bind_rank(py::module_& module) {
     module.attr("rank_histogram_capabilities")=py::int_(skimagexx::rank_histogram_capabilities());
+    module.attr("rank_alias_capabilities")=py::int_(skimagexx::rank_alias_capabilities());
+    module.attr("rank_alias_interface")="rank-alias-v1";
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
         const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
@@ -139,6 +141,10 @@ void bind_rank(py::module_& module) {
         }
         view.serial_alias=numpy.attr("shares_memory")(image,output).cast<bool>() || (!mask_object.is_none() && numpy.attr("shares_memory")(mask,output).cast<bool>());
         if(operation>=9 && numpy.attr("shares_memory")(footprint,output).cast<bool>())throw py::value_error("overlapping buffers are outside rank-histogram-v3 parity");
-        {py::gil_scoped_release release;skimagexx::rank_filter_into(view,static_cast<skimagexx::RankOperation>(operation));}
+        {py::gil_scoped_release release;
+            const auto op=static_cast<skimagexx::RankOperation>(operation);
+            if(operation>=5 && operation<=8)skimagexx::rank_filter_into(view,op,skimagexx::rank_aliases(view));
+            else skimagexx::rank_filter_into(view,op);
+        }
     });
 }

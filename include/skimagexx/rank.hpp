@@ -22,6 +22,13 @@ struct RankView {
     bool uint16=false,serial_alias=false;
 };
 void rank_filter_into(const RankView&,RankOperation);
+// Actual accessed stores, after image/mask normalization. Distinct from the
+// conservative legacy serial_alias flag; the RankView ABI is unchanged.
+struct RankAliases {bool image_output=false,mask_output=false;};
+RankAliases rank_aliases(const RankView&);
+void rank_filter_into(const RankView&,RankOperation,RankAliases);
+// Operation bits only; each call still certifies its byte/index safety class.
+std::uint32_t rank_alias_capabilities() noexcept;
 std::uint16_t rank_max_u16(const std::uint16_t*,std::size_t);
 // Binary16 multiplication/rint/clip follows img_as_ubyte's half precision.
 struct RankHalfConversion {bool nan=false,invalid_multiply=false,overflow=false;};

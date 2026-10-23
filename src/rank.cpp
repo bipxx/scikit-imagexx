@@ -116,6 +116,15 @@ struct Histogram {
         });
         return result;
     }
+    bool median(std::int64_t& selected)const {
+        selected=0;
+        if(!pop)return true;
+        double remaining=double(pop)/2.;bool store=false;
+        // Feedback counts may be negative: the CDF is not monotone. Visit
+        // occupied bins in order and retain the first crossing, or no store.
+        occupied([&](std::size_t index,std::int64_t count){remaining-=double(count);if(remaining<0){selected=std::int64_t(index);store=true;return false;}return true;});
+        return store;
+    }
     std::int64_t integer(RankOperation op)const {
         if(op==RankOperation::pop)return pop;
         if(!pop)return 0.;
@@ -123,8 +132,7 @@ struct Histogram {
         if(!root)return 0.;
         if(op==RankOperation::gradient)return integer(RankOperation::maximum)-integer(RankOperation::minimum);
         if(op==RankOperation::median) {
-            double remaining=double(pop)/2.;std::int64_t selected=0;
-            occupied([&](std::size_t index,std::int64_t count){remaining-=double(count);if(remaining<0){selected=std::int64_t(index);return false;}return true;});
+            std::int64_t selected;median(selected);
             return selected;
         }
         if(op==RankOperation::modal) {
@@ -186,6 +194,7 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
             const auto emit=[&](auto value){switch(v.output_type){case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;case PixelType::uint16:store<std::uint16_t>(out,value);break;case PixelType::float32:store<float>(out,value);break;case PixelType::float64:store<double>(out,value);break;default:break;}};
             if(op==RankOperation::mean)emit(hist.pop ? double(hist.sum)/double(hist.pop):0.);
             else if(op==RankOperation::entropy)emit(hist.entropy());
+            else if(op==RankOperation::median){std::int64_t selected;if(hist.median(selected))emit(selected);}
             else if(int(op)>=9) {
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
@@ -219,9 +228,9 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
     }
 }
 }
-void rank_filter_into(const RankView& view,RankOperation operation) {
+namespace {
+void validate(const RankView& view,RankOperation operation) {
     if(int(operation)<0 || int(operation)>12)throw std::invalid_argument("invalid rank operation");
-    if(int(operation)>=5 && view.serial_alias)throw std::invalid_argument("overlapping buffers are outside rank-histogram-v2 parity");
     for(int axis=0;axis<3;++axis)if(!view.shape[axis] || !view.footprint_shape[axis] || view.center[axis]<0 || std::size_t(view.center[axis])>=view.footprint_shape[axis])throw std::invalid_argument("invalid rank dimensions or center");
     if(!view.image || !view.output || !view.footprint || view.bins<1 || view.bins>65536)throw std::invalid_argument("invalid rank buffers or bins");
     std::size_t pixels=1,footprint_pixels=1,span=0;
@@ -237,6 +246,39 @@ void rank_filter_into(const RankView& view,RankOperation operation) {
         }
     }
     if(pixels>bound/(view.uint16 ? 2:1) || span>bound-itemsize)throw std::overflow_error("rank buffer size overflow");
+}
+// Test exact destination element bytes against a contiguous read buffer.
+// Bounding intervals cheaply reject the common disjoint case; row intervals
+// avoid scanning each pixel for ordinary contiguous/pixel-vector output.
+bool overlaps(const RankView& v,const void* input,std::size_t bytes) {
+    if(!input || !bytes)return false;
+    const auto base=reinterpret_cast<std::uintptr_t>(v.output),low=reinterpret_cast<std::uintptr_t>(input);
+    const auto maximum=std::numeric_limits<std::uintptr_t>::max();
+    if(bytes>maximum-low)throw std::overflow_error("rank pointer range overflow");
+    const auto high=low+bytes,item=pixel_size(v.output_type);
+    std::size_t span=item;
+    for(int axis=0;axis<3;++axis)span+=(v.shape[axis]-1)*std::size_t(v.output_strides[axis]);
+    if(span>maximum-base)throw std::overflow_error("rank pointer range overflow");
+    if(base>=high || base+span<=low)return false;
+    for(std::size_t p=0;p<v.shape[0];++p)for(std::size_t r=0;r<v.shape[1];++r) {
+        const auto row=base+p*std::size_t(v.output_strides[0])+r*std::size_t(v.output_strides[1]);
+        if(v.shape[2]==1 || std::size_t(v.output_strides[2])==item) {
+            if(row<high && row+v.shape[2]*item>low)return true;
+        } else {
+            const auto step=std::size_t(v.output_strides[2]);
+            // First possible store whose end is after low. This remains exact
+            // for disjoint strided views sharing a bounding address interval.
+            const auto c=low>=row+item ? (low-row-item)/step+1:0;
+            if(c<v.shape[2] && row+c*step<high)return true;
+        }
+    }
+    return false;
+}
+RankAliases aliases(const RankView& v) {
+    const auto pixels=v.shape[0]*v.shape[1]*v.shape[2];
+    return {overlaps(v,v.image,pixels*(v.uint16 ? 2:1)),overlaps(v,v.mask,pixels)};
+}
+void run(const RankView& view,RankOperation operation) {
     const auto prepared=plan(view);const auto rows=view.shape[0]*view.shape[1];
     const auto workers=view.serial_alias ? 1:detail::active_workers(rows*view.shape[2]);
     const auto run=[&](auto begin,auto end){
@@ -252,6 +294,42 @@ void rank_filter_into(const RankView& view,RankOperation operation) {
     detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{run(begin,end);}catch(...){failures[id]=std::current_exception();}});
     for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
 }
+}
+RankAliases rank_aliases(const RankView& view) {
+    validate(view,RankOperation::minimum);return aliases(view);
+}
+void rank_filter_into(const RankView& view,RankOperation operation) {
+    // Preserve the old admission contract for existing SDK callers.
+    if(int(operation)>=5 && view.serial_alias)throw std::invalid_argument("overlapping buffers are outside rank-histogram-v2 parity");
+    validate(view,operation);run(view,operation);
+}
+void rank_filter_into(const RankView& view,RankOperation operation,RankAliases requested) {
+    validate(view,operation);
+    const auto actual=aliases(view);
+    if(requested.image_output!=actual.image_output || requested.mask_output!=actual.mask_output)throw std::invalid_argument("rank alias descriptor does not match accessed buffers");
+    const bool feedback=actual.image_output || actual.mask_output;
+    if(feedback && (int(operation)<5 || int(operation)>8))throw std::invalid_argument("overlapping buffers are outside rank alias capability");
+    const auto footprint_pixels=view.footprint_shape[0]*view.footprint_shape[1]*view.footprint_shape[2];
+    if(overlaps(view,view.footprint,footprint_pixels))throw std::invalid_argument("rank footprint/output alias is outside defined coverage");
+    if(feedback) {
+        bool zero=true;
+        for(std::size_t i=0;i<footprint_pixels && zero;++i)zero=view.footprint[i]==0;
+        if(!zero && view.mask) {
+            zero=true;
+            const auto pixels=view.shape[0]*view.shape[1]*view.shape[2];
+            for(std::size_t i=0;i<pixels && zero;++i)zero=view.mask[i]==0;
+        }
+        const bool integral=view.output_type==PixelType::uint8 || view.output_type==PixelType::boolean || view.output_type==PixelType::uint16;
+        if(operation==RankOperation::entropy && integral && !zero)throw std::invalid_argument("integral entropy feedback is outside defined coverage");
+        if(actual.image_output && view.uint16) {
+            if(!integral)throw std::invalid_argument("uint16 image/float output feedback is outside defined coverage");
+            if(view.output_type!=PixelType::uint16 && view.bins!=65536 && !zero)throw std::invalid_argument("uint16 mixed-byte feedback requires full histogram bounds");
+        }
+    }
+    auto prepared=view;prepared.serial_alias=feedback;
+    run(prepared,operation);
+}
+std::uint32_t rank_alias_capabilities() noexcept {return 0x1e0u;}
 std::uint32_t rank_histogram_capabilities() noexcept {return 0x1fffu;}
 std::uint16_t rank_max_u16(const std::uint16_t* data,std::size_t count) {
 #ifdef SKIMAGEXX_AVX2
