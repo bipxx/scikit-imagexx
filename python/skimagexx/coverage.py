@@ -1,5 +1,6 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues'),
     'transform': ('integral_image','integrate','downscale_local_mean'),
     'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
@@ -27,6 +28,7 @@ def native_functions():
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):return ('float32','float64')
     if api in ('filters.threshold_otsu', 'exposure.histogram',
                'exposure.cumulative_distribution', 'exposure.equalize_hist'):
         return ('uint8',)
@@ -45,6 +47,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):
+        return ([image,image*.2,image*.3],),{}
     if api=='filters.gabor':return (image,.2),{}
     if api=='filters.gabor_kernel':
         import numpy as np

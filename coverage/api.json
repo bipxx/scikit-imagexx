@@ -1854,11 +1854,14 @@
       "api": "feature.hessian_matrix_eigvals",
       "kind": "callable",
       "signature": "(H_elems)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "feature.hog",
@@ -1974,11 +1977,14 @@
       "api": "feature.structure_tensor_eigenvalues",
       "kind": "callable",
       "signature": "(A_elems)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.LPIFilter2D",

@@ -1,5 +1,18 @@
 # Last completed whole-library performance checkpoint
 
+Retained symmetric image eigenvalues (`feature.hessian_matrix_eigvals` and
+`feature.structure_tensor_eigenvalues`): measured runtime `33a0e57`, test-only
+portable correction `1e1b21b`, full CI [39874772356](https://github.com/bipxx/scikit-imagexx/actions/runs/39874772356)
+passed all three jobs. Isolated [measurement39872350846](https://github.com/bipxx/scikit-imagexx/actions/runs/39872350846)
+passed both OSes. One-worker geometric means per API: Linux **6.374628× /
+6.349021×**, Windows **5.176761× / 4.725646×**. All 60 cases faster per API/OS;
+slowest corrected case 1.425715×. All 480 timed rows pass parity; float32 exact,
+maximum float64 absolute error 1.066e-14. Initial and intermediate source
+failures and raw samples remain in the [report](symmetric-eigen-initial.md).
+This increment brings native image coverage to **109 + 2 metadata APIs**;
+**344 callable names** and 29 classes/284 static member paths remain pending.
+
+
 The [Gabor image filter](gabor-image-initial.md) is retained after full CI.
 One-worker geometric means are 8.977x Linux /9.006x Windows over scikit-image
 0.26.0; all 72 cases per OS are faster, including every real dtype. Integer and

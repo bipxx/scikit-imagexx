@@ -124,10 +124,10 @@ jobs:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_threshold_local.py
       - run: python -m pytest -q tests/test_rank_order.py
-      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py
       - run: python -m pytest -q tests/test_correlate_sparse.py
       - run: python -m pytest -q tests/test_hysteresis.py
-      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_correlate_sparse.py
