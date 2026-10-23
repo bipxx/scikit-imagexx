@@ -119,3 +119,37 @@ else:raise AssertionError('unexpected import failure hidden')
     env=os.environ.copy();env['PYTHONPATH']=str(Path(xx.__file__).resolve().parent.parent)
     result=subprocess.run([sys.executable,'-c',code],env=env,capture_output=True,text=True)
     assert result.returncode==0,result.stdout+result.stderr
+
+
+def test_standalone_exception_inherits_constructor_pickle_and_notes_without_upstream():
+    code=r'''
+import importlib.abc,pickle,sys
+class NoUpstream(importlib.abc.MetaPathFinder):
+    def find_spec(self,fullname,path=None,target=None):
+        if fullname=='skimage' or fullname.startswith('skimage.'):
+            raise ModuleNotFoundError('optional upstream unavailable',name=fullname)
+blocker=NoUpstream();sys.meta_path.insert(0,blocker)
+import skimagexx as xx
+from skimagexx import _geometric as g
+xx.set_fallback_enabled(False)
+E=xx.util.FailedEstimationAccessError
+assert E is g._StandaloneFailedEstimationAccessError and E.__bases__==(AttributeError,)
+for args in [(),('message',),('a','b'),(42,)]:
+    actual=E(*args,name='params',obj='owner');expected=AttributeError(*args,name='params',obj='owner')
+    assert (actual.args,actual.name,actual.obj,str(actual))==(expected.args,expected.name,expected.obj,str(expected))
+    actual.custom={'state':1};actual.add_note('context')
+    restored=pickle.loads(pickle.dumps(actual));reference=pickle.loads(pickle.dumps(expected))
+    assert type(restored) is E and restored.args==reference.args
+    assert (restored.name,restored.obj)==(reference.name,reference.obj)
+    assert restored.custom=={'state':1} and restored.__notes__==['context']
+    assert actual.with_traceback(None) is actual and actual.__traceback__ is None
+assert not any(n=='skimage' or n.startswith('skimage.') for n in sys.modules)
+# Once selected, canonical identity remains stable even if optional metadata
+# becomes importable later in this process.
+sys.meta_path.remove(blocker)
+assert xx.util.FailedEstimationAccessError is E and g.FailedEstimation.error_cls is E
+assert not any(n=='skimage' or n.startswith('skimage.') for n in sys.modules)
+'''
+    env=os.environ.copy();env['PYTHONPATH']=str(Path(xx.__file__).resolve().parent.parent)
+    result=subprocess.run([sys.executable,'-c',code],env=env,capture_output=True,text=True)
+    assert result.returncode==0,result.stdout+result.stderr
