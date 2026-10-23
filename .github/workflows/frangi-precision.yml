@@ -6,6 +6,10 @@ on:
     paths:
       - tools/diagnose_frangi_precision.py
       - .github/workflows/frangi-precision.yml
+      - src/frangi.cpp
+      - src/bind_frangi.cpp
+      - src/simd_frangi_avx2.cpp
+      - tests/test_frangi.py
 jobs:
   diagnose:
     runs-on: ubuntu-latest
@@ -19,11 +23,15 @@ jobs:
         with:
           python-version: '3.13'
       - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - run: python -m pip install numpy==2.5.4 scipy==1.18.1 scikit-image==0.26.0
+      - run: python -m pip install numpy==2.5.4 scipy==1.18.1 scikit-image==0.26.0 pytest
       - shell: bash
         run: python -m pip install --no-deps build/wheels/*.whl
       - shell: bash
         run: python tools/diagnose_frangi_precision.py > build/frangi-precision.json
+      - run: python -m pytest -q tests/test_frangi.py
+      - run: python -m pytest -q tests/test_frangi.py
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
