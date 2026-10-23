@@ -124,10 +124,10 @@ jobs:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_threshold_local.py
       - run: python -m pytest -q tests/test_rank_order.py
-      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py tests/test_structure_tensor.py tests/test_corner_responses.py tests/test_kitchen_rosenfeld.py tests/test_hessian_matrix.py tests/test_shape_index.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py tests/test_structure_tensor.py tests/test_corner_responses.py tests/test_kitchen_rosenfeld.py tests/test_hessian_matrix.py tests/test_shape_index.py tests/test_hessian_det.py
       - run: python -m pytest -q tests/test_correlate_sparse.py
       - run: python -m pytest -q tests/test_hysteresis.py
-      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py tests/test_structure_tensor.py tests/test_corner_responses.py tests/test_kitchen_rosenfeld.py tests/test_hessian_matrix.py tests/test_shape_index.py
+      - run: python -m pytest -q tests/test_median.py tests/test_multiotsu.py tests/test_clahe.py tests/test_gabor_kernel.py tests/test_gabor.py tests/test_symmetric_eigen.py tests/test_structure_tensor.py tests/test_corner_responses.py tests/test_kitchen_rosenfeld.py tests/test_hessian_matrix.py tests/test_shape_index.py tests/test_hessian_det.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python -m pytest -q tests/test_correlate_sparse.py
