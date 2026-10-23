@@ -111,7 +111,7 @@ def test_own_failure_object_pickle_and_nominal_errors(name):
         assert type(got) is implementation.FailedEstimationAccessError
         assert type(got).__name__==type(wanted).__name__ and isinstance(got,AttributeError)
         assert str(got)==str(wanted)
-        assert type(got) is not type(wanted), 'native helper identity is an explicit compatibility boundary'
+        assert type(got) is type(wanted), 'native and compatible results use the canonical public catch type'
 
 
 def test_public_operations_never_call_original_classes(monkeypatch):
@@ -143,6 +143,14 @@ for name in ('ProjectiveTransform','AffineTransform','EuclideanTransform','Simil
     np.testing.assert_allclose(obj.inverse(points),points)
     fit=cls.from_estimate(points,points+[2.,-1.]);assert fit
     np.testing.assert_allclose(fit(points),points+[2.,-1.],rtol=5e-11,atol=5e-11)
+assert not any(n=='skimage' or n.startswith('skimage.') or n=='scipy' or n.startswith('scipy.') for n in sys.modules)
+failed=xx.transform.ProjectiveTransform.from_estimate(np.zeros((5,2)),np.ones((5,2)))
+try:failed.params
+except xx.util.FailedEstimationAccessError as error:
+    from skimagexx import _geometric as g
+    assert type(error) is g._StandaloneFailedEstimationAccessError
+    assert g.FailedEstimation.error_cls is xx.util.FailedEstimationAccessError
+else:raise AssertionError('standalone public exception alias did not catch')
 assert not any(n=='skimage' or n.startswith('skimage.') or n=='scipy' or n.startswith('scipy.') for n in sys.modules)
 try:xx.transform.EuclideanTransform(rotation=(.1,.2,.3))
 except ModuleNotFoundError as error:assert error.name=='scipy'

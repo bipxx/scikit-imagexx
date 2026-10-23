@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 import skimage
 import numpy as np
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract, class_metadata_providers
 
 MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.generic', 'future',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
@@ -43,7 +43,7 @@ def class_members(value,path):
     for base in value.__mro__:
         for name in vars(base):owners.setdefault(name,base)
     members=[]
-    contract=class_contract(path) if path in native_classes() else None
+    contract=class_contract(path) if path in (*native_classes(),*class_metadata_providers()) else None
     for name,owner in sorted(owners.items()):
         if owner is object:continue
         special=name.startswith('__') and name.endswith('__')
@@ -64,7 +64,7 @@ def class_members(value,path):
         members.append({'api':path+'.'+name,'kind':kind,'signature':signature,
                         'defined_by':owner.__module__+'.'+owner.__qualname__,
                         'inherited':owner is not value,
-                        'implementation':'native-class-member-partial' if supported else 'upstream-only',
+                        'implementation':('exception-metadata-member' if path in class_metadata_providers() else 'native-class-member-partial') if supported else 'upstream-only',
                         'execution_kind':contract['members'][name] if supported else 'upstream',
                         'parity_test':contract['public_parity_test'] if supported else None,
                         'benchmark':None})
@@ -74,6 +74,7 @@ def class_members(value,path):
 def inventory():
     native = set(native_functions())
     classes=set(native_classes())
+    providers=set(class_metadata_providers())
     entries = []
     for module in MODULES:
         upstream = importlib.import_module('skimage.'+module)
@@ -104,12 +105,12 @@ def inventory():
                 entries[-1]['alias_of']='filters.rank.'+name
             if inspect.isclass(value):
                 entries[-1]['members']=class_members(value,path)
-                if path in classes:
+                if path in classes|providers:
                     contract=class_contract(path)
-                    entries[-1].update(implementation='native-class-partial',execution_kind='stateful-class',
+                    entries[-1].update(implementation=contract['implementation'],execution_kind='exception-metadata' if path in providers else 'stateful-class',
                                       parity_test=contract['public_parity_test'],class_contract=contract)
     inventoried = {entry['api'] for entry in entries}
-    missing = (native|classes)-inventoried
+    missing = (native|classes|providers)-inventoried
     if missing:
         raise ValueError(f'Native registry entries absent from upstream inventory: {sorted(missing)}')
     return {'reference_version': skimage.__version__, 'modules': list(MODULES),
@@ -124,15 +125,16 @@ def main():
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(result, indent=2)+'\n',encoding='utf-8')
     entries = result['entries']
-    implemented = [e for e in entries if e['implementation'] in ('native-partial', 'metadata','native-class-partial')]
+    implemented = [e for e in entries if e['implementation'] in ('native-partial', 'metadata','native-class-partial','exception-metadata-provider')]
     kernels = sum(e['implementation'] == 'native-partial' for e in entries)
     metadata = sum(e['implementation'] == 'metadata' for e in entries)
     class_count=sum(e['implementation']=='native-class-partial' for e in entries)
+    exception_count=sum(e['implementation']=='exception-metadata-provider' for e in entries)
     lines = ['# API implementation inventory', '', f'Reference: scikit-image {skimage.__version__}.', '',
              f'{len(entries)} public callable names inventoried in {len(MODULES)} modules; '
              f'{kernels} have partially native image implementations and {metadata} '
              f'{"has" if metadata == 1 else "have"} metadata-only execution. '
-             f'{class_count} have separate partial native class/state implementations; these never increase image-kernel counts. '
+             f'{class_count} have separate partial native class/state implementations and {exception_count} have exception metadata providers; these never increase image-kernel counts. '
              'Covered entries link to per-function test and benchmark files; '
              'these paths do not prove a passing contract or measured performance.', '',
              'An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, '
@@ -155,7 +157,7 @@ def main():
             '| Class | Static member paths | Native member parity |','|---|---:|---|']
     for entry in classes:lines.append(f"| `{entry['api']}` | {len(entry['members'])} | {'partial implementation; evidence separate' if entry['implementation']=='native-class-partial' else 'pending'} |")
     (path.parent/'README.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    print(f'{len(entries)} API names; {kernels} native-partial image, {metadata} metadata, {class_count} native-class-partial; {len(entries)-len(implemented)} pending')
+    print(f'{len(entries)} API names; {kernels} native-partial image, {metadata} metadata, {class_count} native-class-partial, {exception_count} exception metadata providers; {len(entries)-len(implemented)} pending')
     print(f'{len(classes)} class names; {len(members)} static member paths; execution evidence tracked separately')
 
 

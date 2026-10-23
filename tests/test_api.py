@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance, native_classes
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance, native_classes, class_metadata_providers
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -25,7 +25,7 @@ def test_registry_matches_per_function_tests():
     tested = {module.__name__.split('.', 1)[1]+'.'+name for module, _, name in FUNCTIONS}
     assert tested == set(native_functions())
     tested_classes={module.__name__.split('.',1)[1]+'.'+name for module,_,name in CLASSES}
-    assert tested_classes==set(native_classes())
+    assert tested_classes==set(native_classes())|set(class_metadata_providers())
 
 
 def test_unported_namespace_interchangeability():

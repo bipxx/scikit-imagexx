@@ -8,7 +8,7 @@ import warnings
 import pytest
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, native_classes, class_contract
+from skimagexx.coverage import native_functions, native_dtypes, native_classes, class_contract, class_metadata_providers
 from tools.inventory import signature_of
 
 INVENTORY = json.loads((Path(__file__).resolve().parents[1]/'coverage/api.json').read_text(encoding='utf-8'))
@@ -20,6 +20,8 @@ def test_inventory_reference_version():
     assert declared == set(native_functions())
     classes={entry['api'] for entry in INVENTORY['entries'] if entry['implementation']=='native-class-partial'}
     assert classes==set(native_classes()) and not classes&declared
+    providers={entry['api'] for entry in INVENTORY['entries'] if entry['implementation']=='exception-metadata-provider'}
+    assert providers==set(class_metadata_providers()) and not providers&(classes|declared)
 
 
 @pytest.mark.parametrize('entry', INVENTORY['entries'], ids=lambda entry: entry['api'])
@@ -38,10 +40,10 @@ def test_api_availability_and_signature(entry):
             assert entry['parity_test'] is None
             assert entry['benchmark'] is None
             assert entry['native_default_case_dtypes'] == []
-        elif entry['implementation']=='native-class-partial':
+        elif entry['implementation'] in ('native-class-partial','exception-metadata-provider'):
             assert entry['kind']=='class' and entry['native_default_case_dtypes']==[]
             assert entry['class_contract']==class_contract(entry['api'])
-            assert entry['parity_test']=='tests/test_transform_classes_public.py'
+            assert entry['parity_test']==class_contract(entry['api'])['public_parity_test']
         else:
             assert entry['native_default_case_dtypes'] == list(native_dtypes(entry['api']))
     finally:

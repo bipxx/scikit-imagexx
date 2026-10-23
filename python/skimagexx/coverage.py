@@ -33,6 +33,7 @@ def native_functions():
 # Populate only after the isolated public class contract is validated. The
 # implementation/provider facts below describe candidates, not passing evidence.
 NATIVE_CLASSES = {'transform': ('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')}
+CLASS_METADATA_PROVIDERS = {'util': ('FailedEstimationAccessError',)}
 _CLASS_BASE_MEMBERS = ('__init__','__call__','__array__','__add__','__repr__','__nice__',
                        '__str__','identity','inverse','estimate','from_estimate',
                        'residuals','dimensionality')
@@ -63,9 +64,24 @@ def native_classes():
     return tuple(f'{module}.{name}' for module,names in NATIVE_CLASSES.items() for name in names)
 
 
+def class_metadata_providers():
+    """Compatibility class aliases; these are not native class/image kernels."""
+    return tuple(f'{module}.{name}' for module,names in CLASS_METADATA_PROVIDERS.items() for name in names)
+
+
 def class_contract(api):
     """Class implementation facts; evidence paths do not prove execution/speed."""
     module,separator,name=api.rpartition('.')
+    if api=='util.FailedEstimationAccessError':
+        return dict(version='failed-estimation-exception-v1',registered=api in class_metadata_providers(),
+            implementation='exception-metadata-provider',
+            members={member:'python-attributeerror-inheritance' for member in ('__init__','__new__','__str__','__repr__','__reduce__','__setstate__','args','name','obj','add_note','with_traceback')},
+            state=dict(args='inherited AttributeError constructor and pickle policy',attributes='standard exception name/obj and user attributes'),
+            providers=dict(exception='Canonical skimage.util/skimage._shared exception metadata when installed; own AttributeError subclass when absent. No upstream image or transform class calls.'),
+            workers=dict(exception='Python metadata; no C++ workers or BLAS execution'),
+            compatibility_boundaries=['Canonical alias and native failure helpers share identity independent of algorithm fallback policy; unported compatible models retain the same catch type.'],
+            public_parity_test='tests/test_transform_exception_public.py',frozen_contract=None,
+            parity_evidence=None,performance_evidence=None)
     if module!='transform' or not separator or name not in _CLASS_EXTRA_MEMBERS:
         raise KeyError(api)
     members=_CLASS_BASE_MEMBERS+_CLASS_EXTRA_MEMBERS[name]
@@ -82,7 +98,7 @@ def class_contract(api):
         workers=dict(coordinates='shared C++ process-global limit, default one; optional parallel workers',
                      math_providers='NumPy/SciPy thread pools are external; constrain BLAS/OMP separately'),
         compatibility_boundaries=[
-            'FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.',
+            'FailedEstimationAccessError uses the canonical public util exception metadata provider; own subclass only when scikit-image is unavailable.',
             'FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.',
             'Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native.'],
         public_parity_test='tests/test_transform_classes_public.py',
