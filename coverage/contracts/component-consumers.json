@@ -1,0 +1,182 @@
+{
+  "schema": "component-consumers-contracts-v1",
+  "reference": "scikit-image==0.26.0",
+  "apis": {
+    "morphology.remove_small_objects": {
+      "signature": "(ar, min_size=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
+      "native_implemented": false,
+      "native_gate": "Strict fallback rejection followed by explicit xfail until registered; original forwarding never counts as native",
+      "source_module": "skimage.morphology.misc",
+      "deprecated_argument": "min_size",
+      "deprecation_warning": "Parameter `min_size` is deprecated since version 0.26.0 and will be removed in 2.0.0 (or later). To avoid this warning, please use the parameter `max_size` instead. For more details, see the documentation of `remove_small_objects`. Note that the new threshold removes objects smaller than **or equal to** its value, while the previous parameter only removed smaller ones."
+    },
+    "morphology.remove_small_holes": {
+      "signature": "(ar, area_threshold=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
+      "native_implemented": false,
+      "native_gate": "Strict fallback rejection followed by explicit xfail until registered; original forwarding never counts as native",
+      "source_module": "skimage.morphology.misc",
+      "deprecated_argument": "area_threshold",
+      "deprecation_warning": "Parameter `area_threshold` is deprecated since version 0.26.0 and will be removed in 2.0.0 (or later). To avoid this warning, please use the parameter `max_size` instead. For more details, see the documentation of `remove_small_holes`. Note that the new threshold removes objects smaller than **or equal to** its value, while the previous parameter only removed smaller ones."
+    },
+    "segmentation.clear_border": {
+      "signature": "(labels, buffer_size=0, bgval=0, mask=None, *, out=None)",
+      "native_implemented": false,
+      "native_gate": "Strict fallback rejection followed by explicit xfail until registered; original forwarding never counts as native",
+      "source_module": "skimage.segmentation._clear_border"
+    },
+    "segmentation.relabel_sequential": {
+      "signature": "(label_field, offset=1)",
+      "native_implemented": false,
+      "native_gate": "Strict fallback rejection followed by explicit xfail until registered; original forwarding never counts as native",
+      "source_module": "skimage.segmentation._join"
+    }
+  },
+  "worker_policy": {
+    "global_workers": [
+      1,
+      4
+    ],
+    "default": 1,
+    "parallelism": "optional; results, warning order, state and aliases invariant"
+  },
+  "safety": {
+    "image_label_range": "0..11 plus controlled negative validation; no huge bincount label range",
+    "offset_range": "bounded -1..256 or nonfinite validation; no huge dense map materialization",
+    "arraymap_indices": "bounded valid integer/boolean/slice lookup and safe NumPy bounds errors; no unsafe map_array memory layouts",
+    "excluded": [
+      "Impractically large label maxima/count allocation",
+      "Undefined out-of-bounds Cython map_array layouts",
+      "Exhaustive arbitrary object/complex image dtype conversion"
+    ]
+  },
+  "behavior": {
+    "remove_small_objects": [
+      "Checks source dtype before out copy",
+      "out[:] is filled before later errors; out dtype chooses bool labeling versus integer bincount",
+      "max_size==0 returns copied/supplied out before count/negative-label/connectivity validation",
+      "Public deprecated min_size is rewritten by decorator into max_size: actual public threshold is inclusive <=, contrary to inner unreachable exclusive branch",
+      "Integer labels are global IDs even if disconnected; bool images use connected components",
+      "Only-one-integer-label warning and negative-label ValueError are observable"
+    ],
+    "remove_small_holes": [
+      "Integer input emits UserWarning and returns boolean",
+      "Explicit out must be bool, checked after integer-input warning",
+      "Inverts into out before component count errors; partial mutation on error is observable",
+      "Deprecated area_threshold is rewritten to inclusive max_size by decorator",
+      "Inner min_size deprecation warning is suppressed; outer FutureWarning remains"
+    ],
+    "clear_border": [
+      "Initial buffer validation uses labels.shape even with supplied out",
+      "Supplied out is not initialized from labels; existing out pixels are relabeled and cleared",
+      "Default full connectivity in component relabeling; disconnected equal integer labels are cleared independently",
+      "mask overrides border construction; mask must be bool and match out.shape",
+      "Mismatched mask shape currently raises TypeError: exceptions must derive from BaseException, due upstream raise-tuple",
+      "Input/outer out dtype preserved; scalar bgval assignment uses runtime NumPy casting/errors",
+      "Buffer comparison still occurs before mask-is-None short circuit, so nonnumeric buffer can fail even with mask"
+    ],
+    "relabel_sequential": [
+      "offset<=0 validated before input minimum; empty minimum error before dtype guard",
+      "Input negative minimum rejected before integer dtype validation",
+      "offset=int(offset) occurs after initial positivity/minimum check; positive fractional .5 can truncate to0",
+      "Labels assigned by sorted unique old values, not component traversal; 0 remains0",
+      "Output integer dtype uses required smallest unsigned type at overflow boundary; strict < max test changes int8 to uint8 when largest new label equals127",
+      "Output is fresh C-order array; mapping vectors are shared crosswise by forward and inverse maps"
+    ]
+  },
+  "returned_classes": {
+    "ArrayMap": {
+      "origin": "skimage.util._map_array.ArrayMap",
+      "public_util_export": false,
+      "native_implemented": false,
+      "scope": "Additional returned class and constructor interface; separate native implementation is required before relabel API completion",
+      "constructor": "(in_values, out_values)",
+      "methods": {
+        "__init__": "(self, in_values, out_values)",
+        "__len__": "(self)",
+        "__array__": "(self, dtype=None, copy=None)",
+        "__call__": "(self, arr)",
+        "__getitem__": "(self, index)",
+        "__setitem__": "(self, indices, values)",
+        "__repr__": "(self)",
+        "__str__": "(self)"
+      },
+      "properties": [
+        "dtype"
+      ],
+      "instance_fields": [
+        "in_values",
+        "out_values",
+        "_max_str_lines",
+        "_array"
+      ],
+      "state_contract": [
+        "Constructor holds exact supplied key/value arrays without copies",
+        "Initially _array=None and _max_str_lines=4",
+        "len=max(in_values)+1, dtype=out_values.dtype",
+        "Unknown and negative lookup keys map to0; scalar results retain NumPy scalar dtype",
+        "Boolean indexing flattens via nonzero positions; slices create integer index vectors",
+        "__array__ always allocates a fresh dense owned array and does not populate cache, even copy=False",
+        "First __setitem__ materializes _array; indices use dense NumPy semantics; nonzero compaction replaces key/value vectors and breaks inverse aliases",
+        "Failed first out-of-bounds __setitem__ still leaves dense cache materialized but original vectors/aliases intact",
+        "Maps retain data after source image and relabeled image lifetime ends",
+        "repr/str and configurable line truncation are observable",
+        "NumPy>=2.5 map_array out_view.shape assignment emits DeprecationWarning on successful mapping; indexing/call warning parity is checked against pinned original",
+        "Direct __len__ returns a NumPy scalar whose promotion/dtype depends on NumPy runtime; builtin len still returns Python int",
+        "NumPy1 uint64 max+1 promotes to float64: direct __len__ returns float64 while builtin len and dense __array__ raise TypeError even for tiny safe labels; functional integer lookup still works. NumPy2 retains unsigned integer scalar and these size operations work."
+      ],
+      "constructor_test_scope": "Bounded integer keys and float32 mapped values plus returned integer maps; not exhaustive all constructor dtype combinations"
+    }
+  },
+  "native_interface_proposal": {
+    "version": 1,
+    "status": "proposal only; not compiled or registered",
+    "label_dependency": "Use components interface1 for bool connected components and clear_border equal-value relabeling",
+    "operations": {
+      "count_labels": "native nonnegative label count vector, preserves dtype cast/error ordering; sharded deterministic counts for optional global workers",
+      "apply_component_sizes": "native per-pixel mask by component-ID counts and inclusive public threshold; exact explicit-out alias/cast/mutation ordering",
+      "border_component_ids": "native border/mask scan on canonical label IDs, then native scalar assignment into existing out buffer",
+      "relabel_sorted": "native sorted unique integer keys, native label remap and dtype-directed owned outputs; return (labels,old_keys,new_values), with Python ArrayMap wrappers sharing vectors crosswise",
+      "arraymap_lookup": "native integer/scalar/bool-position/slice index mapping to typed output; unknown keys0",
+      "arraymap_dense": "native fresh dense zero+scatter materialization; no cached allocation until mutation; preserve original runtime-specific uint64 scalar-size errors before allocation",
+      "arraymap_update": "native dense index assignment and nonzero compaction; retain lazy-cache/failed-assignment state semantics"
+    },
+    "python_metadata": "Signatures/deprecated sentinels/warnings/scalar coercion/dtype plan/repr/state wiring only; no Python image algorithms",
+    "registration_gate": "All four function parity gates and explicit returned ArrayMap class gate on Windows/modern/min; strict forwarding rejection stays until implementation passes"
+  },
+  "evidence_families": {
+    "real_dtypes": 12,
+    "layouts": [
+      "C",
+      "F",
+      "reverse",
+      "step",
+      "endian",
+      "broadcast",
+      "readonly",
+      "unaligned",
+      "tagged"
+    ],
+    "ranks_and_empty": [
+      "scalar",
+      "empty1D",
+      "empty2D",
+      "empty3D",
+      "1D",
+      "2D",
+      "3D",
+      "numeric4D rejection versus boolND"
+    ],
+    "out_contract": [
+      "self alias",
+      "preinitialized distinct out",
+      "F/strided",
+      "bool/float casts",
+      "mismatch shape",
+      "readonly",
+      "scalar partial mutation"
+    ],
+    "large_worker_threshold": "513x513 bool/int16 stripes/checkerboard, safe label maxima1",
+    "deprecated_parameters": "keyword and positional, inclusive public behavior, conflict/warning-before-body ordering",
+    "returned_class": "array/scalar/bool/slice indexing, call alias, dtypes, len direct-return scalar type, state/mutation/alias/failed-set/lifetime/constructor/repr"
+  }
+}
