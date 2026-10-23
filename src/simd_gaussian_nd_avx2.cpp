@@ -3,6 +3,8 @@
 #include <cstring>
 #include <limits>
 #include <type_traits>
+#include "resize_cast.hpp"
+#include "resize_gaussian.hpp"
 namespace skimagexx::simd {
 namespace {
 __m128i low32(__m256i x) {x=_mm256_shuffle_epi32(x,_MM_SHUFFLE(2,0,2,0));return _mm_unpacklo_epi64(_mm256_castsi256_si128(x),_mm256_extracti128_si256(x,1));}
@@ -37,6 +39,58 @@ template<class T,bool Boolean=false> std::size_t convert(const void* source,doub
     }
     return i;
 }
+template<class T> void store_raw(T* output,__m256d value) {
+    if constexpr(sizeof(T)==8) {
+        alignas(32) double values[4];_mm256_store_pd(values,value);
+        for(int lane=0;lane<4;++lane)output[lane]=detail::resize_raw_cast<T>(values[lane]);
+    } else {
+        auto high_bit=_mm_setzero_si128();int safe_bits=15;
+        auto safe_value=value;
+        if constexpr(std::is_same_v<T,std::uint32_t>) {
+            const auto safe=_mm256_and_pd(_mm256_cmp_pd(value,_mm256_set1_pd(-0x1p31),_CMP_GE_OQ),
+                                         _mm256_cmp_pd(value,_mm256_set1_pd(0x1p32),_CMP_LT_OQ));
+            safe_bits=_mm256_movemask_pd(safe);safe_value=_mm256_and_pd(value,safe);
+            const auto upper=_mm256_cmp_pd(safe_value,_mm256_set1_pd(0x1p31),_CMP_GE_OQ);
+            safe_value=_mm256_sub_pd(safe_value,_mm256_and_pd(upper,_mm256_set1_pd(0x1p31)));
+            const int mask=_mm256_movemask_pd(upper);
+            high_bit=_mm_set_epi32(mask&8 ? std::numeric_limits<std::int32_t>::min() : 0,
+                                  mask&4 ? std::numeric_limits<std::int32_t>::min() : 0,
+                                  mask&2 ? std::numeric_limits<std::int32_t>::min() : 0,
+                                  mask&1 ? std::numeric_limits<std::int32_t>::min() : 0);
+        }
+        auto integers=_mm_xor_si128(_mm256_cvttpd_epi32(safe_value),high_bit);
+        if constexpr(sizeof(T)==4)_mm_storeu_si128(reinterpret_cast<__m128i*>(output),integers);
+        else if constexpr(sizeof(T)==2) {
+            integers=_mm_and_si128(integers,_mm_set1_epi32(65535));
+            _mm_storel_epi64(reinterpret_cast<__m128i*>(output),_mm_packus_epi32(integers,_mm_setzero_si128()));
+        } else {
+            integers=_mm_and_si128(integers,_mm_set1_epi32(255));
+            const auto words=_mm_packus_epi32(integers,_mm_setzero_si128());
+            const auto bytes=_mm_packus_epi16(words,_mm_setzero_si128());
+            const auto packed=_mm_cvtsi128_si32(bytes);std::memcpy(output,&packed,4);
+        }
+        if constexpr(std::is_same_v<T,std::uint32_t>)if(safe_bits!=15) {
+            alignas(32) double values[4];_mm256_store_pd(values,value);
+            for(int lane=0;lane<4;++lane)if(!(safe_bits&(1<<lane)))output[lane]=detail::resize_raw_cast<T>(values[lane]);
+        }
+    }
+}
+template<class T> std::size_t raw_rows(const void* const* left,const void* const* right,
+    const void* center,void* output,std::size_t count,std::size_t radius,
+    const double* weights,double center_weight,double cval) {
+    const auto constant=_mm256_set1_pd(cval),weight=_mm256_set1_pd(center_weight);
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        auto sum=_mm256_mul_pd(raw(static_cast<const T*>(center)+i),weight);
+        for(std::size_t j=0;j<radius;++j) {
+            const auto a=left[j] ? raw(static_cast<const T*>(left[j])+i) : constant;
+            const auto b=right[j] ? raw(static_cast<const T*>(right[j])+i) : constant;
+            sum=_mm256_add_pd(sum,_mm256_mul_pd(_mm256_add_pd(a,b),_mm256_set1_pd(weights[j])));
+        }
+        store_raw(static_cast<T*>(output)+i,sum);
+    }
+    return i;
+}
 __m256d load(const void* data,std::size_t offset,bool single) {
     if(single)return _mm256_cvtps_pd(_mm_loadu_ps(static_cast<const float*>(data)+offset));
     return _mm256_loadu_pd(static_cast<const double*>(data)+offset);
@@ -55,6 +109,16 @@ std::size_t gaussian_prepare(const void* input,double* output,std::size_t count,
     default:return 0;
     }
 #undef RAW
+}
+std::size_t gaussian_raw_rows(const void* const* left,const void* const* right,const void* center,void* output,
+    std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval,PixelType type) {
+    switch(type) {
+        #define RAW_ROWS(tag,T) case PixelType::tag:return raw_rows<T>(left,right,center,output,count,radius,weights,center_weight,cval);
+        RAW_ROWS(uint8,std::uint8_t) RAW_ROWS(int8,std::int8_t) RAW_ROWS(uint16,std::uint16_t) RAW_ROWS(int16,std::int16_t)
+        RAW_ROWS(uint32,std::uint32_t) RAW_ROWS(int32,std::int32_t) RAW_ROWS(uint64,std::uint64_t) RAW_ROWS(int64,std::int64_t)
+        #undef RAW_ROWS
+        default:return 0;
+    }
 }
 std::size_t gaussian_rows(const void* const* left,const void* const* right,const void* center,void* output,
     std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval,bool input_single,bool output_single) {

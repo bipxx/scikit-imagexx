@@ -1,6 +1,7 @@
 #include "resample_detail.hpp"
 #include "bind_numeric.hpp"
 #include "execution.hpp"
+#include "resize_gaussian.hpp"
 #include <cstring>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -52,6 +53,34 @@ void copy_native(const void* source,void* destination,std::size_t count,std::siz
 }
 }
 void bind_resample(py::module_& module) {
+    module.def("resize_gaussian_raw",[](py::array image,py::list kernels,
+        const std::vector<std::size_t>& axes,const std::vector<int>& modes,double cval) {
+        const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
+        if(axes.size()!=std::size_t(kernels.size()) || modes.size()!=axes.size())throw py::value_error("one Gaussian kernel and mode per axis required");
+        const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
+        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
+        }
+        std::vector<skimagexx::GaussianPass> passes;
+        for(std::size_t j=0;j<axes.size();++j) {
+            auto weights=py::array_t<double,py::array::c_style|py::array::forcecast>::ensure(kernels[j]);
+            if(!weights || weights.ndim()!=1)throw py::type_error("one-dimensional Gaussian coefficients required");
+            skimagexx::GaussianPass pass;pass.axis=axes[j];pass.border=static_cast<skimagexx::GaussianBorder>(modes[j]);pass.cval=cval;
+            pass.weights.assign(weights.data(),weights.data()+weights.size());passes.push_back(std::move(pass));
+        }
+        const bool swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+        const bool contiguous=bool(image.flags()&py::array::c_style);
+        const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
+        py::array normalized=copy ? py::array(dtype,dimensions) : image;
+        py::array result(dtype,dimensions);
+        {
+            py::gil_scoped_release release;
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),std::size_t(image.itemsize()),shape,strides,swap,contiguous);
+            skimagexx::detail::gaussian_raw_into(normalized.data(),result.mutable_data(),type,shape,passes);
+        }
+        return result;
+    });
     module.def("resize_zoom",[](py::array image,const std::vector<py::ssize_t>& dimensions,
                                int order,int border,double cval,bool legacy,bool identity,bool simd) {
         if(image.dtype().kind()!='f' || image.itemsize()!=8 || image.ndim()<1)

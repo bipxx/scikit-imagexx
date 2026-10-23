@@ -90,6 +90,13 @@ Next work:
 - Complete float16/endian conversion coverage and floating warning contracts;
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.
+- Complete the private resize/rescale pipeline before registering either API.
+  Spline coefficients, typed grid zoom, and raw Gaussian anti-aliasing now have
+  independent native fixtures and Python parity checks. Integer anti-aliasing
+  stores back into the source dtype after every axis, including full-width
+  casting behavior. Clipping, public argument/warning parity, and isolated
+  one-worker end-to-end benchmarks against scikit-image remain pending.
+  Private stages do not count as public native coverage or measured speedups.
 - Port geometric transforms, measurements, features, restoration, registration,
   segmentation, and graph operations with representative per-function cases.
 - Extend to nested APIs/classes and audit the inventory against upstream docs.
