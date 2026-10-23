@@ -1,0 +1,106 @@
+{
+  "schema": "consumer-source-text-integrity-v1",
+  "base_sha": "9dca3aee505ad7112fc6735f90c8b26a4031633e",
+  "issue": "CRLF-authored raw source hashes disagreed with Linux LF Git checkout, despite identical text.",
+  "correction": "Canonical LF only for the two source-text fingerprints; binary/package/SDK/runtime/capsule seals retain raw byte hashing.",
+  "unchanged": "All878 case IDs, fixtures, source-backed observations, classifications, error cases,205 timing-eligible workloads per runtime, tolerances and timing behavior are unchanged.",
+  "source_text_hash_schema": "sha256-utf8-lf-v1",
+  "changed_sources": [
+    {
+      "path": "benchmarks/component_consumers.py",
+      "sha256": "fd5441322fb04e2a7cd9f1d8da5a5ea2b2f0c6bf29412e411729e46d609ec6d9",
+      "bytes": 25946
+    },
+    {
+      "path": "tests/test_component_consumers_benchmark.py",
+      "sha256": "4a5fcad2414e306c800465c7ffc27508623563e135a5b42c2e9c07e4d9f4c6da",
+      "bytes": 14686
+    },
+    {
+      "path": "coverage/contracts/component-consumers-benchmark.json",
+      "sha256": "043b74521802903fa8c7054fea8b714f3921949068c6c5daaaa48cc8bddad22a",
+      "bytes": 1804357
+    }
+  ],
+  "previous_fingerprints": {
+    "source_contract_sha256": "bb750eabb427c280905a97483e508cb91fca845fb265cc9318c7de2e7a04e0aa",
+    "source_test_sha256": "bb345d31a42f9bf30983bbe2d42a0434cea7967347709810cf64ab2ed1b3ccb5"
+  },
+  "corrected_fingerprints": {
+    "source_contract_sha256": "527576e26592de2f63be94a32b7aef7948527f3a9f40f584b381792fc5c1d8e8",
+    "source_test_sha256": "7d31cb1095fe0234928e48cb20b451c36e2a9fcc55bba3f9292f60d6a4a20911"
+  },
+  "profiles": {
+    "windows": {
+      "passed": 27,
+      "scope": "Harness-only guards, including LF/CRLF acceptance and genuine source-content rejection; no native or timing claim.",
+      "log": {
+        "path": "build/benchmark-source-integrity/guards-windows-v1.log",
+        "sha256": "0b87a18d00dc76c7c343474f770a72359f500ba2bf7c287d135df2ad89f5d19f",
+        "bytes": 698
+      },
+      "command": {
+        "path": "build/benchmark-source-integrity/guards-windows-v1-command.json",
+        "sha256": "727c7e90cc8ee224cf8852e80a70b3322dc1cecebcc1bafb5b99d3c51faa081e",
+        "bytes": 300
+      }
+    },
+    "modern": {
+      "passed": 27,
+      "scope": "Harness-only guards, including LF/CRLF acceptance and genuine source-content rejection; no native or timing claim.",
+      "log": {
+        "path": "build/benchmark-source-integrity/guards-modern-v1.log",
+        "sha256": "b8fb748539777b777848347499b97c53e97b9af37e640f1495813628612123cb",
+        "bytes": 704
+      },
+      "command": {
+        "path": "build/benchmark-source-integrity/guards-modern-v1-command.json",
+        "sha256": "00b6362405a08de446f4efc99061763d5f72ea35941b597531e0d0a0fd4f7052",
+        "bytes": 543
+      }
+    },
+    "minimum": {
+      "passed": 27,
+      "scope": "Harness-only guards, including LF/CRLF acceptance and genuine source-content rejection; no native or timing claim.",
+      "log": {
+        "path": "build/benchmark-source-integrity/guards-minimum-v1.log",
+        "sha256": "526eceb46618bd82da89d9d6149991a78f964560087c46ef18315669286c79fd",
+        "bytes": 100
+      },
+      "command": {
+        "path": "build/benchmark-source-integrity/guards-minimum-v1-command.json",
+        "sha256": "491df9842c2b2855e0e17b83f6ebb7ebd0526dedcc14eb75161c56da6d55ca7b",
+        "bytes": 546
+      }
+    }
+  },
+  "failed_preparation": {
+    "run": 40020440164,
+    "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+    "measurement_started": false,
+    "logs": {
+      "path": "build/component-consumers-performance-runs/40020440164/failed-preparation-v1.log",
+      "sha256": "50c6793a630333154e3d590b50ba1496228b5355f6bf7150909728dbf926c111",
+      "bytes": 73209
+    },
+    "metadata": {
+      "path": "build/component-consumers-performance-runs/40020440164/workflow-v1.json",
+      "sha256": "b30381e63f7a8348b9687d4c42fdd7e6576c64399048696379e006ff60e83481",
+      "bytes": 8165
+    }
+  },
+  "completed_modern_ci_job": {
+    "run": 40019978718,
+    "job": 120641685670,
+    "passed": 167120,
+    "skipped": 30,
+    "failed": 1,
+    "scope": "Only failure is this source-hash guard; whole workflow was still live when completed-job logs were fetched.",
+    "log": {
+      "path": "build/main-core-wave4-evidence/hosted-ci-9040-modern-job-log-v1.log",
+      "sha256": "bc27c20f0bf9917f6cc7c8696baef311a1e09fd054b6a717761ce75017cbb94c",
+      "bytes": 345974
+    }
+  },
+  "local_operation_timing": false
+}

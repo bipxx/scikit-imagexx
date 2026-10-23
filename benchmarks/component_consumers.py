@@ -48,6 +48,11 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, allow_nan=False).encode()).hexdigest()
 
 
+def source_text_sha256(path):
+    """Fingerprint source text independently of Git checkout line endings."""
+    return hashlib.sha256(Path(path).read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+
+
 @dataclass(frozen=True)
 class Case:
     api: str

@@ -15,12 +15,12 @@ source-backed public/legacy rank.generic aliases of existing algorithms, not
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-The user has resumed implementation. Three worker agents are executing the
-rank overlap contracts, component-consumer benchmarks and additional rank
-intensity contracts in parallel, with the integrator handling
-shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
-review and preserved checkpoints remain recorded in the ledger. Existing hosted
-measurement jobs retain their authoritative run.
+Three worker agents are executing returned-map provider compatibility,
+four-operation rank benchmark tooling, and cumulative-package validation followed
+by public rank intensity registration. The integrator handles shared wiring,
+hosted results, measured bottlenecks, prompt merges and cleanup. The earlier
+three-agent review and preserved checkpoints remain recorded in the ledger.
+Existing hosted measurement jobs retain their authoritative run.
 
 ## What changed after review
 
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Nine rank algorithms and aliases integrated with the closed warning-hook fix; controlled resize and footprint factory fixes merged; cumulative production-package gates and isolated dispatch next |
-| Worker 1 | `metrics_reductions` | Defined safe rank overlapping-buffer contracts | New reference contract covers histogram feedback and output preservation; frozen R2 benchmark tooling merged without altering the R1 corpus |
-| Worker 2 | `resize_api` | Original-versus-native four-consumer benchmarks | Controlled resize and complete source-header supplement validated; frozen 878-case consumer corpus has 205 eligible raster workloads; actual package gates running |
-| Worker 3 | `resize_bench` | Next four rank intensity algorithms | Autolevel, equalize, enhance_contrast and threshold reference contracts drafting; footprint optimization and factory callback correction validated across eight profiles |
+| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, hosted measurements, prompt merges and cleanup | Nine public rank algorithms; private thirteen-operation engine and alias480 merged; consumer0486 and stepped-half ae2fd75 merged. Fixing portable consumer source hashes while preserving all878 workloads; six obsolete source-only worktrees archived and removed |
+| Worker 1 | `metrics_reductions` | Returned-map allocation/max provider stages | Frozen5983259 reference audit confirms13 interposition gaps beyond the unchanged692/0486 scope. Implement a separate bounded fix with native ordinary scan/scatter and explicit checked providers; no upstream class forwarding |
+| Worker 2 | `resize_api` | Four-operation rank intensity benchmark tooling | Freeze1428 source-backed canonical cases, keep generic aliases untimed, preserve R1/R2 corpora, and validate reference/tooling independently. Actual native public gates wait for Worker3 packages |
+| Worker 3 | `resize_bench` | Cumulative155 proof, then public rank intensity registration | Complete authoritative591 runners and exact059 nested-test supplements before releasing source/cache lease. Then freeze product base a1665b5 once, append four wrappers/aliases, build whole packages/SDKs and run targeted cumulative checks |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -57,6 +57,12 @@ decomposition work waited for dense-kernel completion. The revised queue release
 it from a versioned, hashed atom interface and requires joint kernel parity at
 integration. Component-consumer original contracts are also independent of native
 labeling. Their implementation waits for the frozen labeling interface.
+
+## Retained checkpoints
+
+The following records describe their measured source revisions; the ledger above
+owns current assignment and readiness. A historical passing source does not
+establish complete parity or performance of a later cumulative package.
 
 The read-only planning reviewer completed its audit. Native half identity
 (`aed3349`) and public resize/rescale (`21ac60b`) are merged. The exact registered
@@ -166,11 +172,13 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Measurement ready | Three error metrics, public label aliases and six footprint functions | Exact public parity accepted; isolated one-worker workflows are the next gate |
-| Active native implementation | Small-object/hole removal, `clear_border`, `relabel_sequential` and returned ArrayMap | Frozen contracts merged; native kernels and adapter parity proceeding independently |
-| Active native implementation | Rank minimum/maximum/mean/sum/pop and matching generic aliases | Frozen nested namespace and histogram contracts merged; reusable rolling engine under validation |
-| Active public integration | Projective, affine, Euclidean and similarity transforms | Private adapters validated; separate class registry, public member/state/ownership checks and explicit math-provider scope |
-| Active optimization | Resize/rescale normalization copies | Retain all baseline slow cases; exact byte parity before isolated same-corpus remeasurement |
+| Active cumulative validation | Production155 image paths plus3 metadata functions,4 classes and1 exception provider at591 | Finish original normal/scalar runners and22 nested-test supplements on8 profiles, then seal and explicitly release the four cached-build/source leases |
+| Active public integration | Rank autolevel, equalize, enhance_contrast and threshold plus identity aliases | Private13-operation C++ proof is merged. Public wrappers, exact aliases/providers, whole packages, installed SDK9 clients and sole-core worker state remain acceptance gates |
+| Active independent tooling | New four-operation rank intensity benchmark corpus | Reference/tooling work is independent of public registration; actual native acceptance and timing wait for sealed public packages |
+| Active compatibility | Returned ArrayMap live allocation/max providers and attribute rebinding | Source-backed13-gap audit is separate from previously accepted dense contracts. Preserve Python evaluation order and native ordinary scan/scatter; validate changed binding/GIL boundaries |
+| Active measured bottleneck | Stepped-half metrics loads and remaining signed min-max normalization | ae2fd75 byte-safe SIMD delta passes private/native parity; cumulative actual-core gate and fresh same-corpus timing remain pending. Last measured1212-case ratios remain0.873/0.806/0.917, slower overall |
+| Live hosted campaign | Controlled old/current/original resize comparison40020239743 | All3 preparation profiles before fresh artifact-only hosts; retain this exact authoritative run to terminal |
+| Preparation correction | Consumer campaign40020440164 failed before measurement | Preserve failed run/logs. Canonical LF source-text fingerprints must pass while every878-case observation/classification and raw binary/capsule hash stays unchanged; dispatch a new exact corrected source only after validation |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
 claims them. Repeat the process for remaining transforms/pyramids, measurements,

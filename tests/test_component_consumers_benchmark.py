@@ -145,13 +145,27 @@ def test_fixed_case_ids_safety_and_separate_metadata_classes():
     cases = list(h.corpus()); matrix = json.loads(h.MANIFEST.read_text())
     assert len(cases) == 878 and sum(c.timed for c in cases) == 216
     assert len({(c.api, c.id) for c in cases}) == 878
-    assert matrix['source_contract_sha256'] == h.artifacts.sha(h.ROOT / 'coverage/contracts/component-consumers.json')
-    assert matrix['source_test_sha256'] == h.artifacts.sha(h.ROOT / 'tests/test_component_consumer_contracts.py')
+    assert matrix['source_text_hash_schema'] == 'sha256-utf8-lf-v1'
+    assert matrix['source_contract_sha256'] == h.source_text_sha256(h.ROOT / 'coverage/contracts/component-consumers.json')
+    assert matrix['source_test_sha256'] == h.source_text_sha256(h.ROOT / 'tests/test_component_consumer_contracts.py')
     for frozen in matrix['profiles'].values():
         assert frozen['timing_eligible_case_count'] == 205
         assert all(row['classification'].startswith('raster') for row in frozen['cases'] if row['timing_eligible'])
     assert all(c.kind in ('raster', 'raster-mutation') for c in cases if c.timed)
     assert matrix['safety_exclusions'] and 'no dense' in matrix['returned_class_scope'].lower()
+
+
+@pytest.mark.parametrize('newline', [b'\n', b'\r\n'])
+def test_source_text_hash_accepts_checkout_endings_but_detects_content_changes(tmp_path, newline):
+    sources = ('coverage/contracts/component-consumers.json', 'tests/test_component_consumer_contracts.py')
+    matrix = json.loads(h.MANIFEST.read_text())
+    for name, key in zip(sources, ('source_contract_sha256', 'source_test_sha256')):
+        path = tmp_path / Path(name).name
+        content = (h.ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+        path.write_bytes(content.replace(b'\n', newline))
+        assert h.source_text_sha256(path) == matrix[key]
+        path.write_bytes(path.read_bytes() + b'changed')
+        assert h.source_text_sha256(path) != matrix[key]
 
 
 @pytest.mark.parametrize('args', [[], ['--reference-only'], ['--check-only'], ['--capsule', 'unused'],

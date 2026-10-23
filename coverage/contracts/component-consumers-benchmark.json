@@ -7,8 +7,8 @@
     "segmentation.clear_border",
     "segmentation.relabel_sequential"
   ],
-  "source_contract_sha256": "bb750eabb427c280905a97483e508cb91fca845fb265cc9318c7de2e7a04e0aa",
-  "source_test_sha256": "bb345d31a42f9bf30983bbe2d42a0434cea7967347709810cf64ab2ed1b3ccb5",
+  "source_contract_sha256": "527576e26592de2f63be94a32b7aef7948527f3a9f40f584b381792fc5c1d8e8",
+  "source_test_sha256": "7d31cb1095fe0234928e48cb20b451c36e2a9fcc55bba3f9292f60d6a4a20911",
   "reference_modules": [
     "skimage.morphology.misc",
     "skimage.segmentation._clear_border",
@@ -49733,5 +49733,6 @@
     }
   },
   "fixed_case_count": 878,
-  "candidate_raster_cases": 216
+  "candidate_raster_cases": 216,
+  "source_text_hash_schema": "sha256-utf8-lf-v1"
 }
