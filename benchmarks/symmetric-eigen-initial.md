@@ -70,4 +70,8 @@ Each reported speedup compares that revision to upstream. These independent
 runs do not establish a paired performance change between native revisions.
 
 Retention and merge remain pending corrected-source
-[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39872352344).
+[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39874772356).
+The earlier CI run caught a test-harness error: its serial-only build was asked
+to use four workers. Test-only commit `1e1b21b` fixes that configuration; the
+runtime source fingerprint is unchanged from measured source `33a0e57`.
+Local portable C++ tests and relocated consumers pass after the correction.
