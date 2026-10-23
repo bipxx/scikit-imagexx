@@ -157,3 +157,20 @@ def test_huge_sigma_warning_order(gaussian):
             with pytest.raises(OverflowError) as error:f(np.ones((3,4)),sigma=2**2000,use_gaussian_derivatives=gaussian)
         return str(error.value),[(type(w.message),str(w.message)) for w in caught if not isinstance(w.message,FallbackWarning)]
     assert capture(xx.feature.hessian_matrix)==capture(reference.hessian_matrix)
+
+
+@pytest.mark.parametrize('dtype',(np.float32,np.float64))
+@pytest.mark.parametrize('value',(0.,-0.,1.,-1.))
+@pytest.mark.parametrize('mode',('constant','reflect','wrap','nearest','mirror'))
+@pytest.mark.parametrize('sigma',(.01,.1,.8,1.,2.))
+def test_zero_tail_signed_zeros(dtype,value,mode,sigma):
+    actual,expected=compare(np.full((37,41),value,dtype=dtype),sigma=sigma,mode=mode,use_gaussian_derivatives=True)
+    for x,y in zip(actual,expected):
+        zero=(x==0)&(y==0);np.testing.assert_array_equal(np.signbit(x[zero]),np.signbit(y[zero]))
+
+
+@pytest.mark.parametrize('sigma',(.01,.05,.1,.11))
+@pytest.mark.parametrize('mode',('constant','reflect','wrap'))
+def test_small_sigma_derivative_classification(sigma,mode):
+    actual,expected=compare(image(np.float64)*1e100,sigma=sigma,mode=mode,cval=-1e99,use_gaussian_derivatives=True)
+    for x,y in zip(actual,expected):np.testing.assert_array_equal(x,y)
