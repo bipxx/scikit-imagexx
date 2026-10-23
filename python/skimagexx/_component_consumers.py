@@ -179,11 +179,17 @@ class ArrayMap:
         self.in_values=in_values;self.out_values=out_values
         self._max_str_lines=4;self._array=None
 
-    def __len__(self):return _core.consumer_max(self.in_values)+1
+    def __len__(self):
+        kind=getattr(getattr(self.in_values,'dtype',None),'kind',None)
+        maximum=_core.consumer_max(self.in_values) if kind in ('i','u') else _core.consumer_dense_max(self.in_values)
+        return maximum+1
 
     def __array__(self,dtype=None,copy=None):
-        dtype=self.out_values.dtype if dtype is None else np.dtype(dtype)
-        return _core.consumer_dense(self.in_values,self.out_values,_core.consumer_max(self.in_values)+1,dtype)
+        dtype=self.out_values.dtype if dtype is None else dtype
+        kind=getattr(getattr(self.in_values,'dtype',None),'kind',None)
+        maximum=_core.consumer_max(self.in_values) if kind in ('i','u') else _core.consumer_dense_max(self.in_values)
+        # The scalar size (and overflow warning) precedes dtype admission.
+        return _core.consumer_dense(self.in_values,self.out_values,maximum+1,dtype)
 
     @property
     def dtype(self):return self.out_values.dtype
