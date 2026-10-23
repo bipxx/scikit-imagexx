@@ -55,9 +55,16 @@ The first package passes 715 Windows checks per SIMD mode and 752 expanded
 checks on Windows and minimum-NumPy Linux. The second adds validation for
 nonfinite prior output in the public C++ response API; all 752 dedicated
 checks per SIMD mode pass on both runtimes. Windows native tests pass 12/12
-and relocated SDK consumers 11/11. Linux native/portable/SDK/sanitizer gates,
-expanded integration and untimed corpus checks are in progress.
+and relocated SDK consumers 11/11. Linux accelerated/portable tests also pass
+12/12, and relocated SDK consumers 11/11 in each configuration. ASan/UBSan
+pass 12/12 normally and with constrained dynamic OpenMP teams.
+The registered third package passes 780 dedicated checks per SIMD mode per
+runtime. Windows integration passes 9,814 checks (6 skipped); minimum-NumPy
+Linux passes 9,774 (46 skipped). All 1,200 untimed corpus rows pass per runtime.
 Initial packages and source archives remain preserved. No local timings ran.
 
-Full CI and isolated performance gates will be linked after the candidate is
-frozen. Until then, numerical parity and performance remain under validation.
+Frozen runtime **f8cb5b4ba12c9cf6a4734c5fdbe6b610953e2c5c** is under
+[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
+and [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246433).
+Later merged Sato measurement reports do not change its runtime sources.
+Retention and performance claims await those gates.
