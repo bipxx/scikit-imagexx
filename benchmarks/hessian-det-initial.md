@@ -98,3 +98,27 @@ are within each runner; these are not paired candidate-to-candidate results.
 
 [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39898515905)
 is still running. Retention awaits this gate.
+
+## Small-image follow-up
+
+Frozen source **b93d1082fdb79a415c45623eae5497f7e3f2dae0** addresses the four
+tiny approximation cases without changing the corpus. Python caches the
+ordinary scalar type sets, avoids repeated dtype/import work, and uses the
+finite interval check directly. Bindings read native dtype/alignment metadata
+without repeated Python attribute calls. Approximation hoists row clipping
+and row-pointer arithmetic out of scalar pixel loops, shares those pointers
+with the SIMD interior, and vectorizes the integral-image safety scan.
+The numerical expression and clipping order are unchanged.
+
+Local checks pass 1,080 dedicated cases per SIMD mode per runtime, including
+all short row widths around SIMD boundaries, negative/even/oversized box
+geometry, and the arithmetic safety threshold. Windows integration passes
+9,766 checks; the NumPy 1.24 Linux set passes 9,310 (Windows additionally ran
+the 456 inventory checks). All 480 untimed corpus rows pass per runtime.
+Native tests pass 10/10 and relocated SDK consumers 9/9 on Windows and Linux
+with acceleration enabled and portable Linux with it disabled. ASan/UBSan pass
+10/10 normally and with constrained dynamic teams. No local timings ran.
+
+The follow-up [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
+and [isolated measurements](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942605)
+are running. Its speedup remains unproven until those raw results are verified.
