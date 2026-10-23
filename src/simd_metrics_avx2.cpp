@@ -1,0 +1,69 @@
+#include "skimagexx/metrics.hpp"
+#include <immintrin.h>
+#include <cstring>
+#include <type_traits>
+namespace skimagexx::simd {
+namespace {
+__m128i low32(__m256i x){x=_mm256_shuffle_epi32(x,_MM_SHUFFLE(2,0,2,0));return _mm_unpacklo_epi64(_mm256_castsi256_si128(x),_mm256_extracti128_si256(x,1));}
+__m256d unsigned32(__m128i value){return _mm256_add_pd(_mm256_cvtepi32_pd(value),_mm256_mul_pd(_mm256_cvtepi32_pd(_mm_srli_epi32(value,31)),_mm256_set1_pd(4294967296.)));}
+__m256d wide(__m256i value,bool is_signed) {
+    const auto high=low32(_mm256_srli_epi64(value,32));
+    return _mm256_add_pd(_mm256_mul_pd(is_signed ? _mm256_cvtepi32_pd(high):unsigned32(high),_mm256_set1_pd(4294967296.)),unsigned32(low32(value)));
+}
+template<class T> __m256d raw(const unsigned char* p) {
+    if constexpr(sizeof(T)==1) {std::uint32_t word;std::memcpy(&word,p,4);const auto v=_mm_cvtsi32_si128(int(word));return _mm256_cvtepi32_pd(std::is_signed_v<T> ? _mm_cvtepi8_epi32(v):_mm_cvtepu8_epi32(v));}
+    else if constexpr(sizeof(T)==2){const auto v=_mm_loadl_epi64(reinterpret_cast<const __m128i*>(p));return _mm256_cvtepi32_pd(std::is_signed_v<T> ? _mm_cvtepi16_epi32(v):_mm_cvtepu16_epi32(v));}
+    else if constexpr(sizeof(T)==4){const auto v=_mm_loadu_si128(reinterpret_cast<const __m128i*>(p));return std::is_signed_v<T> ? _mm256_cvtepi32_pd(v):unsigned32(v);}
+    else return wide(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)),std::is_signed_v<T>);
+}
+__m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t step) {
+    const auto* p=static_cast<const unsigned char*>(view.data)+offset;
+    if(step==0)return _mm256_set1_pd(detail::metric_read(view,offset));
+    const auto bytes=std::ptrdiff_t(pixel_size(view.type));
+    if(!view.swap && !view.half && step==-bytes)
+        return _mm256_permute4x64_pd(load(view,offset-3*bytes,bytes),_MM_SHUFFLE(0,1,2,3));
+    if(!view.swap && !view.half && step!=bytes && bytes>=4) {
+        const auto indices=_mm256_set_epi64x(3*step,2*step,step,0);
+        switch(view.type) {
+            case PixelType::float32:return _mm256_cvtps_pd(_mm256_i64gather_ps(reinterpret_cast<const float*>(p),indices,1));
+            case PixelType::float64:return _mm256_i64gather_pd(reinterpret_cast<const double*>(p),indices,1);
+            case PixelType::int32:return _mm256_cvtepi32_pd(_mm256_i64gather_epi32(reinterpret_cast<const int*>(p),indices,1));
+            case PixelType::uint32:return unsigned32(_mm256_i64gather_epi32(reinterpret_cast<const int*>(p),indices,1));
+            case PixelType::int64:return wide(_mm256_i64gather_epi64(reinterpret_cast<const long long*>(p),indices,1),true);
+            case PixelType::uint64:return wide(_mm256_i64gather_epi64(reinterpret_cast<const long long*>(p),indices,1),false);
+            default:break;
+        }
+    }
+    if(view.swap || view.half || step!=std::ptrdiff_t(pixel_size(view.type))) {
+        alignas(32) double values[4];for(int i=0;i<4;++i)values[i]=detail::metric_read(view,offset+std::ptrdiff_t(i)*step);return _mm256_load_pd(values);
+    }
+    switch(view.type) {
+        case PixelType::boolean:{std::uint32_t word;std::memcpy(&word,p,4);const auto v=_mm_cvtepu8_epi32(_mm_cvtsi32_si128(int(word)));return _mm256_cvtepi32_pd(_mm_andnot_si128(_mm_cmpeq_epi32(v,_mm_setzero_si128()),_mm_set1_epi32(1)));}
+        #define LOAD(tag,T) case PixelType::tag:return raw<T>(p);
+        LOAD(uint8,std::uint8_t) LOAD(int8,std::int8_t) LOAD(uint16,std::uint16_t) LOAD(int16,std::int16_t)
+        LOAD(uint32,std::uint32_t) LOAD(int32,std::int32_t) LOAD(uint64,std::uint64_t) LOAD(int64,std::int64_t)
+        #undef LOAD
+        case PixelType::float32:return _mm256_cvtps_pd(_mm_loadu_ps(reinterpret_cast<const float*>(p)));
+        case PixelType::float64:return _mm256_loadu_pd(reinterpret_cast<const double*>(p));
+        default:return _mm256_setzero_pd();
+    }
+}
+}
+std::size_t metric_values(const MetricImageView& a,const MetricImageView& b,std::ptrdiff_t first,std::ptrdiff_t second,
+    std::ptrdiff_t step0,std::ptrdiff_t step1,std::size_t count,bool single,MetricNormalization mode,double* error,double* energy,double* values) {
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto x=load(a,first+std::ptrdiff_t(i)*step0,step0),y=load(b,second+std::ptrdiff_t(i)*step1,step1);
+        if(single) {
+            const auto xf=_mm256_cvtpd_ps(x),yf=_mm256_cvtpd_ps(y),delta=_mm_sub_ps(xf,yf);
+            _mm256_storeu_pd(error+i,_mm256_cvtps_pd(_mm_mul_ps(delta,delta)));
+            _mm256_storeu_pd(values+i,_mm256_cvtps_pd(xf));
+            if(mode==MetricNormalization::euclidean)_mm256_storeu_pd(energy+i,_mm256_cvtps_pd(_mm_mul_ps(xf,xf)));
+        } else {
+            const auto delta=_mm256_sub_pd(x,y);_mm256_storeu_pd(error+i,_mm256_mul_pd(delta,delta));_mm256_storeu_pd(values+i,x);
+            if(mode==MetricNormalization::euclidean)_mm256_storeu_pd(energy+i,_mm256_mul_pd(x,x));
+        }
+    }
+    return i;
+}
+}
