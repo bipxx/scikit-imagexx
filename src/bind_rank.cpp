@@ -60,6 +60,10 @@ void bind_rank(py::module_& module) {
         auto input=numpy.attr("require")(image,py::arg("dtype")=dtype,py::arg("requirements")=py::make_tuple("C","A")).cast<py::array>();
         py::array_t<std::uint8_t> result(std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
         const auto n=std::size_t(input.size());const auto kind=dtype.kind();const auto width=dtype.itemsize();
+        // Dtype dispatch copies a Python dtype reference: finish it before
+        // releasing the GIL, even though the subsequent comparison is native.
+        const auto type=(kind=='f' || kind=='c' || kind=='m' || kind=='M')
+            ? skimagexx::PixelType::int64:skimagexx::bindings::real_pixel_type(dtype);
         bool invalid=false;
         {
             py::gil_scoped_release release;auto* out=result.mutable_data();std::size_t consumed=0;
@@ -84,7 +88,6 @@ void bind_rank(py::module_& module) {
                     out[i]=!std::isnan(value) && value>0 ? 255:0;
                 }
             } else {
-                const auto type=(kind=='m' || kind=='M') ? skimagexx::PixelType::int64:skimagexx::bindings::real_pixel_type(dtype);
                 switch(type) {
                     #define POS(tag,T) case skimagexx::PixelType::tag:positive<T>(input.data(),out,consumed,n);break;
                     POS(boolean,std::uint8_t) POS(uint8,std::uint8_t) POS(int8,std::int8_t)
