@@ -70,8 +70,8 @@ both raw and scaled errors so input scaling does not hide the difference.
 
 [Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
 and [isolated performance measurements](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
-are running against that frozen source. This candidate is not retained on main,
-and no speedup is claimed yet. Exact wheels, source archive, initial failures,
+ran against that frozen source. Measurements are verified below; full CI is
+still running. This candidate is not retained on main. Exact wheels, source archive, initial failures,
 and final validation logs are preserved in ignored checkpoints.
 
 ## Initial Linux measurements
@@ -96,3 +96,26 @@ conditioning allowance. Maximum input-scaled error is 1.381438e-9 and raw
 error 2.033356e10 for raw integer magnitudes. These are numerical comparisons,
 not exact LAPACK parity. Raw samples: [Linux](sato-first-linux.json).
 Windows measurements and full CI are still running; retention is pending.
+
+## Verified two-platform measurements
+
+Both jobs in the isolated measurement passed. Windows source/binary hashes,
+exact package bytes, the unchanged typed case hash, all 480 rows and seven
+samples per implementation per row were verified as for Linux.
+
+| One-worker result (120 cases per rank/OS) | Linux | Windows |
+|---|---:|---:|
+| 2-D geometric mean | 7.255148× | 5.959401× |
+| 2-D minimum | 3.016982× | 2.914629× |
+| 2-D cases faster | 120/120 | 120/120 |
+| 3-D geometric mean | 5.537527× | 4.501150× |
+| 3-D minimum | 2.861452× | 2.324226× |
+| 3-D cases faster | 120/120 | 120/120 |
+
+All 240 one-worker cases are faster on each OS. The 2-D results are exact;
+both OSes have the same measured 3-D maximum errors and 20 rows requiring
+the conditioning allowance across both worker settings. Raw samples:
+[Linux](sato-first-linux.json), [Windows](sato-first-windows.json).
+These compare candidate versus upstream within each runner; they do not
+constitute a paired candidate-to-candidate experiment. No adverse cases were
+removed. Full CI remains the final retention gate.
