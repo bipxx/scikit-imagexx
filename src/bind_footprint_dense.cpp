@@ -29,9 +29,10 @@ void bind_footprint_dense(py::module_& module) {
         for(const auto& input:{py::array(axis),zero,one})
             if(np.attr("shares_memory")(output,input).cast<bool>())
                 throw py::value_error("disjoint dense footprint buffers required");
+        const auto itemsize=std::size_t(output.itemsize());
         py::gil_scoped_release release;
         skimagexx::footprint_dense_into(output.mutable_data(),std::size_t(output.size()),
-            std::size_t(output.itemsize()),zero.data(),one.data(),axis.data(),
+            itemsize,zero.data(),one.data(),axis.data(),
             std::size_t(axis.size()),static_cast<skimagexx::DenseFootprint>(kind),limit);
     });
 }
