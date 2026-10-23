@@ -1,5 +1,18 @@
 # Last completed whole-library performance checkpoint
 
+Retained `filters.meijering`, measured source `f8cb5b4`:
+[full CI39907246156](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39907246433](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246433)
+passed both OSes. One-worker geometric means for ranks 1–5 are
+**7.488270× / 7.688674× / 5.616934× / 5.387629× / 5.006351× Linux** and
+**5.322143× / 6.176978× / 3.810500× / 3.685129× / 3.682196× Windows**.
+All 600 one-worker cases per OS are faster; minima 2.993998× / 2.070080×.
+Rank 1 measured outputs are exact; maximum absolute errors are 2.384186e-7
+float32 and 2.109424e-15 float64. The [scope and raw samples](meijering-initial.md)
+are preserved. Native coverage is **119 + 2 metadata APIs**; **334 callable
+names** and 29 classes/284 static member paths remain pending.
+
 Retained `filters.sato`, measured source `a5f4a68`:
 [full CI39905542928](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
 passed Windows, Linux and minimum NumPy; isolated
