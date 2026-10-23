@@ -43,6 +43,7 @@ void bind_footprint_dense(pybind11::module_&);
 void bind_footprint_decomposition(pybind11::module_&);
 void bind_footprint_util(pybind11::module_&);
 void bind_components(pybind11::module_&);
+void bind_rank(pybind11::module_&);
 void bind_projective(pybind11::module_&);
 
 namespace py = pybind11;
@@ -867,6 +868,7 @@ PYBIND11_MODULE(_core, m) {
     bind_footprint_decomposition(m);
     bind_footprint_util(m);
     bind_components(m);
+    bind_rank(m);
     bind_projective(m);
     m.def("clahe_has_zero", [](py::array_t<float,py::array::c_style|py::array::forcecast> image) {
         if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
