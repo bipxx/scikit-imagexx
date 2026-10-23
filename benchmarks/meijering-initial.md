@@ -1,8 +1,7 @@
 # Meijering ridge filter native port
 
-This candidate preserves `filters.meijering`'s public signature. It is not yet
-retained on main; isolated measurements are verified below, and full CI
-remains the retention gate.
+This port preserves `filters.meijering`'s public signature. It is retained on
+main after full CI and the verified isolated measurements below.
 
 ## Native scope and arithmetic
 
@@ -90,4 +89,11 @@ maximum absolute error across all ranks and worker caps is 2.384186e-7
 (float32). No adverse cases were removed. Comparisons are candidate versus
 upstream within each runner, not paired candidate-to-candidate measurements.
 Raw samples: [Linux](meijering-first-linux.json),
-[Windows](meijering-first-windows.json). Full CI remains the retention gate.
+[Windows](meijering-first-windows.json).
+
+[Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
+passed Windows, Linux and minimum NumPy. Retained runtime sources match
+measured revision `f8cb5b4ba12c9cf6a4734c5fdbe6b610953e2c5c`; later changes are
+reports and merge bookkeeping. Maximum float64 absolute error is 2.109424e-15
+Linux / 1.998401e-15 Windows. Exact wheels, source archives, validation logs,
+raw samples and complete CI logs remain preserved.
