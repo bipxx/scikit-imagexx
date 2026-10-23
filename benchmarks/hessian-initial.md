@@ -155,4 +155,6 @@ and border-constant regressions are included. No local performance timings ran.
 The same-revision [shape control](https://github.com/bipxx/scikit-imagexx/actions/runs/39895501195)
 passes all 120 one-worker cases per OS, at 3.817543× Linux / 2.631455× Windows.
 The [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39895498410)
-is still running; this padded follow-up awaits retention.
+passed Windows, Linux and minimum NumPy. This padded follow-up is retained on
+`main`; runtime sources match the measured revision. CI logs, exact packages,
+source archives and earlier trial results remain preserved.

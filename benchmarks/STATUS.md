@@ -1,5 +1,19 @@
 # Last completed whole-library performance checkpoint
 
+Retained padded `feature.hessian_matrix`, measured source `f24bc39`:
+[full CI39895498410](https://github.com/bipxx/scikit-imagexx/actions/runs/39895498410)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39895498481](https://github.com/bipxx/scikit-imagexx/actions/runs/39895498481)
+passed both OSes. One-worker geometric means for finite/Gaussian modes are
+**4.553658× / 4.657071× Linux** and **3.787322× / 4.577836× Windows**.
+All 240 one-worker cases are faster on each OS, including the twelve previously
+slower small-volume Windows cases. All 960 timed rows have zero numerical
+difference. The same-source [shape control39895501195](https://github.com/bipxx/scikit-imagexx/actions/runs/39895501195)
+also passes all 120 one-worker cases per OS. Native coverage remains
+**116 + 2 metadata APIs**, with **337 callable names** and 29 classes/284 static
+member paths pending. [Raw samples, validation and trial history](hessian-initial.md)
+are preserved.
+
 Retained `feature.shape_index`, measured source `fc32f93`:
 [full CI39891161029](https://github.com/bipxx/scikit-imagexx/actions/runs/39891161029)
 passed Windows, Linux and minimum NumPy; isolated
@@ -10,7 +24,7 @@ All 480 timed rows pass NaN-mask and numerical parity. Maximum finite absolute
 errors are 1.1920929e-7 float32 and 2.2204461e-16 float64. Native coverage is
 **116 + 2 metadata APIs**; **337 callable names** and 29 classes/284 static
 member paths remain pending. [Raw samples and scope](shape-index-initial.md)
-are preserved. The Hessian small-volume padding follow-up remains in progress.
+are preserved. The subsequent padded Hessian retention is recorded above.
 
 Retained `feature.hessian_matrix`, measured source `5f010a6`:
 [full CI39890585539](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585539)
@@ -19,7 +33,7 @@ passed both OSes. One-worker geometric means for finite/Gaussian modes are
 **4.600456× / 2.493615× Linux** and **3.486546× / 2.070721× Windows**.
 All 240 Linux cases and all 120 Windows finite cases are faster. Windows
 Gaussian derivatives are faster in 108/120; twelve small 3-D cases remain
-slower and are being optimized with padded lines. All 960 timed rows have
+slower in this historical trial; the retained padded-line follow-up above addresses them. All 960 timed rows have
 zero numerical difference. Native coverage is **115 + 2 metadata APIs**;
 **338 callable names** and 29 classes/284 static member paths remain pending.
 [Raw samples, validation and failed trials](hessian-initial.md) are preserved.
