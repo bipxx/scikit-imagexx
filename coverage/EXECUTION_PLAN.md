@@ -6,11 +6,18 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The launch inventory contains 455 public names: 121 native-partial image entries,
-two metadata entries, and 332 upstream-only entries. It includes 29 classes with
+The current inventory contains 455 public names: 123 native-partial image entries,
+two metadata entries, and 330 upstream-only entries. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
+
+The broad implementation goal is currently **paused**. This revision was reviewed
+by three worker agents in parallel, plus the integrator. All three reviews are
+complete, and all local implementation handles reached terminal checkpoints.
+Uncommitted work, failed trials, caches and exact artifacts are preserved. This
+plan is ready to execute when the goal is resumed; inspecting it does not resume
+implementation. Existing hosted measurement jobs retain their authoritative run.
 
 ## What changed after review
 
@@ -28,21 +35,48 @@ Test and benchmark paths in the inventory establish that files exist. They do
 not prove a passing contract, a measured source revision, or a speedup. Track
 those separately in [work_items.json](work_items.json) and packet evidence.
 
-## Work launched now
+## Three-agent review and worker lanes
 
-| Packet | Agent | Exclusive work | Current dependency |
+| Lane | Agent | Independent responsibility | Preserved checkpoint / next handoff |
 |---|---|---|---|
-| C++ foundations / integration | Integrator | Native half identity finish, shared wiring | Range merged as `97a7723`; legal endian-half identity is an explicit registration gate |
-| Error metrics | `metrics_reductions` | Three metrics' C++/SIMD/binding/helper and dedicated tests | Independent contract and kernel work; request shared wiring from integrator |
-| Metrics benchmark harness | `resize_bench` (reused) | Metrics corpus, dedicated workflow and harness tests | Prepare independently; measurements require registered, frozen APIs |
-| Transform class contracts | `resize_api` (reused) | Four classes' executable contracts and member/state matrix | Independent test-first packet; return for half-helper checks when its candidate is ready |
+| Integrator | `root` | Shared wiring/exports, queue, merges, exact artifacts and hosted measurements | Three optimized metrics wheels built; combined optimized parity and public registration pending |
+| Worker 1 | `metrics_reductions` | Kernel/interface review; metrics FP stages | Frozen `070fc64` passes six profiles. Later callback work has four initial boundary failures; its fix is unvalidated. Then take independent footprint utilities or rank contracts |
+| Worker 2 | `resize_api` | Contract/dependency review; labeling contracts and kernels | Three runtimes passed 1,600 contract checks with 1,596 native-pending cases each; two source files uncommitted. Freeze that increment, then implement labeling |
+| Worker 3 | `resize_bench` | Scheduling/benchmark review; dense footprints and decomposition | Contracts `54d416d` merged. Dense source is uncommitted; fixes after eight initial failures are unvalidated. Repair retained build dependencies, validate dense work, then decomposition |
 
-The read-only planning reviewer has completed its audit; its slot was reassigned
-to error metrics. Private resize/rescale wrappers (`09c11b9`) and resize benchmark
-tooling (`2e35855`) have already been merged. Their completed worktrees were removed
-after clean/ancestor checks and evidence preservation. The freed workers now run
-the next independent packets; public resize registration and measurements remain
-gated. The full objective remains active while these packets run.
+The agent names are reused from earlier packets; they do not describe their
+current assignments. The recorded three-agent review and safe checkpoints are
+visible with `tools/work_queue.py --agents`. Live process state is checked with
+the collaboration agent tools, rather than inferred from this ledger.
+
+All three reviewers identified the same avoidable dependency: independent
+decomposition work waited for dense-kernel completion. The revised queue releases
+it from a versioned, hashed atom interface and requires joint kernel parity at
+integration. Component-consumer original contracts are also independent of native
+labeling. Their implementation waits for the frozen labeling interface.
+
+The read-only planning reviewer completed its audit. Native half identity
+(`aed3349`) and public resize/rescale (`21ac60b`) are merged. The exact registered
+wheels passed 9,968 tests in each of six runtime/SIMD profiles, and the 373-case
+corpus passed untimed checks on all three runtimes at workers one and four.
+Performance run [39957875987](https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987)
+uses source `66e5f78`; all preparation and both Linux measurement jobs passed,
+while Windows measurement remains live at this snapshot. Observe this same run;
+do not restart it because of a queue or timeout. All-profile performance acceptance
+remains pending.
+
+The private metrics baseline (`03581ae`, integrated as `99abcfc`) passed 4,082
+tests in each of six profiles through the actual shared `_core`. It is merged as
+`147bd8b`; original worker ancestry is retained by `1945c2e`. Follow-up `070fc64`
+fixes buffered reductions and default-policy details, passing six 4,308-case
+profiles plus native sanitizers. Stateful callback policies and exact combined
+optimized wheels remain registration gates. Private parity is scoped evidence.
+Metrics benchmark tooling (`6c74563`, merged as `d94ef6c`) has a fixed 1,231-case
+corpus, including 19 expected errors; no metrics timing job has been dispatched.
+Transform class contracts (`6fa7f0a`, merged as `ad66094`) passed 228 reference and
+strict-rejection checks per runtime, with 224 native-pending cases. Class
+implementation remains pending. Completed worktrees are removed only after
+evidence archiving and clean/ancestor checks.
 
 ## Dependency and merge order
 
@@ -55,7 +89,18 @@ flowchart LR
     I --> B
     B --> T[Profile and improve retained slow cases]
     M[Independent error metrics contract and kernels] --> MI[Metrics integration]
-    C[Next independent API or class contract] --> CI[Next integration]
+    MC[Stateful FP stages and combined wheel parity] --> MI
+    L[Label contracts] --> LK[Label kernels] --> LI[Label integration]
+    LC[Independent component-consumer contracts] --> CC[Component consumers]
+    LK -. Frozen label interface .-> CC
+    P[Footprint contracts] --> PK[Dense footprint kernels]
+    P --> D[Decomposition tables and formulas]
+    PK -. Frozen atom interface .-> D
+    P --> U[Mirror and pad utilities]
+    PK --> PI[Combined footprint parity and integration]
+    D --> PI
+    U --> PI
+    C[Completed transform class contracts] --> CK[Class implementation] --> CI[Class integration]
 ```
 
 1. Workers freeze interfaces early: shape/dtype/ownership rules, worker policy,
@@ -90,7 +135,7 @@ continues while another packet builds, runs CI or waits for measurements.
 |---|---|---|
 | Active | `mean_squared_error`, `normalized_root_mse`, `peak_signal_noise_ratio` | Existing dtype/worker infrastructure; freeze promotions, ranges, shape checks, NaNs, infinities and warnings first |
 | Next free worker | Connected-component `label` and its inventoried aliases | Freeze canonical numbering and connectivity before parallel block stitching; SIMD comparisons/run discovery, efficient scalar union/find where appropriate |
-| After labeling | Small-object/hole removal, `clear_border`, `relabel_sequential` | Reuse stable label/count interfaces; separate component filtering from labeling ownership |
+| Independent contracts | Small-object/hole removal, `clear_border`, `relabel_sequential` | Original contracts start now; kernels consume the frozen label interface, with joint parity required later |
 | Independent | Footprint rectangle, diamond, disk, ball, mirror/pad and decompositions | Preserve tuple/decomposition forms, output dtype/shape and errors; raster generation is an image operation, not metadata |
 | Independent contract first | Rank minimum/maximum/mean/sum/pop, then histogram-based rank APIs | Integrator freezes nested-namespace exposure; worker owns a reusable rolling-histogram engine |
 | Independent class contracts | Projective, affine, Euclidean and similarity transforms | Inventory constructors, inherited methods, fields, mutation, composition and inversion; implement parent models before subclasses |
@@ -100,6 +145,71 @@ claims them. Repeat the process for remaining transforms/pyramids, measurements,
 features, segmentation, restoration, registration, graph, draw, data, I/O and
 utilities. Review additional namespaces and runtime class attributes rather than
 treating the current static inventory as exhaustive.
+
+## Execute the queue
+
+The integrator uses the ledger checker before assigning work and after every
+handoff. These commands only inspect the plan; they do not launch agents, mutate
+source, compile, time code or cancel jobs.
+
+```powershell
+.venv/Scripts/python.exe tools/work_queue.py --check
+.venv/Scripts/python.exe tools/work_queue.py --check --verify-local-proofs
+.venv/Scripts/python.exe tools/work_queue.py --agents
+.venv/Scripts/python.exe tools/work_queue.py --ready
+.venv/Scripts/python.exe tools/work_queue.py --packet footprints-decomposition
+```
+
+Each scoped packet records exact owned paths, a base revision, read/link
+dependencies, its build policy, a concrete `collaboration.followup_task` handoff
+and acceptance gates. `--ready` lists scoped queued packets whose required proof
+scope or frozen interface is available, excluding occupied writable files.
+It does not resume the paused goal or assert spare
+capacity: the integrator keeps at most three worker agents active, reuses a
+completed agent with `followup_task`, and supplies the printed handoff with an
+explicit isolated worktree and branch. Unscoped inventory items are not launched.
+The checker rejects cycles, missing dependencies, excess worker owners, escaping
+paths and concurrent ownership of the same file, including Windows case aliases.
+It validates interface hashes and requires source/hash-bearing evidence manifests
+with numeric native/pending counts. Registration explicitly requires private
+native proofs; measurement requires actual public-native and harness proofs.
+Reference contracts and expected failures cannot release either gate.
+The optional local-proof check hashes retained manifest bytes in this workspace;
+a fresh checkout needs those preserved artifacts before that check can pass.
+
+The next handoffs are executable in this order:
+
+1. Freeze and merge the preserved labeling contract increment after checking its
+   three-runtime evidence. Keep native-pending cases explicit, then give that
+   same worker the native packet. Footprint contracts are already merged.
+   Component-consumer contracts can be assigned independently.
+2. Keep the metrics agent on its private correctness/optimization follow-up.
+   Freeze and merge that increment after all parity/sanitizer gates. Handle
+   stateful NumPy callback policies in a separate stagewise packet; an explicit
+   fallback guard is a documented gap, not completed native parity.
+3. While those workers build or test, the integrator performs short shared
+   wiring steps, checks actual combined wheels and merges validated increments.
+   Never make independent contract/kernel work wait for an unrelated build.
+   After a safe terminal handoff, immediately give a free worker a disjoint ready
+   packet while integration or hosted measurements continue. Use the recorded
+   worker queues; do not spawn a fourth worker alongside the integrator.
+4. Register only the advertised, verified public contract, regenerate inventory,
+   then freeze its package and dispatch its original-library measurement job.
+   A private helper, original-only test, expected failure or development adapter
+   cannot satisfy the public registration gate.
+5. Return every measured regression to an owning optimization packet. Preserve
+   the complete corpus, raw samples and failed trials, then remeasure retained
+   improvements at one worker. Keep runtime-specific results separate.
+
+All active packets use their own ignored cache. An agent's handoff includes its
+live process handles; observation timeouts leave those jobs active. A finished
+agent reports terminal handles, source SHA, exact artifacts and evidence paths
+before the integrator schedules worktree cleanup.
+Build environments must be retained: Python, NumPy and pybind11 CMake paths must
+not point into an expired temporary build-isolation directory. Interface changes
+create a new version/hash and an explicit dependent handoff; frozen interfaces are
+not edited silently. Standalone adapters never create a second worker policy in
+the installed main `_core`.
 
 ## Evidence and coordination rules
 

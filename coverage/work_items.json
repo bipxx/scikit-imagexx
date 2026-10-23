@@ -57,7 +57,25 @@
           "build/resize-range-*-wheels",
           "build/resize-range-*-package"
         ]
-      }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "f01d792447bc42cfdf8fc74d1bb9fa9afbd32546",
+          "manifest": {
+            "path": "build/checkpoints/resize-range-increment/manifest.json",
+            "sha256": "44a29496e422204747aecd2e7931451a1be224458c683ec5624dc855cc80619d"
+          },
+          "native_contract_checks": 1126,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ]
+        }
+      },
+      "dependency_requirements": {}
     },
     {
       "id": "resize-half-identity",
@@ -74,22 +92,25 @@
         "tests/test_resize_half_identity.py"
       ],
       "depends_on": [],
-      "state": "queued",
+      "state": "parity_passed",
       "contract": {
         "interface": "resize_half_identity(image,clip,policy) -> (out,lower0dHalf,upper0dHalf,has_nan,has_value,runtime_order_used)",
-        "case_manifest": "build/checkpoints/resize-api-increment/agent-evidence/half-identity-windows.json",
-        "uncovered_cases": [
-          "Native copy/clip implementation and validation pending; Half clipping policy must be probed separately."
-        ],
+        "case_manifest": "tests/test_resize_half_identity.py",
+        "uncovered_cases": [],
         "policies": {
           "0": "Half: preserve zero ties; ignore NaN bounds",
           "1": "Half: preserve zero ties; propagate first NaN bound only to non-NaN pixels; preserve input NaN payload"
         }
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "aed3349ea40c45f9ab041a63dec2b9a7f6ab9605",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/half-helper-proof.json",
+          "558 direct helper tests x6 profiles; 6282 wrapper/pipeline tests x6 profiles",
+          "20 native tests per normal/dynamic/portable profile; exhaustive 65536 Half encodings and 30 golden hashes",
+          "12208 combined sanitized Python tests; kernel ASAN/UBSAN/float-cast normal/dynamic/portable"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -101,15 +122,37 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "aed3349ea40c45f9ab041a63dec2b9a7f6ab9605",
+        "main_commit": "386c9b30d1fca2d4bcd0e9370270321ff2a39330"
       },
       "retention": {
         "active_paths": [
           "build/worktrees/li-uniform"
         ],
-        "protected_artifacts": []
-      }
+        "protected_artifacts": [
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/half-helper-proof.json",
+          "build/resize-half-*-wheels",
+          "build/resize-half-*-package"
+        ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "aed3349ea40c45f9ab041a63dec2b9a7f6ab9605",
+          "manifest": {
+            "path": "build/checkpoints/resize-half-tests-increment/agent-evidence/half-helper-proof.json",
+            "sha256": "0cc8c52c4289ccc6fd406aed0701774d1d32acebd33c5def575a98ea557ef357"
+          },
+          "native_contract_checks": 558,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ]
+        }
+      },
+      "dependency_requirements": {}
     },
     {
       "id": "resize-api",
@@ -119,7 +162,7 @@
         "transform.rescale"
       ],
       "owner": "integrator",
-      "branch": "feature/resize-api",
+      "branch": "main",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
       "owns": [
         "python/skimagexx/_resize.py",
@@ -128,40 +171,66 @@
       "depends_on": [
         "resize-range-foundation"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
-        "case_manifest": "build/checkpoints/resize-api-increment/agent-evidence/validated-wrapper.json",
-        "uncovered_cases": [
-          "Legal opposite-endian float16 identity finish needs the native half helper; public registration remains pending."
-        ]
+        "case_manifest": "tests/test_resize_contract.py",
+        "uncovered_cases": []
       },
       "parity": {
-        "source_sha": "09c11b9db60efdb66bd6ea95f3a62e35516a1379",
+        "source_sha": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
         "artifact_sha256": null,
         "runs": [
-          "Archived candidate normal/scalar Windows and modernLinux:6042 passed,240 legalHalf cases pending",
-          "Archived minimum NumPy and intermediate1.25/2.0:6282 passed"
-        ]
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+          "Actual public registered wheels: 9968 passed each of six profiles; no failures/skips/facade",
+          "373 untimed public cases x3 runtimes, workers one/four; zero timing rows"
+        ],
+        "source_sha256": "570221bce8e8a5e6321bddeca57f7a4c24cee5086800df3c6c94d7c09a60ac59"
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
         "raw_results": [],
         "regressions": []
       },
       "merge": {
-        "commit": "09c11b9db60efdb66bd6ea95f3a62e35516a1379",
-        "main_commit": "a79e891c23ac036ffd9486f91841aca0c8c003b8"
+        "commit": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
+        "main_commit": "66e5f78e4f5736597373bd5ccca0378f52d67980"
       },
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
           "build/checkpoints/resize-api-increment/agent-evidence",
-          "build/checkpoints/resize-api-increment/archive-manifest.json"
+          "build/checkpoints/resize-api-increment/archive-manifest.json",
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+          "build/resize-public-*-wheels",
+          "build/resize-public-*-package"
         ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
+          "manifest": {
+            "path": "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+            "sha256": "528a9a1a7ff11bbcba6be99381cf0814c89a27da2d976f9cff72bfeb16a021b8"
+          },
+          "native_contract_checks": 9968,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "scope_note": "Advertised registered resize/rescale contract, not all unassessed upstream inputs."
+        }
+      },
+      "dependency_requirements": {
+        "resize-range-foundation": {
+          "evidence_scope": "native_private"
+        }
       }
     },
     {
@@ -208,7 +277,21 @@
           "build/resize-experiments/benchmark-*.json"
         ]
       },
-      "validation_scope": "Tooling and in-memory development overlay only; real native registry and prepared-package gates remain pending."
+      "validation_scope": "Harness guards passed; entire real registered public corpus passed on exact wheels. Timing remains separate.",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "2e3585574069eacbc799886ea304879b66d6faf0",
+          "manifest": {
+            "path": "build/resize-experiments/benchmark-reference-v3-check-windows.json",
+            "sha256": "6b15f1ae9c52fe1f34c9c27e3a7d40ea255923f34f1a960fd4d0bd339a914c12"
+          },
+          "passing_contract_checks": 373,
+          "harness_guard_checks": 8,
+          "native_executed": 0
+        }
+      },
+      "dependency_requirements": {}
     },
     {
       "id": "resize-public-integration",
@@ -222,39 +305,77 @@
         "python/skimagexx/coverage.py",
         "tests/test_api.py",
         "coverage/api.json",
-        "coverage/README.md"
+        "coverage/README.md",
+        "tests/test_resize_public.py",
+        "tools/inventory.py"
       ],
       "depends_on": [
         "resize-api",
         "resize-half-identity"
       ],
-      "state": "queued",
+      "state": "performance_pending",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "tests/test_resize_contract.py",
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+          "Actual public registered wheels: 9968 passed each of six profiles; no failures/skips/facade",
+          "373 untimed public cases x3 runtimes, workers one/four; zero timing rows"
+        ],
+        "source_sha256": "570221bce8e8a5e6321bddeca57f7a4c24cee5086800df3c6c94d7c09a60ac59"
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
         "raw_results": [],
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
+        "main_commit": "66e5f78e4f5736597373bd5ccca0378f52d67980"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
-      }
+        "protected_artifacts": [
+          "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+          "build/resize-public-*-wheels",
+          "build/resize-public-*-package"
+        ]
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "21ac60b25bcce02dcd1b190a79ae4b5fd4c41377",
+          "manifest": {
+            "path": "build/checkpoints/resize-half-tests-increment/agent-evidence/public-gate-proof.json",
+            "sha256": "528a9a1a7ff11bbcba6be99381cf0814c89a27da2d976f9cff72bfeb16a021b8"
+          },
+          "native_contract_checks": 9968,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "scope_note": "Advertised registered resize/rescale contract, not all unassessed upstream inputs."
+        }
+      },
+      "dependency_requirements": {
+        "resize-api": {
+          "evidence_scope": "native_private"
+        },
+        "resize-half-identity": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "public_registration": true
     },
     {
       "id": "resize-measurement",
@@ -262,13 +383,13 @@
       "apis": [],
       "owner": "integrator",
       "branch": null,
-      "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
+      "base_sha": "66e5f78e4f5736597373bd5ccca0378f52d67980",
       "owns": [],
       "depends_on": [
         "resize-public-integration",
         "resize-benchmark-harness"
       ],
-      "state": "queued",
+      "state": "measuring",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -283,9 +404,13 @@
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "authoritative_run_id": 39957875987,
+        "authoritative_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987",
+        "observed_state": "Three preparation jobs and two Linux measurement jobs succeeded; Windows measurement live. Poll authoritative run39957875987.",
+        "performance_claim": false
       },
       "merge": {
         "commit": null,
@@ -294,17 +419,42 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "resize-public-integration": {
+          "evidence_scope": "public_native"
+        },
+        "resize-benchmark-harness": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "pending",
+          "source_sha": "66e5f78e4f5736597373bd5ccca0378f52d67980",
+          "manifest": null,
+          "required_workers": [
+            1
+          ],
+          "note": "Two Linux measurement jobs succeeded; Windows still live. All-profile evidence is pending."
+        }
+      },
+      "launch": {
+        "tool": "functions.exec / gh run view",
+        "read_only_command": "gh run view 39957875987 --json status,conclusion,jobs",
+        "authoritative_run_id": 39957875987,
+        "observation_rule": "Existing hosted jobs remain authoritative during the pause; retain their exact artifacts."
       }
     },
     {
       "id": "metrics-error-reductions",
-      "kind": "public_api",
+      "kind": "private_kernel",
       "apis": [
         "metrics.mean_squared_error",
         "metrics.normalized_root_mse",
         "metrics.peak_signal_noise_ratio"
       ],
-      "owner": "metrics_reductions",
+      "owner": "integrator",
       "branch": "feature/metrics-reductions",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
       "owns": [
@@ -317,11 +467,122 @@
         "tests/test_metrics_native.cpp"
       ],
       "depends_on": [],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
-        "case_manifest": null,
-        "uncovered_cases": [],
-        "interface": "bind_metrics(module): metrics_reduce(array0,array1,single,normalization,capture_underflow), metrics_raw_range(array)"
+        "case_manifest": "tests/test_metrics_reductions.py",
+        "uncovered_cases": [
+          "call/log/print policies explicitly guarded; stagewise native policy packet remains pending.",
+          "Public exports and whole-core optimized-source artifact validation pending."
+        ],
+        "interface": "bind_metrics(module); metrics_reduce(first,second,single,normalization,capture_underflow,scalar_power_double), metrics_raw_range(array)"
+      },
+      "parity": {
+        "source_sha": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+        "artifact_sha256": null,
+        "runs": [
+          "build/metrics-optimization-evidence/070fc64/manifest.json",
+          "4308 per profile x6 standalone native profiles; normal/dynamic/portable sanitizer and native gates passed",
+          "Previous baseline035 actual shared-core4082 x6; combined resize/metrics baseline14058 x2 Windows"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+        "main_commit": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/metrics-optimization-evidence/070fc64",
+          "build/metrics-main-core-evidence",
+          "build/checkpoints/metrics-main-increment/combined-windows-package.json"
+        ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+          "manifest": {
+            "path": "build/metrics-optimization-evidence/070fc64/manifest.json",
+            "sha256": "8c0047eebd34d600cc11a731566e03e5667cd3b119ba583ccf2a2256be7150b6"
+          },
+          "native_contract_checks": 4308,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "scope_note": "Private warn/raise/ignore contract includes explicit unsupported-policy guards; call/log/print implementation is a separate pending packet."
+        },
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+          "manifest": {
+            "path": "build/metrics-optimization-evidence/070fc64/manifest.json",
+            "sha256": "8c0047eebd34d600cc11a731566e03e5667cd3b119ba583ccf2a2256be7150b6"
+          },
+          "passing_contract_checks": 4308,
+          "native_pending": null,
+          "scope_note": "Supported numeric contract only; full stateful policy contract remains pending."
+        }
+      },
+      "dependency_requirements": {},
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        },
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/resize_range.hpp",
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "required_link_sources": [
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "contract": "Reuse frozen raw range ABI; preserve any-NaN PSNR semantics. AVX2 source is conditional on the portable build flag."
+        }
+      ]
+    },
+    {
+      "id": "connected-components",
+      "kind": "contract",
+      "apis": [
+        "measure.label",
+        "morphology.label"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/connected-components-contracts",
+      "base_sha": "7006189ebccf1a3f15f0f6ab7ae8be8511ab0705",
+      "owns": [
+        "tests/test_connected_components_contracts.py",
+        "coverage/contracts/connected-components.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": "coverage/contracts/connected-components.json",
+        "uncovered_cases": []
       },
       "parity": {
         "source_sha": null,
@@ -343,22 +604,76 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/metrics-reductions"
+          "build/worktrees/connected-components-contracts"
         ],
         "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_api",
+          "message": "Freeze measure.label/morphology.label original signatures, aliases, canonical numbering, bool/integer/float conversion, ranks/layouts, background/connectivity/return_num, warnings/errors and ownership. Original and strict-native-pending proofs on all three runtimes; no implementation claim.\nExclusive ownership: tests/test_connected_components_contracts.py, coverage/contracts/connected-components.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/connected-components-contracts",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "contract_reference": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "passing_contract_checks": 1600,
+          "native_executed": 0,
+          "native_pending": 1596,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "note": "All jobs terminal, but source is uncommitted; freeze/hash the increment after resume."
+        }
+      },
+      "dependency_requirements": {},
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      },
+      "checkpoint": {
+        "packet": "connected-components",
+        "worktree": "build/worktrees/connected-components-contracts",
+        "base_commit": "7006189ebccf1a3f15f0f6ab7ae8be8511ab0705",
+        "uncommitted_work_preserved": true,
+        "passing_contract_checks_per_runtime": 1600,
+        "native_pending_per_runtime": 1596,
+        "live_handles": []
       }
     },
     {
-      "id": "connected-components",
-      "kind": "public_api",
+      "id": "component-consumers",
+      "kind": "contract",
       "apis": [
-        "measure.label",
-        "morphology.label"
+        "morphology.remove_small_objects",
+        "morphology.remove_small_holes",
+        "segmentation.clear_border",
+        "segmentation.relabel_sequential"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "resize_api",
+      "branch": "feature/component-consumers",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
-      "owns": [],
+      "owns": [
+        "tests/test_component_consumer_contracts.py",
+        "coverage/contracts/component-consumers.json"
+      ],
       "depends_on": [],
       "state": "queued",
       "contract": {
@@ -386,55 +701,27 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      }
-    },
-    {
-      "id": "component-consumers",
-      "kind": "public_api",
-      "apis": [
-        "morphology.remove_small_objects",
-        "morphology.remove_small_holes",
-        "segmentation.clear_border",
-        "segmentation.relabel_sequential"
-      ],
-      "owner": null,
-      "branch": null,
-      "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
-      "owns": [],
-      "depends_on": [
-        "connected-components"
-      ],
-      "state": "queued",
-      "contract": {
-        "case_manifest": null,
-        "uncovered_cases": []
       },
-      "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+      "dependency_requirements": {},
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_api",
+          "message": "Freeze original remove_small_objects/remove_small_holes/clear_border/relabel_sequential contracts independently of native labeling. Cover changed/deprecated parameters, dtype/labels/ArrayMap behavior, warnings/errors and strict pending status.\nExclusive ownership: tests/test_component_consumer_contracts.py, coverage/contracts/component-consumers.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/component-consumer-contracts",
+        "requires_user_resume": true
       },
-      "performance": {
-        "reference": "scikit-image==0.26.0",
-        "required_workers": [
-          1
-        ],
-        "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": []
-      },
-      "merge": {
-        "commit": null,
-        "main_commit": null
-      },
-      "retention": {
-        "active_paths": [],
-        "protected_artifacts": []
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
       }
     },
     {
       "id": "footprints",
-      "kind": "public_api",
+      "kind": "contract",
       "apis": [
         "morphology.footprint_rectangle",
         "morphology.diamond",
@@ -443,20 +730,28 @@
         "morphology.mirror_footprint",
         "morphology.pad_footprint"
       ],
-      "owner": null,
-      "branch": null,
-      "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
-      "owns": [],
+      "owner": "integrator",
+      "branch": "feature/footprint-contracts",
+      "base_sha": "7006189ebccf1a3f15f0f6ab7ae8be8511ab0705",
+      "owns": [
+        "tests/test_footprint_contracts.py",
+        "coverage/contracts/footprints.json"
+      ],
       "depends_on": [],
-      "state": "queued",
+      "state": "contracted",
       "contract": {
-        "case_manifest": null,
-        "uncovered_cases": []
+        "case_manifest": "coverage/contracts/footprints.json",
+        "uncovered_cases": [
+          "All six native APIs pending; frozen contracts are original-only/compatibility evidence."
+        ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/footprint-experiments/manifest.json",
+          "2407 original/compatibility/signature/integrity checks passed and1600 strict-native-pending xfailed each runtime"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -468,17 +763,40 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+        "main_commit": "2997f5e938f2967f0bea45258a68aa4befcaf6a3"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
-      }
+        "protected_artifacts": [
+          "build/footprint-experiments"
+        ]
+      },
+      "author_agent": "resize_bench",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+          "manifest": {
+            "path": "build/footprint-experiments/manifest.json",
+            "sha256": "15b798da3b4e0a25298d13366477db5c35771f976766ae6c0e5ad5e1015d404f"
+          },
+          "passing_contract_checks": 2407,
+          "fixed_case_count": 800,
+          "native_executed": 0,
+          "native_pending": 1600,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ]
+        }
+      },
+      "dependency_requirements": {}
     },
     {
       "id": "rank-neighborhoods",
-      "kind": "public_api",
+      "kind": "contract",
       "apis": [
         "filters.rank.minimum",
         "filters.rank.maximum",
@@ -486,10 +804,13 @@
         "filters.rank.sum",
         "filters.rank.pop"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-neighborhoods",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
-      "owns": [],
+      "owns": [
+        "tests/test_rank_neighborhood_contracts.py",
+        "coverage/contracts/rank-neighborhoods.json"
+      ],
       "depends_on": [],
       "state": "queued",
       "contract": {
@@ -517,18 +838,42 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "metrics_reductions",
+          "message": "Freeze nested filters.rank minimum/maximum/mean/sum/pop contracts before rolling-histogram implementation. Include output/mask/shift/footprint/dtype, warnings/errors and strict nested exposure. No shared namespace edits.\nExclusive ownership: tests/test_rank_neighborhood_contracts.py, coverage/contracts/rank-neighborhoods.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/rank-neighborhood-contracts",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "dependency_requirements": {},
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
       }
     },
     {
       "id": "transform-class-contracts",
-      "kind": "public_api",
+      "kind": "contract",
       "apis": [
         "transform.ProjectiveTransform",
         "transform.AffineTransform",
         "transform.EuclideanTransform",
         "transform.SimilarityTransform"
       ],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/transform-class-contracts",
       "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
       "owns": [
@@ -536,15 +881,20 @@
         "coverage/contracts/transform-classes.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
-        "case_manifest": null,
-        "uncovered_cases": []
+        "case_manifest": "coverage/contracts/transform-classes.json",
+        "uncovered_cases": [
+          "All four native classes and their member/state implementation remain pending."
+        ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "6fa7f0ad523f9cbb54fa8c8a077b4ec9c9af886e",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/checkpoints/transform-class-contracts-increment/agent-evidence/class-contract-proof.json",
+          "228 reference/strict-rejection passed and 224 native-pending xfailed per runtime; zero native class implementations"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -556,12 +906,14 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "6fa7f0ad523f9cbb54fa8c8a077b4ec9c9af886e",
+        "main_commit": "ad660949dffaadad76ec7aac67babbe136a3f528"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/transform-class-contracts-increment/agent-evidence"
+        ]
       },
       "contract_member_paths": [
         "transform.AffineTransform.__add__",
@@ -625,13 +977,33 @@
         "transform.SimilarityTransform.rotation",
         "transform.SimilarityTransform.scale",
         "transform.SimilarityTransform.translation"
-      ]
+      ],
+      "author_agent": "resize_api",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "6fa7f0ad523f9cbb54fa8c8a077b4ec9c9af886e",
+          "manifest": {
+            "path": "build/checkpoints/transform-class-contracts-increment/agent-evidence/class-contract-proof.json",
+            "sha256": "5d5489c68a4af8115b576d8e792ff0bf79913a9f4e7ae30d46805b43e9174755"
+          },
+          "passing_contract_checks": 228,
+          "native_executed": 0,
+          "native_pending": 224,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ]
+        }
+      },
+      "dependency_requirements": {}
     },
     {
       "id": "metrics-benchmark-harness",
       "kind": "benchmark_tooling",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "feature/metrics-benchmark",
       "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
       "owns": [
@@ -639,33 +1011,59 @@
         ".github/workflows/metrics-reductions-benchmark.yml",
         "tests/test_metrics_reductions_benchmark.py"
       ],
-      "depends_on": [],
-      "state": "implementing",
+      "depends_on": [
+        "metrics-error-reductions"
+      ],
+      "state": "parity_passed",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "benchmarks/metrics_reductions.py",
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "6c7456302bcc51f91401f24943b95bb94395b041",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "8 harness guards pass Windows/minimum; all 1231 untimed original checks x3 runtimes",
+          "Private development adapter all1231 at workers one/four x3 runtimes; not public registration proof"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
+        "corpus_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
         "raw_results": [],
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "6c7456302bcc51f91401f24943b95bb94395b041",
+        "main_commit": "d94ef6c38e36a0dbd3514ec5a1a65af2406f820e"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/resize-experiments/metrics-benchmark-*",
+          "build/metrics-benchmark-probes"
+        ]
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "6c7456302bcc51f91401f24943b95bb94395b041",
+          "manifest": {
+            "path": "build/resize-experiments/metrics-benchmark-reference-v3-windows.json",
+            "sha256": "9efb4d3ce3074d87e9d95924b7be93b612f9c96adcf4b4817ec1ca39be2e62ff"
+          },
+          "passing_contract_checks": 1231,
+          "harness_guard_checks": 8,
+          "native_executed": 0
+        }
+      },
+      "dependency_requirements": {
+        "metrics-error-reductions": {
+          "evidence_scope": "contract_reference"
+        }
       }
     },
     {
@@ -685,12 +1083,15 @@
         "coverage/README.md"
       ],
       "depends_on": [
-        "metrics-error-reductions"
+        "metrics-optimized-integration",
+        "metrics-fp-stages"
       ],
       "state": "queued",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": []
+        "uncovered_cases": [
+          "Native stateful policies and exact combined public exports require their own parity gate."
+        ]
       },
       "parity": {
         "source_sha": null,
@@ -713,7 +1114,16 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      }
+      },
+      "dependency_requirements": {
+        "metrics-optimized-integration": {
+          "evidence_scope": "native_private"
+        },
+        "metrics-fp-stages": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "public_registration": true
     },
     {
       "id": "metrics-measurement",
@@ -753,6 +1163,1207 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "metrics-public-integration": {
+          "evidence_scope": "public_native"
+        },
+        "metrics-benchmark-harness": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "launch": {
+        "tool": "functions.exec / gh workflow run",
+        "command_template": "gh workflow run metrics-reductions-benchmark.yml --ref <verified-public-native-source-sha> -f workers=1",
+        "requires_user_resume": true,
+        "preconditions": [
+          "All explicit public_native and tooling dependency proofs verified.",
+          "Freeze exact source, wheel, installed SDK and corpus; preparation completes before measurement hosts run."
+        ],
+        "observation_rule": "Record the authoritative run ID and poll the same run; do not restart live or queued work."
+      }
+    },
+    {
+      "id": "metrics-main-core-baseline",
+      "kind": "private_integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": null,
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [],
+      "depends_on": [
+        "resize-half-identity"
+      ],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": "99abcfc743b13d2cc344bc05e7f7e4956b5186f6",
+        "artifact_sha256": null,
+        "runs": [
+          "build/metrics-main-core-evidence/manifest.json",
+          "Actual main-core4082 x6, native21 normal/dynamic/portable, shared API2958 Windows",
+          "Combined public resize/private baseline metrics14058 x2 Windows; actual shared worker/default-one proof"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "99abcfc743b13d2cc344bc05e7f7e4956b5186f6",
+        "main_commit": "147bd8bd5bc926ef4af901cb828987776b08a60f"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "99abcfc743b13d2cc344bc05e7f7e4956b5186f6",
+          "manifest": {
+            "path": "build/metrics-main-core-evidence/manifest.json",
+            "sha256": "80341f9fe00fdffc12208def93927fa8defe6b928fadee2369bc1797e9122066"
+          },
+          "native_contract_checks": 4082,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "scope_note": "Frozen035 baseline; later discovered gaps are tracked in separate follow-ups."
+        }
+      },
+      "dependency_requirements": {
+        "resize-half-identity": {
+          "evidence_scope": "native_private"
+        }
+      }
+    },
+    {
+      "id": "metrics-optimized-integration",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/metrics-optimized-integration",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [],
+      "depends_on": [
+        "metrics-error-reductions"
+      ],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "integrator",
+          "message": "Validate frozen070fc64 in the actual combined main _core on all three runtimes normal/scalar; preserve exact wheel/SDK/source proofs. No exports or timings.\nExclusive ownership: . You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/metrics-optimized-integration",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "metrics-error-reductions": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        },
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/resize_range.hpp",
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "required_link_sources": [
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "contract": "Reuse frozen raw range ABI; preserve any-NaN PSNR semantics. AVX2 source is conditional on the portable build flag."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      },
+      "checkpoint": {
+        "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+        "builds_complete": [
+          "windows-modern",
+          "linux-modern",
+          "linux-minimum"
+        ],
+        "live_handles": [],
+        "combined_optimized_parity": "Pending after resume; no public metrics registration.",
+        "artifacts": [
+          "build/metrics-optimized-main-windows-wheels",
+          "build/metrics-optimized-main-modern-linux-wheels",
+          "build/metrics-optimized-main-minimum-linux-wheels"
+        ]
+      }
+    },
+    {
+      "id": "metrics-fp-stages",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/metrics-reductions",
+      "base_sha": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+      "owns": [
+        "include/skimagexx/metrics.hpp",
+        "src/metrics.cpp",
+        "src/simd_metrics_avx2.cpp",
+        "src/bind_metrics.cpp",
+        "python/skimagexx/_metrics.py",
+        "tests/test_metrics_reductions.py",
+        "tests/test_metrics_native.cpp"
+      ],
+      "depends_on": [
+        "metrics-error-reductions"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [],
+        "interface": "metrics_stage(first,second,single,operation)->(materialized ndarray,status); metrics_stage_sum; metrics_stage_extremum. Existing fused interface unchanged."
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/metrics-reductions"
+        ],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "metrics_reductions",
+          "message": "Implement exceptional-only native materialized stages in upstream order for call/log/print, honoring callback mutation of inputs, already-produced deltas, aliases and FP policy. Preserve default fused performance; test combined callback masks and stateful/reentrant policy changes across runtimes.\nExclusive ownership: include/skimagexx/metrics.hpp, src/metrics.cpp, src/simd_metrics_avx2.cpp, src/bind_metrics.cpp, python/skimagexx/_metrics.py, tests/test_metrics_reductions.py, tests/test_metrics_native.cpp. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/metrics-reductions",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "metrics-error-reductions": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        },
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/resize_range.hpp",
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "required_link_sources": [
+            "src/resize_range.cpp",
+            "src/simd_resize_range_avx2.cpp"
+          ],
+          "contract": "Reuse frozen raw range ABI; preserve any-NaN PSNR semantics. AVX2 source is conditional on the portable build flag."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      },
+      "checkpoint": {
+        "packet": "metrics-fp-stages",
+        "frozen_commit": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+        "uncommitted_work_preserved": true,
+        "passing_initial_checks": 7184,
+        "failing_initial_checks": 4,
+        "subsequent_fix": "Compiles; unvalidated. Preserve callback-resize boundary trials.",
+        "live_handles": []
+      }
+    },
+    {
+      "id": "connected-components-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/connected-components-native",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "include/skimagexx/components.hpp",
+        "src/components.cpp",
+        "src/simd_components_avx2.cpp",
+        "src/bind_components.cpp",
+        "python/skimagexx/_components.py",
+        "tests/test_components_native.cpp",
+        "tests/test_components_pipeline.py"
+      ],
+      "depends_on": [
+        "connected-components"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_bench",
+          "message": "Implement equal-value connected components against the frozen label contracts. Freeze canonical numbering and connectivity before block stitching; SIMD comparisons/run discovery plus efficient union/find. Optional shared workers must produce identical labels at one/four; never edit shared wiring/exports/registry.\nExclusive ownership: include/skimagexx/components.hpp, src/components.cpp, src/simd_components_avx2.cpp, src/bind_components.cpp, python/skimagexx/_components.py, tests/test_components_native.cpp, tests/test_components_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/connected-components-native",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "connected-components": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "provided_interfaces": {
+        "connected-components-label-v1": {
+          "state": "pending",
+          "definition": null,
+          "sha256": null
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "footprints-dense",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/footprint-dense",
+      "base_sha": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+      "owns": [
+        "include/skimagexx/footprint_dense.hpp",
+        "src/footprint_dense.cpp",
+        "src/simd_footprint_dense_avx2.cpp",
+        "src/bind_footprint_dense.cpp",
+        "python/skimagexx/_footprint_dense.py",
+        "tests/test_footprint_dense_native.cpp",
+        "tests/test_footprint_dense_pipeline.py"
+      ],
+      "depends_on": [
+        "footprints"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [],
+        "interface": "bind_footprint_dense(module) provides footprint_dense_into(output, axis_costs, kind, limit, zero_atom, one_atom). Output is writable C-contiguous, disjoint from inputs, with no Python-reference dtype; axis_costs is C-contiguous 1-D float64. kind is rectangle=0, diamond=1, disk=2, ball=3; zero/one atoms match output dtype. Own C++ pixel writes use shared execution.hpp/global workers and runtime AVX2. Python normalization/object-dtype structure remains outside the raw kernel. This freezes an interface, not implementation parity."
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/footprint-dense"
+        ],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_bench",
+          "message": "Implement decomposition=None for rectangle/diamond/disk/ball using frozen exact fractional/negative-radius, dtype/metadata, strict_radius, ownership and error contracts. Own C++ raster loops, runtime SIMD and shared default-one workers. No decomposition, mirror/pad, shared wiring or public registration claims.\nExclusive ownership: include/skimagexx/footprint_dense.hpp, src/footprint_dense.cpp, src/simd_footprint_dense_avx2.cpp, src/bind_footprint_dense.cpp, python/skimagexx/_footprint_dense.py, tests/test_footprint_dense_native.cpp, tests/test_footprint_dense_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/footprint-dense",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "footprints": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "provided_interfaces": {
+        "footprint-dense-into-v1": {
+          "state": "frozen",
+          "definition": "bind_footprint_dense(module) provides footprint_dense_into(output, axis_costs, kind, limit, zero_atom, one_atom). Output is writable C-contiguous, disjoint from inputs, with no Python-reference dtype; axis_costs is C-contiguous 1-D float64. kind is rectangle=0, diamond=1, disk=2, ball=3; zero/one atoms match output dtype. Own C++ pixel writes use shared execution.hpp/global workers and runtime AVX2. Python normalization/object-dtype structure remains outside the raw kernel. This freezes an interface, not implementation parity.",
+          "sha256": "646a8364510760f817812f631136d9d1bf2529d1d00a687f56015ab52e6d2e40",
+          "contract_source_sha": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+          "implementation_verified": false
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      },
+      "checkpoint": {
+        "packet": "footprints-dense",
+        "worktree": "build/worktrees/footprint-dense",
+        "base_commit": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+        "uncommitted_work_preserved": true,
+        "passing_initial_checks": 476,
+        "failing_initial_checks": 8,
+        "subsequent_fix": "Unvalidated; Windows rebuild passes; Linux regeneration exposed ephemeral pybind11_DIR. Repair persistent environment after resume.",
+        "live_handles": []
+      }
+    },
+    {
+      "id": "footprints-decomposition",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/footprints-decomposition",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "include/skimagexx/footprint_decomposition.hpp",
+        "src/footprint_decomposition.cpp",
+        "src/bind_footprint_decomposition.cpp",
+        "python/skimagexx/_footprint_decomposition.py",
+        "tests/test_footprint_decomposition.py"
+      ],
+      "depends_on": [
+        "footprints",
+        "footprints-dense"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_bench",
+          "message": "Implement exact rectangle/diamond decomposition formulas, pinned disk/ball sequence tables and disk cross decomposition. Compare tuple container/dtype/value/iteration semantics; do not substitute dense-mask equivalence for tuple parity.\nExclusive ownership: include/skimagexx/footprint_decomposition.hpp, src/footprint_decomposition.cpp, src/bind_footprint_decomposition.cpp, python/skimagexx/_footprint_decomposition.py, tests/test_footprint_decomposition.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/footprint-decomposition",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "footprints": {
+          "evidence_scope": "contract_reference"
+        },
+        "footprints-dense": {
+          "interface": "footprint-dense-into-v1"
+        }
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "footprints-utilities",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/footprints-utilities",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "include/skimagexx/footprint_util.hpp",
+        "src/footprint_util.cpp",
+        "src/bind_footprint_util.cpp",
+        "python/skimagexx/_footprint_util.py",
+        "tests/test_footprint_util.py"
+      ],
+      "depends_on": [
+        "footprints"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "metrics_reductions",
+          "message": "Implement mirror_footprint and pad_footprint exact array/sequence contracts. Preserve mirror negative-stride view/alias semantics; use native raw-copy/fill for supported pad dtypes and explicit structural providers for arbitrary NumPy object semantics. Do not force ownership or silently copy a reference view.\nExclusive ownership: include/skimagexx/footprint_util.hpp, src/footprint_util.cpp, src/bind_footprint_util.cpp, python/skimagexx/_footprint_util.py, tests/test_footprint_util.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/footprint-utilities",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "footprints": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "transform-class-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/transform-class-native",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "include/skimagexx/projective.hpp",
+        "src/projective.cpp",
+        "src/simd_projective_avx2.cpp",
+        "src/bind_projective.cpp",
+        "python/skimagexx/_geometric.py",
+        "tests/test_projective_native.cpp",
+        "tests/test_transform_native_pipeline.py"
+      ],
+      "depends_on": [
+        "transform-class-contracts"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_bench",
+          "message": "Start the projective parent model and dependent affine/Euclidean/similarity models against frozen constructor, member, state, mutation, composition/inverse contracts. Freeze parameter/solver interface before splitting further; use own native coordinate kernels and declare runtime math providers. Contract tests alone do not count as implementations.\nExclusive ownership: include/skimagexx/projective.hpp, src/projective.cpp, src/simd_projective_avx2.cpp, src/bind_projective.cpp, python/skimagexx/_geometric.py, tests/test_projective_native.cpp, tests/test_transform_native_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/transform-class-native",
+        "requires_user_resume": true
+      },
+      "acceptance": [
+        "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
+        "Report supported and pending cases explicitly; adapters, forwarding, expected failures and original-only checks are not native implementation proof.",
+        "For native kernels: Windows/modern Linux/minimum Linux normal and scalar gates; global workers default one plus workers four; portable/dynamic-team native checks and sanitizers.",
+        "Freeze source, artifact/runtime hashes, exact commands, raw logs and terminal job handles before integration.",
+        "Parent alone integrates exports/registry/shared build wiring; actual combined wheel must pass before public registration.",
+        "Performance remains pending until isolated one-worker original-library comparisons retain the complete corpus and all regressions."
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "transform-class-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "read_dependencies": [
+        {
+          "source_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+          "paths": [
+            "src/execution.hpp",
+            "src/image.cpp",
+            "include/skimagexx/image.hpp"
+          ],
+          "required_link_sources": [
+            "src/image.cpp"
+          ],
+          "contract": "One actual main _core owns the global worker getter/setter. Standalone adapters are development tools only."
+        }
+      ],
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "component-consumers-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/component-consumers-native",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "include/skimagexx/component_consumers.hpp",
+        "src/component_consumers.cpp",
+        "src/bind_component_consumers.cpp",
+        "python/skimagexx/_component_consumers.py",
+        "tests/test_component_consumers_native.cpp",
+        "tests/test_component_consumers_pipeline.py"
+      ],
+      "depends_on": [
+        "component-consumers",
+        "connected-components-native"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "component-consumers": {
+          "evidence_scope": "contract_reference"
+        },
+        "connected-components-native": {
+          "interface": "connected-components-label-v1"
+        }
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "resize_api",
+          "message": "Implement frozen component consumers using the versioned labeling interface. Keep all writes in the owned files; native tests and integration must verify deterministic label/count semantics.\nExclusive ownership: include/skimagexx/component_consumers.hpp, src/component_consumers.cpp, src/bind_component_consumers.cpp, python/skimagexx/_component_consumers.py, tests/test_component_consumers_native.cpp, tests/test_component_consumers_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/component-consumers-native",
+        "requires_user_resume": true
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "connected-components-public-integration",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/connected-components-public-integration",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/measure.py",
+        "python/skimagexx/morphology.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ],
+      "depends_on": [
+        "connected-components-native"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "public_registration": true,
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "integrator",
+          "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/measure.py, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/li-uniform",
+        "requires_user_resume": true
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "connected-components-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "footprints-public-integration",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/footprints-public-integration",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/morphology.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ],
+      "depends_on": [
+        "footprints-dense",
+        "footprints-decomposition",
+        "footprints-utilities"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "public_registration": true,
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "integrator",
+          "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/li-uniform",
+        "requires_user_resume": true
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "footprints-dense": {
+          "evidence_scope": "native_private"
+        },
+        "footprints-decomposition": {
+          "evidence_scope": "native_private"
+        },
+        "footprints-utilities": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "transform-class-public-integration",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/transform-class-public-integration",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/transform.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ],
+      "depends_on": [
+        "transform-class-native"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "public_registration": true,
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "integrator",
+          "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/transform.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/li-uniform",
+        "requires_user_resume": true
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending",
+          "source_sha": null,
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      },
+      "dependency_requirements": {
+        "transform-class-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      }
+    },
+    {
+      "id": "resize-optimization",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/resize-optimization",
+      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "owns": [
+        "src/resample.cpp",
+        "src/simd_resample_avx2.cpp",
+        "python/skimagexx/_resize.py",
+        "tests/test_resize_native_pipeline.py"
+      ],
+      "depends_on": [
+        "resize-measurement"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "resize-measurement": {
+          "evidence_scope": "isolated_performance"
+        }
+      },
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "integrator",
+          "message": "Inspect every one-worker original-library result and retain all slow cases. Fix measured bottlenecks without changing the corpus or parity assertions; preserve rejected trials and remeasure exact immutable packages remotely.\nExclusive ownership: src/resample.cpp, src/simd_resample_avx2.cpp, python/skimagexx/_resize.py, tests/test_resize_native_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. This implementation handoff is held while the broader goal is paused."
+        },
+        "worktree": "build/worktrees/resize-optimization",
+        "requires_user_resume": true
+      },
+      "build": {
+        "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
+        "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
+        "max_compile_workers": 2,
+        "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
       }
     }
   ],
@@ -1191,7 +2802,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Launch snapshot. Inventory paths are not test/measurement evidence; null evidence remains pending.",
+  "note": "Current executable snapshot. All455 inventoried names and284 class members remain in scope; evidence is per contract/source/runtime. Isolated one-worker timing jobs are authoritative and must not be restarted due observation timeouts.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -1479,5 +3090,107 @@
     "util.PendingSkimage2Change.with_traceback"
   ],
   "static_member_note": "All284 static members remain unimplemented/unverified. Class contract packets do not count as member implementations.",
-  "evidence_note": "An empty uncovered_cases list means no issue recorded in this snapshot, not an exhaustive contract proof; null evidence remains pending."
+  "evidence_note": "Proofs are scoped and hash-bearing. Contract/reference success, strict rejection, expected failures, private adapters and unvalidated fixes cannot satisfy public-native or measurement gates. A frozen interface permits independent implementation, never acceptance.",
+  "snapshot_base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+  "inventory_snapshot": {
+    "public_names": 455,
+    "native_partial_image_names": 123,
+    "metadata_names": 2,
+    "upstream_only_names": 330,
+    "classes": 29,
+    "static_member_paths": 284
+  },
+  "execution_policy": {
+    "active_workers": [],
+    "controller": "integrator",
+    "check": "python tools/work_queue.py --check",
+    "ready": "python tools/work_queue.py --ready",
+    "handoff": "python tools/work_queue.py --packet <id>",
+    "launch_rule": "On explicit goal resume, choose a ready packet and an idle one of the three recorded workers; bind the exact followup_task handoff after checking capacity. While paused, inspection and review do not launch implementation.",
+    "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
+    "implementation_goal_status": "paused",
+    "mode": "plan_review_completed",
+    "reserved_worker_lanes": [
+      "metrics_reductions",
+      "resize_api",
+      "resize_bench"
+    ],
+    "agent_roster": "python tools/work_queue.py --agents",
+    "resume_rule": "The broad goal remains paused; plan inspection never resumes it or launches implementation.",
+    "worker_queues": {
+      "metrics_reductions": [
+        "metrics-fp-stages",
+        "footprints-utilities",
+        "rank-neighborhoods"
+      ],
+      "resize_api": [
+        "connected-components",
+        "connected-components-native",
+        "component-consumers",
+        "component-consumers-native"
+      ],
+      "resize_bench": [
+        "footprints-dense",
+        "footprints-decomposition",
+        "transform-class-native"
+      ]
+    }
+  },
+  "parallel_review": {
+    "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
+    "observed_live_agents_during_review": 3,
+    "integrator": "root",
+    "status": "three independent reviews completed",
+    "agents": [
+      {
+        "agent": "metrics_reductions",
+        "review": "Kernel boundaries and frozen read/link dependencies",
+        "status": "completed",
+        "checkpoint": {
+          "packet": "metrics-fp-stages",
+          "frozen_commit": "070fc64dbf40ead859d7877903c3c0dd398e5082",
+          "uncommitted_work_preserved": true,
+          "passing_initial_checks": 7184,
+          "failing_initial_checks": 4,
+          "subsequent_fix": "Compiles; unvalidated. Preserve callback-resize boundary trials.",
+          "live_handles": []
+        }
+      },
+      {
+        "agent": "resize_api",
+        "review": "Per-function contracts and proof-scoped dependency gates",
+        "status": "completed",
+        "checkpoint": {
+          "packet": "connected-components",
+          "worktree": "build/worktrees/connected-components-contracts",
+          "base_commit": "7006189ebccf1a3f15f0f6ab7ae8be8511ab0705",
+          "uncommitted_work_preserved": true,
+          "passing_contract_checks_per_runtime": 1600,
+          "native_pending_per_runtime": 1596,
+          "live_handles": []
+        }
+      },
+      {
+        "agent": "resize_bench",
+        "review": "Three-worker scheduling, handoffs and benchmark isolation",
+        "status": "completed",
+        "checkpoint": {
+          "packet": "footprints-dense",
+          "worktree": "build/worktrees/footprint-dense",
+          "base_commit": "54d416dd9eaf2630427a5bb1feebece2e7fec81f",
+          "uncommitted_work_preserved": true,
+          "passing_initial_checks": 476,
+          "failing_initial_checks": 8,
+          "subsequent_fix": "Unvalidated; Windows rebuild passes; Linux regeneration exposed ephemeral pybind11_DIR. Repair persistent environment after resume.",
+          "live_handles": []
+        }
+      }
+    ],
+    "adopted_corrections": [
+      "Allow decomposition from frozen interface, with joint native parity required at integration.",
+      "Scope component-consumer reference contracts independently of labeling kernels.",
+      "Require edge-specific evidence scopes, numeric native/pending counts and hash-bearing manifests.",
+      "Track immutable helper/link dependencies, persistent build environments and safe checkpoints."
+    ]
+  }
 }
