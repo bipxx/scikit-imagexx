@@ -1,0 +1,163 @@
+name: resize-controlled
+on:
+  workflow_dispatch:
+    inputs:
+      workers:
+        description: Native limits for both C++ backends (worker1 is primary)
+        type: choice
+        options: ['1', '1 4']
+        default: '1'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prepare:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            runtime: modern
+            profile: windows-modern
+            python: '3.13'
+            numpy: '2.5.4'
+            scipy: '1.18.1'
+          - os: ubuntu-latest
+            runtime: modern
+            profile: linux-modern
+            python: '3.13'
+            numpy: '2.5.4'
+            scipy: '1.18.1'
+          - os: ubuntu-latest
+            runtime: minimum
+            profile: linux-minimum
+            python: '3.11'
+            numpy: '1.24.4'
+            scipy: '1.15.3'
+    runs-on: ${{ matrix.os }}
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+      RESIZE_WORKERS: ${{ inputs.workers }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Download authentic initial performance artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: resize-performance-${{ matrix.os }}-${{ matrix.runtime }}
+          run-id: 39957875987
+          github-token: ${{ github.token }}
+          path: build/capsule/initial
+      - name: Obtain exact initial source independently
+        uses: actions/checkout@v4
+        with:
+          ref: 66e5f78e4f5736597373bd5ccca0378f52d67980
+          path: build/initial-checkout
+      - name: Export immutable old source without a Git database in the capsule
+        shell: bash
+        run: |
+          git -C build/initial-checkout archive --format=zip --output="$PWD/build/capsule/old-source.zip" HEAD
+          python tools/resize_controlled_artifacts.py export-source --archive build/capsule/old-source.zip --output build/capsule/old-source
+      - name: Build complete current wheel
+        shell: bash
+        run: |
+          mkdir -p build/preparation
+          python -m pip wheel . --no-deps --wheel-dir build/capsule/wheels --verbose 2>&1 | tee build/preparation/build.log
+          python -m pip install numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0 pytest
+          python -m pip install --no-deps build/capsule/wheels/*.whl
+      - name: Preserve whole current source and checked Python provenance
+        shell: bash
+        run: |
+          python tools/preserve_baseline.py --wheel build/capsule/wheels/*.whl --source-root . --output build/capsule/current-exact
+          python -m pip freeze > build/capsule/runtime-freeze.txt
+          python -m pip wheel --find-links build/capsule/wheels --wheel-dir build/capsule/wheels -r build/capsule/runtime-freeze.txt
+      - name: Public resize and controlled harness correctness
+        run: >-
+          python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py
+          tests/test_resize_half_identity.py tests/test_resize_public.py tests/test_resize_benchmark.py
+          tests/test_resize_controlled.py tests/test_ci_measurement_isolation.py
+      - name: Seal exact initial/current/runtime/source/SDK capsule
+        run: python tools/resize_controlled_artifacts.py freeze --capsule build/capsule --profile ${{ matrix.profile }}
+      # controlled-capsule.json binds every input before the full parity gate.
+      - name: Check every original/old/current case before any measurement
+        shell: bash
+        run: python benchmarks/resize_controlled.py --capsule build/capsule --check-only --threads $RESIZE_WORKERS --output build/preparation/controlled-check.json
+      - name: Scalar correctness on both independent native backends
+        shell: bash
+        run: python benchmarks/resize_controlled.py --capsule build/capsule --check-only --threads $RESIZE_WORKERS --output build/preparation/controlled-scalar-check.json
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resize-controlled-prepared-${{ matrix.os }}-${{ matrix.runtime }}
+          include-hidden-files: true
+          retention-days: 90
+          path: |
+            build/capsule/
+            build/preparation/
+
+  measure:
+    # All runtime preparations must pass before any fresh measurement host.
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            runtime: modern
+            python: '3.13'
+          - os: ubuntu-latest
+            runtime: modern
+            python: '3.13'
+          - os: ubuntu-latest
+            runtime: minimum
+            python: '3.11'
+    runs-on: ${{ matrix.os }}
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+      RESIZE_WORKERS: ${{ inputs.workers }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: resize-controlled-prepared-${{ matrix.os }}-${{ matrix.runtime }}
+          path: build/prepared
+      - name: Install only the exact offline hashed runtime and current wheel
+        shell: bash
+        run: |
+          python -m pip install --no-index --no-deps --require-hashes --find-links build/prepared/capsule/wheels -r build/prepared/capsule/runtime-lock.txt
+      - name: Verify all artifacts and source before the controlled session
+        run: python tools/resize_controlled_artifacts.py verify --capsule build/prepared/capsule
+      - name: Measure old/current/original in one process on this CPU
+        shell: bash
+        run: python benchmarks/resize_controlled.py --capsule build/prepared/capsule --threads $RESIZE_WORKERS --repeat 7 --output build/results/resize-controlled.json
+      - name: Verify source, runtime and complete capsule remain immutable
+        if: always()
+        run: python tools/resize_controlled_artifacts.py verify --capsule build/prepared/capsule
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resize-controlled-performance-${{ matrix.os }}-${{ matrix.runtime }}
+          include-hidden-files: true
+          retention-days: 90
+          path: |
+            build/results/
+            build/prepared/capsule/
+            build/prepared/preparation/
