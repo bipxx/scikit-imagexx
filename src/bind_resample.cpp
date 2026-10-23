@@ -3,6 +3,7 @@
 #include "execution.hpp"
 #include "resize_gaussian.hpp"
 #include "resize_clip.hpp"
+#include "resize_range.hpp"
 #include <cstring>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -60,6 +61,41 @@ void copy_native(const void* source,void* destination,std::size_t count,std::siz
 }
 }
 void bind_resample(py::module_& module) {
+    // These are bound NumPy C methods, not Python image implementations.
+    // Only ambiguous zero ties/all-NaN payloads need their runtime ordering.
+    const auto numpy=py::module_::import("numpy");
+    const py::object minimum=numpy.attr("minimum").attr("reduce"),maximum=numpy.attr("maximum").attr("reduce"),
+                     fmin=numpy.attr("fmin").attr("reduce"),fmax=numpy.attr("fmax").attr("reduce");
+    module.def("resize_range",[minimum,maximum,fmin,fmax](py::array image) {
+        const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
+        if(!image.size())throw py::value_error("zero-size array to reduction operation minimum which has no identity");
+        const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
+        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
+        }
+        const bool swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+        const bool contiguous=bool(image.flags()&(py::array::c_style|py::array::f_style));
+        const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
+        py::array normalized=copy ? py::array(dtype,dimensions) : image;
+        py::array lower(dtype,std::vector<py::ssize_t>{}),upper(dtype,std::vector<py::ssize_t>{});
+        skimagexx::detail::ResizeRangeInfo info;
+        {
+            py::gil_scoped_release release;
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),std::size_t(image.itemsize()),shape,strides,swap,contiguous);
+            info=skimagexx::detail::resize_range_into(normalized.data(),std::size_t(image.size()),type,lower.mutable_data(),upper.mutable_data());
+        }
+        bool ambiguous=!info.has_value;
+        if(info.positive_zero && info.negative_zero) {
+            if(type==skimagexx::PixelType::float32)ambiguous|=*static_cast<const float*>(lower.data())==0 || *static_cast<const float*>(upper.data())==0;
+            else if(type==skimagexx::PixelType::float64)ambiguous|=*static_cast<const double*>(lower.data())==0 || *static_cast<const double*>(upper.data())==0;
+        }
+        if(ambiguous) {
+            lower=py::array::ensure((info.has_nan ? fmin : minimum)(image,py::arg("axis")=py::none()));
+            upper=py::array::ensure((info.has_nan ? fmax : maximum)(image,py::arg("axis")=py::none()));
+        }
+        return py::make_tuple(lower,upper,info.has_nan,info.has_value,ambiguous);
+    });
     module.def("resize_clip",[](py::array image,py::array lower,py::array upper,int policy) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
         if(!(image.flags()&py::array::c_style) || !image.writeable() || !image.dtype().attr("isnative").cast<bool>() ||

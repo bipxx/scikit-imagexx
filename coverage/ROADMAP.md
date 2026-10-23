@@ -91,13 +91,16 @@ Next work:
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.
 - Complete the private resize/rescale pipeline before registering either API.
-  Spline coefficients, typed grid zoom, raw Gaussian anti-aliasing, and typed
+  Spline coefficients, typed grid zoom, raw Gaussian anti-aliasing, typed ranges and
   output clipping now have independent native fixtures and Python parity
   checks. Integer anti-aliasing
   stores back into the source dtype after every axis, including full-width
   casting behavior. Clipping preserves all integer bound bits and uses explicit
-  policies for the three observed NumPy signed-zero/NaN behaviors. Input/output
-  range reduction, public argument/warning parity, and isolated
+  policies for the three observed NumPy signed-zero/NaN behaviors. Range scans
+  preserve integer precision and report NaNs/zero signs. The Python bridge uses
+  NumPy's compiled reduction only for observable mixed-zero ties or all-NaN
+  payload ordering; ordinary ranges use the C++ scan. Public argument/warning
+  parity and isolated
   one-worker end-to-end benchmarks against scikit-image remain pending.
   Private stages do not count as public native coverage or measured speedups.
 - Port geometric transforms, measurements, features, restoration, registration,
