@@ -1,0 +1,21 @@
+{
+  "schema": "component-consumers-public-acceptance-v1",
+  "reference": "scikit-image==0.26.0",
+  "frozen_contract": "coverage/contracts/component-consumers.json",
+  "frozen_assertions": "tests/test_component_consumer_contracts.py",
+  "public_assertions": "tests/test_component_consumers_public.py",
+  "apis": ["morphology.remove_small_objects", "morphology.remove_small_holes", "segmentation.clear_border", "segmentation.relabel_sequential"],
+  "implementation": "partial-native-image-consumers",
+  "registration_is_evidence": false,
+  "parity_evidence": null,
+  "performance_evidence": null,
+  "native_stages": "Own C++ copy/assignment, truth/key preparation, sparse counts, size filtering, border clearing, sorted relabeling and sparse/dense map operations. Existing sole-core components label is the only native labeling provider.",
+  "runtime_metadata_providers": ["NumPy empty-array dtype admission/error policy, threshold conversion, dtype selection and scalar casting", "Pinned deprecated-argument sentinel identity when scikit-image is installed; own sentinel when absent", "Runtime NumPy metadata reshape warning policy"],
+  "native_scope": "The unchanged frozen real-dtype/layout/rank/threshold/output-state and returned-map assertions; defined morphology dtype rejection remains native and is not blanket-routed through fallback.",
+  "explicit_protocol_fallback": "Array subclasses, custom array protocols, and non-base-array image/out/mask combinations use the existing explicit fallback policy. Base ndarray dtype rejection and partial mutation order remain in the native consumer shell.",
+  "unrepresented_scope": ["Exhaustive arbitrary object/complex/extended-precision consumer input and output combinations", "Custom Python scalar/threshold conversion protocols", "Arbitrary object/complex/subclass ArrayMap constructor and mutation combinations", "Undefined upstream out-of-bounds Cython map_array layouts"],
+  "returned_arraymap": {"implementation": "Own Python state shell and native map stages", "public_class_registration": false, "contract": "Returned sparse vectors, lookup/call, materialization, mutation, aliases, errors and lifetime are tested separately; the internal constructor is not a new public util/segmentation class."},
+  "sparse_safety": "Huge int64 count/filter safety is native definition-level evidence only; no impractical original bincount or dense map allocation is attempted. Safe sparse relabel reference comparisons are separate.",
+  "workers": {"default": 1, "optional": [1, 4], "runtime": "Same process-global sole _core state; scalar/SIMD parity profiles are separate"},
+  "timings": "None; public pipeline tests and corpus are untimed. Paths and passing contracts do not establish performance."
+}

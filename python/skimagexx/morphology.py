@@ -1,5 +1,6 @@
 """Native flat morphology; unsupported calls use the explicit fallback policy."""
 from collections.abc import Sequence
+from functools import wraps
 from numbers import Integral, Real
 import warnings
 import numpy as np
@@ -8,13 +9,15 @@ from ._compat import fallback, module_attribute
 from ._footprint_decomposition import footprint_rectangle, diamond, disk, ball
 from ._footprint_util import mirror_footprint, pad_footprint
 from ._components import label
+from . import _component_consumers as _consumers
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
 
 __all__ = ['erosion','dilation','opening','closing','white_tophat','black_tophat',
            'binary_erosion','binary_dilation','binary_opening','binary_closing',
-           'footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint','label']
+           'footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint','label',
+           'remove_small_objects','remove_small_holes']
 _DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                     'int32','uint64','int64','float32','float64'))
 _MODES = ('reflect','constant','nearest','mirror','wrap','max','min','ignore')
@@ -25,6 +28,26 @@ _SEQUENCE_ERROR = ('All elements of footprint sequence must be a 2-tuple where t
 
 def __getattr__(name):
     return module_attribute('morphology',name)
+
+
+@wraps(_consumers.remove_small_objects)
+def remove_small_objects(*args,**kwargs):
+    source=args[0] if args else kwargs.get('ar')
+    out=kwargs.get('out')
+    if source is not None and (type(source) is not np.ndarray or
+                              out is not None and type(out) is not np.ndarray):
+        return fallback('morphology','remove_small_objects',*args,**kwargs)
+    return _consumers.remove_small_objects(*args,**kwargs)
+
+
+@wraps(_consumers.remove_small_holes)
+def remove_small_holes(*args,**kwargs):
+    source=args[0] if args else kwargs.get('ar')
+    out=kwargs.get('out')
+    if source is not None and (type(source) is not np.ndarray or
+                              out is not None and type(out) is not np.ndarray):
+        return fallback('morphology','remove_small_holes',*args,**kwargs)
+    return _consumers.remove_small_holes(*args,**kwargs)
 
 
 def _plans(footprint,ndim,binary,first_dilation=False):

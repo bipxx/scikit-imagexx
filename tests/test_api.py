@@ -11,10 +11,12 @@ from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
 from skimage import feature as reference_feature
 from skimage import metrics as reference_metrics, measure as reference_measure
+from skimage import segmentation as reference_segmentation
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
            (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform),
-           (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure)]
+           (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure),
+           (xx.segmentation,reference_segmentation)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
              if not inspect.isclass(getattr(native,name))]
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
@@ -34,12 +36,12 @@ def test_unported_namespace_interchangeability():
     a = np.zeros((9, 11), dtype=bool)
     a[3:6, 4:7] = True
     with pytest.raises(NotImplementedError):
-        xx.morphology.remove_small_objects(a)
+        xx.morphology.area_opening(a)
     xx.set_fallback_enabled(True)
     from skimage import morphology
     with pytest.warns(xx.FallbackWarning):
-        actual = xx.morphology.remove_small_objects(a)
-    np.testing.assert_array_equal(actual, morphology.remove_small_objects(a))
+        actual = xx.morphology.area_opening(a)
+    np.testing.assert_array_equal(actual, morphology.area_opening(a))
 
 
 @pytest.fixture(autouse=True, params=[1, 4])
@@ -66,6 +68,13 @@ def test_every_native_function(native, original, name, dtype, shape):
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
+            # These integer-only algorithms preserve original defined dtype
+            # rejection; this is separate from successful default-case dtypes.
+            with pytest.raises(TypeError) as expected:getattr(original,name)(a)
+            with pytest.raises(TypeError) as actual:getattr(native,name)(a)
+            assert str(actual.value)==str(expected.value)
+            return
         with pytest.raises(NotImplementedError):
             getattr(native, name)(a)
         return
@@ -80,6 +89,18 @@ def test_every_native_function(native, original, name, dtype, shape):
         assert str(actual_error.value)==str(error)
         return
     actual = getattr(native, name)(*args,**options)
+    if api=='segmentation.relabel_sequential':
+        # Compare sparse mapping vectors without dense ArrayMap conversion.
+        assert type(actual) is type(expected) is tuple and len(actual)==3
+        np.testing.assert_array_equal(actual[0],expected[0])
+        assert actual[0].dtype==expected[0].dtype
+        for value,reference in zip(actual[1:],expected[1:]):
+            assert type(value).__name__==type(reference).__name__=='ArrayMap'
+            assert not type(value).__module__.startswith('skimage.')
+            for field in ('in_values','out_values'):
+                np.testing.assert_array_equal(getattr(value,field),getattr(reference,field))
+                assert getattr(value,field).dtype==getattr(reference,field).dtype
+        return
     if name=='rank_order':
         assert type(actual) is type(expected) is tuple and len(actual)==len(expected)==2
         for value,reference in zip(actual,expected):
