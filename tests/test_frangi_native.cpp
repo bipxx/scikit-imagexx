@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include <iostream>
+#include <atomic>
 using namespace skimagexx;
 void require(bool ok){if(!ok)throw std::runtime_error("Frangi native check failed");}
 double analytic(std::size_t n,double first,double second,double third,double gamma_den){
@@ -15,6 +16,10 @@ double analytic(std::size_t n,double first,double second,double third,double gam
 template<class T> bool fixed_eigen(const void* const*,void* destination,std::size_t count,std::size_t n,bool single,void* context){
  require(single==(sizeof(T)==4));++*static_cast<int*>(context);auto* output=static_cast<T*>(destination);
  for(std::size_t i=0;i<count;++i){output[i]=T(4);output[count+i]=T(n==2 ? .2 : 1);if(n==3)output[2*count+i]=T(.2);}return true;
+}
+void constant_exp(const double* input,double* output,std::size_t count,void* context){
+ require(input!=output);static_cast<std::atomic<int>*>(context)->fetch_add(1);
+ for(std::size_t i=0;i<count;++i){require(std::isfinite(input[i]));output[i]=.5;}
 }
 template<class T> void check(std::size_t count,std::size_t n){
  std::vector<std::vector<T>> fields(n*(n+1)/2,std::vector<T>(count));std::vector<const void*> pointers;
@@ -36,6 +41,9 @@ template<class T> void check(std::size_t count,std::size_t n){
  int calls=0;const FrangiEigenProvider provider{&fixed_eigen<T>,&calls};p.eigen_provider=&provider;p.gamma_den=2;
  require(frangi_accumulate_into(pointers.data(),nullptr,output.data(),count,n,single,p));require(calls==1);
  const double supplied=analytic(n,.2,n==2 ? 4 : 1,4,2);for(auto value:output)require(std::abs(double(value)-supplied)<tol);
+ if(!single){std::atomic<int> exp_calls{0};const FrangiExpProvider exponential{&constant_exp,&exp_calls};p.exp_provider=&exponential;
+  require(frangi_accumulate_into(pointers.data(),nullptr,output.data(),count,n,single,p));require(exp_calls>0);
+  for(auto value:output)require(value==(n==2 ? .25 : .125));p.exp_provider=nullptr;}
  T repair[]={T(0),T(-0.),T(-1),T(.2),T(NAN)};ridge_hessian_finish_into(repair,5,single);require(repair[0]==1 && repair[1]==1 && repair[2]==1 && repair[3]==T(.2) && std::isnan(repair[4]));
 }
 int main(){check<float>(19,2);check<double>(19,2);check<float>(19,3);check<double>(19,3);check<float>(266247,3);check<double>(266247,3);

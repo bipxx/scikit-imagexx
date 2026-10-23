@@ -10,10 +10,11 @@
 #include <memory>
 #include <stdexcept>
 namespace skimagexx { namespace {
-template<class T> T factor(T value,double denominator,bool narrow,bool& valid){
+template<class T> T factor(T value,double denominator,bool narrow,bool& valid,const FrangiExpProvider* provider){
  const T square=T(value*value),negative=-square;
  const T exponent=narrow ? T(negative/T(denominator)) : T(double(negative)/denominator);
  if(!std::isfinite(exponent)){valid=false;return T(0);}
+ if constexpr(sizeof(T)==8){if(provider && provider->evaluate){double result;provider->evaluate(&exponent,&result,1,provider->context);return result;}}
  return detail::frangi_exp(exponent);
 }
 template<class T> bool run(const void* const* fields,const void* previous,void* destination,std::size_t count,std::size_t n,FrangiParameters& parameters){
@@ -56,9 +57,9 @@ template<class T> bool run(const void* const* fields,const void* previous,void* 
 #endif
   if(!supported){valid.store(false,std::memory_order_relaxed);return;}
   for(;begin<end;++begin){
-   const T plate=n==2 ? T(1) : T(T(1)-factor(ra[begin],parameters.alpha_den,parameters.alpha_single,supported));
-   T value=T(plate*factor(rb[begin],parameters.beta_den,parameters.beta_single,supported));
-   value=T(value*T(T(1)-factor(norm[begin],parameters.gamma_den,parameters.gamma_single,supported)));
+   const T plate=n==2 ? T(1) : T(T(1)-factor(ra[begin],parameters.alpha_den,parameters.alpha_single,supported,parameters.exp_provider));
+   T value=T(plate*factor(rb[begin],parameters.beta_den,parameters.beta_single,supported,parameters.exp_provider));
+   value=T(value*T(T(1)-factor(norm[begin],parameters.gamma_den,parameters.gamma_single,supported,parameters.exp_provider)));
    const T prior=old ? old[begin] : T(0);
    if(!supported || !std::isfinite(value) || !std::isfinite(prior)){valid.store(false,std::memory_order_relaxed);return;}
    output[begin]=value>=prior ? value : prior;

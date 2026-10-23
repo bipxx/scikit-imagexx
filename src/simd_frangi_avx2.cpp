@@ -33,7 +33,9 @@ template<bool Single> std::size_t response(const void* a,const void* b,const voi
    alignas(32) T lanes[4];
    if constexpr(Single){if(!narrow){const auto wide=_mm256_div_pd(_mm256_cvtps_pd(numerator),_mm256_set1_pd(den));numerator=_mm256_cvtpd_ps(wide);}else numerator=M::div(numerator,M::c(den));}
    else numerator=M::div(numerator,M::c(den));
-   M::store(lanes,numerator);for(auto& lane:lanes){if(!std::isfinite(lane)){valid=false;lane=T(0);}lane=detail::frangi_exp(lane);}return M::load(lanes);
+   M::store(lanes,numerator);for(auto& lane:lanes)if(!std::isfinite(lane)){valid=false;lane=T(0);}
+   if constexpr(!Single){if(p.exp_provider && p.exp_provider->evaluate){alignas(32) double out[4];p.exp_provider->evaluate(lanes,out,4,p.exp_provider->context);return M::load(out);}}
+   for(auto& lane:lanes)lane=detail::frangi_exp(lane);return M::load(lanes);
   };
   const R plate=pair ? M::c(1) : M::sub(M::c(1),exponential(a,p.alpha_den,p.alpha_single));
   auto value=M::mul(plate,exponential(b,p.beta_den,p.beta_single));value=M::mul(value,M::sub(M::c(1),exponential(s,p.gamma_den,p.gamma_single)));

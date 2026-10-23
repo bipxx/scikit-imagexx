@@ -5,6 +5,11 @@ struct FrangiEigenProvider {
  bool (*evaluate)(const void* const*,void*,std::size_t,std::size_t,bool,void*)=nullptr;
  void* context=nullptr;
 };
+struct FrangiExpProvider {
+ // Separate input/output buffers. Host-specific SIMD double-exp rounding.
+ void (*evaluate)(const double*,double*,std::size_t,void*)=nullptr;
+ void* context=nullptr;
+};
 struct FrangiParameters {
  double alpha_den=0.5,beta_den=0.5,gamma_den=0.;
  bool alpha_single=false,beta_single=false,gamma_single=false;
@@ -13,6 +18,8 @@ struct FrangiParameters {
  // Output is decreasing eigenvalue fields in the input field precision.
  // Null uses the standalone C++ Jacobi/formula solver.
  const FrangiEigenProvider* eigen_provider=nullptr;
+ // Null uses the C++ standard library exponential.
+ const FrangiExpProvider* exp_provider=nullptr;
 };
 // Homogeneous dense/aligned upper-triangle Hessian fields in rank2/3. Output
 // and previous (or null=zeros) match field precision, separate storage.

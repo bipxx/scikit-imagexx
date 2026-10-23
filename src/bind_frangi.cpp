@@ -13,6 +13,24 @@
 #include <atomic>
 namespace py=pybind11;
 namespace {
+struct NumpyFrangiExp {
+ py::object owner;
+ PyUFuncGenericFunction function=nullptr;void* data=nullptr;
+ skimagexx::FrangiExpProvider provider;
+ NumpyFrangiExp():owner(py::module_::import("numpy").attr("exp")){
+  if(!PyObject_TypeCheck(owner.ptr(),&PyUFunc_Type))throw std::runtime_error("native exponential loop unavailable");
+  const auto* u=reinterpret_cast<PyUFuncObject*>(owner.ptr());
+  if(u->nargs==2)for(int i=0;i<u->ntypes;++i)if(u->types[2*i]==NPY_DOUBLE && u->types[2*i+1]==NPY_DOUBLE){function=u->functions[i];data=u->data ? u->data[i] : nullptr;break;}
+  if(!function)throw std::runtime_error("native double exponential loop unavailable");
+  provider={&evaluate,this};
+ }
+ static void evaluate(const double* input,double* output,std::size_t count,void* context){
+  const auto& self=*static_cast<const NumpyFrangiExp*>(context);
+  char* args[]={reinterpret_cast<char*>(const_cast<double*>(input)),reinterpret_cast<char*>(output)};
+  const npy_intp dimensions[]={npy_intp(count)},steps[]={sizeof(double),sizeof(double)};
+  self.function(args,dimensions,steps,self.data);
+ }
+};
 struct NumpyFrangiEigen {
  py::object owner;
  PyUFuncGenericFunction function=nullptr;void* data=nullptr;
@@ -49,12 +67,18 @@ struct NumpyFrangiEigen {
 void bind_frangi(py::module_& module){
  if(_import_array()<0 || _import_umath()<0)throw py::error_already_set();
  auto eigen=std::make_shared<NumpyFrangiEigen>();
+ auto exponential=std::make_shared<NumpyFrangiExp>();
+ module.def("frangi_exp_values_double",[exponential](py::array_t<double,py::array::c_style|py::array::forcecast> values){
+  std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<double> output(shape);
+  {py::gil_scoped_release release;exponential->provider.evaluate(values.data(),output.mutable_data(),values.size(),exponential->provider.context);}
+  return output;
+ });
  module.def("frangi_exp_values",[](py::array_t<float,py::array::c_style|py::array::forcecast> values){
   std::vector<py::ssize_t> shape(values.shape(),values.shape()+values.ndim());py::array_t<float> output(shape);
   {py::gil_scoped_release release;for(py::ssize_t i=0;i<values.size();++i)output.mutable_data()[i]=skimagexx::detail::frangi_exp(values.data()[i]);}
   return output;
  });
- module.def("frangi_accumulate",[eigen](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{
+ module.def("frangi_accumulate",[eigen,exponential](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{
   std::vector<py::array> storage;std::vector<const void*> data;std::vector<py::ssize_t> shape;py::dtype field_dtype;
   for(auto entry:fields){auto a=py::array::ensure(entry,py::array::c_style);
    if(!a || !a.dtype().attr("isnative").cast<bool>() || a.dtype().kind()!='f' || (a.itemsize()!=4 && a.itemsize()!=8) || a.ndim()<2 || a.ndim()>3)throw py::value_error("native Frangi Hessian fields required");
@@ -68,6 +92,7 @@ void bind_frangi(py::module_& module){
    if(!prior.attr("flags").attr("aligned").cast<bool>())prior=prior.attr("copy")().cast<py::array>();old=prior.data();}
   skimagexx::FrangiParameters p;p.alpha_den=alpha_den;p.beta_den=beta_den;p.alpha_single=alpha_single;p.beta_single=beta_single;p.gamma_single=gamma_single;p.gamma_compute_single=gamma_compute_single;p.automatic_gamma=gamma_den.is_none();if(!p.automatic_gamma)p.gamma_den=gamma_den.cast<double>();
   if(n==3)p.eigen_provider=&eigen->provider;
+  if(dtype.itemsize()==8)p.exp_provider=&exponential->provider;
   py::array output(dtype,shape);bool valid;
   {py::gil_scoped_release release;valid=skimagexx::frangi_accumulate_into(data.data(),old,output.mutable_data(),output.size(),n,dtype.itemsize()==4,p);}
   return valid ? py::object(py::make_tuple(output,p.gamma_den)) : py::none();

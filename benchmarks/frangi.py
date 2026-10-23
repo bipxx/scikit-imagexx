@@ -73,6 +73,7 @@ def main():
         'eigen_provider_2d': 'C++ analytic symmetric eigenvalues',
         'eigen_provider_3d': 'NumPy native double eigvalsh_lo LAPACK gufunc C loop; C++ matrix packing',
         'float32_exp': 'NumPy BSD-licensed scalar FMA approximation inside SIMD response',
+        'float64_exp': 'NumPy native double exp ufunc C loop; host SIMD dispatch, separate buffers',
         'scope': 'Warmed allocation-inclusive Python calls, input conversion and output destruction included',
         **source_fingerprint(Path(__file__).resolve().parents[1]),
         'case_spec_sha256': hashlib.sha256(json.dumps(specs, sort_keys=True).encode()).hexdigest(),

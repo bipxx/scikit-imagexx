@@ -5,6 +5,17 @@ import skimagexx as xx
 from skimage import filters as reference
 
 TYPES=(np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64)
+
+@pytest.mark.parametrize('length',(1,3,4,7,8,9,693))
+def test_double_exp_host_rounding(length):
+    # Hosted AVX-512 NumPy and libm disagree on exp(x)==1 here. That single
+    # bit controls ridge-Hessian's discontinuous zero-to-one finish.
+    values=np.resize(np.array([float.fromhex('-0x1.ae57019c31868p-55'),
+        float.fromhex('-0x1.cd8883b52286fp-55'),
+        float.fromhex('-0x1.b47553d1d3d71p-55'),-0.,-1e-16,-1.,-700.]),length)
+    expected=np.exp(values)
+    actual=xx._core.frangi_exp_values_double(values)
+    np.testing.assert_array_equal(actual.view(np.uint64),expected.view(np.uint64))
 @pytest.fixture(autouse=True)
 def native():
     xx.set_fallback_enabled(False);xx.set_num_threads(1)

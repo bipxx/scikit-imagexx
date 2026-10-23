@@ -30,6 +30,17 @@ C++ API accepts an optional native eigenvalue-provider callback and defaults
 to its own Jacobi/formula solver; identical sensitive rounding is not claimed
 for that default solver.
 
+Hosted AVX-512 diagnostics additionally prove that NumPy's double exponential
+and libm disagree on exp(x)==1 for five observed tiny negative exponents. All
+six Hessian fields are bit-identical in each failing image. The Python binding
+now also supplies a native double-exp math provider: the captured NumPy ufunc
+C loop evaluates separate input/output buffers without Python calls or the
+GIL, preserving host SIMD rounding for both vector blocks and scalar tails.
+The standalone C++ API defaults to libm and accepts an optional exp provider.
+This additional NumPy math dependency is recorded in benchmark metadata.
+The provider correction is awaiting validation; the preceding failure remains
+the latest hosted full-suite result.
+
 Float32 exponential rounding also matters: a one-ULP difference near exp(x)=1
 can change ridge-Hessian's final zero-to-one decision. The prototype uses
 NumPy's licensed float32 approximation and evaluation order with explicit
