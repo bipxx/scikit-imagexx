@@ -1,5 +1,18 @@
 # Last completed whole-library performance checkpoint
 
+Retained optimized `feature.hessian_matrix_det`, measured source `b93d108`:
+[full CI39899942360](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39899942605](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942605)
+passed both OSes. One-worker geometric means for approximation/exact modes are
+**4.009510× / 5.571440× Linux** and **4.895439× / 4.330357× Windows**.
+All 240 one-worker cases per OS are faster, including all four previously
+slower tiny-image cases. Approximation has zero numerical difference in all
+timed rows; exact mode's maximum absolute error is 2.081668e-17. All fixed
+cases and original trial samples remain in the [report](hessian-det-initial.md).
+Native coverage remains **117 + 2 metadata APIs**, with **336 callable names**
+and 29 classes/284 static member paths pending.
+
 Retained `feature.hessian_matrix_det`, measured source `f9c80e2`:
 [full CI39898515905](https://github.com/bipxx/scikit-imagexx/actions/runs/39898515905)
 passed Windows, Linux and minimum NumPy; isolated
@@ -8,7 +21,7 @@ passed both OSes. One-worker geometric means for approximation/exact modes are
 **3.115030× / 5.686609× Linux** and **2.472311× / 4.411284× Windows**.
 Exact mode is faster in all 120 cases per OS. Approximation is faster in
 119/120 Linux and 117/120 Windows cases; four tiny-image cases remain slower
-and have a separately measured follow-up awaiting full CI. All 960 timed rows
+and are addressed by the retained follow-up above. All 960 timed rows
 pass parity; approximation is exact, and exact mode's maximum absolute error
 is 1.387779e-17. Native coverage is **117 + 2 metadata APIs**, with **336 callable
 names** and 29 classes/284 static member paths pending.

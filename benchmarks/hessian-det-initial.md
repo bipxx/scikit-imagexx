@@ -147,4 +147,7 @@ rows; exact mode's maximum absolute error is 2.081668e-17 Linux /
 upstream within each runner, not paired candidate-to-candidate measurements.
 
 The follow-up [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
-is still running; retention awaits that gate.
+passed Windows, Linux and minimum NumPy. This follow-up is retained on `main`;
+runtime sources match measured revision `b93d1082fdb79a415c45623eae5497f7e3f2dae0`.
+Later retention changes are documentation and merge bookkeeping. Exact packages,
+raw samples, source archives and full CI logs remain preserved.
