@@ -27,7 +27,10 @@ def _inert_numeric_dtype(dtype):
     if id(type(dtype)) in _NUMERIC_DTYPE_CLASS_IDS:
         descriptor = dtype
     elif dtype is None or id(dtype) in _NUMERIC_SCALAR_CLASS_IDS:
-        descriptor = np.dtype(dtype)
+        # Exact pinned scalar classes/None already have known numeric storage.
+        # np.empty performs the original-equivalent resolution; screening must
+        # not invoke a caller-replaced Python numpy.dtype factory.
+        return True
     else:
         return False
     if id(type(descriptor)) not in _NUMERIC_DTYPE_CLASS_IDS:
