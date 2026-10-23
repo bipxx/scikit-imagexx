@@ -1,4 +1,5 @@
 #include "skimagexx/structure_tensor.hpp"
+#include "skimagexx/derivatives.hpp"
 #include "skimagexx/image.hpp"
 #include "structure_tensor_detail.hpp"
 #include "execution.hpp"
@@ -97,6 +98,18 @@ template<class T> bool execute(const void* image,PixelType source,void* const* o
 }
 }}
 namespace skimagexx {
+void sobel_derivative_2d_into(const void* input,void* output,void* scratch,std::size_t height,std::size_t width,bool single,std::size_t axis,const std::array<GaussianBorder,2>& borders,double cval){
+    if(axis>1 || int(borders[0])<0 || int(borders[0])>4 || int(borders[1])<0 || int(borders[1])>4)throw std::invalid_argument("invalid Sobel derivative plan");
+    if(!height || !width)return;
+    if(height>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double)/width)throw std::overflow_error("Sobel derivative dimensions overflow");
+    if(!input || !output || !scratch)throw std::invalid_argument("nonnull Sobel derivative buffers required");
+    const auto count=height*width;const auto workers=detail::active_workers(count*3);
+    auto run=[&](auto dummy){using T=decltype(dummy);
+        sobel_pass(static_cast<const T*>(input),static_cast<T*>(scratch),count,axis ? width : height,axis ? 1 : width,borders[axis],cval,true,workers);
+        sobel_pass(static_cast<const T*>(scratch),static_cast<T*>(output),count,axis ? height : width,axis ? width : 1,borders[1-axis],cval,false,workers);
+    };
+    if(single)run(float{});else run(double{});
+}
 bool structure_tensor_into(const void* image,PixelType source,void* const* output,
     const std::vector<std::size_t>& shape,const std::vector<GaussianPass>& smoothing,
     const std::vector<GaussianBorder>& borders,double cval,bool xy){

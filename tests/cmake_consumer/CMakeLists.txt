@@ -49,3 +49,6 @@ add_test(NAME installed_structure_tensor_consumer COMMAND structure_tensor_consu
 add_executable(corner_response_consumer ../test_corner_response_native.cpp)
 target_link_libraries(corner_response_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_corner_response_consumer COMMAND corner_response_consumer)
+add_executable(kitchen_consumer ../test_kitchen_native.cpp)
+target_link_libraries(kitchen_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_kitchen_consumer COMMAND kitchen_consumer)
