@@ -80,6 +80,32 @@ template<class T> void workers(PixelType type,bool single) {
     }
     set_num_threads(1);
 }
+void half_load_layouts() {
+    std::vector<std::uint16_t> encodings;
+    for(unsigned word=0;word<65536;++word)if((word&0x7c00)!=0x7c00)encodings.push_back(std::uint16_t(word));
+    for(const auto n:{std::size_t(4),std::size_t(5),std::size_t(7),std::size_t(8),std::size_t(9),std::size_t(127),std::size_t(128),std::size_t(129),std::size_t(257),encodings.size()}) {
+        std::vector<std::uint16_t> logical(encodings.begin(),encodings.begin()+n),zero(n,0);
+        auto first=view(logical,PixelType::uint16),second=view(zero,PixelType::uint16);first.half=second.half=true;
+        for(auto mode:{MetricNormalization::none,MetricNormalization::euclidean,MetricNormalization::mean,MetricNormalization::min_max}) {
+            const auto expected=metric_sums(first,second,true,mode,true);
+            for(const int step:{1,-1,2,-2,3,-3})for(const bool swap:{false,true}) {
+                const auto stride=std::size_t(std::abs(step))*2,bytes=(n-1)*stride+3;
+                auto storage=std::make_unique<unsigned char[]>(bytes);std::memset(storage.get(),0xcd,bytes);
+                for(std::size_t i=0;i<n;++i) {
+                    unsigned char encoded[2];std::memcpy(encoded,&logical[i],2);
+                    const auto index=step>0 ? i:n-1-i;
+                    storage[1+index*stride]=encoded[swap ? 1:0];storage[2+index*stride]=encoded[swap ? 0:1];
+                }
+                const std::vector<unsigned char> before(storage.get(),storage.get()+bytes);
+                auto input=first;input.data=storage.get()+1+(step<0 ? (n-1)*stride:0);input.swap=swap;input.strides[0]=step*2;
+                const auto actual=metric_sums(input,second,true,mode);
+                require(!std::memcmp(&expected.error,&actual.error,8) && !std::memcmp(&expected.energy,&actual.energy,8) && !std::memcmp(&expected.mean,&actual.mean,8));
+                require(expected.low==actual.low && expected.high==actual.high && expected.valid==actual.valid && expected.nan==actual.nan);
+                require(!std::memcmp(storage.get(),before.data(),bytes));
+            }
+        }
+    }
+}
 }
 int main() {
     require(get_num_threads()==1);
@@ -127,6 +153,7 @@ int main() {
         finite_half.push_back(float(detail::metric_read(one_half,0)));
     }
     require(metric_sums(view(finite_half,PixelType::float32),view(finite_half,PixelType::float32),true,MetricNormalization::mean,false,false,8192).mean==3.9375);
+    half_load_layouts();
     workers<float>(PixelType::float32,true);workers<double>(PixelType::float64,false);
     workers<std::uint8_t>(PixelType::uint8,false);workers<std::int8_t>(PixelType::int8,false);
     workers<std::uint16_t>(PixelType::uint16,false);workers<std::int16_t>(PixelType::int16,false);
