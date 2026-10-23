@@ -43,7 +43,9 @@ def test_own_wrapper_identity_signature_and_registry(name):
     assert getattr(rank,name) is not getattr(reference,name)
     assert getattr(reference_generic,name) is getattr(reference,name)
     assert inspect.signature(getattr(rank,name))==inspect.signature(getattr(reference,name))
-    assert rank.__all__==generic.__all__==list(NAMES)
+    assert rank.__all__==generic.__all__==_rank.__all__
+    assert rank.__all__[:len(NAMES)]==list(NAMES)
+    assert tuple('filters.rank.'+n for n in rank.__all__)==RANK_CANONICAL_FUNCTIONS
     assert _rank._core is _core
     assert xx.set_num_threads is _core.set_num_threads
     assert xx.get_num_threads is _core.get_num_threads

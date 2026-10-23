@@ -1,8 +1,8 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'segmentation': ('clear_border','relabel_sequential'),
-    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy'),
-    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy'),
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold'),
+    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
@@ -40,6 +40,29 @@ def rank_contract(api):
     """Execution facts and explicit limits, separate from measured evidence."""
     canonical=RANK_IDENTITY_ALIASES.get(api,api)
     if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
+    name=canonical.rsplit('.',1)[1]
+    if name in ('autolevel','equalize','enhance_contrast','threshold'):
+        arithmetic={
+            'autolevel':'Signed64 (bins-1)*(center-min)/(max-min), integer truncation toward zero before all output stores; unsigned narrowing is modular, floating stores retain the signed quotient',
+            'equalize':'Inclusive ascending CDF; integer (bins-1)*count before double division by population',
+            'enhance_contrast':'Local extrema; lower value wins equal-distance ties',
+            'threshold':'Strict center > integer weighted sum / double population; outputs zero or one',
+        }
+        return dict(version='rank-histogram-v3',canonical=canonical,
+            identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
+            implementation='cpp-rolling-histogram-runtime-simd',
+            operation=9+('autolevel','equalize','enhance_contrast','threshold').index(name),
+            arithmetic=arithmetic[name],
+            providers='Own C++ uint8/uint16 histogram kernels. NumPy owns preparation, dtype/error/warning semantics, structural output operations and staged stateful floating conversions; no upstream rank image algorithm forwarding',
+            workers='one actual process-global C++ worker policy, default one; optional parallel workers, small workloads remain serial; NumPy/BLAS provider pools controlled separately',
+            simd='Runtime AVX2 and portable loops; equalize has int64 blocked-prefix SIMD, other operations reuse extrema/uniform-run or sum SIMD paths',
+            buffers='Qualified disjoint prepared image/mask/output read-write domains; overlapping prepared buffers remain excluded. Public R2 alias admission is unchanged; private alias capability480 does not admit R3 overlap',
+            unsafe_buffers='Undersized masks/outputs and zero-depth outputs safely rejected; upstream undefined memory behavior excluded from parity',
+            protocol_scope='Sealed ordinary ndarray/type/layout/metadata and defined rejection contracts; arbitrary unrepresented array/subclass protocols and callback interleavings are not newly claimed',
+            capability=8191,public_parity_test='tests/test_rank_intensity_public.py',
+            frozen_contract='coverage/contracts/rank-intensity.json',
+            public_contract='coverage/contracts/rank-intensity-public.json',
+            parity_evidence=None,performance_evidence=None)
     r2=canonical.rsplit('.',1)[1] in ('gradient','median','modal','entropy')
     return dict(version='rank-histogram-v2',canonical=canonical,
         identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),

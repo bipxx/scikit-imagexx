@@ -165,7 +165,8 @@ def pop(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):return
 
 def _require_operation(operation):
     if not (getattr(_core,'rank_histogram_capabilities',0) & (1<<operation)):
-        raise NotImplementedError('rank-histogram-v2 backend required for this operation')
+        version=3 if operation>=9 else 2
+        raise NotImplementedError(f'rank-histogram-v{version} backend required for this operation')
 
 
 def gradient(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
@@ -189,4 +190,25 @@ def entropy(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
     return _apply(8,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=np.float64)
 
 
-__all__=['minimum','maximum','mean','sum','pop','gradient','median','modal','entropy']
+def autolevel(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(9)
+    return _apply(9,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def equalize(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(10)
+    return _apply(10,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def enhance_contrast(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(11)
+    return _apply(11,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def threshold(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_operation(12)
+    return _apply(12,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+__all__=['minimum','maximum','mean','sum','pop','gradient','median','modal','entropy',
+         'autolevel','equalize','enhance_contrast','threshold']
