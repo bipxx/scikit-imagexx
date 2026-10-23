@@ -26,8 +26,7 @@ def structure_tensor_eigenvalues(A_elems):
 def __getattr__(name):return module_attribute('feature',name)
 
 
-def structure_tensor(image,sigma=1,mode='constant',cval=0,order='rc'):
-    def forwarded():return fallback('feature','structure_tensor',image,sigma=sigma,mode=mode,cval=cval,order=order)
+def _structure_tensor_impl(image,sigma,mode,cval,order,forwarded):
     from .filters import _GAUSSIAN_TYPES,_GAUSSIAN_MODES,_gaussian_coefficients,_gaussian_cached_coefficients
     if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
     if type(order) is not str or order not in ('rc','xy') or order=='xy' and image.ndim>2:return forwarded()
@@ -67,4 +66,51 @@ def structure_tensor(image,sigma=1,mode='constant',cval=0,order='rc'):
     return result if result is not None else forwarded()
 
 
-__all__+=['structure_tensor']
+def structure_tensor(image,sigma=1,mode='constant',cval=0,order='rc'):
+    return _structure_tensor_impl(image,sigma,mode,cval,order,lambda:fallback('feature','structure_tensor',image,sigma=sigma,mode=mode,cval=cval,order=order))
+
+
+def _corner_response(image,sigma,method,parameter,forwarded):
+    from .filters import _GAUSSIAN_TYPES
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    single=image.dtype.type in (np.float16,np.float32);wide=False
+    if method in (0,1):
+        scalar_types=(bool,int,float,np.bool_,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64,np.float16,np.float32,np.float64)
+        if type(parameter) not in scalar_types:return forwarded()
+        dtype=np.dtype(np.float32 if single else np.float64)
+        try:
+            target=np.result_type(np.empty(1,dtype=dtype),parameter)
+            value=float(parameter)
+        except (ValueError,TypeError,OverflowError):return forwarded()
+        if target.type not in (np.float32,np.float64) or not np.isfinite(value) or abs(value)>np.finfo(target).max/16:return forwarded()
+        wide=single and target.type is np.float64
+    else:value=0.
+    fields=_structure_tensor_impl(image,sigma,'constant',0,'rc',lambda:None)
+    if fields is None:return forwarded()
+    a,b,c=fields  # Preserve upstream's three-component unpacking error in N-D.
+    if method==3 and image.shape!=a.shape:return forwarded()
+    result=_core.corner_response(fields,method,value,wide)
+    if result is None:return forwarded()
+    if method==3 and (type(image) is np.memmap or not image.flags.c_contiguous):
+        outputs=[]
+        for field in result:
+            out=np.zeros_like(image,dtype=field.dtype);out[...]=field;outputs.append(out)
+        return tuple(outputs)
+    return result
+
+
+def corner_harris(image,method='k',k=0.05,eps=1e-6,sigma=1):
+    forwarded=lambda:fallback('feature','corner_harris',image,method=method,k=k,eps=eps,sigma=sigma)
+    if type(method) is not str:return forwarded()
+    return _corner_response(image,sigma,0 if method=='k' else 1,k if method=='k' else eps,forwarded)
+
+
+def corner_shi_tomasi(image,sigma=1):
+    return _corner_response(image,sigma,2,0,lambda:fallback('feature','corner_shi_tomasi',image,sigma=sigma))
+
+
+def corner_foerstner(image,sigma=1):
+    return _corner_response(image,sigma,3,0,lambda:fallback('feature','corner_foerstner',image,sigma=sigma))
+
+
+__all__+=['structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner']

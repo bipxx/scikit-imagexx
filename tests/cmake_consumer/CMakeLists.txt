@@ -46,3 +46,6 @@ add_test(NAME installed_symmetric_eigen_consumer COMMAND symmetric_eigen_consume
 add_executable(structure_tensor_consumer ../test_structure_tensor_native.cpp)
 target_link_libraries(structure_tensor_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_structure_tensor_consumer COMMAND structure_tensor_consumer)
+add_executable(corner_response_consumer ../test_corner_response_native.cpp)
+target_link_libraries(corner_response_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_corner_response_consumer COMMAND corner_response_consumer)
