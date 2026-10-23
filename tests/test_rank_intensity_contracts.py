@@ -195,3 +195,11 @@ def test_autolevel_signed_wide_quotient_is_observable_in_float_output(ndim,outpu
     with warnings.catch_warnings():
         warnings.simplefilter('ignore');actual=reference.autolevel(image,footprint,mask=mask,out=np.empty(shape,output))
     np.testing.assert_array_equal(actual,expected)
+    # The integer writer is a different contract: narrow unsigned output wraps
+    # the SIGNED integer quotient modulo2**bits. It must not route through an
+    # out-of-range floating-to-unsigned conversion or clamp to zero/fullscale.
+    integer_expected=intensity_oracle('autolevel',image,footprint,mask,(1,)*ndim,np.uint16)
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore');integer_actual=reference.autolevel(image,footprint,mask=mask)
+    assert integer_actual.dtype==np.uint16
+    np.testing.assert_array_equal(integer_actual,integer_expected)

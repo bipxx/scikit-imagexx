@@ -28,6 +28,21 @@
       "native_pending": 253,
       "python_source_sha256": "0e1b14517f1e6da1165ef26786ed32f75ff8da2b047c9bceaf49447ca2e6afa4",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "store_policy": {
+        "arithmetic": "Signed64 numerator and C integer division truncating toward zero before ANY store conversion.",
+        "examples": [
+          {
+            "quotient": 4294770690,
+            "uint16": 2
+          },
+          {
+            "quotient": -4294639622,
+            "uint16": 65530
+          }
+        ],
+        "floating": "Convert the already-truncated signed integer quotient to float32/64, preserving negative and >int32 values without unsigned wrap.",
+        "unsigned_integer": "Convert signed integer quotient modulo2**output_bits; never funnel negative/large quotients through out-of-range floating-to-unsigned casts or clamp."
+      },
       "wide_arithmetic": "Masked uint16 centers outside a unit-span local range produce signed quotients beyond +/-2**31; float32/64 output makes this observable. Do not use signed32 multiply/divide or cvtt-to-int32 intermediates."
     },
     "enhance_contrast": {
@@ -87,6 +102,10 @@
   },
   "identity_generic_aliases": 4,
   "independent_oracle_checks_per_profile": 248,
+  "independent_oracle_groups": {
+    "autolevel_signed64_float_and_unsigned_store": 8,
+    "border_mask_shift_histogram_definitions": 240
+  },
   "interface_proposal": {
     "capability_attribute": "rank_histogram_capabilities",
     "capability_bits_through_12": 8191,
