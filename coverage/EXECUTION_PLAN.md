@@ -32,7 +32,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Packet | Agent | Exclusive work | Current dependency |
 |---|---|---|---|
-| Range foundation | Integrator | C++ typed range scan, shared SIMD helpers and binding | Merged as `97a7723`; private stage, public performance pending |
+| C++ foundations / integration | Integrator | Range scan, native half identity finish, shared wiring | Range merged as `97a7723`; legal endian-half identity is an explicit registration gate |
 | Resize/rescale contract | `resize_api` | `python/skimagexx/_resize.py`, `tests/test_resize_native_pipeline.py` | Frozen range wheel; validate the unchanged public contract before registration |
 | Resize benchmark harness | `resize_bench` | `benchmarks/resize.py`, dedicated workflow and harness tests | Harness can merge independently; measurements require registered, frozen APIs |
 | Error metrics | `metrics_reductions` | Three metrics' C++/SIMD/binding/helper and dedicated tests | Independent contract and kernel work; request shared wiring from integrator |
@@ -45,6 +45,7 @@ to error metrics. The full objective remains active while these packets run.
 ```mermaid
 flowchart LR
     R[Range foundation: merged] --> A[Resize wrapper parity]
+    F[Native endian-half identity finish] --> I
     A --> I[Exports, aliases, registry and inventory]
     H[Fixed benchmark harness] --> B[Isolated one-worker measurements]
     I --> B

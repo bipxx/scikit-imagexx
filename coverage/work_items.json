@@ -56,6 +56,54 @@
       }
     },
     {
+      "id": "resize-half-identity",
+      "kind": "private_foundation",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/resize",
+      "base_sha": "66f246517950bdfd9e612348b7c61febb66478bd",
+      "owns": [
+        "src/bind_resample.cpp",
+        "src/resize_half.hpp",
+        "src/resize_half.cpp",
+        "src/simd_resize_half_avx2.cpp",
+        "tests/test_resize_half_identity.py"
+      ],
+      "depends_on": [],
+      "state": "queued",
+      "contract": {
+        "interface": "resize_half_identity(image,clip,policy) -> (out,lower0dHalf,upper0dHalf,has_nan,has_value,runtime_order_used)",
+        "case_manifest": "build/worktrees/resize-api/build/half-identity-windows.json",
+        "uncovered_cases": [
+          "Native copy/clip implementation and validation pending; Half clipping policy must be probed separately."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/li-uniform"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
       "id": "resize-api",
       "kind": "public_api",
       "apis": [
@@ -75,7 +123,9 @@
       "state": "validating",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": []
+        "uncovered_cases": [
+          "Legal opposite-endian float16 identity finish needs the native half helper; public registration remains pending."
+        ]
       },
       "parity": {
         "source_sha": null,
@@ -156,7 +206,8 @@
         "coverage/README.md"
       ],
       "depends_on": [
-        "resize-api"
+        "resize-api",
+        "resize-half-identity"
       ],
       "state": "queued",
       "contract": {
@@ -1275,5 +1326,6 @@
     "util.PendingSkimage2Change.args",
     "util.PendingSkimage2Change.with_traceback"
   ],
-  "static_member_note": "All284 static members remain unimplemented/unverified. Class contract packets do not count as member implementations."
+  "static_member_note": "All284 static members remain unimplemented/unverified. Class contract packets do not count as member implementations.",
+  "evidence_note": "An empty uncovered_cases list means no issue recorded in this snapshot, not an exhaustive contract proof; null evidence remains pending."
 }
