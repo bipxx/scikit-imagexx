@@ -1,10 +1,11 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'segmentation': ('clear_border','relabel_sequential'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale'),
-    'morphology': ('label','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
+    'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -108,6 +109,8 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
+        return ('uint8',)
     if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):return ('float32','float64')
     if api in ('filters.threshold_otsu', 'exposure.histogram',
                'exposure.cumulative_distribution', 'exposure.equalize_hist'):
@@ -128,6 +131,13 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='morphology.remove_small_objects':
+        # Random uint8 IDs have mixed counts around this threshold, so both
+        # retained and removed IDs are represented without input conversion.
+        return (image,),{'max_size':max(1,image.size//256)}
+    if api=='morphology.remove_small_holes':return (image,),{'max_size':4}
+    if api=='segmentation.clear_border':return (image,),{'buffer_size':1 if min(image.shape)>2 else 0}
+    if api=='segmentation.relabel_sequential':return (image,),{'offset':3}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
@@ -174,6 +184,8 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential'):
+        return (0.,0.)
     if api.startswith('metrics.'):
         tolerance=3e-6 if str(dtype)=='float32' else 3e-13
         return tolerance,tolerance if api=='metrics.peak_signal_noise_ratio' else 0.

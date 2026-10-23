@@ -7,12 +7,18 @@ spec=importlib.util.spec_from_file_location('class_registry_unit',Path(__file__)
 registry=importlib.util.module_from_spec(spec);spec.loader.exec_module(registry)
 
 
-def test_class_registry_never_inflates_image_or_metadata_counts():
+def test_class_registry_never_inflates_image_or_metadata_counts(monkeypatch):
     functions=registry.native_functions()
-    assert len(functions)==136
+    kinds={api:registry.execution_kind(api) for api in functions}
     assert sum(registry.execution_kind(api)=='metadata' for api in functions)==3
-    assert sum(registry.execution_kind(api)=='native' for api in functions)==133
     assert not set(functions)&set(registry.native_classes())
+    assert not set(functions)&set(registry.class_metadata_providers())
+    assert not set(registry.native_classes())&set(registry.class_metadata_providers())
+    with monkeypatch.context() as scope:
+        scope.setattr(registry,'NATIVE_CLASSES',{})
+        scope.setattr(registry,'CLASS_METADATA_PROVIDERS',{})
+        assert registry.native_functions()==functions
+        assert {api:registry.execution_kind(api) for api in functions}==kinds
 
 
 @pytest.mark.parametrize('name',registry._CLASS_EXTRA_MEMBERS)
