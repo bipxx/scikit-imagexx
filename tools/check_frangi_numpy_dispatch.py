@@ -31,14 +31,11 @@ try:
  from numpy.lib.introspect import opt_func_info
  dispatch=opt_func_info(func_name='^exp$')
 except ImportError:dispatch=None
-if 'X86_V3' in features:
- # NumPy 2.5 retains component capability bits when a feature group is
- # disabled. Check the actual exp target, not only those component bits.
- assert not features['X86_V3'] and not features['X86_V4']
- assert dispatch['exp']['ff']['current'].startswith('baseline')
-else:
- targets=core._multiarray_umath.__cpu_dispatch__
- assert not any(features.get(key,False) for key in targets if key in ('AVX2','FMA3') or key.startswith('AVX512'))
+# NumPy can retain hardware capability bits for uncompiled target groups.
+# Validate the compiled targets and, when exposed, the actual exp loop.
+targets=core._multiarray_umath.__cpu_dispatch__
+assert not any(features.get(key,False) for key in targets if key in ('AVX2','FMA3','X86_V3','X86_V4') or key.startswith('AVX512'))
+if dispatch is not None:assert dispatch['exp']['ff']['current'].startswith('baseline')
 print(json.dumps(dict(numpy=np.__version__,numpy_cpu_features=features,numpy_dispatch_targets=core._multiarray_umath.__cpu_dispatch__,numpy_exp_dispatch=dispatch,cpp_avx2=xx.has_avx2(),cpp_fma=xx._core.frangi_has_fma(),float_exp_uses_numpy=xx._core.frangi_float_exp_uses_numpy())))
 """
     for mode in ('auto', 'scalar'):
