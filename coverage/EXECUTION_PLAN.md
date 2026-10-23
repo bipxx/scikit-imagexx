@@ -15,12 +15,12 @@ source-backed public/legacy rank.generic aliases of existing algorithms, not
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-Three worker agents are executing private consumer output-scan optimization,
-the next four rank statistics kernels, and cumulative whole-core validation of
-SIMD metrics classification plus qualified R2 aliases. The integrator handles
-shared wiring, hosted measurements, verified reports, prompt merges and cleanup.
-All four completed report families are merged; live jobs keep their authoritative
-handles until terminal.
+The accepted whole6 product adds finite/min-max metrics SIMD classification and
+qualified R2 aliases without changing the 163-path inventory. Three workers now
+prepare R4 benchmarks, implement R4 public wrappers, and freeze the next nine
+percentile reference contracts. Private R4 kernels and consumer scan changes are
+ready for the next coordinated core after public/shared wiring freezes. The
+integrator owns shared wiring, hosted measurements, prompt merges and cleanup.
 
 ## What changed after review
 
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Accepted c44 product: 163 image paths and 303 upstream-only. Controlled resize, R1/R2 rank and consumer reports verified and merged; all regressions retained |
-| Worker 1 | `metrics_reductions` | Measured consumer bottlenecks | New private branch from frozen 61da: fixed-width output stores and certified contiguous SIMD scan. Preserve provider/alias/partial-error behavior; sorting/hash/layout conversion remain unresolved |
-| Worker 2 | `resize_api` | Next rank statistics kernels | Reference contracts pass 6,257 checks on each of three runtimes. Implement geometric mean, noise filter, centered mean and vector histogram privately with unchanged RankView ABI; eight paths remain upstream-only |
-| Worker 3 | `resize_bench` | Cumulative metrics/alias actual-core validation | Frozen 61da packages: all authoritative original runners terminal, 538 migrated admission checks pass on each of eight profiles and all 72 SDK checks pass. Final data-only inventory supplement and evidence sealing remain; retain all original obsolete-policy failures |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 actual product accepted: 163 image paths, 303 upstream-only, 1,913 sealed records. New metrics measurement next; footprint/label trials live from exact 845608d |
+| Worker 1 | `metrics_reductions` | R4 benchmark corpus and artifact workflow | Consumer 237 fixed-width/SIMD scan private proof passed. New R4 Phase1 freezes all 995 reference IDs plus balanced safe workloads; original-only, native0, no dispatch |
+| Worker 2 | `resize_api` | Next nine percentile reference contracts | R4 f7 kernels pass 2,706 checks on 12 private profiles and 11,452 old-op checks on eight; public acceptance pending. Next packet audits actual percentile plus eight suffix functions, bounds and provider order |
+| Worker 3 | `resize_bench` | R4 public wrapper integration | Whole6 final seal and lease release complete. Implement separate statistics/vector interface guards and exact noise/histogram metadata stages; root owns registry, namespace and CMake wiring before whole7 |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -172,12 +172,14 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Active cumulative validation | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Authoritative original jobs terminal; four-function admission migration passes 538 checks on each of eight profiles. Finish data-only 163-path inventory supplement and seal core/SDK/source identities before acceptance and release |
-| Active measured bottleneck | Consumer raster output scans | Private width dispatch and certified SIMD selects/fills; fixed 878-case corpus, provider/owner/partial-write contracts and all regressions remain unchanged |
-| Active independent kernels | Four R4 rank statistics algorithms | Separate scalar statistics and vector-depth capabilities preserve RankView ABI and old bits. Reference-only eight paths stay upstream-only until genuine public gates pass |
-| Ready measurement | Four public R3 intensity algorithms | All eight public-package profiles and 1,428-case corpus pass. One-worker hosted run [40034423731](https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731) uses exact fbdfb46; 384 canonical raster workloads, aliases/errors untimed. Poll the same run to terminal |
-| Verified reports | Controlled resize and initial R1/R2/consumer campaigns | Completed runs 40020239743, 40024802716, 40024807986 and 40024754860; all raw samples, source boundaries and slower cases retained |
-| Retained preparation failure | Consumer campaign 40020440164 | Preserve original failed source-text guards and logs. Corrected LF/CRLF-only provenance passed without changing any of 878 observations, followed by successful campaign 40024754860 |
+| Accepted cumulative increment | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Actual 104-member products, 59-member SDKs, 23,668 logical checks/profile, 1,231-case corpus and 72 SDK checks pass. Test/data-only supplements and retained failures are explicit; caches released |
+| Private measured bottleneck | Consumer raster output scans at 237532d | Width dispatch and certified SIMD selects/fills pass private 2,937x10 and fixed 878-case gates. Genuine whole7/performance pending; sorting/hash/layout conversion unresolved |
+| Active public integration | Four R4 rank statistics algorithms | Private f7 C++ proof ready. Worker3 owns wrappers/tests, root owns registry/namespace/CMake and metadata transition. Preserve separate vector depth and RankView ABI; eight paths remain upstream-only until whole proof |
+| Active independent tooling | R4 original-only benchmark Phase1 | Worker1 includes all 995 reference IDs plus balanced scalar/vector workloads; aliases/errors untimed, actual-public gate precedes future timers |
+| Active reference coverage | Nine actual rank percentile functions | Worker2 audits source safety and p0/p1 conversion/arithmetic before original calls. equalize_percentile is absent; rank.percentile is a function, not an importable module |
+| Live R3 measurement | Four public R3 intensity algorithms | One-worker run 40034423731 from fbdfb46; all preparation gates passed, retain exact run through terminal/offline verification |
+| Live validated-family trials | Footprint setup and connected-component short runs | Runs 40035389599 and 40035393397 from 845608d; fixed 556/527 and 954/802 corpora, three preparation profiles before fresh artifact-only hosts |
+| Next accepted metrics trial | Stepped-half loads plus finite/min-max classification | Dispatch exact accepted main source with the unchanged 1,231/1,212 corpus and one native worker; keep all earlier slower cases and raw trials |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
 claims them. Repeat the process for remaining transforms/pyramids, measurements,

@@ -36,8 +36,15 @@ evidence limits remain explicit in their reports.
 
 Measurements use fresh hosted jobs after all preparation gates, without local
 operation timing. Stepped-half and signed min-max metrics, relabeling, object
-filtering and sparse rank scans remain measured bottlenecks. Later optimization
-candidates await cumulative public parity and fresh measurements.
+filtering and sparse rank scans remain measured bottlenecks. The accepted stepped-half and finite/min-max metrics changes now pass cumulative
+whole-core parity; their fresh one-worker measurement is pending. Private
+consumer scan and R4 rank candidates still await genuine whole-core qualification.
+Footprint setup and labeling remeasurements retain authoritative runs
+[40035389599](https://github.com/bipxx/scikit-imagexx/actions/runs/40035389599) and
+[40035393397](https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397),
+both from source `845608d`. The R3 intensity campaign is
+[40034423731](https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731)
+from `fbdfb46`; completed results remain subject to offline verification.
 
 ## Retained whole-library checkpoints
 

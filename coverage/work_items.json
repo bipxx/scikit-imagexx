@@ -17071,11 +17071,11 @@
       "depends_on": [
         "components-measurement"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Whole actual package/SDK and original-library one-worker timings are pending; no speedup claimed."
+          "Current whole-package parity is accepted; fresh same-corpus one-worker trial40035393397 pending."
         ]
       },
       "parity": {
@@ -17118,6 +17118,17 @@
           "native_contract_checks": 1828,
           "native_pending": 0,
           "scope": "Six private pipeline profiles plus boundary/native sanitizer gates; actual whole-package validation pending."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
+          "manifest": {
+            "path": "build/combined155-evidence/manifest.json",
+            "sha256": "3785b4c946fe1df3f75a6cbfdfc363288831e179458f48e26f9c41ab1df170ec"
+          },
+          "native_contract_checks": 954,
+          "native_pending": 0,
+          "scope": "Exact component C++/Python family unchanged from591 to845/current;954 corpus across8 actual profiles atworkers1/4 plus full family suites in combined155. No speed claim."
         }
       }
     },
@@ -17213,7 +17224,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Bounded rectangle descriptor fastpath, duplicate shape-check removal and direct mirror slicing; whole Release/Debug gates and isolated binding sanitizer checks pending. No arbitrary dtype/atom cache, fixed556 corpus unchanged."
+          "Whole Release/Debug/provider/factory gates accepted; fixed556/527 original-library trial40035389599 pending."
         ]
       },
       "parity": {
@@ -18415,7 +18426,7 @@
       "depends_on": [
         "metrics-simd-measurement"
       ],
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "benchmarks/metrics_reductions.py",
         "uncovered_cases": [
@@ -18465,6 +18476,17 @@
           "native_contract_checks": 144,
           "native_pending": 0,
           "scope": "Six focused normal/scalar profiles and two ASan/UBSan binding profiles144 each; modern broad7874 includes7730 unchanged assertions. Fixed1231 corpus on three runtimes workers1/4. Ten native gates exercise all63488 finite half encodings at exact strided/unaligned allocations. Private binding only, not sole production core; no timing claim."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+          "manifest": {
+            "path": "coverage/evidence/public-wave6.json",
+            "sha256": "f30890a1b9266e04dd17ca8010a05fbc5f33be482ab865f12dd1a7c58befb6df"
+          },
+          "native_contract_checks": 144,
+          "native_pending": 0,
+          "scope": "Actual whole-core144 stepped-half checks within204 leaf/half x8, full1231 fixed corpus; fresh hosted performance pending."
         }
       },
       "launch": {
@@ -18561,7 +18583,7 @@
       "base_sha": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1",
       "owns": [],
       "depends_on": [
-        "combined-public-wave5"
+        "combined-public-wave6"
       ],
       "state": "queued",
       "contract": {
@@ -18581,7 +18603,7 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "note": "Same fixed1231 checks/1212 timed cases, one-worker primary; all3 preparation profiles before fresh artifact-only measurement hosts. No local timing or cross-host causal speed claim."
+        "note": "Next one-worker trial combines accepted byte-safe stepped-half loads and finite/minmax classification on exact public source. Fixed1231/1212 corpus unchanged; retain all regressions, no local timing."
       },
       "merge": {
         "commit": null,
@@ -18592,7 +18614,7 @@
         "protected_artifacts": []
       },
       "dependency_requirements": {
-        "combined-public-wave5": {
+        "combined-public-wave6": {
           "evidence_scope": "public_native"
         }
       }
@@ -19063,7 +19085,7 @@
       "base_sha": "211dc6bc55404e0acf477b07544d78902ba5fc48",
       "owns": [],
       "depends_on": [],
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19102,6 +19124,17 @@
           "scope": "Finite/minmax SIMD classification only; all scalar sum/tree/buffer expressions retained.1231 corpus x3 workers1/4,7790 broad,3706x6 targeted,60x8 bytewise diagnostics with explicitly matched oldASan control, native10 leak/portable/dynamic gates. Removed sum trials and cross-build NaN variance retained; private only, whole/performance pending.",
           "native_contract_checks": 60,
           "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+          "manifest": {
+            "path": "coverage/evidence/public-wave6.json",
+            "sha256": "f30890a1b9266e04dd17ca8010a05fbc5f33be482ab865f12dd1a7c58befb6df"
+          },
+          "native_contract_checks": 60,
+          "native_pending": 0,
+          "scope": "Actual whole-core60 leaf bytewise cases within204 leaf/half tests x8;3706 policies and1231 fixed corpus x8, scalar sums/trees unchanged. Fresh hosted speedup unmeasured."
         }
       }
     },
@@ -19114,11 +19147,11 @@
       "base_sha": "ba82013e28051ad3ae2a50e455ab7a0da18218f5",
       "owns": [],
       "depends_on": [],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Genuine cumulative whole-core rebuild required with safety1d, public aliasPython and metrics211; never overlay Python onto883 and claim new kernel support. R3 overlaps remain excluded."
+          "R3 overlaps and unassessed alias/protocol combinations remain pending."
         ]
       },
       "parity": {
@@ -19155,6 +19188,17 @@
           "scope": "Full private14132x8,1008 frozen observations workers1/4, native4families x6 and bindingASan2044. Safety1d guards misaligned sameuint16 feedback before writes and serializes possibly overlapping output stores. Public4062 collected only; whole acceptance pending.",
           "native_contract_checks": 1008,
           "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+          "manifest": {
+            "path": "coverage/evidence/public-wave6.json",
+            "sha256": "f30890a1b9266e04dd17ca8010a05fbc5f33be482ab865f12dd1a7c58befb6df"
+          },
+          "native_contract_checks": 4062,
+          "native_pending": 0,
+          "scope": "Qualified actualpublicR2 aliases4062x8, legacy and admission538x8 controls; no unsafe original probes or R3 overlap claim."
         }
       }
     },
@@ -19229,7 +19273,7 @@
       "id": "combined-public-wave6",
       "kind": "integration",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "validation/wave6-metrics-alias",
       "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
       "owns": [],
@@ -19238,11 +19282,11 @@
         "metrics-leaf-classification",
         "rank-alias-public"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Actual frozen61da whole products only. Original runners retain130 obsolete admission-policy expectation failures/profile; four-function test-only supplement pending until original handles terminal. No source rebuild/restart or new public acceptance yet."
+          "Fresh one-worker measurements and full remaining API/input/class scope remain pending."
         ]
       },
       "parity": {
@@ -19273,23 +19317,18 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "b914ff77f8f048ddc91a8be078e0f777de41c17d",
+        "main_commit": "da1fa5582e26b9920a345c98a41ab24276520b6b"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/core-rank9-validation",
-          "build/worktrees/wave6-metrics-alias",
-          "build/worktrees/wave6-alias-admission",
-          "build/main-core-release-wheel-windows",
-          "build/main-core-wave6-evidence"
-        ],
+        "active_paths": [],
         "protected_artifacts": [
           "build/main-core-wave6-release-windows-package",
           "build/main-core-wave6-release-modern-linux-package",
           "build/main-core-wave6-release-minimum-linux-package",
           "build/main-core-wave6-debug-modern-linux-package"
-        ]
+        ],
+        "lease_release": "Explicit terminal1913-record rehash/release by resize_bench."
       },
       "dependency_requirements": {
         "combined-public-wave5": {
@@ -19301,6 +19340,19 @@
         "rank-alias-public": {
           "evidence_scope": "native_private"
         }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+          "manifest": {
+            "path": "coverage/evidence/public-wave6.json",
+            "sha256": "f30890a1b9266e04dd17ca8010a05fbc5f33be482ab865f12dd1a7c58befb6df"
+          },
+          "native_contract_checks": 23668,
+          "native_pending": 0,
+          "scope": "Eight actual immutable104-member complete packages;23668 scoped logical checks/profile plus1231 corpus at1/4,72 installed-SDK checks,59SDK/source identities. Counts include metadata/reference/policy; supported domains only; inheritance and superseded failures explicit."
+        }
       }
     },
     {
@@ -19309,7 +19361,7 @@
       "apis": [],
       "owner": "resize_api",
       "branch": "feature/rank-statistics-native",
-      "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+      "base_sha": "f7fc78fd7392ad3a404dbef0ef82024de2836f75",
       "owns": [
         "src/rank.cpp",
         "src/simd_rank_avx2.cpp",
@@ -19321,7 +19373,7 @@
       "depends_on": [
         "rank-statistics-contracts"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/rank-statistics.json",
         "uncovered_cases": [
@@ -19356,6 +19408,19 @@
         "rank-statistics-contracts": {
           "evidence_scope": "contract_reference"
         }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "f7fc78fd7392ad3a404dbef0ef82024de2836f75",
+          "manifest": {
+            "path": "build/worktrees/rank-statistics-native/build/rank-statistics-private-proof.json",
+            "sha256": "234213206822248884df3b7bafbdac281f0b4e5134a4aa4a694066f85f721f60"
+          },
+          "native_contract_checks": 2706,
+          "native_pending": 0,
+          "scope": "Private-only actualR4 binding:995 frozen IDs andstrengthened2706x12 includingportable/Debug/ASan;11452 oldrankx8, nativeleaks. Sixfiles; no public registration/full-core/performance claim."
+        }
       }
     },
     {
@@ -19364,7 +19429,7 @@
       "apis": [],
       "owner": "metrics_reductions",
       "branch": "feature/consumer-layout-scan",
-      "base_sha": "61da2db0227d50f7bb94234b8ba2646c91c504c4",
+      "base_sha": "237532d4d0cb020a5b5264291bae4a1b9d2dfd44",
       "owns": [
         "src/component_consumers.cpp",
         "src/simd_component_consumers_avx2.cpp",
@@ -19376,7 +19441,7 @@
         "component-consumers-measurement",
         "arraymap-live-provider-fix"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/component-consumers-benchmark.json",
         "uncovered_cases": [
@@ -19414,7 +19479,320 @@
         "arraymap-live-provider-fix": {
           "evidence_scope": "public_native"
         }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "237532d4d0cb020a5b5264291bae4a1b9d2dfd44",
+          "manifest": {
+            "path": "build/consumer-layout-scan-evidence/237532d/manifest.json",
+            "sha256": "3db521074904fd73b78c0fceecec5f26d0b880364d1f98d23f1d7b56d09f5791"
+          },
+          "native_contract_checks": 2937,
+          "native_pending": 0,
+          "scope": "Private-only actualconsumer binding:2937x10,878x3 at1/4,native2families x10 includingportable/ASanleaks. Three C++files andtwo newtests only; no Python/provider edits, genuine whole/public/performance pending."
+        }
       }
+    },
+    {
+      "id": "footprint-setup-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "owns": [],
+      "depends_on": [
+        "footprint-setup-optimization",
+        "combined-public-wave5"
+      ],
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "run_id": 40035389599,
+        "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035389599",
+        "observed_state": "completed",
+        "created_at": "2026-10-23T22:43:02Z",
+        "workers": [
+          1
+        ],
+        "expected_checks": 556,
+        "expected_timed": 527,
+        "repeat": 7,
+        "observation_rule": "Poll exact authoritative run until terminal; no cancellation/restart for observation timeout. All3 preparations before fresh artifact-only measurement hosts.",
+        "runtime_evidence_boundary": "Older family workflow archives product/source/SDK andruntime pins/freeze; dependency-binary closure must be assessed from actual artifacts, never inferred.",
+        "previous_failed_campaigns": [
+          {
+            "run_id": 39987149069,
+            "source_sha": "b5d59bbaa71f4840264e756599cb5700c08407f6",
+            "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39987149069",
+            "conclusion": "failure",
+            "retention": "Historical failed run andsource preserved; do not replace or erase it."
+          }
+        ]
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/footprints-performance-runs/40035389599"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "footprint-setup-optimization": {
+          "evidence_scope": "public_native"
+        },
+        "combined-public-wave5": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "components-short-run-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "owns": [],
+      "depends_on": [
+        "components-short-run-optimization",
+        "combined-public-wave5"
+      ],
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "run_id": 40035393397,
+        "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397",
+        "observed_state": "in_progress",
+        "created_at": "2026-10-23T22:43:05Z",
+        "workers": [
+          1
+        ],
+        "expected_checks": 954,
+        "expected_timed": 802,
+        "repeat": 7,
+        "observation_rule": "Poll exact authoritative run until terminal; no cancellation/restart for observation timeout. All3 preparations before fresh artifact-only measurement hosts.",
+        "runtime_evidence_boundary": "Older family workflow archives product/source/SDK andruntime pins/freeze; dependency-binary closure must be assessed from actual artifacts, never inferred.",
+        "previous_failed_campaigns": [
+          {
+            "run_id": 39987147523,
+            "source_sha": "b5d59bbaa71f4840264e756599cb5700c08407f6",
+            "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39987147523",
+            "conclusion": "failure",
+            "retention": "Historical failed run andsource preserved; do not replace or erase it."
+          }
+        ]
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/components-performance-runs/40035393397"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "components-short-run-optimization": {
+          "evidence_scope": "public_native"
+        },
+        "combined-public-wave5": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/rank-statistics-public",
+      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_statistics_public.py",
+        "coverage/contracts/rank-statistics-public.json"
+      ],
+      "depends_on": [
+        "rank-statistics-native"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-statistics.json",
+        "uncovered_cases": [
+          "Root owns registry/namespace/CMake wiring andstrict-pending metadata transition. No public acceptance until genuine whole7,995 values unchanged; exactnoise metadata stages/customprotocols andvector-depth interface separate."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-statistics-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "public_registration": true
+    },
+    {
+      "id": "rank-statistics-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-statistics-benchmark",
+      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "owns": [
+        "benchmarks/rank_statistics.py",
+        "tests/test_rank_statistics_benchmark.py",
+        "coverage/contracts/rank-statistics-benchmark.json",
+        ".github/workflows/rank-statistics-benchmark.yml",
+        "tools/rank_statistics_artifacts.py"
+      ],
+      "depends_on": [
+        "rank-statistics-contracts"
+      ],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Phase1original-only withall995 frozen IDs plusbalanced safe timingfixtures. Native0; aliases/errors untimed; future actualpublic version/capability/full-product/worker gates must pass before timers. No localtiming/dispatch."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-statistics-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      }
+    },
+    {
+      "id": "rank-percentile-contracts",
+      "kind": "reference_contract",
+      "apis": [
+        "filters.rank.autolevel_percentile",
+        "filters.rank.enhance_contrast_percentile",
+        "filters.rank.gradient_percentile",
+        "filters.rank.mean_percentile",
+        "filters.rank.percentile",
+        "filters.rank.pop_percentile",
+        "filters.rank.subtract_mean_percentile",
+        "filters.rank.threshold_percentile",
+        "filters.rank.sum_percentile"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/rank-percentile-contracts",
+      "base_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "owns": [
+        "tests/test_rank_percentile_contracts.py",
+        "coverage/contracts/rank-percentile.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Source-safe original-only nine actualalgorithms. equalize_percentile absent; rank.percentile isfunction, compiledmodule _percentile. Audit percentile bounds/NaN/empty/unsigned hazards before anyCython call; native0/no inventory inflation."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {}
     }
   ],
   "unassigned_inventoried_apis": [
@@ -19590,22 +19968,13 @@
     "filters.prewitt",
     "filters.prewitt_h",
     "filters.prewitt_v",
-    "filters.rank.autolevel_percentile",
-    "filters.rank.enhance_contrast_percentile",
     "filters.rank.generic.majority",
     "filters.rank.generic.otsu",
-    "filters.rank.gradient_percentile",
     "filters.rank.majority",
     "filters.rank.mean_bilateral",
-    "filters.rank.mean_percentile",
     "filters.rank.otsu",
-    "filters.rank.percentile",
     "filters.rank.pop_bilateral",
-    "filters.rank.pop_percentile",
-    "filters.rank.subtract_mean_percentile",
     "filters.rank.sum_bilateral",
-    "filters.rank.sum_percentile",
-    "filters.rank.threshold_percentile",
     "filters.rank_order",
     "filters.roberts",
     "filters.roberts_neg_diag",
@@ -19841,7 +20210,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Full implementation goal remains active. Accepted163 scoped image paths and303 upstream-only. All163 have parity-test and benchmark links. Four report families newly measured with all regressions retained; whole61da SIMD/alias candidate remains validating. Three independent workers continue consumer scans, private R4 kernels and cumulative whole-core validation.",
+  "note": "Full goal active: accepted163 partial imagepaths/303upstream-only. Whole6 finite/minmax SIMD andqualifiedR2 aliases acceptedwith1913 seals; newperformance pending. Consumer237 andR4f7 areprivate-only. Threeworkers nowexecute R4benchmark, R4publicwrappers andnextnine percentile referencecontracts. Livecampaigns retain exactauthoritative IDs.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -20165,14 +20534,13 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "consumer-layout-scan"
+        "rank-statistics-benchmark-tooling"
       ],
       "resize_api": [
-        "rank-statistics-native"
+        "rank-percentile-contracts"
       ],
       "resize_bench": [
-        "combined-public-wave6",
-        "rank-alias-public"
+        "rank-statistics-public"
       ]
     }
   },

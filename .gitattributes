@@ -11,3 +11,4 @@ benchmarks/rank-public-*.json -text
 benchmarks/rank-distribution-public-*.json -text
 benchmarks/component-consumers-public-*.json -text
 coverage/contracts/rank-statistics.json -text
+coverage/evidence/public-wave6.json -text
