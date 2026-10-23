@@ -278,9 +278,22 @@ RankAliases aliases(const RankView& v) {
     const auto pixels=v.shape[0]*v.shape[1]*v.shape[2];
     return {overlaps(v,v.image,pixels*(v.uint16 ? 2:1)),overlaps(v,v.mask,pixels)};
 }
+// A sufficient injectivity certificate for arbitrary positive SDK strides.
+// Uncertified layouts remain valid, but their stores must run serially.
+bool independent_stores(const RankView& v) {
+    std::array<int,3> axes{0,1,2};
+    std::sort(axes.begin(),axes.end(),[&](int a,int b){return v.output_strides[a]<v.output_strides[b];});
+    auto span=pixel_size(v.output_type);
+    for(const auto axis:axes)if(v.shape[axis]>1) {
+        const auto stride=std::size_t(v.output_strides[axis]);
+        if(stride<span)return false;
+        span+=(v.shape[axis]-1)*stride;
+    }
+    return true;
+}
 void run(const RankView& view,RankOperation operation) {
     const auto prepared=plan(view);const auto rows=view.shape[0]*view.shape[1];
-    const auto workers=view.serial_alias ? 1:detail::active_workers(rows*view.shape[2]);
+    const auto workers=view.serial_alias || !independent_stores(view) ? 1:detail::active_workers(rows*view.shape[2]);
     const auto run=[&](auto begin,auto end){
         if(operation==RankOperation::equalize) {
             if(view.uint16)process<std::uint16_t,true>(view,operation,prepared,begin,end);else process<std::uint8_t,true>(view,operation,prepared,begin,end);
@@ -323,7 +336,10 @@ void rank_filter_into(const RankView& view,RankOperation operation,RankAliases r
         if(operation==RankOperation::entropy && integral && !zero)throw std::invalid_argument("integral entropy feedback is outside defined coverage");
         if(actual.image_output && view.uint16) {
             if(!integral)throw std::invalid_argument("uint16 image/float output feedback is outside defined coverage");
-            if(view.output_type!=PixelType::uint16 && view.bins!=65536 && !zero)throw std::invalid_argument("uint16 mixed-byte feedback requires full histogram bounds");
+            bool whole_words=view.output_type==PixelType::uint16 &&
+                (reinterpret_cast<std::uintptr_t>(view.output)%2==reinterpret_cast<std::uintptr_t>(view.image)%2);
+            for(int axis=0;axis<3;++axis)if(view.shape[axis]>1 && view.output_strides[axis]%2)whole_words=false;
+            if(!whole_words && view.bins!=65536 && !zero)throw std::invalid_argument("uint16 mixed-byte feedback requires full histogram bounds");
         }
     }
     auto prepared=view;prepared.serial_alias=feedback;

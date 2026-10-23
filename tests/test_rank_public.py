@@ -91,9 +91,17 @@ def test_public_no_forwarding(name,ndim,dtype,monkeypatch):
 @pytest.mark.parametrize('name',['gradient','median','modal','entropy'])
 def test_pending_r2_alias_is_explicit_safely_rejected(name):
     image=np.arange(35,dtype=np.uint8).reshape(5,7)
-    with pytest.raises(NotImplementedError,match='fallback is disabled|Overlapping buffers'):
-        getattr(rank,name)(image,np.ones((3,3),np.uint8),out=image.view())
-    assert 'pending' in rank_contract('filters.rank.'+name)['buffers']
+    if name=='entropy':
+        # Active integral entropy feedback has no defined original replay.
+        before=image.copy()
+        with pytest.raises(NotImplementedError,match='Overlapping buffers'):
+            getattr(rank,name)(image,np.ones((3,3),np.uint8),out=image.view())
+        np.testing.assert_array_equal(image,before)
+    else:
+        spec=dict(ndim=2,dtype='u1',output='u1',kind='view')
+        closed=load('rank_public_closed_alias',Path(__file__).with_name('test_rank_alias_contracts.py'))
+        assert closed.observe(getattr(rank,name),spec)==closed.observe(getattr(reference,name),spec)
+    assert rank_contract('filters.rank.'+name)['alias_interface']=='rank-alias-v1'
 
 
 def test_unported_names_preserve_policy_and_are_not_native_aliases():

@@ -92,6 +92,11 @@ def _positive(footprint):
     return result
 
 
+def _qualified_alias_backend(operation):
+    return (5<=operation<=8 and getattr(_core,'rank_alias_interface',None)=='rank-alias-v1'
+            and bool(getattr(_core,'rank_alias_capabilities',0)&(1<<operation)))
+
+
 def _r2_alias_admission(operation,original,image,mask,out,ndim):
     if operation<5:return False,None
     # Preserve native validation for unsafe extents, even when a short view
@@ -101,6 +106,10 @@ def _r2_alias_admission(operation,original,image,mask,out,ndim):
     if mask is not None and mask.size<image.size:return False,None
     aliases=np.shares_memory(image,out) or (mask is not None and np.shares_memory(mask,out))
     if not aliases:return False,None
+    if _qualified_alias_backend(operation):
+        # Native validation occurs after the original fused-buffer/shift checks
+        # and before any output store. Preparation is never repeated.
+        return False,None
     source,footprint,destination,source_mask,sx,sy,sz=original
     def plain_u8(value):
         return type(value) is np.ndarray and value.dtype==np.uint8 and value.flags.c_contiguous and value.flags.writeable
@@ -152,7 +161,19 @@ def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=
         raise TypeError('Function call with ambiguous argument types')
     handled,result=_r2_alias_admission(operation,original,image,mask,out,ndim)
     if handled:return result
-    _core.rank_run(image,footprint,mask,out,shifts,bins,operation)
+    if _qualified_alias_backend(operation):
+        try:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
+        except ValueError as error:
+            # These named native errors certify unsupported domains PREWRITE.
+            # Other validation/numerical errors retain their original class.
+            excluded=('integral entropy feedback is outside defined coverage',
+                      'uint16 image/float output feedback is outside defined coverage',
+                      'uint16 mixed-byte feedback requires full histogram bounds',
+                      'rank footprint/output alias is outside defined coverage')
+            if str(error) in excluded:
+                raise NotImplementedError('Overlapping buffers are outside qualified rank-alias-v1 coverage: '+str(error)) from None
+            raise
+    else:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
     return np.squeeze(out,axis=-1) if ndim==2 else out.reshape(out.shape[:3])
 
 
