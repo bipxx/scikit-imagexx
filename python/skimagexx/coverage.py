@@ -131,6 +131,13 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='morphology.remove_small_objects':
+        # Random uint8 IDs have mixed counts around this threshold, so both
+        # retained and removed IDs are represented without input conversion.
+        return (image,),{'max_size':max(1,image.size//256)}
+    if api=='morphology.remove_small_holes':return (image,),{'max_size':4}
+    if api=='segmentation.clear_border':return (image,),{'buffer_size':1 if min(image.shape)>2 else 0}
+    if api=='segmentation.relabel_sequential':return (image,),{'offset':3}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
