@@ -18235,7 +18235,9 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
-          "build/resize-controlled-publication-evidence/3998d14"
+          "build/resize-controlled-publication-evidence/3998d14",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
         ]
       },
       "dependency_requirements": {
@@ -18365,7 +18367,9 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
-          "build/component-consumers-initial-publication-evidence/4c9ee50"
+          "build/component-consumers-initial-publication-evidence/4c9ee50",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
         ]
       },
       "dependency_requirements": {
@@ -18846,7 +18850,9 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
-          "build/rank-initial-publication-evidence/09f4da3"
+          "build/rank-initial-publication-evidence/09f4da3",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
         ]
       },
       "dependency_requirements": {
@@ -18951,7 +18957,9 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
-          "build/rank-distribution-initial-publication-evidence/102550f"
+          "build/rank-distribution-initial-publication-evidence/102550f",
+          "build/checkpoints/published-reports-cleanup",
+          "coverage/evidence/published-reports-cleanup.json"
         ]
       },
       "dependency_requirements": {
@@ -18992,13 +19000,13 @@
       "apis": [],
       "owner": "integrator",
       "branch": "main",
-      "base_sha": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+      "base_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
       "owns": [],
       "depends_on": [
         "rank-intensity-public",
         "rank-intensity-benchmark-tooling"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19016,14 +19024,25 @@
         "corpus_sha256": "94ff120b62a7b7814902429cbca5776ee1f0dc01dd33bc01ac296099ed79e0f9",
         "raw_results": [],
         "regressions": [],
-        "note": "One-worker primary,1428checked/384canonical rasters perruntime; aliases/errors metadata untimed. Dispatch only exact validated source; no local operation timing."
+        "note": "One-worker primary,1428checked/384canonical rasters perruntime; aliases/errors metadata untimed. Dispatch only exact validated source; no local operation timing.",
+        "run_id": 40034423731,
+        "source_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731",
+        "observed_state": "in_progress",
+        "created_at": "2026-10-23T22:33:54Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll exact authoritative run to terminal; never cancel/restart for observation timeout. All3 preparation profiles precede fresh artifact-only measurement hosts."
       },
       "merge": {
         "commit": null,
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/rank-intensity-performance-runs/40034423731"
+        ],
         "protected_artifacts": []
       },
       "dependency_requirements": {
@@ -19350,9 +19369,8 @@
         "src/component_consumers.cpp",
         "src/simd_component_consumers_avx2.cpp",
         "include/skimagexx/component_consumers.hpp",
-        "src/bind_component_consumers.cpp",
-        "python/skimagexx/_component_consumers.py",
-        "tests/test_consumer_layout_scan.py"
+        "tests/test_consumer_layout_native.cpp",
+        "tests/test_consumer_layout_pipeline.py"
       ],
       "depends_on": [
         "component-consumers-measurement",
@@ -19362,7 +19380,7 @@
       "contract": {
         "case_manifest": "coverage/contracts/component-consumers-benchmark.json",
         "uncovered_cases": [
-          "Measured broadcast relabel/clear-border and object filtering regressions. Move raw-word output width dispatch outside loops and certify disjoint contiguous SIMD stores; preserve NaN/zero bits, generic strides/aliases/partial-error/provider order. Sorting/hash/layout conversion remain unresolved. Private/public parity and new measurements pending."
+          "Measured broadcast relabel/clear-border and object filtering regressions. Move raw-word output width dispatch outside loops and certify disjoint contiguous SIMD stores; preserve NaN/zero bits, generic strides/aliases/partial-error/provider order. Sorting/hash/layout conversion remain unresolved. Private/public parity and new measurements pending. No binding/Python/provider edits currently needed."
         ]
       },
       "parity": {

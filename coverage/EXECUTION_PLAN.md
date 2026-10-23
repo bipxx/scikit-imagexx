@@ -45,7 +45,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 | Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Accepted c44 product: 163 image paths and 303 upstream-only. Controlled resize, R1/R2 rank and consumer reports verified and merged; all regressions retained |
 | Worker 1 | `metrics_reductions` | Measured consumer bottlenecks | New private branch from frozen 61da: fixed-width output stores and certified contiguous SIMD scan. Preserve provider/alias/partial-error behavior; sorting/hash/layout conversion remain unresolved |
 | Worker 2 | `resize_api` | Next rank statistics kernels | Reference contracts pass 6,257 checks on each of three runtimes. Implement geometric mean, noise filter, centered mean and vector histogram privately with unchanged RankView ABI; eight paths remain upstream-only |
-| Worker 3 | `resize_bench` | Cumulative metrics/alias actual-core validation | Frozen 61da packages: new alias/R3/metrics normal gates pass on four profiles, all 72 SDK checks pass. Finish original scalar runners and test-only legacy admission migration supplements; retain 130 obsolete-policy failures per original profile |
+| Worker 3 | `resize_bench` | Cumulative metrics/alias actual-core validation | Frozen 61da packages: all authoritative original runners terminal, 538 migrated admission checks pass on each of eight profiles and all 72 SDK checks pass. Final data-only inventory supplement and evidence sealing remain; retain all original obsolete-policy failures |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -172,10 +172,10 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Active cumulative validation | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Finish authoritative normal/scalar jobs and four-function admission-policy supplements against immutable packages; seal all core/SDK/source identities before acceptance and release |
+| Active cumulative validation | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Authoritative original jobs terminal; four-function admission migration passes 538 checks on each of eight profiles. Finish data-only 163-path inventory supplement and seal core/SDK/source identities before acceptance and release |
 | Active measured bottleneck | Consumer raster output scans | Private width dispatch and certified SIMD selects/fills; fixed 878-case corpus, provider/owner/partial-write contracts and all regressions remain unchanged |
 | Active independent kernels | Four R4 rank statistics algorithms | Separate scalar statistics and vector-depth capabilities preserve RankView ABI and old bits. Reference-only eight paths stay upstream-only until genuine public gates pass |
-| Ready measurement | Four public R3 intensity algorithms | All eight public-package profiles and 1,428-case corpus pass. Dispatch one-worker hosted campaign from exact validated source; 384 canonical raster workloads, aliases/errors untimed |
+| Ready measurement | Four public R3 intensity algorithms | All eight public-package profiles and 1,428-case corpus pass. One-worker hosted run [40034423731](https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731) uses exact fbdfb46; 384 canonical raster workloads, aliases/errors untimed. Poll the same run to terminal |
 | Verified reports | Controlled resize and initial R1/R2/consumer campaigns | Completed runs 40020239743, 40024802716, 40024807986 and 40024754860; all raw samples, source boundaries and slower cases retained |
 | Retained preparation failure | Consumer campaign 40020440164 | Preserve original failed source-text guards and logs. Corrected LF/CRLF-only provenance passed without changing any of 878 observations, followed by successful campaign 40024754860 |
 
