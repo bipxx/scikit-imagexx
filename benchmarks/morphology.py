@@ -13,6 +13,12 @@ from skimage import morphology as reference
 import skimagexx as xx
 
 
+# Image operators share this footprint/out workload. Generators, labeling and
+# component consumers have their own benchmark corpora as the namespace grows.
+OPERATIONS=('erosion','dilation','opening','closing','white_tophat','black_tophat',
+            'binary_erosion','binary_dilation','binary_opening','binary_closing')
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--size',type=int,default=512)
@@ -31,7 +37,7 @@ def main():
         a=rng.integers(0,256,(args.size,args.size),dtype=np.uint8)
         if dtype=='bool': a=a>127
         else: a=a.astype(dtype)
-        for name in xx.morphology.__all__:
+        for name in OPERATIONS:
             binary=name.startswith('binary_')
             image=(a>np.median(a)).astype(dtype) if binary and dtype!='bool' else a
             old,current=getattr(reference,name),getattr(xx.morphology,name)

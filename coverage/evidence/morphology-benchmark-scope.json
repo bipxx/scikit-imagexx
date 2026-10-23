@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "scope": "Benchmark fixture selection only; no product/API-count change or performance claim.",
+  "original_ci": {
+    "run_id": 40023717392,
+    "source": "77a0e34f9be7ccda17ff89cf3748975c72560632",
+    "failure": "Both measurement jobs applied footprint= to footprint_rectangle after morphology namespace growth; correctness/native/build jobs passed."
+  },
+  "change": "Fix the workload to its six grayscale and four binary image operators. All four dtypes, three footprints and output-reuse cases retained. Generators/labeling/consumers retain their separate corpora.",
+  "validation": {
+    "test": "tests/test_morphology_benchmark.py",
+    "result": "1 passed",
+    "actual_public_product": "c44c475430a9187231309f75ebf81c7de9ca4850",
+    "parity_workloads": 120,
+    "workers": 1,
+    "namespace_growth_guard": true,
+    "real_timer_calls": 0,
+    "measurement_stub": "Explicit unit-test-only zero durations; temporary output is not performance evidence."
+  },
+  "files": {
+    "benchmarks/morphology.py": {
+      "sha256": "3e0ec245dc66d3a0de0702081a399bb38245564ba82590023877cabf482e018e",
+      "bytes": 5173
+    },
+    "tests/test_morphology_benchmark.py": {
+      "sha256": "414c0d7dc48c7d304f4797acf1a3d5a62380b682d90748219f085c6b0a7a437e",
+      "bytes": 2362
+    },
+    "build/ci-morphology-scope-evidence/ci-77a0e34-job-120677024366-original-v1.log": {
+      "sha256": "626938418c2bd5b4394528439818712e0c628b8c3d16a040e86b49fdaa24e555",
+      "bytes": 386511
+    },
+    "build/ci-morphology-scope-evidence/ci-77a0e34-job-120677024542-original-v1.log": {
+      "sha256": "bf2d2852006d20af2fb8f27ab7c578f509223b96bb52bb274473e3223d7d13c5",
+      "bytes": 409732
+    },
+    "build/ci-morphology-scope-evidence/unit-actual-c44-windows-v1.log": {
+      "sha256": "161546852cb240c9b3406172f2a0c3db27163abf5883a8e5a411271a8c6df0a8",
+      "bytes": 101
+    }
+  }
+}
