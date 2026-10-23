@@ -7,6 +7,7 @@ void bind_kitchen(pybind11::module_&);
 void bind_hessian(pybind11::module_&);
 void bind_shape_index(pybind11::module_&);
 void bind_hessian_det(pybind11::module_&);
+void bind_sato(pybind11::module_&);
 
 // Keep new binding groups in their own translation units. Adding a kernel
 // does not require recompiling the original, large binding implementation.
@@ -19,4 +20,5 @@ void bind_extra(pybind11::module_& module) {
     bind_hessian(module);
     bind_shape_index(module);
     bind_hessian_det(module);
+    bind_sato(module);
 }
