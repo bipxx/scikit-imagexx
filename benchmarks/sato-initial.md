@@ -59,5 +59,17 @@ pass 11/11 on Windows and accelerated/portable Linux; relocated SDK consumers
 pass 10/10 on all three. ASan/UBSan pass 11/11 normally and with constrained
 dynamic OpenMP teams. No local performance timings have run.
 
-Full CI and isolated performance measurements are pending. This candidate
-is not retained on main, and no speedup is claimed yet.
+Frozen source **a5f4a68ee5cb9868b45068e6a8b33fff28142ab6** passes all 882
+expanded dedicated checks per SIMD mode per runtime. The final untimed corpus
+has 20/480 rows per runtime needing the conditioning allowance, all retained.
+Maximum input-scaled absolute error is 1.567116e-9; raw maximum is 1.781590e10
+because integer inputs, including full-width uint64, are cast without range
+normalization. For a float64 mirror case, the raw error is 3.457321e-9.
+These are numerical-parity limits, not exact output equality. Reports retain
+both raw and scaled errors so input scaling does not hide the difference.
+
+[Full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542928)
+and [isolated performance measurements](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
+are running against that frozen source. This candidate is not retained on main,
+and no speedup is claimed yet. Exact wheels, source archive, initial failures,
+and final validation logs are preserved in ignored checkpoints.
