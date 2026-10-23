@@ -159,21 +159,24 @@ def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=
     # Match the fused dispatcher before converting its signed-char arguments.
     if out.ndim!=ndim+1 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):
         raise TypeError('Function call with ambiguous argument types')
-    handled,result=_r2_alias_admission(operation,original,image,mask,out,ndim)
-    if handled:return result
-    if _qualified_alias_backend(operation):
-        try:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
-        except ValueError as error:
-            # These named native errors certify unsupported domains PREWRITE.
-            # Other validation/numerical errors retain their original class.
-            excluded=('integral entropy feedback is outside defined coverage',
-                      'uint16 image/float output feedback is outside defined coverage',
-                      'uint16 mixed-byte feedback requires full histogram bounds',
-                      'rank footprint/output alias is outside defined coverage')
-            if str(error) in excluded:
-                raise NotImplementedError('Overlapping buffers are outside qualified rank-alias-v1 coverage: '+str(error)) from None
-            raise
-    else:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
+    if 13<=operation<=15:
+        _statistics_call(_core.rank_statistics_run,image,footprint,mask,out,shifts,bins,operation)
+    else:
+        handled,result=_r2_alias_admission(operation,original,image,mask,out,ndim)
+        if handled:return result
+        if _qualified_alias_backend(operation):
+            try:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
+            except ValueError as error:
+                # These named native errors certify unsupported domains PREWRITE.
+                # Other validation/numerical errors retain their original class.
+                excluded=('integral entropy feedback is outside defined coverage',
+                          'uint16 image/float output feedback is outside defined coverage',
+                          'uint16 mixed-byte feedback requires full histogram bounds',
+                          'rank footprint/output alias is outside defined coverage')
+                if str(error) in excluded:
+                    raise NotImplementedError('Overlapping buffers are outside qualified rank-alias-v1 coverage: '+str(error)) from None
+                raise
+        else:_core.rank_run(image,footprint,mask,out,shifts,bins,operation)
     return np.squeeze(out,axis=-1) if ndim==2 else out.reshape(out.shape[:3])
 
 
@@ -231,5 +234,93 @@ def threshold(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
     return _apply(12,image,footprint,out,mask,shift_x,shift_y,shift_z)
 
 
+def _require_statistics(operation):
+    vector=operation==16
+    interface='rank_vector_interface' if vector else 'rank_statistics_interface'
+    expected='rank-vector-v1' if vector else 'rank-statistics-v1'
+    capabilities='rank_vector_capabilities' if vector else 'rank_statistics_capabilities'
+    entry='rank_windowed_histogram_run' if vector else 'rank_statistics_run'
+    if (getattr(_core,interface,None)!=expected or not (getattr(_core,capabilities,0)&(1<<operation))
+            or not callable(getattr(_core,entry,None))
+            or operation==14 and not callable(getattr(_core,'rank_noise_footprint',None))):
+        raise NotImplementedError(expected+' backend required for this operation')
+
+
+def _statistics_call(function,*args):
+    try:return function(*args)
+    except ValueError as error:
+        if str(error) in ('overlapping buffers are outside rank-statistics-v1 parity',
+                         'overlapping buffers are outside rank-histogram-v3 parity',
+                         'rank statistics output stores overlap',
+                         'subtract_mean unsigned conversion outside defined coverage',
+                         'invalid rank vector depth or dimensions',
+                         'rank output pixel depth must be positive'):
+            raise NotImplementedError('Outside qualified rank-statistics/vector coverage: '+str(error)) from None
+        raise
+
+
+def geometric_mean(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_statistics(13)
+    return _apply(13,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def _noise_footprint(footprint,shifts):
+    # Only inert built-in shift arithmetic can safely share one shape read.
+    # Protocol hooks retain original repeated shape/float-division/copy order.
+    if (type(footprint) is np.ndarray and all(type(s) in (int,bool,float) for s in shifts)
+            and all(n<=2**53 for n in footprint.shape)):
+        return _core.rank_noise_footprint(footprint,list(shifts))
+    row=int(footprint.shape[0]/2)+shifts[1]
+    col=int(footprint.shape[1]/2)+shifts[0]
+    if len(shifts)==3:
+        plane=int(footprint.shape[2]/2)+shifts[2]
+        indices=(row,col,plane)
+    else:indices=(row,col)
+    result=footprint.copy();result[indices]=0
+    return result
+
+
+def noise_filter(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_statistics(14)
+    ndim=np.asanyarray(image).ndim
+    if _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
+    if ndim not in (2,3):raise ValueError(f'`image` must have 2 or 3 dimensions, got {ndim}.')
+    footprint=_noise_footprint(footprint,(shift_x,shift_y) if ndim==2 else (shift_x,shift_y,shift_z))
+    return _apply(14,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def subtract_mean(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    _require_statistics(15)
+    return _apply(15,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def windowed_histogram(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,n_bins=None):
+    _require_statistics(16)
+    if n_bins is None:n_bins=int(image.max())+1
+    value=np.asanyarray(image)
+    if value.size==0:raise ValueError('The parameter `image` cannot be an empty array')
+    if value.ndim!=2:raise ValueError('The parameter `image` must be a 2-dimensional array')
+    dtype=image.dtype
+    if dtype==bool:raise ValueError('dtype cannot be bool.')
+    if dtype not in (np.uint8,np.uint16):
+        warnings.warn(f'Possible precision loss converting image of type {dtype} to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.',UserWarning,stacklevel=2)
+        image=_ubyte(image)
+    if _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
+    footprint=np.ascontiguousarray(_positive(footprint))
+    if footprint.ndim!=image.ndim:raise ValueError('Image dimensions and neighborhood dimensionsdo not match')
+    image=np.ascontiguousarray(image)
+    if mask is not None:mask=np.ascontiguousarray(_ubyte(mask))
+    if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
+    if out is None:out=np.empty(image.shape+(n_bins,),np.float64)
+    elif len(out.shape)==2:out=out.reshape(out.shape+(n_bins,))
+    bins=256 if image.dtype in (np.uint8,np.int8) else _core.rank_bins(image)
+    if bins>1024:warnings.warn(f'Bad rank filter performance is expected due to a large number of bins ({bins}), equivalent to an approximate bitdepth of {np.log2(bins):.1f}.',UserWarning,stacklevel=2)
+    for name,shift in zip(('shift_x','shift_y'),(shift_x,shift_y)):
+        if np.dtype(type(shift))==bool:warnings.warn(f'Paramter `{name}` is boolean and will be interpreted as int. This is not officially supported, use int instead.',UserWarning,stacklevel=2)
+    if out.ndim!=3 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):raise TypeError('Function call with ambiguous argument types')
+    _statistics_call(_core.rank_windowed_histogram_run,image,footprint,mask,out,[shift_x,shift_y],bins)
+    return out
+
+
 __all__=['minimum','maximum','mean','sum','pop','gradient','median','modal','entropy',
-         'autolevel','equalize','enhance_contrast','threshold']
+         'autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram']
