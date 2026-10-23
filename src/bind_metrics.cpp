@@ -72,6 +72,46 @@ void bind_metrics(py::module_& module) {
         }
         return out;
     });
+    module.def("metrics_stage",[numpy](py::array first,py::array second,bool single,int operation) {
+        const auto dtype=single ? py::dtype::of<float>():py::dtype::of<double>();
+        py::array output;
+        if(operation==1) {
+            // The compiled iterator chooses the same common K-order output
+            // layout as the binary ufunc; it performs no pixel operations.
+            const auto iterator=numpy.attr("nditer")(py::make_tuple(first,second,py::none()),
+                py::arg("flags")=py::make_tuple("zerosize_ok"),
+                py::arg("op_flags")=py::make_tuple(py::make_tuple("readonly"),py::make_tuple("readonly"),py::make_tuple("writeonly","allocate")),
+                py::arg("op_dtypes")=py::make_tuple(first.dtype(),second.dtype(),dtype));
+            output=iterator.attr("operands")[py::int_(2)].cast<py::array>();
+        } else output=numpy.attr("empty_like")(first,py::arg("dtype")=dtype,py::arg("order")="K",py::arg("subok")=false).cast<py::array>();
+        const auto axes=order(output,true);const auto out=view(output,axes);
+        const auto broadcast=[&](const py::array& input) {
+            skimagexx::MetricImageView result;result.data=input.data();
+            result.half=input.dtype().kind()=='f' && input.itemsize()==2;
+            result.type=result.half ? skimagexx::PixelType::uint16:skimagexx::bindings::real_pixel_type(input.dtype());
+            result.swap=!input.dtype().attr("isnative").cast<bool>() && input.itemsize()>1;
+            for(auto axis:axes) {
+                const auto logical=py::ssize_t(axis)-(output.ndim()-input.ndim());
+                result.shape.push_back(std::size_t(output.shape(py::ssize_t(axis))));
+                result.strides.push_back(logical<0 || input.shape(logical)==1 ? 0:input.strides(logical));
+            }
+            return result;
+        };
+        const auto a=broadcast(first),b=broadcast(second);
+        unsigned flags;
+        {py::gil_scoped_release release;flags=skimagexx::metric_stage_into(a,b,out,operation,single);}
+        return py::make_tuple(output,flags);
+    });
+    module.def("metrics_stage_sum",[numpy,buffered](py::array first,bool single) {
+        const auto input=view(first,order(first,true));
+        const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
+        skimagexx::MetricSums result;
+        {py::gil_scoped_release release;result=skimagexx::metric_sums(input,input,single,skimagexx::MetricNormalization::mean,true,false,block);}
+        return py::make_tuple(result.mean,result.mean_reduce_flags);
+    });
+    module.def("metrics_stage_extremum",[minimum,maximum](py::array first,bool largest) {
+        return (largest ? maximum:minimum)(first,py::arg("axis")=py::none());
+    });
     module.def("metrics_raw_range",[](py::array image) {
         if(!image.size())throw py::value_error("zero-size array to reduction operation minimum which has no identity");
         const auto input=view(image,order(image,false));

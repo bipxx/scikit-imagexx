@@ -266,6 +266,43 @@ MetricSums metric_sums(const MetricImageView& a,const MetricImageView& b,bool si
     }
     return result;
 }
+unsigned metric_stage_into(const MetricImageView& a,const MetricImageView& b,const MetricImageView& output,int operation,bool single) {
+    const auto n=count(a);count(b);count(output);
+    if(a.shape!=b.shape || a.shape!=output.shape)throw std::invalid_argument("metric stage shapes must match");
+    if(operation<0 || operation>3)throw std::invalid_argument("invalid metric stage");
+    if(output.swap || output.half || output.type!=(single ? PixelType::float32:PixelType::float64))throw std::invalid_argument("native floating metric stage output required");
+    const auto workers=detail::active_workers(n);std::vector<unsigned> flags(std::size_t(workers),0);
+    detail::partition(n,workers,[&](auto begin,auto end,auto worker){
+        std::feclearexcept(FE_ALL_EXCEPT);
+        for(auto done=begin;done<end;) {
+            const auto width=a.shape.empty() ? std::size_t{1}:a.shape.back();
+            const auto span=std::min(end-done,width-done%width);
+            const auto first=offset(a,done),second=offset(b,done),dest=offset(output,done);
+            const auto step0=a.shape.empty() ? 0:a.strides.back(),step1=b.shape.empty() ? 0:b.strides.back();
+            const auto step_out=output.shape.empty() ? 0:output.strides.back();
+            auto* target=static_cast<unsigned char*>(const_cast<void*>(output.data))+dest;
+            std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+            if(has_avx2() && step_out==std::ptrdiff_t(single ? sizeof(float):sizeof(double)))
+                i=simd::metric_stage_values(a,b,first,second,step0,step1,span,single,operation,target);
+#endif
+            for(;i<span;++i) {
+                if(single) {
+                    const float x=work_read<float>(a,first+std::ptrdiff_t(i)*step0);
+                    const float value=operation==0 ? x:operation==1 ? float(x-work_read<float>(b,second+std::ptrdiff_t(i)*step1)):float(x*x);
+                    std::memcpy(target+std::ptrdiff_t(i)*step_out,&value,sizeof(value));
+                } else {
+                    const double x=work_read<double>(a,first+std::ptrdiff_t(i)*step0);
+                    const double value=operation==0 ? x:operation==1 ? x-work_read<double>(b,second+std::ptrdiff_t(i)*step1):x*x;
+                    std::memcpy(target+std::ptrdiff_t(i)*step_out,&value,sizeof(value));
+                }
+            }
+            done+=span;
+        }
+        flags[worker]=status();
+    });
+    unsigned result=0;for(auto value:flags)result|=value;return result;
+}
 MetricRawRange metric_raw_range(const MetricImageView& view) {
     const auto n=count(view);if(!n)throw std::invalid_argument("empty metric range");
     if(view.half)return raw_range<std::uint16_t,false,true>(view,n);

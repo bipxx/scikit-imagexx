@@ -35,6 +35,19 @@ template<class T> void workers(PixelType type,bool single) {
         require(!std::memcmp(&one.mean,&four.mean,sizeof(double)));
         require(one.low==four.low && one.high==four.high && one.valid==four.valid && one.nan==four.nan);
     }
+    // Materialized exceptional stages share the same global workers and
+    // preserve their arrays/status independently of team size.
+    using Work=std::conditional_t<std::is_same_v<T,float>,float,double>;
+    std::vector<Work> first(a.size()),second(a.size());
+    for(int operation=0;operation<4;++operation) {
+        set_num_threads(1);
+        const auto one=metric_stage_into(view(a,type),view(b,type),view(first,single ? PixelType::float32:PixelType::float64),operation,single);
+#ifdef _OPENMP
+        set_num_threads(4);
+#endif
+        const auto four=metric_stage_into(view(a,type),view(b,type),view(second,single ? PixelType::float32:PixelType::float64),operation,single);
+        require(one==four && !std::memcmp(first.data(),second.data(),first.size()*sizeof(Work)));
+    }
     set_num_threads(1);
 }
 }
@@ -72,6 +85,18 @@ int main() {
     require(metric_sums(scalar_first,scalar_second,true,MetricNormalization::none,false,true).error==double(delta)*double(delta));
     const std::vector<float> negative_zero(37,-0.f),ones(37,1.f);
     require(!std::signbit(metric_sums(view(negative_zero,PixelType::float32),view(ones,PixelType::float32),true,MetricNormalization::mean).mean));
+    std::vector<float> stage_a{std::numeric_limits<float>::max(),std::numeric_limits<float>::infinity()},
+                       stage_b{-std::numeric_limits<float>::max(),std::numeric_limits<float>::infinity()},delta_values(2),square_values(2);
+    require(metric_stage_into(view(stage_a,PixelType::float32),view(stage_b,PixelType::float32),view(delta_values,PixelType::float32),1,true)==5);
+    stage_a.assign(2,0);stage_b.assign(2,0);
+    require(metric_stage_into(view(delta_values,PixelType::float32),view(delta_values,PixelType::float32),view(square_values,PixelType::float32),2,true)==0);
+    require(std::isinf(square_values[0]) && std::isnan(square_values[1]));
+    std::vector<float> finite_half;
+    for(unsigned h=65536;h-->0;)if((h&0x7c00)!=0x7c00) {
+        const auto word=std::uint16_t(h);const MetricImageView one_half{&word,PixelType::uint16,true,false,{1},{2}};
+        finite_half.push_back(float(detail::metric_read(one_half,0)));
+    }
+    require(metric_sums(view(finite_half,PixelType::float32),view(finite_half,PixelType::float32),true,MetricNormalization::mean,false,false,8192).mean==3.9375);
     workers<float>(PixelType::float32,true);workers<double>(PixelType::float64,false);
     workers<std::uint8_t>(PixelType::uint8,false);workers<std::int8_t>(PixelType::int8,false);
     workers<std::uint16_t>(PixelType::uint16,false);workers<std::int16_t>(PixelType::int16,false);

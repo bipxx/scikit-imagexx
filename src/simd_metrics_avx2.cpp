@@ -67,6 +67,25 @@ __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t st
     }
 }
 }
+std::size_t metric_stage_values(const MetricImageView& a,const MetricImageView& b,std::ptrdiff_t first,std::ptrdiff_t second,
+    std::ptrdiff_t step0,std::ptrdiff_t step1,std::size_t count,bool single,int operation,void* output) {
+    // Half conversion preserves signaling payloads without raising invalid;
+    // arithmetic may promote through double and correctly reports invalid.
+    if(operation==0 && a.half)return 0;
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto x=load(a,first+std::ptrdiff_t(i)*step0,step0);
+        if(single) {
+            const auto value=_mm256_cvtpd_ps(x);
+            const auto result=operation==0 ? value:operation==1 ? _mm_sub_ps(value,_mm256_cvtpd_ps(load(b,second+std::ptrdiff_t(i)*step1,step1))):_mm_mul_ps(value,value);
+            _mm_storeu_ps(static_cast<float*>(output)+i,result);
+        } else {
+            const auto result=operation==0 ? x:operation==1 ? _mm256_sub_pd(x,load(b,second+std::ptrdiff_t(i)*step1,step1)):_mm256_mul_pd(x,x);
+            _mm256_storeu_pd(static_cast<double*>(output)+i,result);
+        }
+    }
+    return i;
+}
 std::size_t metric_values(const MetricImageView& a,const MetricImageView& b,std::ptrdiff_t first,std::ptrdiff_t second,
     std::ptrdiff_t step0,std::ptrdiff_t step1,std::size_t count,bool single,MetricNormalization mode,double* error,double* energy,double* values) {
     std::size_t i=0;
