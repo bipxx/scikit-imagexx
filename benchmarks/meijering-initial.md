@@ -68,3 +68,26 @@ Frozen runtime **f8cb5b4ba12c9cf6a4734c5fdbe6b610953e2c5c** is under
 and [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246433).
 Later merged Sato measurement reports do not change its runtime sources.
 Retention and performance claims await those gates.
+
+## Verified isolated measurements
+
+Both measurement jobs passed against frozen source `f8cb5b4`. Source and binary
+hashes, exact wheel/package bytes, the fixed 600-case specification, all 1,200
+rows per OS and seven samples per implementation per row were verified.
+
+| One-worker result (120 cases per rank/OS) | Linux | Windows |
+|---|---:|---:|
+| Rank 1 geometric mean | 7.488270× | 5.322143× |
+| Rank 2 geometric mean | 7.688674× | 6.176978× |
+| Rank 3 geometric mean | 5.616934× | 3.810500× |
+| Rank 4 geometric mean | 5.387629× | 3.685129× |
+| Rank 5 geometric mean | 5.006351× | 3.682196× |
+| Minimum over all ranks | 2.993998× | 2.070080× |
+| Cases faster over all ranks | 600/600 | 600/600 |
+
+All one-worker cases are faster per OS. Rank 1 measured outputs are exact;
+maximum absolute error across all ranks and worker caps is 2.384186e-7
+(float32). No adverse cases were removed. Comparisons are candidate versus
+upstream within each runner, not paired candidate-to-candidate measurements.
+Raw samples: [Linux](meijering-first-linux.json),
+[Windows](meijering-first-windows.json). Full CI remains the retention gate.
