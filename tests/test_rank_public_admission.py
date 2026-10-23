@@ -35,7 +35,11 @@ def inputs(ndim,kind,dtype=np.uint8):
 @pytest.mark.parametrize('name',['gradient','median','modal'])
 @pytest.mark.parametrize('ndim',[2,3])
 @pytest.mark.parametrize('kind',['view','offset','mask'])
-def test_proven_alias_compatibility_output_warnings_and_mutations(surface,name,ndim,kind):
+@pytest.mark.parametrize('alias_backend',['qualified','missing-interface','wrong-interface','missing-operation'])
+def test_proven_alias_compatibility_output_warnings_and_mutations(surface,name,ndim,kind,alias_backend,monkeypatch):
+    if alias_backend=='missing-interface':monkeypatch.delattr(_rank._core,'rank_alias_interface')
+    elif alias_backend=='wrong-interface':monkeypatch.setattr(_rank._core,'rank_alias_interface','unrecognized-alias-version')
+    elif alias_backend=='missing-operation':monkeypatch.setattr(_rank._core,'rank_alias_capabilities',480 & ~(1<<(5+('gradient','median','modal').index(name))))
     expected_image,fp,expected_options,expected_owners=inputs(ndim,kind)
     image,footprint,options,owners=inputs(ndim,kind)
     with warnings.catch_warnings(record=True) as original_warnings:
@@ -48,8 +52,8 @@ def test_proven_alias_compatibility_output_warnings_and_mutations(surface,name,n
             actual=getattr(surface,name)(image,footprint,**options)
     finally:xx.set_fallback_enabled(previous)
     fallback=[w for w in actual_warnings if isinstance(w.message,xx.FallbackWarning)]
-    assert len(fallback)==1
-    assert str(fallback[0].message)==f'skimage.filters.rank.{name} executed by scikit-image fallback'
+    assert len(fallback)==(0 if alias_backend=='qualified' else 1)
+    if fallback:assert str(fallback[0].message)==f'skimage.filters.rank.{name} executed by scikit-image fallback'
     assert [(type(w.message),str(w.message)) for w in actual_warnings if not isinstance(w.message,xx.FallbackWarning)]==[(type(w.message),str(w.message)) for w in original_warnings]
     assert actual.dtype==expected.dtype and actual.strides==expected.strides
     assert actual.tobytes()==expected.tobytes()
@@ -60,9 +64,25 @@ def test_proven_alias_compatibility_output_warnings_and_mutations(surface,name,n
 @pytest.mark.parametrize('name',['gradient','median','modal'])
 @pytest.mark.parametrize('ndim',[2,3])
 @pytest.mark.parametrize('kind',['view','offset','mask'])
-def test_strict_proven_alias_rejection_is_before_writes(name,ndim,kind):
+@pytest.mark.parametrize('alias_backend',['qualified','missing-interface','wrong-interface','missing-operation'])
+def test_strict_proven_alias_rejection_is_before_writes(name,ndim,kind,alias_backend,monkeypatch):
+    if alias_backend=='missing-interface':monkeypatch.delattr(_rank._core,'rank_alias_interface')
+    elif alias_backend=='wrong-interface':monkeypatch.setattr(_rank._core,'rank_alias_interface','unrecognized-alias-version')
+    elif alias_backend=='missing-operation':monkeypatch.setattr(_rank._core,'rank_alias_capabilities',480 & ~(1<<(5+('gradient','median','modal').index(name))))
     image,fp,options,owners=inputs(ndim,kind)
     before=[a.tobytes() for a in owners]
+    if alias_backend=='qualified':
+        expected_image,expected_fp,expected_options,expected_owners=inputs(ndim,kind)
+        expected=getattr(reference,name)(expected_image,expected_fp,**expected_options)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            actual=getattr(rank,name)(image,fp,**options)
+        assert not notices
+        assert actual.dtype==expected.dtype and actual.strides==expected.strides
+        assert actual.tobytes()==expected.tobytes()
+        assert [a.tobytes() for a in owners]==[a.tobytes() for a in expected_owners]
+        assert np.shares_memory(actual,options['out'])==np.shares_memory(expected,expected_options['out'])
+        return
     with warnings.catch_warnings(record=True) as notices:
         warnings.simplefilter('always')
         with pytest.raises(NotImplementedError,match='fallback is disabled'):
@@ -72,17 +92,35 @@ def test_strict_proven_alias_rejection_is_before_writes(name,ndim,kind):
 
 @pytest.mark.parametrize('name',['gradient','median','modal','entropy'])
 @pytest.mark.parametrize('enabled',[False,True])
-def test_unproved_wide_and_entropy_aliases_never_forward(name,enabled,monkeypatch):
+@pytest.mark.parametrize('alias_backend',['qualified','missing-interface','wrong-interface','missing-operation'])
+def test_unproved_wide_and_entropy_aliases_never_forward(name,enabled,monkeypatch,alias_backend):
+    if alias_backend=='missing-interface':monkeypatch.delattr(_rank._core,'rank_alias_interface')
+    elif alias_backend=='wrong-interface':monkeypatch.setattr(_rank._core,'rank_alias_interface','unrecognized-alias-version')
+    elif alias_backend=='missing-operation':monkeypatch.setattr(_rank._core,'rank_alias_capabilities',480 & ~(1<<(5+('gradient','median','modal','entropy').index(name))))
     image,fp,options,owners=inputs(2,'view',np.uint16 if name!='entropy' else np.uint8)
     before=[a.tobytes() for a in owners]
+    qualified=alias_backend=='qualified' and name!='entropy'
+    if qualified:
+        # Aligned whole-word gradient/median/modal stay within the original
+        # uint16 maximum. No mixed-byte or integral-entropy oracle is run.
+        expected_image,expected_fp,expected_options,expected_owners=inputs(2,'view',np.uint16)
+        expected=getattr(reference,name)(expected_image,expected_fp,**expected_options)
     def forbidden(*args,**kwargs):raise AssertionError('unproved overlap forwarded')
     monkeypatch.setattr(reference,name,forbidden)
     previous=xx.set_fallback_enabled(enabled)
     try:
-        with pytest.raises(NotImplementedError,match='compatibility is pending'):
-            getattr(rank,name)(image,fp,**options)
+        if qualified:
+            actual=getattr(rank,name)(image,fp,**options)
+            assert actual.dtype==expected.dtype and actual.strides==expected.strides
+            assert actual.tobytes()==expected.tobytes()
+            assert [a.tobytes() for a in owners]==[a.tobytes() for a in expected_owners]
+            assert np.shares_memory(actual,options['out'])==np.shares_memory(expected,expected_options['out'])
+        else:
+            message='integral entropy' if alias_backend=='qualified' else 'compatibility is pending'
+            with pytest.raises(NotImplementedError,match=message):
+                getattr(rank,name)(image,fp,**options)
     finally:xx.set_fallback_enabled(previous)
-    assert before==[a.tobytes() for a in owners]
+    if not qualified:assert before==[a.tobytes() for a in owners]
 
 
 @pytest.mark.parametrize('name',['gradient','median','modal','entropy'])
@@ -101,7 +139,11 @@ def test_unsafe_alias_extent_rejection_never_forwards(name,kind,monkeypatch):
 
 
 @pytest.mark.parametrize('name',['gradient','median','modal'])
-def test_compatibility_delegation_preserves_argument_objects(name,monkeypatch):
+@pytest.mark.parametrize('alias_backend',['missing-interface','wrong-interface','missing-operation'])
+def test_compatibility_delegation_preserves_argument_objects(name,monkeypatch,alias_backend):
+    if alias_backend=='missing-interface':monkeypatch.delattr(_rank._core,'rank_alias_interface')
+    elif alias_backend=='wrong-interface':monkeypatch.setattr(_rank._core,'rank_alias_interface','unrecognized-alias-version')
+    elif alias_backend=='missing-operation':monkeypatch.setattr(_rank._core,'rank_alias_capabilities',480 & ~(1<<(5+('gradient','median','modal').index(name))))
     image,fp,options,_=inputs(2,'mask')
     sentinel=object();calls=[]
     def delegated(module,operation,*args,**kwargs):
