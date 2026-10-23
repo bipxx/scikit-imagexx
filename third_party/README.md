@@ -35,3 +35,13 @@ Multi-Otsu float32 moment initialization, objective accumulation order and first
 CLAHE clipping and redistribution, 14-bit quantization and interpolation order follow scikit-image 0.26.0 (`exposure/_adapthist.py`), adapted there from Karel Zuiderveld, Graphics Gems IV and relicensed with permission under the Modified BSD license. See `scikit-image-LICENSE.txt`. This implementation uses unpadded tile access, native histogram rows and runtime-dispatched AVX2 quantization/interpolation.
 
 The private resize/rescale spline foundation in `src/spline.cpp` adapts the B-spline weights, poles and coefficient recurrences from [SciPy v1.18.1 `ni_splines.c`](https://github.com/scipy/scipy/blob/v1.18.1/scipy/ndimage/src/ni_splines.c). `scipy-ndimage-LICENSE.txt` retains the BSD notice. Native axis traversal, scratch ownership and optional global worker partitioning are implemented here. An AVX2 kernel advances four independent coefficient lines together without gather/scatter scratch; SIMD/scalar outputs are checked bitwise. Legacy reflected initialization reproduces the short-axis endpoint aliasing fixed in [SciPy 1.18.0, gh-24615](https://github.com/scipy/scipy/pull/24615); the modern default uses the corrected recurrence. This foundation does not yet register native resize/rescale coverage.
+
+The private grid-mode sampler in `src/resample.cpp` follows the coordinate,
+border and corner accumulation conventions of
+[SciPy v1.18.1 `ni_interpolation.c`](https://github.com/scipy/scipy/blob/v1.18.1/scipy/ndimage/src/ni_interpolation.c).
+Its axis tables use contiguous allocations, and its AVX2 kernel samples four
+independent outputs with masked gathers and ordered multiplication/addition.
+Both scalar and SIMD paths preserve whole-field spline prefiltering, the
+nearest/grid-constant prepadding, and optional global workers. The same BSD
+notice is retained in `scipy-ndimage-LICENSE.txt`. This stage and its private
+Python binding do not claim completed public resize/rescale coverage.
