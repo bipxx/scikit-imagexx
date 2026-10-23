@@ -2,6 +2,7 @@
 #include "bind_numeric.hpp"
 #include "execution.hpp"
 #include "resize_gaussian.hpp"
+#include "resize_clip.hpp"
 #include <cstring>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -9,6 +10,12 @@
 
 namespace py=pybind11;
 namespace {
+template<class T> void clip_python(py::array& image,const py::array& lower,const py::array& upper,
+                                  skimagexx::PixelType type,int policy) {
+    T low,high;std::memcpy(&low,lower.data(),sizeof(T));std::memcpy(&high,upper.data(),sizeof(T));
+    py::gil_scoped_release release;
+    skimagexx::detail::resize_clip_into(image.mutable_data(),std::size_t(image.size()),type,&low,&high,static_cast<skimagexx::detail::ResizeClipPolicy>(policy));
+}
 template<std::size_t Bytes> void copy_layout(const void* source,void* destination,std::size_t count,
                  const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides,bool swap) {
     auto* target=static_cast<unsigned char*>(destination);const auto* input=static_cast<const unsigned char*>(source);
@@ -53,6 +60,24 @@ void copy_native(const void* source,void* destination,std::size_t count,std::siz
 }
 }
 void bind_resample(py::module_& module) {
+    module.def("resize_clip",[](py::array image,py::array lower,py::array upper,int policy) {
+        const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
+        if(!(image.flags()&py::array::c_style) || !image.writeable() || !image.dtype().attr("isnative").cast<bool>() ||
+           !image.attr("flags").attr("aligned").cast<bool>())throw py::value_error("writable native aligned C-order clip image required");
+        for(const auto& bound:{lower,upper})
+            if(bound.size()!=1 || !bound.dtype().attr("isnative").cast<bool>() ||
+               skimagexx::bindings::real_pixel_type(bound.dtype())!=type)throw py::type_error("one same-dtype native scalar per clip bound required");
+        switch(type) {
+            case skimagexx::PixelType::boolean:clip_python<std::uint8_t>(image,lower,upper,type,policy);break;
+            #define CLIP(tag,T) case skimagexx::PixelType::tag:clip_python<T>(image,lower,upper,type,policy);break;
+            CLIP(uint8,std::uint8_t) CLIP(int8,std::int8_t) CLIP(uint16,std::uint16_t) CLIP(int16,std::int16_t)
+            CLIP(uint32,std::uint32_t) CLIP(int32,std::int32_t) CLIP(uint64,std::uint64_t) CLIP(int64,std::int64_t)
+            CLIP(float32,float) CLIP(float64,double)
+            #undef CLIP
+            default:throw py::type_error("unsupported clip dtype");
+        }
+        return image;
+    });
     module.def("resize_gaussian_raw",[](py::array image,py::list kernels,
         const std::vector<std::size_t>& axes,const std::vector<int>& modes,double cval) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
