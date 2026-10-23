@@ -16725,22 +16725,16 @@
       "id": "rank-public-integration",
       "kind": "integration",
       "apis": [],
-      "owner": "metrics_reductions",
+      "owner": "integrator",
       "branch": "feature/rank-public",
       "base_sha": "99b1a1dba48942f6daade395c8fc03925db2b865",
-      "owns": [
-        "python/skimagexx/_namespace.py",
-        "python/skimagexx/_rank_namespace.py",
-        "python/skimagexx/filters.py",
-        "tests/test_rank_public.py",
-        "coverage/contracts/rank-public.json"
-      ],
+      "owns": [],
       "depends_on": [
         "rank-distribution-native",
         "rank-floating-policies",
         "rank-gil-fix"
       ],
-      "state": "implementing",
+      "state": "validating",
       "dependency_requirements": {
         "rank-distribution-native": {
           "evidence_scope": "native_private"
@@ -16759,9 +16753,12 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "3a140c18a94d70dcd517e82e8818266131a7357c",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/rank-public-evidence/d4508ac/manifest.json",
+          "build/rank-integer-evidence/0e5f860-3a140c1/manifest.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -16773,8 +16770,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "3a140c18a94d70dcd517e82e8818266131a7357c",
+        "main_commit": "2bb44c0b2c7a9a30888317ac3d47ee410ed81d01"
       },
       "retention": {
         "active_paths": [],
@@ -16782,18 +16779,23 @@
       },
       "public_registration": true,
       "integration_files": [
-        "python/skimagexx/coverage.py",
-        "tests/test_api.py",
-        "tools/inventory.py",
-        "coverage/api.json"
+        "python/skimagexx/_namespace.py",
+        "python/skimagexx/_rank_namespace.py",
+        "python/skimagexx/filters.py",
+        "tests/test_rank_public.py",
+        "coverage/contracts/rank-public.json"
       ],
       "proofs": {
         "public_native": {
-          "status": "pending",
-          "source_sha": null,
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "status": "verified",
+          "source_sha": "3a140c18a94d70dcd517e82e8818266131a7357c",
+          "manifest": {
+            "path": "build/rank-integer-evidence/0e5f860-3a140c1/manifest.json",
+            "sha256": "49d9fcc1692474cb8a0a514713ec5de30ead126d45a415a5d5cb0835dc29424f"
+          },
+          "scope": "Paired with sealed d450 public namespace proof: four actual whole-package profiles normal/scalar11612 plus2070 active warning hooks, all pass; root cumulative591 integration remains a separate packet.",
+          "native_contract_checks": 2070,
+          "native_pending": 0
         }
       }
     },
@@ -17111,7 +17113,7 @@
       "id": "resize-controlled-comparison",
       "kind": "tooling",
       "apis": [],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/resize-controlled",
       "base_sha": "caf8b815b07c1024583f264335f10f514ccfb49a",
       "owns": [
@@ -17124,7 +17126,7 @@
         "resize-measurement",
         "resize-optimization-measurement"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -17132,9 +17134,12 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/worktrees/resize-controlled/build/resize-controlled-proof.json",
+          "build/worktrees/resize-controlled-sdk-set/build/sdk-header-set-supplement-proof.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -17146,8 +17151,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "36440f8e80f582bfc2ab258d9558a2384a419367",
+        "main_commit": "abb0f46"
       },
       "retention": {
         "active_paths": [],
@@ -17160,26 +17165,39 @@
         "resize-optimization-measurement": {
           "evidence_scope": "isolated_performance"
         }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
+          "manifest": {
+            "path": "build/worktrees/resize-controlled-sdk-set/build/sdk-header-set-supplement-proof.json",
+            "sha256": "3c18e4c574b35dfb54d5b2b7dd779d452d4c75711b3a6f757342eda91528c752"
+          },
+          "scope": "Actual authenticated initial66e and current whole packages versus original0.26, six normal/scalar gates at workers1/4; complete source header-set guard and60 tooling guards/runtime. No local timing; compiledb6/Python5d product equivalentcaf8 recorded separately.",
+          "native_contract_checks": 373,
+          "native_pending": 0
+        }
       }
     },
     {
       "id": "footprint-setup-optimization",
       "kind": "private_kernel",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "feature/footprint-performance",
       "base_sha": "00f45b8c5f1a907d783e07f1d29eb64566abeaf6",
       "owns": [
         "src/bind_footprint_dense.cpp",
         "python/skimagexx/_footprint_dense.py",
         "python/skimagexx/_footprint_decomposition.py",
-        "python/skimagexx/_footprint_utils.py"
+        "python/skimagexx/_footprint_util.py"
       ],
       "depends_on": [
         "footprints-measurement",
         "footprint-dtype-provider-fix"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -17187,9 +17205,12 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "daf843b52668d9e88182c2cf9a88fac6c03a01f9",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/footprint-setup-evidence/manifest.json",
+          "build/footprint-dtype-factory-evidence/manifest.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -17201,8 +17222,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "daf843b52668d9e88182c2cf9a88fac6c03a01f9",
+        "main_commit": "ed55e9c2fdab1a840c6a459e494598ee72ccb7b7"
       },
       "retention": {
         "active_paths": [],
@@ -17214,6 +17235,19 @@
         },
         "footprint-dtype-provider-fix": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "daf843b52668d9e88182c2cf9a88fac6c03a01f9",
+          "manifest": {
+            "path": "build/footprint-dtype-factory-evidence/manifest.json",
+            "sha256": "de108298be0910a743dc84657ea0118b3703311bcb6e47d23968784ac4ddec4b"
+          },
+          "scope": "Paired with c1 whole-package proof864fccc2: eight profiles5053 +556 unchanged corpus, stateful providers and cold raising/nonraising dtype factories; native/SDK bytes unchanged by final Python fix; no speedup claim.",
+          "native_contract_checks": 5053,
+          "native_pending": 0
         }
       }
     },
@@ -17322,6 +17356,640 @@
         "transform-class-performance-harness": {
           "evidence_scope": "public_native",
           "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717"
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave4",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "detached/591ce3f",
+      "base_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
+      "owns": [],
+      "depends_on": [],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "checkpoint": {
+        "source_lease": "build/worktrees/core-rank9-validation stays591 until all PhaseA supplements/seal terminal",
+        "actual_packages": "build/main-core-wave4-*-package",
+        "member_count": 104,
+        "sdk_member_count": 59,
+        "sdk_scope": "All59 SDK bytes equal the passed seven-client dynamic/scalar four-runtime SDK proof.",
+        "authoritative_handles": [
+          19104,
+          26922,
+          27059,
+          74006
+        ],
+        "known_harness_gaps": "Initial identity counted155 images as155 total functions instead of158; corrected identity-v2 all8 pass. Two old nested import tests assumed rank mean/maximum were unported. Parent059fe76 supplies exact22-case module supplement; preserve original failures.",
+        "timing_calls": 0
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending",
+          "source_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
+          "manifest": null,
+          "native_contract_checks": 0,
+          "native_pending": null
+        }
+      }
+    },
+    {
+      "id": "rank-distribution-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/rank-distribution-benchmark",
+      "base_sha": "c4ce46fb0a0fb013e6d97bf71bc9c7ef66fa1a60",
+      "owns": [],
+      "depends_on": [],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "c4ce46fb0a0fb013e6d97bf71bc9c7ef66fa1a60",
+        "main_commit": "df928d5"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "c4ce46fb0a0fb013e6d97bf71bc9c7ef66fa1a60",
+          "manifest": {
+            "path": "build/rank-distribution-benchmark-evidence/c4ce46f/manifest.json",
+            "sha256": "0cdff6c74247852735b5b7a62ed4f1ba7bc9525b3acfc6f96af4844f99a7cca3"
+          },
+          "scope": "648 source-frozen original checks/384 eligible/142 expected errors,21 guards and artifact barrier check on three runtimes. No native acceptance or timings; R1 corpus810 unchanged."
+        }
+      }
+    },
+    {
+      "id": "component-consumers-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/component-consumers-benchmark",
+      "base_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+      "owns": [],
+      "depends_on": [],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+        "main_commit": "e856196afaab91095d416ab5d161984565eb7335"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+          "manifest": {
+            "path": "build/worktrees/component-consumers-benchmark/build/component-consumers-benchmark-proof.json",
+            "sha256": "2cad77e6fbd046faccc393f66263cadb36b1ce6c26b6d9aede87dac73fcdb170"
+          },
+          "scope": "Frozen reference878 on three runtimes; six actual complete-package normal/scalar gates workers1/4,43 guards/runtime.205 raster-eligible cases; errors and sparse metadata kept untimed. No local timers.",
+          "native_contract_checks": 878,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "rank-intensity-contracts",
+      "kind": "reference_contract",
+      "apis": [
+        "filters.rank.autolevel",
+        "filters.rank.equalize",
+        "filters.rank.enhance_contrast",
+        "filters.rank.threshold",
+        "filters.rank.generic.autolevel",
+        "filters.rank.generic.equalize",
+        "filters.rank.generic.enhance_contrast",
+        "filters.rank.generic.threshold"
+      ],
+      "owner": "integrator",
+      "branch": "feature/rank-intensity-contracts",
+      "base_sha": "429b6325005b8fb22dcba901660d18cedcce0912",
+      "owns": [],
+      "depends_on": [],
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "429b6325005b8fb22dcba901660d18cedcce0912",
+          "manifest": {
+            "path": "build/rank-intensity-contract-evidence/manifest.json",
+            "sha256": "00e7b34e5dedf96540cc3d19e8c2878832c5b345fea62381f5dc3a21e8412714"
+          },
+          "scope": "1012 source-frozen IDs through canonical/generic original paths plus248 independent arithmetic oracles;6325 mixed checks/runtime including strict-pending metadata, zero native image checks.",
+          "passing_contract_checks": 2272
+        }
+      }
+    },
+    {
+      "id": "rank-intensity-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/rank-intensity-native",
+      "base_sha": "9b9fe85f96c75887adb7f4e8011aa5cfac70de96",
+      "owns": [],
+      "depends_on": [
+        "rank-intensity-contracts"
+      ],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "9b9fe85f96c75887adb7f4e8011aa5cfac70de96",
+        "main_commit": "1f662f5251e3b4255938bc078cbb1284d2afb2f4"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-intensity-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "9b9fe85f96c75887adb7f4e8011aa5cfac70de96",
+          "manifest": {
+            "path": "build/rank-intensity-evidence/manifest.json",
+            "sha256": "91d5c17c6a0bdfec2f8bbe56c3a931f75f9fffa01dec41779e52371ca90a37bb"
+          },
+          "scope": "Eight private profiles12120 each: old9542+new2578; signed64, modular/floating stores,248 oracles, native portable/ASanUBSan/LSAN clean. Python binding bounds664 pass; Python shutdown leak reports remain explicitly baseline CPython-limited. No public registration or timing.",
+          "native_contract_checks": 1012,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "rank-intensity-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/rank-intensity-public",
+      "base_sha": "1f662f5251e3b4255938bc078cbb1284d2afb2f4",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_rank_public.py",
+        "tests/test_rank_intensity_public.py",
+        "coverage/contracts/rank-intensity-public.json"
+      ],
+      "depends_on": [
+        "rank-intensity-native",
+        "combined-public-wave4"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "PhaseB only after PhaseA lease released: append own required-footprint wrappers and precise providers/alias exclusions; actual full-core whole-wheel/SDK gates before root acceptance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-intensity-native": {
+          "evidence_scope": "native_private"
+        },
+        "combined-public-wave4": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "rank-alias-contracts",
+      "kind": "reference_contract",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/rank-alias-contracts",
+      "base_sha": "913e922a82662319cbfd3c1439414ccc8f2f1a30",
+      "owns": [],
+      "depends_on": [],
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "913e922a82662319cbfd3c1439414ccc8f2f1a30",
+          "manifest": {
+            "path": "build/rank-alias-evidence/913e922/manifest.json",
+            "sha256": "1bc15b4fa83aabf40d4128320e36b8e3ee05bbd7d838c62ba4bb01b4a738c429"
+          },
+          "scope": "1008 bounded original observations plus1008 source-order replay/owner checks on three runtimes;2022 total with integrity/signatures. Negative populations and median no-store; unsafe extent/cast/effective-type scopes excluded explicitly.",
+          "passing_contract_checks": 2016
+        }
+      }
+    },
+    {
+      "id": "rank-alias-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-alias-native",
+      "base_sha": "c05a92958d51afb76c614ea6054a1d1aabf874aa",
+      "owns": [
+        "src/rank.cpp",
+        "src/simd_rank_avx2.cpp",
+        "include/skimagexx/rank.hpp",
+        "src/bind_rank.cpp",
+        "tests/test_rank_alias_native.cpp",
+        "tests/test_rank_alias_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-alias-contracts"
+      ],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "rank-alias-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c05a92958d51afb76c614ea6054a1d1aabf874aa",
+          "manifest": {
+            "path": "build/rank-alias-native-evidence/c05a929/bounded-v1/manifest.json",
+            "sha256": "c655fe3a88c3f2a6167abfbd1b0147ecdd3bee70c94e3a531547386dfa3e6431"
+          },
+          "scope": "Bounded sealed proof: eight private16186 profiles,64 transport and40 release/state supplements, native checks. Full instrumented binding scalar still live67655; do not count unsealed sanitizer work. Separate alias480, histogram8191 and old two-argument ABI retained.",
+          "native_contract_checks": 1008,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "arraymap-dense-contracts",
+      "kind": "reference_contract",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/arraymap-dense-contracts",
+      "base_sha": "6920dff8bbcd836473cffc42868d48d5d5a0a45d",
+      "owns": [],
+      "depends_on": [],
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "6920dff8bbcd836473cffc42868d48d5d5a0a45d",
+          "manifest": {
+            "path": "build/worktrees/arraymap-dense-contracts/build/arraymap-dense-proof.json",
+            "sha256": "aea1e2e52eb83082b4029a6930cc76f762a9b6063037b392449811d9ba5365e7"
+          },
+          "scope": "383 tests/runtime including382 allocation-bounded cases. Original uses checked NumPy assignment; uint8/signed overflow errors are defined. Native audits209modern/107minimum symptoms are known gaps, not acceptance.",
+          "passing_contract_checks": 382
+        }
+      }
+    },
+    {
+      "id": "arraymap-dense-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/arraymap-dense-native",
+      "base_sha": "591ce3f1a6947b0dbdd74805a8ac99f15855de45",
+      "owns": [
+        "python/skimagexx/_component_consumers.py",
+        "src/bind_component_consumers.cpp",
+        "src/component_consumers.cpp",
+        "include/skimagexx/component_consumers.hpp",
+        "tests/test_arraymap_dense_pipeline.py"
+      ],
+      "depends_on": [
+        "arraymap-dense-contracts"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Preserve overflow/dtype/index/cast order, bool/vector/scalar distinctions, compact-key ownership and partial cache state. Actual whole bindings link immutable591 SDK; all candidate changes isolated."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "arraymap-dense-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      }
+    },
+    {
+      "id": "resize-controlled-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "caf8b815b07c1024583f264335f10f514ccfb49a",
+      "owns": [],
+      "depends_on": [
+        "resize-controlled-comparison"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "resize-controlled-comparison": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "component-consumers-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+      "owns": [],
+      "depends_on": [
+        "component-consumers-benchmark-tooling"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "component-consumers-benchmark-tooling": {
+          "evidence_scope": "public_native"
         }
       }
     }
@@ -17499,20 +18167,13 @@
     "filters.prewitt",
     "filters.prewitt_h",
     "filters.prewitt_v",
-    "filters.rank.autolevel",
     "filters.rank.autolevel_percentile",
-    "filters.rank.enhance_contrast",
     "filters.rank.enhance_contrast_percentile",
-    "filters.rank.equalize",
-    "filters.rank.generic.autolevel",
-    "filters.rank.generic.enhance_contrast",
-    "filters.rank.generic.equalize",
     "filters.rank.generic.geometric_mean",
     "filters.rank.generic.majority",
     "filters.rank.generic.noise_filter",
     "filters.rank.generic.otsu",
     "filters.rank.generic.subtract_mean",
-    "filters.rank.generic.threshold",
     "filters.rank.generic.windowed_histogram",
     "filters.rank.geometric_mean",
     "filters.rank.gradient_percentile",
@@ -17528,7 +18189,6 @@
     "filters.rank.subtract_mean_percentile",
     "filters.rank.sum_bilateral",
     "filters.rank.sum_percentile",
-    "filters.rank.threshold",
     "filters.rank.threshold_percentile",
     "filters.rank.windowed_histogram",
     "filters.rank_order",
@@ -18058,12 +18718,12 @@
   "snapshot_base_sha": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
   "inventory_snapshot": {
     "public_names": 474,
-    "native_partial_image_names": 137,
+    "native_partial_image_names": 155,
     "metadata_names": 3,
-    "upstream_only_names": 329,
+    "upstream_only_names": 311,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Actual candidate137image+3helper+4classes+1exceptionprovider; new4consumer public gates pass. Private18rank paths remain unregistered. Classification is not full-library parity or performance completion.",
+    "note": "155 partial image paths,3 metadata helpers,4 partial classes,1 exception metadata provider; all155 benchmark links. Nine public rank algorithms across18paths. R3 four algorithms are private-only; classification is not full parity or performance acceptance.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -18090,13 +18750,14 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-public-integration"
+        "rank-alias-native"
       ],
       "resize_api": [
-        "resize-controlled-comparison"
+        "arraymap-dense-native"
       ],
       "resize_bench": [
-        "footprint-setup-optimization"
+        "combined-public-wave4",
+        "rank-intensity-public"
       ]
     }
   },
