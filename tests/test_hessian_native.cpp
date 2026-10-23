@@ -31,6 +31,15 @@ template<class T> void volume(){
  for(std::size_t a=2;a+2<h;++a)for(std::size_t b=2;b+2<w;++b)for(std::size_t c=2;c+2<d;++c){const auto i=(a*w+b)*d+c;
   for(std::size_t f=0;f<6;++f)require(result[f][i]==T(f==0 || f==3 || f==5 ? 2 : 0));}
 }
-int main(){volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
+void tiny_derivative(){
+ std::vector<double> input(19,-1.),output(19);void* fields[]={output.data()};
+ const HessianPass zero{{0,{-0.,0.,0.},GaussianBorder::reflect,0},true};
+ require(hessian_matrix_into(input.data(),PixelType::float64,fields,{19},{{zero}},true));
+ for(auto x:output)require(x==0. && !std::signbit(x));
+ const HessianPass tiny{{0,{-1e-40,0.,1e-40},GaussianBorder::reflect,0},true};
+ require(hessian_matrix_into(input.data(),PixelType::float64,fields,{19},{{tiny}},true));
+ for(auto x:output)require(std::abs(x+4e-80)<1e-94);
+}
+int main(){tiny_derivative();volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
  require(hessian_matrix_into(nullptr,PixelType::float64,nullptr,{0,3},{{},{}},true));set_num_threads(1);std::cout<<"Hessian native checks passed\n";
 }

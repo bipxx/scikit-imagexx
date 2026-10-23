@@ -46,7 +46,15 @@ template<class T> void gradient(const T* input,T* output,std::size_t count,std::
  });
 }
 template<class T> void convolve(const T* input,T* output,std::size_t count,const std::vector<std::size_t>& shape,const HessianPass& plan,int workers){
- const auto& p=plan.filter;const auto radius=p.weights.size()/2,length=shape[p.axis];std::size_t stride=1;
+ const auto& p=plan.filter;const auto original_radius=p.weights.size()/2,length=shape[p.axis];
+ // ndimage chooses its symmetric arithmetic before antisymmetric arithmetic.
+ // Tiny derivative kernels can satisfy both tests within double epsilon.
+ bool derivative=plan.derivative;
+ if(derivative){derivative=false;for(std::size_t j=0;j<original_radius;++j)
+  if(std::abs(p.weights[j]-p.weights[p.weights.size()-1-j])>std::numeric_limits<double>::epsilon()){derivative=true;break;}}
+
+ std::size_t first=0;while(first<original_radius && p.weights[first]==0.)++first;
+ const auto radius=original_radius-first;const auto* weights=p.weights.data()+first;std::size_t stride=1;
  for(std::size_t axis=p.axis+1;axis<shape.size();++axis)stride*=shape[axis];
  detail::partition(count,workers,[&](auto begin,auto end,auto){
   std::vector<const void*> left(radius),right(radius);
@@ -60,13 +68,26 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
    }
    std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-   if(has_avx2())done=simd::hessian_convolve(left.data(),right.data(),input+begin,output+begin,stop-begin,radius,p.weights.data(),plan.derivative,p.cval,std::is_same_v<T,float>);
+   if(has_avx2())done=simd::hessian_convolve(left.data(),right.data(),input+begin,output+begin,stop-begin,radius,weights,derivative,p.cval,std::is_same_v<T,float>);
 #endif
-   for(;done<stop-begin;++done){double sum=double(input[begin+done])*p.weights[radius];
+   for(;done<stop-begin;++done){double sum=double(input[begin+done])*weights[radius];
     for(std::size_t j=0;j<radius;++j){const auto a=left[j] ? double(static_cast<const T*>(left[j])[done]) : p.cval,b=right[j] ? double(static_cast<const T*>(right[j])[done]) : p.cval;
-     sum+=(plan.derivative ? a-b : a+b)*p.weights[j];}
+     sum+=(derivative ? a-b : a+b)*weights[j];}
     output[begin+done]=T(sum);
-   }begin=stop;
+   }
+   // Exactly zero tails cannot change finite nonzero sums. They can change a
+   // negative zero into positive zero. Repair only that cold output case with
+   // the original ordered pass, preserving ndimage's signed-zero behavior.
+   if(first)for(auto position=begin;position<stop;++position)if(output[position]==T(0) && std::signbit(output[position])){
+    const auto x=position/stride%length,k=position%stride,base=position-x*stride-k;
+    double sum=double(input[position])*p.weights[original_radius];
+    for(std::size_t j=0;j<original_radius;++j){const auto distance=std::ptrdiff_t(original_radius-j);
+     const auto lo=mapped(std::ptrdiff_t(x)-distance,length,p.border),hi=mapped(std::ptrdiff_t(x)+distance,length,p.border);
+     const auto a=lo<0 ? p.cval : double(input[base+std::size_t(lo)*stride+k]),b=hi<0 ? p.cval : double(input[base+std::size_t(hi)*stride+k]);
+     sum+=(derivative ? a-b : a+b)*p.weights[j];
+    }output[position]=T(sum);
+   }
+   begin=stop;
   }
  });
 }
