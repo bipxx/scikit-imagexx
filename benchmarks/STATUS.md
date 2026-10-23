@@ -1,5 +1,16 @@
 # Last completed whole-library performance checkpoint
 
+Retained `feature.corner_kitchen_rosenfeld`, measured source `ee733e2`:
+[full CI39883029028](https://github.com/bipxx/scikit-imagexx/actions/runs/39883029028)
+passed Windows, Linux and minimum NumPy; isolated
+[measurement39883035493](https://github.com/bipxx/scikit-imagexx/actions/runs/39883035493)
+passed both OSes. One-worker geometric means are **7.043285× Linux / 6.175798×
+Windows**, all 120 cases faster per OS; minima 5.295321× / 3.294634×.
+All 480 timed rows have zero numerical difference. Dedicated/native/portable/
+SDK/sanitizer validation passes; [raw samples and scope](kitchen-initial.md)
+are preserved. Native coverage is **114 + 2 metadata APIs**; **339 callable
+names** and 29 classes/284 static member paths remain pending.
+
 Retained `feature.corner_harris`, `corner_shi_tomasi` and `corner_foerstner`,
 measured source `0513a44`: [full CI39881327501](https://github.com/bipxx/scikit-imagexx/actions/runs/39881327501)
 passed Windows, Linux and minimum NumPy. Isolated [measurement39881327150](https://github.com/bipxx/scikit-imagexx/actions/runs/39881327150)
