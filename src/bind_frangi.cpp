@@ -146,7 +146,8 @@ void bind_frangi(py::module_& module){
   for(py::ssize_t axis=0;axis<output.ndim();++axis)if(output.shape(axis)>1)axes.emplace_back(output.strides(axis),output.shape(axis));
   std::sort(axes.begin(),axes.end());py::ssize_t stride=output.itemsize();
   for(const auto& axis:axes){if(axis.first!=stride)throw py::value_error("dense ridge Hessian response required");stride*=axis.second;}
-  {py::gil_scoped_release release;skimagexx::ridge_hessian_finish_into(output.mutable_data(),output.size(),output.itemsize()==4);}
+  const bool single=output.itemsize()==4;
+  {py::gil_scoped_release release;skimagexx::ridge_hessian_finish_into(output.mutable_data(),output.size(),single);}
   return output;
  });
 }

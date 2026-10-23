@@ -41,7 +41,8 @@ void bind_footprint_decomposition(py::module_& module) {
         }
         const auto np=py::module_::import("numpy");
         for(const auto& atom:{zero,one})if(np.attr("shares_memory")(output,atom).cast<bool>())throw py::value_error("disjoint element buffers required");
+        const auto itemsize=std::size_t(output.itemsize());
         py::gil_scoped_release release;
-        skimagexx::footprint_element_into(output.mutable_data(),std::size_t(output.itemsize()),zero.data(),one.data(),kind,dimensions,axis,direction,vertical,horizontal);
+        skimagexx::footprint_element_into(output.mutable_data(),itemsize,zero.data(),one.data(),kind,dimensions,axis,direction,vertical,horizontal);
     });
 }

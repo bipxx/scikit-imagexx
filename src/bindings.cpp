@@ -1027,8 +1027,9 @@ PYBIND11_MODULE(_core, m) {
         for(py::ssize_t axis=0;axis<image.ndim();++axis)shape.push_back(image.shape(axis));
         shape.push_back(channels);py::array result(target,shape);
         const auto layout=raw_rows(image,channels==4 ? &alpha : nullptr,int(image.ndim()));
+        const auto itemsize=std::size_t(image.itemsize());
         {py::gil_scoped_release release;skimagexx::gray_expand_rows_into(image.data(),channels==4 ? alpha.data() : nullptr,
-            result.mutable_data(),layout.rows,layout.columns,std::size_t(image.itemsize()),channels,layout.image.data(),layout.alpha.data(),layout.image_step,layout.alpha_step,swap_component,byte_order.empty() ? nullptr : byte_order.data());}
+            result.mutable_data(),layout.rows,layout.columns,itemsize,channels,layout.image.data(),layout.alpha.data(),layout.image_step,layout.alpha_step,swap_component,byte_order.empty() ? nullptr : byte_order.data());}
         return result;
     });
     m.def("rgba_composite", [](py::array image,py::array_t<double,py::array::c_style|py::array::forcecast> background) -> py::array {
