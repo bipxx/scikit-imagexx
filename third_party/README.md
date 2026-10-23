@@ -45,3 +45,5 @@ Both scalar and SIMD paths preserve whole-field spline prefiltering, the
 nearest/grid-constant prepadding, and optional global workers. The same BSD
 notice is retained in `scipy-ndimage-LICENSE.txt`. This stage and its private
 Python binding do not claim completed public resize/rescale coverage.
+
+Typed sampling retains ndimage's distinct interpolation-output rounding and raw Gaussian line-buffer truncation. `src/resize_cast.hpp` provides defined integer conversions for the observed x86 reference behavior, including 64-bit endpoint cases, without out-of-range C++ casts. Float32 prepadding rounds its constant before double spline filtering. Native normalization preserves raw dtype words through strided/endian copies; AVX2 loaders and stores operate directly on typed buffers. These private stages still do not register public resize/rescale coverage.
