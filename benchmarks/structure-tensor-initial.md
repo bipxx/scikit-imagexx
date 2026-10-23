@@ -46,7 +46,9 @@ and UndefinedBehaviorSanitizer pass all five native tests, including large
 
 Raw samples: [Linux](structure-tensor-initial-linux.json),
 [Windows](structure-tensor-initial-windows.json).
-The initial source archive, exact local and Actions packages, failed shape-error
-trial and validation logs are retained under ignored `build/checkpoints/`.
+The initial source archive, package manifests, exact Actions packages, failed
+shape-error trial and validation logs are retained under ignored
+`build/checkpoints/`. Exact local wheels remain in their `build/tensor-*`
+directories.
 Retention and merge await
 [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936041).
