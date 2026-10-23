@@ -1,5 +1,17 @@
 # Last completed whole-library performance checkpoint
 
+Retained `feature.hessian_matrix`, measured source `5f010a6`:
+[full CI39890585539](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585539)
+passed all three jobs; [measurement39890585030](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585030)
+passed both OSes. One-worker geometric means for finite/Gaussian modes are
+**4.600456× / 2.493615× Linux** and **3.486546× / 2.070721× Windows**.
+All 240 Linux cases and all 120 Windows finite cases are faster. Windows
+Gaussian derivatives are faster in 108/120; twelve small 3-D cases remain
+slower and are being optimized with padded lines. All 960 timed rows have
+zero numerical difference. Native coverage is **115 + 2 metadata APIs**;
+**338 callable names** and 29 classes/284 static member paths remain pending.
+[Raw samples, validation and failed trials](hessian-initial.md) are preserved.
+
 Retained `feature.corner_kitchen_rosenfeld`, measured source `ee733e2`:
 [full CI39883029028](https://github.com/bipxx/scikit-imagexx/actions/runs/39883029028)
 passed Windows, Linux and minimum NumPy; isolated
