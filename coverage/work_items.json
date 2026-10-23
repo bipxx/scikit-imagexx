@@ -17936,8 +17936,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "913e922a82662319cbfd3c1439414ccc8f2f1a30",
+        "main_commit": "480fd8626e36a79cda2164348e04e824ec3e9ab6"
       },
       "retention": {
         "active_paths": [],
@@ -17987,8 +17987,9 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "c05a92958d51afb76c614ea6054a1d1aabf874aa",
+        "main_commit": "480fd8626e36a79cda2164348e04e824ec3e9ab6",
+        "note": "Private capability merged; production Python overlap admission remains separately pending."
       },
       "retention": {
         "active_paths": [],
