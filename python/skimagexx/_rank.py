@@ -4,6 +4,7 @@ from numbers import Integral
 import warnings
 import numpy as np
 from . import _core
+from ._compat import fallback
 
 _REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64}
 
@@ -28,7 +29,17 @@ def _ubyte(image):
         np.clip(work,0,255,out=work)
         return work.astype(np.uint8)
     result,downcast,maximum,nan,over,under,invalid,multiply_invalid=_core.rank_convert(image)
-    if downcast:warnings.warn(f'Downcasting {image.dtype} to uint8 without scaling because max value {maximum} fits in uint8',UserWarning,stacklevel=3)
+    if downcast:
+        warnings.warn(f'Downcasting {image.dtype} to uint8 without scaling because max value {maximum} fits in uint8',UserWarning,stacklevel=3)
+        # Pinned _scale chooses the branch/kind before warning, then looks up
+        # astype on its same np.asarray result after warning hooks return.
+        # Re-running fused conversion would incorrectly reconsider the range.
+        result=image.astype(np.dtype('u1' if dtype.kind=='u' else 'i2'))
+        if dtype.kind=='i':
+            clipped=np.empty(result.shape,np.uint8)
+            np.maximum(result,0,out=clipped,dtype=result.dtype,casting='unsafe')
+            result=clipped
+        return result
     if multiply_invalid or over:
         # NumPy reports combined multiply status in one operation, overflow
         # before invalid. Preserve warn/raise ordering and the shared mask.
@@ -81,7 +92,37 @@ def _positive(footprint):
     return result
 
 
+def _r2_alias_admission(operation,original,image,mask,out,ndim):
+    if operation<5:return False,None
+    # Preserve native validation for unsafe extents, even when a short view
+    # overlaps an input. Never send bounds-unsafe arrays to upstream Cython.
+    if out.ndim!=ndim+1 or out.shape[-1]<1 or any(out.shape[i]<image.shape[i] for i in range(ndim)):
+        return False,None
+    if mask is not None and mask.size<image.size:return False,None
+    aliases=np.shares_memory(image,out) or (mask is not None and np.shares_memory(mask,out))
+    if not aliases:return False,None
+    source,footprint,destination,source_mask,sx,sy,sz=original
+    def plain_u8(value):
+        return type(value) is np.ndarray and value.dtype==np.uint8 and value.flags.c_contiguous and value.flags.writeable
+    shifts=(sx,sy) if ndim==2 else (sx,sy,sz)
+    proven=(operation in (5,6,7) and plain_u8(source) and plain_u8(destination)
+        and source.shape==destination.shape and source.ndim==ndim
+        and type(footprint) is np.ndarray and footprint.dtype==np.uint8
+        and footprint.ndim==ndim and footprint.size>0
+        and (source_mask is None or plain_u8(source_mask) and source_mask.shape==source.shape)
+        and all(type(value) is int and -128<=value<=127 for value in shifts))
+    if proven:
+        centers=tuple(size//2+value for size,value in zip(footprint.shape,(sy,sx) if ndim==2 else shifts))
+        proven=all(0<=center<size for center,size in zip(centers,footprint.shape))
+    if proven:
+        name={5:'gradient',6:'median',7:'modal'}[operation]
+        return True,fallback('filters.rank',name,source,footprint,out=destination,mask=source_mask,
+            shift_x=sx,shift_y=sy,shift_z=sz)
+    raise NotImplementedError('Overlapping buffers are outside native rank-histogram-v2 coverage; compatibility is pending for this overlap scope.')
+
+
 def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=None):
+    original=(image,footprint,out,mask,shift_x,shift_y,shift_z)
     ndim=np.asanyarray(image).ndim
     if ndim not in (2,3):raise ValueError(f'`image` must have 2 or 3 dimensions, got {ndim}.')
     if np.asanyarray(image).size==0:raise ValueError('The parameter `image` cannot be an empty array')
@@ -109,6 +150,8 @@ def _apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z,out_dtype=
     # Match the fused dispatcher before converting its signed-char arguments.
     if out.ndim!=ndim+1 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):
         raise TypeError('Function call with ambiguous argument types')
+    handled,result=_r2_alias_admission(operation,original,image,mask,out,ndim)
+    if handled:return result
     _core.rank_run(image,footprint,mask,out,shifts,bins,operation)
     return np.squeeze(out,axis=-1) if ndim==2 else out.reshape(out.shape[:3])
 

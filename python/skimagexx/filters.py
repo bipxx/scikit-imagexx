@@ -81,6 +81,9 @@ def threshold_mean(image):
 
 
 def __getattr__(name):
+    if name=='rank':
+        import importlib
+        return importlib.import_module(__name__+'.rank')
     return module_attribute('filters', name)
 
 
