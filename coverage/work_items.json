@@ -7894,7 +7894,7 @@
       "apis": [],
       "owner": "integrator",
       "branch": "feature/resize-optimization",
-      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
+      "base_sha": "6960e4e28b5cbff41a79e0558229af8b90496e5a",
       "owns": [
         "src/resample.cpp",
         "src/simd_resample_avx2.cpp",
@@ -7906,7 +7906,7 @@
       "depends_on": [
         "resize-measurement"
       ],
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -7930,8 +7930,19 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
-        "protected_artifacts": []
+        "active_paths": [
+          "build/worktrees/resize-optimization",
+          "build/resize-copy-harness",
+          "build/resize-copy-whole-wheel-windows",
+          "build/resize-copy-whole-*-wheels"
+        ],
+        "protected_artifacts": [
+          "benchmarks/resize-public-*-initial.json",
+          "build/resize-performance-runs/39957875987",
+          "build/public-wave1-*-package",
+          "build/resize-copy-harness/*failure*",
+          "build/resize-copy-harness/sanitize*.log"
+        ]
       },
       "dependency_requirements": {
         "resize-measurement": {
@@ -7952,6 +7963,40 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
+      },
+      "checkpoint": {
+        "candidate_commit": "3b8eeb36e8bbdeff4155d4fa1dc9ad21d014bd8e",
+        "advertised_change": "Inner-axis span copies remove per-pixel coordinate bookkeeping and scratch vectors; dtype itemsize read before releasing GIL. No arithmetic or corpus change.",
+        "development_raw_checks_per_profile": 440,
+        "development_resize_checks_per_profile": 10356,
+        "development_profiles": [
+          "windows-normal",
+          "windows-scalar",
+          "linux-modern-normal",
+          "linux-modern-scalar",
+          "linux-minimum-normal",
+          "linux-minimum-scalar"
+        ],
+        "sanitized_changed_binding_checks": [
+          440,
+          440
+        ],
+        "acceptance_scope": "Development linked probes and kernel injection only; actual whole public wheels are now building and have not yet passed final public gates. No performance improvement claim.",
+        "retained_original_failures": [
+          "build/resize-copy-harness/sanitize.log",
+          "build/resize-copy-harness/sanitize-diagnostic.log"
+        ],
+        "whole_wheel_build_handles": {
+          "windows": 80264,
+          "linux-modern": 21290,
+          "linux-minimum": 78813
+        },
+        "whole_wheel_build_logs": [
+          "build/resize-copy-harness/whole-windows-build.log",
+          "build/resize-copy-harness/whole-modern-build.log",
+          "build/resize-copy-harness/whole-minimum-build.log"
+        ],
+        "observation_rule": "Poll these same handles until terminal; never restart due observation timeout."
       }
     },
     {
