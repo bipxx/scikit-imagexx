@@ -9,6 +9,8 @@ from ._compat import module_attribute
 
 class _UpstreamNamespaces(MetaPathFinder, Loader):
     def find_spec(self, fullname, path=None, target=None):
+        if fullname in ('skimagexx.filters.rank','skimagexx.filters.rank.generic'):
+            return spec_from_loader(fullname,self,is_package=True)
         parts = fullname.split('.')
         if (len(parts) < 3 or parts[0] != 'skimagexx'
                 or parts[1] not in _PUBLIC_MODULES
@@ -32,6 +34,10 @@ class _UpstreamNamespaces(MetaPathFinder, Loader):
 
     def exec_module(self, module):
         relative = module.__name__.split('.', 1)[1]
+        if relative in ('filters.rank','filters.rank.generic'):
+            from ._rank_namespace import initialize
+            initialize(module)
+            return
         original = importlib.import_module('skimage.' + relative)
         module.__doc__ = original.__doc__
         module.__path__ = []

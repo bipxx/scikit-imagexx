@@ -1,0 +1,21 @@
+{
+  "version": "rank-public-v2-candidate",
+  "status": "Source integration candidate; actual combined-core public proof pending",
+  "canonical_namespace": "filters.rank",
+  "identity_alias_namespace": "filters.rank.generic",
+  "canonical_functions": ["minimum", "maximum", "mean", "sum", "pop", "gradient", "median", "modal", "entropy"],
+  "algorithm_count": 9,
+  "identity_alias_count": 9,
+  "native_surface_count": 18,
+  "identity": "Both modules export the identical own skimagexx._rank function objects; own import path does not inspect upstream modules",
+  "import_policy": "Native __all__ contains nine functions. Unsupported names use existing policy-aware fallback. Native nested imports and supported calls work without installed scikit-image.",
+  "legacy_exclusions": "majority and all other nonidentity legacy functions remain unported policy-aware names, not native aliases",
+  "worker_state": "Only actual skimagexx._core state, default one, optional workers. No standalone backend or mirrored setters permitted in public proof.",
+  "capability": "rank_histogram_capabilities=511 from linked implementation; appended operations require their bits",
+  "scope": "First five retain defined safe serial alias traversal. Gradient/median/modal/entropy overlapping-buffer parity remains pending and is safely rejected. Unsafe original memory accesses are excluded.",
+  "dtype_providers": "Ordinary image operations use C++; active stateful FP policies use explicit owned NumPy dtype stages; object comparisons use NumPy reference-aware provider. No upstream rank algorithms.",
+  "frozen_contracts": ["coverage/contracts/rank-neighborhoods.json", "coverage/contracts/rank-distribution.json"],
+  "public_tests": "tests/test_rank_public.py",
+  "parity_evidence": null,
+  "performance_evidence": null
+}

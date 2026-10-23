@@ -1,5 +1,7 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy'),
+    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
@@ -27,6 +29,27 @@ NATIVE_FUNCTIONS = {
 
 def native_functions():
     return tuple(f'{module}.{name}' for module, names in NATIVE_FUNCTIONS.items() for name in names)
+
+
+RANK_CANONICAL_FUNCTIONS=tuple('filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank'])
+RANK_IDENTITY_ALIASES={'filters.rank.generic.'+name:'filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank']}
+
+
+def rank_contract(api):
+    """Execution facts and explicit limits, separate from measured evidence."""
+    canonical=RANK_IDENTITY_ALIASES.get(api,api)
+    if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
+    r2=canonical.rsplit('.',1)[1] in ('gradient','median','modal','entropy')
+    return dict(version='rank-histogram-v2',canonical=canonical,
+        identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
+        implementation='cpp-rolling-histogram-runtime-simd',
+        providers='NumPy dtype stages for stateful floating policies and reference-bearing comparisons; no upstream rank image algorithms',
+        workers='one actual process-global C++ worker policy, default one; optional four',
+        buffers='R2 defined overlapping-buffer parity pending; native rejection is an explicit boundary' if r2 else 'Defined safe v1 output aliases use serial upstream traversal order; unsafe buffer extents rejected',
+        unsafe_buffers='Undersized masks/outputs and zero-depth outputs safely rejected; upstream undefined memory behavior excluded from parity',
+        capability=511,public_parity_test='tests/test_rank_public.py',
+        frozen_contract='coverage/contracts/rank-distribution.json' if r2 else 'coverage/contracts/rank-neighborhoods.json',
+        parity_evidence=None,performance_evidence=None)
 
 
 # Classes have state, constructors and members; they are never image-call rows.
@@ -108,6 +131,8 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api.startswith('filters.rank.'):
+        return ('uint8','uint16','int8','int16','int32','int64','uint32','uint64','float16','float32','float64')
     if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):return ('float32','float64')
     if api in ('filters.threshold_otsu', 'exposure.histogram',
                'exposure.cumulative_distribution', 'exposure.equalize_hist'):
@@ -128,6 +153,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api.startswith('filters.rank.'):
+        import numpy as np
+        return (image,np.ones((3,)*image.ndim,np.uint8)),{}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
@@ -174,6 +202,7 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api.startswith('filters.rank.'):return (0.,0.)
     if api.startswith('metrics.'):
         tolerance=3e-6 if str(dtype)=='float32' else 3e-13
         return tolerance,tolerance if api=='metrics.peak_signal_noise_ratio' else 0.
