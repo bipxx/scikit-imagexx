@@ -13,3 +13,5 @@ benchmarks/component-consumers-public-*.json -text
 coverage/contracts/rank-statistics.json -text
 coverage/evidence/public-wave6.json -text
 coverage/evidence/temp-build-cleanup-20261023.json -text
+benchmarks/rank-intensity-public-*.json -text
+coverage/contracts/rank-statistics-benchmark.json -text
