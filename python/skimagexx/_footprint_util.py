@@ -20,7 +20,8 @@ def _sequence(footprint):
 
 def mirror_footprint(footprint):
     if _sequence(footprint):return tuple((mirror_footprint(item),count) for item,count in footprint)
-    return _core.footprint_mirror(np.asarray(footprint))
+    image=np.asarray(footprint)
+    return image[(slice(None,None,-1),)*image.ndim]
 
 
 def pad_footprint(footprint,*,pad_end=True):

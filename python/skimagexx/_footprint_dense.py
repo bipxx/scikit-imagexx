@@ -10,9 +10,39 @@ from . import _core
 _TRUE = np.ones(1, dtype=bool)
 _FALSE = np.zeros(1, dtype=bool)
 _TRUE.flags.writeable = _FALSE.flags.writeable = False
+_NUMERIC_DTYPE_CLASSES = frozenset(type(np.dtype(name)) for name in
+    ('bool','uint8','int8','uint16','int16','uint32','int32','uint64','int64',
+     'float16','float32','float64','complex64','complex128'))
+_NUMERIC_SCALAR_CLASSES = (bool,int,float,complex,np.bool_,np.uint8,np.int8,
+    np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,
+    np.float32,np.float64,np.complex64,np.complex128)
+
+
+def _inert_numeric_dtype(dtype):
+    # Never inspect/normalize custom dtype providers: their conversion hooks
+    # and invocation order belong to the original general path. This caches
+    # neither dtype instances nor scalar atoms.
+    if any(type(dtype) is cls for cls in _NUMERIC_DTYPE_CLASSES):
+        descriptor = dtype
+    elif dtype is None or type(dtype) is str or any(dtype is cls for cls in _NUMERIC_SCALAR_CLASSES):
+        descriptor = np.dtype(dtype)
+    else:
+        return False
+    if not any(type(descriptor) is cls for cls in _NUMERIC_DTYPE_CLASSES):
+        return False
+    if descriptor.fields is not None or descriptor.subdtype is not None:
+        return False
+    return (descriptor.kind == 'b' and descriptor.itemsize == 1 or
+            descriptor.kind in 'iu' and descriptor.itemsize in (1,2,4,8) or
+            descriptor.kind == 'f' and descriptor.itemsize in (2,4,8) or
+            descriptor.kind == 'c' and descriptor.itemsize in (8,16))
 
 
 def _generate(shape, dtype, kind, costs=None, limit=0.):
+    if kind == 0 and _inert_numeric_dtype(dtype):
+        output = np.empty(shape, dtype=dtype)
+        _core.footprint_rectangle_numeric_into(output)
+        return output
     if costs is None:
         costs = np.empty(0, dtype=np.float64)
     else:
@@ -21,7 +51,8 @@ def _generate(shape, dtype, kind, costs=None, limit=0.):
         # np.ones supplies the dtype's exact scalar (e.g. object int, U3 '1').
         # Allocation precedes atom conversion just as in np.ones(shape, dtype).
         output = np.empty(shape, dtype=dtype)
-        # Resolve caller dtype metadata only during the original-equivalent allocation.
+        # The original np.ones resolves a caller dtype provider once, during
+        # allocation. Further atom work must use that resolved descriptor.
         one = np.ones((), dtype=output.dtype)
         zero = np.zeros((), dtype=output.dtype)
     else:
