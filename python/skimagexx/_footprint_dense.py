@@ -16,19 +16,21 @@ _NUMERIC_DTYPE_CLASSES = frozenset(type(np.dtype(name)) for name in
 _NUMERIC_SCALAR_CLASSES = (bool,int,float,complex,np.bool_,np.uint8,np.int8,
     np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,
     np.float32,np.float64,np.complex64,np.complex128)
+_NUMERIC_DTYPE_CLASS_IDS = frozenset(map(id, _NUMERIC_DTYPE_CLASSES))
+_NUMERIC_SCALAR_CLASS_IDS = frozenset(map(id, _NUMERIC_SCALAR_CLASSES))
 
 
 def _inert_numeric_dtype(dtype):
     # Never inspect/normalize custom dtype providers: their conversion hooks
     # and invocation order belong to the original general path. This caches
     # neither dtype instances nor scalar atoms.
-    if any(type(dtype) is cls for cls in _NUMERIC_DTYPE_CLASSES):
+    if id(type(dtype)) in _NUMERIC_DTYPE_CLASS_IDS:
         descriptor = dtype
-    elif dtype is None or type(dtype) is str or any(dtype is cls for cls in _NUMERIC_SCALAR_CLASSES):
+    elif dtype is None or type(dtype) is str or id(dtype) in _NUMERIC_SCALAR_CLASS_IDS:
         descriptor = np.dtype(dtype)
     else:
         return False
-    if not any(type(descriptor) is cls for cls in _NUMERIC_DTYPE_CLASSES):
+    if id(type(descriptor)) not in _NUMERIC_DTYPE_CLASS_IDS:
         return False
     if descriptor.fields is not None or descriptor.subdtype is not None:
         return False
