@@ -24,3 +24,47 @@ def structure_tensor_eigenvalues(A_elems):
 
 
 def __getattr__(name):return module_attribute('feature',name)
+
+
+def structure_tensor(image,sigma=1,mode='constant',cval=0,order='rc'):
+    def forwarded():return fallback('feature','structure_tensor',image,sigma=sigma,mode=mode,cval=cval,order=order)
+    from .filters import _GAUSSIAN_TYPES,_GAUSSIAN_MODES,_gaussian_coefficients,_gaussian_cached_coefficients
+    if type(image) not in (np.ndarray,np.memmap) or image.dtype.type not in _GAUSSIAN_TYPES:return forwarded()
+    if type(order) is not str or order not in ('rc','xy') or order=='xy' and image.ndim>2:return forwarded()
+    if np.geterr()['under']!='ignore':return forwarded()
+    scalar_types=(bool,int,float,np.bool_,np.int8,np.uint8,np.int16,np.uint16,np.int32,np.uint32,np.int64,np.uint64,np.float16,np.float32,np.float64)
+    if type(sigma) in scalar_types:sigmas=None
+    elif type(sigma) in (tuple,list) or type(sigma) is np.ndarray and sigma.ndim==1:
+        if len(sigma)!=image.ndim:raise ValueError('sigma must have as many elements as image has axes')
+        sigmas=list(sigma)
+    else:return forwarded()
+    prepared=np.squeeze(image)
+    if not prepared.size:raise ValueError('The parameter `image` cannot be an empty array')
+    if prepared.ndim not in range(2,6):raise ValueError('The parameter `image` must be a 2-or-3-or-4-or-5-dimensional array')
+    if sigmas is None:sigmas=[sigma]*prepared.ndim
+    elif len(sigmas)!=prepared.ndim:return forwarded()
+    if any(type(value) not in scalar_types or not np.isfinite(float(value)) or not 0<=float(value)<=25000 for value in sigmas):return forwarded()
+    # The reference squares typed sigma values before constructing coefficients.
+    # Keep metadata overflows/underflows in its compatibility path so warning
+    # counts and ordering remain correct for every tensor component.
+    for value in sigmas:
+        if type(value) is np.float16 and float(value)!=0 and not .003<=float(value)<=250:return forwarded()
+        if isinstance(value,np.integer) and float(value)**2>np.iinfo(type(value)).max:return forwarded()
+    if type(mode) is str:modes=[mode]*prepared.ndim
+    elif type(mode) in (tuple,list) and len(mode)==prepared.ndim:modes=list(mode)
+    else:return forwarded()
+    if any(type(value) is not str or value not in _GAUSSIAN_MODES for value in modes):return forwarded()
+    if type(cval) not in scalar_types or not np.isfinite(float(cval)):return forwarded()
+    kernels=[];axes=[]
+    for axis,value in enumerate(sigmas):
+        if float(value)<=1e-15:continue
+        radius=int(4*float(value)+.5)
+        weights=(_gaussian_cached_coefficients if type(value) in (int,float) else _gaussian_coefficients)(value,radius)
+        kernels.append(weights);axes.append(axis)
+    if not prepared.dtype.isnative:prepared=_core.edge_native(prepared)
+    if prepared.dtype.type is np.float16:prepared=_core.edge_half(prepared)
+    result=_core.structure_tensor(prepared,kernels,axes,[_GAUSSIAN_MODES[value] for value in modes],float(cval),order=='xy')
+    return result if result is not None else forwarded()
+
+
+__all__+=['structure_tensor']

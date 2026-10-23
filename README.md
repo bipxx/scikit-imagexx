@@ -22,17 +22,18 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **109 partially native
+The reference is scikit-image **0.26.0**. There are currently **110 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18
 modules, including four deprecated binary morphology functions omitted from upstream's
-export list; 344 remain pending native implementation and dedicated parity tests.
+export list; 343 remain pending native implementation and dedicated parity tests.
 Static discovery also records 284 member paths across 29 exported classes;
 their numerical/state parity and runtime attributes remain pending.
 This is not full scikit-image coverage.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
+| `feature.structure_tensor` | Real arrays/memmaps, bool and all integer widths, float16/32/64; squeezed ranks 2–5, anisotropic finite sigma, all ndimage border modes and grid aliases, rc/xy order, endian/unaligned/strided/broadcast input | C++ Sobel derivatives, tensor products and Gaussian smoothing with AVX2 and optional global workers. Owned C arrays, half-to-float32 promotion, integer normalization, dtype-tag behavior and shape errors match reference tests. Nonfinite/extreme data, unsafe typed sigma powers, unusual protocols and non-default underflow policies use explicit fallback. Full CI and isolated measurements pass. One-worker geometric means are 2.98× Linux and 2.26× Windows, all 120 cases faster on each OS, with zero numeric difference in the measured corpus; see the [report](benchmarks/structure-tensor-initial.md) |
 | `feature.hessian_matrix_eigvals`, `feature.structure_tensor_eigenvalues` | Homogeneous float32/64 symmetric component fields; 1–64 matrix dimensions, broadcasting, endian/unaligned/strided storage and dtype tags | Direct 2-D formula preserves intermediate rounding and scalar promotion; larger matrices use scaled double Jacobi iteration, AVX2 across four matrices and optional global workers. Descending eigenvalue view layout and signed zeros preserved. Nonfinite/extreme values, other dtypes and non-default underflow policies use explicit fallback. Dedicated parity covers dimensions through the runtime rank limit, including LAPACK tie ordering and default 32-column reduction for diagonal signed zeros. Other LAPACK tuning has not yet been verified. Windows and NumPy 1.24 suites pass; isolated corrected-revision benchmark results pending |
 | `filters.gabor` | 2-D real arrays/memmaps; bool, all integer widths, float16/32/64; native/endian/unaligned/strided/broadcast storage; reflect, constant, nearest, mirror, wrap and grid aliases | Tuple of ordinary arrays; same dtype (half promotes to float32), stripped dtype tags, exact integer/bool bytes including full 64-bit magnitudes, floating budget 2e-6/2e-13, scalar warning/error order. Fused dual-response ordered float64 accumulation, epsilon tap cutoff, one input preparation, AVX2 and optional global workers. Native zero-stride sentinel compatibility. Extreme reflection offsets that can read outside the reference buffer and unsupported scalar protocols use explicit fallback |
 | `filters.gabor_kernel` | Finite ordinary scalar parameters; complex64/128 output, including dtype tags; rotated, anisotropic, signed-sigma and phase-offset kernels up to 16M values | Fused C++ generation with AVX2 exp/sin/cos and optional global workers; relative and maximum-envelope-scaled absolute budgets of 3e-7 (complex64) or 3e-14 (complex128). Extended/endian complex dtypes, unusual scalar protocols, extreme ranges and non-default underflow policies use explicit fallback. Gabor integer image filtering uses libm transcendental values with SIMD coordinate arithmetic to preserve integer casts |
