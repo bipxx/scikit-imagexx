@@ -1,0 +1,5423 @@
+{
+  "reference": "scikit-image==0.26.0",
+  "source_sha": "66e5f78e4f5736597373bd5ccca0378f52d67980",
+  "workers": [
+    1
+  ],
+  "repeat": 7,
+  "run_id": 39957875987,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987",
+  "case_contract_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
+  "scope": "Warmed end-to-end public resize/rescale calls; all layouts, conversions, allocations and result destruction included.",
+  "acceptance": "Measured baseline; slower cases remain and are retained for optimization.",
+  "profiles": {
+    "windows-modern": {
+      "raw_results": "benchmarks/resize-public-windows-modern-initial.json",
+      "raw_sha256": "846bc812e63dfc9b8983de6905436f18bb4e86aad81f8830a86ca18e76ae93d4",
+      "artifact_id": 12506660091,
+      "artifact_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987/artifacts/12506660091",
+      "prepared_manifest_sha256": "d54effdec9e957978e3d8d4e9f39137921ec02d8c6ce7d159889be86020ea4cf",
+      "binary_sha256": {
+        "_core.cp313-win_amd64.pyd": "64983517cb2616b3962dc0eeb31f5aab9e9424d105a7bedd44e23a08b678af4e"
+      },
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+      "cpu": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD",
+      "checked_cases": 373,
+      "timed_cases": 372,
+      "expected_errors": 1,
+      "geometric_mean_speedup": 1.3181202779657806,
+      "faster_cases": 323,
+      "slower_cases": 49,
+      "minimum_speedup": 0.28533666143691483,
+      "maximum_speedup": 5.764027200477234,
+      "regressions": [
+        {
+          "case_index": 0,
+          "api": "transform.resize",
+          "case": "down-default",
+          "dtype": "|b1",
+          "reference_ms": 0.6488857142857143,
+          "cpp_ms": 0.657578947368421,
+          "speedup": 0.9867799400855268,
+          "workload": {
+            "api": "transform.resize",
+            "case": "down-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 1,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "|b1",
+          "reference_ms": 3.6912666666666665,
+          "cpp_ms": 3.8711666666666664,
+          "speedup": 0.9535282214663969,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 2,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "|b1",
+          "reference_ms": 0.6460933333333334,
+          "cpp_ms": 0.6565466666666666,
+          "speedup": 0.984078308726468,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 3,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "|b1",
+          "reference_ms": 0.6537466666666666,
+          "cpp_ms": 0.66202,
+          "speedup": 0.9875028951794003,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 4,
+          "api": "transform.resize",
+          "case": "preserve-range",
+          "dtype": "|b1",
+          "reference_ms": 0.6492,
+          "cpp_ms": 0.6627944444444445,
+          "speedup": 0.9794891997686562,
+          "workload": {
+            "api": "transform.resize",
+            "case": "preserve-range",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "preserve_range": true
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 7,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "|b1",
+          "reference_ms": 0.65646875,
+          "cpp_ms": 1.4684125,
+          "speedup": 0.44706017552969624,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1,
+              512
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 8,
+          "api": "transform.resize",
+          "case": "reversed",
+          "dtype": "|b1",
+          "reference_ms": 0.6381411764705882,
+          "cpp_ms": 2.23645,
+          "speedup": 0.28533666143691483,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reversed",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              -513,
+              -1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "40ab94463e990ddba61a6e264cb5eda769371c2269f45652c3787781e4b26790"
+          }
+        },
+        {
+          "case_index": 9,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "|b1",
+          "reference_ms": 0.3910625,
+          "cpp_ms": 0.7217684210526316,
+          "speedup": 0.5418115957881227,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "|b1",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "0332910d14acd0a34f037ceb63b8d0c56b0d8526db199b9230a76b59f9f7515a"
+          }
+        },
+        {
+          "case_index": 10,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": "|b1",
+          "reference_ms": 0.6325578947368421,
+          "cpp_ms": 0.6537333333333334,
+          "speedup": 0.9676084459568255,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 11,
+          "api": "transform.resize",
+          "case": "unaligned",
+          "dtype": "|b1",
+          "reference_ms": 0.6419058823529412,
+          "cpp_ms": 0.6565666666666666,
+          "speedup": 0.9776705320905842,
+          "workload": {
+            "api": "transform.resize",
+            "case": "unaligned",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 12,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "|b1",
+          "reference_ms": 0.66108125,
+          "cpp_ms": 2.2178333333333335,
+          "speedup": 0.29807526114075295,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "b8b035f2a45b7269fcf8e2aa6db422b0530a76db5c65fdccc1ab36b7903c9ad1"
+          }
+        },
+        {
+          "case_index": 13,
+          "api": "transform.resize",
+          "case": "readonly",
+          "dtype": "|b1",
+          "reference_ms": 0.6444866666666667,
+          "cpp_ms": 0.65431,
+          "speedup": 0.9849867290224308,
+          "workload": {
+            "api": "transform.resize",
+            "case": "readonly",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 14,
+          "api": "transform.resize",
+          "case": "zero",
+          "dtype": "|b1",
+          "reference_ms": 0.6434647058823529,
+          "cpp_ms": 0.6547952380952381,
+          "speedup": 0.982696068093218,
+          "workload": {
+            "api": "transform.resize",
+            "case": "zero",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "a7c52cc099dd72383056868a4359da45457019426391d32c89da068d4dacd0cb"
+          }
+        },
+        {
+          "case_index": 16,
+          "api": "transform.rescale",
+          "case": "scalar-scale",
+          "dtype": "|b1",
+          "reference_ms": 1.1988444444444446,
+          "cpp_ms": 1.2464666666666668,
+          "speedup": 0.9617942272378813,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "scalar-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 0.7,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 17,
+          "api": "transform.rescale",
+          "case": "anisotropic-scale",
+          "dtype": "|b1",
+          "reference_ms": 2.14502,
+          "cpp_ms": 2.2567,
+          "speedup": 0.9505118092790359,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "anisotropic-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 19,
+          "api": "transform.rescale",
+          "case": "channels-last",
+          "dtype": "|b1",
+          "reference_ms": 0.18900769230769232,
+          "cpp_ms": 0.2130090909090909,
+          "speedup": 0.8873221865838486,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-last",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              67,
+              3
+            ],
+            "strides": [
+              201,
+              3,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": -1
+            },
+            "expected_error": false,
+            "input_sha256": "325b1027e3c80ed6af0f6a159102413aab537754d4dc4c8c7091989375641e06"
+          }
+        },
+        {
+          "case_index": 20,
+          "api": "transform.rescale",
+          "case": "channels-first",
+          "dtype": "|b1",
+          "reference_ms": 0.21448055555555556,
+          "cpp_ms": 0.22736,
+          "speedup": 0.9433521972007194,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-first",
+            "dtype": "|b1",
+            "shape": [
+              3,
+              65,
+              67
+            ],
+            "strides": [
+              1,
+              201,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 0
+            },
+            "expected_error": false,
+            "input_sha256": "c37a24440a24d38bbe7f15052273271bdf5ac011dc73680c8216ee30c0b7a349"
+          }
+        },
+        {
+          "case_index": 21,
+          "api": "transform.rescale",
+          "case": "channels-middle",
+          "dtype": "|b1",
+          "reference_ms": 0.21322307692307693,
+          "cpp_ms": 0.22960666666666665,
+          "speedup": 0.9286449736785094,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-middle",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              3,
+              67
+            ],
+            "strides": [
+              201,
+              1,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 1
+            },
+            "expected_error": false,
+            "input_sha256": "7a9417285e8dc8f70f4fed9ac2d76f10595dc8dc07b7545c2763eb30f7a20e50"
+          }
+        },
+        {
+          "case_index": 112,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u4",
+          "reference_ms": 0.7294214285714286,
+          "cpp_ms": 0.8058416666666667,
+          "speedup": 0.9051671795386959,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "53b594f5f852bfe0cbcdd5af9f9ad4e8ae68382cf84045fdd94924bc950fe9a3"
+          }
+        },
+        {
+          "case_index": 113,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<u4",
+          "reference_ms": 2.93055,
+          "cpp_ms": 3.00005,
+          "speedup": 0.9768337194380095,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<u4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "53b594f5f852bfe0cbcdd5af9f9ad4e8ae68382cf84045fdd94924bc950fe9a3"
+          }
+        },
+        {
+          "case_index": 117,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<u4",
+          "reference_ms": 4.444566666666667,
+          "cpp_ms": 4.6307,
+          "speedup": 0.9598044932011719,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<u4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4,
+              2048
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "53b594f5f852bfe0cbcdd5af9f9ad4e8ae68382cf84045fdd94924bc950fe9a3"
+          }
+        },
+        {
+          "case_index": 139,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<i4",
+          "reference_ms": 4.5469,
+          "cpp_ms": 4.614566666666667,
+          "speedup": 0.9853362901536439,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<i4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4,
+              2048
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "99065a46677afa6fd18bfd70c1e14aca2dc8f7ab2bcb2257ad51bf8e215181d4"
+          }
+        },
+        {
+          "case_index": 156,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u8",
+          "reference_ms": 1.327411111111111,
+          "cpp_ms": 1.8748333333333334,
+          "speedup": 0.7080155273061309,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 157,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<u8",
+          "reference_ms": 9.0521,
+          "cpp_ms": 10.1021,
+          "speedup": 0.896061214994902,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 161,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<u8",
+          "reference_ms": 5.5185,
+          "cpp_ms": 5.6928,
+          "speedup": 0.9693823777403036,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              8,
+              4096
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 178,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<i8",
+          "reference_ms": 1.3989375,
+          "cpp_ms": 1.5984142857142858,
+          "speedup": 0.8752033265110958,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 179,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<i8",
+          "reference_ms": 3.8345666666666665,
+          "cpp_ms": 4.868933333333333,
+          "speedup": 0.787557849768601,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 183,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<i8",
+          "reference_ms": 4.61365,
+          "cpp_ms": 5.7552,
+          "speedup": 0.8016489435640811,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              8,
+              4096
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 222,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "<f4",
+          "reference_ms": 9.0315,
+          "cpp_ms": 9.4194,
+          "speedup": 0.9588190330594305,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 223,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f4",
+          "reference_ms": 0.702,
+          "cpp_ms": 0.7823615384615386,
+          "speedup": 0.8972833728258623,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 228,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<f4",
+          "reference_ms": 3.6219,
+          "cpp_ms": 4.135866666666667,
+          "speedup": 0.8757293916631742,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4,
+              2048
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 229,
+          "api": "transform.resize",
+          "case": "reversed",
+          "dtype": "<f4",
+          "reference_ms": 4.0703,
+          "cpp_ms": 4.9605,
+          "speedup": 0.8205422840439471,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reversed",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              -2052,
+              -4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "609b9cee5694b9198dffb88fb800b1cd85753d48384c357a2902210b81a5498c"
+          }
+        },
+        {
+          "case_index": 230,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "<f4",
+          "reference_ms": 1.2966857142857142,
+          "cpp_ms": 1.3705875,
+          "speedup": 0.9460802132557857,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "09378e12e9ed2b168a1894814eb5ab7e6d5098d38c0bb0e1f2a4ab2c28245d7c"
+          }
+        },
+        {
+          "case_index": 231,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": ">f4",
+          "reference_ms": 4.259733333333333,
+          "cpp_ms": 5.28285,
+          "speedup": 0.8063324405071757,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": ">f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "4188279fe20922b8a6bde4c5f6dcc12d98eeb52623871a99929e4a8618911f50"
+          }
+        },
+        {
+          "case_index": 233,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "<f4",
+          "reference_ms": 3.4316333333333335,
+          "cpp_ms": 4.7421,
+          "speedup": 0.7236526714606047,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              4
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "4ac1117762d778b91144674780c4d1070da053961982cea8f4e71db018b695c2"
+          }
+        },
+        {
+          "case_index": 245,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f8",
+          "reference_ms": 0.71164375,
+          "cpp_ms": 0.873975,
+          "speedup": 0.8142609914471238,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "27407245b70920b27b5c3d31d1918afdddf6df93e3d91c24571091700bb74d01"
+          }
+        },
+        {
+          "case_index": 248,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "<f8",
+          "reference_ms": 0.8163285714285715,
+          "cpp_ms": 0.8664285714285714,
+          "speedup": 0.942176422093982,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "27407245b70920b27b5c3d31d1918afdddf6df93e3d91c24571091700bb74d01"
+          }
+        },
+        {
+          "case_index": 250,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<f8",
+          "reference_ms": 4.065266666666666,
+          "cpp_ms": 4.8789,
+          "speedup": 0.833234267287025,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              8,
+              4096
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "27407245b70920b27b5c3d31d1918afdddf6df93e3d91c24571091700bb74d01"
+          }
+        },
+        {
+          "case_index": 251,
+          "api": "transform.resize",
+          "case": "reversed",
+          "dtype": "<f8",
+          "reference_ms": 4.5131,
+          "cpp_ms": 5.5464,
+          "speedup": 0.8136989759123033,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reversed",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              -4104,
+              -8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "ed0a401b91d8455f80f6165242dde454014548f88268854696b88fe995d3eb0c"
+          }
+        },
+        {
+          "case_index": 252,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "<f8",
+          "reference_ms": 1.300857142857143,
+          "cpp_ms": 1.57945,
+          "speedup": 0.8236140066840627,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              8208,
+              16
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "5660a8f92e31b6932e3afc5909093e20dd4bb1c91770fcf0d1182d50204c451f"
+          }
+        },
+        {
+          "case_index": 253,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": ">f8",
+          "reference_ms": 4.822933333333333,
+          "cpp_ms": 6.85,
+          "speedup": 0.7040778588807787,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": ">f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "0b0e6335ff903466b3008336b6e51ba2320cf8534fb014dd930142bc5b01611e"
+          }
+        },
+        {
+          "case_index": 255,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "<f8",
+          "reference_ms": 3.8248,
+          "cpp_ms": 5.40175,
+          "speedup": 0.7080668301939187,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              8
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "e868a300beb309084b724318aaec8d84be764a6314bef22b2138f7509ef057d3"
+          }
+        },
+        {
+          "case_index": 261,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "<f8",
+          "reference_ms": 0.8207166666666666,
+          "cpp_ms": 0.8693357142857143,
+          "speedup": 0.9440733345931897,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "27407245b70920b27b5c3d31d1918afdddf6df93e3d91c24571091700bb74d01"
+          }
+        },
+        {
+          "case_index": 296,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f4",
+          "reference_ms": 0.4950157894736842,
+          "cpp_ms": 0.5112318181818182,
+          "speedup": 0.9682804783829656,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "1a9a0929fd1903bf2e10003d28ab87fdbf04ec36307ba02d7371632d55694792"
+          }
+        },
+        {
+          "case_index": 329,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f8",
+          "reference_ms": 0.8644285714285714,
+          "cpp_ms": 0.9713727272727273,
+          "speedup": 0.889904098765036,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "32977cde112f8f66fca6184f39cd4bfd7cd4813074ebad64a08bc4728472753f"
+          }
+        },
+        {
+          "case_index": 330,
+          "api": "transform.resize",
+          "case": "nan-identity",
+          "dtype": "<f8",
+          "reference_ms": 0.8627181818181817,
+          "cpp_ms": 0.9647333333333333,
+          "speedup": 0.8942555958311607,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nan-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "0decd3debae7b2201273b12e73ce12190f24eb74171ccc38197b013b734dc14a"
+          }
+        },
+        {
+          "case_index": 370,
+          "api": "transform.resize",
+          "case": "aa-zero",
+          "dtype": "<u8",
+          "reference_ms": 1.9989333333333332,
+          "cpp_ms": 2.5391,
+          "speedup": 0.7872605778950547,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-zero",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.0
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 371,
+          "api": "transform.resize",
+          "case": "aa-scalar",
+          "dtype": "<u8",
+          "reference_ms": 8.7801,
+          "cpp_ms": 10.762,
+          "speedup": 0.8158427801523879,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-scalar",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.7
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 372,
+          "api": "transform.resize",
+          "case": "aa-anisotropic",
+          "dtype": "<u8",
+          "reference_ms": 8.477,
+          "cpp_ms": 10.3717,
+          "speedup": 0.8173202078733477,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-anisotropic",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": [
+                0.3,
+                1.3
+              ]
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        }
+      ]
+    },
+    "linux-modern": {
+      "raw_results": "benchmarks/resize-public-linux-modern-initial.json",
+      "raw_sha256": "0624990b19e213f82d29364948c8309e05803599be174f3983079d33d4796f8c",
+      "artifact_id": 12505467304,
+      "artifact_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987/artifacts/12505467304",
+      "prepared_manifest_sha256": "7d97e01717bcba17c0f3f1d59b1b4fd91c9610302d98d7f8460adf414432b11a",
+      "binary_sha256": {
+        "_core.cpython-313-x86_64-linux-gnu.so": "b4436ecf4d3d2b6d89edbf2def25af04bfc932e46a8571e7aea86e912b7f47e8"
+      },
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "checked_cases": 373,
+      "timed_cases": 372,
+      "expected_errors": 1,
+      "geometric_mean_speedup": 1.4311820844963294,
+      "faster_cases": 320,
+      "slower_cases": 52,
+      "minimum_speedup": 0.3243394489066403,
+      "maximum_speedup": 3.2360068034903775,
+      "regressions": [
+        {
+          "case_index": 0,
+          "api": "transform.resize",
+          "case": "down-default",
+          "dtype": "|b1",
+          "reference_ms": 0.4818585652173913,
+          "cpp_ms": 0.5676727727272727,
+          "speedup": 0.8488315599538026,
+          "workload": {
+            "api": "transform.resize",
+            "case": "down-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 1,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "|b1",
+          "reference_ms": 2.7905572000000003,
+          "cpp_ms": 3.28484925,
+          "speedup": 0.8495236729661186,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 2,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "|b1",
+          "reference_ms": 0.48311447826086956,
+          "cpp_ms": 0.5664756363636364,
+          "speedup": 0.8528424653213946,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 3,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "|b1",
+          "reference_ms": 0.4814554166666667,
+          "cpp_ms": 0.56690715,
+          "speedup": 0.849266792042871,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 4,
+          "api": "transform.resize",
+          "case": "preserve-range",
+          "dtype": "|b1",
+          "reference_ms": 0.481412875,
+          "cpp_ms": 0.5658243333333334,
+          "speedup": 0.8508168465713446,
+          "workload": {
+            "api": "transform.resize",
+            "case": "preserve-range",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "preserve_range": true
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 5,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "|b1",
+          "reference_ms": 0.04549537974683544,
+          "cpp_ms": 0.05040826666666667,
+          "speedup": 0.902538070743068,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 7,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "|b1",
+          "reference_ms": 0.478239375,
+          "cpp_ms": 1.0481705833333335,
+          "speedup": 0.45626101572048505,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1,
+              512
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 8,
+          "api": "transform.resize",
+          "case": "reversed",
+          "dtype": "|b1",
+          "reference_ms": 0.48390241666666667,
+          "cpp_ms": 1.491962875,
+          "speedup": 0.3243394489066403,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reversed",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              -513,
+              -1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "40ab94463e990ddba61a6e264cb5eda769371c2269f45652c3787781e4b26790"
+          }
+        },
+        {
+          "case_index": 9,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "|b1",
+          "reference_ms": 0.27733067647058823,
+          "cpp_ms": 0.5018840434782609,
+          "speedup": 0.55257918651602,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "|b1",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "0332910d14acd0a34f037ceb63b8d0c56b0d8526db199b9230a76b59f9f7515a"
+          }
+        },
+        {
+          "case_index": 10,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": "|b1",
+          "reference_ms": 0.481913,
+          "cpp_ms": 0.56697235,
+          "speedup": 0.8499761937244382,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 11,
+          "api": "transform.resize",
+          "case": "unaligned",
+          "dtype": "|b1",
+          "reference_ms": 0.480300375,
+          "cpp_ms": 0.5653257272727273,
+          "speedup": 0.8495993580852743,
+          "workload": {
+            "api": "transform.resize",
+            "case": "unaligned",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 12,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "|b1",
+          "reference_ms": 0.4960844583333333,
+          "cpp_ms": 1.4861442222222223,
+          "speedup": 0.3338064037900314,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "b8b035f2a45b7269fcf8e2aa6db422b0530a76db5c65fdccc1ab36b7903c9ad1"
+          }
+        },
+        {
+          "case_index": 13,
+          "api": "transform.resize",
+          "case": "readonly",
+          "dtype": "|b1",
+          "reference_ms": 0.48422871999999995,
+          "cpp_ms": 0.5665077619047619,
+          "speedup": 0.8547609628010812,
+          "workload": {
+            "api": "transform.resize",
+            "case": "readonly",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 14,
+          "api": "transform.resize",
+          "case": "zero",
+          "dtype": "|b1",
+          "reference_ms": 0.4836766666666667,
+          "cpp_ms": 0.5656641904761905,
+          "speedup": 0.8550597241439225,
+          "workload": {
+            "api": "transform.resize",
+            "case": "zero",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "a7c52cc099dd72383056868a4359da45457019426391d32c89da068d4dacd0cb"
+          }
+        },
+        {
+          "case_index": 16,
+          "api": "transform.rescale",
+          "case": "scalar-scale",
+          "dtype": "|b1",
+          "reference_ms": 0.90487,
+          "cpp_ms": 1.0661185,
+          "speedup": 0.8487518038567007,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "scalar-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 0.7,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 17,
+          "api": "transform.rescale",
+          "case": "anisotropic-scale",
+          "dtype": "|b1",
+          "reference_ms": 1.654248,
+          "cpp_ms": 1.92825,
+          "speedup": 0.857901205756515,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "anisotropic-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 18,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "|b1",
+          "reference_ms": 0.052718155844155845,
+          "cpp_ms": 0.05947698684210526,
+          "speedup": 0.8863622493874442,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 19,
+          "api": "transform.rescale",
+          "case": "channels-last",
+          "dtype": "|b1",
+          "reference_ms": 0.12543229032258066,
+          "cpp_ms": 0.1693608947368421,
+          "speedup": 0.7406213253507016,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-last",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              67,
+              3
+            ],
+            "strides": [
+              201,
+              3,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": -1
+            },
+            "expected_error": false,
+            "input_sha256": "325b1027e3c80ed6af0f6a159102413aab537754d4dc4c8c7091989375641e06"
+          }
+        },
+        {
+          "case_index": 20,
+          "api": "transform.rescale",
+          "case": "channels-first",
+          "dtype": "|b1",
+          "reference_ms": 0.1371003090909091,
+          "cpp_ms": 0.17798658536585366,
+          "speedup": 0.7702845066053584,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-first",
+            "dtype": "|b1",
+            "shape": [
+              3,
+              65,
+              67
+            ],
+            "strides": [
+              1,
+              201,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 0
+            },
+            "expected_error": false,
+            "input_sha256": "c37a24440a24d38bbe7f15052273271bdf5ac011dc73680c8216ee30c0b7a349"
+          }
+        },
+        {
+          "case_index": 21,
+          "api": "transform.rescale",
+          "case": "channels-middle",
+          "dtype": "|b1",
+          "reference_ms": 0.1380100652173913,
+          "cpp_ms": 0.17785657894736842,
+          "speedup": 0.775962666290975,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-middle",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              3,
+              67
+            ],
+            "strides": [
+              201,
+              1,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 1
+            },
+            "expected_error": false,
+            "input_sha256": "7a9417285e8dc8f70f4fed9ac2d76f10595dc8dc07b7545c2763eb30f7a20e50"
+          }
+        },
+        {
+          "case_index": 24,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "|u1",
+          "reference_ms": 0.5093655909090908,
+          "cpp_ms": 0.5681462727272727,
+          "speedup": 0.8965395275128412,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "|u1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "7465613675a1f3bffb75749e601ec8f2d6486dd620b98a34adb2dfc803ab4682"
+          }
+        },
+        {
+          "case_index": 68,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u2",
+          "reference_ms": 0.5231765238095238,
+          "cpp_ms": 0.5989277894736842,
+          "speedup": 0.8735218719259499,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "3a3bef9628123e4ee0a9c3cf7fc50e65b50d7e019388b02e1377658a6b80cb6c"
+          }
+        },
+        {
+          "case_index": 112,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u4",
+          "reference_ms": 0.5443359,
+          "cpp_ms": 0.6755863125,
+          "speedup": 0.8057236950015917,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "53b594f5f852bfe0cbcdd5af9f9ad4e8ae68382cf84045fdd94924bc950fe9a3"
+          }
+        },
+        {
+          "case_index": 156,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u8",
+          "reference_ms": 1.0735159166666668,
+          "cpp_ms": 1.381206888888889,
+          "speedup": 0.77723035216705,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 157,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<u8",
+          "reference_ms": 6.838919,
+          "cpp_ms": 7.3204835,
+          "speedup": 0.9342168451031957,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 178,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<i8",
+          "reference_ms": 1.0610009090909092,
+          "cpp_ms": 1.515743125,
+          "speedup": 0.6999872812162081,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 179,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<i8",
+          "reference_ms": 2.6713895,
+          "cpp_ms": 3.44273,
+          "speedup": 0.7759509168595853,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 183,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "<i8",
+          "reference_ms": 2.967372,
+          "cpp_ms": 3.5609143333333333,
+          "speedup": 0.8333174354189744,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              8,
+              4096
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 223,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f4",
+          "reference_ms": 0.5145162105263158,
+          "cpp_ms": 0.6285562777777778,
+          "speedup": 0.8185682471350956,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 226,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "<f4",
+          "reference_ms": 0.1312684090909091,
+          "cpp_ms": 0.13179107407407406,
+          "speedup": 0.9960341397409721,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 231,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": ">f4",
+          "reference_ms": 2.5899506,
+          "cpp_ms": 2.85426475,
+          "speedup": 0.9073967647885501,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": ">f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "4188279fe20922b8a6bde4c5f6dcc12d98eeb52623871a99929e4a8618911f50"
+          }
+        },
+        {
+          "case_index": 233,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "<f4",
+          "reference_ms": 2.4468992000000003,
+          "cpp_ms": 2.5781566000000002,
+          "speedup": 0.949088662806596,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              4
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "4ac1117762d778b91144674780c4d1070da053961982cea8f4e71db018b695c2"
+          }
+        },
+        {
+          "case_index": 239,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "<f4",
+          "reference_ms": 0.13894215555555556,
+          "cpp_ms": 0.1406935348837209,
+          "speedup": 0.9875518137374769,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 245,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f8",
+          "reference_ms": 0.5632206666666666,
+          "cpp_ms": 0.7001846875,
+          "speedup": 0.8043887230348302,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "e42ab2432c3a9140ca77c2b6154f5462ce381c81b156a198203f9d300dbd2a0a"
+          }
+        },
+        {
+          "case_index": 248,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "<f8",
+          "reference_ms": 0.2237217419354839,
+          "cpp_ms": 0.24809223333333333,
+          "speedup": 0.9017684226934037,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "e42ab2432c3a9140ca77c2b6154f5462ce381c81b156a198203f9d300dbd2a0a"
+          }
+        },
+        {
+          "case_index": 253,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": ">f8",
+          "reference_ms": 2.934973,
+          "cpp_ms": 3.42333025,
+          "speedup": 0.8573443943949024,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": ">f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "b7e999b8faa64b6361173eff1202b4b86a77c0d38d74a61d115333bdbce8a82f"
+          }
+        },
+        {
+          "case_index": 261,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "<f8",
+          "reference_ms": 0.2323838064516129,
+          "cpp_ms": 0.2562904193548387,
+          "speedup": 0.9067206142024113,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "e42ab2432c3a9140ca77c2b6154f5462ce381c81b156a198203f9d300dbd2a0a"
+          }
+        },
+        {
+          "case_index": 271,
+          "api": "transform.resize",
+          "case": "edge-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.1455114893617021,
+          "cpp_ms": 0.15628819565217392,
+          "speedup": 0.9310459357118958,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 277,
+          "api": "transform.resize",
+          "case": "symmetric-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.14453596226415094,
+          "cpp_ms": 0.1557525,
+          "speedup": 0.9279848622921042,
+          "workload": {
+            "api": "transform.resize",
+            "case": "symmetric-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "symmetric",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 283,
+          "api": "transform.resize",
+          "case": "reflect-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.1457466,
+          "cpp_ms": 0.15632579166666666,
+          "speedup": 0.9323259997350619,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reflect-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "reflect",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 289,
+          "api": "transform.resize",
+          "case": "wrap-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.1441886862745098,
+          "cpp_ms": 0.15556477777777777,
+          "speedup": 0.9268723186201019,
+          "workload": {
+            "api": "transform.resize",
+            "case": "wrap-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "wrap",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 296,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f4",
+          "reference_ms": 0.12948746666666666,
+          "cpp_ms": 0.1616859333333333,
+          "speedup": 0.8008579596081128,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "1a9a0929fd1903bf2e10003d28ab87fdbf04ec36307ba02d7371632d55694792"
+          }
+        },
+        {
+          "case_index": 304,
+          "api": "transform.resize",
+          "case": "edge-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.15057153571428572,
+          "cpp_ms": 0.16099904,
+          "speedup": 0.9352325064440491,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 310,
+          "api": "transform.resize",
+          "case": "symmetric-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.15162441304347826,
+          "cpp_ms": 0.16201990909090908,
+          "speedup": 0.9358381565218759,
+          "workload": {
+            "api": "transform.resize",
+            "case": "symmetric-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "symmetric",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 316,
+          "api": "transform.resize",
+          "case": "reflect-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.151257375,
+          "cpp_ms": 0.16177784444444443,
+          "speedup": 0.9349696524850334,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reflect-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "reflect",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 322,
+          "api": "transform.resize",
+          "case": "wrap-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.15308637209302325,
+          "cpp_ms": 0.1621381914893617,
+          "speedup": 0.9441721946372372,
+          "workload": {
+            "api": "transform.resize",
+            "case": "wrap-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "wrap",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 329,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f8",
+          "reference_ms": 0.21650103125,
+          "cpp_ms": 0.2938210333333333,
+          "speedup": 0.7368466062277593,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "32977cde112f8f66fca6184f39cd4bfd7cd4813074ebad64a08bc4728472753f"
+          }
+        },
+        {
+          "case_index": 330,
+          "api": "transform.resize",
+          "case": "nan-identity",
+          "dtype": "<f8",
+          "reference_ms": 0.27421935714285717,
+          "cpp_ms": 0.2980634230769231,
+          "speedup": 0.9200033815356394,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nan-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "0decd3debae7b2201273b12e73ce12190f24eb74171ccc38197b013b734dc14a"
+          }
+        },
+        {
+          "case_index": 367,
+          "api": "transform.resize",
+          "case": "aa-zero",
+          "dtype": "<u2",
+          "reference_ms": 0.5834094444444445,
+          "cpp_ms": 0.6404589411764706,
+          "speedup": 0.9109240373360534,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-zero",
+            "dtype": "<u2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.0
+            },
+            "expected_error": false,
+            "input_sha256": "d2e26a8c6dfb544a5e2114d165e74ee73e660521a60ec520456501e93fba9b45"
+          }
+        },
+        {
+          "case_index": 370,
+          "api": "transform.resize",
+          "case": "aa-zero",
+          "dtype": "<u8",
+          "reference_ms": 1.1859723,
+          "cpp_ms": 1.472632,
+          "speedup": 0.8053419319965884,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-zero",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.0
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 371,
+          "api": "transform.resize",
+          "case": "aa-scalar",
+          "dtype": "<u8",
+          "reference_ms": 6.534747,
+          "cpp_ms": 7.843261,
+          "speedup": 0.8331670972061239,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-scalar",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.7
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 372,
+          "api": "transform.resize",
+          "case": "aa-anisotropic",
+          "dtype": "<u8",
+          "reference_ms": 6.2774695,
+          "cpp_ms": 7.560847,
+          "speedup": 0.8302600885853132,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-anisotropic",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": [
+                0.3,
+                1.3
+              ]
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        }
+      ]
+    },
+    "linux-minimum": {
+      "raw_results": "benchmarks/resize-public-linux-minimum-initial.json",
+      "raw_sha256": "3ead45c70dfc77d0e117483630b909c3b292835b0f1f06e6cc95436460a92e8c",
+      "artifact_id": 12504778909,
+      "artifact_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987/artifacts/12504778909",
+      "prepared_manifest_sha256": "b19ad23599713a8268708577303ff489cc4a57611e52de69d0f681e88ec0f82c",
+      "binary_sha256": {
+        "_core.cpython-311-x86_64-linux-gnu.so": "5418b97582b39fef78d8afaac152ce43cb709b0d6c661ccff23ee7d3ff1d58ae"
+      },
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "checked_cases": 373,
+      "timed_cases": 372,
+      "expected_errors": 1,
+      "geometric_mean_speedup": 1.406988197568491,
+      "faster_cases": 311,
+      "slower_cases": 61,
+      "minimum_speedup": 0.20945401542972558,
+      "maximum_speedup": 2.729870926545799,
+      "regressions": [
+        {
+          "case_index": 0,
+          "api": "transform.resize",
+          "case": "down-default",
+          "dtype": "|b1",
+          "reference_ms": 0.471337962962963,
+          "cpp_ms": 0.9422031333333333,
+          "speedup": 0.5002508973786364,
+          "workload": {
+            "api": "transform.resize",
+            "case": "down-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 1,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "|b1",
+          "reference_ms": 2.660094,
+          "cpp_ms": 5.6253615,
+          "speedup": 0.47287520988651127,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 2,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "|b1",
+          "reference_ms": 0.47103146153846154,
+          "cpp_ms": 0.9412287692307693,
+          "speedup": 0.5004431196078056,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 3,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "|b1",
+          "reference_ms": 0.4706471111111111,
+          "cpp_ms": 0.9405140714285715,
+          "speedup": 0.5004147470077007,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 4,
+          "api": "transform.resize",
+          "case": "preserve-range",
+          "dtype": "|b1",
+          "reference_ms": 0.46930596153846155,
+          "cpp_ms": 0.9401681538461538,
+          "speedup": 0.4991723657290112,
+          "workload": {
+            "api": "transform.resize",
+            "case": "preserve-range",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "preserve_range": true
+            },
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 5,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "|b1",
+          "reference_ms": 1.70525525,
+          "cpp_ms": 3.562854,
+          "speedup": 0.4786205805795017,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 7,
+          "api": "transform.resize",
+          "case": "fortran",
+          "dtype": "|b1",
+          "reference_ms": 0.4725856956521739,
+          "cpp_ms": 1.586879125,
+          "speedup": 0.2978082502989469,
+          "workload": {
+            "api": "transform.resize",
+            "case": "fortran",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1,
+              512
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 8,
+          "api": "transform.resize",
+          "case": "reversed",
+          "dtype": "|b1",
+          "reference_ms": 0.4695310416666667,
+          "cpp_ms": 2.2416903333333336,
+          "speedup": 0.20945401542972558,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reversed",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              -513,
+              -1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "40ab94463e990ddba61a6e264cb5eda769371c2269f45652c3787781e4b26790"
+          }
+        },
+        {
+          "case_index": 9,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "|b1",
+          "reference_ms": 0.28214543902439027,
+          "cpp_ms": 0.771791125,
+          "speedup": 0.36557227711628615,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "|b1",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "0332910d14acd0a34f037ceb63b8d0c56b0d8526db199b9230a76b59f9f7515a"
+          }
+        },
+        {
+          "case_index": 10,
+          "api": "transform.resize",
+          "case": "endian",
+          "dtype": "|b1",
+          "reference_ms": 0.4699985652173913,
+          "cpp_ms": 0.9420879285714285,
+          "speedup": 0.4988903381132288,
+          "workload": {
+            "api": "transform.resize",
+            "case": "endian",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 11,
+          "api": "transform.resize",
+          "case": "unaligned",
+          "dtype": "|b1",
+          "reference_ms": 0.46791327272727273,
+          "cpp_ms": 0.9412319333333333,
+          "speedup": 0.4971285569011429,
+          "workload": {
+            "api": "transform.resize",
+            "case": "unaligned",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 12,
+          "api": "transform.resize",
+          "case": "broadcast",
+          "dtype": "|b1",
+          "reference_ms": 0.4859440909090909,
+          "cpp_ms": 2.2348508333333337,
+          "speedup": 0.21743916133511856,
+          "workload": {
+            "api": "transform.resize",
+            "case": "broadcast",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              0,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "b8b035f2a45b7269fcf8e2aa6db422b0530a76db5c65fdccc1ab36b7903c9ad1"
+          }
+        },
+        {
+          "case_index": 13,
+          "api": "transform.resize",
+          "case": "readonly",
+          "dtype": "|b1",
+          "reference_ms": 0.4694737692307692,
+          "cpp_ms": 0.9432007857142857,
+          "speedup": 0.4977453118587437,
+          "workload": {
+            "api": "transform.resize",
+            "case": "readonly",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": true,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 14,
+          "api": "transform.resize",
+          "case": "zero",
+          "dtype": "|b1",
+          "reference_ms": 0.4772253181818182,
+          "cpp_ms": 0.9415453076923077,
+          "speedup": 0.5068532701325649,
+          "workload": {
+            "api": "transform.resize",
+            "case": "zero",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "a7c52cc099dd72383056868a4359da45457019426391d32c89da068d4dacd0cb"
+          }
+        },
+        {
+          "case_index": 16,
+          "api": "transform.rescale",
+          "case": "scalar-scale",
+          "dtype": "|b1",
+          "reference_ms": 0.8761368,
+          "cpp_ms": 1.798547375,
+          "speedup": 0.48713579201659896,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "scalar-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 0.7,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 17,
+          "api": "transform.rescale",
+          "case": "anisotropic-scale",
+          "dtype": "|b1",
+          "reference_ms": 1.56593975,
+          "cpp_ms": 3.2608835,
+          "speedup": 0.4802194711954598,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "anisotropic-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 18,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "|b1",
+          "reference_ms": 1.72192775,
+          "cpp_ms": 3.602997,
+          "speedup": 0.47791539931895594,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "|b1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "25041f05d3e1d8e3cb31f62f7cff690c94de760e08880acac51c4522ad184009"
+          }
+        },
+        {
+          "case_index": 19,
+          "api": "transform.rescale",
+          "case": "channels-last",
+          "dtype": "|b1",
+          "reference_ms": 0.14311638888888886,
+          "cpp_ms": 0.27162665625,
+          "speedup": 0.5268863920232014,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-last",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              67,
+              3
+            ],
+            "strides": [
+              201,
+              3,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": -1
+            },
+            "expected_error": false,
+            "input_sha256": "325b1027e3c80ed6af0f6a159102413aab537754d4dc4c8c7091989375641e06"
+          }
+        },
+        {
+          "case_index": 20,
+          "api": "transform.rescale",
+          "case": "channels-first",
+          "dtype": "|b1",
+          "reference_ms": 0.15353620967741935,
+          "cpp_ms": 0.2838765555555556,
+          "speedup": 0.5408555467954866,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-first",
+            "dtype": "|b1",
+            "shape": [
+              3,
+              65,
+              67
+            ],
+            "strides": [
+              1,
+              201,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 0
+            },
+            "expected_error": false,
+            "input_sha256": "c37a24440a24d38bbe7f15052273271bdf5ac011dc73680c8216ee30c0b7a349"
+          }
+        },
+        {
+          "case_index": 21,
+          "api": "transform.rescale",
+          "case": "channels-middle",
+          "dtype": "|b1",
+          "reference_ms": 0.15574257142857142,
+          "cpp_ms": 0.28495356097560975,
+          "speedup": 0.5465542206082555,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "channels-middle",
+            "dtype": "|b1",
+            "shape": [
+              65,
+              3,
+              67
+            ],
+            "strides": [
+              201,
+              1,
+              3
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {
+              "channel_axis": 1
+            },
+            "expected_error": false,
+            "input_sha256": "7a9417285e8dc8f70f4fed9ac2d76f10595dc8dc07b7545c2763eb30f7a20e50"
+          }
+        },
+        {
+          "case_index": 24,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "|u1",
+          "reference_ms": 0.49149914814814816,
+          "cpp_ms": 0.9498338571428572,
+          "speedup": 0.5174580211602475,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "|u1",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              513,
+              1
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "7465613675a1f3bffb75749e601ec8f2d6486dd620b98a34adb2dfc803ab4682"
+          }
+        },
+        {
+          "case_index": 68,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u2",
+          "reference_ms": 0.57095835,
+          "cpp_ms": 0.9717503076923077,
+          "speedup": 0.5875566444181529,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "3a3bef9628123e4ee0a9c3cf7fc50e65b50d7e019388b02e1377658a6b80cb6c"
+          }
+        },
+        {
+          "case_index": 112,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u4",
+          "reference_ms": 0.5448294545454546,
+          "cpp_ms": 1.0198325833333333,
+          "speedup": 0.5342342100550209,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "53b594f5f852bfe0cbcdd5af9f9ad4e8ae68382cf84045fdd94924bc950fe9a3"
+          }
+        },
+        {
+          "case_index": 156,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<u8",
+          "reference_ms": 1.3368889,
+          "cpp_ms": 2.0351831666666667,
+          "speedup": 0.6568887370416046,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "925074aa88261c5b200d9bc50c28955dbf1087f1fb5798c38bb1e9e4a79aceb8"
+          }
+        },
+        {
+          "case_index": 178,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<i8",
+          "reference_ms": 1.3344816666666668,
+          "cpp_ms": 2.0833981666666666,
+          "speedup": 0.6405312666669815,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 179,
+          "api": "transform.resize",
+          "case": "nearest-aa",
+          "dtype": "<i8",
+          "reference_ms": 3.832629,
+          "cpp_ms": 4.477557666666667,
+          "speedup": 0.8559641852369964,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-aa",
+            "dtype": "<i8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true
+            },
+            "expected_error": false,
+            "input_sha256": "424277d93feaa5e5d303de402e91e473208fd264d3a0c3f1af65b1635939b156"
+          }
+        },
+        {
+          "case_index": 199,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "<f2",
+          "reference_ms": 7.836956,
+          "cpp_ms": 9.155531,
+          "speedup": 0.8559804996564372,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "<f2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "ff4506979df6e2cfc10c1a60404f80cd5ac1784c5272819dbb0cd5a966317d3c"
+          }
+        },
+        {
+          "case_index": 200,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f2",
+          "reference_ms": 1.0863743846153846,
+          "cpp_ms": 1.12106025,
+          "speedup": 0.9690597669620207,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "ff4506979df6e2cfc10c1a60404f80cd5ac1784c5272819dbb0cd5a966317d3c"
+          }
+        },
+        {
+          "case_index": 203,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "<f2",
+          "reference_ms": 5.285533,
+          "cpp_ms": 5.919323,
+          "speedup": 0.8929286338995185,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "<f2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "ff4506979df6e2cfc10c1a60404f80cd5ac1784c5272819dbb0cd5a966317d3c"
+          }
+        },
+        {
+          "case_index": 217,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "<f2",
+          "reference_ms": 5.341506,
+          "cpp_ms": 6.0207725,
+          "speedup": 0.8871795106026678,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "<f2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "ff4506979df6e2cfc10c1a60404f80cd5ac1784c5272819dbb0cd5a966317d3c"
+          }
+        },
+        {
+          "case_index": 222,
+          "api": "transform.resize",
+          "case": "up-default",
+          "dtype": "<f4",
+          "reference_ms": 7.198394,
+          "cpp_ms": 9.000795,
+          "speedup": 0.7997509108917602,
+          "workload": {
+            "api": "transform.resize",
+            "case": "up-default",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              641,
+              643
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 223,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f4",
+          "reference_ms": 0.536053125,
+          "cpp_ms": 1.0147769285714285,
+          "speedup": 0.5282472530732828,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 226,
+          "api": "transform.resize",
+          "case": "identity",
+          "dtype": "<f4",
+          "reference_ms": 4.680735,
+          "cpp_ms": 5.836074,
+          "speedup": 0.8020348953765837,
+          "workload": {
+            "api": "transform.resize",
+            "case": "identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 230,
+          "api": "transform.resize",
+          "case": "stepped",
+          "dtype": "<f4",
+          "reference_ms": 1.0610284545454547,
+          "cpp_ms": 1.1087161818181819,
+          "speedup": 0.9569883365510873,
+          "workload": {
+            "api": "transform.resize",
+            "case": "stepped",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              257
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              173,
+              175
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "09378e12e9ed2b168a1894814eb5ab7e6d5098d38c0bb0e1f2a4ab2c28245d7c"
+          }
+        },
+        {
+          "case_index": 238,
+          "api": "transform.rescale",
+          "case": "anisotropic-scale",
+          "dtype": "<f4",
+          "reference_ms": 5.473895,
+          "cpp_ms": 5.5320405,
+          "speedup": 0.9894893213453516,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "anisotropic-scale",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              0.7,
+              1.3
+            ],
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 239,
+          "api": "transform.rescale",
+          "case": "unit-scale",
+          "dtype": "<f4",
+          "reference_ms": 4.723722,
+          "cpp_ms": 5.8937635,
+          "speedup": 0.8014780369113895,
+          "workload": {
+            "api": "transform.rescale",
+            "case": "unit-scale",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": 1.0,
+            "options": {},
+            "expected_error": false,
+            "input_sha256": "06ee1be0fefd7c5e8823c66aa11a0ed6b8887de0a85d0844417fe0ad4e9470a9"
+          }
+        },
+        {
+          "case_index": 245,
+          "api": "transform.resize",
+          "case": "nearest-down",
+          "dtype": "<f8",
+          "reference_ms": 0.6890267058823529,
+          "cpp_ms": 1.1531242727272728,
+          "speedup": 0.5975303115012268,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nearest-down",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "e42ab2432c3a9140ca77c2b6154f5462ce381c81b156a198203f9d300dbd2a0a"
+          }
+        },
+        {
+          "case_index": 265,
+          "api": "transform.resize",
+          "case": "constant-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.2391202340425532,
+          "cpp_ms": 0.2550594255319149,
+          "speedup": 0.9375079299417332,
+          "workload": {
+            "api": "transform.resize",
+            "case": "constant-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "constant",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 271,
+          "api": "transform.resize",
+          "case": "edge-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.15998114035087718,
+          "cpp_ms": 0.25398603921568624,
+          "speedup": 0.6298816298915563,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 272,
+          "api": "transform.resize",
+          "case": "edge-order1",
+          "dtype": "<f4",
+          "reference_ms": 0.35020282857142854,
+          "cpp_ms": 0.3766128235294117,
+          "speedup": 0.9298749450151936,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order1",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 1,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 273,
+          "api": "transform.resize",
+          "case": "edge-order2",
+          "dtype": "<f4",
+          "reference_ms": 1.0217241,
+          "cpp_ms": 1.0277883333333333,
+          "speedup": 0.994099725462279,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order2",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 2,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 277,
+          "api": "transform.resize",
+          "case": "symmetric-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.15996427272727273,
+          "cpp_ms": 0.25461195999999997,
+          "speedup": 0.6282669232320145,
+          "workload": {
+            "api": "transform.resize",
+            "case": "symmetric-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "symmetric",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 278,
+          "api": "transform.resize",
+          "case": "symmetric-order1",
+          "dtype": "<f4",
+          "reference_ms": 0.3532948125,
+          "cpp_ms": 0.3793421666666667,
+          "speedup": 0.9313354631900047,
+          "workload": {
+            "api": "transform.resize",
+            "case": "symmetric-order1",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 1,
+              "mode": "symmetric",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 283,
+          "api": "transform.resize",
+          "case": "reflect-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.15883639655172416,
+          "cpp_ms": 0.2558348888888889,
+          "speedup": 0.6208551040147932,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reflect-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "reflect",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 284,
+          "api": "transform.resize",
+          "case": "reflect-order1",
+          "dtype": "<f4",
+          "reference_ms": 0.35547196875,
+          "cpp_ms": 0.3781649411764706,
+          "speedup": 0.9399918660998219,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reflect-order1",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 1,
+              "mode": "reflect",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 289,
+          "api": "transform.resize",
+          "case": "wrap-order0",
+          "dtype": "<f4",
+          "reference_ms": 0.15927855,
+          "cpp_ms": 0.2520491132075472,
+          "speedup": 0.6319345780393353,
+          "workload": {
+            "api": "transform.resize",
+            "case": "wrap-order0",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "wrap",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 290,
+          "api": "transform.resize",
+          "case": "wrap-order1",
+          "dtype": "<f4",
+          "reference_ms": 0.35217453125,
+          "cpp_ms": 0.37594456756756756,
+          "speedup": 0.9367724968833459,
+          "workload": {
+            "api": "transform.resize",
+            "case": "wrap-order1",
+            "dtype": "<f4",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              516,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 1,
+              "mode": "wrap",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "6f92230403eacb84aeb0c1afc556413d6b3f6aabd79253bbeecc0e3373108238"
+          }
+        },
+        {
+          "case_index": 296,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f4",
+          "reference_ms": 1.9034972857142858,
+          "cpp_ms": 3.7775163333333337,
+          "speedup": 0.5039018015402233,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "1a9a0929fd1903bf2e10003d28ab87fdbf04ec36307ba02d7371632d55694792"
+          }
+        },
+        {
+          "case_index": 297,
+          "api": "transform.resize",
+          "case": "nan-identity",
+          "dtype": "<f4",
+          "reference_ms": 1.9435085714285714,
+          "cpp_ms": 3.8173743333333334,
+          "speedup": 0.5091218208436736,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nan-identity",
+            "dtype": "<f4",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              2052,
+              4
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "e051ba9a58918cd964a28a36810108ac4578402757a76c3cc4d181cc5770d562"
+          }
+        },
+        {
+          "case_index": 298,
+          "api": "transform.resize",
+          "case": "constant-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.24403677499999998,
+          "cpp_ms": 0.26342445833333333,
+          "speedup": 0.9264013544680029,
+          "workload": {
+            "api": "transform.resize",
+            "case": "constant-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "constant",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 304,
+          "api": "transform.resize",
+          "case": "edge-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.17188509523809523,
+          "cpp_ms": 0.26234870588235293,
+          "speedup": 0.6551779802381605,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 306,
+          "api": "transform.resize",
+          "case": "edge-order2",
+          "dtype": "<f8",
+          "reference_ms": 1.0101333846153846,
+          "cpp_ms": 1.0306397857142857,
+          "speedup": 0.9801032316206489,
+          "workload": {
+            "api": "transform.resize",
+            "case": "edge-order2",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 2,
+              "mode": "edge",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 310,
+          "api": "transform.resize",
+          "case": "symmetric-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.17060673684210526,
+          "cpp_ms": 0.2593015192307692,
+          "speedup": 0.6579473091720348,
+          "workload": {
+            "api": "transform.resize",
+            "case": "symmetric-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "symmetric",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 316,
+          "api": "transform.resize",
+          "case": "reflect-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.17139681132075474,
+          "cpp_ms": 0.2610790238095238,
+          "speedup": 0.6564939948825655,
+          "workload": {
+            "api": "transform.resize",
+            "case": "reflect-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "reflect",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 322,
+          "api": "transform.resize",
+          "case": "wrap-order0",
+          "dtype": "<f8",
+          "reference_ms": 0.17135398245614034,
+          "cpp_ms": 0.25928796,
+          "speedup": 0.6608636299816634,
+          "workload": {
+            "api": "transform.resize",
+            "case": "wrap-order0",
+            "dtype": "<f8",
+            "shape": [
+              128,
+              129
+            ],
+            "strides": [
+              1032,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              97,
+              173
+            ],
+            "options": {
+              "order": 0,
+              "mode": "wrap",
+              "cval": -0.3,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "d74c637072ceca10637dc815a569c4ff7d03458b1535ac5190bd764a94c9460e"
+          }
+        },
+        {
+          "case_index": 329,
+          "api": "transform.resize",
+          "case": "mixed-zero-identity",
+          "dtype": "<f8",
+          "reference_ms": 2.1764205,
+          "cpp_ms": 3.9389006666666666,
+          "speedup": 0.5525451602316789,
+          "workload": {
+            "api": "transform.resize",
+            "case": "mixed-zero-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "32977cde112f8f66fca6184f39cd4bfd7cd4813074ebad64a08bc4728472753f"
+          }
+        },
+        {
+          "case_index": 330,
+          "api": "transform.resize",
+          "case": "nan-identity",
+          "dtype": "<f8",
+          "reference_ms": 2.236074,
+          "cpp_ms": 3.9683516666666665,
+          "speedup": 0.5634767752017945,
+          "workload": {
+            "api": "transform.resize",
+            "case": "nan-identity",
+            "dtype": "<f8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              512,
+              513
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": false
+            },
+            "expected_error": false,
+            "input_sha256": "0decd3debae7b2201273b12e73ce12190f24eb74171ccc38197b013b734dc14a"
+          }
+        },
+        {
+          "case_index": 367,
+          "api": "transform.resize",
+          "case": "aa-zero",
+          "dtype": "<u2",
+          "reference_ms": 0.6289531176470587,
+          "cpp_ms": 1.0253901818181819,
+          "speedup": 0.6133793055554946,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-zero",
+            "dtype": "<u2",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              1026,
+              2
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.0
+            },
+            "expected_error": false,
+            "input_sha256": "d2e26a8c6dfb544a5e2114d165e74ee73e660521a60ec520456501e93fba9b45"
+          }
+        },
+        {
+          "case_index": 370,
+          "api": "transform.resize",
+          "case": "aa-zero",
+          "dtype": "<u8",
+          "reference_ms": 1.651090857142857,
+          "cpp_ms": 2.2129676666666667,
+          "speedup": 0.7460980483415063,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-zero",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.0
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 371,
+          "api": "transform.resize",
+          "case": "aa-scalar",
+          "dtype": "<u8",
+          "reference_ms": 8.566,
+          "cpp_ms": 9.530064,
+          "speedup": 0.8988397139830332,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-scalar",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": 0.7
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        },
+        {
+          "case_index": 372,
+          "api": "transform.resize",
+          "case": "aa-anisotropic",
+          "dtype": "<u8",
+          "reference_ms": 8.469806,
+          "cpp_ms": 9.06077,
+          "speedup": 0.9347777286036397,
+          "workload": {
+            "api": "transform.resize",
+            "case": "aa-anisotropic",
+            "dtype": "<u8",
+            "shape": [
+              512,
+              513
+            ],
+            "strides": [
+              4104,
+              8
+            ],
+            "readonly": false,
+            "aligned": true,
+            "target": [
+              257,
+              259
+            ],
+            "options": {
+              "order": 0,
+              "anti_aliasing": true,
+              "anti_aliasing_sigma": [
+                0.3,
+                1.3
+              ]
+            },
+            "expected_error": false,
+            "input_sha256": "646f61f852bd37ca70716687e6368cb3536522316f44a610e38dd76b3f1bac4e"
+          }
+        }
+      ]
+    }
+  }
+}

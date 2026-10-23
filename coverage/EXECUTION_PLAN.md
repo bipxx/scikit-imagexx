@@ -6,18 +6,19 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 455 public names: 123 native-partial image entries,
-two metadata entries, and 330 upstream-only entries. It includes 29 classes with
+The current inventory contains 474 public paths: 133 native-partial image entries,
+three metadata entries, and 338 upstream-only entries. The expansion adds 19
+source-backed public/legacy rank.generic aliases of existing algorithms, not
+19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-The broad implementation goal is currently **paused**. This revision was reviewed
-by three worker agents in parallel, plus the integrator. All three reviews are
-complete, and all local implementation handles reached terminal checkpoints.
-Uncommitted work, failed trials, caches and exact artifacts are preserved. This
-plan is ready to execute when the goal is resumed; inspecting it does not resume
-implementation. Existing hosted measurement jobs retain their authoritative run.
+The user has resumed implementation. Three worker agents are executing the
+rank, component-consumer and exact-package validation lanes in parallel, with the integrator handling
+shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
+review and preserved checkpoints remain recorded in the ledger. Existing hosted
+measurement jobs retain their authoritative run.
 
 ## What changed after review
 
@@ -37,12 +38,12 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 ## Three-agent review and worker lanes
 
-| Lane | Agent | Independent responsibility | Preserved checkpoint / next handoff |
+| Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared wiring/exports, queue, merges, exact artifacts and hosted measurements | Three optimized metrics wheels built; combined optimized parity and public registration pending |
-| Worker 1 | `metrics_reductions` | Kernel/interface review; metrics FP stages | Frozen `070fc64` passes six profiles. Later callback work has four initial boundary failures; its fix is unvalidated. Then take independent footprint utilities or rank contracts |
-| Worker 2 | `resize_api` | Contract/dependency review; labeling contracts and kernels | Three runtimes passed 1,600 contract checks with 1,596 native-pending cases each; two source files uncommitted. Freeze that increment, then implement labeling |
-| Worker 3 | `resize_bench` | Scheduling/benchmark review; dense footprints and decomposition | Contracts `54d416d` merged. Dense source is uncommitted; fixes after eight initial failures are unvalidated. Repair retained build dependencies, validate dense work, then decomposition |
+| Integrator | `root` | Public exports, registry/inventory, measured resize bottlenecks, prompt merges and cleanup | Product candidate `05c3506`; all three exact wheels built; source136 native/metadata registrations await complete public acceptance |
+| Worker 1 | `metrics_reductions` | Reusable rank histogram engine and five canonical/generic aliases | Rank contracts `eabc946` merged; private SIMD/serial-alias implementation running |
+| Worker 2 | `resize_api` | Component counts/filtering, clear_border, relabeling and returned ArrayMap | Contracts `a3714af` merged; own native consumers/ArrayMap implementation running |
+| Worker 3 | `resize_bench` | Exact whole-package validation on Windows/modern/minimum, SDK seals and untimed corpora | Public normal groups14,963 passed per runtime; shared registry test list corrected in `6960e4e`; remaining profiles and gates live |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -60,10 +61,9 @@ The read-only planning reviewer completed its audit. Native half identity
 wheels passed 9,968 tests in each of six runtime/SIMD profiles, and the 373-case
 corpus passed untimed checks on all three runtimes at workers one and four.
 Performance run [39957875987](https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987)
-uses source `66e5f78`; all preparation and both Linux measurement jobs passed,
-while Windows measurement remains live at this snapshot. Observe this same run;
-do not restart it because of a queue or timeout. All-profile performance acceptance
-remains pending.
+uses source `66e5f78`; all six preparation/measurement jobs completed successfully. Observe this same run;
+do not restart it because of a queue or timeout. The [baseline report](../benchmarks/resize-public-initial.md) retains every sample
+and49/52/61slowercases across Windows/modern/minimum; measured bottleneck work remains pending.
 
 The private metrics baseline (`03581ae`, integrated as `99abcfc`) passed 4,082
 tests in each of six profiles through the actual shared `_core`. It is merged as
@@ -164,7 +164,7 @@ Each scoped packet records exact owned paths, a base revision, read/link
 dependencies, its build policy, a concrete `collaboration.followup_task` handoff
 and acceptance gates. `--ready` lists scoped queued packets whose required proof
 scope or frozen interface is available, excluding occupied writable files.
-It does not resume the paused goal or assert spare
+It does not change goal status or assert spare
 capacity: the integrator keeps at most three worker agents active, reuses a
 completed agent with `followup_task`, and supplies the printed handoff with an
 explicit isolated worktree and branch. Unscoped inventory items are not launched.
