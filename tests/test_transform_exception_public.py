@@ -101,6 +101,7 @@ def test_resolver_caches_one_identity_and_exposes_no_kernel_claim():
     assert facts['parity_evidence'] is facts['performance_evidence'] is None
     assert implementation._canonical_failure_error() is xx.util.FailedEstimationAccessError
     assert implementation.FailedEstimation.error_cls is xx.util.FailedEstimationAccessError
+    assert 'FailedEstimationAccessError' in dir(xx.util)
 
 
 def test_unrelated_optional_import_failure_is_not_hidden():

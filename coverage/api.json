@@ -6719,7 +6719,7 @@
           "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
         },
         "compatibility_boundaries": [
-          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimationAccessError uses the canonical public util exception metadata provider; own subclass only when scikit-image is unavailable.",
           "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
           "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
         ],
@@ -7043,7 +7043,7 @@
           "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
         },
         "compatibility_boundaries": [
-          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimationAccessError uses the canonical public util exception metadata provider; own subclass only when scikit-image is unavailable.",
           "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
           "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
         ],
@@ -7521,7 +7521,7 @@
           "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
         },
         "compatibility_boundaries": [
-          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimationAccessError uses the canonical public util exception metadata provider; own subclass only when scikit-image is unavailable.",
           "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
           "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
         ],
@@ -7757,7 +7757,7 @@
           "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
         },
         "compatibility_boundaries": [
-          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimationAccessError uses the canonical public util exception metadata provider; own subclass only when scikit-image is unavailable.",
           "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
           "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
         ],
@@ -8148,10 +8148,10 @@
       "api": "util.FailedEstimationAccessError",
       "kind": "class",
       "signature": null,
-      "implementation": "upstream-only",
+      "implementation": "exception-metadata-provider",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "exception-metadata",
+      "parity_test": "tests/test_transform_exception_public.py",
       "benchmark": null,
       "members": [
         {
@@ -8182,9 +8182,9 @@
           "signature": "(self, /, *args, **kwargs)",
           "defined_by": "builtins.AttributeError",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8193,9 +8193,9 @@
           "signature": "(*args, **kwargs)",
           "defined_by": "builtins.Exception",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8204,9 +8204,9 @@
           "signature": "(self, /)",
           "defined_by": "builtins.AttributeError",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8215,9 +8215,9 @@
           "signature": "(self, /)",
           "defined_by": "builtins.BaseException",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8226,9 +8226,9 @@
           "signature": "(self, object, /)",
           "defined_by": "builtins.BaseException",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8237,9 +8237,9 @@
           "signature": "(self, /)",
           "defined_by": "builtins.AttributeError",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8248,9 +8248,9 @@
           "signature": "(self, object, /)",
           "defined_by": "builtins.BaseException",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8259,9 +8259,9 @@
           "signature": null,
           "defined_by": "builtins.BaseException",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8270,9 +8270,9 @@
           "signature": null,
           "defined_by": "builtins.AttributeError",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8281,9 +8281,9 @@
           "signature": null,
           "defined_by": "builtins.AttributeError",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         },
         {
@@ -8292,12 +8292,47 @@
           "signature": "(self, object, /)",
           "defined_by": "builtins.BaseException",
           "inherited": true,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "exception-metadata-member",
+          "execution_kind": "python-attributeerror-inheritance",
+          "parity_test": "tests/test_transform_exception_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "failed-estimation-exception-v1",
+        "registered": true,
+        "implementation": "exception-metadata-provider",
+        "members": {
+          "__init__": "python-attributeerror-inheritance",
+          "__new__": "python-attributeerror-inheritance",
+          "__str__": "python-attributeerror-inheritance",
+          "__repr__": "python-attributeerror-inheritance",
+          "__reduce__": "python-attributeerror-inheritance",
+          "__setstate__": "python-attributeerror-inheritance",
+          "args": "python-attributeerror-inheritance",
+          "name": "python-attributeerror-inheritance",
+          "obj": "python-attributeerror-inheritance",
+          "add_note": "python-attributeerror-inheritance",
+          "with_traceback": "python-attributeerror-inheritance"
+        },
+        "state": {
+          "args": "inherited AttributeError constructor and pickle policy",
+          "attributes": "standard exception name/obj and user attributes"
+        },
+        "providers": {
+          "exception": "Canonical skimage.util/skimage._shared exception metadata when installed; own AttributeError subclass when absent. No upstream image or transform class calls."
+        },
+        "workers": {
+          "exception": "Python metadata; no C++ workers or BLAS execution"
+        },
+        "compatibility_boundaries": [
+          "Canonical alias and native failure helpers share identity independent of algorithm fallback policy; unported compatible models retain the same catch type."
+        ],
+        "public_parity_test": "tests/test_transform_exception_public.py",
+        "frozen_contract": null,
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "util.PendingSkimage2Change",

@@ -8,8 +8,7 @@ from ._compat import fallback, module_attribute, native_image
 __path__ = []
 
 __all__ = ['invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
-           'img_as_ubyte', 'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits',
-           'FailedEstimationAccessError']
+           'img_as_ubyte', 'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits']
 
 _SUPPORTED = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32, np.int32,
               np.uint64, np.int64, np.float32, np.float64}
@@ -100,3 +99,7 @@ def __getattr__(name):
         from ._geometric import _canonical_failure_error
         return _canonical_failure_error()
     return module_attribute('util', name)
+
+
+def __dir__():
+    return sorted(set(globals()) | set(__all__) | {'FailedEstimationAccessError'})

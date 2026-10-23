@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -457,7 +457,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.warp` | upstream-only | pending | pending |
 | `transform.warp_coords` | upstream-only | pending | pending |
 | `transform.warp_polar` | upstream-only | pending | pending |
-| `util.FailedEstimationAccessError` | upstream-only | pending | pending |
+| `util.FailedEstimationAccessError` | exception-metadata-provider | yes (partial input contract) | pending |
 | `util.PendingSkimage2Change` | upstream-only | pending | pending |
 | `util.apply_parallel` | upstream-only | pending | pending |
 | `util.compare_images` | upstream-only | pending | pending |

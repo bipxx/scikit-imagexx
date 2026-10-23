@@ -25,7 +25,9 @@ def test_registry_matches_per_function_tests():
     tested = {module.__name__.split('.', 1)[1]+'.'+name for module, _, name in FUNCTIONS}
     assert tested == set(native_functions())
     tested_classes={module.__name__.split('.',1)[1]+'.'+name for module,_,name in CLASSES}
-    assert tested_classes==set(native_classes())|set(class_metadata_providers())
+    assert tested_classes==set(native_classes())
+    assert set(class_metadata_providers())=={'util.FailedEstimationAccessError'}
+    assert inspect.isclass(xx.util.FailedEstimationAccessError)
 
 
 def test_unported_namespace_interchangeability():
