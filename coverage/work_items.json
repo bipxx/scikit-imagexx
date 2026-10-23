@@ -17262,7 +17262,7 @@
       "depends_on": [
         "metrics-simd-load-optimization"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17277,18 +17277,86 @@
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "corpus_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+        "raw_results": [
+          "benchmarks/metrics-public-windows-modern-simd-load-trial.json",
+          "benchmarks/metrics-public-linux-modern-simd-load-trial.json",
+          "benchmarks/metrics-public-linux-minimum-simd-load-trial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "windows-modern",
+            "retained_in": "benchmarks/metrics-public-simd-load-trial.json",
+            "cases": 637
+          },
+          {
+            "profile": "linux-modern",
+            "retained_in": "benchmarks/metrics-public-simd-load-trial.json",
+            "cases": 521
+          },
+          {
+            "profile": "linux-minimum",
+            "retained_in": "benchmarks/metrics-public-simd-load-trial.json",
+            "cases": 441
+          }
+        ],
         "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
         "run_id": 40000634063,
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40000634063",
-        "observed_state": "queued",
+        "observed_state": "completed",
         "created_at": "2026-10-23T18:06:51Z",
         "workers": [
           1
         ],
-        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings."
+        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings.",
+        "conclusion": "success",
+        "report": "benchmarks/metrics-public-simd-load-trial.json",
+        "report_sha256": "1359979469c447b76d457a420896bf7051bfd2984e4dc9a75720212eba7c3337",
+        "scope": "Measured versus original only; all slower cases retained. No all-API, pure-C++ provider, or universal speedup claim.",
+        "by_profile": {
+          "windows-modern": {
+            "checked": 1231,
+            "timed": 1212,
+            "by_work_kind": {
+              "public-metric-call": {
+                "cases": 1212,
+                "geometric_mean_speedup": 0.8729409176118493,
+                "faster_cases": 575,
+                "slower_cases": 637,
+                "minimum_speedup": 0.10612822050540328,
+                "maximum_speedup": 2.3549527753221975
+              }
+            }
+          },
+          "linux-modern": {
+            "checked": 1231,
+            "timed": 1212,
+            "by_work_kind": {
+              "public-metric-call": {
+                "cases": 1212,
+                "geometric_mean_speedup": 0.80630665472174,
+                "faster_cases": 691,
+                "slower_cases": 521,
+                "minimum_speedup": 0.0778449705975483,
+                "maximum_speedup": 3.081043566165955
+              }
+            }
+          },
+          "linux-minimum": {
+            "checked": 1231,
+            "timed": 1212,
+            "by_work_kind": {
+              "public-metric-call": {
+                "cases": 1212,
+                "geometric_mean_speedup": 0.9172493664896089,
+                "faster_cases": 771,
+                "slower_cases": 441,
+                "minimum_speedup": 0.08570832130756668,
+                "maximum_speedup": 5.058440768034629
+              }
+            }
+          }
+        }
       },
       "merge": {
         "commit": null,
@@ -17296,12 +17364,29 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/metrics-performance-runs/40000634063",
+          "benchmarks/metrics-public-windows-modern-simd-load-trial.json",
+          "benchmarks/metrics-public-linux-modern-simd-load-trial.json",
+          "benchmarks/metrics-public-linux-minimum-simd-load-trial.json",
+          "benchmarks/metrics-public-simd-load-trial.json"
+        ]
       },
       "dependency_requirements": {
         "metrics-simd-load-optimization": {
           "evidence_scope": "public_native",
           "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
+          "manifest": {
+            "path": "benchmarks/metrics-public-simd-load-trial.json",
+            "sha256": "1359979469c447b76d457a420896bf7051bfd2984e4dc9a75720212eba7c3337"
+          },
+          "scope": "Offline-verified samples, exact hosted source/wheels/package hashes and preparation barrier; see report for SDK seal limits."
         }
       }
     },
@@ -17316,7 +17401,7 @@
       "depends_on": [
         "transform-class-performance-harness"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17331,18 +17416,134 @@
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "corpus_sha256": "223f2bbd38d4215d716b38fe0086d6cc7e469f307ff5c1c481b4bc0d0bf9e428",
+        "raw_results": [
+          "benchmarks/transform-classes-public-windows-modern-initial.json",
+          "benchmarks/transform-classes-public-linux-modern-initial.json",
+          "benchmarks/transform-classes-public-linux-minimum-initial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "windows-modern",
+            "retained_in": "benchmarks/transform-classes-public-initial.json",
+            "cases": 28
+          },
+          {
+            "profile": "linux-modern",
+            "retained_in": "benchmarks/transform-classes-public-initial.json",
+            "cases": 23
+          },
+          {
+            "profile": "linux-minimum",
+            "retained_in": "benchmarks/transform-classes-public-initial.json",
+            "cases": 50
+          }
+        ],
         "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
         "run_id": 40000631852,
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40000631852",
-        "observed_state": "queued",
+        "observed_state": "completed",
         "created_at": "2026-10-23T18:06:50Z",
         "workers": [
           1
         ],
-        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings."
+        "observation_rule": "Retain and poll this authoritative run to a terminal state. Never cancel/restart for observation timeouts. Fresh measurement hosts wait for all preparation gates; no local timings.",
+        "conclusion": "success",
+        "report": "benchmarks/transform-classes-public-initial.json",
+        "report_sha256": "a048dabb0c8997428183773e3170ae46ba28bd1f3ab73adfaf242fb406a80b65",
+        "scope": "Measured versus original only; all slower cases retained. No all-API, pure-C++ provider, or universal speedup claim.",
+        "by_profile": {
+          "windows-modern": {
+            "checked": 296,
+            "timed": 276,
+            "by_work_kind": {
+              "public-coordinate-call": {
+                "cases": 204,
+                "geometric_mean_speedup": 2.304420270745466,
+                "faster_cases": 204,
+                "slower_cases": 0,
+                "minimum_speedup": 1.6389791826039666,
+                "maximum_speedup": 3.597639129672556
+              },
+              "runtime-fitting-or-matrix-provider": {
+                "cases": 56,
+                "geometric_mean_speedup": 1.0002691553205698,
+                "faster_cases": 32,
+                "slower_cases": 24,
+                "minimum_speedup": 0.8322074021341903,
+                "maximum_speedup": 1.2132858809677896
+              },
+              "state-metadata-or-serialization": {
+                "cases": 16,
+                "geometric_mean_speedup": 1.0083323498425045,
+                "faster_cases": 12,
+                "slower_cases": 4,
+                "minimum_speedup": 0.9779758640388831,
+                "maximum_speedup": 1.0674868189806679
+              }
+            }
+          },
+          "linux-modern": {
+            "checked": 296,
+            "timed": 276,
+            "by_work_kind": {
+              "public-coordinate-call": {
+                "cases": 204,
+                "geometric_mean_speedup": 3.029709640664482,
+                "faster_cases": 204,
+                "slower_cases": 0,
+                "minimum_speedup": 1.896516829704204,
+                "maximum_speedup": 8.102357528910906
+              },
+              "runtime-fitting-or-matrix-provider": {
+                "cases": 56,
+                "geometric_mean_speedup": 1.0089767238010094,
+                "faster_cases": 39,
+                "slower_cases": 17,
+                "minimum_speedup": 0.968601436779022,
+                "maximum_speedup": 1.0707792105203566
+              },
+              "state-metadata-or-serialization": {
+                "cases": 16,
+                "geometric_mean_speedup": 1.0106913450792174,
+                "faster_cases": 10,
+                "slower_cases": 6,
+                "minimum_speedup": 0.8739162041409757,
+                "maximum_speedup": 1.105256415730817
+              }
+            }
+          },
+          "linux-minimum": {
+            "checked": 296,
+            "timed": 276,
+            "by_work_kind": {
+              "public-coordinate-call": {
+                "cases": 204,
+                "geometric_mean_speedup": 3.370435336250057,
+                "faster_cases": 204,
+                "slower_cases": 0,
+                "minimum_speedup": 2.0523925052276364,
+                "maximum_speedup": 9.29173937317186
+              },
+              "runtime-fitting-or-matrix-provider": {
+                "cases": 56,
+                "geometric_mean_speedup": 0.9964198568489068,
+                "faster_cases": 13,
+                "slower_cases": 43,
+                "minimum_speedup": 0.9600355127157479,
+                "maximum_speedup": 1.0212543868278265
+              },
+              "state-metadata-or-serialization": {
+                "cases": 16,
+                "geometric_mean_speedup": 1.0016675101136543,
+                "faster_cases": 9,
+                "slower_cases": 7,
+                "minimum_speedup": 0.9825596914523285,
+                "maximum_speedup": 1.0225993134320464
+              }
+            }
+          }
+        }
       },
       "merge": {
         "commit": null,
@@ -17350,12 +17551,29 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/transform-classes-performance-runs/40000631852",
+          "benchmarks/transform-classes-public-windows-modern-initial.json",
+          "benchmarks/transform-classes-public-linux-modern-initial.json",
+          "benchmarks/transform-classes-public-linux-minimum-initial.json",
+          "benchmarks/transform-classes-public-initial.json"
+        ]
       },
       "dependency_requirements": {
         "transform-class-performance-harness": {
           "evidence_scope": "public_native",
           "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+          "manifest": {
+            "path": "benchmarks/transform-classes-public-initial.json",
+            "sha256": "a048dabb0c8997428183773e3170ae46ba28bd1f3ab73adfaf242fb406a80b65"
+          },
+          "scope": "Offline-verified samples, exact hosted source/wheels/package hashes and preparation barrier; see report for SDK seal limits."
         }
       }
     },
@@ -17742,21 +17960,14 @@
       "id": "rank-alias-native",
       "kind": "private_kernel",
       "apis": [],
-      "owner": "metrics_reductions",
+      "owner": "integrator",
       "branch": "feature/rank-alias-native",
       "base_sha": "c05a92958d51afb76c614ea6054a1d1aabf874aa",
-      "owns": [
-        "src/rank.cpp",
-        "src/simd_rank_avx2.cpp",
-        "include/skimagexx/rank.hpp",
-        "src/bind_rank.cpp",
-        "tests/test_rank_alias_native.cpp",
-        "tests/test_rank_alias_pipeline.py"
-      ],
+      "owns": [],
       "depends_on": [
         "rank-alias-contracts"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -17793,10 +18004,10 @@
           "status": "verified",
           "source_sha": "c05a92958d51afb76c614ea6054a1d1aabf874aa",
           "manifest": {
-            "path": "build/rank-alias-native-evidence/c05a929/bounded-v1/manifest.json",
-            "sha256": "c655fe3a88c3f2a6167abfbd1b0147ecdd3bee70c94e3a531547386dfa3e6431"
+            "path": "build/rank-alias-native-evidence/c05a929/final-v1/manifest.json",
+            "sha256": "e5201c408b4633298dbf05b7907c4767eb930ceb11c0ec097238cd4c69961ba6"
           },
-          "scope": "Bounded sealed proof: eight private16186 profiles,64 transport and40 release/state supplements, native checks. Full instrumented binding scalar still live67655; do not count unsealed sanitizer work. Separate alias480, histogram8191 and old two-argument ABI retained.",
+          "scope": "Final ten private16186 profiles,1008 alias cases,8x64 transport and8x40 release/state supplements. Native ASan/UBSan/LSAN detect_leaks1; binding ASan/UBSan detect_leaks0. No public admission, sole-core or performance acceptance.",
           "native_contract_checks": 1008,
           "native_pending": 0
         }
@@ -17991,6 +18202,71 @@
         "component-consumers-benchmark-tooling": {
           "evidence_scope": "public_native"
         }
+      }
+    },
+    {
+      "id": "metrics-stepped-half-optimization",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/metrics-load-optimization",
+      "base_sha": "79ee04345b81af93adcc6f39d7c81cc5f3e5c7df",
+      "owns": [
+        "src/metrics.cpp",
+        "src/simd_metrics_avx2.cpp",
+        "src/bind_metrics.cpp",
+        "include/skimagexx/metrics.hpp",
+        "tests/test_metrics_native.cpp"
+      ],
+      "depends_on": [
+        "metrics-simd-measurement"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "benchmarks/metrics_reductions.py",
+        "uncovered_cases": [
+          "Only stepped-half transport is the current delta; Windows min-max normalization remains a separate measured bottleneck."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "note": "No local operation timing; performance pending a fresh isolated hosted trial."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/metrics-load-optimization"
+        ],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "metrics-simd-measurement": {
+          "evidence_scope": "isolated_performance"
+        }
+      },
+      "proofs": {},
+      "launch": {
+        "tool": "collaboration.followup_task",
+        "arguments": {
+          "target": "metrics_reductions",
+          "message": "Optimize arbitrary-stride half loads using exact packed16bit reads and the existing SIMD decoder. Preserve reduction order, warning/callback behavior and sole optional global worker state. Own only declared metrics files in isolated worktree; no other agents, local timers, benchmark corpus changes or shared registry edits. You are not alone; do not revert other work. Freeze source, actual binding/native parity and sanitizer evidence before integration."
+        },
+        "worktree": "build/worktrees/metrics-load-optimization",
+        "requires_user_resume": false
       }
     }
   ],

@@ -1,6 +1,28 @@
-# Last completed whole-library performance checkpoint
+# Performance verification
 
-Main retains `filters.frangi` and `filters.hessian` with the dispatch-compatible
+The current API inventory has 155 partially native image paths, three metadata
+helpers, four partially native transform classes and 311 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 155 image paths; measured
+acceptance remains specific to the source revision and workload in each report.
+
+Recent isolated one-worker measurements against scikit-image 0.26.0:
+
+| Workload | Windows | Modern Linux | Minimum NumPy Linux | Scope |
+|---|---:|---:|---:|---|
+| Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 cases faster per runtime; providers and state are separate |
+| Metrics SIMD-load trial | 0.873x | 0.806x | 0.917x | 1,212 cases per runtime; slower overall |
+
+The [transform class report](transform-classes-public-initial.md) retains all
+296 checks and separates coordinate kernels, NumPy/SciPy providers and metadata.
+The [metrics trial](metrics-public-simd-load-trial.md) retains all 1,231 checks,
+raw paired samples and every regression. Half-precision stepped loads and signed
+min-max normalization remain measured bottlenecks. These runs use fresh hosted
+measurement jobs after all preparation gates; no local operation timing is used.
+Cross-run CPU changes prevent attributing differences to a patch alone.
+
+## Retained whole-library checkpoints
+
+The `filters.frangi` and `filters.hessian` checkpoint uses the dispatch-compatible
 runtime from `064b83a`: **121 partially native image APIs + 2 metadata**, with
 **332 callable names** pending. Full CI passes Windows, Linux and minimum NumPy;
 normal/generic NumPy dispatch and C++ SIMD/scalar parity checks pass. Final
