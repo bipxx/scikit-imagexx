@@ -1338,6 +1338,7 @@
           "defined_by": "skimage.feature.brief.BRIEF",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1348,6 +1349,7 @@
           "defined_by": "skimage.feature.brief.BRIEF",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -1370,6 +1372,7 @@
           "defined_by": "skimage.feature.censure.CENSURE",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1380,6 +1383,7 @@
           "defined_by": "skimage.feature.censure.CENSURE",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -1402,6 +1406,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1412,6 +1417,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1422,6 +1428,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1432,6 +1439,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1442,6 +1450,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1452,6 +1461,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1462,6 +1472,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1472,6 +1483,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1482,6 +1494,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1492,6 +1505,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1502,6 +1516,7 @@
           "defined_by": "skimage.feature._cascade.Cascade",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -1524,6 +1539,7 @@
           "defined_by": "skimage.feature.orb.ORB",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1534,6 +1550,7 @@
           "defined_by": "skimage.feature.orb.ORB",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1544,6 +1561,7 @@
           "defined_by": "skimage.feature.orb.ORB",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1554,6 +1572,7 @@
           "defined_by": "skimage.feature.orb.ORB",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -1576,6 +1595,7 @@
           "defined_by": "skimage.feature.sift.SIFT",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1586,6 +1606,7 @@
           "defined_by": "skimage.feature.sift.SIFT",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1596,6 +1617,7 @@
           "defined_by": "skimage.feature.sift.SIFT",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1606,6 +1628,7 @@
           "defined_by": "skimage.feature.sift.SIFT",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -1616,6 +1639,7 @@
           "defined_by": "skimage.feature.sift.SIFT",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -2036,6 +2060,7 @@
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -2046,6 +2071,7 @@
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3205,6 +3231,7 @@
           "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3215,6 +3242,7 @@
           "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3225,6 +3253,7 @@
           "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3235,6 +3264,7 @@
           "defined_by": "skimage.future.trainable_segmentation.TrainableSegmenter",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3297,6 +3327,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3307,6 +3338,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3317,6 +3349,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3327,6 +3360,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3337,6 +3371,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3347,6 +3382,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3357,6 +3393,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3367,6 +3404,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3377,6 +3415,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3387,6 +3426,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3409,6 +3449,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3419,6 +3460,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3429,6 +3471,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3439,6 +3482,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3449,6 +3493,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3459,6 +3504,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3469,6 +3515,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Connect",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3479,6 +3526,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3489,6 +3537,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3499,6 +3548,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3509,6 +3559,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3531,6 +3582,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3541,6 +3593,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3551,6 +3604,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3561,6 +3615,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3571,6 +3626,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3581,6 +3637,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3591,6 +3648,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3601,6 +3659,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3611,6 +3670,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3621,6 +3681,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3631,6 +3692,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3641,6 +3703,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3651,6 +3714,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Flexible",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3673,6 +3737,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3683,6 +3748,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3693,6 +3759,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3703,6 +3770,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3713,6 +3781,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3723,6 +3792,7 @@
           "defined_by": "skimage.graph._mcp.MCP_Geometric",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3733,6 +3803,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3743,6 +3814,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3753,6 +3825,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3763,6 +3836,7 @@
           "defined_by": "skimage.graph._mcp.MCP",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -3785,6 +3859,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3795,6 +3870,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3805,6 +3881,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3815,6 +3892,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3825,6 +3903,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3835,6 +3914,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3845,6 +3925,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3855,6 +3936,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3865,6 +3947,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3875,6 +3958,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3885,6 +3969,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3895,6 +3980,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3905,6 +3991,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3915,6 +4002,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3925,6 +4013,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3935,6 +4024,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3945,6 +4035,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3955,6 +4046,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3965,6 +4057,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3975,6 +4068,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3985,6 +4079,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -3995,6 +4090,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4005,6 +4101,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4015,6 +4112,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4025,6 +4123,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4035,6 +4134,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4045,6 +4145,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4055,6 +4156,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4065,6 +4167,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4075,6 +4178,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4085,6 +4189,7 @@
           "defined_by": "skimage.graph._rag.RAG",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4095,6 +4200,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4105,6 +4211,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4115,6 +4222,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4125,6 +4233,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4135,6 +4244,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4145,6 +4255,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4155,6 +4266,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4165,6 +4277,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4175,6 +4288,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4185,6 +4299,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4195,6 +4310,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4205,6 +4321,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4215,6 +4332,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4225,6 +4343,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4235,6 +4354,7 @@
           "defined_by": "networkx.classes.graph.Graph",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4357,6 +4477,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4367,6 +4488,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4377,6 +4499,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4387,6 +4510,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4397,6 +4521,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4407,6 +4532,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4417,6 +4543,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4427,6 +4554,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4437,6 +4565,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4459,6 +4588,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4469,6 +4599,7 @@
           "defined_by": "skimage.io.collection.MultiImage",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4479,6 +4610,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4489,6 +4621,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4499,6 +4632,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4509,6 +4643,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4519,6 +4654,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4529,6 +4665,7 @@
           "defined_by": "skimage.io.collection.MultiImage",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4539,6 +4676,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4549,6 +4687,7 @@
           "defined_by": "skimage.io.collection.ImageCollection",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4661,6 +4800,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4671,6 +4811,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4681,6 +4822,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4691,6 +4833,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4701,6 +4844,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4711,6 +4855,7 @@
           "defined_by": "skimage.measure.fit.CircleModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4733,6 +4878,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4743,6 +4889,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4753,6 +4900,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4763,6 +4911,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4773,6 +4922,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4783,6 +4933,7 @@
           "defined_by": "skimage.measure.fit.EllipseModel",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4805,6 +4956,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4815,6 +4967,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4825,6 +4978,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4835,6 +4989,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4845,6 +5000,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4855,6 +5011,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4865,6 +5022,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4875,6 +5033,7 @@
           "defined_by": "skimage.measure.fit.LineModelND",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -4897,6 +5056,7 @@
           "defined_by": "typing.Generic",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4907,6 +5067,7 @@
           "defined_by": "skimage.measure.fit.RansacModelProtocol",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4917,6 +5078,7 @@
           "defined_by": "typing.Protocol",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4927,6 +5089,7 @@
           "defined_by": "skimage.measure.fit.RansacModelProtocol",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4937,6 +5100,7 @@
           "defined_by": "skimage.measure.fit.RansacModelProtocol",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -4947,6 +5111,7 @@
           "defined_by": "skimage.measure.fit.RansacModelProtocol",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -6320,10 +6485,10 @@
       "api": "transform.AffineTransform",
       "kind": "class",
       "signature": "(matrix=None, *, scale=None, shear=None, rotation=None, translation=None, dimensionality=None)",
-      "implementation": "upstream-only",
+      "implementation": "native-class-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "stateful-class",
+      "parity_test": "tests/test_transform_classes_public.py",
       "benchmark": null,
       "members": [
         {
@@ -6332,8 +6497,9 @@
           "signature": "(self, other)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-small-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6342,8 +6508,9 @@
           "signature": "(self, dtype=None, copy=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-view-or-dtype-cast",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6352,8 +6519,9 @@
           "signature": "(self, coords)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6362,8 +6530,9 @@
           "signature": "(self, matrix=None, *, scale=None, shear=None, rotation=None, translation=None, dimensionality=None)",
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-and-small-matrix-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6372,8 +6541,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6382,8 +6552,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6392,8 +6563,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6402,8 +6574,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6412,8 +6585,9 @@
           "signature": "(self, src, dst, weights=None)",
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-mutation",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6422,8 +6596,9 @@
           "signature": "(dst, weights=None)",
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-construction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6432,8 +6607,9 @@
           "signature": "(dimensionality=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6442,8 +6618,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-inverse-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6452,8 +6629,9 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-coordinate-call-and-numpy-reduction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6462,8 +6640,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-numpy-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6472,8 +6651,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-numpy-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6482,8 +6662,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6492,11 +6673,61 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.AffineTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-live-view",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "geometric-class-v1",
+        "registered": true,
+        "implementation": "native-class-partial",
+        "members": {
+          "__init__": "python-state-and-small-matrix-provider",
+          "__call__": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "__array__": "numpy-view-or-dtype-cast",
+          "__add__": "numpy-small-matrix-and-python-state",
+          "__repr__": "python-metadata",
+          "__nice__": "python-metadata",
+          "__str__": "python-metadata",
+          "identity": "numpy-matrix-and-python-state",
+          "inverse": "numpy-inverse-and-python-state",
+          "estimate": "numpy-fit-provider-and-state-mutation",
+          "from_estimate": "numpy-fit-provider-and-state-construction",
+          "residuals": "cpp-coordinate-call-and-numpy-reduction",
+          "dimensionality": "python-state-metadata",
+          "rotation": "python-numpy-small-matrix",
+          "translation": "numpy-live-view",
+          "scale": "python-numpy-small-matrix",
+          "shear": "python-small-matrix"
+        },
+        "state": {
+          "params": "mutable ndarray; constructor and __array__ preserve documented aliases",
+          "user_attributes": "supported",
+          "inverse": "independent snapshot",
+          "estimation": "replaces params; preserves original failure/state behavior"
+        },
+        "providers": {
+          "coordinates": "C++ scalar/runtime AVX2 for default-policy real float64 work; NumPy for exceptional/dtype/protocol policies",
+          "fitting": "Own NumPy SVD/normalization/Umeyama; no upstream transform class calls",
+          "matrix": "NumPy inverse/composition/determinants; SciPy 3D Euler construction",
+          "metadata": "Own class/failure objects; pinned inspect.signature display shim"
+        },
+        "workers": {
+          "coordinates": "shared C++ process-global limit, default one; optional parallel workers",
+          "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
+        },
+        "compatibility_boundaries": [
+          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
+          "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
+        ],
+        "public_parity_test": "tests/test_transform_classes_public.py",
+        "frozen_contract": "tests/test_transform_class_contracts.py",
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "transform.EssentialMatrixTransform",
@@ -6515,6 +6746,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6525,6 +6757,7 @@
           "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6535,6 +6768,7 @@
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6545,6 +6779,7 @@
           "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6555,6 +6790,7 @@
           "defined_by": "skimage.transform._geometric.EssentialMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6565,6 +6801,7 @@
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6575,6 +6812,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6585,6 +6823,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -6594,10 +6833,10 @@
       "api": "transform.EuclideanTransform",
       "kind": "class",
       "signature": "(matrix=None, *, rotation=None, translation=None, dimensionality=None)",
-      "implementation": "upstream-only",
+      "implementation": "native-class-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "stateful-class",
+      "parity_test": "tests/test_transform_classes_public.py",
       "benchmark": null,
       "members": [
         {
@@ -6606,8 +6845,9 @@
           "signature": "(self, other)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-small-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6616,8 +6856,9 @@
           "signature": "(self, dtype=None, copy=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-view-or-dtype-cast",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6626,8 +6867,9 @@
           "signature": "(self, coords)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6636,8 +6878,9 @@
           "signature": "(self, matrix=None, *, rotation=None, translation=None, dimensionality=None)",
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-and-small-matrix-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6646,8 +6889,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6656,8 +6900,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6666,8 +6911,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6676,8 +6922,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6686,8 +6933,9 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-mutation",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6696,8 +6944,9 @@
           "signature": "(src, dst) -> Union[Self, skimage._shared.utils.FailedEstimation]",
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-construction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6706,8 +6955,9 @@
           "signature": "(dimensionality=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6716,8 +6966,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-inverse-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6726,8 +6977,9 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-coordinate-call-and-numpy-reduction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6736,8 +6988,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-numpy-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -6746,11 +6999,59 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-live-view",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "geometric-class-v1",
+        "registered": true,
+        "implementation": "native-class-partial",
+        "members": {
+          "__init__": "python-state-and-small-matrix-provider",
+          "__call__": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "__array__": "numpy-view-or-dtype-cast",
+          "__add__": "numpy-small-matrix-and-python-state",
+          "__repr__": "python-metadata",
+          "__nice__": "python-metadata",
+          "__str__": "python-metadata",
+          "identity": "numpy-matrix-and-python-state",
+          "inverse": "numpy-inverse-and-python-state",
+          "estimate": "numpy-fit-provider-and-state-mutation",
+          "from_estimate": "numpy-fit-provider-and-state-construction",
+          "residuals": "cpp-coordinate-call-and-numpy-reduction",
+          "dimensionality": "python-state-metadata",
+          "rotation": "python-numpy-small-matrix",
+          "translation": "numpy-live-view"
+        },
+        "state": {
+          "params": "mutable ndarray; constructor and __array__ preserve documented aliases",
+          "user_attributes": "supported",
+          "inverse": "independent snapshot",
+          "estimation": "replaces params; preserves original failure/state behavior"
+        },
+        "providers": {
+          "coordinates": "C++ scalar/runtime AVX2 for default-policy real float64 work; NumPy for exceptional/dtype/protocol policies",
+          "fitting": "Own NumPy SVD/normalization/Umeyama; no upstream transform class calls",
+          "matrix": "NumPy inverse/composition/determinants; SciPy 3D Euler construction",
+          "metadata": "Own class/failure objects; pinned inspect.signature display shim"
+        },
+        "workers": {
+          "coordinates": "shared C++ process-global limit, default one; optional parallel workers",
+          "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
+        },
+        "compatibility_boundaries": [
+          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
+          "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
+        ],
+        "public_parity_test": "tests/test_transform_classes_public.py",
+        "frozen_contract": "tests/test_transform_class_contracts.py",
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "transform.FundamentalMatrixTransform",
@@ -6769,6 +7070,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6779,6 +7081,7 @@
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6789,6 +7092,7 @@
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6799,6 +7103,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6809,6 +7114,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6819,6 +7125,7 @@
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6829,6 +7136,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6839,6 +7147,7 @@
           "defined_by": "skimage.transform._geometric.FundamentalMatrixTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -6861,6 +7170,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6871,6 +7181,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6881,6 +7192,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6891,6 +7203,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6901,6 +7214,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6911,6 +7225,7 @@
           "defined_by": "skimage.transform._geometric.PiecewiseAffineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6921,6 +7236,7 @@
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -6943,6 +7259,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6953,6 +7270,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6963,6 +7281,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6973,6 +7292,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6983,6 +7303,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -6993,6 +7314,7 @@
           "defined_by": "skimage.transform._geometric.PolynomialTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7003,6 +7325,7 @@
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -7012,10 +7335,10 @@
       "api": "transform.ProjectiveTransform",
       "kind": "class",
       "signature": "(matrix=None, *, dimensionality=None)",
-      "implementation": "upstream-only",
+      "implementation": "native-class-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "stateful-class",
+      "parity_test": "tests/test_transform_classes_public.py",
       "benchmark": null,
       "members": [
         {
@@ -7024,8 +7347,9 @@
           "signature": "(self, other)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-small-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7034,8 +7358,9 @@
           "signature": "(self, dtype=None, copy=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-view-or-dtype-cast",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7044,8 +7369,9 @@
           "signature": "(self, coords)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7054,8 +7380,9 @@
           "signature": "(self, matrix=None, *, dimensionality=None)",
           "defined_by": "skimage.transform._geometric._HMatrixTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-and-small-matrix-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7064,8 +7391,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7074,8 +7402,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7084,8 +7413,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7094,8 +7424,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7104,8 +7435,9 @@
           "signature": "(self, src, dst, weights=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-mutation",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7114,8 +7446,9 @@
           "signature": "(src, dst, weights=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-construction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7124,8 +7457,9 @@
           "signature": "(dimensionality=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7134,8 +7468,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-inverse-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7144,20 +7479,66 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-coordinate-call-and-numpy-reduction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "geometric-class-v1",
+        "registered": true,
+        "implementation": "native-class-partial",
+        "members": {
+          "__init__": "python-state-and-small-matrix-provider",
+          "__call__": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "__array__": "numpy-view-or-dtype-cast",
+          "__add__": "numpy-small-matrix-and-python-state",
+          "__repr__": "python-metadata",
+          "__nice__": "python-metadata",
+          "__str__": "python-metadata",
+          "identity": "numpy-matrix-and-python-state",
+          "inverse": "numpy-inverse-and-python-state",
+          "estimate": "numpy-fit-provider-and-state-mutation",
+          "from_estimate": "numpy-fit-provider-and-state-construction",
+          "residuals": "cpp-coordinate-call-and-numpy-reduction",
+          "dimensionality": "python-state-metadata"
+        },
+        "state": {
+          "params": "mutable ndarray; constructor and __array__ preserve documented aliases",
+          "user_attributes": "supported",
+          "inverse": "independent snapshot",
+          "estimation": "replaces params; preserves original failure/state behavior"
+        },
+        "providers": {
+          "coordinates": "C++ scalar/runtime AVX2 for default-policy real float64 work; NumPy for exceptional/dtype/protocol policies",
+          "fitting": "Own NumPy SVD/normalization/Umeyama; no upstream transform class calls",
+          "matrix": "NumPy inverse/composition/determinants; SciPy 3D Euler construction",
+          "metadata": "Own class/failure objects; pinned inspect.signature display shim"
+        },
+        "workers": {
+          "coordinates": "shared C++ process-global limit, default one; optional parallel workers",
+          "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
+        },
+        "compatibility_boundaries": [
+          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
+          "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
+        ],
+        "public_parity_test": "tests/test_transform_classes_public.py",
+        "frozen_contract": "tests/test_transform_class_contracts.py",
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "transform.SimilarityTransform",
       "kind": "class",
       "signature": "(matrix=None, *, scale=None, rotation=None, translation=None, dimensionality=None)",
-      "implementation": "upstream-only",
+      "implementation": "native-class-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "stateful-class",
+      "parity_test": "tests/test_transform_classes_public.py",
       "benchmark": null,
       "members": [
         {
@@ -7166,8 +7547,9 @@
           "signature": "(self, other)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-small-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7176,8 +7558,9 @@
           "signature": "(self, dtype=None, copy=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-view-or-dtype-cast",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7186,8 +7569,9 @@
           "signature": "(self, coords)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7196,8 +7580,9 @@
           "signature": "(self, matrix=None, *, scale=None, rotation=None, translation=None, dimensionality=None)",
           "defined_by": "skimage.transform._geometric.SimilarityTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-and-small-matrix-provider",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7206,8 +7591,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7216,8 +7602,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7226,8 +7613,9 @@
           "signature": "(self)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7236,8 +7624,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-state-metadata",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7246,8 +7635,9 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric.SimilarityTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-mutation",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7256,8 +7646,9 @@
           "signature": "(dst) -> Union[Self, skimage._shared.utils.FailedEstimation]",
           "defined_by": "skimage.transform._geometric.SimilarityTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-fit-provider-and-state-construction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7266,8 +7657,9 @@
           "signature": "(dimensionality=None)",
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-matrix-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7276,8 +7668,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.ProjectiveTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-inverse-and-python-state",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7286,8 +7679,9 @@
           "signature": "(self, src, dst)",
           "defined_by": "skimage.transform._geometric._GeometricTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "cpp-coordinate-call-and-numpy-reduction",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7296,8 +7690,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-numpy-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7306,8 +7701,9 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.SimilarityTransform",
           "inherited": false,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "python-numpy-small-matrix",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         },
         {
@@ -7316,11 +7712,60 @@
           "signature": null,
           "defined_by": "skimage.transform._geometric.EuclideanTransform",
           "inherited": true,
-          "implementation": "upstream-only",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "numpy-live-view",
+          "parity_test": "tests/test_transform_classes_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "geometric-class-v1",
+        "registered": true,
+        "implementation": "native-class-partial",
+        "members": {
+          "__init__": "python-state-and-small-matrix-provider",
+          "__call__": "cpp-simd-coordinates-or-numpy-policy-provider",
+          "__array__": "numpy-view-or-dtype-cast",
+          "__add__": "numpy-small-matrix-and-python-state",
+          "__repr__": "python-metadata",
+          "__nice__": "python-metadata",
+          "__str__": "python-metadata",
+          "identity": "numpy-matrix-and-python-state",
+          "inverse": "numpy-inverse-and-python-state",
+          "estimate": "numpy-fit-provider-and-state-mutation",
+          "from_estimate": "numpy-fit-provider-and-state-construction",
+          "residuals": "cpp-coordinate-call-and-numpy-reduction",
+          "dimensionality": "python-state-metadata",
+          "rotation": "python-numpy-small-matrix",
+          "translation": "numpy-live-view",
+          "scale": "python-numpy-small-matrix"
+        },
+        "state": {
+          "params": "mutable ndarray; constructor and __array__ preserve documented aliases",
+          "user_attributes": "supported",
+          "inverse": "independent snapshot",
+          "estimation": "replaces params; preserves original failure/state behavior"
+        },
+        "providers": {
+          "coordinates": "C++ scalar/runtime AVX2 for default-policy real float64 work; NumPy for exceptional/dtype/protocol policies",
+          "fitting": "Own NumPy SVD/normalization/Umeyama; no upstream transform class calls",
+          "matrix": "NumPy inverse/composition/determinants; SciPy 3D Euler construction",
+          "metadata": "Own class/failure objects; pinned inspect.signature display shim"
+        },
+        "workers": {
+          "coordinates": "shared C++ process-global limit, default one; optional parallel workers",
+          "math_providers": "NumPy/SciPy thread pools are external; constrain BLAS/OMP separately"
+        },
+        "compatibility_boundaries": [
+          "FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.",
+          "FailedEstimation pickle round-trip preserves the pinned upstream RecursionError; valid fitted models pickle normally.",
+          "Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native."
+        ],
+        "public_parity_test": "tests/test_transform_classes_public.py",
+        "frozen_contract": "tests/test_transform_class_contracts.py",
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "transform.ThinPlateSplineTransform",
@@ -7339,6 +7784,7 @@
           "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7349,6 +7795,7 @@
           "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7359,6 +7806,7 @@
           "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7369,6 +7817,7 @@
           "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7379,6 +7828,7 @@
           "defined_by": "skimage.transform._thin_plate_splines.ThinPlateSplineTransform",
           "inherited": false,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -7711,6 +8161,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7721,6 +8172,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7731,6 +8183,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7741,6 +8194,7 @@
           "defined_by": "builtins.Exception",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7751,6 +8205,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7761,6 +8216,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7771,6 +8227,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7781,6 +8238,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7791,6 +8249,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7801,6 +8260,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7811,6 +8271,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7821,6 +8282,7 @@
           "defined_by": "builtins.AttributeError",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7831,6 +8293,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }
@@ -7853,6 +8316,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7863,6 +8327,7 @@
           "defined_by": "builtins.PendingDeprecationWarning",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7873,6 +8338,7 @@
           "defined_by": "builtins.PendingDeprecationWarning",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7883,6 +8349,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7893,6 +8360,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7903,6 +8371,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7913,6 +8382,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7923,6 +8393,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7933,6 +8404,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         },
@@ -7943,6 +8415,7 @@
           "defined_by": "builtins.BaseException",
           "inherited": true,
           "implementation": "upstream-only",
+          "execution_kind": "upstream",
           "parity_test": null,
           "benchmark": null
         }

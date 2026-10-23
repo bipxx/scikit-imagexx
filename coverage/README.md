@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -419,14 +419,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.relabel_sequential` | upstream-only | pending | pending |
 | `segmentation.slic` | upstream-only | pending | pending |
 | `segmentation.watershed` | upstream-only | pending | pending |
-| `transform.AffineTransform` | upstream-only | pending | pending |
+| `transform.AffineTransform` | native-class-partial | yes (partial input contract) | pending |
 | `transform.EssentialMatrixTransform` | upstream-only | pending | pending |
-| `transform.EuclideanTransform` | upstream-only | pending | pending |
+| `transform.EuclideanTransform` | native-class-partial | yes (partial input contract) | pending |
 | `transform.FundamentalMatrixTransform` | upstream-only | pending | pending |
 | `transform.PiecewiseAffineTransform` | upstream-only | pending | pending |
 | `transform.PolynomialTransform` | upstream-only | pending | pending |
-| `transform.ProjectiveTransform` | upstream-only | pending | pending |
-| `transform.SimilarityTransform` | upstream-only | pending | pending |
+| `transform.ProjectiveTransform` | native-class-partial | yes (partial input contract) | pending |
+| `transform.SimilarityTransform` | native-class-partial | yes (partial input contract) | pending |
 | `transform.ThinPlateSplineTransform` | upstream-only | pending | pending |
 | `transform.downscale_local_mean` | native-partial | yes (partial input contract) | yes |
 | `transform.estimate_transform` | upstream-only | pending | pending |
@@ -485,7 +485,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 
 ## Class member inventory
 
-29 exported class names expose 284 statically discoverable member paths, including inherited methods and properties. Their signatures and defining classes are recorded in `api.json`. These members still require native implementations, numerical/state parity cases and benchmarks; they do not increase native coverage. Constructors are not executed and property getters are not evaluated during inventory. Instance fields and runtime-generated attributes remain unassessed.
+29 exported class names expose 284 statically discoverable member paths, including inherited methods and properties. Their signatures and defining classes are recorded in `api.json`. Registered class/member implementations and provider scope are separate from passing parity or measured performance. Unregistered members still require implementation, numerical/state parity and benchmarks; none increase image coverage. Constructors are not executed and property getters are not evaluated during inventory. Instance fields and runtime-generated attributes remain unassessed.
 
 | Class | Static member paths | Native member parity |
 |---|---:|---|
@@ -507,14 +507,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.EllipseModel` | 6 | pending |
 | `measure.LineModelND` | 8 | pending |
 | `measure.RansacModelProtocol` | 6 | pending |
-| `transform.AffineTransform` | 17 | pending |
+| `transform.AffineTransform` | 17 | partial implementation; evidence separate |
 | `transform.EssentialMatrixTransform` | 8 | pending |
-| `transform.EuclideanTransform` | 15 | pending |
+| `transform.EuclideanTransform` | 15 | partial implementation; evidence separate |
 | `transform.FundamentalMatrixTransform` | 8 | pending |
 | `transform.PiecewiseAffineTransform` | 7 | pending |
 | `transform.PolynomialTransform` | 7 | pending |
-| `transform.ProjectiveTransform` | 13 | pending |
-| `transform.SimilarityTransform` | 16 | pending |
+| `transform.ProjectiveTransform` | 13 | partial implementation; evidence separate |
+| `transform.SimilarityTransform` | 16 | partial implementation; evidence separate |
 | `transform.ThinPlateSplineTransform` | 5 | pending |
 | `util.FailedEstimationAccessError` | 13 | pending |
 | `util.PendingSkimage2Change` | 10 | pending |
