@@ -6556,14 +6556,14 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": null,
+      "branch": "main",
       "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
       "owns": [],
       "depends_on": [
         "metrics-public-integration",
         "metrics-benchmark-harness"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -6580,7 +6580,16 @@
         ],
         "corpus_sha256": null,
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "source_sha": "a9e3be3c69e686f6e03bd792ae1edaf5ec1210a4",
+        "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+        "run_id": 39983272390,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39983272390",
+        "observed_state": "queued",
+        "workers": [
+          1
+        ],
+        "note": "Authoritative run; poll unchanged. First short-SHA dispatch was rejected with HTTP422 and created no run. Dispatch through main verified exact head SHA."
       },
       "merge": {
         "commit": null,
@@ -8148,7 +8157,14 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      }
+      },
+      "launch_failures": [
+        {
+          "run_id": 39983229832,
+          "state": "completed_failure",
+          "reason": "Invalid YAML: unquoted colon-space in the binary-only pip command; no preparation or timing jobs launched. Corrected to block scalar and actionlint1.7.12 passes all three public workflows."
+        }
+      ]
     },
     {
       "id": "components-measurement",
@@ -8196,7 +8212,14 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      }
+      },
+      "launch_failures": [
+        {
+          "run_id": 39983227837,
+          "state": "completed_failure",
+          "reason": "Invalid YAML: unquoted colon-space in the binary-only pip command; no preparation or timing jobs launched. Corrected to block scalar and actionlint1.7.12 passes all three public workflows."
+        }
+      ]
     },
     {
       "id": "public-wave1-validation",

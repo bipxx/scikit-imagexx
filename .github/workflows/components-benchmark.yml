@@ -128,7 +128,8 @@ jobs:
         with:
           name: components-prepared-${{ matrix.os }}-${{ matrix.runtime }}
           path: build/prepared
-      - run: python -m pip install --only-binary=:all: numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0
+      - run: |
+          python -m pip install --only-binary=:all: numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0
       - name: Install prepared wheel without rebuilding
         shell: bash
         run: python -m pip install --no-deps build/prepared/wheels/*.whl
