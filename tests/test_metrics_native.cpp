@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
@@ -12,6 +13,35 @@ namespace {
 void require(bool value){if(!value)throw std::runtime_error("metric native check failed");}
 template<class T> MetricImageView view(const std::vector<T>& data,PixelType type) {
     return {data.data(),type,false,false,{data.size()},{std::ptrdiff_t(sizeof(T))}};
+}
+template<class T> void load_layouts(PixelType type,bool single) {
+    for(const auto n:{std::size_t(4),std::size_t(5),std::size_t(7),std::size_t(8),std::size_t(9),std::size_t(127),std::size_t(128),std::size_t(129),std::size_t(257)})
+    for(const int step:{1,-1,3,-3})for(const bool swap:{false,true}) {
+        const auto stride=std::size_t(std::abs(step))*sizeof(T),bytes=(n-1)*stride+sizeof(T)+1;
+        // Exactly one leading unaligned byte, no readable trailing padding.
+        // ASan therefore catches widened narrow loads past the final lane.
+        auto storage=std::make_unique<unsigned char[]>(bytes);
+        std::memset(storage.get(),0xcd,bytes);
+        std::vector<T> logical(n),zero(n,T(0));
+        for(std::size_t i=0;i<n;++i) {
+            if constexpr(std::is_floating_point_v<T>)logical[i]=T(double(int(i%37)-18)*.0625);
+            else {using U=std::make_unsigned_t<T>;const U bits=U(std::uint64_t(0xd1b54a32d192ed03ULL)*(i+1));std::memcpy(&logical[i],&bits,sizeof(T));}
+            const auto index=step>0 ? i:n-1-i;
+            unsigned char encoded[sizeof(T)];std::memcpy(encoded,&logical[i],sizeof(T));
+            for(std::size_t j=0;j<sizeof(T);++j)storage[1+index*stride+j]=encoded[swap ? sizeof(T)-1-j:j];
+        }
+        const std::vector<unsigned char> before(storage.get(),storage.get()+bytes);
+        MetricImageView input{storage.get()+1+(step<0 ? (n-1)*stride:0),type,false,swap,{n},{std::ptrdiff_t(step)*std::ptrdiff_t(sizeof(T))}};
+        for(auto mode:{MetricNormalization::none,MetricNormalization::euclidean,MetricNormalization::mean,MetricNormalization::min_max}) {
+            const auto expected=metric_sums(view(logical,type),view(zero,type),single,mode,true);
+            const auto actual=metric_sums(input,view(zero,type),single,mode);
+            require(!std::memcmp(&actual.error,&expected.error,sizeof(double)));
+            require(!std::memcmp(&actual.energy,&expected.energy,sizeof(double)));
+            require(!std::memcmp(&actual.mean,&expected.mean,sizeof(double)));
+            require(actual.low==expected.low && actual.high==expected.high && actual.valid==expected.valid && actual.nan==expected.nan);
+        }
+        require(!std::memcmp(storage.get(),before.data(),bytes));
+    }
 }
 template<class T> void workers(PixelType type,bool single) {
     std::vector<T> a(257*1025),b(a.size());
@@ -102,5 +132,11 @@ int main() {
     workers<std::uint16_t>(PixelType::uint16,false);workers<std::int16_t>(PixelType::int16,false);
     workers<std::uint32_t>(PixelType::uint32,false);workers<std::int32_t>(PixelType::int32,false);
     workers<std::uint64_t>(PixelType::uint64,false);workers<std::int64_t>(PixelType::int64,false);
+    load_layouts<float>(PixelType::float32,true);load_layouts<double>(PixelType::float64,false);
+    load_layouts<std::uint8_t>(PixelType::boolean,false);
+    load_layouts<std::uint8_t>(PixelType::uint8,false);load_layouts<std::int8_t>(PixelType::int8,false);
+    load_layouts<std::uint16_t>(PixelType::uint16,false);load_layouts<std::int16_t>(PixelType::int16,false);
+    load_layouts<std::uint32_t>(PixelType::uint32,false);load_layouts<std::int32_t>(PixelType::int32,false);
+    load_layouts<std::uint64_t>(PixelType::uint64,false);load_layouts<std::int64_t>(PixelType::int64,false);
     std::cout<<"Metric known values, full-width raw bounds and exact worker tree checks passed\n";
 }
