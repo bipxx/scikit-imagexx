@@ -29,7 +29,17 @@ def _ubyte(image):
         np.clip(work,0,255,out=work)
         return work.astype(np.uint8)
     result,downcast,maximum,nan,over,under,invalid,multiply_invalid=_core.rank_convert(image)
-    if downcast:warnings.warn(f'Downcasting {image.dtype} to uint8 without scaling because max value {maximum} fits in uint8',UserWarning,stacklevel=3)
+    if downcast:
+        warnings.warn(f'Downcasting {image.dtype} to uint8 without scaling because max value {maximum} fits in uint8',UserWarning,stacklevel=3)
+        # Pinned _scale chooses the branch/kind before warning, then looks up
+        # astype on its same np.asarray result after warning hooks return.
+        # Re-running fused conversion would incorrectly reconsider the range.
+        result=image.astype(np.dtype('u1' if dtype.kind=='u' else 'i2'))
+        if dtype.kind=='i':
+            clipped=np.empty(result.shape,np.uint8)
+            np.maximum(result,0,out=clipped,dtype=result.dtype,casting='unsafe')
+            result=clipped
+        return result
     if multiply_invalid or over:
         # NumPy reports combined multiply status in one operation, overflow
         # before invalid. Preserve warn/raise ordering and the shared mask.
