@@ -174,3 +174,38 @@ def test_zero_tail_signed_zeros(dtype,value,mode,sigma):
 def test_small_sigma_derivative_classification(sigma,mode):
     actual,expected=compare(image(np.float64)*1e100,sigma=sigma,mode=mode,cval=-1e99,use_gaussian_derivatives=True)
     for x,y in zip(actual,expected):np.testing.assert_array_equal(x,y)
+
+
+@pytest.mark.parametrize('dtype',(np.float32,np.float64))
+@pytest.mark.parametrize('mode',('constant','reflect','wrap','mirror','nearest'))
+@pytest.mark.parametrize('layout',('rows','columns','zero-signs','3d'))
+def test_repeated_line_reuse(dtype,mode,layout):
+    a=image(dtype,(37,41))
+    if layout=='rows':a[3:30]=a[2]
+    elif layout=='columns':a[:,3:30]=a[:,2:3]
+    elif layout=='zero-signs':a.fill(0);a[5:25]=-0.;a[:,17:23]=0.
+    elif layout=='3d':a=np.broadcast_to(a,(3,37,41)).copy();a[1]=a[0]
+    actual,expected=compare(a,sigma=.8,mode=mode,use_gaussian_derivatives=True)
+    for x,y in zip(actual,expected):
+        zero=(x==0)&(y==0);np.testing.assert_array_equal(np.signbit(x[zero]),np.signbit(y[zero]))
+
+@pytest.mark.parametrize('dtype',(np.float32,np.float64))
+@pytest.mark.parametrize('constant',(1e308,-1e308))
+def test_extreme_cval_fallback(dtype,constant):
+    xx.set_fallback_enabled(True)
+    compare(image(dtype),mode='constant',cval=constant,use_gaussian_derivatives=True)
+
+
+@pytest.mark.parametrize('dtype',TYPES)
+@pytest.mark.parametrize('shape',((19,),(9,11),(3,5,7)))
+def test_zero_sigma_independent_outputs(dtype,shape):
+    a=image(dtype,shape);original=a.copy();a.setflags(write=False)
+    actual,expected=compare(a,sigma=0,use_gaussian_derivatives=True)
+    for x,y in zip(actual,expected):
+        np.testing.assert_array_equal(x,y)
+        assert x.flags.writeable and not np.shares_memory(x,a)
+    for i,x in enumerate(actual):
+        for y in actual[i+1:]:assert not np.shares_memory(x,y)
+    saved=[x.copy() for x in actual];actual[0].flat[0]=2
+    for x,y in zip(actual[1:],saved[1:]):np.testing.assert_array_equal(x,y)
+    np.testing.assert_array_equal(a,original)
