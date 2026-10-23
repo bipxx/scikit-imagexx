@@ -41,6 +41,10 @@ double metric_read(const MetricImageView&,std::ptrdiff_t byte_offset);
 }
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
+// Speculative finite leaf only: false leaves result untouched, preserving the
+// scalar NaN/signaling/zero-tie path. Input arrays contain at most128 values.
+bool metric_leaf_classify(const double*,const double*,const double*,std::size_t,
+                          MetricNormalization,MetricSums&);
 std::size_t metric_stage_values(const MetricImageView&,const MetricImageView&,
     std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::ptrdiff_t,std::size_t,bool,int,void*);
 std::size_t metric_values(const MetricImageView&,const MetricImageView&,

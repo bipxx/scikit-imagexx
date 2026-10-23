@@ -1,6 +1,7 @@
 #include "skimagexx/metrics.hpp"
 #include <immintrin.h>
 #include <cstring>
+#include <cmath>
 #include <type_traits>
 namespace skimagexx::simd {
 namespace {
@@ -109,6 +110,41 @@ __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t st
         default:return _mm256_setzero_pd();
     }
 }
+}
+bool metric_leaf_classify(const double* error,const double* energy,const double* values,std::size_t count,
+                         MetricNormalization mode,MetricSums& result) {
+    // Inspect exponent bits before any floating range comparison. Exceptional
+    // values retain the original scalar classification and flagged replay.
+    const auto exponent=_mm256_set1_epi64x(0x7ff0000000000000LL);
+    const auto magnitude=_mm256_set1_epi64x(0x7fffffffffffffffLL);
+    const bool range=mode==MetricNormalization::min_max,euclidean=mode==MetricNormalization::euclidean;
+    auto invalid=_mm256_setzero_si256(),zeros=_mm256_setzero_si256();
+    auto low=_mm256_set1_pd(INFINITY),high=_mm256_set1_pd(-INFINITY);
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto value=_mm256_loadu_pd(values+i),err=_mm256_loadu_pd(error+i);
+        const auto exceptional=[&](const __m256d v){return _mm256_cmpeq_epi64(_mm256_and_si256(_mm256_castpd_si256(v),exponent),exponent);};
+        invalid=_mm256_or_si256(invalid,_mm256_or_si256(exceptional(value),exceptional(err)));
+        if(euclidean)invalid=_mm256_or_si256(invalid,exceptional(_mm256_loadu_pd(energy+i)));
+        if(range) {
+            zeros=_mm256_or_si256(zeros,_mm256_cmpeq_epi64(_mm256_and_si256(_mm256_castpd_si256(value),magnitude),_mm256_setzero_si256()));
+            // No externally visible flags are consumed on this speculative
+            // path. NaNs below still force the untouched scalar replay.
+            low=_mm256_min_pd(low,value);high=_mm256_max_pd(high,value);
+        }
+    }
+    if(_mm256_movemask_pd(_mm256_castsi256_pd(invalid)) || (range && _mm256_movemask_pd(_mm256_castsi256_pd(zeros))))return false;
+    double minimum=INFINITY,maximum=-INFINITY;
+    if(range) {
+        alignas(32) double lows[4],highs[4];_mm256_store_pd(lows,low);_mm256_store_pd(highs,high);
+        for(int j=0;j<4;++j){if(lows[j]<minimum)minimum=lows[j];if(highs[j]>maximum)maximum=highs[j];}
+    }
+    for(;i<count;++i) {
+        if(!std::isfinite(values[i]) || !std::isfinite(error[i]) || (euclidean && !std::isfinite(energy[i])))return false;
+        if(range){if(values[i]==0)return false;if(values[i]<minimum)minimum=values[i];if(values[i]>maximum)maximum=values[i];}
+    }
+    if(range && count){result.low=minimum;result.high=maximum;result.valid=true;}
+    return true;
 }
 std::size_t metric_stage_values(const MetricImageView& a,const MetricImageView& b,std::ptrdiff_t first,std::ptrdiff_t second,
     std::ptrdiff_t step0,std::ptrdiff_t step1,std::size_t count,bool single,int operation,void* output) {
