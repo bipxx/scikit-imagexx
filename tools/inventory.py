@@ -9,9 +9,20 @@ import skimage
 import numpy as np
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind
 
-MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'future',
+MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.generic', 'future',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
            'restoration', 'segmentation', 'transform', 'util')
+
+DEDICATED_EVIDENCE = {}
+for _names, _test, _benchmark in (
+    (('transform.resize','transform.rescale'),'tests/test_resize_contract.py','benchmarks/resize.py'),
+    (('metrics.mean_squared_error','metrics.normalized_root_mse','metrics.peak_signal_noise_ratio'),
+     'tests/test_metrics_reductions.py','benchmarks/metrics_reductions.py'),
+    (tuple('morphology.'+name for name in ('footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint')),
+     'tests/test_footprint_contracts.py','benchmarks/footprints.py'),
+    (('measure.label','morphology.label'),'tests/test_connected_components_contracts.py','benchmarks/components.py'),
+):
+    for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 
 
 def signature_of(value):
@@ -64,18 +75,27 @@ def inventory():
         # Still callable in the pinned release, but removed from its export list.
         if module=='morphology':
             names.update(('binary_erosion','binary_dilation','binary_opening','binary_closing'))
+        if module=='filters.rank.generic':
+            # Source-backed legacy aliases of canonical rank exports, not
+            # imported NumPy/SciPy/warnings dependencies or extra algorithms.
+            names.update(('sum','majority','windowed_histogram'))
         for name in sorted(n for n in names if not n.startswith('_')):
             value = getattr(upstream, name)
             if not callable(value):
                 continue
             path = module+'.'+name
+            evidence=DEDICATED_EVIDENCE.get(path,('tests/test_api.py::test_every_native_function','benchmarks/coverage.py'))
             entries.append({'api': path, 'kind': 'class' if inspect.isclass(value) else 'callable',
                             'signature': signature_of(value),
                             'implementation': ('metadata' if execution_kind(path) == 'metadata' else 'native-partial') if path in native else 'upstream-only',
                             'native_default_case_dtypes': list(native_dtypes(path)) if path in native else [],
                             'execution_kind': execution_kind(path) if path in native else 'upstream',
-                            'parity_test': ('tests/test_resize_contract.py' if path in ('transform.resize','transform.rescale') else 'tests/test_metrics_reductions.py' if path.startswith('metrics.') else 'tests/test_footprint_contracts.py' if path in ('morphology.footprint_rectangle','morphology.diamond','morphology.disk','morphology.ball','morphology.mirror_footprint','morphology.pad_footprint') else 'tests/test_connected_components_contracts.py' if path in ('measure.label','morphology.label') else 'tests/test_api.py::test_every_native_function') if path in native else None,
-                            'benchmark': ('benchmarks/resize.py' if path in ('transform.resize','transform.rescale') else 'benchmarks/metrics_reductions.py' if path.startswith('metrics.') else 'benchmarks/footprints.py' if path in ('morphology.footprint_rectangle','morphology.diamond','morphology.disk','morphology.ball','morphology.mirror_footprint','morphology.pad_footprint') else 'benchmarks/coverage.py') if path in native else None})
+                            'parity_test': evidence[0] if path in native else None,
+                            'benchmark': evidence[1] if path in native else None})
+            if module=='filters.rank.generic':
+                canonical=getattr(importlib.import_module('skimage.filters.rank'),name)
+                if value is not canonical:raise ValueError(f'Rank alias identity changed: {path}')
+                entries[-1]['alias_of']='filters.rank.'+name
             if inspect.isclass(value):entries[-1]['members']=class_members(value,path)
     inventoried = {entry['api'] for entry in entries}
     missing = native-inventoried

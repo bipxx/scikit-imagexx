@@ -8,6 +8,7 @@
     "feature",
     "filters",
     "filters.rank",
+    "filters.rank.generic",
     "future",
     "graph",
     "io",
@@ -2979,6 +2980,215 @@
       "benchmark": null
     },
     {
+      "api": "filters.rank.generic.autolevel",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.autolevel"
+    },
+    {
+      "api": "filters.rank.generic.enhance_contrast",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.enhance_contrast"
+    },
+    {
+      "api": "filters.rank.generic.entropy",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.entropy"
+    },
+    {
+      "api": "filters.rank.generic.equalize",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.equalize"
+    },
+    {
+      "api": "filters.rank.generic.geometric_mean",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.geometric_mean"
+    },
+    {
+      "api": "filters.rank.generic.gradient",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.gradient"
+    },
+    {
+      "api": "filters.rank.generic.majority",
+      "kind": "callable",
+      "signature": "(image, footprint, *, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.majority"
+    },
+    {
+      "api": "filters.rank.generic.maximum",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.maximum"
+    },
+    {
+      "api": "filters.rank.generic.mean",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.mean"
+    },
+    {
+      "api": "filters.rank.generic.median",
+      "kind": "callable",
+      "signature": "(image, footprint=None, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.median"
+    },
+    {
+      "api": "filters.rank.generic.minimum",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.minimum"
+    },
+    {
+      "api": "filters.rank.generic.modal",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.modal"
+    },
+    {
+      "api": "filters.rank.generic.noise_filter",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.noise_filter"
+    },
+    {
+      "api": "filters.rank.generic.otsu",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.otsu"
+    },
+    {
+      "api": "filters.rank.generic.pop",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.pop"
+    },
+    {
+      "api": "filters.rank.generic.subtract_mean",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.subtract_mean"
+    },
+    {
+      "api": "filters.rank.generic.sum",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.sum"
+    },
+    {
+      "api": "filters.rank.generic.threshold",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.threshold"
+    },
+    {
+      "api": "filters.rank.generic.windowed_histogram",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, n_bins=None)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null,
+      "alias_of": "filters.rank.windowed_histogram"
+    },
+    {
       "api": "future.TrainableSegmenter",
       "kind": "class",
       "signature": "(clf=None, features_func=None)",
@@ -4846,11 +5056,15 @@
       "api": "measure.label",
       "kind": "callable",
       "signature": "(label_image, background=None, return_num=False, connectivity=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_connected_components_contracts.py",
+      "benchmark": "benchmarks/components.py"
     },
     {
       "api": "measure.manders_coloc_coeff",
@@ -5096,11 +5310,15 @@
       "api": "metrics.mean_squared_error",
       "kind": "callable",
       "signature": "(image0, image1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_metrics_reductions.py",
+      "benchmark": "benchmarks/metrics_reductions.py"
     },
     {
       "api": "metrics.normalized_mutual_information",
@@ -5116,21 +5334,29 @@
       "api": "metrics.normalized_root_mse",
       "kind": "callable",
       "signature": "(image_true, image_test, *, normalization='euclidean')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_metrics_reductions.py",
+      "benchmark": "benchmarks/metrics_reductions.py"
     },
     {
       "api": "metrics.peak_signal_noise_ratio",
       "kind": "callable",
       "signature": "(image_true, image_test, *, data_range=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_metrics_reductions.py",
+      "benchmark": "benchmarks/metrics_reductions.py"
     },
     {
       "api": "metrics.structural_similarity",
@@ -5176,11 +5402,15 @@
       "api": "morphology.ball",
       "kind": "callable",
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, strict_radius=True, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.binary_closing",
@@ -5310,11 +5540,15 @@
       "api": "morphology.diamond",
       "kind": "callable",
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.dilation",
@@ -5334,11 +5568,15 @@
       "api": "morphology.disk",
       "kind": "callable",
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, strict_radius=True, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.ellipse",
@@ -5398,11 +5636,15 @@
       "api": "morphology.footprint_rectangle",
       "kind": "callable",
       "signature": "(shape, *, dtype=<class 'numpy.uint8'>, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.h_maxima",
@@ -5468,11 +5710,15 @@
       "api": "morphology.label",
       "kind": "callable",
       "signature": "(label_image, background=None, return_num=False, connectivity=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_connected_components_contracts.py",
+      "benchmark": "benchmarks/components.py"
     },
     {
       "api": "morphology.local_maxima",
@@ -5528,11 +5774,15 @@
       "api": "morphology.mirror_footprint",
       "kind": "callable",
       "signature": "(footprint)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "metadata",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "metadata",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.octagon",
@@ -5572,11 +5822,15 @@
       "api": "morphology.pad_footprint",
       "kind": "callable",
       "signature": "(footprint, *, pad_end=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_contracts.py",
+      "benchmark": "benchmarks/footprints.py"
     },
     {
       "api": "morphology.reconstruction",

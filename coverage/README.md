@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 123 have partially native image implementations and 2 have metadata-only execution. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -237,6 +237,25 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.threshold` | upstream-only | pending | pending |
 | `filters.rank.threshold_percentile` | upstream-only | pending | pending |
 | `filters.rank.windowed_histogram` | upstream-only | pending | pending |
+| `filters.rank.generic.autolevel` | upstream-only | pending | pending |
+| `filters.rank.generic.enhance_contrast` | upstream-only | pending | pending |
+| `filters.rank.generic.entropy` | upstream-only | pending | pending |
+| `filters.rank.generic.equalize` | upstream-only | pending | pending |
+| `filters.rank.generic.geometric_mean` | upstream-only | pending | pending |
+| `filters.rank.generic.gradient` | upstream-only | pending | pending |
+| `filters.rank.generic.majority` | upstream-only | pending | pending |
+| `filters.rank.generic.maximum` | upstream-only | pending | pending |
+| `filters.rank.generic.mean` | upstream-only | pending | pending |
+| `filters.rank.generic.median` | upstream-only | pending | pending |
+| `filters.rank.generic.minimum` | upstream-only | pending | pending |
+| `filters.rank.generic.modal` | upstream-only | pending | pending |
+| `filters.rank.generic.noise_filter` | upstream-only | pending | pending |
+| `filters.rank.generic.otsu` | upstream-only | pending | pending |
+| `filters.rank.generic.pop` | upstream-only | pending | pending |
+| `filters.rank.generic.subtract_mean` | upstream-only | pending | pending |
+| `filters.rank.generic.sum` | upstream-only | pending | pending |
+| `filters.rank.generic.threshold` | upstream-only | pending | pending |
+| `filters.rank.generic.windowed_histogram` | upstream-only | pending | pending |
 | `future.TrainableSegmenter` | upstream-only | pending | pending |
 | `future.fit_segmenter` | upstream-only | pending | pending |
 | `future.manual_lasso_segmentation` | upstream-only | pending | pending |
@@ -282,7 +301,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.inertia_tensor` | upstream-only | pending | pending |
 | `measure.inertia_tensor_eigvals` | upstream-only | pending | pending |
 | `measure.intersection_coeff` | upstream-only | pending | pending |
-| `measure.label` | upstream-only | pending | pending |
+| `measure.label` | native-partial | yes (partial input contract) | yes |
 | `measure.manders_coloc_coeff` | upstream-only | pending | pending |
 | `measure.manders_overlap_coeff` | upstream-only | pending | pending |
 | `measure.marching_cubes` | upstream-only | pending | pending |
@@ -307,15 +326,15 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `metrics.contingency_table` | upstream-only | pending | pending |
 | `metrics.hausdorff_distance` | upstream-only | pending | pending |
 | `metrics.hausdorff_pair` | upstream-only | pending | pending |
-| `metrics.mean_squared_error` | upstream-only | pending | pending |
+| `metrics.mean_squared_error` | native-partial | yes (partial input contract) | yes |
 | `metrics.normalized_mutual_information` | upstream-only | pending | pending |
-| `metrics.normalized_root_mse` | upstream-only | pending | pending |
-| `metrics.peak_signal_noise_ratio` | upstream-only | pending | pending |
+| `metrics.normalized_root_mse` | native-partial | yes (partial input contract) | yes |
+| `metrics.peak_signal_noise_ratio` | native-partial | yes (partial input contract) | yes |
 | `metrics.structural_similarity` | upstream-only | pending | pending |
 | `metrics.variation_of_information` | upstream-only | pending | pending |
 | `morphology.area_closing` | upstream-only | pending | pending |
 | `morphology.area_opening` | upstream-only | pending | pending |
-| `morphology.ball` | upstream-only | pending | pending |
+| `morphology.ball` | native-partial | yes (partial input contract) | yes |
 | `morphology.binary_closing` | native-partial | yes (partial input contract) | yes |
 | `morphology.binary_dilation` | native-partial | yes (partial input contract) | yes |
 | `morphology.binary_erosion` | native-partial | yes (partial input contract) | yes |
@@ -326,32 +345,32 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.convex_hull_object` | upstream-only | pending | pending |
 | `morphology.diameter_closing` | upstream-only | pending | pending |
 | `morphology.diameter_opening` | upstream-only | pending | pending |
-| `morphology.diamond` | upstream-only | pending | pending |
+| `morphology.diamond` | native-partial | yes (partial input contract) | yes |
 | `morphology.dilation` | native-partial | yes (partial input contract) | yes |
-| `morphology.disk` | upstream-only | pending | pending |
+| `morphology.disk` | native-partial | yes (partial input contract) | yes |
 | `morphology.ellipse` | upstream-only | pending | pending |
 | `morphology.erosion` | native-partial | yes (partial input contract) | yes |
 | `morphology.flood` | upstream-only | pending | pending |
 | `morphology.flood_fill` | upstream-only | pending | pending |
 | `morphology.footprint_from_sequence` | upstream-only | pending | pending |
-| `morphology.footprint_rectangle` | upstream-only | pending | pending |
+| `morphology.footprint_rectangle` | native-partial | yes (partial input contract) | yes |
 | `morphology.h_maxima` | upstream-only | pending | pending |
 | `morphology.h_minima` | upstream-only | pending | pending |
 | `morphology.isotropic_closing` | upstream-only | pending | pending |
 | `morphology.isotropic_dilation` | upstream-only | pending | pending |
 | `morphology.isotropic_erosion` | upstream-only | pending | pending |
 | `morphology.isotropic_opening` | upstream-only | pending | pending |
-| `morphology.label` | upstream-only | pending | pending |
+| `morphology.label` | native-partial | yes (partial input contract) | yes |
 | `morphology.local_maxima` | upstream-only | pending | pending |
 | `morphology.local_minima` | upstream-only | pending | pending |
 | `morphology.max_tree` | upstream-only | pending | pending |
 | `morphology.max_tree_local_maxima` | upstream-only | pending | pending |
 | `morphology.medial_axis` | upstream-only | pending | pending |
-| `morphology.mirror_footprint` | upstream-only | pending | pending |
+| `morphology.mirror_footprint` | metadata | yes (partial input contract) | yes |
 | `morphology.octagon` | upstream-only | pending | pending |
 | `morphology.octahedron` | upstream-only | pending | pending |
 | `morphology.opening` | native-partial | yes (partial input contract) | yes |
-| `morphology.pad_footprint` | upstream-only | pending | pending |
+| `morphology.pad_footprint` | native-partial | yes (partial input contract) | yes |
 | `morphology.reconstruction` | upstream-only | pending | pending |
 | `morphology.remove_objects_by_distance` | upstream-only | pending | pending |
 | `morphology.remove_small_holes` | upstream-only | pending | pending |
