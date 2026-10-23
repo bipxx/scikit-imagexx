@@ -1,19 +1,68 @@
 # Frangi and ridge-Hessian benchmarks
 
 `filters.frangi` and `filters.hessian` preserve scikit-image 0.26.0 signatures,
-module exports and root convenience aliases. The measured SIMD-FMA source is
-`4dfa65855a327d2637009cdc8bd30bba6f37697a`. Native-partial scope, explicit math
-providers and initial rejected trials are documented below. Full
-[CI39917576345](https://github.com/bipxx/scikit-imagexx/actions/runs/39917576345)
-and verified paired measurements gate main retention.
+module exports and root convenience aliases. The retained runtime is
+`064b83a5e1b30762ef3d74c1a7ecaf4b5ac0f3d8`; final measured revisions below
+contain the same C++/Python/build sources and benchmark script, with subsequent
+workflow/audit corrections only. Native-partial scope and explicit math
+providers remain documented below.
+
+## Final dispatch-compatible measurements
+
+[Linux run39928998691](https://github.com/bipxx/scikit-imagexx/actions/runs/39928998691)
+measures `f5d7d5fff520a28e9ff84193b0ab99e32550d58b`;
+[Windows run39928737175](https://github.com/bipxx/scikit-imagexx/actions/runs/39928737175)
+measures `74908fa7049bd65f7aa14a97243b694a6067ce7a`.
+[Full CI39928737496](https://github.com/bipxx/scikit-imagexx/actions/runs/39928737496)
+passes Windows, Linux and minimum NumPy for the measured Windows revision.
+Runtime/build/benchmark sources are identical between both measurements and that
+CI revision. Both artifacts pass frozen-source, exact wheel/package, binary,
+complete corpus, raw sample, median, ratio and numerical-bound verification.
+
+[Final Linux raw samples](frangi-dispatch-linux.json) and
+[final Windows raw samples](frangi-dispatch-windows.json) retain all 1,152 rows
+per OS, including worker caps one/four, seven samples per implementation,
+and the preserved `841693b` baseline in the same process. Candidate and baseline
+arrays compare exactly before timing each case. Normal float32 math dispatch
+is `cpp-fma`; generic NumPy math dispatch is tested separately without timing.
+
+| OS | API | Rank | One-worker geometric mean vs scikit-image | Minimum | Faster cases |
+|---|---|---:|---:|---:|---:|
+| Linux | Frangi | 2 | 6.039846x | 3.151641x | 144/144 |
+| Linux | Frangi | 3 | 2.732022x | 1.313810x | 144/144 |
+| Linux | Ridge-Hessian | 2 | 5.942942x | 3.136441x | 144/144 |
+| Linux | Ridge-Hessian | 3 | 2.728814x | 1.306546x | 144/144 |
+| Windows | Frangi | 2 | 4.620256x | 2.018954x | 144/144 |
+| Windows | Frangi | 3 | 2.285534x | 1.280185x | 144/144 |
+| Windows | Ridge-Hessian | 2 | 4.523177x | 2.019928x | 144/144 |
+| Windows | Ridge-Hessian | 3 | 2.289118x | 1.265602x | 144/144 |
+
+All 576 one-worker cases beat scikit-image on each OS. Overall geometric means
+are **4.044561x Linux / 3.233638x Windows**. Across 96 float32-output cases,
+same-runner gains over the preserved C++ baseline are **1.246366x / 1.167357x**;
+individual paired minima are 0.955126x / 0.900568x. The 480 float64 controls
+measure 0.997449x / 1.011386x. Aggregate improvements do not establish a gain
+for every individual baseline comparison. Float32-output errors are zero;
+maximum absolute 3-D Frangi float64 error is 2.220446049250313e-16 on both OSes,
+and the other groups have zero recorded difference.
+
+The fixed case-spec SHA256 remains
+`5b56ac97111f39a52057aac850e4ab04c10bce80931b28adea07960e2e73357f`.
+The ordinary images are 128x129 and 9x11x13; these measurements do not establish
+large-volume throughput. Exact math-provider dependencies are disclosed below.
+
+An earlier Windows audit failed on an assertion about an unused hardware
+feature group. The matrix's default fail-fast then cancelled Linux after only
+302 rows. That partial report is retained as failed evidence and excluded from
+all results above. The audit now checks disabled compiled targets and actual
+NumPy exp dispatch; independent benchmark jobs use `fail-fast: false`.
 
 ## Additional generic-dispatch compatibility gate
 
 After these measurements, a NumPy generic-dispatch probe found two float32
 ridge-Hessian mismatches on Linux in the measured `4dfa658` prototype. Its
 normal-dispatch full CI and performance results remain recorded; those jobs
-alone do not qualify generic NumPy dispatch. The correction is under validation
-before main retention.
+alone do not qualify generic NumPy dispatch. The correction passes the final measurements and full CI above.
 
 Bindings now probe the active NumPy float-exp C loop near one at initialization.
 When its rounding differs from the C++ approximation, a native float-exp
@@ -28,7 +77,9 @@ fresh processes and tests both C++ SIMD and scalar modes. NumPy 2.5's actual
 exp dispatch target is recorded because hardware component bits can remain
 true after its feature groups are disabled. Local normal and generic-dispatch
 suites pass all 1,005 cases on Windows and both tested Linux NumPy runtimes;
-new hosted CI/SDK and measurement gates remain pending.
+hosted CI and final measurement gates now pass. Local SDK/native/portable and
+sanitizer checks pass as well (13 native and 12 relocated SDK tests per
+configuration).
 
 ## Implementation and numerical scope
 
@@ -47,7 +98,7 @@ to one. The standalone C++ API also builds without OpenMP or AVX2.
 
 ### Explicit native math providers
 
-Python bindings use two native NumPy math providers, with no Python image
+Python bindings use native NumPy math providers, with no Python image
 operations or GIL held during kernel execution:
 
 - In 3-D, C++ packs symmetric double matrices in bounded chunks and calls the
@@ -56,6 +107,10 @@ operations or GIL held during kernel execution:
   field, using separate input/output buffers. SIMD preparation and combination
   reuse the now-dead eigenvalue scratch buffer. Whole-field calls preserve
   host vector/tail dispatch independently of C++ worker partitions.
+
+- Float32 uses the C++ FMA/portable helper when it matches the active NumPy
+  loop. A near-one initialization probe selects a whole-field native NumPy
+  float-exp provider when generic dispatch has different rounding.
 
 These are dependencies on NumPy's native math runtime, not rewritten LAPACK
 or a NumPy-free claim. Standalone C++ accepts optional eigenvalue and per-precision exp providers.
@@ -70,7 +125,7 @@ portable helper for subnormal/exceptional exponents and CPUs without FMA.
 The paired measurements below quantify its gains. The existing NumPy
 third-party license covers reused coefficients and evaluation order.
 
-## SIMD FMA paired measurements
+## Earlier SIMD FMA paired measurements (before generic-dispatch correction)
 
 [Measurement39917576124](https://github.com/bipxx/scikit-imagexx/actions/runs/39917576124)
 passed both OS jobs. Each runner compares scikit-image, this candidate and the
@@ -203,4 +258,18 @@ the portable helper over ordinary, subnormal and boundary exponents, including
 100,003 seeded values. It passes all 1,004 dedicated checks per SIMD mode and all 1,152 untimed
 corpus checks on Windows, minimum-NumPy Linux and modern-NumPy Linux. Its
 local native/portable/SDK/sanitizer and hosted AVX-512 parity gates pass. The
-paired measurements above pass; full CI gates main retention.
+paired measurements above passed normal-dispatch CI; the generic-dispatch
+correction supersedes that prototype for retention.
+
+The final float-provider runtime passes 1,005 dedicated cases in normal SIMD,
+normal scalar, generic-NumPy/C++-SIMD and generic-NumPy/C++-scalar configurations
+on Windows, NumPy 1.24 Linux and NumPy 2.5 Linux. Hosted
+[audit39928479221](https://github.com/bipxx/scikit-imagexx/actions/runs/39928479221)
+passes both NumPy runtimes, including sequential runtimes on the same CPU and
+all generic dispatch checks. That same-host CPU was AVX2; this job is not
+represented as an AVX-512 reproduction. The current runtime's
+[audit39927544130](https://github.com/bipxx/scikit-imagexx/actions/runs/39927544130)
+also has an actual AVX-512 NumPy 2.5 job with five sensitive points: all six
+Hessian fields are bit-identical and native final responses match upstream
+exactly. The earlier FMA audit above retains the actual same-host AVX-512
+NumPy 1.24/2.5 evidence for that earlier revision.
