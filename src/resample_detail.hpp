@@ -30,10 +30,18 @@ struct ZoomOptions {
 void zoom_into(const double* input,double* output,
                const std::vector<std::size_t>& input_shape,
                const std::vector<std::size_t>& output_shape,const ZoomOptions&);
+// Native-endian aligned contiguous storage; source/output have the same type.
+// Float32/64 support orders 0..5; integer/bool storage supports nearest only.
+// A public resize wrapper converts integers to floating before higher orders.
+void zoom_typed_into(const void* input,void* output,PixelType,
+                     const std::vector<std::size_t>& input_shape,
+                     const std::vector<std::size_t>& output_shape,const ZoomOptions&);
 }
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
 std::size_t zoom_sample(const double*,double*,const detail::ZoomPlan&,
                         std::size_t begin,std::size_t end);
+std::size_t zoom_sample_typed(const void*,void*,const detail::ZoomPlan&,
+                             std::size_t begin,std::size_t end,PixelType source,PixelType target);
 }
 #endif

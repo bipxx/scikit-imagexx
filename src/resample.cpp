@@ -4,6 +4,7 @@
 // scratch and SIMD traversal are implemented in this repository.
 #include "resample_detail.hpp"
 #include "execution.hpp"
+#include "resize_cast.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -114,7 +115,7 @@ ZoomPlan make_plan(const std::vector<std::size_t>& input,
     }
     return plan;
 }
-double sample(const double* input,const ZoomPlan& plan,
+template<class Input> double sample(const Input* input,const ZoomPlan& plan,
               const std::vector<const ZoomPoint*>& points) {
     double total=0.;const auto rank=points.size();
     for(std::size_t corner=0;corner<plan.corners;++corner) {
@@ -126,14 +127,14 @@ double sample(const double* input,const ZoomPlan& plan,
             // Never include a sentinel in a pointer offset or pointer sum.
             if(offset>=0)index+=offset;
         }
-        double coefficient=outside ? plan.cval : input[index];
+        double coefficient=outside ? plan.cval : double(input[index]);
         if(plan.order)for(std::size_t axis=0;axis<rank;++axis)
             coefficient*=points[axis]->weights[taps[axis]];
         total+=coefficient;
     }
     return total;
 }
-void pad_into(const double* input,double* output,const std::vector<std::size_t>& shape,
+template<class Input> void pad_into(const Input* input,double* output,const std::vector<std::size_t>& shape,
               const std::vector<std::size_t>& padded,std::size_t padding,
               GaussianBorder border,double cval) {
     const auto source_strides=strides(shape),target_strides=strides(padded);
@@ -147,17 +148,37 @@ void pad_into(const double* input,double* output,const std::vector<std::size_t>&
                 const auto clamped=std::size_t(std::clamp(coordinate,std::ptrdiff_t{0},std::ptrdiff_t(shape[axis]-1)));
                 index+=clamped*source_strides[axis];
             }
-            output[i]=outside && border==GaussianBorder::constant ? cval : input[index];
+            output[i]=outside && border==GaussianBorder::constant ? double(Input(cval)) : double(input[index]);
         }
     });
 }
+template<class Input,class Output,bool Boolean=false> void sample_into(const Input* input,Output* output,
+                        PixelType source,PixelType target,const ZoomPlan& plan,const ZoomOptions& options) {
+    const auto threads=active_workers(plan.count);
+    std::vector<std::vector<const ZoomPoint*>> scratch(std::size_t(threads),
+        std::vector<const ZoomPoint*>(plan.axes.size()));
+    (void)source;(void)target;
+    partition(plan.count,threads,[&](std::size_t begin,std::size_t end,std::size_t worker) {
+        #ifdef SKIMAGEXX_AVX2
+        if(options.allow_simd && has_avx2())begin=simd::zoom_sample_typed(input,output,plan,begin,end,source,target);
+        #endif
+        auto& points=scratch[worker];
+        for(auto i=begin;i<end;++i) {
+            for(std::size_t axis=0;axis<points.size();++axis)
+                points[axis]=&plan.axes[axis][(i/plan.output_strides[axis])%plan.axes[axis].size()];
+            output[i]=resize_sample_cast<Output,Boolean>(sample(input,plan,points));
+        }
+    });
 }
-void zoom_into(const double* input,double* output,
+template<class T,bool Boolean=false> void zoom(const T* input,T* output,PixelType type,
                const std::vector<std::size_t>& input_shape,
                const std::vector<std::size_t>& output_shape,const ZoomOptions& options) {
     if(input_shape.empty() || input_shape.size()!=output_shape.size())
         throw std::invalid_argument("matching nonzero zoom ranks required");
     if(options.order<0 || options.order>5)throw std::invalid_argument("spline order must be 0 through 5");
+    if constexpr(!std::is_floating_point_v<T>) {
+        if(options.order!=0)throw std::invalid_argument("integer zoom storage requires nearest interpolation");
+    }
     validate_border(options.border);
     const auto input_count=size(input_shape),output_count=size(output_shape);
     if(options.identity_copy && input_shape!=output_shape)
@@ -165,7 +186,7 @@ void zoom_into(const double* input,double* output,
     if(!output_count)return;
     if(!input_count || !input || !output)throw std::invalid_argument("nonnull nonempty zoom input/output required");
     if(options.identity_copy) {
-        if(input!=output)std::memcpy(output,input,input_count*sizeof(double));
+        if(input!=output)std::memcpy(output,input,input_count*sizeof(T));
         return;
     }
     if(input==output)throw std::invalid_argument("zoom output must not alias input");
@@ -182,26 +203,36 @@ void zoom_into(const double* input,double* output,
             pad_into(input,coefficients.data(),input_shape,source_shape,padding,options.border,options.cval);
             spline_filter_into(coefficients.data(),coefficients.data(),source_shape,options.order,
                                options.border,options.legacy_reflect,options.allow_simd);
-        } else spline_filter_into(input,coefficients.data(),source_shape,options.order,
-                                 options.border,options.legacy_reflect,options.allow_simd);
-        input=coefficients.data();
+        } else {
+            // Promotion happens before the spline recurrence. The native
+            // float32 pad constant above rounds in its original storage type.
+            partition(input_count,active_workers(input_count),[&](std::size_t begin,std::size_t end,std::size_t) {
+                for(auto i=begin;i<end;++i)coefficients[i]=double(input[i]);
+            });
+            spline_filter_into(coefficients.data(),coefficients.data(),source_shape,options.order,
+                               options.border,options.legacy_reflect,options.allow_simd);
+        }
     }
     const auto plan=make_plan(source_shape,output_shape,padding,options);
-    const auto threads=active_workers(output_count);
-    // Allocate per-worker coordinate metadata before OpenMP; no allocations or
-    // exceptions cross worker boundaries, even when dynamic teams are smaller.
-    std::vector<std::vector<const ZoomPoint*>> scratch(std::size_t(threads),
-        std::vector<const ZoomPoint*>(input_shape.size()));
-    partition(output_count,threads,[&](std::size_t begin,std::size_t end,std::size_t worker) {
-        #ifdef SKIMAGEXX_AVX2
-        if(options.allow_simd && has_avx2())begin=simd::zoom_sample(input,output,plan,begin,end);
-        #endif
-        auto& points=scratch[worker];
-        for(auto i=begin;i<end;++i) {
-            for(std::size_t axis=0;axis<points.size();++axis)
-                points[axis]=&plan.axes[axis][(i/plan.output_strides[axis])%output_shape[axis]];
-            output[i]=sample(input,plan,points);
-        }
-    });
+    if(options.order>1)sample_into<double,T,Boolean>(coefficients.data(),output,PixelType::float64,type,plan,options);
+    else sample_into<T,T,Boolean>(input,output,type,type,plan,options);
+}
+} // namespace
+void zoom_typed_into(const void* input,void* output,PixelType type,
+                     const std::vector<std::size_t>& shape,const std::vector<std::size_t>& target,
+                     const ZoomOptions& options) {
+    switch(type) {
+        case PixelType::boolean:zoom<std::uint8_t,true>(static_cast<const std::uint8_t*>(input),static_cast<std::uint8_t*>(output),type,shape,target,options);break;
+        #define ZOOM(tag,T) case PixelType::tag:zoom(static_cast<const T*>(input),static_cast<T*>(output),type,shape,target,options);break;
+        ZOOM(uint8,std::uint8_t) ZOOM(int8,std::int8_t) ZOOM(uint16,std::uint16_t) ZOOM(int16,std::int16_t)
+        ZOOM(uint32,std::uint32_t) ZOOM(int32,std::int32_t) ZOOM(uint64,std::uint64_t) ZOOM(int64,std::int64_t)
+        ZOOM(float32,float) ZOOM(float64,double)
+        #undef ZOOM
+        default:throw std::invalid_argument("unsupported zoom storage type");
+    }
+}
+void zoom_into(const double* input,double* output,const std::vector<std::size_t>& shape,
+               const std::vector<std::size_t>& target,const ZoomOptions& options) {
+    zoom_typed_into(input,output,PixelType::float64,shape,target,options);
 }
 } // namespace skimagexx::detail
