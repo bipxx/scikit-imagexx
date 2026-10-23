@@ -44,5 +44,11 @@ namespace skimagexx::simd {
 std::size_t consumer_truth(const std::intptr_t*,std::uint8_t*,std::size_t,bool);
 std::size_t consumer_bool_write(const std::uint8_t*,std::uint8_t*,std::size_t,bool);
 std::size_t consumer_or(const std::uint8_t*,std::uint8_t*,std::size_t);
+// Whole32-byte transport blocks only. Callers certify disjoint C-order
+// output/read buffers; scalar tails retain generic traversal/error behavior.
+std::size_t consumer_filter_store(const std::intptr_t*,std::size_t,
+    const std::intptr_t* sizes,std::size_t bins,double threshold,void*,std::size_t);
+std::size_t consumer_clear_store(const std::intptr_t*,std::size_t,
+    const std::uint8_t* remove,std::size_t number,const void* fill,void*,std::size_t,std::uint8_t& invalid);
 }
 #endif
