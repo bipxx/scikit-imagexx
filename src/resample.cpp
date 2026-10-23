@@ -1,0 +1,207 @@
+// Grid coordinates and accumulation follow SciPy v1.18.1 ni_interpolation.c.
+// Copyright (C) 2003-2005 Peter J. Verveer, SciPy Developers; BSD-3-Clause.
+// See third_party/scipy-ndimage-LICENSE.txt. Axis plans, bounded per-worker
+// scratch and SIMD traversal are implemented in this repository.
+#include "resample_detail.hpp"
+#include "execution.hpp"
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <limits>
+#include <stdexcept>
+
+namespace skimagexx::detail {
+namespace {
+constexpr auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double);
+std::size_t size(const std::vector<std::size_t>& shape) {
+    std::size_t result=1;
+    for(auto length:shape) {
+        if(length>limit || (length && result>limit/length))
+            throw std::overflow_error("zoom dimensions overflow");
+        result*=length;
+    }
+    return result;
+}
+std::vector<std::size_t> strides(const std::vector<std::size_t>& shape) {
+    std::vector<std::size_t> result(shape.size());std::size_t step=1;
+    for(auto axis=shape.size();axis-->0;) {result[axis]=step;step*=shape[axis];}
+    return result;
+}
+void validate_border(GaussianBorder border) {
+    switch(border) {
+        case GaussianBorder::reflect:case GaussianBorder::constant:
+        case GaussianBorder::nearest:case GaussianBorder::mirror:
+        case GaussianBorder::wrap:return;
+    }
+    throw std::invalid_argument("unsupported zoom boundary mode");
+}
+// Fractional-coordinate mapping preserves ndimage's reflection convention.
+// Grid-constant coordinates stay unmodified; outside taps become cval.
+double map_coordinate(double coordinate,std::ptrdiff_t length,GaussianBorder border) {
+    if(border==GaussianBorder::constant)return coordinate;
+    if(length<=1)return 0.;
+    if(coordinate<0) {
+        switch(border) {
+            case GaussianBorder::mirror: {
+                const auto period=2*length-2;
+                coordinate=period*std::ptrdiff_t(-coordinate/period)+coordinate;
+                return coordinate<=1-length ? coordinate+period : -coordinate;
+            }
+            case GaussianBorder::reflect: {
+                const auto period=2*length;
+                if(coordinate < -period)coordinate=period*std::ptrdiff_t(-coordinate/period)+coordinate;
+                return coordinate < -length ? coordinate+period : (coordinate > -1e-15 ? 1e-15 : -coordinate)-1;
+            }
+            case GaussianBorder::wrap:
+                return coordinate+length*(std::ptrdiff_t((-1-coordinate)/length)+1);
+            case GaussianBorder::nearest:return 0.;
+            default:break;
+        }
+    } else if(coordinate>length-1) {
+        switch(border) {
+            case GaussianBorder::mirror: {
+                const auto period=2*length-2;
+                coordinate-=period*std::ptrdiff_t(coordinate/period);
+                return coordinate>=length ? period-coordinate : coordinate;
+            }
+            case GaussianBorder::reflect: {
+                const auto period=2*length;
+                coordinate-=period*std::ptrdiff_t(coordinate/period);
+                return coordinate>=length ? period-coordinate-1 : coordinate;
+            }
+            case GaussianBorder::wrap:return coordinate-length*std::ptrdiff_t(coordinate/length);
+            case GaussianBorder::nearest:return double(length-1);
+            default:break;
+        }
+    }
+    return coordinate;
+}
+ZoomPlan make_plan(const std::vector<std::size_t>& input,
+                   const std::vector<std::size_t>& output,std::size_t padding,
+                   const ZoomOptions& options) {
+    ZoomPlan plan;plan.count=size(output);plan.output_strides=strides(output);
+    plan.order=options.order;plan.cval=options.cval;plan.axes.resize(input.size());
+    const auto source_strides=strides(input);const auto taps=std::size_t(options.order+1);
+    for(std::size_t axis=0;axis<input.size();++axis) {
+        if(plan.corners>limit/taps)throw std::overflow_error("zoom footprint overflow");
+        plan.corners*=taps;
+        auto& points=plan.axes[axis];points.resize(output[axis]);
+        const double scale=double(input[axis]-2*padding)/double(output[axis]);
+        for(std::size_t i=0;i<points.size();++i) {
+            double coordinate=(double(i)+.5)*scale-.5+double(padding);
+            if(options.border!=GaussianBorder::constant && options.border!=GaussianBorder::nearest)
+                coordinate=map_coordinate(coordinate,std::ptrdiff_t(input[axis]),options.border);
+            auto& point=points[i];point.weights=spline_weights(coordinate,options.order);
+            const auto start=std::ptrdiff_t(std::floor(coordinate+(options.order&1 ? 0. : .5)))-options.order/2;
+            for(std::size_t tap=0;tap<taps;++tap) {
+                auto index=start+std::ptrdiff_t(tap);
+                if(options.border==GaussianBorder::constant && (index<0 || std::size_t(index)>=input[axis]))
+                    point.offsets[tap]=-1;
+                else {
+                    index=std::ptrdiff_t(map_coordinate(double(index),std::ptrdiff_t(input[axis]),options.border));
+                    point.offsets[tap]=index*std::ptrdiff_t(source_strides[axis]);
+                }
+            }
+        }
+    }
+    if(plan.corners>limit/input.size())throw std::overflow_error("zoom footprint overflow");
+    plan.footprint.resize(plan.corners*input.size());
+    for(std::size_t corner=0;corner<plan.corners;++corner) {
+        auto remainder=corner;
+        for(auto axis=input.size();axis-->0;) {
+            plan.footprint[corner*input.size()+axis]=std::uint8_t(remainder%taps);remainder/=taps;
+        }
+    }
+    return plan;
+}
+double sample(const double* input,const ZoomPlan& plan,
+              const std::vector<const ZoomPoint*>& points) {
+    double total=0.;const auto rank=points.size();
+    for(std::size_t corner=0;corner<plan.corners;++corner) {
+        const auto* taps=plan.footprint.data()+corner*rank;
+        std::ptrdiff_t index=0;bool outside=false;
+        for(std::size_t axis=0;axis<rank;++axis) {
+            const auto offset=points[axis]->offsets[taps[axis]];
+            outside|=offset<0;
+            // Never include a sentinel in a pointer offset or pointer sum.
+            if(offset>=0)index+=offset;
+        }
+        double coefficient=outside ? plan.cval : input[index];
+        if(plan.order)for(std::size_t axis=0;axis<rank;++axis)
+            coefficient*=points[axis]->weights[taps[axis]];
+        total+=coefficient;
+    }
+    return total;
+}
+void pad_into(const double* input,double* output,const std::vector<std::size_t>& shape,
+              const std::vector<std::size_t>& padded,std::size_t padding,
+              GaussianBorder border,double cval) {
+    const auto source_strides=strides(shape),target_strides=strides(padded);
+    const auto count=size(padded);
+    partition(count,active_workers(count),[&](std::size_t begin,std::size_t end,std::size_t) {
+        for(auto i=begin;i<end;++i) {
+            std::size_t index=0;bool outside=false;
+            for(std::size_t axis=0;axis<shape.size();++axis) {
+                const auto coordinate=std::ptrdiff_t((i/target_strides[axis])%padded[axis])-std::ptrdiff_t(padding);
+                outside|=coordinate<0 || coordinate>=std::ptrdiff_t(shape[axis]);
+                const auto clamped=std::size_t(std::clamp(coordinate,std::ptrdiff_t{0},std::ptrdiff_t(shape[axis]-1)));
+                index+=clamped*source_strides[axis];
+            }
+            output[i]=outside && border==GaussianBorder::constant ? cval : input[index];
+        }
+    });
+}
+}
+void zoom_into(const double* input,double* output,
+               const std::vector<std::size_t>& input_shape,
+               const std::vector<std::size_t>& output_shape,const ZoomOptions& options) {
+    if(input_shape.empty() || input_shape.size()!=output_shape.size())
+        throw std::invalid_argument("matching nonzero zoom ranks required");
+    if(options.order<0 || options.order>5)throw std::invalid_argument("spline order must be 0 through 5");
+    validate_border(options.border);
+    const auto input_count=size(input_shape),output_count=size(output_shape);
+    if(options.identity_copy && input_shape!=output_shape)
+        throw std::invalid_argument("identity zoom requires equal shapes");
+    if(!output_count)return;
+    if(!input_count || !input || !output)throw std::invalid_argument("nonnull nonempty zoom input/output required");
+    if(options.identity_copy) {
+        if(input!=output)std::memcpy(output,input,input_count*sizeof(double));
+        return;
+    }
+    if(input==output)throw std::invalid_argument("zoom output must not alias input");
+    auto source_shape=input_shape;std::vector<double> coefficients;
+    std::size_t padding=0;
+    if(options.order>1) {
+        if(options.border==GaussianBorder::nearest || options.border==GaussianBorder::constant)padding=12;
+        for(auto& length:source_shape) {
+            if(length>limit-2*padding)throw std::overflow_error("zoom padding overflow");
+            length+=2*padding;
+        }
+        coefficients.resize(size(source_shape));
+        if(padding) {
+            pad_into(input,coefficients.data(),input_shape,source_shape,padding,options.border,options.cval);
+            spline_filter_into(coefficients.data(),coefficients.data(),source_shape,options.order,
+                               options.border,options.legacy_reflect,options.allow_simd);
+        } else spline_filter_into(input,coefficients.data(),source_shape,options.order,
+                                 options.border,options.legacy_reflect,options.allow_simd);
+        input=coefficients.data();
+    }
+    const auto plan=make_plan(source_shape,output_shape,padding,options);
+    const auto threads=active_workers(output_count);
+    // Allocate per-worker coordinate metadata before OpenMP; no allocations or
+    // exceptions cross worker boundaries, even when dynamic teams are smaller.
+    std::vector<std::vector<const ZoomPoint*>> scratch(std::size_t(threads),
+        std::vector<const ZoomPoint*>(input_shape.size()));
+    partition(output_count,threads,[&](std::size_t begin,std::size_t end,std::size_t worker) {
+        #ifdef SKIMAGEXX_AVX2
+        if(options.allow_simd && has_avx2())begin=simd::zoom_sample(input,output,plan,begin,end);
+        #endif
+        auto& points=scratch[worker];
+        for(auto i=begin;i<end;++i) {
+            for(std::size_t axis=0;axis<points.size();++axis)
+                points[axis]=&plan.axes[axis][(i/plan.output_strides[axis])%output_shape[axis]];
+            output[i]=sample(input,plan,points);
+        }
+    });
+}
+} // namespace skimagexx::detail
