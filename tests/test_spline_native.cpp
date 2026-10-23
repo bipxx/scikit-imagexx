@@ -37,6 +37,9 @@ template<class E,class F> void rejects(F body) {
 }
 void guards() {
     double input=3.,output=0.;
+    #ifndef _OPENMP
+    rejects<std::invalid_argument>([]{set_num_threads(4);});require(get_num_threads()==1);
+    #endif
     detail::spline_filter_into(nullptr,nullptr,{2,0,3},3,GaussianBorder::reflect);
     detail::spline_filter_into(&input,&output,{},3,GaussianBorder::reflect);require(output==3.);
     detail::spline_filter_into(&input,&output,{1,1,1},5,GaussianBorder::wrap);require(output==3.);
@@ -59,7 +62,10 @@ void workers() {
     for(bool legacy:{false,true})
     for(auto border:{GaussianBorder::constant,GaussianBorder::nearest,GaussianBorder::mirror,GaussianBorder::reflect,GaussianBorder::wrap}) {
         set_num_threads(1);detail::spline_filter_into(input.data(),one.data(),shape,5,border,legacy);
-        set_num_threads(4);detail::spline_filter_into(input.data(),four.data(),shape,5,border,legacy);
+        #ifdef _OPENMP
+        set_num_threads(4);
+        #endif
+        detail::spline_filter_into(input.data(),four.data(),shape,5,border,legacy);
         require(one==four);
         detail::spline_filter_into(input.data(),scalar.data(),shape,5,border,legacy,false);
         require(scalar==one);
