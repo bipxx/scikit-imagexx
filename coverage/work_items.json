@@ -5765,7 +5765,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave4-cleanup/main-core-release-validation/source.zip"
+        ]
       },
       "dependency_requirements": {
         "resize-public-integration": {
@@ -5801,8 +5803,10 @@
         "read_only_command": "gh run view 39957875987 --json status,conclusion,jobs",
         "authoritative_run_id": 39957875987,
         "observation_rule": "Existing hosted jobs remain authoritative during the pause; retain their exact artifacts.",
-        "requires_user_resume": false
-      }
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "metrics-error-reductions",
@@ -10438,7 +10442,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave4-cleanup/main-core-release-validation/source.zip"
+        ]
       },
       "proofs": {
         "native_private": {
@@ -10462,7 +10468,8 @@
         "resize-half-identity": {
           "evidence_scope": "native_private"
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "metrics-optimized-integration",
@@ -16399,7 +16406,8 @@
         "protected_artifacts": [
           "build/component-consumers-public-evidence",
           "build/component-consumers-8e37-*-package",
-          "build/main-core-99b-*-wheels"
+          "build/main-core-99b-*-wheels",
+          "build/checkpoints/public-wave4-cleanup/component-consumers-public/source.zip"
         ]
       },
       "dependency_requirements": {
@@ -16459,7 +16467,8 @@
         "tests/test_class_registry.py",
         "tests/test_component_consumers_public.py",
         "coverage/contracts/component-consumers-public.json"
-      ]
+      ],
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "rank-benchmark-harness",
@@ -16962,7 +16971,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave4-cleanup/transform-performance/source.zip"
+        ]
       },
       "proofs": {
         "tooling": {
@@ -16984,7 +16995,8 @@
           "native_pending": 0,
           "scope": "Unchanged scoped public class corpus on three complete exact-Python wheels with byte-identical b6 C++/SDK; normal/scalar and workers1/4. Providers remain explicit."
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "footprint-dtype-provider-fix",
@@ -17227,7 +17239,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave4-cleanup/footprint-performance/source.zip"
+        ]
       },
       "dependency_requirements": {
         "footprints-measurement": {
@@ -17249,7 +17263,8 @@
           "native_contract_checks": 5053,
           "native_pending": 0
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "metrics-simd-measurement",
@@ -17556,7 +17571,8 @@
           "benchmarks/transform-classes-public-windows-modern-initial.json",
           "benchmarks/transform-classes-public-linux-modern-initial.json",
           "benchmarks/transform-classes-public-linux-minimum-initial.json",
-          "benchmarks/transform-classes-public-initial.json"
+          "benchmarks/transform-classes-public-initial.json",
+          "build/checkpoints/public-wave4-cleanup/transform-performance/source.zip"
         ]
       },
       "dependency_requirements": {
@@ -17575,7 +17591,8 @@
           },
           "scope": "Offline-verified samples, exact hosted source/wheels/package hashes and preparation barrier; see report for SDK seal limits."
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "combined-public-wave4",
@@ -17830,7 +17847,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave4-cleanup/rank-intensity-native/source.zip"
+        ]
       },
       "dependency_requirements": {
         "rank-intensity-contracts": {
@@ -17849,7 +17868,8 @@
           "native_contract_checks": 1012,
           "native_pending": 0
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave4-cleanup/manifest.json"
     },
     {
       "id": "rank-intensity-public",
@@ -18120,13 +18140,13 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": "main",
-      "base_sha": "caf8b815b07c1024583f264335f10f514ccfb49a",
+      "branch": "feature/resize-controlled-sdk-set",
+      "base_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
       "owns": [],
       "depends_on": [
         "resize-controlled-comparison"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18144,7 +18164,16 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched."
+        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched.",
+        "run_id": 40020239743,
+        "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40020239743",
+        "observed_state": "queued",
+        "created_at": "2026-10-23T20:34:14Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing."
       },
       "merge": {
         "commit": null,
@@ -18165,13 +18194,13 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": "main",
+      "branch": "feature/component-consumers-benchmark",
       "base_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
       "owns": [],
       "depends_on": [
         "component-consumers-benchmark-tooling"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18189,7 +18218,16 @@
         "corpus_sha256": null,
         "raw_results": [],
         "regressions": [],
-        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched."
+        "note": "One worker primary. All3 preparation profiles before fresh artifact-only measurement hosts; retain exact authoritative run when dispatched.",
+        "run_id": 40020440164,
+        "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40020440164",
+        "observed_state": "queued",
+        "created_at": "2026-10-23T20:35:48Z",
+        "workers": [
+          1
+        ],
+        "observation_rule": "Poll this exact authoritative run until terminal. Never cancel/restart for observation timeouts; all three preparation profiles precede fresh measurement hosts. No local operation timing."
       },
       "merge": {
         "commit": null,
