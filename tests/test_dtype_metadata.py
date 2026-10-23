@@ -38,6 +38,16 @@ def compare(actual,expected,api,dtype,path='result'):
         assert len(actual)==len(expected),path
         for index,(a,e) in enumerate(zip(actual,expected)):compare(a,e,api,dtype,f'{path}[{index}]')
         return
+    if api=='segmentation.relabel_sequential' and type(expected).__name__=='ArrayMap':
+        # These results store sparse mapping vectors. Array conversion is a
+        # separate protocol, exercised by the dedicated returned-map contracts.
+        assert type(actual).__name__==type(expected).__name__,path
+        for field in ('in_values','out_values'):
+            a,e=getattr(actual,field),getattr(expected,field)
+            assert a.shape==e.shape and a.dtype==e.dtype,f'{path}.{field}'
+            np.testing.assert_array_equal(a,e)
+            assert a.dtype.metadata==e.dtype.metadata,f'{path}.{field}: dtype metadata'
+        return
     a,e=np.asarray(actual),np.asarray(expected)
     assert a.shape==e.shape and a.dtype==e.dtype,path
     np.testing.assert_allclose(a,e,rtol=parity_tolerance(api,np.dtype(dtype))[0],atol=parity_tolerance(api,np.dtype(dtype))[1])
