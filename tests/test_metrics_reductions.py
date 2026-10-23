@@ -152,6 +152,7 @@ def test_noncanonical_bool():
 def test_signaling_nan(dtype,bits,word,other,name,options):
     a=np.resize(np.array([word],bits).view(dtype),37)
     check(name,a,np.zeros(37,other),**options)
+    if name=='peak_signal_noise_ratio':check(name,a,np.zeros(37,other))
 
 
 @pytest.mark.parametrize('dtype',[np.float32,np.float64])
@@ -201,6 +202,36 @@ def test_import_preserves_floating_policy():
         assert all(value=='raise' for value in np.geterr().values())
 
 
+@pytest.mark.parametrize('layout',['c','reverse','endian','unaligned'])
+def test_every_finite_half_encoding(layout):
+    words=np.arange(65536,dtype=np.uint16)
+    a=words[(words&0x7c00)!=0x7c00].view(np.float16)
+    if layout=='reverse':a=a[::-1]
+    elif layout=='endian':a=a.astype('>f2')
+    elif layout=='unaligned':
+        original=a;a=np.ndarray(a.shape,a.dtype,buffer=bytearray(a.nbytes+1),offset=1);a[...]=original
+    for name,options in FUNCTIONS:check(name,a,np.zeros_like(a),**options)
+
+
+@pytest.mark.parametrize('dtype',TYPES)
+def test_singleton_extreme_strides(dtype):
+    minimum=np.iinfo(np.intp).min;maximum=np.iinfo(np.intp).max
+    a=np.ndarray((1,1),dtype,buffer=bytearray(np.dtype(dtype).itemsize),strides=(minimum,maximum))
+    a[...]=1;b=np.zeros_like(a)
+    for name,options in FUNCTIONS:check(name,a,b,**options)
+    check('peak_signal_noise_ratio',a,b)
+
+
+@pytest.mark.parametrize('dtype',[np.float16,np.float32,np.float64])
+@pytest.mark.parametrize('layout',['c','fortran','reverse','endian'])
+def test_psnr_nan_range_validation(dtype,layout):
+    a=np.resize(np.array([np.nan,2.,-3.,np.inf],dtype),(17,19))
+    if layout=='fortran':a=np.asfortranarray(a)
+    elif layout=='reverse':a=a[::-1,::-1]
+    elif layout=='endian':a=a.astype(a.dtype.newbyteorder('>'))
+    check('peak_signal_noise_ratio',a,np.zeros_like(a))
+
+
 def test_no_python_image_algorithms(monkeypatch):
     a,b=sample(np.float32),sample(np.float32,seed=2371)
     expected=reference.mean_squared_error(a,b)
@@ -208,3 +239,32 @@ def test_no_python_image_algorithms(monkeypatch):
     for name in ['mean','sum','subtract','square','multiply']:
         monkeypatch.setattr(np,name,forbidden)
     assert native.mean_squared_error(a,b)==expected
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('value',['max','tiny'])
+@pytest.mark.parametrize('policy',['warn','raise','ignore'])
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_scalar_power_status(dtype,value,policy,name,options):
+    a=np.asarray(getattr(np.finfo(dtype),value),dtype=dtype)
+    with np.errstate(all=policy):check(name,a,np.asarray(0,dtype=dtype),**options)
+
+
+@pytest.mark.parametrize('block',[32,8192])
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_runtime_reduction_buffer(block,name,options):
+    original=np.getbufsize()
+    a=np.tile(np.array([1e8,1,-1e8,3],np.float32),16385)[::-1]
+    try:
+        np.setbufsize(block)
+        check(name,a,np.zeros_like(a),**options)
+    finally:np.setbufsize(original)
+
+
+@pytest.mark.parametrize('policy',['call','log','print'])
+@pytest.mark.parametrize('name,options',FUNCTIONS)
+def test_stateful_status_policy_explicit_fallback(policy,name,options):
+    a=np.asarray([.2,.4],np.float32)
+    # The native fused implementation cannot honor mutations between stages.
+    # A disabled fallback must expose the unsupported policy explicitly.
+    with np.errstate(all=policy):
+        with pytest.raises(NotImplementedError):getattr(native,name)(a,a,**options)

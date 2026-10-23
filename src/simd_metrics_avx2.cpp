@@ -10,6 +10,19 @@ __m256d wide(__m256i value,bool is_signed) {
     const auto high=low32(_mm256_srli_epi64(value,32));
     return _mm256_add_pd(_mm256_mul_pd(is_signed ? _mm256_cvtepi32_pd(high):unsigned32(high),_mm256_set1_pd(4294967296.)),unsigned32(low32(value)));
 }
+__m128 half4(const unsigned char* p,bool swap) {
+    auto packed=_mm_loadl_epi64(reinterpret_cast<const __m128i*>(p));
+    if(swap)packed=_mm_shuffle_epi8(packed,_mm_setr_epi8(1,0,3,2,5,4,7,6,-1,-1,-1,-1,-1,-1,-1,-1));
+    const auto value=_mm_cvtepu16_epi32(packed),fraction=_mm_and_si128(value,_mm_set1_epi32(1023)),
+               exponent=_mm_srli_epi32(_mm_and_si128(value,_mm_set1_epi32(0x7c00)),10),
+               sign=_mm_slli_epi32(_mm_and_si128(value,_mm_set1_epi32(0x8000)),16);
+    const auto normal=_mm_or_si128(sign,_mm_or_si128(_mm_slli_epi32(_mm_add_epi32(exponent,_mm_set1_epi32(112)),23),_mm_slli_epi32(fraction,13)));
+    const auto small=_mm_or_si128(sign,_mm_castps_si128(_mm_mul_ps(_mm_cvtepi32_ps(fraction),_mm_set1_ps(0x1p-24f))));
+    const auto special=_mm_or_si128(sign,_mm_or_si128(_mm_set1_epi32(0x7f800000),_mm_slli_epi32(fraction,13)));
+    auto result=_mm_blendv_epi8(normal,small,_mm_cmpeq_epi32(exponent,_mm_setzero_si128()));
+    result=_mm_blendv_epi8(result,special,_mm_cmpeq_epi32(exponent,_mm_set1_epi32(31)));
+    return _mm_castsi128_ps(result);
+}
 template<class T> __m256d raw(const unsigned char* p) {
     if constexpr(sizeof(T)==1) {std::uint32_t word;std::memcpy(&word,p,4);const auto v=_mm_cvtsi32_si128(int(word));return _mm256_cvtepi32_pd(std::is_signed_v<T> ? _mm_cvtepi8_epi32(v):_mm_cvtepu8_epi32(v));}
     else if constexpr(sizeof(T)==2){const auto v=_mm_loadl_epi64(reinterpret_cast<const __m128i*>(p));return _mm256_cvtepi32_pd(std::is_signed_v<T> ? _mm_cvtepi16_epi32(v):_mm_cvtepu16_epi32(v));}
@@ -19,6 +32,11 @@ template<class T> __m256d raw(const unsigned char* p) {
 __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t step) {
     const auto* p=static_cast<const unsigned char*>(view.data)+offset;
     if(step==0)return _mm256_set1_pd(detail::metric_read(view,offset));
+    if(view.half && (step==2 || step==-2)) {
+        auto value=half4(step==2 ? p:p-6,view.swap);
+        if(step<0)value=_mm_shuffle_ps(value,value,_MM_SHUFFLE(0,1,2,3));
+        return _mm256_cvtps_pd(value);
+    }
     const auto bytes=std::ptrdiff_t(pixel_size(view.type));
     if(!view.swap && !view.half && step==-bytes)
         return _mm256_permute4x64_pd(load(view,offset-3*bytes,bytes),_MM_SHUFFLE(0,1,2,3));

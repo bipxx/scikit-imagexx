@@ -56,6 +56,15 @@ int main() {
     auto half_a=view(half,PixelType::uint16),half_b=view(half_zero,PixelType::uint16);half_a.half=half_b.half=true;
     const auto half_result=metric_sums(half_a,half_b,true,MetricNormalization::euclidean);
     require(half_result.error==30. && half_result.energy==30.);
+    half_a.data=half.data()+3;half_a.strides[0]=-2;
+    require(metric_sums(half_a,half_b,true,MetricNormalization::none).error==30.);
+    const std::vector<std::uint16_t> half_endian{0x003c,0x0040,0x0042,0x0044};
+    half_a=view(half_endian,PixelType::uint16);half_a.half=half_a.swap=true;
+    require(metric_sums(half_a,half_b,true,MetricNormalization::none).error==30.);
+    const std::vector<std::uint16_t> half_small{1,1023,0x8001,0x83ff};
+    half_a=view(half_small,PixelType::uint16);half_a.half=true;
+    const float small=0x1p-24f,large=1023*0x1p-24f;
+    require(metric_sums(half_a,half_b,true,MetricNormalization::none).error==2*double(float(small*small))+2*double(float(large*large)));
     const std::vector<std::uint8_t> boolean{0,2,128,255},bool_zero(4,0);
     require(metric_sums(view(boolean,PixelType::boolean),view(bool_zero,PixelType::boolean),false,MetricNormalization::none).error==3.);
     const float scalar_a=.3f,scalar_b=.7f,delta=float(scalar_a-scalar_b);

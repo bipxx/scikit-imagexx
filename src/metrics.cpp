@@ -2,6 +2,7 @@
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include "half.hpp"
+#include "resize_range.hpp"
 #include <algorithm>
 #include <array>
 #include <cfenv>
@@ -156,10 +157,59 @@ template<class T> MetricSums run(const MetricImageView& a,const MetricImageView&
     for(std::size_t i=nodes.size();i-->0;)if(nodes[i].left)nodes[i].value=merge<T>(nodes[nodes[i].left].value,nodes[nodes[i].right].value,flags);
     return nodes[0].value;
 }
+// NumPy before 2.3 reduces each iterator buffer pairwise, then combines
+// those buffers in order. Preserve that ordering independently of workers.
+template<class T> MetricSums buffered_run(const MetricImageView& a,const MetricImageView& b,std::size_t n,MetricNormalization mode,bool flags,std::size_t block) {
+    if(!block || n<=block)return run<T>(a,b,n,mode,flags);
+    const auto chunks=1+(n-1)/block;
+    std::vector<MetricSums> partial(chunks);
+    detail::partition(chunks,int(std::min(std::size_t(detail::active_workers(n)),chunks)),[&](auto begin,auto end,auto){
+        for(auto i=begin;i<end;++i)partial[i]=tree<T>(a,b,i*block,std::min(block,n-i*block),mode,flags);
+    });
+    MetricSums result;
+    for(const auto& value:partial)result=merge<T>(result,value,flags);
+    return result;
+}
 template<class T,bool Boolean=false,bool Half=false> MetricRawRange raw_range(const MetricImageView& view,std::size_t n) {
     T low{},high{};double low_half=0,high_half=0;bool valid=false;MetricRawRange result;
+    auto lengths=view.shape;
+    // Repeated broadcast values cannot change min/max or NaN presence.
+    for(std::size_t axis=0;axis<lengths.size();++axis)if(view.strides[axis]==0){n/=lengths[axis];lengths[axis]=1;}
+    if constexpr(!Half) {
+        // Numeric bounds do not depend on traversal order. Dense native
+        // layouts (including F-order and reversals) can share the SIMD range
+        // scan without allocating a normalized image.
+        auto dense=[&](bool fortran) {
+            std::size_t stride=sizeof(T);
+            for(std::size_t i=0;i<lengths.size();++i) {
+                const auto axis=fortran ? i:lengths.size()-1-i;
+                const auto step=view.strides[axis];
+                const auto magnitude=step<0 ? std::uint64_t(-(step+1))+1:std::uint64_t(step);
+                if(lengths[axis]>1 && magnitude!=stride)return false;
+                stride*=lengths[axis];
+            }
+            return true;
+        };
+        if(!view.swap && (dense(false) || dense(true))) {
+            std::ptrdiff_t first=0;
+            for(std::size_t axis=0;axis<lengths.size();++axis)if(view.strides[axis]<0)first+=std::ptrdiff_t(lengths[axis]-1)*view.strides[axis];
+            const auto* data=static_cast<const unsigned char*>(view.data)+first;
+            if(std::uintptr_t(data)%alignof(T)==0) {
+                const auto info=detail::resize_range_into(data,n,view.type,&low,&high);
+                result.has_nan=info.has_nan;
+                std::memcpy(&result.low,&low,sizeof(T));std::memcpy(&result.high,&high,sizeof(T));return result;
+            }
+        }
+    }
+    // Exceptional layouts advance an odometer: no per-pixel division and no
+    // full-image temporary for stepped, broadcast, unaligned or endian data.
+    std::vector<std::size_t> index(lengths.size());std::ptrdiff_t position=0;
     for(std::size_t i=0;i<n;++i) {
-        T value=read<T>(static_cast<const unsigned char*>(view.data)+offset(view,i),view.swap);
+        if(i)for(auto axis=lengths.size();axis-->0;) {
+            if(index[axis]+1<lengths[axis]){++index[axis];position+=view.strides[axis];break;}
+            position-=std::ptrdiff_t(lengths[axis]-1)*view.strides[axis];index[axis]=0;
+        }
+        T value=read<T>(static_cast<const unsigned char*>(view.data)+position,view.swap);
         if constexpr(Boolean)value=T(value!=0);
         if constexpr(Half) {
             const double decoded=detail::decode_half(value);if(std::isnan(decoded)){result.has_nan=true;continue;}
@@ -195,13 +245,13 @@ double metric_read(const MetricImageView& view,std::ptrdiff_t byte_offset) {
     }
 }
 }
-MetricSums metric_sums(const MetricImageView& a,const MetricImageView& b,bool single,MetricNormalization mode,bool capture_underflow,bool scalar_power_double) {
+MetricSums metric_sums(const MetricImageView& a,const MetricImageView& b,bool single,MetricNormalization mode,bool capture_underflow,bool scalar_power_double,std::size_t reduction_block) {
     const auto n=count(a);count(b);if(a.shape!=b.shape)throw std::invalid_argument("metric shapes must match");
     if(int(mode)<0 || int(mode)>3)throw std::invalid_argument("invalid metric normalization");
     if(!n)return {};
-    auto result=single ? run<float>(a,b,n,mode,false):run<double>(a,b,n,mode,false);
+    auto result=single ? buffered_run<float>(a,b,n,mode,false,reduction_block):buffered_run<double>(a,b,n,mode,false,reduction_block);
     if(capture_underflow || result.nonfinite || !std::isfinite(result.error) || !std::isfinite(result.energy) || !std::isfinite(result.mean))
-        result=single ? run<float>(a,b,n,mode,true):run<double>(a,b,n,mode,true);
+        result=single ? buffered_run<float>(a,b,n,mode,true,reduction_block):buffered_run<double>(a,b,n,mode,true,reduction_block);
     if(scalar_power_double && single && a.shape.empty()) {
         // NumPy1.x promotes a 0-D float32 scalar ** Python-int operation to
         // double after the float32 subtraction. Array products and the
