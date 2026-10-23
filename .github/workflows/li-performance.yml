@@ -11,6 +11,11 @@ on:
         description: Also compare the preserved initial package
         type: boolean
         default: false
+      runner:
+        description: Hosted OS to measure (both by default)
+        type: choice
+        options: [both, ubuntu-latest, windows-latest]
+        default: both
 jobs:
   measure:
     permissions:
@@ -18,7 +23,7 @@ jobs:
       actions: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: ${{ fromJSON(inputs.runner == 'windows-latest' && '["windows-latest"]' || inputs.runner == 'ubuntu-latest' && '["ubuntu-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
     runs-on: ${{ matrix.os }}
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: '4'
