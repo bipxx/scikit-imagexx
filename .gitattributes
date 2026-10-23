@@ -10,3 +10,4 @@ coverage/evidence/public-wave5.json -text
 benchmarks/rank-public-*.json -text
 benchmarks/rank-distribution-public-*.json -text
 benchmarks/component-consumers-public-*.json -text
+coverage/contracts/rank-statistics.json -text

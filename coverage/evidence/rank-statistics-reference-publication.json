@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "source_revision": "b362aae905ae8ea9312007f701ba7467e29d55f9",
+  "scope": "Original-only R4 reference corpus publication; no native coverage or performance claim.",
+  "reference_proof": {
+    "path": "build/worktrees/rank-statistics-contracts/build/rank-statistics-contract-proof.json",
+    "sha256": "4e672c3b9781b218facfe37032ea08398d5d6bbb357a6cb3ce0fc20e54ce1a0d"
+  },
+  "contract": {
+    "path": "coverage/contracts/rank-statistics.json",
+    "raw_frozen_sha256": "047c34e7f32591fe4d574075f85c7d780ba66e9c4342bb6acf695b2ca7459588",
+    "canonical_lf_sha256": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
+    "source_git_blob_sha256": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
+    "equality_rule": "Exact raw bytes after CRLF to LF conversion only; complete parsed JSON also identical.",
+    "publication_rule": "coverage/contracts/rank-statistics.json -text"
+  },
+  "checks_per_runtime": 6257,
+  "canonical_cases": 995,
+  "upstream_only_paths": 8,
+  "native_checks": 0,
+  "case_changes": 0,
+  "new_algorithm_runs": 0,
+  "timing_calls": 0,
+  "note": "Preserve the original checked Windows corpus bytes and proof; Git initially normalized text on b362 staging. Both hashes and the exact derivation are recorded without changing any observation/assertion."
+}
