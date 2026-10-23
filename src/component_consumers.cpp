@@ -18,11 +18,11 @@ std::size_t count_of(const std::vector<std::size_t>& shape) {
     for(auto n:shape) {if(n>std::size_t(PTRDIFF_MAX)/8/count)throw std::overflow_error("consumer dimensions overflow");count*=n;}
     return count;
 }
-template<class F> void raster(const ConsumerRaster& view,F call) {
+template<class F> void raster(const ConsumerRaster& view,F call,int captured_workers=0) {
     if(view.shape.size()!=view.strides.size() || (view.itemsize!=1 && view.itemsize!=2 && view.itemsize!=4 && view.itemsize!=8))throw std::invalid_argument("invalid consumer raster");
     const auto count=count_of(view.shape);if(!count)return;
     if(!view.data)throw std::invalid_argument("nonnull consumer raster required");
-    auto workers=detail::active_workers(count);
+    auto workers=captured_workers ? captured_workers : detail::active_workers(count);
     std::vector<std::pair<std::size_t,std::size_t>> axes;
     for(std::size_t axis=0;axis<view.shape.size();++axis)if(view.shape[axis]>1)axes.emplace_back(std::size_t(std::abs(view.strides[axis])),view.shape[axis]);
     std::sort(axes.begin(),axes.end());std::size_t span=view.itemsize;
@@ -91,7 +91,7 @@ bool consumer_min_negative(const ComponentsView& input) {
         const auto mantissa=bytes==2 ? 0x3ffULL : bytes==4 ? 0x7fffffULL : 0xfffffffffffffULL;
         const bool nan=(bits&exponent)==exponent && (bits&mantissa);
         flags[id].nan|=nan;flags[id].negative|=(bits&sign) && (bits&~sign) && !nan;
-    });
+    },workers);
     bool has_negative=false,has_nan=false;for(const auto& f:flags){has_negative|=f.negative;has_nan|=f.nan;}return has_negative && !has_nan;
 }
 void consumer_truth_into(const std::intptr_t* input,std::uint8_t* output,std::size_t count,bool invert) {
@@ -189,8 +189,9 @@ std::vector<std::uint8_t> consumer_border_ids(const std::intptr_t* labels,const 
 }
 void consumer_clear_into(const std::intptr_t* labels,const std::uint8_t* remove,std::size_t number,const void* value,const ConsumerRaster& out) {
     const auto count=count_of(out.shape);if(number>count || (count && (!labels || !remove || !value)))throw std::invalid_argument("invalid consumer clear storage");
-    std::vector<std::uint8_t> invalid(std::size_t(detail::active_workers(count)),0);
-    raster(out,[&](auto i,char* p,auto id){if(labels[i]<0 || std::uint64_t(labels[i])>number)invalid[id]=1;else if(remove[std::size_t(labels[i])])std::memcpy(p,value,out.itemsize);});
+    const auto workers=detail::active_workers(count);
+    std::vector<std::uint8_t> invalid(std::size_t(workers),0);
+    raster(out,[&](auto i,char* p,auto id){if(labels[i]<0 || std::uint64_t(labels[i])>number)invalid[id]=1;else if(remove[std::size_t(labels[i])])std::memcpy(p,value,out.itemsize);},workers);
     if(std::find(invalid.begin(),invalid.end(),1)!=invalid.end())throw std::invalid_argument("invalid consumer component labels");
 }
 std::vector<std::uint64_t> consumer_sorted_unique(const std::uint64_t* input,std::size_t count) {

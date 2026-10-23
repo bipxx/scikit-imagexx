@@ -2,9 +2,11 @@
 #include "skimagexx/image.hpp"
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+#include <thread>
 using namespace skimagexx;
 namespace {
 void require(bool value){if(!value)throw std::runtime_error("component consumer native assertion failed");}
@@ -25,6 +27,23 @@ void count_filter(int workers) {
     const std::int16_t replacement=11;consumer_clear_into(labels.data(),remove.data(),7,&replacement,output);
     for(std::size_t i=1;i<=n;++i)require(pixels[i]==11);
 }
+#ifdef _OPENMP
+void concurrent_configuration() {
+    constexpr std::size_t n=513*513;
+    std::vector<std::intptr_t> labels(n,1),pixels(n);
+    ComponentsView input;input.data=labels.data();input.type=PixelType::int64;input.shape={n};input.strides={8};
+    ConsumerRaster output{pixels.data(),{n},{8},8};const std::uint8_t remove[]{0,1};const std::intptr_t fill=7;
+    std::atomic<bool> stop{false};std::thread setter([&]{while(!stop.load(std::memory_order_relaxed)){set_num_threads(1);set_num_threads(4);}});
+    try {
+        for(int repeat=0;repeat<20;++repeat) {
+            require(!consumer_min_negative(input));
+            consumer_clear_into(labels.data(),remove,1,&fill,output);
+            require(std::all_of(pixels.begin(),pixels.end(),[](auto value){return value==7;}));
+        }
+    } catch(...) {stop.store(true);setter.join();throw;}
+    stop.store(true);setter.join();set_num_threads(1);
+}
+#endif
 }
 int main() {
     require(consumer_count(nullptr,0).empty);
@@ -62,5 +81,8 @@ int main() {
         const auto result=consumer_sorted_unique(large.data(),large.size());require(result.size()==257);
         for(std::size_t i=0;i<result.size();++i)require(result[i]==1000000000000ULL+i);
     }
+#ifdef _OPENMP
+    concurrent_configuration();
+#endif
     set_num_threads(1);std::cout<<"component consumer native contracts passed\n";
 }
