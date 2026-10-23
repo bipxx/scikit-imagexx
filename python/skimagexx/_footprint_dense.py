@@ -21,8 +21,9 @@ def _generate(shape, dtype, kind, costs=None, limit=0.):
         # np.ones supplies the dtype's exact scalar (e.g. object int, U3 '1').
         # Allocation precedes atom conversion just as in np.ones(shape, dtype).
         output = np.empty(shape, dtype=dtype)
-        one = np.ones((), dtype=dtype)
-        zero = np.zeros((), dtype=dtype)
+        # Resolve caller dtype metadata only during the original-equivalent allocation.
+        one = np.ones((), dtype=output.dtype)
+        zero = np.zeros((), dtype=output.dtype)
     else:
         # np.array(bool_mask, dtype) parses dtype even for empty geometry.
         dtype = np.dtype(bool if dtype is None else dtype)
