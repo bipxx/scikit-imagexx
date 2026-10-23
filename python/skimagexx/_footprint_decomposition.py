@@ -82,15 +82,15 @@ def footprint_rectangle(shape, *, dtype=np.uint8, decomposition=None):
         decomposition = 'sequence_fallback'
     def partial(dim, width):
         target = (1,) * dim + (width,) + (1,) * (len(shape) - dim - 1)
-        return dense.footprint_rectangle(target, dtype=dtype), 1
+        return dense._generate(target, dtype, 0), 1
     if decomposition is None:
-        return dense.footprint_rectangle(shape, dtype=dtype)
+        return dense._generate(shape, dtype, 0)
     if decomposition in ('separable', 'sequence_fallback'):
         return tuple(partial(dim, width) for dim, width in enumerate(shape))
     if decomposition == 'sequence':
         minimum = min(shape)
         repetitions = 1 + (minimum - 3) // 2
-        sequence = [(dense.footprint_rectangle((3,) * len(shape), dtype=dtype), repetitions)]
+        sequence = [(dense._generate((3,) * len(shape), dtype, 0), repetitions)]
         for dim, width in enumerate(shape):
             if width > minimum:
                 sequence.append(partial(dim, width - minimum + 1))
