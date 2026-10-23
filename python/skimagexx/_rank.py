@@ -14,23 +14,33 @@ def _stateful_fp():
 
 def _ubyte(image):
     image=np.asarray(image)
+    dtype=image.dtype;ndim=image.ndim
     if image.dtype.type is np.uint8:return image
     if image.dtype.type not in _REAL:raise ValueError(f'Cannot convert from {image.dtype} to uint8.')
-    if image.dtype.kind=='f' and _stateful_fp():raise NotImplementedError('Stateful floating-point conversion policy is pending for rank filters.')
+    if dtype.kind=='f' and _stateful_fp():
+        # Owned NumPy dtype provider for exceptional, stateful FP policies.
+        # Each materialized stage finishes before its callback runs. Callbacks
+        # may mutate the caller's array, policy or handler between stages.
+        if np.min(image)<-1.0 or np.max(image)>1.0:
+            raise ValueError('Images of type float must be between -1 and 1.')
+        work=np.multiply(image,255,dtype=dtype.type)
+        np.rint(work,out=work)
+        np.clip(work,0,255,out=work)
+        return work.astype(np.uint8)
     result,downcast,maximum,nan,over,under,invalid,multiply_invalid=_core.rank_convert(image)
     if downcast:warnings.warn(f'Downcasting {image.dtype} to uint8 without scaling because max value {maximum} fits in uint8',UserWarning,stacklevel=3)
     if multiply_invalid or over:
         # NumPy reports combined multiply status in one operation, overflow
         # before invalid. Preserve warn/raise ordering and the shared mask.
-        dtype=image.dtype.type;probe=np.zeros(int(bool(over))+int(bool(multiply_invalid)),dtype)
-        if over:probe[0]=np.finfo(dtype).max
+        work_dtype=dtype.type;probe=np.zeros(int(bool(over))+int(bool(multiply_invalid)),work_dtype)
+        if over:probe[0]=np.finfo(work_dtype).max
         if multiply_invalid:
-            unsigned=np.uint16 if dtype is np.float16 else np.uint32 if dtype is np.float32 else np.uint64
-            probe.view(unsigned)[-1]=0x7c01 if dtype is np.float16 else 0x7f800001 if dtype is np.float32 else 0x7ff0000000000001
-        np.multiply(probe,255,dtype=dtype)
-    if image.ndim==0 and image.dtype.kind=='f':raise TypeError('return arrays must be of ArrayType')
+            unsigned=np.uint16 if work_dtype is np.float16 else np.uint32 if work_dtype is np.float32 else np.uint64
+            probe.view(unsigned)[-1]=0x7c01 if work_dtype is np.float16 else 0x7f800001 if work_dtype is np.float32 else 0x7ff0000000000001
+        np.multiply(probe,255,dtype=work_dtype)
+    if ndim==0 and dtype.kind=='f':raise TypeError('return arrays must be of ArrayType')
     if under:np.asarray([1e-300]).astype(np.float32)
-    if nan:np.asarray([np.nan],image.dtype).astype(np.uint8)
+    if nan:np.asarray([np.nan],dtype).astype(np.uint8)
     elif invalid:np.asarray([0x7f800001],np.uint32).view(np.float32).astype(np.uint8)
     return result
 
@@ -52,7 +62,10 @@ def _positive(footprint):
             # cannot be implemented by interpreting arbitrary raw pointers.
             return _ubyte(np.greater(footprint,0))
         np.empty(0,footprint.dtype)>0
-    if footprint.dtype.kind in 'fc' and _stateful_fp():raise NotImplementedError('Stateful floating-point footprint policy is pending for rank filters.')
+    if footprint.dtype.kind in 'fc' and _stateful_fp():
+        # This comparison owns its boolean output before invoking a callback;
+        # interpreting caller memory again after that callback would be wrong.
+        return _ubyte(np.greater(footprint,0))
     result,invalid=_core.rank_positive(footprint)
     if invalid:
         if footprint.dtype.kind=='c':

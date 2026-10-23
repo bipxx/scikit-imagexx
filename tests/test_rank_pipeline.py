@@ -152,14 +152,16 @@ def test_aliases_and_conversion_precedence(name,kind):
 @pytest.mark.parametrize('policy',['call','log','print'])
 @pytest.mark.parametrize('name',contracts.NAMES)
 @pytest.mark.parametrize('stage',['conversion','footprint'])
-def test_stateful_float_provider_explicit_pending(policy,name,stage):
+def test_stateful_float_provider_finite_parity(policy,name,stage):
     a=np.ones((3,5),np.float32 if stage=='conversion' else np.uint8)
     fp=np.ones((3,3),np.float32 if stage=='footprint' else np.uint8)
     with warnings.catch_warnings():
         warnings.simplefilter('ignore',UserWarning)
         with np.errstate(all=policy):
-            with pytest.raises(NotImplementedError,match='Stateful floating-point'):
-                getattr(native,name)(a,fp)
+            expected=getattr(reference,name)(a,fp)
+            actual=getattr(native,name)(a,fp)
+    np.testing.assert_array_equal(actual,expected)
+    assert actual.dtype==expected.dtype and actual.strides==expected.strides
 
 
 @pytest.mark.parametrize('name',contracts.NAMES)
