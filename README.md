@@ -16,6 +16,12 @@ speedups, raw reports and remaining regressions on an i7-12700K.
 
 ## Supported parity surface
 
+Symmetric image eigenvalues now have measured native implementations: one-worker
+geometric-mean speedups are 6.37×/6.35× on Linux and 5.18×/4.73× on Windows,
+with all 60 cases faster per API on each OS. Corrected-source full CI passes.
+See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
+input contract, raw samples and rejected trials.
+
 The reference is scikit-image **0.26.0**. There are currently **109 partially native
 image functions and two metadata helpers**. The
 [API inventory](coverage/README.md) tracks 455 public callable names across 18

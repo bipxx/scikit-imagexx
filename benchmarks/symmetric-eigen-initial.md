@@ -69,9 +69,11 @@ parity gaps: [Linux samples](symmetric-eigen-masked-control-ubuntu.json),
 Each reported speedup compares that revision to upstream. These independent
 runs do not establish a paired performance change between native revisions.
 
-Retention and merge remain pending corrected-source
+The corrected implementation is retained after successful
 [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39874772356).
 The earlier CI run caught a test-harness error: its serial-only build was asked
 to use four workers. Test-only commit `1e1b21b` fixes that configuration; the
 runtime source fingerprint is unchanged from measured source `33a0e57`.
 Local portable C++ tests and relocated consumers pass after the correction.
+All three final CI jobs passed: Windows, Linux and minimum NumPy. The measured
+runtime is unchanged; only test and report files were subsequently edited.
