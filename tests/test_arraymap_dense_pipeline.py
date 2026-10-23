@@ -75,7 +75,8 @@ def test_private_native_provenance_and_debug_assertions():
     if os.environ.get('SKIMAGEXX_REQUIRE_GIL_ASSERTIONS')=='1':assert core._consumer_gil_assertions is True
 
 
-@pytest.mark.parametrize('index',[0,-1,np.int64(0),np.uint64(999),True,np.bool_(True),
+@pytest.mark.parametrize('index',[0,-1,np.int64(0),np.uint64(999),np.uint64(2**63),np.uint64(2**64-1),
+    2**63,2**100,-2**100,True,np.bool_(True),
     np.array(0),np.array(True),np.array([0,1]),np.array([0,999]),np.array([0,0]),slice(None)])
 @pytest.mark.parametrize('readonly',[False,True])
 def test_checked_scalar_array_bool_index_and_readonly_order(index,readonly):
@@ -99,3 +100,20 @@ def test_compacted_key_base_and_ownership(nonzero):
     assert contract.array(keys)==contract.array(expected)
     assert keys.base.shape==expected.base.shape and keys.base.strides==expected.base.strides
     assert keys.base.flags.owndata==expected.base.flags.owndata
+
+
+@pytest.mark.parametrize('keys,values',[
+    ([0,2],np.array([3,4],np.int16)),([0,2],[3,4]),
+    ([True,False,True],[3,4]),([[0,2],[2,0]],[[3,4],[5,6]]),
+    ([0.5,1.0],[3,4]),
+])
+@pytest.mark.parametrize('dtype',[None,np.float32,'not-a-dtype'])
+def test_checked_sequence_keys_and_allocation_precedence(keys,values,dtype):
+    def run(cls):
+        mapping=cls(keys,values)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            try:output=contract.array(mapping.__array__(dtype=dtype));error=None
+            except Exception as caught:output=None;error=(type(caught).__name__,str(caught))
+        return output,error,[(type(n.message).__name__,str(n.message)) for n in notices],mapping._array is None,mapping.in_values is keys,mapping.out_values is values
+    assert run(candidate.ArrayMap)==run(OriginalArrayMap)

@@ -141,14 +141,15 @@ void bind_component_consumers(py::module_& m) {
         // map maxima retain consumer_max's C++ scan and scalar reconstruction.
         return maximum(keys,py::arg("axis")=py::none());
     });
-    m.def("consumer_dense",[zeros](const py::array& keys,py::object supplied_values,py::handle length,py::object dtype){
+    m.def("consumer_dense",[zeros](py::object supplied_keys,py::object supplied_values,py::handle length,py::object dtype){
         // Allocation is the shape/dtype authority, including object zeros.
         // No upstream ArrayMap or map_array implementation is called.
         py::array out=zeros(length,py::arg("dtype")=dtype).cast<py::array>();
-        const bool array_values=PyArray_Check(supplied_values.ptr());
+        const bool array_keys=PyArray_Check(supplied_keys.ptr()),array_values=PyArray_Check(supplied_values.ptr());
+        py::array keys=array_keys ? py::reinterpret_borrow<py::array>(supplied_keys) : py::array();
         py::array values=array_values ? py::reinterpret_borrow<py::array>(supplied_values) : py::array();
-        const auto key_kind=keys.dtype().kind(),value_kind=array_values ? values.dtype().kind() : '\0';
-        const bool typed=array_values && out.ndim()==1 && keys.ndim()==1 && values.ndim()==1 && keys.size()==values.size()
+        const auto key_kind=array_keys ? keys.dtype().kind() : '\0',value_kind=array_values ? values.dtype().kind() : '\0';
+        const bool typed=array_keys && array_values && out.ndim()==1 && keys.ndim()==1 && values.ndim()==1 && keys.size()==values.size()
             && (key_kind=='i' || key_kind=='u') && (value_kind=='b' || value_kind=='i' || value_kind=='u' || value_kind=='f')
             && values.itemsize()<=8 && PyArray_EquivTypes(PyArray_DESCR(array(values)),PyArray_DESCR(array(out)));
         if(typed) {
@@ -162,14 +163,21 @@ void bind_component_consumers(py::module_& m) {
         }
         // Checked indexing preserves negative/bool indices, bounds messages,
         // broadcast/cast warnings and the reference's partial-error ordering.
-        if(PyObject_SetItem(out.ptr(),keys.ptr(),supplied_values.ptr())<0)throw py::error_already_set();
+        if(PyObject_SetItem(out.ptr(),supplied_keys.ptr(),supplied_values.ptr())<0)throw py::error_already_set();
         return out;
     });
     m.def("consumer_scatter",[](const py::array& cache,py::handle index,py::handle values){
         const auto kind=cache.dtype().kind();
         const bool integer_scalar=(PyLong_Check(index.ptr()) && !PyBool_Check(index.ptr())) || PyArray_IsScalar(index.ptr(),Integer);
         if(integer_scalar && cache.ndim()==1 && cache.writeable() && (kind=='b' || kind=='i' || kind=='u' || kind=='f') && cache.itemsize()<=8) {
-            auto location=PyNumber_AsSsize_t(index.ptr(),PyExc_IndexError);if(PyErr_Occurred())throw py::error_already_set();
+            auto location=PyNumber_AsSsize_t(index.ptr(),PyExc_IndexError);
+            if(PyErr_Occurred()) {
+                // NumPy distinguishes large scalar integers from integers
+                // outside its index protocol. Keep that checked authority.
+                PyErr_Clear();
+                if(PyObject_SetItem(cache.ptr(),index.ptr(),values.ptr())<0)throw py::error_already_set();
+                return;
+            }
             const auto original=location;if(location<0)location+=cache.size();
             if(location<0 || location>=cache.size())throw py::index_error("index "+std::to_string(original)+" is out of bounds for axis 0 with size "+std::to_string(cache.size()));
             auto target=writable(cache);auto value=scalar(cache.dtype(),values);const std::uint64_t key=std::uint64_t(location);
