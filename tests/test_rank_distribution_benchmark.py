@@ -207,3 +207,4 @@ def test_workflow_all_preparation_before_fresh_measurement():
     assert '--no-deps build/prepared/wheels/*.whl' in measurement
     assert 'tests/test_rank_distribution_contracts.py tests/test_rank_distribution_pipeline.py tests/test_rank_distribution_benchmark.py' in preparation
     assert all(path in preparation for path in ('tests/test_rank_public.py','tests/test_rank_public_admission.py','tests/test_rank_integer_warning.py'))
+    assert 'rank-distribution-performance.json' in measurement and 'name: rank-distribution-performance-' in measurement

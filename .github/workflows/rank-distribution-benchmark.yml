@@ -140,11 +140,11 @@ jobs:
           python -m pip install --no-deps build/prepared/wheels/*.whl
       - name: Measure fixed public corpus (one-worker result is primary)
         shell: bash
-        run: python benchmarks/rank_distribution.py --threads $RANK_DISTRIBUTION_WORKERS --repeat 7 --prepared-source build/prepared/exact-package/baseline-source.json --output build/results/rank-performance.json
+        run: python benchmarks/rank_distribution.py --threads $RANK_DISTRIBUTION_WORKERS --repeat 7 --prepared-source build/prepared/exact-package/baseline-source.json --output build/results/rank-distribution-performance.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: rank-performance-${{ matrix.os }}-${{ matrix.runtime }}
+          name: rank-distribution-performance-${{ matrix.os }}-${{ matrix.runtime }}
           retention-days: 90
           path: |
             build/results/
