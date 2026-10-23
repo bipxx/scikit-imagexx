@@ -74,14 +74,19 @@ fixes buffered reductions and default-policy details, passing six 4,308-case
 profiles plus native sanitizers. Stateful callback policies and exact combined
 optimized wheels remain registration gates. Private parity is scoped evidence.
 Metrics benchmark tooling (`6c74563`, merged as `d94ef6c`) has a fixed 1,231-case
-corpus, including 19 expected errors; no metrics timing job has been dispatched.
+corpus, including 19 expected errors; its one-worker timing workflow is now queued.
 The combined public metrics, footprints and label package at `05c3506` now passes
 14,963 public-suite checks and 6,506 metadata/shared API checks in each of six
 runtime/SIMD profiles. All 18 dedicated untimed corpus runs pass at workers one
 and four, plus native tests, sanitizers and external SDK consumers. Counts include
 reference and metadata assertions; they are not distinct algorithm counts.
 The [acceptance record](evidence/public-wave1.json) seals 702 retained artifacts.
-These public integrations are parity-passed with performance pending.
+These public integrations are parity-passed with performance pending. The one-worker
+[metrics](https://github.com/bipxx/scikit-imagexx/actions/runs/39983272390),
+[footprint](https://github.com/bipxx/scikit-imagexx/actions/runs/39983468427) and
+[label](https://github.com/bipxx/scikit-imagexx/actions/runs/39983471905)
+measurement workflows are dispatched at recorded exact revisions. Poll these
+runs unchanged, including while queued.
 
 Transform class contracts (`6fa7f0a`, merged as `ad66094`) passed 228 reference and
 strict-rejection checks per runtime, with 224 public-native-pending cases. Four

@@ -8116,14 +8116,14 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": "feature/footprints-measurement",
+      "branch": "main",
       "base_sha": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
       "owns": [],
       "depends_on": [
         "footprints-public-integration",
         "footprints-benchmark-harness"
       ],
-      "state": "queued",
+      "state": "preparing",
       "dependency_requirements": {
         "footprints-public-integration": {
           "evidence_scope": "public_native"
@@ -8148,7 +8148,16 @@
         ],
         "corpus_sha256": null,
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "source_sha": "b4633193db85cd09de961fb934ef368216e34bda",
+        "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+        "run_id": 39983468427,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39983468427",
+        "observed_state": "queued",
+        "workers": [
+          1
+        ],
+        "note": "Authoritative isolated run; exact main head verified after dispatch. Poll unchanged; no restart for queue/observation timeouts."
       },
       "merge": {
         "commit": null,
@@ -8171,14 +8180,14 @@
       "kind": "measurement",
       "apis": [],
       "owner": "integrator",
-      "branch": "feature/components-measurement",
+      "branch": "main",
       "base_sha": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
       "owns": [],
       "depends_on": [
         "connected-components-public-integration",
         "components-benchmark-harness"
       ],
-      "state": "queued",
+      "state": "preparing",
       "dependency_requirements": {
         "connected-components-public-integration": {
           "evidence_scope": "public_native"
@@ -8203,7 +8212,16 @@
         ],
         "corpus_sha256": null,
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "source_sha": "b4633193db85cd09de961fb934ef368216e34bda",
+        "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+        "run_id": 39983471905,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39983471905",
+        "observed_state": "queued",
+        "workers": [
+          1
+        ],
+        "note": "Authoritative isolated run; exact main head verified after dispatch. Poll unchanged; no restart for queue/observation timeouts."
       },
       "merge": {
         "commit": null,
