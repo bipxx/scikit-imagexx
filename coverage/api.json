@@ -2739,11 +2739,15 @@
       "api": "filters.rank.entropy",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py"
     },
     {
       "api": "filters.rank.equalize",
@@ -2769,11 +2773,15 @@
       "api": "filters.rank.gradient",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py"
     },
     {
       "api": "filters.rank.gradient_percentile",
@@ -2799,21 +2807,29 @@
       "api": "filters.rank.maximum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py"
     },
     {
       "api": "filters.rank.mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py"
     },
     {
       "api": "filters.rank.mean_bilateral",
@@ -2839,31 +2855,43 @@
       "api": "filters.rank.median",
       "kind": "callable",
       "signature": "(image, footprint=None, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py"
     },
     {
       "api": "filters.rank.minimum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py"
     },
     {
       "api": "filters.rank.modal",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py"
     },
     {
       "api": "filters.rank.noise_filter",
@@ -2899,11 +2927,15 @@
       "api": "filters.rank.pop",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py"
     },
     {
       "api": "filters.rank.pop_bilateral",
@@ -2949,11 +2981,15 @@
       "api": "filters.rank.sum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py"
     },
     {
       "api": "filters.rank.sum_bilateral",
@@ -3031,11 +3067,15 @@
       "api": "filters.rank.generic.entropy",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py",
       "alias_of": "filters.rank.entropy"
     },
     {
@@ -3064,11 +3104,15 @@
       "api": "filters.rank.generic.gradient",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py",
       "alias_of": "filters.rank.gradient"
     },
     {
@@ -3086,55 +3130,75 @@
       "api": "filters.rank.generic.maximum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py",
       "alias_of": "filters.rank.maximum"
     },
     {
       "api": "filters.rank.generic.mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py",
       "alias_of": "filters.rank.mean"
     },
     {
       "api": "filters.rank.generic.median",
       "kind": "callable",
       "signature": "(image, footprint=None, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py",
       "alias_of": "filters.rank.median"
     },
     {
       "api": "filters.rank.generic.minimum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py",
       "alias_of": "filters.rank.minimum"
     },
     {
       "api": "filters.rank.generic.modal",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank_distribution.py",
       "alias_of": "filters.rank.modal"
     },
     {
@@ -3163,11 +3227,15 @@
       "api": "filters.rank.generic.pop",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py",
       "alias_of": "filters.rank.pop"
     },
     {
@@ -3185,11 +3253,15 @@
       "api": "filters.rank.generic.sum",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_public.py",
+      "benchmark": "benchmarks/rank.py",
       "alias_of": "filters.rank.sum"
     },
     {

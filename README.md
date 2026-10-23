@@ -7,7 +7,7 @@ namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
 Every native public function has scoped parity tests. Benchmark harnesses cover
-133 of the 137 partially native image API paths against original scikit-image;
+151 of the 155 partially native image API paths against original scikit-image;
 the four newly integrated component consumers still need benchmarks.
 Measurements include **one-worker** runs and allocation,
 conversion and Python dispatch costs. Published results identify measured
@@ -25,11 +25,11 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **137 partially native
+The reference is scikit-image **0.26.0**. There are currently **155 partially native
 image functions and three metadata helpers**. The
 [API inventory](coverage/README.md) tracks 474 public callable paths across 19
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases of existing algorithms; 329 paths remain upstream-only.
+rank.generic aliases of existing algorithms; 311 paths remain upstream-only.
 Four transform classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
@@ -41,6 +41,7 @@ This is not full scikit-image coverage.
 |---|---|---|
 | `transform.resize`, `transform.rescale` | Real arrays/memmaps and supported NumPy scalars; bool, all integer widths and float16/32/64; interpolation orders 0–5, five borders, anti-aliasing, clipping, preserve-range and rescale channel axes; native/endian/strided/unaligned storage | C++ B-spline preparation, typed grid sampling, per-axis typed Gaussian smoothing and clipping; AVX2 and optional global workers default one. Integer bounds retain all bits. Half identity uses raw-word SIMD without F16C. NumPy compiled reductions preserve exceptional zero-tie/NaN-bound ordering. Strict contract, scalar/SIMD, worker and sanitizer checks pass; One-worker baseline geometric means are 1.318x Windows, 1.431x modern Linux and 1.407x minimum NumPy. Slower cases remain and are retained in the [full report](benchmarks/resize-public-initial.md). Unsupported Python protocols/extended dtypes retain explicit fallback. |
 | `metrics.mean_squared_error`, `normalized_root_mse`, `peak_signal_noise_ratio` | Real arrays/memmaps and NumPy scalars, all Boolean/integer widths and float16/32/64, dtype promotions, strides/endianness, normalizations/ranges, empty and nonfinite inputs | Fused native reductions and materialized stages preserve reduction/callback order. The one-worker baseline is slower overall: 0.847x Windows, 0.673x modern Linux and 0.811x minimum NumPy. Endian and stepped loads are optimization targets; [all 1,212 workloads and regressions](benchmarks/metrics-public-initial.md) are retained. Extended dtypes/custom protocols use explicit compatibility. |
+| `filters.rank.minimum`, `maximum`, `mean`, `sum`, `pop`, `gradient`, `median`, `modal`, `entropy` and their `rank.generic` identity aliases | Scoped 2-D/3-D real arrays, footprints, masks, shifts, output storage, conversion warnings and callback policies; nine algorithms across eighteen paths | Own C++ rolling histograms, runtime SIMD and the shared optional global worker limit. NumPy provides explicit conversion stages for active policies and integer warning hooks. First-five safe aliases retain serial traversal; native overlapping-buffer parity for the last four remains pending. Listed proven overlaps use explicit compatibility. Public source and integer-hook proofs pass; combined integration and one-worker measurements are tracked separately in the [contract](coverage/contracts/rank-public.json). |
 | `measure.label`, `morphology.label` | Real 8/16/32/64-bit array types; Boolean higher-rank and numeric rank 1–3 behavior, backgrounds/connectivity/counts, layouts and singleton-axis restoration | Native conversion, SIMD equal runs, worker-local unions and deterministic stitching. The raster-only one-worker baseline is 0.821x Windows, 1.395x modern Linux and 1.210x minimum NumPy; large multivalued/high-connectivity regressions remain. [All measurements](benchmarks/components-public-initial.md) separate raster, tiny, empty and warning calls. Other valid dtypes/protocols use explicit compatibility. |
 | `morphology.remove_small_objects`, `remove_small_holes`, `segmentation.clear_border`, `relabel_sequential` | Frozen real-array, threshold/deprecation, connectivity, output mutation and returned sparse-map contracts; custom protocols/subclasses use explicit fallback | Own C++ counting, filtering, border removal, sorted relabeling and map stages share the sole native worker limit. The returned internal `ArrayMap` has its own tested state shell. Eight public Release/Debug profiles pass; performance remains pending. NumPy dtype/scalar metadata providers and unrepresented protocol combinations are explicit in the [acceptance scope](coverage/evidence/component-consumers-public.json). |
 | `morphology.footprint_rectangle`, `diamond`, `disk`, `ball`, `mirror_footprint`, `pad_footprint` | Exact dense/decomposition tuple forms, radius/shape/dtype/error behavior, view/scalar ownership, recursive sequences and arbitrary record padding | SIMD geometry, native decomposition plans and direct record copies. Raster one-worker geometric means are 2.160x Windows, 2.323x modern Linux and 2.499x minimum NumPy. Decomposition/view setup remains slower overall and is reported separately in the [full baseline](benchmarks/footprints-public-initial.md). Object/reference-bearing dtypes use explicit NumPy providers. |

@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 137 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 155 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -210,28 +210,28 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.autolevel_percentile` | upstream-only | pending | pending |
 | `filters.rank.enhance_contrast` | upstream-only | pending | pending |
 | `filters.rank.enhance_contrast_percentile` | upstream-only | pending | pending |
-| `filters.rank.entropy` | upstream-only | pending | pending |
+| `filters.rank.entropy` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.equalize` | upstream-only | pending | pending |
 | `filters.rank.geometric_mean` | upstream-only | pending | pending |
-| `filters.rank.gradient` | upstream-only | pending | pending |
+| `filters.rank.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient_percentile` | upstream-only | pending | pending |
 | `filters.rank.majority` | upstream-only | pending | pending |
-| `filters.rank.maximum` | upstream-only | pending | pending |
-| `filters.rank.mean` | upstream-only | pending | pending |
+| `filters.rank.maximum` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.mean_bilateral` | upstream-only | pending | pending |
 | `filters.rank.mean_percentile` | upstream-only | pending | pending |
-| `filters.rank.median` | upstream-only | pending | pending |
-| `filters.rank.minimum` | upstream-only | pending | pending |
-| `filters.rank.modal` | upstream-only | pending | pending |
+| `filters.rank.median` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.minimum` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.modal` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.noise_filter` | upstream-only | pending | pending |
 | `filters.rank.otsu` | upstream-only | pending | pending |
 | `filters.rank.percentile` | upstream-only | pending | pending |
-| `filters.rank.pop` | upstream-only | pending | pending |
+| `filters.rank.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.pop_bilateral` | upstream-only | pending | pending |
 | `filters.rank.pop_percentile` | upstream-only | pending | pending |
 | `filters.rank.subtract_mean` | upstream-only | pending | pending |
 | `filters.rank.subtract_mean_percentile` | upstream-only | pending | pending |
-| `filters.rank.sum` | upstream-only | pending | pending |
+| `filters.rank.sum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.sum_bilateral` | upstream-only | pending | pending |
 | `filters.rank.sum_percentile` | upstream-only | pending | pending |
 | `filters.rank.threshold` | upstream-only | pending | pending |
@@ -239,21 +239,21 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.windowed_histogram` | upstream-only | pending | pending |
 | `filters.rank.generic.autolevel` | upstream-only | pending | pending |
 | `filters.rank.generic.enhance_contrast` | upstream-only | pending | pending |
-| `filters.rank.generic.entropy` | upstream-only | pending | pending |
+| `filters.rank.generic.entropy` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.equalize` | upstream-only | pending | pending |
 | `filters.rank.generic.geometric_mean` | upstream-only | pending | pending |
-| `filters.rank.generic.gradient` | upstream-only | pending | pending |
+| `filters.rank.generic.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.majority` | upstream-only | pending | pending |
-| `filters.rank.generic.maximum` | upstream-only | pending | pending |
-| `filters.rank.generic.mean` | upstream-only | pending | pending |
-| `filters.rank.generic.median` | upstream-only | pending | pending |
-| `filters.rank.generic.minimum` | upstream-only | pending | pending |
-| `filters.rank.generic.modal` | upstream-only | pending | pending |
+| `filters.rank.generic.maximum` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.generic.mean` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.generic.median` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.generic.minimum` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.generic.modal` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.noise_filter` | upstream-only | pending | pending |
 | `filters.rank.generic.otsu` | upstream-only | pending | pending |
-| `filters.rank.generic.pop` | upstream-only | pending | pending |
+| `filters.rank.generic.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.subtract_mean` | upstream-only | pending | pending |
-| `filters.rank.generic.sum` | upstream-only | pending | pending |
+| `filters.rank.generic.sum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.threshold` | upstream-only | pending | pending |
 | `filters.rank.generic.windowed_histogram` | upstream-only | pending | pending |
 | `future.TrainableSegmenter` | upstream-only | pending | pending |

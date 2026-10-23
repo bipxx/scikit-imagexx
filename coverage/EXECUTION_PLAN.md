@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 137 native-partial image entries,
+The current inventory contains 474 public paths: 155 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 329 upstream-only entries. The expansion adds 19
+provider, and 311 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -16,8 +16,8 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The user has resumed implementation. Three worker agents are executing the
-rank public integration, controlled resize comparison and measured footprint
-optimization lanes in parallel, with the integrator handling
+rank overlap contracts, component-consumer benchmarks and additional rank
+intensity contracts in parallel, with the integrator handling
 shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
 review and preserved checkpoints remain recorded in the ledger. Existing hosted
 measurement jobs retain their authoritative run.
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Combined `99b1a1d` passes eight whole-package Debug/Release profiles; metrics SIMD and class timing tooling merged; private short-run label trial needs whole-package gates |
-| Worker 1 | `metrics_reductions` | Nine public rank algorithms and generic identity aliases | `d4508ac` whole-package gates pass with a known integer warning-hook gap; `0e5f860` correctness fix and stronger hook tests validating before public registration |
-| Worker 2 | `resize_api` | Controlled previous/current/original resize comparison | Metrics SIMD `6545e33` validated and merged; new independent capsule authenticates the preserved initial backend and keeps all 373 parity checks |
-| Worker 3 | `resize_bench` | Measured footprint setup bottlenecks | Class timing tooling `5d1b3da` and exact-artifact supplement validated and merged; rectangle dtype-provider correctness fix accepted; bounded rectangle/mirror optimization validating |
+| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Nine rank algorithms and aliases integrated with the closed warning-hook fix; controlled resize and footprint factory fixes merged; cumulative production-package gates and isolated dispatch next |
+| Worker 1 | `metrics_reductions` | Defined safe rank overlapping-buffer contracts | New reference contract covers histogram feedback and output preservation; frozen R2 benchmark tooling merged without altering the R1 corpus |
+| Worker 2 | `resize_api` | Original-versus-native four-consumer benchmarks | Controlled resize and complete source-header supplement validated; frozen 878-case consumer corpus has 205 eligible raster workloads; actual package gates running |
+| Worker 3 | `resize_bench` | Next four rank intensity algorithms | Autolevel, equalize, enhance_contrast and threshold reference contracts drafting; footprint optimization and factory callback correction validated across eight profiles |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

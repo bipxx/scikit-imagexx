@@ -29,7 +29,7 @@ for _names, _test, _benchmark in (
      'tests/test_rank_public.py','benchmarks/rank.py'),
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
            for name in ('gradient','median','modal','entropy')),
-     'tests/test_rank_public.py',None),
+     'tests/test_rank_public.py','benchmarks/rank_distribution.py'),
 ):
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 
