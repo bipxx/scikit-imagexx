@@ -6,18 +6,18 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 155 native-partial image entries,
+The current inventory contains 474 public paths: 163 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 311 upstream-only entries. The expansion adds 19
+provider, and 303 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-Three worker agents are executing returned-map provider compatibility,
-four-operation rank benchmark tooling, and cumulative-package validation followed
-by public rank intensity registration. The integrator handles shared wiring,
+Three worker agents are executing measured resize-result verification, the next
+four rank statistics reference contracts, and a coordinated cumulative build for
+SIMD metrics classification plus qualified R2 alias safety. The integrator handles shared wiring,
 hosted results, measured bottlenecks, prompt merges and cleanup. The earlier
 three-agent review and preserved checkpoints remain recorded in the ledger.
 Existing hosted measurement jobs retain their authoritative run.
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, hosted measurements, prompt merges and cleanup | Nine public rank algorithms; private thirteen-operation engine and alias480 merged; consumer0486 and stepped-half ae2fd75 merged. Fixing portable consumer source hashes while preserving all878 workloads; six obsolete source-only worktrees archived and removed |
-| Worker 1 | `metrics_reductions` | Returned-map allocation/max provider stages | Frozen5983259 reference audit confirms13 interposition gaps beyond the unchanged692/0486 scope. Implement a separate bounded fix with native ordinary scan/scatter and explicit checked providers; no upstream class forwarding |
-| Worker 2 | `resize_api` | Four-operation rank intensity benchmark tooling | Freeze1428 source-backed canonical cases, keep generic aliases untimed, preserve R1/R2 corpora, and validate reference/tooling independently. Actual native public gates wait for Worker3 packages |
-| Worker 3 | `resize_bench` | Cumulative155 proof, then public rank intensity registration | Complete authoritative591 runners and exact059 nested-test supplements before releasing source/cache lease. Then freeze product base a1665b5 once, append four wrappers/aliases, build whole packages/SDKs and run targeted cumulative checks |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Actual complete productc44 accepted;163 image paths/303 upstream-only, all163 test and benchmark links. R3 public and live-provider fix merged; controlled resize results under offline verification |
+| Worker 1 | `metrics_reductions` | Fixed-metric SIMD work and measured-result verification | Private211 finite/minmax SIMD classification passed, scalar reduction order unchanged. Verify/publish controlled resize raw samples offline while Worker3 validates the new cumulative core |
+| Worker 2 | `resize_api` | Next rank statistics reference contracts | Geometric mean, noise filter, centered mean and windowed histogram original contracts/oracles; eight paths remain upstream-only until native implementation/public proof |
+| Worker 3 | `resize_bench` | Cumulative metrics/alias actual-core validation | Safety1d +qualified public candidateba820 and metrics211 staged as61da. Reuse four producer caches once; freeze source and complete public4062 aliases/metrics/SDK/source gates before root acceptance |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

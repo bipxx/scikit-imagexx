@@ -1,8 +1,8 @@
 # Performance verification
 
-The current API inventory has 155 partially native image paths, three metadata
-helpers, four partially native transform classes and 311 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 155 image paths; measured
+The current API inventory has 163 partially native image paths, three metadata
+helpers, four partially native transform classes and 303 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 163 image paths; measured
 acceptance remains specific to the source revision and workload in each report.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
