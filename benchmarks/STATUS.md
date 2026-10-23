@@ -1,5 +1,16 @@
 # Last completed whole-library performance checkpoint
 
+Retained `feature.corner_harris`, `corner_shi_tomasi` and `corner_foerstner`,
+measured source `0513a44`: [full CI39881327501](https://github.com/bipxx/scikit-imagexx/actions/runs/39881327501)
+passed Windows, Linux and minimum NumPy. Isolated [measurement39881327150](https://github.com/bipxx/scikit-imagexx/actions/runs/39881327150)
+passed both OSes. One-worker geometric means by API are **3.225440× / 3.486305× /
+3.590115× Linux** and **2.333236× / 2.377552× / 2.850550× Windows**.
+All 264 one-worker cases are faster per OS; all 1,056 timed rows have zero
+numerical difference. Dedicated/native/SDK/sanitizer validation passes;
+[raw samples and scope](corner-responses-initial.md) are preserved.
+Native coverage is **113 + 2 metadata APIs**; **340 callable names** and
+29 classes/284 static member paths remain pending.
+
 Retained `feature.structure_tensor`, measured source `ccab3b0`:
 [full CI39877936041](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936041)
 passed Windows, Linux and minimum NumPy. Isolated
