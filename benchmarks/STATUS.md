@@ -1,5 +1,17 @@
 # Last completed whole-library performance checkpoint
 
+Main retains `filters.frangi` and `filters.hessian` with the dispatch-compatible
+runtime from `064b83a`: **121 partially native image APIs + 2 metadata**, with
+**332 callable names** pending. Full CI passes Windows, Linux and minimum NumPy;
+normal/generic NumPy dispatch and C++ SIMD/scalar parity checks pass. Final
+isolated paired measurements verify **576/576 faster one-worker cases on each
+OS**, with overall geometric means **4.044561× Linux / 3.233638× Windows**.
+The earlier four slower Windows zero-sigma cases remain in the corpus and are
+now faster. Raw trials, explicit native NumPy math dependencies, numerical
+scope and rejected/partial trials are recorded in the
+[retained scope and measurement report](frangi-initial.md).
+The retained checkpoints below describe their original measured coverage.
+
 Retained `filters.meijering`, measured source `f8cb5b4`:
 [full CI39907246156](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
 passed Windows, Linux and minimum NumPy; isolated
