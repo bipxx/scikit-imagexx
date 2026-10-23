@@ -3,10 +3,12 @@ on:
   push:
     paths-ignore:
       - '**/*.md'
+      - 'coverage/work_items.json'
       - 'benchmarks/*.json'
   pull_request:
     paths-ignore:
       - '**/*.md'
+      - 'coverage/work_items.json'
       - 'benchmarks/*.json'
   workflow_dispatch:
     inputs:

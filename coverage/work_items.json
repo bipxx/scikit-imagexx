@@ -25,11 +25,11 @@
       "depends_on": [],
       "state": "parity_passed",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "tests/test_resize_range.py",
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "f01d792447bc42cfdf8fc74d1bb9fa9afbd32546",
         "artifact_sha256": null,
         "runs": [
           "build/resize-experiments/range-parity-{windows,modern-linux,minimum-linux}.log",
@@ -52,7 +52,11 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/resize-range-increment/manifest.json",
+          "build/resize-range-*-wheels",
+          "build/resize-range-*-package"
+        ]
       }
     },
     {
@@ -73,10 +77,14 @@
       "state": "queued",
       "contract": {
         "interface": "resize_half_identity(image,clip,policy) -> (out,lower0dHalf,upper0dHalf,has_nan,has_value,runtime_order_used)",
-        "case_manifest": "build/worktrees/resize-api/build/half-identity-windows.json",
+        "case_manifest": "build/checkpoints/resize-api-increment/agent-evidence/half-identity-windows.json",
         "uncovered_cases": [
           "Native copy/clip implementation and validation pending; Half clipping policy must be probed separately."
-        ]
+        ],
+        "policies": {
+          "0": "Half: preserve zero ties; ignore NaN bounds",
+          "1": "Half: preserve zero ties; propagate first NaN bound only to non-NaN pixels; preserve input NaN payload"
+        }
       },
       "parity": {
         "source_sha": null,
@@ -110,7 +118,7 @@
         "transform.resize",
         "transform.rescale"
       ],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/resize-api",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
       "owns": [
@@ -122,15 +130,18 @@
       ],
       "state": "validating",
       "contract": {
-        "case_manifest": null,
+        "case_manifest": "build/checkpoints/resize-api-increment/agent-evidence/validated-wrapper.json",
         "uncovered_cases": [
           "Legal opposite-endian float16 identity finish needs the native half helper; public registration remains pending."
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "09c11b9db60efdb66bd6ea95f3a62e35516a1379",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "Archived candidate normal/scalar Windows and modernLinux:6042 passed,240 legalHalf cases pending",
+          "Archived minimum NumPy and intermediate1.25/2.0:6282 passed"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -142,19 +153,22 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "09c11b9db60efdb66bd6ea95f3a62e35516a1379",
+        "main_commit": "a79e891c23ac036ffd9486f91841aca0c8c003b8"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/resize-api-increment/agent-evidence",
+          "build/checkpoints/resize-api-increment/archive-manifest.json"
+        ]
       }
     },
     {
       "id": "resize-benchmark-harness",
       "kind": "benchmark_tooling",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "feature/resize-benchmark",
       "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
       "owns": [
@@ -163,33 +177,38 @@
         "tests/test_resize_benchmark.py"
       ],
       "depends_on": [],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "2e3585574069eacbc799886ea304879b66d6faf0",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "8 harness guard tests passed; all373 reference/candidate checks passed across Windows/modernLinux/minimumLinux; untimed only"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
         "raw_results": [],
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "2e3585574069eacbc799886ea304879b66d6faf0",
+        "main_commit": "5161e248d1067f2514c114a957c2d6d878c0af66"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
-      }
+        "protected_artifacts": [
+          "build/resize-experiments/benchmark-*.json"
+        ]
+      },
+      "validation_scope": "Tooling and in-memory development overlay only; real native registry and prepared-package gates remain pending."
     },
     {
       "id": "resize-public-integration",
@@ -295,14 +314,14 @@
         "src/bind_metrics.cpp",
         "python/skimagexx/_metrics.py",
         "tests/test_metrics_reductions.py",
-        "tests/test_metrics_native.cpp",
-        "benchmarks/metrics_reductions.py"
+        "tests/test_metrics_native.cpp"
       ],
       "depends_on": [],
       "state": "implementing",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": []
+        "uncovered_cases": [],
+        "interface": "bind_metrics(module): metrics_reduce(array0,array1,single,normalization,capture_underflow), metrics_raw_range(array)"
       },
       "parity": {
         "source_sha": null,
@@ -323,7 +342,9 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/worktrees/metrics-reductions"
+        ],
         "protected_artifacts": []
       }
     },
@@ -507,12 +528,15 @@
         "transform.EuclideanTransform",
         "transform.SimilarityTransform"
       ],
-      "owner": null,
-      "branch": null,
-      "base_sha": "97a772327aaed84ba883c8c36e5ac6c2b436d8e7",
-      "owns": [],
+      "owner": "resize_api",
+      "branch": "feature/transform-class-contracts",
+      "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
+      "owns": [
+        "tests/test_transform_class_contracts.py",
+        "coverage/contracts/transform-classes.json"
+      ],
       "depends_on": [],
-      "state": "queued",
+      "state": "contracting",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -602,6 +626,134 @@
         "transform.SimilarityTransform.scale",
         "transform.SimilarityTransform.translation"
       ]
+    },
+    {
+      "id": "metrics-benchmark-harness",
+      "kind": "benchmark_tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/metrics-benchmark",
+      "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
+      "owns": [
+        "benchmarks/metrics_reductions.py",
+        ".github/workflows/metrics-reductions-benchmark.yml",
+        "tests/test_metrics_reductions_benchmark.py"
+      ],
+      "depends_on": [],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "metrics-public-integration",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/metrics.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_api.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ],
+      "depends_on": [
+        "metrics-error-reductions"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "metrics-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": null,
+      "base_sha": "5161e248d1067f2514c114a957c2d6d878c0af66",
+      "owns": [],
+      "depends_on": [
+        "metrics-public-integration",
+        "metrics-benchmark-harness"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
     }
   ],
   "unassigned_inventoried_apis": [

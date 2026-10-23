@@ -32,13 +32,17 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Packet | Agent | Exclusive work | Current dependency |
 |---|---|---|---|
-| C++ foundations / integration | Integrator | Range scan, native half identity finish, shared wiring | Range merged as `97a7723`; legal endian-half identity is an explicit registration gate |
-| Resize/rescale contract | `resize_api` | `python/skimagexx/_resize.py`, `tests/test_resize_native_pipeline.py` | Frozen range wheel; validate the unchanged public contract before registration |
-| Resize benchmark harness | `resize_bench` | `benchmarks/resize.py`, dedicated workflow and harness tests | Harness can merge independently; measurements require registered, frozen APIs |
+| C++ foundations / integration | Integrator | Native half identity finish, shared wiring | Range merged as `97a7723`; legal endian-half identity is an explicit registration gate |
 | Error metrics | `metrics_reductions` | Three metrics' C++/SIMD/binding/helper and dedicated tests | Independent contract and kernel work; request shared wiring from integrator |
+| Metrics benchmark harness | `resize_bench` (reused) | Metrics corpus, dedicated workflow and harness tests | Prepare independently; measurements require registered, frozen APIs |
+| Transform class contracts | `resize_api` (reused) | Four classes' executable contracts and member/state matrix | Independent test-first packet; return for half-helper checks when its candidate is ready |
 
 The read-only planning reviewer has completed its audit; its slot was reassigned
-to error metrics. The full objective remains active while these packets run.
+to error metrics. Private resize/rescale wrappers (`09c11b9`) and resize benchmark
+tooling (`2e35855`) have already been merged. Their completed worktrees were removed
+after clean/ancestor checks and evidence preservation. The freed workers now run
+the next independent packets; public resize registration and measurements remain
+gated. The full objective remains active while these packets run.
 
 ## Dependency and merge order
 
@@ -112,6 +116,8 @@ treating the current static inventory as exhaustive.
   semantics; do not invent an image-kernel speedup for asset loading or metadata.
 - Only the integrator changes this task ledger. Workers report evidence and
   request integration; they do not edit another packet's registry or inventory.
+  Planning-ledger-only updates do not trigger the full build/test workflow;
+  product, contract-test and integration changes still do.
 - Never run local timing experiments. Untimed parity and `--check-only` are
   allowed. Never overlap measurements with builds/tests on their measurement
   host, or rebuild/delete a package a benchmark is using.
