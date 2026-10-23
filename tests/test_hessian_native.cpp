@@ -64,6 +64,13 @@ void zero_sigma(){
  std::vector<float> invalid(input.size(),0);invalid[0]=NAN;std::vector<float> fa(input.size()),fb(input.size()),fc(input.size());void* floats[]={fa.data(),fb.data(),fc.data()};
  require(!hessian_matrix_into(invalid.data(),PixelType::float32,floats,{19,23},{{},{}},true));
 }
-int main(){zero_sigma();repeated<float>();repeated<double>();tiny_derivative();volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
+void padded_constant_precision(){
+ std::vector<float> input{.11f,.23f,.37f,.41f,.53f,.67f,.79f},scratch(input.size()),expected(input.size()),actual(input.size());
+ auto pass=[&](const std::vector<float>& from,std::vector<float>& to){for(std::size_t x=0;x<from.size();++x){const double left=x ? double(from[x-1]) : -.3,right=x+1<from.size() ? double(from[x+1]) : -.3;double sum=double(from[x])*.5;sum+=(left+right)*.25;to[x]=float(sum);}};
+ pass(input,scratch);pass(scratch,expected);void* outputs[]={actual.data()};
+ const HessianPass smoothing{{0,{.25,.5,.25},GaussianBorder::constant,-.3},false};
+ require(hessian_matrix_into(input.data(),PixelType::float32,outputs,{input.size()},{{smoothing}},true));require(actual==expected);
+}
+int main(){padded_constant_precision();zero_sigma();repeated<float>();repeated<double>();tiny_derivative();volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
  require(hessian_matrix_into(nullptr,PixelType::float64,nullptr,{0,3},{{},{}},true));set_num_threads(1);std::cout<<"Hessian native checks passed\n";
 }

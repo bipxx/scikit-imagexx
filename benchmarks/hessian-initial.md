@@ -117,3 +117,42 @@ measured revision; later retention changes are reports and merge bookkeeping.
 Raw retained samples: [Linux](hessian-repeated-linux.json),
 [Windows](hessian-repeated-windows.json). Initial and intermediate trial data
 and exact packages remain preserved.
+
+## Padded-line follow-up
+
+Measured source **f24bc39263a9256d7e36d3ef07e521e90265ccbd** pads the last
+axis once per line, making SIMD available even when the axis is shorter than
+the filter support. Double buffers preserve ndimage's cval precision for
+float32 images and hoist repeated float32-to-double conversion. Original-radius
+padding also permits ordered negative-zero repair without boundary mapping.
+Bit-identical line/block reuse and independent zero-sigma outputs are retained.
+
+The [padded measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39895498481)
+passed both platforms. Exact source/binary hashes, seven samples and unchanged
+fixed-case hashes were verified. All 960 timed rows have zero numerical error.
+
+| One-worker result | Linux | Windows |
+|---|---:|---:|
+| Finite-difference geometric mean | 4.553658× | 3.787322× |
+| Gaussian-derivative geometric mean | 4.657071× | 4.577836× |
+| Finite-difference minimum | 2.042799× | 1.118084× |
+| Gaussian-derivative minimum | 1.570192× | 1.741476× |
+
+All 240 one-worker cases are faster on each platform. The twelve previously
+slower Windows 3-D Gaussian cases now measure **3.111887×–3.490604×**
+over upstream. No adverse cases were removed. Results compare each candidate
+with upstream on its own runner; these are not paired candidate-to-candidate
+measurements. Raw samples: [Linux](hessian-padded-linux.json),
+[Windows](hessian-padded-windows.json).
+
+The combined package passes 8,204 integration checks per runtime and 1,532
+shape/Hessian checks per SIMD mode per runtime. Untimed checks cover 480
+Hessian and 240 shape cases per runtime. Native C++ tests pass 9/9 on Windows
+and both Linux configurations; relocated SDK consumers pass 8/8 on all three.
+ASan/UBSan pass 9/9 normally and with constrained OpenMP teams. Exact short-axis
+and border-constant regressions are included. No local performance timings ran.
+
+The same-revision [shape control](https://github.com/bipxx/scikit-imagexx/actions/runs/39895501195)
+passes all 120 one-worker cases per OS, at 3.817543× Linux / 2.631455× Windows.
+The [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39895498410)
+is still running; this padded follow-up awaits retention.

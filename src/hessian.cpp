@@ -57,6 +57,37 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
  std::size_t first=0;while(first<original_radius && p.weights[first]==0.)++first;
  const auto radius=original_radius-first;const auto* weights=p.weights.data()+first;std::size_t stride=1;
  for(std::size_t axis=p.axis+1;axis<shape.size();++axis)stride*=shape[axis];
+ // Pad a contiguous last-axis line once, retaining double cval precision even
+ // for float32 inputs. Every output pixel can then use the SIMD dot product.
+ if(stride==1){
+  detail::partition(count/length,workers,[&](auto row_begin,auto row_end,auto){
+   std::vector<double> padded(length+2*original_radius);
+   std::vector<const void*> left(radius),right(radius);
+   for(std::size_t j=0;j<radius;++j){left[j]=padded.data()+original_radius-radius+j;right[j]=padded.data()+original_radius+radius-j;}
+   for(auto row=row_begin;row<row_end;++row){const auto* from=input+row*length;auto* target=output+row*length;
+    if(row>row_begin && std::memcmp(from,from-length,length*sizeof(T))==0){std::copy_n(target-length,length,target);continue;}
+    std::copy_n(from,length,padded.data()+original_radius);
+    for(std::size_t j=0;j<original_radius;++j){
+     const auto lo=mapped(std::ptrdiff_t(j)-std::ptrdiff_t(original_radius),length,p.border),hi=mapped(std::ptrdiff_t(length)+std::ptrdiff_t(j),length,p.border);
+     padded[j]=lo<0 ? p.cval : double(from[std::size_t(lo)]);
+     padded[original_radius+length+j]=hi<0 ? p.cval : double(from[std::size_t(hi)]);
+    }
+    std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2())done=simd::hessian_convolve(left.data(),right.data(),padded.data()+original_radius,target,length,radius,weights,derivative,p.cval,false,std::is_same_v<T,float>);
+#endif
+    for(;done<length;++done){double sum=padded[original_radius+done]*weights[radius];
+     for(std::size_t j=0;j<radius;++j){const auto a=padded[original_radius+done-radius+j],b=padded[original_radius+done+radius-j];sum+=(derivative ? a-b : a+b)*weights[j];}
+     target[done]=T(sum);
+    }
+    if(first)for(std::size_t x=0;x<length;++x)if(target[x]==T(0) && std::signbit(target[x])){
+     double sum=padded[original_radius+x]*p.weights[original_radius];
+     for(std::size_t j=0;j<original_radius;++j){const auto a=padded[x+j],b=padded[2*original_radius+x-j];sum+=(derivative ? a-b : a+b)*p.weights[j];}
+     target[x]=T(sum);
+    }
+   }
+  });return;
+ }
  // Identical inner blocks have identical ordered results. Compute one value
  // per block, including the original zero tails, then copy its exact bits.
  if(stride>1){
@@ -77,17 +108,9 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
   }
  }
  detail::partition(count,workers,[&](auto begin,auto end,auto){
-  const auto partition_begin=begin;
   std::vector<const void*> left(radius),right(radius);
   while(begin<end){const auto coordinate=begin/stride%length,inner=begin%stride,block=begin-coordinate*stride-inner;
-   // A previous complete row in this worker's partition is safe to reuse.
-   // Byte comparison distinguishes signed zeros and keeps worker output exact.
-   if(stride==1 && coordinate==0 && end-begin>=length && begin-partition_begin>=length &&
-      std::memcmp(input+begin,input+begin-length,length*sizeof(T))==0){
-    std::copy_n(output+begin-length,length,output+begin);begin+=length;continue;
-   }
    auto stop=std::min(end,begin+stride-inner);
-   if(stride==1 && coordinate>=radius && radius<length && coordinate<length-radius)stop=std::min(end,block+length-radius);
    for(std::size_t j=0;j<radius;++j){const auto distance=std::ptrdiff_t(radius-j);
     const auto lo=mapped(std::ptrdiff_t(coordinate)-distance,length,p.border),hi=mapped(std::ptrdiff_t(coordinate)+distance,length,p.border);
     left[j]=lo<0 ? nullptr : input+block+std::size_t(lo)*stride+inner;
@@ -95,7 +118,7 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
    }
    std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-   if(has_avx2())done=simd::hessian_convolve(left.data(),right.data(),input+begin,output+begin,stop-begin,radius,weights,derivative,p.cval,std::is_same_v<T,float>);
+   if(has_avx2())done=simd::hessian_convolve(left.data(),right.data(),input+begin,output+begin,stop-begin,radius,weights,derivative,p.cval,std::is_same_v<T,float>,std::is_same_v<T,float>);
 #endif
    for(;done<stop-begin;++done){double sum=double(input[begin+done])*weights[radius];
     for(std::size_t j=0;j<radius;++j){const auto a=left[j] ? double(static_cast<const T*>(left[j])[done]) : p.cval,b=right[j] ? double(static_cast<const T*>(right[j])[done]) : p.cval;
