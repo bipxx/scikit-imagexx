@@ -2,8 +2,11 @@
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include "simd.hpp"
+#include "resize_gaussian.hpp"
+#include "resize_cast.hpp"
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -63,7 +66,8 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                     const double b=hi<0 ? pass.cval : double(input[block+std::size_t(hi)*stride+inner]);
                     sum+=(a+b)*pass.weights[j];
                 }
-                output[position]=Output(sum);
+                if constexpr(std::is_integral_v<Output>)output[position]=detail::resize_raw_cast<Output>(sum);
+                else output[position]=Output(sum);
             };
             if(stride==1) {
                 auto stop=std::min(end,block+length),position=begin;
@@ -76,8 +80,16 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                         left[j]=input+position-(radius-j);right[j]=input+position+(radius-j);
                     }
 #ifdef SKIMAGEXX_AVX2
-                    if(has_avx2())position+=simd::gaussian_rows(left.data(),right.data(),input+position,output+position,vector_end-position,
-                        radius,pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                    if(has_avx2()) {
+                        if constexpr(std::is_integral_v<Output>)position+=simd::gaussian_raw_rows(left.data(),right.data(),input+position,output+position,vector_end-position,
+                            radius,pass.weights.data(),center_weight,pass.cval,
+                            sizeof(Output)==1 ? (std::is_signed_v<Output> ? PixelType::int8 : PixelType::uint8) :
+                            sizeof(Output)==2 ? (std::is_signed_v<Output> ? PixelType::int16 : PixelType::uint16) :
+                            sizeof(Output)==4 ? (std::is_signed_v<Output> ? PixelType::int32 : PixelType::uint32) :
+                            std::is_signed_v<Output> ? PixelType::int64 : PixelType::uint64);
+                        else position+=simd::gaussian_rows(left.data(),right.data(),input+position,output+position,vector_end-position,
+                            radius,pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                    }
 #endif
                     for(;position<vector_end;++position)scalar(position);
                 }
@@ -103,8 +115,16 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                 }
                 std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-                if(has_avx2())done=simd::gaussian_rows(left.data(),right.data(),input+begin,output+begin,span,radius,
-                    pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                if(has_avx2()) {
+                    if constexpr(std::is_integral_v<Output>)done=simd::gaussian_raw_rows(left.data(),right.data(),input+begin,output+begin,span,radius,
+                        pass.weights.data(),center_weight,pass.cval,
+                        sizeof(Output)==1 ? (std::is_signed_v<Output> ? PixelType::int8 : PixelType::uint8) :
+                        sizeof(Output)==2 ? (std::is_signed_v<Output> ? PixelType::int16 : PixelType::uint16) :
+                        sizeof(Output)==4 ? (std::is_signed_v<Output> ? PixelType::int32 : PixelType::uint32) :
+                        std::is_signed_v<Output> ? PixelType::int64 : PixelType::uint64);
+                    else done=simd::gaussian_rows(left.data(),right.data(),input+begin,output+begin,span,radius,
+                        pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                }
 #endif
                 for(auto i=done;i<span;++i)scalar(begin+i);
                 begin+=span;
@@ -162,6 +182,37 @@ ConversionInfo gaussian_nd_into(const void* input,void* output,PixelType source,
     if(target==PixelType::float32)return filter(static_cast<const double*>(input),static_cast<float*>(output),source,target,shape,passes,count,workers);
     return filter(static_cast<const double*>(input),static_cast<double*>(output),source,target,shape,passes,count,workers);
 }
+namespace detail {
+void gaussian_raw_into(const void* input,void* output,PixelType type,
+                       const std::vector<std::size_t>& shape,const std::vector<GaussianPass>& passes) {
+    if(type==PixelType::float32 || type==PixelType::float64) {
+        gaussian_nd_into(input,output,type,type,shape,passes,true);return;
+    }
+    if(type==PixelType::boolean)throw std::invalid_argument("boolean raw Gaussian is not supported");
+    const auto count=elements(shape,sizeof(double));
+    for(const auto& pass:passes) {
+        if(pass.axis>=shape.size() || pass.weights.empty() || pass.weights.size()%2==0 || int(pass.border)<0 || int(pass.border)>4)
+            throw std::invalid_argument("invalid Gaussian pass");
+        for(std::size_t j=0;j<pass.weights.size()/2;++j)
+            if(std::abs(pass.weights[j]-pass.weights[pass.weights.size()-1-j])>std::numeric_limits<double>::epsilon())
+                throw std::invalid_argument("symmetric Gaussian coefficients required");
+    }
+    if(!count)return;
+    if(!input || !output || input==output)throw std::invalid_argument("disjoint nonnull raw Gaussian storage required");
+    if(passes.empty()) {
+        std::memcpy(output,input,count*pixel_size(type));
+        return;
+    }
+    const auto workers=active_workers(count);
+    switch(type) {
+        #define RAW(tag,T) case PixelType::tag:filter(static_cast<const T*>(input),static_cast<T*>(output),type,type,shape,passes,count,workers);break;
+        RAW(uint8,std::uint8_t) RAW(int8,std::int8_t) RAW(uint16,std::uint16_t) RAW(int16,std::int16_t)
+        RAW(uint32,std::uint32_t) RAW(int32,std::int32_t) RAW(uint64,std::uint64_t) RAW(int64,std::int64_t)
+        #undef RAW
+        default:throw std::invalid_argument("unsupported raw Gaussian type");
+    }
+}
+} // namespace detail
 namespace {
 template<class T> void difference(const T* first,const T* second,T* output,std::size_t count) {
     detail::partition(count,detail::active_workers(count),[&](std::size_t begin,std::size_t end,auto) {
