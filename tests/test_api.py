@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance, native_classes
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -15,12 +15,17 @@ from skimage import metrics as reference_metrics, measure as reference_measure
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
            (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform),
            (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure)]
-FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__]
+FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
+             if not inspect.isclass(getattr(native,name))]
+CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
+           if inspect.isclass(getattr(native,name))]
 
 
 def test_registry_matches_per_function_tests():
     tested = {module.__name__.split('.', 1)[1]+'.'+name for module, _, name in FUNCTIONS}
     assert tested == set(native_functions())
+    tested_classes={module.__name__.split('.',1)[1]+'.'+name for module,_,name in CLASSES}
+    assert tested_classes==set(native_classes())
 
 
 def test_unported_namespace_interchangeability():
