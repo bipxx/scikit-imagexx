@@ -1,4 +1,8 @@
-"""Raw-value pairwise image metrics, backed by fused native reductions."""
+"""Raw-value pairwise image metrics, backed by fused native reductions.
+
+Native FP policies are warn, raise and ignore. Stateful call/log/print
+policies use explicit compatibility fallback until stagewise execution exists.
+"""
 import warnings
 import numpy as np
 from . import _core
@@ -21,6 +25,7 @@ def _prepare(first,second):
     if not (type(second) in (np.ndarray,np.memmap) or isinstance(second,np.generic)):return None
     if first.dtype.kind=='c' or second.dtype.kind=='c':raise ValueError('complex valued input is not supported')
     if first.dtype.type not in _REAL or second.dtype.type not in _REAL:return None
+    if any(policy not in ('warn','raise','ignore') for policy in np.geterr().values()):return None
     return np.float32 if first.dtype.char in 'ef' and second.dtype.char in 'ef' else np.float64
 
 
@@ -63,9 +68,20 @@ def _casts(result):
             np.array([0x7f800001],np.uint32).view(np.float32).astype(np.float64)
 
 
-def _error(result,size,dtype):
+def _error(result,size,dtype,scalar=False):
     _emit(result['subtract_flags'],'subtract',dtype)
-    _emit(result['square_flags'],'square',dtype)
+    if scalar and result['square_flags']:
+        # Zero-dimensional subtraction produces a NumPy scalar; its power
+        # reports 'scalar power' rather than the array ufunc's 'square'.
+        flags=result['square_flags'];typ=np.dtype(dtype).type
+        if flags&1:
+            with np.errstate(invalid='ignore',under='ignore'):typ(np.finfo(dtype).max)**2
+        if flags&2:
+            with np.errstate(over='ignore',invalid='ignore'):typ(np.finfo(dtype).tiny)**2
+        if flags&4:
+            bits=np.array([0x7f800001],np.uint32) if dtype is np.float32 else np.array([0x7ff0000000000001],np.uint64)
+            with np.errstate(over='ignore',under='ignore'):bits.view(dtype)[0]**2
+    else:_emit(result['square_flags'],'square',dtype)
     _emit(result['error_reduce_flags'],'reduce',np.float64)
     return _mean(result['error'],size,np.float64)
 
@@ -82,7 +98,7 @@ def mean_squared_error(image0,image1):
     if dtype is None:return fallback('metrics','mean_squared_error',image0,image1)
     data=_reduce(image0,image1,dtype,0)
     _casts(data)
-    return _error(data,image0.size,dtype)
+    return _error(data,image0.size,dtype,image0.ndim==0)
 
 
 def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
@@ -114,7 +130,7 @@ def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
         if 'minmax_scalars' in data:low,high=data['minmax_scalars']
         if not data['nan']:low=np.dtype(dtype).type(data['low']);high=np.dtype(dtype).type(data['high'])
         denominator=high-low
-    return np.sqrt(_error(data,image_true.size,dtype))/denominator
+    return np.sqrt(_error(data,image_true.size,dtype,image_true.ndim==0))/denominator
 
 
 def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
@@ -123,6 +139,8 @@ def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
     if not known(image_true) or not known(image_test):
         return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
     if any(image.dtype.type not in _REAL and image.dtype.kind!='c' for image in (image_true,image_test)):
+        return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
+    if any(policy not in ('warn','raise','ignore') for policy in np.geterr().values()):
         return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
     if data_range is None:
         if image_true.dtype!=image_test.dtype:
@@ -137,7 +155,7 @@ def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
     if dtype is None:return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
     data=_reduce(image_true,image_test,dtype,0)
     _casts(data)
-    error=_error(data,image_true.size,dtype)
+    error=_error(data,image_true.size,dtype,image_true.ndim==0)
     data_range=float(data_range)
     return 10*np.log10((data_range**2)/error)
 

@@ -21,14 +21,16 @@ std::vector<std::size_t> order(const py::array& image,bool keep) {
     // Broadcast axes carry no physical ordering information. NumPy retains
     // logical C order rather than moving a zero-stride axis innermost.
     if(keep)for(auto axis:axes)if(image.strides(py::ssize_t(axis))==0)return axes;
-    if(keep)std::stable_sort(axes.begin(),axes.end(),[&](auto a,auto b){return std::abs(image.strides(py::ssize_t(a)))>std::abs(image.strides(py::ssize_t(b)));});
+    const auto magnitude=[](py::ssize_t value){return value<0 ? std::uint64_t(-(value+1))+1:std::uint64_t(value);};
+    if(keep)std::stable_sort(axes.begin(),axes.end(),[&](auto a,auto b){return magnitude(image.strides(py::ssize_t(a)))>magnitude(image.strides(py::ssize_t(b)));});
     return axes;
 }
 }
 void bind_metrics(py::module_& module) {
     const auto numpy=py::module_::import("numpy");
     const py::object minimum=numpy.attr("minimum").attr("reduce"),maximum=numpy.attr("maximum").attr("reduce");
-    module.def("metrics_reduce",[numpy,minimum,maximum](py::array first,py::array second,bool single,int normalization,bool capture_underflow,bool scalar_power_double) {
+    const bool buffered=numpy.attr("lib").attr("NumpyVersion")(numpy.attr("__version__")).attr("__lt__")("2.3.0").cast<bool>();
+    module.def("metrics_reduce",[numpy,minimum,maximum,buffered](py::array first,py::array second,bool single,int normalization,bool capture_underflow,bool scalar_power_double) {
         if(first.ndim()!=second.ndim())throw py::value_error("Input images must have the same dimensions.");
         for(py::ssize_t axis=0;axis<first.ndim();++axis)if(first.shape(axis)!=second.shape(axis))throw py::value_error("Input images must have the same dimensions.");
         const bool common_f=bool(first.flags()&py::array::f_style) && bool(second.flags()&py::array::f_style);
@@ -36,12 +38,13 @@ void bind_metrics(py::module_& module) {
         const auto mode=static_cast<skimagexx::MetricNormalization>(normalization);
         const auto true_axes=order(first,true);const bool separate=normalization!=0 && true_axes!=axes;
         const auto normalized=view(first,true_axes);
+        const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
         skimagexx::MetricSums result;
         {
             py::gil_scoped_release release;
-            result=skimagexx::metric_sums(a,b,single,mode,capture_underflow,scalar_power_double);
+            result=skimagexx::metric_sums(a,b,single,mode,capture_underflow,scalar_power_double,block);
             if(separate) {
-                const auto stats=skimagexx::metric_sums(normalized,normalized,single,mode,capture_underflow);
+                const auto stats=skimagexx::metric_sums(normalized,normalized,single,mode,capture_underflow,false,block);
                 result.energy=stats.energy;result.mean=stats.mean;result.low=stats.low;result.high=stats.high;
                 result.energy_flags=stats.energy_flags;result.energy_reduce_flags=stats.energy_reduce_flags;result.mean_reduce_flags=stats.mean_reduce_flags;
                 result.valid=stats.valid;result.nan=stats.nan;

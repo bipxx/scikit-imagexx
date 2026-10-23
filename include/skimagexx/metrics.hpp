@@ -18,14 +18,18 @@ struct MetricSums {
     unsigned cast0_flags=0,cast1_flags=0;
     bool nonfinite=false,valid=false,nan=false,range_signaling=false;
 };
+// Bounds occupy the first storage-width bytes of each word in native byte
+// order; bounds are unspecified when has_nan is true.
 struct MetricRawRange {std::uint64_t low=0,high=0;bool has_nan=false;};
 // Fused raw-value conversion/subtract/square and ordered pairwise reductions.
 // Views have equal shapes; either arbitrary byte strides/endianness are allowed.
 // single=true requests float32 subtraction/products (half/F32 inputs only).
 // Other inputs use float64. Optional workers preserve the fixed reduction tree.
+// reduction_block reproduces legacy NumPy iterator-buffer reduction order.
 // scalar_power_double reproduces NumPy1.x's 0-D float32 ** Python-int policy.
 MetricSums metric_sums(const MetricImageView&,const MetricImageView&,bool single,
-                       MetricNormalization,bool capture_underflow=false,bool scalar_power_double=false);
+                       MetricNormalization,bool capture_underflow=false,bool scalar_power_double=false,
+                       std::size_t reduction_block=0);
 MetricRawRange metric_raw_range(const MetricImageView&);
 namespace detail {
 double metric_read(const MetricImageView&,std::ptrdiff_t byte_offset);
