@@ -134,18 +134,50 @@ void bind_component_consumers(py::module_& m) {
         for(py::ssize_t i=1;i<a.size();++i){const auto x=prepared.data()[i];if(a.dtype().kind()=='i' ? std::int64_t(x)>std::int64_t(maximum) : x>maximum)maximum=x;}
         py::array_t<std::uint64_t> raw(1);raw.mutable_data()[0]=maximum;auto typed=cast(raw,a.dtype(),NPY_CORDER);return typed.attr("__getitem__")(0);
     });
-    m.def("consumer_dense",[](const py::array& keys,const py::array& values,py::handle length,py::dtype dtype){
-        PyArray_Dims dimensions{nullptr,0};if(!PyArray_IntpConverter(length.ptr(),&dimensions))throw py::error_already_set();
-        std::vector<py::ssize_t> dims(dimensions.ptr,dimensions.ptr+dimensions.len);PyDimMem_FREE(dimensions.ptr);
-        py::array out(dtype,dims);pod_buffer(out);if(out.ndim()!=1)throw py::value_error("one-dimensional dense map required");
-        auto old=words(keys);auto source=cast(values,dtype,NPY_CORDER);if(source.size()<old.size())throw py::value_error("insufficient map values");
-        const auto bytes=std::size_t(out.itemsize());const auto count=std::size_t(out.size());
-        {py::gil_scoped_release release;consumer_dense_into(old.data(),source.data(),old.size(),bytes,out.mutable_data(),count);}return out;
+    const auto numpy=py::module_::import("numpy");
+    const py::object zeros=numpy.attr("zeros"),maximum=numpy.attr("maximum").attr("reduce");
+    m.def("consumer_dense_max",[maximum](py::object keys){
+        // Noninteger constructors need NumPy's scalar/type protocol. Integer
+        // map maxima retain consumer_max's C++ scan and scalar reconstruction.
+        return maximum(keys,py::arg("axis")=py::none());
+    });
+    m.def("consumer_dense",[zeros](py::object supplied_keys,py::object supplied_values,py::handle length,py::object dtype){
+        // Allocation is the shape/dtype authority, including object zeros.
+        // No upstream ArrayMap or map_array implementation is called.
+        py::array out=zeros(length,py::arg("dtype")=dtype).cast<py::array>();
+        const bool array_keys=PyArray_Check(supplied_keys.ptr()),array_values=PyArray_Check(supplied_values.ptr());
+        py::array keys=array_keys ? py::reinterpret_borrow<py::array>(supplied_keys) : py::array();
+        py::array values=array_values ? py::reinterpret_borrow<py::array>(supplied_values) : py::array();
+        const auto key_kind=array_keys ? keys.dtype().kind() : '\0',value_kind=array_values ? values.dtype().kind() : '\0';
+        const bool typed=array_keys && array_values && out.ndim()==1 && keys.ndim()==1 && values.ndim()==1 && keys.size()==values.size()
+            && (key_kind=='i' || key_kind=='u') && (value_kind=='b' || value_kind=='i' || value_kind=='u' || value_kind=='f')
+            && values.itemsize()<=8 && PyArray_EquivTypes(PyArray_DESCR(array(values)),PyArray_DESCR(array(out)));
+        if(typed) {
+            auto old=words(keys);const auto count=std::size_t(out.size());bool in_bounds=true;
+            {py::gil_scoped_release release;for(py::ssize_t i=0;i<old.size();++i)if(old.data()[i]>=count){in_bounds=false;break;}}
+            if(in_bounds) {
+                auto source=contiguous(values);const auto bytes=std::size_t(out.itemsize());
+                {py::gil_scoped_release release;consumer_scatter_into(old.data(),source.data(),std::size_t(old.size()),bytes,out.mutable_data(),count);}
+                return out;
+            }
+        }
+        // Checked indexing preserves negative/bool indices, bounds messages,
+        // broadcast/cast warnings and the reference's partial-error ordering.
+        if(PyObject_SetItem(out.ptr(),supplied_keys.ptr(),supplied_values.ptr())<0)throw py::error_already_set();
+        return out;
     });
     m.def("consumer_scatter",[](const py::array& cache,py::handle index,py::handle values){
         const auto kind=cache.dtype().kind();
-        if(PyIndex_Check(index.ptr()) && !PyBool_Check(index.ptr()) && (kind=='b' || kind=='i' || kind=='u' || kind=='f') && cache.itemsize()<=8) {
-            auto location=PyNumber_AsSsize_t(index.ptr(),PyExc_IndexError);if(PyErr_Occurred())throw py::error_already_set();
+        const bool integer_scalar=(PyLong_Check(index.ptr()) && !PyBool_Check(index.ptr())) || PyArray_IsScalar(index.ptr(),Integer);
+        if(integer_scalar && cache.ndim()==1 && cache.writeable() && (kind=='b' || kind=='i' || kind=='u' || kind=='f') && cache.itemsize()<=8) {
+            auto location=PyNumber_AsSsize_t(index.ptr(),PyExc_IndexError);
+            if(PyErr_Occurred()) {
+                // NumPy distinguishes large scalar integers from integers
+                // outside its index protocol. Keep that checked authority.
+                PyErr_Clear();
+                if(PyObject_SetItem(cache.ptr(),index.ptr(),values.ptr())<0)throw py::error_already_set();
+                return;
+            }
             const auto original=location;if(location<0)location+=cache.size();
             if(location<0 || location>=cache.size())throw py::index_error("index "+std::to_string(original)+" is out of bounds for axis 0 with size "+std::to_string(cache.size()));
             auto target=writable(cache);auto value=scalar(cache.dtype(),values);const std::uint64_t key=std::uint64_t(location);
@@ -159,7 +191,10 @@ void bind_component_consumers(py::module_& m) {
     m.def("consumer_compact",[](const py::array& a){
         auto plan=view(a);py::array_t<std::uint8_t> prepared(shape(a));{py::gil_scoped_release release;consumer_nonzero_into(plan,prepared.mutable_data());}
         std::vector<std::intptr_t> positions;positions.reserve(a.size());for(py::ssize_t i=0;i<a.size();++i)if(prepared.data()[i])positions.push_back(i);
-        py::array_t<std::intptr_t> keys(positions.size());if(!positions.empty())std::memcpy(keys.mutable_data(),positions.data(),positions.size()*sizeof(std::intptr_t));
+        py::array_t<std::intptr_t> key_storage(std::vector<py::ssize_t>{py::ssize_t(positions.size()),1});
+        if(!positions.empty())std::memcpy(key_storage.mutable_data(),positions.data(),positions.size()*sizeof(std::intptr_t));
+        npy_intp key_count=npy_intp(positions.size());PyArray_Dims key_shape{&key_count,1};
+        auto keys=checked(PyArray_Newshape(array(key_storage),&key_shape,NPY_CORDER));
         auto source=contiguous(a);py::array values(a.dtype(),std::vector<py::ssize_t>{py::ssize_t(positions.size())});for(std::size_t i=0;i<positions.size();++i)std::memcpy(static_cast<char*>(values.mutable_data())+i*a.itemsize(),static_cast<const char*>(source.data())+positions[i]*a.itemsize(),a.itemsize());return py::make_tuple(keys,values);
     });
 }
