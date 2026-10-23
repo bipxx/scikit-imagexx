@@ -44,7 +44,34 @@ tests pass with SIMD enabled and disabled: Windows 936 passed / 4 rank-limit
 skips, minimum NumPy 1.24 Linux 896 passed / 44 rank-limit skips. Standalone
 C++ tests include dimension 64; installed-library consumers pass on both OSes.
 
-Retention is pending corrected-source
-[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39872352344) and
-[measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39872350846).
-These runs must finish before this increment is merged into `main`.
+The corrected-source [measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39872350846)
+passed on both platforms. Exact source fingerprints, binary hashes and seven
+samples per implementation were verified against the preserved packages.
+
+| Corrected one-worker result | Linux | Windows |
+|---|---:|---:|
+| Hessian eigenvalues, geometric mean | 6.374628× | 5.176761× |
+| Structure-tensor eigenvalues, geometric mean | 6.349021× | 4.725646× |
+| Hessian eigenvalues, slowest case | 1.675500× | 1.432209× |
+| Structure-tensor eigenvalues, slowest case | 1.662400× | 1.425715× |
+| Faster one-worker cases per public API | 60/60 | 60/60 |
+
+All 480 timed corrected rows pass parity. Float32 results in this fixed corpus
+are exact; maximum float64 absolute error is 7.994e-15 on Linux and 1.066e-14 on
+Windows. Raw corrected samples: [Linux](symmetric-eigen-corrected-ubuntu.json),
+[Windows](symmetric-eigen-corrected-windows.json).
+
+The intermediate masked source **97a3e4a760f643bd680de6638ba3530a5d34731f**
+was also measured and is not retained because of high-dimension signed-zero
+parity gaps: [Linux samples](symmetric-eigen-masked-control-ubuntu.json),
+[Windows samples](symmetric-eigen-masked-control-windows.json),
+[run](https://github.com/bipxx/scikit-imagexx/actions/runs/39871289601).
+Each reported speedup compares that revision to upstream. These independent
+runs do not establish a paired performance change between native revisions.
+
+Retention and merge remain pending corrected-source
+[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39874772356).
+The earlier CI run caught a test-harness error: its serial-only build was asked
+to use four workers. Test-only commit `1e1b21b` fixes that configuration; the
+runtime source fingerprint is unchanged from measured source `33a0e57`.
+Local portable C++ tests and relocated consumers pass after the correction.
