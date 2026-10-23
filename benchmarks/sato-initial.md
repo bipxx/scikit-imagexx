@@ -73,3 +73,26 @@ and [isolated performance measurements](https://github.com/bipxx/scikit-imagexx/
 are running against that frozen source. This candidate is not retained on main,
 and no speedup is claimed yet. Exact wheels, source archive, initial failures,
 and final validation logs are preserved in ignored checkpoints.
+
+## Initial Linux measurements
+
+The Linux job of the [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39905542679)
+completed successfully against frozen source `a5f4a68`. Source fingerprint,
+exact package/wheel bytes, binary hash, typed case-specification hash, all
+480 rows and seven samples per implementation per row are verified.
+
+| One-worker result (120 cases per rank) | Linux |
+|---|---:|
+| 2-D geometric mean | 7.255148× |
+| 2-D minimum | 3.016982× |
+| 2-D cases faster | 120/120 |
+| 3-D geometric mean | 5.537527× |
+| 3-D minimum | 2.861452× |
+| 3-D cases faster | 120/120 |
+
+All 240 one-worker Linux cases are faster. The measured 2-D outputs are exact.
+In 3-D, 20/240 rows across both worker settings require the documented
+conditioning allowance. Maximum input-scaled error is 1.381438e-9 and raw
+error 2.033356e10 for raw integer magnitudes. These are numerical comparisons,
+not exact LAPACK parity. Raw samples: [Linux](sato-first-linux.json).
+Windows measurements and full CI are still running; retention is pending.
