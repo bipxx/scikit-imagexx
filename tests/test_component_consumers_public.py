@@ -163,6 +163,18 @@ def test_ndarray_subclass_uses_explicit_fallback(name):
     finally:xx.set_fallback_enabled(old)
 
 
+def test_positional_custom_mask_obeys_protocol_fallback():
+    class TaggedArray(np.ndarray):pass
+    image=contract.image_for(np.int16);mask=np.ones(image.shape,bool).view(TaggedArray)
+    with pytest.raises(NotImplementedError,match='fallback is disabled'):
+        xx.segmentation.clear_border(image,0,0,mask)
+    old=xx.set_fallback_enabled(True)
+    try:
+        with pytest.warns(xx.FallbackWarning):actual=xx.segmentation.clear_border(image,0,0,mask)
+        np.testing.assert_array_equal(actual,segmentation.clear_border(image,0,0,mask))
+    finally:xx.set_fallback_enabled(old)
+
+
 def test_installed_public_default_workers_and_identity():
     code='import skimagexx as x;from skimagexx import _component_consumers as c,_components as l;assert x.get_num_threads()==1;assert x._core is c._core is l._core;assert x._core.component_consumers_interface_version==1'
     env=os.environ.copy();env['PYTHONPATH']=str(Path(xx.__file__).resolve().parent.parent)
