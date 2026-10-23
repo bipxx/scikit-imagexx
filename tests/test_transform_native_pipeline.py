@@ -1,8 +1,9 @@
-"""Private class adapter tests; public registration remains independently pending.
+"""Private class adapters and installed-class collection regressions.
 
 The unchanged frozen contract functions are collected here. Temporary namespace
 entries expose only our candidate classes during each test, against the selected
-actual compiled backend. This adapter is never public/performance evidence.
+actual compiled backend. Registered packages reuse their canonical class objects.
+This adapter alone is never performance evidence.
 """
 import importlib
 import importlib.util
@@ -11,9 +12,11 @@ from pathlib import Path
 import sys
 import weakref
 import gc
+import subprocess
 import numpy as np
 import pytest
 import skimagexx as xx
+from skimagexx.coverage import native_classes
 
 ROOT=Path(__file__).resolve().parents[1]
 def load(name,path):
@@ -22,15 +25,40 @@ def load(name,path):
     spec.loader.exec_module(module);return module
 
 contract=load('transform_frozen_contract',ROOT/'tests/test_transform_class_contracts.py')
-native=load('skimagexx._geometric',ROOT/'python/skimagexx/_geometric.py')
-if os.environ.get('SKIMAGEXX_PROJECTIVE_BACKEND'):
-    native._core=importlib.import_module(os.environ['SKIMAGEXX_PROJECTIVE_BACKEND'])
+backend=os.environ.get('SKIMAGEXX_PROJECTIVE_BACKEND')
+registered=all('transform.'+name in native_classes() for name in contract.NAMES)
+if registered and not backend:
+    # Public aliases and pickle must retain the installed class objects even
+    # when this private adapter is collected later in the same process.
+    native=importlib.import_module('skimagexx._geometric')
+else:
+    native=load('skimagexx._geometric_private_pipeline',ROOT/'python/skimagexx/_geometric.py')
+    if backend:native._core=importlib.import_module(backend)
 INITIAL_WORKERS=native._core.get_num_threads()
 class_name=contract.class_name
 transform_class=contract.transform_class
 for _name in vars(contract):
     if _name.startswith('test_'):globals()[_name]=getattr(contract,_name)
 del _name
+
+
+def test_registered_class_identity_survives_private_adapter_collection():
+    if backend or not registered:
+        pytest.skip('registered-package collection regression')
+    script="""import importlib, importlib.util, pickle, sys
+import skimagexx as x
+names=('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')
+canonical=importlib.import_module('skimagexx._geometric')
+classes=tuple(getattr(x.transform,name) for name in names)
+spec=importlib.util.spec_from_file_location('private_collection_probe',sys.argv[1])
+module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+assert sys.modules['skimagexx._geometric'] is canonical
+for name,cls in zip(names,classes):
+    assert getattr(x.transform,name) is getattr(canonical,name) is cls
+    assert type(pickle.loads(pickle.dumps(cls()))) is cls
+"""
+    result=subprocess.run([sys.executable,'-c',script,str(Path(__file__).resolve())],capture_output=True,text=True)
+    assert result.returncode==0,result.stderr
 
 
 @pytest.fixture(params=[1,4],autouse=True)

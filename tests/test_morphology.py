@@ -1,11 +1,15 @@
-"""Exact numerical parity with the original morphology implementations."""
+"""Exact parity for grayscale and binary morphology image operators."""
 import warnings
 import numpy as np
 import pytest
 from skimage import morphology as reference
 import skimagexx as xx
 
-NAMES=xx.morphology.__all__
+# These operators accept images, footprints, border modes and output buffers.
+# Generators, labeling and component consumers have separate contract suites.
+NAMES=('erosion','dilation','opening','closing','white_tophat','black_tophat',
+       'binary_erosion','binary_dilation','binary_opening','binary_closing')
+assert set(NAMES)<=set(xx.morphology.__all__)
 DTYPES=['bool','uint8','int8','uint16','int16','uint32','int32','uint64','int64','float32','float64']
 pytestmark=pytest.mark.filterwarnings('ignore:.*is deprecated since version 0.26:FutureWarning')
 
