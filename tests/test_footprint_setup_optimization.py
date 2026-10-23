@@ -51,6 +51,40 @@ def test_custom_metaclass_hash_is_never_consulted_by_admission():
     assert not events
 
 
+@pytest.mark.parametrize('text',['uint8','float32','>i2','object','U3','S3','a3','a','M8[D]','not-a-dtype'])
+def test_dtype_strings_are_not_preparsed_by_fast_admission(text):
+    with warnings.catch_warnings(record=True) as notices:
+        warnings.simplefilter('always');assert not dense._inert_numeric_dtype(text)
+    assert not notices
+    def observe(namespace):
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            try:result,error=namespace.footprint_rectangle((3,5),dtype=text),None
+            except Exception as caught:result,error=None,caught
+        return result,error,[(type(w.message),str(w.message)) for w in notices]
+    actual,error,notices=observe(xx.morphology);expected,wanted,expected_notices=observe(original)
+    assert notices==expected_notices
+    if wanted is not None:assert type(error) is type(wanted) and str(error)==str(wanted)
+    else:assert error is None;np.testing.assert_array_equal(actual,expected)
+
+
+@pytest.mark.parametrize('decomposition',[None,'sequence','separable'])
+def test_dtype_getter_shape_mutation_order_and_per_atom_resolution(decomposition):
+    def observe(namespace):
+        shape=[3,5];events=[]
+        class Provider:
+            @property
+            def dtype(self):
+                events.append(tuple(shape))
+                shape[:]=[3,7]
+                return np.dtype('>i2' if len(events)%2 else 'f4')
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always');result=namespace.footprint_rectangle(shape,dtype=Provider(),decomposition=decomposition)
+        elements=result if isinstance(result,tuple) else ((result,1),)
+        return events,shape,tuple((a.dtype.str,a.shape,a.tobytes(),n) for a,n in elements),[(type(w.message),str(w.message)) for w in notices]
+    assert observe(xx.morphology)==observe(original)
+
+
 @pytest.mark.parametrize('decomposition',[None,'sequence','separable'])
 def test_rectangle_shape_validation_has_original_single_pass(decomposition):
     def observe(namespace):

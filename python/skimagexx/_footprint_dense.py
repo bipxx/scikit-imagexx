@@ -26,7 +26,7 @@ def _inert_numeric_dtype(dtype):
     # neither dtype instances nor scalar atoms.
     if id(type(dtype)) in _NUMERIC_DTYPE_CLASS_IDS:
         descriptor = dtype
-    elif dtype is None or type(dtype) is str or id(dtype) in _NUMERIC_SCALAR_CLASS_IDS:
+    elif dtype is None or id(dtype) in _NUMERIC_SCALAR_CLASS_IDS:
         descriptor = np.dtype(dtype)
     else:
         return False
