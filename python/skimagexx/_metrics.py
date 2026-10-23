@@ -93,7 +93,10 @@ def _reduce(first,second,dtype,mode):
 
 
 def _stateful():
-    return any(policy not in ('warn','raise','ignore') for policy in np.geterr().values())
+    # Public warning hooks can mutate inputs just like NumPy FP callbacks.
+    # Preserve stage boundaries when warning dispatch has been customized.
+    return (warnings.showwarning is not warnings._showwarning_orig or
+            any(policy not in ('warn','raise','ignore') for policy in np.geterr().values()))
 
 
 def _stage_emit(flags,operation,dtype,scalar=False):
@@ -184,7 +187,8 @@ def mean_squared_error(image0,image1):
 def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
     dtype=_prepare(image_true,image_test)
     if dtype is None:return fallback('metrics','normalized_root_mse',image_true,image_test,normalization=normalization)
-    if _stateful():return _stage_nrmse(image_true,image_test,dtype,normalization)
+    if _stateful() or type(normalization) not in (str,np.str_):
+        return _stage_nrmse(image_true,image_test,dtype,normalization)
     modes={'euclidean':1,'min-max':3,'mean':2}
     if type(normalization) not in (str,np.str_) or normalization.lower() not in modes:
         # Upstream converts both arrays before inspecting this parameter.

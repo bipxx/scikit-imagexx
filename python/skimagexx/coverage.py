@@ -1,8 +1,11 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
+    'measure': ('label',),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale'),
-    'morphology': ('erosion','dilation','opening','closing','white_tophat','black_tophat',
+    'morphology': ('label','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
+                   'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
@@ -37,7 +40,7 @@ def native_dtypes(api):
 
 def execution_kind(api):
     """Keep constant dtype metadata separate from C++ image kernels in reports."""
-    return 'metadata' if api in ('util.dtype_limits','color.xyz_tristimulus_values') else 'native'
+    return 'metadata' if api in ('util.dtype_limits','color.xyz_tristimulus_values','morphology.mirror_footprint') else 'native'
 
 
 def needs_color_input(api):
@@ -47,6 +50,13 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api.startswith('metrics.'):
+        return (image,image[::-1]),{}
+    if api in ('measure.label','morphology.label'):
+        return ((image>(127 if str(image.dtype)=='uint8' else .5)).astype(image.dtype),),{}
+    if api=='morphology.footprint_rectangle':return (image.shape,),{'dtype':image.dtype}
+    if api in ('morphology.diamond','morphology.disk','morphology.ball'):
+        return (max(1,max(image.shape)//16),),{'dtype':image.dtype}
     if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):
         return ([image,image*.2,image*.3],),{}
     if api=='filters.gabor':return (image,.2),{}
@@ -86,6 +96,9 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api.startswith('metrics.'):
+        tolerance=3e-6 if str(dtype)=='float32' else 3e-13
+        return tolerance,tolerance if api=='metrics.peak_signal_noise_ratio' else 0.
     if api in ('color.label2rgb','transform.integral_image','transform.integrate','filters.threshold_minimum','filters.threshold_multiotsu','filters.rank_order','filters.apply_hysteresis_threshold'):return (0.,0.)
     name = str(dtype)
     single = name == 'float32'

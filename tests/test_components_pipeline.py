@@ -21,6 +21,29 @@ spec=importlib.util.spec_from_file_location('skimagexx._components_private',ROOT
 candidate=importlib.util.module_from_spec(spec);spec.loader.exec_module(candidate);candidate._core=core
 spec=importlib.util.spec_from_file_location('_components_contracts',ROOT/'tests/test_connected_components_contracts.py')
 contract=importlib.util.module_from_spec(spec);spec.loader.exec_module(contract)
+
+
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('policy',['call','warn'])
+def test_cast_callback_uses_prepared_shape(dtype,policy):
+    import warnings
+    def run(function):
+        image=np.array([np.nan,1.],dtype);called=[False]
+        def callback(*args,**kwargs):
+            if not called[0]:
+                called[0]=True;image.resize((1,2),refcheck=False)
+        with warnings.catch_warnings(),np.errstate(invalid=policy):
+            warnings.simplefilter('always')
+            if policy=='call':old=np.seterrcall(callback)
+            else:warnings.showwarning=callback
+            try:result=function(image,return_num=True)
+            finally:
+                if policy=='call':np.seterrcall(old)
+        assert called[0] and image.shape==(1,2)
+        return result
+    wanted=run(contract.original('measure.label'));actual=run(candidate.label)
+    np.testing.assert_array_equal(actual[0],wanted[0])
+    assert actual[0].shape==(2,) and actual[1]==wanted[1]
 for name in vars(contract):
     if name.startswith('test_') and name!='test_unregistered_label_rejects_strict_fallback':globals()[name]=getattr(contract,name)
 

@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 from skimage import metrics as reference
 import skimagexx as xx
+from skimagexx.coverage import native_functions
 
 if os.environ.get('SKIMAGEXX_METRICS_CANDIDATE'):
     spec=importlib.util.spec_from_file_location('skimagexx._metrics_candidate',os.environ['SKIMAGEXX_METRICS_CANDIDATE'])
@@ -21,8 +22,55 @@ FUNCTIONS=[('mean_squared_error',{}),('normalized_root_mse',{'normalization':'eu
            ('peak_signal_noise_ratio',{'data_range':2})]
 
 
+@pytest.mark.parametrize('dtype',[np.float32,np.float64])
+@pytest.mark.parametrize('case',['empty-mean-resize','energy-warning-mutation'])
+def test_warning_hook_preserves_materialized_stage_boundaries(dtype,case):
+    def run(backend):
+        if case=='empty-mean-resize':
+            first=np.empty(0,dtype);second=np.empty(0,dtype);normalization='mean'
+        else:
+            first=np.full(2,np.finfo(dtype).max,dtype);second=first.copy();normalization='euclidean'
+        notices=[]
+        def hook(message,category,*args,**kwargs):
+            notices.append((category,str(message)))
+            if len(notices)==1:
+                if case=='empty-mean-resize':first.resize(1,refcheck=False)
+                else:first[:]=np.inf;second[:]=0
+        with warnings.catch_warnings(),np.errstate(all='warn'):
+            warnings.simplefilter('always');warnings.showwarning=hook
+            try:result=backend.normalized_root_mse(first,second,normalization=normalization);error=None
+            except Exception as caught:result=None;error=(type(caught),str(caught))
+        return result,error,notices
+    expected=run(reference);actual=run(native)
+    assert actual[1:]==expected[1:]
+    if expected[1] is None:
+        assert type(actual[0]) is type(expected[0])
+        np.testing.assert_array_equal(actual[0],expected[0])
+
+
+@pytest.mark.parametrize('dtype',[np.uint8,np.float32,np.float64])
+def test_normalization_protocol_preserves_conversion_before_lower(dtype):
+    def run(backend):
+        first=np.ones(3,dtype);second=np.full(3,2,dtype);calls=[]
+        class Normalization:
+            def lower(self):
+                calls.append('lower');first[:]=0;second[:]=1
+                return 'euclidean'
+        with np.errstate(divide='ignore',invalid='ignore'):
+            result=backend.normalized_root_mse(first,second,normalization=Normalization())
+        return result,calls,first,second
+    expected=run(reference);actual=run(native)
+    assert actual[1]==expected[1]==['lower']
+    for x,y in zip(actual[::2],expected[::2]):np.testing.assert_array_equal(x,y)
+    np.testing.assert_array_equal(actual[3],expected[3])
+
+
 @pytest.fixture(autouse=True,params=[1,4])
 def configuration(request):
+    if 'metrics.mean_squared_error' in native_functions() and not os.environ.get('SKIMAGEXX_METRICS_CANDIDATE'):
+        assert native._core is xx._core
+        for name,_ in FUNCTIONS:
+            assert getattr(native,name) is getattr(xx.metrics,name)
     previous=xx.set_fallback_enabled(False)
     xx.set_num_threads(request.param);native._core.set_num_threads(request.param)
     yield

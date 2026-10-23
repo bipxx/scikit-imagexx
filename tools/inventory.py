@@ -74,8 +74,8 @@ def inventory():
                             'implementation': ('metadata' if execution_kind(path) == 'metadata' else 'native-partial') if path in native else 'upstream-only',
                             'native_default_case_dtypes': list(native_dtypes(path)) if path in native else [],
                             'execution_kind': execution_kind(path) if path in native else 'upstream',
-                            'parity_test': ('tests/test_resize_contract.py' if path in ('transform.resize','transform.rescale') else 'tests/test_api.py::test_every_native_function') if path in native else None,
-                            'benchmark': ('benchmarks/resize.py' if path in ('transform.resize','transform.rescale') else 'benchmarks/coverage.py') if path in native else None})
+                            'parity_test': ('tests/test_resize_contract.py' if path in ('transform.resize','transform.rescale') else 'tests/test_metrics_reductions.py' if path.startswith('metrics.') else 'tests/test_footprint_contracts.py' if path in ('morphology.footprint_rectangle','morphology.diamond','morphology.disk','morphology.ball','morphology.mirror_footprint','morphology.pad_footprint') else 'tests/test_connected_components_contracts.py' if path in ('measure.label','morphology.label') else 'tests/test_api.py::test_every_native_function') if path in native else None,
+                            'benchmark': ('benchmarks/resize.py' if path in ('transform.resize','transform.rescale') else 'benchmarks/metrics_reductions.py' if path.startswith('metrics.') else 'benchmarks/footprints.py' if path in ('morphology.footprint_rectangle','morphology.diamond','morphology.disk','morphology.ball','morphology.mirror_footprint','morphology.pad_footprint') else 'benchmarks/coverage.py') if path in native else None})
             if inspect.isclass(value):entries[-1]['members']=class_members(value,path)
     inventoried = {entry['api'] for entry in entries}
     missing = native-inventoried

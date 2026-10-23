@@ -6,10 +6,18 @@ third_party/scikit-image-LICENSE.txt).
 """
 import numpy as np
 from . import _core
+from ._compat import fallback
 
 
 def label(label_image, background=None, return_num=False, connectivity=None):
     """Label connected equal-valued regions in logical C traversal order."""
+    if not (type(label_image) in (np.ndarray,np.memmap) or isinstance(label_image,np.generic)):
+        return fallback('measure','label',label_image,background=background,return_num=return_num,connectivity=connectivity)
+    descriptor=label_image.dtype
+    supported=(descriptor.kind=='b' or descriptor.kind in 'iu' and descriptor.itemsize in (1,2,4,8)
+               or descriptor.kind=='f' and descriptor.char in 'efd')
+    if not supported:
+        return fallback('measure','label',label_image,background=background,return_num=return_num,connectivity=connectivity)
     boolean=label_image.dtype==bool
     swaps=[]
     if boolean:
@@ -29,11 +37,11 @@ def label(label_image, background=None, return_num=False, connectivity=None):
             # A tiny scalar probe reproduces the active NumPy error policy;
             # native preparation already converted every image pixel.
             np.asarray([np.nan]).astype(np.intp)
-        if label_image.ndim<1 or label_image.ndim>3:
+        if prepared.ndim<1 or prepared.ndim>3:
             raise NotImplementedError('Only for images of dimension 1-3 are supported, '
-                                      f'got a {label_image.ndim}D one')
+                                      f'got a {prepared.ndim}D one')
         background=0 if background is None else _core.components_background(background)
-    ndim=label_image.ndim
+    ndim=label_image.ndim if boolean else prepared.ndim
     if connectivity is None:connectivity=ndim
     if not 1<=connectivity<=ndim:
         raise ValueError(f'Connectivity for {ndim}D image should be in [1, ..., {ndim}]. Got {connectivity}.')
@@ -41,7 +49,7 @@ def label(label_image, background=None, return_num=False, connectivity=None):
                else _core.components_background(connectivity))
     if boolean:prepared=_core.components_prepare_bool(label_image)
     dtype=np.dtype(np.intp if not boolean or label_image.size>=2**31-2 else np.int32)
-    if not boolean and label_image.dtype==np.dtype(np.intp):dtype=label_image.dtype
+    if not boolean and descriptor==np.dtype(np.intp):dtype=descriptor
     output,count=_core.components_label(prepared,background,effective,boolean,dtype)
     if swaps:
         base=output

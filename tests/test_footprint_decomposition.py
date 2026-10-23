@@ -20,10 +20,13 @@ def load(name, path):
 
 
 contract = load('footprint_decomposition_contract', ROOT / 'tests/test_footprint_contracts.py')
-dense = load('skimagexx._footprint_dense', ROOT / 'python/skimagexx/_footprint_dense.py')
-native = load('skimagexx._footprint_decomposition', ROOT / 'python/skimagexx/_footprint_decomposition.py')
 if os.environ.get('SKIMAGEXX_FOOTPRINT_BACKEND'):
+    dense = load('skimagexx._footprint_dense', ROOT / 'python/skimagexx/_footprint_dense.py')
+    native = load('skimagexx._footprint_decomposition', ROOT / 'python/skimagexx/_footprint_decomposition.py')
     native._core = dense._core = importlib.import_module(os.environ['SKIMAGEXX_FOOTPRINT_BACKEND'])
+else:
+    dense = importlib.import_module('skimagexx._footprint_dense')
+    native = importlib.import_module('skimagexx._footprint_decomposition')
 INITIAL_WORKERS = native._core.get_num_threads()
 CASES = [case for case in contract.CASES if case[1] in contract.NAMES[:4]]
 
