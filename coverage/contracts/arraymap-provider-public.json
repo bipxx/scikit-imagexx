@@ -1,0 +1,33 @@
+{
+  "version": "arraymap-live-provider-scope-v1",
+  "returned_internal_helper": "ArrayMap",
+  "new_public_api_names": [],
+  "new_native_image_or_class_count": 0,
+  "component_consumers_interface_version": 1,
+  "consumer_dense_assignment_version": 1,
+  "methods": ["__len__", "__array__"],
+  "stages": [
+    "Capture out_values.dtype if no dtype was supplied",
+    "Bind the current np.zeros callable",
+    "Bind the current np.max callable before fetching its keys argument",
+    "Compute the maximum and scalar +1 before allocation",
+    "Invoke the previously bound allocator with length and dtype keyword",
+    "Fetch fresh out_values first, then fresh in_values",
+    "Assign through validated native scatter or checked __setitem__ and return the same allocator result"
+  ],
+  "ordinary_integer_max": "Retains C++ scan for exact plain ndarray with a built-in integer dtype and the unchanged canonical NumPy max provider; other providers/protocols call the live max(keys) without an added axis keyword.",
+  "ordinary_assignment": "Retains C++ duplicate-order scatter for exact plain arrays, writable C-contiguous one-dimensional output, matching built-in numeric contiguous values, valid snapshotted keys and disjoint output/value bytes.",
+  "checked_assignment": "Strided, readonly, subclass, arbitrary __setitem__ output, unsupported dtype/protocol or overlapping value storage uses PyObject_SetItem. No implicit ndarray conversion of allocator output occurs.",
+  "frozen_reference_contract": "5983259647d9937b9216afcad63420a3869d9d14",
+  "existing_dense_contract_unchanged": ["6920dff", "0486cbb"],
+  "private_pipeline": "Actual changed consumer binding and unchanged native kernels, one private C++ worker state, explicit private bootstrap. Not complete production-package acceptance.",
+  "complete_package_acceptance": "pending separate frozen883 SDK and complete22-binding product proof",
+  "unproven_scopes": [
+    "Arbitrary mutation of NumPy implementation objects or private implementation globals while retaining callable identity",
+    "All possible user-defined dtype, descriptor, sequence and custom-output protocols beyond the bounded safe fixtures",
+    "Arbitrary custom allocator results propagated into lazy __setitem__ cache operations beyond the existing dense contract",
+    "Bounds-unsafe fabricated arrays or huge original allocations"
+  ],
+  "upstream_arraymap_or_map_array_forwarding": false,
+  "operation_timings_or_dispatch": false
+}
