@@ -64,9 +64,15 @@ jobs:
         shell: bash
         run: python tools/preserve_baseline.py --wheel build/wheels/*.whl --source-root . --output build/exact-package
       - name: Public contract and harness checks
-        run: python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py tests/test_resize_benchmark.py
+        run: >-
+          python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py
+          tests/test_resize_half_identity.py tests/test_resize_range.py tests/test_resize_gaussian_raw.py
+          tests/test_resize_clip.py tests/test_resize_copy.py tests/test_resize_public.py tests/test_resize_benchmark.py
       - name: Portable public contract
-        run: python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py
+        run: >-
+          python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py
+          tests/test_resize_half_identity.py tests/test_resize_range.py tests/test_resize_gaussian_raw.py
+          tests/test_resize_clip.py tests/test_resize_copy.py tests/test_resize_public.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Fixed untimed corpus gate

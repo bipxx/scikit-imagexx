@@ -24,26 +24,39 @@ template<std::size_t Bytes> void copy_layout(const void* source,void* destinatio
     std::vector<std::size_t> steps(shape.size());std::size_t step=1;
     for(auto axis=shape.size();axis-->0;){steps[axis]=step;step*=shape[axis];}
     const auto threads=skimagexx::detail::active_workers(count);
-    // Each worker updates these counters per pixel. Align their payloads to
-    // separate cache lines rather than sharing tiny vector allocations.
-    std::vector<std::vector<std::size_t>> coordinates(std::size_t(threads),
-        std::vector<std::size_t>(shape.size()+64/sizeof(std::size_t)));
-    skimagexx::detail::partition(count,threads,[&](std::size_t begin,std::size_t end,std::size_t worker) {
-        auto* raw=coordinates[worker].data();
-        auto* index=raw+((64-std::uintptr_t(raw)%64)%64)/sizeof(std::size_t);
-        std::ptrdiff_t offset=0;
-        for(std::size_t axis=0;axis<shape.size();++axis) {
-            index[axis]=(begin/steps[axis])%shape[axis];offset+=std::ptrdiff_t(index[axis])*strides[axis];
-        }
-        for(auto i=begin;i<end;++i) {
-            auto* output=target+i*Bytes;const auto* value=input+offset;
-            if(swap)for(std::size_t byte=0;byte<Bytes;++byte)output[byte]=value[Bytes-1-byte];
-            else std::memcpy(output,value,Bytes);
-            // Advance a logical C-order coordinate without division per pixel.
-            for(auto axis=shape.size();axis-->0;) {
-                if(index[axis]+1<shape[axis]){++index[axis];offset+=strides[axis];break;}
-                offset-=std::ptrdiff_t(shape[axis]-1)*strides[axis];index[axis]=0;
+    const auto width=shape.empty() ? std::size_t{1}:shape.back();
+    const auto inner=shape.empty() ? std::ptrdiff_t{0}:strides.back();
+    // Calculate coordinates once per inner-axis span. The pixel loop only
+    // loads/stores raw words; contiguous and broadcast spans use bulk copies.
+    skimagexx::detail::partition(count,threads,[&](std::size_t begin,std::size_t end,std::size_t) {
+        for(auto i=begin;i<end;) {
+            std::ptrdiff_t offset=0;
+            for(std::size_t axis=0;axis<shape.size();++axis)
+                offset+=std::ptrdiff_t((i/steps[axis])%shape[axis])*strides[axis];
+            const auto span=std::min(end-i,width-i%width);
+            auto* output=target+i*Bytes;
+            if(inner==std::ptrdiff_t(Bytes) && !swap)
+                std::memcpy(output,input+offset,span*Bytes);
+            else if(inner==0) {
+                unsigned char word[Bytes];
+                for(std::size_t byte=0;byte<Bytes;++byte)word[byte]=input[offset+std::ptrdiff_t(swap ? Bytes-1-byte:byte)];
+                if constexpr(Bytes==1)std::memset(output,word[0],span);
+                else {
+                    std::memcpy(output,word,Bytes);
+                    for(std::size_t filled=1;filled<span;) {
+                        const auto chunk=std::min(filled,span-filled);
+                        std::memcpy(output+filled*Bytes,output,chunk*Bytes);filled+=chunk;
+                    }
+                }
+            } else {
+                for(std::size_t column=0;column<span;++column) {
+                    const auto* value=input+offset+std::ptrdiff_t(column)*inner;
+                    auto* destination=output+column*Bytes;
+                    if(swap)for(std::size_t byte=0;byte<Bytes;++byte)destination[byte]=value[Bytes-1-byte];
+                    else std::memcpy(destination,value,Bytes);
+                }
             }
+            i+=span;
         }
     });
 }
@@ -113,7 +126,8 @@ void bind_resample(py::module_& module) {
         for(py::ssize_t axis=0;axis<image.ndim();++axis) {
             shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
         }
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+        const auto itemsize=std::size_t(image.itemsize());
+        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
         const bool contiguous=bool(image.flags()&(py::array::c_style|py::array::f_style));
         const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
         py::array normalized=copy ? py::array(dtype,dimensions) : image;
@@ -121,7 +135,7 @@ void bind_resample(py::module_& module) {
         skimagexx::detail::ResizeRangeInfo info;
         {
             py::gil_scoped_release release;
-            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),std::size_t(image.itemsize()),shape,strides,swap,contiguous);
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
             info=skimagexx::detail::resize_range_into(normalized.data(),std::size_t(image.size()),type,lower.mutable_data(),upper.mutable_data());
         }
         bool ambiguous=!info.has_value;
@@ -169,14 +183,15 @@ void bind_resample(py::module_& module) {
             skimagexx::GaussianPass pass;pass.axis=axes[j];pass.border=static_cast<skimagexx::GaussianBorder>(modes[j]);pass.cval=cval;
             pass.weights.assign(weights.data(),weights.data()+weights.size());passes.push_back(std::move(pass));
         }
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+        const auto itemsize=std::size_t(image.itemsize());
+        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
         const bool contiguous=bool(image.flags()&py::array::c_style);
         const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
         py::array normalized=copy ? py::array(dtype,dimensions) : image;
         py::array result(dtype,dimensions);
         {
             py::gil_scoped_release release;
-            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),std::size_t(image.itemsize()),shape,strides,swap,contiguous);
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
             skimagexx::detail::gaussian_raw_into(normalized.data(),result.mutable_data(),type,shape,passes);
         }
         return result;
@@ -213,7 +228,8 @@ void bind_resample(py::module_& module) {
             shape.push_back(std::size_t(image.shape(axis)));target.push_back(std::size_t(dimensions[std::size_t(axis)]));
             source_shape.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
         }
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+        const auto itemsize=std::size_t(image.itemsize());
+        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
         const bool contiguous=bool(image.flags()&py::array::c_style);
         const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
         py::array normalized=copy ? py::array(dtype,source_shape) : image;
@@ -223,7 +239,7 @@ void bind_resample(py::module_& module) {
         options.legacy_reflect=legacy;options.identity_copy=identity;options.allow_simd=simd;
         {
             py::gil_scoped_release release;
-            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),std::size_t(image.itemsize()),shape,strides,swap,contiguous);
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
             skimagexx::detail::zoom_typed_into(normalized.data(),result.mutable_data(),type,shape,target,options);
         }
         return result;
