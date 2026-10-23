@@ -1,13 +1,15 @@
 # Last completed whole-library performance checkpoint
 
-The feature branch additionally registers `filters.frangi` and `filters.hessian`
-as native-partial candidates: **121 image APIs + 2 metadata**, with **332 callable
-names** pending. Dedicated/shared parity tests and a fixed isolated benchmark
-exist. Initial whole-field measurements verify 576/576 faster one-worker cases
-on Linux and 572/576 on Windows; four Windows zero-sigma cases remain slower.
-A vector-FMA trial, final hosted gates and retention are pending. These are
-baseline results, not a measured claim for the SIMD trial. See
-[candidate scope and raw samples](frangi-initial.md).
+Main retains `filters.frangi` and `filters.hessian` with the dispatch-compatible
+runtime from `064b83a`: **121 partially native image APIs + 2 metadata**, with
+**332 callable names** pending. Full CI passes Windows, Linux and minimum NumPy;
+normal/generic NumPy dispatch and C++ SIMD/scalar parity checks pass. Final
+isolated paired measurements verify **576/576 faster one-worker cases on each
+OS**, with overall geometric means **4.044561× Linux / 3.233638× Windows**.
+The earlier four slower Windows zero-sigma cases remain in the corpus and are
+now faster. Raw trials, explicit native NumPy math dependencies, numerical
+scope and rejected/partial trials are recorded in the
+[retained scope and measurement report](frangi-initial.md).
 The retained checkpoints below describe their original measured coverage.
 
 Retained `filters.meijering`, measured source `f8cb5b4`:
