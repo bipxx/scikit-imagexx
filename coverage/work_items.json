@@ -16784,7 +16784,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-public",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-public.zip"
+          }
+        ]
       },
       "public_registration": true,
       "integration_files": [
@@ -16856,14 +16862,20 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/metrics-performance",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-performance.zip"
+          }
+        ]
       },
       "proofs": {
         "public_native": {
           "status": "verified",
           "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
           "manifest": {
-            "path": "build/worktrees/metrics-performance/build/metrics-simd-loads-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/metrics-performance/retained-proofs/build/metrics-simd-loads-proof.json",
             "sha256": "8bc1b5966dca58d74efa4337f8f8b3de942d984ea838fe1c4a257f0e6aea04e6"
           },
           "native_contract_checks": 10984,
@@ -17100,7 +17112,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/components-performance",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/components-performance.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "components-measurement": {
@@ -17179,7 +17197,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/resize-controlled",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/resize-controlled.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "resize-measurement": {
@@ -17194,7 +17218,7 @@
           "status": "verified",
           "source_sha": "36440f8e80f582bfc2ab258d9558a2384a419367",
           "manifest": {
-            "path": "build/worktrees/resize-controlled-sdk-set/build/sdk-header-set-supplement-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/resize-controlled-sdk-set/retained-proofs/build/sdk-header-set-supplement-proof.json",
             "sha256": "3c18e4c574b35dfb54d5b2b7dd779d452d4c75711b3a6f757342eda91528c752"
           },
           "scope": "Actual authenticated initial66e and current whole packages versus original0.26, six normal/scalar gates at workers1/4; complete source header-set guard and60 tooling guards/runtime. No local timing; compiledb6/Python5d product equivalentcaf8 recorded separately.",
@@ -17396,6 +17420,12 @@
           "benchmarks/metrics-public-linux-modern-simd-load-trial.json",
           "benchmarks/metrics-public-linux-minimum-simd-load-trial.json",
           "benchmarks/metrics-public-simd-load-trial.json"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/metrics-performance",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-performance.zip"
+          }
         ]
       },
       "dependency_requirements": {
@@ -17701,7 +17731,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-distribution-benchmark",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-distribution-benchmark.zip"
+          }
+        ]
       },
       "proofs": {
         "tooling": {
@@ -17749,14 +17785,20 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/component-consumers-benchmark",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/component-consumers-benchmark.zip"
+          }
+        ]
       },
       "proofs": {
         "public_native": {
           "status": "verified",
           "source_sha": "ba90b0b75bd41a807f60de5d924433207a0ce27f",
           "manifest": {
-            "path": "build/worktrees/component-consumers-benchmark/build/component-consumers-benchmark-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/component-consumers-benchmark/retained-proofs/build/component-consumers-benchmark-proof.json",
             "sha256": "2cad77e6fbd046faccc393f66263cadb36b1ce6c26b6d9aede87dac73fcdb170"
           },
           "scope": "Frozen reference878 on three runtimes; six actual complete-package normal/scalar gates workers1/4,43 guards/runtime.205 raster-eligible cases; errors and sparse metadata kept untimed. No local timers.",
@@ -17808,7 +17850,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-intensity-contracts",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-contracts.zip"
+          }
+        ]
       },
       "proofs": {
         "contract_reference": {
@@ -17923,7 +17971,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-intensity-public",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-public.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "rank-intensity-native": {
@@ -17981,7 +18035,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-alias-contracts",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-contracts.zip"
+          }
+        ]
       },
       "proofs": {
         "contract_reference": {
@@ -18033,7 +18093,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-alias-native",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-native.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "rank-alias-contracts": {
@@ -18088,14 +18154,20 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/arraymap-dense-contracts",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-contracts.zip"
+          }
+        ]
       },
       "proofs": {
         "contract_reference": {
           "status": "verified",
           "source_sha": "6920dff8bbcd836473cffc42868d48d5d5a0a45d",
           "manifest": {
-            "path": "build/worktrees/arraymap-dense-contracts/build/arraymap-dense-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-contracts/retained-proofs/build/arraymap-dense-proof.json",
             "sha256": "aea1e2e52eb83082b4029a6930cc76f762a9b6063037b392449811d9ba5365e7"
           },
           "scope": "383 tests/runtime including382 allocation-bounded cases. Original uses checked NumPy assignment; uint8/signed overflow errors are defined. Native audits209modern/107minimum symptoms are known gaps, not acceptance.",
@@ -18146,8 +18218,25 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": [
-          "build/worktrees/arraymap-dense-native-overflow/build",
-          "build/worktrees/arraymap-dense-native-overflow/build/snapshot1-evidence.zip"
+          "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow.zip"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/arraymap-dense-native-overflow",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow.zip"
+          }
+        ],
+        "archived_inputs": [
+          {
+            "former_path": "build/worktrees/arraymap-dense-native-overflow/build",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow.zip",
+            "member_prefix": "build"
+          },
+          {
+            "former_path": "build/worktrees/arraymap-dense-native-overflow/build/snapshot1-evidence.zip",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow.zip",
+            "member_prefix": "build/snapshot1-evidence.zip"
+          }
         ]
       },
       "dependency_requirements": {
@@ -18160,7 +18249,7 @@
           "status": "verified",
           "source_sha": "0486cbb2b3ea5649fccb4c35b46b90a74cc22bfd",
           "manifest": {
-            "path": "build/worktrees/arraymap-dense-native-overflow/build/arraymap-dense-final-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow/retained-proofs/build/arraymap-dense-final-proof.json",
             "sha256": "207e3f7616db27196f8a5b802d06dea11224a3a41caf0b286451d0b71edb0d0d"
           },
           "native_contract_checks": 382,
@@ -18249,6 +18338,12 @@
           "build/resize-controlled-publication-evidence/3998d14",
           "build/checkpoints/published-reports-cleanup",
           "coverage/evidence/published-reports-cleanup.json"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/resize-controlled-sdk-set",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/resize-controlled-sdk-set.zip"
+          }
         ]
       },
       "dependency_requirements": {
@@ -18453,11 +18548,15 @@
         "main_commit": "a1665b5f005b9d3fd1285fb665c6c0a7d5f31fc1"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/metrics-load-optimization"
-        ],
+        "active_paths": [],
         "protected_artifacts": [
           "build/metrics-half-load-evidence/ae2fd75"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/metrics-load-optimization",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-load-optimization.zip"
+          }
         ]
       },
       "dependency_requirements": {
@@ -18655,7 +18754,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-intensity-benchmark",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-benchmark.zip"
+          }
+        ]
       },
       "dependency_requirements": {},
       "proofs": {
@@ -18663,7 +18768,7 @@
           "status": "verified",
           "source_sha": "071166b0e21aa5e50f0de1782678dc8aca0845da",
           "manifest": {
-            "path": "build/worktrees/rank-intensity-benchmark/build/rank-intensity-benchmark-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-benchmark/retained-proofs/build/rank-intensity-benchmark-proof.json",
             "sha256": "83224316a0aa8519d4214f6e06417b75f01cb79ed31623ef478412a241986ea7"
           },
           "scope": "1428 reference cases and40guards x3, actionlint; source LF/POSIX; no native count in Phase1."
@@ -18672,7 +18777,7 @@
           "status": "verified",
           "source_sha": "4ce562a1314bf746f4476a2bc575b53801f1d0e6",
           "manifest": {
-            "path": "build/worktrees/rank-intensity-benchmark-public/build/rank-intensity-public-benchmark-proof.json",
+            "path": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-benchmark-public/retained-proofs/build/rank-intensity-public-benchmark-proof.json",
             "sha256": "22841f6005d0db9dec1fed52d13d7a2cdacab39699bed6efd6b311b7f427adf1"
           },
           "scope": "Actual strict1428 public cases x8 atworkers1/4; complete source/runtime/104wheel/59SDK capsule seals. Four generic aliases and24policy rows untimed; product equals883.6076public proof inherited explicitly.",
@@ -18717,7 +18822,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/arraymap-provider-contracts",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-provider-contracts.zip"
+          }
+        ]
       },
       "dependency_requirements": {},
       "proofs": {
@@ -18770,7 +18881,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/arraymap-live-providers",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-live-providers.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "arraymap-provider-audit": {
@@ -19110,7 +19227,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/metrics-leaf-simd",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-leaf-simd.zip"
+          }
+        ]
       },
       "dependency_requirements": {},
       "proofs": {
@@ -19174,7 +19297,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-alias-public",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-public.zip"
+          }
+        ]
       },
       "dependency_requirements": {},
       "proofs": {
@@ -19328,7 +19457,13 @@
           "build/main-core-wave6-release-minimum-linux-package",
           "build/main-core-wave6-debug-modern-linux-package"
         ],
-        "lease_release": "Explicit terminal1913-record rehash/release by resize_bench."
+        "lease_release": "Explicit terminal1913-record rehash/release by resize_bench.",
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/wave6-metrics-alias",
+            "archive": "build/cleanup/obsolete-worktrees-20261023/wave6-metrics-alias.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "combined-public-wave5": {
@@ -19793,6 +19928,61 @@
         "protected_artifacts": []
       },
       "dependency_requirements": {}
+    },
+    {
+      "id": "temp-build-cleanup-20261023",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "75e645231e0bfea23e861b46fd1c7f68e0796c74",
+      "owns": [],
+      "depends_on": [],
+      "state": "accepted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": "75e645231e0bfea23e861b46fd1c7f68e0796c74"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/cleanup/obsolete-cache-archives/20261023/manifest.json",
+          "build/cleanup/obsolete-cache-archives/20261023-extra/manifest.json",
+          "build/cleanup/obsolete-cache-archives/20261023-windows-default/manifest.json",
+          "build/cleanup/obsolete-worktrees-20261023/manifest.json",
+          "build/cleanup/source-snapshot-audit/removals.json"
+        ]
+      },
+      "dependency_requirements": {},
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "75e645231e0bfea23e861b46fd1c7f68e0796c74",
+          "manifest": {
+            "path": "coverage/evidence/temp-build-cleanup-20261023.json",
+            "sha256": "fe9af8aaba0bf63f5e740da2776210a3e3f5bcad00a18e2e6a65a100d2aad24e"
+          },
+          "scope": "25obsolete caches,26clean mergedWTs,2duplicate source snapshots retired after lossless archive checks; activeWIP/env/rawbenchmark/product evidence retained. No numerical/native/performance count."
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -20600,5 +20790,325 @@
       "Require edge-specific evidence scopes, numeric native/pending counts and hash-bearing manifests.",
       "Track immutable helper/link dependencies, persistent build environments and safe checkpoints."
     ]
-  }
+  },
+  "artifact_archive_redirects": [
+    {
+      "former_prefix": "build/resize-zoom-wheel-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/resize-zoom-wheel-windows.zip",
+      "archive_sha256": "fbf7213c64454124457ca91d9ef9b4d5861f3495697dd5805c2d023b8561f3cf",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/resize-copy-whole-wheel-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/resize-copy-whole-wheel-windows.zip",
+      "archive_sha256": "56f2d657cde96d6121521e3994e1ac26b01cf64a7091217fab3ccf060aa0bc29",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/public-wave1-wheel-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/public-wave1-wheel-windows.zip",
+      "archive_sha256": "8f948a3e44fe2738b5e5e9fa3737bd285cf20ecbb855dc290bb077ce903e520d",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/metrics-main-core-wheel-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/metrics-main-core-wheel-windows.zip",
+      "archive_sha256": "09d8051bf2ea3555c3181675046aa1ea6da8b3183d3017d367e31b6d42c4ce08",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/footprint-setup-7e78-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/footprint-setup-7e78-native-windows.zip",
+      "archive_sha256": "52010a6046117c019e94b08ae9e807441f17aee24f4b9ad284b02428eb210d4a",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/gabor-image-sanitize",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023/gabor-image-sanitize.zip",
+      "archive_sha256": "53f79f289f7883f07dcbb857ab76ef439676404d7f97fbc1702158b590a6b33c",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/cmake-wave4-targets",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/cmake-wave4-targets.zip",
+      "archive_sha256": "529e9640a4926fb607d813075f6529227beecae44c810d3e3611fd95ac886207",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/footprint-decomposition-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/footprint-decomposition-native-windows.zip",
+      "archive_sha256": "8b2a90acc54dab70eda3db80b6e03fdcf26f20b42c3e419ad1b51dedb9ad0969",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/footprint-dense-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/footprint-dense-native-windows.zip",
+      "archive_sha256": "8fff37cb290059ea369b31a5b5fa9bd880c1a64f8113ff07b752681e9cab0c16",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/footprint-dense-native-windows-v2",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/footprint-dense-native-windows-v2.zip",
+      "archive_sha256": "924718cec2bcd8e29482595c0f73dff6582ed47317b9c836e4302ae5a09fbdce",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/gabor-image-native",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/gabor-image-native.zip",
+      "archive_sha256": "c02ca9fb6305b7bf76e3db10b83e78ceb571c708199b2ee8189b7f18771df512",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/gabor-image-portable",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/gabor-image-portable.zip",
+      "archive_sha256": "efc46fa15212394bcd09ba8e2792d2e46d04354acd1b881e0e523c603f28ce6f",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/hessian-native-linux",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/hessian-native-linux.zip",
+      "archive_sha256": "543dada65f7751de8830b7691bbea54b03cb8a4373a9e3d17df08b48f3ec0da8",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/hessian-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/hessian-native-windows.zip",
+      "archive_sha256": "3957f8783b523dbc7fac6064051bbbe18104bb066995c1a4633533668174ba52",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/hessian-portable-linux",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/hessian-portable-linux.zip",
+      "archive_sha256": "863e05dc5995ed1e8fcefe4e374b8b4ed2b82be08f01efb10b523dc2e9665649",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/metrics-main-core-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/metrics-main-core-native-windows.zip",
+      "archive_sha256": "1ed5f935a0c3edb72c7a7047282f220b996b8c877148288f36b4957ed5acee42",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/native",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/native.zip",
+      "archive_sha256": "68a029ea074eeaef4c07115fbd44d36c8cc55631ab1dab2a3c2557fcd4cea005",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/native-foundations-sdk-consumer-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/native-foundations-sdk-consumer-windows.zip",
+      "archive_sha256": "09b999f708b209d3ec100092358c863bf94b822db4d13737372b9b62e6327d6a",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/native-foundations-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/native-foundations-windows.zip",
+      "archive_sha256": "b23833ca1c333e2a1d150b613ee749b2e719f2619eb0e51f0b9708130af83811",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/portable",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/portable.zip",
+      "archive_sha256": "6ffac848bbbbe369601bdd8d0ca6d1eb83dff5380aa4b386db6cecef1d952e1e",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/projective-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/projective-native-windows.zip",
+      "archive_sha256": "9005150a4bce5a4410845f318cc6e31e4c1dea16b5516ee2aece56959b25c885",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/public-wave1-sdk-consumer-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/public-wave1-sdk-consumer-windows.zip",
+      "archive_sha256": "03e419fe8a7fabab86c3973953c8a42cfebe8721fcf857cde7b5f03cd8b1dea9",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/resize-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/resize-native-windows.zip",
+      "archive_sha256": "0e7be0c4850a8e1820f3ec0463c68adb544e46a4a0a7d1ab359b2aa2557ceb30",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/tensor-native-windows",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-extra/tensor-native-windows.zip",
+      "archive_sha256": "140fe6fff5b6c4b0ac388791608b415e63e283cf739625b2500a7fcb2aebe1b8",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/cp313-cp313-win_amd64",
+      "archive": "build/cleanup/obsolete-cache-archives/20261023-windows-default/cp313-cp313-win_amd64.zip",
+      "archive_sha256": "020a03ca34fb7b2d13a657b7f556f2482a0b8720f693cb66a93399914dce1825",
+      "member_rule": "Remove former_prefix/; exact raw bytes preserved in ZIP."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-intensity-benchmark-public",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-benchmark-public.zip",
+      "archive_sha256": "dd46d3c712e534452a8d842825e90ddc2882da419866d66adf11908b6201c597",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-dense-native",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native.zip",
+      "archive_sha256": "d4baaf3a12ee62ef763bfd9138e51268cb7bea1ccfe5698e7a4bd52ad09be95e",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-provider-whole-proof",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-provider-whole-proof.zip",
+      "archive_sha256": "ec43e652278d553ccd23469cf0b7373b7143c7c044853d018409366b90b7c6c4",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-dense-native-overflow",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-native-overflow.zip",
+      "archive_sha256": "73f6fe13fd164d6923e2e438bcc1852fb802f2d1a0b2257c842de1c30d00a66d",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/resize-controlled",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/resize-controlled.zip",
+      "archive_sha256": "8d5a49a9fe0158031bb3e5f5b78b9abf7aff96ad48bc6861be0ee136131ee56a",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/metrics-performance",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-performance.zip",
+      "archive_sha256": "982fa77fa83499e0d5f25716489ca90df9da64734a9868d66656b9a171fa47c9",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/resize-controlled-sdk-set",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/resize-controlled-sdk-set.zip",
+      "archive_sha256": "66408d026ea5e63240872525b48962c07f24b903acd49200c2db727003a274fb",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/component-consumers-benchmark",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/component-consumers-benchmark.zip",
+      "archive_sha256": "5412f31d3d6f2c6cc66222939bc548fd165aec595ea0b3f713ab2a8426a1fb0b",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-intensity-benchmark",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-benchmark.zip",
+      "archive_sha256": "40a97cfd3ee3ed64d6d366d288565d33dabdc9455ccc7fdb6ed86027b5639c83",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-alias-native",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-native.zip",
+      "archive_sha256": "dbc4e5c38cbbe4c97eae57b93d64e05cb2c9f7ce799ffc4c62353a4afcf47d5a",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/metrics-leaf-simd",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-leaf-simd.zip",
+      "archive_sha256": "0d8d342b65c2d60d0a51ec38847385159f3061d5fa19fa06162fba096068db1f",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-live-providers",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-live-providers.zip",
+      "archive_sha256": "b9fb67d54ceae51d220fbe3a949c701b27f03518f16171ec68e5121c2d8c5001",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-provider-contracts",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-provider-contracts.zip",
+      "archive_sha256": "fa205d641cae993de054020893de58fabcb40f62d01cf0153eb97fbfcb402399",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/metrics-load-optimization",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/metrics-load-optimization.zip",
+      "archive_sha256": "2dc30a48033b5eca7968a5f612a721ea69a06a313ae613eeafde90669ab73506",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-alias-contracts",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-contracts.zip",
+      "archive_sha256": "3186bc5b1c9eea207ddb1b8d8cbde6cce1039203bca6c873f39f8a2722b8d48a",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-distribution-benchmark",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-distribution-benchmark.zip",
+      "archive_sha256": "2f85ed84e87318232ffbe3a3bdfa01a6f3573a29ae62cc45ac0633df97dda73e",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-alias-public",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-alias-public.zip",
+      "archive_sha256": "eb4cb61528a53c67dd0b51f34ebdbb523438a0a5d5b088cd20257908754f28e2",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/wave6-alias-admission",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/wave6-alias-admission.zip",
+      "archive_sha256": "cf6ee9bba1f73fbfbce3fbc67de5efce9bbbf4c502ea20af3eaa66b8685684a0",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/wave6-metrics-alias",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/wave6-metrics-alias.zip",
+      "archive_sha256": "00d7ef9cb8e74a54a716a27a2419785188f8c6d397733089f684beecfd68371c",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/arraymap-dense-contracts",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/arraymap-dense-contracts.zip",
+      "archive_sha256": "6d2abd837b4237a0491160f728c2328e2f83ef289888aba218efa43a22bb3562",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-intensity-public",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-public.zip",
+      "archive_sha256": "df4537505c7866831ec6b6011f22dd683c18e630753ecb7a756bc4cf7e6b044c",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-intensity-contracts",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-intensity-contracts.zip",
+      "archive_sha256": "ea54a57ab8c74bd2d3a87780ff9d1503177d88b0a4c45db34b0b4ea31066d44c",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/components-performance",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/components-performance.zip",
+      "archive_sha256": "aced3ff6ba9125a0b9c2b1ebd72e1232f8e641f59f33d749cf88d6e1f4caa6b1",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-public",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-public.zip",
+      "archive_sha256": "7ec91a70241fbf448b7d7197ec4aa0237253d395eed7de722d632df607b72860",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-integer-warning",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/rank-integer-warning.zip",
+      "archive_sha256": "1f0a0c9a380608c0e520bcecd945acb8d5ba7a8c72bd320ebbdf29429fd5ef56",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/worktrees/main-core-debug-validation",
+      "archive": "build/cleanup/obsolete-worktrees-20261023/main-core-debug-validation.zip",
+      "archive_sha256": "4ef39c9a3dc38f33dfb3124762bf34397c5deb1ea706d89ec651ab9ea713a36e",
+      "member_rule": "Remove former_prefix/; all source/artifact bytes preserved; .git worktree pointer excluded."
+    },
+    {
+      "former_prefix": "build/main-core-wave4-source",
+      "archive": "build/main-core-wave4-evidence/source-591ce3f.zip",
+      "archive_sha256": "203b98aecbff1018e214dc8ac5c9352a5fc8218c2c4a45b9bb22cec47c22d2ef",
+      "member_rule": "Remove former_prefix/; exact raw source bytes in existing sealed ZIP."
+    },
+    {
+      "former_prefix": "build/transform-public-4ae8-source",
+      "archive": "build/transform-public-evidence/transform-public-4ae8-source.zip",
+      "archive_sha256": "94cc869c6e28ffdf97b8bc416b967a4770ce72a8d18033804fdd22578b90015d",
+      "member_rule": "Remove former_prefix/; exact raw source bytes in existing sealed ZIP."
+    }
+  ]
 }

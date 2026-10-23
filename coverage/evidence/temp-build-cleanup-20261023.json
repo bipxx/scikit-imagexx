@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-23T23:27:37.130750+00:00",
+  "scope": "User-requested temporary build artifact cleanup before further implementation. No algorithm/source implementation changes.",
+  "removed": {
+    "obsolete_build_caches": 25,
+    "clean_merged_worktrees": 26,
+    "duplicate_source_snapshots": 2
+  },
+  "estimated_net_bytes_recovered_after_archives": 8017689859,
+  "net_scope": "Logical original file sizes minus newly retained archives; excludes small manifest/proof copies and unrelated free-space changes.",
+  "drive_free_bytes_at_completion": 20811862016,
+  "preservation_indexes": [
+    {
+      "path": "build/cleanup/obsolete-cache-archives/20261023/manifest.json",
+      "sha256": "6a8a1139526c851db978c974e65b026010aee32ac892e9eb49ec0a4b49ffeb7b"
+    },
+    {
+      "path": "build/cleanup/obsolete-cache-archives/20261023-extra/manifest.json",
+      "sha256": "7d1b67a9c1d0d86b62e1b25e0ea0aed5572ea10ad988a6e6ac11bd5ec7fc7575"
+    },
+    {
+      "path": "build/cleanup/obsolete-cache-archives/20261023-windows-default/manifest.json",
+      "sha256": "0b9ddd49bfcf2b193cdee78c25b29c78310307f3d650fcea098df760dc27ed78"
+    },
+    {
+      "path": "build/cleanup/obsolete-worktrees-20261023/manifest.json",
+      "sha256": "8e2fa9f2674b8b6f798df88b63a415de1ffc283741d8dac2d8b5d63b53e674b6"
+    },
+    {
+      "path": "build/cleanup/source-snapshot-audit/removals.json",
+      "sha256": "79b8236192b445dc00fd860cffee56ec8da09d64caf49bd500183259f9217c0a"
+    }
+  ],
+  "sealed_proof_manifests_relocated": 7,
+  "archive_redirects_recorded": 53,
+  "worktree_retirement": "All tracked/untracked source clean, commits ancestors ofmain; git worktree remove only after byte-exact fullarchive verification. Two validated staging ancestry merges left source tree unchanged.",
+  "removal_safety": "Every resolved absolute target checked within workspace; no reparse-point traversal or parentbuild deletion.",
+  "protected_worktrees": [
+    "build/worktrees/consumer-layout-scan",
+    "build/worktrees/core-rank9-validation",
+    "build/worktrees/downscale-local-mean",
+    "build/worktrees/li-uniform",
+    "build/worktrees/rank-percentile-contracts",
+    "build/worktrees/rank-statistics-benchmark",
+    "build/worktrees/rank-statistics-contracts",
+    "build/worktrees/rank-statistics-native",
+    "build/worktrees/rank-statistics-public"
+  ],
+  "protected_environments": "Active .venv andretained Linuxruntime/env paths untouched; two Linuxdefaultcache dependencies unknown andretained; currentWindowsproducer cache retained.",
+  "protected_package_audit": {
+    "path": "build/cleanup/protected-wave6-packages.json",
+    "sha256": "faccb2151141e119ea58d92236191f83430d2ecac8a4fd2749d4577b95335f42",
+    "exact_members_per_product": 104,
+    "products": 4,
+    "sdk_members_per_product": 59,
+    "changed_or_extra_members": 0
+  },
+  "raw_benchmarks_and_baselines": "Global raw reports/downloads/runtime packages remain; all artifacts inside retiredworktrees retained in lossless verifiedarchives.",
+  "unfinished_sources": "All active/unmerged sourcework remains in protectedworktrees; no featurework resumed during cleanup.",
+  "local_job_cancellation": 0,
+  "performance_operations": 0,
+  "remaining_infrastructure": "WSL root filesystem remains emergency read-only; no remount/restart/repair performed."
+}
