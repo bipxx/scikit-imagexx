@@ -67,8 +67,8 @@ The next correction reuses exact results for byte-identical lines/inner blocks
 and removes temporary gradients when all Gaussian passes are empty. Reuse is
 restricted to complete preceding rows owned by the same worker partition.
 Independent outputs, signed-zero patterns and worker parity are regression
-tested. These revised measurements remain pending; this trial is not yet
-retained on main.
+tested. That intermediate source was not retained; the follow-up measurements and
+retained revision appear below.
 
 Zero-tail raw samples: [Linux](hessian-zero-tail-linux.json),
 [Windows](hessian-zero-tail-windows.json).
