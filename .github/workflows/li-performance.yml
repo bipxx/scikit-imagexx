@@ -22,6 +22,7 @@ jobs:
       contents: read
       actions: read
     strategy:
+      fail-fast: false
       matrix:
         os: ${{ fromJSON(inputs.runner == 'windows-latest' && '["windows-latest"]' || inputs.runner == 'ubuntu-latest' && '["ubuntu-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
     runs-on: ${{ matrix.os }}
