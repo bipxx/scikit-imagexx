@@ -5946,7 +5946,7 @@
         "source_sha": "eca9f0e6336ab31e52ed9fa17321aadc2b8bfe2e",
         "artifact_sha256": null,
         "runs": [
-          "build/worktrees/connected-components-contracts/build/connected-components-contract-proof.json"
+          "build/checkpoints/public-wave1-cleanup/connected-components-contracts/agent-evidence/build/connected-components-contract-proof.json"
         ]
       },
       "performance": {
@@ -5963,10 +5963,10 @@
         "main_commit": "09dfc98555eb05b58ad451a1cb59ba9a440d809e"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/connected-components-contracts"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/connected-components-contracts"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -5975,7 +5975,8 @@
           "message": "Freeze measure.label/morphology.label original signatures, aliases, canonical numbering, bool/integer/float conversion, ranks/layouts, background/connectivity/return_num, warnings/errors and ownership. Original and strict-native-pending proofs on all three runtimes; no implementation claim.\nExclusive ownership: tests/test_connected_components_contracts.py, coverage/contracts/connected-components.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/connected-components-contracts",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -5990,7 +5991,7 @@
           "status": "verified",
           "source_sha": "eca9f0e6336ab31e52ed9fa17321aadc2b8bfe2e",
           "manifest": {
-            "path": "build/worktrees/connected-components-contracts/build/connected-components-contract-proof.json",
+            "path": "build/checkpoints/public-wave1-cleanup/connected-components-contracts/agent-evidence/build/connected-components-contract-proof.json",
             "sha256": "1a7651e6f9d41c45a20a75e60a8a9f029db1a0120dc49eb357f16a8f08783cf9"
           },
           "passing_contract_checks": 1600,
@@ -6013,7 +6014,8 @@
         "passing_contract_checks_per_runtime": 1600,
         "native_pending_per_runtime": 1596,
         "live_handles": []
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/connected-components-contracts/manifest.json"
     },
     {
       "id": "component-consumers",
@@ -6041,7 +6043,7 @@
         "source_sha": "a3714affaad5f5a0ed0e89f3bf2363f7cceedb37",
         "artifact_sha256": null,
         "runs": [
-          "build/worktrees/component-consumer-contracts/build/component-consumers-proof.json"
+          "build/checkpoints/public-wave1-cleanup/component-consumer-contracts/agent-evidence/build/component-consumers-proof.json"
         ]
       },
       "performance": {
@@ -6060,7 +6062,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/component-consumer-contracts"
+        ]
       },
       "dependency_requirements": {},
       "launch": {
@@ -6070,7 +6074,8 @@
           "message": "Freeze original remove_small_objects/remove_small_holes/clear_border/relabel_sequential contracts independently of native labeling. Cover changed/deprecated parameters, dtype/labels/ArrayMap behavior, warnings/errors and strict pending status.\nExclusive ownership: tests/test_component_consumer_contracts.py, coverage/contracts/component-consumers.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/component-consumer-contracts",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "build": {
         "cache_policy": "Exclusive ignored cache; retain active environments, source and raw evidence.",
@@ -6083,14 +6088,15 @@
           "status": "verified",
           "source_sha": "a3714affaad5f5a0ed0e89f3bf2363f7cceedb37",
           "manifest": {
-            "path": "build/worktrees/component-consumer-contracts/build/component-consumers-proof.json",
+            "path": "build/checkpoints/public-wave1-cleanup/component-consumer-contracts/agent-evidence/build/component-consumers-proof.json",
             "sha256": "04b7e14b553383d4445e641d062ab41c69dfdd867d6522e7bbae16ce877bbec5"
           },
           "passing_contract_checks": 1436,
           "native_executed": 0,
           "native_pending": 1434
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/component-consumer-contracts/manifest.json"
     },
     {
       "id": "footprints",
@@ -6217,7 +6223,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/rank-neighborhood-contracts"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -6226,7 +6234,8 @@
           "message": "Freeze nested filters.rank minimum/maximum/mean/sum/pop contracts before rolling-histogram implementation. Include output/mask/shift/footprint/dtype, warnings/errors and strict nested exposure. No shared namespace edits.\nExclusive ownership: tests/test_rank_neighborhood_contracts.py, coverage/contracts/rank-neighborhoods.json. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/rank-neighborhood-contracts",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -6255,7 +6264,8 @@
           "native_executed": 0,
           "native_pending": 1115
         }
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/rank-neighborhood-contracts/manifest.json"
     },
     {
       "id": "transform-class-contracts",
@@ -6856,10 +6866,10 @@
         "main_commit": "09dfc98555eb05b58ad451a1cb59ba9a440d809e"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/metrics-reductions"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/metrics-reductions"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -6868,7 +6878,8 @@
           "message": "Implement exceptional-only native materialized stages in upstream order for call/log/print, honoring callback mutation of inputs, already-produced deltas, aliases and FP policy. Preserve default fused performance; test combined callback masks and stateful/reentrant policy changes across runtimes.\nExclusive ownership: include/skimagexx/metrics.hpp, src/metrics.cpp, src/simd_metrics_avx2.cpp, src/bind_metrics.cpp, python/skimagexx/_metrics.py, tests/test_metrics_reductions.py, tests/test_metrics_native.cpp. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/metrics-reductions",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -6936,7 +6947,8 @@
         "failing_initial_checks": 4,
         "subsequent_fix": "Compiles; unvalidated. Preserve callback-resize boundary trials.",
         "live_handles": []
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/metrics-reductions/manifest.json"
     },
     {
       "id": "connected-components-native",
@@ -6969,7 +6981,7 @@
         "source_sha": "643b09a89dd0b4929a365fab1000329b5c77f70b",
         "artifact_sha256": null,
         "runs": [
-          "build/worktrees/connected-components-native/build/components-native-proof.json"
+          "build/checkpoints/public-wave1-cleanup/connected-components-native/agent-evidence/build/components-native-proof.json"
         ]
       },
       "performance": {
@@ -6987,7 +6999,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/connected-components-native"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -6996,7 +7010,8 @@
           "message": "Implement equal-value connected components against the frozen label contracts. Freeze canonical numbering and connectivity before block stitching; SIMD comparisons/run discovery plus efficient union/find. Optional shared workers must produce identical labels at one/four; never edit shared wiring/exports/registry.\nExclusive ownership: include/skimagexx/components.hpp, src/components.cpp, src/simd_components_avx2.cpp, src/bind_components.cpp, python/skimagexx/_components.py, tests/test_components_native.cpp, tests/test_components_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/connected-components-native",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -7011,7 +7026,7 @@
           "status": "verified",
           "source_sha": "643b09a89dd0b4929a365fab1000329b5c77f70b",
           "manifest": {
-            "path": "build/worktrees/connected-components-native/build/components-native-proof.json",
+            "path": "build/checkpoints/public-wave1-cleanup/connected-components-native/agent-evidence/build/components-native-proof.json",
             "sha256": "775311751c1cf826fa1b0d660dadfd8e44dc38536290c5ef020ce3296ab4fa87"
           },
           "native_contract_checks": 1820,
@@ -7049,7 +7064,8 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/connected-components-native/manifest.json"
     },
     {
       "id": "footprints-dense",
@@ -7097,10 +7113,10 @@
         "main_commit": "09dfc98555eb05b58ad451a1cb59ba9a440d809e"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/footprint-dense"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/footprint-dense"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -7109,7 +7125,8 @@
           "message": "Implement decomposition=None for rectangle/diamond/disk/ball using frozen exact fractional/negative-radius, dtype/metadata, strict_radius, ownership and error contracts. Own C++ raster loops, runtime SIMD and shared default-one workers. No decomposition, mirror/pad, shared wiring or public registration claims.\nExclusive ownership: include/skimagexx/footprint_dense.hpp, src/footprint_dense.cpp, src/simd_footprint_dense_avx2.cpp, src/bind_footprint_dense.cpp, python/skimagexx/_footprint_dense.py, tests/test_footprint_dense_native.cpp, tests/test_footprint_dense_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/footprint-dense",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -7174,7 +7191,8 @@
         "failing_initial_checks": 8,
         "subsequent_fix": "Unvalidated; Windows rebuild passes; Linux regeneration exposed ephemeral pybind11_DIR. Repair persistent environment after resume.",
         "live_handles": []
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/footprint-dense/manifest.json"
     },
     {
       "id": "footprints-decomposition",
@@ -7221,7 +7239,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/footprint-decomposition"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -7230,7 +7250,8 @@
           "message": "Implement exact rectangle/diamond decomposition formulas, pinned disk/ball sequence tables and disk cross decomposition. Compare tuple container/dtype/value/iteration semantics; do not substitute dense-mask equivalence for tuple parity.\nExclusive ownership: include/skimagexx/footprint_decomposition.hpp, src/footprint_decomposition.cpp, src/bind_footprint_decomposition.cpp, python/skimagexx/_footprint_decomposition.py, tests/test_footprint_decomposition.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/footprint-decomposition",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -7265,7 +7286,8 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/footprint-decomposition/manifest.json"
     },
     {
       "id": "footprints-utilities",
@@ -7311,7 +7333,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/footprint-utilities"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -7320,7 +7344,8 @@
           "message": "Implement mirror_footprint and pad_footprint exact array/sequence contracts. Preserve mirror negative-stride view/alias semantics; use native raw-copy/fill for supported pad dtypes and explicit structural providers for arbitrary NumPy object semantics. Do not force ownership or silently copy a reference view.\nExclusive ownership: include/skimagexx/footprint_util.hpp, src/footprint_util.cpp, src/bind_footprint_util.cpp, python/skimagexx/_footprint_util.py, tests/test_footprint_util.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/footprint-utilities",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -7367,7 +7392,8 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/footprint-utilities/manifest.json"
     },
     {
       "id": "transform-class-native",
@@ -7418,7 +7444,9 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/checkpoints/public-wave1-cleanup/transform-class-native"
+        ]
       },
       "launch": {
         "tool": "collaboration.followup_task",
@@ -7427,7 +7455,8 @@
           "message": "Start the projective parent model and dependent affine/Euclidean/similarity models against frozen constructor, member, state, mutation, composition/inverse contracts. Freeze parameter/solver interface before splitting further; use own native coordinate kernels and declare runtime math providers. Contract tests alone do not count as implementations.\nExclusive ownership: include/skimagexx/projective.hpp, src/projective.cpp, src/simd_projective_avx2.cpp, src/bind_projective.cpp, python/skimagexx/_geometric.py, tests/test_projective_native.cpp, tests/test_transform_native_pipeline.py. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/transform-class-native",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "acceptance": [
         "Frozen pinned-original per-function contracts, including values, dtype, layout, ownership, warnings and errors.",
@@ -7473,7 +7502,8 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
-      }
+      },
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/transform-class-native/manifest.json"
     },
     {
       "id": "component-consumers-native",
@@ -7591,7 +7621,8 @@
         "protected_artifacts": [
           "build/public-wave1-evidence",
           "build/public-wave1-{windows,modern-linux,minimum-linux}-package",
-          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels"
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels",
+          "build/checkpoints/public-wave1-cleanup/public-wave1-validation"
         ]
       },
       "public_registration": true,
@@ -7602,7 +7633,8 @@
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/measure.py, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/public-wave1-validation",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "proofs": {
         "public_native": {
@@ -7650,7 +7682,8 @@
         "coverage/api.json",
         "coverage/README.md",
         "tests/test_components_public.py"
-      ]
+      ],
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/public-wave1-validation/manifest.json"
     },
     {
       "id": "footprints-public-integration",
@@ -7696,7 +7729,8 @@
         "protected_artifacts": [
           "build/public-wave1-evidence",
           "build/public-wave1-{windows,modern-linux,minimum-linux}-package",
-          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels"
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels",
+          "build/checkpoints/public-wave1-cleanup/public-wave1-validation"
         ]
       },
       "public_registration": true,
@@ -7707,7 +7741,8 @@
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
         "worktree": "build/worktrees/public-wave1-validation",
-        "requires_user_resume": false
+        "requires_user_resume": false,
+        "worktree_removed_after_merge": true
       },
       "proofs": {
         "public_native": {
@@ -7760,7 +7795,8 @@
         "coverage/api.json",
         "coverage/README.md",
         "tests/test_footprints_public.py"
-      ]
+      ],
+      "checkpoint_archive": "build/checkpoints/public-wave1-cleanup/public-wave1-validation/manifest.json"
     },
     {
       "id": "transform-class-public-integration",
@@ -7847,7 +7883,9 @@
         "tests/test_api.py",
         "tests/test_transform_classes_public.py",
         "coverage/api.json",
-        "coverage/README.md"
+        "coverage/README.md",
+        "python/skimagexx/_geometric.py",
+        "tests/test_class_registry.py"
       ]
     },
     {
@@ -8079,7 +8117,7 @@
         "source_sha": "d1aea44be009a2878e879c92ee21ebed39a18f52",
         "artifact_sha256": null,
         "runs": [
-          "build/worktrees/components-benchmark/build/components-benchmark-proof.json"
+          "build/checkpoints/public-wave1-cleanup/components-benchmark/agent-evidence/build/components-benchmark-proof.json"
         ]
       },
       "performance": {
@@ -8104,7 +8142,7 @@
           "status": "verified",
           "source_sha": "d1aea44be009a2878e879c92ee21ebed39a18f52",
           "manifest": {
-            "path": "build/worktrees/components-benchmark/build/components-benchmark-proof.json",
+            "path": "build/checkpoints/public-wave1-cleanup/components-benchmark/agent-evidence/build/components-benchmark-proof.json",
             "sha256": "0ca367a08b602628958c6636619cda2c6ffda2a1c9a5924e983670919750c1df"
           },
           "passing_contract_checks": 954
