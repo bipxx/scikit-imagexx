@@ -104,6 +104,18 @@ def test_returned_arraymap_is_not_a_public_class_registration():
     assert 'ArrayMap' not in xx.segmentation.__all__ and 'ArrayMap' not in xx.util.__all__
 
 
+@pytest.mark.parametrize('api',contract.APIS[:2])
+@pytest.mark.parametrize('dtype',[np.complex64,np.complex128,object,'U3','V4',np.longdouble])
+@pytest.mark.parametrize('deprecated',[False,True])
+def test_defined_morphology_dtype_rejection_stays_native(api,dtype,deprecated):
+    # Defined error/deprecation order does not need an image-kernel provider.
+    # This does not claim object/complex pixel processing or ArrayMap support.
+    candidate=getattr(xx.morphology,api.split('.')[1])
+    old='min_size' if api.endswith('objects') else 'area_threshold'
+    options={old:2} if deprecated else {}
+    contract.check(candidate,api,lambda:(np.zeros((3,4),dtype),(),dict(options)))
+
+
 def test_native_sparse_count_safety_without_impractical_reference_allocation(monkeypatch):
     monkeypatch.setattr(morphology,'remove_small_objects',lambda *a,**k:(_ for _ in ()).throw(AssertionError('unsafe reference allocation')))
     image=np.array([0,10**12,10**12,3],np.int64);before=image.copy()
