@@ -4,6 +4,7 @@
 #include "resize_gaussian.hpp"
 #include "resize_clip.hpp"
 #include "resize_range.hpp"
+#include "resize_half.hpp"
 #include <cstring>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -66,6 +67,44 @@ void bind_resample(py::module_& module) {
     const auto numpy=py::module_::import("numpy");
     const py::object minimum=numpy.attr("minimum").attr("reduce"),maximum=numpy.attr("maximum").attr("reduce"),
                      fmin=numpy.attr("fmin").attr("reduce"),fmax=numpy.attr("fmax").attr("reduce");
+    module.def("resize_half_identity",[minimum,maximum,fmin,fmax](py::array image,bool clip,int policy)->py::tuple {
+        if(image.dtype().kind()!='f' || image.itemsize()!=2)throw py::type_error("binary16 identity input required");
+        if(policy<0 || policy>1)throw py::value_error("invalid half clip policy");
+        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
+        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
+            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
+        }
+        const bool swap=!image.dtype().attr("isnative").cast<bool>(),contiguous=bool(image.flags()&py::array::c_style);
+        const py::dtype dtype("float16");py::array result(dtype,dimensions);
+        const auto count=std::size_t(image.size());
+        {
+            py::gil_scoped_release release;
+            if(contiguous)skimagexx::detail::half_copy_into(image.data(),static_cast<std::uint16_t*>(result.mutable_data()),count,swap);
+            else copy_native(image.data(),result.mutable_data(),count,2,shape,strides,swap,false);
+        }
+        if(!clip)return py::make_tuple(result,py::none(),py::none(),false,false,false);
+        if(!count)throw py::value_error("zero-size array to reduction operation minimum which has no identity");
+        py::array lower(dtype,std::vector<py::ssize_t>{}),upper(dtype,std::vector<py::ssize_t>{});
+        skimagexx::detail::ResizeRangeInfo info;
+        {
+            py::gil_scoped_release release;
+            info=skimagexx::detail::half_range_into(static_cast<const std::uint16_t*>(result.data()),count,
+                static_cast<std::uint16_t*>(lower.mutable_data()),static_cast<std::uint16_t*>(upper.mutable_data()));
+        }
+        std::uint16_t low,high;std::memcpy(&low,lower.data(),2);std::memcpy(&high,upper.data(),2);
+        const bool runtime_order=!info.has_value || (info.positive_zero && info.negative_zero &&
+            (skimagexx::detail::half_zero(low)||skimagexx::detail::half_zero(high)));
+        if(runtime_order) {
+            lower=py::array::ensure((info.has_nan ? fmin : minimum)(image,py::arg("axis")=py::none()));
+            upper=py::array::ensure((info.has_nan ? fmax : maximum)(image,py::arg("axis")=py::none()));
+            std::memcpy(&low,lower.data(),2);std::memcpy(&high,upper.data(),2);
+        }
+        {
+            py::gil_scoped_release release;
+            skimagexx::detail::half_clip_into(static_cast<std::uint16_t*>(result.mutable_data()),count,low,high,policy);
+        }
+        return py::make_tuple(result,lower,upper,info.has_nan,info.has_value,runtime_order);
+    });
     module.def("resize_range",[minimum,maximum,fmin,fmax](py::array image) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
         if(!image.size())throw py::value_error("zero-size array to reduction operation minimum which has no identity");
