@@ -1,0 +1,86 @@
+{
+  "reference": "scikit-image==0.26.0",
+  "public_paths": 474,
+  "partial_native_image_paths": 137,
+  "partial_native_classes": 4,
+  "metadata_helpers": 3,
+  "exception_metadata_providers": 1,
+  "upstream_only_paths": 329,
+  "scoped_parity_test_links": 137,
+  "image_benchmark_harness_links": 133,
+  "pending_image_benchmarks": [
+    "morphology.remove_small_holes",
+    "morphology.remove_small_objects",
+    "segmentation.clear_border",
+    "segmentation.relabel_sequential"
+  ],
+  "count_scope": "Public API paths include aliases; partial native classification is not complete parity or measured speedup. Pending public rank paths are excluded.",
+  "combined_core": {
+    "source": "99b1a1dba48942f6daade395c8fc03925db2b865",
+    "profiles": 8,
+    "checks_per_profile": 42295,
+    "scope": "Public-wave14963, shared7522, private9014, resize10796; grouped assertions, not distinct algorithms. Whole Debug GIL assertions enabled; full-core ASan is not claimed."
+  },
+  "metrics_simd": {
+    "source": "6545e330759f1419b9080d5cb04fa18c069096ae",
+    "profiles": 6,
+    "public_checks_per_profile": 10984,
+    "fixed_corpus_checks": 1231,
+    "timing_eligible_cases": 1212,
+    "speedup_claim": null
+  },
+  "class_tooling": {
+    "source": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+    "fixed_corpus_checks": 296,
+    "timing_eligible_cases": 276,
+    "exact_artifact_supplement": true,
+    "local_timings": false
+  },
+  "label_trial": {
+    "source": "3b593186cc7cb93f856ca2e488e89f77a32b218f",
+    "private_profiles": 6,
+    "private_checks_per_profile": 1828,
+    "remaining": "Actual whole-package gates and isolated original-library timings."
+  },
+  "footprint_dtype_fix": {
+    "source": "1894482aa67353181955239f019fecd060018d3f",
+    "test_only_repr_followup": "00f45b8c5f1a907d783e07f1d29eb64566abeaf6",
+    "profiles": 6,
+    "focused_checks_per_profile": 120,
+    "existing_public_and_dense_checks_per_profile": 4599,
+    "scope": "Caller dtype getter count/order and exact returned/exception/warning observations; initial minimum-runtime repr failures retained."
+  },
+  "resize_trial_report": "benchmarks/resize-public-span-copy-trial.json",
+  "resize_trial_limitation": "One-worker versus-original results are valid for the recorded hosts. Different CPU models between hosted runs prevent a causal previous/current claim; a same-host three-backend experiment is implementing.",
+  "local_proof_manifests": {
+    "combined_core": {
+      "path": "build/main-core-99b-evidence/manifest.json",
+      "sha256": "fdbbe549cf50c5fc899696753f4f96744b406765e1cda11511133d0692455ba7"
+    },
+    "metrics_simd": {
+      "path": "build/worktrees/metrics-performance/build/metrics-simd-loads-proof.json",
+      "sha256": "8bc1b5966dca58d74efa4337f8f8b3de942d984ea838fe1c4a257f0e6aea04e6"
+    },
+    "class_tooling": {
+      "path": "build/transform-class-performance-evidence/manifest.json",
+      "sha256": "4ed9f1556e65ffe1fb727b25f6f760389479ea7ad70e14bf39b9d076ed5f42fa"
+    },
+    "class_exact_artifacts": {
+      "path": "build/transform-class-performance-artifact-supplement/manifest.json",
+      "sha256": "d544d693aa70e53b20e4e0858aaf6a4508cdd382f4eb217fcb1706d025fb9c97"
+    },
+    "label_private_trial": {
+      "path": "build/components-run-evidence/3b59318/manifest.json",
+      "sha256": "7bd869db39a1e9101a591ffc4f22f9f749fabfa2bb4f8f7ab7245d078b466034"
+    },
+    "footprint_dtype_fix": {
+      "path": "build/footprint-setup-evidence/dtype189-proof.json",
+      "sha256": "7006661bcf4e6ec67d9820619d03b4038b1a2cdf5b782f903c07363b3ed40f94"
+    }
+  },
+  "live_workers": {
+    "metrics_reductions": "Rank public warning-hook correctness and acceptance",
+    "resize_api": "Controlled three-backend resize benchmark capsules",
+    "resize_bench": "Footprint setup optimization and actual-package gates"
+  }
+}

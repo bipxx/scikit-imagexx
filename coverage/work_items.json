@@ -16186,7 +16186,7 @@
       "depends_on": [
         "resize-optimization"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -16201,17 +16201,22 @@
         "required_workers": [
           1
         ],
-        "corpus_sha256": null,
-        "raw_results": [],
+        "corpus_sha256": "fba80775a00c05cce788ed788e5991b9897dec122327b703d67c7222418952a4",
+        "raw_results": [
+          "benchmarks/resize-public-windows-modern-span-copy-trial.json",
+          "benchmarks/resize-public-linux-modern-span-copy-trial.json",
+          "benchmarks/resize-public-linux-minimum-span-copy-trial.json"
+        ],
         "regressions": [],
         "source_sha": "b5d59bbaa71f4840264e756599cb5700c08407f6",
         "run_id": 39987242238,
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/39987242238",
-        "observed_state": "queued",
+        "observed_state": "completed-success",
         "workers": [
           1
         ],
-        "note": "Authoritative unchanged373-case resize trial; b5 changes workflow only from proven3b product. No restart/cancel for observation timeouts; compare every original-library result and retain regressions."
+        "note": "Measured span-copy trial; CPU models differ from the first baseline, so controlled previous/current comparison remains pending. Slower cases remain.",
+        "summary": "benchmarks/resize-public-span-copy-trial.json"
       },
       "merge": {
         "commit": null,
@@ -16225,6 +16230,17 @@
         "resize-optimization": {
           "evidence_scope": "public_native"
         }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "b5d59bbaa71f4840264e756599cb5700c08407f6",
+          "manifest": {
+            "path": "benchmarks/resize-public-span-copy-trial.json",
+            "sha256": "3b1c80a150bd91c1fff3ab54d162827edd37c2d2bc7b86ff245dec82562dc6c7"
+          },
+          "scope": "373 checks/372 timings/7 pairs per runtime, workers1. Hosts differ from initial run; no causal cross-run claim."
+        }
       }
     },
     {
@@ -16232,7 +16248,7 @@
       "kind": "integration",
       "apis": [],
       "owner": "integrator",
-      "branch": "detached/722006f",
+      "branch": "detached/99b1a1d",
       "base_sha": "722006f552d015639c7fc06389a8f74d88dab3d6",
       "owns": [],
       "depends_on": [
@@ -16241,15 +16257,17 @@
         "component-consumers-native",
         "native-foundations-sdk"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "99b1a1dba48942f6daade395c8fc03925db2b865",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/main-core-99b-evidence/manifest.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -16317,15 +16335,24 @@
           "linux-modern": 51337,
           "linux-minimum": 34718,
           "debug-modern": 73850
+        },
+        "all_corrected_tests_terminal": true,
+        "proof_manifest": {
+          "path": "build/main-core-99b-evidence/manifest.json",
+          "sha256": "fdbbe549cf50c5fc899696753f4f96744b406765e1cda11511133d0692455ba7"
         }
       },
       "proofs": {
         "native_private": {
-          "status": "pending",
-          "source_sha": "722006f552d015639c7fc06389a8f74d88dab3d6",
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "status": "verified",
+          "source_sha": "99b1a1dba48942f6daade395c8fc03925db2b865",
+          "manifest": {
+            "path": "build/main-core-99b-evidence/manifest.json",
+            "sha256": "fdbbe549cf50c5fc899696753f4f96744b406765e1cda11511133d0692455ba7"
+          },
+          "native_contract_checks": 9014,
+          "native_pending": 0,
+          "scope": "Per profile private rank/consumer/footprint scope; all eight whole-package profiles pass."
         }
       }
     },
@@ -16776,18 +16803,15 @@
       "apis": [],
       "owner": "resize_api",
       "branch": "feature/metrics-performance",
-      "base_sha": "99b1a1dba48942f6daade395c8fc03925db2b865",
+      "base_sha": "b6c97ba94229ad9fcc12e5545ce26d2f1d5dbaa5",
       "owns": [
         "src/simd_metrics_avx2.cpp",
-        "src/metrics.cpp",
-        "src/bind_metrics.cpp",
-        "python/skimagexx/_metrics.py",
-        "tests/test_metrics_simd_loads.cpp"
+        "tests/test_metrics_native.cpp"
       ],
       "depends_on": [
         "metrics-measurement"
       ],
-      "state": "implementing",
+      "state": "performance_pending",
       "dependency_requirements": {
         "metrics-measurement": {
           "evidence_scope": "isolated_performance"
@@ -16800,9 +16824,11 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/worktrees/metrics-performance/build/metrics-simd-loads-proof.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -16814,12 +16840,25 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "6545e330759f1419b9080d5cb04fa18c069096ae",
+        "main_commit": "0056bbb"
       },
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
+          "manifest": {
+            "path": "build/worktrees/metrics-performance/build/metrics-simd-loads-proof.json",
+            "sha256": "8bc1b5966dca58d74efa4337f8f8b3de942d984ea838fe1c4a257f0e6aea04e6"
+          },
+          "native_contract_checks": 10984,
+          "native_pending": 0,
+          "scope": "Six actual whole-package runtime/SIMD profiles; unchanged1231-case untimed corpus and separate native sanitizer/layout gates."
+        }
       }
     },
     {
@@ -16891,11 +16930,205 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "Existing296 descriptors kept unchanged; separate timing scope per operation",
         "uncovered_cases": [
           "Original-only/tooling gates independent; no local operation timings, public exact-source one-worker measurement still pending."
+        ]
+      },
+      "parity": {
+        "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+        "artifact_sha256": null,
+        "runs": [
+          "build/transform-class-performance-evidence/manifest.json",
+          "build/transform-class-performance-artifact-supplement/manifest.json"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+        "main_commit": "fa0dca1"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+          "manifest": {
+            "path": "build/transform-class-performance-evidence/manifest.json",
+            "sha256": "4ed9f1556e65ffe1fb727b25f6f760389479ea7ad70e14bf39b9d076ed5f42fa"
+          }
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+          "manifest": {
+            "path": "build/transform-class-performance-artifact-supplement/manifest.json",
+            "sha256": "d544d693aa70e53b20e4e0858aaf6a4508cdd382f4eb217fcb1706d025fb9c97"
+          },
+          "native_contract_checks": 296,
+          "native_pending": 0,
+          "scope": "Unchanged scoped public class corpus on three complete exact-Python wheels with byte-identical b6 C++/SDK; normal/scalar and workers1/4. Providers remain explicit."
+        }
+      }
+    },
+    {
+      "id": "footprint-dtype-provider-fix",
+      "kind": "public_fix",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "1894482aa67353181955239f019fecd060018d3f",
+      "owns": [],
+      "depends_on": [
+        "footprints-public-integration"
+      ],
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": "1894482aa67353181955239f019fecd060018d3f",
+        "artifact_sha256": null,
+        "runs": [
+          "build/footprint-setup-evidence/dtype189-proof.json"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "1894482aa67353181955239f019fecd060018d3f",
+        "main_commit": "9420e4d"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "footprints-public-integration": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "1894482aa67353181955239f019fecd060018d3f",
+          "manifest": {
+            "path": "build/footprint-setup-evidence/dtype189-proof.json",
+            "sha256": "7006661bcf4e6ec67d9820619d03b4038b1a2cdf5b782f903c07363b3ed40f94"
+          },
+          "native_contract_checks": 120,
+          "native_pending": 0,
+          "scope": "Exact getter/order/error/warning/value/dtype checks; six profiles with existing4007public+592dense checks. Test-only deterministic repr followup00f; failed trial retained."
+        }
+      }
+    },
+    {
+      "id": "components-short-run-optimization",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/components-performance",
+      "base_sha": "3b593186cc7cb93f856ca2e488e89f77a32b218f",
+      "owns": [
+        "src/components.cpp",
+        "tests/test_components_native.cpp"
+      ],
+      "depends_on": [
+        "components-measurement"
+      ],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Whole actual package/SDK and original-library one-worker timings are pending; no speedup claimed."
+        ]
+      },
+      "parity": {
+        "source_sha": "3b593186cc7cb93f856ca2e488e89f77a32b218f",
+        "artifact_sha256": null,
+        "runs": [
+          "build/components-run-evidence/3b59318/manifest.json"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "3b593186cc7cb93f856ca2e488e89f77a32b218f",
+        "main_commit": "25bea16"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "components-measurement": {
+          "evidence_scope": "isolated_performance"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "3b593186cc7cb93f856ca2e488e89f77a32b218f",
+          "manifest": {
+            "path": "build/components-run-evidence/3b59318/manifest.json",
+            "sha256": "7bd869db39a1e9101a591ffc4f22f9f749fabfa2bb4f8f7ab7245d078b466034"
+          },
+          "native_contract_checks": 1828,
+          "native_pending": 0,
+          "scope": "Six private pipeline profiles plus boundary/native sanitizer gates; actual whole-package validation pending."
+        }
+      }
+    },
+    {
+      "id": "resize-controlled-comparison",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/resize-controlled",
+      "base_sha": "caf8b815b07c1024583f264335f10f514ccfb49a",
+      "owns": [
+        "benchmarks/resize_controlled.py",
+        "tools/resize_controlled_artifacts.py",
+        "tests/test_resize_controlled.py",
+        ".github/workflows/resize-controlled.yml"
+      ],
+      "depends_on": [
+        "resize-measurement",
+        "resize-optimization-measurement"
+      ],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Prepare authenticated previous/current/original whole packages and offline capsules;373 untimed checks each old/current at1/4 before372 timings; no local timings."
         ]
       },
       "parity": {
@@ -16919,6 +17152,161 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "resize-measurement": {
+          "evidence_scope": "isolated_performance"
+        },
+        "resize-optimization-measurement": {
+          "evidence_scope": "isolated_performance"
+        }
+      }
+    },
+    {
+      "id": "footprint-setup-optimization",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/footprint-performance",
+      "base_sha": "00f45b8c5f1a907d783e07f1d29eb64566abeaf6",
+      "owns": [
+        "src/bind_footprint_dense.cpp",
+        "python/skimagexx/_footprint_dense.py",
+        "python/skimagexx/_footprint_decomposition.py",
+        "python/skimagexx/_footprint_utils.py"
+      ],
+      "depends_on": [
+        "footprints-measurement",
+        "footprint-dtype-provider-fix"
+      ],
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Bounded rectangle descriptor fastpath, duplicate shape-check removal and direct mirror slicing; whole Release/Debug gates and isolated binding sanitizer checks pending. No arbitrary dtype/atom cache, fixed556 corpus unchanged."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "footprints-measurement": {
+          "evidence_scope": "isolated_performance"
+        },
+        "footprint-dtype-provider-fix": {
+          "evidence_scope": "public_native"
+        }
+      }
+    },
+    {
+      "id": "metrics-simd-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/metrics-performance",
+      "base_sha": "6545e330759f1419b9080d5cb04fa18c069096ae",
+      "owns": [],
+      "depends_on": [
+        "metrics-simd-load-optimization"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae"
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "metrics-simd-load-optimization": {
+          "evidence_scope": "public_native",
+          "source_sha": "6545e330759f1419b9080d5cb04fa18c069096ae"
+        }
+      }
+    },
+    {
+      "id": "transform-class-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/transform-performance",
+      "base_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717",
+      "owns": [],
+      "depends_on": [
+        "transform-class-performance-harness"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": [],
+        "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717"
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "dependency_requirements": {
+        "transform-class-performance-harness": {
+          "evidence_scope": "public_native",
+          "source_sha": "5d1b3da3418657a8b6e04ac9bb76d324310e9717"
+        }
       }
     }
   ],
@@ -17689,10 +18077,10 @@
         "rank-public-integration"
       ],
       "resize_api": [
-        "metrics-simd-load-optimization"
+        "resize-controlled-comparison"
       ],
       "resize_bench": [
-        "transform-class-performance-harness"
+        "footprint-setup-optimization"
       ]
     }
   },

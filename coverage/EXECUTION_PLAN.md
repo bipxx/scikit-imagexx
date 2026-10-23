@@ -16,8 +16,8 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The user has resumed implementation. Three worker agents are executing the
-rank public integration, transform-class performance tooling and measured
-metrics optimization lanes in parallel, with the integrator handling
+rank public integration, controlled resize comparison and measured footprint
+optimization lanes in parallel, with the integrator handling
 shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
 review and preserved checkpoints remain recorded in the ledger. Existing hosted
 measurement jobs retain their authoritative run.
@@ -42,10 +42,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Corrected combined `99b1a1d` Debug/Release packages under actual public gates; nine-operation rank core builds in parallel |
-| Worker 1 | `metrics_reductions` | Nine public rank algorithms and generic identity aliases | Native `8c6e154` validated; own nested public namespace source ready, actual combined-core gates pending |
-| Worker 2 | `resize_api` | Measured metrics SIMD bottlenecks | Rank benchmark and isolated CI tooling validated; endian/stepped typed load trial implementing against retained 1,212-case baseline |
-| Worker 3 | `resize_bench` | Original-versus-native transform-class performance tooling | Four public consumers `8e37749` merged after eight 5,795-check profiles; separate 296-case class measurement tooling implementing |
+| Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Combined `99b1a1d` passes eight whole-package Debug/Release profiles; metrics SIMD and class timing tooling merged; private short-run label trial needs whole-package gates |
+| Worker 1 | `metrics_reductions` | Nine public rank algorithms and generic identity aliases | `d4508ac` whole-package gates pass with a known integer warning-hook gap; `0e5f860` correctness fix and stronger hook tests validating before public registration |
+| Worker 2 | `resize_api` | Controlled previous/current/original resize comparison | Metrics SIMD `6545e33` validated and merged; new independent capsule authenticates the preserved initial backend and keeps all 373 parity checks |
+| Worker 3 | `resize_bench` | Measured footprint setup bottlenecks | Class timing tooling `5d1b3da` and exact-artifact supplement validated and merged; rectangle dtype-provider correctness fix accepted; bounded rectangle/mirror optimization validating |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
