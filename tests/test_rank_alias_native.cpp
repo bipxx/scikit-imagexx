@@ -3,6 +3,7 @@
 #ifdef NDEBUG
 #undef NDEBUG
 #endif
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <cstring>
@@ -54,6 +55,34 @@ void admission() {
     view.serial_alias=true;
     rejected=false;try{skimagexx::rank_filter_into(view,skimagexx::RankOperation::median);}catch(const std::invalid_argument&){rejected=true;}assert(rejected && owner==before);
 }
+void word_feedback_prewrite() {
+    for(bool odd_base:{false,true})for(bool odd_stride:{false,true}) {
+        if(!odd_base && !odd_stride)continue;
+        std::vector<std::uint8_t> owner(64,0);std::uint8_t footprint=1;
+        for(std::size_t i=0;i<4;++i){std::uint16_t value=std::uint16_t(i+1);std::memcpy(owner.data()+2*i,&value,2);}
+        skimagexx::RankView v;v.image=owner.data();v.output=owner.data()+(odd_base ? 1:0);v.footprint=&footprint;v.uint16=true;v.bins=5;
+        v.shape={1,1,4};v.footprint_shape={1,1,1};v.output_type=skimagexx::PixelType::uint16;v.output_strides={16,16,odd_stride ? 3:2};
+        const auto before=owner;const auto alias=skimagexx::rank_aliases(v);assert(alias.image_output);
+        for(int op=5;op<=7;++op){bool rejected=false;try{skimagexx::rank_filter_into(v,skimagexx::RankOperation(op),alias);}catch(const std::invalid_argument&){rejected=true;}assert(rejected && owner==before);}
+        // The all-zero footprint remains an invariant and needs no bin bound.
+        footprint=0;skimagexx::rank_filter_into(v,skimagexx::RankOperation::median,alias);
+    }
+}
+void self_overlapping_stores() {
+    constexpr std::size_t rows=513,cols=519;
+    std::vector<std::uint8_t> image(rows*cols),one(rows+cols-1,99),four(one),expected(one);
+    for(std::size_t i=0;i<image.size();++i)image[i]=std::uint8_t((i*17)%251);
+    for(std::size_t r=0;r<rows;++r)for(std::size_t n=0;n<cols;++n){const auto c=r%2 ? cols-1-n:n;expected[r+c]=image[r*cols+c];}
+    std::uint8_t footprint=1;skimagexx::RankView v;v.image=image.data();v.footprint=&footprint;v.shape={1,rows,cols};v.footprint_shape={1,1,1};v.output_strides={1,1,1};
+    v.output=one.data();skimagexx::set_num_threads(1);skimagexx::rank_filter_into(v,skimagexx::RankOperation::median,skimagexx::rank_aliases(v));
+#ifdef _OPENMP
+    skimagexx::set_num_threads(4);
+#endif
+    v.output=four.data();skimagexx::rank_filter_into(v,skimagexx::RankOperation::median,skimagexx::rank_aliases(v));
+    assert(one==expected && four==expected);
+    // The legacy two-argument ABI must also avoid parallel write races.
+    std::fill(four.begin(),four.end(),99);skimagexx::rank_filter_into(v,skimagexx::RankOperation::median);assert(four==expected);
+}
 }
 int main() {
     assert(skimagexx::rank_histogram_capabilities()==8191);
@@ -64,6 +93,6 @@ int main() {
         const auto four=drift(op,volume,4);assert(one==four);
 #endif
     }
-    admission();
+    admission();word_feedback_prewrite();self_overlapping_stores();
     std::cout<<"rank alias native: signed feedback, no-store, exact descriptor and bounds admission passed\n";
 }
