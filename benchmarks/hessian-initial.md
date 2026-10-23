@@ -37,7 +37,8 @@ Unoptimized raw samples: [Linux](hessian-unoptimized-linux.json),
 [Windows](hessian-unoptimized-windows.json). Exact packages, source archives,
 validation logs and failed correction trials are retained in ignored build
 checkpoints. The initial [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39886134106)
-is still running and will not establish retention for this failed trial.
+passed all three jobs. That initial CI does not establish retention for the
+failed performance trial or cover the later tiny-sigma regressions.
 
 ## Zero-tail correction
 
@@ -71,3 +72,48 @@ retained on main.
 
 Zero-tail raw samples: [Linux](hessian-zero-tail-linux.json),
 [Windows](hessian-zero-tail-windows.json).
+
+## Retained repeated-line and zero-sigma revision
+
+Retained source **5f010a6785700be1f43ca8bb3101907deb00887e** reuses results
+for byte-identical inner blocks and complete previous rows owned by the same
+worker. All-empty Gaussian plans normalize directly into the first independent
+output and copy the remaining outputs, avoiding gradient/scratch temporaries.
+A conservative cval bound preserves whole-call fallback for unsafe arithmetic.
+
+The [third isolated run](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585030)
+passed on both platforms. Exact preserved source/binary fingerprints, seven
+samples per implementation and unchanged fixed-case hashes were verified.
+All 960 timed rows have zero numerical absolute difference.
+
+| One-worker result | Linux | Windows |
+|---|---:|---:|
+| Finite-difference geometric mean | 4.600456× | 3.486546× |
+| Gaussian-derivative geometric mean | 2.493615× | 2.070721× |
+| Finite-difference minimum | 2.146880× | 1.370723× |
+| Gaussian-derivative minimum | 1.397062× | 0.847398× |
+
+All 240 one-worker Linux cases are faster than upstream. Windows finite
+differences are faster in 120/120 cases; Gaussian derivatives in 108/120.
+All twelve slower Windows cases are small 3-D images (7×9×11), with a minimum
+of 0.847398×. Their last axis is shorter than the filter's nonzero support,
+preventing an interior SIMD block and repeating boundary mapping per output.
+A padded-line follow-up is being developed; these cases remain in the corpus.
+This retention proves aggregate improvement per derivative mode and OS,
+not a speedup for every input.
+
+Expanded production-package validation passes 7,656 integration checks per
+runtime and 1,010 dedicated checks per SIMD mode per runtime, including minimum
+NumPy 1.24. Untimed corpus checks pass 480 cases per runtime. Independent C++
+tests pass 8/8 on Windows and both Linux configurations; relocated SDK consumers
+pass 7/7 on all three. ASan/UBSan pass 8/8 normally and with constrained OpenMP
+teams. New checks cover tiny-sigma epsilon classification, signed-zero tails,
+repeated lines, extreme cval fallback and independent writable zero-sigma outputs.
+No local performance timings were run.
+
+All three [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39890585539)
+jobs passed: Windows, Linux and minimum NumPy. Runtime sources match the
+measured revision; later retention changes are reports and merge bookkeeping.
+Raw retained samples: [Linux](hessian-repeated-linux.json),
+[Windows](hessian-repeated-windows.json). Initial and intermediate trial data
+and exact packages remain preserved.
