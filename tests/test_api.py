@@ -10,10 +10,11 @@ from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
 from skimage import feature as reference_feature
+from skimage import metrics as reference_metrics, measure as reference_measure
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
            (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform),
-           (xx.feature,reference_feature)]
+           (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__]
 
 
