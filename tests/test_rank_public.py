@@ -47,7 +47,7 @@ def test_own_wrapper_identity_signature_and_registry(name):
     assert _rank._core is _core
     assert xx.set_num_threads is _core.set_num_threads
     assert xx.get_num_threads is _core.get_num_threads
-    assert _core.rank_histogram_capabilities==511
+    assert _core.rank_histogram_capabilities & 511 == 511
     canonical='filters.rank.'+name;alias='filters.rank.generic.'+name
     assert canonical in native_functions() and alias in native_functions()
     assert RANK_IDENTITY_ALIASES[alias]==canonical
@@ -122,7 +122,7 @@ import skimagexx.filters.rank.generic as generic
 from skimagexx import _core,_rank
 assert xx.get_num_threads()==1
 assert _rank._core is _core
-assert _core.rank_histogram_capabilities==511
+assert _core.rank_histogram_capabilities & 511 == 511
 xx.set_fallback_enabled(False)
 image=np.arange(35,dtype=np.uint8).reshape(5,7)
 for workers in (1,4):

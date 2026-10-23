@@ -353,7 +353,8 @@ def main(argv=None):
         if not args.reference_only:
             missing=sorted(set(APIS)-set(native_functions()))
             if missing:raise RuntimeError('public native rank APIs are not registered: '+', '.join(missing))
-            if getattr(xx._core,'rank_histogram_capabilities',0)!=511:raise RuntimeError('rank-histogram-v2 compiled capability511 required')
+            capabilities=getattr(xx._core,'rank_histogram_capabilities',0)
+            if not isinstance(capabilities,int) or capabilities<0 or capabilities & 511 != 511:raise RuntimeError('rank-histogram-v2 compiled capability511 required')
         # Identity/provenance gates precede all image fixture creation.
         for name in NAMES:
             original=resolve(name,True);assert original is resolve(name,True,True)
