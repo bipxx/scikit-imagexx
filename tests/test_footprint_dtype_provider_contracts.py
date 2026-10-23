@@ -20,6 +20,7 @@ def test_dtype_getter_and_error_order_per_original_allocation(shape,decompositio
     def observe(namespace):
         events=[]
         class Provider:
+            def __repr__(self):return '<caller-dtype-provider>'
             @property
             def dtype(self):
                 events.append('dtype')
