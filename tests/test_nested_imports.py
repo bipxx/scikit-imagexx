@@ -3,6 +3,7 @@ import importlib
 import inspect
 import sys
 import subprocess
+import warnings
 
 import numpy as np
 import pytest
@@ -93,23 +94,45 @@ def test_from_import_signature_and_policy():
     footprint = np.ones((3, 3), dtype=bool)
     assert inspect.signature(mean) == inspect.signature(original)
     assert mean.__name__ == original.__name__
-    with pytest.raises(NotImplementedError, match='fallback is disabled'):
-        mean(image, footprint)
+    from skimagexx import _rank
+    assert mean is _rank.mean and mean is not original
+    for policy in (False,True):
+        xx.set_fallback_enabled(policy)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always');actual=mean(image,footprint)
+        assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
+        np.testing.assert_array_equal(actual,original(image,footprint))
+
+
+def test_unported_rank_keeps_explicit_fallback_policy():
+    from skimagexx.filters.rank import geometric_mean
+    from skimage.filters.rank import geometric_mean as original
+    image=np.arange(25,dtype=np.uint8).reshape(5,5);footprint=np.ones((3,3),bool)
+    assert inspect.signature(geometric_mean)==inspect.signature(original)
+    with pytest.raises(NotImplementedError,match='fallback is disabled'):
+        geometric_mean(image,footprint)
     xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning, match='skimage.filters.rank.mean'):
-        actual = mean(image, footprint)
-    np.testing.assert_array_equal(actual, original(image, footprint))
+    with pytest.warns(xx.FallbackWarning,match='skimage.filters.rank.geometric_mean'):
+        actual=geometric_mean(image,footprint)
+    np.testing.assert_array_equal(actual,original(image,footprint))
     xx.set_fallback_enabled(False)
-    with pytest.raises(NotImplementedError):
-        mean(image, footprint)
+    with pytest.raises(NotImplementedError):geometric_mean(image,footprint)
 
 
 def test_deep_import_and_native_precedence():
     from skimagexx.filters.rank.generic import maximum
     from skimage.filters.rank.generic import maximum as original
     assert inspect.signature(maximum) == inspect.signature(original)
-    with pytest.raises(NotImplementedError):
-        maximum(np.zeros((3, 3), np.uint8), np.ones((3, 3), bool))
+    from skimagexx import _rank
+    assert maximum is _rank.maximum and maximum is not original
+    image=np.arange(9,dtype=np.uint8).reshape(3,3);footprint=np.ones((3,3),bool)
+    for policy in (False,True):
+        xx.set_fallback_enabled(policy)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always');actual=maximum(image,footprint)
+        assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
+        np.testing.assert_array_equal(actual,original(image,footprint))
+    xx.set_fallback_enabled(False)
     from skimagexx import filters
     from skimagexx.filters import gaussian
     assert gaussian is filters.gaussian
