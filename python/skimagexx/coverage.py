@@ -67,13 +67,17 @@ def rank_contract(api):
     return dict(version='rank-histogram-v2',canonical=canonical,
         identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
         implementation='cpp-rolling-histogram-runtime-simd',
-        providers='NumPy astype after integer downcast warning hooks, signed maximum stage, owned dtype stages for stateful floating policies and reference-bearing comparisons; listed overlap scopes use explicit compatibility fallback',
+        providers='NumPy astype after integer downcast warning hooks, signed maximum stage, owned dtype stages for stateful floating policies and reference-bearing comparisons; qualified R2 feedback uses own C++ histogram, historical plain uint8 compatibility fallback only when alias interface or operation bit is absent',
         workers='one actual process-global C++ worker policy, default one; optional four',
-        buffers='R2 native overlapping-buffer parity pending; proven plain uint8 gradient/median/modal aliases use explicit policy-aware compatibility fallback; unproved overlap scopes raise NotImplementedError' if r2 else 'Defined safe v1 output aliases use serial upstream traversal order; unsafe buffer extents rejected',
+        buffers='Qualified rank-alias-v1 R2 feedback executes serially on the shared native core. Full-bin uint16 mixed-byte domains and zero invariants are explicit; unrepresented/unsafe domains remain pending and raise NotImplementedError before writes. Historical plain uint8 compatibility fallback remains only when native alias interface/bit is absent' if r2 else 'Defined safe v1 output aliases use serial upstream traversal order; unsafe buffer extents rejected',
         unsafe_buffers='Undersized masks/outputs and zero-depth outputs safely rejected; upstream undefined memory behavior excluded from parity',
         capability=511,public_parity_test='tests/test_rank_public.py',
         frozen_contract='coverage/contracts/rank-distribution.json' if r2 else 'coverage/contracts/rank-neighborhoods.json',
-        parity_evidence=None,performance_evidence=None)
+        parity_evidence=None,performance_evidence=None,
+        **(dict(alias_interface='rank-alias-v1',alias_capability=1<<(5+('gradient','median','modal','entropy').index(name)),
+                alias_public_test='tests/test_rank_alias_public.py',alias_frozen_contract='coverage/contracts/rank-aliases.json',
+                alias_scope='Qualified accessed read/store domains only; active integral entropy, uint16/float feedback, and partial-bin uint16 mixed-word feedback excluded; arbitrary unrepresented protocols remain pending',
+                alias_performance_evidence=None) if r2 else {}))
 
 
 # Classes have state, constructors and members; they are never image-call rows.

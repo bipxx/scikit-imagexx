@@ -1,0 +1,21 @@
+{
+  "version": "rank-alias-public-v1",
+  "status": "candidate-awaiting-whole-core-proof",
+  "algorithms": ["gradient", "median", "modal", "entropy"],
+  "canonical_and_identity_generic_paths": true,
+  "algorithm_capability": 8191,
+  "alias_interface": "rank-alias-v1",
+  "alias_capability": 480,
+  "frozen_reference": "coverage/contracts/rank-aliases.json",
+  "frozen_cases": 1008,
+  "public_test": "tests/test_rank_alias_public.py",
+  "execution": "Actual public namespace and sole production core; serial feedback traversal with shared optional global workers default one",
+  "providers": "Own C++ rolling histogram and NumPy original-order preparation, dtype, warning and structural operations; no upstream algorithm forwarding in qualified scope",
+  "excluded": ["Active integral entropy feedback", "uint16 image/float output feedback", "Partial-bin mixed-byte uint16 feedback including odd-relative uint16 stores", "Footprint/output feedback", "Unrepresented arbitrary caller protocols", "R3 overlap"],
+  "zero_invariants": "All-zero prepared mask or footprint permits proven zero feedback domains",
+  "historical_fallback": "Only previously proven plain uint8 gradient/median/modal domains when exact native alias interface or operation bit is absent; no broadened forwarding",
+  "unsafe_original": "Fabricated mixed-byte and output-self-overlap cases are own native rejection/serialization regressions only, never executed through unsafe upstream Cython",
+  "api_count_change": 0,
+  "parity_evidence": null,
+  "performance_evidence": null
+}
