@@ -3,6 +3,14 @@
 #include <algorithm>
 #include <cstring>
 namespace skimagexx::simd {
+std::int64_t rank_count_prefix(const std::int64_t* data,std::size_t count) {
+    auto sums=_mm256_setzero_si256();std::size_t i=0;
+    for(;i+4<=count;i+=4)sums=_mm256_add_epi64(sums,_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i)));
+    alignas(32) std::int64_t lanes[4];_mm256_store_si256(reinterpret_cast<__m256i*>(lanes),sums);
+    std::int64_t result=lanes[0]+lanes[1]+lanes[2]+lanes[3];
+    for(;i<count;++i)result+=data[i];
+    return result;
+}
 std::uint64_t rank_sum(const void* input,std::size_t count,bool wide) {
     std::uint64_t result=0;std::size_t i=0;
     if(!wide) {
