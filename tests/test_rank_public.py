@@ -89,7 +89,7 @@ def test_public_no_forwarding(name,ndim,dtype,monkeypatch):
 @pytest.mark.parametrize('name',['gradient','median','modal','entropy'])
 def test_pending_r2_alias_is_explicit_safely_rejected(name):
     image=np.arange(35,dtype=np.uint8).reshape(5,7)
-    with pytest.raises(ValueError,match='overlapping buffers'):
+    with pytest.raises(NotImplementedError,match='fallback is disabled|Overlapping buffers'):
         getattr(rank,name)(image,np.ones((3,3),np.uint8),out=image.view())
     assert 'pending' in rank_contract('filters.rank.'+name)['buffers']
 

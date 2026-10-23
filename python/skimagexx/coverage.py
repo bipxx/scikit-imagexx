@@ -45,7 +45,7 @@ def rank_contract(api):
         implementation='cpp-rolling-histogram-runtime-simd',
         providers='NumPy dtype stages for stateful floating policies and reference-bearing comparisons; no upstream rank image algorithms',
         workers='one actual process-global C++ worker policy, default one; optional four',
-        buffers='R2 defined overlapping-buffer parity pending; native rejection is an explicit boundary' if r2 else 'Defined safe v1 output aliases use serial upstream traversal order; unsafe buffer extents rejected',
+        buffers='R2 native overlapping-buffer parity pending; proven plain uint8 gradient/median/modal aliases use explicit policy-aware compatibility fallback; unproved overlap scopes raise NotImplementedError' if r2 else 'Defined safe v1 output aliases use serial upstream traversal order; unsafe buffer extents rejected',
         unsafe_buffers='Undersized masks/outputs and zero-depth outputs safely rejected; upstream undefined memory behavior excluded from parity',
         capability=511,public_parity_test='tests/test_rank_public.py',
         frozen_contract='coverage/contracts/rank-distribution.json' if r2 else 'coverage/contracts/rank-neighborhoods.json',

@@ -12,7 +12,7 @@
   "legacy_exclusions": "majority and all other nonidentity legacy functions remain unported policy-aware names, not native aliases",
   "worker_state": "Only actual skimagexx._core state, default one, optional workers. No standalone backend or mirrored setters permitted in public proof.",
   "capability": "rank_histogram_capabilities=511 from linked implementation; appended operations require their bits",
-  "scope": "First five retain defined safe serial alias traversal. Gradient/median/modal/entropy overlapping-buffer parity remains pending and is safely rejected. Unsafe original memory accesses are excluded.",
+  "scope": "First five retain defined safe serial alias traversal. R2 native overlapping-buffer parity remains pending. Proven plain uint8 gradient/median/modal aliases use explicit policy-aware fallback; strict mode rejects without writes. Entropy and unproved mixed/wide overlaps remain unsupported under either policy. Unsafe buffer extents retain native safe validation, never delegated upstream.",
   "dtype_providers": "Ordinary image operations use C++; active stateful FP policies use explicit owned NumPy dtype stages; object comparisons use NumPy reference-aware provider. No upstream rank algorithms.",
   "frozen_contracts": ["coverage/contracts/rank-neighborhoods.json", "coverage/contracts/rank-distribution.json"],
   "public_tests": "tests/test_rank_public.py",
