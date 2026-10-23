@@ -29,6 +29,66 @@ def native_functions():
     return tuple(f'{module}.{name}' for module, names in NATIVE_FUNCTIONS.items() for name in names)
 
 
+# Classes have state, constructors and members; they are never image-call rows.
+# Populate only after the isolated public class contract is validated. The
+# implementation/provider facts below describe candidates, not passing evidence.
+NATIVE_CLASSES = {'transform': ()}
+_CLASS_BASE_MEMBERS = ('__init__','__call__','__array__','__add__','__repr__','__nice__',
+                       '__str__','identity','inverse','estimate','from_estimate',
+                       'residuals','dimensionality')
+_CLASS_EXTRA_MEMBERS = {
+    'ProjectiveTransform': (),
+    'AffineTransform': ('rotation','translation','scale','shear'),
+    'EuclideanTransform': ('rotation','translation'),
+    'SimilarityTransform': ('rotation','translation','scale'),
+}
+_CLASS_MEMBER_EXECUTION = {
+    '__init__':'python-state-and-small-matrix-provider',
+    '__call__':'cpp-simd-coordinates-or-numpy-policy-provider',
+    '__array__':'numpy-view-or-dtype-cast',
+    '__add__':'numpy-small-matrix-and-python-state',
+    '__repr__':'python-metadata','__nice__':'python-metadata','__str__':'python-metadata',
+    'identity':'numpy-matrix-and-python-state','inverse':'numpy-inverse-and-python-state',
+    'estimate':'numpy-fit-provider-and-state-mutation',
+    'from_estimate':'numpy-fit-provider-and-state-construction',
+    'residuals':'cpp-coordinate-call-and-numpy-reduction',
+    'dimensionality':'python-state-metadata','rotation':'python-numpy-small-matrix',
+    'translation':'numpy-live-view','scale':'python-numpy-small-matrix',
+    'shear':'python-small-matrix',
+}
+
+
+def native_classes():
+    """Reviewed public class entry points, separate from image functions."""
+    return tuple(f'{module}.{name}' for module,names in NATIVE_CLASSES.items() for name in names)
+
+
+def class_contract(api):
+    """Class implementation facts; evidence paths do not prove execution/speed."""
+    module,separator,name=api.rpartition('.')
+    if module!='transform' or not separator or name not in _CLASS_EXTRA_MEMBERS:
+        raise KeyError(api)
+    members=_CLASS_BASE_MEMBERS+_CLASS_EXTRA_MEMBERS[name]
+    return dict(version='geometric-class-v1',registered=api in native_classes(),
+        implementation='native-class-partial',
+        members={member:_CLASS_MEMBER_EXECUTION[member] for member in members},
+        state=dict(params='mutable ndarray; constructor and __array__ preserve documented aliases',
+                   user_attributes='supported',inverse='independent snapshot',
+                   estimation='replaces params; preserves original failure/state behavior'),
+        providers=dict(coordinates='C++ scalar/runtime AVX2 for default-policy real float64 work; NumPy for exceptional/dtype/protocol policies',
+                       fitting='Own NumPy SVD/normalization/Umeyama; no upstream transform class calls',
+                       matrix='NumPy inverse/composition/determinants; SciPy 3D Euler construction',
+                       metadata='Own class/failure objects; pinned inspect.signature display shim'),
+        workers=dict(coordinates='shared C++ process-global limit, default one; optional parallel workers',
+                     math_providers='NumPy/SciPy thread pools are external; constrain BLAS/OMP separately'),
+        compatibility_boundaries=[
+            'FailedEstimationAccessError has native identity; name, AttributeError hierarchy and message parity are separate contracts.',
+            'Pinned return-annotation display mentions upstream spelling; executable annotations/failure objects are native.'],
+        public_parity_test='tests/test_transform_classes_public.py',
+        frozen_contract='tests/test_transform_class_contracts.py',
+        parity_evidence=None,performance_evidence=None)
+
+
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api in ('feature.hessian_matrix_eigvals','feature.structure_tensor_eigenvalues'):return ('float32','float64')
@@ -40,6 +100,7 @@ def native_dtypes(api):
 
 def execution_kind(api):
     """Keep constant dtype metadata separate from C++ image kernels in reports."""
+    if api in native_classes():return 'stateful-class'
     return 'metadata' if api in ('util.dtype_limits','color.xyz_tristimulus_values','morphology.mirror_footprint') else 'native'
 
 
