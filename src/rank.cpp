@@ -54,20 +54,41 @@ struct Histogram {
     std::size_t limit;
     std::vector<std::int64_t> counts;
     std::vector<std::uint64_t> bits,summary;
+    // Allocated only for equalize: bounded 64-bin block sums avoid scanning
+    // every occupied uint16 bin for each center. Old operations pay no update.
+    std::vector<std::int64_t> prefix_blocks;
     std::uint64_t root=0;
     std::int64_t sum=0,pop=0;
-    explicit Histogram(std::size_t bins,bool extrema):limit(bins),counts(extrema ? bins:0),bits(extrema ? (bins+63)/64:0),summary(extrema ? (bins+4095)/4096:0){}
-    void add(std::uint32_t value,std::int64_t count) {
+    explicit Histogram(std::size_t bins,bool extrema,bool prefix=false):limit(bins),counts(extrema ? bins:0),bits(extrema ? (bins+63)/64:0),summary(extrema ? (bins+4095)/4096:0),prefix_blocks(prefix ? (bins+63)/64:0){}
+    template<bool Prefix> void add(std::uint32_t value,std::int64_t count) {
         pop+=count;sum+=std::int64_t(value)*count;
         if(value>=limit)throw std::invalid_argument("aliased rank image exceeded histogram bounds");
         if(counts.empty())return;
         const auto before=counts[value];counts[value]+=count;
+        if constexpr(Prefix)prefix_blocks[value/64]+=count;
         if((before==0)==(counts[value]==0))return;
         const auto word=value/64,group=word/64;const auto old=bits[word];
         if(counts[value])bits[word]|=std::uint64_t{1}<<(value%64);else bits[word]&=~(std::uint64_t{1}<<(value%64));
         if(bool(old)==bool(bits[word]))return;
         if(bits[word])summary[group]|=std::uint64_t{1}<<(word%64);else summary[group]&=~(std::uint64_t{1}<<(word%64));
         if(summary[group])root|=std::uint64_t{1}<<group;else root&=~(std::uint64_t{1}<<group);
+    }
+    double equalize(std::uint32_t center)const {
+        if(!pop)return 0.;
+        std::int64_t cumulative=0;
+        const auto block=center/64;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            cumulative=simd::rank_count_prefix(prefix_blocks.data(),block);
+            cumulative+=simd::rank_count_prefix(counts.data()+block*64,center%64+1);
+        } else
+#endif
+        {
+            for(std::size_t i=0;i<block;++i)cumulative+=prefix_blocks[i];
+            for(std::size_t i=block*64;i<=center;++i)cumulative+=counts[i];
+        }
+        // Cython multiplies integers before converting for division.
+        return double(std::int64_t(limit-1)*cumulative)/double(pop);
     }
     template<class F> void occupied(F visit)const {
         auto groups=root;
@@ -116,7 +137,7 @@ struct Histogram {
         return std::int64_t(word*64+(op==RankOperation::minimum ? first(bits[word]):last(bits[word])));
     }
 };
-template<class T> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
+template<class T,bool Prefix> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
     const auto* image=static_cast<const unsigned char*>(v.image);
     const auto read=[](const unsigned char* p){T value;std::memcpy(&value,p,sizeof(T));return value;};
     for(const auto& run:runs) {
@@ -141,12 +162,12 @@ template<class T> void update(Histogram& hist,const RankView& v,const std::vecto
             constexpr auto width=32/sizeof(T);
             for(;i+width<=n;i+=width) {
                 std::uint32_t value;
-                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add(value,std::int64_t(width)*sign);
-                else for(std::size_t j=0;j<width;++j)hist.add(read(data+(i+j)*sizeof(T)),sign);
+                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add<Prefix>(value,std::int64_t(width)*sign);
+                else for(std::size_t j=0;j<width;++j)hist.add<Prefix>(read(data+(i+j)*sizeof(T)),sign);
             }
         }
 #endif
-        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add(read(data+i*sizeof(T)),sign);
+        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add<Prefix>(read(data+i*sizeof(T)),sign);
     }
 }
 template<class T,class Value> void store(unsigned char* out,Value value) {
@@ -154,37 +175,52 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
     if constexpr(std::is_integral_v<T> && std::is_floating_point_v<Value>)result=T(std::int64_t(value));else result=T(value);
     std::memcpy(out,&result,sizeof(result));
 }
-template<class T> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end) {
+template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
-        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop);
+        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold,Prefix);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
-        update<T>(hist,v,prepared.initial,p,r,c,1);
+        update<T,Prefix>(hist,v,prepared.initial,p,r,c,1);
         const auto write=[&](){
             auto* out=static_cast<unsigned char*>(v.output)+std::ptrdiff_t(p)*v.output_strides[0]+r*v.output_strides[1]+c*v.output_strides[2];
             const auto emit=[&](auto value){switch(v.output_type){case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;case PixelType::uint16:store<std::uint16_t>(out,value);break;case PixelType::float32:store<float>(out,value);break;case PixelType::float64:store<double>(out,value);break;default:break;}};
             if(op==RankOperation::mean)emit(hist.pop ? double(hist.sum)/double(hist.pop):0.);
             else if(op==RankOperation::entropy)emit(hist.entropy());
+            else if(int(op)>=9) {
+                T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
+                std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
+                if(pixel>=v.bins)throw std::invalid_argument("rank center exceeded histogram bounds");
+                if(op==RankOperation::threshold)emit(hist.pop && double(pixel)>double(hist.sum)/double(hist.pop) ? std::int64_t{1}:std::int64_t{0});
+                else if(op==RankOperation::equalize)emit(hist.equalize(pixel));
+                else {
+                    const auto low=hist.integer(RankOperation::minimum),high=hist.integer(RankOperation::maximum),g=std::int64_t(pixel);
+                    if(op==RankOperation::autolevel) {
+                        // Signed integer division truncates toward zero even
+                        // for floating outputs. Integer stores wrap separately.
+                        emit(high>low ? std::int64_t(v.bins-1)*(g-low)/(high-low):std::int64_t{0});
+                    } else emit(hist.pop ? (high-g<g-low ? high:low):std::int64_t{0});
+                }
+            }
             else emit(hist.integer(op));
         };
         write();bool east=true;
         while(true) {
             if(east)for(c=1;c<std::ptrdiff_t(v.shape[2]);++c) {
-                update<T>(hist,v,prepared.enter[2],p,r,c,1);update<T>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
+                update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
             }
             else for(c=std::ptrdiff_t(v.shape[2])-2;c>=0;--c) {
-                update<T>(hist,v,prepared.leave[2],p,r,c,1);update<T>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
+                update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
             }
             c=east ? std::ptrdiff_t(v.shape[2])-1:0;
             if(++r>=std::ptrdiff_t(finish))break;
-            update<T>(hist,v,prepared.enter[1],p,r,c,1);update<T>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
+            update<T,Prefix>(hist,v,prepared.enter[1],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
         }
         begin=p*v.shape[1]+finish;
     }
 }
 }
 void rank_filter_into(const RankView& view,RankOperation operation) {
-    if(int(operation)<0 || int(operation)>8)throw std::invalid_argument("invalid rank operation");
+    if(int(operation)<0 || int(operation)>12)throw std::invalid_argument("invalid rank operation");
     if(int(operation)>=5 && view.serial_alias)throw std::invalid_argument("overlapping buffers are outside rank-histogram-v2 parity");
     for(int axis=0;axis<3;++axis)if(!view.shape[axis] || !view.footprint_shape[axis] || view.center[axis]<0 || std::size_t(view.center[axis])>=view.footprint_shape[axis])throw std::invalid_argument("invalid rank dimensions or center");
     if(!view.image || !view.output || !view.footprint || view.bins<1 || view.bins>65536)throw std::invalid_argument("invalid rank buffers or bins");
@@ -203,14 +239,20 @@ void rank_filter_into(const RankView& view,RankOperation operation) {
     if(pixels>bound/(view.uint16 ? 2:1) || span>bound-itemsize)throw std::overflow_error("rank buffer size overflow");
     const auto prepared=plan(view);const auto rows=view.shape[0]*view.shape[1];
     const auto workers=view.serial_alias ? 1:detail::active_workers(rows*view.shape[2]);
-    const auto run=[&](auto begin,auto end){if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end);else process<std::uint8_t>(view,operation,prepared,begin,end);};
+    const auto run=[&](auto begin,auto end){
+        if(operation==RankOperation::equalize) {
+            if(view.uint16)process<std::uint16_t,true>(view,operation,prepared,begin,end);else process<std::uint8_t,true>(view,operation,prepared,begin,end);
+        } else {
+            if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end);else process<std::uint8_t>(view,operation,prepared,begin,end);
+        }
+    };
     if(workers==1){run(std::size_t{0},rows);return;}
     // C++ exceptions must leave an OpenMP team through the calling thread.
     std::vector<std::exception_ptr> failures(std::size_t(workers),std::exception_ptr{});
     detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{run(begin,end);}catch(...){failures[id]=std::current_exception();}});
     for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
 }
-std::uint32_t rank_histogram_capabilities() noexcept {return 0x1ffu;}
+std::uint32_t rank_histogram_capabilities() noexcept {return 0x1fffu;}
 std::uint16_t rank_max_u16(const std::uint16_t* data,std::size_t count) {
 #ifdef SKIMAGEXX_AVX2
     if(has_avx2())return simd::rank_max_u16(data,count);

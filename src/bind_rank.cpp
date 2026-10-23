@@ -107,7 +107,7 @@ void bind_rank(py::module_& module) {
     });
     module.def("rank_shift",[](py::object value){return shift(value);});
     module.def("rank_run",[numpy](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation) {
-        if(operation<0 || operation>=32 || !(skimagexx::rank_histogram_capabilities() & (std::uint32_t{1}<<operation)))throw py::value_error("invalid rank operation");
+        if(operation<0 || operation>12 || !(skimagexx::rank_histogram_capabilities() & (std::uint32_t{1}<<operation)))throw py::value_error("invalid rank operation");
         const int rank=int(requested_shifts.size());
         if((rank!=2 && rank!=3) || image.ndim()!=rank)throw py::type_error("Function call with ambiguous argument types");
         const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
@@ -138,6 +138,7 @@ void bind_rank(py::module_& module) {
             view.mask=static_cast<const std::uint8_t*>(mask.data());
         }
         view.serial_alias=numpy.attr("shares_memory")(image,output).cast<bool>() || (!mask_object.is_none() && numpy.attr("shares_memory")(mask,output).cast<bool>());
+        if(operation>=9 && numpy.attr("shares_memory")(footprint,output).cast<bool>())throw py::value_error("overlapping buffers are outside rank-histogram-v3 parity");
         {py::gil_scoped_release release;skimagexx::rank_filter_into(view,static_cast<skimagexx::RankOperation>(operation));}
     });
 }

@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 namespace skimagexx {
-enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8 };
+enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8,autolevel=9,equalize=10,enhance_contrast=11,threshold=12 };
 // Capabilities come from the linked implementation, not just a header version.
 std::uint32_t rank_histogram_capabilities() noexcept;
 // Prepared C-order image/mask and binary footprint;2D uses a singleton plane.
@@ -30,6 +30,7 @@ RankHalfConversion rank_half_u8(const std::uint16_t*,std::uint8_t*,std::size_t);
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
 std::uint64_t rank_sum(const void*,std::size_t,bool);
+std::int64_t rank_count_prefix(const std::int64_t*,std::size_t);
 bool rank_uniform(const void*,bool,std::uint32_t&);
 std::uint16_t rank_max_u16(const std::uint16_t*,std::size_t);
 std::size_t rank_positive(const void*,std::uint8_t*,std::size_t,PixelType);
