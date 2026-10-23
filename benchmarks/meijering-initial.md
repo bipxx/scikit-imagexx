@@ -1,8 +1,8 @@
 # Meijering ridge filter native port
 
 This candidate preserves `filters.meijering`'s public signature. It is not yet
-retained on main, and no performance improvement is claimed before isolated
-measurements finish.
+retained on main; isolated measurements are verified below, and full CI
+remains the retention gate.
 
 ## Native scope and arithmetic
 
@@ -67,7 +67,7 @@ Frozen runtime **f8cb5b4ba12c9cf6a4734c5fdbe6b610953e2c5c** is under
 [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246156)
 and [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39907246433).
 Later merged Sato measurement reports do not change its runtime sources.
-Retention and performance claims await those gates.
+Verified measurements are recorded below; retention awaits full CI.
 
 ## Verified isolated measurements
 
