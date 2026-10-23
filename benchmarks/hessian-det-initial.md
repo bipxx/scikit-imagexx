@@ -119,6 +119,28 @@ Native tests pass 10/10 and relocated SDK consumers 9/9 on Windows and Linux
 with acceleration enabled and portable Linux with it disabled. ASan/UBSan pass
 10/10 normally and with constrained dynamic teams. No local timings ran.
 
+The follow-up [isolated measurement](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942605)
+passed both OSes. Frozen revision, source and binary hashes, exact wheel/package
+bytes, unchanged case hash, all 480 rows per OS and seven samples per
+implementation per row are verified.
+
+| One-worker result (120 cases per mode/OS) | Linux | Windows |
+|---|---:|---:|
+| Approximation geometric mean | 4.009510× | 4.895439× |
+| Approximation minimum | 1.770231× | 1.472212× |
+| Approximation cases faster | 120/120 | 120/120 |
+| Exact geometric mean | 5.571440× | 4.330357× |
+| Exact minimum | 3.816523× | 2.705763× |
+| Exact cases faster | 120/120 | 120/120 |
+
+All 240 one-worker cases are faster on each OS. The formerly slower tiny
+approximations now measure 1.770231× for Linux float64 and 1.678733× /
+1.472212× / 1.585138× for Windows bool / float16 / float32. No adverse cases
+were removed. Approximation has zero numerical difference across all timed
+rows; exact mode's maximum absolute error is 2.081668e-17 Linux /
+1.214307e-17 Windows. Raw samples: [Linux](hessian-det-small-linux.json),
+[Windows](hessian-det-small-windows.json). Comparisons are candidate versus
+upstream within each runner, not paired candidate-to-candidate measurements.
+
 The follow-up [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942360)
-and [isolated measurements](https://github.com/bipxx/scikit-imagexx/actions/runs/39899942605)
-are running. Its speedup remains unproven until those raw results are verified.
+is still running; retention awaits that gate.
