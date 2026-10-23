@@ -6471,17 +6471,18 @@
         "metrics-optimized-integration",
         "metrics-fp-stages"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": [
-          "Source registered in local candidate05; exact whole public package gates pending, no acceptance claim."
-        ]
+        "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "artifact_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
+        "runs": [
+          "build/public-wave1-evidence/manifest.json",
+          "coverage/evidence/public-wave1.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -6493,12 +6494,16 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "main_commit": "05c35069222b69b7a5451c44961c5e96c5e70770"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/public-wave1-evidence",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-package",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels"
+        ]
       },
       "dependency_requirements": {
         "metrics-optimized-integration": {
@@ -6511,11 +6516,28 @@
       "public_registration": true,
       "proofs": {
         "public_native": {
-          "status": "pending",
+          "status": "verified",
           "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "manifest": {
+            "path": "build/public-wave1-evidence/manifest.json",
+            "sha256": "67d24c3f2e43c660aa2f8f4ac3eda9595794016606cc7cbc3b91528d205330e9"
+          },
+          "native_contract_checks": 1231,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "workers": [
+            1,
+            4
+          ],
+          "simd_profiles": [
+            "normal",
+            "disabled"
+          ],
+          "scope": "Actual public metrics fixed corpus; shared public frozen suites and SDK/sanitizer checks additionally pass. All reported counts are scoped, not full library parity."
         }
       },
       "integration_files": [
@@ -7523,23 +7545,24 @@
       "kind": "integration",
       "apis": [],
       "owner": "integrator",
-      "branch": "feature/connected-components-public-integration",
+      "branch": "main",
       "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
       "owns": [],
       "depends_on": [
         "connected-components-native"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": [
-          "Source registered in local candidate05; exact whole public package gates pending, no acceptance claim."
-        ]
+        "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "artifact_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
+        "runs": [
+          "build/public-wave1-evidence/manifest.json",
+          "coverage/evidence/public-wave1.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -7551,12 +7574,16 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "main_commit": "05c35069222b69b7a5451c44961c5e96c5e70770"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/public-wave1-evidence",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-package",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels"
+        ]
       },
       "public_registration": true,
       "launch": {
@@ -7565,16 +7592,33 @@
           "target": "integrator",
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/measure.py, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
-        "worktree": "build/worktrees/li-uniform",
+        "worktree": "build/worktrees/public-wave1-validation",
         "requires_user_resume": false
       },
       "proofs": {
         "public_native": {
-          "status": "pending",
+          "status": "verified",
           "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "manifest": {
+            "path": "build/public-wave1-evidence/manifest.json",
+            "sha256": "67d24c3f2e43c660aa2f8f4ac3eda9595794016606cc7cbc3b91528d205330e9"
+          },
+          "native_contract_checks": 954,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "workers": [
+            1,
+            4
+          ],
+          "simd_profiles": [
+            "normal",
+            "disabled"
+          ],
+          "scope": "Actual public components fixed corpus; shared public frozen suites and SDK/sanitizer checks additionally pass. All reported counts are scoped, not full library parity."
         }
       },
       "dependency_requirements": {
@@ -7604,7 +7648,7 @@
       "kind": "integration",
       "apis": [],
       "owner": "integrator",
-      "branch": "feature/footprints-public-integration",
+      "branch": "main",
       "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
       "owns": [],
       "depends_on": [
@@ -7612,17 +7656,18 @@
         "footprints-decomposition",
         "footprints-utilities"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": [
-          "Source registered in local candidate05; exact whole public package gates pending, no acceptance claim."
-        ]
+        "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "artifact_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
+        "runs": [
+          "build/public-wave1-evidence/manifest.json",
+          "coverage/evidence/public-wave1.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -7634,12 +7679,16 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "main_commit": "05c35069222b69b7a5451c44961c5e96c5e70770"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/public-wave1-evidence",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-package",
+          "build/public-wave1-{windows,modern-linux,minimum-linux}-wheels"
+        ]
       },
       "public_registration": true,
       "launch": {
@@ -7648,16 +7697,33 @@
           "target": "integrator",
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/morphology.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
-        "worktree": "build/worktrees/li-uniform",
+        "worktree": "build/worktrees/public-wave1-validation",
         "requires_user_resume": false
       },
       "proofs": {
         "public_native": {
-          "status": "pending",
+          "status": "verified",
           "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "manifest": {
+            "path": "build/public-wave1-evidence/manifest.json",
+            "sha256": "67d24c3f2e43c660aa2f8f4ac3eda9595794016606cc7cbc3b91528d205330e9"
+          },
+          "native_contract_checks": 556,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "workers": [
+            1,
+            4
+          ],
+          "simd_profiles": [
+            "normal",
+            "disabled"
+          ],
+          "scope": "Actual public footprints fixed corpus; shared public frozen suites and SDK/sanitizer checks additionally pass. All reported counts are scoped, not full library parity."
         }
       },
       "dependency_requirements": {
@@ -7691,24 +7757,18 @@
       "id": "transform-class-public-integration",
       "kind": "integration",
       "apis": [],
-      "owner": "integrator",
-      "branch": "feature/transform-class-public-integration",
-      "base_sha": "d0d40e13cf51600c574b7b89280e7b66fd3e8ded",
-      "owns": [
-        "CMakeLists.txt",
-        "src/bindings.cpp",
-        "python/skimagexx/transform.py",
-        "python/skimagexx/coverage.py",
-        "coverage/api.json",
-        "coverage/README.md"
-      ],
+      "owner": "resize_bench",
+      "branch": "feature/transform-public",
+      "base_sha": "fba1dd7a1b411baefe2f63083a10d70ceb0f1645",
       "depends_on": [
         "transform-class-native"
       ],
-      "state": "queued",
+      "state": "implementing",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": []
+        "uncovered_cases": [
+          "Public integration and class-specific coverage/evidence pending; private providers do not imply pure C++ fitting."
+        ]
       },
       "parity": {
         "source_sha": null,
@@ -7736,10 +7796,10 @@
       "launch": {
         "tool": "collaboration.followup_task",
         "arguments": {
-          "target": "integrator",
+          "target": "resize_bench",
           "message": "Integrate only after every explicit private native proof is verified. Validate the actual combined public wheel, aliases, registry/inventory and full strict contract before publishing a public_native proof.\nExclusive ownership: CMakeLists.txt, src/bindings.cpp, python/skimagexx/transform.py, python/skimagexx/coverage.py, coverage/api.json, coverage/README.md. You are not alone in the codebase; do not revert others or edit shared files outside this packet. Use an isolated worktree and persistent own cache. Freeze read/link interfaces. No local timing calls. Preserve source, artifacts, raw failures and authoritative live handles. Parent merges main; use no nested agents. The user has resumed implementation of this plan."
         },
-        "worktree": "build/worktrees/li-uniform",
+        "worktree": "build/worktrees/transform-public",
         "requires_user_resume": false
       },
       "proofs": {
@@ -7761,7 +7821,25 @@
         "dependency_policy": "Resolve Python, NumPy and pybind11 CMake configuration inside retained environments; never persist a pybind11_DIR inside temporary uv build-isolation directories.",
         "max_compile_workers": 2,
         "measurement_policy": "Frozen packages on isolated Actions hosts; no build/test overlap on measurement hosts."
-      }
+      },
+      "integration_files": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/transform.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ],
+      "owns": [
+        "python/skimagexx/transform.py",
+        "python/skimagexx/coverage.py",
+        "tools/inventory.py",
+        "tests/test_inventory.py",
+        "tests/test_api.py",
+        "tests/test_transform_classes_public.py",
+        "coverage/api.json",
+        "coverage/README.md"
+      ]
     },
     {
       "id": "resize-optimization",
@@ -8129,16 +8207,19 @@
       "base_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
       "owns": [],
       "depends_on": [],
-      "state": "validating",
+      "state": "parity_passed",
       "dependency_requirements": {},
       "contract": {
         "case_manifest": "Actual public metrics/footprint/label suites, full shared API/inventory, dedicated corpus checks; private transform suites supplementary.",
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
+        "artifact_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
+        "runs": [
+          "build/public-wave1-evidence/manifest.json",
+          "coverage/evidence/public-wave1.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -8155,11 +8236,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/public-wave1-evidence"
+        ]
       },
       "checkpoint": {
         "product_source": "05c35069222b69b7a5451c44961c5e96c5e70770",
-        "test_metadata_source": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
+        "test_metadata_source": "6960e4e28b5cbff41a79e0558229af8b90496e5a",
         "source_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
         "build_handles_terminal": [
           47135,
@@ -8172,7 +8255,30 @@
           "build/public-wave1-modern-linux-package",
           "build/public-wave1-minimum-linux-package"
         ],
-        "tests": "Worker beginning six actual public-package profiles; public acceptance pending."
+        "tests": "Complete:14963 public and6506 shared API checks per six profiles; all18 untimed public corpora; native24/24; sanitizer and SDK consumers pass. Original failures retained.",
+        "active_handles": []
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05c35069222b69b7a5451c44961c5e96c5e70770",
+          "manifest": {
+            "path": "build/public-wave1-evidence/manifest.json",
+            "sha256": "67d24c3f2e43c660aa2f8f4ac3eda9595794016606cc7cbc3b91528d205330e9"
+          },
+          "native_contract_checks": 2741,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "workers": [
+            1,
+            4
+          ],
+          "scope": "Three actual public fixed corpora; frozen suites supplement these checks. Transform classes remain public-pending."
+        }
       }
     }
   ],
@@ -8625,7 +8731,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Current executable snapshot. All455 inventoried names and284 class members remain in scope; evidence is per contract/source/runtime. Isolated one-worker timing jobs are authoritative and must not be restarted due observation timeouts.",
+  "note": "Current executable snapshot. All474 inventoried paths and284 static class members remain in scope; proof is per contract/source/runtime. Isolated one-worker timing jobs are authoritative and must not be restarted after observation timeouts.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -8922,7 +9028,7 @@
     "upstream_only_names": 338,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Inventory generated from exact wave1 package; source-advertised implementations await public proof.19added generic aliases are existing algorithms, not19new algorithms."
+    "note": "Exact wave1 package public scopes validated; native-partial classification is not full-library parity. The19 additional rank.generic paths alias existing algorithms."
   },
   "execution_policy": {
     "active_workers": [
@@ -8953,7 +9059,7 @@
         "component-consumers-native"
       ],
       "resize_bench": [
-        "public-wave1-validation"
+        "transform-class-public-integration"
       ]
     }
   },

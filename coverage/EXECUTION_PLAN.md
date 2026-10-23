@@ -15,7 +15,7 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The user has resumed implementation. Three worker agents are executing the
-rank, component-consumer and exact-package validation lanes in parallel, with the integrator handling
+rank, component-consumer and public transform-class lanes in parallel, with the integrator handling
 shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
 review and preserved checkpoints remain recorded in the ledger. Existing hosted
 measurement jobs retain their authoritative run.
@@ -40,10 +40,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Public exports, registry/inventory, measured resize bottlenecks, prompt merges and cleanup | Product candidate `05c3506`; all three exact wheels built; source136 native/metadata registrations await complete public acceptance |
+| Integrator | `root` | Public exports, registry/inventory, measured resize bottlenecks, prompt merges and cleanup | Public product `05c3506` validated across six profiles; publishing proof and launching isolated measurements; resize copy optimization under validation |
 | Worker 1 | `metrics_reductions` | Reusable rank histogram engine and five canonical/generic aliases | Rank contracts `eabc946` merged; private SIMD/serial-alias implementation running |
 | Worker 2 | `resize_api` | Component counts/filtering, clear_border, relabeling and returned ArrayMap | Contracts `a3714af` merged; own native consumers/ArrayMap implementation running |
-| Worker 3 | `resize_bench` | Exact whole-package validation on Windows/modern/minimum, SDK seals and untimed corpora | Public normal groups14,963 passed per runtime; shared registry test list corrected in `6960e4e`; remaining profiles and gates live |
+| Worker 3 | `resize_bench` | Public transform-class exports and separate class coverage/evidence | Whole-package wave validation complete; integrating four privately implemented classes without inflating image-function counts |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -63,7 +63,9 @@ corpus passed untimed checks on all three runtimes at workers one and four.
 Performance run [39957875987](https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987)
 uses source `66e5f78`; all six preparation/measurement jobs completed successfully. Observe this same run;
 do not restart it because of a queue or timeout. The [baseline report](../benchmarks/resize-public-initial.md) retains every sample
-and49/52/61slowercases across Windows/modern/minimum; measured bottleneck work remains pending.
+and 49/52/61 slower cases across Windows/modern/minimum. Row-span normalization
+copies are the first measured-bottleneck trial; parity checks are running before
+remeasurement of the unchanged corpus.
 
 The private metrics baseline (`03581ae`, integrated as `99abcfc`) passed 4,082
 tests in each of six profiles through the actual shared `_core`. It is merged as
@@ -73,9 +75,18 @@ profiles plus native sanitizers. Stateful callback policies and exact combined
 optimized wheels remain registration gates. Private parity is scoped evidence.
 Metrics benchmark tooling (`6c74563`, merged as `d94ef6c`) has a fixed 1,231-case
 corpus, including 19 expected errors; no metrics timing job has been dispatched.
+The combined public metrics, footprints and label package at `05c3506` now passes
+14,963 public-suite checks and 6,506 metadata/shared API checks in each of six
+runtime/SIMD profiles. All 18 dedicated untimed corpus runs pass at workers one
+and four, plus native tests, sanitizers and external SDK consumers. Counts include
+reference and metadata assertions; they are not distinct algorithm counts.
+The [acceptance record](evidence/public-wave1.json) seals 702 retained artifacts.
+These public integrations are parity-passed with performance pending.
+
 Transform class contracts (`6fa7f0a`, merged as `ad66094`) passed 228 reference and
-strict-rejection checks per runtime, with 224 native-pending cases. Class
-implementation remains pending. Completed worktrees are removed only after
+strict-rejection checks per runtime, with 224 public-native-pending cases. Four
+private class adapters are implemented; public exports and class-specific
+coverage are now a separate worker packet. Completed worktrees are removed only after
 evidence archiving and clean/ancestor checks.
 
 ## Dependency and merge order
@@ -133,12 +144,11 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Active | `mean_squared_error`, `normalized_root_mse`, `peak_signal_noise_ratio` | Existing dtype/worker infrastructure; freeze promotions, ranges, shape checks, NaNs, infinities and warnings first |
-| Next free worker | Connected-component `label` and its inventoried aliases | Freeze canonical numbering and connectivity before parallel block stitching; SIMD comparisons/run discovery, efficient scalar union/find where appropriate |
-| Independent contracts | Small-object/hole removal, `clear_border`, `relabel_sequential` | Original contracts start now; kernels consume the frozen label interface, with joint parity required later |
-| Independent | Footprint rectangle, diamond, disk, ball, mirror/pad and decompositions | Preserve tuple/decomposition forms, output dtype/shape and errors; raster generation is an image operation, not metadata |
-| Independent contract first | Rank minimum/maximum/mean/sum/pop, then histogram-based rank APIs | Integrator freezes nested-namespace exposure; worker owns a reusable rolling-histogram engine |
-| Independent class contracts | Projective, affine, Euclidean and similarity transforms | Inventory constructors, inherited methods, fields, mutation, composition and inversion; implement parent models before subclasses |
+| Measurement ready | Three error metrics, public label aliases and six footprint functions | Exact public parity accepted; isolated one-worker workflows are the next gate |
+| Active native implementation | Small-object/hole removal, `clear_border`, `relabel_sequential` and returned ArrayMap | Frozen contracts merged; native kernels and adapter parity proceeding independently |
+| Active native implementation | Rank minimum/maximum/mean/sum/pop and matching generic aliases | Frozen nested namespace and histogram contracts merged; reusable rolling engine under validation |
+| Active public integration | Projective, affine, Euclidean and similarity transforms | Private adapters validated; separate class registry, public member/state/ownership checks and explicit math-provider scope |
+| Active optimization | Resize/rescale normalization copies | Retain all baseline slow cases; exact byte parity before isolated same-corpus remeasurement |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
 claims them. Repeat the process for remaining transforms/pyramids, measurements,

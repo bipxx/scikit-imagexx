@@ -1,0 +1,319 @@
+{
+  "compiled_product_revision": "05c35069222b69b7a5451c44961c5e96c5e70770",
+  "test_metadata_revision": "6960e4e28b5cbff41a79e0558229af8b90496e5a",
+  "product_source_sha256": "d07404e72694c6345e45b21e67fcdc7ec55b11948481393b88aa5f4b9422197f",
+  "source_hash_schema": "cpp-python-build-posix-lf-v2",
+  "retained_master_manifest": {
+    "path": "build/public-wave1-evidence/manifest.json",
+    "sha256": "67d24c3f2e43c660aa2f8f4ac3eda9595794016606cc7cbc3b91528d205330e9"
+  },
+  "hashed_artifacts": 702,
+  "public_profiles": {
+    "windows-normal": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6086
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    },
+    "windows-scalar": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6086
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    },
+    "modern-linux-normal": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6086
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    },
+    "modern-linux-scalar": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6086
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    },
+    "minimum-linux-normal": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6082,
+        "skipped": 4
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    },
+    "minimum-linux-scalar": {
+      "public_suite": {
+        "passed": 14963
+      },
+      "metadata_and_generic_api": {
+        "passed": 6506
+      },
+      "supplementary_private": {
+        "passed": 6082,
+        "skipped": 4
+      },
+      "public_transform_pending": {
+        "passed": 228,
+        "xfailed": 224
+      }
+    }
+  },
+  "untimed_public_corpora": [
+    {
+      "family": "metrics",
+      "profile": "windows",
+      "mode": "normal",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-windows-normal.json",
+      "sha256": "ee9d0755b5641cb23b1ab764c723ebf7acb53b33c54a91149118ce808b999fbb"
+    },
+    {
+      "family": "footprints",
+      "profile": "windows",
+      "mode": "normal",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-windows-normal.json",
+      "sha256": "f50c3d17500213a23c09a1dcbe3902b80ad7d6d11b5901cc945693f1b9764df3"
+    },
+    {
+      "family": "components",
+      "profile": "windows",
+      "mode": "normal",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-windows-normal.json",
+      "sha256": "0cde4c500b2df54007bee9d0c223118a79bb7dc6c3517da61ec653e0b3a592bd"
+    },
+    {
+      "family": "metrics",
+      "profile": "windows",
+      "mode": "scalar",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-windows-scalar.json",
+      "sha256": "bf3c2c261df07d90fc47d7addcf8b4790ea0cc4727278b47c5dc6c0087741816"
+    },
+    {
+      "family": "footprints",
+      "profile": "windows",
+      "mode": "scalar",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-windows-scalar.json",
+      "sha256": "6a88829393c182dd3b9a3c21a4449165fcf54b2b9355cac7c484da9f5e9f6ce4"
+    },
+    {
+      "family": "components",
+      "profile": "windows",
+      "mode": "scalar",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-windows-scalar.json",
+      "sha256": "dff344641afdcdfb09c5b7e77dab310361a802dd4ee7eada80566dddc45f4050"
+    },
+    {
+      "family": "metrics",
+      "profile": "modern-linux",
+      "mode": "normal",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-modern-linux-normal.json",
+      "sha256": "ef295a25cc7e76cc5ec66c18b338c891971ff138bcf9644578303570d680b955"
+    },
+    {
+      "family": "footprints",
+      "profile": "modern-linux",
+      "mode": "normal",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-modern-linux-normal.json",
+      "sha256": "bc1fab28d24f5bee3f47495daf3270a0b0605d777aa61c773e5b1b6a117d223a"
+    },
+    {
+      "family": "components",
+      "profile": "modern-linux",
+      "mode": "normal",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-modern-linux-normal.json",
+      "sha256": "80aa63c5dc9277a3bf21f65a96098336ab5661ae57d9acf8c9e46c2570088ffb"
+    },
+    {
+      "family": "metrics",
+      "profile": "modern-linux",
+      "mode": "scalar",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-modern-linux-scalar.json",
+      "sha256": "e5f2c91aa71262057523364c125f3b8e25c20a86c96ffa6c279879e7ef1b7de1"
+    },
+    {
+      "family": "footprints",
+      "profile": "modern-linux",
+      "mode": "scalar",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-modern-linux-scalar.json",
+      "sha256": "7ce505a1d7d54cde34dc90f0e91a15a99d7b6260baec0a74cefd40fcecd79137"
+    },
+    {
+      "family": "components",
+      "profile": "modern-linux",
+      "mode": "scalar",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-modern-linux-scalar.json",
+      "sha256": "a9ae29231526881f54dbaa67f5d7a91eade4573b9f29a8a36c5b4fefb594d43a"
+    },
+    {
+      "family": "metrics",
+      "profile": "minimum-linux",
+      "mode": "normal",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-minimum-linux-normal.json",
+      "sha256": "98f5bb0cbeede076cf0aeb8eeee96b741ec002a6cf475cb64ee9a56fc76982a5"
+    },
+    {
+      "family": "footprints",
+      "profile": "minimum-linux",
+      "mode": "normal",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-minimum-linux-normal.json",
+      "sha256": "1abf6f4fa742cc5b96df789607f03ba4c7b3ee2fc6235476ec69bc6a8a6a207d"
+    },
+    {
+      "family": "components",
+      "profile": "minimum-linux",
+      "mode": "normal",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-minimum-linux-normal.json",
+      "sha256": "6e2afa45427ccef496fe069285429481f0e83d8bc8a33b362540f3a629e36904"
+    },
+    {
+      "family": "metrics",
+      "profile": "minimum-linux",
+      "mode": "scalar",
+      "checks": 1231,
+      "case_contract_sha256": "aaabd4d66d1b5f79ee96e24bd37eef6a4a7e79115f27fe549db60eb0a95d6369",
+      "report": "build\\public-wave1-evidence\\corpus-metrics-minimum-linux-scalar.json",
+      "sha256": "a72d44b70f45a376edc2474c4a00b649d7db79570d0859cbcbc756bea3e97679"
+    },
+    {
+      "family": "footprints",
+      "profile": "minimum-linux",
+      "mode": "scalar",
+      "checks": 556,
+      "case_contract_sha256": "4dacacc9cd81aa0476cad2b80ba3cc58c96529226497c08ebf0078d864a540b5",
+      "report": "build\\public-wave1-evidence\\corpus-footprints-minimum-linux-scalar.json",
+      "sha256": "2810c412fa4dab175de1d481367a08fa1615c671f678ec8360970a72f0457488"
+    },
+    {
+      "family": "components",
+      "profile": "minimum-linux",
+      "mode": "scalar",
+      "checks": 954,
+      "case_contract_sha256": "d8cfc6c39bb1559cf7c792f2030210d079e5a13056b23ada09bde6ff9f261f83",
+      "report": "build\\public-wave1-evidence\\corpus-components-minimum-linux-scalar.json",
+      "sha256": "de42ee2f5b6c75f9524773f121d63368956fb215f6be704caa7bd99d517ee4c7"
+    }
+  ],
+  "native_ctest": {
+    "windows": {
+      "passed": 24,
+      "log": "build\\public-wave1-evidence\\native-windows.log"
+    },
+    "normal": {
+      "passed": 24,
+      "log": "build\\public-wave1-evidence\\native-normal.log"
+    },
+    "dynamic": {
+      "passed": 24,
+      "log": "build\\public-wave1-evidence\\native-dynamic.log"
+    },
+    "portable": {
+      "passed": 24,
+      "log": "build\\public-wave1-evidence\\native-portable.log"
+    },
+    "sanitize": {
+      "passed": 24,
+      "log": "build\\public-wave1-evidence\\native-sanitize.log"
+    }
+  },
+  "sanitized_python": {
+    "public_suite": 14963,
+    "supplementary_private": 6086,
+    "core_instrumentation": "address,undefined,float-cast-overflow"
+  },
+  "sdk_consumer_profiles": [
+    "windows",
+    "modern",
+    "minimum"
+  ],
+  "wheels": {
+    "windows": {
+      "wheel_sha256": "5dd1a1bb12ab2a882bacee6e9de209cb11913b048243a3eaf0317b8048d2720e"
+    },
+    "modern-linux": {
+      "wheel_sha256": "d404509d55b9412d09d4c99d5f429d67261968c3321b7f0a7e1983012473b925"
+    },
+    "minimum-linux": {
+      "wheel_sha256": "cb2b167e7beecbb872f6c9662c3ad8b59b62f03de4118bbb8cac045fb0266ab6"
+    },
+    "sanitize-linux": {
+      "wheel_sha256": "81b8b5178464c8c48f134ba401cf2dbe3cbd9565ed397ed5bd337af3d8ca8b32"
+    }
+  },
+  "scope": "Registered public/frozen suites are acceptance evidence. Private label/footprint/transform development adapters are supplementary only; public transform classes remain pending.",
+  "counts_note": "Suite totals include reference, signature and metadata checks; they are not counts of distinct image algorithms. Per-family native_contract_checks below use the dedicated actual-public fixed corpora. No pending cases within those advertised scopes.",
+  "performance": "Pending isolated one-worker measurements; no speedup claim from parity.",
+  "retained_initial_failure": "Initial shared registry test MODULES omitted metrics and measure; two failures per six profiles retained, parent test-only6960 expands namespaces without weakening guard; affected6506-check group rerun only."
+}
