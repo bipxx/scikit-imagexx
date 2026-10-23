@@ -21,6 +21,9 @@ for _names, _test, _benchmark in (
     (tuple('morphology.'+name for name in ('footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint')),
      'tests/test_footprint_contracts.py','benchmarks/footprints.py'),
     (('measure.label','morphology.label'),'tests/test_connected_components_contracts.py','benchmarks/components.py'),
+    (('morphology.remove_small_objects','morphology.remove_small_holes',
+      'segmentation.clear_border','segmentation.relabel_sequential'),
+     'tests/test_component_consumers_public.py',None),
 ):
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 

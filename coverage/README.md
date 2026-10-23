@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 133 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 137 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -373,8 +373,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.pad_footprint` | native-partial | yes (partial input contract) | yes |
 | `morphology.reconstruction` | upstream-only | pending | pending |
 | `morphology.remove_objects_by_distance` | upstream-only | pending | pending |
-| `morphology.remove_small_holes` | upstream-only | pending | pending |
-| `morphology.remove_small_objects` | upstream-only | pending | pending |
+| `morphology.remove_small_holes` | native-partial | yes (partial input contract) | pending |
+| `morphology.remove_small_objects` | native-partial | yes (partial input contract) | pending |
 | `morphology.skeletonize` | upstream-only | pending | pending |
 | `morphology.star` | upstream-only | pending | pending |
 | `morphology.thin` | upstream-only | pending | pending |
@@ -402,7 +402,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.active_contour` | upstream-only | pending | pending |
 | `segmentation.chan_vese` | upstream-only | pending | pending |
 | `segmentation.checkerboard_level_set` | upstream-only | pending | pending |
-| `segmentation.clear_border` | upstream-only | pending | pending |
+| `segmentation.clear_border` | native-partial | yes (partial input contract) | pending |
 | `segmentation.disk_level_set` | upstream-only | pending | pending |
 | `segmentation.expand_labels` | upstream-only | pending | pending |
 | `segmentation.felzenszwalb` | upstream-only | pending | pending |
@@ -416,7 +416,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.morphological_geodesic_active_contour` | upstream-only | pending | pending |
 | `segmentation.quickshift` | upstream-only | pending | pending |
 | `segmentation.random_walker` | upstream-only | pending | pending |
-| `segmentation.relabel_sequential` | upstream-only | pending | pending |
+| `segmentation.relabel_sequential` | native-partial | yes (partial input contract) | pending |
 | `segmentation.slic` | upstream-only | pending | pending |
 | `segmentation.watershed` | upstream-only | pending | pending |
 | `transform.AffineTransform` | native-class-partial | yes (partial input contract) | pending |

@@ -1,0 +1,53 @@
+{
+  "python_source_revision": "8e37749b3f65408aeaddeba7be8960e8f9b5ba4e",
+  "compiled_source_revision": "99b1a1dba48942f6daade395c8fc03925db2b865",
+  "manifest": {
+    "path": "build/component-consumers-public-evidence/manifest.json",
+    "sha256": "9c423fb1f59260cedbfe10cf64fb68bede1503652c32ac0e6ab462e16af0520b"
+  },
+  "public_apis": [
+    "morphology.remove_small_objects",
+    "morphology.remove_small_holes",
+    "segmentation.clear_border",
+    "segmentation.relabel_sequential"
+  ],
+  "profiles": {
+    "release-windows": {
+      "normal": 5795,
+      "scalar": 5795
+    },
+    "release-modern-linux": {
+      "normal": 5795,
+      "scalar": 5795
+    },
+    "release-minimum-linux": {
+      "normal": 5795,
+      "scalar": 5795
+    },
+    "debug-modern-linux": {
+      "normal": 5795,
+      "scalar": 5795
+    }
+  },
+  "actual_inventory_checks": {
+    "release-windows": 474,
+    "release-modern-linux": 474,
+    "release-minimum-linux": 474
+  },
+  "root_combined_inventory": "474 paths:137 partial image entries,3 helpers,4 partial transform classes,1 exception metadata provider,329 upstream-only.",
+  "inventory_metadata_validation": "484 root inventory/class registry checks pass against the immutable actual candidate package. Dedicated four consumer test links, no benchmark/performance claim.",
+  "scope": "Actual complete public packages, no facade/candidate selectors/standalone backend. Frozen consumer1436 assertions executed through actual reference/native fixtures; public supplements and shared API/class-registry checks bring each profile to5795.",
+  "worker_policy": "Default1; optional1/4 exercised by tests; normal and SIMD-disabled profiles on Windows CP313, Linux CP313 modern, Linux CP311 minimum, plus Linux Debug GIL-assertion profile. BLAS/OMP1, OMP_WAIT_POLICY=PASSIVE.",
+  "limitations": [
+    "No local timings or performance claim; no dispatch.",
+    "Returned ArrayMap is internal protocol scope and never increments public class registry.",
+    "Sparse huge-ID count/filter safety is definition-level native proof; original impractical bincount/dense map never invoked.",
+    "Arbitrary object/complex/extendedprecision consumer/out and ArrayMap constructor/mutation combinations remain unrepresented; base morphology defined dtype errors are separately strict-native tested.",
+    "Array subclasses/custom image/out/mask protocols use explicit upstream fallback.",
+    "NumPy scalar/dtype/deprecation sentinel/warning metadata providers are explicit; native pixel stages and sole-core label never call original image algorithms.",
+    "Prior722 Debug138 sharedAPI GIL failures per mode retained; fixed99b acceptance has no failures.",
+    "Parent regenerates combined tracked inventory after merging; candidate ignored inventory is not a mutation of main inventory."
+  ],
+  "inherited_full_package_gate": "Root broader99b combined suite remains a separately tracked live regression packet; dedicated new public API gates are complete.",
+  "returned_class_count": "ArrayMap is returned internal protocol scope, not a newly exported public class."
+}

@@ -6021,20 +6021,24 @@
       "api": "morphology.remove_small_holes",
       "kind": "callable",
       "signature": "(ar, area_threshold=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_component_consumers_public.py",
       "benchmark": null
     },
     {
       "api": "morphology.remove_small_objects",
       "kind": "callable",
       "signature": "(ar, min_size=<DEPRECATED>, connectivity=1, *, max_size=64, out=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_component_consumers_public.py",
       "benchmark": null
     },
     {
@@ -6315,10 +6319,14 @@
       "api": "segmentation.clear_border",
       "kind": "callable",
       "signature": "(labels, buffer_size=0, bgval=0, mask=None, *, out=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_component_consumers_public.py",
       "benchmark": null
     },
     {
@@ -6455,10 +6463,12 @@
       "api": "segmentation.relabel_sequential",
       "kind": "callable",
       "signature": "(label_field, offset=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_component_consumers_public.py",
       "benchmark": null
     },
     {

@@ -16336,28 +16336,23 @@
       "owner": "resize_bench",
       "branch": "feature/component-consumers-public",
       "base_sha": "722006f552d015639c7fc06389a8f74d88dab3d6",
-      "owns": [
-        "python/skimagexx/morphology.py",
-        "python/skimagexx/segmentation.py",
-        "python/skimagexx/coverage.py",
-        "tests/test_api.py",
-        "tests/test_class_registry.py",
-        "tests/test_component_consumers_public.py",
-        "coverage/contracts/component-consumers-public.json"
-      ],
+      "owns": [],
       "depends_on": [
         "component-consumers-native",
         "main-core-combined-validation"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "8e37749b3f65408aeaddeba7be8960e8f9b5ba4e",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/component-consumers-public-evidence/manifest.json",
+          "coverage/evidence/component-consumers-public.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -16369,12 +16364,16 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "8e37749b3f65408aeaddeba7be8960e8f9b5ba4e",
+        "main_commit": "605e2d6b7c4dc690b3cd3d40d110edcac8a23b73"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/component-consumers-public-evidence",
+          "build/component-consumers-8e37-*-package",
+          "build/main-core-99b-*-wheels"
+        ]
       },
       "dependency_requirements": {
         "component-consumers-native": {
@@ -16387,11 +16386,20 @@
       "public_registration": true,
       "proofs": {
         "public_native": {
-          "status": "pending",
-          "source_sha": null,
-          "manifest": null,
-          "native_contract_checks": 0,
-          "native_pending": null
+          "status": "verified",
+          "source_sha": "8e37749b3f65408aeaddeba7be8960e8f9b5ba4e",
+          "manifest": {
+            "path": "build/component-consumers-public-evidence/manifest.json",
+            "sha256": "9c423fb1f59260cedbfe10cf64fb68bede1503652c32ac0e6ab462e16af0520b"
+          },
+          "native_contract_checks": 1434,
+          "native_pending": 0,
+          "runtime_profiles": [
+            "windows-modern",
+            "linux-modern",
+            "linux-minimum"
+          ],
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -16406,8 +16414,25 @@
           "linux-minimum": 42763,
           "debug-modern": 48108
         },
-        "candidate_inventory": "474paths/137partialimage+3helpers+4partialclasses+1exceptionprovider; actualstagedpackage inventory, unaccepted until fullpublicproof"
-      }
+        "candidate_inventory": "474paths/137partialimage+3helpers+4partialclasses+1exceptionprovider; actualstagedpackage inventory, unaccepted until fullpublicproof",
+        "all_public_handles_terminal": [
+          71320,
+          69570,
+          42763,
+          48108
+        ],
+        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
+      },
+      "integration_files": [
+        "python/skimagexx/morphology.py",
+        "python/skimagexx/segmentation.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_api.py",
+        "tests/test_class_registry.py",
+        "tests/test_component_consumers_public.py",
+        "coverage/contracts/component-consumers-public.json"
+      ]
     },
     {
       "id": "rank-benchmark-harness",
@@ -16844,6 +16869,56 @@
           },
           "scope": "Reference/tooling/data-flow tests and actionlint pass. Rank actual public/native performance gate and hosted CI correctness/performance are separate; no local timing/dispatch claim."
         }
+      }
+    },
+    {
+      "id": "transform-class-performance-harness",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/transform-performance",
+      "base_sha": "605e2d6b7c4dc690b3cd3d40d110edcac8a23b73",
+      "owns": [
+        "benchmarks/transform_class_performance.py",
+        "tests/test_transform_class_performance.py",
+        ".github/workflows/transform-classes-benchmark.yml"
+      ],
+      "depends_on": [
+        "transform-class-public-integration"
+      ],
+      "dependency_requirements": {
+        "transform-class-public-integration": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "Existing296 descriptors kept unchanged; separate timing scope per operation",
+        "uncovered_cases": [
+          "Original-only/tooling gates independent; no local operation timings, public exact-source one-worker measurement still pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "corpus_sha256": null,
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
       }
     }
   ],
@@ -17579,12 +17654,12 @@
   "snapshot_base_sha": "09dfc98555eb05b58ad451a1cb59ba9a440d809e",
   "inventory_snapshot": {
     "public_names": 474,
-    "native_partial_image_names": 133,
+    "native_partial_image_names": 137,
     "metadata_names": 3,
-    "upstream_only_names": 333,
+    "upstream_only_names": 329,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current main metadata:133 partial image paths,3 helper functions,4 partial model classes,1 exception metadata provider,333 upstream-only. Private rank/consumer foundations do not increase public image counts.",
+    "note": "Actual candidate137image+3helper+4classes+1exceptionprovider; new4consumer public gates pass. Private18rank paths remain unregistered. Classification is not full-library parity or performance completion.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -17617,7 +17692,7 @@
         "metrics-simd-load-optimization"
       ],
       "resize_bench": [
-        "component-consumers-public-integration"
+        "transform-class-performance-harness"
       ]
     }
   },

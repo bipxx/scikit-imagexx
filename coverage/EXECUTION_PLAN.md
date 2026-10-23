@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 133 native-partial image entries,
+The current inventory contains 474 public paths: 137 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 333 upstream-only entries. The expansion adds 19
+provider, and 329 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -16,7 +16,7 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The user has resumed implementation. Three worker agents are executing the
-rank public integration, component-consumer public integration and measured
+rank public integration, transform-class performance tooling and measured
 metrics optimization lanes in parallel, with the integrator handling
 shared wiring, measured bottlenecks and prompt merges. The earlier three-agent
 review and preserved checkpoints remain recorded in the ledger. Existing hosted
@@ -45,7 +45,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 | Integrator | `root` | Shared core/SDK, registry/inventory, frozen artifacts, measured bottlenecks, prompt merges and cleanup | Corrected combined `99b1a1d` Debug/Release packages under actual public gates; nine-operation rank core builds in parallel |
 | Worker 1 | `metrics_reductions` | Nine public rank algorithms and generic identity aliases | Native `8c6e154` validated; own nested public namespace source ready, actual combined-core gates pending |
 | Worker 2 | `resize_api` | Measured metrics SIMD bottlenecks | Rank benchmark and isolated CI tooling validated; endian/stepped typed load trial implementing against retained 1,212-case baseline |
-| Worker 3 | `resize_bench` | Four public component consumers and returned internal ArrayMap | Private `d1b55f7` validated; public candidate checks running on corrected shared Debug/Release packages |
+| Worker 3 | `resize_bench` | Original-versus-native transform-class performance tooling | Four public consumers `8e37749` merged after eight 5,795-check profiles; separate 296-case class measurement tooling implementing |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -103,8 +103,10 @@ remain partial: NumPy/SciPy matrix/fitting providers and external provider threa
 pools are explicit, with independent C++ solvers and performance still pending.
 Installed SDK foundations pass 26 native tests on Windows/Linux plus portable,
 sanitizer and external consumer gates. Private rank adds nine algorithms and
-component consumers add four wrappers; their public registration is separately
-gated by actual combined packages. Debug validation reproduced generic array
+component consumers add four public wrappers, accepted through eight actual
+Release/Debug package profiles with 5,795 checks each and three 474-path inventory
+checks. Returned ArrayMap stays internal. Nine rank algorithms still await their
+separate public package gates. Debug validation reproduced generic array
 dtype-reference access after GIL release; the four fixed bindings are undergoing
 full regression checks without disabling assertions. Completed worktrees are removed only after
 evidence archiving and clean/ancestor checks.
