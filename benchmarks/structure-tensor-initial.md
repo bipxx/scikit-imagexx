@@ -50,5 +50,7 @@ The initial source archive, package manifests, exact Actions packages, failed
 shape-error trial and validation logs are retained under ignored
 `build/checkpoints/`. Exact local wheels remain in their `build/tensor-*`
 directories.
-Retention and merge await
-[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936041).
+The implementation is retained after all three
+[full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936041) jobs
+passed: Windows, Linux and minimum NumPy. Subsequent edits are reports and
+merge bookkeeping; runtime sources match the measured revision.

@@ -1,5 +1,17 @@
 # Last completed whole-library performance checkpoint
 
+Retained `feature.structure_tensor`, measured source `ccab3b0`:
+[full CI39877936041](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936041)
+passed Windows, Linux and minimum NumPy. Isolated
+[measurement39877936033](https://github.com/bipxx/scikit-imagexx/actions/runs/39877936033)
+passed both OSes. One-worker geometric means **2.984798× Linux / 2.263855×
+Windows**, all 120 cases faster per OS; minima 1.771831×/1.502563×.
+All 480 timed rows have zero numerical difference. Dedicated/native/installed
+SDK/sanitizer checks pass; [raw samples and scope](structure-tensor-initial.md)
+are preserved. Native image coverage is now **110 + 2 metadata APIs**, with
+**343 callable names** and 29 classes/284 static member paths pending.
+
+
 Retained symmetric image eigenvalues (`feature.hessian_matrix_eigvals` and
 `feature.structure_tensor_eigenvalues`): measured runtime `33a0e57`, test-only
 portable correction `1e1b21b`, full CI [39874772356](https://github.com/bipxx/scikit-imagexx/actions/runs/39874772356)
