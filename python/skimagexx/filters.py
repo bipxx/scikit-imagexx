@@ -872,6 +872,7 @@ def frangi(image,sigmas=range(1,10,2),scale_range=None,scale_step=None,alpha=.5,
 
 def hessian(image,sigmas=range(1,10,2),scale_range=None,scale_step=None,alpha=.5,beta=.5,gamma=15,black_ridges=True,mode='reflect',cval=0):
     return _frangi_impl(image,sigmas,scale_range,scale_step,alpha,beta,gamma,black_ridges,mode,cval,True,lambda:fallback('filters','hessian',image,sigmas=sigmas,scale_range=scale_range,scale_step=scale_step,alpha=alpha,beta=beta,gamma=gamma,black_ridges=black_ridges,mode=mode,cval=cval))
+__all__+=['frangi','hessian']
 _GAUSSIAN_MODES={'reflect':0,'grid-mirror':0,'constant':1,'grid-constant':1,'nearest':2,'mirror':3,'wrap':4,'grid-wrap':4}
 
 

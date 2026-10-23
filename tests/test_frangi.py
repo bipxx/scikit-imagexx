@@ -88,6 +88,24 @@ def test_memmap(name,black,empty,tmp_path):
 def test_signature(name):assert inspect.signature(getattr(xx.filters,name))==inspect.signature(getattr(reference,name))
 
 @pytest.mark.parametrize('name',('frangi','hessian'))
+@pytest.mark.parametrize('dtype',(np.float32,np.float64,np.uint64))
+@pytest.mark.parametrize('rank',(2,3))
+@pytest.mark.parametrize('workers',(1,4))
+def test_registered_backend_swap(name,dtype,rank,workers):
+    import skimage
+    a=image(dtype,rank)
+    def pipeline(backend):
+        smoothed=backend.filters.gaussian(a,.7,preserve_range=True)
+        return getattr(backend.filters,name)(smoothed,sigmas=[.7,1.3],mode='mirror')
+    xx.set_num_threads(workers)
+    assert name in xx.filters.__all__ and name in xx.__all__
+    assert getattr(xx,name) is getattr(xx.filters,name)
+    actual=pipeline(xx);expected=pipeline(skimage)
+    assert actual.dtype==expected.dtype and actual.shape==expected.shape
+    tolerance=2e-6 if actual.dtype==np.float32 else 2e-13
+    np.testing.assert_allclose(actual,expected,rtol=tolerance,atol=tolerance)
+
+@pytest.mark.parametrize('name',('frangi','hessian'))
 @pytest.mark.parametrize('rank',(2,3))
 @pytest.mark.parametrize('kind',('quadratic','axis-ridge','tilted-ridge','negative-zero'))
 def test_degenerate(name,rank,kind):

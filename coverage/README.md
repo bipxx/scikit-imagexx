@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-455 public callable names inventoried in 18 modules; 119 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
+455 public callable names inventoried in 18 modules; 121 have partially native image implementations and 2 have metadata-only execution. All covered entries have per-function tests and benchmarks.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -169,11 +169,11 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.farid_v` | native-partial | yes (partial input contract) | yes |
 | `filters.filter_forward` | upstream-only | pending | pending |
 | `filters.filter_inverse` | upstream-only | pending | pending |
-| `filters.frangi` | upstream-only | pending | pending |
+| `filters.frangi` | native-partial | yes (partial input contract) | yes |
 | `filters.gabor` | native-partial | yes (partial input contract) | yes |
 | `filters.gabor_kernel` | native-partial | yes (partial input contract) | yes |
 | `filters.gaussian` | native-partial | yes (partial input contract) | yes |
-| `filters.hessian` | upstream-only | pending | pending |
+| `filters.hessian` | native-partial | yes (partial input contract) | yes |
 | `filters.laplace` | native-partial | yes (partial input contract) | yes |
 | `filters.median` | native-partial | yes (partial input contract) | yes |
 | `filters.meijering` | native-partial | yes (partial input contract) | yes |

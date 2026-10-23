@@ -1,8 +1,9 @@
-# Frangi and ridge-Hessian prototypes
+# Frangi and ridge-Hessian candidate
 
-The unregistered prototypes preserve the public signatures of `filters.frangi`
-and `filters.hessian`. They are not retained on main and have no performance
-claim yet. Native benchmark and broader integration gates remain pending.
+The candidate preserves the public signatures of `filters.frangi` and
+`filters.hessian`, exports both through the native registry and root aliases,
+and has dedicated and shared per-function parity tests. It is not retained on
+main and has no performance claim yet. Hosted and measured gates are pending.
 
 C++ computes Gaussian Hessians, orders eigenvalues by magnitude, forms ridge
 ratios and Hessian norms, initializes automatic gamma once from the first
