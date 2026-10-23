@@ -92,6 +92,32 @@
       "filters.rank",
       "filters.rank.generic"
     ],
+    "classification_counts": {
+      "explicit_public_export_alias": 16,
+      "implementation_helper_module": 7,
+      "imported_dependency_callable": 3,
+      "imported_dependency_module": 2,
+      "legacy_callable_alias": 3,
+      "legacy_module_namespace": 1
+    },
+    "declared_generic_exports": [
+      "autolevel",
+      "equalize",
+      "gradient",
+      "maximum",
+      "mean",
+      "geometric_mean",
+      "subtract_mean",
+      "median",
+      "minimum",
+      "modal",
+      "enhance_contrast",
+      "pop",
+      "threshold",
+      "noise_filter",
+      "entropy",
+      "otsu"
+    ],
     "declared_rank_exports": [
       "autolevel",
       "autolevel_percentile",
@@ -128,198 +154,780 @@
     "discovered_uninventoried": [
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.bilateral"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.bilateral",
+        "source_evidence": [
+          {
+            "line": 33,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "from .bilateral import mean_bilateral, pop_bilateral, sum_bilateral",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L33"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.bilateral_cy"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.bilateral_cy",
+        "source_evidence": [
+          {
+            "line": 27,
+            "path": "src/skimage/filters/rank/bilateral.py",
+            "text": "from . import bilateral_cy",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/bilateral.py#L27"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.core_cy"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.core_cy",
+        "source_evidence": [
+          {
+            "line": 9,
+            "path": "src/skimage/filters/rank/generic_cy.pyx",
+            "text": "from .core_cy cimport dtype_t, dtype_t_out, _core",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic_cy.pyx#L9"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.core_cy_3d"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.core_cy_3d",
+        "source_evidence": [
+          {
+            "line": 11,
+            "path": "src/skimage/filters/rank/generic_cy.pyx",
+            "text": "from .core_cy_3d cimport _core_3D",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic_cy.pyx#L11"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "legacy_module_namespace",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.generic"
+        "note": "Externally importable implementation namespace; selected callable aliases are separately contracted. Module name itself is not another image algorithm.",
+        "path": "filters.rank.generic",
+        "source_evidence": [
+          {
+            "line": 1,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "from .generic import (",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L1"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.generic_cy"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.generic_cy",
+        "source_evidence": [
+          {
+            "line": 57,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from . import generic_cy",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L57"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.percentile_cy"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.percentile_cy",
+        "source_evidence": [
+          {
+            "line": 26,
+            "path": "src/skimage/filters/rank/_percentile.py",
+            "text": "from . import percentile_cy",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/_percentile.py#L26"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.autolevel",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.autolevel"
+        "path": "filters.rank.generic.autolevel",
+        "source_evidence": [
+          {
+            "line": 2,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "autolevel,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L2"
+          },
+          {
+            "line": 442,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def autolevel(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "imported_dependency_callable",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "callable",
-        "path": "filters.rank.generic.check_nD"
+        "origin": "skimage._shared.utils",
+        "path": "filters.rank.generic.check_nD",
+        "source_evidence": [
+          {
+            "line": 54,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from ..._shared.utils import check_nD, warn",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L54"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.enhance_contrast",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.enhance_contrast"
+        "path": "filters.rank.generic.enhance_contrast",
+        "source_evidence": [
+          {
+            "line": 13,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "enhance_contrast,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L13"
+          },
+          {
+            "line": 1118,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def enhance_contrast("
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.entropy",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.entropy"
+        "path": "filters.rank.generic.entropy",
+        "source_evidence": [
+          {
+            "line": 17,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "entropy,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L17"
+          },
+          {
+            "line": 1482,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def entropy(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.equalize",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.equalize"
+        "path": "filters.rank.generic.equalize",
+        "source_evidence": [
+          {
+            "line": 3,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "equalize,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L3"
+          },
+          {
+            "line": 507,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def equalize(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
         "canonical_alias": "filters.rank.generic_cy",
+        "classification": "implementation_helper_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.generic.generic_cy"
+        "note": "Implementation module exposure is retained for assessment; its public attribute tree is not contracted or counted as additional algorithms.",
+        "path": "filters.rank.generic.generic_cy",
+        "source_evidence": [
+          {
+            "line": 57,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from . import generic_cy",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L57"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.geometric_mean",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.geometric_mean"
+        "path": "filters.rank.generic.geometric_mean",
+        "source_evidence": [
+          {
+            "line": 8,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "geometric_mean,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L8"
+          },
+          {
+            "line": 764,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def geometric_mean("
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.gradient",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.gradient"
+        "path": "filters.rank.generic.gradient",
+        "source_evidence": [
+          {
+            "line": 4,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "gradient,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L4"
+          },
+          {
+            "line": 569,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def gradient(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "imported_dependency_callable",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "callable",
-        "path": "filters.rank.generic.img_as_ubyte"
+        "origin": "skimage.util.dtype",
+        "path": "filters.rank.generic.img_as_ubyte",
+        "source_evidence": [
+          {
+            "line": 56,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from ...util import img_as_ubyte",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L56"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.majority",
+        "classification": "legacy_callable_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.majority"
+        "path": "filters.rank.generic.majority",
+        "source_evidence": [
+          {
+            "line": 5,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "majority,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L5"
+          },
+          {
+            "line": 1684,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def majority("
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.maximum",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "five_function_alias",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.maximum"
+        "path": "filters.rank.generic.maximum",
+        "source_evidence": [
+          {
+            "line": 6,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "maximum,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L6"
+          },
+          {
+            "line": 631,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def maximum(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.mean",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "five_function_alias",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.mean"
+        "path": "filters.rank.generic.mean",
+        "source_evidence": [
+          {
+            "line": 7,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "mean,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L7"
+          },
+          {
+            "line": 702,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def mean(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.median",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.median"
+        "path": "filters.rank.generic.median",
+        "source_evidence": [
+          {
+            "line": 10,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "median,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L10"
+          },
+          {
+            "line": 905,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def median("
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.minimum",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "five_function_alias",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.minimum"
+        "path": "filters.rank.generic.minimum",
+        "source_evidence": [
+          {
+            "line": 11,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "minimum,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L11"
+          },
+          {
+            "line": 983,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def minimum(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.modal",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.modal"
+        "path": "filters.rank.generic.modal",
+        "source_evidence": [
+          {
+            "line": 12,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "modal,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L12"
+          },
+          {
+            "line": 1054,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def modal(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "imported_dependency_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.generic.ndi"
+        "origin": "scipy.ndimage",
+        "path": "filters.rank.generic.ndi",
+        "source_evidence": [
+          {
+            "line": 52,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from scipy import ndimage as ndi",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L52"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.noise_filter",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.noise_filter"
+        "path": "filters.rank.generic.noise_filter",
+        "source_evidence": [
+          {
+            "line": 16,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "noise_filter,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L16"
+          },
+          {
+            "line": 1393,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def noise_filter("
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "imported_dependency_module",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "module",
-        "path": "filters.rank.generic.np"
+        "origin": "numpy",
+        "path": "filters.rank.generic.np",
+        "source_evidence": [
+          {
+            "line": 51,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "import numpy as np",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L51"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.otsu",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.otsu"
+        "path": "filters.rank.generic.otsu",
+        "source_evidence": [
+          {
+            "line": 18,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "otsu,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L18"
+          },
+          {
+            "line": 1554,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def otsu(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.pop",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "five_function_alias",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.pop"
+        "path": "filters.rank.generic.pop",
+        "source_evidence": [
+          {
+            "line": 14,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "pop,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L14"
+          },
+          {
+            "line": 1186,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def pop(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.subtract_mean",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.subtract_mean"
+        "path": "filters.rank.generic.subtract_mean",
+        "source_evidence": [
+          {
+            "line": 9,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "subtract_mean,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L9"
+          },
+          {
+            "line": 833,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def subtract_mean("
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.sum",
+        "classification": "legacy_callable_alias",
         "contract_scope": "five_function_alias",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.sum"
+        "path": "filters.rank.generic.sum",
+        "source_evidence": [
+          {
+            "line": 19,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "sum,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L19"
+          },
+          {
+            "line": 1255,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def sum(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.threshold",
+        "classification": "explicit_public_export_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": true,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.threshold"
+        "path": "filters.rank.generic.threshold",
+        "source_evidence": [
+          {
+            "line": 15,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "threshold,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L15"
+          },
+          {
+            "line": 1324,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def threshold(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0):"
+          }
+        ]
       },
       {
         "canonical_alias": null,
+        "classification": "imported_dependency_callable",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": false,
         "kind": "callable",
-        "path": "filters.rank.generic.warn"
+        "origin": "skimage._shared.utils.warn (imported functools.partial)",
+        "path": "filters.rank.generic.warn",
+        "source_evidence": [
+          {
+            "line": 54,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "from ..._shared.utils import check_nD, warn",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/generic.py#L54"
+          }
+        ]
       },
       {
+        "alias_identity": true,
         "canonical_alias": "filters.rank.windowed_histogram",
+        "classification": "legacy_callable_alias",
         "contract_scope": "discovered_not_contracted",
+        "count_as_additional_algorithm": false,
+        "declared_generic_export": false,
+        "declared_rank_export": true,
         "kind": "callable",
-        "path": "filters.rank.generic.windowed_histogram"
+        "path": "filters.rank.generic.windowed_histogram",
+        "source_evidence": [
+          {
+            "line": 20,
+            "path": "src/skimage/filters/rank/__init__.py",
+            "text": "windowed_histogram,",
+            "url": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/filters/rank/__init__.py#L20"
+          },
+          {
+            "line": 1622,
+            "path": "src/skimage/filters/rank/generic.py",
+            "text": "def windowed_histogram("
+          }
+        ]
       }
     ],
-    "note": "Discovered attributes are reported without changing the455-name inventory. Only five canonical functions and five generic aliases are contracted; other imported helper/module trees remain unassessed."
+    "note": "Discovery preserves32 paths, including19 aliases of already inventoried rank functions,5 imported dependencies,7 implementation modules and1 legacy module namespace. These are not32 additional image APIs; parent owns any inventory scope decision.",
+    "selected_alias_contracts": {
+      "maximum": {
+        "canonical": "filters.rank.maximum",
+        "declared_generic_export": true,
+        "externally_reachable_by_import": true,
+        "inherits_canonical_case_count": 223,
+        "inherits_canonical_snapshot_prefix": "maximum/",
+        "native_status": "pending",
+        "native_wrapper_identity_required_when_registered": true,
+        "path": "filters.rank.generic.maximum",
+        "reference_identity": true,
+        "reference_source_sha256": "678c4fabad478e93b537a325c46fbe6207c912f2a5c02b5e927bbd82ba4a9e5b",
+        "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      },
+      "mean": {
+        "canonical": "filters.rank.mean",
+        "declared_generic_export": true,
+        "externally_reachable_by_import": true,
+        "inherits_canonical_case_count": 223,
+        "inherits_canonical_snapshot_prefix": "mean/",
+        "native_status": "pending",
+        "native_wrapper_identity_required_when_registered": true,
+        "path": "filters.rank.generic.mean",
+        "reference_identity": true,
+        "reference_source_sha256": "d530d1eed95053d16599324503fe3a32c5747ec21bc3c2dc4e7ce898874edfa1",
+        "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      },
+      "minimum": {
+        "canonical": "filters.rank.minimum",
+        "declared_generic_export": true,
+        "externally_reachable_by_import": true,
+        "inherits_canonical_case_count": 223,
+        "inherits_canonical_snapshot_prefix": "minimum/",
+        "native_status": "pending",
+        "native_wrapper_identity_required_when_registered": true,
+        "path": "filters.rank.generic.minimum",
+        "reference_identity": true,
+        "reference_source_sha256": "a09d06b6dd63a4e2fa667e4e9c2240dfc2f3c87feba3f1ac39853b40a7e93d67",
+        "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      },
+      "pop": {
+        "canonical": "filters.rank.pop",
+        "declared_generic_export": true,
+        "externally_reachable_by_import": true,
+        "inherits_canonical_case_count": 223,
+        "inherits_canonical_snapshot_prefix": "pop/",
+        "native_status": "pending",
+        "native_wrapper_identity_required_when_registered": true,
+        "path": "filters.rank.generic.pop",
+        "reference_identity": true,
+        "reference_source_sha256": "6c63fc011bfaf20210bc5ba49ffd2a4aa22d78590c9f5fcb5e0026d23834efbe",
+        "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      },
+      "sum": {
+        "canonical": "filters.rank.sum",
+        "declared_generic_export": false,
+        "externally_reachable_by_import": true,
+        "inherits_canonical_case_count": 223,
+        "inherits_canonical_snapshot_prefix": "sum/",
+        "native_status": "pending",
+        "native_wrapper_identity_required_when_registered": true,
+        "path": "filters.rank.generic.sum",
+        "reference_identity": true,
+        "reference_source_sha256": "fd6d98fba76be8c630f3daaed27f87cd004694d429604ba9eef782cc338ca7a5",
+        "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)"
+      }
+    },
+    "source_hashes": {
+      "__init__.py": "485b79e1618e6ff7af8e4b47f3bb0a4dc2a4de2fb80b69aa34dddcea7bf8e9fc",
+      "generic.py": "eaf677dc6be5f09994ce6b35de7cdebaf09d0fb436e9b6cdb77504e2e275f750"
+    }
   },
   "native_contract_checks": 0,
   "native_pending": 1115,
@@ -1533,13 +2141,14 @@
     }
   ],
   "validation_counts": {
+    "alias_and_classification": 6,
     "compatibility_forwarding": 2230,
     "definition_oracles": 180,
     "native_implementation_checks": 0,
     "original_frozen": 1115,
     "signature_and_integrity": 6,
     "strict_pending_rejections": 4460,
-    "total_per_runtime": 7991
+    "total_per_runtime": 7997
   },
   "observations": {
     "00f8a69a3fb858e2c9a41d87411ee067c7d7f17621ec28d02015aee2daa063d7": {"after":{"footprint":{"alias":[],"c":true,"descr":"[('', '|u1')]","dtype":"|u1","f":false,"identity":[],"metadata":"None","owned":true,"shape":[3,3],"strides":[3,1],"type":"ndarray","values_sha256":"40cc15ba2119b4955a0aa29b55c511fa59140bdcb9bc6808f32eeda6fea0d502","writeable":true},"image":{"alias":[],"c":true,"descr":"[('', '<u2')]","dtype":"<u2","f":false,"identity":[],"metadata":"None","owned":true,"shape":[5,7],"strides":[14,2],"type":"ndarray","values_sha256":"2a27ff5430bf82fa7118a5535ebe58e3124dda019a04a499bf0e2fac65ea426a","writeable":false}},"before":{"footprint":{"alias":[],"c":true,"descr":"[('', '|u1')]","dtype":"|u1","f":false,"identity":[],"metadata":"None","owned":true,"shape":[3,3],"strides":[3,1],"type":"ndarray","values_sha256":"40cc15ba2119b4955a0aa29b55c511fa59140bdcb9bc6808f32eeda6fea0d502","writeable":true},"image":{"alias":[],"c":true,"descr":"[('', '<u2')]","dtype":"<u2","f":false,"identity":[],"metadata":"None","owned":true,"shape":[5,7],"strides":[14,2],"type":"ndarray","values_sha256":"2a27ff5430bf82fa7118a5535ebe58e3124dda019a04a499bf0e2fac65ea426a","writeable":false}},"error":{"message":"buffer source array is read-only","type":"ValueError"},"result":null,"warnings":[]},

@@ -265,6 +265,40 @@ def test_independent_border_mask_shift_definition(name,ndim,dtype,output,pattern
     np.testing.assert_array_equal(actual,expected)
 
 
+
+
+@pytest.mark.parametrize('name',NAMES)
+def test_original_generic_alias_contract(frozen,name):
+    original_generic=importlib.import_module('skimage.filters.rank.generic')
+    alias=frozen['namespace_assessment']['selected_alias_contracts'][name]
+    assert getattr(original_generic,name) is getattr(reference,name)
+    assert alias['reference_identity'] and alias['externally_reachable_by_import']
+    assert str(inspect.signature(getattr(original_generic,name)))==alias['signature']
+    assert hashlib.sha256(inspect.getsource(getattr(original_generic,name)).encode()).hexdigest()==alias['reference_source_sha256']
+    assert alias['inherits_canonical_case_count']==sum(key.startswith(name+'/') for key,_,_ in CASES)
+    if 'filters.rank.'+name in native_functions():
+        assert getattr(importlib.import_module('skimagexx.filters.rank.generic'),name) is getattr(importlib.import_module('skimagexx.filters.rank'),name)
+
+
+def test_namespace_discovery_classification(frozen):
+    original_generic=importlib.import_module('skimage.filters.rank.generic')
+    assessment=frozen['namespace_assessment'];entries=assessment['discovered_uninventoried']
+    discovered={'filters.rank.'+name for name in dir(reference) if not name.startswith('_') and name not in reference.__all__}
+    discovered|={'filters.rank.generic.'+name for name in dir(original_generic) if not name.startswith('_')}
+    assert discovered=={entry['path'] for entry in entries}
+    assert assessment['declared_generic_exports']==list(original_generic.__all__)
+    for entry in entries:
+        assert entry['source_evidence'] and not entry['count_as_additional_algorithm']
+        name=entry['path'].rsplit('.',1)[1]
+        if entry['classification'] in ('explicit_public_export_alias','legacy_callable_alias'):
+            assert getattr(original_generic,name) is getattr(reference,name)
+            assert name in reference.__all__
+            assert (name in original_generic.__all__)==(entry['classification']=='explicit_public_export_alias')
+        else:
+            assert entry['classification'] in ('imported_dependency_module','imported_dependency_callable','implementation_helper_module','legacy_module_namespace')
+            assert name not in reference.__all__ and name not in original_generic.__all__
+
+
 if __name__=='__main__':
     import argparse,sys
     parser=argparse.ArgumentParser();parser.add_argument('--snapshot',type=Path,required=True);arguments=parser.parse_args()
