@@ -116,6 +116,42 @@ struct Histogram {
         });
         return result;
     }
+    std::int64_t geometric_mean(const std::vector<double>& logarithms)const {
+        if(!pop)return 0;
+        double total=0.;
+        occupied([&](std::size_t index,std::int64_t count){total+=double(count)*logarithms[index];return true;});
+        const double value=std::exp(total/double(pop))-1.;
+        // interpolation.pxd's round: ties away from zero, then C truncation.
+        return std::int64_t(value>0 ? value+.5:value-.5);
+    }
+    std::int64_t noise(std::uint32_t center)const {
+        if(counts[center])return 0;
+        std::size_t lower=0,upper=limit-1;
+        const auto word=center/64,group=word/64,bit=center%64;
+        auto below=bit ? bits[word]&((std::uint64_t{1}<<bit)-1):0;
+        if(below)lower=word*64+last(below);
+        else {
+            auto words=word%64 ? summary[group]&((std::uint64_t{1}<<(word%64))-1):0;
+            auto g=group;
+            if(!words) {
+                const auto groups=group ? root&((std::uint64_t{1}<<group)-1):0;
+                if(groups){g=last(groups);words=summary[g];}
+            }
+            if(words){const auto w=g*64+last(words);lower=w*64+last(bits[w]);}
+        }
+        auto above=bit==63 ? 0:bits[word]&(~std::uint64_t{0}<<(bit+1));
+        if(above)upper=word*64+first(above);
+        else {
+            auto words=word%64==63 ? 0:summary[group]&(~std::uint64_t{0}<<(word%64+1));
+            auto g=group;
+            if(!words) {
+                const auto groups=group==63 ? 0:root&(~std::uint64_t{0}<<(group+1));
+                if(groups){g=first(groups);words=summary[g];}
+            }
+            if(words){const auto w=g*64+first(words);upper=w*64+first(bits[w]);}
+        }
+        return std::int64_t(std::min(std::size_t(center)-lower,upper-std::size_t(center)));
+    }
     bool median(std::int64_t& selected)const {
         selected=0;
         if(!pop)return true;
@@ -183,23 +219,39 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
     if constexpr(std::is_integral_v<T> && std::is_floating_point_v<Value>)result=T(std::int64_t(value));else result=T(value);
     std::memcpy(out,&result,sizeof(result));
 }
-template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end) {
+template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
-        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold,Prefix);
+        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
         update<T,Prefix>(hist,v,prepared.initial,p,r,c,1);
         const auto write=[&](){
             auto* out=static_cast<unsigned char*>(v.output)+std::ptrdiff_t(p)*v.output_strides[0]+r*v.output_strides[1]+c*v.output_strides[2];
-            const auto emit=[&](auto value){switch(v.output_type){case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;case PixelType::uint16:store<std::uint16_t>(out,value);break;case PixelType::float32:store<float>(out,value);break;case PixelType::float64:store<double>(out,value);break;default:break;}};
+            const auto emit=[&](auto value){
+                if(domain_only){const double truncated=std::trunc(double(value));const double maximum=v.output_type==PixelType::uint16 ? 65535.:255.;if(!std::isfinite(truncated) || truncated<0 || truncated>maximum)throw std::invalid_argument("subtract_mean unsigned conversion outside defined coverage");return;}
+                switch(v.output_type){case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;case PixelType::uint16:store<std::uint16_t>(out,value);break;case PixelType::float32:store<float>(out,value);break;case PixelType::float64:store<double>(out,value);break;default:break;}};
+            if(op==RankOperation::windowed_histogram) {
+                const double scale=hist.pop ? 1./double(hist.pop):0.;
+                const auto emit_vector=[&](auto tag){using O=decltype(tag);std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+                    if constexpr(std::is_floating_point_v<O>)if(has_avx2() && hist.pop<=std::numeric_limits<std::int32_t>::max())i=simd::rank_histogram_normalized(hist.counts.data(),out,depth,scale,sizeof(O)==4);
+#endif
+                    for(;i<depth;++i)store<O>(out+i*sizeof(O),double(hist.counts[i])*scale);
+                };
+                switch(v.output_type){case PixelType::boolean:case PixelType::uint8:emit_vector(std::uint8_t{});break;case PixelType::uint16:emit_vector(std::uint16_t{});break;case PixelType::float32:emit_vector(float{});break;case PixelType::float64:emit_vector(double{});break;default:break;}
+                return;
+            }
             if(op==RankOperation::mean)emit(hist.pop ? double(hist.sum)/double(hist.pop):0.);
             else if(op==RankOperation::entropy)emit(hist.entropy());
+            else if(op==RankOperation::geometric_mean)emit(hist.geometric_mean(logarithms));
             else if(op==RankOperation::median){std::int64_t selected;if(hist.median(selected))emit(selected);}
             else if(int(op)>=9) {
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
                 if(pixel>=v.bins)throw std::invalid_argument("rank center exceeded histogram bounds");
                 if(op==RankOperation::threshold)emit(hist.pop && double(pixel)>double(hist.sum)/double(hist.pop) ? std::int64_t{1}:std::int64_t{0});
+                else if(op==RankOperation::noise_filter)emit(hist.noise(pixel));
+                else if(op==RankOperation::subtract_mean)emit(hist.pop ? ((double(pixel)-double(hist.sum)/double(hist.pop))/2.+double(v.bins/2))-1.:0.);
                 else if(op==RankOperation::equalize)emit(hist.equalize(pixel));
                 else {
                     const auto low=hist.integer(RankOperation::minimum),high=hist.integer(RankOperation::maximum),g=std::int64_t(pixel);
@@ -250,12 +302,12 @@ void validate(const RankView& view,RankOperation operation) {
 // Test exact destination element bytes against a contiguous read buffer.
 // Bounding intervals cheaply reject the common disjoint case; row intervals
 // avoid scanning each pixel for ordinary contiguous/pixel-vector output.
-bool overlaps(const RankView& v,const void* input,std::size_t bytes) {
+bool overlaps(const RankView& v,const void* input,std::size_t bytes,std::size_t pixel_bytes=0) {
     if(!input || !bytes)return false;
     const auto base=reinterpret_cast<std::uintptr_t>(v.output),low=reinterpret_cast<std::uintptr_t>(input);
     const auto maximum=std::numeric_limits<std::uintptr_t>::max();
     if(bytes>maximum-low)throw std::overflow_error("rank pointer range overflow");
-    const auto high=low+bytes,item=pixel_size(v.output_type);
+    const auto high=low+bytes,item=pixel_bytes ? pixel_bytes:pixel_size(v.output_type);
     std::size_t span=item;
     for(int axis=0;axis<3;++axis)span+=(v.shape[axis]-1)*std::size_t(v.output_strides[axis]);
     if(span>maximum-base)throw std::overflow_error("rank pointer range overflow");
@@ -280,10 +332,10 @@ RankAliases aliases(const RankView& v) {
 }
 // A sufficient injectivity certificate for arbitrary positive SDK strides.
 // Uncertified layouts remain valid, but their stores must run serially.
-bool independent_stores(const RankView& v) {
+bool independent_stores(const RankView& v,std::size_t pixel_bytes=0) {
     std::array<int,3> axes{0,1,2};
     std::sort(axes.begin(),axes.end(),[&](int a,int b){return v.output_strides[a]<v.output_strides[b];});
-    auto span=pixel_size(v.output_type);
+    auto span=pixel_bytes ? pixel_bytes:pixel_size(v.output_type);
     for(const auto axis:axes)if(v.shape[axis]>1) {
         const auto stride=std::size_t(v.output_strides[axis]);
         if(stride<span)return false;
@@ -307,6 +359,55 @@ void run(const RankView& view,RankOperation operation) {
     detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{run(begin,end);}catch(...){failures[id]=std::current_exception();}});
     for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
 }
+// Statistics/vectors are a separate admission surface. Validate every read
+// value and every accessed output byte before any worker can write.
+std::vector<double> statistics_validate(const RankView& v,RankOperation op,std::size_t depth) {
+    validate(v,RankOperation::minimum);
+    const auto item=pixel_size(v.output_type),bound=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());
+    if(depth && (v.shape[0]!=1 || depth>v.bins || depth>bound/item))throw std::invalid_argument("invalid rank vector depth or dimensions");
+    const auto width=depth ? item*depth:item;
+    std::size_t span=width;
+    for(int axis=0;axis<3;++axis){const auto extent=v.shape[axis]-1,step=std::size_t(v.output_strides[axis]);if(extent && step>(bound-span)/extent)throw std::overflow_error("rank vector output strides overflow");span+=extent*step;}
+    if(!independent_stores(v,width))throw std::invalid_argument("rank statistics output stores overlap");
+    const auto pixels=v.shape[0]*v.shape[1]*v.shape[2],fp=v.footprint_shape[0]*v.footprint_shape[1]*v.footprint_shape[2];
+    if(fp>std::size_t(std::numeric_limits<std::int64_t>::max())/(v.uint16 ? 65535:255))throw std::overflow_error("rank statistics population sum overflow");
+    if(v.serial_alias || overlaps(v,v.image,pixels*(v.uint16 ? 2:1),width) || overlaps(v,v.mask,pixels,width) || overlaps(v,v.footprint,fp,width))throw std::invalid_argument("overlapping buffers are outside rank-statistics-v1 parity");
+    std::vector<double> logarithms(op==RankOperation::geometric_mean ? v.bins:0,0.);
+    // Cache log only for globally occupied values; each output still accumulates
+    // in ascending-bin order. No reassociation/incremental floating reduction.
+    std::vector<std::uint8_t> seen(logarithms.empty() ? 0:v.bins,0);
+    const auto* image=static_cast<const unsigned char*>(v.image);
+    for(std::size_t i=0;i<pixels;++i){std::uint16_t value;if(v.uint16)std::memcpy(&value,image+2*i,2);else value=image[i];if(value>=v.bins)throw std::invalid_argument("rank image exceeded histogram bounds");if(!seen.empty())seen[value]=1;}
+    for(std::size_t i=0;i<seen.size();++i)if(seen[i])logarithms[i]=std::log(double(i+1));
+    return logarithms;
+}
+void statistics_run(const RankView& view,RankOperation operation,std::size_t depth) {
+    const auto logarithms=statistics_validate(view,operation,depth);const auto prepared=plan(view);
+    const auto rows=view.shape[0]*view.shape[1];
+    const auto invoke=[&](std::size_t begin,std::size_t end,bool check){if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end,logarithms,depth,check);else process<std::uint8_t>(view,operation,prepared,begin,end,logarithms,depth,check);};
+    // C floating-to-unsigned conversion outside the target range is undefined
+    // upstream. Certify all values first, preserving output on rejected calls.
+    const bool integral=view.output_type==PixelType::boolean || view.output_type==PixelType::uint8 || view.output_type==PixelType::uint16;
+    // An even capacity gives extrema in [-.5, bins-1.5], so truncation
+    // certifies the entire target domain without another raster traversal.
+    const bool bounded_integral=!(view.bins&1) && (view.output_type==PixelType::uint16 || view.bins<=256);
+    if(operation==RankOperation::subtract_mean && integral && !bounded_integral)invoke(0,rows,true);
+    const auto workers=detail::active_workers(rows*view.shape[2]);
+    if(workers==1){invoke(0,rows,false);return;}
+    std::vector<std::exception_ptr> failures(std::size_t(workers),std::exception_ptr{});
+    detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{invoke(begin,end,false);}catch(...){failures[id]=std::current_exception();}});
+    for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
+}
+}
+std::uint32_t rank_statistics_capabilities() noexcept {return 0xe000u;}
+std::uint32_t rank_vector_capabilities() noexcept {return 0x10000u;}
+void rank_statistics_into(const RankView& view,RankOperation op) {
+    if(int(op)<13 || int(op)>15)throw std::invalid_argument("invalid rank statistics operation");
+    statistics_run(view,op,0);
+}
+void rank_windowed_histogram_into(const RankView& view,std::size_t depth) {
+    if(!depth)throw std::invalid_argument("rank output pixel depth must be positive");
+    statistics_run(view,RankOperation::windowed_histogram,depth);
 }
 RankAliases rank_aliases(const RankView& view) {
     validate(view,RankOperation::minimum);return aliases(view);
