@@ -40,6 +40,30 @@ void tiny_derivative(){
  require(hessian_matrix_into(input.data(),PixelType::float64,fields,{19},{{tiny}},true));
  for(auto x:output)require(std::abs(x+4e-80)<1e-94);
 }
-int main(){tiny_derivative();volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
+template<class T> void repeated(){
+ const std::size_t h=513,w=519,n=h*w;std::vector<T> input(n),g0(n),g1(n),expected0(n),expected1(n),expected2(n),a(n),b(n),c(n),serial0,serial1,serial2;
+ for(std::size_t y=0;y<h;++y)for(std::size_t x=0;x<w;++x)input[y*w+x]=y<100 ? T(-1) : y<200 ? T(-0.) : y<350 ? T(2) : T(0);
+ auto pass=[&](const std::vector<T>& from,std::vector<T>& to,int axis){
+  for(std::size_t y=0;y<h;++y)for(std::size_t x=0;x<w;++x){const auto lo=axis==0 ? (y ? y-1 : 0)*w+x : y*w+(x ? x-1 : 0),hi=axis==0 ? (y+1<h ? y+1 : y)*w+x : y*w+(x+1<w ? x+1 : x);
+   double sum=double(from[y*w+x])*0.;sum+=(double(from[lo])-double(from[hi]))*-.5;to[y*w+x]=T(sum);}
+ };
+ pass(input,g0,0);pass(input,g1,1);pass(g0,expected0,0);pass(g0,expected1,1);pass(g1,expected2,1);
+ const HessianPass first{{0,{-.5,0.,.5},GaussianBorder::nearest,0},true},second{{1,{-.5,0.,.5},GaussianBorder::nearest,0},true};void* outputs[]={a.data(),b.data(),c.data()};
+ set_num_threads(1);require(hessian_matrix_into(input.data(),sizeof(T)==4 ? PixelType::float32 : PixelType::float64,outputs,{h,w},{{first},{second}},true));
+ auto same=[&](const std::vector<T>& x,const std::vector<T>& y){for(std::size_t i=0;i<n;++i)require(x[i]==y[i] && (x[i]!=T(0) || std::signbit(x[i])==std::signbit(y[i])));};
+ same(a,expected0);same(b,expected1);same(c,expected2);serial0=a;serial1=b;serial2=c;
+#ifdef _OPENMP
+ set_num_threads(4);
+#endif
+ require(hessian_matrix_into(input.data(),sizeof(T)==4 ? PixelType::float32 : PixelType::float64,outputs,{h,w},{{first},{second}},true));same(a,serial0);same(b,serial1);same(c,serial2);
+}
+void zero_sigma(){
+ std::vector<std::uint8_t> input(19*23,128);std::vector<double> a(input.size()),b(input.size()),c(input.size());void* outputs[]={a.data(),b.data(),c.data()};
+ require(hessian_matrix_into(input.data(),PixelType::uint8,outputs,{19,23},{{},{}},true));
+ for(std::size_t i=0;i<input.size();++i)require(a[i]==128.*(1./255.) && b[i]==a[i] && c[i]==a[i]);
+ std::vector<float> invalid(input.size(),0);invalid[0]=NAN;std::vector<float> fa(input.size()),fb(input.size()),fc(input.size());void* floats[]={fa.data(),fb.data(),fc.data()};
+ require(!hessian_matrix_into(invalid.data(),PixelType::float32,floats,{19,23},{{},{}},true));
+}
+int main(){zero_sigma();repeated<float>();repeated<double>();tiny_derivative();volume<float>();volume<double>();check<float>(13,17);check<double>(13,17);check<float>(513,519);check<double>(513,519);
  require(hessian_matrix_into(nullptr,PixelType::float64,nullptr,{0,3},{{},{}},true));set_num_threads(1);std::cout<<"Hessian native checks passed\n";
 }

@@ -38,3 +38,36 @@ Unoptimized raw samples: [Linux](hessian-unoptimized-linux.json),
 validation logs and failed correction trials are retained in ignored build
 checkpoints. The initial [full CI](https://github.com/bipxx/scikit-imagexx/actions/runs/39886134106)
 is still running and will not establish retention for this failed trial.
+
+## Zero-tail correction
+
+Source **1172ed10fcce19855226cde30f38444f131514b0** removes exactly-zero
+outer taps, repairs affected negative-zero outputs with the original ordered
+pass, and matches SciPy's symmetric-before-antisymmetric epsilon classification.
+Expanded tests also verify tiny-sigma behavior absent from the initial corpus.
+
+The [second isolated run](https://github.com/bipxx/scikit-imagexx/actions/runs/39888217108)
+passed on both platforms, with exact source/binary provenance and seven samples
+verified. Fixed case-spec hashes and seeds match the first run. All 960 timed
+rows retain zero numerical absolute difference.
+
+| One-worker geometric-mean speedup | Linux | Windows |
+|---|---:|---:|
+| Finite differences | 4.243598× | 3.861404× |
+| Gaussian derivatives | 2.163296× | 1.908508× |
+
+Finite differences remain faster in all 120 cases per OS. Gaussian derivatives
+are faster in 117/120 Linux and 110/120 Windows cases. The remaining Linux
+slowdowns are float32/int8/int16 broadcast inputs (minimum 0.51785×). Windows
+has those same slow broadcast cases (minimum 0.40158×) and several zero-sigma
+copy cases. No cases were removed.
+
+The next correction reuses exact results for byte-identical lines/inner blocks
+and removes temporary gradients when all Gaussian passes are empty. Reuse is
+restricted to complete preceding rows owned by the same worker partition.
+Independent outputs, signed-zero patterns and worker parity are regression
+tested. These revised measurements remain pending; this trial is not yet
+retained on main.
+
+Zero-tail raw samples: [Linux](hessian-zero-tail-linux.json),
+[Windows](hessian-zero-tail-windows.json).

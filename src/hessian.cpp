@@ -5,6 +5,7 @@
 #include "execution.hpp"
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -56,9 +57,35 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
  std::size_t first=0;while(first<original_radius && p.weights[first]==0.)++first;
  const auto radius=original_radius-first;const auto* weights=p.weights.data()+first;std::size_t stride=1;
  for(std::size_t axis=p.axis+1;axis<shape.size();++axis)stride*=shape[axis];
+ // Identical inner blocks have identical ordered results. Compute one value
+ // per block, including the original zero tails, then copy its exact bits.
+ if(stride>1){
+  bool repeated=true;const auto blocks=count/stride;
+  for(std::size_t block=0;block<blocks;++block)
+   if(std::memcmp(input+block*stride,input+block*stride+1,(stride-1)*sizeof(T))){repeated=false;break;}
+  if(repeated){
+   detail::partition(blocks,workers,[&](auto begin,auto end,auto){
+    for(auto position=begin;position<end;++position){const auto x=position%length,base=(position/length)*length;
+     double sum=double(input[position*stride])*p.weights[original_radius];
+     for(std::size_t j=0;j<original_radius;++j){const auto distance=std::ptrdiff_t(original_radius-j);
+      const auto lo=mapped(std::ptrdiff_t(x)-distance,length,p.border),hi=mapped(std::ptrdiff_t(x)+distance,length,p.border);
+      const auto a=lo<0 ? p.cval : double(input[(base+std::size_t(lo))*stride]),b=hi<0 ? p.cval : double(input[(base+std::size_t(hi))*stride]);
+      sum+=(derivative ? a-b : a+b)*p.weights[j];
+     }std::fill_n(output+position*stride,stride,T(sum));
+    }
+   });return;
+  }
+ }
  detail::partition(count,workers,[&](auto begin,auto end,auto){
+  const auto partition_begin=begin;
   std::vector<const void*> left(radius),right(radius);
   while(begin<end){const auto coordinate=begin/stride%length,inner=begin%stride,block=begin-coordinate*stride-inner;
+   // A previous complete row in this worker's partition is safe to reuse.
+   // Byte comparison distinguishes signed zeros and keeps worker output exact.
+   if(stride==1 && coordinate==0 && end-begin>=length && begin-partition_begin>=length &&
+      std::memcmp(input+begin,input+begin-length,length*sizeof(T))==0){
+    std::copy_n(output+begin-length,length,output+begin);begin+=length;continue;
+   }
    auto stop=std::min(end,begin+stride-inner);
    if(stride==1 && coordinate>=radius && radius<length && coordinate<length-radius)stop=std::min(end,block+length-radius);
    for(std::size_t j=0;j<radius;++j){const auto distance=std::ptrdiff_t(radius-j);
@@ -93,6 +120,16 @@ template<class T> void convolve(const T* input,T* output,std::size_t count,const
 }
 template<class T> bool execute(const void* input,PixelType source,void* const* output,const std::vector<std::size_t>& shape,const std::vector<std::vector<HessianPass>>& plans,bool gaussian,bool xy,std::size_t count){
  constexpr bool single=std::is_same_v<T,float>;const auto type=single ? PixelType::float32 : PixelType::float64;
+ if(gaussian && std::all_of(plans.begin(),plans.end(),[](const auto& passes){return passes.empty();})){
+  auto* normalized=static_cast<T*>(output[0]);
+  if(source==type)std::copy_n(static_cast<const T*>(input),count,normalized);
+  else gaussian_nd_into(input,normalized,source,type,shape,{},false);
+  if(!finite(normalized,count))return false;
+  const auto fields=shape.size()*(shape.size()+1)/2;
+  detail::partition(count,detail::active_workers(count*fields),[&](auto begin,auto end,auto){
+   for(std::size_t field=1;field<fields;++field)std::copy(normalized+begin,normalized+end,static_cast<T*>(output[field])+begin);
+  });return true;
+ }
  std::unique_ptr<T[]> converted,scratch(new T[count]),other(new T[count]);
  const T* prepared;
  if(source==type)prepared=static_cast<const T*>(input);
@@ -128,7 +165,8 @@ bool hessian_matrix_into(const void* input,PixelType source,void* const* output,
  for(auto length:shape){if(!length)return true;if(!gaussian && length<2)throw std::invalid_argument("finite Hessian axes require two samples");if(length>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/bytes/count)throw std::overflow_error("Hessian dimensions overflow");count*=length;}
  for(const auto& list:plans)for(const auto& plan:list){const auto& p=plan.filter;
   if(p.axis>=shape.size() || p.weights.empty() || p.weights.size()%2==0 || int(p.border)<0 || int(p.border)>4)throw std::invalid_argument("invalid Hessian pass");
-  if(!std::isfinite(p.cval))return false;
+  const auto constant_limit=source==PixelType::float32 ? double(std::numeric_limits<float>::max())/16 : std::numeric_limits<double>::max()/16;
+  if(!std::isfinite(p.cval) || std::abs(p.cval)>constant_limit)return false;
   double sum=0.;for(auto weight:p.weights){if(!std::isfinite(weight))return false;sum+=std::abs(weight);}
   if(sum>1e6)return false;
   for(std::size_t i=0;i<p.weights.size();++i)if(std::abs(p.weights[i]-(plan.derivative ? -1 : 1)*p.weights[p.weights.size()-1-i])>16*std::numeric_limits<double>::epsilon()*std::max(1.,sum))throw std::invalid_argument("Hessian kernel symmetry mismatch");
