@@ -94,7 +94,7 @@ Next work:
 - Complete float16/endian conversion coverage and floating warning contracts;
   port remaining exposure operations, broaden morphology's exceptional-value and
   output-dtype contracts, and add connected-component labeling.
-- Complete the private resize/rescale pipeline before registering either API.
+- Measure and tune the registered resize/rescale pipeline against scikit-image.
   Spline coefficients, typed grid zoom, raw Gaussian anti-aliasing, typed ranges and
   output clipping now have independent native fixtures and Python parity
   checks. Integer anti-aliasing
@@ -103,10 +103,12 @@ Next work:
   policies for the three observed NumPy signed-zero/NaN behaviors. Range scans
   preserve integer precision and report NaNs/zero signs. The Python bridge uses
   NumPy's compiled reduction only for observable mixed-zero ties or all-NaN
-  payload ordering; ordinary ranges use the C++ scan. Public argument/warning
-  parity and isolated
-  one-worker end-to-end benchmarks against scikit-image remain pending.
-  Private stages do not count as public native coverage or measured speedups.
+  payload ordering; ordinary ranges use the C++ scan. Raw Half identity has a
+  separate SIMD finish preserving zero ties and NaN payloads. Public
+  argument/warning parity passes on Windows and both Linux dependency profiles,
+  with scalar/SIMD execution and global worker caps one/four. Isolated one-worker
+  end-to-end benchmarks and bottleneck tuning remain pending; registration is
+  not evidence of measured speedup.
 - Port geometric transforms, measurements, features, restoration, registration,
   segmentation, and graph operations with representative per-function cases.
 - Extend to nested APIs/classes and audit the inventory against upstream docs.
