@@ -66,6 +66,12 @@ __all__=['integral_image','integrate','downscale_local_mean']
 from ._resize import resize,rescale
 __all__ += ['resize','rescale']
 
+# Class exports are tracked separately from image-call coverage. Coordinate
+# application uses the shared C++ core; fitting and small matrices retain the
+# explicit NumPy/SciPy providers described by coverage.class_contract.
+from ._geometric import ProjectiveTransform, AffineTransform, EuclideanTransform, SimilarityTransform
+__all__ += ['ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform']
+
 
 
 def _integrate_fallback(ii,start,end):

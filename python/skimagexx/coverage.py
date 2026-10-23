@@ -32,7 +32,7 @@ def native_functions():
 # Classes have state, constructors and members; they are never image-call rows.
 # Populate only after the isolated public class contract is validated. The
 # implementation/provider facts below describe candidates, not passing evidence.
-NATIVE_CLASSES = {'transform': ()}
+NATIVE_CLASSES = {'transform': ('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')}
 _CLASS_BASE_MEMBERS = ('__init__','__call__','__array__','__add__','__repr__','__nice__',
                        '__str__','identity','inverse','estimate','from_estimate',
                        'residuals','dimensionality')

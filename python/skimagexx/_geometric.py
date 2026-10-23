@@ -39,7 +39,6 @@ import textwrap
 import warnings
 from typing import Self
 import numpy as np
-from scipy import spatial
 from . import _core
 
 NP_COPY_IF_NEEDED = None if np.lib.NumpyVersion(np.__version__) >= '2.0.0' else False
@@ -220,6 +219,7 @@ def _umeyama(src, dst, estimate_scale):
     return T
 
 def _euler_rotation_matrix(angles, degrees=False):
+    from scipy import spatial
     return spatial.transform.Rotation.from_euler('XYZ', angles=angles, degrees=degrees).as_matrix()
 
 class _HMatrixTransform(_GeometricTransform):
