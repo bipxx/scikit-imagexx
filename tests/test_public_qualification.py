@@ -1251,7 +1251,7 @@ def test_matrix_source_closure_is_required_before_build(tmp_path,monkeypatch,mis
 
 
 def synthetic_matrix_admission(monkeypatch):
-    core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,
+    core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,has_openmp=True,
         matrix_transform_interface='matrix-transform-math-v1',matrix_transform_capabilities=31,
         matrix_transform_v2_interface='matrix-transform-math-v2',matrix_transform_v2_capabilities=63)
     for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_completed','matrix_transform_v2_completed'):
@@ -1270,7 +1270,7 @@ def test_matrix_admission_metadata_does_not_execute_an_algorithm(monkeypatch):
     q.matrix_admission(*synthetic_matrix_admission(monkeypatch))
 
 
-@pytest.mark.parametrize('fault',('registry','duplicate','core','workers','v1','v2','float-cap','missing-entry',
+@pytest.mark.parametrize('fault',('registry','duplicate','core','workers','no-omp','v1','v2','float-cap','missing-entry',
     'entry-owner','entry-name','python-entry','forwarding','export','signature','star','runtime'))
 def test_matrix_admission_refuses_substituted_or_unverified_paths(monkeypatch,fault):
     core,transform,wrapper,registered=synthetic_matrix_admission(monkeypatch)
@@ -1278,6 +1278,7 @@ def test_matrix_admission_refuses_substituted_or_unverified_paths(monkeypatch,fa
     elif fault=='duplicate':registered*=2
     elif fault=='core':wrapper._core=object()
     elif fault=='workers':core.get_num_threads=lambda:4
+    elif fault=='no-omp':core.has_openmp=False
     elif fault=='v1':core.matrix_transform_capabilities=63
     elif fault=='v2':core.matrix_transform_v2_capabilities=31
     elif fault=='float-cap':core.matrix_transform_v2_capabilities=63.
@@ -1334,6 +1335,26 @@ def test_matrix_public_routes_require_all_real_completed_cohorts(tmp_path,fault)
     if fault is None:q.validate_matrix_rows(path)
     else:
         with pytest.raises(q.QualificationError):q.validate_matrix_rows(path)
+
+
+def test_matrix_default_call_constructs_coordinate_metadata_without_numeric_execution(monkeypatch):
+    """Inert providers expose missing imports without running any image math."""
+    namespace={};exec((ROOT/'python/skimagexx/coverage.py').read_text(),namespace)
+    events=[];flat=object();coords=object();matrix=object()
+    image=types.SimpleNamespace(ravel=lambda:flat)
+    def column_stack(values):
+        assert values==(flat,flat);events.append('coordinate-columns');return coords
+    def eye(size):
+        assert size==3;events.append('matrix3');return matrix
+    monkeypatch.setitem(sys.modules,'numpy',types.SimpleNamespace(column_stack=column_stack,eye=eye))
+    args,kwargs=namespace['default_call']('transform.matrix_transform',image)
+    assert args==(coords,matrix) and kwargs=={} and events==['coordinate-columns','matrix3']
+
+
+def test_public_openmp_metadata_comes_from_actual_core_compilation():
+    source=(ROOT/'src/bindings.cpp').read_text()
+    assert '#ifdef _OPENMP\n    m.attr("has_openmp") = true;\n#else\n    m.attr("has_openmp") = false;\n#endif' in source
+    assert 'target_link_libraries(skimagexx PUBLIC OpenMP::OpenMP_CXX)' in (ROOT/'CMakeLists.txt').read_text()
 
 
 @pytest.mark.parametrize('missing',q.MAX_TREE_SOURCE_PATHS)

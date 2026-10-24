@@ -1118,6 +1118,13 @@ PYBIND11_MODULE(_core, m) {
     m.def("set_num_threads", &skimagexx::set_num_threads, py::arg("count"),
           "Set the process-wide worker limit for all algorithms. Default is 1 (serial); use >1 to enable parallel work. SIMD is independent.");
     m.def("get_num_threads", &skimagexx::get_num_threads, "Return the process-wide configured worker limit.");
+    // The same compile-time worker-policy fact used by standalone fixtures;
+    // public tests must observe the sole production core, not a private shim.
+#ifdef _OPENMP
+    m.attr("has_openmp") = true;
+#else
+    m.attr("has_openmp") = false;
+#endif
     m.def("has_avx2", &skimagexx::has_avx2);
     m.def("rgb2gray", [](py::array image) {
         shape(image,true);

@@ -304,7 +304,9 @@ def default_call(api, image):
         return (.2,),{'dtype':np.complex64 if image.dtype==np.float32 else np.complex128}
     if api=='exposure.match_histograms':return (image,image[...,::2]),{}
     if api=='transform.downscale_local_mean':return (image,2),{}
-    if api=='transform.matrix_transform':return (np.column_stack((image.ravel(),image.ravel())),np.eye(3)),{}
+    if api=='transform.matrix_transform':
+        import numpy as np
+        return (np.column_stack((image.ravel(),image.ravel())),np.eye(3)),{}
     if api=='transform.resize':return (image,tuple(max(1,(n+1)//2) for n in image.shape)),{}
     if api=='transform.rescale':return (image,.5),{}
     if api=='transform.integrate':

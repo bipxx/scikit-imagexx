@@ -887,6 +887,7 @@ def matrix_admission(core, transform, wrapper, registered):
     require(tuple(registered).count(MATRIX_PATH)==1, 'missing/duplicate public matrix registry')
     require(wrapper._core is core, 'matrix alternate core worker state')
     require(core.get_num_threads()==1, 'matrix initial global workers must be1')
+    require(getattr(core,'has_openmp',None) is True, 'matrix public worker4 requires actual OpenMP core')
     for name,want in (('matrix_transform_interface','matrix-transform-math-v1'),
                       ('matrix_transform_capabilities',31),
                       ('matrix_transform_v2_interface','matrix-transform-math-v2'),
