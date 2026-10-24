@@ -20263,7 +20263,7 @@
       "depends_on": [
         "rank-statistics-native"
       ],
-      "state": "performance_pending",
+      "state": "measured",
       "contract": {
         "case_manifest": "coverage/contracts/rank-statistics.json",
         "uncovered_cases": [
@@ -20281,8 +20281,854 @@
           1
         ],
         "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          "benchmarks/rank-statistics-public-linux-minimum-initial.json",
+          "benchmarks/rank-statistics-public-linux-modern-initial.json",
+          "benchmarks/rank-statistics-public-windows-modern-initial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.7311891493398646
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.889922451626846
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.8262503778467578
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.5026984113815305
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.5289130226178883
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.5504554503155508
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.3924775014472458
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.5721951184035464
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9554161190307688
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.7388445740878659
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.6813335038425469
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.46135563008539854
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.8773972143762448
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.5513888356228178
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.6108768074158972
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.6286636767391272
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.5926943217607242
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.5979412144963807
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 236,
+            "speedup": 0.8653810322806246
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.7213957614679559
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth64",
+            "case_index": 305,
+            "speedup": 0.9841596170242018
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.5505371553458311
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.709689203051394
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.9677268515158767
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.4842827819519276
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.5962633359061769
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.6222948101063168
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.8819928410078897
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.9373507003468686
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.9659825142806823
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.6699470591839725
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 38,
+            "speedup": 0.9360058084653003
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.5165738491517072
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.7023625806576066
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.5453740175215416
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.49988426363678257
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.5223309144402322
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9928152536593096
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.5631302155612385
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d1/p2",
+            "case_index": 118,
+            "speedup": 0.9945540814790024
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f0",
+            "case_index": 132,
+            "speedup": 0.9357396243744966
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.513015308602422
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.31132343790855277
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f5",
+            "case_index": 137,
+            "speedup": 0.9776063787572831
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.5975893803557233
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.41341067234832385
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f5",
+            "case_index": 143,
+            "speedup": 0.9741709393284728
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.8721130861590075
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.8026714293538826
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.503762415082753
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.5054864478566072
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 236,
+            "speedup": 0.8712847593501799
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.6676238363562329
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.5854418514613735
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.7974222020955726
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p2/depth4",
+            "case_index": 308,
+            "speedup": 0.9238746601288917
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.8120221964866972
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.5563617863427676
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.8926279770498543
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth4",
+            "case_index": 314,
+            "speedup": 0.9186729025387839
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth64",
+            "case_index": 315,
+            "speedup": 0.9819080333555713
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p2/depth4",
+            "case_index": 316,
+            "speedup": 0.9111206210288147
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.49526054806085135
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.8492028126236166
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.9986971431657397
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.6854519348986768
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.8776555036160887
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 38,
+            "speedup": 0.9584406278689626
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s0/d1/p1",
+            "case_index": 101,
+            "speedup": 0.7522088311683619
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.3401065556233921
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.407312558407016
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.3847045014557705
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p3",
+            "case_index": 107,
+            "speedup": 0.9671921068669601
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.36165539607713204
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p1",
+            "case_index": 109,
+            "speedup": 0.887550862008138
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.3570501534850126
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9080112401251258
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.6046530623357883
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d1/p3",
+            "case_index": 119,
+            "speedup": 0.9249726353514106
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/2d/d0/f2",
+            "case_index": 122,
+            "speedup": 0.7781164188732155
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/2d/d1/f2",
+            "case_index": 128,
+            "speedup": 0.9309794634567325
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f0",
+            "case_index": 132,
+            "speedup": 0.9702001055446978
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.6330042839881367
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.35299822449010043
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f5",
+            "case_index": 137,
+            "speedup": 0.9892840847640936
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f0",
+            "case_index": 138,
+            "speedup": 0.9223951319200691
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.7218496788514963
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.5179528901286223
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f5",
+            "case_index": 143,
+            "speedup": 0.7302508521282177
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b256/p1",
+            "case_index": 149,
+            "speedup": 0.7816633789608386
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b256/p3",
+            "case_index": 151,
+            "speedup": 0.8884927605127667
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b1024/p3",
+            "case_index": 155,
+            "speedup": 0.9189271331965656
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.7402064426897634
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.6568343067696288
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.6267401237529012
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.6233142401392111
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s0/d0/p2/depth4",
+            "case_index": 292,
+            "speedup": 0.9771377939859998
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s0/d1/p1/depth4",
+            "case_index": 298,
+            "speedup": 0.9162412002185687
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.4666081410221681
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth64",
+            "case_index": 305,
+            "speedup": 0.8425147077231193
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.3534240749416028
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.46524842435065916
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p2/depth4",
+            "case_index": 308,
+            "speedup": 0.6928761454330475
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.5460552803924231
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.4066860423083041
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.7418752169193392
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth4",
+            "case_index": 314,
+            "speedup": 0.7284305812720568
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth64",
+            "case_index": 315,
+            "speedup": 0.7850077021398837
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p2/depth4",
+            "case_index": 316,
+            "speedup": 0.7166044471959965
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.3201432117025753
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.834655064014632
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d0/f2/depth4",
+            "case_index": 324,
+            "speedup": 0.7594089661197975
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d0/f2/depth16",
+            "case_index": 325,
+            "speedup": 0.8536299496640709
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d1/f2/depth4",
+            "case_index": 336,
+            "speedup": 0.7551530162915882
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d1/f2/depth16",
+            "case_index": 337,
+            "speedup": 0.7816438010933615
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b256/p1",
+            "case_index": 349,
+            "speedup": 0.7975042619217027
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b256/p3",
+            "case_index": 351,
+            "speedup": 0.8588256837701591
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b1024/p1",
+            "case_index": 353,
+            "speedup": 0.998601144279489
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b1024/p3",
+            "case_index": 355,
+            "speedup": 0.7659713104789692
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b65536/p3",
+            "case_index": 359,
+            "speedup": 0.9302020338836958
+          }
+        ],
+        "report": "benchmarks/rank-statistics-public-initial.md"
       },
       "merge": {
         "commit": "eae8dc62a526705a6bd244abe025e3825e7b091b",
@@ -21306,15 +22152,19 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": "coverage/contracts/rank-statistics-benchmark.json",
-        "uncovered_cases": []
+        "uncovered_cases": [
+          "Observed largevector cohort remains beloworiginal acrossall3profiles; targetedinternal bottleneck counters/controlledtuning pending. Remaining original argumentdomains outside declaredpartial scope remainunassessed."
+        ]
       },
       "parity": {
         "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
-        "artifact_sha256": null,
-        "runs": []
+        "artifact_sha256": "a8ef3726b2cdddd20e68f46f745e8d9353b1f199d8295f02b45b194375fe8107",
+        "runs": [
+          "https://github.com/bipxx/scikit-imagexx/actions/runs/40049417301"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -21330,17 +22180,864 @@
         "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
         "source_product_equivalent_to": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "created_at": "2026-10-24T01:21:30Z",
-        "observed_state": "queued",
+        "observed_state": "completed-success/offline-verified",
         "repeat": 7,
         "expected_checks_per_runtime": 1379,
         "successful_timing_candidates": 376,
         "scalar_timing_cases": 282,
         "vector_timing_cases": 94,
         "expected_original_error_candidates_untimed": 8,
-        "raw_results": [],
-        "regressions": [],
-        "verification_state": "Latestexactrun40049417301: Windows/minimum preparation succeeded, modernpreparationqueued; freshmeasurementjobs waitall3barrier. No timingresults yet.",
-        "observation_rule": "Follow40049417301 toterminal, nevercancel/restart forqueue/session timeout. Threepreparationjobs workers1/4normal/scalar beforefreshartifact-onlymeasurementhosts workers1."
+        "raw_results": [
+          "benchmarks/rank-statistics-public-linux-minimum-initial.json",
+          "benchmarks/rank-statistics-public-linux-modern-initial.json",
+          "benchmarks/rank-statistics-public-windows-modern-initial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.7311891493398646
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.889922451626846
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.8262503778467578
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.5026984113815305
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.5289130226178883
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.5504554503155508
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.3924775014472458
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.5721951184035464
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9554161190307688
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.7388445740878659
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.6813335038425469
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.46135563008539854
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.8773972143762448
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.5513888356228178
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.6108768074158972
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.6286636767391272
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.5926943217607242
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.5979412144963807
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 236,
+            "speedup": 0.8653810322806246
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.7213957614679559
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth64",
+            "case_index": 305,
+            "speedup": 0.9841596170242018
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.5505371553458311
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.709689203051394
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.9677268515158767
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.4842827819519276
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.5962633359061769
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.6222948101063168
+          },
+          {
+            "profile": "linux-minimum",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.8819928410078897
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.9373507003468686
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.9659825142806823
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.6699470591839725
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 38,
+            "speedup": 0.9360058084653003
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.5165738491517072
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.7023625806576066
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.5453740175215416
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.49988426363678257
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.5223309144402322
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9928152536593096
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.5631302155612385
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d1/p2",
+            "case_index": 118,
+            "speedup": 0.9945540814790024
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f0",
+            "case_index": 132,
+            "speedup": 0.9357396243744966
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.513015308602422
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.31132343790855277
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f5",
+            "case_index": 137,
+            "speedup": 0.9776063787572831
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.5975893803557233
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.41341067234832385
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f5",
+            "case_index": 143,
+            "speedup": 0.9741709393284728
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.8721130861590075
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.8026714293538826
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.503762415082753
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.5054864478566072
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 236,
+            "speedup": 0.8712847593501799
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.6676238363562329
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.5854418514613735
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.7974222020955726
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p2/depth4",
+            "case_index": 308,
+            "speedup": 0.9238746601288917
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.8120221964866972
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.5563617863427676
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.8926279770498543
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth4",
+            "case_index": 314,
+            "speedup": 0.9186729025387839
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth64",
+            "case_index": 315,
+            "speedup": 0.9819080333555713
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p2/depth4",
+            "case_index": 316,
+            "speedup": 0.9111206210288147
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.49526054806085135
+          },
+          {
+            "profile": "linux-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.8492028126236166
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 12,
+            "speedup": 0.9986971431657397
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 14,
+            "speedup": 0.6854519348986768
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 16,
+            "speedup": 0.8776555036160887
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.geometric_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 38,
+            "speedup": 0.9584406278689626
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s0/d1/p1",
+            "case_index": 101,
+            "speedup": 0.7522088311683619
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p0",
+            "case_index": 104,
+            "speedup": 0.3401065556233921
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p1",
+            "case_index": 105,
+            "speedup": 0.407312558407016
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p2",
+            "case_index": 106,
+            "speedup": 0.3847045014557705
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d0/p3",
+            "case_index": 107,
+            "speedup": 0.9671921068669601
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 108,
+            "speedup": 0.36165539607713204
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p1",
+            "case_index": 109,
+            "speedup": 0.887550862008138
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 110,
+            "speedup": 0.3570501534850126
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s1/d1/p3",
+            "case_index": 111,
+            "speedup": 0.9080112401251258
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 112,
+            "speedup": 0.6046530623357883
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "balanced/s2/d1/p3",
+            "case_index": 119,
+            "speedup": 0.9249726353514106
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/2d/d0/f2",
+            "case_index": 122,
+            "speedup": 0.7781164188732155
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/2d/d1/f2",
+            "case_index": 128,
+            "speedup": 0.9309794634567325
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f0",
+            "case_index": 132,
+            "speedup": 0.9702001055446978
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f1",
+            "case_index": 133,
+            "speedup": 0.6330042839881367
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 134,
+            "speedup": 0.35299822449010043
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d0/f5",
+            "case_index": 137,
+            "speedup": 0.9892840847640936
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f0",
+            "case_index": 138,
+            "speedup": 0.9223951319200691
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f1",
+            "case_index": 139,
+            "speedup": 0.7218496788514963
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f2",
+            "case_index": 140,
+            "speedup": 0.5179528901286223
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "footprint/3d/d1/f5",
+            "case_index": 143,
+            "speedup": 0.7302508521282177
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b256/p1",
+            "case_index": 149,
+            "speedup": 0.7816633789608386
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b256/p3",
+            "case_index": 151,
+            "speedup": 0.8884927605127667
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.noise_filter",
+            "case": "bins/2d/b1024/p3",
+            "case_index": 155,
+            "speedup": 0.9189271331965656
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p0",
+            "case_index": 204,
+            "speedup": 0.7402064426897634
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s1/d1/p2",
+            "case_index": 206,
+            "speedup": 0.6568343067696288
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "balanced/s2/d0/p0",
+            "case_index": 208,
+            "speedup": 0.6267401237529012
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.subtract_mean",
+            "case": "footprint/3d/d0/f2",
+            "case_index": 230,
+            "speedup": 0.6233142401392111
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s0/d0/p2/depth4",
+            "case_index": 292,
+            "speedup": 0.9771377939859998
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s0/d1/p1/depth4",
+            "case_index": 298,
+            "speedup": 0.9162412002185687
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth4",
+            "case_index": 304,
+            "speedup": 0.4666081410221681
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p0/depth64",
+            "case_index": 305,
+            "speedup": 0.8425147077231193
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth4",
+            "case_index": 306,
+            "speedup": 0.3534240749416028
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p1/depth64",
+            "case_index": 307,
+            "speedup": 0.46524842435065916
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p2/depth4",
+            "case_index": 308,
+            "speedup": 0.6928761454330475
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d0/p3/depth4",
+            "case_index": 310,
+            "speedup": 0.5460552803924231
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth4",
+            "case_index": 312,
+            "speedup": 0.4066860423083041
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p0/depth64",
+            "case_index": 313,
+            "speedup": 0.7418752169193392
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth4",
+            "case_index": 314,
+            "speedup": 0.7284305812720568
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p1/depth64",
+            "case_index": 315,
+            "speedup": 0.7850077021398837
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p2/depth4",
+            "case_index": 316,
+            "speedup": 0.7166044471959965
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth4",
+            "case_index": 318,
+            "speedup": 0.3201432117025753
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "balanced/s1/d1/p3/depth64",
+            "case_index": 319,
+            "speedup": 0.834655064014632
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d0/f2/depth4",
+            "case_index": 324,
+            "speedup": 0.7594089661197975
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d0/f2/depth16",
+            "case_index": 325,
+            "speedup": 0.8536299496640709
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d1/f2/depth4",
+            "case_index": 336,
+            "speedup": 0.7551530162915882
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "footprint/2d/d1/f2/depth16",
+            "case_index": 337,
+            "speedup": 0.7816438010933615
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b256/p1",
+            "case_index": 349,
+            "speedup": 0.7975042619217027
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b256/p3",
+            "case_index": 351,
+            "speedup": 0.8588256837701591
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b1024/p1",
+            "case_index": 353,
+            "speedup": 0.998601144279489
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b1024/p3",
+            "case_index": 355,
+            "speedup": 0.7659713104789692
+          },
+          {
+            "profile": "windows-modern",
+            "api": "filters.rank.windowed_histogram",
+            "case": "bins/2d/b65536/p3",
+            "case_index": 359,
+            "speedup": 0.9302020338836958
+          }
+        ],
+        "verification_state": "All6jobs success; all3preps normal/scalar1/4 beforefresh artifact-onlyworkers1.1379checks/376timings each;940Git+sourceZIP/allwheelRECORD/fourinstalledpackages/dependencylibraries/59SDK/pairedsamples/medians/ratios independentlyverified. All120slowerobservations retained; no global speedclaim.",
+        "observation_rule": "Follow40049417301 toterminal, nevercancel/restart forqueue/session timeout. Threepreparationjobs workers1/4normal/scalar beforefreshartifact-onlymeasurementhosts workers1.",
+        "summary": "benchmarks/rank-statistics-public-initial.json",
+        "report": "benchmarks/rank-statistics-public-initial.md"
       },
       "merge": {
         "commit": null,
@@ -21350,7 +23047,21 @@
         "active_paths": [
           "build/rank-statistics-performance-dispatch/ed8ca5c"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/rank-statistics-initial-publication-evidence/ed8ca5c/manifest.json",
+          "build/rank-statistics-performance-runs/40049417301"
+        ]
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+          "manifest": {
+            "path": "build/rank-statistics-initial-publication-evidence/ed8ca5c/manifest.json",
+            "sha256": "a8ef3726b2cdddd20e68f46f745e8d9353b1f199d8295f02b45b194375fe8107"
+          },
+          "scope": "Three exact hosted profiles,1379parity+4identity observations/376successful one-worker timings each,7pairedsamples.104project/59SDK members; allrawresults and120regressions retained. Qualifiedf4criticalproductiontree byte-identical toed8measurement source; no local timing."
+        }
       }
     },
     {
@@ -21519,11 +23230,11 @@
           "evidence_scope": "tooling"
         }
       },
-      "state": "validating",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Hostedactualwhole8 run40051495344 queuedaftercleanexactsource/staticreview/fourplan0blockers. Predicted180 notaccepteduntilallprofiles/genuine104+59SDK12/default1/1+4/corpora andartifactclosure pass. Mainremains171."
+          "Original exactrun40051495344 ended4failures: stale canonical26/generic17 no-skimage test assumptions; missingpytest-tmp parent; Linuxinterpreter symlink verify rejects validexternalbase; WindowshardcodedVS17SDKgenerator absent. Alloriginal diagnostics retained; no numericalmismatch reported inthese diagnostics, but180notaccepted. Next cumulative186candidate pendingcorrectedR6 masked-center proof/rootwiring/tooling corrections/freshgenuinequalification."
         ]
       },
       "parity": {
@@ -21571,7 +23282,10 @@
           "path": "build/worktrees/wave8-percentile-metrics/build/whole8-static-review.json",
           "sha256": "4842e9ab2dcfc521df5b93524a4f365ec4d37ba04383899dddb051bef0326c6c"
         },
-        "policy": "Exactrun throughterminal; no cancel/restart solelyobservationtimeout. Allfour genuineproduct/corpus/SDK scopes required; private/prototype or old171metadata probes notactual180."
+        "policy": "Exactrun throughterminal; no cancel/restart solelyobservationtimeout. Allfour genuineproduct/corpus/SDK scopes required; private/prototype or old171metadata probes notactual180.",
+        "terminal_outcome": "failure",
+        "all_four_jobs_terminal": true,
+        "original_trial_preserved": "build/whole8-hosted-dispatch/cc13165"
       }
     },
     {

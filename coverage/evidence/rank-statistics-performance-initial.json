@@ -1,0 +1,47 @@
+{
+  "schema": "rank-statistics-performance-publication-v1",
+  "source": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+  "run_id": 40049417301,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40049417301",
+  "scope": "Four R4 algorithms/eight canonical+identity paths; one-worker original0.26 comparison only. Main coverage unchanged171partial/477paths.",
+  "proof": {
+    "path": "build/rank-statistics-initial-publication-evidence/ed8ca5c/manifest.json",
+    "sha256": "a8ef3726b2cdddd20e68f46f745e8d9353b1f199d8295f02b45b194375fe8107"
+  },
+  "profiles": {
+    "linux-minimum": {
+      "timed": 376,
+      "checks": 1379,
+      "slower": 28,
+      "descriptive_geomean": 3.094177413033324,
+      "raw_report": "benchmarks/rank-statistics-public-linux-minimum-initial.json",
+      "raw_sha256": "8cac920833e875a53bdf6a094385bd8be56d90780cbfd2a4a8147bc6f6eb1f86",
+      "artifact_id": 12544128028,
+      "artifact_sha256": "sha256:8965acb5657d69d2aa5e9a6422e14a0b1efd903e2afcc1023b175b6e1d8ca0b5"
+    },
+    "linux-modern": {
+      "timed": 376,
+      "checks": 1379,
+      "slower": 36,
+      "descriptive_geomean": 2.693784625627197,
+      "raw_report": "benchmarks/rank-statistics-public-linux-modern-initial.json",
+      "raw_sha256": "5fd7e152c2508292e8d293494626adc38df1a5735eb7de78945a2a47a2155032",
+      "artifact_id": 12543787694,
+      "artifact_sha256": "sha256:f8c13b2fd84fc1e02abfb7e9469fd9600696aeb3d85bd24d82b88a0c031f603c"
+    },
+    "windows-modern": {
+      "timed": 376,
+      "checks": 1379,
+      "slower": 56,
+      "descriptive_geomean": 2.576190980254854,
+      "raw_report": "benchmarks/rank-statistics-public-windows-modern-initial.json",
+      "raw_sha256": "e6f13d91efa7b9013d24ab08b03fa5c04a31ab5b82e3f0a4a9faff20252559f5",
+      "artifact_id": 12543417822,
+      "artifact_sha256": "sha256:05a1e7450edc76808df9f7fe496db091d56f63abe7fa3f8d8417933d9d07f8fa"
+    }
+  },
+  "raw_samples_unmodified": true,
+  "local_operations": 0,
+  "local_timers": 0,
+  "native_coverage_increase": 0
+}

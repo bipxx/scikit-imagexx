@@ -12,6 +12,7 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 | Rank first five algorithms | 2.081x | 2.220x | 2.412x | 480 timed cases; 142/155/112 slower |
 | Rank next four algorithms | 2.583x | 3.295x | 3.411x | 384 timed cases; 69/64/63 slower |
 | Rank four intensity algorithms | 2.089x | 2.244x | 2.402x | 384 timed cases; 92/81/81 slower |
+| Rank statistics/vector algorithms | 2.576x | 2.694x | 3.094x | 376 timed cases; 56/36/28 slower; scalar/vector cohorts separate |
 | Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
 | Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
 | Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
@@ -25,6 +26,7 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 These geometric means apply to the exact sources and workloads in the
 [R1 rank](rank-public-initial.md), [R2 rank](rank-distribution-public-initial.md),
 [R3 intensity](rank-intensity-public-initial.md),
+[R4 statistics/vector](rank-statistics-public-initial.md),
 [consumer](component-consumers-public-initial.md),
 [controlled resize](resize-public-controlled.md),
 [transform](transform-classes-public-initial.md),
@@ -46,7 +48,7 @@ SDK closure; initial default-one state is a source-preflight assertion, without
 separate telemetry. Measured calls enforce one worker. Reports preserve these
 source-specific evidence limits.
 
-All four new campaigns completed their three-profile preparation barrier and
+The four earlier trial campaigns and R4 run completed their preparation barriers and
 fresh artifact-only measurement jobs; their samples and classifications are now
 independently verified offline. No local image-operation timing was used.
 Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
@@ -60,12 +62,22 @@ and72 non-star value checks each, plus1379 strict corpus cases at workers1/4.
 All four complete104-member products retain the full59-member SDK; unchanged
 consumer/metrics scopes and88 SDK checks inherit only after full-byte/source
 identity checks. Private source-adapter supplements remain explicitly separate.
-R4 initial one-worker timing and updated consumer-scan timing remain pending.
+R4 initial one-worker timing is [verified](rank-statistics-public-initial.md):
+1,379 checks and 376 timings per runtime; all 120 slower observations remain
+visible. Large vector workloads are slower across all three profiles. Updated
+consumer-scan timing remains pending.
 
-Nine percentile kernels and wrapper prototypes plus a990-eligible-case benchmark
-harness are ready for shared integration; those are not additional accepted
-public paths. Three workers now freeze bilateral/Otsu/majority contracts and
-prepare portable hosted qualification while the integrator wires whole8.
+Nine percentile kernels and their 990-case timing harness remain pending genuine
+public acceptance. The original four-profile hosted trial ended with test/runner
+failures: stale generic-alias smoke assertions, missing temporary-directory
+parents, Windows SDK generator selection and Linux interpreter-link verification.
+Original failures are retained. The accepted image count stays 171.
+
+Three agents now work on the bilateral masked-center correction, original
+Otsu/majority benchmark contracts and qualification tooling fixes. The next
+cumulative candidate targets 186 partial image paths only after the bilateral
+wrapper/namespace/SDK wiring and fresh genuine qualification pass. This is a
+prediction, not accepted coverage.
 
 ## Retained whole-library checkpoints
 
