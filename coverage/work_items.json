@@ -27330,12 +27330,29 @@
         "source": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
         "qualified_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
         "evidence": "coverage/evidence/tv-chambolle-controller-correction.json",
-        "successor_dispatch_pending": true,
+        "successor_dispatch_pending": false,
         "root_review": {
           "path": "build/decisions-readiness/TV-controller-lifecycle-summary-root-review/manifest.json",
           "bytes": 1754,
           "sha256": "5c2884bec63e57963ffad894adb96efe453aee00558839906090458045cc7b0e"
         }
+      },
+      "hosted_run": {
+        "id": 40103617685,
+        "controller": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
+        "qualified_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+        "status": "queued-or-preparing",
+        "performance_accepted": false
+      },
+      "successor_proposal": {
+        "path": "build/tv-chambolle-benchmark-lifecycle-proposal/manifest.json",
+        "bytes": 6164,
+        "sha256": "21af8148c5dffabd6d64d41f34d589584ba59c66647acf07d7a0f109381f6d4d"
+      },
+      "successor_root_proposal_review": {
+        "path": "build/decisions-readiness/TV-controller-lifecycle-summary-root-review/proposal-review.json",
+        "bytes": 766,
+        "sha256": "b7f6df07e883dc534a36f55f9ea646dbf499d85ffb337cf9c5cffcc5dd98fba6"
       }
     },
     {
@@ -27400,9 +27417,10 @@
         }
       },
       "hosted_run": {
-        "id": 40096175414,
-        "controller": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+        "id": 40103414999,
+        "controller": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
         "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
+        "status": "queued-or-discovering",
         "acceptance": false
       },
       "controller_corrections": {
@@ -27536,6 +27554,70 @@
         "public_native": {
           "status": "pending"
         }
+      }
+    },
+    {
+      "id": "tv-bregman-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-bregman-benchmark",
+      "base_sha": "cbd7174eae369626c57cde361b4b6129f9936925",
+      "owns": [
+        "benchmarks/tv_bregman.py",
+        "tests/test_tv_bregman_benchmark.py",
+        "coverage/contracts/tv-bregman-benchmark.json"
+      ],
+      "depends_on": [
+        "tv-bregman-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": "coverage/contracts/tv-bregman-benchmark.json",
+        "uncovered_cases": [
+          "Qualified public192/SDK18 artifact consumer, complete native validation for every fixed case and fresh hosted seven-pair one-worker timings."
+        ]
+      },
+      "parity": {
+        "source_sha": "b510271e267c8810ded723cf24100f9efee22b92",
+        "artifact_sha256": "79c14ad93ebf7a9eaf3f29fc686cc8c293d713f4b1aed4fd80f204194210030b",
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "b510271e267c8810ded723cf24100f9efee22b92",
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-bregman-benchmark/build/tv-bregman-benchmark-reference"
+        ],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "b510271e267c8810ded723cf24100f9efee22b92",
+          "manifest": {
+            "path": "build/worktrees/tv-bregman-benchmark/build/tv-bregman-benchmark-reference/manifest.json",
+            "bytes": 185326,
+            "sha256": "79c14ad93ebf7a9eaf3f29fc686cc8c293d713f4b1aed4fd80f204194210030b"
+          },
+          "scope": "Original-only135reference+110finite candidates+4blocked nonfinite intakes and70metadata guards per three runtimes; no native or timing admission."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/bregman-benchmark-reference-root-review/manifest.json",
+        "bytes": 1296,
+        "sha256": "d9ef9f42048951aced77daed110e504a32b78c8e45ec840091baecb7295f1ce6"
       }
     }
   ],
@@ -28354,8 +28436,10 @@
       "observer_session": 44483,
       "sequential_retainer_session": 77649,
       "expected_image_paths": 191,
-      "accepted": false,
-      "previous_failure_retained": 40083629572
+      "accepted": true,
+      "previous_failure_retained": 40083629572,
+      "acceptance_scope": "Public191 parity and SDK17; separate one-worker benchmark remains pending.",
+      "evidence": "coverage/evidence/public-wave12.json"
     },
     "controlled_counts_experiment": {
       "run_id": 40084877921,

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "status": "original-only-reference-reviewed-native-performance-pending",
+  "source": "b510271e267c8810ded723cf24100f9efee22b92",
+  "root_review": {
+    "path": "build/decisions-readiness/bregman-benchmark-reference-root-review/manifest.json",
+    "bytes": 1296,
+    "sha256": "d9ef9f42048951aced77daed110e504a32b78c8e45ec840091baecb7295f1ce6"
+  },
+  "reference_proof": {
+    "path": "build/worktrees/tv-bregman-benchmark/build/tv-bregman-benchmark-reference/manifest.json",
+    "bytes": 185326,
+    "sha256": "79c14ad93ebf7a9eaf3f29fc686cc8c293d713f4b1aed4fd80f204194210030b"
+  },
+  "frozen_corpus": {
+    "path": "coverage/contracts/tv-bregman-benchmark.json",
+    "sha256": "38e57cca48c8305165067638b2e15ae4f7744353f9095b71b66f0175d2deb7c4"
+  },
+  "profiles": [
+    "windows",
+    "modern",
+    "minimum"
+  ],
+  "original_reference_cases": 135,
+  "safe_original_reference_cases": 112,
+  "finite_timing_cases": 110,
+  "actual_new_original_helper_entries_per_profile": 128,
+  "nonfinite_intakes_explicitly_entry_blocked": 4,
+  "metadata_checks_per_profile": 70,
+  "decompressed_raw_output_blobs_verified": 786,
+  "accepted_product_pins": null,
+  "native_checks": 0,
+  "operation_timings": 0,
+  "public_native_count_change": 0,
+  "pending": "Qualified public192/SDK18 artifact consumer, complete native validation for every fixed case and fresh hosted seven-pair one-worker timings."
+}
