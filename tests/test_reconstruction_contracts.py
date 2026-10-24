@@ -33,7 +33,7 @@ def cases():
         a,b=pair.split(':');add('mixed/'+pair+'/'+m,dtype=a,mask_dtype=b,method=m)
     for d,m in itertools.product(('f4','f8'),('dilation','erosion')):add('zero/'+d+'/'+m,kind='signed-zero',dtype=d,method=m)
     for d,m in itertools.product(('u8','i8','f4','f8'),('dilation','erosion')):add('extreme/'+d+'/'+m,kind='extreme',dtype=d,method=m)
-    for name in ('shape','order-dilation','order-erosion','method','method-order','even','offset-ndim','offset-range','offset-list','empty','scalar','list','complex','fp-raise'):add('preentry/'+name,preentry=name,dtype='f4')
+    for name in ('shape','order-dilation','order-erosion','method','method-order','even','offset-ndim','offset-range','offset-list','empty','scalar','list','complex','fp-raise'):add('boundary/scalar',kind='scalar',dtype='f4') if name=='scalar' else add('preentry/'+name,preentry=name,dtype='f4')
     for name in ('nan','wrong-footprint-rank','custom-bad-footprint'):add('blocked/'+name,blocked=name,dtype='f4')
     for m,p in itertools.product(('dilation','erosion'),('fp-record','fp-mutate','offset-record')):add('provider/'+p+'/'+m,provider=p,dtype='f4',method=m,rank=1 if p=='offset-record' else 2)
     assert len(rows)==275 and len({s['id'] for s in rows})==275
@@ -83,7 +83,7 @@ def fixture(s,events):
     if p=='offset-range':seed=seed[0];mask=mask[0];kw['footprint']=np.ones(3,bool);kw['offset']=np.array([3])
     if p=='offset-list':kw['offset']=[1,1]
     if p=='empty':seed=np.empty((0,3),d);mask=seed.copy()
-    if p=='scalar':seed=np.array(1,d);mask=np.array(2,d)
+    if s.get('kind')=='scalar':seed=np.array(1,d);mask=np.array(2,d)
     if p=='list':seed=seed.tolist();mask=mask.tolist()
     if p=='complex':seed=seed.astype('c8');mask=mask.astype('c8')
     class Footprint:
@@ -184,4 +184,5 @@ def test_native_pending_is_not_upstream_forwarding(workers):
         with pytest.raises(NotImplementedError):xx.morphology.reconstruction(Unsupported(),Unsupported())
         assert not attempts
     finally:sys.setprofile(old_profile);xx.set_num_threads(before);xx.set_fallback_enabled(previous)
+
 
