@@ -27,3 +27,7 @@ coverage/contracts/rank-bilateral.json -text
 coverage/contracts/rank-decisions.json -text
 coverage/contracts/rank-percentile-public.json -text
 coverage/evidence/public-wave7.json -text
+coverage/contracts/rank-bilateral-public.json -text
+coverage/contracts/rank-bilateral-masked-center-public.json -text
+coverage/evidence/rank-bilateral-fixture-assertion-migration.json -text
+coverage/contracts/rank-decisions-benchmark.json -text
