@@ -89,3 +89,4 @@ benchmarks/tv-chambolle-public-initial-raw.zip -text
 coverage/evidence/tv-chambolle-public-performance.json -text
 coverage/contracts/tv-bregman-benchmark-original-b510.py -text
 coverage/evidence/tv-bregman-benchmark-source-migration.json -text
+coverage/evidence/released-build-cache-cleanup-20261024.json -text
