@@ -1,4 +1,4 @@
-name: Matrix default BLAS profile discovery
+name: Matrix authenticated private runtime validation
 
 on:
   workflow_dispatch:
@@ -6,11 +6,12 @@ on:
       source_revision:
         description: Exact frozen private kernel/binder source (review required)
         required: true
-        default: 7b8094fdc321f789c40b3d6f2a4bb25436469bc6
+        default: 52066265b89ceecf613c4a5f7d3b73c23b44d58d
         type: string
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   discover:
@@ -65,6 +66,8 @@ jobs:
           python tools/matrix_transform_profiles.py plan --profile '${{ matrix.profile }}' --source-root build/matrix-profile-source --output 'build/matrix-default-${{ matrix.profile }}'
       - name: Genuine tiny private build and untimed complete discovery
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           python tools/matrix_transform_profiles.py all --profile '${{ matrix.profile }}' --source-root build/matrix-profile-source --output 'build/matrix-default-${{ matrix.profile }}'
       - name: Retain scientific rows and all terminal failures
@@ -82,3 +85,7 @@ jobs:
             build/matrix-default-${{ matrix.profile }}/*.stdout
             build/matrix-default-${{ matrix.profile }}/*.stderr
             build/matrix-default-${{ matrix.profile }}/*.gz
+            build/matrix-default-${{ matrix.profile }}/*.xml
+            build/matrix-default-${{ matrix.profile }}/input-source/**
+            build/matrix-default-${{ matrix.profile }}/input-controller/**
+            build/matrix-default-${{ matrix.profile }}/context/**

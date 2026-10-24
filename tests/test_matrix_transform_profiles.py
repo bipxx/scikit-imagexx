@@ -237,7 +237,8 @@ def test_upload_keeps_authenticated_hidden_controller_provenance_only_within_all
     upload=text.split('uses: actions/upload-artifact@v4',1)[1]
     assert re.search(r'^\s+include-hidden-files:\s+true\s*$',upload,re.M)
     paths=[p.strip().replace('${{ matrix.profile }}','modern') for p in upload.split('path: |',1)[1].splitlines() if p.strip()]
-    assert paths==['build/matrix-default-modern/artifact/**',*[f'build/matrix-default-modern/*.{e}' for e in ('json','stdout','stderr','gz')]]
+    assert paths==['build/matrix-default-modern/artifact/**',*[f'build/matrix-default-modern/*.{e}' for e in ('json','stdout','stderr','gz','xml')],
+                  *[f'build/matrix-default-modern/{folder}/**' for folder in ('input-source','input-controller','context')]]
     provenance='build/matrix-default-modern/artifact/controller/.github/workflows/matrix-transform-profiles.yml'
     assert any(fnmatch.fnmatchcase(provenance,p) for p in paths)
     # Both the artifact producer and explicit upload selection exclude entire
@@ -309,3 +310,145 @@ def test_windows_seal_copies_regular_tlogs_inside_tlog_directories(tmp_path):
             for path in (artifact/'tlogs').rglob('*') if path.is_file()}
     assert copied==expected
     assert not (artifact/'tlogs'/folder.relative_to(native)/'empty.tlog').exists()
+
+
+def test_final_source_and_unchanged_pipeline_are_pinned():
+    assert c.SOURCE_REVISION=='52066265b89ceecf613c4a5f7d3b73c23b44d58d'
+    for name in ('python/skimagexx/_matrix_transform.py','tests/test_matrix_transform_native_pipeline.py',
+                 'tests/test_matrix_transform_binding.py'):
+        assert name in c.SOURCE_HASHES
+    assert '6ce5d575' not in c.SOURCE_HASHES['include/skimagexx/matrix_transform.hpp']
+
+
+@pytest.mark.parametrize('name',('LD_PRELOAD','LD_AUDIT'))
+def test_linker_interposition_cannot_enter_hosted_runtime(name):
+    with pytest.raises(ValueError,match='preloaded'):
+        c.validate_default_environment({name:'arbitrary.so'})
+
+
+@pytest.mark.parametrize('mutation',('outer','product','wheel','escape','duplicate'))
+def test_donor_context_exact_bytes_and_paths_fail_closed(mutation):
+    data=io.BytesIO();product=b'product-envelope';wheel=b'wheel-raw'
+    with zipfile.ZipFile(data,'w') as z:
+        z.writestr('product.json',product)
+        z.writestr('wheels/context.whl',wheel)
+        if mutation=='escape':z.writestr('../extra',b'x')
+        if mutation=='duplicate':z.writestr('product.json',product)
+    raw=data.getvalue();pins=(1,c.digest(raw),c.digest(product),c.digest(wheel))
+    if mutation=='outer':pins=(1,'0'*64,*pins[2:])
+    if mutation=='product':pins=(*pins[:2],'0'*64,pins[3])
+    if mutation=='wheel':pins=(*pins[:3],'0'*64)
+    with pytest.raises(ValueError):c.context_members(raw,pins)
+
+
+def test_donor_product_and_wheel_are_distinct_authenticated_records():
+    data=io.BytesIO()
+    with zipfile.ZipFile(data,'w') as z:
+        z.writestr('product.json',b'envelope');z.writestr('wheels/context.whl',b'wheel')
+    raw=data.getvalue()
+    got=c.context_members(raw,(1,c.digest(raw),c.digest(b'envelope'),c.digest(b'wheel')))
+    assert got==('product.json',b'envelope','wheels/context.whl',b'wheel')
+
+
+@pytest.mark.parametrize('fault',('fail','skip','missing','provider','mismatch','worker'))
+def test_pipeline_cannot_claim_provider_or_incomplete_native_pass(tmp_path,fault):
+    failed=int(fault=='fail');skipped=int(fault=='skip')
+    (tmp_path/'pipeline-normal.xml').write_text(f'<testsuites><testsuite tests="8894" failures="{failed}" errors="0" skipped="{skipped}"/></testsuites>')
+    rows=[dict(cpp_completed=1,expected_sha256='same',actual_sha256='same',workers=w) for w in (1,4) for _ in range(4000)]
+    d=dict(rows=[{}]*748,general_pipeline=rows,public_registration=False,operation_timings=0)
+    if fault=='missing':d['general_pipeline'].pop()
+    elif fault=='provider':rows[0]['cpp_completed']=0
+    elif fault=='mismatch':rows[0]['actual_sha256']='different'
+    elif fault=='worker':
+        for row in rows:row['workers']=1
+    (tmp_path/'pipeline-routes-normal.json').write_text(json.dumps(d))
+    with pytest.raises(ValueError):c.validate_pipeline(tmp_path,'normal')
+
+
+def test_full_unmodified_pipeline_runs_after_natural_certificate_only():
+    tree=ast.parse((ROOT/'tools/matrix_transform_profiles.py').read_text())
+    body=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='pipeline')
+    text=ast.unparse(body)
+    assert text.index('version == np.__version__') < text.index("'full-pipeline-tests-'")
+    assert 'matrix_transform_run_v2' in text and 'shell._runtime_profile()' in text
+    assert "source / 'tests/test_matrix_transform_native_pipeline.py'" in text
+    assert "source / 'tests/test_matrix_transform_binding.py'" in text
+    assert "xx._core is not backend" in text
+
+
+def test_each_mode_retains_failures_and_attempts_all_scopes():
+    body=ast.unparse(next(n for n in ast.parse((ROOT/'tools/matrix_transform_profiles.py').read_text()).body
+                         if isinstance(n,ast.FunctionDef) and n.name=='prepare'))
+    assert "('normal', 'scalar')" in body
+    assert "'authenticated-pipeline'" in body
+    assert 'failures.append' in body
+    assert body.index("'terminal-scopes.json'") < body.index('require(not failures')
+
+
+def test_sequential_child_journal_cannot_be_overwritten(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    journal=c.Journal(tmp_path)
+    prior=tmp_path/'command-001-child.json';prior.write_text('{"raw":"preserve"}')
+    monkeypatch.setattr(c.subprocess,'run',lambda *a,**kw:SimpleNamespace(returncode=0))
+    journal.run('parent',['inert-tool'],{})
+    assert prior.read_text()=='{"raw":"preserve"}'
+    assert (tmp_path/'command-002-parent.json').is_file()
+
+
+def test_project_record_rejects_corrupt_or_missing_payload():
+    payload=b'exact-python-source';name='skimagexx/__init__.py';record='pkg.dist-info/RECORD'
+    hashed='sha256='+base64.urlsafe_b64encode(hashlib.sha256(payload).digest()).decode().rstrip('=')
+    def wheel(data):
+        out=io.BytesIO()
+        with zipfile.ZipFile(out,'w') as z:
+            z.writestr(name,data);z.writestr(record,f'{name},{hashed},{len(payload)}\n{record},,\n')
+        return out.getvalue()
+    got=c.verify_project_record(wheel(payload))
+    assert got[name]['sha256']==c.digest(payload)
+    with pytest.raises(ValueError,match='RECORD bytes'):c.verify_project_record(wheel(b'changed'))
+
+
+def test_successful_full_pipeline_requires_real_completed_rows(tmp_path):
+    (tmp_path/'pipeline-normal.xml').write_text('<testsuites><testsuite tests="8894" failures="0" errors="0" skipped="0"/></testsuites>')
+    d=dict(rows=[{}]*748,general_pipeline=[dict(cpp_completed=1,expected_sha256='x',actual_sha256='x',workers=w)
+           for w in (1,4) for _ in range(4000)],public_registration=False,operation_timings=0)
+    (tmp_path/'pipeline-routes-normal.json').write_text(json.dumps(d))
+    assert c.validate_pipeline(tmp_path,'normal')==dict(tests=8894,errors=0,failures=0,skipped=0)
+
+
+def test_actions_token_is_not_forwarded_to_artifact_blob():
+    tree=ast.parse((ROOT/'tools/matrix_transform_profiles.py').read_text())
+    body=ast.unparse(next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='install_context'))
+    assert 'NoRedirect' in body
+    assert 'urllib.request.urlopen(url)' in body
+    assert 'urllib.request.urlopen(url, headers' not in body
+    assert "metadata['workflow_run']['head_sha'] == CONTEXT_SOURCE" in body
+    assert "metadata['workflow_run']['id'] == CONTEXT_RUN" in body
+
+
+def test_failed_host_upload_retains_raw_xml_sources_and_exact_donor():
+    text=(ROOT/'.github/workflows/matrix-transform-profiles.yml').read_text()
+    assert 'actions: read' in text and 'GH_TOKEN: ${{ github.token }}' in text
+    assert '/*.xml' in text and '/input-source/**' in text and '/context/**' in text
+
+
+@pytest.mark.parametrize('mutation',(None,'wheel','envelope','records','artifact'))
+def test_independent_donor_reverification_is_not_just_manifest_trust(tmp_path,monkeypatch,mutation):
+    payload=b'inert-source';record='pkg.dist-info/RECORD';name='skimagexx/__init__.py'
+    hashed='sha256='+base64.urlsafe_b64encode(hashlib.sha256(payload).digest()).decode().rstrip('=')
+    buf=io.BytesIO()
+    with zipfile.ZipFile(buf,'w') as z:
+        z.writestr(name,payload);z.writestr(record,f'{name},{hashed},{len(payload)}\n{record},,\n')
+    raw=buf.getvalue();product=b'envelope';pins=(1,'0'*64,c.digest(product),c.digest(raw))
+    monkeypatch.setitem(c.CONTEXT,'modern',pins)
+    folder=tmp_path/'context';folder.mkdir();(folder/'project.whl').write_bytes(raw);(folder/'product.json').write_bytes(product)
+    d=dict(project_records=c.verify_project_record(raw),wheel_sha256=pins[3],artifact=dict(id=1,digest='sha256:'+pins[1],
+        workflow_run=dict(id=c.CONTEXT_RUN,head_sha=c.CONTEXT_SOURCE)))
+    if mutation=='wheel':(folder/'project.whl').write_bytes(b'changed')
+    elif mutation=='envelope':(folder/'product.json').write_bytes(b'changed')
+    elif mutation=='records':d['project_records'].pop(name)
+    elif mutation=='artifact':d['artifact']['id']=2
+    (tmp_path/'context.json').write_text(json.dumps(d))
+    if mutation is None:c.verify_context_files(tmp_path,'debug')
+    else:
+        with pytest.raises(ValueError):c.verify_context_files(tmp_path,'modern')

@@ -28518,7 +28518,7 @@
           "source_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -28607,15 +28607,25 @@
         "unresolved_SkylakeX_rows_per_mode": 60,
         "runtime_profile_admission": false
       },
-      "current_scope": "Fresh four-profile final520 actual loaded runtime certificate and complete unchanged374/4000 pipeline/direct controls. Prior discovery/mismatches/tooling receipts remain historical; no public/SDK/speed claim.",
+      "current_scope": "Completed final520 private actual Haswell/Zen hosted execution,71152 checks; actual Cooperlake/SkylakeX, genuine public-core/SDK and speed remain pending.",
       "prospective_final520_run": {
         "id": 40110960789,
         "controller": "418f381e41879e06aa8850dbd338b9c58fd0f5e0",
         "private_source": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
         "observer_session": 33823,
         "retainer_session": 86994,
-        "status": "running",
+        "status": "all-four-terminal-success-private-only",
         "acceptance": false
+      },
+      "latest_actual_runtime_review": {
+        "path": "build/decisions-readiness/matrix-final-hosted-root-review/manifest.json",
+        "bytes": 6033,
+        "sha256": "8c180c9a45014de827c422f0ca67395f7d2caafe8cee203b1cdfc57f8323a4e7"
+      },
+      "latest_actual_runtime_proof": {
+        "path": "coverage/evidence/matrix-final-hosted-private.json",
+        "bytes": 2062,
+        "sha256": "6746eb9d0af0ed2109ae5c991da21dce39d566e3fe3393526d7bf920c60d6c00"
       }
     },
     {
@@ -29221,6 +29231,23 @@
           "build/worktrees/max-tree-root-compression"
         ],
         "protected_artifacts": []
+      },
+      "native_kernel_stage": {
+        "source": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3",
+        "manifest": {
+          "path": "build/worktrees/max-tree-root-compression/build/max-tree-root-compression/native-manifest.json",
+          "bytes": 52182,
+          "sha256": "6e15f0b157a6dc9e8dfda5b099191daee80fcb3474b60d87501bb7441effa9ee"
+        },
+        "root_review": {
+          "path": "build/decisions-readiness/max-tree-root-compression-native-root-review/manifest.json",
+          "bytes": 1046,
+          "sha256": "d6e2fd8246a9e8c55ccb0fc6f357f3b48e64475499832af4b1f0e489d42ec6a5"
+        },
+        "gates": 14,
+        "assertions": 17952334,
+        "original_numeric_projections": 5592,
+        "scope": "Full prepared C++ native gates only; separate optimized aggregate/staged private binding composition remains in progress."
       }
     },
     {
@@ -29315,7 +29342,80 @@
         },
         "raw_failure_and_recovery_XMLs_retained": true
       },
-      "current_public_acceptance": 0
+      "current_public_acceptance": 0,
+      "current_prepared_source": "c2c0d035b805265728bb183f859c855a3f1554a5"
+    },
+    {
+      "id": "matrix-transform-public199-integration",
+      "kind": "public_integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-public",
+      "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
+      "state": "implementing",
+      "owns": [
+        "build/worktrees/matrix-transform-public/CMakeLists.txt",
+        "build/worktrees/matrix-transform-public/src/bindings.cpp",
+        "build/worktrees/matrix-transform-public/python/skimagexx/transform.py",
+        "build/worktrees/matrix-transform-public/python/skimagexx/coverage.py",
+        "build/worktrees/matrix-transform-public/tools/inventory.py",
+        "build/worktrees/matrix-transform-public/tools/public_qualification.py",
+        "build/worktrees/matrix-transform-public/tools/rank_statistics_products.py",
+        "build/worktrees/matrix-transform-public/tests/cmake_consumer/CMakeLists.txt",
+        "build/worktrees/matrix-transform-public/tests/test_matrix_transform_public.py",
+        "build/worktrees/matrix-transform-public/tests/test_matrix_transform_contracts.py",
+        "build/worktrees/matrix-transform-public/tests/test_public_qualification.py",
+        "build/worktrees/matrix-transform-public/tests/test_rank_statistics_products.py"
+      ],
+      "ownership_scope": "Exact isolated worktree paths distinguish independent candidate patches; root remains sole main/shared integration owner.",
+      "public_registration": true,
+      "depends_on": [
+        "matrix-transform-profile-binding",
+        "max-tree-root-compression"
+      ],
+      "dependency_requirements": {
+        "matrix-transform-profile-binding": {
+          "evidence_scope": "native_private",
+          "source_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d"
+        },
+        "max-tree-root-compression": {
+          "evidence_scope": "native_private",
+          "source_sha": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3"
+        }
+      },
+      "contract": {
+        "case_manifest": "coverage/contracts/matrix-transform.json",
+        "uncovered_cases": [
+          "Prepare sole public core/global-worker ownership and strict matrix20 historical census closure; preserve374/4000 raw observations/legacyv1.",
+          "Genuine full public199+3/114wheel/65SDK20/40checks four-profile qualification after final max-tree composition proof.",
+          "Actual Cooperlake/SkylakeX runtime confirmation, original-library one-thread measurements and wider dtype/protocol scope."
+        ]
+      },
+      "parity": {
+        "source_sha": "cc87a1dd0aa2b1ea06a1c98a10d1a5ae944cb085",
+        "artifact_sha256": null,
+        "runs": [],
+        "native_checks": 0
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/matrix-transform-public"
+        ],
+        "protected_artifacts": []
+      },
+      "full_product_dispatch": "Held for root coordination; metadata-only candidate, no public acceptance."
     }
   ],
   "unassigned_inventoried_apis": [
