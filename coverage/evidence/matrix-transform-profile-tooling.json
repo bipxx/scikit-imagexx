@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "status": "tooling-verified-first-hosted-diagnostic-unaccepted",
-  "controller_source": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+  "status": "controller-fixes-verified-hosted-diagnostics-unaccepted",
+  "controller_source": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
   "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
   "root_review": {
     "path": "build/decisions-readiness/matrix-profile-tooling-root-review/manifest.json",
@@ -31,5 +31,43 @@
   "forced_CPU_coretype": false,
   "operation_timings": 0,
   "public_or_new_CPU_profile_acceptance": false,
-  "scope": "Observe actual UMATH-linked loaded BLAS/default CPU dispatch and genuine private candidate words. Matching words require later vendor-source/disassembly,374-pipeline and production-core qualification. First Windows CMake-path failure is retained; controller-only fixes are separate reviewed increments."
+  "scope": "Retain every original/candidate result, including Cooperlake mismatches and both Windows producer failures. Reviewed path/upload and regular-tlog fixes change orchestration only. New CPU profiles and public native routing still require source arithmetic, full pipeline and production qualification.",
+  "previous_controller_source": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+  "path_hidden_upload_fix": {
+    "source": "052668b0f8148e8a07302e2985b34828f1b5b112",
+    "root_review": {
+      "path": "build/decisions-readiness/matrix-profile-path-fix-root-review/manifest.json",
+      "bytes": 729,
+      "sha256": "6d6a92a2aab726a335affe0b8961a34110c3ab0343c6b38b764a6bc3b1168d6f"
+    }
+  },
+  "regular_tlog_fix": {
+    "source": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
+    "proof": {
+      "path": "build/matrix-profile-tlog-proof/manifest.json",
+      "bytes": 11858,
+      "sha256": "5d064aff6756f8068f0b005e8f29e8c790fb6d3f44e3df3884db985fcfcf62af"
+    },
+    "independent_rehash": {
+      "path": "build/matrix-profile-tlog-proof/independent-verification.json",
+      "bytes": 136,
+      "sha256": "7799585f62870707e9c9defbc0c82b6b3a6ac542ea4384b99aceddb65549b329"
+    },
+    "metadata_passed": 59,
+    "metadata_skipped": 0,
+    "exact_old_controller_restored_by_removing_one_regular_file_guard": true
+  },
+  "second_diagnostic": {
+    "run": 40099938410,
+    "controller_source": "052668b0f8148e8a07302e2985b34828f1b5b112",
+    "linux_profiles_terminal_success": [
+      "modern",
+      "minimum",
+      "debug"
+    ],
+    "windows_numerical_commands_success": true,
+    "windows_seal_failure": "shutil.copy2 received an MSVC directory whose name ends in .tlog.",
+    "raw_results_retained": true,
+    "accepted": false
+  }
 }

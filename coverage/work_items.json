@@ -27343,7 +27343,7 @@
       "kind": "tooling",
       "apis": [],
       "owner": "resize_bench",
-      "branch": "feature/matrix-transform-profiles",
+      "branch": "feature/matrix-profile-tlog",
       "base_sha": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
       "owns": [
         "tools/matrix_transform_profiles.py",
@@ -27358,7 +27358,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Actual four-host diagnostic is running. First Windows CMake escape failure retained; separately frozen path/upload fix052668b awaits root review. No CPU profile is accepted from candidate matches."
+          "Two complete diagnostic attempts are retained: initial Windows CMake path failure, then numerical success followed by MSVC directory-copy sealing failure. Both orchestration corrections are reviewed. A fresh terminal sealed Windows diagnostic and source-derived arithmetic/full-pipeline checks remain required; candidate matches do not admit CPU profiles."
         ]
       },
       "parity": {
@@ -27380,7 +27380,10 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/matrix-transform-contracts/build/matrix-hosted-profile-design"
+          "build/worktrees/matrix-transform-contracts/build/matrix-hosted-profile-design",
+          "build/matrix-default-profile-runs/40096175414",
+          "build/matrix-default-profile-paths-runs/40099938410",
+          "build/matrix-profile-tlog-proof"
         ],
         "protected_artifacts": []
       },
@@ -27401,7 +27404,19 @@
         "controller": "d9df9bb093a3a1f18397088a22143ee958fbe223",
         "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
         "acceptance": false
-      }
+      },
+      "controller_corrections": {
+        "source": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
+        "proof": {
+          "path": "build/matrix-profile-tlog-proof/manifest.json",
+          "bytes": 11858,
+          "sha256": "5d064aff6756f8068f0b005e8f29e8c790fb6d3f44e3df3884db985fcfcf62af"
+        }
+      },
+      "retained_diagnostic_runs": [
+        40096175414,
+        40099938410
+      ]
     },
     {
       "id": "max-tree-private-binding",

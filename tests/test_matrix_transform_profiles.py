@@ -280,3 +280,32 @@ def test_all_raw_rows_reconcile_without_dropping_mismatches(tmp_path,monkeypatch
     if fault is None:c.validate_rows(path,result(),{},'normal')
     else:
         with pytest.raises(ValueError):c.validate_rows(path,result(),{},'normal')
+
+
+def test_windows_seal_copies_regular_tlogs_inside_tlog_directories(tmp_path):
+    """Exercise the actual seal loop with the Visual Studio directory layout."""
+    import shutil
+    out=tmp_path/'out';native=out/'native';artifact=tmp_path/'artifact'
+    folder=native/'_matrix_math_core.dir/Release/_matrix_.E6E911FD.tlog'
+    folder.mkdir(parents=True);(folder/'empty.tlog').mkdir()
+    expected={
+        '_matrix_math_core.dir/Release/_matrix_.E6E911FD.tlog/CL.command.1.tlog':b'actual-command\r\n',
+        '_matrix_math_core.dir/Release/_matrix_.E6E911FD.tlog/nested/CL.read.1.tlog':b'actual-read\x00\xff',
+        'matrix_native.dir/Release/compiler.tlog':b'other-target\r\n',
+    }
+    for name,data in expected.items():
+        path=native/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
+    (folder/'unrelated.txt').write_bytes(b'excluded')
+    source=ast.parse((ROOT/'tools/matrix_transform_profiles.py').read_text())
+    seal=next(node for node in source.body if isinstance(node,ast.FunctionDef) and node.name=='seal')
+    loops=[node for node in ast.walk(seal) if isinstance(node,ast.For)
+           and isinstance(node.iter,ast.Call) and isinstance(node.iter.func,ast.Attribute)
+           and node.iter.func.attr=='rglob' and len(node.iter.args)==1
+           and isinstance(node.iter.args[0],ast.Constant) and node.iter.args[0].value=='*.tlog']
+    assert len(loops)==1
+    exec(compile(ast.Module(body=loops,type_ignores=[]),'<actual-Windows-tlog-seal-loop>','exec'),
+         dict(out=out,artifact=artifact,shutil=shutil))
+    copied={path.relative_to(artifact/'tlogs').as_posix():path.read_bytes()
+            for path in (artifact/'tlogs').rglob('*') if path.is_file()}
+    assert copied==expected
+    assert not (artifact/'tlogs'/folder.relative_to(native)/'empty.tlog').exists()
