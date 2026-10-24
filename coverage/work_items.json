@@ -24633,11 +24633,11 @@
       ],
       "depends_on": [],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Phase1 source054:97metadata+1379original/4aliases/376eligible pass x3, native0. RootrealWindowsvenv topology exposed direct-parent guard defect; followup69e usesone-use source/run/role stdio startup authentication,108guards andrealvenv probes pass x3. All productpinsNULL; rootreview/integration ongoing, no native/performance admission."
+          "Phase 1 source/process metadata guards passed; exact 69e startup proof and 108 integrated main guards retained. Complete real before/after products, common build-input identity, preparation barrier and measurements remain pending. All six product pins remain null."
         ]
       },
       "parity": {
@@ -24654,8 +24654,12 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "69e7bc5b6cad4ce53e62ef9eab4dddb6cc8ed8da",
+        "main_commits": [
+          "c2c713252aaa5383ad417d692bb1ed06a4382319",
+          "5f5059aa1042e454d11f03f928b8b681aa720db9"
+        ],
+        "main_commit": "5f5059aa1042e454d11f03f928b8b681aa720db9"
       },
       "retention": {
         "active_paths": [],
@@ -24853,6 +24857,1917 @@
           "native_pending": 0,
           "scope": "70records/17.4MB. Exact19-file bb38 closure, sixbaselineISA TUs/noAVX instructions/noOMP deps; runtime featureFalse and unsupported worker4 rejection. Separate private portability supplement."
         }
+      }
+    },
+    {
+      "id": "rank-decisions-source-staging",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave11-decisions",
+      "base_sha": "a01882d2066a6e36c468a2d8d2084e5a4eb0bb04",
+      "owns": [
+        "coverage/api.json",
+        "coverage/README.md",
+        ".gitattributes"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "a01882d2066a6e36c468a2d8d2084e5a4eb0bb04",
+          "manifest": {
+            "path": "build/decisions-readiness/root-review/manifest.json",
+            "sha256": "c35602b91e9d781a922c1ab13dc058bbad7c292f909cfd214e11f308c735ff9d",
+            "bytes": 5192
+          },
+          "scope": "203 source/tool guards, four zero-blocker namespace/SDK-source plans, and exact qualified native Git blobs. Genuine public and SDK execution remain pending."
+        }
+      },
+      "evidence": {
+        "path": "coverage/evidence/rank-decisions-source-staging.json",
+        "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
+        "bytes": 1024
+      }
+    },
+    {
+      "id": "rank-windowed-counts-r7-port",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/rank-windowed-counts-r7",
+      "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
+      "owns": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-decisions-native",
+        "rank-windowed-counts-native"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Source port and default installed-public loader frozen; require fresh compiled four-profile public parity including focused tails before acceptance. Original numerical ASTs and fixed observations remain unchanged."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "603fa906bd2e5eca5f12596db5adc98622ff04e6",
+          "manifest": {
+            "path": "build/rank-windowed-counts-r7-port-evidence/603fa90/manifest.json",
+            "sha256": "5ba8abf650516ad0f1c1b70db5da079c2ae8ed0e4949b9b2c89dcdd379b1b403"
+          },
+          "scope": "Source-only exact 11-fragment port, reverse restoration and strict approved patch guards. No new native execution."
+        },
+        "native_private": {
+          "status": "verified",
+          "source_sha": "3269977b12df75cf406d7465f97891ab6a84e1de",
+          "manifest": {
+            "path": "build/rank-windowed-counts-r7-compiled/manifest.json",
+            "sha256": "15b5e4932fda0cf23575095239119559b33a25969263f08ff6af188105ae0ca9"
+          },
+          "native_contract_checks": 995,
+          "native_pending": 0,
+          "scope": "Private rank-runtime proof for the exact R7 histogram port. Whole-product parity and one-worker controlled comparisons remain separate required gates."
+        }
+      },
+      "public_loader_followup": {
+        "source_sha": "0d51a494032aa8f0aa4c7004ef2b1c63de793878",
+        "manifest": {
+          "path": "build/rank-windowed-counts-r7-port-evidence/0d51a49/manifest.json",
+          "sha256": "9fd2891793dcfc924d3d2da27487a3d32c9b1ec8a6389d84ac7c35b762f6acff"
+        },
+        "scope": "17 metadata admission/tamper checks; all seven existing function ASTs unchanged. Genuine public and native execution remain pending."
+      }
+    },
+    {
+      "id": "rank-statistics-common-build-consumer",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/rank-statistics-build-identity",
+      "base_sha": "5f5059aa1042e454d11f03f928b8b681aa720db9",
+      "owns": [
+        "benchmarks/rank_statistics_compare.py",
+        "tests/test_rank_statistics_compare.py",
+        "coverage/contracts/rank-statistics-comparison.json",
+        ".github/workflows/rank-statistics-comparison.yml"
+      ],
+      "depends_on": [
+        "rank-statistics-comparison-tooling"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Strict prospective actual compiler/backend/linker/toolchain/header/argv identity before fixture imports; raw generated outputs retained separately; no blanket build-root exclusions. No real product pins or timings yet."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "eb6615c6444076bb9ade37d4abcd4111d11b296b",
+        "main_commit": "651be47ea7cf73e74d100038531f9929e58ce8bd"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "eb6615c6444076bb9ade37d4abcd4111d11b296b",
+          "manifest": {
+            "path": "build/worktrees/rank-statistics-build-identity/build/build-identity-source-proof.json",
+            "sha256": "b2d8468834485bb7ac2fce057653a0b71a96b0d8025e86ce9e8722f37fa683e9"
+          },
+          "scope": "158 integrated main metadata guards pass; actual compiler/source/header/argv common-input gate and receipt binding. New genuine product capture remains pending."
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-common-build-capture",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/build-identity-facts",
+      "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
+      "owns": [
+        "tools/public_qualification.py",
+        "tests/test_public_qualification.py",
+        "tools/build_identity_facts.py",
+        "tests/test_build_identity_facts.py"
+      ],
+      "depends_on": [
+        "rank-decisions-source-staging"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Prospective genuine build-host Ninja/MSVC dependency capture with optimized LTO preserved, immutable evidence included before seal; fail closed for missing facts. Conditional genuine public-counts group followup."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "fe9822b752b9f5b0b5e2bb611407543b23504ced",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/public-counts-group-proof/manifest.json",
+            "sha256": "20b1f2cfe28dab6b58c3da988a056f69f33b9782301a258d6f8a779d4e5499de"
+          },
+          "scope": "Source-only collector/hook and conditional public-counts group. Three-runtime metadata proof; first hosted GNU capture exposed unsafe-label validation for underscore LTO role names, correction in progress."
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave11",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave11-decisions",
+      "base_sha": "a01882d2066a6e36c468a2d8d2084e5a4eb0bb04",
+      "owns": [
+        "build/decisions-readiness",
+        "build/whole11-hosted-dispatch"
+      ],
+      "depends_on": [
+        "rank-decisions-native",
+        "rank-decisions-public",
+        "rank-decisions-endian-public",
+        "rank-decisions-source-staging",
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture",
+        "rank-statistics-product-stager"
+      ],
+      "dependency_requirements": {},
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Failed trial retained and never accepted. GNU role-label and Windows resource classification failures have source-reviewed fixes; later corrected trials remain separate sources."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/genuine190-baseline-hosted-observation/40071624250",
+          "build/worktrees/public-decisions-qualification"
+        ],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "source_sha": "e15c6e44dde62aa2aafd743729177eda7d5509f1",
+        "branch": "integration/wave11-decisions",
+        "source_frozen": true,
+        "predicted_image_paths": 190,
+        "metadata_paths": 3,
+        "SDK_families": 14
+      },
+      "hosted_run": {
+        "run_id": 40071624250,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40071624250",
+        "source_sha": "e15c6e44dde62aa2aafd743729177eda7d5509f1",
+        "status": "completed",
+        "authority": "Both exact sources/runs and all8 jobs terminal. Gather-build-identity-facts failed before any public parity/SDK/capsule/seal.",
+        "conclusion": "failure"
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "rank-build-identity-independent-readiness",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-windowed-counts-r7",
+      "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
+      "owns": [
+        "build/build-identity-independent-readiness"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Read-only actual retained MSVC/Ninja metadata shape audit and prospective schema boundary review; no source edits or native execution."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "0d51a494032aa8f0aa4c7004ef2b1c63de793878",
+          "manifest": {
+            "path": "build/build-identity-independent-readiness/receipt.json",
+            "sha256": "33d04c0a3d42ee80484beaeae62fcd378c961828dd5ec2533a835c07cf3c7472"
+          },
+          "scope": "Read-only actual metadata-shape audit: MSVC Lib-link naming and multiline/stale tracking groups, hosted 124-TU/22-LTO compdb facts, prospective dependency closure requirements. No native or image execution."
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave12-counts",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave12-counts",
+      "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
+      "owns": [
+        "build/whole12-hosted-dispatch",
+        "build/counts-readiness"
+      ],
+      "depends_on": [
+        "rank-windowed-counts-r7-port",
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture",
+        "rank-decisions-source-staging",
+        "rank-statistics-product-stager"
+      ],
+      "dependency_requirements": {},
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Failed trial retained and never accepted. GNU role-label and Windows resource classification failures have source-reviewed fixes; later corrected trials remain separate sources."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/genuine190-counts-hosted-observation/40071625954"
+        ],
+        "protected_artifacts": [],
+        "retired_worktrees": [
+          {
+            "path": "build/worktrees/public-counts-qualification",
+            "head": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+            "cleanup_receipt": "coverage/evidence/temp-build-cleanup-20261024.json",
+            "method": "git worktree remove"
+          }
+        ]
+      },
+      "source_freeze": {
+        "source_sha": "d4efaec3a3e272a8356f9922a45ca6665d93a6d5",
+        "branch": "integration/wave12-counts",
+        "source_frozen": true,
+        "predicted_image_paths": 190,
+        "metadata_paths": 3,
+        "SDK_families": 14
+      },
+      "hosted_run": {
+        "run_id": 40071625954,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40071625954",
+        "source_sha": "d4efaec3a3e272a8356f9922a45ca6665d93a6d5",
+        "status": "completed",
+        "authority": "Both exact sources/runs and all8 jobs terminal. Gather-build-identity-facts failed before any public parity/SDK/capsule/seal.",
+        "conclusion": "failure"
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-counts-controlled-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/rank-statistics-counts-measurement",
+      "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave13",
+        "combined-public-wave14-counts",
+        "rank-statistics-common-build-consumer"
+      ],
+      "dependency_requirements": {
+        "combined-public-wave13": {
+          "evidence_scope": "public_native"
+        },
+        "combined-public-wave14-counts": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "state": "queued",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Six actual accepted product pins, common actual build-input identity, all1379 cases and four alias checks for original/before/after at workers1/4 normal/scalar, three-profile barrier, then isolated fresh-host one-worker seven-triad samples for all376 eligible IDs. Retain every raw sample and slower case."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-statistics-product-stager",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-statistics-product-stager",
+      "base_sha": "a01882d2066a6e36c468a2d8d2084e5a4eb0bb04",
+      "owns": [
+        "tools/rank_statistics_products.py",
+        "tests/test_rank_statistics_products.py",
+        ".github/workflows/public-qualification.yml"
+      ],
+      "depends_on": [
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Stage bounded reusable products after terminal qualification and independent verification; preserve original raw receipts, SDK, chosen source ZIP, runtime wheels and build identity. Only product.json is derived; root acceptance and all six benchmark pins remain pending. No measurement in the build workflow."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "c13104a63cfc31b9de90180b9543ff12fb479f2e",
+          "manifest": {
+            "path": "build/rank-statistics-product-stager-evidence/c13104a/manifest.json",
+            "sha256": "7ae38cd152475c463fe0e29af524881ba2b7ed6e4ef0c4b515cf74b1b797db86"
+          },
+          "scope": "47 metadata assertions pass on three runtimes with two separate preserved Linux launcher postamble failures; actual producer/stager synthetic interop passes. No real product staging acceptance."
+        }
+      }
+    },
+    {
+      "id": "genuine190-pair-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/wave11-decisions",
+      "base_sha": "e15c6e44dde62aa2aafd743729177eda7d5509f1",
+      "owns": [
+        "build/genuine190-baseline-hosted-observation",
+        "build/genuine190-counts-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Observe both exact runs to terminal; preserve complete raw failed/successful scientific records, CRC/SHA whole ZIP closure and bounded CAS dependencies. No accepted source pins until independent root qualification review."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "e15c6e44dde62aa2aafd743729177eda7d5509f1",
+          "manifest": {
+            "path": "build/genuine190-baseline-hosted-observation/handoff.json",
+            "sha256": "7fd2878b819a42316d1f2f7571ac4eb8de8961e5394dff54e11365e8d95ad22f"
+          },
+          "scope": "Bounded failed-trial retention, all8 exact jobs terminal, raw science/source/wheel inputs preserved; no public acceptance. Explicit first Debug in-memory cache hash-table loss retained, not reconstructed as full per-cache verification."
+        }
+      }
+    },
+    {
+      "id": "rank-windowed-counts-r7-compiled",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "integration/wave12-counts",
+      "base_sha": "3269977b12df75cf406d7465f97891ab6a84e1de",
+      "owns": [
+        "build/rank-windowed-counts-r7-compiled"
+      ],
+      "depends_on": [
+        "rank-windowed-counts-r7-port"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Bounded private rank-runtime source closure only; existing no-AVX/no-OpenMP and combined Debug-GIL/sanitizer binaries through full frozen projections. Original build handles terminal; native counts1331 and R7 executables pass, Python checks still running. No whole-product or performance acceptance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "3269977b12df75cf406d7465f97891ab6a84e1de",
+          "manifest": {
+            "path": "build/rank-windowed-counts-r7-compiled/manifest.json",
+            "sha256": "15b5e4932fda0cf23575095239119559b33a25969263f08ff6af188105ae0ca9"
+          },
+          "native_contract_checks": 995,
+          "native_pending": 0,
+          "scope": "Private rank-runtime proof for the exact R7 histogram port. Whole-product parity and one-worker controlled comparisons remain separate required gates."
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-contracts",
+      "kind": "contract",
+      "apis": [
+        "restoration.denoise_tv_chambolle"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/tv-chambolle-contracts",
+      "base_sha": "95153f066591216797f76187ba33e85a1ca64dea",
+      "owns": [
+        "tests/test_tv_chambolle_contracts.py",
+        "coverage/contracts/tv-chambolle.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Reference-only fixed corpus and independent stencil/energy controls; freeze dtype/reduction/stopping, borders, channel axes, warnings/provider/return-alias contracts on three runtimes. New C++ implementation and performance remain pending. Preserve raw NaN payload nondeterminism before documenting its exact exclusion."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": [
+          "build/decisions-readiness/tv-reference-root-review.json"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+        "main_commit": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/tv-chambolle-contracts",
+            "head": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+            "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-contracts.zip",
+            "archive_sha256": "341af00b3134289b5d6e8b74c26d32cbcbb2077a12611f47685fc0b31b203d9c",
+            "source_clean": true,
+            "ancestor_of_main": true
+          }
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+          "manifest": {
+            "path": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-contracts/build/tv-reference/manifest.json",
+            "sha256": "b714da573b0f9bb025274d0d071fa53f01acaee2f1b24972184364c8746b5e9e"
+          },
+          "passing_contract_checks": 330,
+          "profiles": 3,
+          "native_checks": 0,
+          "scope": "Only result floating NaN sign/payload encodings are excluded after original repeated calls varied. NaN positions, every non-NaN word including signed zero/Inf, input bytes, metadata, aliasing, warnings, errors and provider events remain exact. Raw observations and all14 initial minimum-runtime repeated-call failures remain retained."
+        }
+      }
+    },
+    {
+      "id": "genuine190-corrected-pair-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/wave13-decisions",
+      "base_sha": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+      "owns": [
+        "build/genuine190-corrected-pair-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Observer88553 is terminal. Both second-pair runs failed, not accepted: Linux actual last-linker depfile capture failed; Windows shared stale-majority test failed after other groups/corpora/SDK passed. Full bounded source/product/failure retention and independent verification are complete."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          {
+            "path": "build/genuine190-corrected-pair-hosted-observation/independent-verification.json",
+            "sha256": "409ec740cbb943b0174832ff429e2bcbdba160956db76d4bf4bb45f715766f4b"
+          },
+          {
+            "path": "build/genuine190-corrected-pair-hosted-observation/handoff.json",
+            "sha256": "71cf62543b82b31f0b7222c1f5b075ae460405bc5c662472782566e6ff8594ae"
+          }
+        ]
+      }
+    },
+    {
+      "id": "combined-public-wave13",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave13-decisions",
+      "base_sha": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+      "owns": [
+        "build/whole13-hosted-dispatch"
+      ],
+      "depends_on": [
+        "rank-decisions-source-staging",
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture",
+        "rank-statistics-product-stager"
+      ],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "565 metadata checks and four source plans pass. Fresh hosted parity/SDK gates still pending; Linux collector found missing actual link depfile after CMake overrides requested name. Preserve failed profiles and remaining live jobs separately."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "source_sha": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+        "predicted_image_paths": 190,
+        "registered_count": 193,
+        "SDK_families": 14
+      },
+      "hosted_run": {
+        "run_id": 40072543741,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40072543741",
+        "source_sha": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+        "status": "in_progress"
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave14-counts",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave14-counts",
+      "base_sha": "58650de6a8a7a246f9b614680887faa3c0b55644",
+      "owns": [
+        "build/whole14-hosted-dispatch"
+      ],
+      "depends_on": [
+        "rank-decisions-source-staging",
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture",
+        "rank-statistics-product-stager"
+      ],
+      "dependency_requirements": {},
+      "state": "preparing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "This exact candidate failed qualification and is superseded by later immutable candidates. Retain failed seals and raw artifacts; do not release public-native or performance dependencies."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "source_sha": "58650de6a8a7a246f9b614680887faa3c0b55644",
+        "predicted_image_paths": 190,
+        "registered_count": 193,
+        "SDK_families": 14
+      },
+      "hosted_run": {
+        "run_id": 40072545858,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40072545858",
+        "source_sha": "58650de6a8a7a246f9b614680887faa3c0b55644",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/tv-chambolle-native",
+      "base_sha": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+      "owns": [
+        "include/skimagexx/tv_chambolle.hpp",
+        "src/tv_chambolle.cpp",
+        "src/simd_tv_chambolle_avx2.cpp",
+        "tests/test_tv_chambolle_native.cpp"
+      ],
+      "depends_on": [
+        "tv-chambolle-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Frozen stage kernels and PIC bindings passed private proofs. Whole finite loop is a separate verified kernel; actual new loop-binding/default-wrapper/public/SDK/performance integration remains pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "2319db7e41c8e1be24509b12592114f92b03b97a",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-native/build/native-trial1/manifest.json",
+            "sha256": "043ad4ba4b143c1fe992541989e1a9252acb632047ff449c41047cd2a946b526"
+          },
+          "native_contract_checks": 4753,
+          "native_pending": 0,
+          "scope": "Private materialized F32/F64 stages only: 28484 native checks, typed NumPy oracle 9792 comparisons across3 reference runtimes, packed AVX2/no-FMA and portable/sanitizer/worker gates. Root rehashed177 raw records+4ownedGit members. Whole-loop/energy/stopping/public integration and SDK remain pending."
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-chambolle-benchmark",
+      "base_sha": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+      "owns": [
+        "benchmarks/tv_chambolle.py",
+        "tests/test_tv_chambolle_benchmark.py",
+        "coverage/contracts/tv-chambolle-benchmark.json",
+        ".github/workflows/tv-chambolle-benchmark.yml"
+      ],
+      "depends_on": [
+        "tv-chambolle-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Reference-only authoring is merged; 400 original checks and101 guards x3, root42raw+4Git and101integrated checks pass. No measurements or native admission. Future workflow must download actual qualified artifact/qualification.json/exactwheel instead of rebuilding and guessing pins; migrate actual completeSDKset, authenticated strict-pending assertion transition and publicinterface."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "6304a522767b54c419918be5ca7679cc51041c78",
+        "main_commit": "1ecde6a42001eab1530d1d6a71901e6bbb9210bf"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/tv-chambolle-benchmark",
+            "head": "6304a522767b54c419918be5ca7679cc51041c78",
+            "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
+            "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
+            "source_clean": true,
+            "ancestor_of_main": true
+          }
+        ]
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "6304a522767b54c419918be5ca7679cc51041c78",
+          "manifest": {
+            "path": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-benchmark/build/tv-benchmark-phase1/manifest.json",
+            "sha256": "49245b34a57752dcd24cd1c740ce048ccdb172e75eb65e29c3efe96b10dd4887"
+          },
+          "scope": "400 original-only checks including330 untimed source IDs+70 fixed finite timing candidates and101 metadata guards on3 runtimes. All public native/interface/product pins null; no timing or accepted native scope."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/tv-benchmark-root-review.json",
+        "sha256": "50779ecc7552fb6851d28f6485fe416798edd0629d3a7a62d02ea614b7f0f8ae"
+      }
+    },
+    {
+      "id": "tv-chambolle-private-wrapper",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-chambolle-wrapper",
+      "base_sha": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+      "owns": [
+        "src/bind_tv_chambolle.cpp",
+        "python/skimagexx/_tv_chambolle.py",
+        "tests/test_tv_chambolle_native_pipeline.py"
+      ],
+      "depends_on": [
+        "tv-chambolle-contracts",
+        "tv-chambolle-native"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Frozen0252 staged-wrapper proof passes11708 tests with1292 explicit portable-worker4 setup rejections. All330 warn-policy observations remain provider orchestration;5688 separate finite controls execute native stages. It still uses Python iteration/energy/sum and is not the new whole C++ loop."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "0252c1d9289e1e7d647c63c100775fbb47e73163",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-wrapper/build/tv-wrapper-prototype/manifest.json",
+            "sha256": "474193be951ee9ff63c6e46a00a235a96f202ca870d9a61c495eea200a1f9f07"
+          },
+          "native_contract_checks": 5688,
+          "native_pending": 0,
+          "scope": "Private staged orchestration only. Provider cases, finite compiled-stage cases and metadata counts are separate; no whole-C++ or public admission."
+        }
+      }
+    },
+    {
+      "id": "rank-decisions-nested-policy-preflight",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/r7-nested-import-policy",
+      "base_sha": "4843f210fc9545691fd25966cc685f6fa297cbac",
+      "owns": [
+        "build/decisions-readiness/nested-import-preflight-v1"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "88 actual corrected-test checks on an unchanged genuine Windows wheel plus573 metadata checks each and8zero-blocker source plans. Fresh four-profile qualification is pending; original failed seal is unchanged."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "66860aef0d2483ca1d728589d9b3b0952433db91",
+          "manifest": {
+            "path": "build/decisions-readiness/nested-import-preflight-v1/manifest.json",
+            "sha256": "881e20f9bd8323d342aa1f211c12cca327f1f7a39d642d677f7b4b9de7353b87"
+          },
+          "scope": "Test-only preflight; genuine unchanged104-member wheel/59SDK; no public acceptance."
+        }
+      }
+    },
+    {
+      "id": "genuine190-linkdep-pair-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/wave15-decisions",
+      "base_sha": "4843f210fc9545691fd25966cc685f6fa297cbac",
+      "owns": [
+        "build/genuine190-linkdep-pair-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "All8 third-pair products terminal failed solely stale shared-majority assertion. Complete failed closure retained under explicitly amended350MiB science budgets; no accepted or performance classification."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "genuine190-nested-fix-pair-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/wave17-decisions",
+      "base_sha": "66860aef0d2483ca1d728589d9b3b0952433db91",
+      "owns": [
+        "build/genuine190-nested-fix-pair-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "All8 fourth-pair products and6actual Release envelopes independently verified. All4 source/strict patch/common-build-input pair gates pass. Root parity acceptance public-wave11; one-worker measurements pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-chambolle-reductions",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/tv-chambolle-reductions",
+      "base_sha": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+      "owns": [
+        "include/skimagexx/tv_reductions.hpp",
+        "src/tv_reductions.cpp",
+        "tests/test_tv_reductions_native.cpp"
+      ],
+      "depends_on": [
+        "tv-chambolle-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Exact NumPy1.24.4 buffered versus2.5.4 aligned-contiguous pairwise reduction, square-before-sum and typed FP flags;684 original rows/runtime and14 profile/mode runs. No public or performance admission."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "0eaf6329a3a8c5f6b60a76e574dae2d91ba0077e",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-reductions/build/private-v1/manifest.json",
+            "sha256": "cc8089e19d1ba848ed34300cfccefb366c2f34625e6410a784e8283fba6a0ea5"
+          },
+          "native_contract_checks": 684,
+          "native_pending": 0,
+          "scope": "Private reductions;48,373,314 scalar/array assertions, not API coverage count."
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-finite-loop",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/tv-chambolle-finite-loop",
+      "base_sha": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+      "owns": [
+        "include/skimagexx/tv_denoise.hpp",
+        "src/tv_denoise.cpp",
+        "tests/test_tv_denoise_native.cpp"
+      ],
+      "depends_on": [
+        "tv-chambolle-native",
+        "tv-chambolle-reductions"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Actual new finite-loop binding binaries and default fast-wrapper parity across ABIs; original330 protocols and70 fixtures; genuine whole-core/complete SDK public integration; source-pinned isolated one-worker original-scikit-image measurements. Protocol/provider shell and channel handling remain separately scoped; no all-argument or full-library C++ claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "f8f38b69b05781065ab4916473b717bdd2248203",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-finite-loop/build/private-v1/manifest.json",
+            "sha256": "fc3cc19fcd32dd00e81c1791101336039816a477c5ab1b2c3c981e10812407b9"
+          },
+          "native_contract_checks": 127,
+          "native_pending": 0,
+          "scope": "Guarded private whole finite loop,28 profile/mode runs and1,048,356 scalar/array assertions; all70 literal original fixtures retained. No all-argument/public/SDK/performance admission."
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-finite-wrapper",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-chambolle-finite-loop-python",
+      "base_sha": "0252c1d9289e1e7d647c63c100775fbb47e73163",
+      "owns": [
+        "src/bind_tv_chambolle.cpp",
+        "python/skimagexx/_tv_chambolle.py",
+        "tests/test_tv_chambolle_native_pipeline.py"
+      ],
+      "depends_on": [
+        "tv-chambolle-private-wrapper",
+        "tv-chambolle-finite-loop"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Pristine eligible finite inputs must execute one actual C++ loop per spatial channel. Preserve330 original protocol observations and70 fixed benchmark fixtures, actual default native counters/trace/alias values, plus explicitly forced legacy-stage coverage. Resolve concrete allocator hook edge from bounded original evidence. Genuine public/SDK and one-worker performance remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c11ede33e634de34304be7dccab7b51a34684931",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-wrapper/build/tv-finite-prototype/manifest.json",
+            "sha256": "572815d465c0abc8bc087a92d238ae5a5044edfe753e236e273154c5bcb6dc62"
+          },
+          "native_contract_checks": 632,
+          "native_pending": 0,
+          "scope": "19358privatePASS/2122 explicitportable4rejections; original provider, forced stages, actual default loop and trace scopes separated. No public/SDK/performance claim."
+        }
+      }
+    },
+    {
+      "id": "tv-chambolle-finite-bridge",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/tv-chambolle-finite-loop-python",
+      "base_sha": "a0c4d4a53fe508fdc037ed3986dd24f45a9b377c",
+      "owns": [
+        "build/tv-chambolle-finite-bridge"
+      ],
+      "depends_on": [
+        "tv-chambolle-finite-loop"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Compile only bounded private frozen finite binding/needed PIC objects against unchanged stage/image/global-worker foundations in existing three ABIs, portable and Debug-GIL sanitizer. No full product, new environment, or timing."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "a0c4d4a53fe508fdc037ed3986dd24f45a9b377c",
+          "manifest": {
+            "path": "build/tv-chambolle-finite-bridge/manifest.json",
+            "sha256": "c08f08a13dafca05829ca03d4c80b8eb134f07e6e8c36e4fc2ab78f1afd86cbd"
+          },
+          "scope": "Five actual private variants normal/scalar;2008 focused binding checks. Public integration remains separate."
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave18-counts",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave18-counts",
+      "base_sha": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+      "owns": [
+        "build/whole18-hosted-dispatch"
+      ],
+      "depends_on": [
+        "rank-decisions-source-staging",
+        "rank-statistics-common-build-consumer",
+        "rank-statistics-common-build-capture",
+        "rank-statistics-product-stager",
+        "rank-decisions-nested-policy-preflight"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Both source-pinned four-profile runs dispatched once after573 metadata checks each/8plans/88actual test preflights. Complete genuine whole-core corpora, own aliases, default1/global4, normal/scalar, Debug-GIL/ASan, full59SDK/14families and successful bounded product staging remain required; no acceptance pins until verified."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+        "main_commit": "79902c2"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "before": "66860aef0d2483ca1d728589d9b3b0952433db91",
+        "after": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+        "predicted_image_paths": 190,
+        "registered_count": 193,
+        "SDK_families": 14,
+        "controlled_source_delta": [
+          "src/rank.cpp",
+          "tests/test_rank_windowed_counts_native.cpp",
+          "tests/test_rank_windowed_counts_pipeline.py"
+        ]
+      },
+      "hosted_runs": {
+        "before": {
+          "id": 40077192858,
+          "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40077192858"
+        },
+        "after": {
+          "id": 40077194449,
+          "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40077194449"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+          "manifest": {
+            "path": "coverage/evidence/public-wave11.json",
+            "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+          },
+          "native_contract_checks": 7742,
+          "native_pending": 0,
+          "scope": "Selected six-corpus scope in actual normal/scalar1/4 products;672856XML checks+112SDK checks. No full-argument/performance acceptance."
+        }
+      },
+      "root_acceptance": {
+        "path": "coverage/evidence/public-wave11.json",
+        "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+      }
+    },
+    {
+      "id": "tv-chambolle-public-191",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/tv-chambolle-public",
+      "base_sha": null,
+      "owns": [
+        "build/TV191-hosted-dispatch"
+      ],
+      "depends_on": [
+        "tv-chambolle-finite-loop",
+        "tv-chambolle-finite-wrapper",
+        "tv-chambolle-finite-bridge"
+      ],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Frozenb550 actual public/whole-core/SDK17 qualification run40083629572, all4profiles required.768 final merged metadata guards pass; standalone source-hash and Windows certificate byte bugs fixed before dispatch. Actual public execution and timings remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "source_sha": "b550107eb335a86ea69b9b806d552404bf3229f0",
+        "predicted_images": 191,
+        "registered_functions": 194,
+        "wheel_members": 108,
+        "SDK_members": 62,
+        "SDK_families": 17,
+        "SDK_checks": 34
+      },
+      "hosted_run": {
+        "id": 40083629572,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40083629572",
+        "status": "in_progress"
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "genuine191-tv-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/tv-chambolle-public",
+      "base_sha": null,
+      "owns": [
+        "build/genuine191-tv-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Exact-source observer33635 and sequential retainer96566; preserve full source/science/build closure and real successful-only products. No timeout cancellation or performance claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "live_observation": {
+        "session_id": 33635,
+        "sequential_retainer": 96566,
+        "run_id": 40083629572
+      }
+    },
+    {
+      "id": "matrix-transform-contracts",
+      "kind": "contract",
+      "apis": [
+        "transform.matrix_transform"
+      ],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-contracts",
+      "base_sha": null,
+      "owns": [
+        "tests/test_matrix_transform_contracts.py",
+        "coverage/contracts/matrix-transform.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "374 original rows/383 reference checks per3runtimes;748 strict nativepending cases. Raw words/provider order/geometry/ownership preserved. No native or performance admission."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "c6d20c901c598a89a5786e5c9b60015aa17cb294",
+        "main_commit": "583db3d82af2c4d086858f33daccb0fd7b4ad017"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "c6d20c901c598a89a5786e5c9b60015aa17cb294",
+          "manifest": {
+            "path": "build/worktrees/matrix-transform-contracts/build/matrix-reference/manifest.json",
+            "sha256": "4d3a50d860ea361a02d05d2bd34652f1f6ab2aad988914c5020c0c6d7b08263a"
+          },
+          "passing_contract_checks": 374
+        }
+      }
+    },
+    {
+      "id": "matrix-transform-private-shell",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-contracts",
+      "base_sha": null,
+      "owns": [
+        "python/skimagexx/_matrix_transform.py",
+        "tests/test_matrix_transform_native_pipeline.py"
+      ],
+      "depends_on": [
+        "matrix-transform-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Private shell376f9:796PASS+8explicitCPP-requiredpending per6modes.432actual checkedCPP/316provider-or-metadata worker rows. CPP certificate only abs<=16/grid2^-20; ordinary floating/large-coordinate kernel remains required. No public registration or performance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "matrix-transform-general-kernel",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-native",
+      "base_sha": null,
+      "owns": [
+        "include/skimagexx/matrix_transform.hpp",
+        "src/matrix_transform.cpp",
+        "src/simd_matrix_transform_avx2.cpp",
+        "tests/test_matrix_transform_native.cpp"
+      ],
+      "depends_on": [
+        "matrix-transform-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Audit pinned NumPy/BLAS shape/layout/runtime association; implement versioned general finite C++ mapping/SIMD/globalworkers while preserving original words. Explicit pending ordinary cases must advance beyond dyadic certificate; no upstream forwarding/tolerance weakening or whole-product/local timing."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-bregman-contracts",
+      "kind": "contract",
+      "apis": [
+        "restoration.denoise_tv_bregman"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/tv-bregman-contracts",
+      "base_sha": null,
+      "owns": [
+        "tests/test_tv_bregman_contracts.py",
+        "coverage/contracts/tv-bregman.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Source-audited135 original IDs:112 safe actual Cython,12 Python pre-entry rejects,11 blocked intake-only;418PASS perruntime,270 strictnativepending. Cython/wrapper sources retained beforecalls; no unsafe probes or new native implementation."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "5f6d9564b1d704feed59dd9c8a3bf9b7dcc472b2",
+          "manifest": {
+            "path": "build/worktrees/tv-bregman-contracts/build/tv-bregman-reference/manifest.json",
+            "sha256": "a5a35cb904e9e1e956952b1c10e97705fceebd9d2bdf3badcc05eca3ec33554f"
+          },
+          "passing_contract_checks": 135
+        }
+      }
+    },
+    {
+      "id": "tv-bregman-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-bregman-contracts",
+      "base_sha": null,
+      "owns": [
+        "include/skimagexx/tv_bregman.hpp",
+        "src/tv_bregman.cpp",
+        "src/simd_tv_bregman_avx2.cpp",
+        "tests/test_tv_bregman_native.cpp"
+      ],
+      "depends_on": [
+        "tv-bregman-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Typed C++ Gauss-Seidel source-order, asymmetric halos, mixed scalar precision, ordered typed-square/double RMSE and strict stopping. Preserve reused channel-output initialization; no naive parallel channels. Versioned early ABI, SIMD/globalworkers only with dependency proof; bounded native builds, no full product/env/timing/registration."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
       }
     }
   ],
@@ -25174,8 +27089,6 @@
     "restoration.denoise_bilateral",
     "restoration.denoise_invariant",
     "restoration.denoise_nl_means",
-    "restoration.denoise_tv_bregman",
-    "restoration.denoise_tv_chambolle",
     "restoration.denoise_wavelet",
     "restoration.ellipsoid_kernel",
     "restoration.estimate_sigma",
@@ -25221,7 +27134,6 @@
     "transform.integrate",
     "transform.iradon",
     "transform.iradon_sart",
-    "transform.matrix_transform",
     "transform.order_angles_golden_ratio",
     "transform.probabilistic_hough_line",
     "transform.pyramid_expand",
@@ -25556,12 +27468,12 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 186,
+    "native_partial_image_names": 190,
     "metadata_names": 3,
-    "upstream_only_names": 283,
+    "upstream_only_names": 279,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current accepted whole10:186 native-partial image paths,3metadata,4partialclasses,1exceptionprovider,283upstream-only/477total. Twelve new algorithms across15 new canonical/identity paths. Full arguments/class state/data/I/O and performance remain incomplete.",
+    "note": "Accepted whole11 after94f:190 partial image paths,3metadata,4partialclasses,1exception,279upstream-only/477. Full argument/class/state/data/I/O and performance objective remains incomplete.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -25588,14 +27500,105 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-bilateral-native"
-      ],
-      "resize_api": [
-        "rank-bilateral-benchmark-tooling"
+        "genuine191-tv-observation"
       ],
       "resize_bench": [
-        "combined-public-wave8"
+        "matrix-transform-general-kernel"
+      ],
+      "resize_api": [
+        "tv-bregman-native"
       ]
+    },
+    "current_three_agent_packets": {
+      "metrics_reductions": "genuine191-tv-observation",
+      "resize_bench": "matrix-transform-general-kernel",
+      "resize_api": "tv-bregman-native"
+    },
+    "current_source_staging": {
+      "path": "coverage/evidence/rank-decisions-source-staging.json",
+      "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
+      "bytes": 1024
+    },
+    "historical_hosted_source_pair": {
+      "before": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+      "after": "58650de6a8a7a246f9b614680887faa3c0b55644",
+      "source_delta": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "static_plans": 8,
+      "local_metadata_before": 565,
+      "local_metadata_after": 565,
+      "accepted_main_images": 186,
+      "new_public_acceptance": 0,
+      "status": "Both exact second-pair runs terminal failed; complete bounded retention verified. Public acceptance remains0."
+    },
+    "previous_hosted_source_pair": {
+      "before": "4843f210fc9545691fd25966cc685f6fa297cbac",
+      "after": "44f7a6956bfe0cad326d6ec4a44f1edb87ab7482",
+      "branches": [
+        "integration/wave15-decisions",
+        "integration/wave16-counts"
+      ],
+      "dispatches": 2,
+      "local_metadata_checks_each": 573,
+      "source_delta": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "fix": "798cb11 selects actual last GNU linker dependency-file option and prospectively keeps Ninja depfiles; previous exact runs continue to terminal.",
+      "run_ids": [
+        40074322430,
+        40074324260
+      ],
+      "status": "Observer84195 continues exact third-pair jobs through terminal. Inspected modern-before and Debug-after passed collector/other corpora/SDK but failed stale shared-majority test; raw failed seals retained."
+    },
+    "current_hosted_source_pair": {
+      "before": "66860aef0d2483ca1d728589d9b3b0952433db91",
+      "after": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+      "branches": [
+        "integration/wave17-decisions",
+        "integration/wave18-counts"
+      ],
+      "run_ids": [
+        40077192858,
+        40077194449
+      ],
+      "source_delta": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "static_plans": 8,
+      "local_metadata_before": 573,
+      "local_metadata_after": 573,
+      "accepted_main_images": 190,
+      "new_public_acceptance": 4,
+      "evidence": {
+        "path": "coverage/evidence/public-wave11.json",
+        "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+      },
+      "status": "All8products/all6envelopes qualified and root accepted parity-only"
+    },
+    "current_private_TV": {
+      "path": "coverage/evidence/tv-chambolle-private-loop.json",
+      "sha256": "47650d79edb57655c01d235939e8c5ba63bfab9bdd977d2d95aba1308cfbd791"
+    },
+    "current_public_TV": {
+      "source": "b550107eb335a86ea69b9b806d552404bf3229f0",
+      "run_id": 40083629572,
+      "observer_session": 33635,
+      "expected_image_paths": 191,
+      "accepted": false
+    },
+    "controlled_counts_experiment": {
+      "raw_sha256": "9266f3acd562712c2fd0adda5dddbc10d25136065e25a2d7efe118eba511a2f5",
+      "producer_run": 40083908759,
+      "producer_source": "21b9cc9ee2349df644b3c6baab05aa3dc28c5c2f",
+      "consumer_ref": "integration/wave17-decisions",
+      "status": "Exact metadata publication queued; original/before/after one-worker benchmark not dispatched yet"
     }
   },
   "parallel_review": {
@@ -26087,6 +28090,18 @@
       "archive": "build/cleanup/current-checkpoint/archives/06-pytest-tmp.zip",
       "archive_sha256": "d853bcf9ce44592c4023cdf681be6a77d218d4ee11af5977958fee42ffdc3202",
       "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/tv-chambolle-contracts",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-contracts.zip",
+      "archive_sha256": "341af00b3134289b5d6e8b74c26d32cbcbb2077a12611f47685fc0b31b203d9c",
+      "member_rule": "Remove former_prefix/; all original regular bytes retained exactly. ZIP has no links; benchmark tar.gz preserves six exact link targets without following them. Worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/tv-chambolle-benchmark",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
+      "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
+      "member_rule": "Remove former_prefix/; all original regular bytes retained exactly. ZIP has no links; benchmark tar.gz preserves six exact link targets without following them. Worktree .git administrative pointer omitted."
     }
   ],
   "inventory_assessment_pending": {
@@ -26126,7 +28141,7 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/qualification-checkpoint-cleanup-20261024.json",
-    "sha256": "8cfdeb5b731c8399eef35ac805fdad79b2f2a104e475d855fc1a832a89ed8b67"
+    "path": "coverage/evidence/tv-reference-worktree-cleanup-20261024.json",
+    "sha256": "d764871c6742d1e40c86291c6bd7fd457d8b74f2dcab328d96acbfd2b42ab8f4"
   }
 }

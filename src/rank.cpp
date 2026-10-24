@@ -62,9 +62,18 @@ struct Histogram {
     std::vector<std::int64_t> weighted_blocks;
     std::uint64_t root=0;
     std::int64_t sum=0,pop=0;
-    explicit Histogram(std::size_t bins,bool extrema,bool prefix=false,bool weighted=false):limit(bins),counts(extrema ? bins:0),bits(extrema ? (bins+63)/64:0),summary(extrema ? (bins+4095)/4096:0),prefix_blocks(prefix ? (bins+63)/64:0),weighted_blocks(weighted ? (bins+63)/64:0){}
-    template<bool Prefix> void add(std::uint32_t value,std::int64_t count) {
-        pop+=count;sum+=std::int64_t(value)*count;
+    explicit Histogram(std::size_t bins,bool extrema,bool prefix=false,bool weighted=false,bool counts_only=false):limit(bins),counts(extrema ? bins:0),bits(extrema && !counts_only ? (bins+63)/64:0),summary(extrema && !counts_only ? (bins+4095)/4096:0),prefix_blocks(prefix ? (bins+63)/64:0),weighted_blocks(weighted ? (bins+63)/64:0){}
+    template<bool Prefix,bool CountsOnly=false> void add(std::uint32_t value,std::int64_t count) {
+        pop+=count;
+        // Opcode16 queries only counts/pop. Keep its full-bin counters and
+        // existing bounds check, without maintaining unused extrema or sums.
+        if constexpr(CountsOnly) {
+            static_assert(!Prefix);
+            if(value>=limit)throw std::invalid_argument("aliased rank image exceeded histogram bounds");
+            counts[value]+=count;
+            return;
+        }
+        sum+=std::int64_t(value)*count;
         if(value>=limit)throw std::invalid_argument("aliased rank image exceeded histogram bounds");
         if(counts.empty())return;
         const auto before=counts[value];counts[value]+=count;
@@ -360,7 +369,7 @@ struct Histogram {
         return std::int64_t(word*64+(op==RankOperation::minimum ? first(bits[word]):last(bits[word])));
     }
 };
-template<class T,bool Prefix> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
+template<class T,bool Prefix,bool CountsOnly=false> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
     const auto* image=static_cast<const unsigned char*>(v.image);
     const auto read=[](const unsigned char* p){T value;std::memcpy(&value,p,sizeof(T));return value;};
     for(const auto& run:runs) {
@@ -385,12 +394,12 @@ template<class T,bool Prefix> void update(Histogram& hist,const RankView& v,cons
             constexpr auto width=32/sizeof(T);
             for(;i+width<=n;i+=width) {
                 std::uint32_t value;
-                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add<Prefix>(value,std::int64_t(width)*sign);
-                else for(std::size_t j=0;j<width;++j)hist.add<Prefix>(read(data+(i+j)*sizeof(T)),sign);
+                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add<Prefix,CountsOnly>(value,std::int64_t(width)*sign);
+                else for(std::size_t j=0;j<width;++j)hist.add<Prefix,CountsOnly>(read(data+(i+j)*sizeof(T)),sign);
             }
         }
 #endif
-        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add<Prefix>(read(data+i*sizeof(T)),sign);
+        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add<Prefix,CountsOnly>(read(data+i*sizeof(T)),sign);
     }
 }
 template<class T,class Value> void store(unsigned char* out,Value value) {
@@ -398,13 +407,13 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
     if constexpr(std::is_integral_v<T> && std::is_floating_point_v<Value>)result=T(std::int64_t(value));else result=T(value);
     std::memcpy(out,&result,sizeof(result));
 }
-template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
+template<class T,bool Prefix=false,bool CountsOnly=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
         const bool weighted=op==RankOperation::mean_percentile || op==RankOperation::subtract_mean_percentile || op==RankOperation::sum_percentile || (int(op)>=26 && int(op)<=28);
-        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix,weighted);
+        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix,weighted,CountsOnly);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
-        update<T,Prefix>(hist,v,prepared.initial,p,r,c,1);
+        update<T,Prefix,CountsOnly>(hist,v,prepared.initial,p,r,c,1);
         const auto write=[&](){
             auto* out=static_cast<unsigned char*>(v.output)+std::ptrdiff_t(p)*v.output_strides[0]+r*v.output_strides[1]+c*v.output_strides[2];
             const auto emit=[&](auto value){
@@ -462,14 +471,14 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
         write();bool east=true;
         while(true) {
             if(east)for(c=1;c<std::ptrdiff_t(v.shape[2]);++c) {
-                update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
+                update<T,Prefix,CountsOnly>(hist,v,prepared.enter[2],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
             }
             else for(c=std::ptrdiff_t(v.shape[2])-2;c>=0;--c) {
-                update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
+                update<T,Prefix,CountsOnly>(hist,v,prepared.leave[2],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
             }
             c=east ? std::ptrdiff_t(v.shape[2])-1:0;
             if(++r>=std::ptrdiff_t(finish))break;
-            update<T,Prefix>(hist,v,prepared.enter[1],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
+            update<T,Prefix,CountsOnly>(hist,v,prepared.enter[1],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
         }
         begin=p*v.shape[1]+finish;
     }
@@ -583,7 +592,15 @@ std::vector<double> statistics_validate(const RankView& v,RankOperation op,std::
 void statistics_run(const RankView& view,RankOperation operation,std::size_t depth) {
     const auto logarithms=statistics_validate(view,operation,depth);const auto prepared=plan(view);
     const auto rows=view.shape[0]*view.shape[1];
-    const auto invoke=[&](std::size_t begin,std::size_t end,bool check){if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end,logarithms,depth,check);else process<std::uint8_t>(view,operation,prepared,begin,end,logarithms,depth,check);};
+    const auto invoke=[&](std::size_t begin,std::size_t end,bool check){
+        if(operation==RankOperation::windowed_histogram) {
+            if(view.uint16)process<std::uint16_t,false,true>(view,operation,prepared,begin,end,logarithms,depth,check);
+            else process<std::uint8_t,false,true>(view,operation,prepared,begin,end,logarithms,depth,check);
+        } else {
+            if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end,logarithms,depth,check);
+            else process<std::uint8_t>(view,operation,prepared,begin,end,logarithms,depth,check);
+        }
+    };
     // C floating-to-unsigned conversion outside the target range is undefined
     // upstream. Certify all values first, preserving output on rejected calls.
     const bool integral=view.output_type==PixelType::boolean || view.output_type==PixelType::uint8 || view.output_type==PixelType::uint16;
