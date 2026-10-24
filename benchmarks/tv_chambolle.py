@@ -473,12 +473,12 @@ def main(argv=None):
         # Complete original+both-worker validation occurs before entering here.
         # The fresh measurement host performs no builds/pytest and onlyworker1.
         report['status']='measuring';xx.set_num_threads(1)
-        for case in cases:
+        for index,case in enumerate(cases):
             if not case.timed:continue
             left,unchanged_left=timing_callback(resolve(True),case);right,unchanged_right=timing_callback(resolve(),case)
             with warnings.catch_warnings():warnings.simplefilter('ignore');timing=measure(left,right,7,args.target_ms)
             assert unchanged_left() and unchanged_right()
-            report['results'].append(dict(id=case.id,cohort=case.fixture['cohort'],threads=1,slower_than_original=timing['speedup']<1,**timing));save(report,args.output)
+            report['results'].append(dict(id=case.id,cohort=case.fixture['cohort'],threads=1,case_index=index,slower_than_original=timing['speedup']<1,**timing));save(report,args.output)
         integrity();report['summary']=summarize(report['results'],[1],70);report['status']='complete-measurement';return 0
     except Exception as error:
         report['failures'].append(dict(phase=report['status'],type=type(error).__name__,message=str(error),traceback=traceback.format_exc()));report['status']='failed';return 1

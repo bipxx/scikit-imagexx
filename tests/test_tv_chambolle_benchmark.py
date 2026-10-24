@@ -502,3 +502,44 @@ print(json.dumps(dict(entry=entry,initial_fallback=True,fallback=fallback[0],ini
     else:
         assert row['error'] is None
         if entry!='verify-api':assert row['result']==0
+
+
+def test_actual_timing_row_assembly_and_shared_summary_keep_every_regression(tmp_path):
+    """70 inert metadata sample sets, never operation timings or native proof."""
+    import statistics
+    from benchmarks.resize import summarize
+    tree=ast.parse(Path(h.__file__).read_text())
+    main=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='main')
+    def target(node,key):
+        return isinstance(node,ast.Subscript) and isinstance(node.value,ast.Name) and node.value.id=='report' and isinstance(node.slice,ast.Constant) and node.slice.value==key
+    calls=[node for node in ast.walk(main) if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute) and node.func.attr=='append' and target(node.func.value,'results')]
+    assert len(calls)==1
+    loops=[node for node in ast.walk(main) if isinstance(node,ast.For) and any(call is calls[0] for call in ast.walk(node))]
+    assert len(loops)==1 and ast.dump(loops[0].iter)==ast.dump(ast.parse('enumerate(cases)',mode='eval').body)
+    assert ast.dump(loops[0].target)==ast.dump(ast.parse('for index,case in enumerate(cases): pass').body[0].target)
+    summary_node=next(node for node in ast.walk(main) if isinstance(node,ast.Assign) and any(target(value,'summary') for value in node.targets))
+    inventory=manifest()['case_inventory'];assert len(inventory)==400
+    timed=[(index,row) for index,row in enumerate(inventory) if row['timed']]
+    assert len(timed)==70 and [index for index,row in timed]==list(range(330,400))
+    report=dict(version=h.VERSION,status='metadata-only',metadata={'synthetic_tooling_only':True,'operation_timer_calls':0},checks=inventory,results=[],failures=[])
+    for ordinal,(index,row) in enumerate(timed):
+        ratio=(0.5,1.,2.)[ordinal%3]
+        samples=[[1.+round_index/10 for round_index in range(7)]]
+        samples.append([value/ratio for value in samples[0]])
+        reference,current=[statistics.median(values) for values in samples]
+        timing=dict(reference_ms=reference,cpp_ms=current,speedup=reference/current,samples_ms=samples,loops=[2,3],sample_labels=['scikit-image','current'])
+        case=types.SimpleNamespace(id=row['id'],fixture=row['fixture'])
+        namespace=dict(report=report,case=case,index=index,timing=timing)
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[ast.Expr(value=calls[0])],type_ignores=[])),'<actual-TV-row-assembly>','exec'),namespace)
+    exec(compile(ast.Module(body=[summary_node],type_ignores=[]),'<actual-TV-shared-summary>','exec'),dict(report=report,summarize=summarize))
+    assert len(report['results'])==70
+    assert [(row['case_index'],row['id']) for row in report['results']]==[(index,row['id']) for index,row in timed]
+    assert all(inventory[row['case_index']]['id']==row['id'] and row['cohort']==inventory[row['case_index']]['cohort'] for row in report['results'])
+    assert {row['speedup']<1 for row in report['results']}=={True,False}
+    assert any(row['speedup']==1 for row in report['results'])
+    slower=[dict(case_index=row['case_index'],speedup=row['speedup']) for row in report['results'] if row['slower_than_original']]
+    assert len(slower)==24 and report['summary']['1']['slower_cases']==slower
+    required={'id','cohort','threads','case_index','slower_than_original','reference_ms','cpp_ms','speedup','samples_ms','loops','sample_labels'}
+    assert all(set(row)==required and row['threads']==1 and all(len(samples)==7 for samples in row['samples_ms']) for row in report['results'])
+    output=tmp_path/'metadata-only-full-report.json';h.save(report,output)
+    assert json.loads(output.read_text())==report
