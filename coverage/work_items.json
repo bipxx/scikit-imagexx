@@ -29877,8 +29877,7 @@
       "contract": {
         "case_manifest": "coverage/contracts/tv-chambolle-benchmark.json",
         "uncovered_cases": [
-          "All4actual192/SDK18 qualification outcomes and independent cumulative root acceptance.",
-          "Separately reviewed exact-header common-input adapter and isolated controlled one-worker comparison."
+          "Separately reviewed exact-header two-edge common-input adapter and isolated original/5e/af7 controlled one-worker comparison; remaining regressions stay open."
         ]
       },
       "parity": {
@@ -29893,7 +29892,7 @@
         "bytes": 169760,
         "sha256": "ab8e35efe6f568b21d9abd2c1abe90ca8e86484284fb3d49ef502780cb9fcebe"
       },
-      "public_acceptance": false,
+      "public_acceptance": true,
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
@@ -29903,14 +29902,17 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+        "main_commit": "bbc1fc1148be85357b77300a752150642bc8d0b8"
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/tv-finite-admission"
+          "build/worktrees/tv-finite-admission",
+          "build/worktrees/tv-single-admission-compare"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/TV-single-admission192-hosted/af7b2af"
+        ]
       },
       "proofs": {
         "native_private": {
@@ -29925,19 +29927,32 @@
           }
         },
         "public_native": {
-          "status": "pending",
-          "source_sha": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee"
+          "status": "verified",
+          "source_sha": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+          "manifest": {
+            "path": "coverage/evidence/tv-single-admission-whole.json",
+            "bytes": 5949,
+            "sha256": "1e79d4ce148c929e294b0aebb1ef60a493e7c0481f852330919a1bfb4602e43b"
+          },
+          "native_contract_checks": 5024,
+          "native_pending": 0,
+          "scope": "Actual complete four-profile public192/SDK18 qualification;5024 is the conservative compiled-finite default trace floor, not all707800 mixed XML checks."
         }
       },
       "qualification_branch": "integration/tv-admission-public",
       "full_product_dispatch": {
         "source": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
         "run": 40128026938,
-        "status": "running-not-accepted",
+        "status": "all-four-success-root-accepted",
         "proof": {
           "path": "coverage/evidence/tv-single-admission-dispatch.json",
           "bytes": 1347,
           "sha256": "47421e806f74020cbf802aa061dc5fd1615aca80576c73e59d34958208638765"
+        },
+        "qualified_evidence": {
+          "path": "coverage/evidence/tv-single-admission-whole.json",
+          "bytes": 5949,
+          "sha256": "1e79d4ce148c929e294b0aebb1ef60a493e7c0481f852330919a1bfb4602e43b"
         }
       }
     },
@@ -30008,8 +30023,8 @@
       "contract": {
         "case_manifest": "coverage/contracts/iterative-thresholds.json",
         "uncovered_cases": [
-          "Freeze source-derived safe original defaults/dtype/layout/histogram/callback observations on3existing runtimes; unsafe original paths metadata-only.",
-          "Native implementations, full hot-swap parity, global workers/SIMD and isolated one-worker original-library performance remain pending."
+          "Root review and publication of expanded original312-case reference plus private actual-qualified audit; both APIs already have native-partial implementations and this packet adds zero public paths.",
+          "Extend existing native admitted domains, full hot-swap parity, global workers/SIMD and isolated one-worker original-library performance; current audit has72solver/32preparation matches,198unsupported,3provider controls and7unsafe cases per312projection."
         ]
       },
       "parity": {
@@ -31596,9 +31611,9 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/released-opaque-test-cache-cleanup-20261024.json",
-    "bytes": 1893,
-    "sha256": "ae45bff7a58c95fbf7ba2cd2dbdf7a7647fc722d67ad3625ba4a6d3adddc78cc"
+    "path": "coverage/evidence/released-metadata-scratch-cleanup-20261024.json",
+    "bytes": 3513,
+    "sha256": "7b0383403e2ce78cbf03ffd08184024b273a8e463bcb21a54fa84147391c9873"
   },
   "post_cursor_cleanup": {
     "proofs": [
@@ -31618,5 +31633,16 @@
     "net_payload_reclaimed_bytes": 2846105,
     "receipt_overhead_excluded": true,
     "merged_clean_report_worktree_retired": true
+  },
+  "pre_continuation_cleanup": {
+    "proof": {
+      "path": "coverage/evidence/released-metadata-scratch-cleanup-20261024.json",
+      "bytes": 3513,
+      "sha256": "7b0383403e2ce78cbf03ffd08184024b273a8e463bcb21a54fa84147391c9873"
+    },
+    "removed_directories": 43,
+    "source_worktrees_removed": 0,
+    "net_logical_payload_reclaimed_bytes_at_accounting": 3330783670,
+    "two_redundant_partial_archives_retained_by_automatic_approval_review": true
   }
 }

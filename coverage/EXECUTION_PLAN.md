@@ -42,7 +42,7 @@ baseline retains all 70 cases per runtime, including 34/38/36 slower observation
 on Windows/modern/minimum Linux. Those timings remain tied to `f87120c`.
 Whole13 admits Bregman source `3cdd363`: 192 partial image paths, 704,760 mixed
 checks and 144 SDK checks with complete 110-member wheels and 63-member SDK18.
-The latest qualified source `5e068a5` adds logical strided-address cursors without
+The qualified source `5e068a5` adds logical strided-address cursors without
 adding API paths. All four normal/scalar profiles pass 707,800 mixed checks and
 144 SDK checks. Its separate original/before/after comparison uses all 400 frozen
 observations before timing the fixed 70 cases in seven paired one-worker rounds.
@@ -66,18 +66,33 @@ APIs have separate scoped parity proofs; neither increases accepted public count
 The [max-tree benchmark reference](evidence/max-tree-benchmark-reference.json)
 preserves all 351 source observations and 252 finite candidates per runtime;
 native admission and one-worker measurements remain pending.
-The next TV single-admission source `585d568` has passed independent private
+The TV single-admission source `585d568` has passed independent private
 review: 429,718 checked-entry assertions, 22,778 mixed pipeline checks and the
-unchanged 400-case provider corpus. Exact composed source `af7b2af` is now in
-[four-profile whole qualification](https://github.com/bipxx/scikit-imagexx/actions/runs/40128026938).
-Its new independent old-source control stays private-only. Public acceptance and
-the new one-worker comparison remain pending; current accepted coverage is unchanged.
+unchanged 400-case provider corpus. Exact composed source `af7b2af` passed all
+[four qualification jobs](https://github.com/bipxx/scikit-imagexx/actions/runs/40128026938)
+and independent root review of 1,669 records: 707,800 mixed XML checks and 144
+SDK checks. It is merged and pushed as `bbc1fc1`; actual qualified packages keep
+their `af7b2af` labels. The [public evidence](evidence/tv-single-admission-whole.json)
+records 192 partial image paths, 110 wheel members and 63 SDK members across
+18 families. Its independent old-source control stays private-only. The new
+one-worker original/`5e068a5`/`af7b2af` comparison and exact two-edge private-header
+adapter remain pending; this increment adds no API paths or speed claim.
 The [closing dtype correction](evidence/max-tree-closing-dtype-private.json) and
 [SDK oracle registration](evidence/max-tree-sdk-oracle-private.json) also have
 independently verified private evidence. Their combined `cfb5c40` candidate still
 needs Windows matrix admission and fresh complete qualification.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
+
+Before resuming, [43 released metadata cache and temporary directories](evidence/released-metadata-scratch-cleanup-20261024.json)
+were removed after preserving 133,816 files and verifying every archived payload.
+The net logical payload reduction at accounting was 3.33 GB after retained
+archives, indices and receipts. All source worktrees, environments, original and
+qualified products, raw results and 170 protected receipts remain intact. Two
+redundant partial archives (17.7 MB) remain because automatic approval review
+blocked their deletion. The three workers have resumed the TV comparison
+adapter, a separate default-policy Li reference supplement, and the corrected
+199-path qualification candidate; those lanes add no accepted public paths yet.
 
 ## What changed after review
 

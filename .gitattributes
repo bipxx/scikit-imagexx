@@ -108,5 +108,7 @@ coverage/work_items.json -text
 coverage/evidence/released-opaque-test-cache-cleanup-20261024.json -text
 coverage/evidence/tv-single-admission-private.json -text
 coverage/evidence/tv-single-admission-dispatch.json -text
+coverage/evidence/tv-single-admission-whole.json -text
+coverage/evidence/released-metadata-scratch-cleanup-20261024.json -text
 coverage/evidence/max-tree-closing-dtype-private.json -text
 coverage/evidence/max-tree-sdk-oracle-private.json -text
