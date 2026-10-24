@@ -1,4 +1,4 @@
-"""Private real-stage pipeline proof; never public namespace/SDK admission.
+"""Real installed TV pipeline, with an explicitly selected private proof mode.
 
 The330 frozen observations deliberately set all FP modes to warn. Those prove
 provider orchestration, not compiled pixel usage. A separately labeled default
@@ -28,23 +28,53 @@ def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
+BACKEND=os.environ.get('SKIMAGEXX_TV_CHAMBOLLE_STAGE_CORE')
+
+
+def installed_admission():
+    """Fail before fixtures for an incomplete registered public product."""
+    from skimagexx.coverage import native_functions
+    path='restoration.denoise_tv_chambolle'
+    if path not in native_functions():
+        pytest.skip('TV public pipeline pending registration; no private backend substituted',allow_module_level=True)
+    from skimagexx import _core, _tv_chambolle
+    from skimage.restoration import denoise_tv_chambolle as reference
+    restoration=importlib.import_module('skimagexx.restoration')
+    function=restoration.denoise_tv_chambolle
+    assert restoration is xx.restoration
+    assert function is _tv_chambolle.denoise_tv_chambolle
+    assert function is not reference and inspect.isfunction(function)
+    assert function.__module__==_tv_chambolle.__name__=='skimagexx._tv_chambolle'
+    assert inspect.getmodule(function) is _tv_chambolle
+    assert inspect.signature(function)==inspect.signature(reference)
+    assert _tv_chambolle._core is _core
+    package=Path(xx.__file__).resolve().parent
+    assert Path(_tv_chambolle.__file__).resolve().parent==package
+    assert Path(_core.__file__).resolve().parent==package
+    assert xx.get_num_threads is _core.get_num_threads
+    assert xx.set_num_threads is _core.set_num_threads
+    assert _core.get_num_threads()==1
+    _tv_chambolle._require_stages()
+    _tv_chambolle._require_finite()
+    return _tv_chambolle
+
+
+wrapper=(load('skimagexx._tv_chambolle_private_source',ROOT/'python/skimagexx/_tv_chambolle.py')
+         if BACKEND else installed_admission())
 contracts=load('tv_private_frozen_reference',ROOT/'tests/test_tv_chambolle_contracts.py')
 MATRIX=json.loads(contracts.MATRIX.read_text())
-wrapper=load('skimagexx._tv_chambolle_private_source',ROOT/'python/skimagexx/_tv_chambolle.py')
-BACKEND=os.environ.get('SKIMAGEXX_TV_CHAMBOLLE_STAGE_CORE')
 
 
 @pytest.fixture(scope='module')
 def core():
-    if not BACKEND:pytest.skip('PRIVATE TV STAGE PIPELINE PENDING: explicit immutable real compiled bridge required; no alternate/backend substituted')
-    path=Path(BACKEND).resolve(strict=True)
-    module=load('_tv_stage_core',path)
+    module=load('_tv_stage_core',Path(BACKEND).resolve(strict=True)) if BACKEND else wrapper._core
     assert module.tv_chambolle_interface=='tv-chambolle-stages-v1'
     assert type(module.tv_chambolle_capabilities) is int and module.tv_chambolle_capabilities==63
     for name in wrapper._ENTRIES:
         entry=getattr(module,name);assert inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==module.__name__
     assert module.get_num_threads()==1
-    if os.environ.get('SKIMAGEXX_REQUIRE_GIL_ASSERTIONS')=='1':assert module.gil_assertions is True
+    if os.environ.get('SKIMAGEXX_REQUIRE_GIL_ASSERTIONS')=='1':
+        assert getattr(module,'gil_assertions' if BACKEND else '_consumer_gil_assertions') is True
     return module
 
 
@@ -56,9 +86,14 @@ def active(request,core,monkeypatch):
         assert core.get_num_threads()==before==1
         pytest.skip('Portable build explicitly rejects4; no serial worker4 parity is claimed')
     core.set_num_threads(request.param)
-    monkeypatch.setattr(wrapper,'_core',core)
+    if BACKEND:monkeypatch.setattr(wrapper,'_core',core)
+    else:
+        assert wrapper._core is core and xx.get_num_threads()==request.param
+        assert xx.restoration.denoise_tv_chambolle is wrapper.denoise_tv_chambolle
+    fallback=xx.set_fallback_enabled(False)
     try:yield wrapper
-    finally:core.set_num_threads(before)
+    finally:
+        core.set_num_threads(before);xx.set_fallback_enabled(fallback)
 
 
 @pytest.fixture
