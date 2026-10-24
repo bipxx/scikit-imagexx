@@ -24,6 +24,10 @@ MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.uti
            (native_rank,reference_rank),(native_rank_generic,reference_rank_generic)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
              if not inspect.isclass(getattr(native,name))]
+# Pinned generic exposes these callable identity aliases outside star exports.
+# Exercise signatures and values independently of the advertised __all__ list.
+FUNCTIONS += [(native_rank_generic, reference_rank_generic, name)
+              for name in ('sum', 'windowed_histogram') if name not in native_rank_generic.__all__]
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 
