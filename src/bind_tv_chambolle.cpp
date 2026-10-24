@@ -1,8 +1,10 @@
 #include "skimagexx/tv_chambolle.hpp"
+#include "skimagexx/tv_denoise.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cstddef>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace py = pybind11;
@@ -102,4 +104,72 @@ void bind_tv_chambolle(py::module_& module) {
             skimagexx::tv_chambolle_dual_into(output, gradient, divisor, tau_work);
         }, py::arg("p").noconvert(), py::arg("g").noconvert(),
            py::arg("denominator").noconvert(), py::arg("tau_work"));
+
+    // A separate private finite-loop interface. Stage63 is never evidence of
+    // loop support. Scalar/shape metadata and owner lifetimes are marshalled
+    // with the GIL held; no dtype/itemsize or Python object access after release.
+    module.attr("tv_chambolle_finite_interface") = skimagexx::tv_denoise_interface;
+    module.attr("tv_chambolle_finite_capabilities") = py::int_(skimagexx::tv_denoise_capabilities);
+    module.attr("tv_chambolle_finite_profiles") = py::make_tuple("1.24.4", "2.5.4");
+    module.def("tv_chambolle_finite_run",
+        [](py::array image, py::array p, py::array g, py::array d,
+           double weight, double eps, std::size_t max_iterations,
+           const std::string& profile, std::size_t buffer_elements, bool trace) {
+            skimagexx::TvReductionProfile reduction_profile;
+            if (profile == "1.24.4") reduction_profile = skimagexx::TvReductionProfile::numpy_1244_buffered;
+            else if (profile == "2.5.4") reduction_profile = skimagexx::TvReductionProfile::numpy_254_aligned_contiguous;
+            else throw py::value_error("TV finite loop requires an explicitly audited NumPy profile");
+            if (image.ndim() < 1 || image.ndim() > 4 || image.size() == 0 || max_iterations < 1 || max_iterations > 20000) {
+                PyErr_SetString(PyExc_NotImplementedError, "TV finite loop requires nonempty rank1..4 and iterations1..20000");
+                throw py::error_already_set();
+            }
+            const auto input = const_view(image);
+            std::vector<py::ssize_t> shape;
+            for (py::ssize_t axis = 0; axis < image.ndim(); ++axis) shape.push_back(image.shape(axis));
+            const py::dtype dtype = image.dtype();
+            py::array out(dtype, shape);
+            py::array squared(dtype, shape);
+            py::array norm(dtype, shape);
+            const skimagexx::TvDenoiseWorkspace workspace{
+                writable_planes(p), writable_planes(g), writable_view(d),
+                writable_view(out), writable_view(squared), writable_view(norm),
+                const_planes(p), const_planes(g), const_view(out), const_view(norm)};
+            const skimagexx::TvDenoiseParameters parameters{
+                weight, eps, max_iterations, {reduction_profile, buffer_elements}};
+            std::vector<skimagexx::TvDenoiseTrace> rows(trace ? max_iterations : 0);
+            skimagexx::TvDenoiseResult result{};
+            const char* reason = nullptr;
+            {
+                py::gil_scoped_release release;
+                reason = skimagexx::tv_denoise_ineligibility(input, workspace, parameters,
+                    trace ? rows.data() : nullptr, rows.size());
+                if (reason == nullptr) {
+                    // The native entry rechecks before any write. Unexpected
+                    // loop exceptions propagate; never hide partial work by
+                    // translating all exceptions into a provider retry.
+                    result = skimagexx::tv_denoise_finite_into(input, workspace, parameters,
+                        trace ? rows.data() : nullptr, rows.size());
+                }
+            }
+            if (reason != nullptr) {
+                PyErr_SetString(PyExc_NotImplementedError, reason);
+                throw py::error_already_set();
+            }
+            py::list trace_rows;
+            if (trace) {
+                for (std::size_t i = 0; i < result.iterations; ++i) {
+                    const auto& row = rows[i];
+                    trace_rows.append(py::make_tuple(row.square_sum_bits, row.norm_sum_bits,
+                        row.energy_bits, row.difference_bits, row.threshold_bits,
+                        row.energy_is_float32, row.stopped));
+                }
+            }
+            // Do not expose uninitialized internal out storage for the one-
+            // iteration alias case. All numerical updates still ran in C++.
+            py::object returned = result.input_alias ? py::object(image) : py::object(out);
+            return py::make_tuple(returned, result.iterations, result.input_alias, trace_rows);
+        }, py::arg("image").noconvert(), py::arg("p").noconvert(),
+           py::arg("g").noconvert(), py::arg("d").noconvert(),
+           py::arg("weight"), py::arg("eps"), py::arg("max_iterations"),
+           py::arg("profile"), py::arg("buffer_elements"), py::arg("trace") = false);
 }
