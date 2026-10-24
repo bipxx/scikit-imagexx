@@ -42,7 +42,8 @@ struct GuardEnvironment {
     }
 };
 bool multiply(std::size_t a,std::size_t b,std::size_t limit,std::size_t& value) {
-    if(a && b>limit/a)return false;value=a*b;return true;
+    if(a && b>limit/a)return false;
+    value=a*b;return true;
 }
 bool span(const void* data,std::size_t n,std::size_t width,Span& value,std::size_t alignment=0) {
     if(!data || n>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/width)return false;
@@ -59,7 +60,8 @@ bool fp_profile() {
     return true;
 }
 template<class T> bool finite(const T* data,std::size_t n) {
-    for(std::size_t i=0;i<n;++i)if(!std::isfinite(data[i]))return false;return true;
+    for(std::size_t i=0;i<n;++i)if(!std::isfinite(data[i]))return false;
+    return true;
 }
 template<class T> bool coefficients(double value,T& weight,T& lam,T& norm) {
     if(value>double(std::numeric_limits<T>::max()))return false;
@@ -102,7 +104,8 @@ template<class T> int initialize(const TvBregmanImage& image,const TvBregmanWork
     return actual.load();
 }
 template<class T> TvBregmanResult process(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int workers) {
-    T weight,lam,norm;coefficients(parameters.weight,weight,lam,norm);
+    T weight{},lam{},norm{};
+    if(!coefficients(parameters.weight,weight,lam,norm))throw std::invalid_argument("TV Bregman coefficient prewrite check failed");
     const int actual=initialize<T>(image,workspace,workers);
     const auto* input=static_cast<const T*>(image.data);auto* out=static_cast<T*>(workspace.out.data);auto* dx=static_cast<T*>(workspace.dx.data);auto* dy=static_cast<T*>(workspace.dy.data);auto* bx=static_cast<T*>(workspace.bx.data);auto* by=static_cast<T*>(workspace.by.data);
     const auto r=image.rows,c=image.cols,d=image.channels,stride=(c+2)*d;
