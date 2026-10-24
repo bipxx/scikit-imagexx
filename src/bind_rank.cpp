@@ -42,6 +42,8 @@ void bind_rank(py::module_& module) {
     module.attr("rank_statistics_capabilities")=py::int_(skimagexx::rank_statistics_capabilities());
     module.attr("rank_vector_interface")="rank-vector-v1";
     module.attr("rank_vector_capabilities")=py::int_(skimagexx::rank_vector_capabilities());
+    module.attr("rank_percentile_interface")="rank-percentile-v1";
+    module.attr("rank_percentile_capabilities")=py::int_(skimagexx::rank_percentile_capabilities());
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
         const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
@@ -128,9 +130,10 @@ void bind_rank(py::module_& module) {
         if(PyObject_SetItem(copy.ptr(),indices.ptr(),zero.ptr())<0)throw py::error_already_set();
         return copy;
     });
-    const auto run_rank=[numpy](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation,int mode) {
+    const auto run_rank=[numpy](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation,int mode,py::handle p0={},py::handle p1={}) {
         if(mode==0 && (operation<0 || operation>12 || !(skimagexx::rank_histogram_capabilities() & (std::uint32_t{1}<<operation))))throw py::value_error("invalid rank operation");
         if(mode==1 && (operation<13 || operation>15))throw py::value_error("invalid rank statistics operation");
+        if(mode==3 && (operation<17 || operation>25))throw py::value_error("invalid rank percentile operation");
         const int rank=int(requested_shifts.size());
         if((rank!=2 && rank!=3) || image.ndim()!=rank)throw py::type_error("Function call with ambiguous argument types");
         const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
@@ -140,6 +143,14 @@ void bind_rank(py::module_& module) {
         buffer(output,rank+1);
         if(mode && ((image.dtype().kind()!='u' || (image.itemsize()!=1 && image.itemsize()!=2)) || footprint.dtype().kind()!='u' || footprint.itemsize()!=1 || (!mask_object.is_none() && (mask.dtype().kind()!='u' || mask.itemsize()!=1))))throw py::type_error("rank statistics requires prepared unsigned buffers");
         std::vector<int> shifts;for(const auto& value:requested_shifts)shifts.push_back(shift(value));
+        double lower=0.,upper=1.;
+        if(mode==3) {
+            // Match Cython argument conversion, including NumPy scalar and
+            // array __float__ warning/error behavior; do not normalize via
+            // Python float(), and finish both before center validation/GIL.
+            lower=PyFloat_AsDouble(p0.ptr());if(PyErr_Occurred())throw py::error_already_set();
+            upper=PyFloat_AsDouble(p1.ptr());if(PyErr_Occurred())throw py::error_already_set();
+        }
         skimagexx::RankView view;view.uint16=image.itemsize()==2;view.image=image.data();view.footprint=static_cast<const std::uint8_t*>(footprint.data());view.output=output.mutable_data();view.bins=bins;
         view.output_type=skimagexx::bindings::real_pixel_type(dtype);
         const int skip=rank==2 ? 1:0;view.shape[0]=view.footprint_shape[0]=1;
@@ -164,10 +175,12 @@ void bind_rank(py::module_& module) {
         view.serial_alias=numpy.attr("shares_memory")(image,output).cast<bool>() || (!mask_object.is_none() && numpy.attr("shares_memory")(mask,output).cast<bool>());
         const auto depth=std::size_t(output.shape(rank));
         if(mode==2 && rank!=2)throw py::value_error("rank vector requires 2D input");
+        if(mode==3 && rank!=2)throw py::value_error("rank percentile requires 2D input");
         if(operation>=9 && numpy.attr("shares_memory")(footprint,output).cast<bool>())throw py::value_error("overlapping buffers are outside rank-histogram-v3 parity");
         {py::gil_scoped_release release;
             const auto op=static_cast<skimagexx::RankOperation>(operation);
-            if(mode==1)skimagexx::rank_statistics_into(view,op);
+            if(mode==3)skimagexx::rank_percentile_into(view,op,lower,upper);
+            else if(mode==1)skimagexx::rank_statistics_into(view,op);
             else if(mode==2)skimagexx::rank_windowed_histogram_into(view,depth);
             else if(operation>=5 && operation<=8)skimagexx::rank_filter_into(view,op,skimagexx::rank_aliases(view));
             else skimagexx::rank_filter_into(view,op);
@@ -176,4 +189,5 @@ void bind_rank(py::module_& module) {
     module.def("rank_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op){run_rank(a,f,m,o,s,b,op,0);});
     module.def("rank_statistics_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op){run_rank(a,f,m,o,s,b,op,1);});
     module.def("rank_windowed_histogram_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b){run_rank(a,f,m,o,s,b,16,2);});
+    module.def("rank_percentile_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op,py::object p0,py::object p1){run_rank(a,f,m,o,s,b,op,3,p0,p1);});
 }
