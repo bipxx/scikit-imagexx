@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           mkdir -p build
           python -m pip install pytest==9.1.1
-          python -m pytest -q --capture=sys tests/test_public_qualification.py -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml 2>&1 | tee build/qualification-tool-guards.log
+          python -m pytest -q --capture=sys tests/test_public_qualification.py tests/test_build_identity_facts.py tests/test_rank_statistics_products.py -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml 2>&1 | tee build/qualification-tool-guards.log
       - name: Build and qualify one genuine whole product on this fresh host
         shell: bash
         run: |
@@ -74,11 +74,24 @@ jobs:
           set -euo pipefail
           manifest='build/public-qualification/${{ matrix.profile }}/manifest.json'
           if [[ -f "$manifest" ]]; then
-            python tools/public_qualification.py verify --profile '${{ matrix.profile }}' --output 'build/public-qualification/${{ matrix.profile }}'
+            python tools/public_qualification.py verify --profile '${{ matrix.profile }}' --output 'build/public-qualification/${{ matrix.profile }}' | tee 'build/qualification-verify-${{ matrix.profile }}.json'
           else
             echo 'No terminal acceptance seal; retain failure receipts and original command states.'
             exit 1
           fi
+      - name: Stage a bounded controlled product after successful independent verification
+        if: success() && matrix.profile != 'debug'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/rank_statistics_products.py --qualification 'build/public-qualification/${{ matrix.profile }}' --verification-receipt 'build/qualification-verify-${{ matrix.profile }}.json' --profile '${{ matrix.profile }}' --artifact-run '${{ github.run_id }}' --output 'build/rank-statistics-product-${{ matrix.profile }}'
+      - uses: actions/upload-artifact@v4
+        if: success() && matrix.profile != 'debug'
+        with:
+          name: rank-statistics-product-${{ matrix.profile }}
+          include-hidden-files: true
+          retention-days: 90
+          path: build/rank-statistics-product-${{ matrix.profile }}/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -89,3 +102,4 @@ jobs:
             build/public-qualification/${{ matrix.profile }}/
             build/qualification-tool-guards.xml
             build/qualification-tool-guards.log
+            build/qualification-verify-${{ matrix.profile }}.json
