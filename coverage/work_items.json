@@ -26021,11 +26021,11 @@
       ],
       "depends_on": [],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Follow exact run/source identities through terminal; retain full SHA/CRC/member receipts and bounded scientific data. No cancel/retry, measurement, or passed-seal reclassification."
+          "All8 third-pair products terminal failed solely stale shared-majority assertion. Complete failed closure retained under explicitly amended350MiB science budgets; no accepted or performance classification."
         ]
       },
       "parity": {
@@ -26048,13 +26048,6 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      },
-      "live_observation": {
-        "session_id": 84195,
-        "run_ids": [
-          40074322430,
-          40074324260
-        ]
       }
     },
     {
@@ -26069,11 +26062,11 @@
       ],
       "depends_on": [],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Follow exact run/source identities through terminal; retain full SHA/CRC/member receipts and bounded scientific data. No cancel/retry, measurement, or passed-seal reclassification."
+          "All8 fourth-pair products and6actual Release envelopes independently verified. All4 source/strict patch/common-build-input pair gates pass. Root parity acceptance public-wave11; one-worker measurements pending."
         ]
       },
       "parity": {
@@ -26096,13 +26089,6 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
-      },
-      "live_observation": {
-        "session_id": 1541,
-        "run_ids": [
-          40077192858,
-          40077194449
-        ]
       }
     },
     {
@@ -26239,7 +26225,7 @@
         "tv-chambolle-finite-loop"
       ],
       "dependency_requirements": {},
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -26269,7 +26255,15 @@
       },
       "proofs": {
         "native_private": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "c11ede33e634de34304be7dccab7b51a34684931",
+          "manifest": {
+            "path": "build/worktrees/tv-chambolle-wrapper/build/tv-finite-prototype/manifest.json",
+            "sha256": "572815d465c0abc8bc087a92d238ae5a5044edfe753e236e273154c5bcb6dc62"
+          },
+          "native_contract_checks": 632,
+          "native_pending": 0,
+          "scope": "19358privatePASS/2122 explicitportable4rejections; original provider, forced stages, actual default loop and trace scopes separated. No public/SDK/performance claim."
         }
       }
     },
@@ -26287,7 +26281,7 @@
         "tv-chambolle-finite-loop"
       ],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -26314,6 +26308,17 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "a0c4d4a53fe508fdc037ed3986dd24f45a9b377c",
+          "manifest": {
+            "path": "build/tv-chambolle-finite-bridge/manifest.json",
+            "sha256": "c08f08a13dafca05829ca03d4c80b8eb134f07e6e8c36e4fc2ab78f1afd86cbd"
+          },
+          "scope": "Five actual private variants normal/scalar;2008 focused binding checks. Public integration remains separate."
+        }
       }
     },
     {
@@ -26334,7 +26339,7 @@
         "rank-decisions-nested-policy-preflight"
       ],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -26355,8 +26360,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+        "main_commit": "79902c2"
       },
       "retention": {
         "active_paths": [],
@@ -26386,8 +26391,376 @@
       },
       "proofs": {
         "public_native": {
+          "status": "verified",
+          "source_sha": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+          "manifest": {
+            "path": "coverage/evidence/public-wave11.json",
+            "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+          },
+          "native_contract_checks": 7742,
+          "native_pending": 0,
+          "scope": "Selected six-corpus scope in actual normal/scalar1/4 products;672856XML checks+112SDK checks. No full-argument/performance acceptance."
+        }
+      },
+      "root_acceptance": {
+        "path": "coverage/evidence/public-wave11.json",
+        "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+      }
+    },
+    {
+      "id": "tv-chambolle-public-191",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/tv-chambolle-public",
+      "base_sha": null,
+      "owns": [
+        "build/TV191-hosted-dispatch"
+      ],
+      "depends_on": [
+        "tv-chambolle-finite-loop",
+        "tv-chambolle-finite-wrapper",
+        "tv-chambolle-finite-bridge"
+      ],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Frozenb550 actual public/whole-core/SDK17 qualification run40083629572, all4profiles required.768 final merged metadata guards pass; standalone source-hash and Windows certificate byte bugs fixed before dispatch. Actual public execution and timings remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "source_freeze": {
+        "source_sha": "b550107eb335a86ea69b9b806d552404bf3229f0",
+        "predicted_images": 191,
+        "registered_functions": 194,
+        "wheel_members": 108,
+        "SDK_members": 62,
+        "SDK_families": 17,
+        "SDK_checks": 34
+      },
+      "hosted_run": {
+        "id": 40083629572,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40083629572",
+        "status": "in_progress"
+      },
+      "proofs": {
+        "public_native": {
           "status": "pending"
         }
+      }
+    },
+    {
+      "id": "genuine191-tv-observation",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/tv-chambolle-public",
+      "base_sha": null,
+      "owns": [
+        "build/genuine191-tv-hosted-observation"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Exact-source observer33635 and sequential retainer96566; preserve full source/science/build closure and real successful-only products. No timeout cancellation or performance claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "live_observation": {
+        "session_id": 33635,
+        "sequential_retainer": 96566,
+        "run_id": 40083629572
+      }
+    },
+    {
+      "id": "matrix-transform-contracts",
+      "kind": "contract",
+      "apis": [
+        "transform.matrix_transform"
+      ],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-contracts",
+      "base_sha": null,
+      "owns": [
+        "tests/test_matrix_transform_contracts.py",
+        "coverage/contracts/matrix-transform.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "374 original rows/383 reference checks per3runtimes;748 strict nativepending cases. Raw words/provider order/geometry/ownership preserved. No native or performance admission."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "c6d20c901c598a89a5786e5c9b60015aa17cb294",
+        "main_commit": "583db3d82af2c4d086858f33daccb0fd7b4ad017"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "c6d20c901c598a89a5786e5c9b60015aa17cb294",
+          "manifest": {
+            "path": "build/worktrees/matrix-transform-contracts/build/matrix-reference/manifest.json",
+            "sha256": "4d3a50d860ea361a02d05d2bd34652f1f6ab2aad988914c5020c0c6d7b08263a"
+          },
+          "passing_contract_checks": 374
+        }
+      }
+    },
+    {
+      "id": "matrix-transform-private-shell",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-contracts",
+      "base_sha": null,
+      "owns": [
+        "python/skimagexx/_matrix_transform.py",
+        "tests/test_matrix_transform_native_pipeline.py"
+      ],
+      "depends_on": [
+        "matrix-transform-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Private shell376f9:796PASS+8explicitCPP-requiredpending per6modes.432actual checkedCPP/316provider-or-metadata worker rows. CPP certificate only abs<=16/grid2^-20; ordinary floating/large-coordinate kernel remains required. No public registration or performance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "matrix-transform-general-kernel",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-native",
+      "base_sha": null,
+      "owns": [
+        "include/skimagexx/matrix_transform.hpp",
+        "src/matrix_transform.cpp",
+        "src/simd_matrix_transform_avx2.cpp",
+        "tests/test_matrix_transform_native.cpp"
+      ],
+      "depends_on": [
+        "matrix-transform-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Audit pinned NumPy/BLAS shape/layout/runtime association; implement versioned general finite C++ mapping/SIMD/globalworkers while preserving original words. Explicit pending ordinary cases must advance beyond dyadic certificate; no upstream forwarding/tolerance weakening or whole-product/local timing."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-bregman-contracts",
+      "kind": "contract",
+      "apis": [
+        "restoration.denoise_tv_bregman"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/tv-bregman-contracts",
+      "base_sha": null,
+      "owns": [
+        "tests/test_tv_bregman_contracts.py",
+        "coverage/contracts/tv-bregman.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Source-audited135 original IDs:112 safe actual Cython,12 Python pre-entry rejects,11 blocked intake-only;418PASS perruntime,270 strictnativepending. Cython/wrapper sources retained beforecalls; no unsafe probes or new native implementation."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "5f6d9564b1d704feed59dd9c8a3bf9b7dcc472b2",
+          "manifest": {
+            "path": "build/worktrees/tv-bregman-contracts/build/tv-bregman-reference/manifest.json",
+            "sha256": "a5a35cb904e9e1e956952b1c10e97705fceebd9d2bdf3badcc05eca3ec33554f"
+          },
+          "passing_contract_checks": 135
+        }
+      }
+    },
+    {
+      "id": "tv-bregman-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/tv-bregman-contracts",
+      "base_sha": null,
+      "owns": [
+        "include/skimagexx/tv_bregman.hpp",
+        "src/tv_bregman.cpp",
+        "src/simd_tv_bregman_avx2.cpp",
+        "tests/test_tv_bregman_native.cpp"
+      ],
+      "depends_on": [
+        "tv-bregman-contracts"
+      ],
+      "dependency_requirements": {},
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Typed C++ Gauss-Seidel source-order, asymmetric halos, mixed scalar precision, ordered typed-square/double RMSE and strict stopping. Preserve reused channel-output initialization; no naive parallel channels. Versioned early ABI, SIMD/globalworkers only with dependency proof; bounded native builds, no full product/env/timing/registration."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
       }
     }
   ],
@@ -26709,7 +27082,6 @@
     "restoration.denoise_bilateral",
     "restoration.denoise_invariant",
     "restoration.denoise_nl_means",
-    "restoration.denoise_tv_bregman",
     "restoration.denoise_wavelet",
     "restoration.ellipsoid_kernel",
     "restoration.estimate_sigma",
@@ -26755,7 +27127,6 @@
     "transform.integrate",
     "transform.iradon",
     "transform.iradon_sart",
-    "transform.matrix_transform",
     "transform.order_angles_golden_ratio",
     "transform.probabilistic_hough_line",
     "transform.pyramid_expand",
@@ -27090,12 +27461,12 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 186,
+    "native_partial_image_names": 190,
     "metadata_names": 3,
-    "upstream_only_names": 283,
+    "upstream_only_names": 279,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current accepted whole10:186 native-partial image paths,3metadata,4partialclasses,1exceptionprovider,283upstream-only/477total. Twelve new algorithms across15 new canonical/identity paths. Full arguments/class state/data/I/O and performance remain incomplete.",
+    "note": "Accepted whole11 after94f:190 partial image paths,3metadata,4partialclasses,1exception,279upstream-only/477. Full argument/class/state/data/I/O and performance objective remains incomplete.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -27122,20 +27493,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "genuine190-linkdep-pair-observation",
-        "genuine190-nested-fix-pair-observation"
+        "genuine191-tv-observation"
       ],
       "resize_bench": [
-        "tv-chambolle-finite-bridge"
+        "matrix-transform-general-kernel"
       ],
       "resize_api": [
-        "tv-chambolle-finite-wrapper"
+        "tv-bregman-native"
       ]
     },
     "current_three_agent_packets": {
-      "metrics_reductions": "genuine190-nested-fix-pair-observation",
-      "resize_bench": "tv-chambolle-finite-bridge",
-      "resize_api": "tv-chambolle-finite-wrapper"
+      "metrics_reductions": "genuine191-tv-observation",
+      "resize_bench": "matrix-transform-general-kernel",
+      "resize_api": "tv-bregman-native"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -27197,17 +27567,31 @@
       "static_plans": 8,
       "local_metadata_before": 573,
       "local_metadata_after": 573,
-      "accepted_main_images": 186,
-      "new_public_acceptance": 0,
-      "observer_session": 1541,
+      "accepted_main_images": 190,
+      "new_public_acceptance": 4,
       "evidence": {
-        "path": "coverage/evidence/rank-decisions-nested-policy-fix.json",
-        "sha256": "f5ffae1b55d32125a5952cd88f81788ef0ff7a99a8913a2cd96d7ab5ea83615f"
-      }
+        "path": "coverage/evidence/public-wave11.json",
+        "sha256": "7148c38c34c02323dd14bee42597960acfd758c359a7b5cde5a415e146f3fabc"
+      },
+      "status": "All8products/all6envelopes qualified and root accepted parity-only"
     },
     "current_private_TV": {
       "path": "coverage/evidence/tv-chambolle-private-loop.json",
       "sha256": "47650d79edb57655c01d235939e8c5ba63bfab9bdd977d2d95aba1308cfbd791"
+    },
+    "current_public_TV": {
+      "source": "b550107eb335a86ea69b9b806d552404bf3229f0",
+      "run_id": 40083629572,
+      "observer_session": 33635,
+      "expected_image_paths": 191,
+      "accepted": false
+    },
+    "controlled_counts_experiment": {
+      "raw_sha256": "9266f3acd562712c2fd0adda5dddbc10d25136065e25a2d7efe118eba511a2f5",
+      "producer_run": 40083908759,
+      "producer_source": "21b9cc9ee2349df644b3c6baab05aa3dc28c5c2f",
+      "consumer_ref": "integration/wave17-decisions",
+      "status": "Exact metadata publication queued; original/before/after one-worker benchmark not dispatched yet"
     }
   },
   "parallel_review": {
