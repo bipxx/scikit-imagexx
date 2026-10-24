@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "acceptance_scope": "Genuine whole-product selected public parity, source/runtime/core/package/SDK and controlled source/build inputs; performance remains pending.",
+  "sources": {
+    "before": "66860aef0d2483ca1d728589d9b3b0952433db91",
+    "after": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7"
+  },
+  "runs": {
+    "before": 40077192858,
+    "after": 40077194449
+  },
+  "independent_verification": {
+    "path": "build/genuine190-nested-fix-pair-hosted-observation/independent-verification.json",
+    "sha256": "081b4669b6b293c89d428ce055048f4737a05243a832d4ebfdfb568bd484874a"
+  },
+  "retained_handoff": {
+    "path": "build/genuine190-nested-fix-pair-hosted-observation/handoff.json",
+    "sha256": "22196bd1dbf96e5439caa76774b0a040a894c428731fe6483e792f5951b7f43a"
+  },
+  "product_pin_material": {
+    "path": "build/genuine190-nested-fix-pair-hosted-observation/root-review-product-pin-material.json",
+    "sha256": "b6cfef9c950bf481d9828779852b1ce03ecda848a3131989fcc5a50dae4f9fe9"
+  },
+  "root_rehashed_owned_records": 2297,
+  "actual_profiles_each": [
+    "windows",
+    "modern",
+    "minimum",
+    "debug"
+  ],
+  "normal_and_scalar": true,
+  "XML_checks": {
+    "before": 649056,
+    "after": 672856
+  },
+  "total_XML_checks": 1321912,
+  "SDK_families_each": 14,
+  "SDK_checks_total": 224,
+  "complete_product_members_each": 104,
+  "complete_SDK_members_each": 59,
+  "image_paths": 190,
+  "metadata_functions": 3,
+  "partial_classes": 4,
+  "exception_provider": 1,
+  "upstream_only": 279,
+  "inventory_paths": 477,
+  "new_canonical_rank_algorithms": [
+    "otsu",
+    "majority"
+  ],
+  "new_public_paths": [
+    "filters.rank.otsu",
+    "filters.rank.majority",
+    "filters.rank.generic.otsu",
+    "filters.rank.generic.majority"
+  ],
+  "canonical_rank_algorithms": 31,
+  "default_native_workers": 1,
+  "supplementary_native_workers": 4,
+  "common_build_inputs_equal_all_four": true,
+  "approved_counts_only_source_delta": [
+    {
+      "profile": "windows",
+      "changed": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "full_source_canonical_index_sha256": [
+        "b61c44f246034c480cf109029c2f3c44fcb06c6a943819c5efa8cb0bb67d675d",
+        "6c7db712cf1a2347d379302af47b7a37f8ca705c3eb5ba00e7611fe1b28e8071"
+      ],
+      "approved_patch_sha256": "c03e6dbf0ae809e0e38a4374c16f998f4d4cb453191104bdcb36204be21cf2c7",
+      "common_sha256": "86df63187013e0e4ec47ca55c49a94936c9c7ab0432fa809980e91fbffc7fb31",
+      "all_common_inputs_equal": true,
+      "generated_output_raw_hashes_retained_not_required_equal": true
+    },
+    {
+      "profile": "modern",
+      "changed": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "full_source_canonical_index_sha256": [
+        "1cad0f98fda0225296893751bd9cbc0ae324c6f70800a842e92b7edc8160c550",
+        "50f0d6348b11c69782a82e8eebf833af5c597d3d6cdd8ffc7bbd98f9cfdad4fb"
+      ],
+      "approved_patch_sha256": "c03e6dbf0ae809e0e38a4374c16f998f4d4cb453191104bdcb36204be21cf2c7",
+      "common_sha256": "7360514b7b74d4b4ffa36afee32c41a18e95bcb8da2ca595cb91e11c8ee19ff2",
+      "all_common_inputs_equal": true,
+      "generated_output_raw_hashes_retained_not_required_equal": true
+    },
+    {
+      "profile": "minimum",
+      "changed": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "full_source_canonical_index_sha256": [
+        "1cad0f98fda0225296893751bd9cbc0ae324c6f70800a842e92b7edc8160c550",
+        "50f0d6348b11c69782a82e8eebf833af5c597d3d6cdd8ffc7bbd98f9cfdad4fb"
+      ],
+      "approved_patch_sha256": "c03e6dbf0ae809e0e38a4374c16f998f4d4cb453191104bdcb36204be21cf2c7",
+      "common_sha256": "287812f7e4903460a9b4fe0ab4ba9cd3f284810a1f1ed192ff578a21d1ebfe3d",
+      "all_common_inputs_equal": true,
+      "generated_output_raw_hashes_retained_not_required_equal": true
+    },
+    {
+      "profile": "debug",
+      "changed": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "full_source_canonical_index_sha256": [
+        "1cad0f98fda0225296893751bd9cbc0ae324c6f70800a842e92b7edc8160c550",
+        "50f0d6348b11c69782a82e8eebf833af5c597d3d6cdd8ffc7bbd98f9cfdad4fb"
+      ],
+      "approved_patch_sha256": "c03e6dbf0ae809e0e38a4374c16f998f4d4cb453191104bdcb36204be21cf2c7",
+      "common_sha256": "20819edbd3fbcb1e9cd2bb379c2d23851100925b9433fa23e8ebd1c0f77a4530",
+      "all_common_inputs_equal": true,
+      "generated_output_raw_hashes_retained_not_required_equal": true
+    }
+  ],
+  "performance_acceptance": false,
+  "all_argument_or_full_library_parity": false,
+  "limitations": "This accepts only the frozen advertised scopes and exact products. Existing partial API/class/provider limitations remain. Counts-only speed changes require the unchanged1379/376 original-library trial; no timing or universal SIMD/speed claim follows from parity."
+}
