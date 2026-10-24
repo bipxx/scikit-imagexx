@@ -1,0 +1,48 @@
+{
+  "schema": "joined-tv191-qualification-retry-v1",
+  "failed_run": 40083629572,
+  "failed_source": "b550107eb335a86ea69b9b806d552404bf3229f0",
+  "original_failure_unchanged": true,
+  "retained_original_failure": {
+    "path": "build/genuine191-tv-hosted-observation/40083629572/retained-v1/manifest.json",
+    "sha256": "15a981da819df2a3e17bbdaa19f955fe408ed7c5cc7234d1b94ee7640c2a8873"
+  },
+  "independent_failure_review": {
+    "path": "build/genuine191-tv-hosted-observation/independent-verification.json",
+    "sha256": "2ba81716e64d564023b56c2f4bf482370859be23ab76bf151aca2883beff527b"
+  },
+  "corrected_TV_source": "7e092e8f22944340ced8ee6b5c34efe98136337c",
+  "preflight_checks": 985,
+  "preflight": {
+    "path": "build/decisions-readiness/TV191-census-fix/aggregate-manifest.json",
+    "sha256": "9eb531c1bef9453ad90f2210f64f39ff5e0c6f848ea728d239bed763e8deee65"
+  },
+  "independent_source_review": {
+    "path": "build/TV191-census-independent-review/7e092e8/receipt.json",
+    "sha256": "2c7a7d742166dbed0801e638cd27ed547a3cf0cc8971cd28b0efea1ef53f1252"
+  },
+  "combined_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+  "joined_accepted_main": "000dbc4147348c38c66c66c18e97e97439c03ae8",
+  "joined_source_review": {
+    "path": "build/decisions-readiness/TV191-census-fix/joined-main-source-review.json",
+    "sha256": "48413a72d4f9e6ed6f049425f30dd180625d7a9179c1761b5f7d4dd69e5cf354"
+  },
+  "qualification_run": 40087742726,
+  "observer_session": 44483,
+  "sequential_retainer_session": 77649,
+  "expected_image_paths": 191,
+  "expected_registered_functions": 194,
+  "SDK_families": 17,
+  "SDK_members": 62,
+  "required_groups_include": [
+    "public-TV",
+    "public-counts"
+  ],
+  "accepted": false,
+  "dispatch": {
+    "path": "build/TV191-hosted-dispatch/f87120c/request.json",
+    "sha256": "3e0ec13f9c11da186c1ecdee9bdb43323cb0a6bb2b2dd0a00887afc6b2888b00"
+  },
+  "operation_timings": 0,
+  "scope": "Fresh joined-product qualification pending. Original assertions/cases unchanged; metadata/census errors corrected. Public acceptance remains190."
+}

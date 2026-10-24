@@ -25316,7 +25316,7 @@
       "id": "rank-statistics-counts-controlled-measurement",
       "kind": "measurement",
       "apis": [],
-      "owner": "integrator",
+      "owner": "metrics_reductions",
       "branch": "integration/rank-statistics-counts-measurement",
       "base_sha": "800fb95d5191c4b2a19beb089ef6b7ef2ea42140",
       "owns": [],
@@ -25333,7 +25333,7 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "queued",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -25351,15 +25351,75 @@
           1
         ],
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "partial_profiles": [
+          {
+            "profile": "windows",
+            "verification": {
+              "path": "build/rank-statistics-controlled-performance-runs/40084877921/windows/offline-verification.json",
+              "sha256": "ef86c87d47214351c3e6eee82f714f7601b12013f7e7a4808f648f82dded2dbd"
+            },
+            "status": "independently verified partial profile; complete three-profile performance promotion pending"
+          },
+          {
+            "profile": "minimum",
+            "verification": {
+              "path": "build/rank-statistics-controlled-performance-runs/40084877921/minimum/offline-verification.json",
+              "sha256": "c71130eb388452d1d937ef94bad3c153d9b77b964294a112e38775d724a9f36d"
+            },
+            "status": "independently verified partial profile; complete three-profile performance promotion pending"
+          }
+        ],
+        "hosted_run_terminal": "success",
+        "verified_profiles": [
+          {
+            "profile": "windows",
+            "verification": {
+              "path": "build/rank-statistics-controlled-performance-runs/40084877921/windows/offline-verification.json",
+              "sha256": "ef86c87d47214351c3e6eee82f714f7601b12013f7e7a4808f648f82dded2dbd"
+            }
+          },
+          {
+            "profile": "modern",
+            "verification": {
+              "path": "build/rank-statistics-controlled-performance-runs/40084877921/modern/offline-verification.json",
+              "sha256": "9a51c4f2c6c99a5c9fe57cdea0dd5990d53a83d618b8d38c093337d1c62d9900"
+            }
+          },
+          {
+            "profile": "minimum",
+            "verification": {
+              "path": "build/rank-statistics-controlled-performance-runs/40084877921/minimum/offline-verification.json",
+              "sha256": "c71130eb388452d1d937ef94bad3c153d9b77b964294a112e38775d724a9f36d"
+            }
+          }
+        ]
       },
       "merge": {
         "commit": null,
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/rank-statistics-controlled-performance-runs/40084877921"
+        ],
         "protected_artifacts": []
+      },
+      "live_observation": {
+        "session_id": 1437,
+        "run_id": 40084877921,
+        "controller_source": "66860aef0d2483ca1d728589d9b3b0952433db91"
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+          "manifest": {
+            "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
+            "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
+          },
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
+        }
       }
     },
     {
@@ -26494,7 +26554,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Exact-source observer33635 and sequential retainer96566; preserve full source/science/build closure and real successful-only products. No timeout cancellation or performance claim."
+          "Fresh exact f871 joined-product/all four profiles, normal/scalar/public-counts+TV/full108wheel/62SDK/17families qualification. Only actual successful sealed products may be accepted; prior b550 failure immutable."
         ]
       },
       "parity": {
@@ -26515,14 +26575,28 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/genuine191-tv-joined-hosted-observation"
+        ],
         "protected_artifacts": []
       },
       "live_observation": {
-        "session_id": 33635,
-        "sequential_retainer": 96566,
-        "run_id": 40083629572
-      }
+        "session_id": 44483,
+        "sequential_retainer": 77649,
+        "run_id": 40087742726,
+        "source": "f87120cda4e6ca9246c30f837479babe0bce0b92"
+      },
+      "retained_failed_runs": [
+        {
+          "run": 40083629572,
+          "source": "b550107eb335a86ea69b9b806d552404bf3229f0",
+          "accepted": false,
+          "proof": {
+            "path": "build/genuine191-tv-hosted-observation/40083629572/retained-v1/manifest.json",
+            "sha256": "15a981da819df2a3e17bbdaa19f955fe408ed7c5cc7234d1b94ee7640c2a8873"
+          }
+        }
+      ]
     },
     {
       "id": "matrix-transform-contracts",
@@ -26629,7 +26703,7 @@
       "apis": [],
       "owner": "resize_bench",
       "branch": "feature/matrix-transform-native",
-      "base_sha": null,
+      "base_sha": "376f9f23fb331d39de4fbdeaea38141b8a810b17",
       "owns": [
         "include/skimagexx/matrix_transform.hpp",
         "src/matrix_transform.cpp",
@@ -26640,17 +26714,26 @@
         "matrix-transform-contracts"
       ],
       "dependency_requirements": {},
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Audit pinned NumPy/BLAS shape/layout/runtime association; implement versioned general finite C++ mapping/SIMD/globalworkers while preserving original words. Explicit pending ordinary cases must advance beyond dyadic certificate; no upstream forwarding/tolerance weakening or whole-product/local timing."
+          "General casting outside the existing dyadic certificate, unfamiliar BLAS/CPU profiles and arbitrary/exceptional arithmetic remain unassessed.",
+          "Real Python bridge/full pipeline, production core/SDK/public registry and one-worker bottleneck measurements remain separate gates."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e",
+        "artifact_sha256": "87ab5981a003a075a4ced62bcfe3ee74a2f9bfd27b44821ba2112c0f711b72b2",
+        "runs": [],
+        "scope": {
+          "actual_native_contract_checks": 96000,
+          "oracle_reports": 24,
+          "unique_general_cohorts_per_report": 4000,
+          "native_control_assertions": 3146154,
+          "whole_pipeline_public_claim": false,
+          "limits": "Finite F64,D2..4,exact authenticated Haswell NumPy/OpenBLAS arithmetic profiles; no arbitrary-argument/public/performance admission."
+        }
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -26665,8 +26748,41 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/worktrees/matrix-transform-contracts/build/matrix-kernel"
+        ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e",
+          "manifest": {
+            "path": "build/worktrees/matrix-transform-contracts/build/matrix-kernel/manifest.json",
+            "sha256": "87ab5981a003a075a4ced62bcfe3ee74a2f9bfd27b44821ba2112c0f711b72b2"
+          },
+          "native_contract_checks": 96000,
+          "native_pending": 0,
+          "scope": {
+            "actual_native_contract_checks": 96000,
+            "oracle_reports": 24,
+            "unique_general_cohorts_per_report": 4000,
+            "native_control_assertions": 3146154,
+            "whole_pipeline_public_claim": false,
+            "limits": "Finite F64,D2..4,exact authenticated Haswell NumPy/OpenBLAS arithmetic profiles; no arbitrary-argument/public/performance admission."
+          },
+          "public_registration": false
+        }
+      },
+      "provided_interfaces": {
+        "matrix-transform-math-v1": {
+          "state": "frozen",
+          "definition": "#pragma once\n#include <cstddef>\n#include <cstdint>\n\nnamespace skimagexx {\n// PRIVATE matrix-transform-math-v1. Profiles describe executed arithmetic,\n// not NumPy version ranges or a public/function capability registration.\nenum class MatrixArithmeticProfile : std::uint32_t {\n    unsupported = 0,\n    // Audited Haswell OpenBLAS 0.3.21 / 0.3.34.106 GEMM, K=3..5,\n    // alpha=1,beta=0. Caller authenticates library/dispatch and GEMM selection.\n    haswell_gemm_fma = 1,\n    // NumPy1.24.4 DOUBLE_matmul_inner_noblas: ordered separate mul/add.\n    numpy124_noblas = 2,\n    // N=1 Haswell GEMV: literal transposed/nontransposed small-K trees.\n    // Caller selects from original matmul's actual internal layout/iterator\n    // buffering, not from the layout of a later converted view.\n    haswell_gemv_transposed = 3,\n    haswell_gemv_nontransposed = 4,\n    // NumPy2.5.4 N=1 special-case, non-BLASable matrix scalar loop.\n    numpy254_special_noblas = 5,\n};\nstruct MatrixReadView {\n    const void* data;\n    std::size_t rows, columns;\n    std::ptrdiff_t row_stride, column_stride; // signed bytes; unaligned allowed\n    const void* allocation;\n    std::size_t allocation_bytes; // authentic owner extent, never fabricated\n};\nstruct MatrixWriteView {\n    void* data;\n    std::size_t rows, columns;\n    std::size_t allocation_bytes; // contiguous C double output, no self-overlap\n};\nenum class MatrixMapStatus : std::uint32_t {\n    ok = 0, unsupported_profile, unsupported_shape, invalid_view,\n    overlap, unsafe_fp_environment, nonfinite_or_range, unsafe_divisor,\n};\n// Allocation-free finite F64 mapping for D=2..4, N>0, arbitrary authentic\n// input byte strides. Input abs<=2^20; nonzeros abs>=2^-200. All input bounds,\n// output disjointness, nearest/gradual FP and all denominators are checked\n// BEFORE any output store. Zero denominators become binary64 epsilon exactly.\n// Nonzero denominators must abs>=2^-400. Source FP flags are restored.\n// GEMV arithmetic requires the explicit separate profiles; GEMM rejects N=1.\n// SIMD-disabled and portable paths use identical explicitly rounded arithmetic\n// (std::fma for fused profiles), not an arithmetic-profile substitution.\nMatrixMapStatus matrix_transform_into(const MatrixReadView& points,\n    const MatrixReadView& matrix, const MatrixWriteView& output,\n    MatrixArithmeticProfile profile);\nnamespace simd {\n// Runtime-gated AVX2+FMA leaf, no validation; returns processed row count.\nstd::size_t matrix_transform_fma(const MatrixReadView&, const double* coefficients,\n    double* output, std::size_t begin, std::size_t end, std::size_t dimensions);\n}\n} // namespace skimagexx\n",
+          "sha256": "6ce5d575ec67b15b9f6e5b22d329e3b08f036e5b67d1e904af1dfa1544bdc131",
+          "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e",
+          "header": "include/skimagexx/matrix_transform.hpp",
+          "public": false
+        }
       }
     },
     {
@@ -26729,8 +26845,8 @@
       "kind": "private_kernel",
       "apis": [],
       "owner": "resize_api",
-      "branch": "feature/tv-bregman-contracts",
-      "base_sha": null,
+      "branch": "feature/tv-bregman-native",
+      "base_sha": "5f6d9564b1d704feed59dd9c8a3bf9b7dcc472b2",
       "owns": [
         "include/skimagexx/tv_bregman.hpp",
         "src/tv_bregman.cpp",
@@ -26741,11 +26857,106 @@
         "tv-bregman-contracts"
       ],
       "dependency_requirements": {},
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Typed C++ Gauss-Seidel source-order, asymmetric halos, mixed scalar precision, ordered typed-square/double RMSE and strict stopping. Preserve reused channel-output initialization; no naive parallel channels. Versioned early ABI, SIMD/globalworkers only with dependency proof; bounded native builds, no full product/env/timing/registration."
+          "Gauss-Seidel sweep remains serial; only independent initialization has optional parallel/SIMD execution.",
+          "Broader defined numeric parameters/external buffer protocols, owned wrapper/binding, production core/SDK/public registry and one-worker bottleneck measurements remain separate gates."
+        ]
+      },
+      "parity": {
+        "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47",
+        "artifact_sha256": "0443b40e19763ec3dbf5e8fc7f0db722c1bacd84512f6719eb1af5d66fab0eed",
+        "runs": [],
+        "scope": {
+          "actual_native_contract_checks": 2976,
+          "safe_original_case_ids": 112,
+          "native_control_assertions": 12933638,
+          "metadata_rejections_or_blocked_intake_counted_native": 0,
+          "whole_pipeline_public_claim": false,
+          "parallel_sweep": false,
+          "limits": "Prepared finite F32/F64; original positive typed weight/nonnegative eps domain; serial Gauss-Seidel; parallel initialization only. No Python ABI/public/performance admission."
+        }
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-bregman-contracts/build/tv-bregman-native"
+        ],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47",
+          "manifest": {
+            "path": "build/worktrees/tv-bregman-contracts/build/tv-bregman-native/manifest.json",
+            "sha256": "0443b40e19763ec3dbf5e8fc7f0db722c1bacd84512f6719eb1af5d66fab0eed"
+          },
+          "native_contract_checks": 2976,
+          "native_pending": 0,
+          "scope": {
+            "actual_native_contract_checks": 2976,
+            "safe_original_case_ids": 112,
+            "native_control_assertions": 12933638,
+            "metadata_rejections_or_blocked_intake_counted_native": 0,
+            "whole_pipeline_public_claim": false,
+            "parallel_sweep": false,
+            "limits": "Prepared finite F32/F64; original positive typed weight/nonnegative eps domain; serial Gauss-Seidel; parallel initialization only. No Python ABI/public/performance admission."
+          },
+          "public_registration": false
+        }
+      },
+      "provided_interfaces": {
+        "tv-bregman-prepared-v1": {
+          "state": "frozen",
+          "definition": "#pragma once\n#include <cstddef>\n#include <cstdint>\n\nnamespace skimagexx {\ninline constexpr const char* tv_bregman_interface = \"tv-bregman-prepared-v1\";\ninline constexpr unsigned tv_bregman_capabilities = 3; // private typed F32/F64\ninline constexpr bool tv_bregman_parallel_sweep = false;\nenum class TvBregmanType { float32, float64 };\nstruct TvBregmanImage {\n    const void* data;\n    TvBregmanType type;\n    std::size_t rows, cols, channels, elements;\n};\nstruct TvBregmanBuffer { void* data; std::size_t elements; };\nstruct TvBregmanWorkspace {\n    TvBregmanBuffer out, dx, dy, bx, by;\n};\nstruct TvBregmanParameters {\n    double weight; // caller supplies the already dtype-converted weight value\n    int max_iterations; // source Cint; <=0 still performs initialization\n    double eps;\n    bool isotropic;\n};\nstruct TvBregmanTrace {\n    std::uint64_t rmse_bits; // ordered F64 fold of typed tx*tx, sqrt(sum/N)\n    bool stopped; // !(rmse>eps), including NaN if arithmetic produces it\n};\nstruct TvBregmanResult {\n    std::size_t iterations;\n    double rmse; // DBL_MAX when no update body executes\n    int initialization_workers; // actual team, never a parallel-sweep claim\n};\n\n// Native aligned denseC input (rows,cols,channels), rows/cols>=2, channels>=1.\n// Every caller-owned workspace has exact (rows+2)*(cols+2)*channels elements\n// of input type. Initial out is caller supplied finite data: zeros for the\n// first public call, previous channel_out for subsequent calls. Initial aux\n// words are unrestricted and completely overwritten. All six byte extents and optional trace are disjoint. Corners\n// of out retain their initial words. Four aux buffers copy CURRENT out before\n// resetting its interior/fixed halos: callers must preserve channel_out reuse.\n// Input/current out must be finite. Positive typed weight and derived lambda/\n// norm must remain finite/nonzero; finite eps>=0. Nearest/gradual FP profile.\n// No allocation, shape/provider coercion, channel-axis, return-view ownership,\n// warning/error text or unsafe-original-domain compatibility claim.\n// One invocation jointly processes all channels in r/c/k order with one RMSE.\n// A future public channel loop calls channels=1 sequentially with reused out;\n// each invocation resets RMSE to DBL_MAX. No hidden/global channel state.\n// Returns nullptr when eligible; validates BEFORE ANY WRITE.\nconst char* tv_bregman_ineligibility(const TvBregmanImage& input,\n    const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,\n    TvBregmanTrace* trace=nullptr,std::size_t trace_capacity=0) noexcept;\n\n// Rechecks the guard before writes. Snapshot sole image.cpp global workers;\n// optional parallel SIMD initialization only. Gauss-Seidel r/c/k updates and\n// the residual fold remain serial and preserve source association. F32\n// isotropic +1 denominator/division and anisotropic reciprocal use F64.\nTvBregmanResult tv_bregman_into(const TvBregmanImage& input,\n    const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,\n    TvBregmanTrace* trace=nullptr,std::size_t trace_capacity=0);\n} // namespace skimagexx\n",
+          "sha256": "e7628e15e96026dcd7721450cb87f58bf0e12fd6c634961e853062780419dedc",
+          "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47",
+          "header": "include/skimagexx/tv_bregman.hpp",
+          "public": false
+        }
+      }
+    },
+    {
+      "id": "matrix-transform-general-binding",
+      "kind": "private_binding",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-binding",
+      "base_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e",
+      "owns": [
+        "src/bind_matrix_transform.cpp",
+        "python/skimagexx/_matrix_transform.py",
+        "tests/test_matrix_transform_native_pipeline.py",
+        "tests/test_matrix_transform_binding.py"
+      ],
+      "depends_on": [
+        "matrix-transform-general-kernel"
+      ],
+      "dependency_requirements": {
+        "matrix-transform-general-kernel": {
+          "evidence_scope": "native_private",
+          "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": "coverage/contracts/matrix-transform.json",
+        "uncovered_cases": [
+          "Real builtin ownership/completed arithmetic counters, dtype/layout/provider conversion order, sole native workers, source-faithful full Python pipeline; no upstream image algorithm forwarding. Public/full-domain/performance acceptance remains pending."
         ]
       },
       "parity": {
@@ -26767,6 +26978,193 @@
       },
       "retention": {
         "active_paths": [],
+        "protected_artifacts": []
+      },
+      "public_registration": false
+    },
+    {
+      "id": "tv-bregman-binding",
+      "kind": "private_binding",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/tv-bregman-binding",
+      "base_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47",
+      "owns": [
+        "src/bind_tv_bregman.cpp",
+        "python/skimagexx/_tv_bregman.py",
+        "tests/test_tv_bregman_native_pipeline.py",
+        "tests/test_tv_bregman_binding.py"
+      ],
+      "depends_on": [
+        "tv-bregman-native"
+      ],
+      "dependency_requirements": {
+        "tv-bregman-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": "coverage/contracts/tv-bregman.json",
+        "uncovered_cases": [
+          "Real builtin ownership/completed arithmetic counters, dtype/layout/provider conversion order, sole native workers, source-faithful full Python pipeline; no upstream image algorithm forwarding. Public/full-domain/performance acceptance remains pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "public_registration": false,
+      "worker_handoff": {
+        "source_sha": "54dcc71c26e5732797a7fa7b7015bbdf015dacf4",
+        "manifest": {
+          "path": "build/worktrees/tv-bregman-contracts/build/tv-bregman-binding/manifest.json",
+          "sha256": "eb683ab3ad6d915d60559405b0dc63c409ce87b7565a0f684d3bb1ee2b873e80"
+        },
+        "passing_private_checks": 2780,
+        "portable_worker4_rejections": 290,
+        "public_acceptance": false,
+        "integrator_review": "pending"
+      }
+    },
+    {
+      "id": "max-tree-contracts",
+      "kind": "contract",
+      "apis": [
+        "morphology.max_tree",
+        "morphology.max_tree_local_maxima",
+        "morphology.area_opening",
+        "morphology.area_closing",
+        "morphology.diameter_opening",
+        "morphology.diameter_closing"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/max-tree-contracts",
+      "base_sha": "000dbc4147348c38c66c66c18e97e97439c03ae8",
+      "owns": [
+        "tests/test_max_tree_contracts.py",
+        "coverage/contracts/max-tree.json"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": "coverage/contracts/max-tree.json",
+        "uncovered_cases": [
+          "Authenticate official pinned wrappers/full Cython tree/canonicalization/attribute traversal before calls; source-audit safety, typed index bounds and provided-parent reuse.",
+          "Bounded deterministic per-function original observations on all3 runtimes, exact parent/traverser identities and raw outputs/dtype/layout/ownership/protocol/error order; retain unstable ties instead of normalizing.",
+          "Unsafe original shape/index domains remain intake metadata only; no Cython probing or numerical/native claim. Future C++/SIMD/globalworkers/public core/one-worker benchmarks are separate gates."
+        ]
+      },
+      "parity": {
+        "source_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2",
+        "artifact_sha256": "f69be1dd8b6b736d4e9bdccf25d576d3fc23cea5d5dd7856fc1c31803db85be4",
+        "runs": [],
+        "passing_reference_and_metadata_checks": 3234,
+        "native_checks": 0
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/max-tree-contracts"
+        ],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2",
+          "manifest": {
+            "path": "build/worktrees/max-tree-contracts/build/max-tree-reference/manifest.json",
+            "sha256": "f69be1dd8b6b736d4e9bdccf25d576d3fc23cea5d5dd7856fc1c31803db85be4"
+          },
+          "passing_contract_checks": 3234,
+          "scope": "Original-only six-function source contract; exact parent/traverser/labels preserved, unsafe Cython calls blocked; C++ and timing pending.",
+          "native_checks": 0
+        }
+      }
+    },
+    {
+      "id": "max-tree-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/max-tree-native",
+      "base_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2",
+      "owns": [
+        "include/skimagexx/max_tree.hpp",
+        "src/max_tree.cpp",
+        "src/simd_max_tree_avx2.cpp",
+        "tests/test_max_tree_native.cpp"
+      ],
+      "depends_on": [
+        "max-tree-contracts"
+      ],
+      "dependency_requirements": {
+        "max-tree-contracts": {
+          "evidence_scope": "contract_reference",
+          "source_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/max-tree.json",
+        "uncovered_cases": [
+          "Versioned early ABI; own typed C++ stable sorting/union-find/canonicalization and all six prepared operations with exact parent/traverser/uint64 labels.",
+          "233 safe original IDs become real C++;118 metadata-only cases never count native. SIMD/optional sole workers only where source dependencies permit; sequential tree stages remain explicit.",
+          "Bindings/providers/production core/SDK/public registry and isolated one-worker original-library benchmarks remain separate gates."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/max-tree-contracts"
+        ],
         "protected_artifacts": []
       }
     }
@@ -27042,8 +27440,6 @@
     "metrics.normalized_mutual_information",
     "metrics.structural_similarity",
     "metrics.variation_of_information",
-    "morphology.area_closing",
-    "morphology.area_opening",
     "morphology.binary_closing",
     "morphology.binary_dilation",
     "morphology.binary_erosion",
@@ -27052,8 +27448,6 @@
     "morphology.closing",
     "morphology.convex_hull_image",
     "morphology.convex_hull_object",
-    "morphology.diameter_closing",
-    "morphology.diameter_opening",
     "morphology.dilation",
     "morphology.ellipse",
     "morphology.erosion",
@@ -27068,8 +27462,6 @@
     "morphology.isotropic_opening",
     "morphology.local_maxima",
     "morphology.local_minima",
-    "morphology.max_tree",
-    "morphology.max_tree_local_maxima",
     "morphology.medial_axis",
     "morphology.octagon",
     "morphology.octahedron",
@@ -27500,19 +27892,20 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "genuine191-tv-observation"
+        "genuine191-tv-observation",
+        "rank-statistics-counts-controlled-measurement"
       ],
       "resize_bench": [
-        "matrix-transform-general-kernel"
+        "matrix-transform-general-binding"
       ],
       "resize_api": [
-        "tv-bregman-native"
+        "max-tree-native"
       ]
     },
     "current_three_agent_packets": {
       "metrics_reductions": "genuine191-tv-observation",
-      "resize_bench": "matrix-transform-general-kernel",
-      "resize_api": "tv-bregman-native"
+      "resize_bench": "matrix-transform-general-binding",
+      "resize_api": "max-tree-native"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -27587,19 +27980,51 @@
       "sha256": "47650d79edb57655c01d235939e8c5ba63bfab9bdd977d2d95aba1308cfbd791"
     },
     "current_public_TV": {
-      "source": "b550107eb335a86ea69b9b806d552404bf3229f0",
-      "run_id": 40083629572,
-      "observer_session": 33635,
+      "source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+      "run_id": 40087742726,
+      "observer_session": 44483,
+      "sequential_retainer_session": 77649,
       "expected_image_paths": 191,
-      "accepted": false
+      "accepted": false,
+      "previous_failure_retained": 40083629572
     },
     "controlled_counts_experiment": {
-      "raw_sha256": "9266f3acd562712c2fd0adda5dddbc10d25136065e25a2d7efe118eba511a2f5",
-      "producer_run": 40083908759,
-      "producer_source": "21b9cc9ee2349df644b3c6baab05aa3dc28c5c2f",
-      "consumer_ref": "integration/wave17-decisions",
-      "status": "Exact metadata publication queued; original/before/after one-worker benchmark not dispatched yet"
-    }
+      "run_id": 40084877921,
+      "observer_session": 1437,
+      "source": "66860aef0d2483ca1d728589d9b3b0952433db91",
+      "status": "All7 jobs and all3 profile/independent/root audits passed; full report publication in progress.",
+      "measurement_workers": 1,
+      "timed_ids_per_profile": 376,
+      "paired_rounds": 7,
+      "partial_profiles": [
+        {
+          "profile": "windows",
+          "verification": {
+            "path": "build/rank-statistics-controlled-performance-runs/40084877921/windows/offline-verification.json",
+            "sha256": "ef86c87d47214351c3e6eee82f714f7601b12013f7e7a4808f648f82dded2dbd"
+          },
+          "status": "independently verified partial profile; complete three-profile performance promotion pending"
+        },
+        {
+          "profile": "minimum",
+          "verification": {
+            "path": "build/rank-statistics-controlled-performance-runs/40084877921/minimum/offline-verification.json",
+            "sha256": "c71130eb388452d1d937ef94bad3c153d9b77b964294a112e38775d724a9f36d"
+          },
+          "status": "independently verified partial profile; complete three-profile performance promotion pending"
+        }
+      ],
+      "performance_promoted": false,
+      "root_verification": {
+        "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
+        "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
+      }
+    },
+    "integrator_queue": [
+      "tv-bregman-binding",
+      "joined-TV-public-qualification",
+      "matrix-transform-general-binding"
+    ]
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
@@ -28141,7 +28566,8 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/tv-reference-worktree-cleanup-20261024.json",
-    "sha256": "d764871c6742d1e40c86291c6bd7fd457d8b74f2dcab328d96acbfd2b42ab8f4"
+    "receipt": "coverage/evidence/temp-build-cleanup-20261024.json",
+    "logical_net_bytes_recovered": 763614068,
+    "active_envs_baselines_raw_results_and_unfinished_sources_preserved": true
   }
 }

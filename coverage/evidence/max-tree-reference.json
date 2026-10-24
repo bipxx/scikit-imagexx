@@ -1,0 +1,23 @@
+{
+  "schema": "integrator-max-tree-reference-review-v1",
+  "source_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2",
+  "manifest": {
+    "path": "build/worktrees/max-tree-contracts/build/max-tree-reference/manifest.json",
+    "sha256": "f69be1dd8b6b736d4e9bdccf25d576d3fc23cea5d5dd7856fc1c31803db85be4"
+  },
+  "owned_records_verified": 69,
+  "owned_bytes_verified": 52432712,
+  "Git_source_members_verified": 2,
+  "passing_reference_and_metadata_checks": 3234,
+  "source_safe_numeric_case_ids": 233,
+  "metadata_only_cases": 118,
+  "strict_native_pending_checks": 2106,
+  "native_checks": 0,
+  "public_acceptance": false,
+  "scope": "Original-only six-function source contract; exact parent/traverser/labels preserved, unsafe Cython calls blocked; C++ and timing pending.",
+  "passed": true,
+  "integrator_review": {
+    "path": "build/decisions-readiness/max-tree-reference-root-review.json",
+    "sha256": "b07c079f610027f34e7d40e8b0aa93bb0460ba0df788a08882f979921c6e72f3"
+  }
+}

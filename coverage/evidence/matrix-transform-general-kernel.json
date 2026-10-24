@@ -1,0 +1,31 @@
+{
+  "schema": "integrator-private-kernel-byte-source-review-v1",
+  "family": "matrix",
+  "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e",
+  "manifest": {
+    "path": "build/worktrees/matrix-transform-contracts/build/matrix-kernel/manifest.json",
+    "sha256": "87ab5981a003a075a4ced62bcfe3ee74a2f9bfd27b44821ba2112c0f711b72b2"
+  },
+  "owned_records_verified": 536,
+  "owned_bytes_verified": 512660792,
+  "Git_source_members_verified": 4,
+  "scope": {
+    "actual_native_contract_checks": 96000,
+    "oracle_reports": 24,
+    "unique_general_cohorts_per_report": 4000,
+    "native_control_assertions": 3146154,
+    "whole_pipeline_public_claim": false,
+    "limits": "Finite F64,D2..4,exact authenticated Haswell NumPy/OpenBLAS arithmetic profiles; no arbitrary-argument/public/performance admission."
+  },
+  "operation_timings": 0,
+  "new_builds": 0,
+  "public_acceptance": false,
+  "passed": true,
+  "integrator_review": {
+    "path": "build/decisions-readiness/private-kernel-reviews/matrix.json",
+    "sha256": "72fcd035e8e5f548b94ecaf4b40121535d2f9c554db9c16236ba0e6f782dff52"
+  },
+  "public_registration": false,
+  "performance_evidence": null,
+  "next_gate": "Real owned binding/full source-faithful Python pipeline, then sole production core/SDK/public qualification and isolated original-library benchmark."
+}

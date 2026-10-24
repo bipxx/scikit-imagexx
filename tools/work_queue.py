@@ -168,7 +168,7 @@ def main(argv=None):
     action = parser.add_mutually_exclusive_group()
     action.add_argument('--check', action='store_true')
     action.add_argument('--ready', action='store_true')
-    action.add_argument('--agents', action='store_true', help='Print the recorded three-agent roster; not a live process query')
+    action.add_argument('--agents', action='store_true', help='Print current recorded worker assignments; not a live process query')
     action.add_argument('--packet', help='Print an agent handoff, without launching it')
     args = parser.parse_args(argv)
     try:
@@ -179,7 +179,18 @@ def main(argv=None):
         if args.check:
             print(f'Validated {len(by_id)} packets: no dependency cycles or active file conflicts.')
         elif args.agents:
-            print(json.dumps(document.get('parallel_review', {}), indent=2))
+            policy = document.get('execution_policy', {})
+            assignments = policy.get('current_three_agent_packets', {})
+            print(json.dumps(dict(
+                live_process_query=False,
+                integrator='root',
+                implementation_goal_status=policy.get('implementation_goal_status', 'unspecified'),
+                agents=[dict(agent=owner, packet=name, state=by_id[name]['state'],
+                             branch=by_id[name]['branch'],
+                             queue=policy.get('worker_queues', {}).get(owner, [name]))
+                        for owner, name in assignments.items()],
+                historical_review_completed_at=document.get('parallel_review', {}).get('completed_at_utc'),
+            ), indent=2))
         elif args.packet:
             if args.packet not in by_id:
                 raise ValueError(f'unknown packet: {args.packet}')

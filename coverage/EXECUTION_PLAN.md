@@ -33,7 +33,7 @@ its speed remains unmeasured. Whole11 now qualifies local Otsu, majority and the
 two generic aliases, bringing the accepted count to 190 partial image paths and
 31 canonical rank algorithms. Both exact controlled sources pass all four
 products: 649,056 before checks and 672,856 after checks, with 224 combined SDK
-checks and equal actual common build inputs. Counts-only timing is pending.
+checks and equal actual common build inputs. Controlled one-worker counts run `40084877921` has independently verified all three profiles and passed the root audit; full report publication is in progress. All 376 IDs, seven paired rounds and every slower case are retained. These results apply to the frozen 190-path source pair.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
@@ -57,10 +57,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole11 accepted and merged: 190 partial image paths. Main executable/header/Python/tool sources match qualified `94d2d3f`; 265 exact members were checked. TV candidate `b550107` predicts 191 and is in fresh genuine qualification; no speedup inferred. |
-| Worker 1 | `metrics_reductions` | Actual TV qualification and controlled rank artifact verification | Rank runs `40077192858`/`40077194449` and all six real Release envelopes are authenticated. Observe TV run `40083629572` at exact `b550107`; preserve whole-source/SDK17 closure. The reviewed one-worker counts experiment uses the immutable 190-path products. |
-| Worker 2 | `resize_api` | Native Bregman TV kernel | Source-audited reference has 135 fixed IDs and 418 passing checks per runtime. Preserve mixed precision, Gauss-Seidel dependencies, ordered RMSE, asymmetric halos and sequential channel-output reuse. Independent copies can parallelize; the sweep remains an explicit follow-up. |
-| Worker 3 | `resize_bench` | General finite C++ matrix mapping | All 374 function contracts have an owned shell; small dyadic C++ execution is separately qualified. General floating transforms, large coordinates and GEMV/GEMM association need the versioned kernel. Keep pending ordinary cohorts explicit while adding SIMD and the sole global worker policy. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole11 remains accepted at 190 partial image paths. Joined TV source `f87120c` includes the qualified rank optimization and is in fresh qualification `40087742726`; prior `b550107` failure is retained. The metadata/intake patch passes 985 checks. |
+| Worker 1 | `metrics_reductions` | Joined TV qualification and controlled one-worker rank publication | Observe exact `f87120c` run `40087742726` and retain SDK17/source/science closure. Counts run `40084877921` passed all three preparations, barrier, measurements and independent/root audits. Publish all 1,128 rows and 23,688 paired-role samples, including every slower case. |
+| Worker 2 | `resize_api` | Native max-tree/attribute-filter family | Six-function original contract `5b92e53` passes 3,234 reference/metadata checks across three runtimes: 233 safe numeric IDs, 118 metadata-only IDs, native0. The worker now implements typed C++ stable sort/tree/attribute/label primitives. Ready Bregman bridge `54dcc71` awaits root integration. |
+| Worker 3 | `resize_bench` | General matrix bridge and full source-faithful pipeline | Private kernel `7ae1b77` passes 96,000 exact comparisons (24 reports of 4,000 general cohorts) with explicit GEMM/GEMV/NumPy profiles. Real binding tests preserve the 374 frozen pipeline cases and old certified routes, with completed math counted separately from guarded attempts. General casting/public core/performance remain pending. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

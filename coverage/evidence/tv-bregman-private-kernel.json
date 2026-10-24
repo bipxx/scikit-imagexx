@@ -1,0 +1,32 @@
+{
+  "schema": "integrator-private-kernel-byte-source-review-v1",
+  "family": "bregman",
+  "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47",
+  "manifest": {
+    "path": "build/worktrees/tv-bregman-contracts/build/tv-bregman-native/manifest.json",
+    "sha256": "0443b40e19763ec3dbf5e8fc7f0db722c1bacd84512f6719eb1af5d66fab0eed"
+  },
+  "owned_records_verified": 301,
+  "owned_bytes_verified": 14840449,
+  "Git_source_members_verified": 4,
+  "scope": {
+    "actual_native_contract_checks": 2976,
+    "safe_original_case_ids": 112,
+    "native_control_assertions": 12933638,
+    "metadata_rejections_or_blocked_intake_counted_native": 0,
+    "whole_pipeline_public_claim": false,
+    "parallel_sweep": false,
+    "limits": "Prepared finite F32/F64; original positive typed weight/nonnegative eps domain; serial Gauss-Seidel; parallel initialization only. No Python ABI/public/performance admission."
+  },
+  "operation_timings": 0,
+  "new_builds": 0,
+  "public_acceptance": false,
+  "passed": true,
+  "integrator_review": {
+    "path": "build/decisions-readiness/private-kernel-reviews/bregman.json",
+    "sha256": "403e65845c3bc1d53a1e39f6b18b45619bedce93b1799ad3e87b626f9fb4939d"
+  },
+  "public_registration": false,
+  "performance_evidence": null,
+  "next_gate": "Real owned binding/full source-faithful Python pipeline, then sole production core/SDK/public qualification and isolated original-library benchmark."
+}
