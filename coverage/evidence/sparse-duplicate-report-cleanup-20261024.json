@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T02:57:39.066301+00:00",
+  "worktrees": 4,
+  "duplicate_report_copies_omitted": 224,
+  "duplicate_report_bytes_omitted": 949960192,
+  "preservation": "All exact raw data remains in currentmain physicalfiles and unchangedGitblobs; this omits only redundanttracked worktreecopies via sparsecheckout. Othertracked sourcebytes rehashed unchanged; no ignored build/package/environment path touched.",
+  "plan": {
+    "path": "build/cleanup/sparse-duplicate-reports-20261024/plan.json",
+    "sha256": "446fb79c9b1f805651b2bf28d72e30f699536d18aeeb23e951519bae0cc89bda"
+  },
+  "manifest": {
+    "path": "build/cleanup/sparse-duplicate-reports-20261024/manifest.json",
+    "sha256": "f3f219cb8f99a53c2d910dbaf834c5db2cafba0f287717e8cbf13d8d89ab50af"
+  },
+  "free_bytes_before": 1329426432,
+  "free_bytes_after": 2257993728
+}
