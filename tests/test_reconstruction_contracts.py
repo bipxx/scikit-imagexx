@@ -98,6 +98,11 @@ def fixture(s,events):
         def ndim(self):events.append(['offset_ndim']);return 1
         def __iter__(self):events.append(['offset_iter']);return iter([1])
     if s.get('provider')=='offset-record':kw['offset']=Offset()
+    if s.get('blocked')=='nan':seed=seed.copy();seed.flat[0]=np.nan
+    if s.get('blocked')=='wrong-footprint-rank':kw['footprint']=np.ones((3,),bool)
+    class BadFootprint:
+        def astype(self,dtype,copy):return np.ones((3,3),np.int64)
+    if s.get('blocked')=='custom-bad-footprint':kw['footprint']=BadFootprint()
     return seed,mask,kw
 
 def observe(s,function=None):
@@ -186,3 +191,13 @@ def test_native_pending_is_not_upstream_forwarding(workers):
     finally:sys.setprofile(old_profile);xx.set_num_threads(before);xx.set_fallback_enabled(previous)
 
 
+
+@pytest.mark.parametrize('spec',[s for s in cases() if s.get('blocked')],ids=lambda s:s['id'])
+def test_blocked_intakes_are_real_and_never_execute_original(spec):
+    seed,mask,kwargs=fixture(spec,[]);attempts=[]
+    if spec['blocked']=='nan':assert np.isnan(seed).any()
+    if spec['blocked']=='wrong-footprint-rank':assert kwargs['footprint'].ndim!=seed.ndim
+    if spec['blocked']=='custom-bad-footprint':assert type(kwargs['footprint']).__name__=='BadFootprint'
+    def forbidden(*args,**kwargs):attempts.append(True);raise AssertionError('unsafe original executed')
+    row=observe(spec,forbidden)
+    assert not attempts and row['original_Cython_attempts']==0 and row['error']['type']=='SourceUnsafeBoundary'
