@@ -19715,7 +19715,7 @@
       },
       "merge": {
         "commit": null,
-        "main_commit": null
+        "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
         "active_paths": [
@@ -19760,16 +19760,16 @@
         "component-consumers-measurement",
         "arraymap-live-provider-fix"
       ],
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "coverage/contracts/component-consumers-benchmark.json",
         "uncovered_cases": [
-          "Measured broadcast relabel/clear-border and object filtering regressions. Move raw-word output width dispatch outside loops and certify disjoint contiguous SIMD stores; preserve NaN/zero bits, generic strides/aliases/partial-error/provider order. Sorting/hash/layout conversion remain unresolved. Private/public parity and new measurements pending. No binding/Python/provider edits currently needed."
+          "Advertisedpartial public scope passed genuinewhole7b; remaining unassessedinput/alias/protocol domains and isolated one-worker performance remainpending."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+        "artifact_sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e",
         "runs": []
       },
       "performance": {
@@ -19782,8 +19782,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "237532d4d0cb020a5b5264291bae4a1b9d2dfd44",
+        "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
         "active_paths": [
@@ -19810,6 +19810,18 @@
           "native_contract_checks": 2937,
           "native_pending": 0,
           "scope": "Private-only actualconsumer binding:2937x10,878x3 at1/4,native2families x10 includingportable/ASanleaks. Three C++files andtwo newtests only; no Python/provider edits, genuine whole/public/performance pending."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "manifest": {
+            "path": "coverage/evidence/public-wave7.json",
+            "sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e"
+          },
+          "native_contract_checks": 3980,
+          "profiles": 8,
+          "native_pending": 0,
+          "scope": "Actual public R4 frozen995IDs canonical/generic workers1/4 eachprofile; mixed31929rank+854metadata+72values and1379strictcorpus scopes listed separately. No privateadapter or logicaltest count becomesalgorithm count."
         }
       }
     },
@@ -20243,16 +20255,16 @@
       "depends_on": [
         "rank-statistics-native"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "coverage/contracts/rank-statistics.json",
         "uncovered_cases": [
-          "Root owns registry/namespace/CMake wiring andstrict-pending metadata transition. No public acceptance until genuine whole7,995 values unchanged; exactnoise metadata stages/customprotocols andvector-depth interface separate."
+          "Advertisedpartial public scope passed genuinewhole7b; remaining unassessedinput/alias/protocol domains and isolated one-worker performance remainpending."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+        "artifact_sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e",
         "runs": []
       },
       "performance": {
@@ -20265,8 +20277,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "eae8dc62a526705a6bd244abe025e3825e7b091b",
+        "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
         "active_paths": [],
@@ -20289,6 +20301,18 @@
           "native_contract_checks": 995,
           "native_pending": 0,
           "scope": "Privatef7 wrapper qualification only:995x1/4x8, expandedWindows3297x1/4xnormal/scalar,72capabilityguards and11providers.4660publictests collected, notexecuted/accepted; genuinewhole7 pending."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "manifest": {
+            "path": "coverage/evidence/public-wave7.json",
+            "sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e"
+          },
+          "native_contract_checks": 3980,
+          "profiles": 8,
+          "native_pending": 0,
+          "scope": "Actual public R4 frozen995IDs canonical/generic workers1/4 eachprofile; mixed31929rank+854metadata+72values and1379strictcorpus scopes listed separately. No privateadapter or logicaltest count becomesalgorithm count."
         }
       },
       "read_only_frozen_paths": [
@@ -20373,7 +20397,30 @@
             "sha256": "379a9862e5f7be85b8cc4efe1fe2baf779dd71f4fc099559bee659f28021b2a1"
           },
           "scope": "1379referencechecks x3,30guardtests x3/actionlint,376eligible(94/API);native0.16pytest-current helperlinks explicitly excluded; all215regularinputs hashed, no unreadable/home byteclosure claim."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "manifest": {
+            "path": "coverage/evidence/public-wave7.json",
+            "sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e"
+          },
+          "native_contract_checks": 3980,
+          "profiles": 8,
+          "native_pending": 0,
+          "scope": "Actual public R4 frozen995IDs canonical/generic workers1/4 eachprofile; mixed31929rank+854metadata+72values and1379strictcorpus scopes listed separately. No privateadapter or logicaltest count becomesalgorithm count."
         }
+      },
+      "actual_public_qualification": {
+        "source": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+        "cases": 1379,
+        "profiles": 8,
+        "workers": [
+          1,
+          4
+        ],
+        "timings": 0,
+        "phase1_reference_data_retained": true
       }
     },
     {
@@ -20588,16 +20635,16 @@
         "rank-statistics-public",
         "rank-statistics-benchmark-tooling"
       ],
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Original7aaa trial sealed2314records with knownrawmetadatafailures; all handles terminal. Correctedf4e6 producer leased for genuine7bpackages/affectedpublicrank+metadata/72nonstar values+fresh1379R4capsules. Native171acceptance and isolatedperformance remainpending; acceptedmain163."
+          "Advertisedpartial public scope passed genuinewhole7b; remaining unassessedinput/alias/protocol domains and isolated one-worker performance remainpending."
         ]
       },
       "parity": {
-        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
-        "artifact_sha256": null,
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+        "artifact_sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e",
         "runs": []
       },
       "performance": {
@@ -20611,7 +20658,7 @@
       },
       "merge": {
         "commit": null,
-        "main_commit": null
+        "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
         "active_paths": [
@@ -20640,7 +20687,7 @@
       "source_freeze": {
         "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "worktree": "build/worktrees/core-rank9-validation",
-        "lease_state": "granted",
+        "lease_state": "released",
         "prediction_only": {
           "partial_native_image_paths": 171,
           "upstream_only_paths": 295
@@ -20650,12 +20697,13 @@
         "path": "build/main-core-wave7b-evidence/lease.json",
         "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "owner": "resize_bench",
-        "scope": "Actual corrected packages; affected gates+freshR4capsules. Unaffected scopes inherit onlyafterfull-byte equivalence."
+        "scope": "Actual corrected packages; affected gates+freshR4capsules. Unaffected scopes inherit onlyafterfull-byte equivalence.",
+        "state": "released"
       },
       "followup_candidate": {
         "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "worktree": "build/worktrees/wave7-rank-consumer",
-        "lease_state": "granted",
+        "lease_state": "released",
         "changes": [
           "Original generic star export omission for sum, retaining both own alias attributes",
           "Authenticated fullfixturefile pin after pytest native-assertion migration; all13helpers/global/import/oracle AST and1379frozen cases/reference observations unchanged"
@@ -20690,7 +20738,7 @@
           18667,
           90100
         ],
-        "public_native_acceptance": false
+        "public_native_acceptance": true
       },
       "original_trial": {
         "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
@@ -20699,6 +20747,20 @@
         "records_verified": 2314,
         "accepted_product": false,
         "all_handles_terminal": true
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "manifest": {
+            "path": "coverage/evidence/public-wave7.json",
+            "sha256": "49e4bbac37ed762179099410b88ff15d1026d40b265a309d78a3c87590cf1c3e"
+          },
+          "native_contract_checks": 3980,
+          "profiles": 8,
+          "native_pending": 0,
+          "scope": "Actual public R4 frozen995IDs canonical/generic workers1/4 eachprofile; mixed31929rank+854metadata+72values and1379strictcorpus scopes listed separately. No privateadapter or logicaltest count becomesalgorithm count."
+        }
       }
     },
     {
@@ -20808,8 +20870,7 @@
       "contract": {
         "case_manifest": "tests/test_metrics_reverse_simd.py",
         "uncovered_cases": [
-          "Direct native-endian negative-unit f32/f64 transport preserves existing lane reversal, exact reduction tree, floating-point flags, NaN payloads and callback order. Actual route/counter evidence precedes optimization. Genuine cumulative parity and hosted performance remain required.",
-          "Qualified private transport proof sealed329records. Three original Linux normal-policy capfd handles remain live and excluded; all preserved. Exact actual cumulative public-package and hosted performance acceptance remain pending."
+          "Completeprivate reversed-load checks andallnormal-policy supplements nowpass; actualwhole8 publicpackage/nonforwarding/default1 andisolated performance remainpending."
         ]
       },
       "parity": {
@@ -21116,6 +21177,50 @@
       },
       "retention": {
         "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "public-qualification-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/public-qualification",
+      "base_sha": "e3a69810112a9e54a03386b3f066ec52445917f4",
+      "owns": [
+        "tools/public_qualification.py",
+        "tests/test_public_qualification.py",
+        ".github/workflows/public-qualification.yml"
+      ],
+      "depends_on": [],
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Portable hosted4profile actualwhole8 qualification only, no timings. Source-clean/full104+59SDK/runtimeclosure/default1/shared1/4/no privateprototype admission. Expected180derive/cross-check; older171metadata probe cannot countwhole8. Pending actualsourcefreeze/hosteddispatch."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/public-qualification"
+        ],
         "protected_artifacts": []
       }
     }
@@ -21858,8 +21963,7 @@
         "rank-decisions-contracts"
       ],
       "resize_bench": [
-        "rank-statistics-public",
-        "combined-public-wave7"
+        "public-qualification-tooling"
       ]
     }
   },

@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 163 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+474 public callable names inventoried in 19 modules; 171 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -212,7 +212,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.enhance_contrast_percentile` | upstream-only | pending | pending |
 | `filters.rank.entropy` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.equalize` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.geometric_mean` | upstream-only | pending | pending |
+| `filters.rank.geometric_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient_percentile` | upstream-only | pending | pending |
 | `filters.rank.majority` | upstream-only | pending | pending |
@@ -223,25 +223,25 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.median` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.minimum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.modal` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.noise_filter` | upstream-only | pending | pending |
+| `filters.rank.noise_filter` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.otsu` | upstream-only | pending | pending |
 | `filters.rank.percentile` | upstream-only | pending | pending |
 | `filters.rank.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.pop_bilateral` | upstream-only | pending | pending |
 | `filters.rank.pop_percentile` | upstream-only | pending | pending |
-| `filters.rank.subtract_mean` | upstream-only | pending | pending |
+| `filters.rank.subtract_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.subtract_mean_percentile` | upstream-only | pending | pending |
 | `filters.rank.sum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.sum_bilateral` | upstream-only | pending | pending |
 | `filters.rank.sum_percentile` | upstream-only | pending | pending |
 | `filters.rank.threshold` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.threshold_percentile` | upstream-only | pending | pending |
-| `filters.rank.windowed_histogram` | upstream-only | pending | pending |
+| `filters.rank.windowed_histogram` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.autolevel` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.enhance_contrast` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.entropy` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.equalize` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.geometric_mean` | upstream-only | pending | pending |
+| `filters.rank.generic.geometric_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.majority` | upstream-only | pending | pending |
 | `filters.rank.generic.maximum` | native-partial | yes (partial input contract) | yes |
@@ -249,13 +249,13 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.generic.median` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.minimum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.modal` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.noise_filter` | upstream-only | pending | pending |
+| `filters.rank.generic.noise_filter` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.otsu` | upstream-only | pending | pending |
 | `filters.rank.generic.pop` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.subtract_mean` | upstream-only | pending | pending |
+| `filters.rank.generic.subtract_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.sum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.threshold` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.windowed_histogram` | upstream-only | pending | pending |
+| `filters.rank.generic.windowed_histogram` | native-partial | yes (partial input contract) | yes |
 | `future.TrainableSegmenter` | upstream-only | pending | pending |
 | `future.fit_segmenter` | upstream-only | pending | pending |
 | `future.manual_lasso_segmentation` | upstream-only | pending | pending |

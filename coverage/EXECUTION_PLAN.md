@@ -6,22 +6,24 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 163 native-partial image entries,
+The current inventory contains 474 public paths: 171 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 303 upstream-only entries. The expansion adds 19
+provider, and 295 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
 
-The accepted whole6 product adds finite/min-max metrics SIMD classification and
-qualified R2 aliases without changing the 163-path inventory. Four newly verified
-hosted campaigns retain all samples and regressions. Three workers now qualify
-percentile benchmark contracts, implement nine percentile kernels, and prepare
-whole7 qualification of frozen consumer/R4 public changes. The candidate predicts
-171 image paths; that count requires actual cumulative package gates. The
-integrator owns shared wiring, hosted measurements, prompt merges and cleanup.
+The accepted whole7b product adds four R4 algorithms/eight public paths and
+byte-preserving consumer scans:171 partially native image paths. Eight actual
+normal/scalar Release/Debug profiles and fresh strict1379-case corpus checks
+pass; full104-member packages and59-member SDK/source equality authenticate
+explicitly inherited unaffected scopes. One-worker R4 and scan timing is next.
+Nine percentile kernels, wrapper prototypes and benchmark tooling are frozen
+privately for whole8. Three workers independently freeze bilateral and local
+Otsu/majority originals and prepare portable hosted qualification; the integrator
+owns shared wiring, exact-source performance dispatch, prompt merges and cleanup.
 
 ## What changed after review
 
@@ -43,10 +45,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 accepted: 163 image paths, 303 upstream-only. Four verified campaigns merged; whole7 source frozen7aaa747, actual package gates pending |
-| Worker 1 | `metrics_reductions` | Nine percentile benchmark contracts and hosted workflow | Reversed metrics transport5d2975 has a sealed qualified private proof; three original capfd policy handles remain live/excluded. Next original-only benchmark packet freezes1544 reference IDs and balanced safe rasters; public/performance gates pending |
-| Worker 2 | `resize_api` | Nine percentile public-wrapper contracts | New private kernels8e37 pass6618checks across11profiles;295immutable records independently verified. NoOMP policy explicit; inherited27041 remainslive/excluded. Prototype wrappers nowimplement canonical-only9paths; genuinewhole8/public/SDK/performance pending |
-| Worker 3 | `resize_bench` | Whole7 actual package/corpus/SDK qualification | R4 wrappers and benchmark Phase1 frozen. Final toolchain health verified; exclusive7aaa747 build lease granted. Genuine public/corpus/SDK gates and independent171-path inventory are running, with no coverage increase yet |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted:171image paths,295upstream-only;3007 new/preserved records independently verified. Whole8 sharedwiring and exactone-worker R4/consumer measurement next |
+| Worker 1 | `metrics_reductions` | Three rank bilateral original contracts and public module aliases | R5benchmark frozen6dd; metrics5d allprivate gates complete. Next exact strict range/ssize/index/provider semantics,3canonical+3publicmodule identities, original-only/native0 |
+| Worker 2 | `resize_api` | Local Otsu/majority reference contracts | R5wrapper prototypebbc6674passes across6profiles,0publicadmission. Next502canonical decisions IDs,32provider traces and independent neighborhood definitions; original-only/native0 |
+| Worker 3 | `resize_bench` | Portable four-profile genuine public qualification tooling | Whole7b complete/released,171accepted. Next hosted whole8 source/package/corpus/default1/SDK gates; no local fullbuilds or timing, separateNP2headers/runtime environments |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

@@ -1,8 +1,8 @@
 # Performance verification
 
-The current API inventory has 163 partially native image paths, three metadata
-helpers, four partially native transform classes and 303 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 163 image paths; measured
+The current API inventory has 171 partially native image paths, three metadata
+helpers, four partially native transform classes and 295 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 171 image paths; measured
 acceptance remains specific to each report's source revision and workload.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
@@ -50,12 +50,22 @@ All four new campaigns completed their three-profile preparation barrier and
 fresh artifact-only measurement jobs; their samples and classifications are now
 independently verified offline. No local image-operation timing was used.
 Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
-scans remain bottlenecks. Reversed metrics transport has a scoped private proof;
-three original policy trials remain live and excluded. Three workers now prepare
-percentile benchmark contracts, implement nine percentile kernels, and qualify
-actual whole7 packages combining consumer scans and four new rank algorithms. Candidate
-171-path metadata is a prediction until genuine cumulative gates pass; accepted
-main remains at 163 image paths.
+scans remain bottlenecks. Reversed metrics transport has completed its private
+checks; actual cumulative public/performance qualification remains pending.
+
+The accepted [whole7b product](../coverage/evidence/public-wave7.json) now covers
+171 partially native image paths. Four new rank algorithms/eight callable paths
+pass eight genuine normal/scalar Release/Debug profiles:31929 rank,854 metadata,
+and72 non-star value checks each, plus1379 strict corpus cases at workers1/4.
+All four complete104-member products retain the full59-member SDK; unchanged
+consumer/metrics scopes and88 SDK checks inherit only after full-byte/source
+identity checks. Private source-adapter supplements remain explicitly separate.
+R4 initial one-worker timing and updated consumer-scan timing remain pending.
+
+Nine percentile kernels and wrapper prototypes plus a990-eligible-case benchmark
+harness are ready for shared integration; those are not additional accepted
+public paths. Three workers now freeze bilateral/Otsu/majority contracts and
+prepare portable hosted qualification while the integrator wires whole8.
 
 ## Retained whole-library checkpoints
 
