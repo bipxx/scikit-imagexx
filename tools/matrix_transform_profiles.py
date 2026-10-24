@@ -392,6 +392,14 @@ def hosted():
 def env_python(folder):return Path(folder)/('Scripts/python.exe' if os.name=='nt' else 'bin/python')
 
 
+def cmake_path_definitions(source,python,pybind):
+    # Only CMake's three path-valued definitions are encoded here. Raw process,
+    # source and tool identity records retain the observed platform paths.
+    # CMake4 FindPython EVAL otherwise treats Windows \a/\U as escapes.
+    return ['-D'+name+'='+str(value).replace('\\','/') for name,value in
+            [('SOURCE',source),('Python_EXECUTABLE',python),('pybind11_DIR',pybind)]]
+
+
 def prepare(source,revision,profile,out):
     hosted();state,blobs=source_state(source,revision,True);validate_default_environment(os.environ)
     require('.'.join(map(str,sys.version_info[:2]))==PROFILES[profile]['python'],'wrong host Python')
@@ -429,7 +437,7 @@ def prepare(source,revision,profile,out):
         options=windows_generator(caps,instances)
     buildenv=environment();buildenv['PATH']=str(scripts)+os.pathsep+buildenv['PATH']
     journal.run('configure-private',[cmake,*options,'-S',harness,'-B',out/'native',
-        '-DSOURCE='+str(source),'-DPython_EXECUTABLE='+str(buildpy),'-Dpybind11_DIR='+cmakedir,
+        *cmake_path_definitions(source,buildpy,cmakedir),
         '-DCMAKE_BUILD_TYPE='+PROFILES[profile]['config']],buildenv)
     journal.run('build-private',[cmake,'--build',out/'native','--config',PROFILES[profile]['config'],'--parallel','2'],buildenv)
     extension='.pyd' if os.name=='nt' else '.so'

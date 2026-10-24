@@ -4,6 +4,7 @@ import base64
 import copy
 import csv
 import gzip
+import fnmatch
 import hashlib
 import importlib.util
 import io
@@ -94,6 +95,25 @@ def test_native_trial_is_hosted_only_before_any_build(monkeypatch,tmp_path):
     monkeypatch.setattr(c.venv,'EnvBuilder',lambda **kw:pytest.fail('must not create environment'))
     with pytest.raises(ValueError,match='hosted-only'):c.prepare(ROOT,c.SOURCE_REVISION,'modern',tmp_path/'absent')
     assert not (tmp_path/'absent').exists()
+
+
+@pytest.mark.parametrize('paths',[
+    (r'D:\a\source with spaces',r'C:\Users\agent\python.exe',r'D:\tools\é\pybind11'),
+    ('/home/runner/source','/opt/python/bin/python','/opt/pybind11/share/cmake'),
+])
+def test_all_three_cmake_definitions_avoid_eval_path_escapes_without_mutating_facts(paths):
+    original=tuple(paths)
+    definitions=c.cmake_path_definitions(*paths)
+    assert definitions==['-D'+name+'='+value.replace('\\','/') for name,value in
+                         zip(('SOURCE','Python_EXECUTABLE','pybind11_DIR'),paths)]
+    assert len(definitions)==3 and all('\\' not in value for value in definitions)
+    assert paths==original
+    # Exact callsite uses this tested encoder; unrelated generator/tool arguments
+    # and raw path identity capture retain their existing behavior.
+    source=ast.parse((ROOT/'tools/matrix_transform_profiles.py').read_text())
+    prepare=next(n for n in source.body if isinstance(n,ast.FunctionDef) and n.name=='prepare')
+    assert any(isinstance(n,ast.Starred) and isinstance(n.value,ast.Call) and
+               isinstance(n.value.func,ast.Name) and n.value.func.id=='cmake_path_definitions' for n in ast.walk(prepare))
 
 
 @pytest.mark.parametrize('wrong',['outside','unrecorded','changed'])
@@ -210,6 +230,24 @@ def test_workflow_is_manual_four_fresh_hosts_and_never_dispatches():
         assert value in text
     assert 'schedule:' not in text and 'gh workflow run' not in text
     assert 'OPENBLAS_CORETYPE:' not in text and 'NPY_DISABLE_CPU_FEATURES:' not in text
+
+
+def test_upload_keeps_authenticated_hidden_controller_provenance_only_within_allowlist():
+    text=(ROOT/'.github/workflows/matrix-transform-profiles.yml').read_text()
+    upload=text.split('uses: actions/upload-artifact@v4',1)[1]
+    assert re.search(r'^\s+include-hidden-files:\s+true\s*$',upload,re.M)
+    paths=[p.strip().replace('${{ matrix.profile }}','modern') for p in upload.split('path: |',1)[1].splitlines() if p.strip()]
+    assert paths==['build/matrix-default-modern/artifact/**',*[f'build/matrix-default-modern/*.{e}' for e in ('json','stdout','stderr','gz')]]
+    provenance='build/matrix-default-modern/artifact/controller/.github/workflows/matrix-transform-profiles.yml'
+    assert any(fnmatch.fnmatchcase(provenance,p) for p in paths)
+    # Both the artifact producer and explicit upload selection exclude entire
+    # checkout/environment trees. Hidden-file inclusion preserves a known source
+    # member, rather than widening capture to the parent repository.
+    assert '.github/workflows/matrix-transform-profiles.yml' in c.CONTROLLER_PATHS
+    for forbidden in ('build/matrix-profile-source/.git/config',
+                      'build/matrix-default-modern/runtime-env/.env',
+                      'build/matrix-default-modern/build-env/.git/config'):
+        assert not any(fnmatch.fnmatchcase(forbidden,p) for p in paths)
 
 
 def test_artifact_undeclared_nested_verification_is_not_ignored(tmp_path):
