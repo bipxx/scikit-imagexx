@@ -42398,7 +42398,7 @@
   ],
   "fixture_source_sha256": {
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368",
-    "tests/test_rank_percentile_contracts.py": "60f54275892abdca676db76bd36dd529802626f916814d1f10102e841ab69f16"
+    "tests/test_rank_percentile_contracts.py": "5a9349789d62f44060741a4e011a27b151d08301ed9d3050e797449c28826e6c"
   },
   "intended_timing_cases": 1008,
   "native_checks": 0,

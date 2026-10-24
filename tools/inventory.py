@@ -36,6 +36,8 @@ for _names, _test, _benchmark in (
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
            for name in ('geometric_mean','noise_filter','subtract_mean','windowed_histogram')),
      'tests/test_rank_statistics_public.py','benchmarks/rank_statistics.py'),
+    (tuple('filters.rank.'+name for name in ('autolevel_percentile', 'enhance_contrast_percentile', 'gradient_percentile', 'mean_percentile', 'pop_percentile', 'subtract_mean_percentile', 'threshold_percentile', 'sum_percentile', 'percentile')),
+     'tests/test_rank_percentile_public.py','benchmarks/rank_percentile.py'),
 ):
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 

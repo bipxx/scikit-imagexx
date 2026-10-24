@@ -174,7 +174,7 @@ def snapshot():
 def frozen():return json.loads(MATRIX.read_text())
 
 
-def test_integrity_safe_scope_and_native_pending(frozen):
+def test_integrity_safe_scope_and_original_capture(frozen):
     assert frozen['pinned_skimage']==skimage.__version__=='0.26.0'
     assert frozen['native_checks']==0 and frozen['native_pending']==len(CASES)
     assert frozen['canonical_cases']==len(CASES)==len({key for key,_,_ in CASES})
@@ -209,14 +209,17 @@ def test_original_frozen_contract(case,namespace,frozen):
 
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('case',CASES,ids=[c[0] for c in CASES])
-def test_strict_pending_never_counts_forwarding(case,workers):
-    _,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
+def test_public_native_preserves_frozen_contract(case,workers,frozen):
+    key,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
     try:
-        if 'filters.rank.'+name in native_functions():pytest.skip('native transition needs separately sealed actual public implementation proof')
-        actual=observe(getattr(importlib.import_module('skimagexx.filters.rank'),name),name,parameters)
-        assert actual['error']['type']=='NotImplementedError' and 'fallback is disabled' in actual['error']['message']
-        assert actual['result'] is None and not actual['warnings'] and actual['before']==actual['after']
+        assert 'filters.rank.'+name in native_functions()
+        function=getattr(importlib.import_module('skimagexx.filters.rank'),name)
+        assert function is getattr(importlib.import_module('skimagexx._rank'),name)
+        assert function is not getattr(reference,name)
+        actual=observe(function,name,parameters)
+        assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],key
     finally:xx.set_num_threads(threads);xx.set_fallback_enabled(policy)
+
 
 
 def neighborhoods(image,footprint,mask,shifts):

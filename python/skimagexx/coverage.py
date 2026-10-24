@@ -1,7 +1,7 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'segmentation': ('clear_border','relabel_sequential'),
-    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
@@ -33,7 +33,7 @@ def native_functions():
 
 
 RANK_CANONICAL_FUNCTIONS=tuple('filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank'])
-RANK_IDENTITY_ALIASES={'filters.rank.generic.'+name:'filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank']}
+RANK_IDENTITY_ALIASES={'filters.rank.generic.'+name:'filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank.generic']}
 
 
 def rank_contract(api):
@@ -41,6 +41,20 @@ def rank_contract(api):
     canonical=RANK_IDENTITY_ALIASES.get(api,api)
     if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
     name=canonical.rsplit('.',1)[1]
+    percentiles=('autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile',
+                 'pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile')
+    if name in percentiles:
+        return dict(version='rank-percentile-v1',canonical=canonical,identity_alias=False,
+            registered=api in native_functions(),implementation='cpp-rolling-histogram-runtime-simd',
+            operation=17+percentiles.index(name),capability=0x3fe0000,interface='rank_percentile_interface',
+            arithmetic='Original strict/inclusive whole-bin CDF cutoffs, signed integer sums/division and exact half-residual expression; no interpolated quantiles or reassociation',
+            providers='Own C++ kernels and conversion foundations; explicit NumPy metadata/allocation providers. Buffer/signed-char shifts precede PyFloat conversion; no upstream rank algorithm forwarding',
+            workers='Sole process-global native worker limit, default one; optional parallel workers; NumPy provider pools external',
+            simd='Typed rolling histogram updates and four-block AVX2 integer count/weighted-prefix transport; scalar-equivalent arithmetic',
+            buffers='2D inputs, disjoint prepared buffers and qualified output strides; output reshape/error stages retained. Unsupported or unsafe scopes rejected before stores',
+            protocol_scope='Frozen1544 cases,54parameter traces and explicit callback-error provenance guards; unrepresented mutation protocols remain unassessed',
+            public_parity_test='tests/test_rank_percentile_public.py',frozen_contract='coverage/contracts/rank-percentile.json',
+            public_contract='coverage/contracts/rank-percentile-public.json',parity_evidence=None,performance_evidence=None)
     statistics=('geometric_mean','noise_filter','subtract_mean','windowed_histogram')
     if name in statistics:
         vector=name=='windowed_histogram'

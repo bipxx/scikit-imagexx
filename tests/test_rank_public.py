@@ -106,8 +106,10 @@ def test_pending_r2_alias_is_explicit_safely_rejected(name):
 
 
 def test_unported_names_preserve_policy_and_are_not_native_aliases():
-    assert len(RANK_CANONICAL_FUNCTIONS)==len(RANK_IDENTITY_ALIASES)==len(rank.__all__)
-    assert set(RANK_IDENTITY_ALIASES.values())==set(RANK_CANONICAL_FUNCTIONS)
+    assert len(RANK_CANONICAL_FUNCTIONS)==len(rank.__all__)
+    expected_aliases={'filters.rank.generic.'+name:'filters.rank.'+name for name in rank.__all__
+                      if hasattr(reference_generic,name) and getattr(reference_generic,name) is getattr(reference,name)}
+    assert RANK_IDENTITY_ALIASES==expected_aliases
     assert 'majority' not in rank.__all__ and 'majority' not in generic.__all__
     image=np.arange(35,dtype=np.uint8).reshape(5,7);fp=np.ones((3,3),np.uint8)
     for module in (rank,generic):
