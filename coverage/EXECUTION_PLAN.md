@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 477 public paths: 191 native-partial image entries,
+The current inventory contains 477 public paths: 192 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 278 upstream-only entries. The expansion adds 19
+provider, and 277 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -37,8 +37,25 @@ checks and equal actual common build inputs. Controlled one-worker counts run `4
 Whole12 now admits joined source `f87120c`: TV-Chambolle raises the count to 191
 partial image paths. All four actual products pass 698,448 selected mixed checks
 and 136 SDK client checks, with complete 108-member wheels and 62-member SDKs.
-The previous failed TV run remains failed. TV original-library performance is a
-separate pending gate; its reviewed certificate selects the genuine products.
+The previous failed TV run remains failed. Its published initial one-worker
+baseline retains all 70 cases per runtime, including 34/38/36 slower observations
+on Windows/modern/minimum Linux. Those timings remain tied to `f87120c`.
+Whole13 admits Bregman source `3cdd363`: 192 partial image paths, 704,760 mixed
+checks and 144 SDK checks with complete 110-member wheels and 63-member SDK18.
+The latest qualified source `5e068a5` adds logical strided-address cursors without
+adding API paths. All four normal/scalar profiles pass 707,800 mixed checks and
+144 SDK checks. Its separate original/before/after comparison uses all 400 frozen
+observations before timing the fixed 70 cases in seven paired one-worker rounds.
+The [reviewed controller and certificate](evidence/tv-cursor-comparison-controller.json)
+preserve actual before `3cdd363` and after `5e068a5` product labels.
+The combined 199-path/114-wheel/65-SDK20 candidate remains unaccepted: run
+`40117331038` built Windows artifacts but rejected matrix runtime authentication
+before public parity groups. Its retained failure is a certificate boundary,
+not evidence of a numerical mismatch. Private matrix binding and six max-tree
+APIs have separate scoped parity proofs; neither increases accepted public counts.
+The [max-tree benchmark reference](evidence/max-tree-benchmark-reference.json)
+preserves all 351 source observations and 252 finite candidates per runtime;
+native admission and one-worker measurements remain pending.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
@@ -62,10 +79,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole12 remains accepted at 191 partial image paths. Guarded/tagged Bregman private source `ea7c237` passes 3,160 checks plus 290 explicit portable worker-4 rejections; prepare the genuine 192-path/110-wheel/63-SDK/18-family public gate. Matrix/max-tree public integration remains separate. |
-| Worker 1 | `metrics_reductions` | Qualified TV original-library benchmark | First trial `40094239260` failed report serialization before timing, with all raw failures retained. Corrected controller `bd384a3` separates its source from unchanged qualified `f87120c` products. Three preparations and a fresh one-worker measurement barrier remain mandatory. The rank report already publishes all 1,128 rows and 23,688 samples. |
-| Worker 2 | `resize_api` | Native max-tree binding and observable stages | Six-function reference `5b92e53` and private kernel `f650fd7` retain exact parent/traverser/labels for 233 safe numeric IDs. Implement the real aggregate/staged C++ binding and source-faithful wrapper for all 351 observations; 118 metadata cases stay separate. Bregman bridge `54dcc71` awaits root integration. |
-| Worker 3 | `resize_bench` | Actual hosted matrix CPU/BLAS profiles | First four-host diagnostic `40096175414` has three Linux successes and a retained Windows CMake path-escape failure. Review controller-only path/upload fix `052668b`; keep all raw observations and actual loaded BLAS identities. No forced coretype or automatic profile admission from matching words. Public core, wider casting and performance remain pending. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Qualified 192-path source `5e068a5` is merged; 199 remains a separate candidate. Review artifact/runtime boundaries, retain failures, merge validated increments and remove released caches. |
+| Worker 1 | `metrics_reductions` | Qualified TV cursor original/before/after comparison | Frozen controller `d48a17e` and exact certificate are reviewed; publisher `40118914870` preserves the unchanged certificate. Complete all three preparation profiles before fresh one-worker measurements; retain every raw sample and regression. |
+| Worker 2 | `resize_api` | Six-API max-tree public benchmark consumer | Optimized aggregate/staged composition passes private parity. Original-only source `ae57e3e` and all 252 benchmark candidates are merged. Implement the separate public199/SDK20 consumer, with static admission pending genuine qualification and all three preparation barriers. |
+| Worker 3 | `resize_bench` | Genuine public199 qualification and matrix certificate diagnosis | Follow the same `40117331038` observer/retainer to terminal. Diagnose the rejected Windows certificate using exact artifact/library bytes and a separate metadata-only fresh-host probe; preserve the missing failed-host getter evidence as a limitation. No forced CPU or relaxed guards. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

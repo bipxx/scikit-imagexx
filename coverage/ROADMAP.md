@@ -10,7 +10,7 @@ Follow the [parallel execution plan](EXECUTION_PLAN.md) and
 and integration order.
 
 `api.json` is generated from exported names in scikit-image 0.26.0. It records
-455 callable names across 18 modules, including the experimental `future`
+477 callable names across 20 modules, including the experimental `future`
 namespace and four callable deprecated binary
 morphology functions that upstream omits from its export list. Other nested namespaces, plugin APIs,
 and later upstream additions still need inventory review. Static discovery also
@@ -46,7 +46,11 @@ Label-to-RGB overlays and region averages use native ranks, palette compositing,
 typed group reductions and optional global workers.
 Current implementation and pending counts are generated in the
 [API implementation inventory](README.md), which is the authoritative per-entry
-coverage record for all 455 names. The `future` namespace is available through explicit
+coverage record for all 477 names. The current accepted scope is 192 partial image
+paths, three metadata helpers, four partial transform classes and one exception
+metadata provider; 277 entries remain upstream-only. Matrix-transform and six
+max-tree APIs remain public candidates until their genuine whole-product gate
+passes. The `future` namespace is available through explicit
 compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
