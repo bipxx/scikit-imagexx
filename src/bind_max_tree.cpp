@@ -63,11 +63,13 @@ stages::Coordinates coordinates(const py::array& a) {
     return {static_cast<double*>(const_cast<void*>(a.data())),static_cast<std::size_t>(a.size()),static_cast<std::size_t>(a.shape(1)),static_cast<std::size_t>(a.strides(0)/8),static_cast<std::size_t>(a.strides(1)/8)};
 }
 struct Stamp {
-    py::array value;const void* pointer;py::ssize_t size;std::vector<py::ssize_t> shape,strides;
-    explicit Stamp(py::array a):value(std::move(a)),pointer(value.data()),size(value.nbytes()),shape(value.shape(),value.shape()+value.ndim()),strides(value.strides(),value.strides()+value.ndim()) {}
+    py::array value;py::dtype dtype;const void* pointer;py::ssize_t size;int flags;
+    std::vector<py::ssize_t> shape,strides;
+    explicit Stamp(py::array a):value(std::move(a)),dtype(value.dtype()),pointer(value.data()),size(value.nbytes()),flags(value.flags()),shape(value.shape(),value.shape()+value.ndim()),strides(value.strides(),value.strides()+value.ndim()) {}
     void verify() const {
-        if(value.data()!=pointer || value.nbytes()!=size || std::size_t(value.ndim())!=shape.size())throw py::value_error("array storage changed during threshold conversion");
-        for(py::ssize_t d=0;d<value.ndim();++d)if(value.shape(d)!=shape[std::size_t(d)] || value.strides(d)!=strides[std::size_t(d)])throw py::value_error("array metadata changed during threshold conversion");
+        if(value.data()!=pointer || value.nbytes()!=size || std::size_t(value.ndim())!=shape.size())throw py::value_error("array storage changed during scalar conversion");
+        if(!value.dtype().is(dtype) || value.flags()!=flags)throw py::value_error("array dtype/flags changed during scalar conversion");
+        for(py::ssize_t d=0;d<value.ndim();++d)if(value.shape(d)!=shape[std::size_t(d)] || value.strides(d)!=strides[std::size_t(d)])throw py::value_error("array metadata changed during scalar conversion");
         extent(value);
     }
 };
@@ -97,11 +99,13 @@ void bind_max_tree(py::module_& m) {
         auto a=array(input_obj);auto dtype=type(a);
         if(a.ndim()!=2 && a.ndim()!=3)throw py::value_error("prepared max-tree spatial rank must be2or3");
         auto parent=typed<std::int64_t>(parent_obj,-1),order=typed<std::int64_t>(order_obj,1);
+        std::array<Stamp,3> captured{{Stamp(a),Stamp(parent),Stamp(order)}};
         const auto operation=integer(operation_obj);
         if(operation<0 || operation>5)throw py::value_error("invalid max-tree operation");
         const auto connectivity=provided?1:integer(connectivity_obj);
         if(connectivity<std::numeric_limits<int>::min() || connectivity>std::numeric_limits<int>::max())throw py::value_error("connectivity exceeds C int");
         const double threshold=operation>=2?scalar(threshold_obj):0;
+        for(const auto& stamp:captured)stamp.verify();
         py::array out;
         if(operation) {
             out=operation==1?typed<std::uint64_t>(output_obj,-1):array(output_obj);

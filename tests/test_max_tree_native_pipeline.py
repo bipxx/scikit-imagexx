@@ -143,6 +143,13 @@ def test_pristine_real_aggregate_partition(spec,workers,implementation,monkeypat
     if eligible:
         assert counts['aggregate']=={'attempted':1,'completed':1}
         assert sum(row['completed'] for key,row in counts.items() if key!='aggregate')==0
+    elif type(passed) is np.ndarray and spec['function'].endswith('closing'):
+        # The readonly outer input takes the source route; its newly inverted
+        # writable array admits a genuine aggregate TREE subcall. Attribute
+        # and direct-filter operations remain actual C++ stages.
+        assert counts['aggregate']=={'attempted':1,'completed':1}
+        assert counts['filter']=={'attempted':1,'completed':1}
+        assert counts['extension' if spec['function'].startswith('diameter') else 'area']['completed']==1
     else:
         assert counts['aggregate']=={'attempted':0,'completed':0}
         assert sum(row['completed'] for row in counts.values())>0
@@ -189,6 +196,25 @@ def test_threshold_after_buffers_attempted_vs_completed(implementation):
         def __float__(self):out[-1]=42.;raise Raised('threshold rejected')
     with pytest.raises(Raised,match='threshold rejected'):core.max_tree_filter_stage(image,out,parent,order,attribute,Reject())
     assert out[-1]==42. and core.max_tree_counts()['filter']=={'attempted':3,'completed':1}
+
+
+@pytest.mark.parametrize('kind',('dtype','rank','readonly'))
+@pytest.mark.parametrize('entry',('aggregate','filter'))
+def test_scalar_metadata_mutations_rejected_before_native_access(kind,entry,implementation):
+    _,core=implementation
+    image=np.arange(20,dtype='f4').reshape(4,5) if entry=='aggregate' else np.arange(20,dtype='f4')
+    output=image.copy();parent=np.zeros(20,dtype='i8');order=np.arange(20,dtype='i8');attribute=np.ones(20,dtype='f8')
+    before=output.tobytes();core.max_tree_counts(True)
+    class Mutation:
+        def __float__(self):
+            if kind=='dtype':image.dtype=np.dtype('i4')
+            elif kind=='rank':image.shape=(20,) if entry=='aggregate' else (4,5)
+            else:image.flags.writeable=False
+            return 3.
+    with pytest.raises(ValueError,match='changed during scalar conversion'):
+        if entry=='aggregate':core.max_tree_run(image,output,parent,order,2,1,Mutation(),False)
+        else:core.max_tree_filter_stage(image,output,parent,order,attribute,Mutation())
+    assert output.tobytes()==before and core.max_tree_counts()[entry]=={'attempted':1,'completed':0}
 
 
 @pytest.mark.parametrize('name',contracts.NAMES[1:])

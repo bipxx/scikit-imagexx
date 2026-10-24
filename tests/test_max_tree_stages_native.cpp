@@ -41,7 +41,8 @@ template<class T> void check_type(MaxTreeType type) {
             s::extension(stage_image,{shape,2},tree,{observed.data(),n},{minimum.data(),n*2,2,1,n},{maximum.data(),n*2,2,1,n});
         }else s::area(stage_image,tree,{observed.data(),n});
         require(same(observed,expected_attribute),"stage F64 attributes differ from aggregate/source order");
-        output=image;s::direct_filter(stage_image,{output.data(),n},tree,{observed.data(),n},3);
+        std::memcpy(output.data(),image.data(),n*sizeof(T));
+        s::direct_filter(stage_image,{output.data(),n},tree,{observed.data(),n},3);
         require(same(output,expected_output),"stage direct-filter differs from original-qualified aggregate");
         std::fill(observed.begin(),observed.end(),0);
         s::direct_filter(stage_image,{output.data(),n},tree,{observed.data(),n},3);
