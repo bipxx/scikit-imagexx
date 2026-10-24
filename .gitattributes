@@ -41,3 +41,6 @@ coverage/contracts/rank-bilateral-endian-public.json -text
 coverage/evidence/rank-bilateral-masked-source-pin-migration.json -text
 coverage/evidence/public-wave10.json -text
 coverage/evidence/qualification-checkpoint-cleanup-20261024.json -text
+coverage/evidence/rank-decisions-fixture-assertion-migration.json -text
+coverage/contracts/rank-decisions-public.json -text
+coverage/contracts/rank-decisions-endian-public.json -text

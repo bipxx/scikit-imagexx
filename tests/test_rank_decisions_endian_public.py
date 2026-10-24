@@ -157,7 +157,8 @@ def test_projection_preserves_pre_shift_and_nonidentified_allocations():
 
 def test_exact_two_callsite_scope_and_shared_provider_body():
     old=ast.parse(DATA['prerequisite_source']);new=ast.parse((ROOT/'python/skimagexx/_rank.py').read_text())
-    assert len(new.body)>=len(old.body)
+    exports=ast.parse("_DECISIONS_FUNCTIONS=(\'otsu\',\'majority\')\n__all__+=list(_DECISIONS_FUNCTIONS)\n")
+    assert len(new.body)==len(old.body)+2 and ast.dump(ast.Module(body=new.body[-2:],type_ignores=[]))==ast.dump(exports)
     for a,b in zip(old.body,new.body):
         if isinstance(a,ast.FunctionDef) and a.name=='_decisions_apply':
             calls=[n for n in ast.walk(b) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='_bilateral_ubyte'];assert len(calls)==2
@@ -176,7 +177,7 @@ def test_exact_two_callsite_scope_and_shared_provider_body():
     body=body.replace('def _bilateral_ubyte(image,*,_integer_provider=False):','def _bilateral_ubyte(image):').replace("and (not dtype.isnative or _integer_provider):","and not dtype.isnative:")
     assert hashlib.sha256(body.encode()).hexdigest()==DATA['qualified_scale_helper_canonical_lf_sha256']
     assert source_wrapper._GENERIC_FUNCTIONS==tuple(ast.literal_eval(next(n.value for n in old.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='_GENERIC_FUNCTIONS' for t in n.targets))))
-    if PROTOTYPE:assert len(source_wrapper.__all__)==29 and len(source_wrapper._GENERIC_FUNCTIONS)==17
+    if PROTOTYPE:assert len(source_wrapper.__all__)==31 and len(source_wrapper._GENERIC_FUNCTIONS)==17
 
 
 def test_literal_observer_source_and_all468_ids():

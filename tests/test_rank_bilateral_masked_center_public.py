@@ -189,6 +189,9 @@ def test_frozen_source_observer_derivation_and_scope():
 
 def test_source_pin_migration_preserves_frozen_observers_and_assertions():
     import copy
+    decisions=load('masked_decisions_migration',ROOT/'tests/test_rank_decisions_contracts.py')
+    decisions.test_source_facts_safety_and_strict_pending(json.loads(decisions.MATRIX.read_text()))
+    decisions_migration=json.loads((ROOT/'coverage/evidence/rank-decisions-fixture-assertion-migration.json').read_text())
     migration=json.loads((ROOT/'coverage/evidence/rank-bilateral-masked-source-pin-migration.json').read_text())
     frozen_text=migration['original_contract_utf8']
     assert hashlib.sha256(frozen_text.encode()).hexdigest()=='484e8ccb287722f12606095316262293734878a7e7b3411034d16ea802e148c6'
@@ -210,6 +213,9 @@ def test_source_pin_migration_preserves_frozen_observers_and_assertions():
         expected['unchanged_source_pins'][filename]=current_digest
         old=ast.parse(old_text);new=ast.parse(new_text)
         if filename=='python/skimagexx/_rank.py':
+            # The complete live c6/ae2/export chain was authenticated above.
+            # Replay the original bilateral-only projection on its frozen d6 stage.
+            new=ast.parse(decisions_migration['rank_stages']['bilateral_provider']['utf8'])
             helpers=[node for node in new.body if isinstance(node,ast.FunctionDef) and node.name=='_bilateral_ubyte']
             assert len(helpers)==1
             new.body.remove(helpers[0])

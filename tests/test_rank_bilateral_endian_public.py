@@ -150,7 +150,11 @@ def test_all132_source_defined_endian_boundaries_hooks_and_types(key,active,no_f
 
 
 def test_nonbilateral_ast_and_two_callsite_scope():
-    before=ast.parse(DATA['nonbilateral_source']);after=ast.parse((ROOT/'python/skimagexx/_rank.py').read_text())
+    decisions=load('bilateral_provider_decisions_migration',ROOT/'tests/test_rank_decisions_contracts.py')
+    decisions.test_source_facts_safety_and_strict_pending(json.loads(decisions.MATRIX.read_text()))
+    migration=json.loads((ROOT/'coverage/evidence/rank-decisions-fixture-assertion-migration.json').read_text())
+    qualified=migration['rank_stages']['bilateral_provider']['utf8']
+    before=ast.parse(DATA['nonbilateral_source']);after=ast.parse(qualified)
     for a,b in zip(before.body,after.body):
         if isinstance(a,ast.FunctionDef) and a.name=='_bilateral_apply':
             calls=[n for n in ast.walk(b) if isinstance(n,ast.Name) and n.id=='_bilateral_ubyte'];assert len(calls)==2
@@ -160,7 +164,7 @@ def test_nonbilateral_ast_and_two_callsite_scope():
     # Outside the one new integer branch, the new helper duplicates old intake
     # and native/provider stages exactly, without an extra asarray call.
     old=next(n for n in before.body if isinstance(n,ast.FunctionDef) and n.name=='_ubyte')
-    new=ast.parse((ROOT/'python/skimagexx/_rank.py').read_text()).body[-1];new.name='_ubyte'
+    new=ast.parse(qualified).body[-1];new.name='_ubyte'
     extras=[n for n in new.body if isinstance(n,ast.If) and 'not dtype.isnative' in ast.unparse(n.test)];assert len(extras)==1
     new.body.remove(extras[0]);assert ast.dump(new,include_attributes=False)==ast.dump(old,include_attributes=False)
 

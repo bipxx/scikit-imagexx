@@ -28,7 +28,7 @@
   },
   "source_contract_sha256": "6bf68bdd94bf458e5ad722ca92ca191fabdb35216c0ae15624eec4b78e3fd25b",
   "fixture_source_sha256": {
-    "tests/test_rank_decisions_contracts.py": "49909f317f19fb31ae2c41d4084ece5d97e69bf54bd45370a3068984699c53f1",
+    "tests/test_rank_decisions_contracts.py": "fc9830959330c153ccffba2fe7fbddd08f812cb5db387df349df465d54a3ed80",
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368"
   },
   "reference_functions": {

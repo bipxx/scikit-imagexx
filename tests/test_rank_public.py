@@ -106,21 +106,15 @@ def test_pending_r2_alias_is_explicit_safely_rejected(name):
 
 
 def test_unported_names_preserve_policy_and_are_not_native_aliases():
-    assert len(RANK_CANONICAL_FUNCTIONS)==len(rank.__all__)
+    assert len(RANK_CANONICAL_FUNCTIONS)==len(rank.__all__)==31
     expected_aliases={f'filters.rank.{module}.'+name:'filters.rank.'+name
                       for module in ('generic','bilateral') for name in rank.__all__
                       if hasattr(importlib.import_module('skimage.filters.rank.'+module),name)
                       and getattr(importlib.import_module('skimage.filters.rank.'+module),name) is getattr(reference,name)}
     assert RANK_IDENTITY_ALIASES==expected_aliases
-    assert 'majority' not in rank.__all__ and 'majority' not in generic.__all__
-    image=np.arange(35,dtype=np.uint8).reshape(5,7);fp=np.ones((3,3),np.uint8)
-    for module in (rank,generic):
-        with pytest.raises(NotImplementedError,match='fallback is disabled'):module.majority(image,fp)
-    previous=xx.set_fallback_enabled(True)
-    try:
-        with pytest.warns(xx.FallbackWarning):actual=rank.majority(image,fp)
-        assert actual.tobytes()==reference.majority(image,fp).tobytes()
-    finally:xx.set_fallback_enabled(previous)
+    assert 'majority' in rank.__all__ and 'majority' not in generic.__all__
+    assert rank.majority is generic.__dict__['majority'] is importlib.import_module('skimagexx._rank').majority
+    assert len(generic.__all__)==16 and len(expected_aliases)==22
 
 
 def test_fresh_process_native_imports_without_scikit_image():
@@ -130,7 +124,7 @@ def test_fresh_process_native_imports_without_scikit_image():
     expected_generic=tuple(name for name in rank.__all__
                            if hasattr(reference_generic,name)
                            and getattr(reference_generic,name) is getattr(reference,name))
-    assert len(expected_generic)==17
+    assert len(expected_generic)==19
     script="expected_generic="+repr(expected_generic)+"\n"+r'''
 import importlib.abc,sys
 class NoUpstream(importlib.abc.MetaPathFinder):
@@ -145,6 +139,8 @@ import skimagexx.filters.rank.generic as generic
 from skimagexx import _core,_rank
 assert xx.get_num_threads()==1
 assert _rank._core is _core
+assert len(rank.__all__)==31 and len(expected_generic)==19 and len(generic.__all__)==16
+assert generic.majority is rank.majority and 'majority' not in generic.__all__
 assert _core.rank_histogram_capabilities & 511 == 511
 xx.set_fallback_enabled(False)
 image=np.arange(35,dtype=np.uint8).reshape(5,7)
@@ -168,7 +164,7 @@ for workers in (1,4):
             assert getattr(bilateral,name) is getattr(rank,name)
             assert getattr(bilateral,name)(image,np.ones((3,3),np.uint8)).shape==image.shape
 assert not any(n=='skimage' or n.startswith('skimage.') for n in sys.modules)
-print('native canonical/default1/shared core/workers1+4, independent17generic aliases passed without skimage')
+print('native canonical/default1/shared core/workers1+4, independent19generic aliases passed without skimage')
 '''
     result=subprocess.run([sys.executable,'-c',script],capture_output=True,text=True,env=os.environ.copy())
     assert result.returncode==0,(result.stdout,result.stderr)

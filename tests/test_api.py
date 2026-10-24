@@ -30,7 +30,7 @@ FUNCTIONS = [(native, original, name) for native, original in MODULES for name i
 # Pinned generic exposes these callable identity aliases outside star exports.
 # Exercise signatures and values independently of the advertised __all__ list.
 FUNCTIONS += [(native_rank_generic, reference_rank_generic, name)
-              for name in ('sum', 'windowed_histogram') if name not in native_rank_generic.__all__]
+              for name in ('sum', 'windowed_histogram', 'majority') if name not in native_rank_generic.__all__]
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 

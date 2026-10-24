@@ -170,6 +170,64 @@ def test_source_facts_safety_and_strict_pending(frozen):
     for snapshots in frozen['snapshots'].values():assert set(snapshots)=={key for key,_,_ in CASES}
     assert reference.otsu is not importlib.import_module('skimage.filters').threshold_otsu
 
+    import ast, copy
+    root=Path(__file__).parents[1]
+    migration=json.loads((root/'coverage/evidence/rank-decisions-fixture-assertion-migration.json').read_text())
+    old_text=migration['original_fixture_utf8']
+    assert hashlib.sha256(old_text.encode()).hexdigest()==migration['original_fixture_canonical_lf_sha256']=='49909f317f19fb31ae2c41d4084ece5d97e69bf54bd45370a3068984699c53f1'
+    new_text=Path(__file__).read_bytes().replace(b'\r\n',b'\n').decode()
+    assert hashlib.sha256(new_text.encode()).hexdigest()==migration['current_fixture_canonical_lf_sha256']
+    old=ast.parse(old_text);new=ast.parse(new_text)
+    allowed={'test_source_facts_safety_and_strict_pending','test_strict_pending_never_counts_forwarding'}
+    assert set(migration['allowed_fixture_test_bodies'])==allowed and len(old.body)==len(new.body)
+    changed=set()
+    for a,b in zip(old.body,new.body):
+        if isinstance(b,ast.FunctionDef) and b.name in allowed:
+            assert isinstance(a,ast.FunctionDef) and a.name==b.name
+            b.body=copy.deepcopy(a.body);changed.add(b.name)
+        assert ast.dump(a)==ast.dump(b)
+    assert changed==allowed
+    pins={
+        'namespace29':'12eb630bb4be789be2693b99e543b7fa280d593ab14151a4791f856cc748acfc',
+        'bilateral_provider':'c86646bd9314637a34a3628fef31d513817858277b8ff89dbc1d04ca6c0cc6e4',
+        'decisions_append':'da6fd4934da9348ba4ed0e04940b21561ffc2e876498a730672cb26f6ef96b28',
+        'composed':'d05a3c6cc82edce9f2ed7d9522155b159f4c639c5bed9ed6f0955562457eb6c4',
+        'integer_provider':'18bd8cfa53f585262fada6a9bfdb5d421c907971cb08f809d308081b44611033',
+        'base':'18bd8cfa53f585262fada6a9bfdb5d421c907971cb08f809d308081b44611033'}
+    stages=migration['rank_stages'];assert set(stages)==set(pins)
+    trees={}
+    for name,pin in pins.items():
+        assert hashlib.sha256(stages[name]['utf8'].encode()).hexdigest()==stages[name]['canonical_lf_sha256']==pin
+        trees[name]=ast.parse(stages[name]['utf8'])
+    assert len(trees['namespace29'].body)==66 and len(trees['bilateral_provider'].body)==67
+    assert len(trees['decisions_append'].body)==71 and len(trees['composed'].body)==72
+    assert ast.dump(ast.Module(body=trees['decisions_append'].body[:66],type_ignores=[]))==ast.dump(trees['namespace29'])
+    assert [n.name for n in trees['decisions_append'].body[66:]]==['_require_decisions','_decisions_call','_decisions_apply','otsu','majority']
+    assert ast.dump(trees['composed'])==ast.dump(ast.Module(body=trees['bilateral_provider'].body+trees['decisions_append'].body[66:],type_ignores=[]))
+    assert ast.dump(trees['integer_provider'])==ast.dump(trees['base'])
+    # Authenticate the sole approved provider delta on the exact composed source.
+    normalized=copy.deepcopy(trees['integer_provider'])
+    for a,b in zip(trees['composed'].body,normalized.body):
+        if isinstance(b,ast.FunctionDef) and b.name=='_decisions_apply':
+            calls=[n for n in ast.walk(b) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='_bilateral_ubyte']
+            assert len(calls)==2 and {n.args[0].id for n in calls}=={'image','mask'}
+            for n in calls:
+                assert len(n.keywords)==1 and n.keywords[0].arg=='_integer_provider' and ast.literal_eval(n.keywords[0].value) is True
+                n.func.id='_ubyte';n.keywords=[]
+        if isinstance(b,ast.FunctionDef) and b.name=='_bilateral_ubyte':
+            assert len(b.args.kwonlyargs)==1 and b.args.kwonlyargs[0].arg=='_integer_provider' and ast.literal_eval(b.args.kw_defaults[0]) is False
+            b.args.kwonlyargs=[];b.args.kw_defaults=[]
+            conditions=[n for n in b.body if isinstance(n,ast.If) and isinstance(n.test,ast.BoolOp) and isinstance(n.test.values[-1],ast.BoolOp) and isinstance(n.test.values[-1].op,ast.Or)]
+            assert len(conditions)==1 and ast.unparse(conditions[0].test.values[-1])=='not dtype.isnative or _integer_provider'
+            conditions[0].test.values[-1]=conditions[0].test.values[-1].values[0]
+        assert ast.dump(a)==ast.dump(b)
+    current=ast.parse((root/'python/skimagexx/_rank.py').read_text())
+    exports=ast.parse("_DECISIONS_FUNCTIONS=('otsu','majority')\n__all__+=list(_DECISIONS_FUNCTIONS)\n")
+    assert ast.dump(ast.parse(migration['appended_export_utf8']))==ast.dump(exports)
+    assert ast.dump(current)==ast.dump(ast.Module(body=trees['base'].body+exports.body,type_ignores=[]))
+    assert migration['numerical_cases']==502 and migration['provider_traces']==32 and migration['independent_oracles']==256
+    assert migration['public_admission'] is False
+
 
 @pytest.mark.parametrize('name',NAMES)
 def test_original_signatures_exports_identity(name,frozen):
@@ -193,12 +251,13 @@ def test_original_frozen_contract(case,namespace,frozen):
 @pytest.mark.parametrize('namespace',('filters.rank','filters.rank.generic'))
 @pytest.mark.parametrize('case',CASES,ids=[c[0] for c in CASES])
 def test_strict_pending_never_counts_forwarding(case,namespace,workers):
-    _,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
+    key,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
     try:
-        if 'filters.rank.'+name in native_functions():pytest.skip('native transition requires separately sealed actual public implementation proof')
+        paths={prefix+n for prefix in ('filters.rank.','filters.rank.generic.') for n in NAMES}
+        assert paths<=set(native_functions()),'genuine four-path public decisions registration is required'
+        frozen=json.loads(MATRIX.read_text())
         actual=observe(getattr(importlib.import_module('skimagexx.'+namespace),name),name,parameters)
-        assert actual['error']['type']=='NotImplementedError' and 'fallback is disabled' in actual['error']['message']
-        assert actual['result'] is None and not actual['warnings'] and actual['before']==actual['after']
+        assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],key
     finally:xx.set_num_threads(threads);xx.set_fallback_enabled(policy)
 
 

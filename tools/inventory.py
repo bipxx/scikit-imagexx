@@ -39,6 +39,9 @@ for _names, _test, _benchmark in (
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.bilateral')
            for name in ('mean_bilateral','pop_bilateral','sum_bilateral')),
      'tests/test_rank_bilateral_public.py','benchmarks/rank_bilateral.py'),
+    (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
+           for name in ('otsu','majority')),
+     'tests/test_rank_decisions_public.py','benchmarks/rank_decisions.py'),
     (tuple('filters.rank.'+name for name in ('autolevel_percentile', 'enhance_contrast_percentile', 'gradient_percentile', 'mean_percentile', 'pop_percentile', 'subtract_mean_percentile', 'threshold_percentile', 'sum_percentile', 'percentile')),
      'tests/test_rank_percentile_public.py','benchmarks/rank_percentile.py'),
 ):

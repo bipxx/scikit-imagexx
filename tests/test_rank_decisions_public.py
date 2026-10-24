@@ -67,12 +67,14 @@ def test_source_signatures_old46_nodes_exports_and_compiled_prototype():
     before=ast.parse(PUBLIC['old_module_source']);after=ast.parse((ROOT/'python/skimagexx/_rank.py').read_text())
     assert len(before.body)==PUBLIC['old_top_level_node_count']==66
     assert len([n for n in before.body if isinstance(n,ast.FunctionDef)])==PUBLIC['old_function_count']==46
-    prefix=ast.Module(body=after.body[:len(before.body)],type_ignores=[])
-    assert ast.dump(prefix,include_attributes=False)==ast.dump(before,include_attributes=False)
+    contracts.test_source_facts_safety_and_strict_pending(MATRIX)
     assert hashlib.sha256(PUBLIC['old_module_source'].encode()).hexdigest()==PUBLIC['old_source_canonical_lf_sha256']
-    assert len(source_wrapper._GENERIC_FUNCTIONS)==17 and len(source_wrapper.__all__)==29
-    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+source_wrapper._PERCENTILE_FUNCTIONS+source_wrapper._BILATERAL_FUNCTIONS)
-    assert not set(NAMES)&set(source_wrapper.__all__)
+    migration=json.loads((ROOT/'coverage/evidence/rank-decisions-fixture-assertion-migration.json').read_text())
+    assert PUBLIC['old_module_source']==migration['rank_stages']['namespace29']['utf8']
+    assert len(source_wrapper._GENERIC_FUNCTIONS)==17 and source_wrapper._DECISIONS_FUNCTIONS==NAMES
+    assert len(source_wrapper.__all__)==31
+    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+source_wrapper._PERCENTILE_FUNCTIONS+source_wrapper._BILATERAL_FUNCTIONS+NAMES)
+    assert set(NAMES)<=set(source_wrapper.__all__)
     for name in NAMES:assert inspect.signature(getattr(source_wrapper,name))==inspect.signature(getattr(reference,name))
     if PROTOTYPE:
         core=source_wrapper._core

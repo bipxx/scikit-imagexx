@@ -660,3 +660,7 @@ def otsu(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
 def majority(image,footprint,*,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
     """Apply the qualified local majority decision with a compiled backend."""
     return _decisions_apply(30,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+_DECISIONS_FUNCTIONS=('otsu','majority')
+__all__+=list(_DECISIONS_FUNCTIONS)
