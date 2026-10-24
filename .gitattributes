@@ -76,3 +76,4 @@ coverage/contracts/tv-chambolle-controller.json -text
 coverage/evidence/tv-chambolle-controller-correction.json -text
 coverage/evidence/matrix-transform-profile-tooling.json -text
 coverage/evidence/tv-bregman-private-bridge.json -text
+coverage/contracts/tv-bregman-benchmark.json -text
