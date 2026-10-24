@@ -1,7 +1,20 @@
 {
   "schema": "tv-chambolle-cursor-performance-v1",
-  "status": "root-review-pending",
-  "accepted_performance": false,
+  "status": "accepted-performance-with-regressions",
+  "accepted_performance": true,
+  "root_review": {
+    "proof_sha256": "66bf1baf26a2a40b7244349a5a1068eb38134f8f3132437def96e0ff585ae6b9",
+    "campaign_records_verified": 357,
+    "campaign_bytes_verified": 538098154,
+    "artifact_members_verified": 6917,
+    "publication_archive_members_verified": 85,
+    "CSV_rows_verified": 210,
+    "raw_samples_verified": 4410,
+    "regression_union_rows_retained": 129,
+    "raw_scientific_bytes_changed": false,
+    "optimization_complete": false,
+    "archive_draft_metadata": "Historical draft-status fields in immutable raw copies are retained unchanged."
+  },
   "run": 40119412201,
   "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201",
   "controller_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",

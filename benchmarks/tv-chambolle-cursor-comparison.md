@@ -1,10 +1,10 @@
 # TV Chambolle cursor comparison
 
-**Draft — root independent review pending.** This one-worker campaign compares the cursor increment with the prior C++ product and scikit-image 0.26.0. Aggregate gains coexist with individual regressions; this does not complete the performance goal.
+This independently reviewed one-worker campaign compares the cursor increment with the prior C++ product and scikit-image 0.26.0. Aggregate gains coexist with individual regressions; this does not complete the performance goal.
 
 [Actions run 40119412201](https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201) used immutable controller `d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1`. Actual before product/source is `3cdd3637ca78343edb2cb554b77269de5f5eaf20`; after is `5e068a5a2267c3a917701d5348449972fad162a7`. Both have 192 image APIs, 3 metadata APIs, 110 wheel members, 63 SDK members and 18 SDK families. `6ff02f63f6033cb186d3b93d22a778fd8d0624a3` is only the authenticated intended-before source-equivalence anchor, not a relabelled wheel.
 
-| Host profile | After / original GM | After / before GM | Slower than original | Slower than before |
+| Host profile | Speedup vs original (GM) | Speedup vs prior C++ (GM) | Slower than original | Slower than prior C++ |
 |---|---:|---:|---:|---:|
 | windows | 1.315585× | 1.206708× | 30/70 | 30/70 |
 | modern | 1.152370× | 1.306207× | 34/70 | 5/70 |
@@ -14,7 +14,7 @@ Ratios greater than 1 favor after. Each ratio uses per-role median times, then t
 
 ## Cohorts
 
-| Profile | Cohort | Cases | After / original GM | After / before GM | Slower original / before |
+| Profile | Cohort | Cases | Speedup vs original (GM) | Speedup vs prior C++ (GM) | Slower original / prior C++ |
 |---|---|---:|---:|---:|---:|
 | windows | channels | 12 | 0.940925× | 1.287990× | 6 / 4 |
 | windows | layout | 10 | 1.787074× | 1.175831× | 2 / 5 |
@@ -66,4 +66,6 @@ The before/after full toolchain, dependency, flag and header common-input model 
 
 The ZIP includes exact experiment bytes, preparation reports, barrier records, permits, complete timing reports and artifact SHA/CRC inventories. Three claims and nine startup receipts were deterministically reconstructed from frozen controller field order plus captured permit/report metadata; every reconstructed SHA matched its original pin. They are explicitly labelled **source-derived**, never original raw uploads. The old initial f871 baseline/report is unchanged and remains a separate campaign.
 
-This campaign supports only these workloads on these hosts. Cross-host/cross-campaign CPU changes, tiny-call variance and individual regressions preclude universal speed claims. Acceptance and publication status remain pending root review.
+Independent root review verified all 357 retained campaign records (538,098,154 bytes), all 6,917 artifact members and the complete before/after product seals, then compared every CSV value and all 85 archive members with their original bytes. Publication proof SHA256: `66bf1baf26a2a40b7244349a5a1068eb38134f8f3132437def96e0ff585ae6b9`. Historical draft-status fields inside the immutable raw archive are retained unchanged.
+
+This campaign supports only these workloads on these hosts. Cross-host/cross-campaign CPU changes, tiny-call variance and individual regressions preclude universal speed claims. Measurements are accepted with every regression retained; optimization remains incomplete.
