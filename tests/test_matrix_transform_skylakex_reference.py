@@ -1,5 +1,6 @@
 """Inert source/admission/census guards; no numerical dependency imports."""
 import ast,hashlib,importlib.util,json,sys,types
+from fractions import Fraction
 from pathlib import Path
 import pytest
 
@@ -45,7 +46,10 @@ def test_exact_old_source_pins_and_full4000_inventory(monkeypatch):
 
 
 def test_boundary_data_are_separate_fixed_finite_definitions():
-    rows=c.adversarial_cases();assert len(rows)==12 and len({r['id'] for r in rows})==12
+    rows=c.adversarial_cases();assert len(rows)==15 and len({r['id'] for r in rows})==15
+    prefix=json.dumps(rows[:12],sort_keys=True,separators=(',',':')).encode()
+    assert hashlib.sha256(prefix).hexdigest()=='c087c5515240c3f03b1bf213b23dd5872551762bb9901a05753d61b26f3cf590'
+    assert c.BOUNDARY_SCHEMA=='matrix-skylakex-boundary-census-v2-fma'
     for row in rows:
         d=len(row['coords'][0]);assert d in (2,3,4)
         assert len(row['matrix'])==d+1 and all(len(a)==d+1 for a in row['matrix'])
@@ -92,6 +96,10 @@ def test_raw_buffer_storage_is_lossless_deduplicated_portable_and_bounded(tmp_pa
     with pytest.raises(ValueError,match='never omit cases'):c.Buffers(other).array(array)
 
 
+def synthetic_site(helper,line):
+    return dict(code=helper.__code__,provenance=dict(expected_event='line',expected_line=line,public_co_code_sha256=hashlib.sha256(helper.__code__.co_code).hexdigest(),scope='Inert unit helper only; not original/native proof.'))
+
+
 def test_unchanged_original_call_trace_captures_actual_operands_without_copy():
     marker=object();params=object()
     def helper(matrix,points):
@@ -99,10 +107,82 @@ def test_unchanged_original_call_trace_captures_actual_operands_without_copy():
         new_points_h=marker
         return marker
     def public(points,matrix):return helper(matrix,points)
-    code=helper.__code__;result,captured=c.capture_original(public,helper,marker,params)
+    code=helper.__code__;site=synthetic_site(helper,code.co_firstlineno+3)
+    result,captured,observed=c.capture_original(public,helper,marker,params,site)
     assert result is marker and captured['matrix'] is params
     assert captured['points_h'] is captured['new_points_h'] is marker
     assert helper.__code__ is code and sys.gettrace() is None
+    assert observed['observed_event']=='line' and observed['observed_line']==site['provenance']['expected_line']
+    assert observed['public_co_code_sha256']==hashlib.sha256(code.co_code).hexdigest()
+    assert observed['divs_bound_at_capture'] is False
+
+
+def test_return_event_cannot_substitute_for_post_matmul_line():
+    marker=object()
+    def helper(matrix,points):
+        points_h=marker;new_points_h=marker;return marker
+    with pytest.raises(ValueError,match='return fallback forbidden'):
+        c.capture_original(lambda p,m:helper(m,p),helper,marker,marker,synthetic_site(helper,helper.__code__.co_firstlineno+1))
+    assert sys.gettrace() is None
+
+
+def test_first_eligible_line_cannot_be_skipped_for_a_late_capture():
+    marker=object()
+    def helper(matrix,points):
+        points_h=marker
+        new_points_h=marker
+        divs=marker
+        return marker
+    with pytest.raises(ValueError,match='first post-@ line differs'):
+        c.capture_original(lambda p,m:helper(m,p),helper,marker,marker,synthetic_site(helper,helper.__code__.co_firstlineno+4))
+    assert sys.gettrace() is None
+
+
+def test_capture_site_is_pinned_to_code_and_computed_from_authenticated_boundary(monkeypatch):
+    def helper(matrix,points):return None
+    source='def _apply_homogeneous(matrix, points):\n    new_points_h = points_h @ matrix.T\n    divs = new_points_h[:, -1]\n    return new_points_h\n'
+    monkeypatch.setattr(c.inspect,'getsource',lambda h:source)
+    site=c.capture_site(helper,source)
+    assert site['code'] is helper.__code__
+    assert site['provenance']['expected_line']==helper.__code__.co_firstlineno+2
+    assert site['provenance']['matmul_line']==helper.__code__.co_firstlineno+1
+    assert site['provenance']['co_linetable_sha256']==hashlib.sha256(helper.__code__.co_linetable).hexdigest()
+    bad=source.replace('divs = new_points_h[:, -1]','divs = normalized')
+    monkeypatch.setattr(c.inspect,'getsource',lambda h:bad)
+    with pytest.raises(ValueError,match='boundary differs'):c.capture_site(helper,bad)
+
+
+def test_FMA_witnesses_distinguish_product_rounding_by_exact_fraction_only():
+    proof=c.fma_fraction_proof();assert proof['exact_fused_residual_denominator']==2**54
+    for row in c.adversarial_cases()[12:]:
+        d=len(row['coords'][0]);assert d in (2,3,4) and row['id']==f'boundary-D{d}-fused-product'
+        point=[Fraction.from_float(x) for x in row['coords'][0]]
+        coefficient=[Fraction.from_float(x) for x in row['matrix'][0]]
+        first=point[0]*coefficient[0];product=point[1]*coefficient[1]
+        assert first==-1 and product-1==Fraction(-1,2**54)
+        previous=1-Fraction(1,2**53)
+        assert product==(previous+1)/2 # tie-to-even rounds separate product to1
+        assert Fraction(1)+first==0 and product+first!=0
+
+
+def test_integer_JSON_legacy_points_explicitly_request_float64_without_numerical_import():
+    calls=[];sentinel=object();result=object()
+    fake=types.SimpleNamespace(float64=sentinel,array=lambda x,**kw:(calls.append((x,kw)),result)[1])
+    assert c.points_for_case(fake,dict(coords=[[1,2]]),0,0.03125) is result
+    assert calls==[([[1,2]],dict(dtype=sentinel))]
+    tree=ast.parse((ROOT/'tools/matrix_transform_skylakex_reference.py').read_text())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='points_for_case')
+    for call in [n for n in ast.walk(fn) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='array']:
+        assert any(k.arg=='dtype' and ast.unparse(k.value)=='np.float64' for k in call.keywords)
+
+
+def test_expected_capture_site_is_computed_once_outside_fixture_loop():
+    tree=ast.parse((ROOT/'tools/matrix_transform_skylakex_reference.py').read_text())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='references')
+    calls=[n for n in ast.walk(fn) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='capture_site']
+    assert len(calls)==1
+    for loop in [n for n in ast.walk(fn) if isinstance(n,(ast.For,ast.While))]:
+        assert not any(n is calls[0] for n in ast.walk(loop))
 
 
 def test_actual_matmul_source_node_is_required_without_execution():

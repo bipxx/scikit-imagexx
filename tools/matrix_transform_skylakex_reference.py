@@ -6,6 +6,7 @@ unchanged certificate may refuse this CPU; that refusal is preserved, not fixed.
 """
 from __future__ import annotations
 import argparse,ast,ctypes,gzip,hashlib,importlib,importlib.util,inspect,io,json,os,struct,subprocess,sys,traceback,warnings,zipfile
+from fractions import Fraction
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -22,6 +23,7 @@ MAX_ROWS=131072
 MAX_ARRAY_BYTES=32*1024*1024
 MAX_RETAINED=256*1024*1024
 MAX_BUFFER_RETAINED=192*1024*1024 # reserve64MiB for census/journal/raw metadata
+BOUNDARY_SCHEMA='matrix-skylakex-boundary-census-v2-fma'
 FORBIDDEN=('OPENBLAS_CORETYPE','NPY_DISABLE_CPU_FEATURES','NPY_ENABLE_CPU_FEATURES','MKL_DEBUG_CPU_TYPE','MKL_SERVICE_FORCE_INTEL')
 
 
@@ -84,16 +86,35 @@ def adversarial_cases():
         # Denominator-specific lanes: a nonzero constant prevents unsafe poles.
         matrix[-1]=[1.,half,-1.]+[half]*(d-3)+[1.] if d>=3 else [half,-half,1.]
         rows.append(dict(id=f'boundary-D{d}-denominator-lanes',coords=[[1.]*d],matrix=matrix))
+    # Preserve all original12 definitions above, then add independent product
+    # rounding witnesses. These constants come from the exact Fraction proof,
+    # never from observations or a fitted arithmetic candidate.
+    a=float.fromhex('0x1.0000002000000p+0')
+    b=float.fromhex('0x1.ffffffc000000p-1')
+    for d in (2,3,4):
+        matrix=[[float(i==j) for j in range(d+1)] for i in range(d+1)]
+        matrix[0]=[-1.,b]+[0.]*(d-1)
+        rows.append(dict(id=f'boundary-D{d}-fused-product',coords=[[1.,a]+[0.]*(d-2)],matrix=matrix))
     return rows
+def fma_fraction_proof():
+    """Exact scalar metadata only; does not execute floating multiplication."""
+    a=Fraction.from_float(float.fromhex('0x1.0000002000000p+0'))
+    b=Fraction.from_float(float.fromhex('0x1.ffffffc000000p-1'))
+    product=a*b;previous=Fraction(1)-Fraction(1,2**53)
+    require(a==1+Fraction(1,2**27) and b==1-Fraction(1,2**27),'binary witness literals differ')
+    require(product==(previous+1)/2 and product-1==Fraction(-1,2**54),'exact FMA witness derivation differs')
+    lower_significand=2**53-1;upper_significand=2**52
+    require(lower_significand%2==1 and upper_significand%2==0,'nearest-even endpoint metadata differs')
+    return dict(a_hex='0x1.0000002000000p+0',b_hex='0x1.ffffffc000000p-1',first_accumulated_term=-1,exact_product_numerator=product.numerator,exact_product_denominator=product.denominator,lower_endpoint_significand=lower_significand,upper_endpoint_significand=upper_significand,exact_fused_residual_numerator=-1,exact_fused_residual_denominator=2**54,separate_product_rounding='halfway between previous binary64 and1; ties-to-even selects1',separate_product_then_add_result=0,scope='Source-derived conditional association witness, NOT an observed original/native result.')
 def case_specs(spec,fields):
     for case in spec['cases']:
         for n in [0]+spec['rows']:
             for pl in spec['layouts']:
                 for ml in spec['layouts']:yield dict(family='legacy4000',case=case,n=n,pl=pl,ml=ml,extension=spec['row_extension'])
-    for case in adversarial_cases():
+    for index,case in enumerate(adversarial_cases()):
         for n in boundary_sizes(fields,len(case['coords'][0])+1):
             for pl in spec['layouts']:
-                for ml in spec['layouts']:yield dict(family='boundary-v1',case=case,n=n,pl=pl,ml=ml,extension=0.)
+                for ml in spec['layouts']:yield dict(family='boundary-v1' if index<12 else 'boundary-fma-v2',case=case,n=n,pl=pl,ml=ml,extension=0.)
 def layout(np,a,name):
     if name=='C':return np.array(a,order='C')
     if name=='F':return np.array(a,order='F')
@@ -108,20 +129,37 @@ def source_matmul_node(source):
     nodes=[n for n in function.body if isinstance(n,ast.Assign) and isinstance(n.value,ast.BinOp) and isinstance(n.value.op,ast.MatMult)]
     require(len(nodes)==1 and ast.unparse(nodes[0])=='new_points_h = points_h @ matrix.T','original @ intake differs')
     return nodes[0]
-def capture_original(function,helper,points,matrix):
+def capture_site(helper,source):
+    """Compute the authenticated post-@/pre-divs site ONCE, before fixtures."""
+    require(inspect.getsource(helper)==source,'capture helper source differs')
+    matmul=source_matmul_node(source);body=ast.parse(source).body[0].body
+    position=next(i for i,n in enumerate(body) if n.lineno==matmul.lineno)
+    following=body[position+1]
+    require(ast.unparse(following)=='divs = new_points_h[:, -1]','source normalization boundary differs')
+    code=helper.__code__;path=Path(code.co_filename).resolve();raw=path.read_bytes()
+    provenance=dict(expected_event='line',expected_line=code.co_firstlineno+following.lineno-1,matmul_line=code.co_firstlineno+matmul.lineno-1,code_firstlineno=code.co_firstlineno,code_name=code.co_name,code_filename=str(path),source_module_sha256=H(raw),helper_source_sha256=H(source.encode()),public_co_code_sha256=H(code.co_code),co_linetable_sha256=H(code.co_linetable),scope='Public code-object metadata and authenticated source location, not a native ISA claim.')
+    return dict(code=code,provenance=provenance)
+def capture_original(function,helper,points,matrix,site):
     """Trace the unchanged ORIGINAL call, with no replacement prefix/math."""
     require(sys.gettrace() is None,'existing Python tracer not replaced')
-    captured={};code=helper.__code__
+    captured={};observed={};code=helper.__code__
+    require(code is site['code'],'original helper code changed after site authentication')
     def trace(frame,event,arg):
-        if frame.f_code is code and event in ('line','return') and 'new_points_h' in frame.f_locals and not captured:
+        if frame.f_code is code and event=='line' and 'new_points_h' in frame.f_locals and not captured:
+            require(frame.f_lineno==site['provenance']['expected_line'] and frame.f_trace_lines,'first post-@ line differs; no late/return capture')
+            require('divs' not in frame.f_locals,'normalization started before source capture')
             captured.update({name:frame.f_locals[name] for name in ('matrix','points','points_h','new_points_h')})
+            observed.update(site['provenance'],observed_event=event,observed_line=frame.f_lineno,f_trace_lines=frame.f_trace_lines,divs_bound_at_capture=False)
         return trace
     sys.settrace(trace)
     try:result=function(points,matrix)
     finally:sys.settrace(None)
-    require(set(captured)=={'matrix','points','points_h','new_points_h'},'original @ operands/result not captured')
+    require(set(captured)=={'matrix','points','points_h','new_points_h'},'exact post-@ line event missing; return fallback forbidden')
     require(helper.__code__ is code,'original source replaced')
-    return result,captured
+    return result,captured,observed
+def points_for_case(np,case,n,extension):
+    if n==0:return np.array(case['coords'],dtype=np.float64)
+    return np.array([np.array(case['coords'][i%len(case['coords'])],dtype=np.float64)+i*extension for i in range(n)],dtype=np.float64)
 
 
 def readable_image_span(base,image_size,address,size,query):
@@ -197,21 +235,22 @@ def references(out,mode):
     for name,text in facts.items():
         function=getattr(original.ProjectiveTransform,name.split('.')[1]) if name.startswith('ProjectiveTransform.') else getattr(original,name)
         require(inspect.getsource(function)==text,'original source mismatch: '+name)
-    source_matmul_node(facts['_apply_homogeneous'])
+    site=capture_site(original._apply_homogeneous,facts['_apply_homogeneous'])
     table=live_fields(wrapper,p,np);fields=table['fields'];fp=fp_metadata();require(fp['nearest'] and fp['gradual'],'unassessed FP environment')
     census=list(case_specs(spec,fields));require(sum(c['family']=='legacy4000' for c in census)==4000,'legacy cases missing')
     require(len(json.dumps(census).encode())<=32*1024*1024,'complete metadata census exceeds reserved budget')
-    dump(reports/'before-fixtures.json',dict(source=facts,live_table=table,fp=fp,mode=mode,case_count=len(census),cases=census,original_only=True,native_acceptance=False,public_acceptance=False))
+    dump(reports/'before-fixtures.json',dict(source=facts,capture_site=site['provenance'],boundary_schema=BOUNDARY_SCHEMA,fma_witness_fraction_proof=fma_fraction_proof(),live_table=table,fp=fp,mode=mode,case_count=len(census),cases=census,original_only=True,native_acceptance=False,public_acceptance=False))
     buffers=Buffers(reports.parent);completed=0
     before=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed());require(before==(0,0),'unexpected prior native arithmetic')
     with gzip.open(reports/'rows.jsonl.gz','wt',encoding='utf-8') as stream:
         for item in census:
             case=item['case'];n=item['n']
-            points=np.array(case['coords']) if n==0 else np.array([np.array(case['coords'][i%len(case['coords'])])+i*item['extension'] for i in range(n)])
+            points=points_for_case(np,case,n,item['extension'])
             points=layout(np,points,item['pl']);matrix=layout(np,np.array(case['matrix'],dtype='f8'),item['ml'])
+            require(points.dtype.str==matrix.dtype.str=='<f8','compiled double cohort must enter original as float64')
             inputs=(points.tobytes(),matrix.tobytes());pre_fp=fp_metadata()
             with warnings.catch_warnings(record=True) as notices:
-                warnings.simplefilter('always');actual,operands=capture_original(original.matrix_transform,original._apply_homogeneous,points,matrix)
+                warnings.simplefilter('always');actual,operands,observed=capture_original(original.matrix_transform,original._apply_homogeneous,points,matrix,site)
             post_fp=fp_metadata()
             require(inputs==(points.tobytes(),matrix.tobytes()),'original inputs mutated')
             arrays=(points,matrix,actual,*operands.values());owners={}
@@ -225,13 +264,13 @@ def references(out,mode):
             # no claim about Python/library initialization's total RSS.
             workspace_bound=sum(owners.values())+4*len(points)*8
             require(workspace_bound<=MAX_ARRAY_BYTES,'reference workspace certificate exceeded')
-            row=dict(family=item['family'],id=case['id'],requested_rows=n,points_layout=item['pl'],matrix_layout=item['ml'],mode=mode,array_workspace_bound=workspace_bound,original_inputs=dict(points=buffers.array(points),matrix=buffers.array(matrix)),actual_original_intake={name:buffers.array(a) for name,a in operands.items()},original_result=buffers.array(actual),warnings=[dict(category=type(w.message).__name__,message=str(w.message)) for w in notices],FP_before=pre_fp,FP_after=post_fp,native_completed=0,native_acceptance=False)
+            row=dict(family=item['family'],id=case['id'],requested_rows=n,points_layout=item['pl'],matrix_layout=item['ml'],mode=mode,capture_observed=observed,array_workspace_bound=workspace_bound,original_inputs=dict(points=buffers.array(points),matrix=buffers.array(matrix)),actual_original_intake={name:buffers.array(a) for name,a in operands.items()},original_result=buffers.array(actual),warnings=[dict(category=type(w.message).__name__,message=str(w.message)) for w in notices],FP_before=pre_fp,FP_after=post_fp,native_completed=0,native_acceptance=False)
             stream.write(json.dumps(row,separators=(',',':'),allow_nan=False)+'\n');stream.flush();completed+=1
     after=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed());require(before==after==(0,0),'native arithmetic requested during original-only reference')
     require(table==live_fields(wrapper,p,np),'selected runtime/table changed')
     auth=json.loads((out/'input-authentication.json').read_text())
     for name,record in auth['files'].items():require(p.file_record(out/'genuine-prefix'/name)['sha256']==record['sha256'],'runtime/product input changed')
-    dump(reports/'result.json',dict(completed=completed,expected=len(census),legacy_completed=4000,boundary_completed=completed-4000,mode=mode,buffers=buffers.records,retained_bytes=buffers.bytes,native_counters_before=before,native_counters_after=after,original_only=True,native_acceptance=False,public_acceptance=False,operation_timings=0,scope='Actual unforced NEW HOST original references, not native/profile/public acceptance. Scalar label controls own unused core only, not original BLAS ISA.'))
+    dump(reports/'result.json',dict(completed=completed,expected=len(census),legacy_completed=4000,boundary_completed=completed-4000,boundary_schema=BOUNDARY_SCHEMA,mode=mode,buffers=buffers.records,retained_bytes=buffers.bytes,native_counters_before=before,native_counters_after=after,original_only=True,native_acceptance=False,public_acceptance=False,operation_timings=0,scope='Actual unforced NEW HOST original references, not native/profile/public acceptance. Scalar label controls own unused core only, not original BLAS ISA.'))
 def prepare(out):
     require(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_RUN_ID','').isdigit() and os.name=='nt','fresh hosted preparation only')
     validate_environment(os.environ)
@@ -277,6 +316,7 @@ def verify(out):
         reports=out/'reports'/mode;before=json.loads((reports/'before-fixtures.json').read_text());result=json.loads((reports/'result.json').read_text())
         fields=before['live_table']['fields'];census=list(case_specs(spec,fields))
         require(before['cases']==census and before['case_count']==len(census),'fixture census differs')
+        require(before['boundary_schema']==result['boundary_schema']==BOUNDARY_SCHEMA and before['fma_witness_fraction_proof']==fma_fraction_proof(),'versioned boundary/witness metadata differs')
         expected={(r['family'],r['case']['id'],r['n'],r['pl'],r['ml']):r for r in census};keys=set(expected)
         require(len(keys)==len(census) and result['completed']==result['expected']==len(keys) and result['legacy_completed']==4000,'missing original rows')
         require(result['original_only'] is True and result['native_acceptance'] is False and result['public_acceptance'] is False and result['operation_timings']==0,'reference scope differs')
@@ -287,6 +327,8 @@ def verify(out):
                 row=json.loads(line);key=(row['family'],row['id'],row['requested_rows'],row['points_layout'],row['matrix_layout'])
                 require(key in keys and key not in seen and row['mode']==mode,'unexpected/duplicate/mislabeled original row');seen.add(key)
                 require(row['native_completed']==0 and row['native_acceptance'] is False,'native claim in reference row')
+                observed=row['capture_observed'];site=before['capture_site']
+                require(observed==dict(site,observed_event='line',observed_line=site['expected_line'],f_trace_lines=True,divs_bound_at_capture=False),'missing/wrong first post-@ line/code provenance')
                 arrays=[*row['original_inputs'].values(),*row['actual_original_intake'].values(),row['original_result']]
                 require(row['array_workspace_bound']<=MAX_ARRAY_BYTES and row['FP_before']['nearest'] and row['FP_before']['gradual'] and row['FP_after']['nearest'] and row['FP_after']['gradual'],'unassessed numerical environment/workspace')
                 definition=expected[key];dimensions=len(definition['case']['coords'][0]);n=definition['n'] or len(definition['case']['coords'])
@@ -297,7 +339,7 @@ def verify(out):
                     elements=1
                     for size in array['shape']:
                         require(type(size) is int and size>=0,'invalid original shape');elements*=size
-                    require(array['dtype'] in ('<f8','<i8') and record['raw_bytes']==elements*8,'raw words/array descriptor disagree')
+                    require(array['dtype']=='<f8' and record['raw_bytes']==elements*8,'raw words/float64 descriptor disagree')
                     if digest not in verified:
                         path=out/'reports'/record['path'];require(record['path']=='arrays/'+digest+'.gz','buffer path differs')
                         packed=path.read_bytes();require(H(packed)==record['stored_sha256'] and len(packed)==record['stored_bytes'],'packed buffer differs')
