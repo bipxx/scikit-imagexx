@@ -21223,6 +21223,74 @@
         ],
         "protected_artifacts": []
       }
+    },
+    {
+      "id": "rank-statistics-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "benchmark/rank-statistics-initial-ed8ca5c",
+      "base_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave7",
+        "rank-statistics-benchmark-tooling"
+      ],
+      "dependency_requirements": {
+        "combined-public-wave7": {
+          "evidence_scope": "public_native",
+          "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb"
+        },
+        "rank-statistics-benchmark-tooling": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "state": "preparing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-statistics-benchmark.json",
+        "uncovered_cases": []
+      },
+      "parity": {
+        "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "preparation_workers": [
+          1,
+          4
+        ],
+        "run_id": 40049417301,
+        "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40049417301",
+        "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+        "source_product_equivalent_to": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+        "created_at": "2026-10-24T01:21:30Z",
+        "observed_state": "queued",
+        "repeat": 7,
+        "expected_checks_per_runtime": 1379,
+        "successful_timing_candidates": 376,
+        "scalar_timing_cases": 282,
+        "vector_timing_cases": 94,
+        "expected_original_error_candidates_untimed": 8,
+        "raw_results": [],
+        "regressions": [],
+        "verification_state": "Queuedpreparation verified byexactrunID/headSHA; no timingclaim.",
+        "observation_rule": "Follow40049417301 toterminal, nevercancel/restart forqueue/session timeout. Threepreparationjobs workers1/4normal/scalar beforefreshartifact-onlymeasurementhosts workers1."
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/rank-statistics-performance-dispatch/ed8ca5c"
+        ],
+        "protected_artifacts": []
+      }
     }
   ],
   "unassigned_inventoried_apis": [
