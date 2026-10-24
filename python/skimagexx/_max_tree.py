@@ -144,6 +144,10 @@ def _try_fast(image,operation,threshold=0,connectivity=1,parent=None,tree_traver
     prepared=image.ravel().reshape(image.shape)
     if operation==0: output=None
     elif operation==1: output=np.ones(image.shape,dtype=np.uint64)
+    elif operation in (3,5):
+        # The literal closing route allocates through subtract's canonical
+        # scalar dtype before filtering. Unlike opening's copy, it drops tags.
+        output=np.empty(image.shape,dtype=image.dtype.type)
     else: output=image.copy()
     if reuse: p=parent.ravel();s=tree_traverser
     else: p=np.zeros(image.shape,dtype=np.int64);s=np.empty(image.size,dtype=np.int64)
