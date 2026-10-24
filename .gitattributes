@@ -79,3 +79,8 @@ coverage/evidence/tv-bregman-private-bridge.json -text
 coverage/contracts/tv-bregman-benchmark.json -text
 coverage/evidence/tv-bregman-benchmark-reference.json -text
 coverage/evidence/max-tree-private-bridge.json -text
+
+# Exact unexecuted Bregman benchmark/provenance baselines
+coverage/contracts/tv-bregman-benchmark-original-b510.py -text
+coverage/evidence/tv-bregman-benchmark-source-migration.json -text
+coverage/evidence/tv-bregman-public-assertion-migration.json -text
