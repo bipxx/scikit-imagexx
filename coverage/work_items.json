@@ -29221,17 +29221,20 @@
           "source_sha": "29eb2ae8e97edbf6425e80afad169c97adf2d04d"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/max-tree.json",
         "uncovered_cases": [
-          "Optimize only aggregate roots scratch with moving-node halving; preserve representatives/parent assignments/order, all six outputs and guards/ABI. Staged/provider-observable scratch stays unchanged. Full14 original/pathological gates and real optimized-aggregate private binding composition required; public/SDK/isolated one-worker timings remain separate."
+          "Genuine whole public199/SDK20 qualification and original-library isolated one-worker performance for every one of six APIs; wider unsupported protocol/input combinations remain pending."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3",
+        "artifact_sha256": "277e5ae7943b84a527d6cf664cb6ad85a4e2f29e2125ce0fcfb8743b565726fa",
+        "runs": [
+          "build/worktrees/max-tree-root-compression/build/max-tree-root-composition/manifest.json"
+        ],
+        "native_checks": 4194
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -29249,7 +29252,11 @@
         "active_paths": [
           "build/worktrees/max-tree-root-compression"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/worktrees/max-tree-root-compression/build/max-tree-root-composition/manifest.json",
+          "build/decisions-readiness/max-tree-composition-root-review/manifest.json",
+          "coverage/evidence/max-tree-root-composition-private.json"
+        ]
       },
       "native_kernel_stage": {
         "source": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3",
@@ -29266,7 +29273,21 @@
         "gates": 14,
         "assertions": 17952334,
         "original_numeric_projections": 5592,
-        "scope": "Full prepared C++ native gates only; separate optimized aggregate/staged private binding composition remains in progress."
+        "scope": "Full prepared C++ gates, followed by separately root-accepted real optimized aggregate/staged private binding composition. Neither is public or speed acceptance."
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3",
+          "manifest": {
+            "path": "build/worktrees/max-tree-root-compression/build/max-tree-root-composition/manifest.json",
+            "bytes": 89428,
+            "sha256": "277e5ae7943b84a527d6cf664cb6ad85a4e2f29e2125ce0fcfb8743b565726fa"
+          },
+          "native_contract_checks": 4194,
+          "native_pending": 0,
+          "scope": "All233 safe frozen observations through the actual optimized aggregate/staged private binding on five variants; workers1/4 normal/scalar, with explicit portable4 rejections. Wider/public/performance scopes remain pending."
+        }
       }
     },
     {
@@ -29362,16 +29383,25 @@
         "raw_failure_and_recovery_XMLs_retained": true
       },
       "current_public_acceptance": 0,
-      "current_prepared_source": "c2c0d035b805265728bb183f859c855a3f1554a5"
+      "current_prepared_source": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
+      "current_combined_scope": {
+        "image_paths": 199,
+        "metadata_paths": 3,
+        "wheel_members": 114,
+        "sdk_members": 65,
+        "sdk_families": 20,
+        "qualification_run": 40117331038,
+        "public_acceptance": false
+      }
     },
     {
       "id": "matrix-transform-public199-integration",
       "kind": "public_integration",
       "apis": [],
       "owner": "resize_bench",
-      "branch": "feature/matrix-transform-public",
+      "branch": "integration/public199",
       "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "build/worktrees/matrix-transform-public/CMakeLists.txt",
         "build/worktrees/matrix-transform-public/src/bindings.cpp",
@@ -29411,7 +29441,7 @@
         ]
       },
       "parity": {
-        "source_sha": "cc87a1dd0aa2b1ea06a1c98a10d1a5ae944cb085",
+        "source_sha": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
         "artifact_sha256": null,
         "runs": [],
         "native_checks": 0
@@ -29430,11 +29460,20 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/matrix-transform-public"
+          "build/worktrees/matrix-transform-public",
+          "build/worktrees/max-tree-public"
         ],
         "protected_artifacts": []
       },
-      "full_product_dispatch": "Held for root coordination; metadata-only candidate, no public acceptance."
+      "full_product_dispatch": {
+        "source": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
+        "run": 40117331038,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40117331038",
+        "status": "running-not-accepted",
+        "previous_failed_run": 40115365507,
+        "previous_failure": "Before product build: synthetic metadata fixture incorrectly imported NumPy; minimum interpreter AST witness was version-specific. Both fixed in metadata only;570 bootstrap guards pass on3.11 and3.13 with numerical imports blocked.",
+        "runtime_source_changed_from_c05": false
+      }
     }
   ],
   "unassigned_inventoried_apis": [

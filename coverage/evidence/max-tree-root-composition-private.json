@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "scope": "Private optimized max-tree aggregate plus unchanged staged binding; no public API or speed acceptance.",
+  "source": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3",
+  "root_review": {
+    "path": "build/decisions-readiness/max-tree-composition-root-review/manifest.json",
+    "bytes": 1155,
+    "sha256": "d9e15040fdf9918329b80ecd023192508b8f4365afc7592a06b1d52be99b43e6"
+  },
+  "composition_manifest": {
+    "path": "build/worktrees/max-tree-root-compression/build/max-tree-root-composition/manifest.json",
+    "bytes": 89428,
+    "sha256": "277e5ae7943b84a527d6cf664cb6ad85a4e2f29e2125ce0fcfb8743b565726fa"
+  },
+  "native_manifest": {
+    "path": "build/worktrees/max-tree-root-compression/build/max-tree-root-compression/native-manifest.json",
+    "bytes": 52182,
+    "sha256": "6e15f0b157a6dc9e8dfda5b099191daee80fcb3474b60d87501bb7441effa9ee"
+  },
+  "verified_composition_records": 429,
+  "verified_composition_bytes": 107922734,
+  "verified_source_archive_members": 76,
+  "verified_source_pins": 74,
+  "real_binding_modules": 5,
+  "pipeline_passes": 11016,
+  "explicit_portable_worker4_rejections": 1204,
+  "source_numeric_projections": 4194,
+  "pristine_numeric_projections": 4194,
+  "native_stage_controls": 9040,
+  "prepared_native_gates": 14,
+  "prepared_native_assertions": 17952334,
+  "prepared_original_numeric_projections": 5592,
+  "signatures_and_other_scientific_test_ASTs_unchanged": true,
+  "production_test_macro": "undefined",
+  "public_acceptance": false,
+  "new_public_image_paths": 0,
+  "operation_timings": 0,
+  "pending": "Genuine combined public199/SDK20 qualification and isolated one-worker comparisons against scikit-image0.26.0 for all six APIs."
+}
