@@ -261,9 +261,25 @@ R6_SOURCE_PATHS = (
     'coverage/contracts/rank-bilateral-benchmark.json',
     'coverage/evidence/rank-bilateral-fixture-assertion-migration.json',
 )
+R7 = ('otsu', 'majority')
+R7_PATHS = frozenset(prefix + name for prefix in ('filters.rank.', 'filters.rank.generic.') for name in R7)
+R7_SOURCE_PATHS = (
+    'tests/test_rank_decisions_contracts.py',
+    'tests/test_rank_decisions_public.py',
+    'tests/test_rank_decisions_endian_public.py',
+    'tests/test_rank_decisions_native.cpp',
+    'include/skimagexx/rank.hpp',
+    'coverage/contracts/rank-decisions.json',
+    'coverage/contracts/rank-decisions-public.json',
+    'coverage/contracts/rank-decisions-endian-public.json',
+    'coverage/contracts/rank-decisions-benchmark.json',
+    'coverage/evidence/rank-decisions-fixture-assertion-migration.json',
+)
+LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor', 'corner_response',
+    'kitchen', 'hessian', 'shape_index', 'hessian_det', 'sato', 'meijering', 'frangi'))
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
-            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral')
+            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -272,6 +288,8 @@ GROUPS = {
                     'test_rank_percentile_contracts.py'),
     'public-bilateral': ('test_rank_bilateral_contracts.py', 'test_rank_bilateral_public.py',
                          'test_rank_bilateral_masked_center_public.py', 'test_rank_bilateral_endian_public.py'),
+    'public-decisions': ('test_rank_decisions_contracts.py', 'test_rank_decisions_public.py',
+                         'test_rank_decisions_endian_public.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -281,7 +299,8 @@ GROUPS = {
 }
 POLICIES = 'warning_hook or runtime_reduction_buffer or stateful or overflow_policies or underflow_policies or scalar_power_status'
 CORPORA = {'consumers': ('component_consumers.py', 878), 'statistics': ('rank_statistics.py', 1379),
-           'percentile': ('rank_percentile.py', 2552), 'bilateral': ('rank_bilateral.py', 1008)}
+           'percentile': ('rank_percentile.py', 2552), 'bilateral': ('rank_bilateral.py', 1008),
+           'decisions': ('rank_decisions.py', 694)}
 
 
 class QualificationError(RuntimeError):
@@ -347,23 +366,29 @@ def source_state(root):
 def registry_expectation(root):
     # This data-only file has no package imports; never import source/python.
     namespace = runpy.run_path(str(root / 'python/skimagexx/coverage.py'))
-    names = set(namespace['native_functions']())
+    declared = tuple(namespace['native_functions']())
+    require(len(declared) == len(set(declared)), 'duplicate source registry paths')
+    names = set(declared)
     image_count = sum(namespace['execution_kind'](n) == 'native' for n in names)
     return dict(functions=sorted(names), image_count=image_count, registered_count=len(names), metadata_count=len(names)-image_count)
 
 
-def declared_sdk_families(cmake):
+def sdk_family_declarations(cmake):
     """Read the repo's explicit literal/foreach ITEMS declarations, not execute CMake.
 
-    Actual target existence and exact13 CTest discovery are independently required
+    Actual target existence and exact14 CTest discovery are independently required
     after relocation; this early source check is not native client proof.
     """
-    names = set(re.findall(r'add_executable\(\s*(\w+)_consumer\b', cmake))
+    names = list(re.findall(r'add_executable\(\s*(\w+)_consumer\b', cmake))
     for match in re.finditer(r'foreach\(\s*(\w+)\s+IN\s+ITEMS\s+([^)]*)\)(.*?)endforeach\(\s*\)', cmake, re.S):
         variable, items, body = match.groups()
         if 'add_executable(${' + variable + '}_consumer' in body:
-            names.update(re.findall(r'\b\w+\b', items))
+            names.extend(re.findall(r'\b\w+\b', items))
     return names
+
+
+def declared_sdk_families(cmake):
+    return set(sdk_family_declarations(cmake))
 
 
 def plan(root, profile, expected=None):
@@ -381,6 +406,14 @@ def plan(root, profile, expected=None):
     for name in R6:
         if 'filters.rank.generic.' + name in registry['functions']:
             blockers.append('R6 must not register generic alias: ' + name)
+    for name in sorted(R7_PATHS - set(registry['functions'])):
+        blockers.append('missing public R7 registry: ' + name)
+    for name in registry['functions']:
+        if name.startswith('filters.rank.') and name.rsplit('.', 1)[-1] in R7 and name not in R7_PATHS:
+            blockers.append('unexpected public R7 alias: ' + name)
+    for name in R7_SOURCE_PATHS:
+        if not (root / name).is_file():
+            blockers.append('missing required R7 source: ' + name)
     for name in R6_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required R6 source: ' + name)
@@ -391,13 +424,23 @@ def plan(root, profile, expected=None):
         if not (root / 'benchmarks' / filename).is_file():
             blockers.append('missing required corpus: ' + filename)
     cmake = (root / 'tests/cmake_consumer/CMakeLists.txt').read_text()
-    declared = declared_sdk_families(cmake)
+    declarations = sdk_family_declarations(cmake)
+    declared = set(declarations)
+    for family in sorted(declared):
+        if declarations.count(family) != 1:
+            blockers.append('duplicate installed SDK client: ' + family)
+    for family in sorted(declared - set(FAMILIES) - LEGACY_SDK_FAMILIES):
+        blockers.append('unknown installed SDK client: ' + family)
     for family in FAMILIES:
+        if not (root / 'tests' / ('test_' + family + '_native.cpp')).is_file():
+            blockers.append('missing required SDK client source: ' + family)
         if family not in declared:
             blockers.append('missing required installed SDK client: ' + family)
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
                 public_groups=GROUPS, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
+                R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
+                count_semantics='image_count counts registered image paths including identity aliases, excludes metadata; registered_count adds metadata, neither is algorithm count',
                 exclusions='No full-library, private-adapter, portable/no-OpenMP/sanitizer or performance claim. No cross-build NaN guarantee.')
 
 
@@ -679,6 +722,32 @@ def bilateral_admission(core, rank, nested, generic, wrapper, registered):
                 and 'filters.rank.generic.' + name not in registered, 'R6 generic alias/export forbidden')
 
 
+def decisions_admission(core, rank, generic, wrapper, registered):
+    """Only own public metadata; reject before contracts or fixture creation."""
+    capability = getattr(core, 'rank_decisions_capabilities', None)
+    require(getattr(core, 'rank_decisions_interface', None) == 'rank-decisions-v1'
+            and type(capability) is int and capability == 0x60000000,
+            'missing/wrong public R7 capability')
+    entry = getattr(core, 'rank_decisions_run', None)
+    require(inspect.isbuiltin(entry) and entry.__name__ == 'rank_decisions_run'
+            and entry.__module__ == core.__name__, 'missing owned compiled R7 entry')
+    paths = tuple(registered)
+    require(all(paths.count(name) == 1 for name in R7_PATHS), 'missing/duplicate public R7 registry')
+    require({name for name in paths if name.startswith('filters.rank.')
+             and name.rsplit('.', 1)[-1] in R7} == R7_PATHS, 'unexpected public R7 alias')
+    require(wrapper._core is core, 'R7 alternate core worker state')
+    require(core.get_num_threads() == 1, 'R7 initial global workers must be1')
+    for name in R7:
+        function = vars(rank).get(name)
+        require(callable(function) and function is vars(generic).get(name)
+                and function is vars(wrapper).get(name), 'R7 own public identity mismatch: ' + name)
+        require(inspect.unwrap(function).__module__ == 'skimagexx._rank'
+                and function.__name__ == name, 'upstream R7 algorithm forwarding')
+        require(list(rank.__all__).count(name) == 1, 'R7 canonical star exports differ')
+    require(list(generic.__all__).count('otsu') == 1 and 'majority' not in generic.__all__,
+            'R7 generic star exports differ')
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -696,6 +765,9 @@ def admission(out, state):
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
     require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
+    require(len(coverage.native_functions()) == state['expected']['registered_count']
+            and state['expected']['metadata_count'] == state['expected']['registered_count'] - state['expected']['image_count'],
+            'registered/image/metadata counts differ')
     required = dict(rank_histogram_capabilities=8191, rank_alias_interface='rank-alias-v1', rank_alias_capabilities=480,
                     rank_statistics_interface='rank-statistics-v1', rank_statistics_capabilities=0xe000,
                     rank_vector_interface='rank-vector-v1', rank_vector_capabilities=0x10000,
@@ -712,6 +784,7 @@ def admission(out, state):
         require(name not in vars(generic) and name not in generic.__all__, 'R5 generic path must remain absent')
     bilateral_admission(xx._core, rank, importlib.import_module('skimagexx.filters.rank.bilateral'),
                         generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
+    decisions_admission(xx._core, rank, generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -854,6 +927,47 @@ def validate_corpus(path, family):
                 {('filters.rank.'+n,'filters.rank.bilateral.'+n) for n in R6}, 'R6 alias paths differ')
 
 
+    if family == 'decisions':
+        require([len(report[k]) for k in ('alias_checks','provider_checks','policy_checks')] == [2,32,12], 'R7 auxiliary46 contract changed')
+        meta = report['metadata']
+        require(meta.get('validation_scope') == 'strict actual public R7', 'R7 genuine source admission absent')
+        require(meta.get('algorithm_count') == meta.get('scalar_api_count') == 2
+                and meta.get('vector_api_count') == 0 and meta.get('aliases_timed') is False
+                and meta.get('fallback_enabled') is False and type(meta.get('initial_default_workers')) is int
+                and meta.get('initial_default_workers') == 1,
+                'R7 algorithm/worker/no-forward metadata differs')
+        require(meta.get('canonical_paths') == ['filters.rank.'+name for name in R7]
+                and meta.get('public_alias_paths') == ['filters.rank.generic.'+name for name in R7]
+                and meta.get('operation_ids') == {'otsu':29,'majority':30}, 'R7 API/operation metadata differs')
+        require(all(type(worker) is int for worker in meta['requested_workers']), 'R7 worker telemetry must be integers')
+        source = json.loads((ROOT / 'coverage/contracts/rank-decisions-benchmark.json').read_text())
+        inventory = source['case_inventory']
+        require(len(inventory) == 694 and meta.get('case_contract_sha256') == source['case_contract_sha256'], 'R7 frozen694 inventory differs')
+        require(all(type(row.get('case_index')) is int for row in report['checks'])
+                and [row.get('case_index') for row in report['checks']] == list(range(694)), 'R7 missing/duplicate/reordered cases')
+        for row, expected in zip(report['checks'], inventory):
+            require(all(key in row and row[key] == value for key,value in expected.items()), 'R7 case specification differs')
+        metadata_rows = [row for row in report['checks'] if row.get('timing_class') == 'source-metadata-layout']
+        require(len(metadata_rows) == 16 and all(row.get('timing_eligible') is False for row in metadata_rows), 'R7 all16 metadata/error rows must remain untimed')
+        def identical(left, right):
+            try:
+                return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+            except (TypeError, ValueError):
+                return False
+        for key in ('checks','alias_checks','provider_checks','policy_checks'):
+            require(all(set(row.get('actual_by_workers',{})) == {'1','4'} for row in report[key]), 'R7 auxiliary workers incomplete')
+            require(all('reference' in row and all(identical(actual,row['reference']) for actual in row['actual_by_workers'].values()) for row in report[key]), 'R7 observation differs from reference')
+        require(all(row.get('timed') is False for key in ('alias_checks','provider_checks','policy_checks') for row in report[key]), 'R7 auxiliary rows must stay untimed')
+        providers = {(row.get('api'),row.get('case')) for row in report['provider_checks']}
+        require(providers == {('filters.rank.'+name,f'{ndim}/{stage}') for name in R7 for ndim in (2,3)
+                for stage in ('success','footprint','shift_x','shift_y','shift_z','bad-out','bad-image','image-array-only')}, 'R7 provider identities differ')
+        policies = {(row.get('api'),row.get('policy')) for row in report['policy_checks']}
+        require(policies == {('filters.rank.'+name,policy) for name in R7 for policy in ('warn','raise','ignore','call','log','print')}, 'R7 policy identities differ')
+        require(all(row.get('reference_identity') is True and row.get('native_identity') is True for row in report['alias_checks']), 'R7 canonical/generic identities incomplete')
+        aliases = [(row.get('canonical'),row.get('alias')) for row in report['alias_checks']]
+        require(len(set(aliases)) == 2 and set(aliases) == {('filters.rank.'+name,'filters.rank.generic.'+name) for name in R7}, 'R7 alias paths differ')
+
+
 def validate_metrics(path):
     report = json.loads(path.read_text())
     require(report.get('status') == 'complete-parity-check' and not report.get('failures') and not report.get('results') and len(report.get('checks',[])) == 1231, 'metrics fixed1231 failed/not untimed')
@@ -986,7 +1100,7 @@ def sdk(out, state, journal):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=FAMILIES, checks=26, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,13 independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=FAMILIES, checks=28, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,14 independently linked installed clients normal/scalar; no source includes or Python dependency'))
 
 
 def qualify(out):
@@ -1041,7 +1155,7 @@ def seal(out):
         verify_record(out, name, row, state['interpreter_provenance'])
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
                  interpreter_provenance=state['interpreter_provenance'],
-                 counts=counts, SDK_checks=26, expected_registry=state['expected'], command_count=len(commands), records=records,
+                 counts=counts, SDK_checks=28, expected_registry=state['expected'], command_count=len(commands), records=records,
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')
