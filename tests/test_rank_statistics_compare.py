@@ -3,6 +3,7 @@ import ast
 import base64
 import builtins
 import csv
+import copy
 import hashlib
 import importlib.util
 import io
@@ -29,6 +30,43 @@ def wheel(path,name,version,entries=None):
     return entries
 
 
+def synthetic_build_facts(path,revision='a'*40,compiler_id='MSVC',lto=False):
+    """Small files stand in for tools/objects; none is executable or native proof."""
+    source=path/'source';build=path.parent/(path.name+'-SYNTHETIC-BUILD');build.mkdir(parents=True,exist_ok=True)
+    def put(relative,body):
+        p=build/relative;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(body);return str(p.resolve())
+    for relative,body in {'src/rank.cpp':b'SYNTHETIC counts source\n','src/unchanged.cpp':b'SYNTHETIC unchanged source\n','include/skimagexx/h0.hpp':b'// fake\n'}.items():
+        p=source/relative;p.parent.mkdir(parents=True,exist_ok=True)
+        if not p.exists():p.write_bytes(body)
+    roles={'GNU':['compiler','backend','assembler','linker','link_driver','archiver','ranlib'],
+           'MSVC':['compiler','frontend','backend','linker','archiver']}[compiler_id]
+    if compiler_id=='GNU' and lto:roles+=['lto_backend','lto_wrapper','lto_plugin']
+    binaries={r:put('bin/'+r,b'SYNTHETIC NONEXECUTABLE TOOL '+r.encode()) for r in roles}
+    roots={'project':[str(source.resolve())]};dependencies=[str((source/'include/skimagexx/h0.hpp').resolve())]
+    for family in ('python','numpy','pybind11','toolchain'):
+        header=put('headers/'+family+'/header.h',('SYNTHETIC '+family).encode());roots[family]=[str(Path(header).parent)];dependencies.append(header)
+    rank=put('objects/rank.obj',b'SYNTHETIC rank object');other=put('objects/other.obj',b'SYNTHETIC other object');archive=put('lib/native.lib',b'SYNTHETIC generated archive');external=put('build-env/external.lib',b'SYNTHETIC external library')
+    core=put('_core.synthetic.so',b'NOT A NATIVE MODULE')
+    native=path/'wheels/native.whl'
+    if not native.exists():native.parent.mkdir(parents=True,exist_ok=True);wheel(native,'scikit-imagexx','0.1.0',{'skimagexx/_core.synthetic.so':Path(core).read_bytes()})
+    units=[]
+    for filename,output in [('rank.cpp',rank),('unchanged.cpp',other)]:
+        cpp=str((source/'src'/filename).resolve());units.append(dict(source=cpp,target='static',argv=[binaries['compiler'],'-O3','-ffp-contract=off',*(['-flto=auto'] if lto else []),'-I'+str(source.resolve()),'-o',output,'-c',cpp],dependencies=list(dependencies),outputs=[output]))
+    links=[dict(target='archive',tool='archiver',argv=[binaries['archiver'],'qc',archive,rank,other],inputs=[rank,other],outputs=[archive]),dict(target='module',tool='compiler',argv=[binaries['compiler'],'-shared','-o',core,archive,external],inputs=[archive,external],outputs=[core])]
+    evidence={r:[put('evidence/'+r+'.txt',('SYNTHETIC RAW '+r).encode())] for r in ('configuration','compiler','commands','dependencies')}
+    return dict(schema=c.BUILD_INPUT_SCHEMA,revision=revision,profile='windows',source_root=str(source.resolve()),build_root=str(build.resolve()),configuration=dict(compiler_id=compiler_id,compiler_version='SYNTHETIC-1',generator='SYNTHETIC',generator_version='1',target_arch='x64',toolset='SYNTHETIC',crt='SYNTHETIC',build_type='Release',openmp=True,avx2=True,lto=lto),binaries=binaries,header_roots=roots,translation_units=units,link_commands=links,link_inputs=[dict(path=p,generated=p!=external) for p in (rank,other,archive,external)],evidence=evidence,product_wheel=str(native.resolve()),core=core)
+
+
+def capture_synthetic_build(path,facts):
+    facts_path=path.parent/(path.name+'-facts.json');facts_path.write_text(json.dumps(facts))
+    c.capture_build_identity(facts_path,path/'build-identity.json')
+    identity=c.load_json(path/'build-identity.json')
+    records={'build-identity.json':dict(bytes=(path/'build-identity.json').stat().st_size,sha256=c.sha(path/'build-identity.json'))}
+    records.update({name:dict(bytes=r['bytes'],sha256=r['sha256']) for name,r in identity['evidence_records'].items()})
+    qualification=dict(schema='public-qualification-v2',passed=True,profile='windows',source=dict(revision=facts['revision']),records=records)
+    return identity,qualification
+
+
 @pytest.fixture
 def fake_product(tmp_path):
     path=tmp_path/'SYNTHETIC-NONNATIVE';(path/'wheels').mkdir(parents=True);source=path/'source';source.mkdir()
@@ -37,7 +75,7 @@ def fake_product(tmp_path):
     entries=dict(sdk,**{'skimagexx/__init__.py':b'# fake\n','skimagexx/_core.synthetic.so':b'NOT A NATIVE MODULE'})
     wheel(path/'wheels/native.whl','scikit-imagexx','0.1.0',entries)
     for name,version in (('scikit-image','0.26.0'),('numpy','2.5.4'),('scipy','1.18.1')):wheel(path/'wheels'/str(name+'.whl'),name,version)
-    contents=dict(headers,**{'python/skimagexx/__init__.py':b'# fake\n','readme.txt':b'SYNTHETIC SOURCE\n','coverage/contracts/rank-statistics-benchmark.json':json.dumps(dict(case_contract_sha256='fixed',case_inventory=[{}]*1379)).encode()})
+    contents=dict(headers,**{'python/skimagexx/__init__.py':b'# fake\n','readme.txt':b'SYNTHETIC SOURCE\n','src/rank.cpp':b'SYNTHETIC counts source\n','src/unchanged.cpp':b'SYNTHETIC unchanged source\n','coverage/contracts/rank-statistics-benchmark.json':json.dumps(dict(case_contract_sha256='fixed',case_inventory=[{}]*1379)).encode()})
     for n,b in contents.items():p=source/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
     with zipfile.ZipFile(path/'source.zip','w') as z:
         for n,b in contents.items():z.writestr(n,b)
@@ -49,6 +87,8 @@ def fake_product(tmp_path):
     wheels={p.name:{k:v for k,v in c.verify_wheel(p).items() if k!='members'} for p in (path/'wheels').glob('*.whl')}
     runtime=dict(schema='ci-offline-measurement-v1',source=dict(revision=revision),wheels=wheels,lock_sha256=c.sha(path/'runtime-lock.txt'),runtime=dict(sdk_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()}))
     (path/'runtime.json').write_text(json.dumps(runtime))
+    _,build_qualification=capture_synthetic_build(path,synthetic_build_facts(path,revision))
+    qualification['records'].update(build_qualification['records']);(path/'qualification.json').write_text(json.dumps(qualification))
     cfg=dict(accepted_products={'before':{'windows':dict(revision=revision,qualification_sha256=c.sha(path/'qualification.json'),wheel_sha256=c.sha(path/'wheels/native.whl'),source_sha256=c.sha(path/'source.zip'),product_sha256='pending',scope=scope,artifact_run='1',artifact_name='synthetic-only')}},source_text_sha256={'readme.txt':c.text_sha(source/'readme.txt')},case_contract_sha256='fixed',profiles={'windows':dict(numpy='2.5.4',scipy='1.18.1')})
     def reseal():
         p=path/'product.json';p.write_text(json.dumps(dict(schema='rank-statistics-comparison-product-v1',revision=revision,profile='windows',files_sha256=c.tree(path,('product.json',)))))
@@ -113,13 +153,14 @@ def receipts(tmp_path,monkeypatch):
     cfg=c.config();cfg['accepted_products']={r:{p:dict(revision=('a' if r=='before' else 'b')*40,qualification_sha256='1'*64,product_sha256=('2' if r=='before' else '3')*64,wheel_sha256='4'*64,source_sha256='5'*64,scope=cfg['planned_scope'],artifact_run='1',artifact_name='synthetic-only') for p in c.PROFILES} for r in ('before','after')}
     paths=[]
     for profile in c.PROFILES:
-        row=dict(schema='rank-statistics-comparison-preparation-v1',receipt_id=profile,generation='run',attempt='1',contract_sha256=c.text_sha(c.CONTRACT),profile=profile,native_admission=True,reference_only=False,modes=['normal','scalar'],workers=[1,4],canonical_cases=1379,alias_checks=4,timed_ids=cfg['timed_ids'],products={r:dict(product_sha256=cfg['accepted_products'][r][profile]['product_sha256']) for r in ('before','after')})
+        build=dict(schema=c.BUILD_IDENTITY_SCHEMA,common_sha256='8'*64,products=dict(before='6'*64,after='7'*64))
+        row=dict(schema='rank-statistics-comparison-preparation-v1',receipt_id=profile,generation='run',attempt='1',contract_sha256=c.text_sha(c.CONTRACT),profile=profile,native_admission=True,reference_only=False,modes=['normal','scalar'],workers=[1,4],canonical_cases=1379,alias_checks=4,timed_ids=cfg['timed_ids'],products={r:dict(product_sha256=cfg['accepted_products'][r][profile]['product_sha256'],build_identity_sha256=build['products'][r],build_common_sha256=build['common_sha256']) for r in ('before','after')})
         directory=tmp_path/profile;directory.mkdir();p=directory/'preparation.json'
         frozen=json.loads((ROOT/'coverage/contracts/rank-statistics-benchmark.json').read_text())['reference_profiles'][profile]['observations']
         digests=[frozen[str(i)] for i in range(1379)]
         value=dict(checks=[dict(workers=w,digests=digests,errors=[None]*1379,warnings=[[]]*1379) for w in (1,4)],aliases=cfg['algorithm_names'],mismatches=[])
         identities={mode:{role:dict(role=role,pid=index+1,source=cfg['accepted_products']['before' if role=='original' else role][profile]['revision'],product_sha256=cfg['accepted_products']['before' if role=='original' else role][profile]['product_sha256'],profile=profile,default_workers=1,scalar=mode=='scalar',has_avx2=mode=='normal',core_sha256='a'*64 if role!='after' else 'b'*64,core_path='/fake/'+role+'/core') for index,role in enumerate(c.ROLES)} for mode in ('normal','scalar')}
-        report=dict(source_comparison=dict(changed=['src/rank.cpp'],patch_sha256=cfg['counts_cpp_patch_sha256'],scope=cfg['planned_scope'],full_source_index_sha256=['a'*64,'b'*64]),schema='rank-statistics-controlled-v1',status='complete-parity-check',check_only=True,reference_only=False,profile=profile,results=[],failures=[],contract_sha256=c.text_sha(c.CONTRACT),worker_identities=identities,checks={mode:{role:value for role in c.ROLES} for mode in ('normal','scalar')})
+        report=dict(source_comparison=dict(changed=['src/rank.cpp'],patch_sha256=cfg['counts_cpp_patch_sha256'],scope=cfg['planned_scope'],full_source_index_sha256=['a'*64,'b'*64],build_identity=build),schema='rank-statistics-controlled-v1',status='complete-parity-check',check_only=True,reference_only=False,profile=profile,results=[],failures=[],contract_sha256=c.text_sha(c.CONTRACT),worker_identities=identities,checks={mode:{role:value for role in c.ROLES} for mode in ('normal','scalar')})
         (directory/'report.json').write_text(json.dumps(report));row['report_sha256']=c.sha(directory/'report.json')
         p.write_text(json.dumps(row));paths.append(p)
     return cfg,paths
@@ -411,6 +452,9 @@ def test_counts_patch_allows_line_offsets_but_no_changed_context():
 
 @pytest.mark.parametrize('failure',['other-source','other-rank-edit','missing-counts','scope','registry'])
 def test_full_source_pair_only_allows_the_approved_counts_delta(tmp_path,monkeypatch,failure):
+    # This existing unit isolates the source-patch guard. Separate tests below
+    # exercise the real common-build gate with byte-authenticated fake inputs.
+    monkeypatch.setattr(c,'verify_common_build',lambda *a:dict(schema=c.BUILD_IDENTITY_SCHEMA,common_sha256='8'*64,products=dict(before='6'*64,after='7'*64)))
     cfg=c.config();scope=cfg['planned_scope'];patch='@@ -1 +1 @@\n-old_bookkeeping\n+counts_population_only\n'
     cfg['counts_cpp_patch']=patch;cfg['counts_cpp_patch_sha256']=hashlib.sha256(patch.encode()).hexdigest()
     pin=lambda role:dict(revision=('a' if role=='before' else 'b')*40,qualification_sha256='1'*64,product_sha256='2'*64,wheel_sha256='3'*64,source_sha256='4'*64,scope=scope,artifact_run='1',artifact_name='metadata-only')
@@ -449,3 +493,141 @@ def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(
     loaded=c.config(path,c.sha(path))
     assert c.accepted_pin(loaded,'before','windows')['scope']['image_paths']==190
     assert c.accepted_pin(loaded,'after','windows')['scope']['sdk_families']==14
+
+
+def synthetic_build_pair(tmp_path,change=None,compiler_id='MSVC',lto=False):
+    cfg=c.config();cfg['accepted_products']={r:{} for r in ('before','after')};roots=[]
+    for role,revision in (('before','a'*40),('after','b'*40)):
+        path=tmp_path/role;path.mkdir();facts=synthetic_build_facts(path,revision,compiler_id,lto)
+        if role=='after' and change:change(facts)
+        identity,q=capture_synthetic_build(path,facts);q['expected_registry']={'functions':['same']};(path/'qualification.json').write_text(json.dumps(q))
+        cfg['accepted_products'][role]['windows']=dict(revision=revision,qualification_sha256=c.sha(path/'qualification.json'),product_sha256='1'*64,wheel_sha256=c.sha(path/'wheels/native.whl'),source_sha256='2'*64,scope=cfg['planned_scope'],artifact_run='1',artifact_name='SYNTHETIC-NONNATIVE')
+        roots.append(path)
+    return roots,cfg
+
+
+def test_actual_metadata_capture_does_not_execute_tools_or_import_numerical_code(tmp_path,monkeypatch):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path)
+    monkeypatch.setattr(c.subprocess,'Popen',lambda *a,**k:pytest.fail('tool execution reached'))
+    original=builtins.__import__
+    def checked(name,*args,**kwargs):
+        assert name.split('.')[0] not in ('numpy','scipy','skimage','skimagexx')
+        return original(name,*args,**kwargs)
+    monkeypatch.setattr(builtins,'__import__',checked)
+    identity,q=capture_synthetic_build(path,facts)
+    result=c.verify_build_identity(path,'windows',q,facts['revision'])
+    assert result['common_sha256']==identity['common_sha256'] and identity['raw']==facts
+    assert identity['file_records']['binaries']['backend']['sha256']==c.sha(facts['binaries']['backend'])
+
+
+@pytest.mark.parametrize('compiler_id,lto',[('MSVC',False),('GNU',False),('GNU',True)])
+def test_common_build_is_root_normalized_and_generated_outputs_are_observations(tmp_path,compiler_id,lto):
+    def variation(facts):
+        Path(facts['translation_units'][0]['source']).write_text('SYNTHETIC approved counts change\n')
+        # Real LTO outputs can contain nonreproducible stamps. Every output raw
+        # hash remains in its role receipt; no input library/header is masked.
+        for command in [*facts['translation_units'],*facts['link_commands']]:
+            for p in command['outputs']:
+                if p!=facts['core']:Path(p).write_bytes(Path(p).read_bytes()+b' generated stamp')
+    roots,cfg=synthetic_build_pair(tmp_path,variation,compiler_id,lto)
+    result=c.verify_common_build(*roots,'windows',cfg)
+    assert result['schema']==c.BUILD_IDENTITY_SCHEMA and len(result['common_sha256'])==64
+    before=c.load_json(roots[0]/'build-identity.json');after=c.load_json(roots[1]/'build-identity.json')
+    assert before['file_records']['outputs']!=after['file_records']['outputs']
+    assert before['common']==after['common']
+
+
+@pytest.mark.parametrize('change',['compiler','backend','linker','toolset','flags','FP','OpenMP','AVX2','LTO','header','numpy-header','external-build-env-library','other-source'])
+def test_common_build_rejects_any_different_actual_common_input(tmp_path,change):
+    def mutate(facts):
+        if change in ('compiler','backend','linker'):Path(facts['binaries'][change]).write_bytes(b'DIFFERENT TOOL')
+        elif change=='toolset':facts['configuration']['toolset']='different-toolset'
+        elif change=='flags':facts['translation_units'][0]['argv'].append('-funroll-loops')
+        elif change=='FP':facts['translation_units'][0]['argv'].append('-ffast-math')
+        elif change in ('OpenMP','AVX2','LTO'):facts['configuration'][change.lower()]=not facts['configuration'][change.lower()]
+        elif change in ('header','numpy-header'):
+            family='toolchain' if change=='header' else 'numpy';Path(facts['header_roots'][family][0],'header.h').write_bytes(b'DIFFERENT HEADER')
+        elif change=='external-build-env-library':Path(next(r['path'] for r in facts['link_inputs'] if not r['generated'])).write_bytes(b'DIFFERENT BUILD-ENV LIBRARY')
+        else:Path(facts['translation_units'][1]['source']).write_text('UNAPPROVED SOURCE\n')
+    roots,cfg=synthetic_build_pair(tmp_path,mutate)
+    with pytest.raises(RuntimeError,match='compiler, headers, used inputs or build flags differ'):c.verify_common_build(*roots,'windows',cfg)
+
+
+@pytest.mark.parametrize('role',['lto_backend','lto_wrapper','lto_plugin'])
+def test_executed_gnu_lto_binaries_are_mandatory(tmp_path,role):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path,compiler_id='GNU',lto=True);facts['binaries'].pop(role)
+    with pytest.raises(RuntimeError,match='LTO tool'):capture_synthetic_build(path,facts)
+
+
+@pytest.mark.parametrize('role',['lto_backend','lto_wrapper','lto_plugin'])
+def test_actual_lto_binary_byte_difference_rejects_common_build(tmp_path,role):
+    def mutate(facts):Path(facts['binaries'][role]).write_bytes(b'DIFFERENT EXECUTED LTO TOOL')
+    roots,cfg=synthetic_build_pair(tmp_path,mutate,'GNU',True)
+    with pytest.raises(RuntimeError,match='compiler, headers, used inputs or build flags differ'):c.verify_common_build(*roots,'windows',cfg)
+
+
+@pytest.mark.parametrize('flag',['-B/unrecorded/backend','/B1unrecorded','-fplugin=/unrecorded/plugin.so','--specs=/unrecorded/specs'])
+def test_unrecorded_compiler_overrides_or_plugins_fail_closed(tmp_path,flag):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path);facts['translation_units'][0]['argv'].append(flag)
+    with pytest.raises(RuntimeError):capture_synthetic_build(path,facts)
+
+
+@pytest.mark.parametrize('failure',['backend','flags','response','link-response','used-headers','header-family','link-edges','generated-external','global-inputs','source-root','LTO-hidden'])
+def test_build_capture_fails_closed_on_missing_or_untraceable_facts(tmp_path,failure):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path)
+    if failure=='backend':facts['binaries'].pop('backend')
+    elif failure=='flags':facts['translation_units'][0]['argv']=[]
+    elif failure=='response':facts['translation_units'][0]['argv'].append('@unexpanded.rsp')
+    elif failure=='link-response':facts['link_commands'][1]['argv'].append('-Wl,@unexpanded.rsp')
+    elif failure=='used-headers':facts['translation_units'][0]['dependencies']=[]
+    elif failure=='header-family':facts['header_roots'].pop('python')
+    elif failure=='link-edges':facts['link_commands'][0].pop('inputs')
+    elif failure=='generated-external':next(r for r in facts['link_inputs'] if not r['generated'])['generated']=True
+    elif failure=='global-inputs':facts['link_inputs'].pop()
+    elif failure=='source-root':facts['source_root']=str(Path(facts['source_root']).anchor)
+    else:facts['translation_units'][0]['argv'].append('-flto=auto')
+    with pytest.raises(RuntimeError):capture_synthetic_build(path,facts)
+
+
+def test_debug_capture_is_honest_but_never_release_comparison_admission(tmp_path):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path);facts['profile']='debug';facts['configuration']['build_type']='Debug'
+    identity,q=capture_synthetic_build(path,facts);q['profile']='debug'
+    with pytest.raises(RuntimeError,match='Release'):c.verify_build_identity(path,'debug',q,facts['revision'])
+    assert identity['raw']['configuration']['build_type']=='Debug'
+
+
+@pytest.mark.parametrize('failure',['missing','unqualified','evidence-unqualified','evidence-tamper','common-tamper','source-tamper'])
+def test_identity_and_raw_evidence_require_original_qualification_binding(tmp_path,failure):
+    path=tmp_path/'SYNTHETIC';path.mkdir();facts=synthetic_build_facts(path);identity,q=capture_synthetic_build(path,facts)
+    if failure=='missing':(path/'build-identity.json').unlink()
+    elif failure=='unqualified':q['records'].pop('build-identity.json')
+    elif failure=='evidence-unqualified':q['records'].pop(next(iter(identity['evidence_records'])))
+    elif failure=='evidence-tamper':(path/next(iter(identity['evidence_records']))).write_bytes(b'changed raw facts')
+    elif failure=='source-tamper':Path(facts['translation_units'][0]['source']).write_text('changed source\n')
+    else:
+        identity['common']['configuration']['toolset']='tamper';(path/'build-identity.json').write_text(json.dumps(identity));q['records']['build-identity.json']=dict(bytes=(path/'build-identity.json').stat().st_size,sha256=c.sha(path/'build-identity.json'))
+    with pytest.raises(RuntimeError):c.verify_build_identity(path,'windows',q,facts['revision'])
+
+
+def test_old_qualified_product_without_build_capture_fails_before_fixtures(fake_product,monkeypatch):
+    path,cfg,reseal=fake_product;q=c.load_json(path/'qualification.json');q['records'].pop('build-identity.json');(path/'qualification.json').write_text(json.dumps(q));cfg['accepted_products']['before']['windows']['qualification_sha256']=c.sha(path/'qualification.json');reseal()
+    monkeypatch.setattr(c,'harness',lambda *_:pytest.fail('fixture import reached'))
+    with pytest.raises(RuntimeError,match='build identity missing'):c.verify_product(path,'before','windows',cfg)
+
+
+def test_declared_roots_do_not_normalize_unrelated_flags_or_paths():
+    roots=[('/owned/source','$SOURCE'),('/owned/build','$BUILD')]
+    assert c._normalize_build_argument('-I/owned/source/include',roots)=='-I$SOURCE/include'
+    assert c._normalize_build_argument('/Fo/owned/build/a.obj',roots)=='/Fo$BUILD/a.obj'
+    for arg in ('-I/owned/source-other/include','-I/system/include','-O3','-fplugin=/system/compiler/plugin.so'):
+        assert c._normalize_build_argument(arg,roots)==arg
+
+
+@pytest.mark.parametrize('field',['common_sha256','before_identity','missing'])
+def test_barrier_binds_original_preparation_common_build_identity(tmp_path,monkeypatch,field):
+    cfg,paths=receipts(tmp_path,monkeypatch);row=c.load_json(paths[0]);report_path=paths[0].parent/'report.json';report=c.load_json(report_path)
+    if field=='common_sha256':row['products']['after']['build_common_sha256']='9'*64
+    elif field=='before_identity':row['products']['before']['build_identity_sha256']='9'*64
+    else:report['source_comparison'].pop('build_identity');report_path.write_text(json.dumps(report));row['report_sha256']=c.sha(report_path)
+    paths[0].write_text(json.dumps(row))
+    with pytest.raises(RuntimeError):c.receipt_barrier(paths,cfg,'run','1')
