@@ -89,7 +89,7 @@ def synthetic_gnu(tmp_path,monkeypatch,lto=False):
     put(native/'.ninja_log','# ninja log v5\n'+''.join(f'0\t1\t2\t{p.relative_to(native).as_posix()}\thash\n' for p in (obj,archive,core)))
     put(native/'.ninja_deps','binary dependency fixture');put(native/'build.ninja','synthetic graph')
     deps=relative+': #deps 6, deps mtime 2 (VALID)\n'+''.join('    '+str(p)+'\n' for p in [cpp,*headers])
-    link=[str(tools['c++']),*flags,'-save-temps=obj','-shared',str(obj),str(archive),'-o',str(core)]
+    link=[str(tools['c++']),*flags,'-save-temps=obj','-Wl,--dependency-file='+str(native/'core-link.d'),'-shared',str(obj),str(archive),'-o',str(core)]
     commands='\n'.join(shlex.join(v) for v in [compile,[str(tools['ar']),'qc',str(archive),str(obj)],[str(tools['ranlib']),str(archive)],link,[str(tools['strip']),str(core)]])
     linkpaths=[obj,archive,crt]
     if lto:linkpaths.append(put(native/(core.name+'.ltrans0.ltrans.o')))
@@ -213,6 +213,39 @@ def test_every_gnu_role_callsite_uses_collision_free_label_encoding():
     roles=('backend','assembler','linker','link_driver','archiver','ranlib','lto_backend','lto_wrapper','lto_plugin')
     labels=['resolve-'+role.replace('_','-') for role in roles]
     assert len(labels)==len(set(labels))
+
+
+@pytest.mark.parametrize('form',['wl','xlinker'])
+def test_actual_last_cmake_injected_dependency_file_wins_without_old_file(tmp_path,form):
+    selected=put(tmp_path/'CMakeFiles/_core.dir/link.d','core.so: input.o\n')
+    argv=['/usr/bin/g++','-shared','-save-temps=obj','-Wl,--dependency-file='+str(tmp_path/'core-link.d')]
+    argv+=['-Wl,--dependency-file=CMakeFiles/_core.dir/link.d'] if form=='wl' else ['-Xlinker','--dependency-file','-Xlinker','CMakeFiles/_core.dir/link.d']
+    path,flags=f.actual_linker_depfile(argv,tmp_path)
+    assert path==selected and flags==[str(tmp_path/'core-link.d'),'CMakeFiles/_core.dir/link.d']
+    assert not (tmp_path/'core-link.d').exists()
+
+
+@pytest.mark.parametrize('kind',['missing','noflag','escape','missingoperand','linkrsp'])
+def test_actual_dependency_path_missing_or_unproven_never_falls_back(tmp_path,kind):
+    put(tmp_path/'core-link.d','old unused file')
+    tail={'missing':['-Wl,--dependency-file=CMakeFiles/_core.dir/link.d'],'noflag':[],
+          'escape':['-Wl,--dependency-file=../escape.d'],'missingoperand':['-Wl,--dependency-file'],
+          'linkrsp':['-Wl,@link.rsp']}[kind]
+    with pytest.raises(f.FactsError):f.actual_linker_depfile(['/usr/bin/g++',*tail],tmp_path)
+
+
+def test_complete_capture_uses_real_cmake_last_depfile_and_retains_selection(tmp_path,monkeypatch):
+    x=synthetic_gnu(tmp_path,monkeypatch);query=f.Capture.query
+    path=x['native']/'core-link.d';selected=x['native']/'CMakeFiles/_core.dir/link.d';selected.parent.mkdir(parents=True);path.rename(selected)
+    def injected(self,label,argv,cwd):
+        value=query(self,label,argv,cwd)
+        if label=='ninja-commands':value=value.replace('-shared','-Wl,--dependency-file=CMakeFiles/_core.dir/link.d -shared')
+        return value
+    monkeypatch.setattr(f.Capture,'query',injected)
+    facts=f.collect(x['source'],x['build'],'a'*40,'modern',x['build']/'facts.json')
+    assert str(selected) in facts['evidence']['dependencies']
+    selection=json.loads((x['build']/'build-identity-facts-evidence/linker-dependency-selection.json').read_text())
+    assert selection['selected_path']==str(selected) and len(selection['dependency_file_options'])==2
 
 
 def test_observed_sortdefault_nls_is_explicit_pinned_toolchain_resource(tmp_path,monkeypatch):
