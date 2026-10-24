@@ -297,6 +297,18 @@ GROUPS = {
     'shared': ('test_class_registry.py', 'test_api.py', 'test_inventory.py', 'test_nested_imports.py',
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
+_BASE_GROUPS = GROUPS
+
+
+def groups_for_source(root):
+    """Counts-after has one additional genuine-public gate; before has none."""
+    groups = dict(_BASE_GROUPS)
+    if (Path(root) / 'tests/test_rank_windowed_counts_pipeline.py').is_file():
+        groups['public-counts'] = ('test_rank_windowed_counts_pipeline.py',)
+    return groups
+
+
+GROUPS = groups_for_source(ROOT)
 POLICIES = 'warning_hook or runtime_reduction_buffer or stateful or overflow_policies or underflow_policies or scalar_power_status'
 CORPORA = {'consumers': ('component_consumers.py', 878), 'statistics': ('rank_statistics.py', 1379),
            'percentile': ('rank_percentile.py', 2552), 'bilateral': ('rank_bilateral.py', 1008),
@@ -417,7 +429,8 @@ def plan(root, profile, expected=None):
     for name in R6_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required R6 source: ' + name)
-    for name in [n for group in GROUPS.values() for n in group] + ['test_arraymap_dense_contracts.py']:
+    groups = groups_for_source(root)
+    for name in [n for group in groups.values() for n in group] + ['test_arraymap_dense_contracts.py']:
         if not (root / 'tests' / name.split('::')[0]).is_file():
             blockers.append('missing required test: ' + name)
     for filename, _ in CORPORA.values():
@@ -438,7 +451,7 @@ def plan(root, profile, expected=None):
             blockers.append('missing required installed SDK client: ' + family)
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
-                public_groups=GROUPS, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
+                public_groups=groups, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
                 R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
                 count_semantics='image_count counts registered image paths including identity aliases, excludes metadata; registered_count adds metadata, neither is algorithm count',
                 exclusions='No full-library, private-adapter, portable/no-OpenMP/sanitizer or performance claim. No cross-build NaN guarantee.')

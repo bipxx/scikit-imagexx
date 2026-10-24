@@ -874,3 +874,40 @@ def test_wrong_identity_facts_reject_before_producer(tmp_path,key,value):
     journal.run=modified
     with pytest.raises(q.QualificationError,match='source/profile/roots differ'):q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
     assert [r[0] for r in journal.rows]==['gather-build-identity-facts']
+
+
+def test_counts_after_group_is_conditional_and_keeps_every_original_group(tmp_path):
+    before=q.groups_for_source(tmp_path);assert before==q._BASE_GROUPS and 'public-counts' not in before
+    path=tmp_path/'tests/test_rank_windowed_counts_pipeline.py';path.parent.mkdir();path.write_text('# metadata fixture, never collected')
+    after=q.groups_for_source(tmp_path)
+    assert after['public-counts']==('test_rank_windowed_counts_pipeline.py',)
+    assert {k:v for k,v in after.items() if k!='public-counts'}==before
+    assert before==q._BASE_GROUPS  # no mutation of the before configuration
+
+
+def test_counts_directory_does_not_masquerade_as_a_test_file(tmp_path):
+    (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').mkdir(parents=True)
+    assert 'public-counts' not in q.groups_for_source(tmp_path)
+
+
+def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path,monkeypatch):
+    synthetic_complete_plan(tmp_path)
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
+    before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
+    (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
+    after=q.plan(tmp_path,'modern',190);assert not after['blockers']
+    assert after['public_groups']['public-counts']==('test_rank_windowed_counts_pipeline.py',)
+    assert {k:v for k,v in after['public_groups'].items() if k!='public-counts'}==before['public_groups']
+    assert after['corpora']==before['corpora'] and after['SDK_families']==before['SDK_families']
+
+
+def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_path,monkeypatch):
+    (tmp_path/'package.json').write_text(json.dumps({'members_sha256':{}}))
+    monkeypatch.setattr(q,'verify_tree',lambda *_:None);monkeypatch.setattr(q,'validate_interpreter_provenance',lambda *_:None)
+    monkeypatch.setenv('SKIMAGEXX_WINDOWED_COUNTS_CORE','historical_private_core')
+    original=builtins.__import__
+    def guarded(name,*a,**kw):
+        if name in ('skimagexx','pytest'):raise AssertionError('package/fixture imported before private selector rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    with pytest.raises(q.QualificationError,match='private selectors forbidden'):q.admission(tmp_path,{'interpreter_provenance':{}})
