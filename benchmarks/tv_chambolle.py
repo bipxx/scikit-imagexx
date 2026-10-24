@@ -226,6 +226,40 @@ def certificate(path,run=None,revision=None):
     return value
 
 
+def controller_identity(qualified_root,cert):
+    """Keep full qualified product source and reviewed controller source distinct."""
+    qualified_root=Path(qualified_root).resolve(strict=True)
+    assert qualified_root!=ROOT.resolve(), 'separate exact qualified-source checkout required'
+    policy_path=ROOT/'coverage/contracts/tv-chambolle-controller.json'
+    policy=json.loads(policy_path.read_text())
+    allowed={'benchmarks/tv_chambolle.py','tests/test_tv_chambolle_benchmark.py',
+             '.github/workflows/tv-chambolle-benchmark.yml','coverage/contracts/tv-chambolle-controller.json'}
+    assert set(policy)=={'schema','qualified_source','allowed_controller_paths','product_source_sha256','native_source_members'}
+    assert policy['schema']=='tv-qualified-controller-v1' and set(policy['allowed_controller_paths'])==allowed
+    assert len(policy['allowed_controller_paths'])==len(allowed)
+    assert policy['qualified_source']==cert['qualified_source']
+    qualified=artifacts.source_state(qualified_root);controller=artifacts.source_state(ROOT)
+    expected=os.environ['TV_CONTROLLER_SOURCE'];assert re.fullmatch('[0-9a-f]{40}',expected)
+    assert controller['revision']==expected and controller['revision']!=qualified['revision']
+    assert qualified['revision']==cert['qualified_source']
+    before=qualified['files_sha256'];after=controller['files_sha256']
+    delta={name:dict(qualified=before.get(name),controller=after.get(name))
+           for name in sorted(set(before)|set(after)) if before.get(name)!=after.get(name)}
+    assert set(delta)==allowed, 'controller changes outside exact reviewed four-path delta'
+    def native_names(files):
+        return {name for name in files if name in ('CMakeLists.txt','pyproject.toml')
+                or name.startswith(('src/','include/skimagexx/')) and name.count('/')==(2 if name.startswith('include/') else 1)
+                or name.startswith('python/skimagexx/') and name.count('/')==2 and name.endswith('.py')}
+    names=native_names(before);assert names==native_names(after) and len(names)==policy['native_source_members']==255
+    assert all(before[name]==after[name] for name in names)
+    native=source_fingerprint(qualified_root);assert native==source_fingerprint(ROOT)
+    assert native['source_sha256']==policy['product_source_sha256']
+    assert all(pin['product_source_sha256']==native['source_sha256'] for pin in cert['profiles'].values())
+    return dict(schema='tv-controller-source-separation-v1',qualified_source=qualified,
+                controller_source=controller,delta=delta,native_source=native,
+                policy_source_text_sha256=text_sha(policy_path))
+
+
 def qualified_product(capsule,certificate_path,run=None,revision=None):
     """Standard-library artifact checks before any fixture or image operation."""
     from benchmarks import rank_statistics_compare as controller
@@ -236,7 +270,9 @@ def qualified_product(capsule,certificate_path,run=None,revision=None):
     verified=controller.verify_product(product,'before',profile(),cfg)
     q=json.loads((product/'qualification.json').read_text())
     assert API in q['expected_registry']['functions']
-    assert q['source']==artifacts.source_state(ROOT),'complete current/qualified source index differs'
+    qualified_root=Path(os.environ['TV_QUALIFIED_SOURCE_ROOT']).resolve(strict=True)
+    controller_info=controller_identity(qualified_root,cert)
+    assert q['source']==controller_info['qualified_source'],'complete qualified source index differs'
     assert source_fingerprint(ROOT)['source_sha256']==pin['product_source_sha256']
     provenance=json.loads((product/'product.json').read_text())['provenance']
     assert provenance['original_run']==cert['qualified_run'] and provenance['original_manifest_sha256']==pin['qualification_sha256']
@@ -249,11 +285,11 @@ def qualified_product(capsule,certificate_path,run=None,revision=None):
     for mode in ('normal','scalar'):
         row=q['counts'][mode+'-public-TV']
         assert row['tests']>=2148 and not any(row[k] for k in ('failures','errors','skipped'))
-    runtime=artifacts.verify(ROOT,product/'wheels',product/'runtime.json')
+    runtime=artifacts.verify(qualified_root,product/'wheels',product/'runtime.json')
     assert len(runtime['runtime']['sdk_sha256'])==62
     cores={n:h for n,h in runtime['runtime']['packages_sha256']['skimagexx'].items() if n.startswith('_core.') and n.endswith(('.so','.pyd'))}
     assert list(cores.values())==[pin['core_sha256']]
-    return dict(**pin,profile=profile(),certificate_sha256=artifacts.sha(certificate_path),verified_product=verified)
+    return dict(**pin,profile=profile(),certificate_sha256=artifacts.sha(certificate_path),verified_product=verified,controller=controller_info)
 
 
 def preparation_reports(directory):
@@ -302,9 +338,9 @@ def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revis
     assert not (capsule/'tv-chambolle-artifacts.json').exists() and not (capsule/'checks').exists()
     shutil.copyfile(certificate_path,capsule/'tv-certificate.json');(capsule/'checks').mkdir()
     for name in ('normal.json','scalar.json','pipeline-normal.xml','pipeline-scalar.xml'):shutil.copyfile(directory/name,capsule/'checks'/name)
-    info=dict(schema='tv-chambolle-qualified-offline-v2',corpus_manifest_sha256=artifacts.sha(MANIFEST),qualified=qualified,files_sha256=capsule_tree(capsule))
+    info=dict(schema='tv-chambolle-qualified-offline-v3',corpus_manifest_sha256=artifacts.sha(MANIFEST),qualified=qualified,files_sha256=capsule_tree(capsule))
     path=capsule/'tv-chambolle-artifacts.json';path.write_text(json.dumps(info,indent=2)+'\n')
-    receipt=dict(schema='tv-preparation-receipt-v1',status='ready',profile=profile(),workflow_run=workflow_run,workflow_attempt=attempt,qualified_run=run,qualified_source=revision,certificate_sha256=qualified['certificate_sha256'],product_sha256=qualified['product_sha256'],capsule_sha256=artifacts.sha(path),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,native_checks_per_mode=800,pipeline_default_finite_required=True)
+    receipt=dict(schema='tv-preparation-receipt-v2',status='ready',profile=profile(),workflow_run=workflow_run,workflow_attempt=attempt,qualified_run=run,qualified_source=revision,certificate_sha256=qualified['certificate_sha256'],product_sha256=qualified['product_sha256'],capsule_sha256=artifacts.sha(path),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,native_checks_per_mode=800,pipeline_default_finite_required=True,controller_revision=qualified['controller']['controller_source']['revision'],controller_sha256=digest(qualified['controller']))
     receipt_output.parent.mkdir(parents=True,exist_ok=True);receipt_output.write_text(json.dumps(receipt,indent=2)+'\n')
     return verify(capsule)
 
@@ -313,7 +349,7 @@ def seal(*args):raise RuntimeError('use genuine qualified product plus complete 
 
 
 def verify(capsule):
-    info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-qualified-offline-v2'
+    info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-qualified-offline-v3'
     assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST)
     qualified=qualified_product(capsule,capsule/'tv-certificate.json')
     assert qualified==info['qualified']
@@ -324,13 +360,17 @@ def verify(capsule):
 def preparation_barrier(directory,capsule):
     assert os.environ.get('GITHUB_ACTIONS')=='true'
     cert=certificate(capsule/'tv-certificate.json');paths=list(directory.rglob('tv-receipt-*.json'))
+    sealed_controller=json.loads((capsule/'tv-chambolle-artifacts.json').read_text())['qualified']['controller']
+    assert sealed_controller['controller_source']['revision']==os.environ['TV_CONTROLLER_SOURCE']
     assert len(paths)==3,'all3 preparation receipts required before fixture/timer work'
     rows={}
     for path in paths:
         row=json.loads(path.read_text());name=row['profile'];assert name in PROFILES and name not in rows
-        assert row['schema']=='tv-preparation-receipt-v1' and row['status']=='ready'
+        assert row['schema']=='tv-preparation-receipt-v2' and row['status']=='ready'
         assert row['workflow_run']==os.environ['GITHUB_RUN_ID'] and row['workflow_attempt']==os.environ['GITHUB_RUN_ATTEMPT'],'stale/reused preparation receipt'
         assert row['qualified_run']==cert['qualified_run'] and row['qualified_source']==cert['qualified_source']
+        assert row['controller_revision']==sealed_controller['controller_source']['revision']
+        assert row['controller_sha256']==digest(sealed_controller)
         assert row['certificate_sha256']==artifacts.sha(capsule/'tv-certificate.json')
         assert row['product_sha256']==cert['profiles'][name]['product_sha256']
         assert row['modes']==['normal','scalar'] and row['workers']==[1,4]
@@ -361,7 +401,7 @@ def main(argv=None):
     import scipy,skimage
     previous=xx.get_num_threads();policy=xx.set_fallback_enabled(False)
     manifest=json.loads(MANIFEST.read_text());source=source_fingerprint(ROOT);manifest_sha=artifacts.sha(MANIFEST)
-    report=dict(version=VERSION,status='preflight',scope='reference-only/native0' if args.reference_only else 'strict actual public TV',metadata=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,skimage=skimage.__version__,source_revision=source_revision(ROOT),source=source,workers=args.threads,primary_workers=1,repeat=7,check_only=args.check_only,reference_only=args.reference_only,simd_mode="scalar" if os.environ.get("SKIMAGEXX_DISABLE_SIMD")=="1" else "normal",session_id=str(uuid.uuid4()),cpu=cpu_metadata(),timing_scope='Whole public call including conversion/allocation/result destruction; fixture construction excluded; errors/protocols/NaN cases untimed'),checks=[],results=[],failures=[])
+    report=dict(version=VERSION,status='preflight',scope='reference-only/native0' if args.reference_only else 'strict actual public TV',metadata=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,skimage=skimage.__version__,source_revision=source_revision(ROOT),source=source,workers=args.threads,primary_workers=1,repeat=7,check_only=args.check_only,reference_only=args.reference_only,simd_mode="scalar" if os.environ.get("SKIMAGEXX_DISABLE_SIMD")=="1" else "normal",session_id=str(uuid.uuid4()),process_pid=os.getpid(),paired_backend_process='same process: original and current callbacks',cpu=cpu_metadata(),timing_scope='Whole public call including conversion/allocation/result destruction; fixture construction excluded; errors/protocols/NaN cases untimed'),checks=[],results=[],failures=[])
     save(report,args.output)
     try:
         assert skimage.__version__=='0.26.0'
@@ -383,6 +423,7 @@ def main(argv=None):
         if not args.reference_only:
             assert expected_profile is not None and args.capsule is not None
             report['metadata']['artifacts']=qualified
+            report['metadata']['controller']=qualified['controller']
         for index,case in enumerate(cases):
             row=dict(index=index,**inventory(case))
             try:
