@@ -21,6 +21,7 @@ except ImportError:
  from provenance import source_fingerprint
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from tools import ci_measurement_artifacts as artifacts
+from tools.public_qualification import SDK_MEMBERS
 MANIFEST=ROOT/'coverage/contracts/rank-percentile-benchmark.json'
 SOURCE_CONTRACT=ROOT/'coverage/contracts/rank-percentile.json'
 NAMES=('autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile')
@@ -254,7 +255,7 @@ def verify(capsule):
  path=capsule/'rank-percentile-artifacts.json';info=json.loads(path.read_text());assert info['schema']=='rank-percentile-exact-offline-v1'
  assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST) and info['product_source']==source_fingerprint(ROOT)
  assert info['runtime_manifest_sha256']==artifacts.sha(capsule/'rank-percentile-runtime.json')
- runtime=artifacts.verify(ROOT,capsule/'wheels',capsule/'rank-percentile-runtime.json');assert len(runtime['runtime']['sdk_sha256'])==59
+ runtime=artifacts.verify(ROOT,capsule/'wheels',capsule/'rank-percentile-runtime.json');assert len(runtime['runtime']['sdk_sha256'])==SDK_MEMBERS
  with zipfile.ZipFile(capsule/'source.zip') as z:
   assert set(z.namelist())==set(runtime['source']['files_sha256'])
   assert all(hashlib.sha256(z.read(n).replace(b'\r\n',b'\n')).hexdigest()==h for n,h in runtime['source']['files_sha256'].items())

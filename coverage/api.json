@@ -3142,7 +3142,8 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_rank_bilateral_public.py",
-      "benchmark": "benchmarks/rank_bilateral.py"
+      "benchmark": "benchmarks/rank_bilateral.py",
+      "alias_of": "filters.rank.mean_bilateral"
     },
     {
       "api": "filters.rank.bilateral.pop_bilateral",
@@ -3156,7 +3157,8 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_rank_bilateral_public.py",
-      "benchmark": "benchmarks/rank_bilateral.py"
+      "benchmark": "benchmarks/rank_bilateral.py",
+      "alias_of": "filters.rank.pop_bilateral"
     },
     {
       "api": "filters.rank.bilateral.sum_bilateral",
@@ -3170,7 +3172,8 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_rank_bilateral_public.py",
-      "benchmark": "benchmarks/rank_bilateral.py"
+      "benchmark": "benchmarks/rank_bilateral.py",
+      "alias_of": "filters.rank.sum_bilateral"
     },
     {
       "api": "filters.rank.generic.autolevel",

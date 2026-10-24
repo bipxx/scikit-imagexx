@@ -44,6 +44,7 @@ coverage/evidence/qualification-checkpoint-cleanup-20261024.json -text
 coverage/evidence/rank-decisions-fixture-assertion-migration.json -text
 coverage/contracts/rank-decisions-public.json -text
 coverage/contracts/rank-decisions-endian-public.json -text
+coverage/evidence/tv-chambolle-sdk-census-migration.json -text
 coverage/evidence/private-rank-collection-migration.json -text
 coverage/contracts/tv-chambolle.json -text
 coverage/contracts/tv-chambolle-benchmark.json -text
