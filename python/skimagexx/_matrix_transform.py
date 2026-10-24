@@ -71,6 +71,7 @@ _RUNTIME_PINS = {
 }
 _THREAD_QUERY = None
 _RUNTIME_CORENAME = None
+_RUNTIME_DRIVER = None
 _FORCED_CPU = ('OPENBLAS_CORETYPE', 'NPY_DISABLE_CPU_FEATURES',
                'NPY_ENABLE_CPU_FEATURES', 'MKL_DEBUG_CPU_TYPE', 'MKL_SERVICE_FORCE_INTEL')
 _RUNTIME_CORES = {
@@ -84,6 +85,65 @@ def _unforced():
     import os
     return (not any(name in os.environ for name in _FORCED_CPU)
             and not any(os.environ.get(name) for name in ('LD_PRELOAD', 'LD_AUDIT')))
+
+
+def _skylakex_driver_fields(fields):
+    # P/Q cover the complete K<=5 reduction. C-output first M panels are
+    # clamped to 3*uN=6; F-output has internal N=K<=5, including m16/m8 bulk
+    # and later M panels. The ed4 n12 grouped-K tree is therefore unreachable.
+    return (type(fields) is tuple and len(fields) == 6
+            and all(type(value) is int for value in fields)
+            and 5 <= fields[0] <= 4096 and 5 <= fields[1] <= 4096
+            and 1 <= fields[2] <= 65536 and fields[3:] == (16, 2, 32))
+
+
+def _skylakex_table_readable(base, address, query):
+    # Exact hash-qualified ed4 PE: SizeOfImage=0x13ad000 and the six driver
+    # fields lie in its .data section at RVA0x12ffd00+0x2f0. No arbitrary
+    # address or pointer read is admitted by this metadata predicate.
+    return (type(base) is int and base > 0 and type(address) is int
+            and address == base + (0x28216fd00 - 0x280e70000) + 0x2f0
+            and address + 24 <= base + 0x13ad000
+            and query['allocation_base'] == base and query['state'] == 0x1000
+            and query['type'] == 0x1000000
+            and query['protect'] & 0xff in (2, 4, 8, 0x20, 0x40, 0x80)
+            and not query['protect'] & (0x100 | 0x01)
+            and query['region_base'] <= address
+            and address + 24 <= query['region_base'] + query['region_size'])
+
+
+def _windows_skylakex_driver(certificate):
+    """Read-only selected ed4 driver certificate; no arithmetic calibration."""
+    import os
+    import struct
+    version, digest, core, threads, library, identities = certificate
+    if (os.name != 'nt' or version != '2.5.4'
+            or digest != 'ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8'
+            or core() != b'SkylakeX' or threads() != 1):
+        return None
+    try:
+        class Info(ctypes.Structure):
+            _fields_ = [('BaseAddress', ctypes.c_void_p), ('AllocationBase', ctypes.c_void_p),
+                        ('AllocationProtect', ctypes.c_uint32), ('PartitionId', ctypes.c_uint16),
+                        ('RegionSize', ctypes.c_size_t), ('State', ctypes.c_uint32),
+                        ('Protect', ctypes.c_uint32), ('Type', ctypes.c_uint32)]
+        base = library._handle
+        address = base + (0x28216fd00 - 0x280e70000) + 0x2f0
+        query = ctypes.WinDLL('kernel32', use_last_error=True).VirtualQuery
+        query.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_size_t]
+        query.restype = ctypes.c_size_t
+        info = Info()
+        if query(address, ctypes.byref(info), ctypes.sizeof(info)) != ctypes.sizeof(info):
+            return None
+        metadata = dict(allocation_base=info.AllocationBase, state=info.State,
+                        type=info.Type, protect=info.Protect, region_base=info.BaseAddress,
+                        region_size=info.RegionSize)
+        if not _skylakex_table_readable(base, address, metadata):
+            return None
+        fields = struct.unpack('<6i', ctypes.string_at(address, 24))
+        return fields if _skylakex_driver_fields(fields) else None
+    except (OSError, AttributeError, ValueError, TypeError, struct.error):
+        return None
 
 
 def _pe_imports(data):
@@ -220,9 +280,10 @@ def _authenticate_runtime():
 
 def _runtime_profile():
     from pathlib import Path
-    global _THREAD_QUERY, _RUNTIME_CORENAME
+    global _THREAD_QUERY, _RUNTIME_CORENAME, _RUNTIME_DRIVER
     _THREAD_QUERY = None
     _RUNTIME_CORENAME = None
+    _RUNTIME_DRIVER = None
     if not _unforced():
         return None
     certificate = _authenticate_runtime()
@@ -237,8 +298,15 @@ def _runtime_profile():
         if actual is None:
             return None
         corename = actual.decode('ascii')
-        if corename not in _RUNTIME_CORES[digest] or threads() != 1:
+        if threads() != 1:
             return None
+        if corename not in _RUNTIME_CORES[digest]:
+            if corename != 'SkylakeX':
+                return None
+            driver = _windows_skylakex_driver(certificate)
+            if driver is None:
+                return None
+            _RUNTIME_DRIVER = driver
     except (OSError, ValueError, UnicodeError):
         return None
     _THREAD_QUERY = threads
