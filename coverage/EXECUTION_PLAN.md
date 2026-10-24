@@ -87,12 +87,15 @@ wiring, exact-source performance dispatch, prompt merges and cleanup.
 Before resuming, [43 released metadata cache and temporary directories](evidence/released-metadata-scratch-cleanup-20261024.json)
 were removed after preserving 133,816 files and verifying every archived payload.
 The net logical payload reduction at accounting was 3.33 GB after retained
-archives, indices and receipts. All source worktrees, environments, original and
+archives, indices and receipts. All unfinished source, environments, original and
 qualified products, raw results and 170 protected receipts remain intact. Two
 redundant partial archives (17.7 MB) remain because automatic approval review
 blocked their deletion. The three workers have resumed the TV comparison
 adapter, a separate default-policy Li reference supplement, and the corrected
 199-path qualification candidate; those lanes add no accepted public paths yet.
+The merged TV admission worktree was then [retired normally](evidence/tv-admission-public-worktree-retirement.json)
+after all three readers released it; its 48 remaining ignored proof files are
+preserved in a verified archive with exact path redirects.
 
 ## What changed after review
 

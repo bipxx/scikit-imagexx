@@ -1,0 +1,40 @@
+{
+  "schema": "merged-TV-worktree-retirement-v1",
+  "completed_utc": "2026-10-24T21:36:51.331144+00:00",
+  "former_path": "build/worktrees/tv-admission-public",
+  "source_head": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+  "source_main_merge": "bbc1fc1148be85357b77300a752150642bc8d0b8",
+  "normal_git_worktree_remove_exit": 0,
+  "tracked_and_untracked_source_clean": true,
+  "all_commits_ancestors_of_main": true,
+  "all_three_reader_releases": [
+    "metrics_reductions: no current/queued physical readers; globalproducts/Git only",
+    "resize_api: no current/queued physical readers; actualnativecopies outside WT",
+    "resize_bench: no current/queued physical readers; immutableGit/ownWT only"
+  ],
+  "ignored_files_preserved": 48,
+  "ignored_payload_bytes": 280021,
+  "archive": {
+    "path": "build/cleanup/tv-admission-public-retirement-20261024/preserved-ignored-proof-files.zip",
+    "bytes": 115536,
+    "sha256": "ecc584af2484c0769a69f9d5bebf2ddbd6dedb74e9de4b785cf1c66f8bfaf267"
+  },
+  "index": {
+    "path": "build/cleanup/tv-admission-public-retirement-20261024/preservation-index.json",
+    "bytes": 15693,
+    "sha256": "d462de9e1dc0bbfdd881b674a27cdbf21cce4e36a11ed75700479ed0b1cc24a8"
+  },
+  "archive_member_rule": "Full former workspace-relative file path is the exact ZIP member; raw bytes, lengths and SHA are in preservation-index.json.",
+  "all_archive_members_SHA_CRC_verified": true,
+  "protected_receipts_still_physical": 122,
+  "protected_receipts_preserved_in_archive": 48,
+  "qualified_products_and_environments_outside_worktree_preserved": true,
+  "reparse_points": 0,
+  "source_changes_discarded": 0,
+  "other_source_worktrees_removed": 0,
+  "terminal_receipt": {
+    "path": "build/cleanup/tv-admission-public-retirement-20261024/retirement-receipt.json",
+    "bytes": 1675,
+    "sha256": "70f452f622483e56459c404758e35dde7f21b3cecfcefa7c8b020b13f1617ce3"
+  }
+}

@@ -31572,6 +31572,12 @@
       "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
       "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
       "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/tv-admission-public",
+      "archive": "build/cleanup/tv-admission-public-retirement-20261024/preserved-ignored-proof-files.zip",
+      "archive_sha256": "ecc584af2484c0769a69f9d5bebf2ddbd6dedb74e9de4b785cf1c66f8bfaf267",
+      "member_rule": "Full former workspace-relative file path is the exact ZIP member; raw bytes, lengths and SHA are in preservation-index.json."
     }
   ],
   "inventory_assessment_pending": {
@@ -31611,9 +31617,9 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/released-metadata-scratch-cleanup-20261024.json",
-    "bytes": 3513,
-    "sha256": "7b0383403e2ce78cbf03ffd08184024b273a8e463bcb21a54fa84147391c9873"
+    "path": "coverage/evidence/tv-admission-public-worktree-retirement.json",
+    "bytes": 1897,
+    "sha256": "d84b65933aefe187213a5ea44442da84b362abd737a2a83ee4f45b2f2edc3409"
   },
   "post_cursor_cleanup": {
     "proofs": [
@@ -31644,5 +31650,15 @@
     "source_worktrees_removed": 0,
     "net_logical_payload_reclaimed_bytes_at_accounting": 3330783670,
     "two_redundant_partial_archives_retained_by_automatic_approval_review": true
+  },
+  "merged_tv_admission_worktree_retirement": {
+    "proof": {
+      "path": "coverage/evidence/tv-admission-public-worktree-retirement.json",
+      "bytes": 1897,
+      "sha256": "d84b65933aefe187213a5ea44442da84b362abd737a2a83ee4f45b2f2edc3409"
+    },
+    "removed": "build/worktrees/tv-admission-public",
+    "head": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+    "all_readers_released": true
   }
 }
