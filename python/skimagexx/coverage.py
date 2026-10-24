@@ -1,9 +1,9 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'segmentation': ('clear_border','relabel_sequential'),
-    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral'),
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
-    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
+    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
@@ -44,6 +44,21 @@ def rank_contract(api):
     canonical=RANK_IDENTITY_ALIASES.get(api,api)
     if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
     name=canonical.rsplit('.',1)[1]
+    decisions=('otsu','majority')
+    if name in decisions:
+        return dict(version='rank-decisions-v1',canonical=canonical,
+            identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
+            implementation='cpp-rolling-histogram-runtime-simd',operation=29+decisions.index(name),
+            capability=0x60000000,interface='rank_decisions_interface',
+            arithmetic='Ascending occupied-bin Otsu with original strict floating comparisons, or lowest-bin majority tie; empty populations emit zero',
+            providers='Own C++ histogram kernels; explicit dtype/allocation/index providers preserve captured buffers and signed-char conversion order; no upstream algorithm forwarding',
+            workers='Sole process-global native worker limit, default one; optional parallel workers',
+            buffers='Source-qualified disjoint 2D/3D prepared buffers and captured-bin-safe stores; unsupported overlap is rejected before writes',
+            protocol_scope='Frozen502 cases/32 provider traces/256 independent oracles and qualified endian-provider supplements; unrepresented protocols remain unassessed',
+            public_parity_test='tests/test_rank_decisions_public.py',
+            frozen_contract='coverage/contracts/rank-decisions.json',
+            public_contract='coverage/contracts/rank-decisions-public.json',
+            parity_evidence=None,performance_evidence=None)
     bilateral=('mean_bilateral','pop_bilateral','sum_bilateral')
     if name in bilateral:
         return dict(version='rank-bilateral-v1',canonical=canonical,

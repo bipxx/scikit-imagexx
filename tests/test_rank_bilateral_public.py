@@ -68,8 +68,8 @@ def no_forwarding(monkeypatch):block_original(monkeypatch)
 def test_source_signature_and_pending_shared_handoff():
     assert source_wrapper._BILATERAL_FUNCTIONS==NAMES
     assert len(source_wrapper._GENERIC_FUNCTIONS)==17 and not set(NAMES)&set(source_wrapper._GENERIC_FUNCTIONS)
-    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+source_wrapper._PERCENTILE_FUNCTIONS+NAMES)
-    assert len(source_wrapper.__all__)==29 and set(NAMES)<=set(source_wrapper.__all__)
+    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+source_wrapper._PERCENTILE_FUNCTIONS+NAMES+source_wrapper._DECISIONS_FUNCTIONS)
+    assert len(source_wrapper.__all__)==31 and set(NAMES)<=set(source_wrapper.__all__)
     for name in NAMES:
         assert inspect.signature(getattr(source_wrapper,name))==inspect.signature(getattr(reference,name))
         assert getattr(reference,name) is getattr(contracts.bilateral_module,name)

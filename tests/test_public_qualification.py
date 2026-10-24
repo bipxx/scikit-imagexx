@@ -256,19 +256,20 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS:
         path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
+    for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS)+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS)+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -534,10 +535,10 @@ def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch
 
 
 def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
-    assert len(q.FAMILIES)==13 and q.FAMILIES[-1]=='rank_bilateral'
+    assert len(q.FAMILIES)==14 and q.FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
-    (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES[:-1]))
+    (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES if f!='rank_bilateral'))
     assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
 
 
@@ -590,3 +591,327 @@ def test_bilateral_strict_metadata_rejection_precedes_fixture_engine(tmp_path,mo
     monkeypatch.setattr(builtins,'__import__',guard)
     with pytest.raises(q.QualificationError):q.child(tmp_path,'public-bilateral')
     assert not (tmp_path/'pytest-tmp').exists()
+
+# R7 fixtures below are deliberately synthetic metadata models. Their entry
+# must never execute and none of these unit tests prove native image parity.
+def decisions_metadata(monkeypatch):
+    def entry(*args):raise AssertionError('metadata entry cannot execute native work')
+    entry.__name__='rank_decisions_run';entry.__module__='builtins'
+    original=q.inspect.isbuiltin
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:value is entry or original(value))
+    core=types.SimpleNamespace(__name__='builtins',rank_decisions_interface='rank-decisions-v1',
+        rank_decisions_capabilities=0x60000000,rank_decisions_run=entry,get_num_threads=lambda:1)
+    wrapper=types.SimpleNamespace(_core=core)
+    rank=types.SimpleNamespace(__all__=['otsu','majority']);generic=types.SimpleNamespace(__all__=['otsu'])
+    for name in q.R7:
+        def function(*a,**kw):raise AssertionError('metadata function cannot execute an image')
+        function.__name__=name;function.__module__='skimagexx._rank'
+        for module in (rank,generic,wrapper):setattr(module,name,function)
+    return core,rank,generic,wrapper,list(q.R7_PATHS)
+
+
+def test_decisions_metadata_only_own_aliases_and_nonstar_majority(monkeypatch):
+    q.decisions_admission(*decisions_metadata(monkeypatch))
+
+
+@pytest.mark.parametrize('failure',['version','missing-cap','partial-cap','float-cap','bool-cap','subclass-cap',
+    'python-entry','borrowed-entry','entry-name','entry-owner','spoof-builtin','missing-path','duplicate-path','extra-path',
+    'core','worker','identity','lazy-attribute','forwarding','name','canonical-star','duplicate-star','generic-otsu','generic-majority'])
+def test_decisions_strict_rejection_before_fixture_engine(tmp_path,monkeypatch,failure):
+    args=list(decisions_metadata(monkeypatch));core,rank,generic,wrapper,registered=args
+    if failure=='version':core.rank_decisions_interface='rank-decisions-v0'
+    elif failure=='missing-cap':del core.rank_decisions_capabilities
+    elif failure=='partial-cap':core.rank_decisions_capabilities=0x20000000
+    elif failure=='float-cap':core.rank_decisions_capabilities=float(0x60000000)
+    elif failure=='bool-cap':core.rank_decisions_capabilities=True
+    elif failure=='subclass-cap':
+        class Capability(int):pass
+        core.rank_decisions_capabilities=Capability(0x60000000)
+    elif failure=='python-entry':core.rank_decisions_run=lambda:None
+    elif failure=='borrowed-entry':core.rank_decisions_run=len
+    elif failure=='entry-name':core.rank_decisions_run.__name__='borrowed'
+    elif failure=='entry-owner':core.__name__='another_core'
+    elif failure=='spoof-builtin':
+        Fake=type('builtin_function_or_method',(),{'__module__':'builtins','__name__':'rank_decisions_run'})
+        core.rank_decisions_run=Fake()
+    elif failure=='missing-path':registered.pop()
+    elif failure=='duplicate-path':registered.append(registered[0])
+    elif failure=='extra-path':registered.append('filters.rank.bilateral.otsu')
+    elif failure=='core':wrapper._core=object()
+    elif failure=='worker':core.get_num_threads=lambda:4
+    elif failure=='identity':generic.otsu=lambda:None
+    elif failure=='lazy-attribute':del generic.majority
+    elif failure=='forwarding':rank.otsu.__module__='skimage.filters.rank.generic'
+    elif failure=='name':rank.otsu.__name__='another_algorithm'
+    elif failure=='canonical-star':rank.__all__.remove('majority')
+    elif failure=='duplicate-star':rank.__all__.append('otsu')
+    elif failure=='generic-otsu':generic.__all__.remove('otsu')
+    else:generic.__all__.append('majority')
+    (tmp_path/'state.json').write_text(json.dumps({'source':{}}))
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'admission',lambda *_:q.decisions_admission(*args))
+    original=builtins.__import__
+    def guarded(name,*a,**kw):
+        if name=='pytest' or 'decisions_contract' in name:raise AssertionError('fixture imported before R7 metadata rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    with pytest.raises(q.QualificationError):q.child(tmp_path,'public-decisions')
+
+
+def valid_decisions_report():
+    source=json.loads((q.ROOT/'coverage/contracts/rank-decisions-benchmark.json').read_text())
+    reference={'synthetic':'metadata equality only'}
+    def row():return dict(status='passed',timed=False,reference=reference,actual_by_workers={'1':dict(reference),'4':dict(reference)})
+    checks=[dict(row(),case_index=i,timing_eligible=item['timed_candidate'],**item) for i,item in enumerate(source['case_inventory'])]
+    return dict(status='complete-parity-check',checks=checks,failures=[],results=[],
+        alias_checks=[dict(row(),canonical='filters.rank.'+n,alias='filters.rank.generic.'+n,reference_identity=True,native_identity=True) for n in q.R7],
+        provider_checks=[dict(row(),api='filters.rank.'+n,case=f'{d}/{stage}') for n in q.R7 for d in (2,3) for stage in ('success','footprint','shift_x','shift_y','shift_z','bad-out','bad-image','image-array-only')],
+        policy_checks=[dict(row(),api='filters.rank.'+n,policy=policy) for n in q.R7 for policy in ('warn','raise','ignore','call','log','print')],
+        metadata=dict(check_only=True,reference_only=False,requested_workers=[1,4],validation_scope='strict actual public R7',
+            algorithm_count=2,scalar_api_count=2,vector_api_count=0,aliases_timed=False,fallback_enabled=False,
+            initial_default_workers=1,canonical_paths=['filters.rank.'+n for n in q.R7],public_alias_paths=['filters.rank.generic.'+n for n in q.R7],operation_ids={'otsu':29,'majority':30},case_contract_sha256=source['case_contract_sha256']))
+
+
+def test_decisions_complete_synthetic_report_has_694_and_auxiliary46(tmp_path):
+    report=valid_decisions_report();assert len(report['checks'])==694
+    assert sum(r['timing_class']=='source-metadata-layout' for r in report['checks'])==16
+    p=tmp_path/'r7.json';p.write_text(json.dumps(report));q.validate_corpus(p,'decisions')
+
+
+@pytest.mark.parametrize('failure',['missing-case','duplicate-case','wrong-spec','metadata-timed','metadata-dropped',
+    'provider-count','policy-count','alias-count','wrong-alias','duplicate-alias','private-alias','aux-worker',
+    'case-observation','provider-observation','policy-observation','alias-observation','scope','fallback','default-worker',
+    'bool-worker','algorithms','canonical','opcodes','case-hash','reference-only','timed','duplicate-provider','duplicate-policy','aux-timed','bool-default','typed-observation'])
+def test_decisions_report_cannot_hide_missing_rows_or_substitute_observations(tmp_path,failure):
+    r=valid_decisions_report()
+    if failure=='missing-case':r['checks'].pop()
+    elif failure=='duplicate-case':r['checks'][1]=r['checks'][0]
+    elif failure=='wrong-spec':r['checks'][0]['fixture']={}
+    elif failure=='metadata-timed':next(v for v in r['checks'] if v['timing_class']=='source-metadata-layout')['timing_eligible']=True
+    elif failure=='metadata-dropped':next(v for v in r['checks'] if v['timing_class']=='source-metadata-layout')['timing_class']='defined-nonalias-raster'
+    elif failure=='provider-count':r['provider_checks'].pop()
+    elif failure=='policy-count':r['policy_checks'].pop()
+    elif failure=='alias-count':r['alias_checks'].pop()
+    elif failure=='wrong-alias':r['alias_checks'][0]['alias']='filters.rank.bilateral.otsu'
+    elif failure=='duplicate-alias':r['alias_checks'][1]=r['alias_checks'][0]
+    elif failure=='private-alias':r['alias_checks'][0]['native_identity']=None
+    elif failure=='aux-worker':r['provider_checks'][0]['actual_by_workers'].pop('4')
+    elif failure in ('case-observation','provider-observation','policy-observation','alias-observation'):
+        key={'case-observation':'checks','provider-observation':'provider_checks','policy-observation':'policy_checks','alias-observation':'alias_checks'}[failure]
+        r[key][0]['actual_by_workers']['4']={'wrong':'observation'}
+    elif failure=='scope':r['metadata']['validation_scope']='private source wrapper'
+    elif failure=='fallback':r['metadata']['fallback_enabled']=True
+    elif failure=='default-worker':r['metadata']['initial_default_workers']=4
+    elif failure=='bool-worker':r['metadata']['requested_workers']=[True,4]
+    elif failure=='algorithms':r['metadata']['algorithm_count']=4
+    elif failure=='canonical':r['metadata']['canonical_paths'].reverse()
+    elif failure=='opcodes':r['metadata']['operation_ids']['majority']=29
+    elif failure=='case-hash':r['metadata']['case_contract_sha256']='0'*64
+    elif failure=='reference-only':r['metadata']['reference_only']=True
+    elif failure=='duplicate-provider':r['provider_checks'][1]=r['provider_checks'][0]
+    elif failure=='duplicate-policy':r['policy_checks'][1]=r['policy_checks'][0]
+    elif failure=='aux-timed':r['provider_checks'][0]['timed']=True
+    elif failure=='bool-default':r['metadata']['initial_default_workers']=True
+    elif failure=='typed-observation':
+        r['checks'][0]['reference']={'flag':True};r['checks'][0]['actual_by_workers']={'1':{'flag':True},'4':{'flag':1}}
+    else:r['results']=[{'timed':'forbidden'}]
+    p=tmp_path/'r7.json';p.write_text(json.dumps(r))
+    with pytest.raises(q.QualificationError):q.validate_corpus(p,'decisions')
+
+
+def synthetic_complete_plan(root):
+    (root/'tests/cmake_consumer').mkdir(parents=True)
+    (root/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
+    for group in q.GROUPS.values():
+        for name in group:(root/'tests'/name.split('::')[0]).touch()
+    (root/'tests/test_arraymap_dense_contracts.py').touch()
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS:
+        path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
+    for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
+    (root/'benchmarks').mkdir()
+    for name,_ in q.CORPORA.values():(root/'benchmarks'/name).touch()
+
+
+@pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
+def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
+    synthetic_complete_plan(tmp_path)
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
+    assert not q.plan(tmp_path,'modern',190)['blockers']
+    (tmp_path/missing).unlink()
+    assert 'missing required R7 source: '+missing in q.plan(tmp_path,'modern',190)['blockers']
+
+
+@pytest.mark.parametrize('failure',['missing','duplicate','wrong','source'])
+def test_sdk14_requires_exact_clients_and_existing_sources(tmp_path,monkeypatch,failure):
+    synthetic_complete_plan(tmp_path)
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190))
+    path=tmp_path/'tests/cmake_consumer/CMakeLists.txt';text=path.read_text()
+    if failure=='missing':text=text.replace('add_executable(rank_decisions_consumer x.cpp)','')
+    elif failure=='duplicate':text+='\nadd_executable(rank_decisions_consumer x.cpp)'
+    elif failure=='wrong':text+='\nadd_executable(wrong_family_consumer x.cpp)'
+    else:(tmp_path/'tests/test_rank_decisions_native.cpp').unlink()
+    path.write_text(text);blockers=q.plan(tmp_path,'modern')['blockers']
+    assert any({'missing':'missing required installed SDK client: rank_decisions','duplicate':'duplicate installed SDK client: rank_decisions','wrong':'unknown installed SDK client: wrong_family','source':'missing required SDK client source: rank_decisions'}[failure]==v for v in blockers)
+
+
+def test_decisions_group_is_public_and_sdk14_keeps_old13():
+    assert q.GROUPS['public-decisions']==('test_rank_decisions_contracts.py','test_rank_decisions_public.py','test_rank_decisions_endian_public.py')
+    assert not any('pipeline' in n or 'supplement.py' in n for n in q.GROUPS['public-decisions'])
+    assert q.CORPORA['decisions']==('rank_decisions.py',694)
+    assert len(q.FAMILIES)==14 and q.FAMILIES[-1]=='rank_decisions' and q.FAMILIES[-2]=='rank_bilateral'
+    listing={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.FAMILIES]};q.validate_sdk_listing(listing)
+    listing['tests'][-1]={'name':listing['tests'][0]['name']}
+    with pytest.raises(q.QualificationError):q.validate_sdk_listing(listing)
+
+
+def test_registered193_counts_are190_images_plus3_metadata(tmp_path):
+    path=tmp_path/'python/skimagexx';path.mkdir(parents=True)
+    (path/'coverage.py').write_text('def native_functions():return tuple("image"+str(i) for i in range(190))+tuple("metadata"+str(i) for i in range(3))\ndef execution_kind(name):return "native" if name.startswith("image") else "metadata-native"\n')
+    r=q.registry_expectation(tmp_path)
+    assert r['registered_count']==193 and r['image_count']==190 and r['metadata_count']==3
+
+
+def test_source_duplicate_registration_rejected(tmp_path):
+    path=tmp_path/'python/skimagexx';path.mkdir(parents=True)
+    (path/'coverage.py').write_text('def native_functions():return ("image", "image")\ndef execution_kind(name):return "native"\n')
+    with pytest.raises(q.QualificationError,match='duplicate source registry'):q.registry_expectation(tmp_path)
+
+@pytest.mark.parametrize('selector',['SKIMAGEXX_RANK_DECISIONS_PROTOTYPE_CORE','SKIMAGEXX_RANK_DECISIONS_ENDIAN_PROTOTYPE_CORE'])
+def test_private_r7_selectors_rejected_before_any_package_or_fixture_import(tmp_path,monkeypatch,selector):
+    (tmp_path/'package.json').write_text(json.dumps({'members_sha256':{}}))
+    monkeypatch.setattr(q,'verify_tree',lambda *_:None)
+    monkeypatch.setattr(q,'validate_interpreter_provenance',lambda *_:None)
+    monkeypatch.setenv(selector,'private_core')
+    original=builtins.__import__
+    def guarded(name,*a,**kw):
+        if name in ('skimagexx','pytest'):raise AssertionError('package/fixture imported before selector rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    with pytest.raises(q.QualificationError,match='private selectors forbidden'):q.admission(tmp_path,{'interpreter_provenance':{}})
+
+
+def test_shared_global_worker_checks_remain_before_any_fixtures():
+    import ast
+    import inspect
+    admission=ast.parse(inspect.getsource(q.admission))
+    worker=next(n for n in ast.walk(admission) if isinstance(n,ast.For) and isinstance(n.iter,ast.Tuple) and ast.literal_eval(n.iter)==(4,1))
+    text=ast.unparse(worker)
+    assert 'xx.set_num_threads(worker)' in text and 'xx._core.get_num_threads() == worker' in text
+    assert 'xx.set_num_threads is xx._core.set_num_threads' in inspect.getsource(q.admission)
+    assert 'xx.get_num_threads is xx._core.get_num_threads' in inspect.getsource(q.admission)
+    child=ast.parse(inspect.getsource(q.child));guard=next(n for n in ast.walk(child) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='admission')
+    fixtures=next(n for n in ast.walk(child) if isinstance(n,ast.Import) and any(a.name=='pytest' for a in n.names))
+    assert guard.lineno<fixtures.lineno
+
+
+def test_build_identity_capture_is_after_product_before_admission_and_seal():
+    import ast
+    import inspect
+    source=inspect.getsource(q.prepare);tree=ast.parse(source)
+    build=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='must_run' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and n.args[1].value=='build-whole-product')
+    capture=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='capture_build_identity')
+    admission=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='must_run' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and n.args[1].value=='initial-public-admission')
+    assert build.lineno<capture.lineno<admission.lineno
+    assert '--verbose' in source
+    assert 'CMAKE_MODULE_LINKER_FLAGS=-save-temps=obj -Wl,--dependency-file=' in source
+    assert 'native-build/core-link.d' in source and 'CMAKE_EXPORT_COMPILE_COMMANDS=ON' in source
+    assert 'build.tool-args=-d;keeprsp;-d;keepdepfile' in source
+    assert 'validate_build_identity(out, state)' in inspect.getsource(q.seal)
+    assert "'gather-build-identity-facts','capture-build-identity'" in inspect.getsource(q.seal)
+
+
+def fake_identity_journal(out,profile,revision,failure=None):
+    class MetadataJournal:
+        rows=[]
+        def run(self,label,command,env=None):
+            self.rows.append((label,list(map(str,command)),env))
+            if label==failure:return 1
+            if label=='gather-build-identity-facts':
+                (out/'build-identity-facts.json').write_text(json.dumps(dict(schema='rank-statistics-build-input-v2',revision=revision,profile=profile,source_root=str(q.ROOT),build_root=str(out))))
+            else:(out/'build-identity.json').write_text(json.dumps(dict(schema='rank-statistics-build-identity-v2')))
+            return 0
+    return MetadataJournal()
+
+
+@pytest.mark.parametrize('profile',['windows','modern','minimum','debug'])
+def test_identity_capture_uses_journal_and_exact_source_root_profile(tmp_path,profile):
+    journal=fake_identity_journal(tmp_path,profile,'a'*40);env={'NO_IMAGE_CALLS':'metadata-fixture-only'}
+    record=q.capture_build_identity(tmp_path,profile,{'revision':'a'*40},journal,Path('buildpython'),env)
+    assert [r[0] for r in journal.rows]==['gather-build-identity-facts','capture-build-identity']
+    assert all(r[2] is env for r in journal.rows)
+    argv=journal.rows[1][1];assert argv[2:]==['capture-build-identity','--facts',str(tmp_path/'build-identity-facts.json'),'--output',str(tmp_path/'build-identity.json')]
+    q.validate_build_identity(tmp_path,{'build_identity':record})
+    with pytest.raises(q.QualificationError,match='retrofit'):q.capture_build_identity(tmp_path,profile,{'revision':'a'*40},journal,Path('buildpython'),env)
+
+
+@pytest.mark.parametrize('label',['gather-build-identity-facts','capture-build-identity'])
+def test_failed_identity_child_stops_before_any_later_stage(tmp_path,label):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40,label)
+    with pytest.raises(q.QualificationError,match='command failed'):q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    assert journal.rows[-1][0]==label and not (tmp_path/'manifest.json').exists()
+
+
+@pytest.mark.parametrize('change',['missing','oldschema','facts','identity'])
+def test_identity_absent_old_or_changed_cannot_be_sealed(tmp_path,change):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40)
+    record=q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    if change=='missing':state={}
+    else:
+        state={'build_identity':record}
+        if change=='oldschema':record['schema']='rank-statistics-build-identity-v1'
+        else:(tmp_path/('build-identity-facts.json' if change=='facts' else 'build-identity.json')).write_text('{}')
+    with pytest.raises(q.QualificationError):q.validate_build_identity(tmp_path,state)
+
+
+@pytest.mark.parametrize('key,value',[('revision','b'*40),('profile','minimum'),('source_root','/wrong'),('build_root','/wrong'),('schema','rank-statistics-build-input-v1')])
+def test_wrong_identity_facts_reject_before_producer(tmp_path,key,value):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40);run=journal.run
+    def modified(label,command,env=None):
+        result=run(label,command,env)
+        if label=='gather-build-identity-facts':
+            path=tmp_path/'build-identity-facts.json';d=json.loads(path.read_text());d[key]=value;path.write_text(json.dumps(d))
+        return result
+    journal.run=modified
+    with pytest.raises(q.QualificationError,match='source/profile/roots differ'):q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    assert [r[0] for r in journal.rows]==['gather-build-identity-facts']
+
+
+def test_counts_after_group_is_conditional_and_keeps_every_original_group(tmp_path):
+    before=q.groups_for_source(tmp_path);assert before==q._BASE_GROUPS and 'public-counts' not in before
+    path=tmp_path/'tests/test_rank_windowed_counts_pipeline.py';path.parent.mkdir();path.write_text('# metadata fixture, never collected')
+    after=q.groups_for_source(tmp_path)
+    assert after['public-counts']==('test_rank_windowed_counts_pipeline.py',)
+    assert {k:v for k,v in after.items() if k!='public-counts'}==before
+    assert before==q._BASE_GROUPS  # no mutation of the before configuration
+
+
+def test_counts_directory_does_not_masquerade_as_a_test_file(tmp_path):
+    (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').mkdir(parents=True)
+    assert 'public-counts' not in q.groups_for_source(tmp_path)
+
+
+def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path,monkeypatch):
+    synthetic_complete_plan(tmp_path)
+    # The fixture builder also follows an after checkout's available selectors.
+    # Explicitly create the absent-file before variant in either checkout.
+    counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
+    if counts_source.exists():counts_source.unlink()
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
+    before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
+    (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
+    after=q.plan(tmp_path,'modern',190);assert not after['blockers']
+    assert after['public_groups']['public-counts']==('test_rank_windowed_counts_pipeline.py',)
+    assert {k:v for k,v in after['public_groups'].items() if k!='public-counts'}==before['public_groups']
+    assert after['corpora']==before['corpora'] and after['SDK_families']==before['SDK_families']
+
+
+def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_path,monkeypatch):
+    (tmp_path/'package.json').write_text(json.dumps({'members_sha256':{}}))
+    monkeypatch.setattr(q,'verify_tree',lambda *_:None);monkeypatch.setattr(q,'validate_interpreter_provenance',lambda *_:None)
+    monkeypatch.setenv('SKIMAGEXX_WINDOWED_COUNTS_CORE','historical_private_core')
+    original=builtins.__import__
+    def guarded(name,*a,**kw):
+        if name in ('skimagexx','pytest'):raise AssertionError('package/fixture imported before private selector rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    with pytest.raises(q.QualificationError,match='private selectors forbidden'):q.admission(tmp_path,{'interpreter_provenance':{}})

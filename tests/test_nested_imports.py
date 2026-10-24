@@ -104,9 +104,9 @@ def test_from_import_signature_and_policy():
         np.testing.assert_array_equal(actual,original(image,footprint))
 
 
-def test_unported_rank_keeps_explicit_fallback_policy():
-    from skimagexx.filters.rank import geometric_mean,majority
-    from skimage.filters.rank import geometric_mean as original,majority as unported_original
+def test_native_rank_and_unported_nested_filter_keep_explicit_policy():
+    from skimagexx.filters.rank import geometric_mean
+    from skimage.filters.rank import geometric_mean as original
     from skimagexx import _rank
     image=np.arange(25,dtype=np.uint8).reshape(5,5);footprint=np.ones((3,3),bool)
     assert inspect.signature(geometric_mean)==inspect.signature(original)
@@ -117,16 +117,40 @@ def test_unported_rank_keeps_explicit_fallback_policy():
             warnings.simplefilter('always');actual=geometric_mean(image,footprint)
         assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
         np.testing.assert_array_equal(actual,original(image,footprint))
+    canonical=importlib.import_module('skimagexx.filters.rank')
+    generic=importlib.import_module('skimagexx.filters.rank.generic')
+    original_rank=importlib.import_module('skimage.filters.rank')
+    for name in ('majority','otsu'):
+        native=getattr(canonical,name);reference=getattr(original_rank,name)
+        assert native is getattr(generic,name) and native is getattr(_rank,name)
+        assert native is not reference and native.__module__=='skimagexx._rank'
+        assert inspect.signature(native)==inspect.signature(reference)
+        for policy in (False,True):
+            xx.set_fallback_enabled(policy)
+            with warnings.catch_warnings(record=True) as notices:
+                warnings.simplefilter('always');actual=native(image,footprint)
+            assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
+            np.testing.assert_array_equal(actual,reference(image,footprint))
+    # Public lpi_filter is a real nested namespace; private _fft_based remains
+    # deliberately unavailable. filter_forward is still upstream-only.
+    namespace=importlib.import_module('skimagexx.filters.lpi_filter')
+    unported=namespace.filter_forward
+    unported_original=importlib.import_module('skimage.filters.lpi_filter').filter_forward
+    assert unported is not unported_original
+    assert inspect.signature(unported)==inspect.signature(unported_original)
+    filter_image=image.astype(np.float64)
+    def impulse_response(row,column):
+        return np.exp(-row*row-column*column)
     xx.set_fallback_enabled(False)
-    assert inspect.signature(majority)==inspect.signature(unported_original)
     with pytest.raises(NotImplementedError,match='fallback is disabled'):
-        majority(image,footprint)
+        unported(filter_image,impulse_response=impulse_response)
     xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning,match='skimage.filters.rank.majority'):
-        actual=majority(image,footprint)
-    np.testing.assert_array_equal(actual,unported_original(image,footprint))
+    with pytest.warns(xx.FallbackWarning,match=r'skimage\.filters\.lpi_filter\.filter_forward'):
+        actual=unported(filter_image,impulse_response=impulse_response)
+    np.testing.assert_array_equal(actual,unported_original(filter_image,impulse_response=impulse_response))
     xx.set_fallback_enabled(False)
-    with pytest.raises(NotImplementedError):majority(image,footprint)
+    with pytest.raises(NotImplementedError,match='fallback is disabled'):
+        unported(filter_image,impulse_response=impulse_response)
 
 
 def test_deep_import_and_native_precedence():

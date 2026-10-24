@@ -3,6 +3,41 @@
 #include <algorithm>
 #include <cstring>
 namespace skimagexx::simd {
+namespace {
+__m256i prefix4(__m256i value) {
+    const auto zero=_mm256_setzero_si256();
+    const auto previous=_mm256_blend_epi32(_mm256_permute4x64_epi64(value,_MM_SHUFFLE(2,1,0,0)),zero,0x03);
+    const auto pairs=_mm256_add_epi64(value,previous);
+    const auto previous_pairs=_mm256_blend_epi32(_mm256_permute4x64_epi64(pairs,_MM_SHUFFLE(1,0,0,0)),zero,0x0f);
+    return _mm256_add_epi64(pairs,previous_pairs);
+}
+__m256i gather4(const std::int64_t* counts,const std::uint32_t* indices) {
+    return _mm256_i32gather_epi64(reinterpret_cast<const long long*>(counts),_mm_loadu_si128(reinterpret_cast<const __m128i*>(indices)),8);
+}
+}
+void rank_decision_prefix4(const std::int64_t* counts,const std::uint32_t* indices,std::int64_t q,std::int64_t moment,std::int64_t* qout,std::int64_t* mout) {
+    const auto values=gather4(counts,indices);
+    const auto bins=_mm256_cvtepu32_epi64(_mm_loadu_si128(reinterpret_cast<const __m128i*>(indices)));
+    const auto low=_mm256_mul_epu32(values,bins);
+    const auto high=_mm256_slli_epi64(_mm256_mul_epu32(_mm256_srli_epi64(values,32),bins),32);
+    const auto weighted=_mm256_add_epi64(low,high);
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(qout),_mm256_add_epi64(prefix4(values),_mm256_set1_epi64x(q)));
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(mout),_mm256_add_epi64(prefix4(weighted),_mm256_set1_epi64x(moment)));
+}
+void rank_majority4(const std::int64_t* counts,const std::uint32_t* indices,std::int64_t& votes,std::int64_t& candidate) {
+    const auto values=gather4(counts,indices);
+    auto maximum=values;
+    auto other=_mm256_permute4x64_epi64(maximum,_MM_SHUFFLE(1,0,3,2));
+    maximum=_mm256_blendv_epi8(maximum,other,_mm256_cmpgt_epi64(other,maximum));
+    other=_mm256_permute4x64_epi64(maximum,_MM_SHUFFLE(2,3,0,1));
+    maximum=_mm256_blendv_epi8(maximum,other,_mm256_cmpgt_epi64(other,maximum));
+    const auto best=std::int64_t(_mm_cvtsi128_si64(_mm256_castsi256_si128(maximum)));
+    if(best>votes) {
+        const unsigned mask=unsigned(_mm256_movemask_pd(_mm256_castsi256_pd(_mm256_cmpeq_epi64(values,maximum))));
+        unsigned lane=0;while(!(mask&(1u<<lane)))++lane;
+        votes=best;candidate=indices[lane]; // indices arrive strictly ascending
+    }
+}
 std::size_t rank_histogram_normalized(const std::int64_t* counts,void* output,std::size_t count,double scale,bool narrow) {
     std::size_t i=0;const auto factor=_mm256_set1_pd(scale);
     const auto order=_mm256_setr_epi32(0,2,4,6,0,0,0,0);

@@ -528,7 +528,7 @@ del _bilateral_name
 __all__+=list(_BILATERAL_FUNCTIONS)
 
 
-def _bilateral_ubyte(image):
+def _bilateral_ubyte(image,*,_integer_provider=False):
     image=np.asarray(image)
     dtype=image.dtype;ndim=image.ndim
     if image.dtype.type is np.uint8:return image
@@ -543,7 +543,7 @@ def _bilateral_ubyte(image):
         np.rint(work,out=work)
         np.clip(work,0,255,out=work)
         return work.astype(np.uint8)
-    if dtype.kind in 'ui' and dtype.itemsize>1 and not dtype.isnative:
+    if dtype.kind in 'ui' and dtype.itemsize>1 and (not dtype.isnative or _integer_provider):
         # Pinned _scale keeps the nonnative dtype as a ufunc argument. The
         # low-range warning chooses its cast before hooks run; high-range
         # allocation hooks run before the fresh dtype lookup for floor_divide.
@@ -589,3 +589,78 @@ def _bilateral_ubyte(image):
     elif invalid:np.asarray([0x7f800001],np.uint32).view(np.float32).astype(np.uint8)
     return result
 
+
+
+def _require_decisions(operation):
+    entry=getattr(_core,'rank_decisions_run',None)
+    capabilities=getattr(_core,'rank_decisions_capabilities',None)
+    if (getattr(_core,'rank_decisions_interface',None)!='rank-decisions-v1'
+            or type(capabilities) is not int or capabilities!=0x60000000
+            or operation not in (29,30)
+            or not isinstance(entry,BuiltinFunctionType)
+            or getattr(entry,'__module__',None)!=getattr(_core,'__name__',None)
+            or getattr(entry,'__name__',None)!='rank_decisions_run'):
+        raise NotImplementedError('rank-decisions-v1 compiled backend required for this operation')
+    return entry
+
+
+def _decisions_call(function,*args):
+    try:return function(*args)
+    except (ValueError,OverflowError) as error:
+        # Translate only native coverage certificates. A Python shift hook
+        # carrying identical text keeps its own exception and output effects.
+        if error.__traceback__.tb_next is None and str(error) in (
+                'rank output pixel depth must be positive',
+                'rank output is smaller than image',
+                'rank mask storage is smaller than image',
+                'overlapping buffers are outside rank-decisions-v1 parity',
+                'rank decisions moment products outside defined coverage',
+                'rank decisions image exceeded histogram bounds'):
+            raise NotImplementedError('Outside qualified rank-decisions-v1 coverage: '+str(error)) from None
+        raise
+
+
+def _decisions_apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z):
+    entry=_require_decisions(operation)
+    ndim=np.asanyarray(image).ndim
+    if ndim not in (2,3):raise ValueError(f'`image` must have 2 or 3 dimensions, got {ndim}.')
+    if np.asanyarray(image).size==0:raise ValueError('The parameter `image` cannot be an empty array')
+    dtype=image.dtype
+    if ndim==2 and dtype==bool:raise ValueError('dtype cannot be bool.')
+    if dtype not in (np.uint8,np.uint16):
+        warnings.warn(f'Possible precision loss converting image of type {dtype} to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.',UserWarning,stacklevel=3)
+        image=_bilateral_ubyte(image,_integer_provider=True)
+    if ndim==2 and _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
+    footprint=np.ascontiguousarray(_positive(footprint))
+    if footprint.ndim!=image.ndim:raise ValueError('Image dimensions and neighborhood dimensionsdo not match')
+    image=np.ascontiguousarray(image)
+    if mask is not None:mask=np.ascontiguousarray(_bilateral_ubyte(mask,_integer_provider=True))
+    if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
+    if out is None:out=np.empty(image.shape+(1,),dtype=image.dtype)
+    elif ndim==3 or len(out.shape)==2:out=out.reshape(out.shape+(1,))
+    bins=256 if image.dtype in (np.uint8,np.int8) else _core.rank_bins(image)
+    if bins>1024:
+        warnings.warn(f'Bad rank filter performance is expected due to a large number of bins ({bins}), equivalent to an approximate bitdepth of {np.log2(bins):.1f}.',UserWarning,stacklevel=3)
+    shifts=[shift_x,shift_y] if ndim==2 else [shift_x,shift_y,shift_z]
+    for name,shift in zip(('shift_x','shift_y','shift_z'),shifts):
+        if np.dtype(type(shift))==bool:
+            spelling='Paramter' if ndim==2 else 'Parameter'
+            warnings.warn(f'{spelling} `{name}` is boolean and will be interpreted as int. This is not officially supported, use int instead.',UserWarning,stacklevel=3)
+    if out.ndim!=ndim+1 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):
+        raise TypeError('Function call with ambiguous argument types')
+    _decisions_call(entry,image,footprint,mask,out,shifts,bins,operation)
+    return np.squeeze(out,axis=-1) if ndim==2 else out.reshape(out.shape[:3])
+
+
+def otsu(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    """Apply the qualified local Otsu decision with a compiled backend."""
+    return _decisions_apply(29,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+def majority(image,footprint,*,out=None,mask=None,shift_x=0,shift_y=0,shift_z=0):
+    """Apply the qualified local majority decision with a compiled backend."""
+    return _decisions_apply(30,image,footprint,out,mask,shift_x,shift_y,shift_z)
+
+
+_DECISIONS_FUNCTIONS=('otsu','majority')
+__all__+=list(_DECISIONS_FUNCTIONS)

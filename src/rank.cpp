@@ -62,9 +62,18 @@ struct Histogram {
     std::vector<std::int64_t> weighted_blocks;
     std::uint64_t root=0;
     std::int64_t sum=0,pop=0;
-    explicit Histogram(std::size_t bins,bool extrema,bool prefix=false,bool weighted=false):limit(bins),counts(extrema ? bins:0),bits(extrema ? (bins+63)/64:0),summary(extrema ? (bins+4095)/4096:0),prefix_blocks(prefix ? (bins+63)/64:0),weighted_blocks(weighted ? (bins+63)/64:0){}
-    template<bool Prefix> void add(std::uint32_t value,std::int64_t count) {
-        pop+=count;sum+=std::int64_t(value)*count;
+    explicit Histogram(std::size_t bins,bool extrema,bool prefix=false,bool weighted=false,bool counts_only=false):limit(bins),counts(extrema ? bins:0),bits(extrema && !counts_only ? (bins+63)/64:0),summary(extrema && !counts_only ? (bins+4095)/4096:0),prefix_blocks(prefix ? (bins+63)/64:0),weighted_blocks(weighted ? (bins+63)/64:0){}
+    template<bool Prefix,bool CountsOnly=false> void add(std::uint32_t value,std::int64_t count) {
+        pop+=count;
+        // Opcode16 queries only counts/pop. Keep its full-bin counters and
+        // existing bounds check, without maintaining unused extrema or sums.
+        if constexpr(CountsOnly) {
+            static_assert(!Prefix);
+            if(value>=limit)throw std::invalid_argument("aliased rank image exceeded histogram bounds");
+            counts[value]+=count;
+            return;
+        }
+        sum+=std::int64_t(value)*count;
         if(value>=limit)throw std::invalid_argument("aliased rank image exceeded histogram bounds");
         if(counts.empty())return;
         const auto before=counts[value];counts[value]+=count;
@@ -227,6 +236,63 @@ struct Histogram {
             }
         }
     }
+    std::int64_t majority()const {
+        if(!pop)return 0;
+        std::int64_t votes=counts[0],candidate=0;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            std::uint32_t indices[4];std::size_t n=0;
+            occupied([&](std::size_t index,std::int64_t){
+                if(!index)return true;
+                indices[n++]=std::uint32_t(index);
+                if(n==4){simd::rank_majority4(counts.data(),indices,votes,candidate);n=0;}
+                return true;
+            });
+            for(std::size_t i=0;i<n;++i)if(counts[indices[i]]>votes){votes=counts[indices[i]];candidate=indices[i];}
+            return candidate;
+        }
+#endif
+        // Independent source decision; do not alias modal's signed-feedback
+        // admission or its initialization/tie semantics into this operation.
+        occupied([&](std::size_t index,std::int64_t count){if(index && count>votes){votes=count;candidate=std::int64_t(index);}return true;});
+        return candidate;
+    }
+    std::int64_t otsu()const {
+        if(!pop)return 0;
+        std::int64_t q1=counts[0],mu1=0,candidate=0;double best=0.;
+        const auto score=[&](std::size_t index,std::int64_t q,std::int64_t moment){
+            if(q==pop)return false; // source breaks before updating mu1
+            q1=q;mu1=moment;
+            const auto mu2=sum-mu1;
+            const double remaining=double(pop)-double(q1);
+            // In pinned Cython mu2*q1 is an INT64 product BEFORE promotion.
+            // Preserve this expression tree and ascending FP evaluation order.
+            const double t=remaining*double(mu1)-double(mu2*q1);
+            const double sigma=(t*t)/(double(q1)*remaining);
+            if(sigma>best){best=sigma;candidate=std::int64_t(index);}
+            return true;
+        };
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            std::uint32_t indices[4];std::size_t n=0;bool stopped=false;
+            occupied([&](std::size_t index,std::int64_t){
+                if(!index)return true;
+                indices[n++]=std::uint32_t(index);
+                if(n==4) {
+                    std::int64_t q[4],moment[4];
+                    simd::rank_decision_prefix4(counts.data(),indices,q1,mu1,q,moment);
+                    for(std::size_t lane=0;lane<4;++lane)if(!score(indices[lane],q[lane],moment[lane])){stopped=true;return false;}
+                    n=0;
+                }
+                return true;
+            });
+            if(!stopped)for(std::size_t i=0;i<n;++i){const auto index=indices[i];const auto count=counts[index];if(!score(index,q1+count,mu1+std::int64_t(index)*count))break;}
+            return candidate;
+        }
+#endif
+        occupied([&](std::size_t index,std::int64_t count){return !index || score(index,q1+count,mu1+std::int64_t(index)*count);});
+        return candidate;
+    }
     double entropy()const {
         double result=0.;
         if(pop)occupied([&](std::size_t,std::int64_t count){
@@ -303,7 +369,7 @@ struct Histogram {
         return std::int64_t(word*64+(op==RankOperation::minimum ? first(bits[word]):last(bits[word])));
     }
 };
-template<class T,bool Prefix> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
+template<class T,bool Prefix,bool CountsOnly=false> void update(Histogram& hist,const RankView& v,const std::vector<Run>& runs,std::ptrdiff_t p,std::ptrdiff_t r,std::ptrdiff_t c,int sign,int row_adjust=0,int col_adjust=0) {
     const auto* image=static_cast<const unsigned char*>(v.image);
     const auto read=[](const unsigned char* p){T value;std::memcpy(&value,p,sizeof(T));return value;};
     for(const auto& run:runs) {
@@ -328,12 +394,12 @@ template<class T,bool Prefix> void update(Histogram& hist,const RankView& v,cons
             constexpr auto width=32/sizeof(T);
             for(;i+width<=n;i+=width) {
                 std::uint32_t value;
-                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add<Prefix>(value,std::int64_t(width)*sign);
-                else for(std::size_t j=0;j<width;++j)hist.add<Prefix>(read(data+(i+j)*sizeof(T)),sign);
+                if(simd::rank_uniform(data+i*sizeof(T),sizeof(T)==2,value))hist.add<Prefix,CountsOnly>(value,std::int64_t(width)*sign);
+                else for(std::size_t j=0;j<width;++j)hist.add<Prefix,CountsOnly>(read(data+(i+j)*sizeof(T)),sign);
             }
         }
 #endif
-        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add<Prefix>(read(data+i*sizeof(T)),sign);
+        for(;i<n;++i)if(!v.mask || v.mask[index+i])hist.add<Prefix,CountsOnly>(read(data+i*sizeof(T)),sign);
     }
 }
 template<class T,class Value> void store(unsigned char* out,Value value) {
@@ -341,13 +407,13 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
     if constexpr(std::is_integral_v<T> && std::is_floating_point_v<Value>)result=T(std::int64_t(value));else result=T(value);
     std::memcpy(out,&result,sizeof(result));
 }
-template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
+template<class T,bool Prefix=false,bool CountsOnly=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
-        const bool weighted=op==RankOperation::mean_percentile || op==RankOperation::subtract_mean_percentile || op==RankOperation::sum_percentile || int(op)>=26;
-        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix,weighted);
+        const bool weighted=op==RankOperation::mean_percentile || op==RankOperation::subtract_mean_percentile || op==RankOperation::sum_percentile || (int(op)>=26 && int(op)<=28);
+        Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix,weighted,CountsOnly);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
-        update<T,Prefix>(hist,v,prepared.initial,p,r,c,1);
+        update<T,Prefix,CountsOnly>(hist,v,prepared.initial,p,r,c,1);
         const auto write=[&](){
             auto* out=static_cast<unsigned char*>(v.output)+std::ptrdiff_t(p)*v.output_strides[0]+r*v.output_strides[1]+c*v.output_strides[2];
             const auto emit=[&](auto value){
@@ -368,17 +434,19 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
             else if(op==RankOperation::entropy)emit(hist.entropy());
             else if(op==RankOperation::geometric_mean)emit(hist.geometric_mean(logarithms));
             else if(op==RankOperation::median){std::int64_t selected;if(hist.median(selected))emit(selected);}
+            else if(op==RankOperation::otsu)emit(hist.otsu());
+            else if(op==RankOperation::majority)emit(hist.majority());
             else if(int(op)>=9) {
                 // Radius hooks may change uint16 pixels after bins/buffers
                 // were captured. A zero bilateral population never indexes
                 // those bins upstream, so emit before the center-bin guard.
-                if(int(op)>=26 && !hist.pop){emit(std::int64_t{0});return;}
+                if(int(op)>=26 && int(op)<=28 && !hist.pop){emit(std::int64_t{0});return;}
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
                 // Bilateral uses g only in a clipped interval comparison,
                 // never as hist[g]. A masked center may exceed captured bins.
                 if(pixel>=v.bins && (int(op)<26 || int(op)>28))throw std::invalid_argument("rank center exceeded histogram bounds");
-                if(int(op)>=26)emit(hist.bilateral(op,pixel,s0,s1));
+                if(int(op)>=26 && int(op)<=28)emit(hist.bilateral(op,pixel,s0,s1));
                 else if(int(op)>=17) {
                     if(op==RankOperation::subtract_mean_percentile) {
                         const auto values=hist.selected(p0,p1);
@@ -403,14 +471,14 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
         write();bool east=true;
         while(true) {
             if(east)for(c=1;c<std::ptrdiff_t(v.shape[2]);++c) {
-                update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
+                update<T,Prefix,CountsOnly>(hist,v,prepared.enter[2],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.leave[2],p,r,c,-1,0,-1);write();
             }
             else for(c=std::ptrdiff_t(v.shape[2])-2;c>=0;--c) {
-                update<T,Prefix>(hist,v,prepared.leave[2],p,r,c,1);update<T,Prefix>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
+                update<T,Prefix,CountsOnly>(hist,v,prepared.leave[2],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.enter[2],p,r,c,-1,0,1);write();
             }
             c=east ? std::ptrdiff_t(v.shape[2])-1:0;
             if(++r>=std::ptrdiff_t(finish))break;
-            update<T,Prefix>(hist,v,prepared.enter[1],p,r,c,1);update<T,Prefix>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
+            update<T,Prefix,CountsOnly>(hist,v,prepared.enter[1],p,r,c,1);update<T,Prefix,CountsOnly>(hist,v,prepared.leave[1],p,r,c,-1,-1,0);write();east=!east;
         }
         begin=p*v.shape[1]+finish;
     }
@@ -524,7 +592,15 @@ std::vector<double> statistics_validate(const RankView& v,RankOperation op,std::
 void statistics_run(const RankView& view,RankOperation operation,std::size_t depth) {
     const auto logarithms=statistics_validate(view,operation,depth);const auto prepared=plan(view);
     const auto rows=view.shape[0]*view.shape[1];
-    const auto invoke=[&](std::size_t begin,std::size_t end,bool check){if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end,logarithms,depth,check);else process<std::uint8_t>(view,operation,prepared,begin,end,logarithms,depth,check);};
+    const auto invoke=[&](std::size_t begin,std::size_t end,bool check){
+        if(operation==RankOperation::windowed_histogram) {
+            if(view.uint16)process<std::uint16_t,false,true>(view,operation,prepared,begin,end,logarithms,depth,check);
+            else process<std::uint8_t,false,true>(view,operation,prepared,begin,end,logarithms,depth,check);
+        } else {
+            if(view.uint16)process<std::uint16_t>(view,operation,prepared,begin,end,logarithms,depth,check);
+            else process<std::uint8_t>(view,operation,prepared,begin,end,logarithms,depth,check);
+        }
+    };
     // C floating-to-unsigned conversion outside the target range is undefined
     // upstream. Certify all values first, preserving output on rejected calls.
     const bool integral=view.output_type==PixelType::boolean || view.output_type==PixelType::uint8 || view.output_type==PixelType::uint16;
@@ -559,6 +635,41 @@ void percentile_run(const RankView& view,RankOperation operation,double p0,doubl
 }
 std::uint32_t rank_percentile_capabilities() noexcept {return 0x3fe0000u;}
 std::uint32_t rank_bilateral_capabilities() noexcept {return 0x1c000000u;}
+std::uint32_t rank_decisions_capabilities() noexcept {return 0x60000000u;}
+void rank_decisions_into(const RankView& view,RankOperation op) {
+    if(op!=RankOperation::otsu && op!=RankOperation::majority)throw std::invalid_argument("invalid rank decisions operation");
+    validate(view,RankOperation::minimum);
+    const auto pixels=view.shape[0]*view.shape[1]*view.shape[2];
+    const auto footprint_pixels=view.footprint_shape[0]*view.footprint_shape[1]*view.footprint_shape[2];
+    if(overlaps(view,view.image,pixels*(view.uint16 ? 2:1)) || overlaps(view,view.mask,pixels) || overlaps(view,view.footprint,footprint_pixels))throw std::invalid_argument("overlapping buffers are outside rank-decisions-v1 parity");
+    const auto prepared=plan(view);std::uint64_t population=0;
+    for(const auto& run:prepared.initial)population+=run.count;
+    const auto maximum=std::uint64_t(std::numeric_limits<std::int64_t>::max());
+    const auto largest=std::uint64_t(std::min(view.bins-1,view.uint16 ? std::size_t{65535}:std::size_t{255}));
+    const auto population_bound=std::min(population,std::uint64_t(pixels));
+    // Source moment sums and mu2*q1 are signed integers; population itself
+    // must also remain exact in the source float64 counter. The quadratic
+    // bound is conservative and prewrite, never invented numerical wrapping.
+    if(population_bound>(std::uint64_t{1}<<52) || (population_bound && largest && population_bound>maximum/largest/population_bound))throw std::overflow_error("rank decisions moment products outside defined coverage");
+    if(population && view.bins<(view.uint16 ? 65536u:256u)) {
+        const auto* data=static_cast<const unsigned char*>(view.image);
+        // Masked-out centers are not histogram indices. In particular a
+        // zero footprint/mask remains valid after safe shift-hook mutations.
+        for(std::size_t i=0;i<pixels;++i)if(!view.mask || view.mask[i]) {
+            std::uint16_t value;if(view.uint16)std::memcpy(&value,data+2*i,2);else value=data[i];
+            if(value>=view.bins)throw std::invalid_argument("rank decisions image exceeded histogram bounds");
+        }
+    }
+    const auto rows=view.shape[0]*view.shape[1];
+    const auto invoke=[&](std::size_t begin,std::size_t end){
+        if(view.uint16)process<std::uint16_t>(view,op,prepared,begin,end);else process<std::uint8_t>(view,op,prepared,begin,end);
+    };
+    const auto workers=independent_stores(view) ? detail::active_workers(pixels):1;
+    if(workers==1){invoke(0,rows);return;}
+    std::vector<std::exception_ptr> failures(std::size_t(workers),std::exception_ptr{});
+    detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{invoke(begin,end);}catch(...){failures[id]=std::current_exception();}});
+    for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
+}
 void rank_bilateral_into(const RankView& view,RankOperation op,std::ptrdiff_t s0,std::ptrdiff_t s1) {
     if(int(op)<26 || int(op)>28)throw std::invalid_argument("invalid rank bilateral operation");
     validate(view,RankOperation::minimum);

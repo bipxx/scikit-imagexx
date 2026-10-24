@@ -62,8 +62,8 @@
     "unchanged": true
   },
   "unchanged_source_pins": {
-    "python/skimagexx/_rank.py": "c86646bd9314637a34a3628fef31d513817858277b8ff89dbc1d04ca6c0cc6e4",
-    "tests/test_rank_bilateral_public.py": "002f5b826f47744b840f74c8ca6bca17bbaae009d31524314efaa587cb2b7c5c",
+    "python/skimagexx/_rank.py": "c965d949415079f4f7d9df9a291ec199fbcf0217c527673034b9795db308dd10",
+    "tests/test_rank_bilateral_public.py": "c85018b796fa2396135be40a57c6fb6ae64d1e5548e85f175b682a22066d503c",
     "coverage/contracts/rank-bilateral-public.json": "740428daa9368e3a7ecaab1b40f7d8eebf3b961f05ab9f900a4deb30653ffb72",
     "tests/test_rank_bilateral_contracts.py": "9fb6411bb69a92bbc40bc4ebab37f553328476a19d010c895ea7c0c2dc9d1f16",
     "coverage/contracts/rank-bilateral.json": "a2f499256e08e94e5e63e29a05ce8e20586e33718161351fd3cec71e761b5c14",

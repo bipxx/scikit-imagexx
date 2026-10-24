@@ -2826,11 +2826,15 @@
       "api": "filters.rank.majority",
       "kind": "callable",
       "signature": "(image, footprint, *, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_decisions_public.py",
+      "benchmark": "benchmarks/rank_decisions.py"
     },
     {
       "api": "filters.rank.maximum",
@@ -2948,11 +2952,15 @@
       "api": "filters.rank.otsu",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_decisions_public.py",
+      "benchmark": "benchmarks/rank_decisions.py"
     },
     {
       "api": "filters.rank.percentile",
@@ -3258,11 +3266,15 @@
       "api": "filters.rank.generic.majority",
       "kind": "callable",
       "signature": "(image, footprint, *, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_decisions_public.py",
+      "benchmark": "benchmarks/rank_decisions.py",
       "alias_of": "filters.rank.majority"
     },
     {
@@ -3359,11 +3371,15 @@
       "api": "filters.rank.generic.otsu",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_decisions_public.py",
+      "benchmark": "benchmarks/rank_decisions.py",
       "alias_of": "filters.rank.otsu"
     },
     {

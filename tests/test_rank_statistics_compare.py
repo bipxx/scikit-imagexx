@@ -82,7 +82,7 @@ def fake_product(tmp_path):
     scope=c.config()['planned_scope']
     sdk_receipt=dict(families=scope['sdk_family_names'],checks=2*scope['sdk_families'],SDK_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()})
     (path/'sdk.json').write_text(json.dumps(sdk_receipt))
-    qualification=dict(schema='public-qualification-v2',SDK_checks=26,passed=True,no_timing=True,failures=[],profile='windows',source=dict(revision=revision),expected_registry=dict(image_count=scope['image_paths'],metadata_count=scope['metadata_paths'],registered_count=scope['image_paths']+scope['metadata_paths'],functions=list(map(str,range(scope['image_paths']+scope['metadata_paths'])))),records={'sdk.json':dict(bytes=(path/'sdk.json').stat().st_size,sha256=c.sha(path/'sdk.json'))})
+    qualification=dict(schema='public-qualification-v2',SDK_checks=2*scope['sdk_families'],passed=True,no_timing=True,failures=[],profile='windows',source=dict(revision=revision),expected_registry=dict(image_count=scope['image_paths'],metadata_count=scope['metadata_paths'],registered_count=scope['image_paths']+scope['metadata_paths'],functions=list(map(str,range(scope['image_paths']+scope['metadata_paths'])))),records={'sdk.json':dict(bytes=(path/'sdk.json').stat().st_size,sha256=c.sha(path/'sdk.json'))})
     (path/'qualification.json').write_text(json.dumps(qualification));(path/'runtime-lock.txt').write_text('SYNTHETIC')
     wheels={p.name:{k:v for k,v in c.verify_wheel(p).items() if k!='members'} for p in (path/'wheels').glob('*.whl')}
     runtime=dict(schema='ci-offline-measurement-v1',source=dict(revision=revision),wheels=wheels,lock_sha256=c.sha(path/'runtime-lock.txt'),runtime=dict(sdk_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()}))
@@ -461,13 +461,13 @@ def test_full_source_pair_only_allows_the_approved_counts_delta(tmp_path,monkeyp
     cfg['accepted_products']={r:{'windows':pin(r)} for r in ('before','after')}
     for role,text in (('before','old_bookkeeping\n'),('after','counts_population_only\n')):
         root=tmp_path/role;(root/'source/src').mkdir(parents=True);(root/'source/src/rank.cpp').write_text(text)
-        (root/'qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['same'],image_count=186))))
+        (root/'qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['same'],image_count=scope['image_paths']))))
     c.verify_pair_sources(tmp_path/'before',tmp_path/'after','windows',cfg)
     if failure=='other-source':(tmp_path/'after/source/src/other.cpp').write_text('changed')
     elif failure=='other-rank-edit':(tmp_path/'after/source/src/rank.cpp').write_text('counts_population_only\nextra_edit\n')
     elif failure=='missing-counts':(tmp_path/'after/source/src/rank.cpp').write_text('old_bookkeeping\n')
-    elif failure=='scope':cfg['accepted_products']['after']['windows']['scope']=dict(scope,image_paths=190)
-    else:(tmp_path/'after/qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['different'],image_count=186))))
+    elif failure=='scope':cfg['accepted_products']['after']['windows']['scope']=dict(scope,image_paths=scope['image_paths']+1)
+    else:(tmp_path/'after/qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['different'],image_count=scope['image_paths']))))
     with pytest.raises(RuntimeError):c.verify_pair_sources(tmp_path/'before',tmp_path/'after','windows',cfg)
 
 
@@ -482,17 +482,20 @@ def test_preparation_scope_rejects_float_or_boolean_integer_lookalikes(tmp_path,
     with pytest.raises(RuntimeError):c.receipt_barrier(paths,cfg,'run','1')
 
 
-def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(tmp_path,monkeypatch):
+@pytest.mark.parametrize('image_paths,sdk_families',[(186,13),(190,14)])
+def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(tmp_path,monkeypatch,image_paths,sdk_families):
     cfg,_=receipts(tmp_path,monkeypatch)
     for role in ('before','after'):
         for profile in c.PROFILES:
-            scope=dict(cfg['accepted_products'][role][profile]['scope']);scope['image_paths']=190
-            scope['sdk_families']=14;scope['sdk_family_names']=[*scope['sdk_family_names'],'rank_decisions']
+            scope=dict(cfg['accepted_products'][role][profile]['scope']);scope['image_paths']=image_paths
+            scope['sdk_families']=sdk_families
+            scope['sdk_family_names']=[name for name in scope['sdk_family_names'] if name!='rank_decisions']
+            if sdk_families==14:scope['sdk_family_names'].append('rank_decisions')
             cfg['accepted_products'][role][profile]['scope']=scope
     path=tmp_path/'external.json';path.write_text(json.dumps(dict(schema='rank-statistics-experiment-v1',template_sha256=c.text_sha(c.CONTRACT),accepted_products=cfg['accepted_products'])))
     loaded=c.config(path,c.sha(path))
-    assert c.accepted_pin(loaded,'before','windows')['scope']['image_paths']==190
-    assert c.accepted_pin(loaded,'after','windows')['scope']['sdk_families']==14
+    assert c.accepted_pin(loaded,'before','windows')['scope']['image_paths']==image_paths
+    assert c.accepted_pin(loaded,'after','windows')['scope']['sdk_families']==sdk_families
 
 
 def synthetic_build_pair(tmp_path,change=None,compiler_id='MSVC',lto=False):

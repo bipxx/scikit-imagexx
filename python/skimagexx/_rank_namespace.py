@@ -10,10 +10,10 @@ def initialize(module):
     module.__path__=[]
     # The pinned generic module exposes these callables as identity aliases
     # but omits them from star imports. Keep availability and star exports separate.
-    names=(_rank._GENERIC_FUNCTIONS if relative=='filters.rank.generic' else
+    names=(_rank._GENERIC_FUNCTIONS+_rank._DECISIONS_FUNCTIONS if relative=='filters.rank.generic' else
            _rank._BILATERAL_FUNCTIONS if relative=='filters.rank.bilateral' else _rank.__all__)
     module.__all__=[name for name in names
-                    if relative!='filters.rank.generic' or name not in ('sum','windowed_histogram')]
+                    if relative!='filters.rank.generic' or name not in ('sum','windowed_histogram','majority')]
     for name in names:
         setattr(module,name,getattr(_rank,name))
     def missing(name):

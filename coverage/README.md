@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-477 public callable names inventoried in 20 modules; 186 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 190 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -215,7 +215,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.geometric_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient_percentile` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.majority` | upstream-only | pending | pending |
+| `filters.rank.majority` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.maximum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.mean_bilateral` | native-partial | yes (partial input contract) | yes |
@@ -224,7 +224,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.minimum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.modal` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.noise_filter` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.otsu` | upstream-only | pending | pending |
+| `filters.rank.otsu` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.pop_bilateral` | native-partial | yes (partial input contract) | yes |
@@ -246,14 +246,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.generic.equalize` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.geometric_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.gradient` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.majority` | upstream-only | pending | pending |
+| `filters.rank.generic.majority` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.maximum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.median` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.minimum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.modal` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.noise_filter` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.generic.otsu` | upstream-only | pending | pending |
+| `filters.rank.generic.otsu` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.pop` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.subtract_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.sum` | native-partial | yes (partial input contract) | yes |

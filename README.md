@@ -6,7 +6,7 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has scoped parity tests. All 186 partially native
+Every native public function has scoped parity tests. All 190 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
@@ -25,11 +25,11 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **186 partially native
+The reference is scikit-image **0.26.0**. There are currently **190 partially native
 image API paths and three metadata helpers**. The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 283 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 279 paths remain upstream-only.
 Four transform classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
@@ -37,13 +37,14 @@ across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
 
-The [latest accepted qualification](coverage/evidence/public-wave10.json) passes
-588,768 checks across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus 104 installed SDK client checks. The fixed corpora run
-with one and four native workers. Local Otsu and majority are staged for a
-four-path increment; [source readiness](coverage/evidence/rank-decisions-source-staging.json)
-and the [parallel work ledger](coverage/work_items.json) track their pending
-whole-product qualification and performance work.
+The [latest accepted qualification](coverage/evidence/public-wave11.json) passes
+672,856 checks across Windows, modern/minimum Linux and Debug builds with normal
+and scalar dispatch, plus 112 installed SDK client checks. The fixed corpora run
+with one and four native workers. Local Otsu, majority and their two generic
+aliases are now qualified, bringing rank to 31 canonical algorithms. A separately
+qualified before product passes another 649,056 checks; exact source and common
+build inputs match the controlled counts-only change. Its one-worker speed
+comparison remains pending in the [parallel work ledger](coverage/work_items.json).
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
