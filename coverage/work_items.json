@@ -27217,19 +27217,18 @@
           "source_sha": "5b92e534da06e37eb348250ebbd1692b5ecccbd2"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/max-tree.json",
         "uncovered_cases": [
-          "Versioned early ABI; own typed C++ stable sorting/union-find/canonicalization and all six prepared operations with exact parent/traverser/uint64 labels.",
-          "233 safe original IDs become real C++;118 metadata-only cases never count native. SIMD/optional sole workers only where source dependencies permit; sequential tree stages remain explicit.",
-          "Bindings/providers/production core/SDK/public registry and isolated one-worker original-library benchmarks remain separate gates."
+          "Fresh sole public core, full package/SDK19 qualification, broader provider protocols and original-library one-worker bottleneck measurements. Integer sorting and root compression are separate increments."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527",
+        "artifact_sha256": "ca45b1a494574b7aa1bd90d821800991482fae93bfdd4a1fe37a37b3488ebf14",
+        "runs": [],
+        "native_checks": 5592
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -27248,6 +27247,25 @@
           "build/worktrees/max-tree-contracts"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527",
+          "manifest": {
+            "path": "build/worktrees/max-tree-contracts/build/max-tree-native/manifest.json",
+            "bytes": 81845,
+            "sha256": "ca45b1a494574b7aa1bd90d821800991482fae93bfdd4a1fe37a37b3488ebf14"
+          },
+          "native_contract_checks": 5592,
+          "native_pending": 0,
+          "scope": "Only233 bounded safe numeric IDs;118 metadata/intake cases are not native math acceptance. No public core/SDK/performance claim."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/max-tree-private-root-review/manifest.json",
+        "bytes": 2973,
+        "sha256": "79fe9f15debc83a4ceeeb7b3d50dd5f1c64a781545dc6a947df055dda1634fba"
       }
     },
     {
@@ -27449,24 +27467,29 @@
         "src/bind_max_tree.cpp",
         "python/skimagexx/_max_tree.py",
         "tests/test_max_tree_native_pipeline.py",
-        "tests/test_max_tree_binding.py",
         "tests/test_max_tree_stages_native.cpp"
       ],
       "depends_on": [
         "max-tree-native"
       ],
-      "dependency_requirements": {},
-      "state": "implementing",
+      "dependency_requirements": {
+        "max-tree-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527"
+        }
+      },
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Pristine aggregate plus actual staged C++ build/order/attributes/filter/localmax for observable providers; numerical stages separate from pybind. Preserve351source observations,233safe numeric native and118metadata; no upstream image algorithm forwarding. Shared public wiring/SDK/performance are separate."
+          "Fresh sole public core, full package/SDK19 qualification, broader provider protocols and original-library one-worker bottleneck measurements. Integer sorting and root compression are separate increments."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "29eb2ae8e97edbf6425e80afad169c97adf2d04d",
+        "artifact_sha256": "52ac85c4d3c960e57282f908103edb8d7db7334ced5007a2266553a8e9cbe4c9",
+        "runs": [],
+        "native_checks": 4194
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -27485,6 +27508,25 @@
           "build/worktrees/max-tree-contracts"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "29eb2ae8e97edbf6425e80afad169c97adf2d04d",
+          "manifest": {
+            "path": "build/worktrees/max-tree-contracts/build/max-tree-binding/manifest.json",
+            "bytes": 115997,
+            "sha256": "52ac85c4d3c960e57282f908103edb8d7db7334ced5007a2266553a8e9cbe4c9"
+          },
+          "native_contract_checks": 4194,
+          "native_pending": 0,
+          "scope": "Only233 bounded safe numeric IDs;118 metadata/intake cases are not native math acceptance. No public core/SDK/performance claim."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/max-tree-private-root-review/manifest.json",
+        "bytes": 2973,
+        "sha256": "79fe9f15debc83a4ceeeb7b3d50dd5f1c64a781545dc6a947df055dda1634fba"
       }
     },
     {
@@ -27618,6 +27660,111 @@
         "path": "build/decisions-readiness/bregman-benchmark-reference-root-review/manifest.json",
         "bytes": 1296,
         "sha256": "d9ef9f42048951aced77daed110e504a32b78c8e45ec840091baecb7295f1ce6"
+      }
+    },
+    {
+      "id": "max-tree-integer-sort",
+      "kind": "private_optimization",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/max-tree-integer-sort",
+      "base_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527",
+      "owns": [
+        "src/max_tree.cpp",
+        "tests/test_max_tree_native.cpp"
+      ],
+      "depends_on": [
+        "max-tree-native"
+      ],
+      "dependency_requirements": {
+        "max-tree-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "U8 stable histogram and U16 two-pass radix sorting; preserve full typed order/ties, all233 original trees and every pathological large control. Frozen823 all four full drivers continue unchanged; no speed claim before isolated hosted one-worker measurements."
+        ]
+      },
+      "parity": {
+        "source_sha": "82394aecc306ae117027160f73fff7d769b04eec",
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/max-tree-integer-sort"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "matrix-transform-cooperlake-n1-kernel",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-cooperlake",
+      "base_sha": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
+      "owns": [
+        "include/skimagexx/matrix_transform.hpp",
+        "src/matrix_transform.cpp",
+        "src/simd_matrix_transform_avx2.cpp",
+        "tests/test_matrix_transform_native.cpp"
+      ],
+      "depends_on": [
+        "matrix-transform-general-kernel"
+      ],
+      "dependency_requirements": {
+        "matrix-transform-general-kernel": {
+          "evidence_scope": "native_private",
+          "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Source/binary-derived Cooperlake0.3.21 N1 D2..4 arithmetic with new strict v2 entry/cap63 and ID6. Legacyv1 still rejects6; IDs1..5 unchanged. Keep all160 earlier mismatches; no fitting or runtime/public profile admission before GEMM/GEMVT audits, full pipeline and whole-product gates."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/matrix-transform-cooperlake",
+          "build/matrix-cooperlake-arithmetic-audit"
+        ],
+        "protected_artifacts": []
       }
     }
   ],
@@ -28347,16 +28494,17 @@
         "tv-chambolle-public-benchmark"
       ],
       "resize_bench": [
+        "matrix-transform-cooperlake-n1-kernel",
         "matrix-transform-hosted-profiles"
       ],
       "resize_api": [
-        "max-tree-private-binding"
+        "max-tree-integer-sort"
       ]
     },
     "current_three_agent_packets": {
       "metrics_reductions": "tv-chambolle-public-benchmark",
-      "resize_bench": "matrix-transform-hosted-profiles",
-      "resize_api": "max-tree-private-binding"
+      "resize_bench": "matrix-transform-cooperlake-n1-kernel",
+      "resize_api": "max-tree-integer-sort"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -28475,7 +28623,7 @@
     },
     "integrator_queue": [
       "tv-bregman-public-192",
-      "max-tree-native",
+      "max-tree-private-binding",
       "matrix-transform-general-binding"
     ]
   },
