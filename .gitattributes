@@ -31,3 +31,5 @@ coverage/contracts/rank-bilateral-public.json -text
 coverage/contracts/rank-bilateral-masked-center-public.json -text
 coverage/evidence/rank-bilateral-fixture-assertion-migration.json -text
 coverage/contracts/rank-decisions-benchmark.json -text
+coverage/contracts/rank-bilateral-endian-public.json -text
+coverage/evidence/rank-bilateral-masked-source-pin-migration.json -text
