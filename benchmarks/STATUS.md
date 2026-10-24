@@ -1,8 +1,8 @@
 # Performance verification
 
-The current API inventory has 171 partially native image paths, three metadata
-helpers, four partially native transform classes and 298 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 171 image paths; measured
+The current API inventory has 190 partially native image paths, three metadata
+helpers, four partially native transform classes and 279 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 190 image paths; measured
 acceptance remains specific to each report's source revision and workload.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
@@ -13,6 +13,7 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 | Rank next four algorithms | 2.583x | 3.295x | 3.411x | 384 timed cases; 69/64/63 slower |
 | Rank four intensity algorithms | 2.089x | 2.244x | 2.402x | 384 timed cases; 92/81/81 slower |
 | Rank statistics/vector algorithms | 2.576x | 2.694x | 3.094x | 376 timed cases; 56/36/28 slower; scalar/vector cohorts separate |
+| Controlled rank statistics/vector counts update | 2.701x | 2.851x | 2.906x | 376 fixed cases; 43/24/30 slower; exact qualified before/after pair |
 | Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
 | Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
 | Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
@@ -27,6 +28,7 @@ These geometric means apply to the exact sources and workloads in the
 [R1 rank](rank-public-initial.md), [R2 rank](rank-distribution-public-initial.md),
 [R3 intensity](rank-intensity-public-initial.md),
 [R4 statistics/vector](rank-statistics-public-initial.md),
+[controlled R4 counts](rank-statistics-counts-comparison.md),
 [consumer](component-consumers-public-initial.md),
 [controlled resize](resize-public-controlled.md),
 [transform](transform-classes-public-initial.md),
@@ -55,29 +57,25 @@ Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
 scans remain bottlenecks. Reversed metrics transport has completed its private
 checks; actual cumulative public/performance qualification remains pending.
 
-The accepted [whole7b product](../coverage/evidence/public-wave7.json) now covers
-171 partially native image paths. Four new rank algorithms/eight callable paths
-pass eight genuine normal/scalar Release/Debug profiles:31929 rank,854 metadata,
-and72 non-star value checks each, plus1379 strict corpus cases at workers1/4.
-All four complete104-member products retain the full59-member SDK; unchanged
-consumer/metrics scopes and88 SDK checks inherit only after full-byte/source
-identity checks. Private source-adapter supplements remain explicitly separate.
-R4 initial one-worker timing is [verified](rank-statistics-public-initial.md):
-1,379 checks and 376 timings per runtime; all 120 slower observations remain
-visible. Large vector workloads are slower across all three profiles. Updated
-consumer-scan timing remains pending.
+The accepted [whole11 products](../coverage/evidence/public-wave11.json) cover
+190 partially native image paths, including the percentile/bilateral families
+and local Otsu/majority aliases. The exact before/after sources pass 649,056 and
+672,856 checks across four normal/scalar runtime profiles, with 224 combined
+installed-SDK checks. Earlier whole7b/failed qualification records remain
+historical evidence, rather than current acceptance.
 
-Nine percentile kernels and their 990-case timing harness remain pending genuine
-public acceptance. The original four-profile hosted trial ended with test/runner
-failures: stale generic-alias smoke assertions, missing temporary-directory
-parents, Windows SDK generator selection and Linux interpreter-link verification.
-Original failures are retained. The accepted image count stays 171.
+The [controlled R4 counts comparison](rank-statistics-counts-comparison.md)
+measures the exact `66860ae` to `94d2d3f` 190-path pair at one worker. All three
+preparations, the barrier and fresh measurement jobs passed; independent and
+integrator audits verify every 376-by-seven paired result. The histogram cohort
+improves 1.239x/1.159x/1.181x versus prior C++, while all 102/106/145 slower-prior
+and 43/24/30 slower-upstream observations remain in the full CSV and permanent
+raw ZIP. Unchanged scalar API fluctuations are not attributed to this patch.
 
-Three agents now work on the bilateral masked-center correction, original
-Otsu/majority benchmark contracts and qualification tooling fixes. The next
-cumulative candidate targets 186 partial image paths only after the bilateral
-wrapper/namespace/SDK wiring and fresh genuine qualification pass. This is a
-prediction, not accepted coverage.
+The joined TV candidate `f87120c` targets 191 image paths in fresh qualification
+run40087742726; acceptance waits for the complete retained-product audit.
+Matrix and Bregman kernel/binding proofs are scoped private evidence. Max-tree
+reference/native work advances six more APIs without public registration yet.
 
 ## Retained whole-library checkpoints
 

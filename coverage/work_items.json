@@ -25350,8 +25350,23 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": [],
+        "raw_results": [
+          "benchmarks/rank-statistics-counts-comparison-raw.zip"
+        ],
+        "regressions": {
+          "windows": {
+            "before": 102,
+            "original": 43
+          },
+          "modern": {
+            "before": 106,
+            "original": 24
+          },
+          "minimum": {
+            "before": 145,
+            "original": 30
+          }
+        },
         "partial_profiles": [
           {
             "profile": "windows",
@@ -25393,7 +25408,10 @@
               "sha256": "c71130eb388452d1d937ef94bad3c153d9b77b964294a112e38775d724a9f36d"
             }
           }
-        ]
+        ],
+        "report": "benchmarks/rank-statistics-counts-comparison.md",
+        "evidence": "coverage/evidence/rank-statistics-counts-measured.json",
+        "publication_status": "verified"
       },
       "merge": {
         "commit": null,
@@ -27992,7 +28010,7 @@
       "run_id": 40084877921,
       "observer_session": 1437,
       "source": "66860aef0d2483ca1d728589d9b3b0952433db91",
-      "status": "All7 jobs and all3 profile/independent/root audits passed; full report publication in progress.",
+      "status": "Complete hosted and independent/root verified campaign; full report/CSV/raw archive published.",
       "measurement_workers": 1,
       "timed_ids_per_profile": 376,
       "paired_rounds": 7,
@@ -28014,7 +28032,7 @@
           "status": "independently verified partial profile; complete three-profile performance promotion pending"
         }
       ],
-      "performance_promoted": false,
+      "performance_promoted": true,
       "root_verification": {
         "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
         "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"

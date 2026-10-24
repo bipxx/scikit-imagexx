@@ -33,7 +33,7 @@ its speed remains unmeasured. Whole11 now qualifies local Otsu, majority and the
 two generic aliases, bringing the accepted count to 190 partial image paths and
 31 canonical rank algorithms. Both exact controlled sources pass all four
 products: 649,056 before checks and 672,856 after checks, with 224 combined SDK
-checks and equal actual common build inputs. Controlled one-worker counts run `40084877921` has independently verified all three profiles and passed the root audit; full report publication is in progress. All 376 IDs, seven paired rounds and every slower case are retained. These results apply to the frozen 190-path source pair.
+checks and equal actual common build inputs. Controlled one-worker counts run `40084877921` has independently verified all three profiles and passed the root audit; the [full report, CSV and raw archive](../benchmarks/rank-statistics-counts-comparison.md) are published. All 376 IDs, seven paired rounds and every slower case are retained. These results apply to the frozen 190-path source pair.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
@@ -188,11 +188,11 @@ continues while another packet builds, runs CI or waits for measurements.
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
 | Accepted cumulative increment | Whole11 sources `66860ae`/`94d2d3f` | 190 native-partial image paths; all eight genuine products, complete selected corpora, source/build/runtime closure and six Release envelopes verified. Full argument and performance parity remain separate. |
-| Accepted rank increment | Rank Otsu/majority plus their two generic aliases | Both four-profile runs pass; exactly three counts-optimization paths differ and common compiler/header/link inputs match in all four profiles. Source merged promptly; one-worker measurements remain pending. |
-| Isolated measured bottleneck | Counts-only R4 windowed histogram update | Private R7 portable/sanitizer gates pass. Keep all 1,379 fixed cases and 376 timing IDs. Obtain six accepted before/after products, then prepare all three runtime profiles and time only on fresh artifact-only hosts at one worker. |
+| Accepted rank increment | Rank Otsu/majority plus their two generic aliases | Both four-profile runs pass; exactly three counts-optimization paths differ and common compiler/header/link inputs match in all four profiles. Source merged promptly; all three controlled one-worker profiles are measured and independently/root verified. |
+| Isolated measured bottleneck | Counts-only R4 windowed histogram update | Controlled run40084877921 passes all three profiles. Histogram cohort gains1.239x/1.159x/1.181x versus prior C++; every before/original regression remains in the published report/CSV/raw ZIP. More bottlenecks remain. |
 | Private native foundation | TV typed stages and spatial reductions | `2319db7` stages and `0eaf632` reductions have scoped private evidence. NumPy 1.24.4/2.5.4 reduction association and scalar promotion differ; preserve both exact profiles. These are not public function acceptance. |
 | Private complete finite loop | TV kernel `f8f38b6` | C++ now owns finite divergence/output, square/sum, gradient/norm/sum, denominator/dual, energy and strict stopping. Validate actual new bindings and default wrapper calls; stage capability 63 cannot substitute for finite-loop capability 3. |
-| Live shared integration | Public TV core, registry and complete SDK | Frozen `b550107`, run `40083629572`: candidate 191 paths, 108 wheel files, 62 SDK files, 17 client families/34 SDK checks. Private wrapper and 768 final metadata checks pass; actual four-profile public/core/SDK execution is pending. |
+| Live shared integration | Public TV core, registry and complete SDK | Joined `f87120c`, run `40087742726`: candidate191 paths,108wheel/62SDK,17families/34checks. Original b550 failed metadata/intake gates and is retained.985preflight checks pass; fresh combined-product acceptance is pending. |
 | Performance follow-up | TV original-library comparison | The reference-only benchmark authoring has 330 untimed source cases and 70 fixed timing candidates. Consume actual qualified artifacts and exact wheel/SDK/source pins; finish the default-policy parity barrier before isolated one-worker samples. |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
@@ -232,29 +232,31 @@ Reference contracts and expected failures cannot release either gate.
 The optional local-proof check hashes retained manifest bytes in this workspace;
 a fresh checkout needs those preserved artifacts before that check can pass.
 
-The next handoffs are executable in this order:
+Current handoffs run in parallel:
 
-1. Worker 1 follows the two exact rank candidate runs and every earlier live
-   handle through terminal. The integrator authenticates passing whole products,
-   merges the validated rank increment and sets controlled-comparison product
-   pins only after complete source/build/runtime/SDK verification.
-2. Worker 3 sends each actual TV finite-loop binary and hash to Worker 2 as soon
-   as its ABI passes bounded controls. Worker 2 can validate that ABI while the
-   next ABI compiles. Both retain frozen prerequisites and old raw failures;
-   neither edits the other's owned source or creates another worker policy.
-3. The integrator reviews and authenticates private TV source/proofs, handles
-   shared CMake/public/SDK wiring, and promptly merges reviewable qualified
-   increments. A private whole finite loop does not establish the 330 protocol
-   cases, actual public core or complete installed SDK. Keep those gates explicit.
-4. Use genuine qualified before/after artifacts for the unchanged counts trial;
-   use an independently qualified public TV product for its fixed corpus.
-   Complete all preparation profiles before fresh isolated one-worker timing.
-   Preserve all workload IDs, raw samples and regressions.
-5. Return measured bottlenecks to their owning implementation packet, then
-   remeasure retained improvements against the same original-library baseline.
-   Continue remaining APIs, classes/state, nested namespaces, data and I/O;
-   186 accepted partial image paths and the current private TV work do not
-   satisfy the full-library objective.
+1. Worker 1 observes joined TV run `40087742726` at exact `f87120c` through
+   terminal, retaining each complete source/build/runtime/public/SDK closure.
+   Root accepts and merges only genuinely successful products. The completed
+   controlled counts run and its full raw archive stay immutable.
+2. Worker 3 closes the general matrix binding/pipeline proof, then qualifies
+   actual hosted NumPy/OpenBLAS dispatch profiles. Haswell-only private proof
+   cannot establish native execution on a different default BLAS core. Keep
+   the 374 original observations, 4,000 general cohorts and every old certified
+   route; homogeneous-buffer fusion and wider casting remain follow-ups.
+3. Worker 2 implements the six max-tree/attribute-filter primitives from the
+   351-ID source contract: 233 safe numeric IDs and 118 metadata-only IDs.
+   Stable parent/traverser/tie/label identities and safe source boundaries
+   remain exact. Optional parallel work must respect tree dependencies.
+4. Root reviews and wires ready Bregman bridge `54dcc71` into the sole core,
+   public restoration namespace, inventory and installed SDK on an isolated
+   candidate. Use safe original geometry; never execute unchecked singleton
+   Cython calls for a generic smoke test. Fresh public parity and fixed-corpus
+   one-worker comparison remain required; serial Gauss-Seidel is an explicit
+   optimization target.
+5. Root integrates passing increments promptly. Public TV measurements consume
+   qualified artifacts after all preparation profiles pass. Repeat this for
+   remaining APIs, classes/state, nested namespaces, data and I/O. The current
+   190 accepted partial image paths do not satisfy the full-library objective.
 
 All active packets use their own ignored cache. An agent's handoff includes its
 live process handles; observation timeouts leave those jobs active. A finished
