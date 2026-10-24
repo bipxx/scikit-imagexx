@@ -4,7 +4,7 @@
   "main_commit": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
   "API": "restoration.denoise_tv_chambolle",
   "proof": {
-    "path": "build/worktrees/tv-chambolle-contracts/build/tv-reference/manifest.json",
+    "path": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-contracts/build/tv-reference/manifest.json",
     "sha256": "b714da573b0f9bb025274d0d071fa53f01acaee2f1b24972184364c8746b5e9e"
   },
   "root_review": {

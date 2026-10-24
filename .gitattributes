@@ -47,3 +47,4 @@ coverage/contracts/tv-chambolle.json -text
 coverage/evidence/rank-counts-r7-private.json -text
 coverage/evidence/tv-chambolle-reference.json -text
 coverage/contracts/tv-chambolle-benchmark.json -text
+coverage/evidence/tv-reference-worktree-cleanup-20261024.json -text

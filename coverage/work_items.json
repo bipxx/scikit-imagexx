@@ -25563,17 +25563,25 @@
         "main_commit": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/tv-chambolle-contracts/build/tv-reference"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/tv-chambolle-contracts",
+            "head": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+            "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-contracts.zip",
+            "archive_sha256": "341af00b3134289b5d6e8b74c26d32cbcbb2077a12611f47685fc0b31b203d9c",
+            "source_clean": true,
+            "ancestor_of_main": true
+          }
+        ]
       },
       "proofs": {
         "contract_reference": {
           "status": "verified",
           "source_sha": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
           "manifest": {
-            "path": "build/worktrees/tv-chambolle-contracts/build/tv-reference/manifest.json",
+            "path": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-contracts/build/tv-reference/manifest.json",
             "sha256": "b714da573b0f9bb025274d0d071fa53f01acaee2f1b24972184364c8746b5e9e"
           },
           "passing_contract_checks": 330,
@@ -25852,14 +25860,24 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/tv-chambolle-benchmark",
+            "head": "6304a522767b54c419918be5ca7679cc51041c78",
+            "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
+            "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
+            "source_clean": true,
+            "ancestor_of_main": true
+          }
+        ]
       },
       "proofs": {
         "tooling": {
           "status": "verified",
           "source_sha": "6304a522767b54c419918be5ca7679cc51041c78",
           "manifest": {
-            "path": "build/worktrees/tv-chambolle-benchmark/build/tv-benchmark-phase1/manifest.json",
+            "path": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-benchmark/build/tv-benchmark-phase1/manifest.json",
             "sha256": "49245b34a57752dcd24cd1c740ce048ccdb172e75eb65e29c3efe96b10dd4887"
           },
           "scope": "400 original-only checks including330 untimed source IDs+70 fixed finite timing candidates and101 metadata guards on3 runtimes. All public native/interface/product pins null; no timing or accepted native scope."
@@ -27188,6 +27206,18 @@
       "archive": "build/cleanup/current-checkpoint/archives/06-pytest-tmp.zip",
       "archive_sha256": "d853bcf9ce44592c4023cdf681be6a77d218d4ee11af5977958fee42ffdc3202",
       "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/tv-chambolle-contracts",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-contracts.zip",
+      "archive_sha256": "341af00b3134289b5d6e8b74c26d32cbcbb2077a12611f47685fc0b31b203d9c",
+      "member_rule": "Remove former_prefix/; all original regular bytes retained exactly. ZIP has no links; benchmark tar.gz preserves six exact link targets without following them. Worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/tv-chambolle-benchmark",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
+      "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
+      "member_rule": "Remove former_prefix/; all original regular bytes retained exactly. ZIP has no links; benchmark tar.gz preserves six exact link targets without following them. Worktree .git administrative pointer omitted."
     }
   ],
   "inventory_assessment_pending": {
@@ -27227,7 +27257,7 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/qualification-checkpoint-cleanup-20261024.json",
-    "sha256": "8cfdeb5b731c8399eef35ac805fdad79b2f2a104e475d855fc1a832a89ed8b67"
+    "path": "coverage/evidence/tv-reference-worktree-cleanup-20261024.json",
+    "sha256": "d764871c6742d1e40c86291c6bd7fd457d8b74f2dcab328d96acbfd2b42ab8f4"
   }
 }

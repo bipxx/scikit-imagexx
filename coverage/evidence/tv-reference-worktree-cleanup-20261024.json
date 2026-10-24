@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T08:05:42.834005+00:00",
+  "main_source": "9a928111fe8183436844adc5faa5bc74521e314d",
+  "merged_worktrees_removed": 2,
+  "verified_regular_members": 1037,
+  "preserved_symlink_targets": 6,
+  "original_bytes": 132448065,
+  "retained_archive_bytes": 15597371,
+  "retained_individual_proof_bytes": 21744,
+  "logical_net_bytes_recovered": 116828950,
+  "byte_accounting": "Logical regular payload bytes minus archives and copied proof bytes; excludes small cleanup audit metadata and filesystem allocation effects.",
+  "cumulative_logical_cleanup_bytes": 12141328840,
+  "preservation_index": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/preservation-index.json",
+    "sha256": "13ea8d406ea4d75444f18aefd9aad19426e99f109164ccf95cea431d3870c0b2"
+  },
+  "independent_archive_verification": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/independent-worker1-verification.json",
+    "sha256": "b89b3d8e0c4ae084129f5ada9a54cd6962d43e775baea18d5d0eabec5f1f05c7"
+  },
+  "reader_releases": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/reader-releases.json",
+    "sha256": "e0d3a7f30fd1433ad91a54733ec3257a0b609c378e45eb984cc638ed9950a098"
+  },
+  "root_before_removal": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/root-before-removal.json",
+    "sha256": "7a424a5adf04b30ba44ba29dad2236bedbcc8522046debfbdc6b76854806912e"
+  },
+  "removal_receipt": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/removed.json",
+    "sha256": "d4054d75243489d72e2d5e5fa451142dbc16162391b96b326f94d8e65f87acf2"
+  },
+  "source_history_merges": {
+    "path": "build/cleanup/completed-tv-reference-worktrees/merge-history.json",
+    "sha256": "a22bcd44f97614a98547bd4797393636d26e50b7fa6d8a717c61cbf53b3d43b1"
+  },
+  "removed_targets": [
+    {
+      "path": "build/worktrees/tv-chambolle-contracts",
+      "head": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-contracts.zip",
+      "archive_sha256": "341af00b3134289b5d6e8b74c26d32cbcbb2077a12611f47685fc0b31b203d9c",
+      "original_bytes": 65874904,
+      "archive_bytes": 5251700,
+      "verified_regular_members": 328,
+      "verified_link_targets": 0
+    },
+    {
+      "path": "build/worktrees/tv-chambolle-benchmark",
+      "head": "6304a522767b54c419918be5ca7679cc51041c78",
+      "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
+      "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
+      "original_bytes": 66573161,
+      "archive_bytes": 10345671,
+      "verified_regular_members": 709,
+      "verified_link_targets": 6
+    }
+  ],
+  "proof_relocations": [
+    {
+      "old": "build/worktrees/tv-chambolle-contracts/build/tv-reference/manifest.json",
+      "new": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-contracts/build/tv-reference/manifest.json",
+      "bytes": 10949,
+      "sha256": "b714da573b0f9bb025274d0d071fa53f01acaee2f1b24972184364c8746b5e9e"
+    },
+    {
+      "old": "build/worktrees/tv-chambolle-benchmark/build/tv-benchmark-phase1/manifest.json",
+      "new": "build/cleanup/completed-tv-reference-worktrees/retained-proofs/tv-chambolle-benchmark/build/tv-benchmark-phase1/manifest.json",
+      "bytes": 10795,
+      "sha256": "49245b34a57752dcd24cd1c740ce048ccdb172e75eb65e29c3efe96b10dd4887"
+    }
+  ],
+  "protected_active_environments_packages_running_jobs_or_unfinished_source_removed": false,
+  "performance_jobs_cancelled": 0,
+  "scope": "Archive-first retirement of two released reference worktrees after clean-source and genuine merge-ancestry checks. All original source, reference observations, failure logs, proof data and six link targets remain byte-exact in verified archives. Cleanup itself ran no build, image operation or timing; existing unrelated jobs were left intact. Public native acceptance is unchanged."
+}
