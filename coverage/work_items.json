@@ -20592,7 +20592,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Original7aaa actual package gates ongoing; generic sum star-list defect and authenticated fixture-file pin migration corrected only in staged a67 candidate, not active producer. Await all original handles terminal before exactfollowup lease/repack. Candidate171 public acceptance/performance stillpending; accepted main remains163."
+          "Original7aaa trial sealed2314records with knownrawmetadatafailures; all handles terminal. Correctedf4e6 producer leased for genuine7bpackages/affectedpublicrank+metadata/72nonstar values+fresh1379R4capsules. Native171acceptance and isolatedperformance remainpending; acceptedmain163."
         ]
       },
       "parity": {
@@ -20638,7 +20638,7 @@
         }
       },
       "source_freeze": {
-        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "worktree": "build/worktrees/core-rank9-validation",
         "lease_state": "granted",
         "prediction_only": {
@@ -20647,16 +20647,15 @@
         }
       },
       "build_lease": {
-        "path": "build/main-core-wave7-evidence/lease.json",
-        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "path": "build/main-core-wave7b-evidence/lease.json",
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "owner": "resize_bench",
-        "health_sha256": "d01c664de0b0e913a222e56be9caa244b3b4fdb9ab17b8be634dc322bb8ddd2d",
-        "scope": "Actual new public packages/corpora/SDK; prediction171 pending all gates."
+        "scope": "Actual corrected packages; affected gates+freshR4capsules. Unaffected scopes inherit onlyafterfull-byte equivalence."
       },
       "followup_candidate": {
-        "source_sha": "a67ee96e473d0405648cfcf1293b7f6560f7c803",
+        "source_sha": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
         "worktree": "build/worktrees/wave7-rank-consumer",
-        "lease_state": "not_granted",
+        "lease_state": "granted",
         "changes": [
           "Original generic star export omission for sum, retaining both own alias attributes",
           "Authenticated fullfixturefile pin after pytest native-assertion migration; all13helpers/global/import/oracle AST and1379frozen cases/reference observations unchanged"
@@ -20692,6 +20691,14 @@
           90100
         ],
         "public_native_acceptance": false
+      },
+      "original_trial": {
+        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "manifest": "build/main-core-wave7-evidence/original-trial-manifest.json",
+        "sha256": "d2d8bf998591b378820d180487e1efb5bcca28d84983f1fc67e58bcde0c60c31",
+        "records_verified": 2314,
+        "accepted_product": false,
+        "all_handles_terminal": true
       }
     },
     {
@@ -20897,11 +20904,11 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
-          "Phase1 original/reference only: freeze1544 canonical IDs and balanced source-safe raster candidates across all9actualalgorithms. Metadata/aliases/providertraces/policies/errors untimed. Native/public whole-core qualification and isolated performance remain pending; native0 and no dispatch at this stage."
+          "Actualpublic new9canonical wrappers/completepackage/source/SDK/capsules and isolatedActionsmeasurement remainpending. OriginalPhase1 facts staynative0. Fullfixturepin requires authenticated pytest-assertion migration at integration."
         ]
       },
       "parity": {
@@ -20918,12 +20925,27 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "6ddcd675d06a1123e5f78779b265e916f0fe7df7",
+        "main_commit": "8f9e9bb22744aebe537d1e83300d6c21862d1d2f"
       },
       "retention": {
-        "active_paths": [],
-        "protected_artifacts": []
+        "active_paths": [
+          "build/worktrees/rank-percentile-benchmark"
+        ],
+        "protected_artifacts": [
+          "build/rank-percentile-benchmark-evidence/6ddcd67/phase1-v2/manifest.json"
+        ]
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "6ddcd675d06a1123e5f78779b265e916f0fe7df7",
+          "manifest": {
+            "path": "build/rank-percentile-benchmark-evidence/6ddcd67/phase1-v2/manifest.json",
+            "sha256": "164ccf3aff30336b1264afd6b9589d786581b8d1c47b7e9a73b91eb354659e1a"
+          },
+          "scope": "All333immutablemembers independently verified;2552canonical+117aux originalchecks/38guards/3088strictpending perruntime x3, native0.1544sourceIDs untimed;1008candidates->990successful(288raster/558small/144tiny),18readonlyerrorsuntimed. Actual admission stillpending."
+        }
       }
     },
     {
@@ -20953,6 +20975,56 @@
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
           "Ninecanonical functions only; originalgeneric hasnone ofthese aliases. Match2D metadata/preprocessing/provider54traces/outreshape and exact v1/cap/compiledentry guard. Isolatedprivatewrapper prototype is not actualpublic registration. Root owns shared namespace selection, registry/inventory/CMake/SDK and genuinewhole8 package qualification."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-bilateral-contracts",
+      "kind": "contract",
+      "apis": [
+        "filters.rank.mean_bilateral",
+        "filters.rank.pop_bilateral",
+        "filters.rank.sum_bilateral"
+      ],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-bilateral-contracts",
+      "base_sha": "8f9e9bb22744aebe537d1e83300d6c21862d1d2f",
+      "owns": [
+        "tests/test_rank_bilateral_contracts.py",
+        "coverage/contracts/rank-bilateral.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-bilateral.json",
+        "uncovered_cases": [
+          "Freeze actual3canonical algorithms and3source-backed publicbilateral module identity paths; parameterconversion/bounds/order,2Dpreprocessing/alias/outputs/warnings/errors. Native0, original-only/strictpending/independentoracles. No source-unsafe probes or timings."
+        ],
+        "public_aliases_pending_inventory_update": [
+          "filters.rank.bilateral.mean_bilateral",
+          "filters.rank.bilateral.pop_bilateral",
+          "filters.rank.bilateral.sum_bilateral"
         ]
       },
       "parity": {
@@ -21154,10 +21226,7 @@
     "filters.rank.generic.majority",
     "filters.rank.generic.otsu",
     "filters.rank.majority",
-    "filters.rank.mean_bilateral",
     "filters.rank.otsu",
-    "filters.rank.pop_bilateral",
-    "filters.rank.sum_bilateral",
     "filters.rank_order",
     "filters.roberts",
     "filters.roberts_neg_diag",
@@ -21717,7 +21786,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-percentile-benchmark-tooling"
+        "rank-bilateral-contracts"
       ],
       "resize_api": [
         "rank-percentile-public"
