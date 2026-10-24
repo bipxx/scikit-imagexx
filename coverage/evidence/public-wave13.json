@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "accepted_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+  "run": 40098671228,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40098671228",
+  "acceptance_scope": "Scoped partial TV-Bregman public parity and genuine full source/runtime/core/wheel/SDK closure; original-library performance pending.",
+  "root_admission": {
+    "path": "build/decisions-readiness/Bregman192-admission/manifest.json",
+    "bytes": 1922,
+    "sha256": "25019e8a5d042731d12fa0f841dd2e3d1891591f050eb155c9c33b45bc6c2f4b"
+  },
+  "source_equivalence": {
+    "path": "build/decisions-readiness/Bregman192-admission/source-equivalence.json",
+    "bytes": 86274,
+    "sha256": "297c3a418e7a5f3aa493194c14d0b4accdbb34e3b2303c0ca8efaf687c14902a"
+  },
+  "independent_verification": {
+    "path": "build/genuine192-bregman-hosted-observation/independent-verification.json",
+    "bytes": 76912,
+    "sha256": "d262f68856523ea2b3f648ee60f03c3a1c305496324685f79e0a8e1173aa46cf"
+  },
+  "retained_handoff": {
+    "path": "build/genuine192-bregman-hosted-observation/handoff.json",
+    "bytes": 389402,
+    "sha256": "f3dc1e32fd7a178ccd854c49a2fef347a7d4c9bf4494f46f05a8015c0f45e085"
+  },
+  "retained_run_manifest": {
+    "path": "build/genuine192-bregman-hosted-observation/40098671228/retained-v1/manifest.json",
+    "schema": "genuine192-Bregman-terminal-retention-v1",
+    "sha256": "ba7c44b3fec293249e28189cb9938f7e267482c0551f7b44cdf114c6873bae01",
+    "bytes": 3775329
+  },
+  "root_verified_records": 1366,
+  "root_verified_bytes": 375734687,
+  "separately_accounted_nonscientific_cache_bytes": 0,
+  "profiles": [
+    {
+      "profile": "windows",
+      "q_artifact": {
+        "id": 12563345171,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MzM0NTE3MQ==",
+        "name": "public-qualification-windows",
+        "size_in_bytes": 943489362,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563345171",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563345171/zip",
+        "expired": false,
+        "digest": "sha256:c8513d43552e2209d8e5cac16911814c80ccdf92297ffc19b17df339c276a5a0",
+        "created_at": "2026-10-24T13:59:20Z",
+        "updated_at": "2026-10-24T13:59:20Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "q_sha256": "2ee4c3b69c7122659b6b18748963cb8f28fe7a9f2c028b370bac890079f68897",
+      "source_zip_sha256": "980f793d9651d887d88cfe9e0fa7f397aaf0044ced5f2314ab05ebb0cd7ced81",
+      "wheel_sha256": "80d37e8c4b3563c2a7c869a0d886091b3f5026c05bebab60d9a7b262c75295bb",
+      "core_sha256": "3165bc583988d926b56a8d7a30ac00bc9141ea75e401652f0c511c69a6a666f1",
+      "build_identity_sha256": "6437514bc68d57a0f96017c7d0e46c0f00db60ac1d06549ddc15b34ecbd3e848",
+      "common_sha256": "4c37cff70664bf670ef46f8f17ece598ea95e7999cb7a297f30e039a53e512ff",
+      "product_artifact": {
+        "id": 12562900552,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MjkwMDU1Mg==",
+        "name": "rank-statistics-product-windows",
+        "size_in_bytes": 148507911,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562900552",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562900552/zip",
+        "expired": false,
+        "digest": "sha256:a6d724f148c181bc67d70e3cb3237760cd0d24bc66783dacf9bdfbd55056e4d1",
+        "created_at": "2026-10-24T13:58:38Z",
+        "updated_at": "2026-10-24T13:58:38Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "product_sha256": "904578774360e251fb484acc9b8b2459b6043f23689acc72f8c3d63e8ac89c1a",
+      "SDK_checks": 36
+    },
+    {
+      "profile": "modern",
+      "q_artifact": {
+        "id": 12562922221,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MjkyMjIyMQ==",
+        "name": "public-qualification-modern",
+        "size_in_bytes": 1045089904,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562922221",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562922221/zip",
+        "expired": false,
+        "digest": "sha256:ded9872538ff5b86a057208ffa2f8e00792ed5cb20d3d5a453e49f892ca96302",
+        "created_at": "2026-10-24T14:20:45Z",
+        "updated_at": "2026-10-24T14:20:45Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "q_sha256": "8faaad3275cb015dc695d13e493d2b0e84b100db86ae5b91aa0563b7d9b7d31e",
+      "source_zip_sha256": "78a5a684c0c8b1c3661c2ffa43bfa345f69b588a97e3cee7d489e9a19b333a45",
+      "wheel_sha256": "65e5d48949f6579ef02fbbaf9eaee9ebf80b159c7535db35b6e2c16418aeadab",
+      "core_sha256": "e788fff5e3eb6233c7cd05a7aca36ee54c78e60d725f758bea29e8132321c099",
+      "build_identity_sha256": "df810018178af62784632283dc319d706bb6de5e4f7bcefffa6babb49656e0dc",
+      "common_sha256": "9fa46e2f6ad8273d8cd529e6ea9171d5b84fb24d65b6af9c7011febf3be7cfa9",
+      "product_artifact": {
+        "id": 12563321173,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MzMyMTE3Mw==",
+        "name": "rank-statistics-product-modern",
+        "size_in_bytes": 149687325,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563321173",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563321173/zip",
+        "expired": false,
+        "digest": "sha256:c7ce0cc96e136530a91cd352f6edb60fd407e06af10b2a1a89b9776d8a182ed3",
+        "created_at": "2026-10-24T14:19:36Z",
+        "updated_at": "2026-10-24T14:19:36Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "product_sha256": "8ec0e15fc4617c616129d86cffda66103ba77407a68bc4859427e1d6781c83e6",
+      "SDK_checks": 36
+    },
+    {
+      "profile": "minimum",
+      "q_artifact": {
+        "id": 12563737124,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MzczNzEyNA==",
+        "name": "public-qualification-minimum",
+        "size_in_bytes": 1085117511,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563737124",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563737124/zip",
+        "expired": false,
+        "digest": "sha256:9f6092b5b9a2b0b4a07d27a5c6ac2b3fa4578278515b14c0a3caf832ffb2becc",
+        "created_at": "2026-10-24T14:38:19Z",
+        "updated_at": "2026-10-24T14:38:19Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "q_sha256": "e34debd89dcd626edf737de61d6ff3bc2ae15ed8903d3d0e03683279f1c9355c",
+      "source_zip_sha256": "78a5a684c0c8b1c3661c2ffa43bfa345f69b588a97e3cee7d489e9a19b333a45",
+      "wheel_sha256": "7ed0d849f97881259379baaae8e481adc3330b6633ca8aa44e08750b6f70ec24",
+      "core_sha256": "4ec0714fda0443f34c91c04eb7dceb03a4cdabc2145f28480e752d6b64111c79",
+      "build_identity_sha256": "bedc81a824c4e6c341ce6301b991ea1ada8a11430ed84c017ac939265ba7102e",
+      "common_sha256": "63b7edbb0a8c6ca929728ce08ba6d3ebb02c1e4985b189159190d078583c3852",
+      "product_artifact": {
+        "id": 12562883719,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2Mjg4MzcxOQ==",
+        "name": "rank-statistics-product-minimum",
+        "size_in_bytes": 152396545,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562883719",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12562883719/zip",
+        "expired": false,
+        "digest": "sha256:a559d90a8ec7188c59bdc2b731dc2e2df378c61f85c98a51a25aa48c882083b1",
+        "created_at": "2026-10-24T14:37:05Z",
+        "updated_at": "2026-10-24T14:37:05Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "product_sha256": "3bee573c9a8b14de45fb0803482398c939763b246e9eb0f27b0a387fc0b4391b",
+      "SDK_checks": 36
+    },
+    {
+      "profile": "debug",
+      "q_artifact": {
+        "id": 12563090689,
+        "node_id": "MDg6QXJ0aWZhY3QxMjU2MzA5MDY4OQ==",
+        "name": "public-qualification-debug",
+        "size_in_bytes": 1243183414,
+        "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563090689",
+        "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12563090689/zip",
+        "expired": false,
+        "digest": "sha256:df56e8006287b5bc71d4aab40a4f86b5e651a6154f7829e5fded2f90e557b3b1",
+        "created_at": "2026-10-24T14:05:35Z",
+        "updated_at": "2026-10-24T14:05:35Z",
+        "expires_at": "2027-01-22T13:33:46Z",
+        "workflow_run": {
+          "id": 40098671228,
+          "repository_id": 1427753300,
+          "head_repository_id": 1427753300,
+          "head_branch": "integration/tv-bregman-public",
+          "head_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20"
+        }
+      },
+      "q_sha256": "d6ca655d7d6c4183d9615691ad9ca6d124aebd0558cb16b403e8e2721abfbcc8",
+      "source_zip_sha256": "78a5a684c0c8b1c3661c2ffa43bfa345f69b588a97e3cee7d489e9a19b333a45",
+      "wheel_sha256": "2dc9edf29d6658b5000b0d83a35b056aa5a25960c6fd5bae4c6cadbd97fa1b02",
+      "core_sha256": "d00da221299666bcad80ed8782024a443d96bc066636a33ceecb6318666634fe",
+      "build_identity_sha256": "d6a2b5293fe0a08761d375076ea0d899de4503cdf1eae3a052e1b1b7fc793b68",
+      "common_sha256": "79ad3d24ddf9273e26c7a70b45e65adc971181bc11f8830309ae3d50c2ed594c",
+      "product_artifact": null,
+      "product_sha256": null,
+      "SDK_checks": 36
+    }
+  ],
+  "normal_and_scalar": true,
+  "selected_XML_checks": 704760,
+  "selected_checks_include_reference_and_metadata": true,
+  "failures_errors_and_skips": 0,
+  "SDK_client_checks": 144,
+  "wheel_members": 110,
+  "SDK_members": 63,
+  "SDK_families": 18,
+  "image_paths": 192,
+  "metadata_functions": 3,
+  "registered_functions": 195,
+  "partial_classes": 4,
+  "exception_metadata_provider": 1,
+  "upstream_only": 277,
+  "inventory_paths": 477,
+  "new_public_paths": [
+    "restoration.denoise_tv_bregman"
+  ],
+  "default_native_workers": 1,
+  "supplementary_native_workers": 4,
+  "safe_original_numeric_IDs": 112,
+  "blocked_or_boundary_reference_IDs": 23,
+  "raw_reference_matrix_sha256": "638a6f569348a94f36ba11ef1dbbb8f1f08f4acbc1aec1cf893e9fe968cfa85c",
+  "bounded_compiled_stage_check_floor": 1792,
+  "compiled_check_floor_derivation": "112 safe original IDs x workers1/4 x normal/scalar x four actual hosted profiles; metadata and other shared assertions are excluded from the native image floor.",
+  "private_bridge_evidence": "coverage/evidence/tv-bregman-private-bridge.json",
+  "Bregman_performance_acceptance": false,
+  "all_argument_or_full_library_parity": false,
+  "limitations": "Gauss-Seidel sweeps preserve dependency order and remain serial. Independent preparation uses SIMD and optional global workers. NumPy conversion, allocation, channel and exceptional providers remain explicit; unsafe original geometry and unassessed inputs do not count as native math. Published rank timings continue to identify their frozen190-path pair."
+}

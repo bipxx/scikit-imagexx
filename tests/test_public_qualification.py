@@ -82,10 +82,10 @@ def complete_tv_fake_artifact(complete_fake_artifact,tmp_path):
     return new_product,new_source,revision
 
 
-def test_tv108_62_is_default_and_original104_is_explicit_only(complete_fake_artifact,complete_tv_fake_artifact):
-    result=q.inspect_wheel(*complete_tv_fake_artifact)
+def test_historical_tv108_62_requires_explicit_scope_and_original104_stays_explicit(complete_fake_artifact,complete_tv_fake_artifact):
+    result=q.inspect_wheel(*complete_tv_fake_artifact,scope='tv17')
     assert result['product_scope']=='tv17' and len(result['members_sha256'])==108 and len(result['SDK_sha256'])==62
-    with pytest.raises(q.QualificationError,match='complete108'):
+    with pytest.raises(q.QualificationError,match='complete110'):
         q.inspect_wheel(*complete_fake_artifact)
     with pytest.raises(q.QualificationError,match='complete104'):
         q.inspect_wheel(*complete_tv_fake_artifact,scope='rank14')
@@ -100,7 +100,7 @@ def test_tv_source_cannot_omit_any_new_header_or_helper(complete_tv_fake_artifac
         for n in old.namelist():
             if n!=member:archive.writestr(n,old.read(n))
     with pytest.raises(q.QualificationError,match='TV product scope/source'):
-        q.inspect_wheel(product,replacement,revision)
+        q.inspect_wheel(product,replacement,revision,scope='tv17')
 
 
 def test_source_revision_is_authenticated(complete_fake_artifact):
@@ -294,20 +294,20 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS:
         path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH})+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -563,7 +563,7 @@ def test_bilateral_report_cannot_seal_partial_or_substituted_observations(tmp_pa
 
 @pytest.mark.parametrize('missing',q.R6_SOURCE_PATHS)
 def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch,missing):
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH}),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for name in q.R6_SOURCE_PATHS:
@@ -574,7 +574,7 @@ def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch
 
 def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
     assert len(q.ORIGINAL_FAMILIES)==14 and q.ORIGINAL_FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH}),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES if f!='rank_bilateral'))
     assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
@@ -763,7 +763,7 @@ def synthetic_complete_plan(root):
     for group in q.GROUPS.values():
         for name in group:(root/'tests'/name.split('::')[0]).touch()
     (root/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS:
         path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
     (root/'benchmarks').mkdir()
@@ -773,7 +773,7 @@ def synthetic_complete_plan(root):
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
 def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190,registered_count=193,metadata_count=3))
     assert not q.plan(tmp_path,'modern',190)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required R7 source: '+missing in q.plan(tmp_path,'modern',190)['blockers']
@@ -782,7 +782,7 @@ def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,
 @pytest.mark.parametrize('failure',['missing','duplicate','wrong','source'])
 def test_sdk14_requires_exact_clients_and_existing_sources(tmp_path,monkeypatch,failure):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190))
     path=tmp_path/'tests/cmake_consumer/CMakeLists.txt';text=path.read_text()
     if failure=='missing':text=text.replace('add_executable(rank_decisions_consumer x.cpp)','')
     elif failure=='duplicate':text+='\nadd_executable(rank_decisions_consumer x.cpp)'
@@ -934,7 +934,7 @@ def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path
     # Explicitly create the absent-file before variant in either checkout.
     counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
     if counts_source.exists():counts_source.unlink()
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190,registered_count=193,metadata_count=3))
     before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
     (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
     after=q.plan(tmp_path,'modern',190);assert not after['blockers']
@@ -958,8 +958,10 @@ def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_p
 
 def test_tv_public_group_and_sdk17_keep_exact_original14():
     assert q.GROUPS['public-TV']==('test_tv_chambolle_contracts.py','test_tv_chambolle_native_pipeline.py')
-    assert len(q.FAMILIES)==17 and q.FAMILIES[:14]==q.ORIGINAL_FAMILIES
-    assert q.FAMILIES[-3:]==('tv_chambolle','tv_reductions','tv_denoise')
+    assert len(q.TV_FAMILIES)==17 and q.TV_FAMILIES[:14]==q.ORIGINAL_FAMILIES
+    assert len(q.FAMILIES)==18 and q.FAMILIES[:17]==q.TV_FAMILIES
+    assert q.TV_FAMILIES[-3:]==('tv_chambolle','tv_reductions','tv_denoise')
+    assert q.FAMILIES[-1]=='tv_bregman'
     old={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.ORIGINAL_FAMILIES]}
     q.validate_sdk_listing(old,scope='rank14')
     with pytest.raises(q.QualificationError,match='SDK test discovery'):
@@ -972,7 +974,7 @@ def test_tv_public_group_and_sdk17_keep_exact_original14():
 @pytest.mark.parametrize('missing',q.TV_SOURCE_PATHS)
 def test_tv_source_and_registration_block_before_any_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH})
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=191))
     assert not q.plan(tmp_path,'modern',191)['blockers']
     (tmp_path/missing).unlink()
@@ -1036,3 +1038,120 @@ def test_original_rank14_sdk_negative_listings_remain_rejected(change):
     else:listing['tests'][-1]['name']='installed_private_adapter_consumer'
     with pytest.raises(q.QualificationError,match='SDK test discovery'):
         q.validate_sdk_listing(listing,scope='rank14')
+
+
+@pytest.fixture
+def complete_bregman_fake_artifact(complete_tv_fake_artifact,tmp_path):
+    """Complete110/63 inert census; no executable native bytes."""
+    product,source,revision=complete_tv_fake_artifact
+    additions={'include/skimagexx/tv_bregman.hpp':b'// synthetic Bregman header\n',
+               'skimagexx/_tv_bregman.py':b'# synthetic Bregman helper\n'}
+    with zipfile.ZipFile(product) as old:
+        entries={n:old.read(n) for n in old.namelist() if not n.endswith('/RECORD')}
+    entries.update(additions);new_product=tmp_path/'bregman-synthetic.whl';wheel(new_product,entries)
+    new_source=tmp_path/'bregman-source.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(new_source,'w') as archive:
+        archive.comment=old.comment
+        for name in old.namelist():archive.writestr(name,old.read(name))
+        for name,value in additions.items():archive.writestr('python/'+name if name.startswith('skimagexx/') else name,value)
+    return new_product,new_source,revision
+
+
+def test_bregman110_63_is_exact_default_with_explicit_historical_scopes(complete_bregman_fake_artifact,complete_tv_fake_artifact,complete_fake_artifact):
+    result=q.inspect_wheel(*complete_bregman_fake_artifact)
+    assert result['product_scope']=='bregman18' and result['record_verified']
+    assert len(result['members_sha256'])==110 and len(result['SDK_sha256'])==63
+    assert q.product_census('rank14')==(104,59) and q.product_census('tv17')==(108,62)
+    assert q.product_census()==(110,63)
+    for artifact in (complete_tv_fake_artifact,complete_fake_artifact):
+        with pytest.raises(q.QualificationError,match='complete110'):q.inspect_wheel(*artifact)
+    assert q.inspect_wheel(*complete_tv_fake_artifact,scope='tv17')['product_scope']=='tv17'
+    for scope in ('rank14','tv17'):
+        with pytest.raises(q.QualificationError,match='complete'):q.inspect_wheel(*complete_bregman_fake_artifact,scope=scope)
+
+
+@pytest.mark.parametrize('member',('include/skimagexx/tv_bregman.hpp','python/skimagexx/_tv_bregman.py'))
+def test_complete110_wheel_reaches_bregman_source_guard(complete_bregman_fake_artifact,tmp_path,monkeypatch,member):
+    product,source,revision=complete_bregman_fake_artifact;replacement=tmp_path/'missing-bregman.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(replacement,'w') as archive:
+        archive.comment=old.comment
+        for name in old.namelist():
+            if name!=member:archive.writestr(name,old.read(name))
+    calls=[];original=q.wheel_members
+    def witnessed(path):calls.append(str(path));return original(path)
+    monkeypatch.setattr(q,'wheel_members',witnessed)
+    with pytest.raises(q.QualificationError,match='Bregman product scope/source'):
+        q.inspect_wheel(product,replacement,revision)
+    assert calls==[str(product)],'complete110 metadata/RECORD must reach the new source guard'
+
+
+@pytest.mark.parametrize('missing',q.BREGMAN_SOURCE_PATHS)
+def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,missing):
+    synthetic_complete_plan(tmp_path)
+    names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})
+    monkeypatch.setattr(q,'registry_expectation',lambda root:dict(functions=names,image_count=192,metadata_count=3,registered_count=195))
+    assert not q.plan(tmp_path,'modern',192)['blockers']
+    (tmp_path/missing).unlink()
+    assert 'missing required Bregman source: '+missing in q.plan(tmp_path,'modern',192)['blockers']
+    names.remove(q.BREGMAN_PATH)
+    assert 'missing public Bregman registry: '+q.BREGMAN_PATH in q.plan(tmp_path,'modern')['blockers']
+
+
+@pytest.mark.parametrize('scope,families',(('rank14',q.ORIGINAL_FAMILIES),('tv17',q.TV_FAMILIES),('bregman18',q.FAMILIES)))
+def test_each_exact_sdk_census_keeps_missing_duplicate_substitute_guards(scope,families):
+    assert len(families)=={'rank14':14,'tv17':17,'bregman18':18}[scope]
+    listing={'tests':[{'name':'installed_'+name+'_consumer'} for name in families]}
+    q.validate_sdk_listing(listing,scope=scope)
+    for change in ('missing','duplicate','substitute'):
+        altered=json.loads(json.dumps(listing))
+        if change=='missing':altered['tests'].pop()
+        elif change=='duplicate':altered['tests'].append(dict(altered['tests'][0]))
+        else:altered['tests'][-1]['name']='installed_private_consumer'
+        with pytest.raises(q.QualificationError,match='SDK test discovery'):q.validate_sdk_listing(altered,scope=scope)
+    assert q.GROUPS['public-Bregman']==('test_tv_bregman_contracts.py','test_tv_bregman_public.py')
+    assert not any('native_pipeline' in name for name in q.GROUPS['public-Bregman'])
+
+
+def synthetic_bregman_admission(monkeypatch):
+    """Admission routing metadata only; each callable raises if executed."""
+    core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,
+        tv_bregman_interface='tv-bregman-prepared-v1',tv_bregman_capabilities=3,tv_bregman_parallel_sweep=False)
+    def entry(*args,**kwargs):raise AssertionError('metadata-only entry must not execute')
+    entry.__name__='tv_bregman_run';entry.__module__=core.__name__;entry.synthetic_builtin=True
+    core.tv_bregman_run=entry
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
+    def denoise_tv_bregman(image,weight=5.0,max_num_iter=100,eps=0.001,isotropic=True,*,channel_axis=None):
+        raise AssertionError('metadata-only wrapper must not execute')
+    denoise_tv_bregman.__module__='skimagexx._tv_bregman'
+    wrapper=types.SimpleNamespace(_core=core,denoise_tv_bregman=denoise_tv_bregman)
+    restoration=types.SimpleNamespace(denoise_tv_bregman=denoise_tv_bregman)
+    return core,restoration,wrapper,[q.BREGMAN_PATH]
+
+
+def test_bregman_admission_positive_metadata_never_calls_entry(monkeypatch):
+    q.bregman_admission(*synthetic_bregman_admission(monkeypatch))
+
+
+@pytest.mark.parametrize('fault',('missing-registry','duplicate-registry','interface','float-cap','bool-cap',
+    'parallel-true','parallel-int','missing-entry','entry-name','entry-owner','python-entry','wrong-core',
+    'wrong-export','forwarding','wrong-name','signature','default-worker4'))
+def test_bregman_admission_rejects_invalid_metadata_before_provider(monkeypatch,fault):
+    core,restoration,wrapper,registered=synthetic_bregman_admission(monkeypatch)
+    if fault=='missing-registry':registered=[]
+    elif fault=='duplicate-registry':registered*=2
+    elif fault=='interface':core.tv_bregman_interface='stage-only'
+    elif fault=='float-cap':core.tv_bregman_capabilities=3.
+    elif fault=='bool-cap':core.tv_bregman_capabilities=True
+    elif fault=='parallel-true':core.tv_bregman_parallel_sweep=True
+    elif fault=='parallel-int':core.tv_bregman_parallel_sweep=0
+    elif fault=='missing-entry':del core.tv_bregman_run
+    elif fault=='entry-name':core.tv_bregman_run.__name__='borrowed_run'
+    elif fault=='entry-owner':core.tv_bregman_run.__module__='private_core'
+    elif fault=='python-entry':core.tv_bregman_run.synthetic_builtin=False
+    elif fault=='wrong-core':wrapper._core=object()
+    elif fault=='wrong-export':restoration.denoise_tv_bregman=lambda image:image
+    elif fault=='forwarding':wrapper.denoise_tv_bregman.__module__='skimage.restoration'
+    elif fault=='wrong-name':wrapper.denoise_tv_bregman.__name__='borrowed_name'
+    elif fault=='signature':wrapper.denoise_tv_bregman.__signature__=__import__('inspect').Signature()
+    else:core.get_num_threads=lambda:4
+    with pytest.raises(q.QualificationError):q.bregman_admission(core,restoration,wrapper,registered)

@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('restoration.denoise_tv_bregman',),'tests/test_tv_bregman_public.py','benchmarks/coverage.py'),
     (('restoration.denoise_tv_chambolle',),'tests/test_tv_chambolle_contracts.py','benchmarks/tv_chambolle.py'),
     (('transform.resize','transform.rescale'),'tests/test_resize_contract.py','benchmarks/resize.py'),
     (('metrics.mean_squared_error','metrics.normalized_root_mse','metrics.peak_signal_noise_ratio'),

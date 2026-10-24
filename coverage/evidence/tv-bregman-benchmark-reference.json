@@ -32,5 +32,20 @@
   "native_checks": 0,
   "operation_timings": 0,
   "public_native_count_change": 0,
-  "pending": "Qualified public192/SDK18 artifact consumer, complete native validation for every fixed case and fresh hosted seven-pair one-worker timings."
+  "pending": "Qualified public192/SDK18 artifact consumer, complete native validation for every fixed case and fresh hosted seven-pair one-worker timings.",
+  "source_provenance_bridge": {
+    "source": "355cf8a79c393a275d1a881e28ef9f05dbd3ca25",
+    "root_review": {
+      "path": "build/decisions-readiness/Bregman192-admission/benchmark-bridge-review.json",
+      "bytes": 587,
+      "sha256": "491721ab0ff87b6c8d0a1756c92e0e8537bcca4e6361d31472d1f57796e595f0"
+    },
+    "integrated_guard_verification": {
+      "path": "build/decisions-readiness/Bregman192-admission/integrated-guard-verification.json",
+      "bytes": 1322,
+      "sha256": "048227235d69a0da3910d8740b6648043883dd8f1be3f25ae6471af1b77606fb"
+    },
+    "historical_corpus_and_original_helper_pins_preserved": true,
+    "metadata_checks": 81
+  }
 }

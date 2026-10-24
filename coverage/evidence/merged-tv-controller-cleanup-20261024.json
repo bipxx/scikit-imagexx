@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T14:58:47.005317+00:00",
+  "removed_clean_merged_worktrees": 1,
+  "retired_path": "build/worktrees/tv-benchmark-controller-fix",
+  "retired_head": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
+  "method": "git worktree remove without force",
+  "head_ancestor_of_main": true,
+  "tracked_and_untracked_source_clean": true,
+  "ignored_files": 0,
+  "physical_regular_files": 6,
+  "logical_payload_bytes_recovered": 88221,
+  "whole_build_directory_removed": false,
+  "products_raw_results_proofs_environments_and_unfinished_source_untouched": true,
+  "preservation_index": {
+    "path": "build/cleanup/merged-tv-controller-20261024/preservation-index.json",
+    "bytes": 1266,
+    "sha256": "d8e8c236a4fbf1e2a51aabe3eda30814679df237a49c4587e39587259cf2ed9c"
+  },
+  "removal_receipt": {
+    "path": "build/cleanup/merged-tv-controller-20261024/manifest.json",
+    "bytes": 590,
+    "sha256": "ea969bb05d954ec6ce8ab670c474627895872ea65785f632327e6fc087985acf"
+  },
+  "reader_release": {
+    "path": "build/cleanup/merged-tv-controller-20261024/reader-release.json",
+    "bytes": 380,
+    "sha256": "bfe78fb632f6fc42d86ecf62a4cec4c2088032681d22d15c91665f5d96acbc0a"
+  },
+  "reader_checks": [
+    {
+      "path": "build/cleanup/merged-tv-controller-20261024/windows-reader-check.json",
+      "bytes": 192,
+      "sha256": "1deeef4be0be36b362d3c6428202ef53083b4d88676a06ed5b52a3a2a1c0f19e"
+    },
+    {
+      "path": "build/cleanup/merged-tv-controller-20261024/linux-reader-check.json",
+      "bytes": 91,
+      "sha256": "05d4ae9677c21849b4d5966c21a915a8ab377a3f40f3b11bf2215b3a84211061"
+    }
+  ],
+  "previous_combined_logical_net_bytes_recovered": 1263671689,
+  "combined_logical_net_bytes_recovered": 1263759910
+}

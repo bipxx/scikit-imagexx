@@ -82,3 +82,7 @@ coverage/evidence/max-tree-private-bridge.json -text
 coverage/evidence/tv-bregman-sdk-census-migration.json -text
 coverage/evidence/tv-bregman-public-assertion-migration.json -text
 coverage/evidence/public-wave13.json -text
+coverage/evidence/matrix-cooperlake-private.json -text
+coverage/evidence/merged-tv-controller-cleanup-20261024.json -text
+coverage/contracts/tv-bregman-benchmark-original-b510.py -text
+coverage/evidence/tv-bregman-benchmark-source-migration.json -text

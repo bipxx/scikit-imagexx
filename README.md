@@ -6,7 +6,7 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has scoped parity tests. All 191 partially native
+Every native public function has scoped parity tests. All 192 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
@@ -25,11 +25,11 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **191 partially native
+The reference is scikit-image **0.26.0**. There are currently **192 partially native
 image API paths and three metadata helpers**. The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 278 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 277 paths remain upstream-only.
 Four transform classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
@@ -37,12 +37,12 @@ across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
 
-The [latest accepted qualification](coverage/evidence/public-wave12.json) passes
-698,448 checks across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus 136 installed SDK client checks across 17 families.
-The fixed corpora run with one and four native workers. TV-Chambolle now has a
-qualified partial C++ implementation alongside the accepted rank optimization;
-its original-library performance measurement remains pending. Counts include
+The [latest accepted qualification](coverage/evidence/public-wave13.json) passes
+704,760 checks across Windows, modern/minimum Linux and Debug builds with normal
+and scalar dispatch, plus 144 installed SDK client checks across 18 families.
+The fixed corpora run with one and four native workers. TV-Chambolle and TV-Bregman
+have qualified partial C++ implementations alongside the accepted rank optimization;
+their original-library performance measurements remain pending. Counts include
 reference and metadata assertions, rather than distinct algorithms. Rank remains
 at 31 canonical algorithms. Its [controlled one-worker comparison](benchmarks/rank-statistics-counts-comparison.md)
 uses the separately qualified frozen 190-path source pair: the four rank-statistics
@@ -52,6 +52,7 @@ retained across Windows/modern/minimum Linux.
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
 | `restoration.denoise_tv_chambolle` | Scoped real arrays, channels, layouts and finite scalar controls; explicit NumPy conversion, allocation, protocol and exceptional providers | Eligible ordinary finite calls use typed C++ iterations and source-profiled reductions; observable provider paths use genuine compiled materialized stages where eligible. Runtime SIMD and optional shared workers default to one. All four normal/scalar product profiles pass the [scoped parity qualification](coverage/evidence/public-wave12.json); one-worker performance versus original remains pending. |
+| `restoration.denoise_tv_bregman` | Scoped finite native float32/64 and converted integer arrays, channels, layouts and bounded scalar controls; unsafe original geometry is excluded from numerical acceptance | Owned C++ Gauss-Seidel sweeps preserve source order, stopping rules, padded result views and provider behavior. Independent preparation uses SIMD and optional global workers; dependent sweeps remain serial. All four normal/scalar profiles pass [public parity and SDK18 qualification](coverage/evidence/public-wave13.json). One-worker speed comparisons are pending. |
 | `transform.resize`, `transform.rescale` | Real arrays/memmaps and supported NumPy scalars; bool, all integer widths and float16/32/64; interpolation orders 0–5, five borders, anti-aliasing, clipping, preserve-range and rescale channel axes; native/endian/strided/unaligned storage | C++ B-spline preparation, typed grid sampling, per-axis typed Gaussian smoothing and clipping; AVX2 and optional global workers default one. Integer bounds retain all bits. Half identity uses raw-word SIMD without F16C. NumPy compiled reductions preserve exceptional zero-tie/NaN-bound ordering. Strict contract, scalar/SIMD, worker and sanitizer checks pass; The controlled one-worker comparison measures 1.261x Windows, 1.520x modern Linux and 1.557x minimum NumPy versus original, with 57/34/23 slower cases of 372. Gains versus the full initial C++ product are small and mixed (1.012x/1.012x/1.014x). All samples remain in the [controlled report](benchmarks/resize-public-controlled.md). Unsupported Python protocols/extended dtypes retain explicit fallback. |
 | `metrics.mean_squared_error`, `normalized_root_mse`, `peak_signal_noise_ratio` | Real arrays/memmaps and NumPy scalars, all Boolean/integer widths and float16/32/64, dtype promotions, strides/endianness, normalizations/ranges, empty and nonfinite inputs | Fused native reductions and materialized stages preserve reduction/callback order. The accepted stepped-half and finite/min-max SIMD product measures 1.254x Windows, 0.807x modern Linux and 0.970x minimum NumPy, with 345/620/428 slower cases of 1,212. Reversed-stride MSE and stepped PSNR remain bottlenecks; direct reversed-load transport is a private candidate. [All samples and regressions](benchmarks/metrics-public-leaf-classification-trial.md), the [earlier trial](benchmarks/metrics-public-simd-load-trial.md) and [baseline](benchmarks/metrics-public-initial.md) remain available. Different hosted CPUs prevent causal cross-run patch claims. Extended dtypes/custom protocols use explicit compatibility. |
 | `filters.rank.minimum`, `maximum`, `mean`, `sum`, `pop`, `gradient`, `median`, `modal`, `entropy`, `autolevel`, `equalize`, `enhance_contrast`, `threshold` and their `rank.generic` identity aliases | Scoped 2-D/3-D real arrays, footprints, masks, shifts, output storage, conversion warnings and callback policies; thirteen algorithms across twenty-six paths | Own C++ rolling histograms, runtime SIMD and the shared optional global worker limit. The four intensity algorithms pass 6,076 public checks per profile across eight normal/scalar Release/Debug profiles; their 1,428-case public benchmark corpus also passes all eight. NumPy conversion providers are explicit. First-five safe aliases retain serial traversal; Qualified R2 input/output and mask aliases now pass 4,062 public checks per profile across eight profiles with a separate version/capability gate; unassessed combinations and R3 overlaps remain pending. Initial one-worker geometric means for the first five algorithms are 2.081x/2.220x/2.412x across Windows/modern/minimum Linux; the next four measure 2.583x/3.295x/3.411x. Individual regressions remain in the [R1 report](benchmarks/rank-public-initial.md) and [R2 report](benchmarks/rank-distribution-public-initial.md). R3 measures 2.089x/2.244x/2.402x across the same runtime categories, with 92/81/81 slower cases of 384. The [R3 report](benchmarks/rank-intensity-public-initial.md) retains all raw samples, aliases and policy checks; parity remains scoped to the [public contract](coverage/contracts/rank-intensity-public.json). |

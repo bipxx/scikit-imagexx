@@ -27393,7 +27393,8 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Two complete diagnostic attempts are retained: initial Windows CMake path failure, then numerical success followed by MSVC directory-copy sealing failure. Both orchestration corrections are reviewed. A fresh terminal sealed Windows diagnostic and source-derived arithmetic/full-pipeline checks remain required; candidate matches do not admit CPU profiles."
+          "GEMM/GEMVT association and actual SkylakeX/Zen defaults need primary-source/binary audits; all diagnostic mismatches remain retained.",
+          "All4 fullD8 producer/retention verifiers pass; orchestration failures in predecessor runs are retained. Matching candidates never imply CPU-profile/public acceptance."
         ]
       },
       "parity": {
@@ -27438,7 +27439,7 @@
         "id": 40103414999,
         "controller": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
         "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
-        "status": "queued-or-discovering",
+        "status": "all-four-terminal-success-unaccepted-profile-discovery",
         "acceptance": false
       },
       "controller_corrections": {
@@ -27452,7 +27453,30 @@
       "retained_diagnostic_runs": [
         40096175414,
         40099938410
-      ]
+      ],
+      "latest_terminal_diagnostic": {
+        "run": 40103414999,
+        "controller": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
+        "all_four_terminal_success": true,
+        "retention": {
+          "path": "build/matrix-default-profile-tlog-runs/40103414999/manifest.json",
+          "bytes": 187828,
+          "sha256": "7934d84a74dcd98653f8bb5c00cce346a177d6c4a391a93e259fd1d3091e6b86"
+        },
+        "root_review": {
+          "path": "build/decisions-readiness/matrix-cooperlake-diagnostic-root-review/manifest.json",
+          "bytes": 2428,
+          "sha256": "4422666138d750754fcf4dafd55609b2ed6a1d3ec4fd784613512344c1f17329"
+        },
+        "default_corenames": {
+          "windows": "Haswell",
+          "modern": "SkylakeX",
+          "minimum": "Zen",
+          "debug": "Haswell"
+        },
+        "unresolved_SkylakeX_rows_per_mode": 60,
+        "runtime_profile_admission": false
+      }
     },
     {
       "id": "max-tree-private-binding",
@@ -27562,17 +27586,29 @@
         }
       },
       "public_registration": true,
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "coverage/contracts/tv-bregman.json",
         "uncovered_cases": [
-          "Fresh whole-product public admission,192image+3metadata/110wheel/63SDK/18families,normal/scalar and default1/optional4. Frozen135observations/112numeric/23boundary remain unchanged; unsafe original geometry stays blocked. Original-library one-worker performance remains pending."
+          "Public192,110wheel,63SDK,18families passed all four products. Broader argument/protocol domains and isolated one-worker performance versus original0.26 remain open."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "artifact_sha256": "25019e8a5d042731d12fa0f841dd2e3d1891591f050eb155c9c33b45bc6c2f4b",
+        "runs": [
+          {
+            "id": 40098671228,
+            "profiles": [
+              "windows",
+              "modern",
+              "minimum",
+              "debug"
+            ],
+            "selected_checks": 704760,
+            "SDK_checks": 144
+          }
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -27583,18 +27619,28 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
+        "commit": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
         "main_commit": null
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/tv-bregman-public"
+          "build/worktrees/tv-bregman-public",
+          "build/genuine192-bregman-hosted-observation"
         ],
         "protected_artifacts": []
       },
       "proofs": {
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "manifest": {
+            "path": "coverage/evidence/public-wave13.json",
+            "bytes": 12611,
+            "sha256": "4b2efdde269bd1a852b7677d91047dcd7407ca328289c705fa39f68885798223"
+          },
+          "native_contract_checks": 1792,
+          "native_pending": 0,
+          "scope": "112 bounded safe numeric original IDs under workers1/4 and normal/scalar across four genuine installed public products;23 boundary/blocked IDs and other shared/reference assertions excluded from native image floor."
         }
       }
     },
@@ -27735,17 +27781,19 @@
           "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e"
         }
       },
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Source/binary-derived Cooperlake0.3.21 N1 D2..4 arithmetic with new strict v2 entry/cap63 and ID6. Legacyv1 still rejects6; IDs1..5 unchanged. Keep all160 earlier mismatches; no fitting or runtime/public profile admission before GEMM/GEMVT audits, full pipeline and whole-product gates."
+          "GEMM/GEMVT association and actual SkylakeX/Zen defaults need primary-source/binary audits; all diagnostic mismatches remain retained.",
+          "Only source-audited prepared Cooperlake0.3.21 GEMV-N, N1,D2..4. No runtime CPU acceptance, whole374 pipeline, installed public core/SDK or performance claim."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "235174d565d9e1c79d9f0b12a516c06003b791c9",
+        "artifact_sha256": "c4e46834066a52b9cd4bb265b26c60953d89bd4f2ec50a8f4ac7ee08ef648d93",
+        "runs": [],
+        "native_checks": 1400
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -27765,6 +27813,25 @@
           "build/matrix-cooperlake-arithmetic-audit"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "235174d565d9e1c79d9f0b12a516c06003b791c9",
+          "manifest": {
+            "path": "build/worktrees/matrix-transform-cooperlake/build/cooperlake-v1/manifest.json",
+            "bytes": 83469,
+            "sha256": "c4e46834066a52b9cd4bb265b26c60953d89bd4f2ec50a8f4ac7ee08ef648d93"
+          },
+          "native_contract_checks": 1400,
+          "native_pending": 0,
+          "scope": "Only source-audited prepared Cooperlake0.3.21 GEMV-N, N1,D2..4. No runtime CPU acceptance, whole374 pipeline, installed public core/SDK or performance claim."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/matrix-cooperlake-diagnostic-root-review/manifest.json",
+        "bytes": 2428,
+        "sha256": "4422666138d750754fcf4dafd55609b2ed6a1d3ec4fd784613512344c1f17329"
       }
     }
   ],
@@ -28459,12 +28526,12 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 191,
+    "native_partial_image_names": 192,
     "metadata_names": 3,
-    "upstream_only_names": 278,
+    "upstream_only_names": 277,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Accepted joined whole12 sourcef871:191partial image paths,3metadata,4partialclasses,1exception,278upstream-only/477. Full argument/class/state/data/I/O and performance objective remains incomplete.",
+    "note": "Accepted public-wave13 source3cdd:192partial image paths,3metadata,4partialclasses,1exception,277upstream-only/477. Full argument/class/state/data/I/O and performance objective remains incomplete.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -28503,7 +28570,7 @@
     },
     "current_three_agent_packets": {
       "metrics_reductions": "tv-chambolle-public-benchmark",
-      "resize_bench": "matrix-transform-cooperlake-n1-kernel",
+      "resize_bench": "matrix-transform-hosted-profiles",
       "resize_api": "max-tree-integer-sort"
     },
     "current_source_staging": {
@@ -28622,10 +28689,18 @@
       }
     },
     "integrator_queue": [
-      "tv-bregman-public-192",
       "max-tree-private-binding",
       "matrix-transform-general-binding"
-    ]
+    ],
+    "current_public_Bregman": {
+      "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+      "run_id": 40098671228,
+      "accepted": true,
+      "evidence": "coverage/evidence/public-wave13.json",
+      "image_paths": 192,
+      "SDK_families": 18,
+      "performance_accepted": false
+    }
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
@@ -29167,8 +29242,8 @@
     ]
   },
   "latest_cleanup": {
-    "receipt": "coverage/evidence/merged-tv-worktree-cleanup-20261024.json",
-    "logical_net_bytes_recovered": 1263671689,
-    "active_envs_baselines_raw_results_and_unfinished_sources_preserved": true
+    "path": "coverage/evidence/merged-tv-controller-cleanup-20261024.json",
+    "bytes": 1754,
+    "sha256": "f82000646b0013aac457e93aae51f339d77f5eea2c6f3ad316960a2d10aef685"
   }
 }

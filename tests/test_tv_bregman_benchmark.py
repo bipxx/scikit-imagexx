@@ -43,7 +43,7 @@ def test_no_operation_clock_or_native_surrogate():
 
 def test_original_matrix_and_safe_scope_stay_exact():
     assert b.pin(b.REFERENCE_MATRIX)['sha256']==b.MATRIX_SHA256
-    assert b.canonical_hash(b.REFERENCE_HELPERS.read_bytes())==b.HELPERS_CANONICAL_SHA256
+    assert b.source_provenance()['helper_source_canonical_lf_sha256'] in (b.HELPERS_CANONICAL_SHA256,b.PUBLIC_HELPERS_CANONICAL_SHA256)
     matrix=json.loads(b.REFERENCE_MATRIX.read_text())
     assert len(matrix['cases'])==135
     assert sum(c['mode']=='compiled' for c in matrix['cases'])==112
@@ -130,7 +130,10 @@ def test_reference_receipt_tampering_is_rejected(change):
             'reference135':copy.deepcopy(expected['reference135']),
             'blocked_nonfinite':copy.deepcopy(expected['blocked_nonfinite']),
             'timing_cases':copy.deepcopy(expected['timing_cases']),
-            'runtime':copy.deepcopy(expected['runtime'])}
+            'runtime':copy.deepcopy(expected['runtime']),
+            'helper_source_canonical_lf_sha256':b.HELPERS_CANONICAL_SHA256,
+            'harness_source_canonical_lf_sha256':b.ORIGINAL_HARNESS_SHA256}
+    b.verify_report(report,manifest)
     if change=='native':report['native_checks']=1
     elif change=='case':report['reference135'][0]['id']='different'
     elif change=='value':report['timing_cases'][0]['digest']='0'*64
@@ -152,3 +155,64 @@ def test_safe_conversion_layout_and_prepared_channel_semantics():
         if row['layout']=='unaligned':assert image.dtype.kind=='u' and not image.flags.aligned
         if row['channel_axis'] is not None:assert image.shape[row['channel_axis']]==row['shape'][-1]
         assert kwargs['max_num_iter']>0
+
+
+@pytest.fixture
+def provenance_copy(tmp_path,monkeypatch):
+    # Source bytes only: captured helpers/baseline are never imported or executed.
+    metadata=json.loads(b.SOURCE_MIGRATION.read_text())
+    paths={}
+    for attr in ('BENCHMARK_BASELINE','SOURCE_MIGRATION','BENCHMARK_TESTS','REFERENCE_HELPERS'):
+        source=getattr(b,attr);target=tmp_path/source.name;target.write_bytes(source.read_bytes())
+        paths[attr]=target;monkeypatch.setattr(b,attr,target)
+    controller=tmp_path/'controller.py';controller.write_bytes(Path(b.__file__).read_bytes())
+    monkeypatch.setattr(b,'__file__',str(controller));paths['controller']=controller
+    proof=tmp_path/'public-migration.json';proof.write_bytes(metadata['public_migration_utf8'].encode())
+    monkeypatch.setattr(b,'PUBLIC_HELPER_MIGRATION',proof);paths['proof']=proof
+    return paths,metadata
+
+
+@pytest.mark.parametrize('helper',['original','public'])
+def test_source_bridge_accepts_only_authenticated_helper_versions(helper,provenance_copy):
+    paths,metadata=provenance_copy
+    paths['REFERENCE_HELPERS'].write_bytes(metadata[helper+'_helper_utf8'].encode())
+    result=b.source_provenance()
+    assert result['public_helper_migration_used']==(helper=='public')
+    assert result['unchanged_helper_ASTs']==19
+    manifest=json.loads(b.MANIFEST.read_text());b.verify_manifest_metadata(manifest)
+    for profile,expected in manifest['profiles'].items():
+        report=dict(profile=profile,native_checks=0,operation_timings=0,accepted_product_pins=None,
+            reference135=expected['reference135'],blocked_nonfinite=expected['blocked_nonfinite'],
+            timing_cases=expected['timing_cases'],runtime=expected['runtime'],
+            helper_source_canonical_lf_sha256=b.HELPERS_CANONICAL_SHA256,
+            harness_source_canonical_lf_sha256=b.ORIGINAL_HARNESS_SHA256)
+        # These are unchanged frozen observations, not new numerical execution.
+        b.verify_report(report,manifest)
+        report.update(source_provenance=result,helper_source_canonical_lf_sha256=result['helper_source_canonical_lf_sha256'],
+            harness_source_canonical_lf_sha256=result['current_harness_canonical_lf_sha256'])
+        b.verify_report(report,manifest)
+
+
+@pytest.mark.parametrize('mutation',['helper','baseline','proof','embedded-proof','witness','pin','scientific','native-admission','migration-kind'])
+def test_source_bridge_rejects_real_source_tampering_before_import(mutation,provenance_copy,monkeypatch):
+    paths,metadata=provenance_copy
+    paths['REFERENCE_HELPERS'].write_bytes(metadata['public_helper_utf8'].encode())
+    b.source_provenance()  # positive witness: mutations must reach their actual guards
+    if mutation=='helper':paths['REFERENCE_HELPERS'].write_bytes(paths['REFERENCE_HELPERS'].read_bytes()+b'\n# changed')
+    elif mutation=='baseline':paths['BENCHMARK_BASELINE'].write_bytes(paths['BENCHMARK_BASELINE'].read_bytes()+b'\n# changed')
+    elif mutation=='proof':paths['proof'].write_bytes(b'{}')
+    elif mutation=='embedded-proof':metadata['public_migration_utf8']='{}'
+    elif mutation=='witness':metadata['reviewed_unchanged_helper_AST_sha256']={}
+    elif mutation=='pin':metadata['current_harness_canonical_lf_sha256']='0'*64
+    elif mutation=='migration-kind':metadata['native_checks']=False
+    elif mutation in ('scientific','native-admission'):
+        source=paths['controller'].read_text()
+        needle='    rows=[]' if mutation=='scientific' else '    raise AdmissionPending('
+        replacement='    rows=[None]' if mutation=='scientific' else '    return AdmissionPending('
+        assert needle in source;source=source.replace(needle,replacement,1)
+        paths['controller'].write_text(source,encoding='utf-8',newline='\n')
+        # Update only the controller digest to prove AST guards reject the edit.
+        metadata['current_harness_canonical_lf_sha256']=b.canonical_hash(source.encode())
+    paths['SOURCE_MIGRATION'].write_text(json.dumps(metadata),encoding='utf-8')
+    monkeypatch.setattr(b.importlib.util,'spec_from_file_location',lambda *a,**k:pytest.fail('helper imported before source admission'))
+    with pytest.raises(b.SafetyError):b.load_reference()

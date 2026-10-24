@@ -35,6 +35,18 @@ FUNCTIONS += [(native_rank_generic, reference_rank_generic, name)
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 
+# The original Bregman Cython helper has unchecked halo reads for small axes.
+# Use separately reviewed geometry for that API; its frozen contract retains
+# unsafe geometry as explicitly blocked intake metadata, never original calls.
+VALUE_CASES = [
+    (native, original, name, dtype, shape)
+    for native, original, name in FUNCTIONS
+    for dtype in (np.uint8, np.float32, np.float64)
+    for shape in (((4, 5), (7, 19), (519, 521))
+                  if native is xx.restoration and name == 'denoise_tv_bregman'
+                  else ((1, 1), (3, 19), (519, 521)))
+]
+
 
 def test_registry_matches_per_function_tests():
     tested = {module.__name__.split('.', 1)[1]+'.'+name for module, _, name in FUNCTIONS}
@@ -71,9 +83,9 @@ def test_signatures(native, original, name):
     assert inspect.signature(getattr(native, name)) == inspect.signature(getattr(original, name))
 
 
-@pytest.mark.parametrize('native,original,name', FUNCTIONS, ids=[x[2] for x in FUNCTIONS])
-@pytest.mark.parametrize('dtype', [np.uint8, np.float32, np.float64])
-@pytest.mark.parametrize('shape', [(1, 1), (3, 19), (519, 521)])
+@pytest.mark.parametrize('native,original,name,dtype,shape', VALUE_CASES,
+                         ids=[f'{n.__name__}.{name}-{np.dtype(dtype).name}-{shape}'
+                              for n, _, name, dtype, shape in VALUE_CASES])
 def test_every_native_function(native, original, name, dtype, shape):
     rng = np.random.default_rng(15)
     api = native.__name__.split('.', 1)[1]+'.'+name

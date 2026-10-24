@@ -6425,11 +6425,15 @@
       "api": "restoration.denoise_tv_bregman",
       "kind": "callable",
       "signature": "(image, weight=5.0, max_num_iter=100, eps=0.001, isotropic=True, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_tv_bregman_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "restoration.denoise_tv_chambolle",

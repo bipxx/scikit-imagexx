@@ -6,6 +6,7 @@ whole-product consumers, three-profile preparation barrier and fresh-host
 measurement are a later gate; accepted product pins stay null.
 """
 import argparse
+import ast
 import hashlib
 import importlib.util
 import inspect
@@ -22,6 +23,13 @@ ROOT=Path(__file__).resolve().parents[1]
 MANIFEST=ROOT/'coverage/contracts/tv-bregman-benchmark.json'
 REFERENCE_MATRIX=ROOT/'coverage/contracts/tv-bregman.json'
 REFERENCE_HELPERS=ROOT/'tests/test_tv_bregman_contracts.py'
+BENCHMARK_BASELINE=ROOT/'coverage/contracts/tv-bregman-benchmark-original-b510.py'
+SOURCE_MIGRATION=ROOT/'coverage/evidence/tv-bregman-benchmark-source-migration.json'
+PUBLIC_HELPER_MIGRATION=ROOT/'coverage/evidence/tv-bregman-public-assertion-migration.json'
+BENCHMARK_TESTS=ROOT/'tests/test_tv_bregman_benchmark.py'
+ORIGINAL_HARNESS_SHA256='dd1c415d6faaa22e7094bb495025f02497031eccf64531df8f7d83bf60c4db73'
+PUBLIC_HELPERS_CANONICAL_SHA256='12d3d9fdcd023ed121a19006967fb4c3fef814eee537b6874de5ff42e9a625c4'
+PUBLIC_MIGRATION_SHA256='7537d1d0a7cc4edb27685fd7408f492b8378ba75466aeb16c3e0bf7ee6d31e97'
 MATRIX_SHA256='638a6f569348a94f36ba11ef1dbbb8f1f08f4acbc1aec1cf893e9fe968cfa85c'
 HELPERS_CANONICAL_SHA256='11a951abca0c01356e746225a995eb6256caa0676ce0dff265f4e976458dc60b'
 API='restoration.denoise_tv_bregman'
@@ -117,10 +125,61 @@ def validate_case(case):
     return memory
 
 
+def source_provenance():
+    """Authenticate old scientific source and the separate metadata-only controller."""
+    metadata=json.loads(SOURCE_MIGRATION.read_text())
+    if metadata.get('schema')!='tv-bregman-benchmark-source-migration-v1' or metadata.get('native_checks')!=0 or type(metadata.get('native_checks')) is not int or metadata.get('operation_timings')!=0 or type(metadata.get('operation_timings')) is not int or metadata.get('accepted_product_pins','missing') is not None:
+        raise SafetyError('invalid reference-only source migration')
+    baseline=BENCHMARK_BASELINE.read_bytes();current=Path(__file__).read_bytes()
+    if pin(BENCHMARK_BASELINE)['sha256']!=ORIGINAL_HARNESS_SHA256 or canonical_hash(baseline)!=ORIGINAL_HARNESS_SHA256 or metadata.get('original_harness_canonical_lf_sha256')!=ORIGINAL_HARNESS_SHA256:
+        raise SafetyError('exact historical benchmark baseline changed')
+    if canonical_hash(current)!=metadata.get('current_harness_canonical_lf_sha256') or canonical_hash(BENCHMARK_TESTS.read_bytes())!=metadata.get('current_test_canonical_lf_sha256'):
+        raise SafetyError('current benchmark controller/test source changed')
+    allowed={'load_reference','verify_manifest_metadata','verify_report','check_reference'}
+    if set(metadata.get('allowed_metadata_functions',()))!=allowed:
+        raise SafetyError('unreviewed controller metadata delta')
+    def key(node):
+        if isinstance(node,(ast.FunctionDef,ast.ClassDef)):return type(node).__name__+':'+node.name
+        if isinstance(node,ast.Assign):return 'assignment:'+','.join(ast.unparse(t) for t in node.targets)
+        if isinstance(node,ast.Import):return 'import:'+','.join(alias.name for alias in node.names)
+        return ast.dump(node,include_attributes=False)
+    def nodes(data):
+        result={}
+        for node in ast.parse(data).body:
+            name=key(node)
+            if name in result:raise SafetyError('duplicate controller source node')
+            result[name]=ast.dump(node,include_attributes=False)
+        return result
+    old=nodes(baseline);new=nodes(current)
+    additions={'FunctionDef:source_provenance','import:ast'}|{'assignment:'+n for n in ('BENCHMARK_BASELINE','SOURCE_MIGRATION','PUBLIC_HELPER_MIGRATION','BENCHMARK_TESTS','ORIGINAL_HARNESS_SHA256','PUBLIC_HELPERS_CANONICAL_SHA256','PUBLIC_MIGRATION_SHA256')}
+    if set(old)-set(new) or set(new)-set(old)!=additions or {name for name in old if old[name]!=new[name]}!={'FunctionDef:'+name for name in allowed}:
+        raise SafetyError('scientific or unreviewed controller source delta')
+    original=metadata.get('original_helper_utf8','').encode()
+    if canonical_hash(original)!=HELPERS_CANONICAL_SHA256:raise SafetyError('original helper source capture changed')
+    proof_bytes=metadata.get('public_migration_utf8','').encode()
+    if hashlib.sha256(proof_bytes).hexdigest()!=PUBLIC_MIGRATION_SHA256:raise SafetyError('fake public assertion migration')
+    proof=json.loads(proof_bytes)
+    if proof.get('schema')!='tv-bregman-public-assertion-migration-v1' or proof.get('original_source_sha256')!=HELPERS_CANONICAL_SHA256 or proof.get('public_source_sha256')!=PUBLIC_HELPERS_CANONICAL_SHA256 or proof.get('reference_matrix_sha256')!=MATRIX_SHA256 or proof.get('source_file')!='tests/test_tv_bregman_contracts.py':
+        raise SafetyError('public helper migration source binding differs')
+    expected=proof['unchanged_function_class_AST_sha256']
+    if len(expected)!=19 or expected!=metadata.get('reviewed_unchanged_helper_AST_sha256'):raise SafetyError('all19 helper AST witnesses required')
+    helper=REFERENCE_HELPERS.read_bytes();helper_sha=canonical_hash(helper)
+    if helper_sha not in (HELPERS_CANONICAL_SHA256,PUBLIC_HELPERS_CANONICAL_SHA256):raise SafetyError('frozen scientific helper source changed')
+    if helper_sha==PUBLIC_HELPERS_CANONICAL_SHA256 and PUBLIC_HELPER_MIGRATION.read_bytes()!=proof_bytes:raise SafetyError('exact public assertion migration required')
+    original_nodes=nodes(original);helper_nodes=nodes(helper)
+    for name in expected:
+        prefix='ClassDef:' if 'ClassDef:'+name in original_nodes else 'FunctionDef:'
+        if original_nodes.get(prefix+name)!=helper_nodes.get(prefix+name):raise SafetyError('unchanged helper AST changed: '+name)
+    return dict(schema='tv-bregman-reference-source-provenance-v1',original_harness_canonical_lf_sha256=ORIGINAL_HARNESS_SHA256,
+        current_harness_canonical_lf_sha256=canonical_hash(current),helper_source_canonical_lf_sha256=helper_sha,
+        current_test_canonical_lf_sha256=metadata['current_test_canonical_lf_sha256'],source_migration_raw_sha256=pin(SOURCE_MIGRATION)['sha256'],
+        public_assertion_migration_sha256=PUBLIC_MIGRATION_SHA256,public_helper_migration_used=helper_sha==PUBLIC_HELPERS_CANONICAL_SHA256,unchanged_helper_ASTs=19)
+
+
 def load_reference():
     configure_reference_environment()
     if pin(REFERENCE_MATRIX)['sha256']!=MATRIX_SHA256:raise SafetyError('frozen135 original matrix changed')
-    if canonical_hash(REFERENCE_HELPERS.read_bytes())!=HELPERS_CANONICAL_SHA256:raise SafetyError('frozen scientific helper source changed')
+    source_provenance()
     spec=importlib.util.spec_from_file_location('_bregman_benchmark_original_contracts',REFERENCE_HELPERS)
     module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
     matrix=json.loads(REFERENCE_MATRIX.read_text())
@@ -252,7 +311,8 @@ def verify_manifest_metadata(manifest):
         raise SafetyError('frozen timing IDs/options changed')
     if manifest.get('raw_matrix_sha256')!=MATRIX_SHA256 or manifest.get('helper_source_canonical_lf_sha256')!=HELPERS_CANONICAL_SHA256:
         raise SafetyError('scientific source/matrix pin changed')
-    if manifest.get('harness_source_canonical_lf_sha256')!=canonical_hash(Path(__file__).read_bytes()):
+    provenance=source_provenance()
+    if manifest.get('harness_source_canonical_lf_sha256')!=provenance['original_harness_canonical_lf_sha256']:
         raise SafetyError('reference harness source changed')
     if set(manifest.get('scientific_function_sha256',{}))!=set(SCIENTIFIC_FUNCTIONS):
         raise SafetyError('scientific function pin set changed')
@@ -264,6 +324,12 @@ def verify_manifest_metadata(manifest):
 
 def verify_report(report,manifest):
     verify_manifest_metadata(manifest)
+    provenance=report.get('source_provenance')
+    if provenance is None:
+        if report.get('helper_source_canonical_lf_sha256')!=HELPERS_CANONICAL_SHA256 or report.get('harness_source_canonical_lf_sha256')!=ORIGINAL_HARNESS_SHA256:
+            raise SafetyError('historical report source pins differ')
+    elif provenance!=source_provenance() or report.get('helper_source_canonical_lf_sha256')!=provenance['helper_source_canonical_lf_sha256'] or report.get('harness_source_canonical_lf_sha256')!=provenance['current_harness_canonical_lf_sha256']:
+        raise SafetyError('current report source provenance differs')
     profile=report['profile'];expected=manifest['profiles'][profile]
     if report['native_checks']!=0 or report['operation_timings']!=0 or report['accepted_product_pins'] is not None:
         raise SafetyError('reference receipt promoted into performance admission')
@@ -308,7 +374,7 @@ def check_reference(output=None,blob_dir=None,manifest=None):
         'reference135':reference_rows,'timing_cases':timing,'blocked_nonfinite':blocked,
         'timing_spec_sha256':digest(TIMING_CASES),'raw_matrix_sha256':MATRIX_SHA256,
         'helper_source_canonical_lf_sha256':canonical_hash(REFERENCE_HELPERS.read_bytes()),
-        'harness_source_canonical_lf_sha256':canonical_hash(Path(__file__).read_bytes())}
+        'harness_source_canonical_lf_sha256':canonical_hash(Path(__file__).read_bytes()),'source_provenance':source_provenance()}
     if manifest is not None:verify_report(report,manifest)
     if output is not None:Path(output).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     return report

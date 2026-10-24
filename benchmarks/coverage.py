@@ -54,6 +54,8 @@ def main():
     apis = [api for api in native_functions() if args.modules is None or api.rsplit('.',1)[0] in args.modules]
     if not apis:
         parser.error('module selection matches no registered entry points')
+    if 'restoration.denoise_tv_bregman' in apis and min(args.sizes) < 4:
+        parser.error('Bregman original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []

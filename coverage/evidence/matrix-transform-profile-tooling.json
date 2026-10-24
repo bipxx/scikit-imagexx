@@ -68,6 +68,34 @@
     "windows_numerical_commands_success": true,
     "windows_seal_failure": "shutil.copy2 received an MSVC directory whose name ends in .tlog.",
     "raw_results_retained": true,
-    "accepted": false
+    "accepted": false,
+    "retention": {
+      "path": "build/matrix-default-profile-paths-runs/40099938410/manifest.json",
+      "bytes": 170803,
+      "sha256": "8655878aad9bd45e0fdaee522ad4bc27d5cdd1ae375f794ebf472f6990cfeab1"
+    }
+  },
+  "latest_diagnostic": {
+    "run": 40103414999,
+    "controller": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
+    "all_four_terminal_success": true,
+    "retention": {
+      "path": "build/matrix-default-profile-tlog-runs/40103414999/manifest.json",
+      "bytes": 187828,
+      "sha256": "7934d84a74dcd98653f8bb5c00cce346a177d6c4a391a93e259fd1d3091e6b86"
+    },
+    "root_review": {
+      "path": "build/decisions-readiness/matrix-cooperlake-diagnostic-root-review/manifest.json",
+      "bytes": 2428,
+      "sha256": "4422666138d750754fcf4dafd55609b2ed6a1d3ec4fd784613512344c1f17329"
+    },
+    "default_corenames": {
+      "windows": "Haswell",
+      "modern": "SkylakeX",
+      "minimum": "Zen",
+      "debug": "Haswell"
+    },
+    "unresolved_SkylakeX_rows_per_mode": 60,
+    "runtime_profile_admission": false
   }
 }

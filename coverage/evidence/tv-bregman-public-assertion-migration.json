@@ -1,0 +1,35 @@
+{
+  "schema": "tv-bregman-public-assertion-migration-v1",
+  "reference_source": "5f6d9564b1d704feed59dd9c8a3bf9b7dcc472b2",
+  "reference_matrix_sha256": "638a6f569348a94f36ba11ef1dbbb8f1f08f4acbc1aec1cf893e9fe968cfa85c",
+  "source_file": "tests/test_tv_bregman_contracts.py",
+  "original_source_sha256": "11a951abca0c01356e746225a995eb6256caa0676ce0dff265f4e976458dc60b",
+  "public_source_sha256": "12d3d9fdcd023ed121a19006967fb4c3fef814eee537b6874de5ff42e9a625c4",
+  "changed_functions": {
+    "test_source_signature_audited_domain_and_explicit_native0": "test_source_signature_audited_domain_and_explicit_native0",
+    "test_native_pending_never_counts_upstream_forwarding": "test_strict_owned_public_observations_without_forwarding"
+  },
+  "unchanged_function_class_AST_sha256": {
+    "digest": "11388f62a9b13724e0ddb168bd1706580313db78486057c4c336ffcc2c3baee8",
+    "source_sha": "a78d679bd3c3f6b12c9fa758735f2fa79e5c9735a9c05ddfa5513a323ea081b6",
+    "profile": "ccdee413a797779b19a4bbf942f123553727c3d6b36a2e29d197de45cfb29c2d",
+    "cases": "5807dc53144af8b8bc4e479288b38031c025593537088d10bc04556ad4b7af59",
+    "Tagged": "30ceb43fca9681f604d0a33899910d875bf1b3a6f3cbcfdbf536cfd797a823da",
+    "ProviderError": "d9088d9e6800ac59c5f4b17c4900b221ac78665b452f046f632bd655fc19a213",
+    "EntryBlocked": "ccaa67cb534890fa53b452d19ff30f80eaca34f0871386bd1d8ab5c991f8db04",
+    "array": "726b4df83ce8e3302049db227ee346fa8c56391d74da0965898f098e8d73af60",
+    "scalar": "4f8e000094f9d3c943d5c756cf09bb82eb1fad03de5623b4722065d2afd6aadb",
+    "fixture": "90e2f2970992cd200158ecfe4d5ab5c7406aa35b27c539f3bf6a54ac282da95f",
+    "certify_entry": "18fe1c5cccfa24a77042d8f6d1fc16f9391c4beae96cb0d84712c6361b4feba8",
+    "observe": "ea1dbd67dae76705abb4bf9ca7f0927cdb421c42e68b8d3ff35b6bfeeedc970c",
+    "frozen": "f0e58333e043c648d26939fd48fbab8b028edf19de48077645cae7b94bd94248",
+    "test_original_safe_numeric_or_blocked_intake_observation": "3c198f8d60d9784259417ea8cd8671ccc3b5f200d69ff97c6ce2d31a8623ca7f",
+    "independent_sweeps": "9453efa828ab8d9843bbc2e2dbb2604335c971dfb52ac5c6149d967a7a1e4e87",
+    "test_independent_small_gauss_seidel_definition": "9d2dd19ef0d70eb3544522877a147226a1d82a3e20cc8628ce6b018729a06be3",
+    "test_fixed_asymmetric_halos_and_padded_return_owner": "adace56d272a688788266f66974b846526a6eb25bf9dcba836fd20f9ee27b7d8",
+    "test_strict_rmse_stopping_boundary_is_source_ordered": "7b7ea5648f5eaaa4d436fb850fe1831b9e46205f81b16e2f2629a83eefcf814d",
+    "record": "ef6ca35fe7bc291dba137450d343a01677e00cc0687eb5fdfe6611e19b880a3a"
+  },
+  "scope": "Only description/importtypes,270 worker1/4 pending assertions and authenticated source-identity gate change. All135 source observations,112 safe numeric cases,23 boundary/blocked cases, independent oracles and every other function/class AST remain unchanged. Unsafe original inputs are still blocked. No public execution/performance claim follows from this source transition.",
+  "new_public_acceptance": 0
+}
