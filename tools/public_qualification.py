@@ -701,7 +701,7 @@ def prepare(out, profile, expected):
         # reads, including implicit CRT/system inputs; unavailable LTO inputs
         # fail capture instead of being reconstructed after qualification.
         link_capture = ['--config-settings=cmake.define.CMAKE_MODULE_LINKER_FLAGS=-save-temps=obj -Wl,--dependency-file=' + str(out / 'native-build/core-link.d'),
-                        '--config-settings=build.tool-args=-d;keeprsp']
+                        '--config-settings=build.tool-args=-d;keeprsp;-d;keepdepfile']
     must_run(journal, 'build-whole-product', [buildpy, '-m', 'pip', 'wheel', ROOT, '--verbose', '--no-deps', '--no-build-isolation', '--no-index', '--wheel-dir', wheels,
               '--config-settings=cmake.build-type=' + PROFILES[profile]['config'], '--config-settings=build-dir=' + str(out / 'native-build'),
               '--config-settings=cmake.define.CMAKE_EXPORT_COMPILE_COMMANDS=ON', *link_capture], buildenv)

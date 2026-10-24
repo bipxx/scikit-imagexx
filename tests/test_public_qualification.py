@@ -815,7 +815,7 @@ def test_build_identity_capture_is_after_product_before_admission_and_seal():
     assert '--verbose' in source
     assert 'CMAKE_MODULE_LINKER_FLAGS=-save-temps=obj -Wl,--dependency-file=' in source
     assert 'native-build/core-link.d' in source and 'CMAKE_EXPORT_COMPILE_COMMANDS=ON' in source
-    assert 'build.tool-args=-d;keeprsp' in source
+    assert 'build.tool-args=-d;keeprsp;-d;keepdepfile' in source
     assert 'validate_build_identity(out, state)' in inspect.getsource(q.seal)
     assert "'gather-build-identity-facts','capture-build-identity'" in inspect.getsource(q.seal)
 

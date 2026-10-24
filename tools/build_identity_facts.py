@@ -159,6 +159,32 @@ def make_dependencies(raw):
     return result
 
 
+def actual_linker_depfile(argv, cwd):
+    """GNU ld uses the final dependency-file option, including CMake's own."""
+    linker=[];i=1
+    while i<len(argv):
+        value=argv[i]
+        if value.startswith('-Wl,'):
+            pieces=value[4:].split(',');require(not any(v.startswith('@') for v in pieces),'unexpanded linker response file')
+            linker.extend(pieces)
+        elif value=='-Xlinker':
+            i+=1;require(i<len(argv),'missing -Xlinker operand');linker.append(argv[i])
+        i+=1
+    choices=[];i=0
+    while i<len(linker):
+        value=linker[i]
+        if value=='--dependency-file':
+            i+=1;require(i<len(linker) and not linker[i].startswith('-'),'missing actual linker dependency path')
+            choices.append(linker[i])
+        elif value.startswith('--dependency-file='):choices.append(value.split('=',1)[1])
+        i+=1
+    require(choices and all(choices),'actual module link has no dependency-file option')
+    root=Path(cwd).resolve(strict=True);selected=Path(choices[-1]);selected=selected if selected.is_absolute() else root/selected
+    require(selected.resolve().is_relative_to(root),'selected linker dependency file escapes actual native build')
+    require(selected.is_file(),'actual selected linker dependency file missing (retain Ninja -d keepdepfile): '+str(selected))
+    return actual(selected),choices
+
+
 def shell_segments(command):
     lexer = shlex.shlex(command, posix=True, punctuation_chars=';&|'); lexer.whitespace_split = True
     segments = [[]]
@@ -315,7 +341,10 @@ def gnu(native, cache, info, capture):
             resolved=capture.query('resolve-'+role.replace('_','-'),[compiler,option+name],native)
             selected=Path(resolved) if Path(resolved).is_absolute() else Path(shutil.which(resolved) or '')
             require(selected.is_absolute(),'unresolved actual LTO tool: '+name);actual(selected);binaries[role]=str(selected)
-    linkdep = native/'core-link.d'; capture.files.add(linkdep)
+    linkdep,depflags=actual_linker_depfile(module_links[0]['argv'],native)
+    selection=capture.out/'linker-dependency-selection.json'
+    selection.write_text(json.dumps(dict(cwd=str(native),argv=module_links[0]['argv'],dependency_file_options=depflags,selected_path=str(linkdep),semantics='last actual GNU ld dependency-file option; no assumed filename/fallback'),indent=2)+'\n')
+    capture.files.update((linkdep,selection))
     inputs = {actual(p,native) for p in make_dependencies(text(linkdep))}
     for row in links:
         if row['tool']=='compiler':
@@ -463,7 +492,7 @@ def collect(source_root, build_root, revision, profile, output):
     core=single(cores,'missing/ambiguous actual linked production core')
     argv=[a for row in units+links for a in row['argv']]
     configuration=dict(compiler_id=info['CMAKE_CXX_COMPILER_ID'],compiler_version=info['CMAKE_CXX_COMPILER_VERSION'],generator=cache['CMAKE_GENERATOR'],**extra,build_type=config,openmp=cache['SKIMAGEXX_OPENMP']=='ON',avx2=cache['SKIMAGEXX_AVX2']=='ON',lto=any(a.startswith('-flto') or a.upper()=='/GL' or a.upper().startswith('/LTCG') for a in argv))
-    groups=dict(configuration=[str(cache_path)],compiler=[str(compiler_path)]+[str(p) for p in capture.files if p.name.startswith(('resolve-','compiler-target','generator-version'))],commands=[str(p) for p in capture.files if 'command' in p.name.lower() or p.name in ('build.ninja','compile_commands.json','.ninja_log')],dependencies=[str(p) for p in capture.files if p.name in ('.ninja_deps','core-link.d') or 'deps' in p.name or '.read.' in p.name.lower()],responses=[str(p) for p in capture.files if p.suffix.lower()=='.rsp'])
+    groups=dict(configuration=[str(cache_path)],compiler=[str(compiler_path)]+[str(p) for p in capture.files if p.name.startswith(('resolve-','compiler-target','generator-version'))],commands=[str(p) for p in capture.files if 'command' in p.name.lower() or p.name in ('build.ninja','compile_commands.json','.ninja_log')],dependencies=[str(p) for p in capture.files if p.name=='.ninja_deps' or p.suffix=='.d' or 'deps' in p.name or 'dependency-selection' in p.name or '.read.' in p.name.lower()],responses=[str(p) for p in capture.files if p.suffix.lower()=='.rsp'])
     groups={k:sorted(set(v)) for k,v in groups.items() if v}
     # Include every raw provider input, including write/response/project logs.
     groups['raw_metadata']=sorted(map(str,capture.files))
