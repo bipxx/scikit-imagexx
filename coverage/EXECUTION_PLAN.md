@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 477 public paths: 186 native-partial image entries,
+The current inventory contains 477 public paths: 190 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 283 upstream-only entries. The expansion adds 19
+provider, and 279 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -29,7 +29,12 @@ error-parity rows and two metadata issues. Corrected source `05e79eb`, run
 independent source/runtime/artifact review. The accepted checkpoint now has
 186 partially native image paths: nine percentile algorithms and three bilateral
 algorithms add 15 paths. The reverse-stride metrics change is parity accepted;
-its speed remains unmeasured. The integrator owns shared
+its speed remains unmeasured. Whole11 now qualifies local Otsu, majority and their
+two generic aliases, bringing the accepted count to 190 partial image paths and
+31 canonical rank algorithms. Both exact controlled sources pass all four
+products: 649,056 before checks and 672,856 after checks, with 224 combined SDK
+checks and equal actual common build inputs. Counts-only timing is pending.
+The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
 ## What changed after review
@@ -52,10 +57,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole10 accepted: 186 partially native image paths; 477 total paths. Four genuine products, both SIMD modes, full selected corpora, runtime/source closure and 104 SDK checks passed. Main production, tests and contracts are byte-equivalent to tested `05e79eb`; no performance acceptance inferred. |
-| Worker 1 | `metrics_reductions` | Observe and authenticate the exact rank qualification products | Runs `40077192858`/`40077194449` qualify frozen `66860ae`/`94d2d3f`, after 573 metadata checks each, eight source plans and 88 corrected-test checks on an unchanged genuine wheel. Earlier failed seals and exact observers remain protected. Successful four-profile products and controlled benchmark pins are still required. |
-| Worker 2 | `resize_api` | Complete the TV public-signature wrapper using the whole C++ finite loop | Preserve all 330 original observations and 70 literal benchmark fixtures; eligible default calls must use the actual new finite-loop binding. Keep provider orchestration and explicitly forced stage tests separate. Validate return aliasing, iteration traces, callbacks and allocation hooks on all actual ABIs. |
-| Worker 3 | `resize_bench` | Qualify the tiny frozen TV finite-loop binding across ABIs | Kernel `f8f38b6` passes 28 private profile/mode runs with exact energy/stopping. Build only the bounded frozen binding/PIC closure against existing global-worker foundations, send actual binary hashes to Worker 2, and preserve raw failures. No whole-product build, new environment or local timing. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole11 accepted and merged: 190 partial image paths. Main executable/header/Python/tool sources match qualified `94d2d3f`; 265 exact members were checked. TV candidate `b550107` predicts 191 and is in fresh genuine qualification; no speedup inferred. |
+| Worker 1 | `metrics_reductions` | Actual TV qualification and controlled rank artifact verification | Rank runs `40077192858`/`40077194449` and all six real Release envelopes are authenticated. Observe TV run `40083629572` at exact `b550107`; preserve whole-source/SDK17 closure. The reviewed one-worker counts experiment uses the immutable 190-path products. |
+| Worker 2 | `resize_api` | Native Bregman TV kernel | Source-audited reference has 135 fixed IDs and 418 passing checks per runtime. Preserve mixed precision, Gauss-Seidel dependencies, ordered RMSE, asymmetric halos and sequential channel-output reuse. Independent copies can parallelize; the sweep remains an explicit follow-up. |
+| Worker 3 | `resize_bench` | General finite C++ matrix mapping | All 374 function contracts have an owned shell; small dyadic C++ execution is separately qualified. General floating transforms, large coordinates and GEMV/GEMM association need the versioned kernel. Keep pending ordinary cohorts explicit while adding SIMD and the sole global worker policy. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -182,12 +187,12 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Accepted cumulative increment | Whole10 source `05e79eb`, run `40063203314` | 186 native-partial image paths; four genuine products in normal/scalar modes and complete selected corpora/SDK closure. Full argument and performance parity remain separate. |
-| Source qualification | Rank Otsu/majority plus their two generic aliases | Frozen before/after sources predict 190 image paths and 14 SDK families. Only three counts-optimization paths differ. The shared stale-majority test is corrected without removing fallback-policy assertions. Require both genuine four-profile runs before promotion. |
+| Accepted cumulative increment | Whole11 sources `66860ae`/`94d2d3f` | 190 native-partial image paths; all eight genuine products, complete selected corpora, source/build/runtime closure and six Release envelopes verified. Full argument and performance parity remain separate. |
+| Accepted rank increment | Rank Otsu/majority plus their two generic aliases | Both four-profile runs pass; exactly three counts-optimization paths differ and common compiler/header/link inputs match in all four profiles. Source merged promptly; one-worker measurements remain pending. |
 | Isolated measured bottleneck | Counts-only R4 windowed histogram update | Private R7 portable/sanitizer gates pass. Keep all 1,379 fixed cases and 376 timing IDs. Obtain six accepted before/after products, then prepare all three runtime profiles and time only on fresh artifact-only hosts at one worker. |
 | Private native foundation | TV typed stages and spatial reductions | `2319db7` stages and `0eaf632` reductions have scoped private evidence. NumPy 1.24.4/2.5.4 reduction association and scalar promotion differ; preserve both exact profiles. These are not public function acceptance. |
 | Private complete finite loop | TV kernel `f8f38b6` | C++ now owns finite divergence/output, square/sum, gradient/norm/sum, denominator/dual, energy and strict stopping. Validate actual new bindings and default wrapper calls; stage capability 63 cannot substitute for finite-loop capability 3. |
-| Shared integration | Public TV core, registry and complete SDK | After private wrapper qualification, wire one global worker state and all required CMake/binding/SDK files; migrate hardcoded package/member counts to the actual complete product. Freeze and qualify genuine Release/Debug, normal/scalar products before registration acceptance. |
+| Live shared integration | Public TV core, registry and complete SDK | Frozen `b550107`, run `40083629572`: candidate 191 paths, 108 wheel files, 62 SDK files, 17 client families/34 SDK checks. Private wrapper and 768 final metadata checks pass; actual four-profile public/core/SDK execution is pending. |
 | Performance follow-up | TV original-library comparison | The reference-only benchmark authoring has 330 untimed source cases and 70 fixed timing candidates. Consume actual qualified artifacts and exact wheel/SDK/source pins; finish the default-policy parity barrier before isolated one-worker samples. |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
