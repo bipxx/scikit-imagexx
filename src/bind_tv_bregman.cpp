@@ -42,7 +42,9 @@ py::array prepared(py::handle object, const char* name) {
     auto a = py::reinterpret_borrow<py::array>(object);
     if (a.ndim() != 3 || !(a.flags() & py::array::c_style) || !a.writeable())
         throw py::value_error(std::string(name) + " must be writable dense C rank3");
-    if (!a.dtype().is(py::dtype::of<float>()) && !a.dtype().is(py::dtype::of<double>()))
+    // NumPy equivalent native descriptors include metadata-tagged floats.
+    // check_ does not cast/copy, and still rejects opposite-endian storage.
+    if (!py::array_t<float>::check_(a) && !py::array_t<double>::check_(a))
         throw py::type_error(std::string(name) + " must have native float32 or float64 dtype");
     if (reinterpret_cast<std::uintptr_t>(a.data()) % static_cast<std::size_t>(a.itemsize()))
         throw py::value_error(std::string(name) + " must be naturally aligned");
@@ -148,7 +150,7 @@ void bind_tv_bregman(py::module_& m) {
         if (character < -128 || character > 127) throw std::overflow_error("isotropic does not fit signed char");
         auto out = prepared(out_obj,"out");
         snapshot.require_unchanged(image);
-        if (!image.dtype().is(out.dtype())) throw py::type_error("out dtype must match image");
+        if (image.itemsize() != out.itemsize()) throw py::type_error("out dtype must match image");
         if (image.itemsize() == 4) return run<float>(image,out,weight,static_cast<int>(integer),eps,character!=0,tracing);
         return run<double>(image,out,weight,static_cast<int>(integer),eps,character!=0,tracing);
     }, py::arg("image"),py::arg("weight"),py::arg("max_num_iter"),py::arg("eps"),

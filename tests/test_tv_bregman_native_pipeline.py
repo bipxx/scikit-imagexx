@@ -221,3 +221,42 @@ def test_scalar_hooks_preserve_actual_posthook_values(parameter, implementation)
     expected = np.zeros_like(out)
     assert core.tv_bregman_run(image, .5, 2, 1e-6, True, expected) is None
     assert events == [parameter] and out.tobytes() == expected.tobytes()
+
+
+@pytest.mark.parametrize('dtype', ('f4', 'f8'))
+@pytest.mark.parametrize('tags', ('input', 'output', 'both', 'different'))
+def test_native_float_descriptors_accept_independent_metadata(dtype, tags, implementation):
+    _, core = implementation
+    input_dtype = np.dtype(dtype, metadata={'units': 'linear'}) if tags != 'output' else np.dtype(dtype)
+    output_dtype = (np.dtype(dtype, metadata={'units': 'other' if tags == 'different' else 'linear'})
+                    if tags != 'input' else np.dtype(dtype))
+    image = np.empty((4, 5, 1), dtype=input_dtype)
+    image[...] = (np.arange(20).reshape(4, 5, 1) / 32)
+    out = np.zeros((6, 7, 1), dtype=output_dtype)
+    expected = np.zeros((6, 7, 1), dtype=dtype)
+    assert core.tv_bregman_run(image.view(np.dtype(dtype)), .5, 2, 1e-6, True, expected) is None
+    assert core.tv_bregman_run(image, .5, 2, 1e-6, True, out) is None
+    assert out.tobytes() == expected.tobytes()
+    assert out.dtype.metadata == output_dtype.metadata and image.dtype.metadata == input_dtype.metadata
+
+
+@pytest.mark.parametrize('dtype', ('f4', 'f8'))
+def test_owned_tagged_pipeline_matches_safely_certified_original(dtype, implementation, monkeypatch):
+    module, _ = implementation
+    image = np.empty((4, 5), dtype=np.dtype(dtype, metadata={'units': 'linear'}))
+    image[...] = np.arange(20).reshape(4, 5) / 32
+    assert dict(image.dtype.metadata) == {'units': 'linear'}
+    source_entry = contracts.original_module._denoise_tv_bregman
+    entries = []
+    def certified(*args):
+        contracts.certify_entry(*args)
+        entries.append(True)
+        return source_entry(*args)
+    monkeypatch.setattr(contracts.original_module, '_denoise_tv_bregman', certified)
+    options = dict(weight=.5, max_num_iter=2, eps=1e-6, isotropic=True)
+    expected = contracts.reference(image, **options)
+    assert entries == [True]
+    actual = module.denoise_tv_bregman(image, **options)
+    assert actual.shape == expected.shape and actual.dtype == expected.dtype
+    assert actual.dtype.metadata == expected.dtype.metadata == image.dtype.metadata
+    assert actual.tobytes() == expected.tobytes()
