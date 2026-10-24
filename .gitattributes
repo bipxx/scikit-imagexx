@@ -65,3 +65,6 @@ benchmarks/rank-statistics-counts-comparison.csv -text
 benchmarks/rank-statistics-counts-comparison-raw.zip -text
 coverage/contracts/max-tree.json -text
 coverage/evidence/max-tree-reference.json -text
+coverage/evidence/tv-chambolle-sdk-census-migration.json -text
+coverage/evidence/tv-chambolle-public-assertion-migration.json -text
+coverage/evidence/public-wave12.json -text
