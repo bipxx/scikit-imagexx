@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 namespace skimagexx {
-enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8,autolevel=9,equalize=10,enhance_contrast=11,threshold=12,geometric_mean=13,noise_filter=14,subtract_mean=15,windowed_histogram=16,autolevel_percentile=17,enhance_contrast_percentile=18,gradient_percentile=19,mean_percentile=20,pop_percentile=21,subtract_mean_percentile=22,threshold_percentile=23,sum_percentile=24,percentile=25 };
+enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8,autolevel=9,equalize=10,enhance_contrast=11,threshold=12,geometric_mean=13,noise_filter=14,subtract_mean=15,windowed_histogram=16,autolevel_percentile=17,enhance_contrast_percentile=18,gradient_percentile=19,mean_percentile=20,pop_percentile=21,subtract_mean_percentile=22,threshold_percentile=23,sum_percentile=24,percentile=25,mean_bilateral=26,pop_bilateral=27,sum_bilateral=28 };
 // Capabilities come from the linked implementation, not just a header version.
 std::uint32_t rank_histogram_capabilities() noexcept;
 // Prepared C-order image/mask and binary footprint;2D uses a singleton plane.
@@ -35,6 +35,10 @@ void rank_windowed_histogram_into(const RankView&,std::size_t output_depth);
 // in range). Integer CDF/quotient semantics, no interpolated quantiles.
 std::uint32_t rank_percentile_capabilities() noexcept;
 void rank_percentile_into(const RankView&,RankOperation,double p0,double p1);
+// rank-bilateral-v1: strict intensity interval and signed integer quotients.
+// Separate admission preserves every existing operation/RankView ABI.
+std::uint32_t rank_bilateral_capabilities() noexcept;
+void rank_bilateral_into(const RankView&,RankOperation,std::ptrdiff_t s0,std::ptrdiff_t s1);
 // Actual accessed stores, after image/mask normalization. Distinct from the
 // conservative legacy serial_alias flag; the RankView ABI is unchanged.
 struct RankAliases {bool image_output=false,mask_output=false;};
@@ -51,6 +55,7 @@ RankHalfConversion rank_half_u8(const std::uint16_t*,std::uint8_t*,std::size_t);
 namespace skimagexx::simd {
 std::uint64_t rank_sum(const void*,std::size_t,bool);
 std::int64_t rank_count_prefix(const std::int64_t*,std::size_t);
+void rank_weighted_prefix(const std::int64_t*,std::size_t,std::size_t,std::int64_t&,std::int64_t&);
 bool rank_uniform(const void*,bool,std::uint32_t&);
 std::uint16_t rank_max_u16(const std::uint16_t*,std::size_t);
 std::size_t rank_positive(const void*,std::uint8_t*,std::size_t,PixelType);

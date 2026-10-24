@@ -132,6 +132,44 @@ struct Histogram {
         return 0;
     }
     struct Aggregate {std::int64_t count=0,weighted=0;};
+    Aggregate range(std::size_t lo,std::size_t hi)const {
+        Aggregate result;
+        const auto edge=[&](std::size_t begin,std::size_t end) {
+#ifdef SKIMAGEXX_AVX2
+            if(has_avx2()) {
+                simd::rank_weighted_prefix(counts.data()+begin,end-begin,begin,result.count,result.weighted);
+                return;
+            }
+#endif
+            for(auto i=begin;i<end;++i){result.count+=counts[i];result.weighted+=counts[i]*std::int64_t(i);}
+        };
+        const auto first=std::min(hi,((lo+63)/64)*64);
+        edge(lo,first);lo=first;
+        const auto blocks=(hi-lo)/64;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            result.count+=simd::rank_count_prefix(prefix_blocks.data()+lo/64,blocks);
+            result.weighted+=simd::rank_count_prefix(weighted_blocks.data()+lo/64,blocks);
+        } else
+#endif
+        for(std::size_t b=lo/64;b<lo/64+blocks;++b){result.count+=prefix_blocks[b];result.weighted+=weighted_blocks[b];}
+        lo+=blocks*64;edge(lo,hi);return result;
+    }
+    std::int64_t bilateral(RankOperation op,std::int64_t center,std::ptrdiff_t s0,std::ptrdiff_t s1)const {
+        // Upstream returns before evaluating either possibly extreme radius.
+        if(!pop)return 0;
+        // Clip the strict predicate without forming center +/- signed radius.
+        // Every subtraction below is first bounded to the histogram domain.
+        const auto last=std::int64_t(limit-1);
+        const auto lo=s1>center ? std::size_t{0} : s1<=center-last ? limit:std::size_t(center-s1+1);
+        const auto hi=s0<=-center ? std::size_t{0} : s0>=std::int64_t(limit)-center ? limit:std::size_t(center+s0);
+        if(lo>=hi)return 0;
+        const auto values=range(lo,hi);
+        if(op==RankOperation::pop_bilateral)return values.count;
+        // Feedback histograms can contain a zero selected count and a nonzero
+        // signed weighted sum. Cython's guard still writes zero in that case.
+        return values.count ? (op==RankOperation::mean_bilateral ? values.weighted/values.count:values.weighted):0;
+    }
     Aggregate membership_prefix(double target,bool inclusive)const {
         if(target<0 || (!inclusive && target==0))return {};
         if(inclusive && target>=double(pop))return {pop,weighted_blocks.empty() ? 0:sum};
@@ -303,10 +341,10 @@ template<class T,class Value> void store(unsigned char* out,Value value) {
     if constexpr(std::is_integral_v<T> && std::is_floating_point_v<Value>)result=T(std::int64_t(value));else result=T(value);
     std::memcpy(out,&result,sizeof(result));
 }
-template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.) {
+template<class T,bool Prefix=false> void process(const RankView& v,RankOperation op,const Plan& prepared,std::size_t begin,std::size_t end,const std::vector<double>& logarithms={},std::size_t depth=0,bool domain_only=false,double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
     while(begin<end) {
         const auto p=begin/v.shape[1],start=begin%v.shape[1],finish=std::min(v.shape[1],start+end-begin);
-        const bool weighted=op==RankOperation::mean_percentile || op==RankOperation::subtract_mean_percentile || op==RankOperation::sum_percentile;
+        const bool weighted=op==RankOperation::mean_percentile || op==RankOperation::subtract_mean_percentile || op==RankOperation::sum_percentile || int(op)>=26;
         Histogram hist(v.bins,op!=RankOperation::mean && op!=RankOperation::sum && op!=RankOperation::pop && op!=RankOperation::threshold && op!=RankOperation::subtract_mean,Prefix,weighted);
         auto r=std::ptrdiff_t(start),c=std::ptrdiff_t{0};
         update<T,Prefix>(hist,v,prepared.initial,p,r,c,1);
@@ -334,7 +372,8 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
                 if(pixel>=v.bins)throw std::invalid_argument("rank center exceeded histogram bounds");
-                if(int(op)>=17) {
+                if(int(op)>=26)emit(hist.bilateral(op,pixel,s0,s1));
+                else if(int(op)>=17) {
                     if(op==RankOperation::subtract_mean_percentile) {
                         const auto values=hist.selected(p0,p1);
                         emit(values.count ? double(std::int64_t(pixel)-values.weighted/values.count)*.5+double(v.bins/2):0.);
@@ -513,6 +552,45 @@ void percentile_run(const RankView& view,RankOperation operation,double p0,doubl
 }
 }
 std::uint32_t rank_percentile_capabilities() noexcept {return 0x3fe0000u;}
+std::uint32_t rank_bilateral_capabilities() noexcept {return 0x1c000000u;}
+void rank_bilateral_into(const RankView& view,RankOperation op,std::ptrdiff_t s0,std::ptrdiff_t s1) {
+    if(int(op)<26 || int(op)>28)throw std::invalid_argument("invalid rank bilateral operation");
+    validate(view,RankOperation::minimum);
+    if(view.shape[0]!=1 || view.footprint_shape[0]!=1 || view.center[0]!=0)throw std::invalid_argument("rank bilateral requires 2D input");
+    const auto pixels=view.shape[1]*view.shape[2],fp=view.footprint_shape[1]*view.footprint_shape[2];
+    if(overlaps(view,view.footprint,fp))throw std::invalid_argument("rank bilateral footprint/output alias is outside defined coverage");
+    const auto feedback=aliases(view);
+    bool zero=true;for(std::size_t i=0;i<fp && zero;++i)zero=view.footprint[i]==0;
+    if(!zero && view.mask){zero=true;for(std::size_t i=0;i<pixels && zero;++i)zero=view.mask[i]==0;}
+    const auto maximum=std::numeric_limits<std::ptrdiff_t>::max();
+    if(!zero && (s0<std::ptrdiff_t(view.bins-1)-maximum || s1>maximum-std::ptrdiff_t(view.bins-1)))throw std::invalid_argument("rank bilateral radius arithmetic outside defined coverage");
+    if(feedback.image_output) {
+        const bool whole=view.output_type==(view.uint16 ? PixelType::uint16:PixelType::uint8) || (!view.uint16 && view.output_type==PixelType::boolean);
+        if(!whole || (view.uint16 && (reinterpret_cast<std::uintptr_t>(view.output)%2!=reinterpret_cast<std::uintptr_t>(view.image)%2)))throw std::invalid_argument("rank bilateral mixed-type image feedback is outside defined coverage");
+        if(view.uint16)for(int axis=0;axis<3;++axis)if(view.shape[axis]>1 && view.output_strides[axis]%2)throw std::invalid_argument("rank bilateral mixed-byte image feedback is outside defined coverage");
+        if(!zero && view.bins!=(view.uint16 ? 65536u:256u))throw std::invalid_argument("rank bilateral image feedback requires full histogram bounds");
+    }
+    if(feedback.mask_output && view.output_type!=PixelType::uint8 && view.output_type!=PixelType::boolean)throw std::invalid_argument("rank bilateral mixed-type mask feedback is outside defined coverage");
+    // L1 counts can grow under enter-before-leave feedback. Bound all update
+    // events, including partial SIMD lane sums, before modifying any output.
+    const auto magnitude=std::uint64_t(view.uint16 ? 65535:255);
+    const auto limit=std::min(std::uint64_t{1}<<50,std::uint64_t(std::numeric_limits<std::int64_t>::max())/(4*magnitude));
+    if(fp>limit || pixels>limit/fp)throw std::overflow_error("rank bilateral signed histogram outside defined coverage");
+    if(!zero && view.bins<(view.uint16 ? 65536u:256u)) {
+        const auto* data=static_cast<const unsigned char*>(view.image);
+        for(std::size_t i=0;i<pixels;++i){std::uint16_t value;if(view.uint16)std::memcpy(&value,data+2*i,2);else value=data[i];if(value>=view.bins)throw std::invalid_argument("rank image exceeded histogram bounds");}
+    }
+    const auto prepared=plan(view);const auto rows=view.shape[1];
+    const auto invoke=[&](std::size_t begin,std::size_t end){
+        if(view.uint16)process<std::uint16_t,true>(view,op,prepared,begin,end,{},0,false,0.,1.,s0,s1);
+        else process<std::uint8_t,true>(view,op,prepared,begin,end,{},0,false,0.,1.,s0,s1);
+    };
+    const auto workers=feedback.image_output || feedback.mask_output || !independent_stores(view) ? 1:detail::active_workers(pixels);
+    if(workers==1){invoke(0,rows);return;}
+    std::vector<std::exception_ptr> failures(std::size_t(workers),std::exception_ptr{});
+    detail::partition(rows,workers,[&](auto begin,auto end,auto id){try{invoke(begin,end);}catch(...){failures[id]=std::current_exception();}});
+    for(const auto& failure:failures)if(failure)std::rethrow_exception(failure);
+}
 void rank_percentile_into(const RankView& view,RankOperation op,double p0,double p1) {
     if(int(op)<17 || int(op)>25)throw std::invalid_argument("invalid rank percentile operation");
     const bool single=op==RankOperation::percentile || op==RankOperation::threshold_percentile;

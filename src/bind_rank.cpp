@@ -44,6 +44,8 @@ void bind_rank(py::module_& module) {
     module.attr("rank_vector_capabilities")=py::int_(skimagexx::rank_vector_capabilities());
     module.attr("rank_percentile_interface")="rank-percentile-v1";
     module.attr("rank_percentile_capabilities")=py::int_(skimagexx::rank_percentile_capabilities());
+    module.attr("rank_bilateral_interface")="rank-bilateral-v1";
+    module.attr("rank_bilateral_capabilities")=py::int_(skimagexx::rank_bilateral_capabilities());
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
         const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
@@ -190,4 +192,42 @@ void bind_rank(py::module_& module) {
     module.def("rank_statistics_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op){run_rank(a,f,m,o,s,b,op,1);});
     module.def("rank_windowed_histogram_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b){run_rank(a,f,m,o,s,b,16,2);});
     module.def("rank_percentile_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op,py::object p0,py::object p1){run_rank(a,f,m,o,s,b,op,3,p0,p1);});
+    module.def("rank_bilateral_run",[](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation,py::object s0,py::object s1) {
+        if(operation<26 || operation>28)throw py::value_error("invalid rank bilateral operation");
+        if(requested_shifts.size()!=2 || image.ndim()!=2)throw py::type_error("Function call with ambiguous argument types");
+        const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
+        if(output.ndim()!=3 || !((kind=='u' && (width==1 || width==2)) || kind=='b' || (kind=='f' && (width==4 || width==8))))throw py::type_error("Function call with ambiguous argument types");
+        buffer(image,2);buffer(footprint,2);
+        py::array mask;if(!mask_object.is_none()){mask=mask_object.cast<py::array>();buffer(mask,2);}
+        buffer(output,3);
+        if(image.dtype().kind()!='u' || (image.itemsize()!=1 && image.itemsize()!=2) || footprint.dtype().kind()!='u' || footprint.itemsize()!=1 || (!mask_object.is_none() && (mask.dtype().kind()!='u' || mask.itemsize()!=1)))throw py::type_error("rank bilateral requires prepared unsigned buffers");
+        const auto sx=shift(requested_shifts[0]),sy=shift(requested_shifts[1]);
+        // Fused Cython buffers are acquired before either radius __index__.
+        // Snapshot every metadata field now: hooks may reinterpret dtype/shape
+        // on the same allocation without changing the acquired buffer view.
+        skimagexx::RankView view;view.uint16=image.itemsize()==2;view.image=image.data();view.footprint=static_cast<const std::uint8_t*>(footprint.data());view.output=output.mutable_data();view.bins=bins;
+        view.output_type=skimagexx::bindings::real_pixel_type(dtype);
+        view.shape={1,std::size_t(image.shape(0)),std::size_t(image.shape(1))};
+        view.footprint_shape={1,std::size_t(footprint.shape(0)),std::size_t(footprint.shape(1))};
+        view.center={0,footprint.shape(0)/2+sy,footprint.shape(1)/2+sx};
+        view.output_strides={0,output.strides(0),output.strides(1)};
+        const auto output_rows=output.shape(0),output_cols=output.shape(1),depth=output.shape(2);
+        const auto mask_size=mask_object.is_none() ? py::ssize_t{0}:mask.size();
+        if(!mask_object.is_none())view.mask=static_cast<const std::uint8_t*>(mask.data());
+        const auto index=[](py::handle object){
+            const auto integer=py::reinterpret_steal<py::object>(PyNumber_Index(object.ptr()));
+            if(!integer)throw py::error_already_set();
+            const auto value=PyLong_AsSsize_t(integer.ptr());if(PyErr_Occurred())throw py::error_already_set();
+            return std::ptrdiff_t(value);
+        };
+        const auto lower=index(s0),upper=index(s1);
+        const auto cy=view.center[1],cx=view.center[2];const auto rows=view.footprint_shape[1],cols=view.footprint_shape[2];
+        std::string error;if(cy<0)error="centre_r "+std::to_string(cy)+" < 0";else if(cx<0)error="centre_c "+std::to_string(cx)+" < 0";else if(std::size_t(cy)>=rows)error="centre_r "+std::to_string(cy)+" >= srows "+std::to_string(rows);else if(std::size_t(cx)>=cols)error="centre_c "+std::to_string(cx)+" >= scols "+std::to_string(cols);
+        if(!error.empty()){PyErr_SetString(PyExc_AssertionError,error.c_str());throw py::error_already_set();}
+        // Undefined upstream extents remain safely rejected before writes.
+        if(depth<1)throw py::value_error("rank output pixel depth must be positive");
+        if(output_rows<py::ssize_t(view.shape[1]) || output_cols<py::ssize_t(view.shape[2]))throw py::value_error("rank output is smaller than image");
+        if(view.mask && std::size_t(mask_size)<view.shape[1]*view.shape[2])throw py::value_error("rank mask storage is smaller than image");
+        {py::gil_scoped_release release;skimagexx::rank_bilateral_into(view,static_cast<skimagexx::RankOperation>(operation),lower,upper);}
+    });
 }
