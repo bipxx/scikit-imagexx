@@ -327,6 +327,21 @@ def preparation_reports(directory):
     return rows
 
 
+def native_policy_scope(function):
+    """Keep every fresh controller entry scoped to strict native fallback policy."""
+    import functools
+    @functools.wraps(function)
+    def scoped(*args,**kwargs):
+        import skimagexx as xx
+        workers=xx.get_num_threads();fallback=xx.set_fallback_enabled(False)
+        try:return function(*args,**kwargs)
+        finally:
+            try:xx.set_num_threads(workers)
+            finally:xx.set_fallback_enabled(fallback)
+    return scoped
+
+
+@native_policy_scope
 def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revision):
     import shutil
     assert os.environ.get('GITHUB_ACTIONS')=='true'
@@ -348,6 +363,7 @@ def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revis
 def seal(*args):raise RuntimeError('use genuine qualified product plus complete normal/scalar preparation; no wheel build/seal shortcut')
 
 
+@native_policy_scope
 def verify(capsule):
     info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-qualified-offline-v3'
     assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST)
@@ -380,6 +396,7 @@ def preparation_barrier(directory,capsule):
     return rows
 
 
+@native_policy_scope
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,nargs='+',default=[1]);parser.add_argument('--repeat',type=int,default=7);parser.add_argument('--target-ms',type=float,default=15.)
@@ -456,12 +473,12 @@ def main(argv=None):
         # Complete original+both-worker validation occurs before entering here.
         # The fresh measurement host performs no builds/pytest and onlyworker1.
         report['status']='measuring';xx.set_num_threads(1)
-        for case in cases:
+        for index,case in enumerate(cases):
             if not case.timed:continue
             left,unchanged_left=timing_callback(resolve(True),case);right,unchanged_right=timing_callback(resolve(),case)
             with warnings.catch_warnings():warnings.simplefilter('ignore');timing=measure(left,right,7,args.target_ms)
             assert unchanged_left() and unchanged_right()
-            report['results'].append(dict(id=case.id,cohort=case.fixture['cohort'],threads=1,slower_than_original=timing['speedup']<1,**timing));save(report,args.output)
+            report['results'].append(dict(id=case.id,cohort=case.fixture['cohort'],threads=1,case_index=index,slower_than_original=timing['speedup']<1,**timing));save(report,args.output)
         integrity();report['summary']=summarize(report['results'],[1],70);report['status']='complete-measurement';return 0
     except Exception as error:
         report['failures'].append(dict(phase=report['status'],type=type(error).__name__,message=str(error),traceback=traceback.format_exc()));report['status']='failed';return 1

@@ -27255,7 +27255,7 @@
       "kind": "measurement",
       "apis": [],
       "owner": "metrics_reductions",
-      "branch": "integration/tv-chambolle-public",
+      "branch": "feature/tv-benchmark-controller-summary",
       "base_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92",
       "owns": [
         "build/tv-chambolle-benchmark-dispatch",
@@ -27274,7 +27274,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Reviewed291-record inline certificate proposal; one dispatch after root acceptance. Three actual product preparations, scalar/normal workers1/4, real barrier, fresh artifact-only one-worker7paired original/native measurements of all70fixed timing IDs. No local operation timings; retain all330reference observations and every regression."
+          "Fresh three-profile preparation, full normal/scalar 400-case validation, barrier sealing and seven paired one-worker measurements for all 70 fixed timing IDs remain required. Both failed predecessor campaigns are retained; source-only lifecycle and reporting fixes are independently reviewed."
         ]
       },
       "parity": {
@@ -27297,7 +27297,10 @@
       "retention": {
         "active_paths": [
           "build/tv-chambolle-benchmark-proposal",
-          "build/tv-chambolle-benchmark-dispatch"
+          "build/tv-chambolle-benchmark-dispatch",
+          "build/tv-chambolle-benchmark-corrected-runs/40097514733",
+          "build/tv-chambolle-benchmark-lifecycle-proposal",
+          "build/tv-chambolle-benchmark-lifecycle-runs"
         ],
         "protected_artifacts": []
       },
@@ -27311,13 +27314,28 @@
             "bytes": 2364,
             "sha256": "926508dde9e6c633a29d1c60e2f585ad27c2a46341a7e6b5178c1abf098fafd0"
           }
+        },
+        {
+          "id": 40097514733,
+          "source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+          "accepted": false,
+          "closure": {
+            "path": "build/tv-chambolle-benchmark-corrected-runs/40097514733/failed-closure-independent-verification.json",
+            "bytes": 19402,
+            "sha256": "5f0fad9019895fffdee7e1c00e0c610551c39bf75b04ddccde179fed333bd549"
+          }
         }
       ],
       "corrected_controller": {
-        "source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+        "source": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
         "qualified_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
         "evidence": "coverage/evidence/tv-chambolle-controller-correction.json",
-        "successor_dispatch_pending": true
+        "successor_dispatch_pending": true,
+        "root_review": {
+          "path": "build/decisions-readiness/TV-controller-lifecycle-summary-root-review/manifest.json",
+          "bytes": 1754,
+          "sha256": "5c2884bec63e57963ffad894adb96efe453aee00558839906090458045cc7b0e"
+        }
       }
     },
     {

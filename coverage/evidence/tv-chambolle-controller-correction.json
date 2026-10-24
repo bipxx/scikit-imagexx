@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "reviewed-controller-correction-performance-pending",
-  "controller_source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+  "controller_source": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
   "unchanged_qualified_product_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
   "qualified_run": 40087742726,
   "root_review": {
@@ -38,5 +38,40 @@
   "numerical_helpers_400_cases_and_70_timing_specs_unchanged": true,
   "public_image_paths_remain": 191,
   "new_products_or_environments_built_locally": 0,
-  "performance_acceptance": false
+  "performance_acceptance": false,
+  "previous_controller_source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+  "lifecycle_summary_root_review": {
+    "path": "build/decisions-readiness/TV-controller-lifecycle-summary-root-review/manifest.json",
+    "bytes": 1754,
+    "sha256": "5c2884bec63e57963ffad894adb96efe453aee00558839906090458045cc7b0e"
+  },
+  "lifecycle_metadata_proof": {
+    "path": "build/tv-controller-lifecycle-proof/manifest.json",
+    "bytes": 245478,
+    "sha256": "ccce9b69ff78f944ab9bca4d4ae0e94a7113d41c420d953315689cf801bb766e"
+  },
+  "summary_metadata_proof": {
+    "path": "build/tv-controller-summary-proof/manifest.json",
+    "bytes": 86266,
+    "sha256": "0c618e345eb5e40977f8fcd9577c9a3237a20fb81193b3b3f4e7267ebbd1e63d"
+  },
+  "failed_corrected_run": {
+    "id": 40097514733,
+    "controller_source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+    "closure": {
+      "path": "build/tv-chambolle-benchmark-corrected-runs/40097514733/failed-closure-independent-verification.json",
+      "bytes": 19402,
+      "sha256": "5f0fad9019895fffdee7e1c00e0c610551c39bf75b04ddccde179fed333bd549"
+    },
+    "job_binding": {
+      "path": "build/tv-chambolle-benchmark-corrected-runs/40097514733/all3-actual-job-failure-binding.json",
+      "bytes": 2265,
+      "sha256": "353bbb7b2ef4e746097cddcc6b981cb1fc25c9854eb7fc924e34678e65919456"
+    },
+    "failure": "All three profiles passed both 3333-check modes and complete 400-case native observations, then the fresh seal entry reached a strict fallback guard before disabling fallback. No measurement ran.",
+    "accepted": false
+  },
+  "lifecycle_summary_behavior": "Scope fallback disabling and restore prior worker/fallback state for fresh seal, verify and main entries; preserve strict rejection of default four workers. Include each timing row original case index so the unchanged shared summary retains all slower cases.",
+  "lifecycle_summary_metadata_checks": 94,
+  "successor_measurement_pending": true
 }
