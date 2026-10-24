@@ -31,11 +31,14 @@ import sys
 import venv
 import warnings
 import zipfile
+import urllib.request
+import urllib.error
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'matrix-default-profile-discovery-v1'
-SOURCE_REVISION = '7b8094fdc321f789c40b3d6f2a4bb25436469bc6'
-SOURCE_HASHES = {'include/skimagexx/matrix_transform.hpp': '6ce5d575ec67b15b9f6e5b22d329e3b08f036e5b67d1e904af1dfa1544bdc131', 'include/skimagexx/image.hpp': 'b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093', 'src/matrix_transform.cpp': '145e6cd3da22adc19492262b96e8f8495c65ae28d56e8b322605c781dedb53ec', 'src/simd_matrix_transform_avx2.cpp': '40fa45e61b30d95050e66a7ab5b44f0dbb960d036a893a34f228da17a1d05578', 'src/image.cpp': '17a224f0aa15be6591867d1a07b5b957ffdcec1983d072f19e48277eafec3452', 'src/simd_avx2.cpp': 'c4afd6790f2f8289eeaf41fd0b1663aa64bd9238a825b273ba48d94af1a7a4ab', 'src/simd.hpp': '848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141', 'src/execution.hpp': '029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d', 'src/bind_matrix_transform.cpp': '5e2be8e54041b8ac921bf9de1072852f384eda316eb4a0b4fbf355fdadd09f93', 'tests/test_matrix_transform_native.cpp': 'fcf197d18c8403d7ce8ba6f9c04356d78fef18558e6fad35d05dafaeb821ab3d', 'tests/test_matrix_transform_contracts.py': 'a2bf6398cc758effe11531cc7aee1add7808903a5f2e098488d243cab2a7b3ea', 'coverage/contracts/matrix-transform.json': '6622a08fb4b420588d22325b3dc72fd053a7e4d689a4ed7ef88fe10fbc44e0f2', 'tools/public_qualification.py': 'feedb92ae0d87bb03d475145d8866b4ade093e1ab2fab7285689f151a3a4c8ed'}
+SOURCE_REVISION = '52066265b89ceecf613c4a5f7d3b73c23b44d58d'
+SOURCE_HASHES = {'include/skimagexx/matrix_transform.hpp': 'd94ba05b8cfa301c496f263a8cbf37586be5b5777281739cc684c177524f58ec', 'include/skimagexx/image.hpp': 'b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093', 'src/matrix_transform.cpp': '99df2df59bb6d90ae919ea423786e3f5bc1d7490aeea9c31c4671f886ce130b4', 'src/simd_matrix_transform_avx2.cpp': 'f920323c029df46b99e617bcc69dfb52123750641cec0c01bc90cf7ddbc5eabf', 'src/image.cpp': '17a224f0aa15be6591867d1a07b5b957ffdcec1983d072f19e48277eafec3452', 'src/simd_avx2.cpp': 'c4afd6790f2f8289eeaf41fd0b1663aa64bd9238a825b273ba48d94af1a7a4ab', 'src/simd.hpp': '848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141', 'src/execution.hpp': '029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d', 'src/bind_matrix_transform.cpp': '0504ab1040e4e0467b872a151f8b3301a0e8777e2bb00cedd1c33f4b8be8582a', 'tests/test_matrix_transform_native.cpp': '466d7645d841dfbbdbaf9c880d72a73f458af528299e2962493ce63e32cc2eb0', 'tests/test_matrix_transform_contracts.py': 'a2bf6398cc758effe11531cc7aee1add7808903a5f2e098488d243cab2a7b3ea', 'coverage/contracts/matrix-transform.json': '6622a08fb4b420588d22325b3dc72fd053a7e4d689a4ed7ef88fe10fbc44e0f2', 'tools/public_qualification.py': 'feedb92ae0d87bb03d475145d8866b4ade093e1ab2fab7285689f151a3a4c8ed'}
 PROFILES = {
     'windows': dict(python='3.13', config='Release'),
     'modern': dict(python='3.13', config='Release'),
@@ -50,12 +53,110 @@ SOURCE_HASHES.update({
     'include/skimagexx/distance.hpp':'3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5',
     'include/skimagexx/local_threshold.hpp':'019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378',
 })
+SOURCE_HASHES.update({
+    'python/skimagexx/_matrix_transform.py': 'deb219b0cfb0f38d04e53d13e09ebfc40196f29de97c1e3c4c3d4273e416e9b8',
+    'tests/test_matrix_transform_native_pipeline.py': '7048150bb9de8b4569c8a54ed86e75fee0e1f8e617179f09e0903a4007b96322',
+    'tests/test_matrix_transform_binding.py': 'd034027026c54a04c17247eb5af20fec19ab2d1ce756b7f11c64a3e90b642a9a',
+})
 FORBIDDEN = ('OPENBLAS_CORETYPE','NPY_DISABLE_CPU_FEATURES','NPY_ENABLE_CPU_FEATURES',
              'MKL_DEBUG_CPU_TYPE','MKL_SERVICE_FORCE_INTEL')
 CONTROLLER_PATHS=('tools/matrix_transform_profiles.py','tests/test_matrix_transform_profiles.py',
                   '.github/workflows/matrix-transform-profiles.yml')
 ENV_KEYS = (*FORBIDDEN,'OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS',
-            'BLIS_NUM_THREADS','OMP_WAIT_POLICY','SKIMAGEXX_DISABLE_SIMD','LD_PRELOAD','LD_LIBRARY_PATH')
+            'BLIS_NUM_THREADS','OMP_WAIT_POLICY','SKIMAGEXX_DISABLE_SIMD','LD_PRELOAD','LD_AUDIT','LD_LIBRARY_PATH')
+
+# Accepted 192-path products provide ONLY genuine package/registry context.
+# Matrix arithmetic always runs the separately compiled frozen520 private module.
+CONTEXT_SOURCE = '3cdd3637ca78343edb2cb554b77269de5f5eaf20'
+CONTEXT_RUN = 40098671228
+CONTEXT = {
+ 'windows': (12562900552,'a6d724f148c181bc67d70e3cb3237760cd0d24bc66783dacf9bdfbd55056e4d1','904578774360e251fb484acc9b8b2459b6043f23689acc72f8c3d63e8ac89c1a','80d37e8c4b3563c2a7c869a0d886091b3f5026c05bebab60d9a7b262c75295bb'),
+ 'modern': (12563321173,'c7ce0cc96e136530a91cd352f6edb60fd407e06af10b2a1a89b9776d8a182ed3','8ec0e15fc4617c616129d86cffda66103ba77407a68bc4859427e1d6781c83e6','65e5d48949f6579ef02fbbaf9eaee9ebf80b159c7535db35b6e2c16418aeadab'),
+ 'minimum': (12562883719,'a559d90a8ec7188c59bdc2b731dc2e2df378c61f85c98a51a25aa48c882083b1','3bee573c9a8b14de45fb0803482398c939763b246e9eb0f27b0a387fc0b4391b','7ed0d849f97881259379baaae8e481adc3330b6633ca8aa44e08750b6f70ec24'),
+}
+
+
+def context_members(data, pins):
+    """Authenticate the entire donor ZIP, then exact envelope and wheel bytes."""
+    require(digest(data)==pins[1],'context artifact digest mismatch')
+    with zipfile.ZipFile(io.BytesIO(data)) as archive:
+        names=archive.namelist()
+        require(len(names)==len(set(names)),'duplicate context ZIP member')
+        require(all(not n.startswith(('/', '\\')) and '..' not in Path(n).parts and '\\' not in n for n in names),'context ZIP path escape')
+        products=[n for n in names if n.endswith('product.json') and digest(archive.read(n))==pins[2]]
+        wheels=[n for n in names if n.endswith('.whl') and digest(archive.read(n))==pins[3]]
+        require(len(products)==len(wheels)==1,'exact accepted context product/wheel absent')
+        return products[0],archive.read(products[0]),wheels[0],archive.read(wheels[0])
+
+
+def verify_project_record(data):
+    with zipfile.ZipFile(io.BytesIO(data)) as archive:
+        names=[n for n in archive.namelist() if not n.endswith('/')]
+        require(len(names)==len(set(names)),'duplicate project wheel member')
+        require(all(not n.startswith(('/', '\\')) and '..' not in Path(n).parts and '\\' not in n for n in names),'project wheel path escape')
+        records=[n for n in names if n.endswith('.dist-info/RECORD')]
+        require(len(records)==1,'project wheel RECORD missing')
+        rows=list(csv.reader(io.StringIO(archive.read(records[0]).decode())))
+        require({r[0] for r in rows}==set(names) and len(rows)==len(names),'project RECORD closure differs')
+        for name,hashed,size in rows:
+            if name==records[0]:require(not hashed and not size,'RECORD self hash');continue
+            raw=archive.read(name)
+            want='sha256='+base64.urlsafe_b64encode(hashlib.sha256(raw).digest()).decode().rstrip('=')
+            require(hashed==want and size==str(len(raw)),'project RECORD bytes mismatch')
+        return {n:dict(bytes=len(archive.read(n)),sha256=digest(archive.read(n))) for n in names}
+
+
+def install_context(profile,out,journal):
+    key='modern' if profile=='debug' else profile;pins=CONTEXT[key]
+    token=os.environ.get('GH_TOKEN');require(token,'read-only Actions token required for exact accepted context')
+    api='https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/'+str(pins[0])
+    headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json'}
+    with urllib.request.urlopen(urllib.request.Request(api,headers=headers)) as response: metadata=json.load(response)
+    require(metadata['workflow_run']['id']==CONTEXT_RUN and metadata['workflow_run']['head_sha']==CONTEXT_SOURCE,'context run/source differs')
+    require(metadata['digest']=='sha256:'+pins[1] and not metadata['expired'],'context remote digest/expiry differs')
+    # Never forward the Actions bearer token to the redirected blob host.
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self,*args,**kwargs):return None
+    try:
+        urllib.request.build_opener(NoRedirect).open(urllib.request.Request(api+'/zip',headers=headers))
+        raise ValueError('expected signed artifact redirect')
+    except urllib.error.HTTPError as error:
+        require(error.code in (301,302,303,307,308),'artifact redirect failed')
+        url=error.headers['Location'];require(url.startswith('https://'),'unsafe artifact redirect')
+    with urllib.request.urlopen(url) as response:data=response.read(512*1024*1024+1)
+    require(len(data)<=512*1024*1024,'context artifact exceeded bounded download')
+    product_name,product,wheel_name,wheel=context_members(data,pins)
+    records=verify_project_record(wheel)
+    folder=out/'context';folder.mkdir();path=folder/Path(wheel_name).name;path.write_bytes(wheel)
+    (folder/'product.json').write_bytes(product)
+    dump(out/'context.json',dict(artifact=metadata,product_member=product_name,wheel_member=wheel_name,
+        wheel_sha256=digest(wheel),project_records=records,scope='Accepted package context only; donor core never supplies matrix arithmetic'))
+    journal.run('install-context',[env_python(out/'runtime-env'),'-m','pip','install','--no-index','--no-deps',path],environment())
+
+
+def verify_context_files(out,profile):
+    out=Path(out);key='modern' if profile=='debug' else profile;pins=CONTEXT[key]
+    files=[p for p in (out/'context').iterdir() if p.is_file()]
+    wheels=[p for p in files if p.suffix=='.whl']
+    require(len(files)==2 and len(wheels)==1,'context file closure differs')
+    require(sha(wheels[0])==pins[3] and sha(out/'context/product.json')==pins[2],'context envelope/wheel pins differ')
+    records=verify_project_record(wheels[0].read_bytes())
+    context=json.loads((out/'context.json').read_text())
+    require(context['project_records']==records and context['wheel_sha256']==pins[3],'context RECORD census differs')
+    require(context['artifact']['id']==pins[0] and context['artifact']['digest']=='sha256:'+pins[1],'context artifact pin differs')
+    require(context['artifact']['workflow_run']['id']==CONTEXT_RUN and context['artifact']['workflow_run']['head_sha']==CONTEXT_SOURCE,'context source/run differs')
+
+
+def validate_pipeline(out,mode):
+    suites=ET.parse(Path(out)/('pipeline-'+mode+'.xml')).getroot()
+    counts={k:sum(int(s.get(k,0)) for s in suites.iter('testsuite')) for k in ('tests','errors','failures','skipped')}
+    require(counts==dict(tests=8894,errors=0,failures=0,skipped=0),'complete unchanged pipeline/direct guards failed')
+    routes=json.loads((Path(out)/('pipeline-routes-'+mode+'.json')).read_text())
+    require(len(routes['rows'])==748 and len(routes['general_pipeline'])==8000,'incomplete 374/4000 workers1/4 pipeline')
+    require(all(r['cpp_completed']==1 and r['expected_sha256']==r['actual_sha256'] for r in routes['general_pipeline']),'general cohort was provider-only or differs')
+    require({r['workers'] for r in routes['general_pipeline']}=={1,4},'missing global-worker pipeline')
+    require(routes['public_registration'] is False and routes['operation_timings']==0,'false public/timing claim')
+    return counts
 
 
 def require(condition, message):
@@ -167,7 +268,7 @@ def case_specs(spec):
 def validate_default_environment(environ):
     for name in FORBIDDEN:
         require(name not in environ,'CPU dispatch override present: '+name)
-    require(not environ.get('LD_PRELOAD'),'preloaded numerical/runtime code is not default dispatch')
+    require(not environ.get('LD_PRELOAD') and not environ.get('LD_AUDIT'),'preloaded numerical/runtime code is not default dispatch')
 
 
 def environment(mode=None):
@@ -184,6 +285,8 @@ def environment(mode=None):
 class Journal:
     def __init__(self,out):self.out=Path(out);self.count=len(list(self.out.glob('command-*.json')))
     def run(self,label,argv,env=None):
+        # A sequential child may have appended its own pytest command record.
+        self.count=max(self.count,len(list(self.out.glob('command-*.json'))))
         self.count+=1;stem=self.out/('command-%03d-%s'%(self.count,label))
         record=dict(label=label,argv=list(map(str,argv)),utc=datetime.now(timezone.utc).isoformat(),
             environment={k:(env or os.environ).get(k) for k in ENV_KEYS})
@@ -414,6 +517,10 @@ def prepare(source,revision,profile,out):
     controller={n:git(ROOT,'show',controller_revision+':'+n) for n in CONTROLLER_PATHS}
     require(all(canonical((ROOT/n).read_bytes())==canonical(b) for n,b in controller.items()),'controller physical bytes differ')
     dump(out/'controller.json',dict(revision=controller_revision,raw_git_members={n:digest(b) for n,b in controller.items()}))
+    for name,raw in blobs.items():
+        p=out/'input-source'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+    for name,raw in controller.items():
+        p=out/'input-controller'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
     dump(out/'bootstrap.json',dict(python=sys.version,executable=file_record(sys.executable),
         base=file_record(getattr(sys,'_base_executable',sys.executable)),environment={k:os.environ.get(k) for k in ENV_KEYS}))
     for name in ('build-env','runtime-env'):
@@ -467,11 +574,57 @@ def prepare(source,revision,profile,out):
         dump(out/'disassembler.json',file_record(bins[-1]))
         journal.run('module-disassembly',[bins[-1],'/DISASM',modules[0]],environment())
     py=env_python(out/'runtime-env')
+    install_context(profile,out,journal)
+    failures=[]
     for mode in ('normal','scalar'):
-        journal.run('native-controls-'+mode,[native[0]],environment(mode))
-        journal.run('discover-'+mode,[py,Path(__file__).resolve(),'_child','--profile',profile,'--source-root',source,
-            '--source-revision',revision,'--output',out,'--mode',mode],environment(mode))
+        for label,argv in (
+            ('native-controls',[native[0]]),
+            ('discover',[py,Path(__file__).resolve(),'_child','--profile',profile,'--source-root',source,
+                '--source-revision',revision,'--output',out,'--mode',mode]),
+            ('authenticated-pipeline',[py,Path(__file__).resolve(),'_pipeline','--profile',profile,'--source-root',source,
+                '--source-revision',revision,'--output',out,'--mode',mode])):
+            try:journal.run(label+'-'+mode,argv,environment(mode))
+            except Exception as error:failures.append(dict(mode=mode,scope=label,error=str(error)))
+    dump(out/'terminal-scopes.json',dict(failures=failures,all_commands_terminal=True))
     source_state(source,revision,True)
+    require(not failures,'one or more private runtime scopes failed; all raw commands retained')
+
+
+def pipeline(source,revision,profile,out,mode):
+    """Require natural admission BEFORE running unchanged private tests."""
+    hosted();source_state(source,revision,True);validate_default_environment(os.environ)
+    import numpy as np
+    import skimagexx as xx
+    build=json.loads((out/'build.json').read_text());modulepath=Path(build['module']['path'])
+    require(sha(modulepath)==build['module']['sha256'],'private module changed')
+    backend=load_module(modulepath)
+    require(backend.matrix_transform_v2_interface=='matrix-transform-math-v2' and backend.matrix_transform_v2_capabilities==63,'strict v2 interface missing')
+    require(inspect.isbuiltin(backend.matrix_transform_run_v2) and backend.matrix_transform_run_v2.__module__==backend.__name__,'v2 is not owned builtin')
+    require(backend.get_num_threads()==1 and xx._core is not backend,'one private worker owner / distinct genuine context required')
+    site=Path(np.__file__).resolve().parent.parent
+    require(Path(xx.__file__).resolve().parent==site/'skimagexx','package origin shadowed')
+    context=json.loads((out/'context.json').read_text())
+    for name,row in context['project_records'].items():
+        if name.startswith('skimagexx/'):
+            p=site/name
+            require(p.is_file() and p.stat().st_size==row['bytes'] and sha(p)==row['sha256'],'accepted package context bytes changed')
+    spec=importlib.util.spec_from_file_location('skimagexx._matrix_runtime_probe',source/'python/skimagexx/_matrix_transform.py')
+    shell=importlib.util.module_from_spec(spec);spec.loader.exec_module(shell);shell._core=backend
+    version=shell._runtime_profile()
+    metadata=dict(numpy=np.__version__,actual_corename=shell._RUNTIME_CORENAME,natural_runtime_certificate=version,
+        source_revision=revision,private_module=file_record(modulepath),donor_core=file_record(xx._core.__file__),
+        donor_package=file_record(xx.__file__),private_default_workers=backend.get_num_threads(),
+        environment={k:os.environ.get(k) for k in ENV_KEYS},public_acceptance=False,
+        scope='Actual default runtime, frozen strict v2 private module; genuine accepted donor package context only')
+    dump(out/('pipeline-runtime-'+mode+'.json'),metadata)
+    require(version==np.__version__ and shell._checked_entry(6) is backend.matrix_transform_run_v2,'actual runtime is unknown/interposed/unverifiable; provider-only results cannot pass')
+    env=environment(mode);env['MATRIX_TRANSFORM_PRIVATE_BACKEND']=str(modulepath)
+    env['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/('pipeline-routes-'+mode+'.json'))
+    Journal(out).run('full-pipeline-tests-'+mode,[sys.executable,'-m','pytest',
+        source/'tests/test_matrix_transform_native_pipeline.py',source/'tests/test_matrix_transform_binding.py',
+        '--capture=sys','-q','-o','cache_dir='+str(out/('pytest-cache-'+mode)),
+        '--basetemp',out/('pytest-temp-'+mode),'--junitxml',out/('pipeline-'+mode+'.xml')],env)
+    dump(out/('pipeline-counts-'+mode+'.json'),validate_pipeline(out,mode))
 
 
 def layout(np,a,name):
@@ -632,8 +785,10 @@ def seal(out):
     """Copy only durable research evidence; never whole environments/caches."""
     artifact=out/'artifact';artifact.mkdir(exist_ok=False)
     source=Path(json.loads((out/'request.json').read_text())['source_root'])
+    verify_context_files(out,json.loads((out/'request.json').read_text())['profile'])
     spec=cohort_spec(git(source,'show',SOURCE_REVISION+':tests/test_matrix_transform_native.cpp'))
     for mode in ('normal','scalar'):
+        validate_pipeline(out,mode)
         result=json.loads((out/('result-'+mode+'.json')).read_text());validate_discovery(result)
         validate_rows(out/('rows-'+mode+'.jsonl.gz'),result,spec,mode)
     build=json.loads((out/'build.json').read_text())
@@ -641,7 +796,8 @@ def seal(out):
         p=Path(build[key]['path']);require(sha(p)==build[key]['sha256'],'compiled bytes changed')
         shutil.copy2(p,artifact/p.name)
     for p in out.iterdir():
-        if p.is_file() and (p.suffix in ('.json','.stdout','.stderr','.gz')):shutil.copy2(p,artifact/p.name)
+        if p.is_file() and (p.suffix in ('.json','.stdout','.stderr','.gz','.xml')):shutil.copy2(p,artifact/p.name)
+    shutil.copytree(out/'context',artifact/'context')
     for folder in ('harness',):shutil.copytree(out/folder,artifact/folder)
     controller=json.loads((out/'controller.json').read_text())
     for name,want in controller['raw_git_members'].items():
@@ -689,8 +845,10 @@ def verify(artifact):
     validate_source_records({n:digest(canonical((artifact/'source'/n).read_bytes())) for n in SOURCE_HASHES})
     controller=json.loads((artifact/'controller.json').read_text())
     validate_controller_members(artifact/'controller',controller['raw_git_members'])
+    verify_context_files(artifact,json.loads((artifact/'request.json').read_text())['profile'])
     spec=cohort_spec((artifact/'source/tests/test_matrix_transform_native.cpp').read_bytes())
     for mode in ('normal','scalar'):
+        validate_pipeline(artifact,mode)
         result=json.loads((artifact/('result-'+mode+'.json')).read_text());validate_discovery(result)
         validate_rows(artifact/('rows-'+mode+'.jsonl.gz'),result,spec,mode)
     commands=[json.loads(p.read_text()) for p in artifact.glob('command-*.json')]
@@ -701,7 +859,7 @@ def verify(artifact):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage',choices=['plan','all','verify','_child'])
+    parser.add_argument('stage',choices=['plan','all','verify','_child','_pipeline'])
     parser.add_argument('--source-root',type=Path,default=ROOT)
     parser.add_argument('--source-revision',default=os.environ.get('MATRIX_SOURCE_REVISION'))
     parser.add_argument('--profile',choices=PROFILES,default='modern')
@@ -716,8 +874,9 @@ def main(argv=None):
         print(json.dumps(dict(schema=SCHEMA,source=state,pins=pinned_config(blobs,args.profile),
             cases=len(list(case_specs(cohort_spec(blobs['tests/test_matrix_transform_native.cpp'])))),
             public_acceptance=False,operation_timings=0,execution='plan only; all requires clean exact checkout and hosted grant context'),indent=2));return
-    if args.stage=='_child':
-        require(args.mode is not None,'missing explicit process mode');child(source,args.source_revision,args.profile,out,args.mode);return
+    if args.stage in ('_child','_pipeline'):
+        require(args.mode is not None,'missing explicit process mode')
+        (child if args.stage=='_child' else pipeline)(source,args.source_revision,args.profile,out,args.mode);return
     request=dict(source_root=str(source),source_revision=args.source_revision,profile=args.profile,
                  public_acceptance=False,workflow_run=os.environ.get('GITHUB_RUN_ID'))
     try:
