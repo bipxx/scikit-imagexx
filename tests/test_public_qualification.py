@@ -172,17 +172,43 @@ def test_absent_capsule_fails_without_running_fixtures(tmp_path):
         q.corpus_command(Path(sys.executable),'statistics',tmp_path,tmp_path/'out.json')
 
 
-@pytest.mark.parametrize('mutation', ['timed','reference','partial','failed','aux'])
-def test_corpus_guard_cannot_accept_weakened_report(tmp_path,mutation):
-    report=dict(status='complete-parity-check',checks=[{}]*2552,failures=[],results=[],alias_checks=[{}]*9,provider_checks=[{}]*54,policy_checks=[{}]*54,
+def valid_percentile_report():
+    return dict(status='complete-parity-check',checks=[dict(status='passed',actual_by_workers={'1':{},'4':{}}) for _ in range(2552)],failures=[],results=[],
+                alias_checks=[dict(reference_identity=True,native_identity=None) for _ in range(9)],
+                provider_checks=[dict(actual_by_workers={'1':{},'4':{}}) for _ in range(54)],
+                policy_checks=[dict(actual_by_workers={'1':{},'4':{}}) for _ in range(54)],
                 metadata=dict(check_only=True,reference_only=False,requested_workers=[1,4]))
+
+
+def test_complete_synthetic_report_passes_metadata_guard_only(tmp_path):
+    path=tmp_path/'report.json';path.write_text(json.dumps(valid_percentile_report()))
+    q.validate_corpus(path,'percentile')
+
+
+@pytest.mark.parametrize('mutation', ['timed','reference','partial','failed','aux','worker','rowstatus','private-native'])
+def test_corpus_guard_cannot_accept_weakened_report(tmp_path,mutation):
+    report=valid_percentile_report()
     if mutation=='timed':report['results']=[{}]
     elif mutation=='reference':report['metadata']['reference_only']=True
     elif mutation=='partial':report['checks'].pop()
     elif mutation=='failed':report['failures']=[{}]
-    else:report['policy_checks'].pop()
+    elif mutation=='aux':report['policy_checks'].pop()
+    elif mutation=='worker':report['checks'][0]['actual_by_workers'].pop('4')
+    elif mutation=='rowstatus':report['checks'][0]['status']='pending'
+    else:report['alias_checks'][0]['native_identity']=True
     path=tmp_path/'report.json';path.write_text(json.dumps(report))
     with pytest.raises(q.QualificationError):q.validate_corpus(path,'percentile')
+
+
+@pytest.mark.parametrize('expected_error',[False,True])
+def test_metrics_case_requires_both_success_or_error_observations(tmp_path,expected_error):
+    row=dict(status='passed',expected_error=expected_error,actual_scalar_by_workers={} if expected_error else {'1':{},'4':{}},error_parity_workers=[1,4] if expected_error else [])
+    report=dict(status='complete-parity-check',checks=[dict(row) for _ in range(1231)],failures=[],results=[],metadata=dict(check_only=True,reference_only=False,requested_workers=[1,4]))
+    path=tmp_path/'metrics.json';path.write_text(json.dumps(report));q.validate_metrics(path)
+    if expected_error:report['checks'][0]['error_parity_workers']=[1]
+    else:report['checks'][0]['actual_scalar_by_workers']={'1':{}}
+    path.write_text(json.dumps(report))
+    with pytest.raises(q.QualificationError,match='both workers'):q.validate_metrics(path)
 
 
 def test_journal_retains_failure_and_forbids_restart(tmp_path):

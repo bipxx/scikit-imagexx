@@ -702,8 +702,25 @@ def validate_corpus(path, family):
     require(report.get('status') == 'complete-parity-check' and not report.get('failures') and not report.get('results'), 'fixed corpus incomplete/failed/or timed')
     require(len(report['checks']) == CORPORA[family][1], 'fixed corpus count changed')
     require(report['metadata']['check_only'] is True and report['metadata']['reference_only'] is False and report['metadata']['requested_workers'] == [1,4], 'corpus must be actual public untimed1/4')
+    field = 'by_workers' if family == 'consumers' else 'actual_by_workers'
+    require(all(row.get('status') == 'passed' and set(row.get(field, {})) == {'1','4'} for row in report['checks']), 'every fixed case must pass both worker configurations')
     if family == 'percentile':
         require([len(report[k]) for k in ('alias_checks','provider_checks','policy_checks')] == [9,54,54], 'R5 auxiliary117 contract changed')
+        require(all(set(row.get('actual_by_workers',{})) == {'1','4'} for key in ('provider_checks','policy_checks') for row in report[key]), 'R5 provider/policy workers incomplete')
+        require(all(row.get('reference_identity') is True and row.get('native_identity') is None for row in report['alias_checks']), 'R5 private reference identities must not count as native aliases')
+
+
+def validate_metrics(path):
+    report = json.loads(path.read_text())
+    require(report.get('status') == 'complete-parity-check' and not report.get('failures') and not report.get('results') and len(report.get('checks',[])) == 1231, 'metrics fixed1231 failed/not untimed')
+    meta = report['metadata']
+    require(meta['check_only'] is True and meta['reference_only'] is False and meta['requested_workers'] == [1,4], 'metrics must be actual public untimed1/4')
+    for row in report['checks']:
+        require(row.get('status') == 'passed', 'metrics case not passed')
+        if row.get('expected_error'):
+            require(row.get('error_parity_workers') == [1,4], 'metrics expected error not checked at both workers')
+        else:
+            require(set(row.get('actual_scalar_by_workers',{})) == {'1','4'}, 'metrics scalar not checked at both workers')
 
 
 def sdk(out, state, journal):
@@ -780,8 +797,7 @@ def seal(out):
             counts[mode + '-' + group] = row
         for family in CORPORA:
             validate_corpus(out / (mode + '-' + family + '-corpus.json'), family)
-        metric = json.loads((out / (mode + '-metrics-corpus.json')).read_text())
-        require(metric.get('status') == 'complete-parity-check' and not metric['failures'] and not metric['results'] and len(metric['checks']) == 1231, 'metrics fixed1231 failed/not untimed')
+        validate_metrics(out / (mode + '-metrics-corpus.json'))
     require(len([r for r in commands if r['label'].startswith('sdk-')]) == 5, 'SDK commands incomplete')
     records = {p.relative_to(out).as_posix(): dict(bytes=p.stat().st_size,sha256=sha(p)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'}
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
