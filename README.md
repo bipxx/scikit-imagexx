@@ -6,7 +6,7 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has scoped parity tests. All 171 partially native
+Every native public function has scoped parity tests. All 190 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
@@ -25,17 +25,22 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. There are currently **171 partially native
+The reference is scikit-image **0.26.0**. There are currently **190 partially native
 image API paths and three metadata helpers**. The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 298 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 279 paths remain upstream-only.
 Four transform classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
 across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
+
+This integration branch declares 190 image paths for fresh qualification. The
+[last accepted main checkpoint](coverage/evidence/public-wave10.json) contains
+186 image paths. Local Otsu and majority add four canonical/generic paths here;
+whole-product, SDK and controlled performance acceptance for this source are pending.
 
 | Function | Supported inputs and options | Numerical contract |
 |---|---|---|
