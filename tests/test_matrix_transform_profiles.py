@@ -430,3 +430,25 @@ def test_failed_host_upload_retains_raw_xml_sources_and_exact_donor():
     text=(ROOT/'.github/workflows/matrix-transform-profiles.yml').read_text()
     assert 'actions: read' in text and 'GH_TOKEN: ${{ github.token }}' in text
     assert '/*.xml' in text and '/input-source/**' in text and '/context/**' in text
+
+
+@pytest.mark.parametrize('mutation',(None,'wheel','envelope','records','artifact'))
+def test_independent_donor_reverification_is_not_just_manifest_trust(tmp_path,monkeypatch,mutation):
+    payload=b'inert-source';record='pkg.dist-info/RECORD';name='skimagexx/__init__.py'
+    hashed='sha256='+base64.urlsafe_b64encode(hashlib.sha256(payload).digest()).decode().rstrip('=')
+    buf=io.BytesIO()
+    with zipfile.ZipFile(buf,'w') as z:
+        z.writestr(name,payload);z.writestr(record,f'{name},{hashed},{len(payload)}\n{record},,\n')
+    raw=buf.getvalue();product=b'envelope';pins=(1,'0'*64,c.digest(product),c.digest(raw))
+    monkeypatch.setitem(c.CONTEXT,'modern',pins)
+    folder=tmp_path/'context';folder.mkdir();(folder/'project.whl').write_bytes(raw);(folder/'product.json').write_bytes(product)
+    d=dict(project_records=c.verify_project_record(raw),wheel_sha256=pins[3],artifact=dict(id=1,digest='sha256:'+pins[1],
+        workflow_run=dict(id=c.CONTEXT_RUN,head_sha=c.CONTEXT_SOURCE)))
+    if mutation=='wheel':(folder/'project.whl').write_bytes(b'changed')
+    elif mutation=='envelope':(folder/'product.json').write_bytes(b'changed')
+    elif mutation=='records':d['project_records'].pop(name)
+    elif mutation=='artifact':d['artifact']['id']=2
+    (tmp_path/'context.json').write_text(json.dumps(d))
+    if mutation is None:c.verify_context_files(tmp_path,'debug')
+    else:
+        with pytest.raises(ValueError):c.verify_context_files(tmp_path,'modern')

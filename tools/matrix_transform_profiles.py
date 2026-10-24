@@ -134,6 +134,19 @@ def install_context(profile,out,journal):
     journal.run('install-context',[env_python(out/'runtime-env'),'-m','pip','install','--no-index','--no-deps',path],environment())
 
 
+def verify_context_files(out,profile):
+    out=Path(out);key='modern' if profile=='debug' else profile;pins=CONTEXT[key]
+    files=[p for p in (out/'context').iterdir() if p.is_file()]
+    wheels=[p for p in files if p.suffix=='.whl']
+    require(len(files)==2 and len(wheels)==1,'context file closure differs')
+    require(sha(wheels[0])==pins[3] and sha(out/'context/product.json')==pins[2],'context envelope/wheel pins differ')
+    records=verify_project_record(wheels[0].read_bytes())
+    context=json.loads((out/'context.json').read_text())
+    require(context['project_records']==records and context['wheel_sha256']==pins[3],'context RECORD census differs')
+    require(context['artifact']['id']==pins[0] and context['artifact']['digest']=='sha256:'+pins[1],'context artifact pin differs')
+    require(context['artifact']['workflow_run']['id']==CONTEXT_RUN and context['artifact']['workflow_run']['head_sha']==CONTEXT_SOURCE,'context source/run differs')
+
+
 def validate_pipeline(out,mode):
     suites=ET.parse(Path(out)/('pipeline-'+mode+'.xml')).getroot()
     counts={k:sum(int(s.get(k,0)) for s in suites.iter('testsuite')) for k in ('tests','errors','failures','skipped')}
@@ -772,6 +785,7 @@ def seal(out):
     """Copy only durable research evidence; never whole environments/caches."""
     artifact=out/'artifact';artifact.mkdir(exist_ok=False)
     source=Path(json.loads((out/'request.json').read_text())['source_root'])
+    verify_context_files(out,json.loads((out/'request.json').read_text())['profile'])
     spec=cohort_spec(git(source,'show',SOURCE_REVISION+':tests/test_matrix_transform_native.cpp'))
     for mode in ('normal','scalar'):
         validate_pipeline(out,mode)
@@ -831,6 +845,7 @@ def verify(artifact):
     validate_source_records({n:digest(canonical((artifact/'source'/n).read_bytes())) for n in SOURCE_HASHES})
     controller=json.loads((artifact/'controller.json').read_text())
     validate_controller_members(artifact/'controller',controller['raw_git_members'])
+    verify_context_files(artifact,json.loads((artifact/'request.json').read_text())['profile'])
     spec=cohort_spec((artifact/'source/tests/test_matrix_transform_native.cpp').read_bytes())
     for mode in ('normal','scalar'):
         validate_pipeline(artifact,mode)
