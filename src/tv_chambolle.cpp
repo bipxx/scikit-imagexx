@@ -79,6 +79,25 @@ std::ptrdiff_t offset(const Layout& r,std::size_t i) {
     for(std::size_t a=0;a<r.rank;++a)result+=std::ptrdiff_t((i/r.steps[a])%r.shape[a])*r.strides[a];
     return result;
 }
+// Logical address transport only; arithmetic and the axis/element visitation
+// order below remain unchanged. Carry never forms a one-past stride product.
+struct InputCursor {
+    const Layout& layout;
+    std::array<std::size_t,4> coordinate{};
+    std::ptrdiff_t byte;
+    InputCursor(const Layout& value,std::size_t index):layout(value),byte(offset(value,index)) {
+        for(std::size_t a=0;a<layout.rank;++a)
+            coordinate[a]=(index/layout.steps[a])%layout.shape[a];
+    }
+    void advance() {
+        for(std::size_t a=layout.rank;a-->0;) {
+            if(coordinate[a]+1<layout.shape[a]) {
+                ++coordinate[a];byte+=layout.strides[a];return;
+            }
+            byte-=std::ptrdiff_t(coordinate[a])*layout.strides[a];coordinate[a]=0;
+        }
+    }
+};
 template<class T> T read(const void* p,std::ptrdiff_t byte) {T x;std::memcpy(&x,static_cast<const unsigned char*>(p)+byte,sizeof(T));return x;}
 template<class T> void write(void* p,std::ptrdiff_t byte,T x) {std::memcpy(static_cast<unsigned char*>(p)+byte,&x,sizeof(T));}
 template<class T> void divergence(const TvConstPlanes& p,const TvView& d,const Layout& r,const Layout& out) {
@@ -116,9 +135,18 @@ template<class T> void gradient(const TvConstView& out,const TvPlanes& g,const L
                     i+=simd::tv_gradient(first,destination,r.steps[a],stop-i,std::is_same_v<T,float>);
                 }
 #endif
-                for(;i<stop;++i) {
-                    const T left=read<T>(out.data,offset(input,i)),right=read<T>(out.data,offset(input,i+r.steps[a]));
-                    write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
+                if(!input.contiguous && i<stop) {
+                    InputCursor left_cursor(input,i),right_cursor(input,i+r.steps[a]);
+                    for(;i<stop;++i) {
+                        const T left=read<T>(out.data,left_cursor.byte),right=read<T>(out.data,right_cursor.byte);
+                        write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
+                        if(i+1<stop){left_cursor.advance();right_cursor.advance();}
+                    }
+                } else {
+                    for(;i<stop;++i) {
+                        const T left=read<T>(out.data,offset(input,i)),right=read<T>(out.data,offset(input,i+r.steps[a]));
+                        write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
+                    }
                 }
             }
         }

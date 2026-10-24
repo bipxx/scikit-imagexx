@@ -63,6 +63,27 @@ std::ptrdiff_t offset(const InputLayout& layout,std::size_t index) {
         result+=std::ptrdiff_t((index/layout.steps[axis])%layout.shape[axis])*layout.stride[axis];
     return result;
 }
+// Advance through the same logical C-order indices without dividing at every
+// load. Extent validation precedes every use. Carry subtracts the current
+// coordinate contribution before changing an outer axis, so no transient
+// one-past byte offset can overflow for a certified negative/large stride.
+struct InputCursor {
+    const InputLayout& layout;
+    std::array<std::size_t,4> coordinate{};
+    std::ptrdiff_t byte;
+    InputCursor(const InputLayout& value,std::size_t index):layout(value),byte(offset(value,index)) {
+        for(std::size_t a=0;a<layout.rank;++a)
+            coordinate[a]=(index/layout.steps[a])%layout.shape[a];
+    }
+    void advance() {
+        for(std::size_t a=layout.rank;a-->0;) {
+            if(coordinate[a]+1<layout.shape[a]) {
+                ++coordinate[a];byte+=layout.stride[a];return;
+            }
+            byte-=std::ptrdiff_t(coordinate[a])*layout.stride[a];coordinate[a]=0;
+        }
+    }
+};
 template<class T> T load(const void* pointer,std::ptrdiff_t bytes) {
     T value;std::memcpy(&value,static_cast<const char*>(pointer)+bytes,sizeof(T));return value;
 }
@@ -96,8 +117,16 @@ bool alias(const TvPlanes& view,const TvConstPlanes& read) {
 template<class T> bool bounded_input(const TvConstView& input,const InputLayout& layout) {
     constexpr std::uint64_t maximum=sizeof(T)==4?0x49800000ull:0x4130000000000000ull;
     constexpr std::uint64_t sign=sizeof(T)==4?0x80000000ull:0x8000000000000000ull;
-    for(std::size_t i=0;i<layout.n;++i)
-        if((bits(load<T>(input.data,offset(layout,i)))&~sign)>maximum)return false;
+    if(layout.contiguous) {
+        for(std::size_t i=0;i<layout.n;++i)
+            if((bits(load<T>(input.data,offset(layout,i)))&~sign)>maximum)return false;
+    } else {
+        InputCursor cursor(layout,0);
+        for(std::size_t i=0;i<layout.n;++i) {
+            if((bits(load<T>(input.data,cursor.byte))&~sign)>maximum)return false;
+            if(i+1<layout.n)cursor.advance();
+        }
+    }
     return true;
 }
 template<class T> T scalar(std::uint64_t raw) {
@@ -121,7 +150,15 @@ template<class T,class Energy> TvDenoiseResult run(const TvConstView& input,
         if(iteration) {
             tv_chambolle_divergence_into(w.p_read,w.d);
             detail::partition(layout.n,detail::active_workers(layout.n),[&](std::size_t begin,std::size_t end,std::size_t){
-                for(std::size_t i=begin;i<end;++i)out[i]=T(load<T>(input.data,offset(layout,i))+d[i]);
+                if(layout.contiguous) {
+                    for(std::size_t i=begin;i<end;++i)out[i]=T(load<T>(input.data,offset(layout,i))+d[i]);
+                } else if(begin<end) {
+                    InputCursor cursor(layout,begin);
+                    for(std::size_t i=begin;i<end;++i) {
+                        out[i]=T(load<T>(input.data,cursor.byte)+d[i]);
+                        if(i+1<end)cursor.advance();
+                    }
+                }
             });
         }
         tv_square_contiguous_into({w.d.data,layout.n,type},w.squared.data);
