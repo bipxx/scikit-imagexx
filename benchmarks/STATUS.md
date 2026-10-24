@@ -1,8 +1,8 @@
 # Performance verification
 
-The current API inventory has 190 partially native image paths, three metadata
-helpers, four partially native transform classes and 279 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 190 image paths; measured
+The current API inventory has 191 partially native image paths, three metadata
+helpers, four partially native transform classes and 278 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 191 image paths; measured
 acceptance remains specific to each report's source revision and workload.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
@@ -57,12 +57,12 @@ Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
 scans remain bottlenecks. Reversed metrics transport has completed its private
 checks; actual cumulative public/performance qualification remains pending.
 
-The accepted [whole11 products](../coverage/evidence/public-wave11.json) cover
-190 partially native image paths, including the percentile/bilateral families
-and local Otsu/majority aliases. The exact before/after sources pass 649,056 and
-672,856 checks across four normal/scalar runtime profiles, with 224 combined
-installed-SDK checks. Earlier whole7b/failed qualification records remain
-historical evidence, rather than current acceptance.
+The accepted [whole12 products](../coverage/evidence/public-wave12.json) cover
+191 partially native image paths, including TV-Chambolle, the percentile/bilateral
+families and local Otsu/majority aliases. Source `f87120c` passes 698,448 mixed
+public/reference/metadata checks across four normal/scalar runtime profiles,
+with 136 installed-SDK client checks. Its source includes the accepted rank
+counts optimization. Earlier failed qualification records remain unchanged.
 
 The [controlled R4 counts comparison](rank-statistics-counts-comparison.md)
 measures the exact `66860ae` to `94d2d3f` 190-path pair at one worker. All three
@@ -72,8 +72,9 @@ improves 1.239x/1.159x/1.181x versus prior C++, while all 102/106/145 slower-pri
 and 43/24/30 slower-upstream observations remain in the full CSV and permanent
 raw ZIP. Unchanged scalar API fluctuations are not attributed to this patch.
 
-The joined TV candidate `f87120c` targets 191 image paths in fresh qualification
-run40087742726; acceptance waits for the complete retained-product audit.
+The joined TV source `f87120c`, run40087742726, has passed the complete retained
+product audit and scoped parity admission. Its fresh one-worker original-library
+benchmark remains pending; parity is not a speed claim.
 Matrix and Bregman kernel/binding proofs are scoped private evidence. Max-tree
 reference/native work advances six more APIs without public registration yet.
 

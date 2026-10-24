@@ -50,16 +50,22 @@ def wheel(path, name, members):
 
 
 @pytest.fixture
-def synthetic(tmp_path, monkeypatch):
+def synthetic(tmp_path, monkeypatch, request):
     """Tiny inert wheel/source metadata; identity stub is NOT native evidence."""
     q = tmp_path / 'qualification'
     q.mkdir()
     source_root = tmp_path / 'frozen-controller-stubs'
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
+    scope=getattr(request,'param','rank14')
+    assert scope in ('rank14','tv17')
     families = ['synthetic-family-' + str(i) for i in range(14)]
+    if scope=='tv17':families += ['tv_chambolle','tv_reductions','tv_denoise']
+    expected_sdk=62 if scope=='tv17' else 59
+    expected_members=108 if scope=='tv17' else 104
+    expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
-    source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n').encode()
+    source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+("PRODUCT_SCOPE='tv17'\nPRODUCT_MEMBERS=108\nSDK_MEMBERS=62\n" if scope=='tv17' else '')).encode()
     cfg = {'source_text_sha256': {'tools/rank_statistics_products.py': body_hash(source['tools/rank_statistics_products.py'])},
            'case_contract_sha256': '1' * 64,
            'profiles': {'modern': {'numpy': '2.5.4', 'scipy': '1.18.1'}}}
@@ -69,6 +75,9 @@ def synthetic(tmp_path, monkeypatch):
     source['python/skimagexx/_rank.py'] = b'# inert Python metadata\n'
     source['include/skimagexx/rank.hpp'] = b'// inert installed header\n'
     source['include/skimagexx/image.hpp'] = b'// inert installed header\n'
+    if scope=='tv17':
+        for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
+        source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -85,9 +94,15 @@ def synthetic(tmp_path, monkeypatch):
     sdk['lib/libskimagexx.a'] = b'NOT A LIBRARY: synthetic metadata only'
     sdk['lib/cmake/skimagexx/skimagexxConfig.cmake'] = b'# inert synthetic metadata'
     sdk.update({'share/licenses/scikit-imagexx/unit-' + str(i): b'unit' for i in range(55)})
-    assert len(sdk) == 59
+    assert len(sdk) == expected_sdk
     for name in ('numpy', 'scipy', 'scikit-image', 'scikit-imagexx'):
-        members = dict(sdk, **{'skimagexx/_rank.py': source['python/skimagexx/_rank.py']}) if name == 'scikit-imagexx' else {'unit.txt': b'no executable code'}
+        members={'unit.txt': b'no executable code'}
+        if name=='scikit-imagexx':
+            members=dict(sdk)
+            members.update({n.removeprefix('python/'):b for n,b in source.items() if n.startswith('python/skimagexx/')})
+            members['skimagexx/_core.synthetic.so']=b'NOT A NATIVE LIBRARY: synthetic metadata only'
+            for i in range(expected_members-2-len(members)):
+                members['scikit_imagexx-1.0.dist-info/unit-padding-'+str(i)]=b'inert metadata'
         wheel(wheels / (name + '.whl'), name, members)
     records = {f.name: {k: v for k, v in c.verify_wheel(f).items() if k in ('name', 'version', 'sha256')} for f in wheels.iterdir()}
     (capsule / 'runtime-lock.txt').write_bytes(b'synthetic metadata lock\n')
@@ -104,7 +119,7 @@ def synthetic(tmp_path, monkeypatch):
          'files_sha256': p.tree(capsule)})
     (q / 'product-wheels').mkdir()
     (q / 'product-wheels/scikit-imagexx.whl').write_bytes((wheels / 'scikit-imagexx.whl').read_bytes())
-    dump(q / 'sdk.json', {'families': families, 'checks': 28, 'SDK_sha256': sdk_hashes})
+    dump(q / 'sdk.json', {'families': families, 'checks': expected_checks, 'SDK_sha256': sdk_hashes})
     dump(q / 'package.json', {'wheel_sha256': p.sha(wheels / 'scikit-imagexx.whl')})
     evidence = q / 'build-identity-evidence/unit/0-compiler.txt'
     evidence.parent.mkdir(parents=True)
@@ -117,9 +132,9 @@ def synthetic(tmp_path, monkeypatch):
                'facts_sha256': p.sha(q / 'build-identity-facts.json')}
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
-             'failures': [], 'no_timing': True, 'SDK_checks': 28, 'build_identity': binding,
-             'expected_registry': {'image_count': 190, 'metadata_count': 3, 'registered_count': 193,
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]}}
+             'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
+             'expected_registry': {'image_count': 191 if scope=='tv17' else 190, 'metadata_count': 3, 'registered_count': 194 if scope=='tv17' else 193,
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope=='tv17' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -345,3 +360,53 @@ def test_workflow_stages_only_after_independent_verify_and_retains_raw_artifact(
     assert "if: always()" in text[upload:raw]
     assert '| tee \'build/qualification-verify-${{ matrix.profile }}.json\'' in text
     assert 'include-hidden-files: true' in text[upload:raw]
+
+
+
+@pytest.mark.parametrize('synthetic',['tv17'],indirect=True)
+def test_tv_full108_62_sdk17_stage_remains_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==62 and len(sdk['families'])==17 and sdk['checks']==34
+    product=c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')
+    assert len(product['members'])==108
+    assert p.qualification_scope(s.output/'source')['name']=='tv17'
+    assert not any(n in p.load(s.output/'product.json') for n in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('failure',['missing-header','wrong-product-count','wrong-sdk-count','wrong-family',
+                                   'duplicate-family','missing-scope','original-with-new-count'])
+def test_authenticated_scope_literals_cannot_downgrade_or_omit_tv(tmp_path,failure):
+    source=tmp_path/'source';(source/'tools').mkdir(parents=True)
+    families=tuple('original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='tv17',PRODUCT_MEMBERS=108,SDK_MEMBERS=62)
+    if failure=='missing-header':values['SDK_MEMBERS']=61
+    elif failure=='wrong-product-count':values['PRODUCT_MEMBERS']=104
+    elif failure=='wrong-sdk-count':values['SDK_MEMBERS']=59
+    elif failure=='wrong-family':values['FAMILIES']=families[:-1]+('not_tv_denoise',)
+    elif failure=='duplicate-family':values['FAMILIES']=families[:-1]+('tv_reductions',)
+    elif failure=='missing-scope':del values['PRODUCT_SCOPE']
+    else:values['PRODUCT_SCOPE']='rank14'
+    (source/'tools/public_qualification.py').write_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))
+    with pytest.raises(RuntimeError):p.qualification_scope(source)
+
+
+def test_original_rank14_complete104_59_fixture_keeps_original_scope(synthetic):
+    s=synthetic;run(s)
+    scope=p.qualification_scope(s.output/'source')
+    assert scope['name']=='rank14' and scope['members']==104 and scope['sdk']==59
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==104
+    assert len(p.load(s.output/'sdk.json')['families'])==14
+
+
+@pytest.mark.parametrize('synthetic',['tv17'],indirect=True)
+@pytest.mark.parametrize('failure',['old190','missing-TV','duplicate-TV'])
+def test_tv_registry_cannot_be_promoted_from_legacy_or_missing_function(synthetic,failure):
+    s=synthetic;expected=s.proof['expected_registry']
+    if failure=='old190':expected['image_count']=190
+    elif failure=='missing-TV':expected['functions'][-1]='unit-only-replacement'
+    else:expected['functions'][0]=expected['functions'][-1]
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()

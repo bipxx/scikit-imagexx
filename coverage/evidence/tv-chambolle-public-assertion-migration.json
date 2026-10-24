@@ -1,0 +1,37 @@
+{
+  "schema": "tv-chambolle-public-assertion-migration-v1",
+  "reference_source": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+  "reference_matrix_sha256": "e9ea5775b97f5bce2d5926a6eb411449908fdc219e88fb663b7fb1424edcb539",
+  "source_file": "tests/test_tv_chambolle_contracts.py",
+  "original_source_sha256": "5cb0b8501c0f8b6da990bcd49ef6500d2f86455dc98bec53f648b7a7b8f3a932",
+  "public_source_sha256": "48a3660fa0d4d467bd03bf65246fdeb7a9a81daf9afc0beb6781e1715e56b4e3",
+  "changed_functions": {
+    "test_strict_native_pending_never_counts_forwarding": "test_strict_native_owned_values_without_forwarding",
+    "test_source_signature_safety_and_native0": "test_source_signature_safety_and_native0"
+  },
+  "unchanged_function_class_AST_sha256": {
+    "digest": "11388f62a9b13724e0ddb168bd1706580313db78486057c4c336ffcc2c3baee8",
+    "source_sha": "a78d679bd3c3f6b12c9fa758735f2fa79e5c9735a9c05ddfa5513a323ea081b6",
+    "profile": "ccdee413a797779b19a4bbf942f123553727c3d6b36a2e29d197de45cfb29c2d",
+    "cases": "f648d7f63ac9ffbd88ad9b83dcf5f2777da05dc94a0488d2b31d4d60917341ac",
+    "Tagged": "c92366dabc98ebf0bc9e017b70d73d64b390af3055b559fd9fd454009f1c08aa",
+    "SourceProviderError": "22c0c1ab7cc4c39b99d114ea8dd713bc396142f515a0fa01fe97ff92e6b811aa",
+    "scalar": "3063c62af85db25e5284a43e3bad10514618adef4d857b703e3dce5745909743",
+    "array": "a0dd1aef2073eea07ca1bbac67e58cd77400fba499c810acba86ac0c385f9236",
+    "token": "e9d9194aa727617ccb91f8b9e9909cdc112404e31362116bc1151ed11fffd950",
+    "fixture": "be91a4a4c1c2ad9a15f0e06a107c79943173949d7978c57543acf80290251f94",
+    "allocation_hooks": "7c889a8de2a489715e88114f59daf2cc21a1eefd4ce12451abed6f6f9e6a7d2a",
+    "observe": "956dc82ea2fb26d51272614865b76173d36cf6772e87583a1e332e38523acb97",
+    "result_nan_encoding_contract": "885955114c528ddbb3f80b5d10b84cdecb066b639c54c5f4394791c93a750106",
+    "frozen": "f0e58333e043c648d26939fd48fbab8b028edf19de48077645cae7b94bd94248",
+    "test_original_frozen_values_errors_warnings_providers_ownership": "dfa9ae1c216c3ab751c9e87324ed456219806d672216e17f2ed60056b8eb1b6d",
+    "dual_first_update": "40f902ecc96264a8a35f35ae690ffd5d7762c78c8752e995eac751ea1d0af1c1",
+    "test_independent_two_iteration_dual_stencil": "6f1e619a8b64ed0ce635a9dea5ba8cb896c61ff90f88cc2f537ae2f2e89bb6d6",
+    "test_independent_two_pixel_energy_and_return_stage": "f761ba61a4bfb417a5e2f6c51d55bbc43038f3e9a06c299a89239beae5dc90ba",
+    "test_narrow_nan_encoding_contract_does_not_hide_defined_differences": "1139765e3659b7912e201d46f6445174a0922d5deed05b84968d80e60d384b0f",
+    "test_narrow_nan_encoding_contract_ignores_only_result_nan_words": "beb8b58a796bb03536bdf12fcaa62b1817f03ec94215e80e9f231abbf8acea26",
+    "record": "8c1f11fbab1dadb6ffe4997bb2cfdb2850decce8991faa8d3b888a987d7400e7"
+  },
+  "scope": "Only the module description,660 worker1/4 native-pending assertions and the standalone source-identity gate transition to owned public parity and an authenticated current-file source record. Every other module AST node and all330 original observations remain unchanged. This source transition does not itself prove public execution.",
+  "new_public_acceptance": 0
+}

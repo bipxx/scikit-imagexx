@@ -70,7 +70,8 @@ def capture_synthetic_build(path,facts):
 @pytest.fixture
 def fake_product(tmp_path):
     path=tmp_path/'SYNTHETIC-NONNATIVE';(path/'wheels').mkdir(parents=True);source=path/'source';source.mkdir()
-    revision='a'*40;headers={f'include/skimagexx/h{i}.hpp':b'// fake\n' for i in range(54)}
+    scope=c.config()['planned_scope']
+    revision='a'*40;headers={f'include/skimagexx/h{i}.hpp':b'// fake\n' for i in range(scope['sdk_members']-5)}
     sdk=dict(headers,**{'lib/skimagexx.lib':b'NOT A LIBRARY','lib/cmake/skimagexx/a.cmake':b'fake','lib/cmake/skimagexx/b.cmake':b'fake','lib/cmake/skimagexx/c.cmake':b'fake','share/licenses/scikit-imagexx/LICENSE':b'fake'})
     entries=dict(sdk,**{'skimagexx/__init__.py':b'# fake\n','skimagexx/_core.synthetic.so':b'NOT A NATIVE MODULE'})
     wheel(path/'wheels/native.whl','scikit-imagexx','0.1.0',entries)
@@ -79,7 +80,6 @@ def fake_product(tmp_path):
     for n,b in contents.items():p=source/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
     with zipfile.ZipFile(path/'source.zip','w') as z:
         for n,b in contents.items():z.writestr(n,b)
-    scope=c.config()['planned_scope']
     sdk_receipt=dict(families=scope['sdk_family_names'],checks=2*scope['sdk_families'],SDK_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()})
     (path/'sdk.json').write_text(json.dumps(sdk_receipt))
     qualification=dict(schema='public-qualification-v2',SDK_checks=2*scope['sdk_families'],passed=True,no_timing=True,failures=[],profile='windows',source=dict(revision=revision),expected_registry=dict(image_count=scope['image_paths'],metadata_count=scope['metadata_paths'],registered_count=scope['image_paths']+scope['metadata_paths'],functions=list(map(str,range(scope['image_paths']+scope['metadata_paths'])))),records={'sdk.json':dict(bytes=(path/'sdk.json').stat().st_size,sha256=c.sha(path/'sdk.json'))})
@@ -482,15 +482,15 @@ def test_preparation_scope_rejects_float_or_boolean_integer_lookalikes(tmp_path,
     with pytest.raises(RuntimeError):c.receipt_barrier(paths,cfg,'run','1')
 
 
-@pytest.mark.parametrize('image_paths,sdk_families',[(186,13),(190,14)])
+@pytest.mark.parametrize('image_paths,sdk_families',[(186,13),(190,14),(191,17)])
 def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(tmp_path,monkeypatch,image_paths,sdk_families):
     cfg,_=receipts(tmp_path,monkeypatch)
     for role in ('before','after'):
         for profile in c.PROFILES:
             scope=dict(cfg['accepted_products'][role][profile]['scope']);scope['image_paths']=image_paths
             scope['sdk_families']=sdk_families
-            scope['sdk_family_names']=[name for name in scope['sdk_family_names'] if name!='rank_decisions']
-            if sdk_families==14:scope['sdk_family_names'].append('rank_decisions')
+            scope['sdk_family_names']=scope['sdk_family_names'][:sdk_families]
+            scope['sdk_members']=62 if sdk_families==17 else 59
             cfg['accepted_products'][role][profile]['scope']=scope
     path=tmp_path/'external.json';path.write_text(json.dumps(dict(schema='rank-statistics-experiment-v1',template_sha256=c.text_sha(c.CONTRACT),accepted_products=cfg['accepted_products'])))
     loaded=c.config(path,c.sha(path))

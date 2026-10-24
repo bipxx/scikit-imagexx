@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 477 public paths: 190 native-partial image entries,
+The current inventory contains 477 public paths: 191 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 279 upstream-only entries. The expansion adds 19
+provider, and 278 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -34,6 +34,11 @@ two generic aliases, bringing the accepted count to 190 partial image paths and
 31 canonical rank algorithms. Both exact controlled sources pass all four
 products: 649,056 before checks and 672,856 after checks, with 224 combined SDK
 checks and equal actual common build inputs. Controlled one-worker counts run `40084877921` has independently verified all three profiles and passed the root audit; the [full report, CSV and raw archive](../benchmarks/rank-statistics-counts-comparison.md) are published. All 376 IDs, seven paired rounds and every slower case are retained. These results apply to the frozen 190-path source pair.
+Whole12 now admits joined source `f87120c`: TV-Chambolle raises the count to 191
+partial image paths. All four actual products pass 698,448 selected mixed checks
+and 136 SDK client checks, with complete 108-member wheels and 62-member SDKs.
+The previous failed TV run remains failed. TV original-library performance is a
+separate pending gate; its reviewed certificate selects the genuine products.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
@@ -57,10 +62,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole11 remains accepted at 190 partial image paths. Joined TV source `f87120c` includes the qualified rank optimization and is in fresh qualification `40087742726`; prior `b550107` failure is retained. The metadata/intake patch passes 985 checks. |
-| Worker 1 | `metrics_reductions` | Joined TV qualification and controlled one-worker rank publication | Observe exact `f87120c` run `40087742726` and retain SDK17/source/science closure. Counts run `40084877921` passed all three preparations, barrier, measurements and independent/root audits. Publish all 1,128 rows and 23,688 paired-role samples, including every slower case. |
-| Worker 2 | `resize_api` | Native max-tree/attribute-filter family | Six-function original contract `5b92e53` passes 3,234 reference/metadata checks across three runtimes: 233 safe numeric IDs, 118 metadata-only IDs, native0. The worker now implements typed C++ stable sort/tree/attribute/label primitives. Ready Bregman bridge `54dcc71` awaits root integration. |
-| Worker 3 | `resize_bench` | General matrix bridge and full source-faithful pipeline | Private kernel `7ae1b77` passes 96,000 exact comparisons (24 reports of 4,000 general cohorts) with explicit GEMM/GEMV/NumPy profiles. Real binding tests preserve the 374 frozen pipeline cases and old certified routes, with completed math counted separately from guarded attempts. General casting/public core/performance remain pending. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole12 accepts 191 partial image paths at joined source `f87120c`, including the rank optimization. All four qualification profiles and retained-product audits pass; 698,448 mixed checks plus 136 SDK clients. Bregman public wiring and private matrix/max-tree review remain. |
+| Worker 1 | `metrics_reductions` | Qualified TV original-library benchmark | Frozen `f87120c` products are admitted. Execute one reviewed hosted dispatch with three preparations, a real barrier and fresh one-worker measurement jobs. The rank counts report already publishes all 1,128 rows and 23,688 samples, including every regression. |
+| Worker 2 | `resize_api` | Native max-tree binding and observable stages | Six-function reference `5b92e53` and private kernel `f650fd7` retain exact parent/traverser/labels for 233 safe numeric IDs. Implement the real aggregate/staged C++ binding and source-faithful wrapper for all 351 observations; 118 metadata cases stay separate. Bregman bridge `54dcc71` awaits root integration. |
+| Worker 3 | `resize_bench` | Actual hosted matrix CPU/BLAS profiles | Private kernel `7ae1b77` and real bridge `7b8094f` cover the 4,000 prepared cohorts and 374 frozen pipeline cases. Discover actual default loaded BLAS dispatch on four fresh hosted profiles; no forced coretype or automatic admission from matching words. Public core, wider casting and performance remain pending. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

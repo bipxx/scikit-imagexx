@@ -58,17 +58,55 @@ def complete_fake_artifact(tmp_path):
 
 
 def test_complete_wheel_inspection_is_metadata_only(complete_fake_artifact):
-    result = q.inspect_wheel(*complete_fake_artifact)
+    result = q.inspect_wheel(*complete_fake_artifact,scope="rank14")
     assert len(result['members_sha256']) == 104
     assert len(result['SDK_sha256']) == 59
     assert result['record_verified']
     assert 'no algorithm or whole8 acceptance' in result['scope']
 
 
+@pytest.fixture
+def complete_tv_fake_artifact(complete_fake_artifact,tmp_path):
+    product,source,revision=complete_fake_artifact
+    additions={'include/skimagexx/'+n+'.hpp':b'// synthetic TV header\n'
+               for n in ('tv_chambolle','tv_reductions','tv_denoise')}
+    additions['skimagexx/_tv_chambolle.py']=b'# synthetic TV helper\n'
+    with zipfile.ZipFile(product) as archive:
+        entries={n:archive.read(n) for n in archive.namelist() if not n.endswith('/RECORD')}
+    entries.update(additions);new_product=tmp_path/'tv-synthetic.whl';wheel(new_product,entries)
+    new_source=tmp_path/'tv-source.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(new_source,'w') as archive:
+        archive.comment=old.comment
+        for n in old.namelist():archive.writestr(n,old.read(n))
+        for n,value in additions.items():archive.writestr('python/'+n if n.startswith('skimagexx/') else n,value)
+    return new_product,new_source,revision
+
+
+def test_tv108_62_is_default_and_original104_is_explicit_only(complete_fake_artifact,complete_tv_fake_artifact):
+    result=q.inspect_wheel(*complete_tv_fake_artifact)
+    assert result['product_scope']=='tv17' and len(result['members_sha256'])==108 and len(result['SDK_sha256'])==62
+    with pytest.raises(q.QualificationError,match='complete108'):
+        q.inspect_wheel(*complete_fake_artifact)
+    with pytest.raises(q.QualificationError,match='complete104'):
+        q.inspect_wheel(*complete_tv_fake_artifact,scope='rank14')
+
+
+@pytest.mark.parametrize('member',['include/skimagexx/tv_chambolle.hpp','include/skimagexx/tv_reductions.hpp',
+                                  'include/skimagexx/tv_denoise.hpp','python/skimagexx/_tv_chambolle.py'])
+def test_tv_source_cannot_omit_any_new_header_or_helper(complete_tv_fake_artifact,tmp_path,member):
+    product,source,revision=complete_tv_fake_artifact;replacement=tmp_path/'missing-TV.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(replacement,'w') as archive:
+        archive.comment=old.comment
+        for n in old.namelist():
+            if n!=member:archive.writestr(n,old.read(n))
+    with pytest.raises(q.QualificationError,match='TV product scope/source'):
+        q.inspect_wheel(product,replacement,revision)
+
+
 def test_source_revision_is_authenticated(complete_fake_artifact):
     product,source,_ = complete_fake_artifact
     with pytest.raises(q.QualificationError,match='revision'):
-        q.inspect_wheel(product,source,'b'*40)
+        q.inspect_wheel(product,source,'b'*40,scope='rank14')
 
 
 @pytest.mark.parametrize('name', ['python/skimagexx/__init__.py','include/skimagexx/h0.hpp'])
@@ -80,7 +118,7 @@ def test_source_bytes_cannot_replace_wheel_bytes(complete_fake_artifact,tmp_path
         for member in old.namelist():
             new.writestr(member,old.read(member)+(b'wrong' if member==name else b''))
     with pytest.raises(q.QualificationError,match='source bytes differ'):
-        q.inspect_wheel(product,replacement,revision)
+        q.inspect_wheel(product,replacement,revision,scope="rank14")
 
 
 def test_source_header_census_cannot_be_partial(complete_fake_artifact,tmp_path):
@@ -91,7 +129,7 @@ def test_source_header_census_cannot_be_partial(complete_fake_artifact,tmp_path)
         for member in old.namelist():new.writestr(member,old.read(member))
         new.writestr('include/skimagexx/unshipped.hpp',b'extra')
     with pytest.raises(q.QualificationError,match='file set'):
-        q.inspect_wheel(product,replacement,revision)
+        q.inspect_wheel(product,replacement,revision,scope="rank14")
 
 
 @pytest.mark.parametrize('unsafe',['../escaped.py','/absolute.py','dir\\escape.py','C:/escaped.py'])
@@ -256,20 +294,20 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS:
         path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS)+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH})+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -525,7 +563,7 @@ def test_bilateral_report_cannot_seal_partial_or_substituted_observations(tmp_pa
 
 @pytest.mark.parametrize('missing',q.R6_SOURCE_PATHS)
 def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch,missing):
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH}),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for name in q.R6_SOURCE_PATHS:
@@ -535,8 +573,8 @@ def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch
 
 
 def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
-    assert len(q.FAMILIES)==14 and q.FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=186))
+    assert len(q.ORIGINAL_FAMILIES)==14 and q.ORIGINAL_FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH}),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES if f!='rank_bilateral'))
     assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
@@ -725,7 +763,7 @@ def synthetic_complete_plan(root):
     for group in q.GROUPS.values():
         for name in group:(root/'tests'/name.split('::')[0]).touch()
     (root/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS:
         path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
     (root/'benchmarks').mkdir()
@@ -735,7 +773,7 @@ def synthetic_complete_plan(root):
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
 def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190,registered_count=193,metadata_count=3))
     assert not q.plan(tmp_path,'modern',190)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required R7 source: '+missing in q.plan(tmp_path,'modern',190)['blockers']
@@ -744,7 +782,7 @@ def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,
 @pytest.mark.parametrize('failure',['missing','duplicate','wrong','source'])
 def test_sdk14_requires_exact_clients_and_existing_sources(tmp_path,monkeypatch,failure):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190))
     path=tmp_path/'tests/cmake_consumer/CMakeLists.txt';text=path.read_text()
     if failure=='missing':text=text.replace('add_executable(rank_decisions_consumer x.cpp)','')
     elif failure=='duplicate':text+='\nadd_executable(rank_decisions_consumer x.cpp)'
@@ -758,7 +796,7 @@ def test_decisions_group_is_public_and_sdk14_keeps_old13():
     assert q.GROUPS['public-decisions']==('test_rank_decisions_contracts.py','test_rank_decisions_public.py','test_rank_decisions_endian_public.py')
     assert not any('pipeline' in n or 'supplement.py' in n for n in q.GROUPS['public-decisions'])
     assert q.CORPORA['decisions']==('rank_decisions.py',694)
-    assert len(q.FAMILIES)==14 and q.FAMILIES[-1]=='rank_decisions' and q.FAMILIES[-2]=='rank_bilateral'
+    assert len(q.ORIGINAL_FAMILIES)==14 and q.ORIGINAL_FAMILIES[-1]=='rank_decisions' and q.ORIGINAL_FAMILIES[-2]=='rank_bilateral'
     listing={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.FAMILIES]};q.validate_sdk_listing(listing)
     listing['tests'][-1]={'name':listing['tests'][0]['name']}
     with pytest.raises(q.QualificationError):q.validate_sdk_listing(listing)
@@ -896,7 +934,7 @@ def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path
     # Explicitly create the absent-file before variant in either checkout.
     counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
     if counts_source.exists():counts_source.unlink()
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH}),image_count=190,registered_count=193,metadata_count=3))
     before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
     (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
     after=q.plan(tmp_path,'modern',190);assert not after['blockers']
@@ -915,3 +953,86 @@ def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_p
         return original(name,*a,**kw)
     monkeypatch.setattr(builtins,'__import__',guarded)
     with pytest.raises(q.QualificationError,match='private selectors forbidden'):q.admission(tmp_path,{'interpreter_provenance':{}})
+
+
+
+def test_tv_public_group_and_sdk17_keep_exact_original14():
+    assert q.GROUPS['public-TV']==('test_tv_chambolle_contracts.py','test_tv_chambolle_native_pipeline.py')
+    assert len(q.FAMILIES)==17 and q.FAMILIES[:14]==q.ORIGINAL_FAMILIES
+    assert q.FAMILIES[-3:]==('tv_chambolle','tv_reductions','tv_denoise')
+    old={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.ORIGINAL_FAMILIES]}
+    q.validate_sdk_listing(old,scope='rank14')
+    with pytest.raises(q.QualificationError,match='SDK test discovery'):
+        q.validate_sdk_listing(old)
+    for family in q.FAMILIES:
+        listing={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.FAMILIES if f!=family]}
+        with pytest.raises(q.QualificationError,match='SDK test discovery'):q.validate_sdk_listing(listing)
+
+
+@pytest.mark.parametrize('missing',q.TV_SOURCE_PATHS)
+def test_tv_source_and_registration_block_before_any_build(tmp_path,monkeypatch,missing):
+    synthetic_complete_plan(tmp_path)
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH})
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=191))
+    assert not q.plan(tmp_path,'modern',191)['blockers']
+    (tmp_path/missing).unlink()
+    assert 'missing required TV source: '+missing in q.plan(tmp_path,'modern',191)['blockers']
+    names.remove(q.TV_PATH)
+    assert 'missing public TV registry: '+q.TV_PATH in q.plan(tmp_path,'modern')['blockers']
+
+
+def synthetic_tv_admission(monkeypatch):
+    # Explicit inert metadata stand-ins, never invoked and never native proof.
+    core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,
+        tv_chambolle_interface='tv-chambolle-stages-v1',tv_chambolle_capabilities=63,
+        tv_chambolle_finite_interface='tv-chambolle-finite-v1',tv_chambolle_finite_capabilities=3,
+        tv_chambolle_finite_profiles=('1.24.4','2.5.4'))
+    for name in ('tv_chambolle_divergence_into','tv_chambolle_gradient_into','tv_chambolle_norm_into',
+                 'tv_chambolle_dual_into','tv_chambolle_finite_run'):
+        def inert(*_,**__):raise AssertionError('metadata stub must never execute')
+        inert.__name__=name;inert.__module__=core.__name__;inert.synthetic_builtin=True
+        setattr(core,name,inert)
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
+    def denoise_tv_chambolle(image,weight=0.1,eps=0.0002,max_num_iter=200,*,channel_axis=None):
+        raise AssertionError('metadata stub must never execute')
+    denoise_tv_chambolle.__module__='skimagexx._tv_chambolle'
+    wrapper=types.SimpleNamespace(_core=core,denoise_tv_chambolle=denoise_tv_chambolle)
+    restoration=types.SimpleNamespace(denoise_tv_chambolle=denoise_tv_chambolle)
+    return core,restoration,wrapper,[q.TV_PATH]
+
+
+def test_tv_preflight_metadata_does_not_call_any_image_operation(monkeypatch):
+    q.tv_admission(*synthetic_tv_admission(monkeypatch))
+
+
+@pytest.mark.parametrize('failure',['missing-registry','duplicate-registry','stage-only','boolean-capability',
+    'wrong-profile','private-core','wrong-export','forwarding','python-entry','entry-owner','workers','signature'])
+def test_tv_missing_or_forwarded_native_implementation_is_never_admitted(monkeypatch,failure):
+    core,restoration,wrapper,registered=synthetic_tv_admission(monkeypatch)
+    if failure=='missing-registry':registered=[]
+    elif failure=='duplicate-registry':registered*=2
+    elif failure=='stage-only':del core.tv_chambolle_finite_interface
+    elif failure=='boolean-capability':core.tv_chambolle_finite_capabilities=True
+    elif failure=='wrong-profile':core.tv_chambolle_finite_profiles=('2.5.4',)
+    elif failure=='private-core':wrapper._core=types.SimpleNamespace()
+    elif failure=='wrong-export':restoration.denoise_tv_chambolle=lambda x:x
+    elif failure=='forwarding':wrapper.denoise_tv_chambolle.__module__='skimage.restoration'
+    elif failure=='python-entry':core.tv_chambolle_finite_run.synthetic_builtin=False
+    elif failure=='entry-owner':core.tv_chambolle_finite_run.__module__='private_tv_core'
+    elif failure=='workers':core.get_num_threads=lambda:4
+    else:
+        def denoise_tv_chambolle(image):raise AssertionError('metadata only')
+        denoise_tv_chambolle.__module__='skimagexx._tv_chambolle'
+        wrapper.denoise_tv_chambolle=restoration.denoise_tv_chambolle=denoise_tv_chambolle
+    with pytest.raises(q.QualificationError):q.tv_admission(core,restoration,wrapper,registered)
+
+
+@pytest.mark.parametrize('change',['empty','missing','duplicate','substitute'])
+def test_original_rank14_sdk_negative_listings_remain_rejected(change):
+    listing={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.ORIGINAL_FAMILIES]}
+    if change=='empty':listing['tests']=[]
+    elif change=='missing':listing['tests'].pop()
+    elif change=='duplicate':listing['tests'].append(dict(listing['tests'][0]))
+    else:listing['tests'][-1]['name']='installed_private_adapter_consumer'
+    with pytest.raises(q.QualificationError,match='SDK test discovery'):
+        q.validate_sdk_listing(listing,scope='rank14')
