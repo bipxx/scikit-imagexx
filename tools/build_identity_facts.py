@@ -192,6 +192,23 @@ def single(paths, message):
     paths = list(paths); require(len(paths) == 1, message); return paths[0]
 
 
+def windows_sorting_resource(path, system_root):
+    """Observed CL locale reads, pinned as data; no whole-Windows allowance."""
+    if system_root is None:return False
+    root=Path(system_root)
+    require(root.is_absolute() and root.is_dir(),'actual SystemRoot unavailable')
+    folder=root/'Globalization/Sorting';path=Path(path)
+    if path.parent!=folder or path.suffix.lower()!='.nls':return False
+    require(re.fullmatch(r'[A-Za-z0-9_-]+\.nls',path.name,re.I) is not None,'unsupported sorting resource name')
+    # Follow neither a file link nor a parent junction/symlink outside the
+    # declared host directory. The normal producer hashes the actual read file.
+    for entry in (root,root/'Globalization',folder,path):
+        require(not entry.is_symlink() and not (hasattr(entry,'is_junction') and entry.is_junction()),'sorting resource symlink/junction rejected')
+    require(path.absolute()==path.resolve(strict=True),'sorting resource escapes declared host directory')
+    actual(path)
+    return True
+
+
 def header_roots(dependencies, source, native, compiler_info, windows=False):
     roots = dict(project=[source, native], python=[], numpy=[], pybind11=[], toolchain=[])
     for path in dependencies:
@@ -201,6 +218,7 @@ def header_roots(dependencies, source, native, compiler_info, windows=False):
             if part.lower() == 'numpy' and i and parts[i-1].lower() == 'include': roots['numpy'].append(Path(*parts[:i]))
             if part.lower() == 'pybind11' and i and parts[i-1].lower() == 'include': roots['pybind11'].append(Path(*parts[:i]))
     if windows:
+        resource_folders=set()
         for path in dependencies:
             match = re.match(r'(.+[/\\]MSVC[/\\][^/\\]+[/\\]include)(?:[/\\]|$)', str(path), re.I)
             kit = re.match(r'(.+[/\\]Windows Kits[/\\]\d+[/\\]Include[/\\][^/\\]+)(?:[/\\]|$)', str(path), re.I)
@@ -208,6 +226,12 @@ def header_roots(dependencies, source, native, compiler_info, windows=False):
             # MSVC tracking also records resources/support DLLs actually read
             # by CL. Pin these as toolchain inputs rather than dropping them.
             if path.suffix.lower() in ('.dll','.exe'): roots['toolchain'].append(path.parent)
+            if windows_sorting_resource(path,os.environ.get('SystemRoot')):
+                resource_folders.add(path.parent);roots['toolchain'].append(path.parent)
+        # A directory root is required by the identity schema. Limit this
+        # special root to the observed NLS resource kind, not arbitrary files.
+        for path in dependencies:
+            if path.parent in resource_folders:require(windows_sorting_resource(path,os.environ.get('SystemRoot')),'unclassified input beside sorting resource')
     else:
         roots['toolchain'] = [Path(v) for v in compiler_info.get('CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES', '').split(';') if v]
     roots = {k: sorted({p.resolve(strict=True) for p in values if p.is_dir()}, key=str) for k, values in roots.items()}

@@ -215,6 +215,44 @@ def test_every_gnu_role_callsite_uses_collision_free_label_encoding():
     assert len(labels)==len(set(labels))
 
 
+def test_observed_sortdefault_nls_is_explicit_pinned_toolchain_resource(tmp_path,monkeypatch):
+    root=tmp_path/'Windows';resource=put(root/'Globalization/Sorting/SortDefault.nls','actual-host-locale-resource-fixture')
+    monkeypatch.setenv('SystemRoot',str(root))
+    assert f.windows_sorting_resource(resource,str(root))
+    source=tmp_path/'source';native=tmp_path/'out/native-build';native.mkdir(parents=True)
+    deps=[put(source/'include/skimagexx/rank.hpp'),put(tmp_path/'python/Python.h'),put(tmp_path/'numpy/include/numpy/arrayobject.h'),put(tmp_path/'pybind/include/pybind11/pybind11.h'),put(tmp_path/'VC/Tools/MSVC/14.44/include/vcruntime.h'),resource]
+    roots=f.header_roots(set(deps),source,native,{},windows=True)
+    assert str(resource.parent) in roots['toolchain'] and str(root) not in roots['toolchain']
+    import hashlib
+    before=hashlib.sha256(resource.read_bytes()).hexdigest();resource.write_bytes(b'changed-host-locale-data')
+    assert hashlib.sha256(resource.read_bytes()).hexdigest()!=before
+    # It remains a required actual input, never classified as generated data.
+    assert resource not in {native/'object.obj'}
+
+
+@pytest.mark.parametrize('kind',['outside','wrong-kind','missing','link'])
+def test_unknown_missing_or_escaped_sorting_inputs_remain_fail_closed(tmp_path,monkeypatch,kind):
+    root=tmp_path/'Windows';folder=root/'Globalization/Sorting';folder.mkdir(parents=True)
+    if kind=='outside':path=put(tmp_path/'elsewhere/Unknown.nls')
+    elif kind=='wrong-kind':path=put(folder/'SortDefault.txt')
+    elif kind=='missing':path=folder/'SortDefault.nls'
+    else:
+        path=put(folder/'SortDefault.nls');original=Path.is_symlink
+        # Explicit path-protocol fixture tests the guard on hosts that cannot
+        # create Windows links without privileges; no conditional pass/skip.
+        monkeypatch.setattr(Path,'is_symlink',lambda value:value==path or original(value))
+    if kind in ('outside','wrong-kind'):assert not f.windows_sorting_resource(path,str(root))
+    else:
+        with pytest.raises((f.FactsError,FileNotFoundError)):f.windows_sorting_resource(path,str(root))
+
+
+def test_unknown_nls_outside_systemroot_is_not_a_header_root(tmp_path,monkeypatch):
+    root=tmp_path/'Windows';root.mkdir();monkeypatch.setenv('SystemRoot',str(root))
+    source=tmp_path/'source';native=tmp_path/'build';native.mkdir()
+    deps={put(source/'include/a.hpp'),put(tmp_path/'python/Python.h'),put(tmp_path/'numpy/include/numpy/a.h'),put(tmp_path/'pybind/include/pybind11/a.h'),put(tmp_path/'VC/Tools/MSVC/14.44/include/vcruntime.h'),put(tmp_path/'not-windows/Globalization/Sorting/Unknown.nls')}
+    with pytest.raises(f.FactsError,match='unclassified actual dependency'):f.header_roots(deps,source,native,{},windows=True)
+
+
 def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_path,monkeypatch):
     source=tmp_path/'source';build=tmp_path/'out';native=build/'native-build';native.mkdir(parents=True)
     tools={name:put(tmp_path/'VC/Tools/MSVC/14.44/bin/Hostx64/x64'/name) for name in ('cl.exe','c1xx.dll','c2.dll','link.exe','lib.exe')}
