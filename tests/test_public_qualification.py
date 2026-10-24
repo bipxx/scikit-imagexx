@@ -1261,8 +1261,14 @@ def synthetic_matrix_admission(monkeypatch):
     monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
     def matrix_transform(coords,matrix):raise AssertionError('metadata-only wrapper never executes')
     matrix_transform.__module__='skimagexx._matrix_transform'
-    import numpy as np
-    wrapper=types.SimpleNamespace(_core=core,matrix_transform=matrix_transform,_runtime_profile=lambda:np.__version__)
+    # The workflow runs these metadata guards before numerical dependencies are
+    # installed. This explicit inert module is fixture data, never admission of
+    # a real runtime or a substitute for a numerical/image implementation.
+    synthetic_numpy=types.ModuleType('numpy')
+    synthetic_numpy.__version__='metadata-fixture-only'
+    monkeypatch.setitem(sys.modules,'numpy',synthetic_numpy)
+    wrapper=types.SimpleNamespace(_core=core,matrix_transform=matrix_transform,
+                                  _runtime_profile=lambda:synthetic_numpy.__version__)
     transform=types.SimpleNamespace(matrix_transform=matrix_transform,__all__=['matrix_transform'])
     return core,transform,wrapper,[q.MATRIX_PATH]
 
@@ -1295,6 +1301,18 @@ def test_matrix_admission_refuses_substituted_or_unverified_paths(monkeypatch,fa
     with pytest.raises(q.QualificationError):q.matrix_admission(core,transform,wrapper,registered)
 
 
+def require_matrix_projection_witness(row,projection,minor=None):
+    """Authenticate the explicitly supported parser schema, never skip a hash."""
+    minor=minor or '.'.join(map(str,sys.version_info[:2]))
+    assert row['projection_ast_schema']=='python-ast-dump-attributes-off-v1'
+    assert row['projection_authored_minor']=='3.13'
+    by_minor=row['projection_sha256_by_minor']
+    assert set(by_minor)=={'3.11','3.13'}
+    assert row['unchanged_full_module_projection_sha256']==by_minor['3.13']
+    assert minor in by_minor, 'unsupported matrix projection interpreter schema: '+minor
+    assert hashlib.sha256(projection.encode()).hexdigest()==by_minor[minor]
+
+
 def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources():
     migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     for name,row in migration['modules'].items():
@@ -1312,9 +1330,25 @@ def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources()
                 nodes.append(node)
             return ast.dump(ast.Module(body=nodes,type_ignores=[]),include_attributes=False)
         assert project(old)==project(new)
-        assert hashlib.sha256(project(old).encode()).hexdigest()==row['unchanged_full_module_projection_sha256']
+        require_matrix_projection_witness(row,project(old))
     for name,want in migration['frozen_implementation'].items():
         assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==want
+
+
+@pytest.mark.parametrize('fault',(None,'missing-version','wrong-version','unknown-interpreter','schema','authored-witness'))
+def test_matrix_projection_requires_known_schema_and_matching_version_witness(fault):
+    projection='inert AST projection';digest=hashlib.sha256(projection.encode()).hexdigest()
+    row=dict(projection_ast_schema='python-ast-dump-attributes-off-v1',projection_authored_minor='3.13',
+             projection_sha256_by_minor={'3.11':digest,'3.13':digest},unchanged_full_module_projection_sha256=digest)
+    minor='3.11'
+    if fault=='missing-version':del row['projection_sha256_by_minor']['3.11']
+    elif fault=='wrong-version':row['projection_sha256_by_minor']['3.11']='0'*64
+    elif fault=='unknown-interpreter':minor='3.12'
+    elif fault=='schema':row['projection_ast_schema']='unknown-parser'
+    elif fault=='authored-witness':row['unchanged_full_module_projection_sha256']='0'*64
+    if fault is None:require_matrix_projection_witness(row,projection,minor)
+    else:
+        with pytest.raises(AssertionError):require_matrix_projection_witness(row,projection,minor)
 
 
 @pytest.mark.parametrize('fault',(None,'private','registration','missing374','missing4000','provider','mismatch','ordinary','workers'))
