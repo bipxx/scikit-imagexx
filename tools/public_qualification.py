@@ -1,0 +1,868 @@
+"""Hosted, untimed qualification of a frozen complete public product.
+
+Run ``python tools/public_qualification.py all --profile modern --output
+build/public-qualification/modern`` on a fresh host. Each profile owns its build
+and runtime venvs. ``plan`` reports source blockers without importing image code;
+``inspect-wheel`` authenticates an older product without claiming qualification.
+Public selectors below are deliberately bounded, not a full-library claim.
+Portable/no-OpenMP/sanitizer/private-adapter evidence is not inherited implicitly.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import collections
+import csv
+from datetime import datetime, timezone
+from email.parser import BytesParser
+import hashlib
+import importlib
+import importlib.metadata
+import importlib.util
+import io
+import inspect
+import json
+import os
+import platform
+from pathlib import Path, PurePosixPath
+import re
+import runpy
+import shutil
+import subprocess
+import sys
+import venv
+import warnings
+import xml.etree.ElementTree as ET
+import zipfile
+
+ROOT = Path(__file__).resolve().parents[1]
+SCHEMA = 'public-qualification-v1'
+PROFILES = {
+    'windows': dict(python='3.13', numpy='2.5.4', scipy='1.18.1', headers='2.5.4', config='Release'),
+    'modern': dict(python='3.13', numpy='2.5.4', scipy='1.18.1', headers='2.5.4', config='Release'),
+    'minimum': dict(python='3.11', numpy='1.24.4', scipy='1.15.3', headers='2.4.6', config='Release'),
+    'debug': dict(python='3.13', numpy='2.5.4', scipy='1.18.1', headers='2.5.4', config='Debug'),
+}
+# Exact versions read from the authenticated 40024754860 runtime wheel METADATA
+# and retained whole7b build metadata, not a fresh unconstrained resolver result.
+COMMON_RUNTIME = dict(imageio='2.38.1', iniconfig='2.3.1', **{'lazy-loader': '0.6'},
+                      packaging='26.3', pillow='13.0.0', pluggy='1.7.0', pygments='2.21.0',
+                      pytest='9.1.1', **{'scikit-image': '0.26.0'})
+BUILD = {'scikit-build-core': '1.1.1', 'pybind11': '3.1.0', 'cmake': '4.4.4',
+         'ninja': '1.13.2', 'packaging': '26.3', 'pathspec': '1.1.1'}
+# Exact wheel bytes retained by accepted campaign40024754860; debug uses modern.
+RUNTIME_WHEELS = {
+    "windows": {
+        "colorama": {
+            "filename": "colorama-0.4.6-py2.py3-none-any.whl",
+            "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+        },
+        "imageio": {
+            "filename": "imageio-2.38.1-py3-none-any.whl",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+        },
+        "iniconfig": {
+            "filename": "iniconfig-2.3.1-py3-none-any.whl",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+        },
+        "lazy-loader": {
+            "filename": "lazy_loader-0.6-py3-none-any.whl",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+        },
+        "networkx": {
+            "filename": "networkx-3.7-py3-none-any.whl",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+        },
+        "numpy": {
+            "filename": "numpy-2.5.4-cp313-cp313-win_amd64.whl",
+            "sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129"
+        },
+        "packaging": {
+            "filename": "packaging-26.3-py3-none-any.whl",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        },
+        "pillow": {
+            "filename": "pillow-13.0.0-cp313-cp313-win_amd64.whl",
+            "sha256": "9dda0788a9932776a75d8bcc020076edc308ce2508b51f6739a45e3158b3fc42"
+        },
+        "pluggy": {
+            "filename": "pluggy-1.7.0-py3-none-any.whl",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+        },
+        "pygments": {
+            "filename": "pygments-2.21.0-py3-none-any.whl",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+        },
+        "pytest": {
+            "filename": "pytest-9.1.1-py3-none-any.whl",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+        },
+        "scikit-image": {
+            "filename": "scikit_image-0.26.0-cp313-cp313-win_amd64.whl",
+            "sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1"
+        },
+        "scipy": {
+            "filename": "scipy-1.18.1-cp313-cp313-win_amd64.whl",
+            "sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28"
+        },
+        "tifffile": {
+            "filename": "tifffile-2026.10.15-py3-none-any.whl",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+        }
+    },
+    "modern": {
+        "imageio": {
+            "filename": "imageio-2.38.1-py3-none-any.whl",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+        },
+        "iniconfig": {
+            "filename": "iniconfig-2.3.1-py3-none-any.whl",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+        },
+        "lazy-loader": {
+            "filename": "lazy_loader-0.6-py3-none-any.whl",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+        },
+        "networkx": {
+            "filename": "networkx-3.7-py3-none-any.whl",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+        },
+        "numpy": {
+            "filename": "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0"
+        },
+        "packaging": {
+            "filename": "packaging-26.3-py3-none-any.whl",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        },
+        "pillow": {
+            "filename": "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582"
+        },
+        "pluggy": {
+            "filename": "pluggy-1.7.0-py3-none-any.whl",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+        },
+        "pygments": {
+            "filename": "pygments-2.21.0-py3-none-any.whl",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+        },
+        "pytest": {
+            "filename": "pytest-9.1.1-py3-none-any.whl",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+        },
+        "scikit-image": {
+            "filename": "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b"
+        },
+        "scipy": {
+            "filename": "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9"
+        },
+        "tifffile": {
+            "filename": "tifffile-2026.10.15-py3-none-any.whl",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+        }
+    },
+    "minimum": {
+        "imageio": {
+            "filename": "imageio-2.38.1-py3-none-any.whl",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+        },
+        "iniconfig": {
+            "filename": "iniconfig-2.3.1-py3-none-any.whl",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+        },
+        "lazy-loader": {
+            "filename": "lazy_loader-0.6-py3-none-any.whl",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+        },
+        "networkx": {
+            "filename": "networkx-3.6.1-py3-none-any.whl",
+            "sha256": "d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762"
+        },
+        "numpy": {
+            "filename": "numpy-1.24.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "7215847ce88a85ce39baf9e89070cb860c98fdddacbaa6c0da3ffb31b3350bd5"
+        },
+        "packaging": {
+            "filename": "packaging-26.3-py3-none-any.whl",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        },
+        "pillow": {
+            "filename": "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "a625df9a2a5597fa5e5266e01aefc82604bb85d291e3547981e863560d75da6c"
+        },
+        "pluggy": {
+            "filename": "pluggy-1.7.0-py3-none-any.whl",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+        },
+        "pygments": {
+            "filename": "pygments-2.21.0-py3-none-any.whl",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+        },
+        "pytest": {
+            "filename": "pytest-9.1.1-py3-none-any.whl",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+        },
+        "scikit-image": {
+            "filename": "scikit_image-0.26.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+            "sha256": "74aa5518ccea28121f57a95374581d3b979839adc25bb03f289b1bc9b99c58af"
+        },
+        "scipy": {
+            "filename": "scipy-1.15.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "39cb9c62e471b1bb3750066ecc3a3f3052b37751c7c3dfd0fd7e48900ed52982"
+        },
+        "tifffile": {
+            "filename": "tifffile-2026.3.3-py3-none-any.whl",
+            "sha256": "e8be15c94273113d31ecb7aa3a39822189dd11c4967e3cc88c178f1ad2fd1170"
+        }
+    }
+}
+# Complete relative-file-set+byte tree digests from accepted whole6 build headers.
+BUILD_HEADER_TREES = {
+    "windows": {
+        "record_sha256": "bf735767faab4486850ae77f2724391f13c8bae4a44de02dd79f9668bc9e4eee",
+        "trees": {
+            "numpy": "9e6d0f823d0863c1b51deaf46050231ece4b1f439f079f6c14328bac4aa888da",
+            "pybind11": "9de71b954881bbe0763c1001fb19cbe16290d7637cb0066b74812333ba2425d4"
+        }
+    },
+    "modern": {
+        "record_sha256": "a1f3f8e49311b9a896337c982f77dfbaf840a137ea0c12300c1415b676599a87",
+        "trees": {
+            "numpy": "4bc4bb58a3ff482b6bfc1d765fc2d43e1054da40830aa3ae2c8d05e7f8f6c4c0",
+            "pybind11": "9de71b954881bbe0763c1001fb19cbe16290d7637cb0066b74812333ba2425d4"
+        }
+    },
+    "minimum": {
+        "record_sha256": "204f3627bc18f28ddee8e61a4e5e8b60dfda85b8a22417930e1dd2d3a6ccdfcf",
+        "trees": {
+            "numpy": "172b39c93f447c3d345f4e3efd1efd4de047c6a4512593d54bc632bb39137f9c",
+            "pybind11": "9de71b954881bbe0763c1001fb19cbe16290d7637cb0066b74812333ba2425d4"
+        }
+    }
+}
+
+R5 = ('autolevel_percentile', 'enhance_contrast_percentile', 'gradient_percentile',
+      'mean_percentile', 'pop_percentile', 'subtract_mean_percentile',
+      'threshold_percentile', 'sum_percentile', 'percentile')
+FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
+            'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
+            'rank_statistics', 'consumer_layout', 'rank_percentile')
+GROUPS = {
+    'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
+                    'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
+                    'test_rank_alias_public.py', 'test_rank_statistics_public.py',
+                    'test_rank_statistics_contracts.py', 'test_rank_percentile_public.py',
+                    'test_rank_percentile_contracts.py'),
+    'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
+    'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
+                          'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
+    'metrics-policies': ('test_metrics_reductions.py',),
+    'shared': ('test_class_registry.py', 'test_api.py', 'test_inventory.py', 'test_nested_imports.py',
+               'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
+}
+POLICIES = 'warning_hook or runtime_reduction_buffer or stateful or overflow_policies or underflow_policies or scalar_power_status'
+CORPORA = {'consumers': ('component_consumers.py', 878), 'statistics': ('rank_statistics.py', 1379),
+           'percentile': ('rank_percentile.py', 2552)}
+
+
+class QualificationError(RuntimeError):
+    pass
+
+
+def require(condition, message):
+    if not condition:
+        raise QualificationError(message)
+
+
+def sha(path):
+    digest = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def dump(path, value):
+    Path(path).write_text(json.dumps(value, indent=2) + '\n', encoding='utf-8')
+
+
+def canonical(name):
+    return re.sub(r'[-_.]+', '-', name).lower()
+
+
+def runtime_pins(profile):
+    p = PROFILES[profile]
+    pins = dict(COMMON_RUNTIME, numpy=p['numpy'], scipy=p['scipy'],
+                networkx='3.6.1' if profile == 'minimum' else '3.7',
+                tifffile='2026.3.3' if profile == 'minimum' else '2026.10.15')
+    if profile == 'windows':
+        pins['colorama'] = '0.4.6'
+    return pins
+
+
+def environment(package=None, scalar=False):
+    env = dict(os.environ)
+    for key in list(env):
+        if key.startswith(('SKIMAGEXX_', 'GIT_')) or key in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONPYCACHEPREFIX'):
+            env.pop(key)
+    env.update(PYTHONDONTWRITEBYTECODE='1', PYTHONNOUSERSITE='1', PYTEST_DISABLE_PLUGIN_AUTOLOAD='1',
+               OMP_WAIT_POLICY='PASSIVE', CMAKE_BUILD_PARALLEL_LEVEL='2')
+    for name in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS'):
+        env[name] = '1'
+    if package is not None:
+        env['PYTHONPATH'] = str(Path(package).resolve())
+    if scalar:
+        env['SKIMAGEXX_DISABLE_SIMD'] = '1'
+    return env
+
+
+def source_state(root):
+    def git(*args):
+        return subprocess.check_output(['git', '-C', str(root), *args], env=environment(), text=True).strip()
+    require(not git('status', '--porcelain'), 'source checkout must be clean')
+    return dict(revision=git('rev-parse', 'HEAD'), files_sha256={
+        n: hashlib.sha256((root / n).read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+        for n in git('ls-files').splitlines() if (root / n).is_file()})
+
+
+def registry_expectation(root):
+    # This data-only file has no package imports; never import source/python.
+    namespace = runpy.run_path(str(root / 'python/skimagexx/coverage.py'))
+    names = set(namespace['native_functions']())
+    return dict(functions=sorted(names), image_count=sum(namespace['execution_kind'](n) == 'native' for n in names))
+
+
+def declared_sdk_families(cmake):
+    """Read the repo's explicit literal/foreach ITEMS declarations, not execute CMake.
+
+    Actual target existence and exact12 CTest discovery are independently required
+    after relocation; this early source check is not native client proof.
+    """
+    names = set(re.findall(r'add_executable\(\s*(\w+)_consumer\b', cmake))
+    for match in re.finditer(r'foreach\(\s*(\w+)\s+IN\s+ITEMS\s+([^)]*)\)(.*?)endforeach\(\s*\)', cmake, re.S):
+        variable, items, body = match.groups()
+        if 'add_executable(${' + variable + '}_consumer' in body:
+            names.update(re.findall(r'\b\w+\b', items))
+    return names
+
+
+def plan(root, profile, expected=None):
+    registry = registry_expectation(root)
+    blockers = []
+    if expected is not None and registry['image_count'] != expected:
+        blockers.append('explicit image count differs from source registry')
+    for name in R5:
+        if 'filters.rank.' + name not in registry['functions']:
+            blockers.append('missing public R5 registry: ' + name)
+        if 'filters.rank.generic.' + name in registry['functions']:
+            blockers.append('R5 must not register generic alias: ' + name)
+    for name in [n for group in GROUPS.values() for n in group] + ['test_arraymap_dense_contracts.py']:
+        if not (root / 'tests' / name.split('::')[0]).is_file():
+            blockers.append('missing required test: ' + name)
+    for filename, _ in CORPORA.values():
+        if not (root / 'benchmarks' / filename).is_file():
+            blockers.append('missing required corpus: ' + filename)
+    cmake = (root / 'tests/cmake_consumer/CMakeLists.txt').read_text()
+    declared = declared_sdk_families(cmake)
+    for family in FAMILIES:
+        if family not in declared:
+            blockers.append('missing required installed SDK client: ' + family)
+    return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
+                runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
+                public_groups=GROUPS, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
+                exclusions='No full-library, private-adapter, portable/no-OpenMP/sanitizer or performance claim. No cross-build NaN guarantee.')
+
+
+def wheel_metadata(path):
+    with zipfile.ZipFile(path) as archive:
+        entries = [n for n in archive.namelist() if n.endswith('.dist-info/METADATA')]
+        require(len(entries) == 1, 'ambiguous wheel metadata')
+        info = BytesParser().parsebytes(archive.read(entries[0]))
+    return dict(name=canonical(info['Name']), version=info['Version'], sha256=sha(path))
+
+
+def wheel_members(path):
+    with zipfile.ZipFile(path) as archive:
+        names = [n for n in archive.namelist() if not n.endswith('/')]
+        require(len(names) == len(set(names)), 'duplicate wheel members')
+        for name in names:
+            p = PurePosixPath(name)
+            require(bool(p.parts) and not p.is_absolute() and '..' not in p.parts and '\\' not in name and ':' not in p.parts[0], 'unsafe wheel path')
+        records = [n for n in names if n.endswith('.dist-info/RECORD')]
+        require(len(records) == 1, 'missing/ambiguous RECORD')
+        rows = list(csv.reader(io.StringIO(archive.read(records[0]).decode())))
+        for row in rows:
+            require(len(row) == 3, 'malformed RECORD row')
+            p = PurePosixPath(row[0])
+            require(bool(p.parts) and not p.is_absolute() and '..' not in p.parts and '\\' not in row[0] and ':' not in p.parts[0], 'unsafe wheel path in RECORD')
+        require(len(rows) == len(names) and {r[0] for r in rows} == set(names), 'RECORD member set differs')
+        members = {}
+        for name, digest, size in rows:
+            data = archive.read(name)
+            if name == records[0]:
+                require(not digest and not size, 'RECORD must have empty self hash')
+            else:
+                expected = 'sha256=' + base64.urlsafe_b64encode(hashlib.sha256(data).digest()).rstrip(b'=').decode()
+                require(digest == expected and int(size) == len(data), 'RECORD bytes differ: ' + name)
+            members[name] = hashlib.sha256(data).hexdigest()
+    return members
+
+
+def inspect_wheel(wheel, source_archive, revision):
+    require(wheel_metadata(wheel)['name'] == 'scikit-imagexx', 'not the product wheel')
+    members = wheel_members(wheel)
+    require(len(members) == 104, 'expected complete104-member product')
+    sdk = {n: v for n, v in members.items() if n.startswith(('include/', 'lib/', 'share/'))}
+    require(len(sdk) == 59, 'expected complete59-member SDK')
+    cores = [n for n in members if n.startswith('skimagexx/_core.') and n.endswith(('.so', '.pyd'))]
+    require(len(cores) == 1, 'require exactly one production core')
+    with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
+        require(source.comment.decode() == revision, 'source archive revision differs')
+        for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
+            names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
+            mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
+            actual = {n for n in members if n.startswith(actual_prefix) and (suffix is None or n.endswith(suffix))}
+            require(set(mapping.values()) == actual, 'complete source Python/header file set differs')
+            for name, destination in mapping.items():
+                require(source.read(name).replace(b'\r\n', b'\n') == product.read(destination).replace(b'\r\n', b'\n'), 'source bytes differ: ' + name)
+    return dict(source_revision=revision, source_archive_sha256=sha(source_archive), wheel_sha256=sha(wheel),
+                members_sha256=members, SDK_sha256=sdk, sole_core=cores[0], record_verified=True,
+                scope='Metadata-only complete product authentication; no algorithm or whole8 acceptance.')
+
+
+def verify_tree(directory, members):
+    actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*') if p.is_file()}
+    require(actual == set(members), 'extracted package file set changed (including extras)')
+    for name, digest in members.items():
+        require(sha(directory / name) == digest, 'extracted bytes changed: ' + name)
+
+
+class Journal:
+    def __init__(self, out):
+        self.out = out
+        self.path = out / 'commands.json'
+        self.rows = json.loads(self.path.read_text()) if self.path.exists() else []
+
+    def run(self, label, command, env=None, cwd=ROOT):
+        require(label not in [row['label'] for row in self.rows], 'never overwrite/restart a recorded command')
+        log = self.out / (label + '.log')
+        require(not log.exists(), 'preserve earlier command log')
+        row = dict(label=label, command=list(map(str, command)), cwd=str(cwd),
+                   started_utc=datetime.now(timezone.utc).isoformat(), state='running', log=log.name)
+        self.rows.append(row); dump(self.path, self.rows)
+        with log.open('w', encoding='utf-8') as stream:
+            process = subprocess.Popen(row['command'], cwd=cwd, env=env or environment(), stdout=stream, stderr=subprocess.STDOUT)
+            row['pid'] = process.pid; dump(self.path, self.rows)
+            # Synchronous ownership: this process waits for this exact child.
+            code = process.wait()
+        row.update(returncode=code, state='terminal', finished_utc=datetime.now(timezone.utc).isoformat())
+        dump(self.path, self.rows)
+        return code
+
+
+def python_in(prefix):
+    return prefix / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+
+
+def tool_in(prefix, name):
+    return prefix / ('Scripts' if os.name == 'nt' else 'bin') / (name + '.exe' if os.name == 'nt' else name)
+
+
+def must_run(journal, label, command, env=None):
+    require(journal.run(label, command, env) == 0, 'command failed; raw log retained: ' + label)
+
+
+def prepare(out, profile, expected):
+    require(not out.exists(), 'choose a fresh output; never mutate a previous trial')
+    out.mkdir(parents=True)
+    source = source_state(ROOT); planning = plan(ROOT, profile, expected); dump(out / 'plan.json', planning)
+    require(not planning['blockers'], 'source not ready: ' + '; '.join(planning['blockers']))
+    require('.'.join(map(str, sys.version_info[:2])) == PROFILES[profile]['python'], 'wrong host Python')
+    require((os.name == 'nt') == (profile == 'windows'), 'wrong host platform')
+    journal = Journal(out)
+    archive = out / 'source.zip'
+    must_run(journal, 'source-archive', ['git', '-C', ROOT, 'archive', '--format=zip', '--output=' + str(archive), source['revision']])
+    for name in ('build-env', 'runtime-env'):
+        must_run(journal, 'venv-' + name, [sys.executable, '-m', 'venv', str(out / name)])
+    buildpy = python_in(out / 'build-env'); runtimepy = python_in(out / 'runtime-env')
+    buildpins = planning['build_pins']; runtimepins = planning['runtime_pins']
+    for label, pins, target, python in [('build', buildpins, out / 'build-wheels', buildpy), ('runtime', runtimepins, out / 'runtime-wheels', runtimepy)]:
+        target.mkdir()
+        specs = [name + '==' + version for name, version in sorted(pins.items())]
+        if label == 'runtime':
+            retained = RUNTIME_WHEELS['modern' if profile == 'debug' else profile]
+            require(set(retained) == set(pins), 'retained runtime hash closure incomplete')
+            lock = out / 'pinned-runtime-inputs.txt'
+            lock.write_text('\n'.join(name + '==' + pins[name] + ' --hash=sha256:' + retained[name]['sha256'] for name in sorted(pins)) + '\n')
+            download_args = ['--require-hashes', '-r', lock]
+        else:
+            download_args = specs
+        must_run(journal, label + '-download', [sys.executable, '-m', 'pip', 'download', '--only-binary=:all:', '--no-deps', '--dest', target, *download_args])
+        observed = {wheel_metadata(p)['name']: wheel_metadata(p)['version'] for p in target.glob('*.whl')}
+        require(observed == pins, 'downloaded wheel versions/file set differ')
+        if label == 'runtime':
+            require({p.name: sha(p) for p in target.glob('*.whl')} == {v['filename']: v['sha256'] for v in retained.values()}, 'runtime wheel bytes/filenames differ from accepted reference inputs')
+        must_run(journal, label + '-install', [python, '-m', 'pip', 'install', '--no-index', '--no-deps', '--no-compile', '--find-links', target, *specs])
+    child_args = [runtimepy, Path(__file__).resolve(), '_child', '--output', out, '--profile', profile]
+    buildenv = environment(); buildenv['PATH'] = str(tool_in(out / 'build-env', 'cmake').parent) + os.pathsep + buildenv.get('PATH', '')
+    must_run(journal, 'build-headers', [buildpy, Path(__file__).resolve(), '_headers', '--output', out, '--profile', profile], buildenv)
+    wheels = out / 'product-wheels'; wheels.mkdir()
+    must_run(journal, 'build-whole-product', [buildpy, '-m', 'pip', 'wheel', ROOT, '--no-deps', '--no-build-isolation', '--no-index', '--wheel-dir', wheels,
+              '--config-settings=cmake.build-type=' + PROFILES[profile]['config'], '--config-settings=build-dir=' + str(out / 'native-build'),
+              '--config-settings=cmake.define.CMAKE_EXPORT_COMPILE_COMMANDS=ON'], buildenv)
+    build_properties = {}
+    for name in ('CMakeCache.txt', 'compile_commands.json', 'build.ninja'):
+        path = out / 'native-build' / name
+        if path.is_file():
+            build_properties[name] = dict(sha256=sha(path), bytes=path.stat().st_size)
+    require('CMakeCache.txt' in build_properties, 'missing genuine native build cache properties')
+    dump(out / 'native-build-properties.json', dict(files=build_properties, config=PROFILES[profile]['config'],
+         scope='Exact actual compile/cache properties retained; no comparison to unrelated private controls inferred.'))
+    products = list(wheels.glob('*.whl')); require(len(products) == 1, 'require one exact complete wheel')
+    package_record = inspect_wheel(products[0], archive, source['revision'])
+    package = out / 'package'; package.mkdir()
+    with zipfile.ZipFile(products[0]) as z:
+        for name in package_record['members_sha256']:
+            p = package / name; p.parent.mkdir(parents=True, exist_ok=True); p.write_bytes(z.read(name))
+    verify_tree(package, package_record['members_sha256'])
+    dump(out / 'package.json', package_record)
+    state = dict(schema=SCHEMA, profile=profile, source=source, expected=planning['registry'],
+                 runtime_pins=runtimepins, product_wheel=products[0].name, profile_config=PROFILES[profile],
+                 no_timing=True, public_scope=GROUPS, supplemental_scopes=['382 returned ArrayMap frozen protocols using installed public class'],
+                 exclusions=planning['exclusions'])
+    state['runtime_wheels'] = {p.name: wheel_metadata(p) for p in (out / 'runtime-wheels').glob('*.whl')}
+    dump(out / 'state.json', state)
+    must_run(journal, 'initial-public-admission', [*child_args, '--group', 'admission'], environment(package))
+
+
+def headers(out, profile):
+    import numpy, pybind11, scikit_build_core
+    p = PROFILES[profile]
+    require(numpy.__version__ == p['headers'] and pybind11.__version__ == BUILD['pybind11'] and scikit_build_core.__version__ == BUILD['scikit-build-core'], 'build dependency version mismatch')
+    record = dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable),
+                  numpy_build_headers=numpy.__version__, pybind11=pybind11.__version__, scikit_build_core=scikit_build_core.__version__,
+                  include_files={name: {p.relative_to(folder).as_posix(): sha(p) for p in folder.rglob('*') if p.is_file()}
+                                 for name, folder in [('numpy', Path(numpy.get_include())), ('pybind11', Path(pybind11.get_include()))]})
+    retained = BUILD_HEADER_TREES['modern' if profile == 'debug' else profile]
+    trees = {name: hashlib.sha256(json.dumps(files, sort_keys=True, separators=(',',':')).encode()).hexdigest() for name, files in record['include_files'].items()}
+    require(trees == retained['trees'], 'complete build header file set/bytes differ from retained accepted inputs')
+    record['retained_header_provenance'] = retained
+    dump(out / 'build-headers.json', record)
+
+
+def admission(out, state):
+    package = out / 'package'; record = json.loads((out / 'package.json').read_text())
+    verify_tree(package, record['members_sha256'])
+    require(not any(k.startswith('SKIMAGEXX_') and k != 'SKIMAGEXX_DISABLE_SIMD' for k in os.environ), 'candidate/private selectors forbidden')
+    require(not any(Path(p).resolve() == ROOT / 'python' for p in sys.path if p), 'source/python shadowing forbidden')
+    import skimagexx as xx
+    require(Path(xx.__file__).resolve().parent == package / 'skimagexx', 'public package not genuine extracted wheel')
+    require(Path(xx._core.__file__).resolve() == package / record['sole_core'], 'wrong/alternate core')
+    xx.set_fallback_enabled(False)
+    require(xx.get_num_threads() == 1, 'initial global workers must be1')
+    require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util'):
+        require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
+    coverage = importlib.import_module('skimagexx.coverage')
+    require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
+    require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
+    required = dict(rank_histogram_capabilities=8191, rank_alias_interface='rank-alias-v1', rank_alias_capabilities=480,
+                    rank_statistics_interface='rank-statistics-v1', rank_statistics_capabilities=0xe000,
+                    rank_vector_interface='rank-vector-v1', rank_vector_capabilities=0x10000,
+                    rank_percentile_interface='rank-percentile-v1', rank_percentile_capabilities=0x3fe0000)
+    for name, value in required.items():
+        require(getattr(xx._core, name, None) == value, 'missing/wrong public capability: ' + name)
+    for name in ('rank_run', 'rank_statistics_run', 'rank_windowed_histogram_run', 'rank_noise_footprint', 'rank_percentile_run'):
+        entry = getattr(xx._core, name, None)
+        require(type(entry).__name__ == 'builtin_function_or_method' and entry.__module__ == xx._core.__name__, 'missing owned compiled entry: ' + name)
+    rank = importlib.import_module('skimagexx.filters.rank'); generic = importlib.import_module('skimagexx.filters.rank.generic')
+    for name in R5:
+        function = getattr(rank, name)
+        require(inspect.unwrap(function).__module__ == 'skimagexx._rank', 'upstream public algorithm forwarding')
+        require(name not in vars(generic) and name not in generic.__all__, 'R5 generic path must remain absent')
+    require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
+    if state['profile'] == 'debug':
+        require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
+    versions = {}
+    for name, version in state['runtime_pins'].items():
+        actual = importlib.metadata.version(name); require(actual == version, 'runtime version mismatch: ' + name); versions[name] = actual
+    # Authenticate installed dependency bytes to original wheel RECORDs before
+    # fixtures, not merely the version string or a self-authored runtime snapshot.
+    for filename, expected in state['runtime_wheels'].items():
+        path = out / 'runtime-wheels' / filename
+        require(wheel_metadata(path) == expected, 'runtime wheel changed')
+        distribution = importlib.metadata.distribution(expected['name'])
+        members = wheel_members(path)
+        for name, digest in members.items():
+            if name.endswith('.dist-info/RECORD'):
+                continue  # pip legitimately appends generated script/installer rows.
+            require('.data/' not in name, 'unassessed relocated dependency wheel data path: ' + name)
+            installed = Path(distribution.locate_file(name))
+            require(installed.is_file() and sha(installed) == digest, 'installed dependency differs from pinned wheel: ' + name)
+    origins = {name: importlib.import_module(name).__file__ for name in ('numpy', 'scipy', 'skimage', 'pytest')}
+    require(all(Path(p).resolve().is_relative_to(out / 'runtime-env') for p in origins.values()), 'runtime dependency outside isolated prefix')
+    for worker in (4, 1):
+        xx.set_num_threads(worker); require(xx._core.get_num_threads() == worker, 'global setter identity mismatch')
+    xx.set_fallback_enabled(False)
+    return dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable), platform=platform.platform(),
+                core=xx._core.__file__, core_sha256=sha(xx._core.__file__), default_workers=1, shared_workers=[1,4],
+                versions=versions, origins=origins, source_image_count=state['expected']['image_count'],
+                scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD') == '1', thread_pools={k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','BLIS_NUM_THREADS')},
+                providers='NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4.')
+
+
+def returned_maps():
+    import numpy as np, skimagexx as xx
+    from skimagexx import _component_consumers as native
+    spec = importlib.util.spec_from_file_location('qualification_original_arraymap_contract', ROOT / 'tests/test_arraymap_dense_contracts.py')
+    contract = importlib.util.module_from_spec(spec); spec.loader.exec_module(contract)
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore'); contract._NATIVE_CLASS = type(xx.segmentation.relabel_sequential(np.array([0,1], np.int16))[1])
+    require(contract._NATIVE_CLASS is native.ArrayMap, 'not the installed public returned map class')
+    matrix = json.loads(contract.MATRIX.read_text()); profile = matrix['profiles'][contract.profile()]
+    require(len(contract.CASES) == 382, 'frozen returned-map corpus changed')
+    for worker in (1,4):
+        xx.set_num_threads(worker)
+        for item in contract.CASES:
+            require(contract.observe(item, True) == matrix['observations'][profile['observations'][item['id']]], 'returned map observation differs: ' + item['id'])
+    print(json.dumps(dict(scope='Installed public returned class vs382 frozen protocol observations; oracle type injection only, no image/source facade; not new public class registration', passed=764)))
+
+
+def inventory(out, state):
+    spec = importlib.util.spec_from_file_location('qualification_inventory', ROOT / 'tools/inventory.py')
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    actual = module.inventory(); target = json.loads((ROOT / 'coverage/api.json').read_text())
+    dump(out / 'actual-inventory.json', actual)
+    a = {r['api']: r for r in actual['entries']}; b = {r['api']: r for r in target['entries']}
+    require(a.keys() == b.keys(), 'inventory names differ')
+    fields = ('kind','implementation','signature','native_default_case_dtypes','parity_test','benchmark','class_contract')
+    diffs = [dict(api=n, field=k, actual=a[n].get(k), target=b[n].get(k)) for n in a for k in fields if a[n].get(k) != b[n].get(k)]
+    counts = dict(collections.Counter(r['implementation'] for r in a.values()))
+    dump(out / 'inventory-comparison.json', dict(differences=diffs, counts=counts, target_sha256=sha(ROOT / 'coverage/api.json')))
+    require(not diffs and counts.get('native-partial') == state['expected']['image_count'], 'actual inventory differs from target')
+
+
+def child(out, group):
+    state = json.loads((out / 'state.json').read_text()); source_now = source_state(ROOT)
+    require(source_now == state['source'], 'frozen source changed')
+    facts = admission(out, state)  # BEFORE importing pytest/contracts or fixtures.
+    sys.path.append(str(ROOT))  # tools/test imports only; genuine package remains first.
+    if group == 'admission':
+        print(json.dumps(facts, indent=2)); return 0
+    if group == 'inventory':
+        inventory(out, state); return 0
+    if group == 'returned-maps':
+        returned_maps(); return 0
+    import pytest
+    require(group in GROUPS, 'unknown public selector')
+    mode = 'scalar' if facts['scalar'] else 'normal'
+    xml = out / f'{mode}-{group}.xml'
+    args = ['-q', '--capture=sys', '--tb=short', '--junitxml=' + str(xml),
+            '--basetemp=' + str(out / 'pytest-tmp' / (mode + '-' + group)), '-o', 'cache_dir=' + str(out / 'pytest-cache' / (mode + '-' + group))]
+    args += [str(ROOT / 'tests' / n) for n in GROUPS[group]]
+    if group == 'metrics-policies':
+        args += ['-k', POLICIES]
+    return pytest.main(args)
+
+
+def create_capsule(out, family, state):
+    capsule = out / ('capsule-' + family); require(not capsule.exists(), 'capsule must be fresh')
+    wheels = capsule / 'wheels'; wheels.mkdir(parents=True)
+    inputs = list((out / 'runtime-wheels').glob('*.whl')) + list((out / 'product-wheels').glob('*.whl'))
+    rows = {}
+    for path in inputs:
+        record = wheel_metadata(path); require(record['name'] not in rows, 'duplicate capsule distribution')
+        rows[record['name']] = record
+        target = wheels / path.name
+        try:
+            os.link(path, target)
+        except OSError:
+            shutil.copyfile(path, target)
+        require(sha(target) == record['sha256'], 'capsule wheel copy changed')
+    require(set(rows) == set(state['runtime_pins']) | {'scikit-imagexx'}, 'incomplete runtime closure')
+    (capsule / 'runtime-freeze.txt').write_text('# Authenticated installed distribution metadata, not unconstrained pip output\n' + '\n'.join(n + '==' + r['version'] for n,r in sorted(rows.items())) + '\n')
+    return capsule
+
+
+def corpus_command(python, family, capsule, output, prepare_capsule=False):
+    require(family in CORPORA, 'unknown fixed corpus')
+    require(capsule.is_dir() and (capsule / 'wheels').is_dir(), 'required complete capsule absent')
+    command = [str(python), str(ROOT / 'benchmarks' / CORPORA[family][0]), '--capsule', str(capsule),
+               '--check-only', '--threads', '1', '4', '--output', str(output)]
+    if prepare_capsule:
+        command.append('--prepare-capsule')
+    return command
+
+
+def validate_corpus(path, family):
+    report = json.loads(path.read_text())
+    require(report.get('status') == 'complete-parity-check' and not report.get('failures') and not report.get('results'), 'fixed corpus incomplete/failed/or timed')
+    require(len(report['checks']) == CORPORA[family][1], 'fixed corpus count changed')
+    require(report['metadata']['check_only'] is True and report['metadata']['reference_only'] is False and report['metadata']['requested_workers'] == [1,4], 'corpus must be actual public untimed1/4')
+    field = 'by_workers' if family == 'consumers' else 'actual_by_workers'
+    require(all(row.get('status') == 'passed' and set(row.get(field, {})) == {'1','4'} for row in report['checks']), 'every fixed case must pass both worker configurations')
+    if family == 'percentile':
+        require([len(report[k]) for k in ('alias_checks','provider_checks','policy_checks')] == [9,54,54], 'R5 auxiliary117 contract changed')
+        require(all(set(row.get('actual_by_workers',{})) == {'1','4'} for key in ('provider_checks','policy_checks') for row in report[key]), 'R5 provider/policy workers incomplete')
+        require(all(row.get('reference_identity') is True and row.get('native_identity') is None for row in report['alias_checks']), 'R5 private reference identities must not count as native aliases')
+
+
+def validate_metrics(path):
+    report = json.loads(path.read_text())
+    require(report.get('status') == 'complete-parity-check' and not report.get('failures') and not report.get('results') and len(report.get('checks',[])) == 1231, 'metrics fixed1231 failed/not untimed')
+    meta = report['metadata']
+    require(meta['check_only'] is True and meta['reference_only'] is False and meta['requested_workers'] == [1,4], 'metrics must be actual public untimed1/4')
+    for row in report['checks']:
+        require(row.get('status') == 'passed', 'metrics case not passed')
+        if row.get('expected_error'):
+            require(row.get('error_parity_workers') == [1,4], 'metrics expected error not checked at both workers')
+        else:
+            require(set(row.get('actual_scalar_by_workers',{})) == {'1','4'}, 'metrics scalar not checked at both workers')
+
+
+def sdk(out, state, journal):
+    prefix = out / 'relocated sdk'; prefix.mkdir(); record = json.loads((out / 'package.json').read_text())
+    for name, digest in record['SDK_sha256'].items():
+        source = out / 'package' / name; require(sha(source) == digest, 'SDK changed before relocation')
+        target = prefix / name; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(source, target)
+    sdk_source = out / 'consumer source'; sdk_source.mkdir()
+    with zipfile.ZipFile(out / 'source.zip') as archive:
+        for name in archive.namelist():
+            if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')):
+                target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
+    cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
+    config = state['profile_config']['config']; env = environment()
+    configure = [cmake, '-S', sdk_source / 'tests/cmake_consumer', '-B', build, '-DCMAKE_BUILD_TYPE=' + config,
+                 '-DCMAKE_PREFIX_PATH=' + str(prefix), '-DSKIMAGEXX_EXPECT_PREFIX=' + str(prefix), '-DSKIMAGEXX_EXPECT_OPENMP=ON',
+                 '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF', '-DCMAKE_DISABLE_FIND_PACKAGE_Python=ON', '-DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON']
+    if os.name == 'nt':
+        configure += ['-G', 'Visual Studio 17 2022']
+    must_run(journal, 'sdk-configure', configure, env)
+    must_run(journal, 'sdk-build', [cmake, '--build', build, '--config', config, '--parallel', '2', '--target', *[f + '_consumer' for f in FAMILIES]], env)
+    pattern = '^installed_(' + '|'.join(FAMILIES) + ')_consumer$'
+    must_run(journal, 'sdk-list', [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--show-only=json-v1'], env)
+    listing = json.loads((out / 'sdk-list.log').read_text())
+    require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in FAMILIES}, 'SDK test discovery differs/empty')
+    for mode in ('normal','scalar'):
+        code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
+        require(code == 0, 'installed SDK client failed')
+    verify_tree(prefix, record['SDK_sha256'])
+    dump(out / 'sdk.json', dict(families=FAMILIES, checks=24, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,12 independently linked installed clients normal/scalar; no source includes or Python dependency'))
+
+
+def qualify(out):
+    state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed since build')
+    journal = Journal(out); python = python_in(out / 'runtime-env'); package = out / 'package'
+    base = [python, Path(__file__).resolve(), '_child', '--output', out, '--profile', state['profile']]
+    # All required capsules exist before ANY corpus process can construct fixtures.
+    capsules = {name: create_capsule(out, name, state) for name in CORPORA}
+    for mode in ('normal','scalar'):
+        env = environment(package, scalar=mode == 'scalar')
+        for group in ('admission', *GROUPS, 'returned-maps'):
+            journal.run(mode + '-' + group, [*base, '--group', group], env)
+        if mode == 'normal':
+            journal.run('actual-inventory', [*base, '--group', 'inventory'], env)
+        journal.run(mode + '-metrics-corpus', [python, ROOT / 'benchmarks/metrics_reductions.py', '--check-only', '--threads', '1', '4', '--output', out / (mode + '-metrics-corpus.json')], env)
+        for family, capsule in capsules.items():
+            journal.run(mode + '-' + family + '-corpus', corpus_command(python, family, capsule, out / (mode + '-' + family + '-corpus.json'), mode == 'normal'), env)
+    # SDK build/test occurs only in this qualification job; never measurement.
+    sdk(out, state, journal)
+
+
+def seal(out):
+    state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed')
+    commands = json.loads((out / 'commands.json').read_text())
+    require(commands and all(r['state'] == 'terminal' for r in commands), 'live/incomplete child cannot be sealed')
+    required_labels = {'initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar'}
+    for mode in ('normal','scalar'):
+        required_labels.update(mode + '-' + n for n in ('admission', *GROUPS, 'returned-maps','metrics-corpus'))
+        required_labels.update(mode + '-' + n + '-corpus' for n in CORPORA)
+    require(required_labels <= {r['label'] for r in commands}, 'missing required qualification command')
+    failures = [r['label'] for r in commands if r['returncode'] != 0]
+    record = json.loads((out / 'package.json').read_text()); verify_tree(out / 'package', record['members_sha256'])
+    require(sha(out / 'product-wheels' / state['product_wheel']) == record['wheel_sha256'], 'product wheel changed')
+    counts = {}
+    for mode in ('normal','scalar'):
+        for group in GROUPS:
+            path = out / f'{mode}-{group}.xml'
+            require(path.is_file(), 'missing actual public XML: ' + group)
+            xml = ET.parse(path).getroot(); suites = [xml] if xml.tag == 'testsuite' else list(xml)
+            row = {k: sum(int(s.get(k,0)) for s in suites) for k in ('tests','failures','errors','skipped')}
+            require(row['tests'] > 0, 'empty public selector: ' + group)
+            if any(row[k] for k in ('failures','errors','skipped')):
+                failures.append(mode + '-' + group + '-assertions-or-skips')
+            counts[mode + '-' + group] = row
+        for family in CORPORA:
+            validate_corpus(out / (mode + '-' + family + '-corpus.json'), family)
+        validate_metrics(out / (mode + '-metrics-corpus.json'))
+    require(len([r for r in commands if r['label'].startswith('sdk-')]) == 5, 'SDK commands incomplete')
+    records = {p.relative_to(out).as_posix(): dict(bytes=p.stat().st_size,sha256=sha(p)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
+                 counts=counts, SDK_checks=24, expected_registry=state['expected'], command_count=len(commands), records=records,
+                 no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
+                 providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
+                 supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')
+    require(not (out / 'manifest.json').exists(), 'never overwrite sealed trial')
+    dump(out / 'manifest.json', proof)
+    print(json.dumps(dict(passed=proof['passed'], manifest_sha256=sha(out / 'manifest.json'), files=len(records))))
+    return int(bool(failures))
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('stage', choices=['plan','prepare','qualify','seal','verify','all','inspect-wheel','_child','_headers'])
+    parser.add_argument('--profile', choices=PROFILES, default='modern')
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--expected-native-images', type=int)
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps',*GROUPS])
+    parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
+    args = parser.parse_args(argv); out = args.output.resolve()
+    require(out.is_relative_to(ROOT / 'build'), 'outputs must be in ignored source build directory')
+    if args.stage == 'plan':
+        result = plan(ROOT, args.profile, args.expected_native_images); print(json.dumps(result,indent=2)); return int(bool(result['blockers']))
+    if args.stage == 'inspect-wheel':
+        require(args.wheel is not None and args.source_archive is not None and args.source_revision is not None, 'inspect requires exact wheel/archive/revision')
+        require(not out.exists(), 'choose fresh inspection output')
+        record = inspect_wheel(args.wheel, args.source_archive, args.source_revision); out.mkdir(parents=True); dump(out / 'inspection.json', record); return 0
+    if args.stage == 'verify':
+        proof = json.loads((out / 'manifest.json').read_text())
+        require(proof['schema'] == SCHEMA and source_state(ROOT) == proof['source'], 'manifest source/schema differs')
+        for name, record in proof['records'].items():
+            path = out / name
+            require(path.resolve().is_relative_to(out), 'sealed record escapes output')
+            require(path.stat().st_size == record['bytes'] and sha(path) == record['sha256'], 'sealed artifact changed: ' + name)
+        print(json.dumps(dict(passed=proof['passed'], manifest_sha256=sha(out / 'manifest.json'), records_rehashed=len(proof['records']))))
+        return int(not proof['passed'])
+    if args.stage == '_child':
+        require(args.group is not None, 'missing child group'); return child(out, args.group)
+    if args.stage == '_headers':
+        headers(out, args.profile); return 0
+    if args.source_revision is not None:
+        require(source_state(ROOT)['revision'] == args.source_revision, 'explicit frozen source revision differs')
+    if args.stage in ('prepare','all'):
+        prepare(out, args.profile, args.expected_native_images)
+    if args.stage in ('qualify','all'):
+        qualify(out)
+    if args.stage in ('seal','all'):
+        return seal(out)
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        # This is a failure receipt, never a passing/incomplete trial seal.
+        if '--output' in sys.argv:
+            position = sys.argv.index('--output') + 1
+            if position < len(sys.argv):
+                folder = Path(sys.argv[position]).resolve()
+                if folder.is_relative_to(ROOT / 'build') and folder.is_dir():
+                    dump(folder / ('failure-' + str(os.getpid()) + '.json'), dict(status='failed-unsealed', exception_type=type(exc).__name__, message=str(exc), stage=sys.argv[1], no_timing=True))
+        import traceback
+        traceback.print_exc()
+        print('QUALIFICATION BLOCKED: ' + str(exc), file=sys.stderr)
+        raise SystemExit(1)
