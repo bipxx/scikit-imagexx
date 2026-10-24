@@ -5,6 +5,8 @@
 namespace skimagexx {
 // PRIVATE matrix-transform-math-v1. Profiles describe executed arithmetic,
 // not NumPy version ranges or a public/function capability registration.
+inline constexpr const char* matrix_transform_math_v2_interface = "matrix-transform-math-v2";
+inline constexpr std::uint32_t matrix_transform_math_v2_capabilities = 63;
 enum class MatrixArithmeticProfile : std::uint32_t {
     unsupported = 0,
     // Audited Haswell OpenBLAS 0.3.21 / 0.3.34.106 GEMM, K=3..5,
@@ -19,6 +21,9 @@ enum class MatrixArithmeticProfile : std::uint32_t {
     haswell_gemv_nontransposed = 4,
     // NumPy2.5.4 N=1 special-case, non-BLASable matrix scalar loop.
     numpy254_special_noblas = 5,
+    // v2 ONLY: exact pinned OpenBLAS0.3.21 Cooperlake GEMV-N association.
+    // N=1, K=3..5; this does not authenticate a CPU/runtime or other BLAS paths.
+    cooperlake0321_gemv_nontransposed = 6,
 };
 struct MatrixReadView {
     const void* data;
@@ -47,9 +52,18 @@ enum class MatrixMapStatus : std::uint32_t {
 MatrixMapStatus matrix_transform_into(const MatrixReadView& points,
     const MatrixReadView& matrix, const MatrixWriteView& output,
     MatrixArithmeticProfile profile);
+// Strict separate v2 entry. The legacy entry still rejects profile6, keeping
+// old v1/cap31 consumers interpretable. Views/status/old arithmetic are unchanged.
+MatrixMapStatus matrix_transform_into_v2(const MatrixReadView& points,
+    const MatrixReadView& matrix, const MatrixWriteView& output,
+    MatrixArithmeticProfile profile);
 namespace simd {
 // Runtime-gated AVX2+FMA leaf, no validation; returns processed row count.
 std::size_t matrix_transform_fma(const MatrixReadView&, const double* coefficients,
     double* output, std::size_t begin, std::size_t end, std::size_t dimensions);
+// v2 one-point leaf: four output components, never a four-row/gather overread.
+// Caller has validated all views/denominators and CPU+OS AVX2/FMA policy.
+void matrix_transform_cooperlake_gemv_n(const MatrixReadView&, const double* coefficients,
+    double* output, std::size_t dimensions);
 }
 } // namespace skimagexx

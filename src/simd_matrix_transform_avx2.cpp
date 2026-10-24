@@ -1,7 +1,47 @@
 #include "skimagexx/matrix_transform.hpp"
 #include <immintrin.h>
 #include <limits>
+#include <cmath>
+#include <cstring>
 namespace skimagexx::simd {
+void matrix_transform_cooperlake_gemv_n(const MatrixReadView& points,const double* m,
+    double* out,std::size_t d) {
+    // One validated input row; load each signed/unaligned coordinate once.
+    // No row gather or fourth-matrix-row access for K3.
+    double x[4];
+    for(std::size_t k=0;k<d;++k)std::memcpy(x+k,
+        static_cast<const unsigned char*>(points.data)+std::ptrdiff_t(k)*points.column_stride,8);
+    const auto k=d+1;
+    auto column=[&](std::size_t c) {
+        return _mm256_set_pd(d>=3 ? m[3*k+c] : 0.,m[2*k+c],m[k+c],m[c]);
+    };
+    const auto zero=_mm256_setzero_pd(),one=_mm256_set1_pd(1.);
+    __m256d value;
+    if (d==2) {
+        value=zero;
+        for(std::size_t c=0;c<d;++c)value=_mm256_fmadd_pd(column(c),_mm256_set1_pd(x[c]),value);
+        value=_mm256_fmadd_pd(column(d),one,value);
+        value=_mm256_fmadd_pd(one,value,zero);
+    }else {
+        value=_mm256_mul_pd(column(1),_mm256_set1_pd(x[1]));
+        value=_mm256_fmadd_pd(column(0),_mm256_set1_pd(x[0]),value);
+        value=_mm256_fmadd_pd(column(2),_mm256_set1_pd(x[2]),value);
+        value=_mm256_fmadd_pd(column(3),d==3 ? one : _mm256_set1_pd(x[3]),value);
+        value=_mm256_fmadd_pd(one,value,zero);
+        if(d==4)value=_mm256_add_pd(value,_mm256_mul_pd(column(4),one));
+    }
+    alignas(32) double lanes[4];_mm256_store_pd(lanes,value);
+    double den;
+    if (d<4)den=lanes[d];
+    else {
+        den=0.;for(std::size_t c=0;c<d;++c)den=std::fma(m[d*k+c],x[c],den);
+        den=std::fma(m[d*k+d],1.,den);den=std::fma(1.,den,0.);
+    }
+    if(den==0.)den=std::numeric_limits<double>::epsilon();
+    _mm256_store_pd(lanes,_mm256_div_pd(value,_mm256_set1_pd(den)));
+    for(std::size_t c=0;c<d;++c)out[c]=lanes[c];
+}
+
 std::size_t matrix_transform_fma(const MatrixReadView& points,const double* m,double* out,
     std::size_t begin,std::size_t end,std::size_t d) {
     if (end-begin<4) return 0;

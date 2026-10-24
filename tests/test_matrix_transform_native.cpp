@@ -114,7 +114,89 @@ void controls() {
     }
     check(get_num_threads()==1);
 }
-void stream(int workers) {
+// New definition controls are independent of all retained numerical observations.
+// Exact dyadic cancellation exposes the source-derived contraction differences.
+double separate_product(double a,double b) { volatile double v=a*b;return v; }
+double separate_add(double a,double b) { volatile double v=a+b;return v; }
+double cooper_definition(const std::vector<double>& x,const double* row,std::size_t component) {
+    const auto d=x.size();
+    if(d==2 || (d==4 && component==4)) {
+        double t=0.;for(std::size_t k=0;k<d;++k)t=std::fma(row[k],x[k],t);
+        return std::fma(1.,std::fma(row[d],1.,t),0.);
+    }
+    double t=separate_product(row[1],x[1]);t=std::fma(row[0],x[0],t);
+    t=std::fma(row[2],x[2],t);t=std::fma(row[3],d==3 ? 1.:x[3],t);
+    t=std::fma(1.,t,0.);
+    return d==4 ? separate_add(t,separate_product(row[4],1.)) : t;
+}
+void cooperlake_controls() {
+    static_assert(matrix_transform_math_v2_capabilities==63);
+    check(std::string(matrix_transform_math_v2_interface)=="matrix-transform-math-v2");
+    const auto profile=MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed;
+    const double a=1.+0x1p-27,b=1.-0x1p-27;
+    for(int workers:{1,4}) {
+#ifndef _OPENMP
+        if(workers==4)continue; // rejection itself remains checked by old controls
+#endif
+        set_num_threads(workers);check(get_num_threads()==workers);
+        for(std::size_t d=2;d<=4;++d) {
+            std::vector<double> p(d),m((d+1)*(d+1),0.),o(d,-123.);
+            for(std::size_t j=0;j<=d;++j)m[j*(d+1)+j]=1.;
+            if(d==2) {p={1.,a};m[0]=-1.;m[1]=b;m[2]=0.;}
+            else {p={a,1.,0.};if(d==4)p.push_back(0.);m[0]=b;m[1]=-1.;m[2]=m[3]=0.;}
+            auto pv=read(p,1,d),mv=read(m,d+1,d+1);MatrixWriteView ov{o.data(),1,d,o.size()*8};
+            const auto run=[&]{return matrix_transform_into_v2(pv,mv,ov,profile);};
+            check(matrix_transform_into(pv,mv,ov,profile)==MatrixMapStatus::unsupported_profile);
+            check(std::all_of(o.begin(),o.end(),[](double v){return v==-123.;}));
+            check(run()==MatrixMapStatus::ok);check(o[0]==-0x1p-54);
+            // Four-term K4 and K5 packed chains must not silently use the
+            // legacy paired tree even though some frozen D3 data coincide.
+            std::vector<double> legacy(d);auto oldov=ov;oldov.data=legacy.data();
+            check(matrix_transform_into(pv,mv,oldov,MatrixArithmeticProfile::haswell_gemv_nontransposed)==MatrixMapStatus::ok);
+            check(legacy[0]==0. && o[0]!=legacy[0]);
+            // Same values through real F and signed/unaligned views, followed
+            // by formula controls including mixed zero signs and non-dyadics.
+            for(int form=0;form<4;++form) {
+                for(std::size_t j=0;j<d;++j)p[j]=form==0 ? -0. : (double(j)+0.123456789)*(j%2 ? -1.:1.);
+                for(std::size_t i=0;i<=d;++i)for(std::size_t j=0;j<=d;++j)
+                    m[i*(d+1)+j]=i==d ? (j==d ? 1.:0.) : (form==0 ? -0. : ((i+j)%2 ? -0.3333333333333333:0.6666666666666666));
+                std::vector<double> expected(d);double den=cooper_definition(p,m.data()+d*(d+1),d);
+                if(den==0.)den=std::numeric_limits<double>::epsilon();
+                for(std::size_t j=0;j<d;++j)expected[j]=cooper_definition(p,m.data()+j*(d+1),j)/den;
+                std::vector<unsigned char> pb(1+24*d,0),mb(1+8*m.size(),0);
+                for(std::size_t j=0;j<d;++j)std::memcpy(pb.data()+1+24*(d-1-j),p.data()+j,8);
+                for(std::size_t i=0;i<=d;++i)for(std::size_t j=0;j<=d;++j)
+                    std::memcpy(mb.data()+1+8*(j*(d+1)+i),m.data()+i*(d+1)+j,8);
+                pv={pb.data()+1+24*(d-1),1,d,0,-24,pb.data(),pb.size()};
+                mv={mb.data()+1,d+1,d+1,8,std::ptrdiff_t((d+1)*8),mb.data(),mb.size()};
+                check(run()==MatrixMapStatus::ok);check(std::memcmp(o.data(),expected.data(),d*8)==0);
+            }
+            pv=read(p,1,d);mv=read(m,d+1,d+1);
+            const auto reject=[&](MatrixMapStatus status) {
+                std::fill(o.begin(),o.end(),-123.);check(run()==status);
+                check(std::all_of(o.begin(),o.end(),[](double v){return v==-123.;}));
+            };
+            pv.rows=2;reject(MatrixMapStatus::unsupported_shape);pv=read(p,1,d);
+            pv.allocation_bytes=1;reject(MatrixMapStatus::invalid_view);pv=read(p,1,d);
+            ov.data=reinterpret_cast<void*>(UINTPTR_MAX-7);reject(MatrixMapStatus::invalid_view);ov.data=o.data();
+            const auto rounding=std::fegetround();std::fesetround(FE_DOWNWARD);reject(MatrixMapStatus::unsafe_fp_environment);std::fesetround(rounding);
+            std::uint64_t signaling=UINT64_C(0x7ff0000000000001);std::memcpy(p.data(),&signaling,8);
+            std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+            reject(MatrixMapStatus::nonfinite_or_range);check(std::fetestexcept(FE_ALL_EXCEPT)==FE_DIVBYZERO);std::feclearexcept(FE_ALL_EXCEPT);
+        }
+        // Generic lda5 denominator has +0-seeded FMA across all5 terms;
+        // mistakenly using the lda1 specialization loses the residual.
+        std::vector<double> p={1.,a,0.,0.},m(25,0.),o(4);m[4]=1.;m[20]=-1.;m[21]=b;
+        auto pv=read(p,1,4),mv=read(m,5,5);MatrixWriteView ov{o.data(),1,4,32};
+        check(matrix_transform_into_v2(pv,mv,ov,profile)==MatrixMapStatus::ok);check(o[0]==-0x1p54);
+        // A valid finite cancellation below the divisor floor rejects prewrite.
+        p={0x1p-200,0x1p-200};m.assign(9,0.);m[6]=0x1p-200;m[7]=-std::nextafter(0x1p-200,1.);o.assign(2,-123.);
+        pv=read(p,1,2);mv=read(m,3,3);ov={o.data(),1,2,16};
+        check(matrix_transform_into_v2(pv,mv,ov,profile)==MatrixMapStatus::unsafe_divisor);check(o[0]==-123. && o[1]==-123.);
+    }
+    set_num_threads(1);check(get_num_threads()==1);
+}
+void stream(int workers,bool v2=false) {
 #ifdef _WIN32
     _setmode(_fileno(stdin),_O_BINARY);_setmode(_fileno(stdout),_O_BINARY);
 #endif
@@ -131,7 +213,9 @@ void stream(int workers) {
         std::vector<double> o(h[1]*h[2],-123.);
         MatrixReadView pv{p.data()+h[3],std::size_t(h[1]),std::size_t(h[2]),std::ptrdiff_t(h[4]),std::ptrdiff_t(h[5]),p.data(),p.size()};
         MatrixReadView mv{m.data()+h[7],std::size_t(h[2]+1),std::size_t(h[2]+1),std::ptrdiff_t(h[8]),std::ptrdiff_t(h[9]),m.data(),m.size()};
-        const auto status=matrix_transform_into(pv,mv,{o.data(),std::size_t(h[1]),std::size_t(h[2]),o.size()*8},MatrixArithmeticProfile(h[0]));
+        const auto output=MatrixWriteView{o.data(),std::size_t(h[1]),std::size_t(h[2]),o.size()*8};
+        const auto status=v2 ? matrix_transform_into_v2(pv,mv,output,MatrixArithmeticProfile(h[0])) :
+            matrix_transform_into(pv,mv,output,MatrixArithmeticProfile(h[0]));
         const std::uint32_t result=std::uint32_t(status);std::cout.write(reinterpret_cast<const char*>(&result),4);
         std::cout.write(reinterpret_cast<const char*>(o.data()),o.size()*8);
     }
@@ -140,6 +224,7 @@ void stream(int workers) {
 int main(int argc,char**argv) {
     try {
         if(argc>=2 && std::string(argv[1])=="--stream") {stream(argc==3?std::stoi(argv[2]):1);return 0;}
-        controls();std::cout<<"matrix native checks "<<checks<<" PASS\n";return 0;
+        if(argc>=2 && std::string(argv[1])=="--stream-v2") {stream(argc==3?std::stoi(argv[2]):1,true);return 0;}
+        controls();cooperlake_controls();std::cout<<"matrix native checks "<<checks<<" PASS\n";return 0;
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

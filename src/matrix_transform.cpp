@@ -67,6 +67,23 @@ bool fma_available() {
 #endif
 }
 double dot(const double* x,const double* m,std::size_t d,MatrixArithmeticProfile profile,std::size_t component) {
+    if (profile==MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed) {
+        // Exact pinned 0.3.21 ELF: K3 scalar tail and K5 lda5 denominator
+        // use +0-seeded FMA. The K4/K5 packed rows instead seed product1.
+        if (d==2 || (d==4 && component==4)) {
+            double value=0.;
+            for(std::size_t k=0;k<d;++k)value=std::fma(m[k],x[k],value);
+            value=std::fma(m[d],1.,value);
+            return std::fma(1.,value,0.);
+        }
+        double value=m[1]*x[1];
+        value=std::fma(m[0],x[0],value);
+        value=std::fma(m[2],x[2],value);
+        value=std::fma(m[3],d==3 ? 1.:x[3],value);
+        value=std::fma(1.,value,0.);
+        if (d==4) { const double tail=m[4]*1.;value=value+tail; }
+        return value;
+    }
     if (profile==MatrixArithmeticProfile::haswell_gemv_transposed) {
         // Small K=3 scalar remainder: actual audited GCC contraction starts
         // from product1, fuses product0, then product2. Larger K uses independent
@@ -111,9 +128,17 @@ struct Environment {
 
 MatrixMapStatus matrix_transform_into(const MatrixReadView& p,const MatrixReadView& m,
     const MatrixWriteView& output,MatrixArithmeticProfile profile) {
+    if (profile==MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed)
+        return MatrixMapStatus::unsupported_profile;
+    return matrix_transform_into_v2(p,m,output,profile);
+}
+
+MatrixMapStatus matrix_transform_into_v2(const MatrixReadView& p,const MatrixReadView& m,
+    const MatrixWriteView& output,MatrixArithmeticProfile profile) {
     const bool fused=profile==MatrixArithmeticProfile::haswell_gemm_fma;
+    const bool cooper=profile==MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed;
     const bool gemv=profile==MatrixArithmeticProfile::haswell_gemv_transposed ||
-        profile==MatrixArithmeticProfile::haswell_gemv_nontransposed;
+        profile==MatrixArithmeticProfile::haswell_gemv_nontransposed || cooper;
     if (!fused && !gemv && profile!=MatrixArithmeticProfile::numpy124_noblas &&
         profile!=MatrixArithmeticProfile::numpy254_special_noblas)
         return MatrixMapStatus::unsupported_profile;
@@ -149,14 +174,21 @@ MatrixMapStatus matrix_transform_into(const MatrixReadView& p,const MatrixReadVi
     }
     std::fenv_t caller;std::fegetenv(&caller);
     const bool vectorized=fused && fma_available();
+    const bool vectorized_cooper=cooper && fma_available();
     detail::partition(n,detail::active_workers(n*d),[&](auto begin,auto end,auto) {
         Environment thread_held;std::fesetenv(&caller);
         std::size_t first=begin;
 #ifdef SKIMAGEXX_AVX2
+        if (vectorized_cooper && begin<end) {
+            simd::matrix_transform_cooperlake_gemv_n(p,coefficients,
+                static_cast<double*>(output.data),d);
+            return;
+        }
         if (vectorized) first+=simd::matrix_transform_fma(p,coefficients,
             static_cast<double*>(output.data),begin,end,d);
 #else
         (void)vectorized;
+        (void)vectorized_cooper;
 #endif
         for (std::size_t i=first;i<end;++i) {
             double x[4];for(std::size_t j=0;j<d;++j)x[j]=load(p,i,j);
