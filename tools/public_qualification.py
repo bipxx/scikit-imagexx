@@ -293,7 +293,8 @@ TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_r
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
     'src/tv_denoise.cpp', 'src/bind_tv_chambolle.cpp', 'python/skimagexx/_tv_chambolle.py',
     'coverage/contracts/tv-chambolle.json',
-    'coverage/evidence/tv-chambolle-public-assertion-migration.json')
+    'coverage/evidence/tv-chambolle-public-assertion-migration.json',
+    'tests/test_tv_denoise_cursor_native.cpp', 'tests/test_tv_chambolle_cursor_pipeline.py')
 BREGMAN_PATH = 'restoration.denoise_tv_bregman'
 BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp',
     'src/simd_tv_bregman_avx2.cpp', 'src/bind_tv_bregman.cpp', 'python/skimagexx/_tv_bregman.py',
@@ -326,7 +327,8 @@ GROUPS = {
                          'test_rank_bilateral_masked_center_public.py', 'test_rank_bilateral_endian_public.py'),
     'public-decisions': ('test_rank_decisions_contracts.py', 'test_rank_decisions_public.py',
                          'test_rank_decisions_endian_public.py'),
-    'public-TV': ('test_tv_chambolle_contracts.py', 'test_tv_chambolle_native_pipeline.py'),
+    'public-TV': ('test_tv_chambolle_contracts.py', 'test_tv_chambolle_native_pipeline.py',
+                  'test_tv_chambolle_cursor_pipeline.py'),
     'public-Bregman': ('test_tv_bregman_contracts.py', 'test_tv_bregman_public.py'),
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
                       'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py'),

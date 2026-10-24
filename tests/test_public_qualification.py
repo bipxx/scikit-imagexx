@@ -959,7 +959,8 @@ def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_p
 
 
 def test_tv_public_group_and_sdk17_keep_exact_original14():
-    assert q.GROUPS['public-TV']==('test_tv_chambolle_contracts.py','test_tv_chambolle_native_pipeline.py')
+    assert q.GROUPS['public-TV']==('test_tv_chambolle_contracts.py','test_tv_chambolle_native_pipeline.py',
+                                 'test_tv_chambolle_cursor_pipeline.py')
     assert len(q.TV_FAMILIES)==17 and q.TV_FAMILIES[:14]==q.ORIGINAL_FAMILIES
     assert len(q.BREGMAN_FAMILIES)==18 and q.BREGMAN_FAMILIES[:17]==q.TV_FAMILIES
     assert len(q.MAX_TREE_FAMILIES)==19 and q.MAX_TREE_FAMILIES[:18]==q.BREGMAN_FAMILIES
@@ -1482,3 +1483,34 @@ def test_max_tree_invalid_metadata_rejects_before_any_provider(monkeypatch,fault
     elif fault=='signature':wrapper.area_opening.__signature__=__import__('inspect').Signature()
     else:core.get_num_threads=lambda:4
     with pytest.raises(q.QualificationError):q.max_tree_admission(core,morphology,wrapper,registered)
+def test_cursor_native_target_and_installed_pipeline_keep_closed_sdk_scopes():
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'add_executable(test_tv_denoise_cursor_native tests/test_tv_denoise_cursor_native.cpp)' in cmake
+    assert 'target_link_libraries(test_tv_denoise_cursor_native PRIVATE skimagexx Threads::Threads)' in cmake
+    assert 'add_test(NAME tv_denoise_cursor_native COMMAND test_tv_denoise_cursor_native)' in cmake
+    native=(ROOT/'tests/test_tv_denoise_cursor_native.cpp').read_text(encoding='utf-8-sig')
+    assert '#include "skimagexx/tv_denoise.hpp"' in native and '#include "skimagexx/image.hpp"' in native
+    assert '../src/' not in native and 'execution.hpp' not in native
+    assert q.PRODUCT_SCOPE=='matrix20' and q.PRODUCT_MEMBERS==114 and q.SDK_MEMBERS==65 and len(q.FAMILIES)==20
+    assert q.product_census('bregman18')==(110,63) and len(q.BREGMAN_FAMILIES)==18
+    assert 'tv_denoise_cursor' not in q.FAMILIES
+    assert {'tests/test_tv_denoise_cursor_native.cpp','tests/test_tv_chambolle_cursor_pipeline.py'}<=set(q.TV_SOURCE_PATHS)
+    pipeline=(ROOT/'tests/test_tv_chambolle_cursor_pipeline.py').read_text()
+    assert 'from skimagexx import _core as core' in pipeline
+    assert "BACKEND=os.environ.get('SKIMAGEXX_TV_CHAMBOLLE_STAGE_CORE')" in pipeline
+
+
+def test_cursor_private_selector_rejected_before_installed_pipeline_import(tmp_path,monkeypatch):
+    # Inert package-envelope fixture exercises the real existing admission
+    # boundary; no numerical stub or native acceptance is claimed.
+    (tmp_path/'package.json').write_text(json.dumps({'members_sha256':{}}))
+    monkeypatch.setattr(q,'verify_tree',lambda *_:None)
+    monkeypatch.setattr(q,'validate_interpreter_provenance',lambda *_:None)
+    monkeypatch.setenv('SKIMAGEXX_TV_CHAMBOLLE_STAGE_CORE','private_cursor_core')
+    original=builtins.__import__
+    def guarded(name,*a,**kw):
+        if name in ('skimagexx','pytest'):raise AssertionError('installed package/fixtures reached before rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    with pytest.raises(q.QualificationError,match='private selectors forbidden'):
+        q.admission(tmp_path,{'interpreter_provenance':{}})
