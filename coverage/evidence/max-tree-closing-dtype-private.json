@@ -1,0 +1,38 @@
+{
+  "schema": "max-tree-closing-dtype-private-v1",
+  "accepted_private": true,
+  "source": "c98ec8e026a8e067ad1ecc6d90bb6d3a7c567b83",
+  "base": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
+  "change": "Closing fast outputs allocate the canonical scalar dtype, matching original metadata removal; openings preserve copy behavior.",
+  "wrapper_canonical_LF_sha256": "3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae",
+  "verified": {
+    "records": 57,
+    "passing_mixed_contract_checks": 11766,
+    "profiles": [
+      "windows",
+      "modern",
+      "minimum"
+    ],
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "each_private_package_members": 114,
+    "each_unchanged_package_members": 113,
+    "each_SDK_members": 65,
+    "Cpp_kernel_binder_headers_changed": false
+  },
+  "root_review": {
+    "path": "build/decisions-readiness/max-closing-dtype-private-root-review/manifest.json",
+    "bytes": 1636,
+    "sha256": "5aa7cc15441778c37d6653200be7dcc6b40313f21ec65653f17c1a5b2464f2b7"
+  },
+  "public_acceptance": false,
+  "operation_timings": 0,
+  "private_omission": "One old wrapper text-identity assertion omitted in private tests; genuine source migrates its metadata pin and must run it.",
+  "pending": "Corrected genuine199 qualification and original-library performance."
+}

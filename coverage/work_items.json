@@ -29534,6 +29534,21 @@
         "native_acceptance": false,
         "original_arithmetic_calls": 0,
         "result": "New unforced Windows host selects SkylakeX from the same authenticated DLL; natural runtime profile refusal captured."
+      },
+      "candidate_followup": {
+        "source": "cfb5c4036a7b4d523ec1689454a75a5b23f489c2",
+        "branch": "integration/public199-fixes",
+        "status": "metadata-passed-public-qualification-pending",
+        "private_dtype_review": {
+          "path": "coverage/evidence/max-tree-closing-dtype-private.json",
+          "bytes": 1351,
+          "sha256": "1261c61bcda0051cb58f412a5558b7d639338c87d056af16f00b14181fcee1ec"
+        },
+        "private_SDK_review": {
+          "path": "coverage/evidence/max-tree-sdk-oracle-private.json",
+          "bytes": 1246,
+          "sha256": "0c13edbc485826ad2d57802d65a7961a919da8c1464e14eddda6819063cfa55b"
+        }
       }
     },
     {
@@ -29604,8 +29619,8 @@
       "id": "max-tree-public-benchmark-consumer",
       "kind": "measurement",
       "apis": [],
-      "owner": "resize_api",
-      "branch": "feature/max-tree-compare-followup",
+      "owner": "integrator",
+      "branch": "feature/max-tree-compare-public-header",
       "base_sha": "a353c074850d15908eeafd9a790c0b9dec50a320",
       "owns": [
         "benchmarks/max_tree_compare.py",
@@ -29665,6 +29680,13 @@
         "bytes": 7869,
         "sha256": "71ac64831a33335d98334bcb678276d142007766d1528ddc4ea12b4c5b5c051b",
         "metadata_guards_per_runtime": 114,
+        "root_review": "pending",
+        "native_acceptance": false,
+        "operation_timings": 0
+      },
+      "tooling_followup": {
+        "source": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
+        "guards_per_runtime": 115,
         "root_review": "pending",
         "native_acceptance": false,
         "operation_timings": 0
@@ -29855,7 +29877,8 @@
       "contract": {
         "case_manifest": "coverage/contracts/tv-chambolle-benchmark.json",
         "uncovered_cases": [
-          "Root source/privateproof review; genuine192 whole-product/SDK18 qualification; separately reviewed exact-header common-input adapter and isolated controlled one-worker comparison."
+          "All4actual192/SDK18 qualification outcomes and independent cumulative root acceptance.",
+          "Separately reviewed exact-header common-input adapter and isolated controlled one-worker comparison."
         ]
       },
       "parity": {
@@ -29888,6 +29911,34 @@
           "build/worktrees/tv-finite-admission"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "585d56819a7679cc740a3f9bc412e83ce31190a8",
+          "native_contract_checks": 429718,
+          "native_pending": 0,
+          "manifest": {
+            "path": "coverage/evidence/tv-single-admission-private.json",
+            "bytes": 1284,
+            "sha256": "6263b1df5430d5113b742877ed41472839d1483f781968c8f1fee24cb879f28e"
+          }
+        },
+        "public_native": {
+          "status": "pending",
+          "source_sha": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee"
+        }
+      },
+      "qualification_branch": "integration/tv-admission-public",
+      "full_product_dispatch": {
+        "source": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+        "run": 40128026938,
+        "status": "running-not-accepted",
+        "proof": {
+          "path": "coverage/evidence/tv-single-admission-dispatch.json",
+          "bytes": 1347,
+          "sha256": "47421e806f74020cbf802aa061dc5fd1615aca80576c73e59d34958208638765"
+        }
       }
     },
     {
@@ -29934,6 +29985,53 @@
         "active_paths": [
           "build/worktrees/matrix-transform-skylakex",
           "build/matrix-windows-skylakex-arithmetic-audit"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "iterative-threshold-contracts",
+      "kind": "reference_contract",
+      "apis": [
+        "filters.threshold_li",
+        "filters.threshold_multiotsu"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/iterative-threshold-contracts",
+      "base_sha": "0d9945460edab972f3af0942eaffaf159f6d4198",
+      "state": "contracting",
+      "owns": [
+        "tests/test_iterative_threshold_contracts.py",
+        "coverage/contracts/iterative-thresholds.json"
+      ],
+      "depends_on": [],
+      "contract": {
+        "case_manifest": "coverage/contracts/iterative-thresholds.json",
+        "uncovered_cases": [
+          "Freeze source-derived safe original defaults/dtype/layout/histogram/callback observations on3existing runtimes; unsafe original paths metadata-only.",
+          "Native implementations, full hot-swap parity, global workers/SIMD and isolated one-worker original-library performance remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/iterative-threshold-contracts"
         ],
         "protected_artifacts": []
       }
@@ -30124,11 +30222,9 @@
     "filters.sobel_h",
     "filters.sobel_v",
     "filters.threshold_isodata",
-    "filters.threshold_li",
     "filters.threshold_local",
     "filters.threshold_mean",
     "filters.threshold_minimum",
-    "filters.threshold_multiotsu",
     "filters.threshold_niblack",
     "filters.threshold_otsu",
     "filters.threshold_sauvola",
@@ -30671,13 +30767,13 @@
         "matrix-transform-profile-binding"
       ],
       "resize_api": [
-        "max-tree-public-benchmark-consumer",
-        "max-tree-root-compression"
+        "iterative-threshold-contracts",
+        "max-tree-public-benchmark-consumer"
       ]
     },
     "current_three_agent_packets": {
       "metrics_reductions": "tv-finite-single-admission",
-      "resize_api": "max-tree-public-benchmark-consumer",
+      "resize_api": "iterative-threshold-contracts",
       "resize_bench": "matrix-transform-skylakex-reference"
     },
     "current_source_staging": {

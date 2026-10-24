@@ -1,0 +1,37 @@
+{
+  "schema": "max-tree-sdk-oracle-private-v1",
+  "accepted_private_fix": true,
+  "source": "ca32dfa1679393a512f449e0939fd690b00f747c",
+  "supplied_SDK_source": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
+  "change": "Both native registrations supply a SHA-authenticated binary oracle to the existing max-tree client; no Python dependency.",
+  "oracle": {
+    "bytes": 174036,
+    "sha256": "e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab61bc39d93b5",
+    "source_ids": 233,
+    "metadata_rows_excluded": 118
+  },
+  "verified": {
+    "source_metadata_guards": 6,
+    "installed_client_assertions_per_mode": 1455053,
+    "source_projections_per_mode": 466,
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "SDK_members_unchanged": 65
+  },
+  "root_review": {
+    "path": "build/decisions-readiness/max-tree-sdk-oracle-root-review/manifest.json",
+    "bytes": 16886,
+    "sha256": "4c5ae11714dd47c7976921e0b3ed614effd6fbb85a787f1e0a9ee4a52cc00b8a"
+  },
+  "only_external_client_TU_built": true,
+  "library_rebuilt": false,
+  "public199_acceptance": false,
+  "operation_timings": 0,
+  "pending": "Compose exact source fix into genuine corrected199 qualification; no unqualified parent merge."
+}

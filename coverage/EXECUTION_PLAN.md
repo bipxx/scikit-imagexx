@@ -66,6 +66,16 @@ APIs have separate scoped parity proofs; neither increases accepted public count
 The [max-tree benchmark reference](evidence/max-tree-benchmark-reference.json)
 preserves all 351 source observations and 252 finite candidates per runtime;
 native admission and one-worker measurements remain pending.
+The next TV single-admission source `585d568` has passed independent private
+review: 429,718 checked-entry assertions, 22,778 mixed pipeline checks and the
+unchanged 400-case provider corpus. Exact composed source `af7b2af` is now in
+[four-profile whole qualification](https://github.com/bipxx/scikit-imagexx/actions/runs/40128026938).
+Its new independent old-source control stays private-only. Public acceptance and
+the new one-worker comparison remain pending; current accepted coverage is unchanged.
+The [closing dtype correction](evidence/max-tree-closing-dtype-private.json) and
+[SDK oracle registration](evidence/max-tree-sdk-oracle-private.json) also have
+independently verified private evidence. Their combined `cfb5c40` candidate still
+needs Windows matrix admission and fresh complete qualification.
 The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
@@ -90,9 +100,9 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
 | Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Qualified 192-path source `5e068a5` and its controlled TV report are merged; 199 remains a separate candidate. Review private fixes, retain failures and promptly merge validated increments. The clean merged report worktree is retired. |
-| Worker 1 | `metrics_reductions` | Next TV single-admission qualification and comparison readiness | Private source `585d568` has an independent old-source control proof. Prepare exact192 source/common-input qualification; the test-only renamed control stays outside public products/SDKs. Whole-product and new speed evidence remain pending. |
-| Worker 2 | `resize_api` | Six-API max-tree benchmark consumer and released-cache cleanup | Consumer `3284541` fixes fresh-worker fallback policy, preserves the global exclusive claim and retains raw authentication bytes. Its 114 metadata guards pass per runtime; root review and genuine public199/SDK20 admission remain pending, with static product pins null. |
-| Worker 3 | `resize_bench` | Original-only Windows SkylakeX characterization | Implement a separate artifact-only controller with owner-bounded live table metadata and unchanged full374/4000 cohorts plus fixed boundary cases. Existing arithmetic profiles are conditionally sufficient; no production profile/allowlist changes or native acceptance before actual-host evidence. |
+| Worker 1 | `metrics_reductions` | Exact TV qualification observation and raw retention | Follow the original `40128026938` observer/retainer through all four outcomes. Preserve genuine192/SDK18 products, all failures and the real5e before products; public acceptance and new speed evidence remain pending. |
+| Worker 2 | `resize_api` | Li and multi-Otsu original contracts | Capture genuine0.26 defaults, dtype/layout/histogram behavior and Li callbacks on existing runtimes, untimed. The separate corrected199 candidate and consumer `551451a` are frozen for root review; neither has public/native measurement acceptance. |
+| Worker 3 | `resize_bench` | Original-only Windows SkylakeX characterization | Controller `ac8a288` adds observed predivision trace provenance and fixed FMA product witnesses while preserving full374/4000 data. Root source review precedes any hosted reference; no production profile/allowlist change or native acceptance follows from metadata guards. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
