@@ -82,7 +82,8 @@ def cases():
     for hist in ('trim','sparse','zero','empty','short-centers','wrong-pair','negative','nan','infinite'):
         add('threshold_multiotsu','hist-boundary-'+hist,hist=hist,dtype='f4',classes=3,blocked=hist in ('negative','nan','infinite'))
     for kind in ('empty','scalar','constant','all-nan','mixed-nan','inf','both-inf','finite-inf','3D','list','none'):
-        add('threshold_multiotsu','image-boundary-'+kind,kind=kind,dtype='f8')
+        # Empty floating histograms normalize to NaNs and reach unchecked Cython.
+        add('threshold_multiotsu','image-boundary-'+kind,kind=kind,dtype='f8',blocked=kind=='empty')
     for nbins in (0,-1,1,2,8,32):add('threshold_multiotsu','nbins-'+str(nbins),dtype='f4',nbins=nbins)
     for classes in (1,0,-1):add('threshold_multiotsu','blocked-classes-'+str(classes),hist='counts',dtype='f4',classes=classes,blocked=True)
     add('threshold_multiotsu','constant-class1',kind='constant',dtype='u1',classes=1)
@@ -270,6 +271,17 @@ def test_source_signatures_integrity_and_native0():
         assert getattr(importlib.import_module('skimage.filters'),name) is ORIGINAL[name]
         node=ast.parse(inspect.getsource(ORIGINAL[name])).body[0]
         assert hashlib.sha256(ast.dump(node,include_attributes=False).encode()).hexdigest()==data['source_function_AST'][str(sys.version_info.minor)][name]
+
+
+@pytest.mark.parametrize('spec',[s for s in cases() if s.get('blocked')],ids=lambda s:s['id'])
+def test_source_unsafe_intakes_never_enter_compiled_algorithm(spec,monkeypatch):
+    attempted=[]
+    def forbidden(*args):attempted.append(args);raise AssertionError('unsafe compiled original executed')
+    for name in ('_get_multiotsu_thresh_indices_lut','_get_multiotsu_thresh_indices'):
+        monkeypatch.setattr(SOURCE,name,forbidden)
+    row=observe(spec)
+    assert not attempted and row['source_unsafe'] and row['numeric_Cython_completed']==0
+    assert row['error']==dict(type='SafetyBoundary',message='source-unsafe Cython intake blocked')
 
 
 @pytest.mark.parametrize('classes',(2,3,4))
