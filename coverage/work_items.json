@@ -21321,7 +21321,7 @@
         "expected_original_error_candidates_untimed": 8,
         "raw_results": [],
         "regressions": [],
-        "verification_state": "Queuedpreparation verified byexactrunID/headSHA; no timingclaim.",
+        "verification_state": "Latestexactrun40049417301: Windows/minimum preparation succeeded, modernpreparationqueued; freshmeasurementjobs waitall3barrier. No timingresults yet.",
         "observation_rule": "Follow40049417301 toterminal, nevercancel/restart forqueue/session timeout. Threepreparationjobs workers1/4normal/scalar beforefreshartifact-onlymeasurementhosts workers1."
       },
       "merge": {
@@ -21481,17 +21481,19 @@
           "evidence_scope": "tooling"
         }
       },
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Cumulative sourceprepared withR5Cpp+wrappers+metrics5d, rootnamespacecanonical26/generic17/SDK12/authenticatedfixtureassertions andpredicted180data. No actual180build/admission. ReadonlyCIstaticreview thenexactsourcehosted4profileworkflow; no localfullbuilds withCdrivepressure. Mainremains171accepted."
+          "Hostedactualwhole8 run40051495344 queuedaftercleanexactsource/staticreview/fourplan0blockers. Predicted180 notaccepteduntilallprofiles/genuine104+59SDK12/default1/1+4/corpora andartifactclosure pass. Mainremains171."
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "https://github.com/bipxx/scikit-imagexx/actions/runs/40051495344"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -21510,6 +21512,28 @@
           "build/worktrees/wave8-percentile-metrics"
         ],
         "protected_artifacts": []
+      },
+      "hosted_run": {
+        "run_id": 40051495344,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40051495344",
+        "source_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
+        "branch": "integration/wave8-percentile-metrics",
+        "initial_state": "queued",
+        "profiles": [
+          "windows",
+          "modern",
+          "minimum",
+          "debug"
+        ],
+        "expected_native_images_predicted_only": 180,
+        "dispatches": 1,
+        "source_frozen": true,
+        "no_local_builds": true,
+        "static_review": {
+          "path": "build/worktrees/wave8-percentile-metrics/build/whole8-static-review.json",
+          "sha256": "4842e9ab2dcfc521df5b93524a4f365ec4d37ba04383899dddb051bef0326c6c"
+        },
+        "policy": "Exactrun throughterminal; no cancel/restart solelyobservationtimeout. Allfour genuineproduct/corpus/SDK scopes required; private/prototype or old171metadata probes notactual180."
       }
     }
   ],
@@ -22655,5 +22679,15 @@
       "archive_sha256": "7db2bcdf25ccc3f80cfd8b21b1dba64ad055d8d25e52df3e4ede71cf9306f5db",
       "member_rule": "Remove former_prefix/; tar uses ./ prefix. Exact regular bytes and36 Lxsymlink targets retained without following links."
     }
-  ]
+  ],
+  "inventory_assessment_pending": {
+    "new_public_paths": [
+      "filters.rank.bilateral.mean_bilateral",
+      "filters.rank.bilateral.pop_bilateral",
+      "filters.rank.bilateral.sum_bilateral"
+    ],
+    "evidence_packet": "rank-bilateral-contracts",
+    "source_sha": "eae7fc01f2533012e16d8faa428b92bae589e473",
+    "note": "Threeadditional publicnested aliases ofsame3algorithms assessedoriginal-only; extend futureinventory explicitly, do notcountasnewalgorithms or pretendnative. Frozenwhole8 metadata remains474total/180predicted untilqualification."
+  }
 }
