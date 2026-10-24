@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-477 public callable names inventoried in 20 modules; 171 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 186 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -207,39 +207,39 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.wiener` | upstream-only | pending | pending |
 | `filters.window` | upstream-only | pending | pending |
 | `filters.rank.autolevel` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.autolevel_percentile` | upstream-only | pending | pending |
+| `filters.rank.autolevel_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.enhance_contrast` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.enhance_contrast_percentile` | upstream-only | pending | pending |
+| `filters.rank.enhance_contrast_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.entropy` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.equalize` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.geometric_mean` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.gradient` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.gradient_percentile` | upstream-only | pending | pending |
+| `filters.rank.gradient_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.majority` | upstream-only | pending | pending |
 | `filters.rank.maximum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.mean` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.mean_bilateral` | upstream-only | pending | pending |
-| `filters.rank.mean_percentile` | upstream-only | pending | pending |
+| `filters.rank.mean_bilateral` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.mean_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.median` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.minimum` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.modal` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.noise_filter` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.otsu` | upstream-only | pending | pending |
-| `filters.rank.percentile` | upstream-only | pending | pending |
+| `filters.rank.percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.pop` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.pop_bilateral` | upstream-only | pending | pending |
-| `filters.rank.pop_percentile` | upstream-only | pending | pending |
+| `filters.rank.pop_bilateral` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.pop_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.subtract_mean` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.subtract_mean_percentile` | upstream-only | pending | pending |
+| `filters.rank.subtract_mean_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.sum` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.sum_bilateral` | upstream-only | pending | pending |
-| `filters.rank.sum_percentile` | upstream-only | pending | pending |
+| `filters.rank.sum_bilateral` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.sum_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.threshold` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.threshold_percentile` | upstream-only | pending | pending |
+| `filters.rank.threshold_percentile` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.windowed_histogram` | native-partial | yes (partial input contract) | yes |
-| `filters.rank.bilateral.mean_bilateral` | upstream-only | pending | pending |
-| `filters.rank.bilateral.pop_bilateral` | upstream-only | pending | pending |
-| `filters.rank.bilateral.sum_bilateral` | upstream-only | pending | pending |
+| `filters.rank.bilateral.mean_bilateral` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.bilateral.pop_bilateral` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.bilateral.sum_bilateral` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.autolevel` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.enhance_contrast` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.entropy` | native-partial | yes (partial input contract) | yes |
