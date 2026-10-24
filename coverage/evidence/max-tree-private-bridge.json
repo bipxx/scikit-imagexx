@@ -34,5 +34,25 @@
   "public_acceptance": false,
   "performance_acceptance": false,
   "new_public_image_paths": 0,
-  "pending": "Fresh sole public core, full package/SDK19 qualification, broader provider protocols and original-library one-worker bottleneck measurements. Integer sorting and root compression are separate increments."
+  "pending": "Fresh sole public core, full package/SDK19 qualification, broader provider protocols and original-library one-worker bottleneck measurements. Integer sorting and root compression are separate increments.",
+  "integer_sort_optimization": {
+    "source": "82394aecc306ae117027160f73fff7d769b04eec",
+    "proof": {
+      "path": "build/worktrees/max-tree-integer-sort/build/max-tree-integer-sort/manifest.json",
+      "bytes": 48456,
+      "sha256": "d7eb6f32702be481b4887f978d6bf36f85cd9db9c752e098a8b624bc33b9f615"
+    },
+    "root_review": {
+      "path": "build/decisions-readiness/max-tree-integer-sort-root-review/manifest.json",
+      "bytes": 916,
+      "sha256": "c1498b2c70304f41a5a531c8f5106ff7aeebde5b60793447904bb0b9abc18a02"
+    },
+    "full_native_gates": 14,
+    "native_assertions": 8718214,
+    "source_numeric_projections": 5592,
+    "all_large_and_pathological_controls_retained": true,
+    "header_ABI_guards_generic_eight_types_and_postsort_math_unchanged": true,
+    "public_acceptance": false,
+    "performance_acceptance": false
+  }
 }

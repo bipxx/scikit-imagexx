@@ -23,5 +23,11 @@
   "runtime_authentication": false,
   "public_acceptance": false,
   "scope": "Only source-audited prepared Cooperlake0.3.21 GEMV-N, N1,D2..4. No runtime CPU acceptance, whole374 pipeline, installed public core/SDK or performance claim.",
-  "pending": "GEMM/GEMVT association and actual SkylakeX/Zen defaults need primary-source/binary audits; all diagnostic mismatches remain retained."
+  "pending": "GEMM/GEMVT association and actual SkylakeX/Zen defaults need primary-source/binary audits; all diagnostic mismatches remain retained.",
+  "further_source_binary_arithmetic_audits": {
+    "path": "build/decisions-readiness/matrix-runtime-arithmetic-root-review/manifest.json",
+    "bytes": 4623,
+    "sha256": "608103349e27aebc9da04d1242a260311f0ce5d2c9cb75450608e84917dbee00"
+  },
+  "next_private_runtime_binding": "feature/matrix-transform-profile-binding; real native replay and actual runtime certificates remain separate scopes, without CPU spoofing."
 }
