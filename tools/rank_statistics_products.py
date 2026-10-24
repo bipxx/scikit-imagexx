@@ -155,7 +155,8 @@ def qualification_scope_text(text):
             'source explicit product scope incomplete')
     scopes = {'tv17': (108, 62, ('tv_chambolle', 'tv_reductions', 'tv_denoise')),
               'bregman18': (110, 63, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman')),
-              'max_tree19': (112, 64, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree'))}
+              'max_tree19': (112, 64, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree')),
+              'matrix20': (114, 65, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform'))}
     require(values['PRODUCT_SCOPE'] in scopes, 'source TV/Bregman scope incomplete')
     members, sdk, suffix = scopes[values['PRODUCT_SCOPE']]
     require(type(values['PRODUCT_MEMBERS']) is int and type(values['SDK_MEMBERS']) is int
@@ -255,19 +256,21 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
                 == q['source']['files_sha256']['tools/public_qualification.py'],
                 'qualified source controller differs before registry admission')
         scope = qualification_scope_text(text.decode('utf-8'))
-    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198}[scope['name']]
+    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
             f'genuine{image_count}+3 registry qualification required')
     require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
-    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19')),
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20')),
             'qualified Bregman registry/source scope differs')
     max_tree = tuple('morphology.' + name for name in ('max_tree', 'max_tree_local_maxima',
                      'area_opening', 'area_closing', 'diameter_opening', 'diameter_closing'))
-    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] == 'max_tree19'
+    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20')
             else not any(name in expected['functions'] for name in max_tree),
             'qualified max-tree registry/source scope differs')
+    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] == 'matrix20'),
+            'qualified matrix registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')
     binding = q.get('build_identity')

@@ -58,13 +58,14 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18','max_tree19')
+    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope in ('bregman18','max_tree19'):families += ['tv_bregman']
-    if scope=='max_tree19':families += ['max_tree']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112}[scope]
+    if scope in ('bregman18','max_tree19','matrix20'):families += ['tv_bregman']
+    if scope in ('max_tree19','matrix20'):families += ['max_tree']
+    if scope=='matrix20':families += ['matrix_transform']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -80,12 +81,15 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope in ('bregman18','max_tree19'):
+    if scope in ('bregman18','max_tree19','matrix20'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
-    if scope=='max_tree19':
+    if scope in ('max_tree19','matrix20'):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
         source['python/skimagexx/_max_tree.py']=b'# inert max-tree helper metadata\n'
+    if scope=='matrix20':
+        source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
+        source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -141,8 +145,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope=='max_tree19' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20') else [])+(['transform.matrix_transform'] if scope=='matrix20' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -507,6 +511,49 @@ def test_max_tree198_registry_requires_all_six_and_prior_public_paths(synthetic,
     elif fault=='duplicate-max-tree':expected['functions'][0]=expected['functions'][-1]
     elif fault=='missing-Bregman':expected['functions'][-7]='unit-only-replacement'
     else:expected['functions'][-8]='unit-only-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic',['matrix20'],indirect=True)
+def test_matrix199_full114_65_sdk20_stage_remains_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==65 and len(sdk['families'])==20 and sdk['checks']==40
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==114
+    assert p.qualification_scope(s.output/'source')['name']=='matrix20'
+    assert p.load(s.output/'qualification.json')['expected_registry']['image_count']==199
+    assert not any(n in p.load(s.output/'product.json') for n in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('fault',('SDK64','wheel112','family19','wrong-family','duplicate-family','missing-scope','max-tree-scope','float-count'))
+def test_matrix_source_literals_cannot_downgrade_closed_scope(fault):
+    families=tuple('tooling-original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='matrix20',PRODUCT_MEMBERS=114,SDK_MEMBERS=65)
+    assert p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))['name']=='matrix20'
+    if fault=='SDK64':values['SDK_MEMBERS']=64
+    elif fault=='wheel112':values['PRODUCT_MEMBERS']=112
+    elif fault=='family19':values['FAMILIES']=families[:-1]
+    elif fault=='wrong-family':values['FAMILIES']=families[:-1]+('private_family',)
+    elif fault=='duplicate-family':values['FAMILIES']=families[:-1]+('max_tree',)
+    elif fault=='missing-scope':del values['PRODUCT_SCOPE']
+    elif fault=='float-count':values['PRODUCT_MEMBERS']=114.
+    else:values['PRODUCT_SCOPE']='max_tree19'
+    with pytest.raises(RuntimeError):p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['matrix20'],indirect=True)
+@pytest.mark.parametrize('fault',('image198','missing-matrix','duplicate-matrix','missing-max-tree','missing-TV','missing-Bregman'))
+def test_matrix199_requires_prior_paths_and_one_matrix_registration(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='image198':expected['image_count']=198
+    elif fault=='missing-matrix':expected['functions'][-1]='unit-replacement'
+    elif fault=='duplicate-matrix':expected['functions'][0]=expected['functions'][-1]
+    else:
+        target={'missing-max-tree':'morphology.max_tree','missing-TV':'restoration.denoise_tv_chambolle','missing-Bregman':'restoration.denoise_tv_bregman'}[fault]
+        expected['functions'][expected['functions'].index(target)]='unit-replacement'
     s.reseal()
     with pytest.raises(RuntimeError):run(s)
     assert not s.output.exists()

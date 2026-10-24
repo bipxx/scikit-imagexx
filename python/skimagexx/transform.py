@@ -224,3 +224,7 @@ def _local_mean_dispatch(image,factors,cval,clip,notices,upstream):
     result=_local_mean_output(image,block_shape,after,shape,target)
     if not _core.downscale_local_mean(image,result,block_shape,constant):return upstream()
     return result[()] if not image.ndim else result
+
+# Source-faithful coordinate intake with authenticated checked C++ arithmetic.
+from ._matrix_transform import matrix_transform
+__all__ += ['matrix_transform']

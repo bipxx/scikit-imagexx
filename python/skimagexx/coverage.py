@@ -8,7 +8,7 @@ NATIVE_FUNCTIONS = {
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
-    'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale'),
+    'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
@@ -33,6 +33,20 @@ NATIVE_FUNCTIONS = {
 
 MAX_TREE_PATHS = tuple('morphology.'+name for name in (
     'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing'))
+
+
+def matrix_transform_contract():
+    """Partial native arithmetic, separate from owned protocol providers."""
+    return dict(api='transform.matrix_transform', implementation='native-partial',
+        interfaces={'matrix-transform-math-v1':31,'matrix-transform-math-v2':63},
+        kernel='Checked finite float64 homogeneous coordinates, rank2 coordinate tables with2..4 spatial columns; typed signed strides and original whole-copy/layout arithmetic profiles',
+        providers='Owned NumPy constructor/ones/hstack/matmul stages preserve exceptional FP, dtype, allocation, callback and protocol semantics. No upstream matrix_transform or ProjectiveTransform algorithm forwarding',
+        runtime='Exact loaded UMATH/OpenBLAS bytes, getter ownership, ILP64, unforced source-audited corename and vendor threads1; unknown/interposed runtime stays owned provider',
+        actual_runtime_evidence=('Haswell','Zen'),
+        prepared_only_runtime_evidence=('Cooperlake','SkylakeX'),
+        wider_dtype_scope='Non-float64 matrices retain certified dyadic native scope; wider general casting remains unassessed',
+        workers='Shared sole_core global setter, default1 and optional4; packed SIMD disabled by SKIMAGEXX_DISABLE_SIMD without changing fused arithmetic',
+        performance='Unmeasured end-to-end public pipeline; homogeneous allocation fusion remains future work')
 
 
 def native_functions():
@@ -290,6 +304,9 @@ def default_call(api, image):
         return (.2,),{'dtype':np.complex64 if image.dtype==np.float32 else np.complex128}
     if api=='exposure.match_histograms':return (image,image[...,::2]),{}
     if api=='transform.downscale_local_mean':return (image,2),{}
+    if api=='transform.matrix_transform':
+        import numpy as np
+        return (np.column_stack((image.ravel(),image.ravel())),np.eye(3)),{}
     if api=='transform.resize':return (image,tuple(max(1,(n+1)//2) for n in image.shape)),{}
     if api=='transform.rescale':return (image,.5),{}
     if api=='transform.integrate':
@@ -328,6 +345,7 @@ def parity_tolerance(api, dtype):
     if api.startswith('metrics.'):
         tolerance=3e-6 if str(dtype)=='float32' else 3e-13
         return tolerance,tolerance if api=='metrics.peak_signal_noise_ratio' else 0.
+    if api=='transform.matrix_transform':return (0.,0.)
     if api in ('color.label2rgb','transform.integral_image','transform.integrate','filters.threshold_minimum','filters.threshold_multiotsu','filters.rank_order','filters.apply_hysteresis_threshold'):return (0.,0.)
     name = str(dtype)
     single = name == 'float32'
