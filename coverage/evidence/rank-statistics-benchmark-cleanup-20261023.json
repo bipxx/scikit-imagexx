@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T00:27:00.671944+00:00",
+  "scope": "Retire final released R4benchmark worktree after all original phase1 jobs terminal and source merged.",
+  "former_path": "build/worktrees/rank-statistics-benchmark",
+  "source_head": "194a2dffb52bba6f5282a1dd3472733f8c9c91e3",
+  "source_clean": true,
+  "ancestor_of_main": true,
+  "verified_regular_members": 1116,
+  "verified_lxsymlink_targets": 16,
+  "archive": "build/cleanup/rank-statistics-benchmark-retirement-20261023/rank-statistics-benchmark.tar.gz",
+  "archive_sha256": "af4565f157d82d6fa6d507e9ee9a516b0761930de3e51f1ff0df90b0b79d60db",
+  "preservation_index": {
+    "path": "build/cleanup/rank-statistics-benchmark-retirement-20261023/manifest.json",
+    "sha256": "0b43a38e79ab4f86759e473bdc90f561a44ee456792febaa39f326fc05730e61"
+  },
+  "logical_net_bytes_recovered": 372204602,
+  "safety": "All1116 regular members rehashed against archive and source;16 Lxsymlink targets independently read without following and matched tar metadata. Resolved deletion target remained inside workspace; git worktree remove used only after clean/ancestor/dependency checks.",
+  "performance_jobs_cancelled": false,
+  "active_environments_packages_or_unfinished_source_removed": false,
+  "cumulative_cleanup": {
+    "obsolete_build_caches": 25,
+    "clean_merged_worktrees": 29,
+    "duplicate_source_snapshots": 2,
+    "logical_net_bytes_recovered": 8874082307
+  }
+}

@@ -20349,6 +20349,12 @@
         "protected_artifacts": [
           "build/worktrees/rank-statistics-benchmark/build",
           "build/rank-statistics-benchmark-evidence/194a2df/final-v2"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-statistics-benchmark",
+            "archive": "build/cleanup/rank-statistics-benchmark-retirement-20261023/rank-statistics-benchmark.tar.gz"
+          }
         ]
       },
       "dependency_requirements": {
@@ -21994,6 +22000,12 @@
       "archive": "build/cleanup/merged-report-worktrees-20261023/rank-statistics-contracts.zip",
       "archive_sha256": "ce9cb7c4d4f2ee986180477cf2f1785701625ace565090939b75f4fac2287493",
       "member_rule": "Remove former_prefix/; exact original raw files retained in verified ZIP."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-statistics-benchmark",
+      "archive": "build/cleanup/rank-statistics-benchmark-retirement-20261023/rank-statistics-benchmark.tar.gz",
+      "archive_sha256": "af4565f157d82d6fa6d507e9ee9a516b0761930de3e51f1ff0df90b0b79d60db",
+      "member_rule": "Remove former_prefix/; tar members use ./ prefix. All original regular bytes and16 Lxsymlink targets retained without following links."
     }
   ]
 }

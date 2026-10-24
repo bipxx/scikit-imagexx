@@ -28,6 +28,6 @@
     "sha256": "1998694d8dafa8972782d1320612b9dba88e3dc2d49f87ea30edc5169b9eb254"
   },
   "safety": "Resolved exact paths checked within workspace; complete per-member hashes rechecked against ZIP and source before git worktree remove. No active jobs, caches, environments, raw benchmark evidence or unfinished source removed.",
-  "retained_reparse_tree": "rank-statistics-benchmark remains retained, including16 historical pytest current reparse entries; not removed or followed.",
+  "retained_reparse_tree": "At this two-tree checkpoint rank-statistics-benchmark remained retained. It was subsequently archived with16 Lxsymlink targets and retired; see coverage/evidence/rank-statistics-benchmark-cleanup-20261023.json.",
   "drive_free_bytes_at_completion": 16641036288
 }
