@@ -160,7 +160,7 @@ def fixture(spec,events):
         callback=spec['callback'];calls=[0]
         def cb(v):
             calls[0]+=1;events.append(['iter_callback',value(v)])
-            if callback=='mutate' and 'image' in work:work['image'].flat[0]=0;events.append(['callback_mutation',value(work['image'])])
+            if callback=='mutate' and 'image' in work:work['image'].flat[0]=work['image'].max();events.append(['callback_mutation',value(work['image'])])
             if callback=='abort1' or callback=='abort2' and calls[0]==2 or calls[0]>=32:raise RuntimeError('callback-stop')
         kwargs['iter_callback']=7 if callback=='invalid' else cb
     class Tolerance(float):
@@ -304,6 +304,17 @@ def test_independent_exhaustive_multiotsu_definition(classes,fallback):
 def test_independent_small_integer_li_partition(data):
     actual=ORIGINAL['threshold_li'](np.array(data,'u1'))
     assert value(actual)==value(li_definition(data))
+
+
+@pytest.mark.parametrize('dtype',('i2','f4','f8'))
+def test_callback_changes_real_working_pixels_before_histogram(dtype):
+    spec=next(s for s in cases() if s['id']=='threshold_li/callback-'+dtype+'-mutate')
+    row=observe(spec)
+    initial=next(event for event in row['events'] if event[0]=='initial_guess')
+    mutation=next(event for event in row['events'] if event[0]=='callback_mutation')
+    assert initial[1]['raw']!=mutation[1]['raw'] and initial[2] is False
+    assert row['input_before']==row['input_after']
+    if dtype=='i2':assert next(b for b in row['source_backend'] if b['stage']=='histogram')['input']['items'][0]['raw']==mutation[1]['raw']
 
 
 @pytest.mark.parametrize('name',NAMES)
