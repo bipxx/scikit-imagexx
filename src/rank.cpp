@@ -375,7 +375,9 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
                 if(int(op)>=26 && !hist.pop){emit(std::int64_t{0});return;}
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
-                if(pixel>=v.bins)throw std::invalid_argument("rank center exceeded histogram bounds");
+                // Bilateral uses g only in a clipped interval comparison,
+                // never as hist[g]. A masked center may exceed captured bins.
+                if(pixel>=v.bins && (int(op)<26 || int(op)>28))throw std::invalid_argument("rank center exceeded histogram bounds");
                 if(int(op)>=26)emit(hist.bilateral(op,pixel,s0,s1));
                 else if(int(op)>=17) {
                     if(op==RankOperation::subtract_mean_percentile) {
@@ -582,7 +584,10 @@ void rank_bilateral_into(const RankView& view,RankOperation op,std::ptrdiff_t s0
     if(fp>limit || pixels>limit/fp)throw std::overflow_error("rank bilateral signed histogram outside defined coverage");
     if(!zero && view.bins<(view.uint16 ? 65536u:256u)) {
         const auto* data=static_cast<const unsigned char*>(view.image);
-        for(std::size_t i=0;i<pixels;++i){std::uint16_t value;if(view.uint16)std::memcpy(&value,data+2*i,2);else value=data[i];if(value>=view.bins)throw std::invalid_argument("rank image exceeded histogram bounds");}
+        // A disjoint mask permanently excludes its zero pixels from every
+        // histogram read. Mask/output feedback can re-enable them, so retain
+        // the full-value certificate for that existing alias admission.
+        for(std::size_t i=0;i<pixels;++i)if(!view.mask || view.mask[i] || feedback.mask_output){std::uint16_t value;if(view.uint16)std::memcpy(&value,data+2*i,2);else value=data[i];if(value>=view.bins)throw std::invalid_argument("rank image exceeded histogram bounds");}
     }
     const auto prepared=plan(view);const auto rows=view.shape[1];
     const auto invoke=[&](std::size_t begin,std::size_t end){

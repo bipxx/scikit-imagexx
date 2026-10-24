@@ -60,5 +60,16 @@ int main(){
  // with an escaping bin remain prewrite-rejected even with radii0.
  std::fill(mask,mask+36,1);std::fill(zeros.begin(),zeros.end(),99);
  rejected([&]{rank_bilateral_into(v,RankOperation::sum_bilateral,0,0);});for(auto value:zeros)require(value==99);
+ // Masked centers are comparison operands, not histogram indices. Keep
+ // source signed-radius bounds on captured bins4 despite guint16 center65535.
+ std::uint16_t narrow[9]{0,1,2,3,65535,1,2,3,0};std::uint8_t selected[9]{1,1,1,1,0,1,1,1,1};double masked_result[9]{};
+ v.image=narrow;v.mask=selected;v.output=masked_result;v.shape={1,3,3};v.output_strides={0,3*8,8};v.bins=4;
+ for(int op=26;op<=28;++op){rank_bilateral_into(v,static_cast<RankOperation>(op),10,65536);require(masked_result[4]==(op==26 ? 1:op==27 ? 8:12));
+  rank_bilateral_into(v,static_cast<RankOperation>(op),3-std::numeric_limits<std::ptrdiff_t>::max(),10);
+  rank_bilateral_into(v,static_cast<RankOperation>(op),10,std::numeric_limits<std::ptrdiff_t>::max()-3);
+ }
+ // Any actual mask/output feedback keeps the complete-value certificate.
+ std::uint8_t mask_owner[10]{1,1,1,1,0,1,1,1,1,1};v.mask=mask_owner;v.output=mask_owner+1;v.output_type=PixelType::uint8;v.output_strides={0,3,1};
+ const std::vector<std::uint8_t> before_mask(mask_owner,mask_owner+10);rejected([&]{rank_bilateral_into(v,RankOperation::pop_bilateral,10,65536);});require(std::equal(before_mask.begin(),before_mask.end(),mask_owner));
  std::cout<<"rank bilateral native checks passed\n";
 }
