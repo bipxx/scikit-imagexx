@@ -20180,9 +20180,9 @@
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368",
     "coverage/contracts/rank-statistics.json": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
     "coverage/contracts/rank-statistics-benchmark.json": "113e24c84a01e49e2e47a612ab905878726befdbf383e6fd728e767e45236dd1",
-    "benchmarks/rank_statistics_compare.py": "0ff2694700b07d6f671a290676aaf931509ac00532dc528e0ce7b510632adef8",
-    "tests/test_rank_statistics_compare.py": "464bacf4d2dad826cbea11dd7a0221f8a99cc14e48e2e612440f0447694008a6",
-    ".github/workflows/rank-statistics-comparison.yml": "dc207b3990ab08e264fdb873a7cbf152eebc69fe7b4700f093162c12799d680f"
+    "benchmarks/rank_statistics_compare.py": "286c616d3b502fe38f5db6d614aa699bab1d1b920635a2e185adfba5eac949bf",
+    "tests/test_rank_statistics_compare.py": "d8933615ce88f9c6c5c2b32e9be261da100418497fb097f4351d4bd261c69674",
+    ".github/workflows/rank-statistics-comparison.yml": "03d11ca8c0c37b8f1b61a5998f0debc726de350bb09672c4069d760dac7b5537"
   },
   "profiles": {
     "windows": {
@@ -20280,5 +20280,17 @@
   },
   "external_experiment": "Native modes require --experiment and its exact rawSHA. External schema rank-statistics-experiment-v1 binds template_sha256 (canonicalLF) and accepted_products before/after xall3 profiles; each pin has revision, four artifact/source/wheel/qualificationSHA values, artifact_run/name, and explicit equal scope(image_paths,metadata_paths,sdk_families,sdk_members,sdk_family_names). Tracked null pins stay unchanged. No self-referential product/source hashes.",
   "startup_authentication": "One-use source/run/profile/role-bound secret over inherited stdio, with secret hashes/controller/source bound into exclusive measurement claim. Exact direct or one-hop declared Popen venv launcher only; no arbitrary ancestor trust. Probe mode is metadata-only/native0 and cannot satisfy native/preparation barriers.",
-  "validation_order": "Complete untimed1379+4alias worker1/4 validation finishes serially in all3 workers before any one-worker warm/calibration/timing; fresh measurement host has no concurrent builds/correctness tests."
+  "validation_order": "Complete untimed1379+4alias worker1/4 validation finishes serially in all3 workers before any one-worker warm/calibration/timing; fresh measurement host has no concurrent builds/correctness tests.",
+  "build_identity": {
+    "required": true,
+    "input_schema": "rank-statistics-build-input-v2",
+    "product_schema": "rank-statistics-build-identity-v2",
+    "producer": "python benchmarks/rank_statistics_compare.py capture-build-identity --facts INPUT.json --output OUT/build-identity.json",
+    "qualification_binding": "Original successful qualification records bind build-identity.json and all build-identity-evidence files before product pins are admitted.",
+    "common_inputs": "Actual compiler/backend/linker and executed LTO binaries, toolset/CRT/configuration, expanded per-TU/link argv, used headers and external link inputs. Normalize only declared SOURCE/BUILD prefixes.",
+    "source_scope": "Exclude src/rank.cpp source content only from common identity; unchanged exact approved three-file source/patch guard remains mandatory.",
+    "generated_outputs": "Retain every raw object/archive/core output hash per product. Traceable outputs may contain nonreproducible LTO stamps, so their bytes are not common inputs; external NumPy/pybind/build-env libraries are never blanket-excluded.",
+    "release_only": true,
+    "producer_integration": "Future genuine qualification-host capture required; no retroactive facts or pins for existing186 products."
+  }
 }

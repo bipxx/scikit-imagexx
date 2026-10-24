@@ -74,6 +74,7 @@ jobs:
         run: |
           python benchmarks/rank_statistics_compare.py verify-product --role before --profile ${{ matrix.profile }} --product build/prepared/before --experiment build/experiment/experiment.json --experiment-sha256 '${{ inputs.experiment_sha256 }}'
           python benchmarks/rank_statistics_compare.py verify-product --role after --profile ${{ matrix.profile }} --product build/prepared/after --experiment build/experiment/experiment.json --experiment-sha256 '${{ inputs.experiment_sha256 }}'
+          python benchmarks/rank_statistics_compare.py verify-pair --profile ${{ matrix.profile }} --before build/prepared/before --after build/prepared/after --experiment build/experiment/experiment.json --experiment-sha256 '${{ inputs.experiment_sha256 }}'
       - name: Install exact offline products into separate ordinary-name prefixes
         shell: bash
         run: |
@@ -176,6 +177,10 @@ jobs:
         with:
           name: rank-statistics-compare-barrier
           path: build/receipts
+      - name: Reauthenticate original qualification and common build identity before installation
+        shell: bash
+        run: |
+          python benchmarks/rank_statistics_compare.py verify-pair --profile ${{ matrix.profile }} --before build/prepared/before --after build/prepared/after --experiment build/experiment/experiment.json --experiment-sha256 '${{ inputs.experiment_sha256 }}'
       - name: Install frozen artifacts only; no resolver builds or source overlays
         shell: bash
         run: |
