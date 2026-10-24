@@ -20568,7 +20568,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Consumer237 plus R4 kernels/public wrappers and shared wiring frozen at7aaa747. Toolchain health is read-only; producer/caches not advanced or leased. Candidate171 inventory must match actual genuine packages. All cumulative public/corpus/SDK gates remain pending; accepted main remains163 image paths."
+          "Original7aaa actual package gates ongoing; generic sum star-list defect and authenticated fixture-file pin migration corrected only in staged a67 candidate, not active producer. Await all original handles terminal before exactfollowup lease/repack. Candidate171 public acceptance/performance stillpending; accepted main remains163."
         ]
       },
       "parity": {
@@ -20615,7 +20615,7 @@
       },
       "source_freeze": {
         "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
-        "worktree": "build/worktrees/wave7-rank-consumer",
+        "worktree": "build/worktrees/core-rank9-validation",
         "lease_state": "granted",
         "prediction_only": {
           "partial_native_image_paths": 171,
@@ -20628,6 +20628,46 @@
         "owner": "resize_bench",
         "health_sha256": "d01c664de0b0e913a222e56be9caa244b3b4fdb9ab17b8be634dc322bb8ddd2d",
         "scope": "Actual new public packages/corpora/SDK; prediction171 pending all gates."
+      },
+      "followup_candidate": {
+        "source_sha": "a67ee96e473d0405648cfcf1293b7f6560f7c803",
+        "worktree": "build/worktrees/wave7-rank-consumer",
+        "lease_state": "not_granted",
+        "changes": [
+          "Original generic star export omission for sum, retaining both own alias attributes",
+          "Authenticated fullfixturefile pin after pytest native-assertion migration; all13helpers/global/import/oracle AST and1379frozen cases/reference observations unchanged"
+        ],
+        "guard_tests": {
+          "scope": "Tooling only; no native/public acceptance",
+          "passed": 30,
+          "log": "build/main-core-wave7-fixture-metadata-check/guard-tests.log"
+        }
+      },
+      "qualification_progress": {
+        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "genuine_packages": 4,
+        "members_per_package": 104,
+        "sdk_members_per_package": 59,
+        "independent_windows_inventory": {
+          "partial_native_image_paths": 171,
+          "upstream_only_paths": 295,
+          "differences": 0,
+          "acceptance": "prediction matches actual Windows facts; full qualification still pending"
+        },
+        "windows_public_rank_per_mode": {
+          "passed": 31911,
+          "failed": 18,
+          "failure": "generic.__all__ incorrectly retains legacy sum; product correction prepared, assertion unchanged"
+        },
+        "windows_other_scopes": "public consumers/live providers3028, private consumer supplements2456, metrics leaf/half204, policies3706, fixed1231, consumer878 corpus normal/scalar and SDK11x2 pass; source paths/namespace errors remain retained.",
+        "metadata_runner_collection": "Original Windows runner lacked tools path; separate corrected launcher appends producer tools only. Original logs preserved.",
+        "r4_corpus": "Original Windows fullfileauth preflight correctly blocked migrated assertion file; all fixture AST unchanged, full hash metadata corrected in separate staged candidate. Fresh actual1379 corpus remains pending.",
+        "live_runtime_handles": [
+          85224,
+          18667,
+          90100
+        ],
+        "public_native_acceptance": false
       }
     },
     {

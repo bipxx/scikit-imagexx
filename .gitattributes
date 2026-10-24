@@ -20,3 +20,4 @@ coverage/evidence/terminal-campaigns-20261023.json -text
 coverage/evidence/merged-report-worktree-cleanup-20261023.json -text
 coverage/contracts/rank-percentile-benchmark.json -text
 coverage/evidence/rank-statistics-benchmark-cleanup-20261023.json -text
+coverage/evidence/rank-statistics-fixture-assertion-migration.json -text
