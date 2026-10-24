@@ -20,6 +20,9 @@ def load(name,path):
     return module
 
 
+if 'SKIMAGEXX_RANK_STATISTICS_BACKEND' not in os.environ and importlib.util.find_spec('_rank_statistics_core') is None:
+    pytest.skip('Private compiled fixture _rank_statistics_core unavailable; supplementary private tests are not public parity',allow_module_level=True)
+
 contracts=load('rank_statistics_private_contracts',Path(__file__).with_name('test_rank_statistics_contracts.py'))
 core=importlib.import_module(os.environ.get('SKIMAGEXX_RANK_STATISTICS_BACKEND','_rank_statistics_core'))
 shell=load('skimagexx._rank_statistics_private_shell',Path(__file__).parents[1]/'python/skimagexx/_rank.py')

@@ -17,6 +17,9 @@ def load(name,path):
     return module
 
 
+if 'SKIMAGEXX_RANK_BILATERAL_BACKEND' not in os.environ and importlib.util.find_spec('_rank_bilateral_core') is None:
+    pytest.skip('Private compiled fixture _rank_bilateral_core unavailable; supplementary private tests are not public parity',allow_module_level=True)
+
 contracts=load('rank_bilateral_private_contracts',Path(__file__).with_name('test_rank_bilateral_contracts.py'))
 core=importlib.import_module(os.environ.get('SKIMAGEXX_RANK_BILATERAL_BACKEND','_rank_bilateral_core'))
 shell=load('skimagexx._rank_bilateral_private_shell',Path(__file__).parents[1]/'python/skimagexx/_rank.py');shell._core=core
