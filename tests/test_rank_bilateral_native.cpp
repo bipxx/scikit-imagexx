@@ -48,5 +48,17 @@ int main(){
  set_num_threads(1);
  std::vector<std::uint16_t> words(40,17);v.image=words.data();v.output=words.data();v.uint16=true;v.bins=65536;v.output_type=PixelType::uint16;v.output_strides={0,19,2};
  const auto before=words;rejected([&]{rank_bilateral_into(v,RankOperation::mean_bilateral,10,10);});require(words==before);
+ // Captured narrow bins may precede a radius hook writing larger u16 values.
+ // A globally zero footprint/mask never indexes those changed values.
+ words.assign(40,2000);std::vector<double> zeros(36,99);std::uint8_t mask[36]{};
+ v.image=words.data();v.output=zeros.data();v.bins=4;v.output_type=PixelType::float64;v.output_strides={0,9*8,8};
+ std::fill(fp,fp+9,0);
+ for(int op=26;op<=28;++op){std::fill(zeros.begin(),zeros.end(),99);rank_bilateral_into(v,static_cast<RankOperation>(op),10,10);for(auto value:zeros)require(value==0);}
+ std::fill(fp,fp+9,1);v.mask=mask;
+ for(int op=26;op<=28;++op){std::fill(zeros.begin(),zeros.end(),99);rank_bilateral_into(v,static_cast<RankOperation>(op),0,0);for(auto value:zeros)require(value==0);}
+ // Empty selection is distinct from zero global population: input updates
+ // with an escaping bin remain prewrite-rejected even with radii0.
+ std::fill(mask,mask+36,1);std::fill(zeros.begin(),zeros.end(),99);
+ rejected([&]{rank_bilateral_into(v,RankOperation::sum_bilateral,0,0);});for(auto value:zeros)require(value==99);
  std::cout<<"rank bilateral native checks passed\n";
 }

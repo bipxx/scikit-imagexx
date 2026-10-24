@@ -369,6 +369,10 @@ template<class T,bool Prefix=false> void process(const RankView& v,RankOperation
             else if(op==RankOperation::geometric_mean)emit(hist.geometric_mean(logarithms));
             else if(op==RankOperation::median){std::int64_t selected;if(hist.median(selected))emit(selected);}
             else if(int(op)>=9) {
+                // Radius hooks may change uint16 pixels after bins/buffers
+                // were captured. A zero bilateral population never indexes
+                // those bins upstream, so emit before the center-bin guard.
+                if(int(op)>=26 && !hist.pop){emit(std::int64_t{0});return;}
                 T pixel;const auto index=(std::size_t(p)*v.shape[1]+std::size_t(r))*v.shape[2]+std::size_t(c);
                 std::memcpy(&pixel,static_cast<const unsigned char*>(v.image)+index*sizeof(T),sizeof(T));
                 if(pixel>=v.bins)throw std::invalid_argument("rank center exceeded histogram bounds");
