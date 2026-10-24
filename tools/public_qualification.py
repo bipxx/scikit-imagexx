@@ -613,6 +613,36 @@ def must_run(journal, label, command, env=None):
     require(journal.run(label, command, env) == 0, 'command failed; raw log retained: ' + label)
 
 
+def capture_build_identity(out, profile, source, journal, buildpy, env):
+    """Prospective host evidence only, before any terminal qualification seal."""
+    facts = out / 'build-identity-facts.json'
+    identity = out / 'build-identity.json'
+    require(not facts.exists() and not identity.exists(), 'never retrofit/overwrite build identity')
+    must_run(journal, 'gather-build-identity-facts', [buildpy, ROOT / 'tools/build_identity_facts.py',
+             '--source-root', ROOT, '--build-root', out, '--revision', source['revision'],
+             '--profile', profile, '--output', facts], env)
+    require(facts.is_file(), 'actual build facts missing')
+    model = json.loads(facts.read_text())
+    require(model.get('schema') == 'rank-statistics-build-input-v2'
+            and model.get('revision') == source['revision'] and model.get('profile') == profile
+            and Path(model.get('source_root', '')).resolve() == ROOT
+            and Path(model.get('build_root', '')).resolve() == out.resolve(), 'build facts source/profile/roots differ')
+    must_run(journal, 'capture-build-identity', [buildpy, ROOT / 'benchmarks/rank_statistics_compare.py',
+             'capture-build-identity', '--facts', facts, '--output', identity], env)
+    require(identity.is_file(), 'build identity producer output missing')
+    require(json.loads(identity.read_text()).get('schema') == 'rank-statistics-build-identity-v2', 'wrong build identity producer schema')
+    return dict(facts_sha256=sha(facts), identity_sha256=sha(identity), schema='rank-statistics-build-identity-v2')
+
+
+def validate_build_identity(out, state):
+    record = state.get('build_identity')
+    require(isinstance(record, dict) and record.get('schema') == 'rank-statistics-build-identity-v2', 'prospective actual build identity absent')
+    for name, key in [('build-identity-facts.json','facts_sha256'),('build-identity.json','identity_sha256')]:
+        path = out / name
+        require(path.is_file() and sha(path) == record.get(key), 'build identity changed/absent before seal: ' + name)
+    require(json.loads((out / 'build-identity.json').read_text()).get('schema') == record['schema'], 'build identity schema changed')
+
+
 def prepare(out, profile, expected):
     require(not out.exists(), 'choose a fresh output; never mutate a previous trial')
     out.mkdir(parents=True)
@@ -652,9 +682,17 @@ def prepare(out, profile, expected):
     buildenv = environment(); buildenv['PATH'] = str(tool_in(out / 'build-env', 'cmake').parent) + os.pathsep + buildenv.get('PATH', '')
     must_run(journal, 'build-headers', [buildpy, Path(__file__).resolve(), '_headers', '--output', out, '--profile', profile], buildenv)
     wheels = out / 'product-wheels'; wheels.mkdir()
-    must_run(journal, 'build-whole-product', [buildpy, '-m', 'pip', 'wheel', ROOT, '--no-deps', '--no-build-isolation', '--no-index', '--wheel-dir', wheels,
+    link_capture = []
+    if os.name != 'nt':
+        # This project has exactly one MODULE (_core). ld records its actual
+        # reads, including implicit CRT/system inputs; unavailable LTO inputs
+        # fail capture instead of being reconstructed after qualification.
+        link_capture = ['--config-settings=cmake.define.CMAKE_MODULE_LINKER_FLAGS=-save-temps=obj -Wl,--dependency-file=' + str(out / 'native-build/core-link.d'),
+                        '--config-settings=build.tool-args=-d;keeprsp']
+    must_run(journal, 'build-whole-product', [buildpy, '-m', 'pip', 'wheel', ROOT, '--verbose', '--no-deps', '--no-build-isolation', '--no-index', '--wheel-dir', wheels,
               '--config-settings=cmake.build-type=' + PROFILES[profile]['config'], '--config-settings=build-dir=' + str(out / 'native-build'),
-              '--config-settings=cmake.define.CMAKE_EXPORT_COMPILE_COMMANDS=ON'], buildenv)
+              '--config-settings=cmake.define.CMAKE_EXPORT_COMPILE_COMMANDS=ON', *link_capture], buildenv)
+    build_identity = capture_build_identity(out, profile, source, journal, buildpy, buildenv)
     build_properties = {}
     for name in ('CMakeCache.txt', 'compile_commands.json', 'build.ninja'):
         path = out / 'native-build' / name
@@ -672,6 +710,7 @@ def prepare(out, profile, expected):
     verify_tree(package, package_record['members_sha256'])
     dump(out / 'package.json', package_record)
     state = dict(schema=SCHEMA, profile=profile, source=source, expected=planning['registry'],
+                 build_identity=build_identity,
                  interpreter_provenance=interpreter,
                  runtime_pins=runtimepins, product_wheel=products[0].name, profile_config=PROFILES[profile],
                  no_timing=True, public_scope=GROUPS, supplemental_scopes=['382 returned ArrayMap frozen protocols using installed public class'],
@@ -1126,11 +1165,13 @@ def seal(out):
     state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed')
     commands = json.loads((out / 'commands.json').read_text())
     require(commands and all(r['state'] == 'terminal' for r in commands), 'live/incomplete child cannot be sealed')
-    required_labels = {'initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar'}
+    required_labels = {'initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar',
+                       'gather-build-identity-facts','capture-build-identity'}
     for mode in ('normal','scalar'):
         required_labels.update(mode + '-' + n for n in ('admission', *GROUPS, 'returned-maps','metrics-corpus'))
         required_labels.update(mode + '-' + n + '-corpus' for n in CORPORA)
     require(required_labels <= {r['label'] for r in commands}, 'missing required qualification command')
+    validate_build_identity(out, state)
     validate_interpreter_provenance(out, state['interpreter_provenance'])
     failures = [r['label'] for r in commands if r['returncode'] != 0]
     record = json.loads((out / 'package.json').read_text()); verify_tree(out / 'package', record['members_sha256'])
@@ -1154,6 +1195,7 @@ def seal(out):
     for name, row in records.items():
         verify_record(out, name, row, state['interpreter_provenance'])
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
+                 build_identity=state['build_identity'],
                  interpreter_provenance=state['interpreter_provenance'],
                  counts=counts, SDK_checks=28, expected_registry=state['expected'], command_count=len(commands), records=records,
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',

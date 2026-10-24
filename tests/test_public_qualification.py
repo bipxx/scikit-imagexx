@@ -802,3 +802,75 @@ def test_shared_global_worker_checks_remain_before_any_fixtures():
     child=ast.parse(inspect.getsource(q.child));guard=next(n for n in ast.walk(child) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='admission')
     fixtures=next(n for n in ast.walk(child) if isinstance(n,ast.Import) and any(a.name=='pytest' for a in n.names))
     assert guard.lineno<fixtures.lineno
+
+
+def test_build_identity_capture_is_after_product_before_admission_and_seal():
+    import ast
+    import inspect
+    source=inspect.getsource(q.prepare);tree=ast.parse(source)
+    build=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='must_run' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and n.args[1].value=='build-whole-product')
+    capture=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='capture_build_identity')
+    admission=next(n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='must_run' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and n.args[1].value=='initial-public-admission')
+    assert build.lineno<capture.lineno<admission.lineno
+    assert '--verbose' in source
+    assert 'CMAKE_MODULE_LINKER_FLAGS=-save-temps=obj -Wl,--dependency-file=' in source
+    assert 'native-build/core-link.d' in source and 'CMAKE_EXPORT_COMPILE_COMMANDS=ON' in source
+    assert 'build.tool-args=-d;keeprsp' in source
+    assert 'validate_build_identity(out, state)' in inspect.getsource(q.seal)
+    assert "'gather-build-identity-facts','capture-build-identity'" in inspect.getsource(q.seal)
+
+
+def fake_identity_journal(out,profile,revision,failure=None):
+    class MetadataJournal:
+        rows=[]
+        def run(self,label,command,env=None):
+            self.rows.append((label,list(map(str,command)),env))
+            if label==failure:return 1
+            if label=='gather-build-identity-facts':
+                (out/'build-identity-facts.json').write_text(json.dumps(dict(schema='rank-statistics-build-input-v2',revision=revision,profile=profile,source_root=str(q.ROOT),build_root=str(out))))
+            else:(out/'build-identity.json').write_text(json.dumps(dict(schema='rank-statistics-build-identity-v2')))
+            return 0
+    return MetadataJournal()
+
+
+@pytest.mark.parametrize('profile',['windows','modern','minimum','debug'])
+def test_identity_capture_uses_journal_and_exact_source_root_profile(tmp_path,profile):
+    journal=fake_identity_journal(tmp_path,profile,'a'*40);env={'NO_IMAGE_CALLS':'metadata-fixture-only'}
+    record=q.capture_build_identity(tmp_path,profile,{'revision':'a'*40},journal,Path('buildpython'),env)
+    assert [r[0] for r in journal.rows]==['gather-build-identity-facts','capture-build-identity']
+    assert all(r[2] is env for r in journal.rows)
+    argv=journal.rows[1][1];assert argv[2:]==['capture-build-identity','--facts',str(tmp_path/'build-identity-facts.json'),'--output',str(tmp_path/'build-identity.json')]
+    q.validate_build_identity(tmp_path,{'build_identity':record})
+    with pytest.raises(q.QualificationError,match='retrofit'):q.capture_build_identity(tmp_path,profile,{'revision':'a'*40},journal,Path('buildpython'),env)
+
+
+@pytest.mark.parametrize('label',['gather-build-identity-facts','capture-build-identity'])
+def test_failed_identity_child_stops_before_any_later_stage(tmp_path,label):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40,label)
+    with pytest.raises(q.QualificationError,match='command failed'):q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    assert journal.rows[-1][0]==label and not (tmp_path/'manifest.json').exists()
+
+
+@pytest.mark.parametrize('change',['missing','oldschema','facts','identity'])
+def test_identity_absent_old_or_changed_cannot_be_sealed(tmp_path,change):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40)
+    record=q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    if change=='missing':state={}
+    else:
+        state={'build_identity':record}
+        if change=='oldschema':record['schema']='rank-statistics-build-identity-v1'
+        else:(tmp_path/('build-identity-facts.json' if change=='facts' else 'build-identity.json')).write_text('{}')
+    with pytest.raises(q.QualificationError):q.validate_build_identity(tmp_path,state)
+
+
+@pytest.mark.parametrize('key,value',[('revision','b'*40),('profile','minimum'),('source_root','/wrong'),('build_root','/wrong'),('schema','rank-statistics-build-input-v1')])
+def test_wrong_identity_facts_reject_before_producer(tmp_path,key,value):
+    journal=fake_identity_journal(tmp_path,'modern','a'*40);run=journal.run
+    def modified(label,command,env=None):
+        result=run(label,command,env)
+        if label=='gather-build-identity-facts':
+            path=tmp_path/'build-identity-facts.json';d=json.loads(path.read_text());d[key]=value;path.write_text(json.dumps(d))
+        return result
+    journal.run=modified
+    with pytest.raises(q.QualificationError,match='source/profile/roots differ'):q.capture_build_identity(tmp_path,'modern',{'revision':'a'*40},journal,'python',{})
+    assert [r[0] for r in journal.rows]==['gather-build-identity-facts']
