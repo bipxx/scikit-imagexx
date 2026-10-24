@@ -98,7 +98,7 @@ def synthetic_gnu(tmp_path,monkeypatch,lto=False):
         if label=='ninja-commands':value=commands
         elif label=='ninja-deps':value=deps
         elif label.startswith('resolve-'):
-            names={'backend':'cc1plus','assembler':'as','linker':'ld','link_driver':'collect2','archiver':'ar','ranlib':'ranlib','lto-backend':'lto1','lto-wrapper':'lto-wrapper','lto-plugin':'liblto_plugin.so'}
+            names={'backend':'cc1plus','assembler':'as','linker':'ld','link-driver':'collect2','archiver':'ar','ranlib':'ranlib','lto-backend':'lto1','lto-wrapper':'lto-wrapper','lto-plugin':'liblto_plugin.so'}
             value=str(tools[names[label.removeprefix('resolve-')]])
         else:value={'compiler-target':'x86_64-linux-gnu','generator-version':'1.13.0'}[label]
         evidence=put(self.out/(label+'.json'),json.dumps(dict(argv=list(map(str,argv)),stdout=value,synthetic=True)));self.files.add(evidence)
@@ -186,6 +186,33 @@ def test_metadata_queries_retain_failure_and_never_run_a_shell(tmp_path,monkeypa
     with pytest.raises(f.FactsError,match='query failed'):capture.query('probe',['ninja','--version'],tmp_path)
     assert 'shell' not in calls[0][1]
     record=json.loads((capture.out/'probe.json').read_text());assert record['stdout']=='raw output' and record['stderr']=='raw failure' and record['returncode']==1
+
+
+@pytest.mark.parametrize('role',('backend','assembler','linker','link_driver','archiver','ranlib','lto_backend','lto_wrapper','lto_plugin'))
+def test_actual_tool_role_query_labels_pass_real_capture_validation(tmp_path,monkeypatch,role):
+    capture=f.Capture(tmp_path/'capture');calls=[]
+    def run(argv,**options):
+        calls.append(argv);return subprocess.CompletedProcess(argv,0,'/actual/tool/path\n','')
+    monkeypatch.setattr(f.subprocess,'run',run)
+    label='resolve-'+role.replace('_','-')
+    assert capture.query(label,['compiler','-print-prog-name=tool'],tmp_path)=='/actual/tool/path'
+    assert len(calls)==1 and (capture.out/(label+'.json')).is_file()
+
+
+@pytest.mark.parametrize('label',('resolve/driver','../driver','resolve driver','resolve\\driver','resolve\tdriver','resolve_driver'))
+def test_unsafe_query_labels_reject_before_any_subprocess(tmp_path,monkeypatch,label):
+    capture=f.Capture(tmp_path/'capture')
+    monkeypatch.setattr(f.subprocess,'run',lambda *_a,**_k:pytest.fail('unsafe label reached subprocess'))
+    with pytest.raises(f.FactsError,match='unsafe metadata query label'):capture.query(label,['compiler'],tmp_path)
+
+
+def test_every_gnu_role_callsite_uses_collision_free_label_encoding():
+    import inspect
+    source=inspect.getsource(f.gnu)
+    assert "capture.query('resolve-'+role.replace('_','-')" in source
+    roles=('backend','assembler','linker','link_driver','archiver','ranlib','lto_backend','lto_wrapper','lto_plugin')
+    labels=['resolve-'+role.replace('_','-') for role in roles]
+    assert len(labels)==len(set(labels))
 
 
 def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_path,monkeypatch):
