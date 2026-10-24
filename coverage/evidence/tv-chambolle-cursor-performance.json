@@ -1,0 +1,3523 @@
+{
+  "schema": "tv-chambolle-cursor-performance-v1",
+  "status": "accepted-performance-with-regressions",
+  "accepted_performance": true,
+  "root_review": {
+    "proof_sha256": "66bf1baf26a2a40b7244349a5a1068eb38134f8f3132437def96e0ff585ae6b9",
+    "campaign_records_verified": 357,
+    "campaign_bytes_verified": 538098154,
+    "artifact_members_verified": 6917,
+    "publication_archive_members_verified": 85,
+    "CSV_rows_verified": 210,
+    "raw_samples_verified": 4410,
+    "regression_union_rows_retained": 129,
+    "raw_scientific_bytes_changed": false,
+    "optimization_complete": false,
+    "archive_draft_metadata": "Historical draft-status fields in immutable raw copies are retained unchanged."
+  },
+  "run": 40119412201,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201",
+  "controller_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+  "before_actual_product_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+  "intended_before_source_equivalence_anchor": "6ff02f63f6033cb186d3b93d22a778fd8d0624a3",
+  "after_actual_product_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+  "qualified_product_scope": {
+    "image_APIs": 192,
+    "metadata_APIs": 3,
+    "wheel_members": 110,
+    "SDK_members": 63,
+    "SDK_families": 18
+  },
+  "method": {
+    "preparation_cases": 400,
+    "timed_cases_per_profile": 70,
+    "profiles": 3,
+    "rows": 210,
+    "samples": 4410,
+    "rounds": 7,
+    "workers": 1,
+    "timing_processes": "three isolated roles, rotating triads",
+    "strict_preparation": "all400 cases for original/before/after workers1/4 normal/scalar before common barrier",
+    "calibration": "all raw calibration elapsed_ns/ms/loop counts preserved in raw reports and CSV",
+    "summary": "geometric mean of per-case ratios of role medians; ratios greater than1 favor after",
+    "not_claimed": [
+      "universal/per-case win",
+      "all-CPU speedup",
+      "finished performance goal",
+      "cross-campaign causal speedup",
+      "equivalence of reconstructed receipts to original raw uploads"
+    ]
+  },
+  "summaries": {
+    "windows": {
+      "overall": {
+        "case_count": 70,
+        "geometric_mean_before_speedup": 1.0902258339845792,
+        "geometric_mean_after_speedup": 1.3155846498675914,
+        "geometric_mean_improvement": 1.2067083799136975,
+        "slower_than_before": [
+          332,
+          333,
+          334,
+          336,
+          337,
+          339,
+          341,
+          342,
+          345,
+          349,
+          353,
+          354,
+          356,
+          357,
+          361,
+          365,
+          366,
+          368,
+          369,
+          373,
+          377,
+          379,
+          381,
+          382,
+          383,
+          394,
+          395,
+          396,
+          397,
+          398
+        ],
+        "slower_than_original": [
+          330,
+          334,
+          338,
+          342,
+          343,
+          346,
+          350,
+          351,
+          354,
+          355,
+          358,
+          359,
+          360,
+          362,
+          363,
+          366,
+          367,
+          370,
+          371,
+          372,
+          374,
+          375,
+          378,
+          380,
+          382,
+          384,
+          386,
+          388,
+          398,
+          399
+        ]
+      },
+      "cohorts": {
+        "channels": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.730537719667713,
+          "geometric_mean_after_speedup": 0.9409254514080432,
+          "geometric_mean_improvement": 1.287990237979807,
+          "slower_than_before": [
+            379,
+            381,
+            382,
+            383
+          ],
+          "slower_than_original": [
+            378,
+            380,
+            382,
+            384,
+            386,
+            388
+          ]
+        },
+        "layout": {
+          "case_count": 10,
+          "geometric_mean_before_speedup": 1.5198393007424995,
+          "geometric_mean_after_speedup": 1.7870744643476122,
+          "geometric_mean_improvement": 1.175831197071005,
+          "slower_than_before": [
+            394,
+            395,
+            396,
+            397,
+            398
+          ],
+          "slower_than_original": [
+            398,
+            399
+          ]
+        },
+        "raster": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.6880829740869115,
+          "geometric_mean_after_speedup": 0.8644656154089824,
+          "geometric_mean_improvement": 1.2563392032132914,
+          "slower_than_before": [
+            354,
+            356,
+            357,
+            361,
+            365
+          ],
+          "slower_than_original": [
+            354,
+            355,
+            358,
+            359,
+            360,
+            362,
+            363
+          ]
+        },
+        "small": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 1.3677622994994376,
+          "geometric_mean_after_speedup": 1.5830370807098069,
+          "geometric_mean_improvement": 1.1573919542080913,
+          "slower_than_before": [
+            342,
+            345,
+            349,
+            353
+          ],
+          "slower_than_original": [
+            342,
+            343,
+            346,
+            350,
+            351
+          ]
+        },
+        "tiny": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 3.3114282071917627,
+          "geometric_mean_after_speedup": 3.2932136686787934,
+          "geometric_mean_improvement": 0.9944994916473168,
+          "slower_than_before": [
+            332,
+            333,
+            334,
+            336,
+            337,
+            339,
+            341
+          ],
+          "slower_than_original": [
+            330,
+            334,
+            338
+          ]
+        },
+        "volume": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.5129069458833281,
+          "geometric_mean_after_speedup": 0.719990624290411,
+          "geometric_mean_improvement": 1.4037451238848866,
+          "slower_than_before": [
+            366,
+            368,
+            369,
+            373,
+            377
+          ],
+          "slower_than_original": [
+            366,
+            367,
+            370,
+            371,
+            372,
+            374,
+            375
+          ]
+        }
+      }
+    },
+    "modern": {
+      "overall": {
+        "case_count": 70,
+        "geometric_mean_before_speedup": 0.8822256820129509,
+        "geometric_mean_after_speedup": 1.1523697327986833,
+        "geometric_mean_improvement": 1.3062074209507841,
+        "slower_than_before": [
+          334,
+          337,
+          338,
+          398,
+          399
+        ],
+        "slower_than_original": [
+          330,
+          334,
+          338,
+          342,
+          343,
+          346,
+          347,
+          350,
+          351,
+          354,
+          355,
+          356,
+          358,
+          359,
+          360,
+          362,
+          363,
+          364,
+          366,
+          367,
+          370,
+          371,
+          372,
+          374,
+          375,
+          376,
+          378,
+          380,
+          382,
+          384,
+          386,
+          388,
+          398,
+          399
+        ]
+      },
+      "cohorts": {
+        "channels": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.5852674564357372,
+          "geometric_mean_after_speedup": 0.8154244243097892,
+          "geometric_mean_improvement": 1.3932509237327184,
+          "slower_than_before": [],
+          "slower_than_original": [
+            378,
+            380,
+            382,
+            384,
+            386,
+            388
+          ]
+        },
+        "layout": {
+          "case_count": 10,
+          "geometric_mean_before_speedup": 1.414714653239858,
+          "geometric_mean_after_speedup": 1.795563186270234,
+          "geometric_mean_improvement": 1.26920519424761,
+          "slower_than_before": [
+            398,
+            399
+          ],
+          "slower_than_original": [
+            398,
+            399
+          ]
+        },
+        "raster": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.37199389560571144,
+          "geometric_mean_after_speedup": 0.5402841077800621,
+          "geometric_mean_improvement": 1.4524004672182225,
+          "slower_than_before": [],
+          "slower_than_original": [
+            354,
+            355,
+            356,
+            358,
+            359,
+            360,
+            362,
+            363,
+            364
+          ]
+        },
+        "small": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 1.1861844190606345,
+          "geometric_mean_after_speedup": 1.4997249984392955,
+          "geometric_mean_improvement": 1.2643270088026959,
+          "slower_than_before": [],
+          "slower_than_original": [
+            342,
+            343,
+            346,
+            347,
+            350,
+            351
+          ]
+        },
+        "tiny": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 3.352844132841359,
+          "geometric_mean_after_speedup": 3.4056837542648086,
+          "geometric_mean_improvement": 1.0157596414655492,
+          "slower_than_before": [
+            334,
+            337,
+            338
+          ],
+          "slower_than_original": [
+            330,
+            334,
+            338
+          ]
+        },
+        "volume": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.4164233582781495,
+          "geometric_mean_after_speedup": 0.6240652247569415,
+          "geometric_mean_improvement": 1.4986316505811803,
+          "slower_than_before": [],
+          "slower_than_original": [
+            366,
+            367,
+            370,
+            371,
+            372,
+            374,
+            375,
+            376
+          ]
+        }
+      }
+    },
+    "minimum": {
+      "overall": {
+        "case_count": 70,
+        "geometric_mean_before_speedup": 1.0416939203219728,
+        "geometric_mean_after_speedup": 1.2437266445606996,
+        "geometric_mean_improvement": 1.1939463409523225,
+        "slower_than_before": [
+          330,
+          332,
+          334,
+          342,
+          346,
+          350,
+          354,
+          356,
+          358,
+          362,
+          366,
+          368,
+          370,
+          374,
+          378,
+          379,
+          380,
+          381,
+          382,
+          383,
+          394,
+          395,
+          397
+        ],
+        "slower_than_original": [
+          342,
+          343,
+          346,
+          350,
+          351,
+          354,
+          355,
+          356,
+          358,
+          359,
+          360,
+          362,
+          363,
+          364,
+          366,
+          367,
+          370,
+          371,
+          372,
+          374,
+          375,
+          376,
+          378,
+          380,
+          382,
+          384,
+          386,
+          388,
+          398,
+          399
+        ]
+      },
+      "cohorts": {
+        "channels": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.7282425034467508,
+          "geometric_mean_after_speedup": 0.8893961081519214,
+          "geometric_mean_improvement": 1.221291127532979,
+          "slower_than_before": [
+            378,
+            379,
+            380,
+            381,
+            382,
+            383
+          ],
+          "slower_than_original": [
+            378,
+            380,
+            382,
+            384,
+            386,
+            388
+          ]
+        },
+        "layout": {
+          "case_count": 10,
+          "geometric_mean_before_speedup": 1.627220601402126,
+          "geometric_mean_after_speedup": 1.980896331512612,
+          "geometric_mean_improvement": 1.217349589727253,
+          "slower_than_before": [
+            394,
+            395,
+            397
+          ],
+          "slower_than_original": [
+            398,
+            399
+          ]
+        },
+        "raster": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.4062725659567092,
+          "geometric_mean_after_speedup": 0.5096981151495737,
+          "geometric_mean_improvement": 1.2545718265502703,
+          "slower_than_before": [
+            354,
+            356,
+            358,
+            362
+          ],
+          "slower_than_original": [
+            354,
+            355,
+            356,
+            358,
+            359,
+            360,
+            362,
+            363,
+            364
+          ]
+        },
+        "small": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 1.4586858681724097,
+          "geometric_mean_after_speedup": 1.7021943421050472,
+          "geometric_mean_improvement": 1.166936884250294,
+          "slower_than_before": [
+            342,
+            346,
+            350
+          ],
+          "slower_than_original": [
+            342,
+            343,
+            346,
+            350,
+            351
+          ]
+        },
+        "tiny": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 3.9374998158690895,
+          "geometric_mean_after_speedup": 4.035467305890514,
+          "geometric_mean_improvement": 1.024880633549897,
+          "slower_than_before": [
+            330,
+            332,
+            334
+          ],
+          "slower_than_original": []
+        },
+        "volume": {
+          "case_count": 12,
+          "geometric_mean_before_speedup": 0.4977403917048497,
+          "geometric_mean_after_speedup": 0.6484345139108587,
+          "geometric_mean_improvement": 1.3027564664580562,
+          "slower_than_before": [
+            366,
+            368,
+            370,
+            374
+          ],
+          "slower_than_original": [
+            366,
+            367,
+            370,
+            371,
+            372,
+            374,
+            375,
+            376
+          ]
+        }
+      }
+    }
+  },
+  "all_regression_union_count": 129,
+  "largest_absolute_after_minus_before_ms": [
+    {
+      "profile": "windows",
+      "case_index": 361,
+      "id": "raster/raster/f4/converge",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"f4\",\"eps\":0.0002,\"id\":\"raster/f4/converge\",\"iterations\":200,\"layout\":\"readonly\",\"pattern\":\"constant\",\"shape\":[257,259],\"weight\":0.5}",
+      "before_ms": 52.0829,
+      "after_ms": 61.2879,
+      "after_minus_before_ms": 9.204999999999998
+    },
+    {
+      "profile": "windows",
+      "case_index": 365,
+      "id": "raster/raster/f8/converge",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"f8\",\"eps\":0.0002,\"id\":\"raster/f8/converge\",\"iterations\":200,\"layout\":\"readonly\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.5}",
+      "before_ms": 25.729,
+      "after_ms": 29.1552,
+      "after_minus_before_ms": 3.4262000000000015
+    },
+    {
+      "profile": "windows",
+      "case_index": 357,
+      "id": "raster/raster/u1/converge",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"u1\",\"eps\":0.0002,\"id\":\"raster/u1/converge\",\"iterations\":200,\"layout\":\"readonly\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.1}",
+      "before_ms": 12.8704,
+      "after_ms": 14.0623,
+      "after_minus_before_ms": 1.1919000000000004
+    },
+    {
+      "profile": "windows",
+      "case_index": 373,
+      "id": "raster/volume/f4/converge",
+      "fixture_json": "{\"cohort\":\"volume\",\"dtype\":\"f4\",\"eps\":0.0002,\"id\":\"volume/f4/converge\",\"iterations\":200,\"layout\":\"readonly\",\"pattern\":\"constant\",\"shape\":[9,33,35],\"weight\":0.5}",
+      "before_ms": 17.0841,
+      "after_ms": 18.1221,
+      "after_minus_before_ms": 1.0380000000000003
+    },
+    {
+      "profile": "minimum",
+      "case_index": 362,
+      "id": "raster/raster/f8/one",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"f8\",\"eps\":0.0,\"id\":\"raster/f8/one\",\"iterations\":1,\"layout\":\"C\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.5}",
+      "before_ms": 2.99569925,
+      "after_ms": 3.559546,
+      "after_minus_before_ms": 0.5638467500000002
+    },
+    {
+      "profile": "minimum",
+      "case_index": 354,
+      "id": "raster/raster/u1/one",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"u1\",\"eps\":0.0,\"id\":\"raster/u1/one\",\"iterations\":1,\"layout\":\"C\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.1}",
+      "before_ms": 3.12450725,
+      "after_ms": 3.6435376666666666,
+      "after_minus_before_ms": 0.5190304166666664
+    },
+    {
+      "profile": "windows",
+      "case_index": 356,
+      "id": "raster/raster/u1/fixed8",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"u1\",\"eps\":0.0,\"id\":\"raster/u1/fixed8\",\"iterations\":8,\"layout\":\"step\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.1}",
+      "before_ms": 6.61665,
+      "after_ms": 7.04415,
+      "after_minus_before_ms": 0.4275000000000002
+    },
+    {
+      "profile": "minimum",
+      "case_index": 356,
+      "id": "raster/raster/u1/fixed8",
+      "fixture_json": "{\"cohort\":\"raster\",\"dtype\":\"u1\",\"eps\":0.0,\"id\":\"raster/u1/fixed8\",\"iterations\":8,\"layout\":\"step\",\"pattern\":\"ramp\",\"shape\":[257,259],\"weight\":0.1}",
+      "before_ms": 6.10243,
+      "after_ms": 6.520927,
+      "after_minus_before_ms": 0.41849700000000034
+    }
+  ],
+  "cpu_and_worker_identities": {
+    "windows": {
+      "normal": {
+        "original": {
+          "role": "original",
+          "pid": 5544,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "904578774360e251fb484acc9b8b2459b6043f23689acc72f8c3d63e8ac89c1a",
+          "core_sha256": "3165bc583988d926b56a8d7a30ac00bc9141ea75e401652f0c511c69a6a666f1",
+          "core_path": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\before-env\\Lib\\site-packages\\skimagexx\\_core.cp313-win_amd64.pyd",
+          "profile": "windows",
+          "cpu": {
+            "cpu_model": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 5952,
+            "launcher_pid": 3684,
+            "worker_pid": 5544,
+            "worker_parent_pid": 3684,
+            "startup_receipt_sha256": "efa7a8562675794429f327e6eecccf231ffab1287af338ad34d793e3f0bd35bc"
+          }
+        },
+        "before": {
+          "role": "before",
+          "pid": 8540,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "904578774360e251fb484acc9b8b2459b6043f23689acc72f8c3d63e8ac89c1a",
+          "core_sha256": "3165bc583988d926b56a8d7a30ac00bc9141ea75e401652f0c511c69a6a666f1",
+          "core_path": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\before-env\\Lib\\site-packages\\skimagexx\\_core.cp313-win_amd64.pyd",
+          "profile": "windows",
+          "cpu": {
+            "cpu_model": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 5952,
+            "launcher_pid": 8544,
+            "worker_pid": 8540,
+            "worker_parent_pid": 8544,
+            "startup_receipt_sha256": "5d752b079b58c8169d51b6605e30020a5d188ddc56e95a13f8885edb0f52ccb5"
+          }
+        },
+        "after": {
+          "role": "after",
+          "pid": 7180,
+          "source": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "product_sha256": "f647236d72b4fe6ba8abcd12b18d1e7f4294f63fd4309fcb5d2617d3fa7a65d3",
+          "core_sha256": "a52cc7581e3d514196eb034debf9061b63508e75456eaf0258a19577ab46ff6b",
+          "core_path": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\after-env\\Lib\\site-packages\\skimagexx\\_core.cp313-win_amd64.pyd",
+          "profile": "windows",
+          "cpu": {
+            "cpu_model": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 5952,
+            "launcher_pid": 8656,
+            "worker_pid": 7180,
+            "worker_parent_pid": 8656,
+            "startup_receipt_sha256": "5e2253023c958483ff08307a3e24e75da33f1b9d9a2e8db1b2277f6b645c9e45"
+          }
+        }
+      }
+    },
+    "modern": {
+      "normal": {
+        "original": {
+          "role": "original",
+          "pid": 2477,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "8ec0e15fc4617c616129d86cffda66103ba77407a68bc4859427e1d6781c83e6",
+          "core_sha256": "e788fff5e3eb6233c7cd05a7aca36ee54c78e60d725f758bea29e8132321c099",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/before-env/lib/python3.13/site-packages/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "profile": "modern",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2464,
+            "launcher_pid": 2477,
+            "worker_pid": 2477,
+            "worker_parent_pid": 2464,
+            "startup_receipt_sha256": "d2bafa112e2e60c95b0ce7dae1ce413efd49c27ee6185ac4d351c50d9ffb0844"
+          }
+        },
+        "before": {
+          "role": "before",
+          "pid": 2489,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "8ec0e15fc4617c616129d86cffda66103ba77407a68bc4859427e1d6781c83e6",
+          "core_sha256": "e788fff5e3eb6233c7cd05a7aca36ee54c78e60d725f758bea29e8132321c099",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/before-env/lib/python3.13/site-packages/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "profile": "modern",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2464,
+            "launcher_pid": 2489,
+            "worker_pid": 2489,
+            "worker_parent_pid": 2464,
+            "startup_receipt_sha256": "e0b99663ba8efe61e11c83bad6b524eb867be8cd8c4c74f4bac9611f5a300dfc"
+          }
+        },
+        "after": {
+          "role": "after",
+          "pid": 2504,
+          "source": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "product_sha256": "485614a948bb04a1a2e4e7a83b1fb2b5e9a753d1cc763c81c1d70fb04e971a8e",
+          "core_sha256": "533f29ac3d478b99e9eaa6a234b79e2ef211dd5ead494a5b1d08128f72a5a40c",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/after-env/lib/python3.13/site-packages/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "profile": "modern",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "X86_V2": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "LAHF": true,
+              "CX16": true,
+              "MOVBE": true,
+              "BMI": true,
+              "BMI2": true,
+              "LZCNT": true,
+              "GFNI": false,
+              "VPCLMULQDQ": true,
+              "VAES": true,
+              "X86_V3": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512FP16": false,
+              "AVX512BF16": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "X86_V4": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "AVX512_SPR": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false,
+              "SVE": false,
+              "RVV": false,
+              "LSX": false
+            }
+          },
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "numpy": "2.5.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2464,
+            "launcher_pid": 2504,
+            "worker_pid": 2504,
+            "worker_parent_pid": 2464,
+            "startup_receipt_sha256": "ee55055e78c88c5e5708b12a88fbc2fff9cac5e7ab4579d2c9a1801319af12a8"
+          }
+        }
+      }
+    },
+    "minimum": {
+      "normal": {
+        "original": {
+          "role": "original",
+          "pid": 2610,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "3bee573c9a8b14de45fb0803482398c939763b246e9eb0f27b0a387fc0b4391b",
+          "core_sha256": "4ec0714fda0443f34c91c04eb7dceb03a4cdabc2145f28480e752d6b64111c79",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/before-env/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "profile": "minimum",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false
+            }
+          },
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "numpy": "1.24.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2595,
+            "launcher_pid": 2610,
+            "worker_pid": 2610,
+            "worker_parent_pid": 2595,
+            "startup_receipt_sha256": "ed810ab4ab1aaa9d24e1927c52d613edd101d9502e551ec54ddee35d123ba73d"
+          }
+        },
+        "before": {
+          "role": "before",
+          "pid": 2625,
+          "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+          "product_sha256": "3bee573c9a8b14de45fb0803482398c939763b246e9eb0f27b0a387fc0b4391b",
+          "core_sha256": "4ec0714fda0443f34c91c04eb7dceb03a4cdabc2145f28480e752d6b64111c79",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/before-env/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "profile": "minimum",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false
+            }
+          },
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "numpy": "1.24.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2595,
+            "launcher_pid": 2625,
+            "worker_pid": 2625,
+            "worker_parent_pid": 2595,
+            "startup_receipt_sha256": "a1d1d70d900e462b10af14b957ed78d7acc4f5ba92c3725b4a1669c257165b9b"
+          }
+        },
+        "after": {
+          "role": "after",
+          "pid": 2638,
+          "source": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "product_sha256": "1f81e0e43a55dcd015bb2be0071a514ac97585df407f444d236ffd4b7fdc7be8",
+          "core_sha256": "4483071de89e89427a8c6a2238950c890d5f6dda5c818adb966235e4786d776f",
+          "core_path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/after-env/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "profile": "minimum",
+          "cpu": {
+            "cpu_model": "AMD EPYC 7763 64-Core Processor",
+            "numpy_cpu_features": {
+              "MMX": true,
+              "SSE": true,
+              "SSE2": true,
+              "SSE3": true,
+              "SSSE3": true,
+              "SSE41": true,
+              "POPCNT": true,
+              "SSE42": true,
+              "AVX": true,
+              "F16C": true,
+              "XOP": false,
+              "FMA4": false,
+              "FMA3": true,
+              "AVX2": true,
+              "AVX512F": false,
+              "AVX512CD": false,
+              "AVX512ER": false,
+              "AVX512PF": false,
+              "AVX5124FMAPS": false,
+              "AVX5124VNNIW": false,
+              "AVX512VPOPCNTDQ": false,
+              "AVX512VL": false,
+              "AVX512BW": false,
+              "AVX512DQ": false,
+              "AVX512VNNI": false,
+              "AVX512IFMA": false,
+              "AVX512VBMI": false,
+              "AVX512VBMI2": false,
+              "AVX512BITALG": false,
+              "AVX512_KNL": false,
+              "AVX512_KNM": false,
+              "AVX512_SKX": false,
+              "AVX512_CLX": false,
+              "AVX512_CNL": false,
+              "AVX512_ICL": false,
+              "VSX": false,
+              "VSX2": false,
+              "VSX3": false,
+              "VSX4": false,
+              "VX": false,
+              "VXE": false,
+              "VXE2": false,
+              "NEON": false,
+              "NEON_FP16": false,
+              "NEON_VFPV4": false,
+              "ASIMD": false,
+              "FPHP": false,
+              "ASIMDHP": false,
+              "ASIMDDP": false,
+              "ASIMDFHM": false
+            }
+          },
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "numpy": "1.24.4",
+          "scalar": false,
+          "default_workers": 1,
+          "has_avx2": true,
+          "fallback_enabled": false,
+          "startup_authentication": {
+            "mechanism": "one-use-inherited-stdio-v1",
+            "controller_pid": 2595,
+            "launcher_pid": 2638,
+            "worker_pid": 2638,
+            "worker_parent_pid": 2595,
+            "startup_receipt_sha256": "ff9995ddc9a96141e73ea445beb87b85371f202a26adf5453f257fed39aed489"
+          }
+        }
+      }
+    }
+  },
+  "product_seals": {
+    "windows": {
+      "before": {
+        "product_sha256": "904578774360e251fb484acc9b8b2459b6043f23689acc72f8c3d63e8ac89c1a",
+        "wheel_sha256": "80d37e8c4b3563c2a7c869a0d886091b3f5026c05bebab60d9a7b262c75295bb",
+        "core_sha256": "3165bc583988d926b56a8d7a30ac00bc9141ea75e401652f0c511c69a6a666f1",
+        "qualified_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "source_zip_sha256": "980f793d9651d887d88cfe9e0fa7f397aaf0044ced5f2314ab05ebb0cd7ced81",
+        "build_identity_sha256": "6437514bc68d57a0f96017c7d0e46c0f00db60ac1d06549ddc15b34ecbd3e848",
+        "runtime_wheels": {
+          "colorama-0.4.6-py2.py3-none-any.whl": {
+            "name": "colorama",
+            "version": "0.4.6",
+            "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+          },
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.7-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.7",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+          },
+          "numpy-2.5.4-cp313-cp313-win_amd64.whl": {
+            "name": "numpy",
+            "version": "2.5.4",
+            "sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp313-cp313-win_amd64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "9dda0788a9932776a75d8bcc020076edc308ce2508b51f6739a45e3158b3fc42"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp313-cp313-win_amd64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1"
+          },
+          "scikit_imagexx-0.1.0-cp313-cp313-win_amd64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "80d37e8c4b3563c2a7c869a0d886091b3f5026c05bebab60d9a7b262c75295bb"
+          },
+          "scipy-1.18.1-cp313-cp313-win_amd64.whl": {
+            "name": "scipy",
+            "version": "1.18.1",
+            "sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28"
+          },
+          "tifffile-2026.10.15-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.10.15",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+          }
+        }
+      },
+      "after": {
+        "product_sha256": "f647236d72b4fe6ba8abcd12b18d1e7f4294f63fd4309fcb5d2617d3fa7a65d3",
+        "wheel_sha256": "55666da9d4167e050874381091dee91d383deb16edac6825fd141c87b04c5b98",
+        "core_sha256": "a52cc7581e3d514196eb034debf9061b63508e75456eaf0258a19577ab46ff6b",
+        "qualified_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "source_zip_sha256": "8f466219c88096bdfd78a5c0d1bf5ff0eebd537574a03f4b0f81eba26810ee9c",
+        "build_identity_sha256": "8da681750666dd882ee12c1ab0bea4771352f8e5b971d383d842f7c429f70889",
+        "runtime_wheels": {
+          "colorama-0.4.6-py2.py3-none-any.whl": {
+            "name": "colorama",
+            "version": "0.4.6",
+            "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+          },
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.7-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.7",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+          },
+          "numpy-2.5.4-cp313-cp313-win_amd64.whl": {
+            "name": "numpy",
+            "version": "2.5.4",
+            "sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp313-cp313-win_amd64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "9dda0788a9932776a75d8bcc020076edc308ce2508b51f6739a45e3158b3fc42"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp313-cp313-win_amd64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1"
+          },
+          "scikit_imagexx-0.1.0-cp313-cp313-win_amd64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "55666da9d4167e050874381091dee91d383deb16edac6825fd141c87b04c5b98"
+          },
+          "scipy-1.18.1-cp313-cp313-win_amd64.whl": {
+            "name": "scipy",
+            "version": "1.18.1",
+            "sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28"
+          },
+          "tifffile-2026.10.15-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.10.15",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+          }
+        }
+      }
+    },
+    "modern": {
+      "before": {
+        "product_sha256": "8ec0e15fc4617c616129d86cffda66103ba77407a68bc4859427e1d6781c83e6",
+        "wheel_sha256": "65e5d48949f6579ef02fbbaf9eaee9ebf80b159c7535db35b6e2c16418aeadab",
+        "core_sha256": "e788fff5e3eb6233c7cd05a7aca36ee54c78e60d725f758bea29e8132321c099",
+        "qualified_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "source_zip_sha256": "78a5a684c0c8b1c3661c2ffa43bfa345f69b588a97e3cee7d489e9a19b333a45",
+        "build_identity_sha256": "df810018178af62784632283dc319d706bb6de5e4f7bcefffa6babb49656e0dc",
+        "runtime_wheels": {
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.7-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.7",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+          },
+          "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "numpy",
+            "version": "2.5.4",
+            "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b"
+          },
+          "scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "65e5d48949f6579ef02fbbaf9eaee9ebf80b159c7535db35b6e2c16418aeadab"
+          },
+          "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scipy",
+            "version": "1.18.1",
+            "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9"
+          },
+          "tifffile-2026.10.15-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.10.15",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+          }
+        }
+      },
+      "after": {
+        "product_sha256": "485614a948bb04a1a2e4e7a83b1fb2b5e9a753d1cc763c81c1d70fb04e971a8e",
+        "wheel_sha256": "ff9f2de52c2455a224c9ba76b8b0039330a3450e66dcc50f1bac03e46ab84bd5",
+        "core_sha256": "533f29ac3d478b99e9eaa6a234b79e2ef211dd5ead494a5b1d08128f72a5a40c",
+        "qualified_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "source_zip_sha256": "7b23f4e130e820bb4a936e0096f7afe334bbb446a527ef3603cdbd5822d0e345",
+        "build_identity_sha256": "3351c6de9121261f9556427b0536b478d5d77d34bd749ea61725d9d614ad8f23",
+        "runtime_wheels": {
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.7-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.7",
+            "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+          },
+          "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "numpy",
+            "version": "2.5.4",
+            "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b"
+          },
+          "scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "ff9f2de52c2455a224c9ba76b8b0039330a3450e66dcc50f1bac03e46ab84bd5"
+          },
+          "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scipy",
+            "version": "1.18.1",
+            "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9"
+          },
+          "tifffile-2026.10.15-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.10.15",
+            "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+          }
+        }
+      }
+    },
+    "minimum": {
+      "before": {
+        "product_sha256": "3bee573c9a8b14de45fb0803482398c939763b246e9eb0f27b0a387fc0b4391b",
+        "wheel_sha256": "7ed0d849f97881259379baaae8e481adc3330b6633ca8aa44e08750b6f70ec24",
+        "core_sha256": "4ec0714fda0443f34c91c04eb7dceb03a4cdabc2145f28480e752d6b64111c79",
+        "qualified_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "source_zip_sha256": "78a5a684c0c8b1c3661c2ffa43bfa345f69b588a97e3cee7d489e9a19b333a45",
+        "build_identity_sha256": "bedc81a824c4e6c341ce6301b991ea1ada8a11430ed84c017ac939265ba7102e",
+        "runtime_wheels": {
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.6.1-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.6.1",
+            "sha256": "d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762"
+          },
+          "numpy-1.24.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+            "name": "numpy",
+            "version": "1.24.4",
+            "sha256": "7215847ce88a85ce39baf9e89070cb860c98fdddacbaa6c0da3ffb31b3350bd5"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "a625df9a2a5597fa5e5266e01aefc82604bb85d291e3547981e863560d75da6c"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "74aa5518ccea28121f57a95374581d3b979839adc25bb03f289b1bc9b99c58af"
+          },
+          "scikit_imagexx-0.1.0-cp311-cp311-linux_x86_64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "7ed0d849f97881259379baaae8e481adc3330b6633ca8aa44e08750b6f70ec24"
+          },
+          "scipy-1.15.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+            "name": "scipy",
+            "version": "1.15.3",
+            "sha256": "39cb9c62e471b1bb3750066ecc3a3f3052b37751c7c3dfd0fd7e48900ed52982"
+          },
+          "tifffile-2026.3.3-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.3.3",
+            "sha256": "e8be15c94273113d31ecb7aa3a39822189dd11c4967e3cc88c178f1ad2fd1170"
+          }
+        }
+      },
+      "after": {
+        "product_sha256": "1f81e0e43a55dcd015bb2be0071a514ac97585df407f444d236ffd4b7fdc7be8",
+        "wheel_sha256": "41333dbaaaa084214f8cdf97fe42fd376adbc937234fa54febc73c646e3828ee",
+        "core_sha256": "4483071de89e89427a8c6a2238950c890d5f6dda5c818adb966235e4786d776f",
+        "qualified_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "source_zip_sha256": "7b23f4e130e820bb4a936e0096f7afe334bbb446a527ef3603cdbd5822d0e345",
+        "build_identity_sha256": "a25568f14778c44217307d3060d7998c24d0a8a0735407fdcbaceca93d9fc75b",
+        "runtime_wheels": {
+          "imageio-2.38.1-py3-none-any.whl": {
+            "name": "imageio",
+            "version": "2.38.1",
+            "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9"
+          },
+          "iniconfig-2.3.1-py3-none-any.whl": {
+            "name": "iniconfig",
+            "version": "2.3.1",
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          },
+          "lazy_loader-0.6-py3-none-any.whl": {
+            "name": "lazy-loader",
+            "version": "0.6",
+            "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+          },
+          "networkx-3.6.1-py3-none-any.whl": {
+            "name": "networkx",
+            "version": "3.6.1",
+            "sha256": "d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762"
+          },
+          "numpy-1.24.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+            "name": "numpy",
+            "version": "1.24.4",
+            "sha256": "7215847ce88a85ce39baf9e89070cb860c98fdddacbaa6c0da3ffb31b3350bd5"
+          },
+          "packaging-26.3-py3-none-any.whl": {
+            "name": "packaging",
+            "version": "26.3",
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          },
+          "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "pillow",
+            "version": "13.0.0",
+            "sha256": "a625df9a2a5597fa5e5266e01aefc82604bb85d291e3547981e863560d75da6c"
+          },
+          "pluggy-1.7.0-py3-none-any.whl": {
+            "name": "pluggy",
+            "version": "1.7.0",
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          },
+          "pygments-2.21.0-py3-none-any.whl": {
+            "name": "pygments",
+            "version": "2.21.0",
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          },
+          "pytest-9.1.1-py3-none-any.whl": {
+            "name": "pytest",
+            "version": "9.1.1",
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          },
+          "scikit_image-0.26.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+            "name": "scikit-image",
+            "version": "0.26.0",
+            "sha256": "74aa5518ccea28121f57a95374581d3b979839adc25bb03f289b1bc9b99c58af"
+          },
+          "scikit_imagexx-0.1.0-cp311-cp311-linux_x86_64.whl": {
+            "name": "scikit-imagexx",
+            "version": "0.1.0",
+            "sha256": "41333dbaaaa084214f8cdf97fe42fd376adbc937234fa54febc73c646e3828ee"
+          },
+          "scipy-1.15.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+            "name": "scipy",
+            "version": "1.15.3",
+            "sha256": "39cb9c62e471b1bb3750066ecc3a3f3052b37751c7c3dfd0fd7e48900ed52982"
+          },
+          "tifffile-2026.3.3-py3-none-any.whl": {
+            "name": "tifffile",
+            "version": "2026.3.3",
+            "sha256": "e8be15c94273113d31ecb7aa3a39822189dd11c4967e3cc88c178f1ad2fd1170"
+          }
+        }
+      }
+    }
+  },
+  "common_build_input_sha256": {
+    "windows": "e1549ccd1a80b3d4a43ce14ccae3c095e1ead905d4d35184a4d869525b9ec874",
+    "modern": "d97713ae1a57bcdbee1bc07095ac26a602158538bfc763f8c705f64d79aa8c74",
+    "minimum": "08e42ec7acf1991da63c88eda27070c66807150d2ca405e47acdcc0432d80fda"
+  },
+  "server_barrier_chronology": {
+    "preparations": [
+      {
+        "completedAt": "2026-10-24T18:17:14Z",
+        "conclusion": "success",
+        "databaseId": 120948000975,
+        "name": "prepare (windows, windows-latest, 3.13)",
+        "startedAt": "2026-10-24T18:13:28Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:13:30Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:13:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:13:40Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:13:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:13:40Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:13:40Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:13:41Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:13:40Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:14:48Z",
+            "conclusion": "success",
+            "name": "Strict external admission and original outer artifact authentication before fixtures",
+            "number": 5,
+            "startedAt": "2026-10-24T18:13:41Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:15:01Z",
+            "conclusion": "success",
+            "name": "Offline exact qualified wheels in two separate ordinary-name prefixes",
+            "number": 6,
+            "startedAt": "2026-10-24T18:14:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:16:54Z",
+            "conclusion": "success",
+            "name": "Exact400 observations original before after workers1and4 normalandscalar",
+            "number": 7,
+            "startedAt": "2026-10-24T18:15:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:17:09Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "startedAt": "2026-10-24T18:16:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:17:10Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:17:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:17:11Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:17:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:17:12Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:17:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:17:12Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:17:12Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120948000975"
+      },
+      {
+        "completedAt": "2026-10-24T18:25:13Z",
+        "conclusion": "success",
+        "databaseId": 120948001021,
+        "name": "prepare (modern, ubuntu-24.04, 3.13)",
+        "startedAt": "2026-10-24T18:21:48Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:21:49Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:21:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:54Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:21:49Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:54Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:54Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:22:56Z",
+            "conclusion": "success",
+            "name": "Strict external admission and original outer artifact authentication before fixtures",
+            "number": 5,
+            "startedAt": "2026-10-24T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:23:05Z",
+            "conclusion": "success",
+            "name": "Offline exact qualified wheels in two separate ordinary-name prefixes",
+            "number": 6,
+            "startedAt": "2026-10-24T18:22:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:24:54Z",
+            "conclusion": "success",
+            "name": "Exact400 observations original before after workers1and4 normalandscalar",
+            "number": 7,
+            "startedAt": "2026-10-24T18:23:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:25:11Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "startedAt": "2026-10-24T18:24:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:25:12Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:25:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:25:12Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:25:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:25:12Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:25:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:25:12Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:25:12Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120948001021"
+      },
+      {
+        "completedAt": "2026-10-24T18:21:25Z",
+        "conclusion": "success",
+        "databaseId": 120948001030,
+        "name": "prepare (minimum, ubuntu-24.04, 3.11)",
+        "startedAt": "2026-10-24T18:18:05Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:18:08Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:18:06Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:18:13Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:18:08Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:18:13Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:18:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:18:14Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:18:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:19:12Z",
+            "conclusion": "success",
+            "name": "Strict external admission and original outer artifact authentication before fixtures",
+            "number": 5,
+            "startedAt": "2026-10-24T18:18:14Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:19:24Z",
+            "conclusion": "success",
+            "name": "Offline exact qualified wheels in two separate ordinary-name prefixes",
+            "number": 6,
+            "startedAt": "2026-10-24T18:19:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:05Z",
+            "conclusion": "success",
+            "name": "Exact400 observations original before after workers1and4 normalandscalar",
+            "number": 7,
+            "startedAt": "2026-10-24T18:19:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:22Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "startedAt": "2026-10-24T18:21:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:23Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:21:22Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:23Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:21:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:23Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:21:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:21:23Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:21:23Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120948001030"
+      }
+    ],
+    "barrier": [
+      {
+        "completedAt": "2026-10-24T18:31:32Z",
+        "conclusion": "success",
+        "databaseId": 120951123832,
+        "name": "barrier",
+        "startedAt": "2026-10-24T18:31:16Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:31:18Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:31:17Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:23Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:31:18Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:23Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:31:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:24Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:31:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:25Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 5,
+            "startedAt": "2026-10-24T18:31:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:28Z",
+            "conclusion": "success",
+            "name": "All three fresh complete reports before any measurement host",
+            "number": 6,
+            "startedAt": "2026-10-24T18:31:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:29Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 7,
+            "startedAt": "2026-10-24T18:31:28Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:29Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 13,
+            "startedAt": "2026-10-24T18:31:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:30Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 14,
+            "startedAt": "2026-10-24T18:31:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:31:30Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "startedAt": "2026-10-24T18:31:30Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120951123832"
+      }
+    ],
+    "measurements": [
+      {
+        "completedAt": "2026-10-24T18:38:45Z",
+        "conclusion": "success",
+        "databaseId": 120952590185,
+        "name": "measure (modern, ubuntu-24.04, 3.13)",
+        "startedAt": "2026-10-24T18:35:35Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:35:38Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:35:36Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:43Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:35:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:43Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:35:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:53Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:35:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:54Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 5,
+            "startedAt": "2026-10-24T18:35:53Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:55Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 6,
+            "startedAt": "2026-10-24T18:35:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:36:21Z",
+            "conclusion": "success",
+            "name": "Materialize only exact archived wheels offline before timing",
+            "number": 7,
+            "startedAt": "2026-10-24T18:35:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:38:40Z",
+            "conclusion": "success",
+            "name": "One worker seven rotating paired triads all70 no builds or pytest",
+            "number": 8,
+            "startedAt": "2026-10-24T18:36:21Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:38:42Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:38:40Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:38:42Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:38:42Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:38:42Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:38:42Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:38:42Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:38:42Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120952590185"
+      },
+      {
+        "completedAt": "2026-10-24T18:49:02Z",
+        "conclusion": "success",
+        "databaseId": 120952590247,
+        "name": "measure (minimum, ubuntu-24.04, 3.11)",
+        "startedAt": "2026-10-24T18:45:53Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:45:55Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:45:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:00Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:45:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:00Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:46:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:08Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:46:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:09Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 5,
+            "startedAt": "2026-10-24T18:46:08Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:09Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 6,
+            "startedAt": "2026-10-24T18:46:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:46:40Z",
+            "conclusion": "success",
+            "name": "Materialize only exact archived wheels offline before timing",
+            "number": 7,
+            "startedAt": "2026-10-24T18:46:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:48:59Z",
+            "conclusion": "success",
+            "name": "One worker seven rotating paired triads all70 no builds or pytest",
+            "number": 8,
+            "startedAt": "2026-10-24T18:46:40Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:49:00Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:48:59Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:49:00Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:49:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:49:00Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:49:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:49:00Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:49:00Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120952590247"
+      },
+      {
+        "completedAt": "2026-10-24T18:35:48Z",
+        "conclusion": "success",
+        "databaseId": 120952590271,
+        "name": "measure (windows, windows-latest, 3.13)",
+        "startedAt": "2026-10-24T18:31:57Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T18:32:00Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T18:31:58Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:32:09Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T18:32:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:32:10Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-24T18:32:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:32:21Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T18:32:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:32:23Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 5,
+            "startedAt": "2026-10-24T18:32:21Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:32:24Z",
+            "conclusion": "success",
+            "name": "Run actions/download-artifact@v4",
+            "number": 6,
+            "startedAt": "2026-10-24T18:32:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:33:02Z",
+            "conclusion": "success",
+            "name": "Materialize only exact archived wheels offline before timing",
+            "number": 7,
+            "startedAt": "2026-10-24T18:32:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:42Z",
+            "conclusion": "success",
+            "name": "One worker seven rotating paired triads all70 no builds or pytest",
+            "number": 8,
+            "startedAt": "2026-10-24T18:33:02Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:44Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 9,
+            "startedAt": "2026-10-24T18:35:42Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:44Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 17,
+            "startedAt": "2026-10-24T18:35:44Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:46Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "startedAt": "2026-10-24T18:35:44Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T18:35:46Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "startedAt": "2026-10-24T18:35:46Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201/job/120952590271"
+      }
+    ]
+  },
+  "auth_boundary": {
+    "windows": {
+      "schema": "tv-cursor-auth-source-derived-reconstruction-v1",
+      "passed": true,
+      "original_raw_upload": false,
+      "source_controller": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+      "frozen_source": "startup_plan/authenticate_startup/controller dictionary field insertion order and save_new JSON formatting",
+      "run": "40119412201",
+      "attempt": "1",
+      "profile": "windows",
+      "records": [
+        {
+          "name": "claim-source-derived.json",
+          "expected_sha256": "a6e010cae89b61859e42e9374905ef9b8accc85b4f6ceb84e84ad28831226b6a",
+          "actual_sha256": "a6e010cae89b61859e42e9374905ef9b8accc85b4f6ceb84e84ad28831226b6a",
+          "bytes": 742
+        },
+        {
+          "name": "original-startup-source-derived.json",
+          "expected_sha256": "efa7a8562675794429f327e6eecccf231ffab1287af338ad34d793e3f0bd35bc",
+          "actual_sha256": "efa7a8562675794429f327e6eecccf231ffab1287af338ad34d793e3f0bd35bc",
+          "bytes": 415
+        },
+        {
+          "name": "before-startup-source-derived.json",
+          "expected_sha256": "5d752b079b58c8169d51b6605e30020a5d188ddc56e95a13f8885edb0f52ccb5",
+          "actual_sha256": "5d752b079b58c8169d51b6605e30020a5d188ddc56e95a13f8885edb0f52ccb5",
+          "bytes": 413
+        },
+        {
+          "name": "after-startup-source-derived.json",
+          "expected_sha256": "5e2253023c958483ff08307a3e24e75da33f1b9d9a2e8db1b2277f6b645c9e45",
+          "actual_sha256": "5e2253023c958483ff08307a3e24e75da33f1b9d9a2e8db1b2277f6b645c9e45",
+          "bytes": 412
+        }
+      ],
+      "secret_frame_or_nonce_not_required": true,
+      "scope": "Exact SHA match of deterministic bytes reconstructed from original uploaded permit, receipt raw SHA hashes and captured PID metadata. These are explicitly derived evidence, never represented as original raw artifact members."
+    },
+    "modern": {
+      "schema": "tv-cursor-auth-source-derived-reconstruction-v1",
+      "passed": true,
+      "original_raw_upload": false,
+      "source_controller": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+      "frozen_source": "startup_plan/authenticate_startup/controller dictionary field insertion order and save_new JSON formatting",
+      "run": "40119412201",
+      "attempt": "1",
+      "profile": "modern",
+      "records": [
+        {
+          "name": "claim-source-derived.json",
+          "expected_sha256": "a4f45f00aa5de001019b3ab113c63da14204fcb5562c0ed38cf8b8a92a918742",
+          "actual_sha256": "a4f45f00aa5de001019b3ab113c63da14204fcb5562c0ed38cf8b8a92a918742",
+          "bytes": 741
+        },
+        {
+          "name": "original-startup-source-derived.json",
+          "expected_sha256": "d2bafa112e2e60c95b0ce7dae1ce413efd49c27ee6185ac4d351c50d9ffb0844",
+          "actual_sha256": "d2bafa112e2e60c95b0ce7dae1ce413efd49c27ee6185ac4d351c50d9ffb0844",
+          "bytes": 414
+        },
+        {
+          "name": "before-startup-source-derived.json",
+          "expected_sha256": "e0b99663ba8efe61e11c83bad6b524eb867be8cd8c4c74f4bac9611f5a300dfc",
+          "actual_sha256": "e0b99663ba8efe61e11c83bad6b524eb867be8cd8c4c74f4bac9611f5a300dfc",
+          "bytes": 412
+        },
+        {
+          "name": "after-startup-source-derived.json",
+          "expected_sha256": "ee55055e78c88c5e5708b12a88fbc2fff9cac5e7ab4579d2c9a1801319af12a8",
+          "actual_sha256": "ee55055e78c88c5e5708b12a88fbc2fff9cac5e7ab4579d2c9a1801319af12a8",
+          "bytes": 411
+        }
+      ],
+      "secret_frame_or_nonce_not_required": true,
+      "scope": "Exact SHA match of deterministic bytes reconstructed from original uploaded permit, receipt raw SHA hashes and captured PID metadata. These are explicitly derived evidence, never represented as original raw artifact members."
+    },
+    "minimum": {
+      "schema": "tv-cursor-auth-source-derived-reconstruction-v1",
+      "passed": true,
+      "original_raw_upload": false,
+      "source_controller": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+      "frozen_source": "startup_plan/authenticate_startup/controller dictionary field insertion order and save_new JSON formatting",
+      "run": "40119412201",
+      "attempt": "1",
+      "profile": "minimum",
+      "records": [
+        {
+          "name": "claim-source-derived.json",
+          "expected_sha256": "31f4c2fbbfebfca6caea3f14d28b91ceed5da410ecb7e0a509c87fff0e3a2f93",
+          "actual_sha256": "31f4c2fbbfebfca6caea3f14d28b91ceed5da410ecb7e0a509c87fff0e3a2f93",
+          "bytes": 742
+        },
+        {
+          "name": "original-startup-source-derived.json",
+          "expected_sha256": "ed810ab4ab1aaa9d24e1927c52d613edd101d9502e551ec54ddee35d123ba73d",
+          "actual_sha256": "ed810ab4ab1aaa9d24e1927c52d613edd101d9502e551ec54ddee35d123ba73d",
+          "bytes": 415
+        },
+        {
+          "name": "before-startup-source-derived.json",
+          "expected_sha256": "a1d1d70d900e462b10af14b957ed78d7acc4f5ba92c3725b4a1669c257165b9b",
+          "actual_sha256": "a1d1d70d900e462b10af14b957ed78d7acc4f5ba92c3725b4a1669c257165b9b",
+          "bytes": 413
+        },
+        {
+          "name": "after-startup-source-derived.json",
+          "expected_sha256": "ff9995ddc9a96141e73ea445beb87b85371f202a26adf5453f257fed39aed489",
+          "actual_sha256": "ff9995ddc9a96141e73ea445beb87b85371f202a26adf5453f257fed39aed489",
+          "bytes": 412
+        }
+      ],
+      "secret_frame_or_nonce_not_required": true,
+      "scope": "Exact SHA match of deterministic bytes reconstructed from original uploaded permit, receipt raw SHA hashes and captured PID metadata. These are explicitly derived evidence, never represented as original raw artifact members."
+    }
+  },
+  "scientific_handoff": {
+    "path": "build/tv-chambolle-cursor-compare-runs/40119412201/handoff.json",
+    "sha256": "7177cfd26261847a2770ad16348719321777208a90c278e96b1b264089c9cee1",
+    "records": 357,
+    "bytes": 538098154
+  },
+  "offline_verification": {
+    "path": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/verification.json",
+    "sha256": "97fb6ce2c4756793fe9831b5e36805c71be0d41fed3af69eb1b8fde0b0cfde0a"
+  },
+  "raw_archive": {
+    "path": "benchmarks/tv-chambolle-cursor-comparison-raw.zip",
+    "bytes": 3547243,
+    "sha256": "878122d315baefaa580954ff3004370d3c9a7ec967bbec9ae2db16f2e33006e3",
+    "member_count": 85,
+    "original_or_derived_member_records": {
+      "artifact-authentication/tv-cursor-barrier/retention.json": {
+        "bytes": 5074,
+        "sha256": "036a559a3bf321286f9b2791dd7e8c1222424d2527eb8c78bcc06612817dd7dc",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-barrier/retention.json"
+      },
+      "artifact-authentication/tv-cursor-barrier/fullstream-auth.json": {
+        "bytes": 2348,
+        "sha256": "0ba1b750542f5f29529d5cdfb21316c9dc20b2d2cd914a963dd2ca37268bfaf5",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-barrier/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-performance-minimum/retention.json": {
+        "bytes": 9150,
+        "sha256": "a6110d1f5f9ec9daf779662a8a7def8f99f0898524933905b79a017fdb907cf2",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-minimum/retention.json"
+      },
+      "artifact-authentication/tv-cursor-performance-minimum/fullstream-auth.json": {
+        "bytes": 3844,
+        "sha256": "b46dc5b239217695f4262668b6541b4cccd930963b0cc60c2c279568c30f80c6",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-minimum/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-performance-modern/retention.json": {
+        "bytes": 9145,
+        "sha256": "3c78be02082a7f3526c1545735d0786e9e8d188c14a21ea420dc27fedf5bb4fd",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-modern/retention.json"
+      },
+      "artifact-authentication/tv-cursor-performance-modern/fullstream-auth.json": {
+        "bytes": 3843,
+        "sha256": "a2ced4c24f6224bb76f04644f28532090d8ee41fc30bee0e881b4e266d398ea3",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-modern/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-performance-windows/retention.json": {
+        "bytes": 8655,
+        "sha256": "4b87df417f29a9ed67bf63cf073c05077ae79416bbe94ac50218b1b44d816023",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-windows/retention.json"
+      },
+      "artifact-authentication/tv-cursor-performance-windows/fullstream-auth.json": {
+        "bytes": 3843,
+        "sha256": "33005b5bf674228a93d34a1dc3de9cdbd113f2d2da51b1b381938d53075029ba",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-performance-windows/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-minimum/retention.json": {
+        "bytes": 1995377,
+        "sha256": "f1ae5235827bb96619658646781682bccb13dff3156fdeb4db85f64a1651d0bf",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-minimum/retention.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-minimum/fullstream-auth.json": {
+        "bytes": 526632,
+        "sha256": "dd5d1f5ad9acf1da14fe2563d8358ecb400fdf5d42870aea63f3359507fd7501",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-minimum/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-modern/retention.json": {
+        "bytes": 1995853,
+        "sha256": "e4af105306f09406c4846fce40b6a37b416296e1554b30f4f47dea08230da92f",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-modern/retention.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-modern/fullstream-auth.json": {
+        "bytes": 526633,
+        "sha256": "780c8d36763971536d9a1051ff651eb5c03cb701fedc494df0eb020a93ca4060",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-modern/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-windows/retention.json": {
+        "bytes": 1975375,
+        "sha256": "0bfae3a0a060ec78b6be5b1a78a5d760af6fe6b16314e837168dda70d038850b",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-windows/retention.json"
+      },
+      "artifact-authentication/tv-cursor-prepared-windows/fullstream-auth.json": {
+        "bytes": 519588,
+        "sha256": "d647f3b1050281e46bef16bfa79f01fc0ab3c2e6c65c34d1a367d0517e359032",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-prepared-windows/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-minimum/retention.json": {
+        "bytes": 2410,
+        "sha256": "d9b687d0531a2ab032f4aaec53e3f6afe6ec0e9799dbfb9299526c9f9077dcdb",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-minimum/retention.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-minimum/fullstream-auth.json": {
+        "bytes": 1424,
+        "sha256": "170bd756ca4b479d51aaac038050f9db47c0c1beff77a7d4190af10c3e26b319",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-minimum/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-modern/retention.json": {
+        "bytes": 2075,
+        "sha256": "791d32889f554ba24e0a1c7de1e04c4cda159bb3d06b4a4bd5c476303c6e98f2",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-modern/retention.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-modern/fullstream-auth.json": {
+        "bytes": 1423,
+        "sha256": "2c57249590509035879d2cf86d479352cd55f276a5a6ea6c0da5aa9461d42c8a",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-modern/fullstream-auth.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-windows/retention.json": {
+        "bytes": 2416,
+        "sha256": "619112f5f778f4acb053d0d9866f84cdc4c2fde71137d6949f4cd3b3a6014b79",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-windows/retention.json"
+      },
+      "artifact-authentication/tv-cursor-receipt-windows/fullstream-auth.json": {
+        "bytes": 1424,
+        "sha256": "6fcc2f94bba4e52cae9cc9da5ad5dbcf4644750eebfd4221189e815ad588a34a",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/tv-cursor-receipt-windows/fullstream-auth.json"
+      },
+      "measurement/windows/results/after-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/after-normal.stderr",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "measurement/windows/results/original-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/original-normal.stderr",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "measurement/windows/results/before-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/before-normal.stderr",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "measurement/windows/results/progress.json": {
+        "bytes": 6841818,
+        "sha256": "5c48fc36fea3b8f8624b45e68d0ec5f6dc173350ee8ed709ec30c2f7b9f230a5",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/progress.json",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "measurement/windows/results/report.json": {
+        "bytes": 6662865,
+        "sha256": "1cc2b16bcb4920b498bae08a3b46848ad94a1de6315249cb2241aa61aa4232a5",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/report.json",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "measurement/windows/results/worker-permit.json": {
+        "bytes": 993,
+        "sha256": "f05a092936ba10dcc45a0f367f0cbc149ead79c5735ad4d65d2ee03a2abfd753",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570958171,
+          "artifact_member": "results/worker-permit.json",
+          "outer_sha256": "sha256:a037ba853c8df3297b7057461606c655f846b5b039b5067e32659209c9df17b0"
+        }
+      },
+      "preparations/windows/preparation.json": {
+        "bytes": 777,
+        "sha256": "186eeee7275399754ee98b5165169651278bf634c21cefa999268ad6fd08b103",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571180700,
+          "artifact_member": "preparation.json",
+          "outer_sha256": "sha256:e8b041cb0f938c43a1b1a7b2e86667a3d9775c828f03564fde81cc05f853785c"
+        }
+      },
+      "preparations/windows/report.json": {
+        "bytes": 418635,
+        "sha256": "4d88afedaf7db0c4bb7a88bf86d5309c673035d8b1cda5350d2ba5c56c4d5000",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571180700,
+          "artifact_member": "report.json",
+          "outer_sha256": "sha256:e8b041cb0f938c43a1b1a7b2e86667a3d9775c828f03564fde81cc05f853785c"
+        }
+      },
+      "source-derived-auth/windows/after-startup-source-derived.json": {
+        "bytes": 412,
+        "sha256": "5e2253023c958483ff08307a3e24e75da33f1b9d9a2e8db1b2277f6b645c9e45",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/windows/after-startup-source-derived.json"
+      },
+      "source-derived-auth/windows/before-startup-source-derived.json": {
+        "bytes": 413,
+        "sha256": "5d752b079b58c8169d51b6605e30020a5d188ddc56e95a13f8885edb0f52ccb5",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/windows/before-startup-source-derived.json"
+      },
+      "source-derived-auth/windows/claim-source-derived.json": {
+        "bytes": 742,
+        "sha256": "a6e010cae89b61859e42e9374905ef9b8accc85b4f6ceb84e84ad28831226b6a",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/windows/claim-source-derived.json"
+      },
+      "source-derived-auth/windows/original-startup-source-derived.json": {
+        "bytes": 415,
+        "sha256": "efa7a8562675794429f327e6eecccf231ffab1287af338ad34d793e3f0bd35bc",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/windows/original-startup-source-derived.json"
+      },
+      "source-derived-auth/windows/reconstruction.json": {
+        "bytes": 1746,
+        "sha256": "f9d89b2f0799388ceadad5d13a13ef64a71bbb9db5a180c1b3c60c1e33c0178e",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/windows/reconstruction.json"
+      },
+      "measurement/modern/results/after-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/after-normal.stderr",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "measurement/modern/results/original-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/original-normal.stderr",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "measurement/modern/results/before-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/before-normal.stderr",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "measurement/modern/results/progress.json": {
+        "bytes": 6623252,
+        "sha256": "3f13b56a7d9cefe61d821a3cad6ad368c298f99aac86f8588514ce85b461e5b0",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/progress.json",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "measurement/modern/results/report.json": {
+        "bytes": 6626571,
+        "sha256": "2c2b26f3db8e9b25999919e94bda2f4e6b99dcdf7d17f3b278cc986b210ccea0",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/report.json",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "measurement/modern/results/worker-permit.json": {
+        "bytes": 1019,
+        "sha256": "a9e459b2a8be0ece76b2a4e08a5184b260c7990a81b4bc10674124aaa2d21c98",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571471532,
+          "artifact_member": "results/worker-permit.json",
+          "outer_sha256": "sha256:4e3553cea0e4dc7e3e3b6d2e2f3e02abe10b0635485423139a56160c6ad3ede9"
+        }
+      },
+      "preparations/modern/preparation.json": {
+        "bytes": 776,
+        "sha256": "51087fec22238e92710762824c05fe50b841d3e29d5962ef18a86a9a1cd6225f",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570691958,
+          "artifact_member": "preparation.json",
+          "outer_sha256": "sha256:4c5f7b13b959e022da9d7b1744bc24305d1266b9c7ad568e849720e71364158a"
+        }
+      },
+      "preparations/modern/report.json": {
+        "bytes": 418492,
+        "sha256": "b62d3845b6627db3ed6bd4a59fc8ea25f40c0971f479a1aa5f1e390ea614e7c6",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12570691958,
+          "artifact_member": "report.json",
+          "outer_sha256": "sha256:4c5f7b13b959e022da9d7b1744bc24305d1266b9c7ad568e849720e71364158a"
+        }
+      },
+      "source-derived-auth/modern/after-startup-source-derived.json": {
+        "bytes": 411,
+        "sha256": "ee55055e78c88c5e5708b12a88fbc2fff9cac5e7ab4579d2c9a1801319af12a8",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/modern/after-startup-source-derived.json"
+      },
+      "source-derived-auth/modern/before-startup-source-derived.json": {
+        "bytes": 412,
+        "sha256": "e0b99663ba8efe61e11c83bad6b524eb867be8cd8c4c74f4bac9611f5a300dfc",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/modern/before-startup-source-derived.json"
+      },
+      "source-derived-auth/modern/claim-source-derived.json": {
+        "bytes": 741,
+        "sha256": "a4f45f00aa5de001019b3ab113c63da14204fcb5562c0ed38cf8b8a92a918742",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/modern/claim-source-derived.json"
+      },
+      "source-derived-auth/modern/original-startup-source-derived.json": {
+        "bytes": 414,
+        "sha256": "d2bafa112e2e60c95b0ce7dae1ce413efd49c27ee6185ac4d351c50d9ffb0844",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/modern/original-startup-source-derived.json"
+      },
+      "source-derived-auth/modern/reconstruction.json": {
+        "bytes": 1745,
+        "sha256": "27c1e67a70894ad4ec10f8e66c3b1dbdc11a76b317fb7c5295f5493a96934ddf",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/modern/reconstruction.json"
+      },
+      "measurement/minimum/results/after-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/after-normal.stderr",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "measurement/minimum/results/before-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/before-normal.stderr",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "measurement/minimum/results/original-normal.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/original-normal.stderr",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "measurement/minimum/results/progress.json": {
+        "bytes": 5657056,
+        "sha256": "9d5ab6d274d3d49fc21d04b7853ae1d36bda2624e8e1b09381a9dbc04e40f7d3",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/progress.json",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "measurement/minimum/results/report.json": {
+        "bytes": 5660788,
+        "sha256": "c37940b7fe84607e85e17d8f83770643f4aca0967783e0a960744cf92c183dc6",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/report.json",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "measurement/minimum/results/worker-permit.json": {
+        "bytes": 1021,
+        "sha256": "62b45826ccda8ea50f8b8ca0438c7005f3752a2c606e124f218435b1d8e26e50",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571577481,
+          "artifact_member": "results/worker-permit.json",
+          "outer_sha256": "sha256:9a78be8b3d50db5aca08499e643c4cfa1d42357fd8e9f7e38b05a3d5d34a3b4d"
+        }
+      },
+      "preparations/minimum/preparation.json": {
+        "bytes": 777,
+        "sha256": "df09e49e09b70826afb54d402c317e02ef549fa40602f0a0737cc3e661ab6e29",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571331024,
+          "artifact_member": "preparation.json",
+          "outer_sha256": "sha256:c6cc5dcc233a5679fdd08aed9a548f82731df0bf535682139284e80e047e42a9"
+        }
+      },
+      "preparations/minimum/report.json": {
+        "bytes": 415503,
+        "sha256": "91ac044d89325964e5d6d46a88f5077ba759681b13223bdc0a16f0261a8ab042",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571331024,
+          "artifact_member": "report.json",
+          "outer_sha256": "sha256:c6cc5dcc233a5679fdd08aed9a548f82731df0bf535682139284e80e047e42a9"
+        }
+      },
+      "source-derived-auth/minimum/after-startup-source-derived.json": {
+        "bytes": 412,
+        "sha256": "ff9995ddc9a96141e73ea445beb87b85371f202a26adf5453f257fed39aed489",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/minimum/after-startup-source-derived.json"
+      },
+      "source-derived-auth/minimum/before-startup-source-derived.json": {
+        "bytes": 413,
+        "sha256": "a1d1d70d900e462b10af14b957ed78d7acc4f5ba92c3725b4a1669c257165b9b",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/minimum/before-startup-source-derived.json"
+      },
+      "source-derived-auth/minimum/claim-source-derived.json": {
+        "bytes": 742,
+        "sha256": "31f4c2fbbfebfca6caea3f14d28b91ceed5da410ecb7e0a509c87fff0e3a2f93",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/minimum/claim-source-derived.json"
+      },
+      "source-derived-auth/minimum/original-startup-source-derived.json": {
+        "bytes": 415,
+        "sha256": "ed810ab4ab1aaa9d24e1927c52d613edd101d9502e551ec54ddee35d123ba73d",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/minimum/original-startup-source-derived.json"
+      },
+      "source-derived-auth/minimum/reconstruction.json": {
+        "bytes": 1746,
+        "sha256": "72f9b71ab8952ec2f63cb17ce91bbb463bc7f5de0d483848990924abd04629b8",
+        "kind": "source-derived-exact-hash-reconstruction-not-original-upload",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/source-derived-auth/minimum/reconstruction.json"
+      },
+      "barrier/tv-cursor-receipt-minimum/preparation.json": {
+        "bytes": 777,
+        "sha256": "df09e49e09b70826afb54d402c317e02ef549fa40602f0a0737cc3e661ab6e29",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-minimum/preparation.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "barrier/tv-cursor-receipt-modern/preparation.json": {
+        "bytes": 776,
+        "sha256": "51087fec22238e92710762824c05fe50b841d3e29d5962ef18a86a9a1cd6225f",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-modern/preparation.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "barrier/tv-cursor-receipt-minimum/report.json": {
+        "bytes": 415503,
+        "sha256": "91ac044d89325964e5d6d46a88f5077ba759681b13223bdc0a16f0261a8ab042",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-minimum/report.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "barrier/tv-cursor-receipt-modern/report.json": {
+        "bytes": 418492,
+        "sha256": "b62d3845b6627db3ed6bd4a59fc8ea25f40c0971f479a1aa5f1e390ea614e7c6",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-modern/report.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "barrier/tv-cursor-receipt-windows/preparation.json": {
+        "bytes": 777,
+        "sha256": "186eeee7275399754ee98b5165169651278bf634c21cefa999268ad6fd08b103",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-windows/preparation.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "barrier/tv-cursor-receipt-windows/report.json": {
+        "bytes": 418635,
+        "sha256": "4d88afedaf7db0c4bb7a88bf86d5309c673035d8b1cda5350d2ba5c56c4d5000",
+        "kind": "original-byte-copy",
+        "origin": {
+          "artifact_id": 12571087553,
+          "artifact_member": "tv-cursor-receipt-windows/report.json",
+          "outer_sha256": "sha256:b79d8c8a493ab8498e216047a8d98598f4eab9c01e68484bb2eb2bd9e0970f67"
+        }
+      },
+      "experiment.json": {
+        "bytes": 78007,
+        "sha256": "f547ba16f384f85df7851b23e05636314f0718da15ec9ba8c1f2fefe16e71afa",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-cursor-experiment-publication/115708a/experiment.json"
+      },
+      "campaign/terminal.json": {
+        "bytes": 28569,
+        "sha256": "c62bb307fcebde367b2678ade9cc7258fc3e9477ce8acd65fc8f35e84d93e591",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/terminal.json"
+      },
+      "campaign/terminal-artifacts.json": {
+        "bytes": 8868,
+        "sha256": "0c47056c0fbf9a4627022cc2b51e6082cdc9229747bd4b5b3d366add46b49c30",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/terminal-artifacts.json"
+      },
+      "campaign/retention-terminal.json": {
+        "bytes": 307,
+        "sha256": "9ff5ed9408f8db0942e50f518224f2255437ff82c20df11058abd440e25e7113",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/retention-terminal.json"
+      },
+      "campaign/handoff.json": {
+        "bytes": 104518,
+        "sha256": "7177cfd26261847a2770ad16348719321777208a90c278e96b1b264089c9cee1",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/handoff.json"
+      },
+      "campaign/offline-audit/verification.json": {
+        "bytes": 100115,
+        "sha256": "97fb6ce2c4756793fe9831b5e36805c71be0d41fed3af69eb1b8fde0b0cfde0a",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/verification.json"
+      },
+      "campaign/offline-audit/all-regressions.json": {
+        "bytes": 10661916,
+        "sha256": "327496d5bbc7da8bbfc3994491a1c5856d2f0b5d147f173ad522b3ee0c37aac1",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-chambolle-cursor-compare-runs/40119412201/offline-audit/all-regressions.json"
+      },
+      "provenance/before-source-equivalence.json": {
+        "bytes": 62989,
+        "sha256": "1fdef1cf9b8eadf3ceb22d2da434c64b36394ecdfbc911ca8b469b8c54a110ef",
+        "kind": "original-byte-copy",
+        "origin": "build/tv-cursor-comparison-preflight/before-source-equivalence.json"
+      },
+      "frozen-controller-source/benchmarks/tv_chambolle_compare.py": {
+        "bytes": 25339,
+        "sha256": "efe8ec9760fe97edfd508c79275f67bd26daf14fc885af3d0692d554d961f038",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "benchmarks/tv_chambolle_compare.py"
+        }
+      },
+      "frozen-controller-source/tools/tv_chambolle_compare_artifacts.py": {
+        "bytes": 14270,
+        "sha256": "5783d6a39efa57f732e3c08a998bf39b9d4c87fea93b141350f5a77bff02caa9",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "tools/tv_chambolle_compare_artifacts.py"
+        }
+      },
+      "frozen-controller-source/tests/test_tv_chambolle_compare.py": {
+        "bytes": 17526,
+        "sha256": "7f68fa822d3e6b7111b9e23bb63b70431c9a5063dc28eb52d20d0f7db85f6e22",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "tests/test_tv_chambolle_compare.py"
+        }
+      },
+      "frozen-controller-source/.github/workflows/tv-chambolle-compare.yml": {
+        "bytes": 9211,
+        "sha256": "bdfc59e7dae094fa8ba6ce6dee090fbdcae2b9d81e6d922111626f83cce2f5d3",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": ".github/workflows/tv-chambolle-compare.yml"
+        }
+      },
+      "frozen-controller-source/benchmarks/tv_chambolle.py": {
+        "bytes": 34197,
+        "sha256": "35b62bff494661ec417cb894507717d0f9965d9f121cfbd8f257ae92c9bba09b",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "benchmarks/tv_chambolle.py"
+        }
+      },
+      "frozen-controller-source/benchmarks/rank_statistics_compare.py": {
+        "bytes": 77036,
+        "sha256": "286c616d3b502fe38f5db6d614aa699bab1d1b920635a2e185adfba5eac949bf",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "benchmarks/rank_statistics_compare.py"
+        }
+      },
+      "frozen-controller-source/benchmarks/resize.py": {
+        "bytes": 22647,
+        "sha256": "8f1937b80dd898a9c6140e2f1ad0527e3e4aad0e30df7381e706c5e9fb0a0e41",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "benchmarks/resize.py"
+        }
+      },
+      "frozen-controller-source/benchmarks/provenance.py": {
+        "bytes": 1037,
+        "sha256": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "benchmarks/provenance.py"
+        }
+      },
+      "frozen-controller-source/tools/ci_measurement_artifacts.py": {
+        "bytes": 7523,
+        "sha256": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "tools/ci_measurement_artifacts.py"
+        }
+      },
+      "frozen-controller-source/coverage/contracts/tv-chambolle-benchmark.json": {
+        "bytes": 284026,
+        "sha256": "0403256c99aafb823e4a3a247ac9e60ce04e898be72883f2e1be7d4403ba684a",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "coverage/contracts/tv-chambolle-benchmark.json"
+        }
+      },
+      "frozen-controller-source/tests/test_tv_chambolle_contracts.py": {
+        "bytes": 25288,
+        "sha256": "48a3660fa0d4d467bd03bf65246fdeb7a9a81daf9afc0beb6781e1715e56b4e3",
+        "kind": "exact-Git-blob",
+        "origin": {
+          "Git_revision": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+          "path": "tests/test_tv_chambolle_contracts.py"
+        }
+      }
+    }
+  },
+  "csv": {
+    "path": "benchmarks/tv-chambolle-cursor-comparison.csv",
+    "bytes": 225085,
+    "sha256": "9fa1f396624916f0c06f65c511f6940425ec7391171437d7b29d6661a80083ed",
+    "rows": 210
+  },
+  "provenance_limitations": [
+    "Actual before wheel/source remains3cdd and actual after remains5e, both192 scope;6ff is only the authenticated source-equivalence anchor.",
+    "Original worker intentionally executes pinned scikit-image0.26 in its own role while its identity includes the before environment/core provenance; this is not a native original implementation claim.",
+    "Build common-input identity allows exactly two TV implementation translation-unit differences; controlled source plumbing/test differences are separately authenticated.",
+    "Three claims and nine startup receipts were not raw artifact uploads; deterministic reconstructed bytes exactly matched original permit/report SHA pins and are labeled source-derived.",
+    "Fresh hosts isolate this campaign; CPU models and timing noise prevent causal attribution to other campaigns or universal wins.",
+    "Calibration and tiny workloads are retained, not treated as large-kernel throughput.",
+    "All129 union regressions and all samples remain public; no cases/tolerances were removed."
+  ]
+}
