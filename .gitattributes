@@ -21,3 +21,8 @@ coverage/evidence/merged-report-worktree-cleanup-20261023.json -text
 coverage/contracts/rank-percentile-benchmark.json -text
 coverage/evidence/rank-statistics-benchmark-cleanup-20261023.json -text
 coverage/evidence/rank-statistics-fixture-assertion-migration.json -text
+coverage/evidence/metrics-reverse-private-composite.json -text
+coverage/evidence/rank-percentile-benchmark-cleanup-20261023.json -text
+coverage/contracts/rank-bilateral.json -text
+coverage/contracts/rank-decisions.json -text
+coverage/contracts/rank-percentile-public.json -text

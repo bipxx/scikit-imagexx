@@ -1,0 +1,38 @@
+{
+  "schema": "metrics-reverse-private-composite-v1",
+  "source_sha": "5d2975ffd28dc35e9f8ffd014810d07d90ea1b37",
+  "scope": "Complete private reversed-load transport checks only; actual cumulative public package and isolated performance stillpending.",
+  "manifests": [
+    {
+      "path": "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json",
+      "sha256": "cf85cbf44c6bd17aafa5a37bf312aca7b55a21421ed33e1e4945d243dd9fdc96"
+    },
+    {
+      "path": "build/metrics-reverse-stride-evidence/5d2975f/supplement-modern-v1/manifest.json",
+      "sha256": "46a6b0fccbd5cd082298e9f9da5c2a97b2d695dd481ce31659a3542b5a9ac6c3"
+    },
+    {
+      "path": "build/metrics-reverse-stride-evidence/5d2975f/supplement-remaining-v1/manifest.json",
+      "sha256": "5ec04997109a92855190322a076a4028b50c5af55b820c5aea8d21f595a09e44"
+    }
+  ],
+  "base_records_independently_verified": 329,
+  "normal_policy_supplements": {
+    "assertions_per_profile": 3706,
+    "profiles": [
+      "modern",
+      "minimum",
+      "ASAN"
+    ],
+    "unchanged_source_and_binaries": true,
+    "original_handles_all_terminal": true,
+    "original_partial_exit1_logs_preserved": true,
+    "no_numeric_failure_inferred_from_missing_XML": true,
+    "no_cancel_or_restart": true,
+    "fresh_assertions_only_after_original_terminal": true,
+    "tmpfs_ephemeral_scope": "Owned boundedfd-capture only; allchildren terminal and ownemptydirs removed after sealing."
+  },
+  "native_public_paths_added": 0,
+  "operation_timings": 0,
+  "whole_public_acceptance": false
+}

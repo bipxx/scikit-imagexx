@@ -20804,7 +20804,7 @@
           "evidence_scope": "isolated_performance"
         }
       },
-      "state": "performance_pending",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "tests/test_metrics_reverse_simd.py",
         "uncovered_cases": [
@@ -20834,7 +20834,9 @@
           "build/worktrees/metrics-reverse-stride"
         ],
         "protected_artifacts": [
-          "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json"
+          "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json",
+          "build/metrics-reverse-stride-evidence/5d2975f/supplement-modern-v1/manifest.json",
+          "build/metrics-reverse-stride-evidence/5d2975f/supplement-remaining-v1/manifest.json"
         ]
       },
       "live_observations": {
@@ -20843,19 +20845,19 @@
           47319,
           48847
         ],
-        "state": "Preserved original capfd/NTFS p9 waits; not cancelled/restarted or included in sealed passing counts."
+        "state": "All originalhandles terminalexit1 with partialcapfdlog/noXML; preserved. All unchanged missingassertions subsequentlypass boundedtmpfs. No cancellations/restarts or numericfailure inference."
       },
       "proofs": {
         "native_private": {
           "status": "verified",
           "source_sha": "5d2975ffd28dc35e9f8ffd014810d07d90ea1b37",
           "manifest": {
-            "path": "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json",
-            "sha256": "cf85cbf44c6bd17aafa5a37bf312aca7b55a21421ed33e1e4945d243dd9fdc96"
+            "path": "coverage/evidence/metrics-reverse-private-composite.json",
+            "sha256": "f7c0fb178dabdc98bc54d6ad8cf664b222681c922bcabbe8cc0d7592164bf8ef"
           },
           "native_contract_checks": 36870,
           "native_pending": 0,
-          "scope": "Direct native-endian float32/float64 negative-unit transport only; no reduction/arithmetic/provider/half/classification/tree changes. Private narrow actual binding, distinct whole-core state; no public or speed acceptance.",
+          "scope": "Complete qualifiedprivate base329records plus allthree missing3706normalpolicy supplements on unchangedsource/binaries after originalhandles terminal; actualwhole/public/performance pending.",
           "excluded_live_normal_policy_trials": [
             {
               "child_pid": 26400,
@@ -20929,11 +20931,15 @@
         "main_commit": "8f9e9bb22744aebe537d1e83300d6c21862d1d2f"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/rank-percentile-benchmark"
-        ],
+        "active_paths": [],
         "protected_artifacts": [
           "build/rank-percentile-benchmark-evidence/6ddcd67/phase1-v2/manifest.json"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-percentile-benchmark",
+            "archive": "build/cleanup/rank-percentile-benchmark-retirement-20261023/rank-percentile-benchmark.tar.gz"
+          }
         ]
       },
       "proofs": {
@@ -20970,11 +20976,11 @@
           "source_sha": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
-          "Ninecanonical functions only; originalgeneric hasnone ofthese aliases. Match2D metadata/preprocessing/provider54traces/outreshape and exact v1/cap/compiledentry guard. Isolatedprivatewrapper prototype is not actualpublic registration. Root owns shared namespace selection, registry/inventory/CMake/SDK and genuinewhole8 package qualification."
+          "Root sharedgeneric17/canonical26 selection, canonical-only9registry/CMake/inventory and genuinewhole8 actualpackage/default1/old17/SDK/corpus/performance gates remainpending. No9generic aliases or percentile submodule."
         ]
       },
       "parity": {
@@ -20991,12 +20997,30 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
+        "commit": "bbc9002b2d1705ef4af405a1675c67c2cd4c2343",
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
-        "protected_artifacts": []
+        "active_paths": [
+          "build/worktrees/rank-percentile-public"
+        ],
+        "protected_artifacts": [
+          "build/worktrees/rank-percentile-public/build/rank-percentile-wrapper-prototype-proof.json"
+        ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "bbc9002b2d1705ef4af405a1675c67c2cd4c2343",
+          "manifest": {
+            "path": "build/worktrees/rank-percentile-public/build/rank-percentile-wrapper-prototype-proof.json",
+            "sha256": "3dafcfc34ab091fd38e24cc3aed45cfd80bc067263758ba1092e009b79e11c18"
+          },
+          "native_contract_checks": 3088,
+          "profiles": 6,
+          "native_pending": 0,
+          "scope": "Direct SOURCE/private REALcompiledcore prototype only;1544frozenIDs workers1/4 per6profiles,6674totalpasses+1explicit actualpublicskip each, including99guardstubs. All25records+3Gitmembers+3inputbinaries independently verified; public/namespace/registry/sole-core/package/SDK/performance acceptance NONE."
+        }
       }
     },
     {
@@ -21025,6 +21049,52 @@
           "filters.rank.bilateral.mean_bilateral",
           "filters.rank.bilateral.pop_bilateral",
           "filters.rank.bilateral.sum_bilateral"
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-decisions-contracts",
+      "kind": "contract",
+      "apis": [
+        "filters.rank.otsu",
+        "filters.rank.majority",
+        "filters.rank.generic.otsu",
+        "filters.rank.generic.majority"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/rank-decisions-contracts",
+      "base_sha": "5e1236ea42aa3025df7837534b789f744d286261",
+      "owns": [
+        "tests/test_rank_decisions_contracts.py",
+        "coverage/contracts/rank-decisions.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-decisions.json",
+        "uncovered_cases": [
+          "Freeze actual localotsu and keyword-onlymajority source semantics,2D/3D/masks/ties/popzero/provider/error/warning/output policies and genericidentity/star facts. Do not assume equivalence with modal or global threshold_otsu. Original-only/native0/strictpending/independentoracles, no timers or unsafeCythonprobes."
         ]
       },
       "parity": {
@@ -21223,10 +21293,6 @@
     "filters.prewitt",
     "filters.prewitt_h",
     "filters.prewitt_v",
-    "filters.rank.generic.majority",
-    "filters.rank.generic.otsu",
-    "filters.rank.majority",
-    "filters.rank.otsu",
     "filters.rank_order",
     "filters.roberts",
     "filters.roberts_neg_diag",
@@ -21789,7 +21855,7 @@
         "rank-bilateral-contracts"
       ],
       "resize_api": [
-        "rank-percentile-public"
+        "rank-decisions-contracts"
       ],
       "resize_bench": [
         "rank-statistics-public",
@@ -22190,6 +22256,12 @@
       "archive": "build/cleanup/rank-statistics-benchmark-retirement-20261023/rank-statistics-benchmark.tar.gz",
       "archive_sha256": "af4565f157d82d6fa6d507e9ee9a516b0761930de3e51f1ff0df90b0b79d60db",
       "member_rule": "Remove former_prefix/; tar members use ./ prefix. All original regular bytes and16 Lxsymlink targets retained without following links."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-percentile-benchmark",
+      "archive": "build/cleanup/rank-percentile-benchmark-retirement-20261023/rank-percentile-benchmark.tar.gz",
+      "archive_sha256": "7db2bcdf25ccc3f80cfd8b21b1dba64ad055d8d25e52df3e4ede71cf9306f5db",
+      "member_rule": "Remove former_prefix/; tar uses ./ prefix. Exact regular bytes and36 Lxsymlink targets retained without following links."
     }
   ]
 }
