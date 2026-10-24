@@ -80,6 +80,37 @@ template<class T> void workers(PixelType type,bool single) {
     }
     set_num_threads(1);
 }
+template<class T> void reverse_rows(PixelType type,bool single) {
+    for(const std::size_t width:{1u,3u,4u,5u,7u,8u,9u,31u,127u,128u,129u,513u}) {
+        const auto n=3*width,bytes=n*sizeof(T);
+        // One unaligned leading byte and no trailing readable padding.
+        auto storage=std::make_unique<unsigned char[]>(bytes+1);
+        std::vector<T> logical(n),other(n),actual(n),expected(n);
+        for(std::size_t i=0;i<n;++i) {
+            logical[i]=T(std::ldexp(double(int(i%67)-33)+.125,int(i%13)-6));
+            other[i]=T(std::ldexp(double(int(i%31)-15)+.375,int(i%11)-5));
+            std::memcpy(storage.get()+1+(n-1-i)*sizeof(T),&logical[i],sizeof(T));
+        }
+        MetricImageView input{storage.get()+1+(n-1)*sizeof(T),type,false,false,{3,width},
+                              {-std::ptrdiff_t(width*sizeof(T)),-std::ptrdiff_t(sizeof(T))}};
+        auto contiguous=view(logical,type),second=view(other,type);
+        contiguous.shape=second.shape={3,width};contiguous.strides=second.strides={std::ptrdiff_t(width*sizeof(T)),std::ptrdiff_t(sizeof(T))};
+        for(const auto block:{0u,32u,8192u})for(auto mode:{MetricNormalization::none,MetricNormalization::euclidean,MetricNormalization::mean,MetricNormalization::min_max}) {
+            const auto wanted=metric_sums(contiguous,second,single,mode,true,false,block);
+            const auto got=metric_sums(input,second,single,mode,false,false,block);
+            require(!std::memcmp(&got.error,&wanted.error,8) && !std::memcmp(&got.energy,&wanted.energy,8) && !std::memcmp(&got.mean,&wanted.mean,8));
+            require(!std::memcmp(&got.low,&wanted.low,8) && !std::memcmp(&got.high,&wanted.high,8));
+        }
+        auto out=view(actual,type),reference_out=view(expected,type);
+        out.shape=reference_out.shape={3,width};out.strides=reference_out.strides=contiguous.strides;
+        for(int operation=0;operation<4;++operation) {
+            const auto flags=metric_stage_into(input,second,out,operation,single);
+            const auto wanted_flags=metric_stage_into(contiguous,second,reference_out,operation,single);
+            require(flags==wanted_flags && !std::memcmp(actual.data(),expected.data(),bytes));
+        }
+        for(std::size_t i=0;i<n;++i)require(!std::memcmp(storage.get()+1+(n-1-i)*sizeof(T),&logical[i],sizeof(T)));
+    }
+}
 void half_load_layouts() {
     std::vector<std::uint16_t> encodings;
     for(unsigned word=0;word<65536;++word)if((word&0x7c00)!=0x7c00)encodings.push_back(std::uint16_t(word));
@@ -125,6 +156,7 @@ void leaf_order_regression() {
 }
 int main() {
     leaf_order_regression();
+    reverse_rows<float>(PixelType::float32,true);reverse_rows<double>(PixelType::float64,false);
     require(get_num_threads()==1);
     const std::vector<double> a{1.,2.,3.,4.},b(4,0.);
     const auto error=metric_sums(view(a,PixelType::float64),view(b,PixelType::float64),false,MetricNormalization::none);

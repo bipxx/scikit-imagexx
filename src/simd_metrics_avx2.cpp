@@ -56,6 +56,17 @@ template<class T,bool Boolean=false> __m256d narrow(const unsigned char* p,std::
 }
 __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t step) {
     const auto* p=static_cast<const unsigned char*>(view.data)+offset;
+    // A four-lane caller has already bounded this logical run to its row.
+    // Read exactly those four elements in ascending physical order, then
+    // restore logical order. Avoid recursive generic dtype dispatch for the
+    // common native floating reverse; keep conversion before permutation as
+    // in the generic path (including signaling-NaN payloads/status).
+    if(!view.half && !view.swap) {
+        if(view.type==PixelType::float64 && step==-8)
+            return _mm256_permute4x64_pd(_mm256_castsi256_pd(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(p-24))),_MM_SHUFFLE(0,1,2,3));
+        if(view.type==PixelType::float32 && step==-4)
+            return _mm256_permute4x64_pd(_mm256_cvtps_pd(_mm_castsi128_ps(_mm_loadu_si128(reinterpret_cast<const __m128i*>(p-12)))),_MM_SHUFFLE(0,1,2,3));
+    }
     if(step==0)return _mm256_set1_pd(detail::metric_read(view,offset));
     if(view.half && (step==2 || step==-2)) {
         auto value=half4(_mm_loadl_epi64(reinterpret_cast<const __m128i*>(step==2 ? p:p-6)),view.swap);
