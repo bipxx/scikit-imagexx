@@ -1,7 +1,6 @@
 {
-  "schema": "iterative-thresholds-reference-v1",
-  "status": "original-reference/native-pending",
-  "native_implemented": 0,
+  "schema": "iterative-thresholds-reference-v2",
+  "status": "original-reference/existing-native-partial-audit-pending",
   "apis": [
     "filters.threshold_li",
     "filters.threshold_multiotsu"
@@ -10,7 +9,7 @@
     "threshold_li": "(image, *, tolerance=None, initial_guess=None, iter_callback=None)",
     "threshold_multiotsu": "(image=None, classes=3, nbins=256, *, hist=None)"
   },
-  "test_source_canonical_lf_sha256": "a05549e832569364dc4f577623daa9c697075e4fa5d6da95d2c246a78d4a3709",
+  "test_source_canonical_lf_sha256": "84badec5fade266a7b6df17d8f8a1ab6bca2888bd8b797d462c84f2e430c1ad0",
   "source_function_AST": {
     "13": {
       "threshold_li": "f22b0ab9b757b4f722122047162fee1ec5f1d38002f33bf04254592b384278b5",
@@ -2124,7 +2123,7 @@
     },
     "source_unsafe_intakes": 7,
     "independent_definitions": 9,
-    "native_image_paths": 0
+    "new_native_image_paths": 0
   },
   "profiles": {
     "windows": {
@@ -127595,5 +127594,37 @@
     "allocationfailure providers other thancontrolled LUT MemoryError",
     "runtime FPcallback policy Cartesian products"
   ],
-  "operation_timings": 0
+  "operation_timings": 0,
+  "new_native_paths": 0,
+  "legacy_native_partial": {
+    "filters.threshold_li": {
+      "api": "filters.threshold_li",
+      "kind": "callable",
+      "signature": "(image, *, tolerance=None, initial_guess=None, iter_callback=None)",
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
+    },
+    "filters.threshold_multiotsu": {
+      "api": "filters.threshold_multiotsu",
+      "kind": "callable",
+      "signature": "(image=None, classes=3, nbins=256, *, hist=None)",
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_api.py::test_every_native_function",
+      "benchmark": "benchmarks/coverage.py"
+    }
+  },
+  "expanded_case_native_audit": "unassessed; separate exact qualified source/core closure required"
 }

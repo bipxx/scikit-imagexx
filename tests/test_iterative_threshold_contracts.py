@@ -1,4 +1,6 @@
-"""Pinned0.26 ORIGINAL-only threshold contracts. Native coverage remains zero.
+"""Pinned0.26 ORIGINAL-only expanded audit for two existing native-partial APIs.
+
+This packet adds no native paths; the new312-case native audit is unassessed.
 
 Unchecked multi-Otsu domains are intercepted BEFORE the original Cython body.
 Those rows are intake witnesses, never numerical/error claims for that body.
@@ -264,9 +266,11 @@ def test_original_fixed_contract(spec):
     assert actual['input_before']==actual['input_after']
 
 
-def test_source_signatures_integrity_and_native0():
+def test_source_signatures_integrity_and_no_new_native_claim():
     data=json.loads(MATRIX.read_bytes());assert skimage.__version__=='0.26.0'
-    assert data['native_implemented']==0 and data['status']=='original-reference/native-pending'
+    assert data['new_native_paths']==0 and data['status']=='original-reference/existing-native-partial-audit-pending'
+    assert set(data['legacy_native_partial'])=={'filters.'+name for name in NAMES}
+    assert data['expanded_case_native_audit']=='unassessed; separate exact qualified source/core closure required'
     assert data['cases']==cases() and len({s['id'] for s in cases()})==len(cases())
     assert data['test_source_canonical_lf_sha256']==hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
     for name in NAMES:
@@ -304,16 +308,19 @@ def test_independent_small_integer_li_partition(data):
 
 @pytest.mark.parametrize('name',NAMES)
 @pytest.mark.parametrize('workers',(1,4))
-def test_native_pending_rejects_forwarding(name,workers):
+def test_unassessed_scope_keeps_unsupported_fallback_strict(name,workers):
     import skimagexx as xx
     from skimagexx.coverage import native_functions
-    assert 'filters.'+name not in native_functions()
+    assert 'filters.'+name in native_functions()
+    assert json.loads(MATRIX.read_bytes())['new_native_paths']==0
+    class Unsupported:
+        def __array__(self,*args,**kwargs):raise AssertionError('unsupported input converted before strict fallback rejection')
     previous=xx.set_fallback_enabled(False);old=xx.get_num_threads();xx.set_num_threads(workers)
     code=ORIGINAL[name].__code__;profile_before=sys.getprofile();attempts=[]
     def reject(frame,event,arg):
         if event=='call' and frame.f_code is code:attempts.append(name);raise AssertionError('upstream forwarding is not native')
     sys.setprofile(reject)
     try:
-        with pytest.raises(NotImplementedError):getattr(xx.filters,name)(np.arange(16,dtype='u1').reshape(4,4))
+        with pytest.raises(NotImplementedError):getattr(xx.filters,name)(Unsupported())
         assert not attempts
     finally:sys.setprofile(profile_before);xx.set_num_threads(old);xx.set_fallback_enabled(previous)
