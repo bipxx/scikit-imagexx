@@ -47,7 +47,7 @@ def layout(a,name):
     if name=='readonly':a.flags.writeable=False
     if name=='tagged':return a.astype(np.dtype(a.dtype,metadata={'reconstruction':1})).view(Tagged)
     if name=='unaligned':
-        owner=np.empty(a.nbytes+1,'u1');out=np.ndarray(a.shape,dtype=a.dtype,buffer=owner,offset=1);out[...]=a;return out
+        owner=np.zeros(a.nbytes+1,'u1');out=np.ndarray(a.shape,dtype=a.dtype,buffer=owner,offset=1);out[...]=a;return out
     return a
 def fixture(s,events):
     rank=s.get('rank',2);shape={1:(7,),2:(4,5),3:(3,4,5),4:(2,3,2,3)}[rank];n=int(np.prod(shape));d=np.dtype(s['dtype']);base=(np.arange(n)%13).reshape(shape)
@@ -184,3 +184,4 @@ def test_native_pending_is_not_upstream_forwarding(workers):
         with pytest.raises(NotImplementedError):xx.morphology.reconstruction(Unsupported(),Unsupported())
         assert not attempts
     finally:sys.setprofile(old_profile);xx.set_num_threads(before);xx.set_fallback_enabled(previous)
+
