@@ -158,3 +158,15 @@ def test_actual_initialization_worker_team(dtype, workers, implementation):
     assert result['initialization_workers'] == workers
     assert result['iterations'] == 1 and result['trace'][0] == (0, True)
     assert np.all(out[1:-1, 1:-1] == .25)
+
+
+def test_binding_owners_released_on_success_and_guard_failure(implementation):
+    _, core = implementation
+    image = np.full((4, 5, 1), .25, dtype='f8')
+    out = np.zeros((6, 7, 1), dtype='f8')
+    counts = (sys.getrefcount(image), sys.getrefcount(out))
+    for _ in range(128):
+        assert core.tv_bregman_run(image, .5, 2, 1e-6, True, out) is None
+        with pytest.raises(ValueError):
+            core.tv_bregman_run(image, -1., 2, 1e-6, True, out)
+    assert (sys.getrefcount(image), sys.getrefcount(out)) == counts
