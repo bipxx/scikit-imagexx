@@ -19,6 +19,15 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = ('windows', 'modern', 'minimum')
+MAX_TREE_RUNTIME_SOURCE_PINS = {'src/max_tree.cpp': '1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135',
+ 'include/skimagexx/max_tree.hpp': '60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',
+ 'src/simd_max_tree_avx2.cpp': '2bdb72ade563581161038b8cf32260c6330e028e938590c7a382dc7c5fa92de4',
+ 'src/max_tree_stages.hpp': '8afefbbdfe06282b5524607c4a5a831ceaeddb59cf75047e33fbbaabee125184',
+ 'src/max_tree_stages.cpp': 'd1961c7d0b4dd0940a765e76e7fb6f64aee8edfcfb3255c69b4e030f3b42d9e6',
+ 'src/bind_max_tree.cpp': 'f4764b61180293ab98e474d68b40b214774ff367fd07e0ca4034c3705bbee2c5',
+ 'python/skimagexx/_max_tree.py': '3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae'}
+MAX_TREE_ORACLE_PATH = 'tests/cmake_consumer/max_tree_source_oracle.bin'
+MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab61bc39d93b5'
 CONTROLLERS = ('tools/rank_statistics_products.py', 'tools/public_qualification.py',
                'tools/build_identity_facts.py', 'benchmarks/rank_statistics_compare.py',
                'benchmarks/rank_statistics.py', 'tools/ci_measurement_artifacts.py',
@@ -166,6 +175,30 @@ def qualification_scope_text(text):
     return dict(name=values['PRODUCT_SCOPE'], families=list(families), members=members, sdk=sdk)
 
 
+def validate_max_tree_source(archive, snapshot, scope):
+    """Data-only source admission; old rank/TV/Bregman envelopes keep their scope."""
+    if scope['name'] not in ('max_tree19', 'matrix20'):
+        return
+    tree = ast.parse(archive.read('tools/public_qualification.py'))
+    declared = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id in ('MAX_TREE_RUNTIME_SOURCE_PINS', 'MAX_TREE_ORACLE_PATH', 'MAX_TREE_ORACLE_SHA256'):
+                    require(target.id not in declared, 'duplicate corrected max-tree source pin declaration')
+                    declared[target.id] = ast.literal_eval(node.value)
+    require(declared == dict(MAX_TREE_RUNTIME_SOURCE_PINS=MAX_TREE_RUNTIME_SOURCE_PINS,
+                MAX_TREE_ORACLE_PATH=MAX_TREE_ORACLE_PATH, MAX_TREE_ORACLE_SHA256=MAX_TREE_ORACLE_SHA256),
+            'corrected max-tree source pins absent or changed')
+    for name, expected in {**MAX_TREE_RUNTIME_SOURCE_PINS, MAX_TREE_ORACLE_PATH: MAX_TREE_ORACLE_SHA256}.items():
+        require(name in archive.namelist(), 'corrected max-tree source absent: ' + name)
+        raw = archive.read(name)
+        canonical = raw if name == MAX_TREE_ORACLE_PATH else raw.replace(b'\r\n', b'\n')
+        require(hashlib.sha256(canonical).hexdigest() == expected
+                and snapshot['files_sha256'].get(name) == expected,
+                'corrected max-tree source bytes differ: ' + name)
+
+
 def validate_payload(path, qualification, profile, compare):
     """Validate a staged tree without manufacturing accepted product pins."""
     source = path / 'source'
@@ -256,6 +289,7 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
                 == q['source']['files_sha256']['tools/public_qualification.py'],
                 'qualified source controller differs before registry admission')
         scope = qualification_scope_text(text.decode('utf-8'))
+        validate_max_tree_source(archive, q['source'], scope)
     image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,

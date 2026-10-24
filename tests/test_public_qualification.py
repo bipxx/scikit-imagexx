@@ -307,6 +307,7 @@ def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch
     for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
+    populate_corrected_max_tree_metadata(tmp_path)
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
     monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH}|set(q.MAX_TREE_PATHS))+['filters.rank.generic.percentile'],image_count=987))
@@ -770,6 +771,7 @@ def synthetic_complete_plan(root):
     for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
     (root/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(root/'benchmarks'/name).touch()
+    populate_corrected_max_tree_metadata(root)
 
 
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
@@ -1548,3 +1550,33 @@ def test_cursor_private_selector_rejected_before_installed_pipeline_import(tmp_p
     monkeypatch.setattr(builtins,'__import__',guarded)
     with pytest.raises(q.QualificationError,match='private selectors forbidden'):
         q.admission(tmp_path,{'interpreter_provenance':{}})
+
+
+def populate_corrected_max_tree_metadata(root):
+    """Only source bytes in inert plans: never imported or compiled."""
+    for name in (*q.MAX_TREE_RUNTIME_SOURCE_PINS,q.MAX_TREE_ORACLE_PATH):
+        path=root/name;path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes((ROOT/name).read_bytes())
+
+
+def test_corrected_max_tree_groups_keep_original_numerical_gate():
+    assert q.GROUPS['public-MaxTree']==('test_max_tree_contracts.py','test_max_tree_public.py')
+    assert q.GROUPS['public-MaxTree-fixes']==('test_max_tree_dtype_metadata.py','test_max_tree_sdk_oracle.py')
+    assert not any('native_pipeline' in name for name in q.GROUPS['public-MaxTree-fixes'])
+    assert q.MAX_TREE_RUNTIME_SOURCE_PINS['python/skimagexx/_max_tree.py']=='3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae'
+    migration=json.loads((ROOT/'coverage/evidence/max-tree-public-assertion-migration.json').read_bytes())
+    assert migration['owned_wrapper_canonical_lf_sha256']==q.MAX_TREE_RUNTIME_SOURCE_PINS['python/skimagexx/_max_tree.py']
+    # This ORIGINAL assertion is still selected naturally, never deselected.
+    tree=ast.parse((ROOT/'tests/test_max_tree_public.py').read_bytes())
+    function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='test_signature_reference_and_frozen_kernel')
+    assert "migration['owned_wrapper_canonical_lf_sha256']" in ast.unparse(function)
+
+
+@pytest.mark.parametrize('name',(*q.MAX_TREE_RUNTIME_SOURCE_PINS,q.MAX_TREE_ORACLE_PATH))
+def test_corrected_source_hash_mismatch_blocks_before_any_build(tmp_path,monkeypatch,name):
+    synthetic_complete_plan(tmp_path)
+    registry=dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH}|set(q.MAX_TREE_PATHS)),image_count=199)
+    monkeypatch.setattr(q,'registry_expectation',lambda _:registry)
+    assert not q.plan(tmp_path,'windows',199)['blockers']
+    path=tmp_path/name;path.write_bytes(path.read_bytes()+b'\r\nnot-authorized')
+    assert 'corrected max-tree source pin differs: '+name in q.plan(tmp_path,'windows',199)['blockers']

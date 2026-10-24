@@ -304,12 +304,23 @@ BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp'
 MAX_TREE_NAMES = ('max_tree', 'max_tree_local_maxima', 'area_opening', 'area_closing',
                  'diameter_opening', 'diameter_closing')
 MAX_TREE_PATHS = tuple('morphology.' + name for name in MAX_TREE_NAMES)
+MAX_TREE_RUNTIME_SOURCE_PINS = {'src/max_tree.cpp': '1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135',
+ 'include/skimagexx/max_tree.hpp': '60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',
+ 'src/simd_max_tree_avx2.cpp': '2bdb72ade563581161038b8cf32260c6330e028e938590c7a382dc7c5fa92de4',
+ 'src/max_tree_stages.hpp': '8afefbbdfe06282b5524607c4a5a831ceaeddb59cf75047e33fbbaabee125184',
+ 'src/max_tree_stages.cpp': 'd1961c7d0b4dd0940a765e76e7fb6f64aee8edfcfb3255c69b4e030f3b42d9e6',
+ 'src/bind_max_tree.cpp': 'f4764b61180293ab98e474d68b40b214774ff367fd07e0ca4034c3705bbee2c5',
+ 'python/skimagexx/_max_tree.py': '3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae'}
+MAX_TREE_ORACLE_PATH = 'tests/cmake_consumer/max_tree_source_oracle.bin'
+MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab61bc39d93b5'
 MAX_TREE_SOURCE_PATHS = ('include/skimagexx/max_tree.hpp', 'src/max_tree.cpp',
     'src/simd_max_tree_avx2.cpp', 'src/max_tree_stages.hpp', 'src/max_tree_stages.cpp',
     'src/bind_max_tree.cpp', 'python/skimagexx/_max_tree.py', 'tests/test_max_tree_native.cpp',
     'tests/test_max_tree_stages_native.cpp', 'tests/test_max_tree_native_pipeline.py',
     'tests/test_max_tree_public.py', 'coverage/contracts/max-tree.json',
-    'coverage/evidence/max-tree-public-assertion-migration.json')
+    'coverage/evidence/max-tree-public-assertion-migration.json',
+    'tests/test_max_tree_dtype_metadata.py', 'tests/test_max_tree_sdk_oracle.py',
+    'tests/cmake_consumer/max_tree_source_oracle.bin', 'tests/cmake_consumer/max_tree_source_oracle.cmake')
 MATRIX_PATH = 'transform.matrix_transform'
 MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_transform.cpp',
     'src/simd_matrix_transform_avx2.cpp', 'src/bind_matrix_transform.cpp', 'python/skimagexx/_matrix_transform.py',
@@ -333,6 +344,7 @@ GROUPS = {
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
                       'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
+    'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -465,6 +477,13 @@ def plan(root, profile, expected=None):
     for name in MAX_TREE_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required max-tree source: ' + name)
+    for name, expected_pin in {**MAX_TREE_RUNTIME_SOURCE_PINS, MAX_TREE_ORACLE_PATH: MAX_TREE_ORACLE_SHA256}.items():
+        path = root / name
+        if path.is_file():
+            raw = path.read_bytes()
+            actual_pin = hashlib.sha256(raw if name == MAX_TREE_ORACLE_PATH else raw.replace(b'\r\n', b'\n')).hexdigest()
+            if actual_pin != expected_pin:
+                blockers.append('corrected max-tree source pin differs: ' + name)
     if MATRIX_PATH not in registry['functions']:
         blockers.append('missing public matrix registry: '+MATRIX_PATH)
     for name in MATRIX_SOURCE_PATHS:

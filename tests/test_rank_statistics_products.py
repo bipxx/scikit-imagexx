@@ -86,7 +86,11 @@ def synthetic(tmp_path, monkeypatch, request):
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
     if scope in ('max_tree19','matrix20'):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
-        source['python/skimagexx/_max_tree.py']=b'# inert max-tree helper metadata\n'
+        # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
+        for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
+            source[name]=(ROOT/name).read_bytes()
+        source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
+        source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
     if scope=='matrix20':
         source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
         source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
@@ -557,3 +561,55 @@ def test_matrix199_requires_prior_paths_and_one_matrix_registration(synthetic,fa
     s.reseal()
     with pytest.raises(RuntimeError):run(s)
     assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19','matrix20'],indirect=True)
+@pytest.mark.parametrize('fault',('missing-declaration','old-wrapper-declaration','missing-wrapper','old-wrapper-bytes','changed-other-runtime','missing-oracle','binary-CRLF','missing-snapshot-pin','forged-snapshot-pin','old-header-declaration','old-header-bytes'))
+def test_corrected_max_tree_source_archive_refuses_partial_or_stale(synthetic,fault):
+    """Real source bytes in inert metadata only: no algorithm/native execution."""
+    s=synthetic
+    with zipfile.ZipFile(s.q/'source.zip') as z:source={name:z.read(name) for name in z.namelist()}
+    snapshot={'files_sha256':{name:body_hash(raw) for name,raw in source.items()}}
+    wrapper='python/skimagexx/_max_tree.py';header='include/skimagexx/max_tree.hpp'
+    if fault=='missing-declaration':source['tools/public_qualification.py']+=b'\nMAX_TREE_RUNTIME_SOURCE_PINS={}\n'
+    elif fault=='old-wrapper-declaration':
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(b'3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae',b'faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53')
+    elif fault=='missing-wrapper':del source[wrapper]
+    elif fault=='old-wrapper-bytes':
+        block=b"    elif operation in (3,5):\n        # The literal closing route allocates through subtract's canonical\n        # scalar dtype before filtering. Unlike opening's copy, it drops tags.\n        output=np.empty(image.shape,dtype=image.dtype.type)\n"
+        assert block in source[wrapper]
+        source[wrapper]=source[wrapper].replace(block,b'')
+        assert body_hash(source[wrapper])=='faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53'
+        snapshot['files_sha256'][wrapper]=body_hash(source[wrapper])
+    elif fault=='changed-other-runtime':source[header]+=b'\n// caller resealed an unauthorized header';snapshot['files_sha256'][header]=body_hash(source[header])
+    elif fault=='old-header-declaration':
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(b'60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',b'7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6')
+    elif fault=='old-header-bytes':
+        source[header]=private_header_from_public(source[header])
+        snapshot['files_sha256'][header]=body_hash(source[header])
+    elif fault=='missing-oracle':del source[p.MAX_TREE_ORACLE_PATH]
+    elif fault=='binary-CRLF':
+        raw=source[p.MAX_TREE_ORACLE_PATH];assert b'\n' in raw
+        source[p.MAX_TREE_ORACLE_PATH]=raw.replace(b'\n',b'\r\n',1)
+        assert hashlib.sha256(source[p.MAX_TREE_ORACLE_PATH].replace(b'\r\n',b'\n')).hexdigest()==snapshot['files_sha256'][p.MAX_TREE_ORACLE_PATH]
+    elif fault=='missing-snapshot-pin':del snapshot['files_sha256'][wrapper]
+    else:snapshot['files_sha256'][wrapper]='0'*64
+    stream=io.BytesIO()
+    with zipfile.ZipFile(stream,'w') as z:
+        for name,raw in source.items():z.writestr(name,raw)
+    stream.seek(0)
+    with zipfile.ZipFile(stream) as z:
+        with pytest.raises(RuntimeError,match='max-tree source'):p.validate_max_tree_source(z,snapshot,p.qualification_scope(s.root))
+
+
+@pytest.mark.parametrize('scope',('rank14','tv17','bregman18'))
+def test_prior_scopes_do_not_invent_max_tree_source_requirements(scope):
+    class NotAnArchive:
+        def read(self,*args):raise AssertionError('legacy scope touched new max-tree archive')
+    p.validate_max_tree_source(NotAnArchive(),{},dict(name=scope))
+
+def private_header_from_public(raw):
+    raw=raw.replace(b'// six prepared operations',b'// private six-operation surface')
+    raw=raw.replace(b'// Rechecks admission before writes. Stable typed ordering (U8 counting/U16\n// radix, otherwise merge; ties in original flat-index order), descending\n// union/find and ascending canonicalization; reverse',b'// Rechecks admission before writes. Stable typed mergesort (ties in original\n// flat-index order), descending union/find, ascending canonicalization; reverse')
+    assert body_hash(raw)=='7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6'
+    return raw

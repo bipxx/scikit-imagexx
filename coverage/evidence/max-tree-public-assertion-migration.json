@@ -5,7 +5,7 @@
   "source_file": "tests/test_max_tree_contracts.py",
   "original_source_sha256": "188a6b7d6641463c2d4949d04878881feff252410d2c2c38f032b081f1d65788",
   "public_source_sha256": "1eed2a531065d0188285f02c15a57ba8786c1dbe5d65aed77464d96895bcfb0d",
-  "owned_wrapper_canonical_lf_sha256": "faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53",
+  "owned_wrapper_canonical_lf_sha256": "3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae",
   "changed_functions": {
     "test_source_fixed_ids_safety_and_native0": "test_source_fixed_ids_safety_and_native0",
     "test_future_native_pending_rejects_forwarding": "test_strict_owned_public_observations_without_forwarding"
