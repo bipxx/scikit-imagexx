@@ -85,11 +85,18 @@ def stage_compatibility(active,monkeypatch,request):
 
 @pytest.fixture
 def provider_loop_watch(active,monkeypatch,request):
-    observed=[];dispatch=active._finite_call
-    def counted(*arguments):observed.append(True);return dispatch(*arguments)
+    observed=dict(attempts=0,prewrite_rejections=0,executed=0);dispatch=active._finite_call
+    def counted(*arguments):
+        observed['attempts']+=1
+        arrays=arguments[1:5];before=[v.tobytes() for v in arrays]
+        try:result=dispatch(*arguments)
+        except NotImplementedError:
+            assert before==[v.tobytes() for v in arrays]
+            observed['prewrite_rejections']+=1;raise
+        observed['executed']+=1;return result
     monkeypatch.setattr(active,'_finite_call',counted)
     yield observed
-    request.node.user_properties.append(('natural_provider_finite_attempts',str(len(observed))))
+    request.node.user_properties.append(('natural_provider_finite_status',json.dumps(observed,sort_keys=True)))
 
 
 @contextmanager
@@ -132,7 +139,10 @@ def test_all330_frozen_warn_provider_orchestration_not_native_usage(spec,active,
     with no_forward():actual=contracts.observe(active.denoise_tv_chambolle,spec)
     assert contracts.result_nan_encoding_contract(actual)==contracts.result_nan_encoding_contract(expected),spec['id']
     assert not calls,'frozen observer sets underflow=warn: do not falsely count it as compiled pixel parity'
-    assert not provider_loop_watch,'frozen330 naturally retain their provider path, not a forced compatibility override'
+    assert provider_loop_watch['executed']==0,'frozen330 naturally retain their provider path, not a forced compatibility override'
+    expected_attempt=(spec.get('policy')=='ignore' and spec.get('pattern') in ('nonfinite','large')
+                      and hasattr(active._core,'tv_chambolle_finite_interface'))
+    assert provider_loop_watch['attempts']==provider_loop_watch['prewrite_rejections']==int(expected_attempt)
 
 
 FINITE=tuple(p for p in contracts.CASES if p['id'].startswith(('base/','extremes/','layout/','channels/','channels4d/')) and p.get('layout')!='tagged')
@@ -457,5 +467,5 @@ def test_observed_empty_provider_edge_preserves_original_call_order(dtype,axis,m
     expected,expected_events=run(contracts.reference)
     with no_forward():actual,actual_events=run(active.denoise_tv_chambolle)
     assert actual==expected and actual_events==expected_events==[]
-    assert not provider_loop_watch and calls['tv_chambolle_norm_into']==0
+    assert provider_loop_watch['attempts']==0 and calls['tv_chambolle_norm_into']==0
     assert calls['tv_chambolle_gradient_into'] and calls['tv_chambolle_dual_into']
