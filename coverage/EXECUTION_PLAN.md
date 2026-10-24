@@ -16,10 +16,11 @@ additional namespaces still need assessment. These counts describe implementatio
 classification, not verified parity or performance.
 
 The accepted whole6 product adds finite/min-max metrics SIMD classification and
-qualified R2 aliases without changing the 163-path inventory. Three workers now
-prepare R4 benchmarks, implement R4 public wrappers, and freeze the next nine
-percentile reference contracts. Private R4 kernels and consumer scan changes are
-ready for the next coordinated core after public/shared wiring freezes. The
+qualified R2 aliases without changing the 163-path inventory. Four newly verified
+hosted campaigns retain all samples and regressions. Three workers now qualify
+reversed-stride metrics transport, implement nine percentile kernels, and prepare
+whole7 qualification of frozen consumer/R4 public changes. The candidate predicts
+171 image paths; that count requires actual cumulative package gates. The
 integrator owns shared wiring, hosted measurements, prompt merges and cleanup.
 
 ## What changed after review
@@ -42,10 +43,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 actual product accepted: 163 image paths, 303 upstream-only, 1,913 sealed records. New metrics measurement next; footprint/label trials live from exact 845608d |
-| Worker 1 | `metrics_reductions` | R4 benchmark corpus and artifact workflow | Consumer 237 fixed-width/SIMD scan private proof passed. New R4 Phase1 freezes all 995 reference IDs plus balanced safe workloads; original-only, native0, no dispatch |
-| Worker 2 | `resize_api` | Next nine percentile reference contracts | R4 f7 kernels pass 2,706 checks on 12 private profiles and 11,452 old-op checks on eight; public acceptance pending. Next packet audits actual percentile plus eight suffix functions, bounds and provider order |
-| Worker 3 | `resize_bench` | R4 public wrapper integration | Whole6 final seal and lease release complete. Implement separate statistics/vector interface guards and exact noise/histogram metadata stages; root owns registry, namespace and CMake wiring before whole7 |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 accepted: 163 image paths, 303 upstream-only. Four verified campaigns merged; whole7 source frozen7aaa747, actual package gates pending |
+| Worker 1 | `metrics_reductions` | Reversed-stride metrics transport and exact floating-point behavior | Actual route/counter and disassembly evidence identifies recursive reversed-load overhead. Private candidate preserves lane/reduction order; genuine public and hosted performance pending |
+| Worker 2 | `resize_api` | Nine percentile C++ kernels and binding contracts | Original reference frozenb928; private kernels preserve54 provider traces and old-op interfaces. Normal/scalar/Debug/portable/sanitizer gates underway; public registration pending |
+| Worker 3 | `resize_bench` | Whole7 actual package/corpus/SDK qualification | R4 wrappers and benchmark Phase1 frozen. Read-only toolchain health precedes exclusive build lease; all actual public gates and independent171-path inventory remain required |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

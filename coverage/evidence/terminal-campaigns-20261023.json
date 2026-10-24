@@ -1,0 +1,191 @@
+{
+  "schema": "verified-terminal-campaign-publication-v1",
+  "scope": "Offline artifact and paired-sample verification of four isolated one-worker campaigns; no new operation execution or universal performance claim.",
+  "reference": "scikit-image==0.26.0",
+  "workers": [
+    1
+  ],
+  "campaigns": [
+    {
+      "packet": "metrics-stepped-half-measurement",
+      "run_id": 40037037771,
+      "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40037037771",
+      "measured_source": "0d5ab290d1c6aa97aeef120a9c567387f93ecdd6",
+      "publication_commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+      "main_merge": "f23a7d38039433e567ed89d1dbe5c9410b5e35ce",
+      "offline_proof": {
+        "path": "build/metrics-leaf-classification-trial-publication-evidence/af49355/manifest.json",
+        "sha256": "74b1f4addf6581665cc43141f151fa06d2c664da7ff60af2ef3edb60d99e2b17"
+      },
+      "reports": {
+        "benchmarks/metrics-public-leaf-classification-trial.json": {
+          "bytes": 3080581,
+          "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+          "path": "benchmarks/metrics-public-leaf-classification-trial.json",
+          "sha256": "04b9f94a8b8850595ed4607d15098bfe950d4673014e60fdb13214114bb6bb1b"
+        },
+        "benchmarks/metrics-public-leaf-classification-trial.md": {
+          "bytes": 2731,
+          "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+          "path": "benchmarks/metrics-public-leaf-classification-trial.md",
+          "sha256": "6ba919536f4aadb5308ef134114a5363e095718366816179705bc3e35158e8fc"
+        },
+        "benchmarks/metrics-public-linux-minimum-leaf-classification-trial.json": {
+          "bytes": 4148982,
+          "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+          "path": "benchmarks/metrics-public-linux-minimum-leaf-classification-trial.json",
+          "sha256": "a1770a1767959cfed273db4885668d04ea9c1a3166532d29992da97d06560f29"
+        },
+        "benchmarks/metrics-public-linux-modern-leaf-classification-trial.json": {
+          "bytes": 4172617,
+          "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+          "path": "benchmarks/metrics-public-linux-modern-leaf-classification-trial.json",
+          "sha256": "cbdc715702a77af210880b9c4cda42ffae652157ca5bcbb62041089ff1b319c5"
+        },
+        "benchmarks/metrics-public-windows-modern-leaf-classification-trial.json": {
+          "bytes": 4290326,
+          "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+          "path": "benchmarks/metrics-public-windows-modern-leaf-classification-trial.json",
+          "sha256": "8ea1e3784ea19c83560d358d280960d2bbab16fe52a1e912e7ba7ca438af99b0"
+        }
+      }
+    },
+    {
+      "packet": "footprint-setup-measurement",
+      "run_id": 40035389599,
+      "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035389599",
+      "measured_source": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "publication_commit": "d5d49597de732524f31779b059073822ffb44823",
+      "main_merge": "2ec473f93ab5e2dc8d7d3417a54512bc6b8e8ec3",
+      "offline_proof": {
+        "path": "build/footprints-setup-trial-publication-evidence/d5d4959/manifest.json",
+        "sha256": "1205f827ce344bd38eac3cff6f3f92e14d39d85bfd96cf97e22bab5dd9e54f15"
+      },
+      "reports": {
+        "benchmarks/footprints-public-linux-minimum-setup-trial.json": {
+          "bytes": 2637691,
+          "commit": "d5d4959",
+          "path": "benchmarks/footprints-public-linux-minimum-setup-trial.json",
+          "sha256": "75420958ee050d559fe4e961a4a8e4cf453ed761f1eb7b6d6f720a192bf0a890"
+        },
+        "benchmarks/footprints-public-linux-modern-setup-trial.json": {
+          "bytes": 2644636,
+          "commit": "d5d4959",
+          "path": "benchmarks/footprints-public-linux-modern-setup-trial.json",
+          "sha256": "d4116cbb73eab0e5b3a35b9a674d7ce394ce227ade78f147eb4e64553e38a940"
+        },
+        "benchmarks/footprints-public-setup-trial.json": {
+          "bytes": 800435,
+          "commit": "d5d4959",
+          "path": "benchmarks/footprints-public-setup-trial.json",
+          "sha256": "ad057fb337469a80a7193236130e1e4cfdcc395a4ca91b61a44180ecf780cf17"
+        },
+        "benchmarks/footprints-public-setup-trial.md": {
+          "bytes": 2756,
+          "commit": "d5d4959",
+          "path": "benchmarks/footprints-public-setup-trial.md",
+          "sha256": "f33558c5744dd9c03052165f13135d7cafb8284296efe492debc19daa0cd8dd1"
+        },
+        "benchmarks/footprints-public-windows-modern-setup-trial.json": {
+          "bytes": 2743206,
+          "commit": "d5d4959",
+          "path": "benchmarks/footprints-public-windows-modern-setup-trial.json",
+          "sha256": "ec44df6cf0557a14c6c7a5ae37d98936628da95bfd76c0d884c4b907649c6e22"
+        }
+      }
+    },
+    {
+      "packet": "components-short-run-measurement",
+      "run_id": 40035393397,
+      "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397",
+      "measured_source": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+      "publication_commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+      "main_merge": "edd2b56b5c271b2b826639f4dd48a84981c384c9",
+      "offline_proof": {
+        "path": "build/components-short-run-trial-publication-evidence/993a52d/manifest.json",
+        "sha256": "fea4f5ca957a0bab8f30e18cb84a1a0bfdfbe75c144980c4d260f9145e8b94da"
+      },
+      "reports": {
+        "benchmarks/components-public-linux-minimum-short-run-trial.json": {
+          "bytes": 4355333,
+          "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+          "path": "benchmarks/components-public-linux-minimum-short-run-trial.json",
+          "sha256": "65b995e56d5942ebf3e3ada53bf16d114dba82d445bd8da555766d5af542ba95"
+        },
+        "benchmarks/components-public-linux-modern-short-run-trial.json": {
+          "bytes": 4353419,
+          "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+          "path": "benchmarks/components-public-linux-modern-short-run-trial.json",
+          "sha256": "59a2d80ee73f0bedf3679a961d53b504abfe982b880c4c5796df620142466f69"
+        },
+        "benchmarks/components-public-short-run-trial.json": {
+          "bytes": 2250519,
+          "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+          "path": "benchmarks/components-public-short-run-trial.json",
+          "sha256": "faa4b392253f6710669ab4f988ab59c73b6ae32379df2669a1808168ddcdf0f9"
+        },
+        "benchmarks/components-public-short-run-trial.md": {
+          "bytes": 2926,
+          "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+          "path": "benchmarks/components-public-short-run-trial.md",
+          "sha256": "ef45e2399eb27cead5962434c7d2fea8b0f1c2ab6f811ff5480c0b3d40a03039"
+        },
+        "benchmarks/components-public-windows-modern-short-run-trial.json": {
+          "bytes": 4528142,
+          "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+          "path": "benchmarks/components-public-windows-modern-short-run-trial.json",
+          "sha256": "0a0c8bfb6caa09fadca6c7e2a9a31f8bbdfde6c2a378592a5fe32d4de0f05158"
+        }
+      }
+    },
+    {
+      "packet": "rank-intensity-measurement",
+      "run_id": 40034423731,
+      "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731",
+      "measured_source": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
+      "publication_commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+      "main_merge": "86efa0f98aa363078c2222c7d63a723d5333f8ea",
+      "offline_proof": {
+        "path": "build/rank-intensity-initial-publication-evidence/463c4e8/manifest.json",
+        "sha256": "c53ebd1f3259280aa49d8ec719d0c7abd54026edecd926c0cf838c15457654f9"
+      },
+      "reports": {
+        "benchmarks/rank-intensity-public-initial.json": {
+          "bytes": 1405958,
+          "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "path": "benchmarks/rank-intensity-public-initial.json",
+          "sha256": "556f4ce1f8dc1c1d96ee027a849f7c9f3d09c6930ee502bd5d5856641ab662cc"
+        },
+        "benchmarks/rank-intensity-public-initial.md": {
+          "bytes": 2742,
+          "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "path": "benchmarks/rank-intensity-public-initial.md",
+          "sha256": "0f11a35e103353d62bafce17811936ade25a956136443512cd15f6b25643c5ea"
+        },
+        "benchmarks/rank-intensity-public-linux-minimum-initial.json": {
+          "bytes": 20976413,
+          "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "path": "benchmarks/rank-intensity-public-linux-minimum-initial.json",
+          "sha256": "997d0b9f3e00d6051a71eb9fd52558d8c1104fc6f3ae9abb03c8e84758b2db78"
+        },
+        "benchmarks/rank-intensity-public-linux-modern-initial.json": {
+          "bytes": 20969085,
+          "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "path": "benchmarks/rank-intensity-public-linux-modern-initial.json",
+          "sha256": "9fae4f5907168c6d88fd5bc24d5cf99d617102d32c7e9c36f67dfaa3f665f465"
+        },
+        "benchmarks/rank-intensity-public-windows-modern-initial.json": {
+          "bytes": 21766889,
+          "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "path": "benchmarks/rank-intensity-public-windows-modern-initial.json",
+          "sha256": "2fe2589f1b6fbeaf59e22d7329ea99bc6bf7b7c5f361c0b047df56c22b3dc83b"
+        }
+      }
+    }
+  ],
+  "public_inventory_unchanged": {
+    "partial_native_image_paths": 163,
+    "upstream_only_paths": 303
+  },
+  "retention": "Raw artifacts, verification recipes, failed trials and every regression remain retained. Older family dependency binary closures are not inferred from pins/freeze."
+}

@@ -18684,7 +18684,7 @@
       "depends_on": [
         "combined-public-wave6"
       ],
-      "state": "validating",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -18700,9 +18700,29 @@
           1
         ],
         "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
-        "note": "Next one-worker trial combines accepted byte-safe stepped-half loads and finite/minmax classification on exact public source. Fixed1231/1212 corpus unchanged; retain all regressions, no local timing.",
+        "raw_results": [
+          "benchmarks/metrics-public-linux-minimum-leaf-classification-trial.json",
+          "benchmarks/metrics-public-linux-modern-leaf-classification-trial.json",
+          "benchmarks/metrics-public-windows-modern-leaf-classification-trial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "count": 428,
+            "cases": "benchmarks/metrics-public-leaf-classification-trial.json#/profiles/linux-minimum/all_slower_cases"
+          },
+          {
+            "profile": "linux-modern",
+            "count": 620,
+            "cases": "benchmarks/metrics-public-leaf-classification-trial.json#/profiles/linux-modern/all_slower_cases"
+          },
+          {
+            "profile": "windows-modern",
+            "count": 345,
+            "cases": "benchmarks/metrics-public-leaf-classification-trial.json#/profiles/windows-modern/all_slower_cases"
+          }
+        ],
+        "note": "Fresh hosted artifact-only measurement jobs followed the three-profile preparation barrier. All errors/aliases/policies remain untimed; workload cohorts stay separate. Different hosted CPUs prevent causal cross-run patch claims.",
         "run_id": 40037037771,
         "source_sha": "0d5ab290d1c6aa97aeef120a9c567387f93ecdd6",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40037037771",
@@ -18712,11 +18732,62 @@
         "workers": [
           1
         ],
-        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
+        "verification_state": "verified: complete source/product/SDK boundaries and all seven paired samples, classifications, medians, ratios and regressions audited offline",
+        "summary": "benchmarks/metrics-public-leaf-classification-trial.json",
+        "cohorts": {
+          "linux-minimum": {
+            "scalar-metric": {
+              "cases": 1212,
+              "faster": 784,
+              "geometric_mean_speedup": 0.9697050537679809,
+              "slower": 428,
+              "worst": 0.1551019720604999
+            }
+          },
+          "linux-modern": {
+            "scalar-metric": {
+              "cases": 1212,
+              "faster": 592,
+              "geometric_mean_speedup": 0.8070302876090183,
+              "slower": 620,
+              "worst": 0.12609819252837506
+            }
+          },
+          "windows-modern": {
+            "scalar-metric": {
+              "cases": 1212,
+              "faster": 867,
+              "geometric_mean_speedup": 1.253767449165162,
+              "slower": 345,
+              "worst": 0.2154390595935505
+            }
+          }
+        },
+        "checks_per_profile": {
+          "linux-minimum": {
+            "checks": 1231,
+            "timed": 1212,
+            "untimed": 19,
+            "slower": 428
+          },
+          "linux-modern": {
+            "checks": 1231,
+            "timed": 1212,
+            "untimed": 19,
+            "slower": 620
+          },
+          "windows-modern": {
+            "checks": 1231,
+            "timed": 1212,
+            "untimed": 19,
+            "slower": 345
+          }
+        },
+        "scope": "Observed exact source on recorded hosts; no causal previous/current patch comparison because hosted CPUs/runs differ. Public call ratios include their recorded allocation/reset/metadata work, not universal image-kernel claims."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "af493559c6c5673ec0e9fcecc667b945b38bc94c",
+        "main_commit": "f23a7d38039433e567ed89d1dbe5c9410b5e35ce"
       },
       "retention": {
         "active_paths": [
@@ -18727,6 +18798,17 @@
       "dependency_requirements": {
         "combined-public-wave6": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "0d5ab290d1c6aa97aeef120a9c567387f93ecdd6",
+          "manifest": {
+            "path": "build/metrics-leaf-classification-trial-publication-evidence/af49355/manifest.json",
+            "sha256": "74b1f4addf6581665cc43141f151fa06d2c664da7ff60af2ef3edb60d99e2b17"
+          },
+          "scope": "All raw paired samples, classifications and regressions, with exact runtime-evidence limits stated in the report."
         }
       }
     },
@@ -19157,7 +19239,7 @@
         "rank-intensity-public",
         "rank-intensity-benchmark-tooling"
       ],
-      "state": "validating",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19173,9 +19255,29 @@
           1
         ],
         "corpus_sha256": "94ff120b62a7b7814902429cbca5776ee1f0dc01dd33bc01ac296099ed79e0f9",
-        "raw_results": [],
-        "regressions": [],
-        "note": "One-worker primary,1428checked/384canonical rasters perruntime; aliases/errors metadata untimed. Dispatch only exact validated source; no local operation timing.",
+        "raw_results": [
+          "benchmarks/rank-intensity-public-linux-minimum-initial.json",
+          "benchmarks/rank-intensity-public-linux-modern-initial.json",
+          "benchmarks/rank-intensity-public-windows-modern-initial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "count": 81,
+            "cases": "benchmarks/rank-intensity-public-initial.json#/profiles/linux-minimum/all_slower_cases"
+          },
+          {
+            "profile": "linux-modern",
+            "count": 81,
+            "cases": "benchmarks/rank-intensity-public-initial.json#/profiles/linux-modern/all_slower_cases"
+          },
+          {
+            "profile": "windows-modern",
+            "count": 92,
+            "cases": "benchmarks/rank-intensity-public-initial.json#/profiles/windows-modern/all_slower_cases"
+          }
+        ],
+        "note": "Fresh hosted artifact-only measurement jobs followed the three-profile preparation barrier. All errors/aliases/policies remain untimed; workload cohorts stay separate. Different hosted CPUs prevent causal cross-run patch claims.",
         "run_id": 40034423731,
         "source_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731",
@@ -19186,11 +19288,62 @@
         ],
         "observation_rule": "Poll exact authoritative run to terminal; never cancel/restart for observation timeout. All3 preparation profiles precede fresh artifact-only measurement hosts.",
         "conclusion": "success",
-        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
+        "verification_state": "verified: complete source/product/SDK boundaries and all seven paired samples, classifications, medians, ratios and regressions audited offline",
+        "summary": "benchmarks/rank-intensity-public-initial.json",
+        "cohorts": {
+          "linux-minimum": {
+            "rank-neighborhood": {
+              "cases": 384,
+              "faster": 303,
+              "geometric_mean_speedup": 2.4021877882319096,
+              "slower": 81,
+              "worst": 0.41240629978859755
+            }
+          },
+          "linux-modern": {
+            "rank-neighborhood": {
+              "cases": 384,
+              "faster": 303,
+              "geometric_mean_speedup": 2.2439967832897905,
+              "slower": 81,
+              "worst": 0.43578984372822643
+            }
+          },
+          "windows-modern": {
+            "rank-neighborhood": {
+              "cases": 384,
+              "faster": 292,
+              "geometric_mean_speedup": 2.089203508541425,
+              "slower": 92,
+              "worst": 0.39079667487999126
+            }
+          }
+        },
+        "checks_per_profile": {
+          "linux-minimum": {
+            "checks": 1428,
+            "timed": 384,
+            "untimed": 1044,
+            "slower": 81
+          },
+          "linux-modern": {
+            "checks": 1428,
+            "timed": 384,
+            "untimed": 1044,
+            "slower": 81
+          },
+          "windows-modern": {
+            "checks": 1428,
+            "timed": 384,
+            "untimed": 1044,
+            "slower": 92
+          }
+        },
+        "scope": "Observed exact source on recorded hosts; no causal previous/current patch comparison because hosted CPUs/runs differ. Public call ratios include their recorded allocation/reset/metadata work, not universal image-kernel claims."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+        "main_commit": "86efa0f98aa363078c2222c7d63a723d5333f8ea"
       },
       "retention": {
         "active_paths": [
@@ -19204,6 +19357,17 @@
         },
         "rank-intensity-benchmark-tooling": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "fbdfb46a339f0b5d89dd1e5ba861f6e68ff6b113",
+          "manifest": {
+            "path": "build/rank-intensity-initial-publication-evidence/463c4e8/manifest.json",
+            "sha256": "c53ebd1f3259280aa49d8ec719d0c7abd54026edecd926c0cf838c15457654f9"
+          },
+          "scope": "All raw paired samples, classifications and regressions, with exact runtime-evidence limits stated in the report."
         }
       }
     },
@@ -19655,7 +19819,7 @@
         "footprint-setup-optimization",
         "combined-public-wave5"
       ],
-      "state": "validating",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19671,8 +19835,28 @@
           1
         ],
         "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "raw_results": [
+          "benchmarks/footprints-public-linux-minimum-setup-trial.json",
+          "benchmarks/footprints-public-linux-modern-setup-trial.json",
+          "benchmarks/footprints-public-windows-modern-setup-trial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "count": 77,
+            "cases": "benchmarks/footprints-public-setup-trial.json#/profiles/linux-minimum/all_slower_cases"
+          },
+          {
+            "profile": "linux-modern",
+            "count": 116,
+            "cases": "benchmarks/footprints-public-setup-trial.json#/profiles/linux-modern/all_slower_cases"
+          },
+          {
+            "profile": "windows-modern",
+            "count": 134,
+            "cases": "benchmarks/footprints-public-setup-trial.json#/profiles/windows-modern/all_slower_cases"
+          }
+        ],
         "run_id": 40035389599,
         "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035389599",
@@ -19696,11 +19880,105 @@
           }
         ],
         "conclusion": "success",
-        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
+        "verification_state": "verified: complete source/product/SDK boundaries and all seven paired samples, classifications, medians, ratios and regressions audited offline",
+        "summary": "benchmarks/footprints-public-setup-trial.json",
+        "cohorts": {
+          "linux-minimum": {
+            "decomposition_plan": {
+              "cases": 144,
+              "faster": 88,
+              "geometric_mean_speedup": 1.190363184027409,
+              "slower": 56,
+              "worst": 0.41565750796786544
+            },
+            "raster": {
+              "cases": 254,
+              "faster": 240,
+              "geometric_mean_speedup": 2.4804375306576683,
+              "slower": 14,
+              "worst": 0.41651837550033055
+            },
+            "view_metadata": {
+              "cases": 129,
+              "faster": 122,
+              "geometric_mean_speedup": 1.0281220003578462,
+              "slower": 7,
+              "worst": 0.980068081852556
+            }
+          },
+          "linux-modern": {
+            "decomposition_plan": {
+              "cases": 144,
+              "faster": 60,
+              "geometric_mean_speedup": 1.0171576090472796,
+              "slower": 84,
+              "worst": 0.43276828514286814
+            },
+            "raster": {
+              "cases": 254,
+              "faster": 227,
+              "geometric_mean_speedup": 2.2324536938238886,
+              "slower": 27,
+              "worst": 0.4334369779420783
+            },
+            "view_metadata": {
+              "cases": 129,
+              "faster": 124,
+              "geometric_mean_speedup": 1.017583736648928,
+              "slower": 5,
+              "worst": 0.9702435866667518
+            }
+          },
+          "windows-modern": {
+            "decomposition_plan": {
+              "cases": 144,
+              "faster": 66,
+              "geometric_mean_speedup": 1.0609829568132851,
+              "slower": 78,
+              "worst": 0.41711368524709114
+            },
+            "raster": {
+              "cases": 254,
+              "faster": 228,
+              "geometric_mean_speedup": 2.5347574444491516,
+              "slower": 26,
+              "worst": 0.42513956075606885
+            },
+            "view_metadata": {
+              "cases": 129,
+              "faster": 99,
+              "geometric_mean_speedup": 1.021209031973686,
+              "slower": 30,
+              "worst": 0.8172228057483061
+            }
+          }
+        },
+        "checks_per_profile": {
+          "linux-minimum": {
+            "checks": 556,
+            "timed": 527,
+            "untimed": 29,
+            "slower": 77
+          },
+          "linux-modern": {
+            "checks": 556,
+            "timed": 527,
+            "untimed": 29,
+            "slower": 116
+          },
+          "windows-modern": {
+            "checks": 556,
+            "timed": 527,
+            "untimed": 29,
+            "slower": 134
+          }
+        },
+        "scope": "Observed exact source on recorded hosts; no causal previous/current patch comparison because hosted CPUs/runs differ. Public call ratios include their recorded allocation/reset/metadata work, not universal image-kernel claims.",
+        "note": "Fresh hosted artifact-only measurement jobs followed the three-profile preparation barrier. All errors/aliases/policies remain untimed; workload cohorts stay separate. Different hosted CPUs prevent causal cross-run patch claims."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "d5d49597de732524f31779b059073822ffb44823",
+        "main_commit": "2ec473f93ab5e2dc8d7d3417a54512bc6b8e8ec3"
       },
       "retention": {
         "active_paths": [
@@ -19714,6 +19992,17 @@
         },
         "combined-public-wave5": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+          "manifest": {
+            "path": "build/footprints-setup-trial-publication-evidence/d5d4959/manifest.json",
+            "sha256": "1205f827ce344bd38eac3cff6f3f92e14d39d85bfd96cf97e22bab5dd9e54f15"
+          },
+          "scope": "All raw paired samples, classifications and regressions, with exact runtime-evidence limits stated in the report."
         }
       }
     },
@@ -19729,7 +20018,7 @@
         "components-short-run-optimization",
         "combined-public-wave5"
       ],
-      "state": "validating",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": []
@@ -19745,8 +20034,28 @@
           1
         ],
         "corpus_sha256": null,
-        "raw_results": [],
-        "regressions": [],
+        "raw_results": [
+          "benchmarks/components-public-linux-minimum-short-run-trial.json",
+          "benchmarks/components-public-linux-modern-short-run-trial.json",
+          "benchmarks/components-public-windows-modern-short-run-trial.json"
+        ],
+        "regressions": [
+          {
+            "profile": "linux-minimum",
+            "count": 269,
+            "cases": "benchmarks/components-public-short-run-trial.json#/profiles/linux-minimum/all_slower_cases"
+          },
+          {
+            "profile": "linux-modern",
+            "count": 265,
+            "cases": "benchmarks/components-public-short-run-trial.json#/profiles/linux-modern/all_slower_cases"
+          },
+          {
+            "profile": "windows-modern",
+            "count": 357,
+            "cases": "benchmarks/components-public-short-run-trial.json#/profiles/windows-modern/all_slower_cases"
+          }
+        ],
         "run_id": 40035393397,
         "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
         "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397",
@@ -19770,11 +20079,126 @@
           }
         ],
         "conclusion": "success",
-        "verification_state": "Offlineartifact/row/sampleverification inprogress; no new speedclaim fromgreenworkflow alone."
+        "verification_state": "verified: complete source/product/SDK boundaries and all seven paired samples, classifications, medians, ratios and regressions audited offline",
+        "summary": "benchmarks/components-public-short-run-trial.json",
+        "cohorts": {
+          "linux-minimum": {
+            "cast_warning": {
+              "cases": 6,
+              "faster": 6,
+              "geometric_mean_speedup": 1.1838119165700145,
+              "slower": 0,
+              "worst": 1.1694894262817956
+            },
+            "empty": {
+              "cases": 18,
+              "faster": 18,
+              "geometric_mean_speedup": 2.26165534371941,
+              "slower": 0,
+              "worst": 1.6580043578362615
+            },
+            "raster": {
+              "cases": 200,
+              "faster": 132,
+              "geometric_mean_speedup": 1.8291141425890607,
+              "slower": 68,
+              "worst": 0.2888474478940432
+            },
+            "tiny": {
+              "cases": 578,
+              "faster": 377,
+              "geometric_mean_speedup": 1.5461931351913125,
+              "slower": 201,
+              "worst": 0.773703961625979
+            }
+          },
+          "linux-modern": {
+            "cast_warning": {
+              "cases": 6,
+              "faster": 6,
+              "geometric_mean_speedup": 1.1509222449136636,
+              "slower": 0,
+              "worst": 1.110846595982497
+            },
+            "empty": {
+              "cases": 18,
+              "faster": 18,
+              "geometric_mean_speedup": 2.2051793006077163,
+              "slower": 0,
+              "worst": 1.5724890186534848
+            },
+            "raster": {
+              "cases": 200,
+              "faster": 130,
+              "geometric_mean_speedup": 1.6677790382153594,
+              "slower": 70,
+              "worst": 0.26245468627296337
+            },
+            "tiny": {
+              "cases": 578,
+              "faster": 383,
+              "geometric_mean_speedup": 1.6175892151249558,
+              "slower": 195,
+              "worst": 0.8390218315238821
+            }
+          },
+          "windows-modern": {
+            "cast_warning": {
+              "cases": 6,
+              "faster": 6,
+              "geometric_mean_speedup": 1.0269583598026024,
+              "slower": 0,
+              "worst": 1.0147139270401244
+            },
+            "empty": {
+              "cases": 18,
+              "faster": 18,
+              "geometric_mean_speedup": 1.8981324375413349,
+              "slower": 0,
+              "worst": 1.3804920846901563
+            },
+            "raster": {
+              "cases": 200,
+              "faster": 94,
+              "geometric_mean_speedup": 0.9924281047284202,
+              "slower": 106,
+              "worst": 0.26566239833415933
+            },
+            "tiny": {
+              "cases": 578,
+              "faster": 327,
+              "geometric_mean_speedup": 1.267770629088849,
+              "slower": 251,
+              "worst": 0.6138206167752227
+            }
+          }
+        },
+        "checks_per_profile": {
+          "linux-minimum": {
+            "checks": 954,
+            "timed": 802,
+            "untimed": 152,
+            "slower": 269
+          },
+          "linux-modern": {
+            "checks": 954,
+            "timed": 802,
+            "untimed": 152,
+            "slower": 265
+          },
+          "windows-modern": {
+            "checks": 954,
+            "timed": 802,
+            "untimed": 152,
+            "slower": 357
+          }
+        },
+        "scope": "Observed exact source on recorded hosts; no causal previous/current patch comparison because hosted CPUs/runs differ. Public call ratios include their recorded allocation/reset/metadata work, not universal image-kernel claims.",
+        "note": "Fresh hosted artifact-only measurement jobs followed the three-profile preparation barrier. All errors/aliases/policies remain untimed; workload cohorts stay separate. Different hosted CPUs prevent causal cross-run patch claims."
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "993a52da96e3a1fd38e65c3592c00a22be81226d",
+        "main_commit": "edd2b56b5c271b2b826639f4dd48a84981c384c9"
       },
       "retention": {
         "active_paths": [
@@ -19788,6 +20212,17 @@
         },
         "combined-public-wave5": {
           "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "845608d8a035eebb31edcb491ee853bf11ad44fe",
+          "manifest": {
+            "path": "build/components-short-run-trial-publication-evidence/993a52d/manifest.json",
+            "sha256": "fea4f5ca957a0bab8f30e18cb84a1a0bfdfbe75c144980c4d260f9145e8b94da"
+          },
+          "scope": "All raw paired samples, classifications and regressions, with exact runtime-evidence limits stated in the report."
         }
       }
     },
@@ -20121,7 +20556,7 @@
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Rootassembling consumer237+R4f7+publiceae8+sharedwiring; producer/caches notadvanced/leased. Candidate171metadata mustmatchactualnewpackages; allactualpublic/corpora/SDK/source gates pending. Nativeimagecount remains163 onacceptedmain."
+          "Consumer237 plus R4 kernels/public wrappers and shared wiring frozen at7aaa747. Toolchain health is read-only; producer/caches not advanced or leased. Candidate171 inventory must match actual genuine packages. All cumulative public/corpus/SDK gates remain pending; accepted main remains163 image paths."
         ]
       },
       "parity": {
@@ -20165,6 +20600,15 @@
         "rank-statistics-benchmark-tooling": {
           "evidence_scope": "tooling"
         }
+      },
+      "source_freeze": {
+        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "worktree": "build/worktrees/wave7-rank-consumer",
+        "lease_state": "not_granted",
+        "prediction_only": {
+          "partial_native_image_paths": 171,
+          "upstream_only_paths": 295
+        }
       }
     },
     {
@@ -20197,12 +20641,10 @@
         "benchmarks/components-public-short-run-trial.md"
       ],
       "depends_on": [],
-      "state": "validating",
+      "state": "accepted",
       "contract": {
         "case_manifest": null,
-        "uncovered_cases": [
-          "Offlineonly fourterminalcampaigns; streamedZIP source/product/SDK/RECORD/runtime-boundary checks plusallpairedsamples/classifications/regressions. No numericaloperations, binaryimports, timers ornative/readiness inflation."
-        ]
+        "uncovered_cases": []
       },
       "parity": {
         "source_sha": null,
@@ -20219,14 +20661,83 @@
         "regressions": []
       },
       "merge": {
+        "commit": "463c4e84024f18084fcdb5612729268e9b7bd191",
+        "main_commit": "86efa0f98aa363078c2222c7d63a723d5333f8ea"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/metrics-leaf-classification-trial-publication-evidence/af49355/manifest.json",
+          "build/footprints-setup-trial-publication-evidence/d5d4959/manifest.json",
+          "build/components-short-run-trial-publication-evidence/993a52d/manifest.json",
+          "build/rank-intensity-initial-publication-evidence/463c4e8/manifest.json"
+        ]
+      },
+      "dependency_requirements": {},
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "463c4e84024f18084fcdb5612729268e9b7bd191",
+          "manifest": {
+            "path": "coverage/evidence/terminal-campaigns-20261023.json",
+            "sha256": "46c13a91cf6a0af802d443b1c6560398de73c7028ad853520ef925248c9dcdfa"
+          },
+          "scope": "Four sealed offline publication proofs and twenty authenticated report blobs; no native count increase."
+        }
+      }
+    },
+    {
+      "id": "metrics-reverse-stride",
+      "kind": "private_optimization",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/metrics-reverse-stride",
+      "base_sha": "6a7c5c33256c18f02e0cb228e5f20ba3cb373d09",
+      "owns": [
+        "src/metrics.cpp",
+        "src/simd_metrics_avx2.cpp",
+        "include/skimagexx/metrics.hpp",
+        "tests/test_metrics_native.cpp",
+        "tests/test_metrics_reverse_simd.py"
+      ],
+      "depends_on": [
+        "metrics-stepped-half-measurement"
+      ],
+      "dependency_requirements": {
+        "metrics-stepped-half-measurement": {
+          "evidence_scope": "isolated_performance"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "tests/test_metrics_reverse_simd.py",
+        "uncovered_cases": [
+          "Direct native-endian negative-unit f32/f64 transport preserves existing lane reversal, exact reduction tree, floating-point flags, NaN payloads and callback order. Actual route/counter evidence precedes optimization. Genuine cumulative parity and hosted performance remain required."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
         "commit": null,
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/worktrees/metrics-reverse-stride"
+        ],
         "protected_artifacts": []
-      },
-      "dependency_requirements": {}
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -20968,7 +21479,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "terminal-campaign-publication"
+        "metrics-reverse-stride"
       ],
       "resize_api": [
         "rank-percentile-native"

@@ -3,7 +3,7 @@
 The current API inventory has 163 partially native image paths, three metadata
 helpers, four partially native transform classes and 303 upstream-only paths.
 Per-function tests and benchmark harnesses cover all 163 image paths; measured
-acceptance remains specific to the source revision and workload in each report.
+acceptance remains specific to each report's source revision and workload.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
 
@@ -11,40 +11,50 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 |---|---:|---:|---:|---|
 | Rank first five algorithms | 2.081x | 2.220x | 2.412x | 480 timed cases; 142/155/112 slower |
 | Rank next four algorithms | 2.583x | 3.295x | 3.411x | 384 timed cases; 69/64/63 slower |
+| Rank four intensity algorithms | 2.089x | 2.244x | 2.402x | 384 timed cases; 92/81/81 slower |
 | Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
 | Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
 | Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
-| Metrics SIMD-load trial | 0.873x | 0.806x | 0.917x | 1,212 cases; slower overall |
+| Metrics leaf-classification trial | 1.254x | 0.807x | 0.970x | 1,212 timed cases; 345/620/428 slower |
+| Footprint setup trial, raster | 2.535x | 2.232x | 2.480x | 254 raster cases; plans/views separate |
+| Footprint setup trial, plans | 1.061x | 1.017x | 1.190x | 144 plan calls; metadata/views separate |
+| Footprint setup trial, metadata/views | 1.021x | 1.018x | 1.028x | 129 calls; 134/116/77 slower across all footprint cohorts |
+| Label short-run trial, raster | 0.992x | 1.668x | 1.829x | 200 raster cases; 106/70/68 slower |
+| Label short-run trial, tiny | 1.268x | 1.618x | 1.546x | 578 tiny calls; empty/warnings separate |
 
-These geometric means apply to the exact source revisions and workloads in the
+These geometric means apply to the exact sources and workloads in the
 [R1 rank](rank-public-initial.md), [R2 rank](rank-distribution-public-initial.md),
+[R3 intensity](rank-intensity-public-initial.md),
 [consumer](component-consumers-public-initial.md),
 [controlled resize](resize-public-controlled.md),
-[transform](transform-classes-public-initial.md) and
-[metrics](metrics-public-simd-load-trial.md) reports. Every slower case and raw
+[transform](transform-classes-public-initial.md),
+[metrics](metrics-public-leaf-classification-trial.md),
+[footprint](footprints-public-setup-trial.md) and
+[label](components-public-short-run-trial.md) reports. Every slower case and raw
 sample remains available. Aliases, expected errors, providers and metadata do not
-inflate image-kernel timing counts.
+inflate image-kernel timing counts. The label report also retains 18 empty and
+six successful cast-warning calls as separate cohorts.
 
 The controlled resize run compares complete current/initial/original products
 on each host: current/initial means are 1.012x/1.012x/1.014x, with mixed workload
 changes. It does not isolate an individual patch. Other reports compare against
 original; cross-run CPU changes prevent causal comparisons between patches.
-Rank artifacts verify complete product/SDK bytes and runtime pins/freeze text;
-they did not archive dependency-binary closures or separately record initial
-default worker state. Measured rank calls explicitly enforce one worker. Those
-evidence limits remain explicit in their reports.
+R1/R2 and older-family artifacts retain runtime pins/freeze without claiming
+complete dependency-binary closures. Metrics verifies all 59 wheel SDK files but
+has no separately serialized installed-SDK seal. R3 verifies its runtime/product/
+SDK closure; initial default-one state is a source-preflight assertion, without
+separate telemetry. Measured calls enforce one worker. Reports preserve these
+source-specific evidence limits.
 
-Measurements use fresh hosted jobs after all preparation gates, without local
-operation timing. Stepped-half and signed min-max metrics, relabeling, object
-filtering and sparse rank scans remain measured bottlenecks. The accepted stepped-half and finite/min-max metrics changes now pass cumulative
-whole-core parity; their fresh one-worker measurement is pending. Private
-consumer scan and R4 rank candidates still await genuine whole-core qualification.
-Footprint setup and labeling remeasurements retain authoritative runs
-[40035389599](https://github.com/bipxx/scikit-imagexx/actions/runs/40035389599) and
-[40035393397](https://github.com/bipxx/scikit-imagexx/actions/runs/40035393397),
-both from source `845608d`. The R3 intensity campaign is
-[40034423731](https://github.com/bipxx/scikit-imagexx/actions/runs/40034423731)
-from `fbdfb46`; completed results remain subject to offline verification.
+All four new campaigns completed their three-profile preparation barrier and
+fresh artifact-only measurement jobs; their samples and classifications are now
+independently verified offline. No local image-operation timing was used.
+Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
+scans remain bottlenecks. Three workers now qualify direct reversed metrics
+transport privately, implement nine percentile kernels, and prepare actual
+whole7 packages combining consumer scans and four new rank algorithms. Candidate
+171-path metadata is a prediction until genuine cumulative gates pass; accepted
+main remains at 163 image paths.
 
 ## Retained whole-library checkpoints
 
