@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T10:24:28.020764+00:00",
+  "scope": "User-requested temporary build cleanup before continuing implementation.",
+  "main_source_before_cleanup": "32d661d8849b0325b30dfd2c3e0469a8410b06dc",
+  "removed": {
+    "clean_merged_worktrees": 1,
+    "obsolete_compiler_caches": 3,
+    "python_pytest_and_temporary_cache_directories": 36
+  },
+  "logical_net_bytes_recovered": 763614068,
+  "byte_accounting": "Logical regular payload bytes minus retained cache ZIP; excludes filesystem allocation and small audit metadata.",
+  "archived_regular_files": 819,
+  "retained_archive_bytes": 148070336,
+  "preservation_indexes": [
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/preservation-index.json",
+      "sha256": "d8f582b94da908c2c3b3789f35e9fb6164b460b2746cb5e1b4474a81eb268d7b"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-preservation-index.json",
+      "sha256": "d05f7e49fdad4990e4e3ed89927221c3e1595d000fb2eb20ed70a2ff25cc50b2"
+    }
+  ],
+  "independent_archive_verifications": [
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/independent-verification.json",
+      "sha256": "ed9c16120d6d948dddf7b9a7d50a5e17e31d7c7dfd5aae62c1c8d7147deb7a1a"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-independent-verification.json",
+      "sha256": "46ba6f1ec9f9820c9ff5260cd8f13b6bb6ee70a4445993455af289b021bd3225"
+    }
+  ],
+  "removal_receipts": [
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/manifest.json",
+      "sha256": "6f6ad65e7bf48d1c9446496629b5d5d2bd54ee335f10abe9c1e6b4ec5e432e22"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-manifest.json",
+      "sha256": "5f210fdf6eec416fdf29950378e301255bcb7786aad6f57bbfdfdd1aa1647a71"
+    }
+  ],
+  "reader_release_and_process_checks": [
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-reader-releases.json",
+      "sha256": "cdccd991c05e6741bbff660ab60d3f1b7d38c3324ddc8d7505f0a9ec90d11a9b"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/linux-reader-check.json",
+      "sha256": "260a83376cc730a4bfc3eeaa7ed52569ae1dba6d035c006a8bd1fc5ff57ae880"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/windows-reader-check.json",
+      "sha256": "a9545be7c525ec3c634aca4603aa09650511353a1470c2afd400d809dacae4c2"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-linux-reader-check.json",
+      "sha256": "0593ecb19826d3029102164f01bec5eab268432a429d90d50f58d5c3b712d3b7"
+    },
+    {
+      "path": "build/cleanup/temp-artifacts-20261024-1015/compiler-windows-reader-check.json",
+      "sha256": "2fcf1dcaf05428e064ff35e010b7a6a98786d6b4dbcf35a63d8afe29dfd223a5"
+    }
+  ],
+  "retired_worktree": {
+    "path": "build/worktrees/public-counts-qualification",
+    "head": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+    "head_ancestor_of_main": true,
+    "tracked_and_untracked_source_clean": true,
+    "ignored_files": 0,
+    "method": "git worktree remove without force",
+    "branch_retained": "integration/wave18-counts"
+  },
+  "retired_compiler_caches": [
+    "build/main-core-wave7-cache-debug-modern-linux",
+    "build/main-core-wave7-cache-release-modern-linux",
+    "build/main-core-wave7-cache-release-minimum-linux"
+  ],
+  "unfinished_matrix_and_bregman_sources": "Preserved byte-exact; native source worktrees retained.",
+  "protected_sources_manifests_and_environment_records_rehashed": 13,
+  "active_environments_removed": 0,
+  "baseline_packages_wheels_and_sdk_directories_removed": 0,
+  "benchmark_or_raw_results_removed": 0,
+  "running_jobs_cancelled": 0,
+  "whole_build_directory_removed": false,
+  "public_native_acceptance_changed": false,
+  "safety": "Every exact absolute target resolved within this workspace with no link or reparse-point traversal; cache bytes archived and independently verified before final review. Hosted benchmark observation continued without interruption."
+}

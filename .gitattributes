@@ -56,3 +56,4 @@ coverage/evidence/public-wave11.json -text
 coverage/evidence/rank-decisions-fixture-assertion-migration.json -text
 coverage/contracts/rank-decisions-public.json -text
 coverage/contracts/rank-decisions-endian-public.json -text
+coverage/evidence/temp-build-cleanup-20261024.json -text

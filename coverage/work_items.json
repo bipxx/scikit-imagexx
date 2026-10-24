@@ -25278,10 +25278,17 @@
       },
       "retention": {
         "active_paths": [
-          "build/genuine190-counts-hosted-observation/40071625954",
-          "build/worktrees/public-counts-qualification"
+          "build/genuine190-counts-hosted-observation/40071625954"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "retired_worktrees": [
+          {
+            "path": "build/worktrees/public-counts-qualification",
+            "head": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+            "cleanup_receipt": "coverage/evidence/temp-build-cleanup-20261024.json",
+            "method": "git worktree remove"
+          }
+        ]
       },
       "source_freeze": {
         "source_sha": "d4efaec3a3e272a8356f9922a45ca6665d93a6d5",
