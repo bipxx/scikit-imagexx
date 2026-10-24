@@ -528,7 +528,7 @@ del _bilateral_name
 __all__+=list(_BILATERAL_FUNCTIONS)
 
 
-def _bilateral_ubyte(image):
+def _bilateral_ubyte(image,*,_integer_provider=False):
     image=np.asarray(image)
     dtype=image.dtype;ndim=image.ndim
     if image.dtype.type is np.uint8:return image
@@ -543,7 +543,7 @@ def _bilateral_ubyte(image):
         np.rint(work,out=work)
         np.clip(work,0,255,out=work)
         return work.astype(np.uint8)
-    if dtype.kind in 'ui' and dtype.itemsize>1 and not dtype.isnative:
+    if dtype.kind in 'ui' and dtype.itemsize>1 and (not dtype.isnative or _integer_provider):
         # Pinned _scale keeps the nonnative dtype as a ufunc argument. The
         # low-range warning chooses its cast before hooks run; high-range
         # allocation hooks run before the fresh dtype lookup for floor_divide.
@@ -629,12 +629,12 @@ def _decisions_apply(operation,image,footprint,out,mask,shift_x,shift_y,shift_z)
     if ndim==2 and dtype==bool:raise ValueError('dtype cannot be bool.')
     if dtype not in (np.uint8,np.uint16):
         warnings.warn(f'Possible precision loss converting image of type {dtype} to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.',UserWarning,stacklevel=3)
-        image=_ubyte(image)
+        image=_bilateral_ubyte(image,_integer_provider=True)
     if ndim==2 and _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
     footprint=np.ascontiguousarray(_positive(footprint))
     if footprint.ndim!=image.ndim:raise ValueError('Image dimensions and neighborhood dimensionsdo not match')
     image=np.ascontiguousarray(image)
-    if mask is not None:mask=np.ascontiguousarray(_ubyte(mask))
+    if mask is not None:mask=np.ascontiguousarray(_bilateral_ubyte(mask,_integer_provider=True))
     if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
     if out is None:out=np.empty(image.shape+(1,),dtype=image.dtype)
     elif ndim==3 or len(out.shape)==2:out=out.reshape(out.shape+(1,))
