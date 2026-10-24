@@ -110,6 +110,9 @@ def test_local_timing_forbidden(monkeypatch,tmp_path):
 def test_future_workflow_all_prepares_barrier_and_offline_measurement():
  text=(h.ROOT/'.github/workflows/rank-statistics-benchmark.yml').read_text();measure=text.split('  measure:',1)[1]
  assert 'needs: prepare' in measure and '--no-index' in measure and '--require-hashes' in measure and '--repeat 7' in measure
+ prepare=text.split('  measure:',1)[0]
+ assert prepare.count('--check-only --threads 1 4')==2 and '--check-only --threads $RANK_STATISTICS_WORKERS' not in prepare
+ assert '--threads $RANK_STATISTICS_WORKERS --repeat 7' in measure
  assert 'pip wheel' not in measure and 'pytest' not in measure and 'cmake --build' not in measure
 
 def test_record_and_capsule_extra_bytes_are_authenticated(tmp_path):

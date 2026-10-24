@@ -40,7 +40,7 @@ jobs:
       OMP_WAIT_POLICY: PASSIVE
       RANK_STATISTICS_WORKERS: ${{ inputs.workers }}
     steps:
-      # Public acceptance remains pending until agent3 seals the actual R4 package.
+      # Actual R4 public parity is accepted; fresh hosted preparation still checks both worker limits.
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -69,10 +69,10 @@ jobs:
           python -m pip wheel --find-links build/capsule/wheels --wheel-dir build/capsule/wheels -r build/capsule/runtime-freeze.txt
       - name: Seal current source, complete package, SDK, corpus and runtime; check every case
         shell: bash
-        run: python benchmarks/rank_statistics.py --capsule build/capsule --prepare-capsule --check-only --threads $RANK_STATISTICS_WORKERS --output build/preparation/rank-statistics-check.json
+        run: python benchmarks/rank_statistics.py --capsule build/capsule --prepare-capsule --check-only --threads 1 4 --output build/preparation/rank-statistics-check.json
       - name: Check scalar paths on the same immutable package
         shell: bash
-        run: python benchmarks/rank_statistics.py --capsule build/capsule --check-only --threads $RANK_STATISTICS_WORKERS --output build/preparation/rank-statistics-scalar-check.json
+        run: python benchmarks/rank_statistics.py --capsule build/capsule --check-only --threads 1 4 --output build/preparation/rank-statistics-scalar-check.json
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - uses: actions/upload-artifact@v4
