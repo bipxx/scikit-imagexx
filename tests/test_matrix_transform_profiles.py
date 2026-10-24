@@ -9,6 +9,8 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+from pathlib import PurePosixPath
+import re
 import struct
 import sys
 import zipfile
@@ -65,6 +67,21 @@ def test_actual_frozen_git_source_and_complete_metadata_only_cohorts():
         assert config['runtime']['numpy']==('1.24.4' if profile=='minimum' else '2.5.4')
         assert len(config['runtime_wheels'])==(14 if profile=='windows' else 13)
         assert not any('scikit-imagexx' in n for n in config['runtime'])
+
+
+def test_real_frozen_cpp_quoted_include_closure_is_retained():
+    _,blobs=c.source_state(ROOT,c.SOURCE_REVISION)
+    visited=set();pending=[n for n in c.SOURCE_HASHES if n.endswith('.cpp')]
+    while pending:
+        name=pending.pop()
+        if name in visited:continue
+        visited.add(name)
+        for include in re.findall(r'^\s*#include\s*"([^"]+)"',blobs[name].decode(),re.M):
+            candidates=['include/'+include] if include.startswith('skimagexx/') else [str(PurePosixPath(name).parent/include),'src/'+include]
+            matches=[n for n in candidates if n in blobs]
+            assert matches,(name,include,'missing actual transitive source dependency')
+            pending.append(matches[0])
+    assert {'include/skimagexx/convert.hpp','include/skimagexx/distance.hpp','include/skimagexx/local_threshold.hpp'}<=visited
 
 
 @pytest.mark.parametrize('expression',["danger()","dict(x=danger())","__import__('os')","x+1"])

@@ -43,6 +43,13 @@ PROFILES = {
     'debug': dict(python='3.13', config='Debug'),
 }
 SOURCE_HASHES['src/simd_math.hpp']='d5ac161aa4c38d09433b82dfe12abc36ee7660b7da8e82a02eceaeaba0785047'
+# These declaration-only headers are included transitively by the exact shared
+# simd.hpp foundation. Retain them even though this packet adds no new kernels.
+SOURCE_HASHES.update({
+    'include/skimagexx/convert.hpp':'829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016',
+    'include/skimagexx/distance.hpp':'3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5',
+    'include/skimagexx/local_threshold.hpp':'019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378',
+})
 FORBIDDEN = ('OPENBLAS_CORETYPE','NPY_DISABLE_CPU_FEATURES','NPY_ENABLE_CPU_FEATURES',
              'MKL_DEBUG_CPU_TYPE','MKL_SERVICE_FORCE_INTEL')
 CONTROLLER_PATHS=('tools/matrix_transform_profiles.py','tests/test_matrix_transform_profiles.py',
