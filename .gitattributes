@@ -91,3 +91,5 @@ coverage/evidence/max-tree-public-assertion-migration.json -text
 coverage/evidence/max-tree-sdk-census-migration.json -text
 coverage/contracts/tv-bregman-benchmark-original-b510.py -text
 coverage/evidence/tv-bregman-benchmark-source-migration.json -text
+
+coverage/evidence/matrix-transform-public-assertion-migration.json -text

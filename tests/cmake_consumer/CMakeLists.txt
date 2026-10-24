@@ -80,7 +80,7 @@ add_test(NAME installed_frangi_consumer COMMAND frangi_consumer)
 # Exercise the installed public headers and static library for the newer core
 # families as an independent client, without Python or source-tree include paths.
 find_package(Threads REQUIRED)
-foreach(_family IN ITEMS components component_consumers consumer_layout metrics footprint_dense rank rank_distribution rank_intensity rank_alias rank_statistics rank_percentile rank_bilateral rank_decisions projective tv_chambolle tv_reductions tv_denoise tv_bregman max_tree)
+foreach(_family IN ITEMS components component_consumers consumer_layout metrics footprint_dense rank rank_distribution rank_intensity rank_alias rank_statistics rank_percentile rank_bilateral rank_decisions projective tv_chambolle tv_reductions tv_denoise tv_bregman max_tree matrix_transform)
     add_executable(${_family}_consumer ../test_${_family}_native.cpp)
     target_link_libraries(${_family}_consumer PRIVATE skimagexx::skimagexx Threads::Threads)
     add_test(NAME installed_${_family}_consumer COMMAND ${_family}_consumer)

@@ -1,4 +1,4 @@
-"""Private function proof on a genuine installed core, never public acceptance."""
+"""Function proof on the actual installed public core; explicit private adapters remain separately labeled."""
 import hashlib
 import importlib.util
 import inspect
@@ -24,7 +24,9 @@ def load(name, path):
 
 
 contract = load('_matrix_frozen_contract', ROOT/'tests/test_matrix_transform_contracts.py')
-native = load('skimagexx._matrix_transform_candidate', ROOT/'python/skimagexx/_matrix_transform.py')
+PRIVATE_BACKEND = os.environ.get('MATRIX_TRANSFORM_PRIVATE_BACKEND')
+native = (load('skimagexx._matrix_transform_candidate', ROOT/'python/skimagexx/_matrix_transform.py')
+          if PRIVATE_BACKEND else importlib.import_module('skimagexx._matrix_transform'))
 BACKEND = (load('_matrix_math_core', Path(os.environ['MATRIX_TRANSFORM_PRIVATE_BACKEND']))
            if os.environ.get('MATRIX_TRANSFORM_PRIVATE_BACKEND') else xx._core)
 # Explicit genuine private-module adapter; never a public registry/core proof.
@@ -286,7 +288,7 @@ def retained_route_receipt():
             rows=ROUTES,general_cpp_required_pending=GENERAL_ROWS,general_pipeline=PIPELINE_GENERAL_ROWS,nonfinite_provider=NONFINITE_ROWS,
             certificate='authenticated versioned finite F64 general math; broader runtime/protocol domains provider-only',
             private_backend_adapter=BACKEND is not xx._core,
-            public_registration=False,operation_timings=0),indent=2)+'\n')
+            public_registration=not bool(PRIVATE_BACKEND),operation_timings=0),indent=2)+'\n')
 
 
 @pytest.fixture(params=(1,4))
@@ -399,13 +401,17 @@ def test_uncertified_values_and_hooks_use_owned_numpy_only(spec,workers):
 
 def test_backend_identity_and_default_policy_are_not_a_registration_claim():
     from skimagexx.coverage import native_functions
-    assert contract.API not in native_functions()
+    assert (contract.API not in native_functions()) if PRIVATE_BACKEND else tuple(native_functions()).count(contract.API)==1
     assert native._core is BACKEND and native._checked_entry() is ENTRY
     assert inspect.isbuiltin(BACKEND.set_num_threads)
     assert inspect.isbuiltin(BACKEND.get_num_threads) and BACKEND.get_num_threads()==1
     assert inspect.signature(native.matrix_transform)==inspect.signature(contract.original.matrix_transform)
     assert native.matrix_transform is not contract.original.matrix_transform
-    assert native.matrix_transform.__module__=='skimagexx._matrix_transform_candidate'
+    assert native.matrix_transform.__module__==('skimagexx._matrix_transform_candidate' if PRIVATE_BACKEND else 'skimagexx._matrix_transform')
+    if not PRIVATE_BACKEND:
+        assert native is importlib.import_module('skimagexx._matrix_transform') and BACKEND is xx._core
+        assert native.matrix_transform is xx.transform.matrix_transform
+        assert xx.set_num_threads is BACKEND.set_num_threads and xx.get_num_threads is BACKEND.get_num_threads
 
 
 @pytest.mark.parametrize('policy',('ignore','raise','call'))

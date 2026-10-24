@@ -301,11 +301,10 @@ def test_original_contract(spec):
 
 @pytest.mark.parametrize('workers', (1, 4))
 @pytest.mark.parametrize('spec', cases(), ids=lambda s:s['id'])
-def test_native_pending_function_contract(spec, workers):
+def test_native_public_function_contract(spec, workers):
     import skimagexx as xx
     from skimagexx.coverage import native_functions
-    if API not in native_functions():
-        pytest.xfail('native matrix_transform function pending; own ProjectiveTransform class is not function acceptance')
+    assert tuple(native_functions()).count(API)==1, 'registered own function required before public parity'
     previous = xx.set_fallback_enabled(False); old_workers = xx.get_num_threads()
     try:
         function = xx.transform.matrix_transform
