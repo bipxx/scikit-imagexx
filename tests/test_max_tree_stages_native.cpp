@@ -34,7 +34,9 @@ template<class T> void check_type(MaxTreeType type) {
     s::Tree tree{{parent.data(),n},{order.data(),n}};
     for(bool diameter:{false,true}) {
         auto operation=diameter?MaxTreeOperation::diameter_opening:MaxTreeOperation::area_opening;
-        max_tree_into(input,{operation,1,3},workspace,{output.data(),n});auto expected_output=output,expected_attribute=attribute;
+        max_tree_into(input,{operation,1,3},workspace,{output.data(),n});
+        auto expected_output=output;
+        auto expected_attribute=attribute;
         std::vector<double> observed(n,1),minimum(n*2),maximum(n*2);
         if(diameter) {
             for(std::size_t p=0;p<n;++p){minimum[p]=maximum[p]=double(p/5);minimum[p+n]=maximum[p+n]=double(p%5);}
