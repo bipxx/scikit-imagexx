@@ -27,9 +27,9 @@ input contract, raw samples and rejected trials.
 
 The reference is scikit-image **0.26.0**. There are currently **171 partially native
 image API paths and three metadata helpers**. The
-[API inventory](coverage/README.md) tracks 474 public callable paths across 19
+[API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases of existing algorithms; 295 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 298 paths remain upstream-only.
 Four transform classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths

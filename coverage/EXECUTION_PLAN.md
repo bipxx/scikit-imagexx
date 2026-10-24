@@ -6,11 +6,11 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 474 public paths: 171 native-partial image entries,
+The current inventory contains 477 public paths: 171 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 295 upstream-only entries. The expansion adds 19
+provider, and 298 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
-19 additional algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
+19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
 additional namespaces still need assessment. These counts describe implementation
 classification, not verified parity or performance.
@@ -45,10 +45,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted:171image paths,295upstream-only;3007 new/preserved records independently verified. Whole8 sharedwiring and exactone-worker R4/consumer measurement next |
-| Worker 1 | `metrics_reductions` | Three rank bilateral original contracts and public module aliases | R5benchmark frozen6dd; metrics5d allprivate gates complete. Next exact strict range/ssize/index/provider semantics,3canonical+3publicmodule identities, original-only/native0 |
-| Worker 2 | `resize_api` | Local Otsu/majority reference contracts | R5wrapper prototypebbc6674passes across6profiles,0publicadmission. Next502canonical decisions IDs,32provider traces and independent neighborhood definitions; original-only/native0 |
-| Worker 3 | `resize_bench` | Portable four-profile genuine public qualification tooling | Whole7b complete/released,171accepted. Next hosted whole8 source/package/corpus/default1/SDK gates; no local fullbuilds or timing, separateNP2headers/runtime environments |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted171images; current20-module snapshot477paths/298upstream. Additional3publicbilateralaliases areupstream-only, notnewalgorithms. Whole8 andR4performanceexacthostedruns active |
+| Worker 1 | `metrics_reductions` | Three rank bilateral private C++ kernels | Original5151x3 frozeneae7/native0. New3ops26..28/v1/cap1c sourcefrozen:3284normal/scalar checks onWin/modern/min/Debug/portableOMP; old25/ASan/noOMP gates ongoing. No public/perfadmission |
+| Worker 2 | `resize_api` | Rank bilateral benchmark contracts and hosted workflow | Decisions2algorithms/4paths frozen3304x3/native0. Next708frozenuntimedIDs+balanced3algorithm candidates,96providertraces,6publicpaths, strictcapsule/barrier/default1 guards; no dispatch |
+| Worker 3 | `resize_bench` | Exactsource hosted whole8 qualification | Tooling45guards/4metadata probes accepted. Run40051495344 followsfrozencc131;4genuineproductjobs/8modes andSDK12/corpora neededbeforepredicted180acceptance. No localfullbuilds or privatefacades |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -177,7 +177,7 @@ continues while another packet builds, runs CI or waits for measurements.
 |---|---|---|
 | Accepted cumulative increment | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Actual 104-member products, 59-member SDKs, 23,668 logical checks/profile, 1,231-case corpus and 72 SDK checks pass. Test/data-only supplements and retained failures are explicit; caches released |
 | Private measured bottleneck | Consumer raster output scans at 237532d | Width dispatch and certified SIMD selects/fills pass private 2,937x10 and fixed 878-case gates. Genuine whole7/performance pending; sorting/hash/layout conversion unresolved |
-| Active public integration | Four R4 rank statistics algorithms | Private f7 C++ proof ready. Worker3 owns wrappers/tests, root owns registry/namespace/CMake and metadata transition. Preserve separate vector depth and RankView ABI; eight paths remain upstream-only until whole proof |
+| Accepted public increment | Four R4 rank statistics algorithms | Whole7b f4 passes8profiles andstrict1379corpus; eightpaths acceptedpartial, initialone-worker run40049417301 preparing/measuring. Newwhole8 ninecanonicalpercentile paths remainpendingexacthostedrun40051495344 |
 | Active independent tooling | R4 original-only benchmark Phase1 | Worker1 includes all 995 reference IDs plus balanced scalar/vector workloads; aliases/errors untimed, actual-public gate precedes future timers |
 | Active reference coverage | Nine actual rank percentile functions | Worker2 audits source safety and p0/p1 conversion/arithmetic before original calls. equalize_percentile is absent; rank.percentile is a function, not an importable module |
 | Live R3 measurement | Four public R3 intensity algorithms | One-worker run 40034423731 from fbdfb46; all preparation gates passed, retain exact run through terminal/offline verification |

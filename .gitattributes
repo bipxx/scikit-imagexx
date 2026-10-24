@@ -29,3 +29,4 @@ coverage/contracts/rank-percentile-public.json -text
 coverage/evidence/public-wave7.json -text
 coverage/contracts/rank-bilateral-benchmark.json -text
 coverage/evidence/rank-percentile-fixture-assertion-migration.json -text
+coverage/evidence/rank-bilateral-public-assessment.json -text

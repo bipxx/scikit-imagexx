@@ -8,6 +8,7 @@
     "feature",
     "filters",
     "filters.rank",
+    "filters.rank.bilateral",
     "filters.rank.generic",
     "future",
     "graph",
@@ -3072,6 +3073,36 @@
       "execution_kind": "native",
       "parity_test": "tests/test_rank_statistics_public.py",
       "benchmark": "benchmarks/rank_statistics.py"
+    },
+    {
+      "api": "filters.rank.bilateral.mean_bilateral",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
+      "api": "filters.rank.bilateral.pop_bilateral",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
+    },
+    {
+      "api": "filters.rank.bilateral.sum_bilateral",
+      "kind": "callable",
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
     },
     {
       "api": "filters.rank.generic.autolevel",

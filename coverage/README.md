@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-474 public callable names inventoried in 19 modules; 171 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 171 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -237,6 +237,9 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.rank.threshold` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.threshold_percentile` | upstream-only | pending | pending |
 | `filters.rank.windowed_histogram` | native-partial | yes (partial input contract) | yes |
+| `filters.rank.bilateral.mean_bilateral` | upstream-only | pending | pending |
+| `filters.rank.bilateral.pop_bilateral` | upstream-only | pending | pending |
+| `filters.rank.bilateral.sum_bilateral` | upstream-only | pending | pending |
 | `filters.rank.generic.autolevel` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.enhance_contrast` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.generic.entropy` | native-partial | yes (partial input contract) | yes |

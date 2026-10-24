@@ -21090,7 +21090,10 @@
       "apis": [
         "filters.rank.mean_bilateral",
         "filters.rank.pop_bilateral",
-        "filters.rank.sum_bilateral"
+        "filters.rank.sum_bilateral",
+        "filters.rank.bilateral.mean_bilateral",
+        "filters.rank.bilateral.pop_bilateral",
+        "filters.rank.bilateral.sum_bilateral"
       ],
       "owner": "metrics_reductions",
       "branch": "feature/rank-bilateral-contracts",
@@ -21106,11 +21109,7 @@
         "uncovered_cases": [
           "No nativeimplementation/public/SDK/performance acceptance from originalreference tests. Exactfrozen source/protocol/alias domains feed nextprivatekernels."
         ],
-        "public_aliases_pending_inventory_update": [
-          "filters.rank.bilateral.mean_bilateral",
-          "filters.rank.bilateral.pop_bilateral",
-          "filters.rank.bilateral.sum_bilateral"
-        ]
+        "public_aliases_pending_inventory_update": []
       },
       "parity": {
         "source_sha": "eae7fc01f2533012e16d8faa428b92bae589e473",
@@ -22236,7 +22235,7 @@
   "evidence_note": "Proofs are scoped and hash-bearing. Contract/reference success, strict rejection, expected failures, private adapters and unvalidated fixes cannot satisfy public-native or measurement gates. A frozen interface permits independent implementation, never acceptance.",
   "snapshot_base_sha": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
   "inventory_snapshot": {
-    "public_names": 474,
+    "public_names": 477,
     "native_partial_image_names": 163,
     "metadata_names": 3,
     "upstream_only_names": 303,
@@ -22681,13 +22680,22 @@
     }
   ],
   "inventory_assessment_pending": {
+    "new_public_paths": [],
+    "note": "The3source-backed bilateral publicaliases are now inventoried upstream-only. Whole8frozencc131 retainsits earlier474snapshot; newmain477metadata doesnot alterthat source or countnewalgorithms/nativepaths."
+  },
+  "inventory_assessment_completed": {
     "new_public_paths": [
       "filters.rank.bilateral.mean_bilateral",
       "filters.rank.bilateral.pop_bilateral",
       "filters.rank.bilateral.sum_bilateral"
     ],
-    "evidence_packet": "rank-bilateral-contracts",
+    "algorithms_added": 0,
+    "native_paths_added": 0,
+    "reference_packet": "rank-bilateral-contracts",
     "source_sha": "eae7fc01f2533012e16d8faa428b92bae589e473",
-    "note": "Threeadditional publicnested aliases ofsame3algorithms assessedoriginal-only; extend futureinventory explicitly, do notcountasnewalgorithms or pretendnative. Frozenwhole8 metadata remains474total/180predicted untilqualification."
+    "total_public_paths": 477,
+    "modules": 20,
+    "upstream_only": 298,
+    "metadata_test_result": "478passed onactual171Windows7b package; availability/signature only"
   }
 }

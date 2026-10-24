@@ -1,7 +1,7 @@
 # Performance verification
 
 The current API inventory has 171 partially native image paths, three metadata
-helpers, four partially native transform classes and 295 upstream-only paths.
+helpers, four partially native transform classes and 298 upstream-only paths.
 Per-function tests and benchmark harnesses cover all 171 image paths; measured
 acceptance remains specific to each report's source revision and workload.
 

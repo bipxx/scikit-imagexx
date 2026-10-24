@@ -9,7 +9,7 @@ import skimage
 import numpy as np
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract, class_metadata_providers
 
-MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.generic', 'future',
+MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.bilateral', 'filters.rank.generic', 'future',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
            'restoration', 'segmentation', 'transform', 'util')
 
