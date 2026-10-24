@@ -892,6 +892,10 @@ def test_counts_directory_does_not_masquerade_as_a_test_file(tmp_path):
 
 def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path,monkeypatch):
     synthetic_complete_plan(tmp_path)
+    # The fixture builder also follows an after checkout's available selectors.
+    # Explicitly create the absent-file before variant in either checkout.
+    counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
+    if counts_source.exists():counts_source.unlink()
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS),image_count=190,registered_count=193,metadata_count=3))
     before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
     (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
