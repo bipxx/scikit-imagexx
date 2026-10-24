@@ -17669,7 +17669,15 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "head": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+            "archive": "build/cleanup/current-checkpoint/archives/02-core-rank9-validation.zip",
+            "archive_sha256": "81b2a0a549f376e2c5c1428003ddc07ff5d958cad7ac774b72ad7d6fe8c01070",
+            "former_path": "build/worktrees/core-rank9-validation"
+          }
+        ]
       },
       "checkpoint": {
         "source_lease": "build/worktrees/core-rank9-validation stays591 until all PhaseA supplements/seal terminal",
@@ -17681,7 +17689,13 @@
         "known_harness_gaps": "Initial identity counted155 images as155 total functions instead of158; corrected identity-v2 all8 pass. Two old nested import tests assumed rank mean/maximum were unported. Parent059fe76 supplies exact22-case module supplement; preserve original failures.",
         "timing_calls": 0,
         "lease": "released; all original and059 supplements terminal",
-        "scope": "Final proof supersedes pending checkpoint; initial failures retained."
+        "scope": "Final proof supersedes pending checkpoint; initial failures retained.",
+        "physical_worktree_retired": {
+          "head": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "archive": "build/cleanup/current-checkpoint/archives/02-core-rank9-validation.zip",
+          "archive_sha256": "81b2a0a549f376e2c5c1428003ddc07ff5d958cad7ac774b72ad7d6fe8c01070",
+          "former_path": "build/worktrees/core-rank9-validation"
+        }
       },
       "proofs": {
         "public_native": {
@@ -21529,6 +21543,12 @@
           {
             "former_path": "build/worktrees/wave7-rank-consumer",
             "archive": "build/cleanup/merged-kernel-worktrees-20261024/wave7-rank-consumer.zip"
+          },
+          {
+            "head": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+            "archive": "build/cleanup/current-checkpoint/archives/02-core-rank9-validation.zip",
+            "archive_sha256": "81b2a0a549f376e2c5c1428003ddc07ff5d958cad7ac774b72ad7d6fe8c01070",
+            "former_path": "build/worktrees/core-rank9-validation"
           }
         ]
       },
@@ -21556,6 +21576,13 @@
         "prediction_only": {
           "partial_native_image_paths": 171,
           "upstream_only_paths": 295
+        },
+        "worktree_retired": true,
+        "archived_source": {
+          "head": "f4e6f10a61fe553bd81787cf74f19cf14237c7fb",
+          "archive": "build/cleanup/current-checkpoint/archives/02-core-rank9-validation.zip",
+          "archive_sha256": "81b2a0a549f376e2c5c1428003ddc07ff5d958cad7ac774b72ad7d6fe8c01070",
+          "former_path": "build/worktrees/core-rank9-validation"
         }
       },
       "build_lease": {
@@ -23281,10 +23308,16 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/wave8-percentile-metrics"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "head": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+            "archive": "build/cleanup/current-checkpoint/archives/01-wave8-percentile-metrics.zip",
+            "archive_sha256": "6156c22f18691dbf02395b9ff35d3be6a6afc2fef830aa6ef2d1b9d176483fe7",
+            "former_path": "build/worktrees/wave8-percentile-metrics"
+          }
+        ]
       },
       "hosted_run": {
         "run_id": 40051495344,
@@ -23303,7 +23336,7 @@
         "source_frozen": true,
         "no_local_builds": true,
         "static_review": {
-          "path": "build/worktrees/wave8-percentile-metrics/build/whole8-static-review.json",
+          "path": "build/cleanup/current-checkpoint/retained-proofs/wave8-percentile-metrics/build/whole8-static-review.json",
           "sha256": "4842e9ab2dcfc521df5b93524a4f365ec4d37ba04383899dddb051bef0326c6c"
         },
         "policy": "Exactrun throughterminal; no cancel/restart solelyobservationtimeout. Allfour genuineproduct/corpus/SDK scopes required; private/prototype or old171metadata probes notactual180.",
@@ -23857,10 +23890,16 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/wave8-percentile-metrics"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "head": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+            "archive": "build/cleanup/current-checkpoint/archives/01-wave8-percentile-metrics.zip",
+            "archive_sha256": "6156c22f18691dbf02395b9ff35d3be6a6afc2fef830aa6ef2d1b9d176483fe7",
+            "former_path": "build/worktrees/wave8-percentile-metrics"
+          }
+        ]
       },
       "hosted_run": {
         "run_id": 40059399856,
@@ -26006,6 +26045,48 @@
       "archive": "build/cleanup/residual-temp-caches-20261024/_pytest_cache.zip",
       "archive_sha256": "5ec95b2d9dd36049347981c696aaf766f600c0acc3eb86581e487c425d889fa1",
       "member_rule": "Remove former_prefix/; every original regular file remains byte-exact in the verified ZIP. Released temporary cache only; no package/environment/source/raw evidence removed."
+    },
+    {
+      "former_prefix": "build/worktrees/bilateral-qualification-fixes",
+      "archive": "build/cleanup/current-checkpoint/archives/00-bilateral-qualification-fixes.zip",
+      "archive_sha256": "a18c3a62ad352f7f5461ea361c8b8096a1d12332b521e8b90ba9c194fcce3abc",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/wave8-percentile-metrics",
+      "archive": "build/cleanup/current-checkpoint/archives/01-wave8-percentile-metrics.zip",
+      "archive_sha256": "6156c22f18691dbf02395b9ff35d3be6a6afc2fef830aa6ef2d1b9d176483fe7",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/core-rank9-validation",
+      "archive": "build/cleanup/current-checkpoint/archives/02-core-rank9-validation.zip",
+      "archive_sha256": "81b2a0a549f376e2c5c1428003ddc07ff5d958cad7ac774b72ad7d6fe8c01070",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/rank-statistics-comparison-main-integration/pytest-cache",
+      "archive": "build/cleanup/current-checkpoint/archives/03-pytest-cache.zip",
+      "archive_sha256": "2856b50ee47fb539ebe4ecc632637400d97ba5e04196ed1174db90b923cef6a0",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/rank-statistics-comparison-main-integration/pytest-tmp",
+      "archive": "build/cleanup/current-checkpoint/archives/04-pytest-tmp.zip",
+      "archive_sha256": "085559ac78d1b65aa79021c5a268ee805eada21dce7d3b1a5759af1991dbb626",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/whole10-readiness/main-integration-guards/pytest-cache",
+      "archive": "build/cleanup/current-checkpoint/archives/05-pytest-cache.zip",
+      "archive_sha256": "3932a2196fd6bdf80726cedf7c66c6273994552fb0d933568feaf852ffbf9a52",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/whole10-readiness/main-integration-guards/pytest-tmp",
+      "archive": "build/cleanup/current-checkpoint/archives/06-pytest-tmp.zip",
+      "archive_sha256": "d853bcf9ce44592c4023cdf681be6a77d218d4ee11af5977958fee42ffdc3202",
+      "member_rule": "Remove former_prefix/; exact original regular bytes retained in verified ZIP, no reparse points; obsolete worktree .git administrative pointer omitted."
     }
   ],
   "inventory_assessment_pending": {
@@ -26032,9 +26113,20 @@
     "paths": [
       "build/worktrees/metrics-reverse-stride",
       "build/worktrees/public-qualification",
-      "build/worktrees/rank-percentile-public",
-      "build/worktrees/wave8-percentile-metrics"
+      "build/worktrees/rank-percentile-public"
     ],
-    "scope": "224historical rawJSONcopies exactlyequalmain/Git omittedlocally only; allothertrackedsource/build/runtimeinputs unchanged; fulltree remains inGit."
+    "scope": "224historical rawJSONcopies exactlyequalmain/Git omittedlocally only; allothertrackedsource/build/runtimeinputs unchanged; fulltree remains inGit.",
+    "subsequently_retired": [
+      {
+        "head": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+        "archive": "build/cleanup/current-checkpoint/archives/01-wave8-percentile-metrics.zip",
+        "archive_sha256": "6156c22f18691dbf02395b9ff35d3be6a6afc2fef830aa6ef2d1b9d176483fe7",
+        "former_path": "build/worktrees/wave8-percentile-metrics"
+      }
+    ]
+  },
+  "latest_cleanup": {
+    "path": "coverage/evidence/qualification-checkpoint-cleanup-20261024.json",
+    "sha256": "8cfdeb5b731c8399eef35ac805fdad79b2f2a104e475d855fc1a832a89ed8b67"
   }
 }
