@@ -1,9 +1,11 @@
-"""TV-Chambolle provider orchestration around native materialized stages.
+"""TV-Chambolle with a compiled finite loop and owned provider orchestration.
 
-The scalar, energy/reduction, conversion, allocation, channel and exceptional
-NumPy stages are explicit providers, not a pure-C++ whole-loop claim. Source
-ordering follows scikit-image0.26 (BSD-3-Clause; third_party license). Public
-registration and complete-product admission are owned by separate integration.
+Eligible ordinary finite calls execute typed C++ iterations and reductions.
+Conversion, channel, allocation, protocol and exceptional behavior retain
+explicit NumPy providers, with compiled materialized stages where eligible.
+This is not an all-argument pure-C++ claim. Source ordering follows
+scikit-image0.26 (BSD-3-Clause; third_party license). Public registration and
+complete-product admission are owned by separate integration.
 """
 import importlib
 import inspect
@@ -231,7 +233,7 @@ def _spatial(image,weight,eps,max_num_iter,_finite_providers=True):
 
 
 def denoise_tv_chambolle(image,weight=0.1,eps=0.0002,max_num_iter=200,*,channel_axis=None):
-    """Denoise using compiled spatial stages and explicit NumPy providers."""
+    """Denoise with a compiled finite loop or owned stage/provider orchestration."""
     _require_stages()
     providers_pristine=(_providers_pristine() and type(image) is np.ndarray
                         and (channel_axis is None or type(channel_axis) is int))
