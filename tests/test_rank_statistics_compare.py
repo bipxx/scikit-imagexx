@@ -82,7 +82,7 @@ def fake_product(tmp_path):
     scope=c.config()['planned_scope']
     sdk_receipt=dict(families=scope['sdk_family_names'],checks=2*scope['sdk_families'],SDK_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()})
     (path/'sdk.json').write_text(json.dumps(sdk_receipt))
-    qualification=dict(schema='public-qualification-v2',SDK_checks=26,passed=True,no_timing=True,failures=[],profile='windows',source=dict(revision=revision),expected_registry=dict(image_count=scope['image_paths'],metadata_count=scope['metadata_paths'],registered_count=scope['image_paths']+scope['metadata_paths'],functions=list(map(str,range(scope['image_paths']+scope['metadata_paths'])))),records={'sdk.json':dict(bytes=(path/'sdk.json').stat().st_size,sha256=c.sha(path/'sdk.json'))})
+    qualification=dict(schema='public-qualification-v2',SDK_checks=2*scope['sdk_families'],passed=True,no_timing=True,failures=[],profile='windows',source=dict(revision=revision),expected_registry=dict(image_count=scope['image_paths'],metadata_count=scope['metadata_paths'],registered_count=scope['image_paths']+scope['metadata_paths'],functions=list(map(str,range(scope['image_paths']+scope['metadata_paths'])))),records={'sdk.json':dict(bytes=(path/'sdk.json').stat().st_size,sha256=c.sha(path/'sdk.json'))})
     (path/'qualification.json').write_text(json.dumps(qualification));(path/'runtime-lock.txt').write_text('SYNTHETIC')
     wheels={p.name:{k:v for k,v in c.verify_wheel(p).items() if k!='members'} for p in (path/'wheels').glob('*.whl')}
     runtime=dict(schema='ci-offline-measurement-v1',source=dict(revision=revision),wheels=wheels,lock_sha256=c.sha(path/'runtime-lock.txt'),runtime=dict(sdk_sha256={n:hashlib.sha256(b).hexdigest() for n,b in sdk.items()}))
