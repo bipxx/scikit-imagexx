@@ -373,9 +373,9 @@ def main(argv=None):
             public_admission(manifest,qualified)
         assert text_sha(SOURCE_CONTRACT)==manifest['source_contract_sha256']
         assert all(text_sha(ROOT/n)==h for n,h in manifest['fixture_source_sha256'].items())
-        qualified=contracts();frozen=json.loads(SOURCE_CONTRACT.read_text())
-        assert str(inspect.signature(resolve(True)))==frozen['signature'] and qualified.source_sha(resolve(True))==frozen['source_sha256']
-        assert qualified.source_sha(importlib.import_module('skimage.restoration._denoise')._denoise_tv_chambolle_nd)==frozen['helper_sha256']
+        contract_module=contracts();frozen=json.loads(SOURCE_CONTRACT.read_text())
+        assert str(inspect.signature(resolve(True)))==frozen['signature'] and contract_module.source_sha(resolve(True))==frozen['source_sha256']
+        assert contract_module.source_sha(importlib.import_module('skimage.restoration._denoise')._denoise_tv_chambolle_nd)==frozen['helper_sha256']
         cases=corpus();assert [inventory(c) for c in cases]==manifest['case_inventory'] and digest(manifest['case_inventory'])==manifest['case_contract_sha256']
         specs=[case_spec(c) for c in cases];expected_profile=manifest['reference_profiles'].get(profile())
         if expected_profile:assert digest(specs)==expected_profile['case_spec_sha256']

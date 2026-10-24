@@ -295,7 +295,7 @@ def test_qualified_artifact_uses_complete_generic_verifier_plus_tv_specific_scop
     assert "mode + '-public-TV'" in text and "len(package['members_sha256']) == 108" in text
     assert 'independent-verification.json' in text and 'core_sha256' in text
     main=ast.unparse(next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main'))
-    assert main.index('preparation_barrier(args.barrier')<main.index('qualified = contracts()')<main.index('timing = measure(')
+    assert main.index('preparation_barrier(args.barrier')<main.index('contract_module = contracts()')<main.index('timing = measure(')
     assert 'pip wheel' not in source and 'subprocess.run' not in source
 
 
@@ -348,3 +348,36 @@ def test_workflow_certificate_utf8_bytes_are_identical_across_newline_platforms(
         legacy_hashes.append(hashlib.sha256(legacy.read_bytes()).hexdigest())
     assert hashes[0]==hashes[1]
     assert legacy_hashes[0]!=legacy_hashes[1]  # The old text writer reproduces the actual barrier bug.
+
+
+def test_native_check_only_report_keeps_qualified_dictionary_serializable(monkeypatch,tmp_path):
+    """Inert metadata-only case exercises actual main/save; no numerical parity proof."""
+    product={'profile':h.profile(),'product_sha256':'b'*64,'metadata_only_tooling':True}
+    module=types.ModuleType('metadata-only-contract-module')
+    module.source_sha=lambda function:'a'*64
+    marker=dict(error=None,warnings=[],events=[],metadata_only=True)
+    case=types.SimpleNamespace(source_id=None,timed=False,id='metadata-only-not-image')
+    inventory={'id':case.id,'timed':False};spec={'metadata_only':True}
+    original=lambda image:None  # Never called by this metadata control.
+    source=tmp_path/'source.json';source.write_text(json.dumps({'signature':str(h.inspect.signature(original)),'source_sha256':'a'*64,'helper_sha256':'a'*64}))
+    manifest_path=tmp_path/'manifest.json'
+    manifest_path.write_text(json.dumps(dict(source_contract_sha256=h.text_sha(source),fixture_source_sha256={},case_inventory=[inventory],case_contract_sha256=h.digest([inventory]),reference_profiles={h.profile():dict(case_spec_sha256=h.digest([spec]),observations={'0':h.digest(marker)})})))
+    monkeypatch.setattr(h,'MANIFEST',manifest_path);monkeypatch.setattr(h,'SOURCE_CONTRACT',source)
+    monkeypatch.setattr(h,'contracts',lambda:module);monkeypatch.setattr(h,'corpus',lambda:(case,))
+    monkeypatch.setattr(h,'inventory',lambda value:inventory);monkeypatch.setattr(h,'case_spec',lambda value:spec)
+    monkeypatch.setattr(h,'resolve',lambda original_flag=False:original)
+    monkeypatch.setattr(h,'observe',lambda *args:copy.deepcopy(marker));monkeypatch.setattr(h,'native_observe',lambda *args:copy.deepcopy(marker))
+    monkeypatch.setattr(h,'comparison',lambda value:value)
+    calls=[]
+    def qualified(*args):calls.append('qualified');return copy.deepcopy(product)
+    monkeypatch.setattr(h,'qualified_product',qualified)
+    monkeypatch.setattr(h,'public_admission',lambda manifest,value:calls.append(('admission',copy.deepcopy(value))))
+    monkeypatch.setattr(h,'measure',lambda *args:pytest.fail('metadata-only check reached timer'))
+    monkeypatch.setattr(h,'source_fingerprint',lambda root:{'source_sha256':'c'*64})
+    output=tmp_path/'report.json'
+    assert h.main(['--prepare-capsule','--check-only','--threads','1','4','--capsule',str(tmp_path/'capsule'),'--certificate',str(tmp_path/'certificate.json'),'--qualified-run','123','--qualified-source','d'*40,'--output',str(output)])==0
+    result=json.loads(output.read_text())
+    assert result['metadata']['artifacts']==product
+    assert result['status']=='complete-parity-check' and not result['results'] and not result['failures']
+    assert len(result['checks'])==1 and set(result['checks'][0]['actual_by_workers'])=={'1','4'}
+    assert calls==['qualified',('admission',product),'qualified']
