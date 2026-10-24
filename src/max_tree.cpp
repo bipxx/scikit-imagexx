@@ -151,19 +151,40 @@ template<class T> void build_tree(const T* values,const MaxTreeImage& image,int 
                                  const MaxTreeWorkspace& w,bool vectorized) {
     const auto n=image.elements;auto* parent=w.parent.data;auto* roots=w.roots.data;
     auto* order=w.traverser.data;auto* scratch=w.sort_scratch.data;
-    auto less=[&](std::int64_t a,std::int64_t b) {return values[a]<values[b] || (!(values[b]<values[a]) && a<b);};
-    auto* source=order;auto* target=scratch;
-    for(std::size_t width=1;width<n;width*=2) {
-        for(std::size_t begin=0;begin<n;begin+=2*width) {
-            auto middle=std::min(begin+width,n),end=std::min(begin+2*width,n);
-            auto left=begin,right=middle,out=begin;
-            while(left<middle && right<end)target[out++]=less(source[right],source[left])?source[right++]:source[left++];
-            copy_words(source+left,target+out,middle-left,vectorized);out+=middle-left;
-            copy_words(source+right,target+out,end-right,vectorized);
+    if constexpr(std::is_same_v<T,std::uint8_t>) {
+        // Ascending source indices make equal-value placement exactly stable.
+        std::array<std::size_t,256> next{};
+        for(std::size_t i=0;i<n;++i)++next[values[i]];
+        std::size_t prefix=0;
+        for(auto& count:next){const auto frequency=count;count=prefix;prefix+=frequency;}
+        for(std::size_t i=0;i<n;++i)order[next[values[i]]++]=std::int64_t(i);
+    }else if constexpr(std::is_same_v<T,std::uint16_t>) {
+        // Bounded radix storage; both passes preserve the preceding tie order.
+        std::array<std::size_t,256> low{},high{};
+        for(std::size_t i=0;i<n;++i){++low[values[i]&255u];++high[values[i]>>8];}
+        std::size_t low_prefix=0,high_prefix=0;
+        for(std::size_t bin=0;bin<256;++bin) {
+            const auto low_count=low[bin],high_count=high[bin];
+            low[bin]=low_prefix;low_prefix+=low_count;
+            high[bin]=high_prefix;high_prefix+=high_count;
         }
-        std::swap(source,target);
+        for(std::size_t i=0;i<n;++i)scratch[low[values[i]&255u]++]=std::int64_t(i);
+        for(std::size_t i=0;i<n;++i){const auto pixel=scratch[i];order[high[values[pixel]>>8]++]=pixel;}
+    }else {
+        auto less=[&](std::int64_t a,std::int64_t b) {return values[a]<values[b] || (!(values[b]<values[a]) && a<b);};
+        auto* source=order;auto* target=scratch;
+        for(std::size_t width=1;width<n;width*=2) {
+            for(std::size_t begin=0;begin<n;begin+=2*width) {
+                auto middle=std::min(begin+width,n),end=std::min(begin+2*width,n);
+                auto left=begin,right=middle,out=begin;
+                while(left<middle && right<end)target[out++]=less(source[right],source[left])?source[right++]:source[left++];
+                copy_words(source+left,target+out,middle-left,vectorized);out+=middle-left;
+                copy_words(source+right,target+out,end-right,vectorized);
+            }
+            std::swap(source,target);
+        }
+        if(source!=order)copy_words(source,order,n,vectorized);
     }
-    if(source!=order)copy_words(source,order,n,vectorized);
     const auto neighbors=neighborhood(image,connectivity);
     for(std::size_t index=n;index-->0;) {
         const auto p=order[index];parent[p]=roots[p]=p;
