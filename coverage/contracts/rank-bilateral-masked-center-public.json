@@ -62,10 +62,10 @@
     "unchanged": true
   },
   "unchanged_source_pins": {
-    "python/skimagexx/_rank.py": "f194d1b9eeb714169b677265e6d3a4fbfd9977eb3e399f01ef1cff42526b6eae",
-    "tests/test_rank_bilateral_public.py": "996fa7539224b0fe0305774d51d3a478119f8c9c89660901e173c45ab84bbeda",
+    "python/skimagexx/_rank.py": "c86646bd9314637a34a3628fef31d513817858277b8ff89dbc1d04ca6c0cc6e4",
+    "tests/test_rank_bilateral_public.py": "002f5b826f47744b840f74c8ca6bca17bbaae009d31524314efaa587cb2b7c5c",
     "coverage/contracts/rank-bilateral-public.json": "740428daa9368e3a7ecaab1b40f7d8eebf3b961f05ab9f900a4deb30653ffb72",
-    "tests/test_rank_bilateral_contracts.py": "2ca00afc72408e79303472c9a8ce814a9be60b7aa5c79cc9698e318a93536f52",
+    "tests/test_rank_bilateral_contracts.py": "9fb6411bb69a92bbc40bc4ebab37f553328476a19d010c895ea7c0c2dc9d1f16",
     "coverage/contracts/rank-bilateral.json": "a2f499256e08e94e5e63e29a05ce8e20586e33718161351fd3cec71e761b5c14",
     "tests/test_rank_bilateral_mutation_supplement.py": "15c1f4796be9460fd8f99627130207f340876c410e67a10764b2379cd7941774"
   },

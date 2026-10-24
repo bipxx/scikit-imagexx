@@ -185,3 +185,57 @@ def test_frozen_source_observer_derivation_and_scope():
         assert ast.dump(Restore().visit(node))==ast.dump(ast.parse(frozen).body[0])
     for filename,digest in data['unchanged_source_pins'].items():
         assert hashlib.sha256((ROOT/filename).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==digest
+
+
+def test_source_pin_migration_preserves_frozen_observers_and_assertions():
+    import copy
+    migration=json.loads((ROOT/'coverage/evidence/rank-bilateral-masked-source-pin-migration.json').read_text())
+    frozen_text=migration['original_contract_utf8']
+    assert hashlib.sha256(frozen_text.encode()).hexdigest()=='484e8ccb287722f12606095316262293734878a7e7b3411034d16ea802e148c6'
+    original=json.loads(frozen_text)
+    current=json.loads((ROOT/'coverage/contracts/rank-bilateral-masked-center-public.json').read_text())
+    paths={'python/skimagexx/_rank.py','tests/test_rank_bilateral_public.py','tests/test_rank_bilateral_contracts.py'}
+    assert set(migration['sources'])==paths
+    expected=copy.deepcopy(original)
+    allowed_tests={
+        'tests/test_rank_bilateral_public.py':{'test_source_signature_and_pending_shared_handoff'},
+        'tests/test_rank_bilateral_contracts.py':{'test_integrity_safe_scope_native0','test_strict_pending_never_counts_forwarding'},
+    }
+    for filename,record in migration['sources'].items():
+        old_text=record['original_source_utf8']
+        assert hashlib.sha256(old_text.encode()).hexdigest()==original['unchanged_source_pins'][filename]
+        new_text=(ROOT/filename).read_bytes().replace(b'\r\n',b'\n').decode()
+        current_digest=hashlib.sha256(new_text.encode()).hexdigest()
+        assert current_digest==record['current_canonical_lf_sha256']
+        expected['unchanged_source_pins'][filename]=current_digest
+        old=ast.parse(old_text);new=ast.parse(new_text)
+        if filename=='python/skimagexx/_rank.py':
+            helpers=[node for node in new.body if isinstance(node,ast.FunctionDef) and node.name=='_bilateral_ubyte']
+            assert len(helpers)==1
+            new.body.remove(helpers[0])
+            assert ast.dump(new.body[-1])==ast.dump(ast.parse('__all__+=list(_BILATERAL_FUNCTIONS)').body[0])
+            new.body.pop()
+            assert len(old.body)==len(new.body)
+            for before,after in zip(old.body,new.body):
+                if isinstance(after,ast.FunctionDef) and after.name=='_bilateral_apply':
+                    calls=[node for node in ast.walk(after) if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id=='_bilateral_ubyte']
+                    assert len(calls)==2 and {node.args[0].id for node in calls}=={'image','mask'}
+                    for call in calls:call.func.id='_ubyte'
+                elif isinstance(after,ast.Assign) and len(after.targets)==1 and isinstance(after.targets[0],ast.Name) and after.targets[0].id=='_BILATERAL_SCOPE_DOC':
+                    assert isinstance(before,ast.Assign) and before.targets[0].id=='_BILATERAL_SCOPE_DOC'
+                    after.value=copy.deepcopy(before.value)
+        else:
+            assert len(old.body)==len(new.body)
+            changed=set()
+            for before,after in zip(old.body,new.body):
+                if isinstance(after,ast.FunctionDef) and after.name in allowed_tests[filename]:
+                    assert isinstance(before,ast.FunctionDef) and before.name==after.name
+                    after.body=copy.deepcopy(before.body)
+                    changed.add(after.name)
+            assert changed==allowed_tests[filename]
+        # Both source versions use this runtime: no cross-version AST hashes,
+        # ignored fields or numerical fixture rewrites authenticate migration.
+        assert ast.dump(new)==ast.dump(old)
+    # The six source pins are metadata. All396 cases, literal frozen observer
+    # text, safety certificates, interface and other contract values stay exact.
+    assert current==expected

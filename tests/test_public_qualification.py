@@ -542,7 +542,7 @@ def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypat
 
 
 def test_bilateral_groups_are_public_and_old_scopes_remain():
-    assert q.GROUPS['public-bilateral']==('test_rank_bilateral_contracts.py','test_rank_bilateral_public.py','test_rank_bilateral_masked_center_public.py')
+    assert q.GROUPS['public-bilateral']==('test_rank_bilateral_contracts.py','test_rank_bilateral_public.py','test_rank_bilateral_masked_center_public.py','test_rank_bilateral_endian_public.py')
     assert not any('pipeline' in n or 'supplement.py' in n for n in q.GROUPS['public-bilateral'])
     assert q.CORPORA['bilateral']==('rank_bilateral.py',1008)
     assert {'statistics','percentile','consumers'}<=q.CORPORA.keys()
