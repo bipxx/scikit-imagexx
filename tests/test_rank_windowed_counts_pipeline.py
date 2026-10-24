@@ -1,7 +1,8 @@
-"""Private opcode16 counts/pop policy proof; never whole/public admission.
+"""Counts/pop regression tests against the installed public package by default.
 
-A real separately compiled bind_rank module is required explicitly. The source
-wrapper calls that core, without replacing public namespaces or registry.
+SKIMAGEXX_WINDOWED_COUNTS_CORE explicitly selects the historical private-core
+source-wrapper proof mode. That mode provides no public package admission.
+Neither mode replaces the installed public namespace or its core.
 """
 import importlib
 import importlib.util
@@ -21,8 +22,40 @@ def load(name,path):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     return module
 
-core=importlib.import_module(os.environ.get('SKIMAGEXX_WINDOWED_COUNTS_CORE','_rank_windowed_core'))
-shell=load('skimagexx._rank_windowed_counts_candidate',ROOT/'python/skimagexx/_rank.py');shell._core=core
+PRIVATE_CORE=os.environ.get('SKIMAGEXX_WINDOWED_COUNTS_CORE')
+if PRIVATE_CORE:
+    core=importlib.import_module(PRIVATE_CORE)
+    shell=load('skimagexx._rank_windowed_counts_candidate',ROOT/'python/skimagexx/_rank.py');shell._core=core
+else:
+    core=importlib.import_module('skimagexx._core')
+    shell=importlib.import_module('skimagexx._rank')
+
+
+def _admit_installed_public_counts():
+    """Fail closed on a substituted wrapper, namespace, or worker/core state."""
+    xx=importlib.import_module('skimagexx')
+    canonical=importlib.import_module('skimagexx.filters.rank')
+    generic=importlib.import_module('skimagexx.filters.rank.generic')
+    coverage=importlib.import_module('skimagexx.coverage')
+    paths={'filters.rank.windowed_histogram','filters.rank.generic.windowed_histogram'}
+    assert paths<=set(coverage.native_functions())
+    assert shell is importlib.import_module('skimagexx._rank')
+    assert core is importlib.import_module('skimagexx._core') is xx._core is shell._core
+    assert xx.set_num_threads is core.set_num_threads and xx.get_num_threads is core.get_num_threads
+    assert core.get_num_threads()==1
+    own=shell.windowed_histogram
+    assert inspect.isfunction(own) and own.__module__==shell.__name__
+    assert own.__globals__ is shell.__dict__ and own.__globals__['_core'] is core
+    assert canonical.windowed_histogram is generic.windowed_histogram is own
+    assert core.rank_vector_interface=='rank-vector-v1'
+    assert type(core.rank_vector_capabilities) is int and core.rank_vector_capabilities==0x10000
+    entry=core.rank_windowed_histogram_run
+    assert inspect.isbuiltin(entry) and entry.__module__==core.__name__
+    assert entry.__name__=='rank_windowed_histogram_run'
+    assert core.__dict__['rank_windowed_histogram_run'] is entry
+
+
+if not PRIVATE_CORE:_admit_installed_public_counts()
 contracts=load('windowed_counts_frozen_statistics',ROOT/'tests/test_rank_statistics_contracts.py')
 FROZEN=json.loads(contracts.MATRIX.read_text())
 OLD_NAMES=('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy',
