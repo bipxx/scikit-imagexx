@@ -29474,6 +29474,192 @@
         "previous_failure": "Before product build: synthetic metadata fixture incorrectly imported NumPy; minimum interpreter AST witness was version-specific. Both fixed in metadata only;570 bootstrap guards pass on3.11 and3.13 with numerical imports blocked.",
         "runtime_source_changed_from_c05": false
       }
+    },
+    {
+      "id": "max-tree-benchmark-reference",
+      "kind": "benchmark_contract",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "feature/max-tree-benchmark",
+      "base_sha": "2a02909954e9f40f18cbdc2804d7bad9632275ce",
+      "owns": [],
+      "depends_on": [
+        "max-tree-contracts"
+      ],
+      "dependency_requirements": {
+        "max-tree-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "state": "contracted",
+      "contract": {
+        "case_manifest": "coverage/contracts/max-tree-benchmark.json",
+        "uncovered_cases": [
+          "Actual qualified public199/SDK20 consumer parity and fresh hosted one-worker7paired original/native measurement for every252 candidate."
+        ]
+      },
+      "parity": {
+        "source_sha": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2",
+        "artifact_sha256": "2c70e12299d5fdb9ce5ecfafb7de05485332d638099936a3b7082ded3843b612",
+        "runs": [
+          "build/worktrees/max-tree-benchmark/build/max-tree-benchmark-evidence/manifest.json"
+        ],
+        "native_checks": 0
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2",
+        "main_commit": "9e374ba65f0ee9567fb86cf21335b3d0675dba69"
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": [
+          "build/worktrees/max-tree-benchmark/build/max-tree-benchmark-evidence/manifest.json",
+          "build/decisions-readiness/max-tree-benchmark-reference-root-review/manifest.json",
+          "build/decisions-readiness/max-tree-benchmark-reference-root-review/reference-matrix-crosscheck.json"
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2",
+          "manifest": {
+            "path": "build/worktrees/max-tree-benchmark/build/max-tree-benchmark-evidence/manifest.json",
+            "sha256": "2c70e12299d5fdb9ce5ecfafb7de05485332d638099936a3b7082ded3843b612"
+          },
+          "passing_contract_checks": 1053,
+          "scope": "351 original observations on each of three runtimes, plus252 finite untimed candidates on each; no native acceptance."
+        }
+      }
+    },
+    {
+      "id": "max-tree-public-benchmark-consumer",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/max-tree-compare",
+      "base_sha": "9e374ba65f0ee9567fb86cf21335b3d0675dba69",
+      "owns": [
+        "benchmarks/max_tree_compare.py",
+        "tools/max_tree_compare_artifacts.py",
+        "tests/test_max_tree_compare.py",
+        ".github/workflows/max-tree-compare.yml"
+      ],
+      "depends_on": [
+        "max-tree-benchmark-reference",
+        "max-tree-public198-integration"
+      ],
+      "dependency_requirements": {
+        "max-tree-benchmark-reference": {
+          "evidence_scope": "contract_reference",
+          "source_sha": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2"
+        },
+        "max-tree-public198-integration": {
+          "evidence_scope": "public_native",
+          "source_sha": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/max-tree-benchmark.json",
+        "uncovered_cases": [
+          "Implement only separate strict public199/SDK20 artifact consumer and metadata guards; retain null static pins. All351 observations and252 finite cases through real public exports with all3 workers1/4 normal/scalar preparation barriers, then fresh artifact-only one-worker7paired original/native rounds. Genuine product qualification, final pins and every numerical/timing execution remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/max-tree-compare"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-chambolle-cursor-comparison",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/tv-chambolle-compare",
+      "base_sha": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+      "owns": [
+        ".github/workflows/tv-chambolle-compare-experiment-publication.yml"
+      ],
+      "depends_on": [
+        "tv-chambolle-strided-cursor"
+      ],
+      "dependency_requirements": {
+        "tv-chambolle-strided-cursor": {
+          "evidence_scope": "public_native",
+          "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7"
+        }
+      },
+      "state": "preparing",
+      "contract": {
+        "case_manifest": "coverage/contracts/tv-chambolle-benchmark.json",
+        "uncovered_cases": [
+          "New separate metadata-only tiny certificate publisher source review and immutable artifact authentication, then exactly one frozen d48 comparison run; complete original/before/after all400 observations on all3 profiles workers1/4 normal/scalar before fresh70x7 one-worker measurement. Before actual3cdd is never relabeled as intended6ff; after actual5e remains192 even when futuremain199."
+        ]
+      },
+      "parity": {
+        "source_sha": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-chambolle-compare",
+          "build/tv-chambolle-cursor-compare-experiment-proposal"
+        ],
+        "protected_artifacts": [
+          "build/decisions-readiness/tv-cursor-comparison-root-review/manifest.json",
+          "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json"
+        ]
+      },
+      "tooling_root_review": {
+        "path": "build/decisions-readiness/tv-cursor-comparison-root-review/manifest.json",
+        "bytes": 1882,
+        "sha256": "90b76dd5da544717f9a17b026bb9e022fbea005b70f09a1fff01a64bd601666b"
+      },
+      "reviewed_experiment": {
+        "path": "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json",
+        "bytes": 78007,
+        "sha256": "f547ba16f384f85df7851b23e05636314f0718da15ec9ba8c1f2fefe16e71afa"
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -30199,19 +30385,22 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
+        "tv-chambolle-cursor-comparison",
         "tv-chambolle-strided-cursor"
       ],
       "resize_bench": [
+        "matrix-transform-public199-integration",
         "matrix-transform-profile-binding"
       ],
       "resize_api": [
+        "max-tree-public-benchmark-consumer",
         "max-tree-root-compression"
       ]
     },
     "current_three_agent_packets": {
-      "metrics_reductions": "tv-chambolle-strided-cursor",
-      "resize_bench": "matrix-transform-profile-binding",
-      "resize_api": "max-tree-root-compression"
+      "metrics_reductions": "tv-chambolle-cursor-comparison",
+      "resize_bench": "matrix-transform-public199-integration",
+      "resize_api": "max-tree-public-benchmark-consumer"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "scope": "Original-only six-API reference corpus; native admission remains unconditional pending.",
+  "source": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2",
+  "actual_main_merge": "9e374ba65f0ee9567fb86cf21335b3d0675dba69",
+  "root_review": {
+    "path": "build/decisions-readiness/max-tree-benchmark-reference-root-review/manifest.json",
+    "bytes": 1645,
+    "sha256": "6187cdff4d1577a927efc480debcbb7e41db59b243d6912f6387749a71e593a3"
+  },
+  "exact_frozen_matrix_crosscheck": {
+    "path": "build/decisions-readiness/max-tree-benchmark-reference-root-review/reference-matrix-crosscheck.json",
+    "bytes": 256,
+    "sha256": "6de01422efe56c4ea3f99fbad42f8517427a0bf70873178b5f0f107b9a3cf422"
+  },
+  "retained_manifest": {
+    "path": "build/worktrees/max-tree-benchmark/build/max-tree-benchmark-evidence/manifest.json",
+    "sha256": "2c70e12299d5fdb9ce5ecfafb7de05485332d638099936a3b7082ded3843b612"
+  },
+  "original_observations_per_profile": 351,
+  "numeric_per_profile": 233,
+  "metadata_per_profile": 118,
+  "finite_candidates_per_profile": 252,
+  "profiles": [
+    "windows",
+    "modern",
+    "minimum"
+  ],
+  "metadata_checks": 219,
+  "verified_compressed_records": 1021,
+  "verified_decompressed_CAS_members": 965,
+  "verified_array_reference_hashes": 27864,
+  "case_spec_sha256": "d7c04171831e194e7b09b3043b355223b8a7a61ac56c45af0e836fee4d880d77",
+  "corpus": {
+    "path": "coverage/contracts/max-tree-benchmark.json",
+    "bytes": 19527657,
+    "sha256": "09c9d36b548940d25dcd73cd9e59d5b5d8440bb4ae99ca1a0bdb404a8bb163bf"
+  },
+  "native_acceptance": false,
+  "performance_acceptance": false,
+  "operation_timings": 0,
+  "shared_CAS_limitation": "Original three writers used shared write-if-absent, not synchronization. All were terminal before agent and root independently decompressed/rehashed final CAS; no raw repair or rerun. Future consumers must use separate profile outputs or atomic publication.",
+  "pending": "Actual qualified public199/SDK20 consumer parity and fresh hosted one-worker7paired original/native measurement for every252 candidate."
+}

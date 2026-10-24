@@ -96,3 +96,5 @@ coverage/evidence/tv-chambolle-cursor-public.json -text
 coverage/evidence/max-tree-root-composition-private.json -text
 coverage/evidence/released-metadata-cache-cleanup-20261024.json -text
 coverage/contracts/max-tree-benchmark.json -text
+coverage/evidence/max-tree-benchmark-reference.json -text
+coverage/evidence/tv-cursor-comparison-controller.json -text

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "scope": "Reviewed isolated original/before/after TV controller and exact immutable external experiment; no speed claim.",
+  "source": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+  "actual_main_merge": "7ec8948161064bf38631ca0c2371a8a7cc7d297d",
+  "root_review": {
+    "path": "build/decisions-readiness/tv-cursor-comparison-root-review/manifest.json",
+    "bytes": 1882,
+    "sha256": "90b76dd5da544717f9a17b026bb9e022fbea005b70f09a1fff01a64bd601666b"
+  },
+  "reviewed_experiment": {
+    "path": "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json",
+    "bytes": 78007,
+    "sha256": "f547ba16f384f85df7851b23e05636314f0718da15ec9ba8c1f2fefe16e71afa"
+  },
+  "before_product_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+  "intended_before_source": "6ff02f63f6033cb186d3b93d22a778fd8d0624a3",
+  "after_product_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+  "product_scope": 192,
+  "metadata_checks": 216,
+  "reference_observations": 400,
+  "timed_candidates": 70,
+  "rounds": 7,
+  "workers": 1,
+  "all_profiles_preparation_barrier": true,
+  "comparison_dispatched": false,
+  "operation_timings": 0,
+  "performance_acceptance": false,
+  "pending": "Exact tiny certificate publication and root artifact check, followed by one frozen-controller comparison dispatch."
+}
