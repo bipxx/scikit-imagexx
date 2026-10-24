@@ -85,7 +85,7 @@ def complete_tv_fake_artifact(complete_fake_artifact,tmp_path):
 def test_historical_tv108_62_requires_explicit_scope_and_original104_stays_explicit(complete_fake_artifact,complete_tv_fake_artifact):
     result=q.inspect_wheel(*complete_tv_fake_artifact,scope='tv17')
     assert result['product_scope']=='tv17' and len(result['members_sha256'])==108 and len(result['SDK_sha256'])==62
-    with pytest.raises(q.QualificationError,match='complete110'):
+    with pytest.raises(q.QualificationError,match='complete112'):
         q.inspect_wheel(*complete_fake_artifact)
     with pytest.raises(q.QualificationError,match='complete104'):
         q.inspect_wheel(*complete_tv_fake_artifact,scope='rank14')
@@ -294,20 +294,20 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS:
         path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS))+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -563,7 +563,7 @@ def test_bilateral_report_cannot_seal_partial_or_substituted_observations(tmp_pa
 
 @pytest.mark.parametrize('missing',q.R6_SOURCE_PATHS)
 def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch,missing):
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for name in q.R6_SOURCE_PATHS:
@@ -574,7 +574,7 @@ def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch
 
 def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
     assert len(q.ORIGINAL_FAMILIES)==14 and q.ORIGINAL_FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES if f!='rank_bilateral'))
     assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
@@ -763,7 +763,7 @@ def synthetic_complete_plan(root):
     for group in q.GROUPS.values():
         for name in group:(root/'tests'/name.split('::')[0]).touch()
     (root/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS:
         path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
     (root/'benchmarks').mkdir()
@@ -773,7 +773,7 @@ def synthetic_complete_plan(root):
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
 def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
     assert not q.plan(tmp_path,'modern',190)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required R7 source: '+missing in q.plan(tmp_path,'modern',190)['blockers']
@@ -782,7 +782,7 @@ def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,
 @pytest.mark.parametrize('failure',['missing','duplicate','wrong','source'])
 def test_sdk14_requires_exact_clients_and_existing_sources(tmp_path,monkeypatch,failure):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=190))
     path=tmp_path/'tests/cmake_consumer/CMakeLists.txt';text=path.read_text()
     if failure=='missing':text=text.replace('add_executable(rank_decisions_consumer x.cpp)','')
     elif failure=='duplicate':text+='\nadd_executable(rank_decisions_consumer x.cpp)'
@@ -934,7 +934,7 @@ def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path
     # Explicitly create the absent-file before variant in either checkout.
     counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
     if counts_source.exists():counts_source.unlink()
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
     before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
     (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
     after=q.plan(tmp_path,'modern',190);assert not after['blockers']
@@ -959,9 +959,10 @@ def test_counts_private_selector_rejected_before_package_or_fixture_import(tmp_p
 def test_tv_public_group_and_sdk17_keep_exact_original14():
     assert q.GROUPS['public-TV']==('test_tv_chambolle_contracts.py','test_tv_chambolle_native_pipeline.py')
     assert len(q.TV_FAMILIES)==17 and q.TV_FAMILIES[:14]==q.ORIGINAL_FAMILIES
-    assert len(q.FAMILIES)==18 and q.FAMILIES[:17]==q.TV_FAMILIES
+    assert len(q.BREGMAN_FAMILIES)==18 and q.BREGMAN_FAMILIES[:17]==q.TV_FAMILIES
+    assert len(q.FAMILIES)==19 and q.FAMILIES[:18]==q.BREGMAN_FAMILIES
     assert q.TV_FAMILIES[-3:]==('tv_chambolle','tv_reductions','tv_denoise')
-    assert q.FAMILIES[-1]=='tv_bregman'
+    assert q.BREGMAN_FAMILIES[-1]=='tv_bregman' and q.FAMILIES[-1]=='max_tree'
     old={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.ORIGINAL_FAMILIES]}
     q.validate_sdk_listing(old,scope='rank14')
     with pytest.raises(q.QualificationError,match='SDK test discovery'):
@@ -974,7 +975,7 @@ def test_tv_public_group_and_sdk17_keep_exact_original14():
 @pytest.mark.parametrize('missing',q.TV_SOURCE_PATHS)
 def test_tv_source_and_registration_block_before_any_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=191))
     assert not q.plan(tmp_path,'modern',191)['blockers']
     (tmp_path/missing).unlink()
@@ -1057,14 +1058,14 @@ def complete_bregman_fake_artifact(complete_tv_fake_artifact,tmp_path):
     return new_product,new_source,revision
 
 
-def test_bregman110_63_is_exact_default_with_explicit_historical_scopes(complete_bregman_fake_artifact,complete_tv_fake_artifact,complete_fake_artifact):
-    result=q.inspect_wheel(*complete_bregman_fake_artifact)
+def test_bregman110_63_remains_an_exact_explicit_historical_scope(complete_bregman_fake_artifact,complete_tv_fake_artifact,complete_fake_artifact):
+    result=q.inspect_wheel(*complete_bregman_fake_artifact,scope='bregman18')
     assert result['product_scope']=='bregman18' and result['record_verified']
     assert len(result['members_sha256'])==110 and len(result['SDK_sha256'])==63
     assert q.product_census('rank14')==(104,59) and q.product_census('tv17')==(108,62)
-    assert q.product_census()==(110,63)
+    assert q.product_census('bregman18')==(110,63) and q.product_census()==(112,64)
     for artifact in (complete_tv_fake_artifact,complete_fake_artifact):
-        with pytest.raises(q.QualificationError,match='complete110'):q.inspect_wheel(*artifact)
+        with pytest.raises(q.QualificationError,match='complete112'):q.inspect_wheel(*artifact)
     assert q.inspect_wheel(*complete_tv_fake_artifact,scope='tv17')['product_scope']=='tv17'
     for scope in ('rank14','tv17'):
         with pytest.raises(q.QualificationError,match='complete'):q.inspect_wheel(*complete_bregman_fake_artifact,scope=scope)
@@ -1081,14 +1082,14 @@ def test_complete110_wheel_reaches_bregman_source_guard(complete_bregman_fake_ar
     def witnessed(path):calls.append(str(path));return original(path)
     monkeypatch.setattr(q,'wheel_members',witnessed)
     with pytest.raises(q.QualificationError,match='Bregman product scope/source'):
-        q.inspect_wheel(product,replacement,revision)
+        q.inspect_wheel(product,replacement,revision,scope='bregman18')
     assert calls==[str(product)],'complete110 metadata/RECORD must reach the new source guard'
 
 
 @pytest.mark.parametrize('missing',q.BREGMAN_SOURCE_PATHS)
 def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})
+    names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda root:dict(functions=names,image_count=192,metadata_count=3,registered_count=195))
     assert not q.plan(tmp_path,'modern',192)['blockers']
     (tmp_path/missing).unlink()
@@ -1097,9 +1098,9 @@ def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,mi
     assert 'missing public Bregman registry: '+q.BREGMAN_PATH in q.plan(tmp_path,'modern')['blockers']
 
 
-@pytest.mark.parametrize('scope,families',(('rank14',q.ORIGINAL_FAMILIES),('tv17',q.TV_FAMILIES),('bregman18',q.FAMILIES)))
+@pytest.mark.parametrize('scope,families',(('rank14',q.ORIGINAL_FAMILIES),('tv17',q.TV_FAMILIES),('bregman18',q.BREGMAN_FAMILIES),('max_tree19',q.FAMILIES)))
 def test_each_exact_sdk_census_keeps_missing_duplicate_substitute_guards(scope,families):
-    assert len(families)=={'rank14':14,'tv17':17,'bregman18':18}[scope]
+    assert len(families)=={'rank14':14,'tv17':17,'bregman18':18,'max_tree19':19}[scope]
     listing={'tests':[{'name':'installed_'+name+'_consumer'} for name in families]}
     q.validate_sdk_listing(listing,scope=scope)
     for change in ('missing','duplicate','substitute'):
@@ -1155,3 +1156,121 @@ def test_bregman_admission_rejects_invalid_metadata_before_provider(monkeypatch,
     elif fault=='signature':wrapper.denoise_tv_bregman.__signature__=__import__('inspect').Signature()
     else:core.get_num_threads=lambda:4
     with pytest.raises(q.QualificationError):q.bregman_admission(core,restoration,wrapper,registered)
+
+
+@pytest.fixture
+def complete_max_tree_fake_artifact(complete_bregman_fake_artifact,tmp_path):
+    """Inert metadata only: no native implementation is loaded or executed."""
+    product,source,revision=complete_bregman_fake_artifact
+    additions={'include/skimagexx/max_tree.hpp':b'// synthetic max-tree header\n',
+               'skimagexx/_max_tree.py':b'# synthetic max-tree helper\n'}
+    with zipfile.ZipFile(product) as old:
+        entries={n:old.read(n) for n in old.namelist() if not n.endswith('/RECORD')}
+    entries.update(additions);new_product=tmp_path/'max-tree-synthetic.whl';wheel(new_product,entries)
+    new_source=tmp_path/'max-tree-source.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(new_source,'w') as archive:
+        archive.comment=old.comment
+        for name in old.namelist():archive.writestr(name,old.read(name))
+        for name,value in additions.items():archive.writestr('python/'+name if name.startswith('skimagexx/') else name,value)
+    return new_product,new_source,revision
+
+
+def test_max_tree112_64_is_exact_default_and_all_historical_products_stay_explicit(
+        complete_max_tree_fake_artifact,complete_bregman_fake_artifact,complete_tv_fake_artifact,complete_fake_artifact):
+    result=q.inspect_wheel(*complete_max_tree_fake_artifact)
+    assert result['product_scope']=='max_tree19' and result['record_verified']
+    assert len(result['members_sha256'])==112 and len(result['SDK_sha256'])==64
+    for scope,artifact,census in (('rank14',complete_fake_artifact,(104,59)),
+            ('tv17',complete_tv_fake_artifact,(108,62)),('bregman18',complete_bregman_fake_artifact,(110,63))):
+        assert q.product_census(scope)==census
+        assert q.inspect_wheel(*artifact,scope=scope)['product_scope']==scope
+        with pytest.raises(q.QualificationError,match='complete112'):q.inspect_wheel(*artifact)
+        with pytest.raises(q.QualificationError,match='complete'):q.inspect_wheel(*complete_max_tree_fake_artifact,scope=scope)
+
+
+@pytest.mark.parametrize('member',('include/skimagexx/max_tree.hpp','python/skimagexx/_max_tree.py'))
+def test_complete112_product_requires_max_tree_source_header_and_helper(complete_max_tree_fake_artifact,tmp_path,member):
+    product,source,revision=complete_max_tree_fake_artifact;replacement=tmp_path/'missing-max-tree.zip'
+    with zipfile.ZipFile(source) as old,zipfile.ZipFile(replacement,'w') as archive:
+        archive.comment=old.comment
+        for name in old.namelist():
+            if name!=member:archive.writestr(name,old.read(name))
+    with pytest.raises(q.QualificationError,match='max-tree product scope/source'):
+        q.inspect_wheel(product,replacement,revision)
+
+
+@pytest.mark.parametrize('missing',q.MAX_TREE_SOURCE_PATHS)
+def test_max_tree_source_closure_blocks_before_build(tmp_path,monkeypatch,missing):
+    synthetic_complete_plan(tmp_path)
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=198,metadata_count=3,registered_count=201))
+    assert not q.plan(tmp_path,'modern',198)['blockers']
+    (tmp_path/missing).unlink()
+    assert 'missing required max-tree source: '+missing in q.plan(tmp_path,'modern',198)['blockers']
+
+
+@pytest.mark.parametrize('missing',q.MAX_TREE_PATHS)
+def test_each_max_tree_public_registry_path_is_required_in_plan(tmp_path,monkeypatch,missing):
+    synthetic_complete_plan(tmp_path)
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH}|set(q.MAX_TREE_PATHS))
+    names.remove(missing)
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=197,metadata_count=3,registered_count=200))
+    assert 'missing public max-tree registry: '+missing in q.plan(tmp_path,'modern')['blockers']
+
+
+def synthetic_max_tree_admission(monkeypatch):
+    """Admission-only harness: all entries raise if called; never native proof."""
+    core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,
+        max_tree_interface='max-tree-prepared-v1',max_tree_type_capabilities=1023,
+        max_tree_operation_capabilities=63,max_tree_parallel_traversal=False,
+        max_tree_stage_interface='max-tree-stages-v1',max_tree_stage_capabilities=31)
+    def make_entry(name):
+        def entry(*args,**kwargs):raise AssertionError('metadata-only entry must not execute')
+        entry.__name__=name;entry.__module__=core.__name__;entry.synthetic_builtin=True
+        return entry
+    for name in ('max_tree_run','max_tree_counts','max_tree_build_stage','max_tree_area_stage',
+                 'max_tree_extension_stage','max_tree_filter_stage','max_tree_maxima_stage'):
+        setattr(core,name,make_entry(name))
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
+    def max_tree(image,connectivity=1):raise AssertionError('metadata wrapper executed')
+    def max_tree_local_maxima(image,connectivity=1,parent=None,tree_traverser=None):raise AssertionError('metadata wrapper executed')
+    def area_opening(image,area_threshold=64,connectivity=1,parent=None,tree_traverser=None):raise AssertionError('metadata wrapper executed')
+    def area_closing(image,area_threshold=64,connectivity=1,parent=None,tree_traverser=None):raise AssertionError('metadata wrapper executed')
+    def diameter_opening(image,diameter_threshold=8,connectivity=1,parent=None,tree_traverser=None):raise AssertionError('metadata wrapper executed')
+    def diameter_closing(image,diameter_threshold=8,connectivity=1,parent=None,tree_traverser=None):raise AssertionError('metadata wrapper executed')
+    functions={f.__name__:f for f in (max_tree,max_tree_local_maxima,area_opening,area_closing,diameter_opening,diameter_closing)}
+    for function in functions.values():function.__module__='skimagexx._max_tree'
+    return core,types.SimpleNamespace(**functions),types.SimpleNamespace(_core=core,**functions),list(q.MAX_TREE_PATHS)
+
+
+def test_max_tree_metadata_admission_never_calls_wrapper_or_entry(monkeypatch):
+    q.max_tree_admission(*synthetic_max_tree_admission(monkeypatch))
+    assert q.GROUPS['public-MaxTree']==('test_max_tree_contracts.py','test_max_tree_public.py')
+    assert not any('native_pipeline' in n for n in q.GROUPS['public-MaxTree'])
+
+
+@pytest.mark.parametrize('fault',('missing-registry','duplicate-registry','interface','float-types','bool-ops',
+    'parallel-true','parallel-int','stage-version','float-stages','missing-entry','entry-name','entry-owner',
+    'python-entry','wrong-core','wrong-export','forwarding','wrong-name','signature','default-worker4'))
+def test_max_tree_invalid_metadata_rejects_before_any_provider(monkeypatch,fault):
+    core,morphology,wrapper,registered=synthetic_max_tree_admission(monkeypatch)
+    if fault=='missing-registry':registered.pop()
+    elif fault=='duplicate-registry':registered.append(registered[0])
+    elif fault=='interface':core.max_tree_interface='stage-only'
+    elif fault=='float-types':core.max_tree_type_capabilities=1023.
+    elif fault=='bool-ops':core.max_tree_operation_capabilities=True
+    elif fault=='parallel-true':core.max_tree_parallel_traversal=True
+    elif fault=='parallel-int':core.max_tree_parallel_traversal=0
+    elif fault=='stage-version':core.max_tree_stage_interface='wrong'
+    elif fault=='float-stages':core.max_tree_stage_capabilities=31.
+    elif fault=='missing-entry':del core.max_tree_filter_stage
+    elif fault=='entry-name':core.max_tree_area_stage.__name__='max_tree_extension_stage'
+    elif fault=='entry-owner':core.max_tree_run.__module__='private_core'
+    elif fault=='python-entry':core.max_tree_run.synthetic_builtin=False
+    elif fault=='wrong-core':wrapper._core=object()
+    elif fault=='wrong-export':morphology.area_opening=lambda image:image
+    elif fault=='forwarding':wrapper.area_opening.__module__='skimage.morphology'
+    elif fault=='wrong-name':wrapper.area_opening.__name__='borrowed'
+    elif fault=='signature':wrapper.area_opening.__signature__=__import__('inspect').Signature()
+    else:core.get_num_threads=lambda:4
+    with pytest.raises(q.QualificationError):q.max_tree_admission(core,morphology,wrapper,registered)

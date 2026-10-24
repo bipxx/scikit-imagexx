@@ -11,7 +11,8 @@ NATIVE_FUNCTIONS = {
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
-                   'binary_erosion','binary_dilation','binary_opening','binary_closing'),
+                   'binary_erosion','binary_dilation','binary_opening','binary_closing',
+                   'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -28,6 +29,10 @@ NATIVE_FUNCTIONS = {
     'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
+
+
+MAX_TREE_PATHS = tuple('morphology.'+name for name in (
+    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing'))
 
 
 def native_functions():
@@ -316,7 +321,7 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
-    if api=='restoration.denoise_tv_bregman':return (0.,0.)
+    if api=='restoration.denoise_tv_bregman' or api in MAX_TREE_PATHS:return (0.,0.)
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential'):
         return (0.,0.)
     if api.startswith('filters.rank.'):return (0.,0.)

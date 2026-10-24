@@ -280,12 +280,13 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
             'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman')
+            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree')
 ORIGINAL_FAMILIES = FAMILIES[:14]
 TV_FAMILIES = FAMILIES[:17]
-PRODUCT_SCOPE = 'bregman18'
-PRODUCT_MEMBERS = 110
-SDK_MEMBERS = 63
+BREGMAN_FAMILIES = FAMILIES[:18]
+PRODUCT_SCOPE = 'max_tree19'
+PRODUCT_MEMBERS = 112
+SDK_MEMBERS = 64
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -298,6 +299,15 @@ BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp'
     'tests/test_tv_bregman_native.cpp', 'tests/test_tv_bregman_native_pipeline.py',
     'tests/test_tv_bregman_public.py', 'coverage/contracts/tv-bregman.json',
     'coverage/evidence/tv-bregman-public-assertion-migration.json')
+MAX_TREE_NAMES = ('max_tree', 'max_tree_local_maxima', 'area_opening', 'area_closing',
+                 'diameter_opening', 'diameter_closing')
+MAX_TREE_PATHS = tuple('morphology.' + name for name in MAX_TREE_NAMES)
+MAX_TREE_SOURCE_PATHS = ('include/skimagexx/max_tree.hpp', 'src/max_tree.cpp',
+    'src/simd_max_tree_avx2.cpp', 'src/max_tree_stages.hpp', 'src/max_tree_stages.cpp',
+    'src/bind_max_tree.cpp', 'python/skimagexx/_max_tree.py', 'tests/test_max_tree_native.cpp',
+    'tests/test_max_tree_stages_native.cpp', 'tests/test_max_tree_native_pipeline.py',
+    'tests/test_max_tree_public.py', 'coverage/contracts/max-tree.json',
+    'coverage/evidence/max-tree-public-assertion-migration.json')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -310,6 +320,7 @@ GROUPS = {
                          'test_rank_decisions_endian_public.py'),
     'public-TV': ('test_tv_chambolle_contracts.py', 'test_tv_chambolle_native_pipeline.py'),
     'public-Bregman': ('test_tv_bregman_contracts.py', 'test_tv_bregman_public.py'),
+    'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -436,6 +447,12 @@ def plan(root, profile, expected=None):
     for name in BREGMAN_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required Bregman source: ' + name)
+    for name in MAX_TREE_PATHS:
+        if name not in registry['functions']:
+            blockers.append('missing public max-tree registry: ' + name)
+    for name in MAX_TREE_SOURCE_PATHS:
+        if not (root / name).is_file():
+            blockers.append('missing required max-tree source: ' + name)
     if expected is not None and registry['image_count'] != expected:
         blockers.append('explicit image count differs from source registry')
     for name in R5:
@@ -524,8 +541,8 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Exact historical scopes; production qualification requires Bregman18."""
-    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63)}
+    """Closed historical scopes; new production qualification requires max_tree19."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
@@ -542,11 +559,14 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18') else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
         bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
-        require((bregman <= set(source.namelist())) if scope == 'bregman18' else not (bregman & set(source.namelist())),
+        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19') else not (bregman & set(source.namelist())),
                 'Bregman product scope/source header or helper differ')
+        max_tree = {'include/skimagexx/max_tree.hpp', 'python/skimagexx/_max_tree.py'}
+        require((max_tree <= set(source.namelist())) if scope == 'max_tree19' else not (max_tree & set(source.namelist())),
+                'max-tree product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -895,6 +915,37 @@ def bregman_admission(core, restoration, wrapper, registered):
             'Bregman public signature differs')
 
 
+def max_tree_admission(core, morphology, wrapper, registered):
+    """Authenticate installed six-function ownership before any input/provider."""
+    paths = tuple(registered)
+    require(all(paths.count(name) == 1 for name in MAX_TREE_PATHS), 'missing/duplicate public max-tree registry')
+    require(getattr(wrapper, '_core', None) is core, 'max-tree alternate core worker state')
+    require(core.get_num_threads() == 1, 'max-tree initial global workers must be1')
+    for name, value in {'max_tree_interface': 'max-tree-prepared-v1',
+                        'max_tree_type_capabilities': 1023, 'max_tree_operation_capabilities': 63,
+                        'max_tree_parallel_traversal': False, 'max_tree_stage_interface': 'max-tree-stages-v1',
+                        'max_tree_stage_capabilities': 31}.items():
+        actual = getattr(core, name, None)
+        require(type(actual) is type(value) and actual == value, 'missing/wrong public max-tree capability: ' + name)
+    for name in ('max_tree_run', 'max_tree_counts', 'max_tree_build_stage', 'max_tree_area_stage',
+                 'max_tree_extension_stage', 'max_tree_filter_stage', 'max_tree_maxima_stage'):
+        entry = getattr(core, name, None)
+        require(inspect.isbuiltin(entry) and entry.__name__ == name and entry.__module__ == core.__name__,
+                'missing owned compiled max-tree entry: ' + name)
+    signatures = {'max_tree': '(image, connectivity=1)',
+        'max_tree_local_maxima': '(image, connectivity=1, parent=None, tree_traverser=None)',
+        'area_opening': '(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)',
+        'area_closing': '(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)',
+        'diameter_opening': '(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)',
+        'diameter_closing': '(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)'}
+    for name in MAX_TREE_NAMES:
+        function = vars(morphology).get(name)
+        require(callable(function) and function is vars(wrapper).get(name), 'max-tree own public identity mismatch: ' + name)
+        require(inspect.unwrap(function).__module__ == 'skimagexx._max_tree' and function.__name__ == name,
+                'upstream max-tree algorithm forwarding: ' + name)
+        require(str(inspect.signature(function)) == signatures[name], 'max-tree public signature differs: ' + name)
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -907,7 +958,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -936,6 +987,8 @@ def admission(out, state):
                  importlib.import_module('skimagexx._tv_chambolle'), coverage.native_functions())
     bregman_admission(xx._core, importlib.import_module('skimagexx.restoration'),
                       importlib.import_module('skimagexx._tv_bregman'), coverage.native_functions())
+    max_tree_admission(xx._core, importlib.import_module('skimagexx.morphology'),
+                       importlib.import_module('skimagexx._max_tree'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1202,7 +1255,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': FAMILIES}[scope]
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 
@@ -1253,7 +1306,7 @@ def sdk(out, state, journal):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=FAMILIES, checks=2*len(FAMILIES), SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,17 independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=FAMILIES, checks=2*len(FAMILIES), SDK_sha256=record['SDK_sha256'], scope=f'Relocated complete SDK,{len(FAMILIES)} independently linked installed clients normal/scalar; no source includes or Python dependency'))
 
 
 def qualify(out):

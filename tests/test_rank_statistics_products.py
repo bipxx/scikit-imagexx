@@ -58,12 +58,13 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18')
+    assert scope in ('rank14','tv17','bregman18','max_tree19')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope=='bregman18':families += ['tv_bregman']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110}[scope]
+    if scope in ('bregman18','max_tree19'):families += ['tv_bregman']
+    if scope=='max_tree19':families += ['max_tree']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -79,9 +80,12 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope=='bregman18':
+    if scope in ('bregman18','max_tree19'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
+    if scope=='max_tree19':
+        source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
+        source['python/skimagexx/_max_tree.py']=b'# inert max-tree helper metadata\n'
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -137,8 +141,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope=='bregman18' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope=='max_tree19' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -457,10 +461,52 @@ def test_bregman192_registry_requires_both_real_public_paths(synthetic,fault):
     assert not s.output.exists()
 
 
-@pytest.mark.parametrize('scope,members,sdk,suffix',(('tv17',108,62,('tv_chambolle','tv_reductions','tv_denoise')),('bregman18',110,63,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman'))))
+@pytest.mark.parametrize('scope,members,sdk,suffix',(('tv17',108,62,('tv_chambolle','tv_reductions','tv_denoise')),('bregman18',110,63,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman')),('max_tree19',112,64,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree'))))
 @pytest.mark.parametrize('field',('PRODUCT_MEMBERS','SDK_MEMBERS'))
 def test_authenticated_census_counts_are_integer_literals_not_equal_floats(scope,members,sdk,suffix,field):
     values=dict(FAMILIES=tuple('tooling-'+str(i) for i in range(14))+suffix,PRODUCT_SCOPE=scope,PRODUCT_MEMBERS=members,SDK_MEMBERS=sdk)
     values[field]=float(values[field])
     with pytest.raises(RuntimeError,match='scope incomplete'):
         p.qualification_scope_text('\n'.join(name+' = '+repr(value) for name,value in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19'],indirect=True)
+def test_max_tree_full112_64_sdk19_stage_stays_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==64 and len(sdk['families'])==19 and sdk['checks']==38
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==112
+    assert p.qualification_scope(s.output/'source')['name']=='max_tree19'
+    assert p.load(s.output/'qualification.json')['expected_registry']['image_count']==198
+    assert not any(n in p.load(s.output/'product.json') for n in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('fault',('SDK63','wheel110','family18','wrong-family','duplicate-family','missing-scope','bregman-scope-with-new-counts','unknown-scope'))
+def test_max_tree_authenticated_literals_reject_census_downgrades(fault):
+    families=tuple('tooling-original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='max_tree19',PRODUCT_MEMBERS=112,SDK_MEMBERS=64)
+    assert p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))['name']=='max_tree19'
+    if fault=='SDK63':values['SDK_MEMBERS']=63
+    elif fault=='wheel110':values['PRODUCT_MEMBERS']=110
+    elif fault=='family18':values['FAMILIES']=families[:-1]
+    elif fault=='wrong-family':values['FAMILIES']=families[:-1]+('private_family',)
+    elif fault=='duplicate-family':values['FAMILIES']=families[:-1]+('tv_denoise',)
+    elif fault=='missing-scope':del values['PRODUCT_SCOPE']
+    elif fault=='unknown-scope':values['PRODUCT_SCOPE']='max_tree20'
+    else:values['PRODUCT_SCOPE']='bregman18'
+    with pytest.raises(RuntimeError):p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19'],indirect=True)
+@pytest.mark.parametrize('fault',('image192','missing-max-tree','duplicate-max-tree','missing-Bregman','missing-TV'))
+def test_max_tree198_registry_requires_all_six_and_prior_public_paths(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='image192':expected['image_count']=192
+    elif fault=='missing-max-tree':expected['functions'][-1]='unit-only-replacement'
+    elif fault=='duplicate-max-tree':expected['functions'][0]=expected['functions'][-1]
+    elif fault=='missing-Bregman':expected['functions'][-7]='unit-only-replacement'
+    else:expected['functions'][-8]='unit-only-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()

@@ -6,7 +6,7 @@
 namespace skimagexx {
 inline constexpr const char* max_tree_interface = "max-tree-prepared-v1";
 inline constexpr unsigned max_tree_type_capabilities = 0x3ff; // ten prepared real types
-inline constexpr unsigned max_tree_operation_capabilities = 0x3f; // private six-operation surface
+inline constexpr unsigned max_tree_operation_capabilities = 0x3f; // six prepared operations
 inline constexpr bool max_tree_parallel_traversal = false;
 
 enum class MaxTreeType { u8, u16, u32, u64, i8, i16, i32, i64, f32, f64 };
@@ -65,8 +65,9 @@ const char* max_tree_ineligibility(const MaxTreeImage&, const MaxTreeParameters&
     const MaxTreeWorkspace&, MaxTreeBuffer output,
     MaxTreeProvided provided = {{nullptr,0},{nullptr,0}}) noexcept;
 
-// Rechecks admission before writes. Stable typed mergesort (ties in original
-// flat-index order), descending union/find, ascending canonicalization; reverse
+// Rechecks admission before writes. Stable typed ordering (U8 counting/U16
+// radix, otherwise merge; ties in original flat-index order), descending
+// union/find and ascending canonicalization; reverse
 // F64 attributes and source-ordered maxima labels, then forward direct filter.
 // Root below threshold emits typed zero; comparisons are attribute<threshold.
 // Inversion/copies/coordinate preparation may use runtime SIMD/shared optional

@@ -36,14 +36,16 @@ CLASSES = [(native,original,name) for native,original in MODULES for name in nat
            if inspect.isclass(getattr(native,name))]
 
 # The original Bregman Cython helper has unchecked halo reads for small axes.
-# Use separately reviewed geometry for that API; its frozen contract retains
+# Use separately reviewed geometry for Bregman and max-tree APIs; their contracts retain
 # unsafe geometry as explicitly blocked intake metadata, never original calls.
 VALUE_CASES = [
     (native, original, name, dtype, shape)
     for native, original, name in FUNCTIONS
     for dtype in (np.uint8, np.float32, np.float64)
     for shape in (((4, 5), (7, 19), (519, 521))
-                  if native is xx.restoration and name == 'denoise_tv_bregman'
+                  if ((native is xx.restoration and name == 'denoise_tv_bregman')
+                      or (native is xx.morphology and name in ('max_tree','max_tree_local_maxima',
+                          'area_opening','area_closing','diameter_opening','diameter_closing')))
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 
@@ -61,12 +63,12 @@ def test_unported_namespace_interchangeability():
     a = np.zeros((9, 11), dtype=bool)
     a[3:6, 4:7] = True
     with pytest.raises(NotImplementedError):
-        xx.morphology.area_opening(a)
+        xx.morphology.convex_hull_image(a)
     xx.set_fallback_enabled(True)
     from skimage import morphology
     with pytest.warns(xx.FallbackWarning):
-        actual = xx.morphology.area_opening(a)
-    np.testing.assert_array_equal(actual, morphology.area_opening(a))
+        actual = xx.morphology.convex_hull_image(a)
+    np.testing.assert_array_equal(actual, morphology.convex_hull_image(a))
 
 
 @pytest.fixture(autouse=True, params=[1, 4])
@@ -126,7 +128,7 @@ def test_every_native_function(native, original, name, dtype, shape):
                 np.testing.assert_array_equal(getattr(value,field),getattr(reference,field))
                 assert getattr(value,field).dtype==getattr(reference,field).dtype
         return
-    if name=='rank_order':
+    if name=='rank_order' or api=='morphology.max_tree':
         assert type(actual) is type(expected) is tuple and len(actual)==len(expected)==2
         for value,reference in zip(actual,expected):
             assert value.dtype==reference.dtype and value.shape==reference.shape

@@ -5793,21 +5793,29 @@
       "api": "morphology.area_closing",
       "kind": "callable",
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.area_opening",
       "kind": "callable",
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.ball",
@@ -5931,21 +5939,29 @@
       "api": "morphology.diameter_closing",
       "kind": "callable",
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.diameter_opening",
       "kind": "callable",
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.diamond",
@@ -6155,21 +6171,29 @@
       "api": "morphology.max_tree",
       "kind": "callable",
       "signature": "(image, connectivity=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.max_tree_local_maxima",
       "kind": "callable",
       "signature": "(image, connectivity=1, parent=None, tree_traverser=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_max_tree_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.medial_axis",
