@@ -1,0 +1,47 @@
+name: Matrix certificate NEW HOST metadata probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  metadata:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.16'
+      - name: Pin-only metadata plan
+        shell: pwsh
+        run: |
+          python tools/matrix_runtime_certificate_probe.py plan --output build/matrix-certificate-probe
+      - name: Exact failed artifact and unchanged helper; no image or matmul call
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python tools/matrix_runtime_certificate_probe.py all --output build/matrix-certificate-probe
+      - name: Preserve NEW HOST observations and all failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-runtime-certificate-NEW-HOST
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            build/matrix-certificate-probe/*.json
+            build/matrix-certificate-probe/*.txt
+            build/matrix-certificate-probe/*.stdout
+            build/matrix-certificate-probe/*.stderr
