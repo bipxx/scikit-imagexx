@@ -265,7 +265,7 @@ def references(out,mode):
                 warnings.simplefilter('always');actual,operands,observed=capture_original(original.matrix_transform,original._apply_homogeneous,points,matrix,site)
             post_fp=fp_metadata()
             require(inputs==(points.tobytes(),matrix.tobytes()),'original inputs mutated')
-            arrays=(points,matrix,actual,*operands.values());owners={}
+            arrays=(base_points.base,points,matrix,actual,*operands.values());owners={}
             for a in arrays:
                 require(type(a) is np.ndarray,'unassessed source array subclass')
                 owner=a

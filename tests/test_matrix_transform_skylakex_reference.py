@@ -256,3 +256,18 @@ def test_reference_loop_caches_only_base_and_always_calls_existing_layout():
     assert text.index('base_points.get(')<text.index("points = layout(np, points, item['pl'])")<text.index('capture_original(')
     constructors=[n for n in ast.walk(fn) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='LastBasePoints']
     assert len(constructors)==1 and not any(n is constructors[0] for n in ast.walk(loop))
+
+
+def test_live_cached_base_is_owner_budgeted_without_publishing_it_as_an_input():
+    tree=ast.parse((ROOT/'tools/matrix_transform_skylakex_reference.py').read_text())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='references')
+    assignments={ast.unparse(n.targets[0]):n.value for n in ast.walk(fn) if isinstance(n,ast.Assign)}
+    assert ast.unparse(assignments['arrays'])=='(base_points.base, points, matrix, actual, *operands.values())'
+    owner_loop=next(n for n in ast.walk(fn) if isinstance(n,ast.For) and ast.unparse(n.target)=='a' and ast.unparse(n.iter)=='arrays')
+    assert 'owners[id(owner)] = owner.nbytes' in ast.unparse(owner_loop)
+    assert 'while type(owner.base) is np.ndarray:' in ast.unparse(owner_loop)
+    assert ast.unparse(assignments['workspace_bound'])=='sum(owners.values()) + 4 * len(points) * 8'
+    assert "require(workspace_bound <= MAX_ARRAY_BYTES, 'reference workspace certificate exceeded')" in ast.unparse(fn)
+    row=ast.unparse(assignments['row'])
+    assert 'base_points' not in row and 'array_workspace_bound=workspace_bound' in row
+    assert 'original_inputs=dict(points=buffers.array(points), matrix=buffers.array(matrix))' in row
