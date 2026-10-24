@@ -256,17 +256,19 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
+    for name in q.R6_SOURCE_PATHS:
+        path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS)+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -446,3 +448,112 @@ def test_compiler_architecture_and_runtime_are_observed_not_assumed():
         q.windows_toolchain_model(cache,fields.replace('"x64"','"x86"'),project,'Release')
     with pytest.raises(q.QualificationError,match='runtime'):
         q.windows_toolchain_model(cache,fields,project.replace('MultiThreadedDLL','UnknownRuntime'),'Release')
+
+
+# These synthetic modules test metadata rejection only, never native/public proof.
+def bilateral_metadata():
+    core=types.SimpleNamespace(__name__='builtins',rank_bilateral_interface='rank-bilateral-v1',
+        rank_bilateral_capabilities=0x1c000000,rank_bilateral_run=len,get_num_threads=lambda:1)
+    wrapper=types.SimpleNamespace(_core=core)
+    rank=types.SimpleNamespace(__all__=list(q.R6));nested=types.SimpleNamespace(__all__=list(q.R6))
+    generic=types.SimpleNamespace(__all__=[]);rank.bilateral=nested
+    for name in q.R6:
+        def function(*args,**kwargs):raise AssertionError('tooling stub cannot execute an image')
+        function.__module__='skimagexx._rank'
+        for module in (wrapper,rank,nested):setattr(module,name,function)
+    return core,rank,nested,generic,wrapper,set(q.R6_PATHS)
+
+
+def test_bilateral_metadata_guard_has_no_fixture_calls():
+    q.bilateral_admission(*bilateral_metadata())
+
+
+@pytest.mark.parametrize('failure',['version','capability','partial-bits','entry','entry-owner','registry','identity','core','worker','forwarding','generic','nested-exports'])
+def test_bilateral_admission_rejects_incomplete_or_private_metadata(failure):
+    args=list(bilateral_metadata());core,rank,nested,generic,wrapper,registered=args
+    if failure=='version':core.rank_bilateral_interface='rank-bilateral-v0'
+    elif failure=='capability':del core.rank_bilateral_capabilities
+    elif failure=='partial-bits':core.rank_bilateral_capabilities=0x4000000
+    elif failure=='entry':core.rank_bilateral_run=lambda:None
+    elif failure=='entry-owner':core.__name__='not_the_entry_owner'
+    elif failure=='registry':registered.pop()
+    elif failure=='identity':nested.mean_bilateral=lambda:None
+    elif failure=='core':wrapper._core=object()
+    elif failure=='worker':core.get_num_threads=lambda:4
+    elif failure=='forwarding':rank.mean_bilateral.__module__='skimage.filters.rank.bilateral'
+    elif failure=='generic':generic.mean_bilateral=rank.mean_bilateral
+    else:nested.__all__.pop()
+    with pytest.raises(q.QualificationError):q.bilateral_admission(*args)
+
+
+def valid_bilateral_report():
+    row=dict(status='passed',reference={'defined':'observation'},actual_by_workers={'1':{'defined':'observation'},'4':{'defined':'observation'}})
+    aliases=[dict(row,canonical='filters.rank.'+n,alias='filters.rank.bilateral.'+n,reference_identity=True,native_identity=True) for n in q.R6]
+    return dict(status='complete-parity-check',checks=[dict(row) for _ in range(1008)],failures=[],results=[],
+                alias_checks=aliases,provider_checks=[dict(row) for _ in range(96)],policy_checks=[dict(row) for _ in range(18)],
+                metadata=dict(check_only=True,reference_only=False,requested_workers=[1,4],validation_scope='strict actual public R6'))
+
+
+def test_bilateral_complete_synthetic_report_is_metadata_only(tmp_path):
+    path=tmp_path/'r6.json';path.write_text(json.dumps(valid_bilateral_report()));q.validate_corpus(path,'bilateral')
+
+
+@pytest.mark.parametrize('failure',['raster-count','providers','policies','aliases','worker','identity','alias-path','private','timed','observation'])
+def test_bilateral_report_cannot_seal_partial_or_substituted_observations(tmp_path,failure):
+    r=valid_bilateral_report()
+    if failure=='raster-count':r['checks'].pop()
+    elif failure=='providers':r['provider_checks'].pop()
+    elif failure=='policies':r['policy_checks'].pop()
+    elif failure=='aliases':r['alias_checks'].pop()
+    elif failure=='worker':r['provider_checks'][0]['actual_by_workers']={'1':{}}
+    elif failure=='identity':r['alias_checks'][0]['native_identity']=False
+    elif failure=='alias-path':r['alias_checks'][0]['alias']='filters.rank.generic.mean_bilateral'
+    elif failure=='private':r['metadata']['validation_scope']='direct private-core prototype'
+    elif failure=='timed':r['results']=[{}]
+    else:r['checks'][0]['reference']={'different':'observation'}
+    path=tmp_path/'r6.json';path.write_text(json.dumps(r))
+    with pytest.raises(q.QualificationError):q.validate_corpus(path,'bilateral')
+
+
+@pytest.mark.parametrize('missing',q.R6_SOURCE_PATHS)
+def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch,missing):
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=186))
+    (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
+    (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
+    for name in q.R6_SOURCE_PATHS:
+        path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
+    (tmp_path/missing).unlink()
+    assert 'missing required R6 source: '+missing in q.plan(tmp_path,'modern')['blockers']
+
+
+def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
+    assert len(q.FAMILIES)==13 and q.FAMILIES[-1]=='rank_bilateral'
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS),image_count=186))
+    (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
+    (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES[:-1]))
+    assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
+
+
+def test_bilateral_groups_are_public_and_old_scopes_remain():
+    assert q.GROUPS['public-bilateral']==('test_rank_bilateral_contracts.py','test_rank_bilateral_public.py','test_rank_bilateral_masked_center_public.py')
+    assert not any('pipeline' in n or 'supplement.py' in n for n in q.GROUPS['public-bilateral'])
+    assert q.CORPORA['bilateral']==('rank_bilateral.py',1008)
+    assert {'statistics','percentile','consumers'}<=q.CORPORA.keys()
+    assert {'public-rank','public-consumers','metrics-leaf-half','metrics-policies','shared'}<=q.GROUPS.keys()
+
+
+def test_registry_separates_registered_image_and_metadata_counts(tmp_path):
+    path=tmp_path/'python/skimagexx';path.mkdir(parents=True)
+    (path/'coverage.py').write_text('def native_functions(): return [str(i) for i in range(189)]\ndef execution_kind(n): return "native" if int(n)<186 else "metadata"\n')
+    r=q.registry_expectation(tmp_path)
+    assert r['registered_count']==189 and r['image_count']==186 and r['metadata_count']==3
+
+
+@pytest.mark.parametrize('change',['missing-thirteenth','duplicate','unexpected'])
+def test_actual_sdk_discovery_cannot_accept_twelve_or_substituted_clients(change):
+    listing=dict(tests=[dict(name='installed_'+f+'_consumer') for f in q.FAMILIES])
+    q.validate_sdk_listing(listing)
+    if change=='missing-thirteenth':listing['tests'].pop()
+    elif change=='duplicate':listing['tests'].append(dict(listing['tests'][0]))
+    else:listing['tests'][-1]['name']='installed_private_adapter_consumer'
+    with pytest.raises(q.QualificationError,match='SDK test discovery'):q.validate_sdk_listing(listing)

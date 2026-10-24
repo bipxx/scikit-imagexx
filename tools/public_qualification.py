@@ -247,15 +247,28 @@ BUILD_HEADER_TREES = {
 R5 = ('autolevel_percentile', 'enhance_contrast_percentile', 'gradient_percentile',
       'mean_percentile', 'pop_percentile', 'subtract_mean_percentile',
       'threshold_percentile', 'sum_percentile', 'percentile')
+R6 = ('mean_bilateral', 'pop_bilateral', 'sum_bilateral')
+R6_PATHS = frozenset(prefix + name for prefix in ('filters.rank.', 'filters.rank.bilateral.') for name in R6)
+R6_SOURCE_PATHS = (
+    'tests/test_rank_bilateral_mutation_supplement.py',
+    'tests/test_rank_bilateral_masked_center_supplement.py',
+    'coverage/contracts/rank-bilateral.json',
+    'coverage/contracts/rank-bilateral-public.json',
+    'coverage/contracts/rank-bilateral-masked-center-public.json',
+    'coverage/contracts/rank-bilateral-benchmark.json',
+    'coverage/evidence/rank-bilateral-fixture-assertion-migration.json',
+)
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
-            'rank_statistics', 'consumer_layout', 'rank_percentile')
+            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
                     'test_rank_alias_public.py', 'test_rank_statistics_public.py',
                     'test_rank_statistics_contracts.py', 'test_rank_percentile_public.py',
                     'test_rank_percentile_contracts.py'),
+    'public-bilateral': ('test_rank_bilateral_contracts.py', 'test_rank_bilateral_public.py',
+                         'test_rank_bilateral_masked_center_public.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -265,7 +278,7 @@ GROUPS = {
 }
 POLICIES = 'warning_hook or runtime_reduction_buffer or stateful or overflow_policies or underflow_policies or scalar_power_status'
 CORPORA = {'consumers': ('component_consumers.py', 878), 'statistics': ('rank_statistics.py', 1379),
-           'percentile': ('rank_percentile.py', 2552)}
+           'percentile': ('rank_percentile.py', 2552), 'bilateral': ('rank_bilateral.py', 1008)}
 
 
 class QualificationError(RuntimeError):
@@ -332,13 +345,14 @@ def registry_expectation(root):
     # This data-only file has no package imports; never import source/python.
     namespace = runpy.run_path(str(root / 'python/skimagexx/coverage.py'))
     names = set(namespace['native_functions']())
-    return dict(functions=sorted(names), image_count=sum(namespace['execution_kind'](n) == 'native' for n in names))
+    image_count = sum(namespace['execution_kind'](n) == 'native' for n in names)
+    return dict(functions=sorted(names), image_count=image_count, registered_count=len(names), metadata_count=len(names)-image_count)
 
 
 def declared_sdk_families(cmake):
     """Read the repo's explicit literal/foreach ITEMS declarations, not execute CMake.
 
-    Actual target existence and exact12 CTest discovery are independently required
+    Actual target existence and exact13 CTest discovery are independently required
     after relocation; this early source check is not native client proof.
     """
     names = set(re.findall(r'add_executable\(\s*(\w+)_consumer\b', cmake))
@@ -359,6 +373,14 @@ def plan(root, profile, expected=None):
             blockers.append('missing public R5 registry: ' + name)
         if 'filters.rank.generic.' + name in registry['functions']:
             blockers.append('R5 must not register generic alias: ' + name)
+    for name in sorted(R6_PATHS - set(registry['functions'])):
+        blockers.append('missing public R6 registry: ' + name)
+    for name in R6:
+        if 'filters.rank.generic.' + name in registry['functions']:
+            blockers.append('R6 must not register generic alias: ' + name)
+    for name in R6_SOURCE_PATHS:
+        if not (root / name).is_file():
+            blockers.append('missing required R6 source: ' + name)
     for name in [n for group in GROUPS.values() for n in group] + ['test_arraymap_dense_contracts.py']:
         if not (root / 'tests' / name.split('::')[0]).is_file():
             blockers.append('missing required test: ' + name)
@@ -631,6 +653,28 @@ def headers(out, profile):
     dump(out / 'build-headers.json', record)
 
 
+def bilateral_admission(core, rank, nested, generic, wrapper, registered):
+    """Metadata only; fail before importing any contracts or image fixtures."""
+    require(getattr(core, 'rank_bilateral_interface', None) == 'rank-bilateral-v1'
+            and getattr(core, 'rank_bilateral_capabilities', None) == 0x1c000000,
+            'missing/wrong public R6 capability')
+    entry = getattr(core, 'rank_bilateral_run', None)
+    require(type(entry).__name__ == 'builtin_function_or_method' and entry.__module__ == core.__name__,
+            'missing owned compiled R6 entry')
+    require(R6_PATHS <= set(registered), 'missing/partial public R6 registry')
+    require(wrapper._core is core, 'R6 alternate core worker state')
+    require(core.get_num_threads() == 1, 'R6 initial global workers must be1')
+    require(getattr(rank, 'bilateral', None) is nested, 'R6 nested module identity mismatch')
+    require(set(nested.__all__) == set(R6), 'R6 nested exports differ')
+    for name in R6:
+        function = getattr(rank, name, None)
+        require(callable(function) and function is getattr(nested, name, None)
+                and function is getattr(wrapper, name, None), 'R6 public function identity mismatch: ' + name)
+        require(inspect.unwrap(function).__module__ == 'skimagexx._rank', 'upstream R6 algorithm forwarding')
+        require(name in rank.__all__ and name not in vars(generic) and name not in generic.__all__
+                and 'filters.rank.generic.' + name not in registered, 'R6 generic alias/export forbidden')
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -662,6 +706,8 @@ def admission(out, state):
         function = getattr(rank, name)
         require(inspect.unwrap(function).__module__ == 'skimagexx._rank', 'upstream public algorithm forwarding')
         require(name not in vars(generic) and name not in generic.__all__, 'R5 generic path must remain absent')
+    bilateral_admission(xx._core, rank, importlib.import_module('skimagexx.filters.rank.bilateral'),
+                        generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -688,7 +734,8 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     return dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable), base_interpreter=base_interpreter(), platform=platform.platform(),
                 core=xx._core.__file__, core_sha256=sha(xx._core.__file__), default_workers=1, shared_workers=[1,4],
-                versions=versions, origins=origins, source_image_count=state['expected']['image_count'],
+                versions=versions, origins=origins, source_image_count=state['expected']['image_count'], source_registered_count=len(state['expected']['functions']),
+                source_metadata_count=len(state['expected']['functions'])-state['expected']['image_count'],
                 scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD') == '1', thread_pools={k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','BLIS_NUM_THREADS')},
                 providers='NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4.')
 
@@ -792,6 +839,16 @@ def validate_corpus(path, family):
         require(all(set(row.get('actual_by_workers',{})) == {'1','4'} for key in ('provider_checks','policy_checks') for row in report[key]), 'R5 provider/policy workers incomplete')
         require(all(row.get('reference_identity') is True and row.get('native_identity') is None for row in report['alias_checks']), 'R5 private reference identities must not count as native aliases')
 
+    if family == 'bilateral':
+        require([len(report[k]) for k in ('alias_checks','provider_checks','policy_checks')] == [3,96,18], 'R6 auxiliary117 contract changed')
+        require(report['metadata'].get('validation_scope') == 'strict actual public R6', 'R6 genuine source admission absent')
+        for key in ('checks','alias_checks','provider_checks','policy_checks'):
+            require(all(set(row.get('actual_by_workers',{})) == {'1','4'} for row in report[key]), 'R6 auxiliary workers incomplete')
+            require(all('reference' in row and all(actual == row['reference'] for actual in row['actual_by_workers'].values()) for row in report[key]), 'R6 observation differs from reference')
+        require(all(row.get('reference_identity') is True and row.get('native_identity') is True for row in report['alias_checks']), 'R6 canonical/nested identities incomplete')
+        require({(row.get('canonical'),row.get('alias')) for row in report['alias_checks']} ==
+                {('filters.rank.'+n,'filters.rank.bilateral.'+n) for n in R6}, 'R6 alias paths differ')
+
 
 def validate_metrics(path):
     report = json.loads(path.read_text())
@@ -874,6 +931,11 @@ def require_same_windows_toolchain(wheel, sdk_model):
         require(PureWindowsPath(wheel[key])==PureWindowsPath(sdk_model[key]), 'SDK/wheel toolchain mismatch: '+key)
 
 
+def validate_sdk_listing(listing):
+    require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in FAMILIES}
+            and len(listing['tests']) == len(FAMILIES), 'SDK test discovery differs/empty')
+
+
 def sdk(out, state, journal):
     prefix = out / 'relocated sdk'; prefix.mkdir(); record = json.loads((out / 'package.json').read_text())
     for name, digest in record['SDK_sha256'].items():
@@ -915,12 +977,12 @@ def sdk(out, state, journal):
     pattern = '^installed_(' + '|'.join(FAMILIES) + ')_consumer$'
     must_run(journal, 'sdk-list', [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--show-only=json-v1'], env)
     listing = json.loads((out / 'sdk-list.log').read_text())
-    require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in FAMILIES}, 'SDK test discovery differs/empty')
+    validate_sdk_listing(listing)
     for mode in ('normal','scalar'):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=FAMILIES, checks=24, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,12 independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=FAMILIES, checks=26, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,13 independently linked installed clients normal/scalar; no source includes or Python dependency'))
 
 
 def qualify(out):
@@ -975,7 +1037,7 @@ def seal(out):
         verify_record(out, name, row, state['interpreter_provenance'])
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
                  interpreter_provenance=state['interpreter_provenance'],
-                 counts=counts, SDK_checks=24, expected_registry=state['expected'], command_count=len(commands), records=records,
+                 counts=counts, SDK_checks=26, expected_registry=state['expected'], command_count=len(commands), records=records,
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')
