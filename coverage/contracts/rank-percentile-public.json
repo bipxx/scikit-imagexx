@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "status": "DIRECT SOURCE WRAPPER / FROZEN PRIVATE CORE PROTOTYPE ONLY",
+  "pinned_skimage": "0.26.0",
+  "reference_revision": "b928ed6e533be268ce3b856fc260254679bf3709",
+  "reference_canonical_lf_sha256": "2ea6bcd03081980e41b02f83224c0db17bac33bba5a25e466d4bcf4bfa7b57d5",
+  "private_cpp_revision": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c",
+  "private_cpp_qualified_proof_sha256": "0097a8dca974e0d5adf330c7302463178812719b90815c1a34923ec1a2aa5f35",
+  "prototype_selection": {
+    "environment": "SKIMAGEXX_RANK_PERCENTILE_PROTOTYPE_CORE",
+    "backend": "_rank_percentile_core",
+    "meaning": "Source module loaded directly; only its _core points to the real private compiled extension. Public namespaces/registry are not substituted.",
+    "public_namespace_acceptance": false,
+    "public_native_paths_admitted": 0,
+    "complete_package_or_SDK_acceptance": false
+  },
+  "canonical_functions": {
+    "autolevel_percentile": {
+      "operation": 17,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.autolevel_percentile"
+    },
+    "enhance_contrast_percentile": {
+      "operation": 18,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.enhance_contrast_percentile"
+    },
+    "gradient_percentile": {
+      "operation": 19,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.gradient_percentile"
+    },
+    "mean_percentile": {
+      "operation": 20,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.mean_percentile"
+    },
+    "pop_percentile": {
+      "operation": 21,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.pop_percentile"
+    },
+    "subtract_mean_percentile": {
+      "operation": 22,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.subtract_mean_percentile"
+    },
+    "threshold_percentile": {
+      "operation": 23,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
+      "path": "filters.rank.threshold_percentile"
+    },
+    "sum_percentile": {
+      "operation": 24,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
+      "path": "filters.rank.sum_percentile"
+    },
+    "percentile": {
+      "operation": 25,
+      "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
+      "path": "filters.rank.percentile"
+    }
+  },
+  "generic_percentile_aliases": [],
+  "private_upstream_aliases": {
+    "module": "skimage.filters.rank._percentile",
+    "identity_count": 9,
+    "additional_algorithm_count": 0,
+    "additional_public_path_count": 0,
+    "sum_percentile_in_star": false,
+    "rank_percentile_is_function_not_importable_submodule": true,
+    "equalize_percentile_absent": true
+  },
+  "backend_gate": {
+    "interface": "rank-percentile-v1",
+    "capabilities": "0x3fe0000",
+    "entry": "rank_percentile_run",
+    "entry_kind": "BuiltinFunctionType with matching actual core __module__ and exact entry __name__",
+    "admission_order": "Before any array/fixture/preprocessing work",
+    "args": [
+      "prepared_image",
+      "prepared_footprint",
+      "mask_or_None",
+      "out3D",
+      "shiftXY",
+      "prepared_bins",
+      "operation",
+      "p0_object",
+      "p1_object"
+    ]
+  },
+  "source_scope": {
+    "dimensions": 2,
+    "p0": "finite [0,1]",
+    "p1": "finite p0<=p1<=1 for seven interval functions; single-p0 threshold/percentile pass literal0",
+    "buffers": "disjoint accessible prepared buffers; no overlap forwarding",
+    "output": "original scalar channel allocation, out.reshape(out.shape[:2]); post-kernel multichannel reshape errors and partial mutation preserved",
+    "warnings": "exact frozen warning classes/messages",
+    "unsupported": "Named C++ prewrite scope errors become explicit NotImplementedError, never invented upstream ValueError contracts; no unsafe original probes",
+    "provider_errors": "Python callback tracebacks with matching native-guard text retain original ValueError",
+    "unassessed": [
+      "image/mask/footprint output overlap and feedback",
+      "undersized mask or spatial output, actual zero channel depth",
+      "nonfinite percentile values, out-of-range or unordered percentile intervals",
+      "undefined float-to-unsigned stores",
+      "impractically large allocations and signed-index/sum overflow domains",
+      "arbitrary array/shape/copy hooks, concurrent mutations, memmap I/O lifecycle",
+      "exhaustive dtype extensions beyond twelve real dtypes and explicit rejected examples"
+    ]
+  },
+  "coverage": {
+    "frozen_canonical_IDs": 1544,
+    "frozen_provider_traces": 54,
+    "independent_definitions": 1676,
+    "extra_safe_provider_text_collisions": 4,
+    "workers": [
+      1,
+      4
+    ],
+    "required_prototype_profiles": [
+      "windows-normal",
+      "windows-scalar",
+      "modern-normal",
+      "modern-scalar",
+      "minimum-normal",
+      "minimum-scalar"
+    ],
+    "expected_per_profile_pass": 6674,
+    "expected_per_profile_explicit_actual_public_pending_skip": 1,
+    "metadata_only_guard_stubs": 99,
+    "original_or_backend_test_assertions_weakened": false
+  },
+  "old_interfaces": {
+    "existing_function_ASTs_unchanged": true,
+    "old_operation_values": "0..16 unchanged",
+    "old_capabilities": [
+      8191,
+      480,
+      "0xe000",
+      "0x10000"
+    ]
+  },
+  "shared_wiring_pending": {
+    "registry": "Root must register only the nine canonical filters.rank paths after actual whole8 gates.",
+    "canonical_namespace": "Use all26 source wrapper __all__ names.",
+    "generic_functionattributes": "Use _GENERIC_FUNCTIONS old17 only; no new percentile attributes.",
+    "generic_star_exports": "Preserve existing omissions sum and windowed_histogram while restricting to old17.",
+    "public_module": "No importable filters.rank.percentile module is invented.",
+    "actual_required": [
+      "genuine complete whole8 compiled core/package/source/SDK seals",
+      "actual canonical public identity/signatures/default calls/nonforwarding",
+      "actual generic absence and canonical-only registry",
+      "sole core/shared global worker state/default1",
+      "actual corpus all1544 and provider54 workers1/4 normal/scalar three runtimes",
+      "remaining cumulative old17 Linux checks and held27041 completion",
+      "isolated original-library benchmark acceptance"
+    ]
+  },
+  "leased_or_preserved_artifacts": {
+    "producer7aaa": "untouched",
+    "private_8e_module_binaries": "read-only inputs; no builds",
+    "original_inherited_handle27041": "preserved live, mutable logs/tails not sealed or counted"
+  },
+  "timing_calls": 0,
+  "dispatches": 0,
+  "new_full_builds": 0
+}

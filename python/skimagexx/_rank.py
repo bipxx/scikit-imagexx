@@ -1,6 +1,7 @@
 """Typed rolling-histogram rank filters; validation follows pinned0.26 order."""
 from collections.abc import Sequence
 from numbers import Integral
+from types import BuiltinFunctionType
 import warnings
 import numpy as np
 from . import _core
@@ -322,5 +323,116 @@ def windowed_histogram(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,n_
     return out
 
 
-__all__=['minimum','maximum','mean','sum','pop','gradient','median','modal','entropy',
-         'autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram']
+def _require_percentile(operation):
+    entry=getattr(_core,'rank_percentile_run',None)
+    capabilities=getattr(_core,'rank_percentile_capabilities',None)
+    if (getattr(_core,'rank_percentile_interface',None)!='rank-percentile-v1'
+            or not isinstance(capabilities,Integral) or capabilities!=0x3fe0000
+            or not 17<=operation<=25
+            or not isinstance(entry,BuiltinFunctionType)
+            or getattr(entry,'__module__',None)!=getattr(_core,'__name__',None)
+            or getattr(entry,'__name__',None)!='rank_percentile_run'):
+        raise NotImplementedError('rank-percentile-v1 compiled backend required for this operation')
+    return entry
+
+
+def _percentile_call(function,*args):
+    try:return function(*args)
+    except (ValueError,OverflowError) as error:
+        # These certify unsupported domains PREWRITE. They are not invented
+        # upstream public ValueError contracts, and never forward unsafe or
+        # overlapping input to unchecked original Cython.
+        if error.__traceback__.tb_next is None and str(error) in ('overlapping buffers are outside rank-statistics-v1 parity',
+                         'overlapping buffers are outside rank-histogram-v3 parity',
+                         'rank statistics output stores overlap',
+                         'rank percentile parameters outside defined coverage',
+                         'subtract_mean_percentile unsigned conversion outside defined coverage',
+                         'rank output pixel depth must be positive',
+                         'rank output is smaller than image',
+                         'rank mask storage is smaller than image',
+                         'rank image exceeded histogram bounds',
+                         'rank percentile population or sum outside defined coverage'):
+            raise NotImplementedError('Outside qualified rank-percentile-v1 coverage: '+str(error)) from None
+        raise
+
+
+def _percentile_apply(operation,image,footprint,out,mask,shift_x,shift_y,p0,p1):
+    entry=_require_percentile(operation)
+    # Pinned wrapper/common preprocessing each check_nD without replacing the
+    # caller's image. Lists therefore retain the original later dtype error.
+    for _ in range(2):
+        value=np.asanyarray(image)
+        if value.size==0:raise ValueError('The parameter `image` cannot be an empty array')
+        if value.ndim!=2:raise ValueError('The parameter `image` must be a 2-dimensional array')
+    dtype=image.dtype
+    if dtype==bool:raise ValueError('dtype cannot be bool.')
+    if dtype not in (np.uint8,np.uint16):
+        warnings.warn(f'Possible precision loss converting image of type {dtype} to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.',UserWarning,stacklevel=3)
+        image=_ubyte(image)
+    if _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
+    footprint=np.ascontiguousarray(_positive(footprint))
+    if footprint.ndim!=image.ndim:raise ValueError('Image dimensions and neighborhood dimensionsdo not match')
+    image=np.ascontiguousarray(image)
+    if mask is not None:mask=np.ascontiguousarray(_ubyte(mask))
+    if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
+    if out is None:out=np.empty(image.shape+(1,),image.dtype)
+    elif len(out.shape)==2:out=out.reshape(out.shape+(1,))
+    bins=256 if image.dtype in (np.uint8,np.int8) else _core.rank_bins(image)
+    if bins>1024:warnings.warn(f'Bad rank filter performance is expected due to a large number of bins ({bins}), equivalent to an approximate bitdepth of {np.log2(bins):.1f}.',UserWarning,stacklevel=3)
+    for name,shift in zip(('shift_x','shift_y'),(shift_x,shift_y)):
+        if np.dtype(type(shift))==bool:warnings.warn(f'Paramter `{name}` is boolean and will be interpreted as int. This is not officially supported, use int instead.',UserWarning,stacklevel=3)
+    if out.ndim!=3 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):raise TypeError('Function call with ambiguous argument types')
+    _percentile_call(entry,image,footprint,mask,out,[shift_x,shift_y],bins,operation,p0,p1)
+    return out.reshape(out.shape[:2])
+
+
+def autolevel_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(17,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def enhance_contrast_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(18,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def gradient_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(19,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def mean_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(20,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def pop_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(21,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def subtract_mean_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(22,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def threshold_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0):
+    return _percentile_apply(23,image,footprint,out,mask,shift_x,shift_y,p0,0.)
+
+
+def sum_percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0,p1=1):
+    return _percentile_apply(24,image,footprint,out,mask,shift_x,shift_y,p0,p1)
+
+
+def percentile(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,p0=0):
+    return _percentile_apply(25,image,footprint,out,mask,shift_x,shift_y,p0,0.)
+
+
+_GENERIC_FUNCTIONS=('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy',
+                    'autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram')
+_PERCENTILE_FUNCTIONS=('autolevel_percentile','enhance_contrast_percentile','gradient_percentile',
+                       'mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile')
+_PERCENTILE_SCOPE_DOC="""Apply the qualified native 2D percentile filter.
+
+Supports disjoint prepared buffers and finite percentile values in [0,1],
+with p0<=p1 for two-percentile filters. Unsupported native scopes raise
+NotImplementedError; overlapping or unsafe inputs are never sent upstream.
+"""
+for _percentile_name in _PERCENTILE_FUNCTIONS:
+    globals()[_percentile_name].__doc__=_PERCENTILE_SCOPE_DOC
+del _percentile_name
+__all__=list(_GENERIC_FUNCTIONS+_PERCENTILE_FUNCTIONS)
