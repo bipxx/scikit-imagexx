@@ -338,6 +338,30 @@ template<class T> void integer_sort_controls(MaxTreeType type,int workers) {
         }
     }
 }
+template<class T> void branched_tree_definition(MaxTreeType type) {
+    context="independent-branched-tree-representatives";
+    std::vector<T> levels(20,T(0));levels[6]=levels[7]=T(2);levels[8]=T(3);levels[13]=T(4);
+    const std::vector<std::int64_t> order={0,1,2,3,4,5,9,10,11,12,14,15,16,17,18,19,6,7,8,13};
+    std::vector<std::int64_t> parent(20,0);parent[7]=parent[8]=6;parent[13]=8;
+    for(int operation=0;operation<6;++operation) {
+        const bool closed=operation==3 || operation==5;
+        auto input=levels;if(closed)for(auto& pixel:input)pixel=inverse(pixel);
+        Arena<T> a(input,type,MaxTreeOperation(operation),2,{{4,5,1}},1,3);
+        max_tree_into(a.input,a.params,a.workspace(),a.output());
+        require(a.parent==parent && a.traverser==order,"branch representative/canonical parent differs from component definition");
+        for(std::size_t i=0;i<20;++i) {
+            if(operation==1)require(a.labels[i]==std::uint64_t(i==13),"unique high branch maximum label");
+            else if(operation) {
+                // The level-2 component has area4 and diameter3; its higher
+                // branches have area<=2 and diameter<=2, so both filters at3
+                // flatten only those branches. Closing is the exact dual.
+                const T expected=i==6 || i==7 || i==8 || i==13?T(2):T(0);
+                require(a.out[i]==(closed?inverse(expected):expected),"independent branch area/diameter filtering");
+            }
+        }
+        require(a.image==input,"branch input mutated");
+    }
+}
 }
 int main(int argc,char** argv) {
     try {
@@ -351,6 +375,9 @@ int main(int argc,char** argv) {
 #define CONTROL(name,T) context="independent-" #name;independent_ramps<T>(MaxTreeType::name,workers);
             TYPES(CONTROL)
 #undef CONTROL
+#define BRANCH(name,T) branched_tree_definition<T>(MaxTreeType::name);
+            TYPES(BRANCH)
+#undef BRANCH
             exact_key_controls<std::uint64_t>(MaxTreeType::u64,true);
             exact_key_controls<std::int64_t>(MaxTreeType::i64,false);
             exact_key_controls<std::int64_t>(MaxTreeType::i64,true);

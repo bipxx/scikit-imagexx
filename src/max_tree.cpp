@@ -200,8 +200,14 @@ template<class T> void build_tree(const T* values,const MaxTreeImage& image,int 
             if(!valid)continue;
             const auto q=p+neighbor.flat;
             if(parent[q]<0)continue;
-            while(roots[q]!=roots[roots[q]])roots[q]=roots[roots[q]];
-            const auto root=roots[q];
+            // Advance as well as shorten the path. Only the internal scratch
+            // forest changes; its representative and parent writes stay fixed.
+            auto cursor=q;
+            while(roots[cursor]!=roots[roots[cursor]]) {
+                roots[cursor]=roots[roots[cursor]];
+                cursor=roots[cursor];
+            }
+            const auto root=roots[cursor];
             if(root!=p){roots[root]=p;parent[root]=p;}
         }
     }
