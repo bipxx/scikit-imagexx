@@ -78,3 +78,4 @@ coverage/evidence/matrix-transform-profile-tooling.json -text
 coverage/evidence/tv-bregman-private-bridge.json -text
 coverage/contracts/tv-bregman-benchmark.json -text
 coverage/evidence/tv-bregman-benchmark-reference.json -text
+coverage/evidence/max-tree-private-bridge.json -text
