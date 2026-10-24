@@ -11,7 +11,12 @@ namespace py = pybind11;
 namespace {
 // Bounds must come from an actual NumPy allocation, never an arbitrary
 // __array_interface__ provider or unchecked as_strided base.
-void allocation_bounds(const py::array& value) {
+struct AllocationBounds {
+    std::uintptr_t begin;
+    std::size_t bytes;
+    PyObject* owner;
+};
+AllocationBounds allocation_bounds(const py::array& value) {
     py::array owner = value;
     for (unsigned depth = 0; ; ++depth) {
         if (depth > 64) throw py::value_error("array base chain is too deep");
@@ -30,6 +35,7 @@ void allocation_bounds(const py::array& value) {
     if (bytes > std::numeric_limits<std::uintptr_t>::max() - begin ||
         pointer < begin || pointer > begin + bytes || size > begin + bytes - pointer)
         throw py::value_error("array exceeds its allocation extent");
+    return {begin, bytes, owner.ptr()};
 }
 py::array prepared(py::handle object, const char* name) {
     if (!py::isinstance<py::array>(object)) throw py::type_error(std::string(name) + " must be a NumPy array");
@@ -43,6 +49,43 @@ py::array prepared(py::handle object, const char* name) {
     allocation_bounds(a);
     return a;
 }
+
+// Scalar protocols execute while the GIL is held. A callback can mutate or
+// resize even an existing NumPy view/owner. Capture metadata before conversion,
+// then reject any changed span before reading shape(k) or entering typed C++.
+// This is a prewrite safety contract, not a claim about unsafe Cython behavior.
+struct ArraySnapshot {
+    const void* pointer;
+    py::dtype dtype;
+    py::ssize_t itemsize, bytes;
+    int flags;
+    std::vector<py::ssize_t> shape, strides;
+    AllocationBounds allocation;
+
+    explicit ArraySnapshot(const py::array& a)
+        : pointer(a.data()), dtype(a.dtype()), itemsize(a.itemsize()),
+          bytes(a.nbytes()), flags(a.flags()), allocation(allocation_bounds(a)) {
+        for (py::ssize_t axis = 0; axis < a.ndim(); ++axis) {
+            shape.push_back(a.shape(axis));
+            strides.push_back(a.strides(axis));
+        }
+    }
+    void require_unchanged(const py::array& a) const {
+        bool same = a.data() == pointer && a.dtype().is(dtype) &&
+            a.itemsize() == itemsize && a.nbytes() == bytes && a.flags() == flags &&
+            a.ndim() == static_cast<py::ssize_t>(shape.size());
+        if (same) {
+            for (py::ssize_t axis = 0; axis < a.ndim(); ++axis)
+                same = same && a.shape(axis) == shape[static_cast<std::size_t>(axis)] &&
+                    a.strides(axis) == strides[static_cast<std::size_t>(axis)];
+        }
+        if (!same) throw py::value_error("image metadata changed during scalar conversion");
+        const auto current = allocation_bounds(a);
+        if (current.begin != allocation.begin || current.bytes != allocation.bytes ||
+            current.owner != allocation.owner)
+            throw py::value_error("image allocation changed during scalar conversion");
+    }
+};
 template<class T> py::object run(const py::array& image, const py::array& out,
     double weight, int maximum, double eps, bool isotropic, bool tracing) {
     auto rows = static_cast<std::size_t>(image.shape(0));
@@ -90,6 +133,7 @@ void bind_tv_bregman(py::module_& m) {
         py::object maximum_obj, py::object eps_obj, py::object iso_obj,
         py::object out_obj, bool tracing) -> py::object {
         auto image = prepared(image_obj,"image");
+        const ArraySnapshot snapshot(image);
         const double weight = py::cast<double>(weight_obj);
         py::object index = py::reinterpret_steal<py::object>(PyNumber_Index(maximum_obj.ptr()));
         if (!index) throw py::error_already_set();
@@ -103,6 +147,7 @@ void bind_tv_bregman(py::module_& m) {
         if (PyErr_Occurred()) throw py::error_already_set();
         if (character < -128 || character > 127) throw std::overflow_error("isotropic does not fit signed char");
         auto out = prepared(out_obj,"out");
+        snapshot.require_unchanged(image);
         if (!image.dtype().is(out.dtype())) throw py::type_error("out dtype must match image");
         if (image.itemsize() == 4) return run<float>(image,out,weight,static_cast<int>(integer),eps,character!=0,tracing);
         return run<double>(image,out,weight,static_cast<int>(integer),eps,character!=0,tracing);

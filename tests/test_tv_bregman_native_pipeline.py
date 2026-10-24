@@ -170,3 +170,54 @@ def test_binding_owners_released_on_success_and_guard_failure(implementation):
         with pytest.raises(ValueError):
             core.tv_bregman_run(image, -1., 2, 1e-6, True, out)
     assert (sys.getrefcount(image), sys.getrefcount(out)) == counts
+
+
+@pytest.mark.parametrize('parameter', ('weight', 'maximum', 'eps', 'isotropic'))
+@pytest.mark.parametrize('mutation', ('rank', 'shape', 'dtype', 'strides', 'readonly', 'owner-resize'))
+def test_scalar_hooks_cannot_invalidate_captured_input(parameter, mutation, implementation):
+    """Never execute unchecked original Cython on deliberately invalidated storage."""
+    _, core = implementation
+    owner = np.arange(20, dtype='f4')
+    image = owner.reshape(4, 5, 1)
+    out = np.full((6, 7, 1), .125, dtype='f4')
+    before = out.tobytes()
+    events = []
+    def change():
+        events.append(parameter)
+        if mutation == 'rank': image.shape = (4, 5)
+        elif mutation == 'shape': image.shape = (5, 4, 1)
+        elif mutation == 'dtype': image.dtype = np.uint32
+        elif mutation == 'strides': image.strides = (4, 16, 4)
+        elif mutation == 'readonly': image.flags.writeable = False
+        else: owner.resize((1,), refcheck=False)
+    class Hook:
+        def __float__(self): change(); return .5
+        def __index__(self): change(); return 2
+        def __int__(self): change(); return 1
+    arguments = [image, .5, 2, 1e-6, True, out]
+    arguments[{'weight': 1, 'maximum': 2, 'eps': 3, 'isotropic': 4}[parameter]] = Hook()
+    with pytest.raises(ValueError, match='image (metadata|allocation) changed|array exceeds its allocation extent'):
+        core.tv_bregman_run(*arguments)
+    assert events == [parameter]
+    assert out.tobytes() == before
+
+
+@pytest.mark.parametrize('parameter', ('weight', 'maximum', 'eps', 'isotropic'))
+def test_scalar_hooks_preserve_actual_posthook_values(parameter, implementation):
+    _, core = implementation
+    image = np.arange(20, dtype='f8').reshape(4, 5, 1) / 32
+    out = np.zeros((6, 7, 1), dtype='f8')
+    events = []
+    def change():
+        events.append(parameter)
+        image[0, 0, 0] = .25
+    class Hook:
+        def __float__(self): change(); return .5 if parameter == 'weight' else 1e-6
+        def __index__(self): change(); return 2
+        def __int__(self): change(); return 1
+    arguments = [image, .5, 2, 1e-6, True, out]
+    arguments[{'weight': 1, 'maximum': 2, 'eps': 3, 'isotropic': 4}[parameter]] = Hook()
+    assert core.tv_bregman_run(*arguments) is None
+    expected = np.zeros_like(out)
+    assert core.tv_bregman_run(image, .5, 2, 1e-6, True, expected) is None
+    assert events == [parameter] and out.tobytes() == expected.tobytes()
