@@ -210,3 +210,49 @@ def test_workflow_manual_no_install_compile_or_hidden_forcing():
         assert token in text
     for token in ('pip install','cmake','ninja','OPENBLAS_CORETYPE:','gh workflow run','genuine-prefix/**'):
         assert token not in text
+
+
+@pytest.mark.parametrize('change',('identity','n','extension'))
+def test_one_entry_base_cache_misses_and_evicts_without_numerical_arrays(monkeypatch,change):
+    calls=[];case={'coords':[[1,2]]};other=dict(case)
+    class Base:
+        def __init__(self):self.flags=[]
+        def setflags(self,**kw):self.flags.append(kw)
+    def factory(np,row,n,extension):
+        result=Base();calls.append((np,row,n,extension,result));return result
+    monkeypatch.setattr(c,'points_for_case',factory)
+    cache=c.LastBasePoints();np=object();first=cache.get(np,case,7,0.125)
+    assert first.flags==[dict(write=False)]
+    assert cache.get(np,case,7,0.125) is first and len(calls)==1
+    args=(other,7,0.125) if change=='identity' else (case,8,0.125) if change=='n' else (case,7,0.25)
+    second=cache.get(np,*args)
+    assert second is not first and second.flags==[dict(write=False)] and len(calls)==2
+    assert cache.base is second and list(vars(cache))==['case','n','extension','base']
+    assert all(value is not first for value in vars(cache).values())
+    assert cache.get(np,case,7,0.125) is not first and len(calls)==3
+
+
+def test_base_cache_hit_keeps_each_layout_call_fresh_with_inert_factory(monkeypatch):
+    bases=[];copies=[]
+    def factory(np,case,n,extension):
+        base=types.SimpleNamespace(setflags=lambda **kw:None);bases.append(base);return base
+    monkeypatch.setattr(c,'points_for_case',factory)
+    def array(base,**kw):
+        result=object();copies.append((base,result,kw));return result
+    fake=types.SimpleNamespace(array=array);cache=c.LastBasePoints();case={}
+    for name in ('C','F')*3:c.layout(fake,cache.get(fake,case,7,0.),name)
+    assert len(bases)==1 and len(copies)==6
+    assert all(row[0] is bases[0] for row in copies)
+    assert len({id(row[1]) for row in copies})==6
+
+
+def test_reference_loop_caches_only_base_and_always_calls_existing_layout():
+    tree=ast.parse((ROOT/'tools/matrix_transform_skylakex_reference.py').read_text())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='references')
+    loop=next(n for n in ast.walk(fn) if isinstance(n,ast.For) and ast.unparse(n.target)=='item')
+    text=ast.unparse(loop)
+    assert text.count('base_points.get(np, case, n, item[\'extension\'])')==1
+    assert 'points_for_case(' not in text
+    assert text.index('base_points.get(')<text.index("points = layout(np, points, item['pl'])")<text.index('capture_original(')
+    constructors=[n for n in ast.walk(fn) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='LastBasePoints']
+    assert len(constructors)==1 and not any(n is constructors[0] for n in ast.walk(loop))

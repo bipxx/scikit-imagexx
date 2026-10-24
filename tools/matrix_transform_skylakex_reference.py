@@ -162,6 +162,18 @@ def points_for_case(np,case,n,extension):
     return np.array([np.array(case['coords'][i%len(case['coords'])],dtype=np.float64)+i*extension for i in range(n)],dtype=np.float64)
 
 
+class LastBasePoints:
+    """One immutable fixture base; original calls receive fresh layout copies."""
+    def __init__(self):
+        self.case=None;self.n=None;self.extension=None;self.base=None
+    def get(self,np,case,n,extension):
+        if self.case is not case or self.n!=n or self.extension!=extension:
+            base=points_for_case(np,case,n,extension)
+            base.setflags(write=False)
+            self.case=case;self.n=n;self.extension=extension;self.base=base
+        return self.base
+
+
 def readable_image_span(base,image_size,address,size,query):
     """Pure admission metadata for a prospective read; no pointer dereference."""
     require(type(base) is int and type(address) is int and type(size) is int and size>0,'invalid read request')
@@ -240,12 +252,12 @@ def references(out,mode):
     census=list(case_specs(spec,fields));require(sum(c['family']=='legacy4000' for c in census)==4000,'legacy cases missing')
     require(len(json.dumps(census).encode())<=32*1024*1024,'complete metadata census exceeds reserved budget')
     dump(reports/'before-fixtures.json',dict(source=facts,capture_site=site['provenance'],boundary_schema=BOUNDARY_SCHEMA,fma_witness_fraction_proof=fma_fraction_proof(),live_table=table,fp=fp,mode=mode,case_count=len(census),cases=census,original_only=True,native_acceptance=False,public_acceptance=False))
-    buffers=Buffers(reports.parent);completed=0
+    buffers=Buffers(reports.parent);completed=0;base_points=LastBasePoints()
     before=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed());require(before==(0,0),'unexpected prior native arithmetic')
     with gzip.open(reports/'rows.jsonl.gz','wt',encoding='utf-8') as stream:
         for item in census:
             case=item['case'];n=item['n']
-            points=points_for_case(np,case,n,item['extension'])
+            points=base_points.get(np,case,n,item['extension'])
             points=layout(np,points,item['pl']);matrix=layout(np,np.array(case['matrix'],dtype='f8'),item['ml'])
             require(points.dtype.str==matrix.dtype.str=='<f8','compiled double cohort must enter original as float64')
             inputs=(points.tobytes(),matrix.tobytes());pre_fp=fp_metadata()
