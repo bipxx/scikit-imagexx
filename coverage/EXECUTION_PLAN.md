@@ -45,7 +45,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 |---|---|---|---|
 | Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 accepted: 163 image paths, 303 upstream-only. Four verified campaigns merged; whole7 source frozen7aaa747, actual package gates pending |
 | Worker 1 | `metrics_reductions` | Nine percentile benchmark contracts and hosted workflow | Reversed metrics transport5d2975 has a sealed qualified private proof; three original capfd policy handles remain live/excluded. Next original-only benchmark packet freezes1544 reference IDs and balanced safe rasters; public/performance gates pending |
-| Worker 2 | `resize_api` | Nine percentile C++ kernels and binding contracts | Original reference frozenb928; private kernels preserve54 provider traces and old-op interfaces. Normal/scalar/Debug/portable/sanitizer gates underway; public registration pending |
+| Worker 2 | `resize_api` | Nine percentile public-wrapper contracts | New private kernels8e37 pass6618checks across11profiles;295immutable records independently verified. NoOMP policy explicit; inherited27041 remainslive/excluded. Prototype wrappers nowimplement canonical-only9paths; genuinewhole8/public/SDK/performance pending |
 | Worker 3 | `resize_bench` | Whole7 actual package/corpus/SDK qualification | R4 wrappers and benchmark Phase1 frozen. Final toolchain health verified; exclusive7aaa747 build lease granted. Genuine public/corpus/SDK gates and independent171-path inventory are running, with no coverage increase yet |
 
 The agent names are reused from earlier packets; they do not describe their

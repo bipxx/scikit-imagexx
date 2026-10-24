@@ -20239,11 +20239,7 @@
       "owner": "resize_bench",
       "branch": "feature/rank-statistics-public",
       "base_sha": "eae8dc62a526705a6bd244abe025e3825e7b091b",
-      "owns": [
-        "python/skimagexx/_rank.py",
-        "tests/test_rank_statistics_public.py",
-        "coverage/contracts/rank-statistics-public.json"
-      ],
+      "owns": [],
       "depends_on": [
         "rank-statistics-native"
       ],
@@ -20294,7 +20290,13 @@
           "native_pending": 0,
           "scope": "Privatef7 wrapper qualification only:995x1/4x8, expandedWindows3297x1/4xnormal/scalar,72capabilityguards and11providers.4660publictests collected, notexecuted/accepted; genuinewhole7 pending."
         }
-      }
+      },
+      "read_only_frozen_paths": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_statistics_public.py",
+        "coverage/contracts/rank-statistics-public.json"
+      ],
+      "write_ownership_release": "R4wrapper source frozen in leased7aaa/a67 staged correction. Coordinator onlyreads actualproduct; separateR5prototype worker may edit its own isolated next-worktree copy. Current producer/packages remain immutable."
     },
     {
       "id": "rank-statistics-benchmark-tooling",
@@ -20514,7 +20516,7 @@
       "depends_on": [
         "rank-percentile-contracts"
       ],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
@@ -20522,8 +20524,8 @@
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
+        "source_sha": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c",
+        "artifact_sha256": "0097a8dca974e0d5adf330c7302463178812719b90815c1a34923ec1a2aa5f35",
         "runs": []
       },
       "performance": {
@@ -20536,17 +20538,39 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
+        "commit": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c",
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
-        "protected_artifacts": []
+        "active_paths": [
+          "build/worktrees/rank-percentile-native"
+        ],
+        "protected_artifacts": [
+          "build/worktrees/rank-percentile-native/build/rank-percentile-private-qualified-proof.json"
+        ]
       },
       "dependency_requirements": {
         "rank-percentile-contracts": {
           "evidence_scope": "contract_reference"
         }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c",
+          "manifest": {
+            "path": "build/worktrees/rank-percentile-native/build/rank-percentile-private-qualified-proof.json",
+            "sha256": "0097a8dca974e0d5adf330c7302463178812719b90815c1a34923ec1a2aa5f35"
+          },
+          "native_contract_checks": 6618,
+          "profiles": 11,
+          "native_pending": 0,
+          "scope": "Qualified new9 private algorithms only: all295immutablefiles independently rehashed. Portable serial3310 pass/3309worker4 skips with explicit reject4/default1, no serialworker4 claim. InheritedLinuxold17 original27041+queued tails remainunsealed/excluded; cumulative public/SDK/performance pending."
+        }
+      },
+      "live_observations": {
+        "handle": 27041,
+        "scope": "Original inherited-old17 run preserved live; mutable paths deliberately excluded from seal."
       }
     },
     {
@@ -20878,6 +20902,57 @@
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
           "Phase1 original/reference only: freeze1544 canonical IDs and balanced source-safe raster candidates across all9actualalgorithms. Metadata/aliases/providertraces/policies/errors untimed. Native/public whole-core qualification and isolated performance remain pending; native0 and no dispatch at this stage."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-percentile-public",
+      "kind": "public_wrapper_prototype",
+      "public_registration": true,
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-percentile-public",
+      "base_sha": "a67ee96e473d0405648cfcf1293b7f6560f7c803",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_percentile_public.py",
+        "coverage/contracts/rank-percentile-public.json"
+      ],
+      "depends_on": [
+        "rank-percentile-native"
+      ],
+      "dependency_requirements": {
+        "rank-percentile-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-percentile.json",
+        "uncovered_cases": [
+          "Ninecanonical functions only; originalgeneric hasnone ofthese aliases. Match2D metadata/preprocessing/provider54traces/outreshape and exact v1/cap/compiledentry guard. Isolatedprivatewrapper prototype is not actualpublic registration. Root owns shared namespace selection, registry/inventory/CMake/SDK and genuinewhole8 package qualification."
         ]
       },
       "parity": {
@@ -21645,7 +21720,7 @@
         "rank-percentile-benchmark-tooling"
       ],
       "resize_api": [
-        "rank-percentile-native"
+        "rank-percentile-public"
       ],
       "resize_bench": [
         "rank-statistics-public",
