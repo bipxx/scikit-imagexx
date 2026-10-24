@@ -25,6 +25,23 @@ int shift(py::handle value) {
         if(number<-128 || number>127){PyErr_SetString(PyExc_OverflowError,"value too large to convert to signed char");throw py::error_already_set();}
         return int(number);
 }
+int decisions_shift(py::handle value) {
+    // The pinned Cython signed-char converter accepts nb_int, not the modern
+    // PyNumber_Long fallback to an __index__-only provider. Native Python ints
+    // (including subclasses) are read directly without invoking overrides.
+    py::object integer;
+    if(PyLong_Check(value.ptr()))integer=py::reinterpret_borrow<py::object>(value);
+    else {
+        const auto* methods=Py_TYPE(value.ptr())->tp_as_number;
+        if(!methods || !methods->nb_int)throw py::type_error("an integer is required");
+        integer=py::reinterpret_steal<py::object>(PyNumber_Long(value.ptr()));
+        if(!integer)throw py::error_already_set();
+    }
+    const auto number=PyLong_AsLongLong(integer.ptr());
+    if(PyErr_Occurred()){PyErr_Clear();PyErr_SetString(PyExc_OverflowError,"Python int too large to convert to C long");throw py::error_already_set();}
+    if(number<-128 || number>127){PyErr_SetString(PyExc_OverflowError,"value too large to convert to signed char");throw py::error_already_set();}
+    return int(number);
+}
 template<class T> bool signaling(T value) {
     using U=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;U word;std::memcpy(&word,&value,sizeof(T));
     if constexpr(sizeof(T)==4)return (word&0x7f800000)==0x7f800000 && (word&0x007fffff) && !(word&0x00400000);
@@ -46,6 +63,8 @@ void bind_rank(py::module_& module) {
     module.attr("rank_percentile_capabilities")=py::int_(skimagexx::rank_percentile_capabilities());
     module.attr("rank_bilateral_interface")="rank-bilateral-v1";
     module.attr("rank_bilateral_capabilities")=py::int_(skimagexx::rank_bilateral_capabilities());
+    module.attr("rank_decisions_interface")="rank-decisions-v1";
+    module.attr("rank_decisions_capabilities")=py::int_(skimagexx::rank_decisions_capabilities());
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
         const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
@@ -192,6 +211,37 @@ void bind_rank(py::module_& module) {
     module.def("rank_statistics_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op){run_rank(a,f,m,o,s,b,op,1);});
     module.def("rank_windowed_histogram_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b){run_rank(a,f,m,o,s,b,16,2);});
     module.def("rank_percentile_run",[run_rank](py::array a,py::array f,py::object m,py::array o,std::vector<py::object> s,std::size_t b,int op,py::object p0,py::object p1){run_rank(a,f,m,o,s,b,op,3,p0,p1);});
+    module.def("rank_decisions_run",[](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation) {
+        if(operation!=29 && operation!=30)throw py::value_error("invalid rank decisions operation");
+        const int rank=int(requested_shifts.size());
+        if((rank!=2 && rank!=3) || image.ndim()!=rank)throw py::type_error("Function call with ambiguous argument types");
+        const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
+        if(output.ndim()!=rank+1 || !((kind=='u' && (width==1 || width==2)) || kind=='b' || (kind=='f' && (width==4 || width==8))))throw py::type_error("Function call with ambiguous argument types");
+        buffer(image,rank);buffer(footprint,rank);
+        py::array mask;if(!mask_object.is_none()){mask=mask_object.cast<py::array>();buffer(mask,rank);}
+        buffer(output,rank+1);
+        if(image.dtype().kind()!='u' || (image.itemsize()!=1 && image.itemsize()!=2) || footprint.dtype().kind()!='u' || footprint.itemsize()!=1 || (!mask_object.is_none() && (mask.dtype().kind()!='u' || mask.itemsize()!=1)))throw py::type_error("rank decisions requires prepared unsigned buffers");
+        // Capture the acquired fused buffers before signed-char conversions;
+        // those conversions may invoke Python hooks which reinterpret arrays.
+        skimagexx::RankView view;view.uint16=image.itemsize()==2;view.image=image.data();view.footprint=static_cast<const std::uint8_t*>(footprint.data());view.output=output.mutable_data();view.bins=bins;
+        view.output_type=skimagexx::bindings::real_pixel_type(dtype);
+        const int skip=rank==2 ? 1:0;view.shape[0]=view.footprint_shape[0]=1;
+        std::array<py::ssize_t,3> output_shape{};
+        for(int axis=0;axis<rank;++axis){view.shape[axis+skip]=std::size_t(image.shape(axis));view.footprint_shape[axis+skip]=std::size_t(footprint.shape(axis));view.output_strides[axis+skip]=output.strides(axis);output_shape[axis]=output.shape(axis);}
+        const auto depth=output.shape(rank),mask_size=mask_object.is_none() ? py::ssize_t{0}:mask.size();
+        if(!mask_object.is_none())view.mask=static_cast<const std::uint8_t*>(mask.data());
+        std::vector<int> shifts;for(const auto& value:requested_shifts)shifts.push_back(decisions_shift(value));
+        for(int axis=0;axis<rank;++axis)view.center[axis+skip]=std::ptrdiff_t(view.footprint_shape[axis+skip]/2)+(rank==2 ? shifts[1-axis]:shifts[axis]);
+        if(rank==2) {
+            const auto cy=view.center[1],cx=view.center[2];const auto rows=view.footprint_shape[1],cols=view.footprint_shape[2];
+            std::string error;if(cy<0)error="centre_r "+std::to_string(cy)+" < 0";else if(cx<0)error="centre_c "+std::to_string(cx)+" < 0";else if(std::size_t(cy)>=rows)error="centre_r "+std::to_string(cy)+" >= srows "+std::to_string(rows);else if(std::size_t(cx)>=cols)error="centre_c "+std::to_string(cx)+" >= scols "+std::to_string(cols);
+            if(!error.empty()){PyErr_SetString(PyExc_AssertionError,error.c_str());throw py::error_already_set();}
+        } else for(int axis=0;axis<3;++axis)if(view.center[axis]<0 || std::size_t(view.center[axis])>=view.footprint_shape[axis])throw py::value_error(std::string("half footprint + shift_")+char('x'+axis)+" must be between 0 and footprint");
+        if(depth<1)throw py::value_error("rank output pixel depth must be positive");
+        for(int axis=0;axis<rank;++axis)if(output_shape[axis]<py::ssize_t(view.shape[axis+skip]))throw py::value_error("rank output is smaller than image");
+        if(view.mask && std::size_t(mask_size)<view.shape[0]*view.shape[1]*view.shape[2])throw py::value_error("rank mask storage is smaller than image");
+        {py::gil_scoped_release release;skimagexx::rank_decisions_into(view,static_cast<skimagexx::RankOperation>(operation));}
+    });
     module.def("rank_bilateral_run",[](py::array image,py::array footprint,py::object mask_object,py::array output,std::vector<py::object> requested_shifts,std::size_t bins,int operation,py::object s0,py::object s1) {
         if(operation<26 || operation>28)throw py::value_error("invalid rank bilateral operation");
         if(requested_shifts.size()!=2 || image.ndim()!=2)throw py::type_error("Function call with ambiguous argument types");
