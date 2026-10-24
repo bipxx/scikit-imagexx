@@ -28502,18 +28502,23 @@
       "kind": "tooling",
       "apis": [],
       "owner": "resize_bench",
-      "branch": "feature/matrix-profile-tlog",
-      "base_sha": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
+      "branch": "feature/matrix-transform-hosted-v2",
+      "base_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
       "owns": [
         "tools/matrix_transform_profiles.py",
         "tests/test_matrix_transform_profiles.py",
         ".github/workflows/matrix-transform-profiles.yml"
       ],
       "depends_on": [
-        "matrix-transform-general-binding"
+        "matrix-transform-profile-binding"
       ],
-      "dependency_requirements": {},
-      "state": "validating",
+      "dependency_requirements": {
+        "matrix-transform-profile-binding": {
+          "evidence_scope": "native_private",
+          "source_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d"
+        }
+      },
+      "state": "implementing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -28543,7 +28548,8 @@
           "build/worktrees/matrix-transform-contracts/build/matrix-hosted-profile-design",
           "build/matrix-default-profile-runs/40096175414",
           "build/matrix-default-profile-paths-runs/40099938410",
-          "build/matrix-profile-tlog-proof"
+          "build/matrix-profile-tlog-proof",
+          "build/worktrees/matrix-transform-hosted-v2"
         ],
         "protected_artifacts": []
       },
@@ -28600,6 +28606,16 @@
         },
         "unresolved_SkylakeX_rows_per_mode": 60,
         "runtime_profile_admission": false
+      },
+      "current_scope": "Fresh four-profile final520 actual loaded runtime certificate and complete unchanged374/4000 pipeline/direct controls. Prior discovery/mismatches/tooling receipts remain historical; no public/SDK/speed claim.",
+      "prospective_final520_run": {
+        "id": 40110960789,
+        "controller": "418f381e41879e06aa8850dbd338b9c58fd0f5e0",
+        "private_source": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
+        "observer_session": 33823,
+        "retainer_session": 86994,
+        "status": "running",
+        "acceptance": false
       }
     },
     {
@@ -29005,7 +29021,7 @@
           "source_sha": "235174d565d9e1c79d9f0b12a516c06003b791c9"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -29013,9 +29029,10 @@
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
+        "artifact_sha256": "b1f0a74df55df70f99cf45af7ef631baa930bce55bee39f7c0fd745915e34d63",
+        "runs": [],
+        "native_checks": 3600
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -29039,6 +29056,25 @@
         "path": "build/decisions-readiness/matrix-runtime-arithmetic-root-review/manifest.json",
         "bytes": 4623,
         "sha256": "608103349e27aebc9da04d1242a260311f0ce5d2c9cb75450608e84917dbee00"
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
+          "manifest": {
+            "path": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/manifest.json",
+            "bytes": 23962,
+            "sha256": "b1f0a74df55df70f99cf45af7ef631baa930bce55bee39f7c0fd745915e34d63"
+          },
+          "native_contract_checks": 3600,
+          "native_pending": 0,
+          "scope": "Private strict520 bridge and prepared ID6 native completions only; actual local corename Haswell, truthful ASAN embedding distinct. Full frozen374/4000/direct guards retained; no public/SDK/hosted CPU/performance claim."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/current-private-increments-root-review/manifest.json",
+        "bytes": 3941,
+        "sha256": "29093dfe5955bc4935d33e41a2639adfdd040e21683ebe469b15c5e0a24bffbf"
       }
     },
     {
@@ -29052,7 +29088,10 @@
         "src/tv_denoise.cpp",
         "src/tv_chambolle.cpp",
         "tests/test_tv_denoise_cursor_native.cpp",
-        "tests/test_tv_chambolle_cursor_pipeline.py"
+        "tests/test_tv_chambolle_cursor_pipeline.py",
+        "CMakeLists.txt",
+        "tools/public_qualification.py",
+        "tests/test_public_qualification.py"
       ],
       "depends_on": [
         "tv-chambolle-public-191",
@@ -29068,7 +29107,7 @@
           "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
         }
       },
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -29076,9 +29115,10 @@
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "514f9f4bb2f9f80827cd63e3f078602e0b670265",
+        "artifact_sha256": "68cb67c6f5e48154b7ac4b1c26034bd5c0fb97b6a26d0aa145e108e309b111fc",
+        "runs": [],
+        "native_checks": 6367333
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -29095,7 +29135,8 @@
       "retention": {
         "active_paths": [
           "build/worktrees/tv-strided-cursor",
-          "build/tv-chambolle-one-thread-bottlenecks"
+          "build/tv-chambolle-one-thread-bottlenecks",
+          "build/worktrees/tv-strided-cursor-public"
         ],
         "protected_artifacts": []
       },
@@ -29103,7 +29144,28 @@
         "path": "build/tv-chambolle-one-thread-bottlenecks/manifest.json",
         "bytes": 5922,
         "sha256": "a775713a1b97ee783a4e2c9d5e83761632ee17a9d99c3c0c35d1686ecb2d3e64"
-      }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "514f9f4bb2f9f80827cd63e3f078602e0b670265",
+          "manifest": {
+            "path": "build/worktrees/tv-strided-cursor/build/cursor-v1/manifest.json",
+            "bytes": 125826,
+            "sha256": "68cb67c6f5e48154b7ac4b1c26034bd5c0fb97b6a26d0aa145e108e309b111fc"
+          },
+          "native_contract_checks": 6367333,
+          "native_pending": 0,
+          "scope": "Private address-transport native controls (6367333 assertions in each full dynamic native mode), actual full pipelines/fixed400/portable explicitworker4 rejection. All failures/recovery retained. Whole public/SDK and speed pending."
+        }
+      },
+      "root_review": {
+        "path": "build/decisions-readiness/current-private-increments-root-review/manifest.json",
+        "bytes": 3941,
+        "sha256": "29093dfe5955bc4935d33e41a2639adfdd040e21683ebe469b15c5e0a24bffbf"
+      },
+      "qualification_branch": "integration/tv-strided-cursor",
+      "current_scope": "Fresh public192/SDK18 full four-profile qualification from exact main6ff02f6 plus514f; all110/63 members and18 SDK families unchanged. Then common-host original/before/after70x7 one-thread comparison."
     },
     {
       "id": "max-tree-root-compression",
@@ -29160,6 +29222,100 @@
         ],
         "protected_artifacts": []
       }
+    },
+    {
+      "id": "max-tree-public198-integration",
+      "kind": "public_integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/max-tree-public",
+      "base_sha": "15d428c7237ebd0b1e612b753d98905d60635243",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/morphology.py",
+        "python/skimagexx/coverage.py",
+        "tools/public_qualification.py",
+        "tools/rank_statistics_products.py",
+        "tools/inventory.py",
+        "tests/cmake_consumer/CMakeLists.txt",
+        "tests/test_api.py",
+        "tests/test_max_tree_public.py",
+        "tests/test_max_tree_contracts.py",
+        "tests/test_public_qualification.py",
+        "tests/test_rank_statistics_products.py"
+      ],
+      "state": "preparing",
+      "public_registration": true,
+      "depends_on": [
+        "max-tree-native",
+        "max-tree-private-binding",
+        "max-tree-integer-sort",
+        "max-tree-root-compression"
+      ],
+      "dependency_requirements": {
+        "max-tree-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "f650fd70504fd61cce8f9a6241a77ae3e6e98527"
+        },
+        "max-tree-private-binding": {
+          "evidence_scope": "native_private",
+          "source_sha": "29eb2ae8e97edbf6425e80afad169c97adf2d04d"
+        },
+        "max-tree-integer-sort": {
+          "evidence_scope": "native_private",
+          "source_sha": "82394aecc306ae117027160f73fff7d769b04eec"
+        },
+        "max-tree-root-compression": {
+          "evidence_scope": "native_private",
+          "source_sha": "dc12e10b2388f67f3c6a7e9b16ffd32ef2796aa3"
+        }
+      },
+      "contract": {
+        "case_manifest": "coverage/contracts/max-tree.json",
+        "uncovered_cases": [
+          "Merge final root-compression source only after the complete genuine optimized aggregate/staged-binding composition proof.",
+          "Fresh actual whole installed public198+3/112-member wheel/64-member SDK19 qualification on all four profiles.",
+          "Original-library isolated one-worker performance for every one of the six APIs, retaining all regressions."
+        ]
+      },
+      "parity": {
+        "source_sha": "e341be0a33ff237078f4fb2fc60d8c06a4e5df3b",
+        "artifact_sha256": null,
+        "runs": [],
+        "native_checks": 0
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/max-tree-public",
+          "build/max-tree-public-preparation"
+        ],
+        "protected_artifacts": []
+      },
+      "prepared_source": "e341be0a33ff237078f4fb2fc60d8c06a4e5df3b",
+      "metadata_only": {
+        "unique_passing_checks": 424,
+        "clear_source_plans": 4,
+        "receipt": {
+          "path": "build/worktrees/max-tree-public/coverage/evidence/max-tree-sdk-census-migration.json",
+          "bytes": 9778,
+          "sha256": "ebbeb083ec010019df92ec1895236dbc0e381b14428dbbc22e0d488c7b03f700"
+        },
+        "raw_failure_and_recovery_XMLs_retained": true
+      },
+      "current_public_acceptance": 0
     }
   ],
   "unassigned_inventoried_apis": [
@@ -30536,6 +30692,150 @@
       "archive": "build/cleanup/completed-tv-reference-worktrees/tv-chambolle-benchmark.tar.gz",
       "archive_sha256": "d4f9c1b61fcaad1effdb6f5c8ab785bb3b6fa35ac2c8d8943c472cfdc5c20553",
       "member_rule": "Remove former_prefix/; all original regular bytes retained exactly. ZIP has no links; benchmark tar.gz preserves six exact link targets without following them. Worktree .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-integer-sort/build/max-tree-integer-sort/windows-v1",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-integer-sort/build/max-tree-integer-sort/dynamic-v1",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-integer-sort/build/max-tree-integer-sort/portable-v1",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-integer-sort/build/max-tree-integer-sort/sanitizer-v1",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-minimum-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-minimum-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-modern-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-modern-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-portable-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-portable-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-sanitizer-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-sanitizer-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-windows-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/cache-windows-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-binding-sanitizer-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-binding-sanitizer-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-minimum-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-minimum-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-modern-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-modern-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-portable-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-portable-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-windows-normal",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/cache-windows-scalar",
+      "archive": "build/cleanup/released-caches-20261024-1605/preserved-caches.zip",
+      "archive_sha256": "d25f140c1c5c8e1b6b0005d198eb7b8553ed68483a616793b66ed4da884a1d91",
+      "member_rule": "Use full former workspace-relative path as exact ZIP member; preservation-index.json maps every original byte/SHA. Original manifests unchanged."
     }
   ],
   "inventory_assessment_pending": {
@@ -30575,8 +30875,8 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/merged-tv-controller-cleanup-20261024.json",
-    "bytes": 1754,
-    "sha256": "f82000646b0013aac457e93aae51f339d77f5eea2c6f3ad316960a2d10aef685"
+    "path": "coverage/evidence/released-build-cache-cleanup-20261024.json",
+    "bytes": 2345,
+    "sha256": "d0dd994f0d36423ddd8dc08d4b5138f1ab382d92c77aa5294270503eeab360a6"
   }
 }
