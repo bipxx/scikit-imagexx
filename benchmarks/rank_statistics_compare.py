@@ -19,6 +19,7 @@ import os
 from pathlib import Path, PurePosixPath
 import platform
 import random
+import secrets
 import statistics
 import subprocess
 import sys
@@ -230,11 +231,11 @@ def validate_preparation_report(report,cfg,profile):
                         and digest(observations['digests'])==cfg['expected_observation_vectors'][profile],'frozen observations incomplete/different')
 
 
-def claim_measurement(receipts,profile,generation,attempt,claim_root):
+def claim_measurement(receipts,profile,generation,attempt,claim_root,authentication=None):
     require(generation and attempt and claim_root,'measurement session provenance absent')
     key=digest(dict(profile=profile,generation=generation,attempt=attempt,receipts=[sha(p) for p in receipts]))
     path=Path(claim_root)/'rank-statistics-comparison-claims'/(key+'.json')
-    return write_new(path,dict(profile=profile,generation=generation,attempt=attempt,receipt_hashes=[sha(p) for p in receipts]))
+    return write_new(path,dict(profile=profile,generation=generation,attempt=attempt,receipt_hashes=[sha(p) for p in receipts],authentication=authentication))
 
 
 def receipt_barrier(paths,cfg,generation,attempt):
@@ -346,20 +347,68 @@ def sample_admission(validated,measure,actions,workers,scalar,index,timed_ids):
     require(index in timed_ids,'untimed/error case cannot become timed')
 
 
-def worker_permit(path,profile,cfg):
+def startup_plan():
+    nonces={role:secrets.token_hex(32) for role in ROLES}
+    authentication=dict(controller_pid=os.getpid(),tool_sha256=sha(__file__),
+                        startup_sha256={role:hashlib.sha256(value.encode()).hexdigest() for role,value in nonces.items()})
+    return nonces,authentication
+
+
+def startup_frame(authentication,role,profile,generation,attempt,launcher_pid,nonce):
+    return dict(operation='authenticate-startup-v1',controller_pid=authentication['controller_pid'],
+                launcher_pid=launcher_pid,role=role,profile=profile,generation=generation,attempt=attempt,
+                tool_sha256=authentication['tool_sha256'],nonce=nonce)
+
+
+def authenticate_startup(permit,claim,path,role,profile,generation,attempt,stream):
+    """One-use inherited-stdio secret; no arbitrary ancestor traversal.
+
+    The exclusive measurement claim binds controller/source and per-role secret
+    hashes. The secret travels only on the controller-created stdin pipe. The
+    exact declared Popen launcher may be the Windows venv redirector; the real
+    worker must be its immediate child or the controller's direct child.
+    """
+    require(role in ROLES and not stream.isatty(),'direct interactive worker startup forbidden')
+    authentication=claim.get('authentication')
+    require(isinstance(authentication,dict) and set(authentication)=={'controller_pid','tool_sha256','startup_sha256'},'startup authentication absent')
+    require(type(authentication['controller_pid']) is int and authentication['controller_pid']>0,'invalid controller identity')
+    require({key:permit.get(key) for key in authentication}==authentication,'controller/source startup claim differs')
+    hashes=authentication['startup_sha256']
+    require(set(hashes)==set(ROLES) and len(set(hashes.values()))==3 and all(isinstance(v,str) and len(v)==64 for v in hashes.values()),'per-role startup hashes absent/duplicated')
+    line=stream.readline();require(bool(line),'controller startup handshake missing')
+    frame=json.loads(line)
+    expected=dict(operation='authenticate-startup-v1',controller_pid=authentication['controller_pid'],role=role,
+                  profile=profile,generation=generation,attempt=attempt,tool_sha256=sha(__file__))
+    require({key:frame.get(key) for key in expected}==expected,'wrong controller/source/run startup handshake')
+    nonce=frame.get('nonce');require(isinstance(nonce,str) and len(nonce)==64 and hashlib.sha256(nonce.encode('ascii')).hexdigest()==hashes[role],'startup secret differs')
+    launcher=frame.get('launcher_pid');require(type(launcher) is int and launcher>0,'invalid startup launcher')
+    parent=os.getppid();worker=os.getpid();controller=authentication['controller_pid']
+    require((parent==controller and launcher==worker) or (parent==launcher and launcher!=worker),
+            'worker is not the exact controller/launcher child')
+    # Replaying a permit/frame cannot start another worker for the same role.
+    startup_path=Path(path).with_name(Path(path).stem+'-'+role+'-stdio-startup.json')
+    receipt=write_new(startup_path,dict(mechanism='one-use-inherited-stdio-v1',role=role,profile=profile,
+        generation=generation,attempt=attempt,controller_pid=controller,launcher_pid=launcher,
+        worker_pid=worker,worker_parent_pid=parent,tool_sha256=sha(__file__),nonce_sha256=hashes[role]))
+    return dict(mechanism='one-use-inherited-stdio-v1',controller_pid=controller,launcher_pid=launcher,
+                worker_pid=worker,worker_parent_pid=parent,startup_receipt_sha256=sha(receipt))
+
+
+def worker_permit(path,profile,cfg,role=None,stream=None):
     require(path is not None and os.getenv('GITHUB_ACTIONS')=='true','direct worker timing without preparation permit forbidden')
     permit=load_json(path)
-    require(permit['profile']==profile and permit['controller_pid']==os.getppid() and permit['tool_sha256']==sha(__file__),'wrong controller/source permit')
+    require(permit['profile']==profile and permit['tool_sha256']==sha(__file__),'wrong controller/source permit')
     receipt_barrier([Path(p) for p in permit['receipts']],cfg,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'))
     require(sha(permit['claim'])==permit['claim_sha256'],'measurement claim differs')
     claim=load_json(permit['claim'])
     require(claim['profile']==profile and claim['generation']==os.getenv('GITHUB_RUN_ID') and claim['attempt']==os.getenv('GITHUB_RUN_ATTEMPT')
             and claim['receipt_hashes']==[sha(p) for p in permit['receipts']],'measurement claim receipt binding differs')
+    return authenticate_startup(permit,claim,permit['claim'],role,profile,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'),stream or sys.stdin)
 
 
 def worker_main(args):
     cfg=config(args.experiment,args.experiment_sha256);product_role='before' if args.role=='original' else args.role
-    if args.measure:worker_permit(args.permit,args.profile,cfg)
+    startup=worker_permit(args.permit,args.profile,cfg,args.role) if args.measure else None
     seal=verify_product(args.product,product_role,args.profile,cfg) # BEFORE numerical/fixture imports.
     early_native_admission() # mandatory BEFORE harness/contract fixture import.
     h=harness(Path(args.product)/'source');xx=h.xx;runtime=load_json(Path(args.product)/'runtime.json')
@@ -371,7 +420,7 @@ def worker_main(args):
     require(not any(k.startswith('SKIMAGEXX_') and k!='SKIMAGEXX_DISABLE_SIMD' for k in os.environ),'prototype/private selector forbidden')
     previous=xx.get_num_threads();xx.set_fallback_enabled(False);h.admit_native(previous)
     cases=list(h.corpus());require(len(cases)==1379 and h.digest([h.inventory(c) for c in cases])==cfg['case_contract_sha256'],'fixed corpus changed')
-    identity=dict(role=args.role,pid=os.getpid(),source=seal['revision'],product_sha256=seal['product_sha256'],core_sha256=sha(core.__file__),core_path=str(Path(core.__file__).resolve()),python=sys.version,cpu=h.cpu_metadata(),profile=args.profile,scalar=bool(os.getenv('SKIMAGEXX_DISABLE_SIMD')),default_workers=previous,has_avx2=xx.has_avx2())
+    identity=dict(role=args.role,pid=os.getpid(),source=seal['revision'],product_sha256=seal['product_sha256'],core_sha256=sha(core.__file__),core_path=str(Path(core.__file__).resolve()),python=sys.version,cpu=h.cpu_metadata(),profile=args.profile,scalar=bool(os.getenv('SKIMAGEXX_DISABLE_SIMD')),default_workers=previous,has_avx2=xx.has_avx2(),startup_authentication=startup)
     print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=False;callbacks={};expected_after={}
     for line in sys.stdin:
         request=json.loads(line)
@@ -430,7 +479,7 @@ def worker_main(args):
 
 
 class Worker:
-    def __init__(self,python,product,role,profile,output,measure=False,scalar=False,permit=None,experiment=None,experiment_sha256=None):
+    def __init__(self,python,product,role,profile,output,measure=False,scalar=False,permit=None,experiment=None,experiment_sha256=None,startup_nonce=None):
         self.stderr=Path(output).open('x',encoding='utf-8');env=dict(os.environ)
         for key in list(env):
             if key.startswith('SKIMAGEXX_') or key in ('PYTHONPATH','PYTHONHOME'):env.pop(key)
@@ -440,6 +489,10 @@ class Worker:
         if experiment:command+=['--experiment',str(experiment),'--experiment-sha256',experiment_sha256]
         if measure:command+=['--measure','--permit',str(permit)]
         self.process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.stderr,text=True,env=env)
+        if measure:
+            permit_data=load_json(permit)
+            frame=startup_frame(permit_data,role,profile,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'),self.process.pid,startup_nonce)
+            self.process.stdin.write(json.dumps(frame)+'\n');self.process.stdin.flush()
         hello=self._read();self.identity=hello['identity']
     def _read(self):
         line=self.process.stdout.readline();require(bool(line),'worker exited; retained stderr contains failure')
@@ -474,23 +527,26 @@ def controller(args):
     else:require(not args.receipts,'check-only cannot consume measurement barrier')
     output=Path(args.output);output.mkdir(parents=True);report=dict(schema='rank-statistics-controlled-v1',session_id=str(uuid.uuid4()),source_comparison=source_comparison,worker_identities={},status='preflight',profile=args.profile,check_only=args.check_only,reference_only=False,results=[],checks={},failures=[],contract_sha256=text_sha(CONTRACT),experiment_sha256=cfg.get('experiment_sha256'))
     # Exclusive local marker plus run/attempt binding rejects rerun/replay.
-    permit=None
+    permit=None;startup_nonces={}
     if measure:
-        claim=claim_measurement(args.receipts,args.profile,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'),os.getenv('RUNNER_TEMP'))
+        startup_nonces,authentication=startup_plan()
+        claim=claim_measurement(args.receipts,args.profile,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'),os.getenv('RUNNER_TEMP'),authentication)
         write_new(output/'receipt-claim.json',dict(claim_path=str(claim),receipts={str(p):sha(p) for p in args.receipts}))
         permit=output/'worker-permit.json'
-        write_new(permit,dict(profile=args.profile,controller_pid=os.getpid(),tool_sha256=sha(__file__),claim=str(claim),claim_sha256=sha(claim),receipts=[str(Path(p).resolve()) for p in args.receipts]))
+        write_new(permit,dict(profile=args.profile,**authentication,claim=str(claim),claim_sha256=sha(claim),receipts=[str(Path(p).resolve()) for p in args.receipts]))
     scheduler=SerialScheduler();workers={}
     try:
         modes=('normal','scalar') if args.check_only else ('normal',)
         for mode in modes:
             workers={}
             for role,product_role in operation_profiles(args.profile):
-                workers[role]=Worker(getattr(args,product_role+'_python'),products[product_role],role,args.profile,output/(role+'-'+mode+'.stderr'),measure,mode=='scalar',permit,args.experiment,args.experiment_sha256)
+                workers[role]=Worker(getattr(args,product_role+'_python'),products[product_role],role,args.profile,output/(role+'-'+mode+'.stderr'),measure,mode=='scalar',permit,args.experiment,args.experiment_sha256,startup_nonces.get(role))
             require(len({w.identity['pid'] for w in workers.values()})==3,'separate ordinary worker processes required')
             require(workers['before'].identity['core_path']!=workers['after'].identity['core_path'] and workers['before'].identity['core_sha256']!=workers['after'].identity['core_sha256'],'before/after cores must be physically and byte-distinct')
             require(all(w.identity['cpu']==workers['original'].identity['cpu'] for w in workers.values()),'same-host CPU session required')
             report['worker_identities'][mode]={role:worker.identity for role,worker in workers.items()}
+            # Full untimed workers1/4 validation completes before ANY warm/calibration/timing.
+            # The fresh measurement job has no concurrent builds or correctness tests.
             report['checks'][mode]=validate_workers(workers,scheduler)
             if measure:
                 report['triad_order']={}
@@ -522,12 +578,42 @@ def controller(args):
     return report
 
 
+def startup_probe(python,output,profile):
+    output=Path(output);require(not output.exists(),'fresh probe output required');output.mkdir(parents=True)
+    nonces,authentication=startup_plan();generation='metadata-only';attempt='1'
+    claim=write_new(output/'claim.json',dict(authentication=authentication))
+    permit=dict(profile=profile,**authentication,claim=str(claim));write_new(output/'permit.json',permit)
+    env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1')
+    with (output/'child.stderr').open('x') as error:
+        process=subprocess.Popen([str(python),'-u',str(Path(__file__).resolve()),'startup-probe-child',
+            '--permit',str((output/'permit.json').resolve()),'--profile',profile],stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,stderr=error,text=True,env=env)
+        frame=startup_frame(authentication,'before',profile,generation,attempt,process.pid,nonces['before'])
+        stdout,_=process.communicate(json.dumps(frame)+'\n')
+    write_new(output/'result.json',dict(schema='rank-statistics-startup-probe-v1',probe_only=True,
+        native_admission=False,barrier_eligible=False,operation_timer_calls=0,controller_pid=os.getpid(),
+        popen_pid=process.pid,returncode=process.returncode,reply=json.loads(stdout) if stdout else None,
+        interpreter=str(python),tool_sha256=sha(__file__)))
+    require(process.returncode==0,'metadata startup child failed; stderr retained')
+    return load_json(output/'result.json')
+
+
+def startup_probe_child(args):
+    permit=load_json(args.permit);claim=load_json(permit['claim'])
+    require(permit['tool_sha256']==sha(__file__),'probe source differs')
+    result=authenticate_startup(permit,claim,permit['claim'],'before',args.profile,'metadata-only','1',sys.stdin)
+    print(json.dumps(dict(probe_only=True,native_admission=False,barrier_eligible=False,operation_timer_calls=0,
+                         executable=sys.executable,base_executable=getattr(sys,'_base_executable',None),**result)),flush=True)
+
+
 def main(argv=None):
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['plan','reference','worker','compare','verify-product','barrier','selectors'])
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['plan','reference','worker','compare','verify-product','barrier','selectors','startup-probe','startup-probe-child'])
     p.add_argument('--check-only',action='store_true');p.add_argument('--reference-only',action='store_true');p.add_argument('--measure',action='store_true');p.add_argument('--profile',choices=PROFILES)
-    for name in ('output','product','before','after','before-python','after-python','permit','experiment'):p.add_argument('--'+name,type=Path)
+    for name in ('output','product','before','after','before-python','after-python','permit','experiment','python'):p.add_argument('--'+name,type=Path)
     p.add_argument('--experiment-sha256');p.add_argument('--role',choices=ROLES);p.add_argument('--receipts',type=Path,nargs='*',default=[]);p.add_argument('--repeat',type=int,default=7)
     args=p.parse_args(argv)
+    if args.mode=='startup-probe':require(args.python and args.output and args.profile,'probe interpreter/output/profile required');startup_probe(args.python,args.output,args.profile);return
+    if args.mode=='startup-probe-child':startup_probe_child(args);return
     if args.mode=='plan':print(json.dumps(dict(phase='Phase1 original-only/native0',products=config()['accepted_products'],canonical_cases=1379,aliases=4,timed_cases=376,worker_limits=[1,4],measurement_workers=[1],rounds=7,planned_scope=config()['planned_scope'],external_experiment_required=True,blocked_source=BLOCKED_SOURCE),indent=2));return
     if args.mode=='reference':require(args.reference_only and args.check_only and not args.measure and args.output,'reference requires --reference-only --check-only/output');reference_characterization(args.output);return
     require(not args.reference_only,'reference receipt cannot enter native/barrier/measurement')

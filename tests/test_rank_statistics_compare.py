@@ -315,19 +315,69 @@ def test_direct_measurement_worker_needs_authenticated_parent_permit(monkeypatch
     with pytest.raises(RuntimeError,match='permit'):c.worker_permit(None,'modern',c.config())
 
 
-@pytest.mark.parametrize('failure',['parent','tool','claim','profile'])
-def test_worker_permit_rejects_wrong_parent_source_or_claim(tmp_path,monkeypatch,failure):
+def permit_metadata(tmp_path,monkeypatch):
     cfg,paths=receipts(tmp_path,monkeypatch)
     monkeypatch.setenv('GITHUB_ACTIONS','true');monkeypatch.setenv('GITHUB_RUN_ID','run');monkeypatch.setenv('GITHUB_RUN_ATTEMPT','1')
-    claim=c.claim_measurement(paths,'windows','run','1',tmp_path/'r')
-    permit=dict(profile='windows',controller_pid=c.os.getppid(),tool_sha256=c.sha(c.__file__),receipts=[str(p) for p in paths],claim=str(claim),claim_sha256=c.sha(claim))
-    path=tmp_path/'permit.json';path.write_text(json.dumps(permit));c.worker_permit(path,'windows',cfg)
+    nonces,authentication=c.startup_plan();authentication['controller_pid']=c.os.getppid()
+    claim=c.claim_measurement(paths,'windows','run','1',tmp_path/'r',authentication)
+    permit=dict(profile='windows',**authentication,receipts=[str(p) for p in paths],claim=str(claim),claim_sha256=c.sha(claim))
+    path=tmp_path/'permit.json';path.write_text(json.dumps(permit))
+    frame=c.startup_frame(authentication,'before','windows','run','1',c.os.getpid(),nonces['before'])
+    return cfg,path,permit,frame
+
+
+@pytest.mark.parametrize('failure',['parent','tool','claim','profile'])
+def test_worker_permit_rejects_wrong_parent_source_or_claim(tmp_path,monkeypatch,failure):
+    cfg,path,permit,frame=permit_metadata(tmp_path,monkeypatch)
+    c.worker_permit(path,'windows',cfg,'before',io.StringIO(json.dumps(frame)+'\n'))
     if failure=='parent':permit['controller_pid']=-1
     elif failure=='tool':permit['tool_sha256']='tampered'
     elif failure=='profile':permit['profile']='modern'
     else:permit['claim_sha256']='tampered'
     path.write_text(json.dumps(permit))
-    with pytest.raises(RuntimeError):c.worker_permit(path,'windows',cfg)
+    with pytest.raises(RuntimeError):c.worker_permit(path,'windows',cfg,'before',io.StringIO(json.dumps(frame)+'\n'))
+
+
+@pytest.mark.parametrize('failure',['nonce','source','stale-run','stale-attempt','wrong-role','wrong-launcher','missing-frame','unknown-parent'])
+def test_stdio_startup_rejects_unbound_or_stale_controller_frame(tmp_path,monkeypatch,failure):
+    cfg,path,permit,frame=permit_metadata(tmp_path,monkeypatch)
+    if failure=='nonce':frame['nonce']='0'*64
+    elif failure=='source':frame['tool_sha256']='bad'
+    elif failure=='stale-run':frame['generation']='old'
+    elif failure=='stale-attempt':frame['attempt']='0'
+    elif failure=='wrong-role':frame['role']='after'
+    elif failure=='wrong-launcher':frame['launcher_pid']=-1
+    elif failure=='unknown-parent':
+        claim=c.load_json(permit['claim']);claim['authentication']['controller_pid']=permit['controller_pid']+100000
+        permit['controller_pid']=claim['authentication']['controller_pid'];frame['controller_pid']=permit['controller_pid'];frame['launcher_pid']=c.os.getpid()+100000
+        Path(permit['claim']).write_text(json.dumps(claim));permit['claim_sha256']=c.sha(permit['claim']);path.write_text(json.dumps(permit))
+    stream=io.StringIO('' if failure=='missing-frame' else json.dumps(frame)+'\n')
+    with pytest.raises(RuntimeError):c.worker_permit(path,'windows',cfg,'before',stream)
+
+
+def test_consumed_stdio_permit_cannot_start_the_same_role_again(tmp_path,monkeypatch):
+    cfg,path,permit,frame=permit_metadata(tmp_path,monkeypatch)
+    result=c.worker_permit(path,'windows',cfg,'before',io.StringIO(json.dumps(frame)+'\n'))
+    assert result['mechanism']=='one-use-inherited-stdio-v1'
+    with pytest.raises(FileExistsError):c.worker_permit(path,'windows',cfg,'before',io.StringIO(json.dumps(frame)+'\n'))
+
+
+def test_real_existing_venv_subprocess_authenticates_exact_stdio_chain(tmp_path):
+    profile='windows' if c.os.name=='nt' else 'modern'
+    result=c.startup_probe(sys.executable,tmp_path/'real-probe',profile)
+    assert result['probe_only'] and not result['native_admission'] and not result['barrier_eligible'] and result['operation_timer_calls']==0
+    reply=result['reply'];assert reply['probe_only'] and reply['worker_pid']!=result['controller_pid']
+    assert reply['controller_pid']==result['controller_pid'] and reply['launcher_pid']==result['popen_pid']
+    assert reply['worker_parent_pid'] in (result['controller_pid'],result['popen_pid'])
+    assert result['returncode']==0
+
+
+def test_validation_finishes_before_any_one_worker_warm_or_sample():
+    tree=ast.parse((ROOT/'benchmarks/rank_statistics_compare.py').read_text())
+    function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='controller')
+    text=ast.unparse(function)
+    assert text.index('validate_workers(workers, scheduler)')<text.index("operation='warm'")<text.index("operation='sample'")
+    assert text.index('receipt_barrier(')<text.index('Worker(')
 
 
 @pytest.mark.parametrize('failure',['missing-scope','cross-coverage','missing-profile','template','hash','run-binding'])

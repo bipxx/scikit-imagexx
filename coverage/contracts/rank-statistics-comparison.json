@@ -20180,8 +20180,8 @@
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368",
     "coverage/contracts/rank-statistics.json": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
     "coverage/contracts/rank-statistics-benchmark.json": "113e24c84a01e49e2e47a612ab905878726befdbf383e6fd728e767e45236dd1",
-    "benchmarks/rank_statistics_compare.py": "89c2a9f08996ab5ef21ff9b902e359c845cf14f571d7a51640a22c49dfbb4ea7",
-    "tests/test_rank_statistics_compare.py": "0d3819b346922442c8abf59f2ec915d537891ad154fa701eae9374dca246c588",
+    "benchmarks/rank_statistics_compare.py": "0ff2694700b07d6f671a290676aaf931509ac00532dc528e0ce7b510632adef8",
+    "tests/test_rank_statistics_compare.py": "464bacf4d2dad826cbea11dd7a0221f8a99cc14e48e2e612440f0447694008a6",
     ".github/workflows/rank-statistics-comparison.yml": "dc207b3990ab08e264fdb873a7cbf152eebc69fe7b4700f093162c12799d680f"
   },
   "profiles": {
@@ -20278,5 +20278,7 @@
     "tests/test_rank_windowed_counts_native.cpp": "1db0382dca8fa7fd71545848928f8e4e82146a872b2027b466abc9157dc3bd4a",
     "tests/test_rank_windowed_counts_pipeline.py": "ec17e9618dcd68e2e452bb578edc6bed1a3c0b53d8e01d97506a106a270711cc"
   },
-  "external_experiment": "Native modes require --experiment and its exact rawSHA. External schema rank-statistics-experiment-v1 binds template_sha256 (canonicalLF) and accepted_products before/after xall3 profiles; each pin has revision, four artifact/source/wheel/qualificationSHA values, artifact_run/name, and explicit equal scope(image_paths,metadata_paths,sdk_families,sdk_members,sdk_family_names). Tracked null pins stay unchanged. No self-referential product/source hashes."
+  "external_experiment": "Native modes require --experiment and its exact rawSHA. External schema rank-statistics-experiment-v1 binds template_sha256 (canonicalLF) and accepted_products before/after xall3 profiles; each pin has revision, four artifact/source/wheel/qualificationSHA values, artifact_run/name, and explicit equal scope(image_paths,metadata_paths,sdk_families,sdk_members,sdk_family_names). Tracked null pins stay unchanged. No self-referential product/source hashes.",
+  "startup_authentication": "One-use source/run/profile/role-bound secret over inherited stdio, with secret hashes/controller/source bound into exclusive measurement claim. Exact direct or one-hop declared Popen venv launcher only; no arbitrary ancestor trust. Probe mode is metadata-only/native0 and cannot satisfy native/preparation barriers.",
+  "validation_order": "Complete untimed1379+4alias worker1/4 validation finishes serially in all3 workers before any one-worker warm/calibration/timing; fresh measurement host has no concurrent builds/correctness tests."
 }
