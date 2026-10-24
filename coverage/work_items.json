@@ -21100,11 +21100,11 @@
         "coverage/contracts/rank-bilateral.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
         "case_manifest": "coverage/contracts/rank-bilateral.json",
         "uncovered_cases": [
-          "Freeze actual3canonical algorithms and3source-backed publicbilateral module identity paths; parameterconversion/bounds/order,2Dpreprocessing/alias/outputs/warnings/errors. Native0, original-only/strictpending/independentoracles. No source-unsafe probes or timings."
+          "No nativeimplementation/public/SDK/performance acceptance from originalreference tests. Exactfrozen source/protocol/alias domains feed nextprivatekernels."
         ],
         "public_aliases_pending_inventory_update": [
           "filters.rank.bilateral.mean_bilateral",
@@ -21113,8 +21113,8 @@
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
+        "source_sha": "eae7fc01f2533012e16d8faa428b92bae589e473",
+        "artifact_sha256": "43badf24aeeeccda5c6a08e7c8c68d454cc01c6bccf138b3f634784b5ae6665d",
         "runs": []
       },
       "performance": {
@@ -21126,12 +21126,28 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "eae7fc01f2533012e16d8faa428b92bae589e473",
+        "main_commit": "6f018c7af7120d9ae51bdbec2ae799b138e974c6"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/rank-bilateral-contract-evidence/eae7fc0/final-v1/manifest.json"
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "eae7fc01f2533012e16d8faa428b92bae589e473",
+          "manifest": {
+            "path": "build/rank-bilateral-contract-evidence/eae7fc0/final-v1/manifest.json",
+            "sha256": "43badf24aeeeccda5c6a08e7c8c68d454cc01c6bccf138b3f634784b5ae6665d"
+          },
+          "passing_contract_checks": 1416,
+          "profiles": 3,
+          "native_checks": 0,
+          "scope": "Fresh5151x3/native0,708IDs+96traces+804oracles.98members independentlyverified; overwritteninitialreceipt incident explicitlyretained, only fresh full-v2 accepted."
+        }
       }
     },
     {
@@ -21151,16 +21167,16 @@
         "coverage/contracts/rank-decisions.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
         "case_manifest": "coverage/contracts/rank-decisions.json",
         "uncovered_cases": [
-          "Freeze actual localotsu and keyword-onlymajority source semantics,2D/3D/masks/ties/popzero/provider/error/warning/output policies and genericidentity/star facts. Do not assume equivalence with modal or global threshold_otsu. Original-only/native0/strictpending/independentoracles, no timers or unsafeCythonprobes."
+          "No nativeimplementation/public/SDK/performance acceptance from originalreference tests. Exactfrozen source/protocol/alias domains feed nextprivatekernels."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
+        "source_sha": "ba7a569810e1fce796675379a9e687a483bbdcd7",
+        "artifact_sha256": "8e6798d657edcf56c2ee87c31ca897c10f4073426b64af84d93c8db7cdcb729a",
         "runs": []
       },
       "performance": {
@@ -21172,12 +21188,28 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "ba7a569810e1fce796675379a9e687a483bbdcd7",
+        "main_commit": "6f018c7af7120d9ae51bdbec2ae799b138e974c6"
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/worktrees/rank-decisions-contracts/build/rank-decisions-reference-proof.json"
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "ba7a569810e1fce796675379a9e687a483bbdcd7",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/rank-decisions-reference-proof.json",
+            "sha256": "8e6798d657edcf56c2ee87c31ca897c10f4073426b64af84d93c8db7cdcb729a"
+          },
+          "passing_contract_checks": 1004,
+          "profiles": 3,
+          "native_checks": 0,
+          "scope": "3304x3/native0,502IDs+32traces+256oracles.78retained+2Git independentlyverified; reservation29/30 metadata-only withallscientificfacts unchanged."
+        }
       }
     },
     {
@@ -21193,7 +21225,7 @@
         ".github/workflows/public-qualification.yml"
       ],
       "depends_on": [],
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -21214,14 +21246,25 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "b0badd2583cd1380fc2ffa7b2efb517dc9bab048",
+        "main_commit": "6f018c7af7120d9ae51bdbec2ae799b138e974c6"
       },
       "retention": {
         "active_paths": [
           "build/worktrees/public-qualification"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "b0badd2583cd1380fc2ffa7b2efb517dc9bab048",
+          "manifest": {
+            "path": "build/worktrees/public-qualification/build/public-qualification-tooling-proof.json",
+            "sha256": "b9cc71c41aa15b64b907720f3c0a45c684fc7363c3a640d02b833af4a1185cb9"
+          },
+          "scope": "45guards/actionlint and4read-only104/59 metadata probes;96records+3Git members independentlyverified. No localbuilds/algorithms/180admission. Actualwhole8source/dispatch/gates pending."
+        }
       }
     },
     {
@@ -21288,6 +21331,183 @@
       "retention": {
         "active_paths": [
           "build/rank-statistics-performance-dispatch/ed8ca5c"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-bilateral-native",
+      "kind": "private_kernel",
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-bilateral-native",
+      "base_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
+      "owns": [
+        "src/rank.cpp",
+        "src/simd_rank_avx2.cpp",
+        "include/skimagexx/rank.hpp",
+        "src/bind_rank.cpp",
+        "tests/test_rank_bilateral_native.cpp",
+        "tests/test_rank_bilateral_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-bilateral-contracts"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-bilateral.json",
+        "uncovered_cases": [
+          "3ops26..28/v1/cap1c, exactIndexbuffer/shift/centre order, signedrange queries/Sumcount0 ghostfeedback, certified708safeIDs inclaliases, scalar/SIMD/optionalglobal. Old0..25 untouched. Allprivate/public/perf gates pending."
+        ]
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/rank-bilateral-contracts"
+        ],
+        "protected_artifacts": [
+          "build/rank-bilateral-contract-evidence/eae7fc0/final-v1/manifest.json"
+        ]
+      },
+      "apis": [],
+      "state": "implementing",
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      }
+    },
+    {
+      "id": "rank-bilateral-benchmark-tooling",
+      "kind": "tooling",
+      "owner": "resize_api",
+      "branch": "feature/rank-bilateral-benchmark",
+      "base_sha": "6f018c7af7120d9ae51bdbec2ae799b138e974c6",
+      "owns": [
+        "benchmarks/rank_bilateral.py",
+        "tests/test_rank_bilateral_benchmark.py",
+        "coverage/contracts/rank-bilateral-benchmark.json",
+        ".github/workflows/rank-bilateral-benchmark.yml"
+      ],
+      "depends_on": [
+        "rank-bilateral-contracts"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-bilateral.json",
+        "uncovered_cases": [
+          "Reference-only native0,708frozenIDs+96traces untimed plusbalancedcandidates;3algorithms/6publicpaths (new3nested aliases pendinginventoryassessment). Exactv1/cap/Builtin/default1/identity/capsuleguards beforefixtures. Futureall3prep1/4bothmodes thenfresh7-pairedone-worker timing; no dispatch."
+        ]
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/rank-decisions-contracts"
+        ],
+        "protected_artifacts": [
+          "build/worktrees/rank-decisions-contracts/build/rank-decisions-reference-proof.json"
+        ]
+      },
+      "apis": [],
+      "state": "implementing",
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      }
+    },
+    {
+      "id": "combined-public-wave8",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "integration/wave8-percentile-metrics",
+      "base_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
+      "owns": [],
+      "depends_on": [
+        "combined-public-wave7",
+        "rank-percentile-native",
+        "rank-percentile-public",
+        "rank-percentile-benchmark-tooling",
+        "metrics-reverse-stride",
+        "public-qualification-tooling"
+      ],
+      "dependency_requirements": {
+        "combined-public-wave7": {
+          "evidence_scope": "public_native"
+        },
+        "rank-percentile-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-percentile-public": {
+          "evidence_scope": "native_private"
+        },
+        "rank-percentile-benchmark-tooling": {
+          "evidence_scope": "tooling"
+        },
+        "metrics-reverse-stride": {
+          "evidence_scope": "native_private"
+        },
+        "public-qualification-tooling": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Cumulative sourceprepared withR5Cpp+wrappers+metrics5d, rootnamespacecanonical26/generic17/SDK12/authenticatedfixtureassertions andpredicted180data. No actual180build/admission. ReadonlyCIstaticreview thenexactsourcehosted4profileworkflow; no localfullbuilds withCdrivepressure. Mainremains171accepted."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/wave8-percentile-metrics"
         ],
         "protected_artifacts": []
       }
@@ -22025,13 +22245,13 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "rank-bilateral-contracts"
+        "rank-bilateral-native"
       ],
       "resize_api": [
-        "rank-decisions-contracts"
+        "rank-bilateral-benchmark-tooling"
       ],
       "resize_bench": [
-        "public-qualification-tooling"
+        "combined-public-wave8"
       ]
     }
   },
