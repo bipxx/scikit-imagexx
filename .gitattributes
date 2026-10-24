@@ -72,3 +72,5 @@ coverage/evidence/tv-chambolle-public-assertion-migration.json -text
 coverage/evidence/public-wave12.json -text
 coverage/evidence/temp-build-cleanup-followup-20261024.json -text
 coverage/evidence/merged-tv-worktree-cleanup-20261024.json -text
+coverage/evidence/tv-bregman-sdk-census-migration.json -text
+coverage/evidence/tv-bregman-public-assertion-migration.json -text

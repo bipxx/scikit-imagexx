@@ -1,4 +1,4 @@
-"""Pinned0.26 Bregman reference contracts; no native implementation admission.
+"""Pinned0.26 Bregman reference contracts and owned public parity checks.
 
 Only certified finite prepared buffers reach the unchecked Cython solver.
 Python intake/error protocols use an explicit blocked entry and remain separate
@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import struct
 import sys
+import types
 import warnings
 
 import numpy as np
@@ -214,7 +215,12 @@ def test_source_signature_audited_domain_and_explicit_native0(frozen):
     assert source_sha(reference)==frozen['source_sha256']
     assert digest(CASES)==frozen['case_contract_sha256'] and list(CASES)==frozen['cases']
     assert frozen['profiles'][profile()]['numpy']==np.__version__ and frozen['profiles'][profile()]['scipy']==scipy.__version__
-    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==frozen['test_source_canonical_lf_sha256']
+    migration=json.loads((ROOT/'coverage/evidence/tv-bregman-public-assertion-migration.json').read_bytes())
+    assert migration['schema']=='tv-bregman-public-assertion-migration-v1'
+    assert migration['source_file']=='tests/test_tv_bregman_contracts.py'
+    assert migration['original_source_sha256']==frozen['test_source_canonical_lf_sha256']
+    assert migration['reference_matrix_sha256']==hashlib.sha256(MATRIX.read_bytes()).hexdigest()
+    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==migration['public_source_sha256']
     assert frozen['sources']['src/skimage/restoration/_denoise_cy.pyx']['sha256']=='737fa38f080af85c41156d2dfe758c499bc22790b9a8a50c976fbbe8653aa124'
     for row in frozen['sources'].values():assert hashlib.sha256(row['utf8'].encode()).hexdigest()==row['sha256']
 
@@ -234,14 +240,36 @@ def test_original_safe_numeric_or_blocked_intake_observation(spec,frozen):
 
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('spec',CASES,ids=lambda s:s['id'])
-def test_native_pending_never_counts_upstream_forwarding(spec,workers,monkeypatch):
-    assert API not in native_functions()
-    def forbidden(*args,**kwargs):raise AssertionError('original Cython entry forbidden in native-pending tests')
+def test_strict_owned_public_observations_without_forwarding(spec,workers,monkeypatch,frozen):
+    assert API in native_functions(),'actual public registration required; no private adapter or skip'
+    module=importlib.import_module('skimagexx._tv_bregman')
+    function=importlib.import_module('skimagexx.restoration').denoise_tv_bregman
+    assert function is module.denoise_tv_bregman and function is not reference
+    assert inspect.unwrap(function).__module__=='skimagexx._tv_bregman'
+    assert inspect.signature(function)==inspect.signature(reference)
+    assert module._core is xx._core and inspect.isbuiltin(module._require_kernel())
+    observed=types.FunctionType(observe.__code__,dict(observe.__globals__,original_module=module))
+    forwarded=[]
+    def forbidden(*args,**kwargs):
+        forwarded.append('Cython')
+        raise AssertionError('upstream Bregman Cython forwarding forbidden')
     monkeypatch.setattr(original_module,'_denoise_tv_bregman',forbidden)
+    forbidden_codes={reference.__code__,inspect.unwrap(reference).__code__}
+    previous=sys.getprofile()
+    def guard(frame,event,arg):
+        if event=='call' and frame.f_code in forbidden_codes:
+            forwarded.append('Python')
+            raise AssertionError('upstream Bregman Python forwarding forbidden')
+        if previous is not None:previous(frame,event,arg)
     before=xx.get_num_threads();fallback=xx.set_fallback_enabled(False);xx.set_num_threads(workers)
     try:
-        passed,_,_,options,_=fixture(spec)
-        with pytest.raises(NotImplementedError):getattr(xx.restoration,'denoise_tv_bregman')(passed,**options)
+        try:
+            sys.setprofile(guard)
+            actual=observed(function,spec)
+        finally:sys.setprofile(previous)
+        assert not forwarded
+        expected=frozen['observations'][frozen['profiles'][profile()]['snapshots'][spec['id']]]
+        assert actual==expected,spec['id']
     finally:xx.set_num_threads(before);xx.set_fallback_enabled(fallback)
 
 

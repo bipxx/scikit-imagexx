@@ -296,7 +296,8 @@ BREGMAN_PATH = 'restoration.denoise_tv_bregman'
 BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp',
     'src/simd_tv_bregman_avx2.cpp', 'src/bind_tv_bregman.cpp', 'python/skimagexx/_tv_bregman.py',
     'tests/test_tv_bregman_native.cpp', 'tests/test_tv_bregman_native_pipeline.py',
-    'tests/test_tv_bregman_public.py', 'coverage/contracts/tv-bregman.json')
+    'tests/test_tv_bregman_public.py', 'coverage/contracts/tv-bregman.json',
+    'coverage/evidence/tv-bregman-public-assertion-migration.json')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
