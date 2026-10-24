@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "scope": "Tooling/reference benchmark only; accepted publicimage paths unchanged171.",
+  "correction_sources": [
+    "77758b7b0cd977e0250d605435efc3b003dbac3e",
+    "529402044684fd1d968caa47787073836ec488d8"
+  ],
+  "benchmark_source": "146a579d3cd0c9c064e7a9d67283079ff01cf7fc",
+  "independent_source_and_record_audit": {
+    "correction_records": 16,
+    "benchmark_records": 54,
+    "benchmark_Git_members": 4
+  },
+  "main_guards": {
+    "passed": 130,
+    "log": "build/main-tooling-correction-integration/guards.log",
+    "sha256": "b81ec5524d0f0aa001623480b9f77c292e772fbd4630e7d0dabcd82401ac0a70"
+  },
+  "native_image_operations": 0,
+  "local_timing": 0,
+  "actual_new_sdk_configuration": "pending hosted qualification"
+}

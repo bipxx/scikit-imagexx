@@ -23529,8 +23529,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "146a579d3cd0c9c064e7a9d67283079ff01cf7fc",
+        "main_commit": "ac3240237339a60202c44f40a4c743d18fd94930"
       },
       "retention": {
         "active_paths": [],
@@ -23588,8 +23588,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "529402044684fd1d968caa47787073836ec488d8",
+        "main_commit": "ddf4b15c1120304bf321175e77b79ddc02dc3b01"
       },
       "retention": {
         "active_paths": [],
@@ -23643,7 +23643,7 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -23671,7 +23671,18 @@
         "active_paths": [],
         "protected_artifacts": []
       },
-      "public_registration": true
+      "public_registration": true,
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "a29ae31a83e6e2fd9d5d4ce068f95ec9ec203952",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/bilateral-namespace-staging/proof.json",
+            "sha256": "f05470d7a6ba6a13079ea0e9cce343c6c58a82f80424f03f256efbde371c3758"
+          },
+          "scope": "Source/metadata wiring only:29canonical/17generic/3bilateral,189registry=186images prediction.81records+11Git; all46functions and allscientificfixtures unchanged,2testbody metadata migrations authenticated. Actualnewproduct/core/SDK readiness notinferred."
+        }
+      }
     },
     {
       "id": "whole8-failed-artifact-retention",
@@ -23759,7 +23770,7 @@
           "evidence_scope": "tooling"
         }
       },
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -23784,7 +23795,9 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [],
+        "active_paths": [
+          "build/worktrees/wave8-percentile-metrics"
+        ],
         "protected_artifacts": []
       }
     }
