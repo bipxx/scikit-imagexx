@@ -11,7 +11,8 @@ RUNTIME_SOURCE_PINS={
     'src/max_tree_stages.hpp':'8afefbbdfe06282b5524607c4a5a831ceaeddb59cf75047e33fbbaabee125184',
     'src/max_tree_stages.cpp':'d1961c7d0b4dd0940a765e76e7fb6f64aee8edfcfb3255c69b4e030f3b42d9e6',
     'src/bind_max_tree.cpp':'f4764b61180293ab98e474d68b40b214774ff367fd07e0ca4034c3705bbee2c5',
-    'python/skimagexx/_max_tree.py':'faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53'}
+    # c98ec8e: closing allocation's canonical scalar dtype drops source tags.
+    'python/skimagexx/_max_tree.py':'3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae'}
 ACCEPTED_PRODUCT_PINS=None
 NAMES=('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')
 FAMILIES=('components','component_consumers','metrics','footprint_dense','rank','rank_distribution',
@@ -140,6 +141,15 @@ def claim(paths,certificate_sha,run,attempt,cert,profile,nonce):
     save(path,dict(schema='max-tree-measurement-claim-v1',profile=profile,generation=str(run),attempt=str(attempt),certificate_sha256=certificate_sha,
          receipt_sha256=[sha(p) for p in paths],controller_sha256=sha(ROOT/'benchmarks/max_tree_compare.py'),nonce_sha256=hashlib.sha256(nonce.encode()).hexdigest(),controller_pid=os.getpid()))
     return path,rows
+
+
+def retain_claim(claim,output):
+    """Preserve raw bytes without moving/replacing the global once-only anchor."""
+    claim=Path(claim);raw=claim.read_bytes();expected=hashlib.sha256(raw).hexdigest()
+    target=Path(output)/'measurement-claim.json'
+    with target.open('xb') as stream:stream.write(raw)
+    require(target.read_bytes()==raw and sha(target)==sha(claim)==expected,'raw measurement claim changed during retention')
+    return dict(anchor=str(claim.resolve()),path=target.name,sha256=expected,bytes=len(raw))
 
 
 def fetch(frame,output):

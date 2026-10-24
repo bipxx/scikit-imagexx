@@ -305,3 +305,61 @@ def test_workflow_fresh_hosts_no_build_or_test_in_measurement():
     assert 'max_tree_compare.py fetch' in prepare and 'max_tree_compare.py measure' in measure
     assert 'build/barrier/max-tree-receipt-*/preparation/preparation.json' in measure
     assert prepare.count('profile: ')==3 and measure.count('profile: ')==3
+
+
+@pytest.mark.parametrize('initial',[True,False])
+def test_authentic_stdlib_compat_disables_initial_policy(initial):
+    # Real repository _compat, not a fake core or native admission fixture.
+    spec=importlib.util.spec_from_file_location('authentic_policy_control',ROOT/'python/skimagexx/_compat.py')
+    policy=importlib.util.module_from_spec(spec);spec.loader.exec_module(policy)
+    assert policy._fallback_enabled is True
+    policy.set_fallback_enabled(initial)
+    c.disable_fallback(policy)
+    assert policy._fallback_enabled is False
+    assert policy.set_fallback_enabled(False) is False
+    with pytest.raises(NotImplementedError,match='fallback is disabled'):
+        policy.fallback('not_imported','not_called')
+    node=next(n for n in ast.parse(Path(c.__file__).read_text()).body if isinstance(n,ast.FunctionDef) and n.name=='public_admission')
+    assert any(isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='disable_fallback' for n in ast.walk(node))
+
+
+@pytest.mark.parametrize('raw',[b'{"claim":1}\n',b'{"claim":1}\r\n',b' {"claim":1} ',b'{"label":"\xc3\xa9"}\r\n\r\n'])
+def test_claim_retention_is_byte_exact_and_never_replaces_anchor(raw,tmp_path):
+    anchor=tmp_path/'global-claim.json';anchor.write_bytes(raw)
+    output=tmp_path/'uploaded';output.mkdir()
+    row=a.retain_claim(anchor,output)
+    assert anchor.read_bytes()==(output/row['path']).read_bytes()==raw
+    assert row==dict(anchor=str(anchor.resolve()),path='measurement-claim.json',sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw))
+    with pytest.raises(FileExistsError):a.retain_claim(anchor,output)
+    assert anchor.read_bytes()==raw
+
+
+def test_retained_claim_does_not_weaken_global_once_guard(tmp_path,monkeypatch):
+    monkeypatch.setenv('RUNNER_TEMP',str(tmp_path))
+    monkeypatch.setattr(a,'barrier',lambda *args:[])
+    receipts=[]
+    for i in range(3):
+        p=tmp_path/str(i);p.write_bytes(str(i).encode());receipts.append(p)
+    anchor,_=a.claim(receipts,'a'*64,'99','1',synthetic_certificate(),'windows','n'*64)
+    raw=anchor.read_bytes();output=tmp_path/'upload-one';output.mkdir();a.retain_claim(anchor,output)
+    other=tmp_path/'upload-two';other.mkdir()
+    with pytest.raises(FileExistsError):a.claim(receipts,'a'*64,'99','1',synthetic_certificate(),'windows','z'*64)
+    assert anchor.read_bytes()==raw and (output/'measurement-claim.json').read_bytes()==raw
+    # Controller must retain bytes after creating its fresh output, before workers.
+    fn=next(n for n in ast.parse(Path(c.__file__).read_text()).body if isinstance(n,ast.FunctionDef) and n.name=='controller')
+    text=ast.unparse(fn)
+    assert text.index('output.mkdir(')<text.index('a.retain_claim(')<text.index('worker = Worker(')
+
+
+def test_claim_retention_rejects_changed_anchor_hash(tmp_path,monkeypatch):
+    anchor=tmp_path/'claim';anchor.write_bytes(b'original\r\n');output=tmp_path/'upload';output.mkdir()
+    original=a.sha
+    monkeypatch.setattr(a,'sha',lambda path:'0'*64 if Path(path)==anchor else original(path))
+    with pytest.raises(RuntimeError,match='claim changed'):a.retain_claim(anchor,output)
+    assert anchor.read_bytes()==(output/'measurement-claim.json').read_bytes()==b'original\r\n'
+
+
+def test_prior_closing_allocation_source_is_not_admitted(tmp_path):
+    value=synthetic_certificate();value['max_tree_runtime_source_sha256']['python/skimagexx/_max_tree.py']='faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53'
+    path=write(tmp_path/'old-source.json',value)
+    with pytest.raises(RuntimeError,match='runtime source differs'):a.certificate(path,a.sha(path),'7'*40)

@@ -19,6 +19,12 @@ def baseline():
     m=a.read(b.MANIFEST);b.verify_manifest(m);return b,m
 
 
+def disable_fallback(policy):
+    # The authentic setter returns the PREVIOUS policy, initially True.
+    policy.set_fallback_enabled(False)
+    require(policy.set_fallback_enabled(False) is False,'fallback disabling failed')
+
+
 def public_admission(product,profile,cert):
     """No reference helper or fixture is imported before this real-core gate."""
     import skimagexx as xx
@@ -41,7 +47,7 @@ def public_admission(product,profile,cert):
     require(xx.set_num_threads is core.set_num_threads and xx.get_num_threads is core.get_num_threads,'sole shared worker state required')
     require(type(xx.get_num_threads()) is int and xx.get_num_threads()==1,'default global workers must be1')
     for n in (4,1):xx.set_num_threads(n);require(core.get_num_threads()==n,'shared worker limit differs')
-    require(xx.set_fallback_enabled(False) is False,'fallback must already be disabled')
+    disable_fallback(xx)
     require(not any(k.startswith('SKIMAGEXX_') and k!='SKIMAGEXX_DISABLE_SIMD' for k in os.environ),'private selectors forbidden')
     require(all(os.environ.get(k)=='1' for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','BLIS_NUM_THREADS')),'provider pools must be1')
     return xx,wrapper,core
@@ -373,7 +379,8 @@ def controller(args):
     else:require(not args.receipts,'preparation cannot consume a measurement receipt')
     # Product/receipt verification precedes numerical imports and worker startup.
     seal=a.verify_product(args.product,args.profile,cert);output=Path(args.output);require(not output.exists(),'fresh output required');output.mkdir(parents=True)
-    report=dict(schema='max-tree-public-comparison-v1',profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False)
+    retained_claim=a.retain_claim(claim,output) if claim is not None else None
+    report=dict(schema='max-tree-public-comparison-v1',profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False,measurement_claim=retained_claim)
     worker=None
     try:
         for mode in (('normal','scalar') if args.stage=='prepare' else ('normal',)):
