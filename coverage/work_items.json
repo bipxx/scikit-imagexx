@@ -20558,7 +20558,7 @@
         "rank-statistics-public",
         "rank-statistics-benchmark-tooling"
       ],
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -20566,7 +20566,7 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
         "artifact_sha256": null,
         "runs": []
       },
@@ -20610,11 +20610,18 @@
       "source_freeze": {
         "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
         "worktree": "build/worktrees/wave7-rank-consumer",
-        "lease_state": "not_granted",
+        "lease_state": "granted",
         "prediction_only": {
           "partial_native_image_paths": 171,
           "upstream_only_paths": 295
         }
+      },
+      "build_lease": {
+        "path": "build/main-core-wave7-evidence/lease.json",
+        "source_sha": "7aaa7476b1124c36805dd1bbe271e85be9e97263",
+        "owner": "resize_bench",
+        "health_sha256": "d01c664de0b0e913a222e56be9caa244b3b4fdb9ab17b8be634dc322bb8ddd2d",
+        "scope": "Actual new public packages/corpora/SDK; prediction171 pending all gates."
       }
     },
     {
