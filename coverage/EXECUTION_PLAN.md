@@ -6,9 +6,9 @@ and isolated one-worker comparisons against scikit-image 0.26.0. This includes
 classes, nested namespaces, data and I/O. Private helpers and compatibility
 forwarding do not count as completed public implementations.
 
-The current inventory contains 477 public paths: 171 native-partial image entries,
+The current inventory contains 477 public paths: 186 native-partial image entries,
 three metadata functions, four partial native classes, one exception metadata
-provider, and 298 upstream-only entries. The expansion adds 19
+provider, and 283 upstream-only entries. The expansion adds 19
 source-backed public/legacy rank.generic aliases of existing algorithms, not
 19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
 284 statically discovered member paths; constructors, state, runtime fields and
@@ -24,11 +24,12 @@ retains all 376 timings per runtime and all 120 slower cases. Large windowed
 histograms and selected noise-filter cases remain optimization targets.
 Failed whole8 and whole9 trials are retained without public acceptance. The
 whole9 products passed all 104 SDK checks but exposed three bilateral endian
-error-parity rows and two metadata issues. The corrected source `05e79eb` is
-frozen for run 40063203314, including the nine percentile algorithms, three
-bilateral algorithms and reverse-stride metrics change. Its 186 image paths
-remain a prediction; accepted main stays at 171 until all four actual products
-pass and their artifacts are independently verified. The integrator owns shared
+error-parity rows and two metadata issues. Corrected source `05e79eb`, run
+40063203314, passed all four actual products in normal/scalar modes and complete
+independent source/runtime/artifact review. The accepted checkpoint now has
+186 partially native image paths: nine percentile algorithms and three bilateral
+algorithms add 15 paths. The reverse-stride metrics change is parity accepted;
+its speed remains unmeasured. The integrator owns shared
 wiring, exact-source performance dispatch, prompt merges and cleanup.
 
 ## What changed after review
@@ -51,7 +52,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted: 171 image paths; 477 total paths. Corrected candidate `05e79eb` passes 177 tooling guards and targeted modified-wheel preflight. Run 40063203314 requires four genuine products, both SIMD modes, complete corpora and 13 SDK clients before acceptance. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole10 accepted: 186 partially native image paths; 477 total paths. Four genuine products, both SIMD modes, full selected corpora, runtime/source closure and 104 SDK checks passed. Main production, tests and contracts are byte-equivalent to tested `05e79eb`; no performance acceptance inferred. |
 | Worker 1 | `metrics_reductions` | Local Otsu/majority conversion parity | Expanded 694-case preflight found four endian gaps. A narrowly controlled provider flag fixes them and native integer lookup controls while preserving bilateral defaults. Private normal/scalar and bilateral regression gates passed; final evidence is being sealed. Public/SDK14 wiring remains separate. |
 | Worker 2 | `resize_api` | Controlled one-worker R4 comparison tooling | The counts/pop-only opcode16 source has qualified private evidence; its normal result is a verified case-ID union, and scalar runs pass all 5,681 cases. New comparison tooling keeps all 1,379 cases and 376 timing IDs, uses isolated original/before/after processes and requires complete preparation barriers. Product pins remain unset; no speedup claimed. |
 | Worker 3 | `resize_bench` | Audit corrected whole10 artifacts | All four jobs of run 40063203314 at `05e79eb` passed. Full artifact/source/runtime/parity review is complete; root acceptance and integration remain. Failed whole9 evidence is retained at 201.95 MiB and the corrected trial at 179.87 MiB. No performance or full-library claim. |

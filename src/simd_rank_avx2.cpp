@@ -23,6 +23,22 @@ std::int64_t rank_count_prefix(const std::int64_t* data,std::size_t count) {
     for(;i<count;++i)result+=data[i];
     return result;
 }
+void rank_weighted_prefix(const std::int64_t* data,std::size_t count,std::size_t first,std::int64_t& population,std::int64_t& weighted) {
+    auto sums=_mm256_setzero_si256(),products=_mm256_setzero_si256();std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto values=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i));
+        const auto indices=_mm256_setr_epi64x(first+i,first+i+1,first+i+2,first+i+3);
+        // AVX2 has no packed 64-bit multiply. Reconstruct the low64 product
+        // from unsigned32 halves; this also preserves signed count bits.
+        const auto low=_mm256_mul_epu32(values,indices);
+        const auto high=_mm256_slli_epi64(_mm256_mul_epu32(_mm256_srli_epi64(values,32),indices),32);
+        sums=_mm256_add_epi64(sums,values);products=_mm256_add_epi64(products,_mm256_add_epi64(low,high));
+    }
+    alignas(32) std::int64_t counts[4],weights[4];
+    _mm256_store_si256(reinterpret_cast<__m256i*>(counts),sums);_mm256_store_si256(reinterpret_cast<__m256i*>(weights),products);
+    for(int lane=0;lane<4;++lane){population+=counts[lane];weighted+=weights[lane];}
+    for(;i<count;++i){population+=data[i];weighted+=data[i]*std::int64_t(first+i);}
+}
 std::uint64_t rank_sum(const void* input,std::size_t count,bool wide) {
     std::uint64_t result=0;std::size_t i=0;
     if(!wide) {

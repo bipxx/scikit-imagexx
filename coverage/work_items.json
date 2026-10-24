@@ -21902,7 +21902,7 @@
           "source_sha": "8e37e56d2d0ff696b649a09e8c98d2461d16fe8c"
         }
       },
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "coverage/contracts/rank-percentile.json",
         "uncovered_cases": [
@@ -21946,6 +21946,17 @@
           "profiles": 6,
           "native_pending": 0,
           "scope": "Direct SOURCE/private REALcompiledcore prototype only;1544frozenIDs workers1/4 per6profiles,6674totalpasses+1explicit actualpublicskip each, including99guardstubs. All25records+3Gitmembers+3inputbinaries independently verified; public/namespace/registry/sole-core/package/SDK/performance acceptance NONE."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+            "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+          },
+          "native_contract_checks": 2552,
+          "native_pending": 0,
+          "scope": "Actual05e complete-product subset within accepted whole10; canonical/nested identities and numerical/provider/error scope pass all8modes. Private proofs remain distinct; isolated1worker performance pending."
         }
       }
     },
@@ -23322,7 +23333,7 @@
         }
       },
       "public_registration": false,
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "coverage/contracts/rank-bilateral.json",
         "uncovered_cases": [
@@ -23363,6 +23374,17 @@
           "scope": "Privateprototype3968pass+1publicpending x8;65records+3Git rehashed.708/96+680controls,40oldfunctions/top-levelAST unchanged. No public/SDK/speed admission.",
           "native_contract_checks": 708,
           "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+            "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+          },
+          "native_contract_checks": 1008,
+          "native_pending": 0,
+          "scope": "Actual05e complete-product subset within accepted whole10; canonical/nested identities and numerical/provider/error scope pass all8modes. Private proofs remain distinct; isolated1worker performance pending."
         }
       }
     },
@@ -23389,7 +23411,7 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -23428,6 +23450,17 @@
           "scope": "823pass+1publicpending x8;default1metadata/823pending.83records+2Git,396exactevents/pointers/returnedalias observations. No public/SDK/speed.",
           "native_contract_checks": 396,
           "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+            "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+          },
+          "native_contract_checks": 396,
+          "native_pending": 0,
+          "scope": "Actual05e complete-product subset within accepted whole10; canonical/nested identities and numerical/provider/error scope pass all8modes. Private proofs remain distinct; isolated1worker performance pending."
         }
       }
     },
@@ -24326,7 +24359,7 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "parity_passed",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -24365,6 +24398,17 @@
           "scope": "57records and exact3-file delta independently rehashed. ImmutableB7 cores, all1008 worker1/4 cases plus132 boundary/hook rows. Production is two call replacements+owned provider. No builds/timing/public acceptance.",
           "native_contract_checks": 1008,
           "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+            "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+          },
+          "native_contract_checks": 1008,
+          "native_pending": 0,
+          "scope": "Actual05e complete-product subset within accepted whole10; canonical/nested identities and numerical/provider/error scope pass all8modes. Private proofs remain distinct; isolated1worker performance pending."
         }
       }
     },
@@ -24431,9 +24475,7 @@
       "owner": "resize_bench",
       "branch": "integration/wave10-bilateral",
       "base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
-      "owns": [
-        "build/genuine186-corrected-hosted-observation/40063203314"
-      ],
+      "owns": [],
       "depends_on": [
         "bilateral-qualification-corrections",
         "rank-bilateral-endian-public",
@@ -24458,16 +24500,16 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "validating",
+      "state": "accepted",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "All4 hosted05e products passed. Fullretention andindependentdata review complete; rootintegration/acceptance stillpending. Source prediction186/477, currentmain171 untilatomicmerge. No performance/fullAPI/fullargument/pureCppclass claim."
+          "Bounded genuine186 checkpoint accepted; all actual four-product modes/corpora/SDK/globalworker/source/runtime/inventory evidence independently verified. No full-domain/full-library/performance or pureCpp fitting claim."
         ]
       },
       "parity": {
         "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
-        "artifact_sha256": null,
+        "artifact_sha256": "7f0ed171cb7019c7ccd98a03b52fedf6b83850082a7c07eafbd30ee54ae5e9a8",
         "runs": [
           "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314"
         ]
@@ -24520,7 +24562,21 @@
         "policy": "Observe exact run/session39098 through all terminal outcomes. No cancel/restart for observation timeout, source edits, local timing or acceptance from status alone.",
         "terminal_outcome": "success",
         "observer_terminal": true,
-        "retention_path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1"
+        "retention_path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1",
+        "root_accepted": true
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+            "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+          },
+          "native_contract_checks": 56384,
+          "native_pending": 0,
+          "scope": "588768 public XML+56384 fixed cases/112768worker observations+1904auxiliary rows, all8modes;104SDK checks;477inventory/186native-partial images. Full products/source/runtime/RECORD verified. No performance claim."
+        }
       }
     },
     {
@@ -25458,15 +25514,15 @@
   ],
   "static_member_note": "Four public model classes have scoped partial member/state implementations;284 static member paths across29 classes remain tracked individually. Provider metadata and reference-only contracts do not imply native numerical coverage.",
   "evidence_note": "Proofs are scoped and hash-bearing. Contract/reference success, strict rejection, expected failures, private adapters and unvalidated fixes cannot satisfy public-native or measurement gates. A frozen interface permits independent implementation, never acceptance.",
-  "snapshot_base_sha": "35ce49813078c55c572480aed4e6c6dfb7e7915d",
+  "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 163,
+    "native_partial_image_names": 186,
     "metadata_names": 3,
-    "upstream_only_names": 303,
+    "upstream_only_names": 283,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "163 partial image API paths,3metadata,4partialclasses,1exceptionprovider; all163 test and benchmark links.13 public rank algorithms across26 canonical/identity-alias paths.303upstream-only; no full-domain or all-case speed claim.",
+    "note": "Current accepted whole10:186 native-partial image paths,3metadata,4partialclasses,1exceptionprovider,283upstream-only/477total. Twelve new algorithms across15 new canonical/identity paths. Full arguments/class state/data/I/O and performance remain incomplete.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },

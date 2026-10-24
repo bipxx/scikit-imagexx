@@ -1,0 +1,118 @@
+{
+  "schema": "genuine-public-wave10-v1",
+  "accepted": true,
+  "accepted_utc": "2026-10-24T05:35:38.225866+00:00",
+  "tested_source": "05e79eba67b05b4acccd47480ae917a833487b81",
+  "run": "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314",
+  "native_partial_image_paths": 186,
+  "previous_native_partial_image_paths": 171,
+  "total_inventory_paths": 477,
+  "implementation_counts": {
+    "native-partial": 186,
+    "metadata": 3,
+    "upstream-only": 283,
+    "native-class-partial": 4,
+    "exception-metadata-provider": 1
+  },
+  "new_algorithms": 12,
+  "new_image_paths": 15,
+  "additions": {
+    "percentile_algorithms": 9,
+    "percentile_canonical_paths": 9,
+    "bilateral_algorithms": 3,
+    "bilateral_canonical_and_identity_paths": 6
+  },
+  "public_tests": {
+    "profiles": [
+      "windows",
+      "modern",
+      "minimum",
+      "debug"
+    ],
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "passed": 588768,
+    "failed": 0,
+    "skipped": 0
+  },
+  "corpora": {
+    "cases": 56384,
+    "worker_observations": 112768,
+    "workers": [
+      1,
+      4
+    ],
+    "auxiliary_rows": 1904,
+    "per_mode": {
+      "metrics": 1231,
+      "consumers": 878,
+      "statistics": 1379,
+      "percentile": 2552,
+      "bilateral": 1008
+    }
+  },
+  "SDK": {
+    "families": 13,
+    "profiles": 4,
+    "modes": 2,
+    "passed": 104,
+    "product_members_each": 104,
+    "SDK_members_each": 59,
+    "complete_RECORD_verified": true
+  },
+  "runtime": {
+    "sole_core": true,
+    "default_workers": 1,
+    "shared_workers": [
+      1,
+      4
+    ],
+    "dependency_wheels_and_installed_bytes_verified": true,
+    "numpy_modern": "2.5.4",
+    "numpy_minimum": "1.24.4",
+    "reference": "scikit-image==0.26.0"
+  },
+  "retained": {
+    "manifest": {
+      "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/manifest.json",
+      "sha256": "858a14ad2a3bfba8a09454994e9156f1ffba69b344a39c078dcb6448e478f8d9"
+    },
+    "independent": {
+      "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/independent-verification.json",
+      "sha256": "214977b4803c4c1c5b9eba1185c680f6de58c921f75a4288b2c35fb6e9b4c79d"
+    },
+    "handoff": {
+      "path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1/handoff.json",
+      "sha256": "9143837a136eb521f1e6732b31823ed12ba6eec1da78a63cd42fa1cfab79512a"
+    },
+    "ZIP_files": 86579,
+    "successful_manifest_records": 50939,
+    "declared_checks": 96030,
+    "source_Git_members": 973
+  },
+  "integration": {
+    "production_headers_build_inventory_qualification_tests_contracts_benchmarks_workflows_exactly_equal_tested_source": true,
+    "conflict_resolution": "Exact tested source for registry/corpus/qualification files; union preserves all raw-data attribute rules.",
+    "root_authentication": {
+      "path": "build/whole10-readiness/root-authentication.json",
+      "sha256": "a5a32158e371a1057cd9540c92d04e84ee41c82801e1863432108f39af372033"
+    },
+    "independent_main_merge_review": {
+      "path": "build/whole10-readiness/main-merge-review/review.json",
+      "sha256": "aa3ccc78563f582ddfd0b2b8bc5d3a59354691de40cb2c06e5a7cde34c306939"
+    }
+  },
+  "remaining": [
+    "Full API/argument/class-state/data/I/O scope remains unfinished;186 entries are native-partial.",
+    "R5/R6 and reverse-stride optimization one-worker performance remain pending; no all-case speed claim.",
+    "R7 Otsu/majority and counts-only optimization remain separate private increments.",
+    "NumPy/SciPy numerical providers and partial class fitting remain explicit.",
+    "Matched reverse48 diagnostics, portable/noOpenMP and sanitizers are not implicitly inherited beyond their separate proofs."
+  ],
+  "failed_trials_preserved": [
+    "40051495344",
+    "40059399856"
+  ]
+}

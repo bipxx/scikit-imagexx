@@ -2714,11 +2714,15 @@
       "api": "filters.rank.autolevel_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.enhance_contrast",
@@ -2738,11 +2742,15 @@
       "api": "filters.rank.enhance_contrast_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.entropy",
@@ -2804,11 +2812,15 @@
       "api": "filters.rank.gradient_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.majority",
@@ -2852,21 +2864,29 @@
       "api": "filters.rank.mean_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.mean_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.median",
@@ -2938,11 +2958,15 @@
       "api": "filters.rank.percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.pop",
@@ -2962,21 +2986,29 @@
       "api": "filters.rank.pop_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.pop_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.subtract_mean",
@@ -2996,11 +3028,15 @@
       "api": "filters.rank.subtract_mean_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.sum",
@@ -3020,21 +3056,29 @@
       "api": "filters.rank.sum_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.sum_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0, p1=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.threshold",
@@ -3054,11 +3098,15 @@
       "api": "filters.rank.threshold_percentile",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, p0=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_percentile_public.py",
+      "benchmark": "benchmarks/rank_percentile.py"
     },
     {
       "api": "filters.rank.windowed_histogram",
@@ -3078,31 +3126,43 @@
       "api": "filters.rank.bilateral.mean_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.bilateral.pop_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.bilateral.sum_bilateral",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, s0=10, s1=10)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_bilateral_public.py",
+      "benchmark": "benchmarks/rank_bilateral.py"
     },
     {
       "api": "filters.rank.generic.autolevel",

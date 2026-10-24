@@ -225,9 +225,28 @@ def frozen():return json.loads(MATRIX.read_text())
 
 
 def test_integrity_safe_scope_native0(frozen):
+ import ast,copy
  assert frozen['pinned_skimage']==skimage.__version__=='0.26.0' and frozen['native_checks']==0 and frozen['native_pending']==len(CASES)
  assert frozen['cases']==[dict(id=k,function=n,parameters=json.loads(json.dumps(p))) for k,n,p in CASES]
- for name,h in frozen['fixture_source_sha256'].items():assert text_sha(ROOT/name)==h
+ evidence=json.loads((ROOT/'coverage/evidence/rank-bilateral-fixture-assertion-migration.json').read_text())
+ before=evidence['old_fixture_utf8'];current=Path(__file__).read_text()
+ assert hashlib.sha256(before.replace('\r\n','\n').encode()).hexdigest()==frozen['fixture_source_sha256']['tests/test_rank_bilateral_contracts.py']==evidence['old_fixture_canonical_lf_sha256']
+ assert text_sha(Path(__file__))==evidence['current_fixture_canonical_lf_sha256']
+ old=ast.parse(before);new=ast.parse(current)
+ allowed={'test_integrity_safe_scope_native0','test_strict_pending_never_counts_forwarding'}
+ assert set(evidence['allowed_test_bodies'])==allowed and len(old.body)==len(new.body)
+ changed=set()
+ for previous,actual in zip(old.body,new.body):
+  if isinstance(previous,ast.FunctionDef) and previous.name in allowed:
+   assert isinstance(actual,ast.FunctionDef) and actual.name==previous.name
+   restored=copy.deepcopy(actual);restored.body=previous.body
+   assert ast.dump(restored)==ast.dump(previous)
+   assert ast.dump(previous)!=ast.dump(actual)
+   changed.add(previous.name)
+  else:assert ast.dump(previous)==ast.dump(actual)
+ assert changed==allowed
+ for name,h in frozen['fixture_source_sha256'].items():
+  if name!='tests/test_rank_bilateral_contracts.py':assert text_sha(ROOT/name)==h
  for rows in frozen['snapshots'].values():assert set(rows)=={k for k,_,_ in CASES}
  assert all(digest(value)==key for key,value in frozen['observations'].items())
 
@@ -258,13 +277,20 @@ def pending(name,namespace,*args,**options):return getattr(importlib.import_modu
 @pytest.mark.parametrize('namespace',('canonical','public-bilateral'))
 @pytest.mark.parametrize('case',CASES,ids=[c[0] for c in CASES])
 def test_strict_pending_never_counts_forwarding(case,namespace,workers):
- _,name,p=case;previous=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
+ key,name,p=case;previous=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
  try:
-  if 'filters.rank.'+name in native_functions():pytest.skip('native transition requires separately sealed public implementation proof')
+  registered=set(native_functions())
+  path=('filters.rank.' if namespace=='canonical' else 'filters.rank.bilateral.')+name
   actual=observe(lambda *a,**kw:pending(name,namespace,*a,**kw),name,p)
-  assert actual['result'] is None and actual['error']['type']=='NotImplementedError'
-  assert 'fallback is disabled' in actual['error']['message'] and not actual['warnings'] and actual['before']==actual['after']
+  if path in registered:
+   assert set(CANONICAL+ALIASES)<=registered,'partial canonical/nested registration is not public parity'
+   frozen=json.loads(MATRIX.read_text())
+   assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],(path,key)
+  else:
+   assert actual['result'] is None and actual['error']['type']=='NotImplementedError'
+   assert 'fallback is disabled' in actual['error']['message'] and not actual['warnings'] and actual['before']==actual['after']
  finally:xx.set_num_threads(threads);xx.set_fallback_enabled(previous)
+
 
 
 @pytest.mark.parametrize('name',NAMES)

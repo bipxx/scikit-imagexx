@@ -14,14 +14,17 @@ from skimage import metrics as reference_metrics, measure as reference_measure
 from skimage import segmentation as reference_segmentation
 from skimage.filters import rank as reference_rank
 from skimage.filters.rank import generic as reference_rank_generic
+from skimage.filters.rank import bilateral as reference_rank_bilateral
 from skimagexx.filters import rank as native_rank
 from skimagexx.filters.rank import generic as native_rank_generic
+from skimagexx.filters.rank import bilateral as native_rank_bilateral
 
 MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.util, reference_util),
            (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform),
            (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure),
            (xx.segmentation,reference_segmentation),
-           (native_rank,reference_rank),(native_rank_generic,reference_rank_generic)]
+           (native_rank,reference_rank),(native_rank_generic,reference_rank_generic),
+           (native_rank_bilateral,reference_rank_bilateral)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
              if not inspect.isclass(getattr(native,name))]
 # Pinned generic exposes these callable identity aliases outside star exports.
