@@ -32,12 +32,14 @@ void max_tree_invert(const void* input,void* output,std::size_t n,MaxTreeType ty
         case MaxTreeType::f32: {
             const auto* src=static_cast<const float*>(input);auto* dst=static_cast<float*>(output);std::size_t i=0;
             for(;n-i>=8;i+=8)_mm256_storeu_ps(dst+i,_mm256_sub_ps(_mm256_set1_ps(1.f),_mm256_loadu_ps(src+i)));
-            for(;i<n;++i)dst[i]=1.f-src[i];return;
+            for(;i<n;++i)dst[i]=1.f-src[i];
+            return;
         }
         case MaxTreeType::f64: {
             const auto* src=static_cast<const double*>(input);auto* dst=static_cast<double*>(output);std::size_t i=0;
             for(;n-i>=4;i+=4)_mm256_storeu_pd(dst+i,_mm256_sub_pd(_mm256_set1_pd(1.),_mm256_loadu_pd(src+i)));
-            for(;i<n;++i)dst[i]=1.-src[i];return;
+            for(;i<n;++i)dst[i]=1.-src[i];
+            return;
         }
     }
 }

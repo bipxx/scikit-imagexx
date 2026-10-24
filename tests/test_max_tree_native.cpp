@@ -141,7 +141,9 @@ template<class T> void independent_ramps(MaxTreeType type,int workers) {
                 auto expected=a.out;auto expected_labels=a.labels;
                 std::fill(a.out.begin(),a.out.end(),T(7));std::fill(a.labels.begin(),a.labels.end(),14);
                 auto parameters=a.params;parameters.connectivity=-17; // source ignores connectivity when both tree arrays exist
-                auto again=max_tree_into(a.input,parameters,w,a.output(),a.supplied(true));
+                auto supplied_workspace=w;
+                supplied_workspace.parent=supplied_workspace.traverser=supplied_workspace.roots=supplied_workspace.sort_scratch={nullptr,0};
+                auto again=max_tree_into(a.input,parameters,supplied_workspace,a.output(),a.supplied(true));
                 require(again.tree_reused,"independent actual tree reuse");
                 require(op==MaxTreeOperation::local_maxima?equal(a.labels,expected_labels):equal(a.out,expected),"reused-tree result differs");
             }
@@ -159,6 +161,37 @@ template<class T> void independent_ramps(MaxTreeType type,int workers) {
             if(operation==1)require(a.labels[i]==1,"flat maximum labels remain ones");
             else if(operation)require(a.out[i]==(closed?inverse(T(0)):T(0)),"root below threshold literalzero");
         }
+    }
+}
+template<class T> void exact_key_controls(MaxTreeType type,bool high) {
+    context="exact-integer-sort-keys";
+    std::vector<T> values(20);
+    for(std::size_t i=0;i<values.size();++i)
+        values[i]=high?T(std::numeric_limits<T>::max()-T(i%4)):T(std::numeric_limits<T>::lowest()+T(i%4));
+    Arena<T> a(values,type,MaxTreeOperation::tree,2,{{4,5,1}});
+    max_tree_into(a.input,a.params,a.workspace(),a.output());
+    std::size_t position=0;
+    for(int bucket=0;bucket<4;++bucket)for(std::size_t i=0;i<values.size();++i)
+        if(int(i%4)==(high?3-bucket:bucket))require(a.traverser[position++]==std::int64_t(i),"adjacent64-bit limits must not round through float");
+}
+template<class T> void exact_float_keys(MaxTreeType type) {
+    context="exact-float-sort-keys";
+    T levels[4]={T(1),T(1),T(1),T(1)};
+    for(int i=1;i<4;++i)levels[i]=std::nextafter(levels[i-1],std::numeric_limits<T>::infinity());
+    std::vector<T> values(20);for(std::size_t i=0;i<values.size();++i)values[i]=levels[3-i%4];
+    Arena<T> a(values,type,MaxTreeOperation::tree,2,{{4,5,1}});
+    max_tree_into(a.input,a.params,a.workspace(),a.output());
+    std::size_t position=0;
+    for(int bucket=0;bucket<4;++bucket)for(std::size_t i=0;i<values.size();++i)
+        if(int(i%4)==3-bucket)require(a.traverser[position++]==std::int64_t(i),"adjacentfloat ULP keys must retain native precision");
+    context="signed-zero-stable-canonicalization";
+    for(std::size_t i=0;i<values.size();++i)values[i]=i%2?T(0):-T(0);
+    Arena<T> zeros(values,type,MaxTreeOperation::area_opening,2,{{4,5,1}},1,1);
+    max_tree_into(zeros.input,zeros.params,zeros.workspace(),zeros.output());
+    const T negative_zero=-T(0);
+    for(std::size_t i=0;i<values.size();++i) {
+        require(zeros.parent[i]==0 && zeros.traverser[i]==std::int64_t(i),"signedzero keys stable tieorder");
+        require(std::memcmp(&zeros.out[i],&negative_zero,sizeof(T))==0,"canonical negativezero propagation rawbits");
     }
 }
 void guard_controls() {
@@ -206,6 +239,28 @@ void guard_controls() {
     auto huge=a.input;huge.shape={{3,std::size_t(std::numeric_limits<std::int32_t>::max()),1}};
     huge.elements=3*huge.shape[1];auto diagonal=a.params;diagonal.connectivity=2;
     require(std::strcmp(max_tree_ineligibility(huge,diagonal,a.workspace(),a.output()),"max-tree raveled neighborhood overflows source int32")==0,"raveled int32 offset overflow must precede memory reads");
+    huge.rank=3;huge.shape={{3,50000,50000}};huge.elements=std::size_t(3)*50000*50000;diagonal.connectivity=1;
+    require(std::strcmp(max_tree_ineligibility(huge,diagonal,a.workspace(),a.output()),"max-tree raveled neighborhood overflows source int32")==0,"3D stride overflows int32 before memory reads");
+    for(int fault=0;fault<9;++fault) {
+        auto w=a.workspace();auto params=a.params;auto out=a.output();
+        if(fault<=2) {
+            params.operation=MaxTreeOperation::area_closing;
+            if(fault==0)w.inverted.data=nullptr;
+            if(fault==1)--w.inverted.elements;
+            if(fault==2)w.inverted.data=a.out.data();
+        }else if(fault<=5) {
+            params.operation=MaxTreeOperation::diameter_opening;
+            if(fault==3)--w.minimum_coordinates.elements;
+            if(fault==4)w.maximum_coordinates.data=w.minimum_coordinates.data;
+            if(fault==5)w.maximum_coordinates.data=nullptr;
+        }else if(fault==6)w.attribute.data=nullptr;
+        else if(fault==7)--w.attribute.elements;
+        else params.operation=MaxTreeOperation::tree;
+        auto before=a.snapshot();
+        require(max_tree_ineligibility(a.input,params,w,out)!=nullptr,"missing/aliased active workspace accepted");
+        bool rejected=false;try{max_tree_into(a.input,params,w,out);}catch(const std::invalid_argument&){rejected=true;}
+        require(rejected && before==a.snapshot(),"active workspace rejection must precede writes");
+    }
     auto before=a.snapshot();auto old=std::fegetround();std::fesetround(FE_DOWNWARD);
     require(max_tree_ineligibility(a.input,a.params,a.workspace(),a.output())!=nullptr,"non-nearest accepted");
     require(std::fegetround()==FE_DOWNWARD && a.snapshot()==before,"rounding guard changed state");std::fesetround(old);
@@ -236,6 +291,10 @@ int main(int argc,char** argv) {
 #define CONTROL(name,T) context="independent-" #name;independent_ramps<T>(MaxTreeType::name,workers);
             TYPES(CONTROL)
 #undef CONTROL
+            exact_key_controls<std::uint64_t>(MaxTreeType::u64,true);
+            exact_key_controls<std::int64_t>(MaxTreeType::i64,false);
+            exact_key_controls<std::int64_t>(MaxTreeType::i64,true);
+            exact_float_keys<float>(MaxTreeType::f32);exact_float_keys<double>(MaxTreeType::f64);
             guard_controls();large_team(workers);
         }
         set_num_threads(1);
