@@ -461,13 +461,13 @@ def test_full_source_pair_only_allows_the_approved_counts_delta(tmp_path,monkeyp
     cfg['accepted_products']={r:{'windows':pin(r)} for r in ('before','after')}
     for role,text in (('before','old_bookkeeping\n'),('after','counts_population_only\n')):
         root=tmp_path/role;(root/'source/src').mkdir(parents=True);(root/'source/src/rank.cpp').write_text(text)
-        (root/'qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['same'],image_count=186))))
+        (root/'qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['same'],image_count=scope['image_paths']))))
     c.verify_pair_sources(tmp_path/'before',tmp_path/'after','windows',cfg)
     if failure=='other-source':(tmp_path/'after/source/src/other.cpp').write_text('changed')
     elif failure=='other-rank-edit':(tmp_path/'after/source/src/rank.cpp').write_text('counts_population_only\nextra_edit\n')
     elif failure=='missing-counts':(tmp_path/'after/source/src/rank.cpp').write_text('old_bookkeeping\n')
-    elif failure=='scope':cfg['accepted_products']['after']['windows']['scope']=dict(scope,image_paths=190)
-    else:(tmp_path/'after/qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['different'],image_count=186))))
+    elif failure=='scope':cfg['accepted_products']['after']['windows']['scope']=dict(scope,image_paths=scope['image_paths']+1)
+    else:(tmp_path/'after/qualification.json').write_text(json.dumps(dict(expected_registry=dict(functions=['different'],image_count=scope['image_paths']))))
     with pytest.raises(RuntimeError):c.verify_pair_sources(tmp_path/'before',tmp_path/'after','windows',cfg)
 
 
@@ -482,17 +482,20 @@ def test_preparation_scope_rejects_float_or_boolean_integer_lookalikes(tmp_path,
     with pytest.raises(RuntimeError):c.receipt_barrier(paths,cfg,'run','1')
 
 
-def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(tmp_path,monkeypatch):
+@pytest.mark.parametrize('image_paths,sdk_families',[(186,13),(190,14)])
+def test_scope_totals_are_explicit_and_not_hardwired_for_future_common_coverage(tmp_path,monkeypatch,image_paths,sdk_families):
     cfg,_=receipts(tmp_path,monkeypatch)
     for role in ('before','after'):
         for profile in c.PROFILES:
-            scope=dict(cfg['accepted_products'][role][profile]['scope']);scope['image_paths']=190
-            scope['sdk_families']=14;scope['sdk_family_names']=[*scope['sdk_family_names'],'rank_decisions']
+            scope=dict(cfg['accepted_products'][role][profile]['scope']);scope['image_paths']=image_paths
+            scope['sdk_families']=sdk_families
+            scope['sdk_family_names']=[name for name in scope['sdk_family_names'] if name!='rank_decisions']
+            if sdk_families==14:scope['sdk_family_names'].append('rank_decisions')
             cfg['accepted_products'][role][profile]['scope']=scope
     path=tmp_path/'external.json';path.write_text(json.dumps(dict(schema='rank-statistics-experiment-v1',template_sha256=c.text_sha(c.CONTRACT),accepted_products=cfg['accepted_products'])))
     loaded=c.config(path,c.sha(path))
-    assert c.accepted_pin(loaded,'before','windows')['scope']['image_paths']==190
-    assert c.accepted_pin(loaded,'after','windows')['scope']['sdk_families']==14
+    assert c.accepted_pin(loaded,'before','windows')['scope']['image_paths']==image_paths
+    assert c.accepted_pin(loaded,'after','windows')['scope']['sdk_families']==sdk_families
 
 
 def synthetic_build_pair(tmp_path,change=None,compiler_id='MSVC',lto=False):
