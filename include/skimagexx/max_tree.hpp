@@ -35,7 +35,7 @@ struct MaxTreeWorkspace {
 };
 struct MaxTreeParameters {
     MaxTreeOperation operation;
-    int connectivity; // radius-one neighborhood, 1..rank
+    int connectivity; // radius-one 1..rank for building; ignored with supplied tree
     double threshold; // direct-filter comparison, including +/-Inf or NaN
 };
 struct MaxTreeResult {
@@ -46,6 +46,7 @@ struct MaxTreeResult {
 // Counts are ELEMENTS, not bytes. Every active span must describe a real
 // allocation of its declared type, native and naturally aligned. Shape entries
 // are >=3 and <=INT32_MAX; products/byte extents fit ptrdiff_t and signed64.
+// Builder's raveled radius-one offsets must also fit source int32 storage.
 // All active input/provided/workspace/output extents must be disjoint. No
 // initial workspace contents are required; inactive buffers are not accessed.
 // Source-proven reference parity presently covers dimensions>=4, not unsafe
