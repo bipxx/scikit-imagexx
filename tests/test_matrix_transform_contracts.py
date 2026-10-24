@@ -355,7 +355,13 @@ def test_signature_source_and_inventory_integrity():
     assert data['case_contract_sha256'] == digest(cases()) and data['cases'] == cases()
     current = source_facts(); recorded = data['profiles'][profile()]['source']
     assert current == recorded
-    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==data['test_source_canonical_lf_sha256']
+    migration = json.loads((Path(__file__).parents[1] / 'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
+    transition = migration['modules']['tests/test_matrix_transform_contracts.py']
+    assert hashlib.sha256(MATRIX.read_bytes()).hexdigest() == migration['frozen_matrix_raw_sha256']
+    original_helper = transition['original_utf8'].encode('utf-8')
+    assert hashlib.sha256(original_helper.replace(b'\r\n',b'\n')).hexdigest() == data['test_source_canonical_lf_sha256']
+    assert hashlib.sha256(original_helper).hexdigest() == transition['original_raw_sha256']
+    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == transition['current_canonical_lf_sha256']
     assert data['native_function_implementations'] == 0 and data['native_contract_status'] == 'pending'
 
 

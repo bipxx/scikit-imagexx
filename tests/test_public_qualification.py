@@ -1357,6 +1357,56 @@ def test_public_openmp_metadata_comes_from_actual_core_compilation():
     assert 'target_link_libraries(skimagexx PUBLIC OpenMP::OpenMP_CXX)' in (ROOT/'CMakeLists.txt').read_text()
 
 
+@pytest.mark.parametrize('fault',(None,'current-source','current-pin','matrix-raw','matrix-pin',
+                                 'original-utf8','original-raw-pin','frozen-helper-pin'))
+def test_actual_matrix_integrity_gate_checks_original_data_and_migrated_file(tmp_path,fault):
+    """Execute the real identity function, with inert source-fact providers only.
+
+    The actual cases/digest are metadata enumeration. No reference/native image
+    function executes, and this synthetic fixture is never public acceptance.
+    """
+    name='tests/test_matrix_transform_contracts.py'
+    source=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    matrix_raw=(ROOT/'coverage/contracts/matrix-transform.json').read_bytes()
+    data=json.loads(matrix_raw)
+    migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
+    transition=migration['modules'][name]
+    original_tree=ast.parse(transition['original_utf8'])
+    tree=ast.parse(source)
+    old=next(n for n in original_tree.body if isinstance(n,ast.FunctionDef) and n.name=='test_signature_source_and_inventory_integrity')
+    current=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==old.name)
+    # Exactly the obsolete full-current-file hash is replaced. Every preceding
+    # assertion and historical native0/pending assertion remains byte-for-AST.
+    assert [ast.dump(n,include_attributes=False) for n in old.body[:-2]]==[ast.dump(n,include_attributes=False) for n in current.body[:len(old.body)-2]]
+    assert ast.dump(old.body[-1],include_attributes=False)==ast.dump(current.body[-1],include_attributes=False)
+    assert data['test_source_canonical_lf_sha256']==hashlib.sha256(transition['original_utf8'].encode()).hexdigest()
+    assert migration['frozen_matrix_raw_sha256']==hashlib.sha256(matrix_raw).hexdigest()
+    assert transition['current_canonical_lf_sha256']==hashlib.sha256(source).hexdigest()
+    fixture=tmp_path/name;fixture.parent.mkdir(parents=True)
+    if fault=='current-source':source+=b'\n# unapproved current source\n'
+    elif fault=='current-pin':transition['current_canonical_lf_sha256']='0'*64
+    elif fault=='matrix-raw':matrix_raw+=b'\n'
+    elif fault=='matrix-pin':migration['frozen_matrix_raw_sha256']='0'*64
+    elif fault=='original-utf8':transition['original_utf8']+='\n# unapproved original source\n'
+    elif fault=='original-raw-pin':transition['original_raw_sha256']='0'*64
+    elif fault=='frozen-helper-pin':data['test_source_canonical_lf_sha256']='0'*64
+    fixture.write_bytes(source)
+    matrix=tmp_path/'coverage/contracts/matrix-transform.json';matrix.parent.mkdir(parents=True);matrix.write_bytes(matrix_raw)
+    receipt=tmp_path/'coverage/evidence/matrix-transform-public-assertion-migration.json';receipt.parent.mkdir(parents=True);receipt.write_text(json.dumps(migration))
+    def matrix_transform(coords,matrix):raise AssertionError('metadata-only original image function must never execute')
+    profile=next(iter(data['profiles']))
+    namespace=dict(__file__=str(fixture),MATRIX=matrix,Path=Path,json=json,hashlib=hashlib,inspect=inspect,
+        skimage=types.SimpleNamespace(__version__='0.26.0'),original=types.SimpleNamespace(matrix_transform=matrix_transform),
+        matrix_data=lambda:data,profile=lambda:profile,source_facts=lambda:data['profiles'][profile]['source'])
+    namespace['DTYPES']=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign)
+        and any(isinstance(t,ast.Name) and t.id=='DTYPES' for t in n.targets)))
+    nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ('cases','digest',old.name)]
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),str(fixture),'exec'),namespace)
+    if fault is None:namespace[old.name]()
+    else:
+        with pytest.raises(AssertionError):namespace[old.name]()
+
+
 @pytest.mark.parametrize('missing',q.MAX_TREE_SOURCE_PATHS)
 def test_max_tree_source_closure_blocks_before_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
