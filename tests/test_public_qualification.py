@@ -293,3 +293,87 @@ def test_workflow_is_four_check_only_jobs_with_retained_failures():
     assert 'include-hidden-files: true' in text
     assert 'measure:' not in text
     assert 'source_revision' in text
+
+
+def test_fresh_child_tmp_path_fixture_creates_only_owned_parent(tmp_path,monkeypatch):
+    """Real pytest tmp_path setup, with metadata admission stubbed (no images)."""
+    tree=tmp_path/'source';(tree/'tests').mkdir(parents=True)
+    (tree/'tests/test_owned_temporary.py').write_text('def test_owned(tmp_path):\n    p=tmp_path/"owned.txt"\n    p.write_text("ok")\n    assert p.read_text()=="ok"\n')
+    out=tmp_path/'output';out.mkdir();(out/'state.json').write_text(json.dumps({'source':{}}))
+    monkeypatch.setattr(q,'ROOT',tree)
+    monkeypatch.setattr(q,'GROUPS',{'tooling-temp-smoke':('test_owned_temporary.py',)})
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'admission',lambda *_: {'scalar':False})
+    monkeypatch.setattr(q.sys,'path',list(sys.path))
+    assert not (out/'pytest-tmp').exists()
+    assert q.child(out,'tooling-temp-smoke')==0
+    assert (out/'pytest-tmp/normal-tooling-temp-smoke').is_dir()
+    assert list((out/'pytest-tmp/normal-tooling-temp-smoke').rglob('owned.txt'))
+    with pytest.raises(q.QualificationError,match='never reuse'):
+        q.child(out,'tooling-temp-smoke')
+
+
+@pytest.fixture
+def simulated_interpreter_link(tmp_path,monkeypatch):
+    # Windows need not have symlink privilege: simulate link metadata only.
+    # Both actual file bytes and the outside interpreter bytes are still real.
+    out=tmp_path/'output';path=out/'runtime-env/bin/python';path.parent.mkdir(parents=True);path.write_bytes(b'interpreter')
+    target=tmp_path/'known-base-python';target.write_bytes(b'interpreter')
+    base=dict(path=str(target),sha256=q.sha(target),version='synthetic',major_minor='3.13',cache_tag='synthetic',os_name='posix')
+    name='runtime-env/bin/python';link=dict(raw_target=str(target),resolved_target=str(target),sha256=q.sha(target))
+    provenance=dict(base=base,links={name:link});current={'target':target,'raw':str(target)}
+    real_resolve=Path.resolve;real_is_symlink=Path.is_symlink;real_readlink=q.os.readlink
+    def resolve(self,strict=False):
+        if self==path:return current['target']
+        if self==path.parent and current.get('parent_escape'):return out.parent
+        return real_resolve(self,strict=strict)
+    monkeypatch.setattr(Path,'resolve',resolve)
+    monkeypatch.setattr(Path,'is_symlink',lambda self: self==path or real_is_symlink(self))
+    monkeypatch.setattr(q.os,'readlink',lambda p: current['raw'] if Path(p)==path else real_readlink(p))
+    monkeypatch.setattr(q,'base_interpreter',lambda: dict(base))
+    return out,path,name,provenance,current
+
+
+def test_known_external_interpreter_is_pinned_to_owner_target_and_bytes(simulated_interpreter_link):
+    out,path,name,provenance,_=simulated_interpreter_link
+    q.validate_interpreter_provenance(out,provenance)
+    q.verify_record(out,name,dict(bytes=path.stat().st_size,sha256=q.sha(path)),provenance)
+
+
+@pytest.mark.parametrize('change',['different-target-same-bytes','raw-target','bytes','owner','base-provenance'])
+def test_external_interpreter_exception_does_not_admit_arbitrary_escapes(simulated_interpreter_link,change):
+    out,path,name,provenance,current=simulated_interpreter_link
+    if change=='different-target-same-bytes':
+        other=out.parent/'other-interpreter';other.write_bytes(path.read_bytes());current.update(target=other,raw=str(other))
+    elif change=='raw-target':current['raw']='a-different-link-expression'
+    elif change=='bytes':path.write_bytes(b'changed interpreter')
+    elif change=='owner':provenance['links']['runtime-env/bin/arbitrary-secret']=provenance['links'].pop(name)
+    else:provenance['base']=dict(provenance['base'],path=str(out.parent/'forged-base'))
+    with pytest.raises(q.QualificationError):q.validate_interpreter_provenance(out,provenance)
+
+
+@pytest.mark.parametrize('name',['../secret','/absolute','C:/outside','runtime-env\\bin\\python'])
+def test_record_traversal_guard_remains_strict(tmp_path,name):
+    with pytest.raises(q.QualificationError,match='escapes output'):
+        q.verify_record(tmp_path,name,dict(bytes=0,sha256='0'*64),dict(base={},links={}))
+
+
+def test_unapproved_outside_file_still_rejected_even_with_interpreter_bytes(simulated_interpreter_link):
+    out,path,name,provenance,_=simulated_interpreter_link
+    with pytest.raises(q.QualificationError,match='escapes output'):
+        q.verify_record(out,name,dict(bytes=path.stat().st_size,sha256=q.sha(path)),dict(base=provenance['base'],links={}))
+
+
+def test_interpreter_owner_directory_cannot_escape(simulated_interpreter_link):
+    out,_,_,provenance,current=simulated_interpreter_link;current['parent_escape']=True
+    with pytest.raises(q.QualificationError,match='owner directory escapes'):
+        q.validate_interpreter_provenance(out,provenance)
+
+
+def test_owned_regular_file_digest_still_authenticated(tmp_path):
+    path=tmp_path/'owned';path.write_bytes(b'original')
+    record=dict(bytes=path.stat().st_size,sha256=q.sha(path));provenance=dict(base={},links={})
+    q.verify_record(tmp_path,'owned',record,provenance)
+    path.write_bytes(b'different')
+    with pytest.raises(q.QualificationError,match='artifact changed'):
+        q.verify_record(tmp_path,'owned',record,provenance)
