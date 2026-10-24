@@ -1188,3 +1188,27 @@ def test_cursor_private_selector_rejected_before_installed_pipeline_import(tmp_p
     monkeypatch.setattr(builtins,'__import__',guarded)
     with pytest.raises(q.QualificationError,match='private selectors forbidden'):
         q.admission(tmp_path,{'interpreter_provenance':{}})
+
+
+@pytest.mark.parametrize('missing',('src/tv_denoise_internal.hpp',
+                                    'tests/test_tv_denoise_admission_native.cpp'))
+def test_single_admission_private_source_is_a_prebuild_requirement(tmp_path,monkeypatch,missing):
+    # Explicitly inert source envelope; no compilation or numerical calls.
+    assert missing in q.TV_SOURCE_PATHS
+    synthetic_complete_plan(tmp_path)
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH})
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=192))
+    complete=q.plan(tmp_path,'modern',192)
+    assert not complete['blockers']
+    assert complete['product_members']==110 and complete['SDK_members']==63
+    assert complete['SDK_checks']==36 and len(complete['SDK_families'])==18
+    (tmp_path/missing).unlink()
+    assert 'missing required TV source: '+missing in q.plan(tmp_path,'modern',192)['blockers']
+
+
+def test_single_admission_private_control_is_not_a_public_client_or_ctest():
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'test_tv_denoise_admission_native' not in cmake
+    assert 'tv_denoise_admission' not in q.FAMILIES
+    assert len(q.FAMILIES)==18 and q.PRODUCT_MEMBERS==110 and q.SDK_MEMBERS==63
+    assert not (ROOT/'include/skimagexx/tv_denoise_internal.hpp').exists()

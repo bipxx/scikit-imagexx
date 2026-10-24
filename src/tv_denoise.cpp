@@ -1,4 +1,5 @@
 #include "skimagexx/tv_denoise.hpp"
+#include "tv_denoise_internal.hpp"
 #include "execution.hpp"
 #include <array>
 #include <cfenv>
@@ -222,11 +223,20 @@ const char* tv_denoise_ineligibility(const TvConstView& input,const TvDenoiseWor
     return nullptr;
 }
 
+const char* detail::tv_denoise_try_finite_into(const TvConstView& input,
+    const TvDenoiseWorkspace& workspace,const TvDenoiseParameters& parameters,
+    TvDenoiseResult& result,TvDenoiseTrace* trace,std::size_t capacity) {
+    if(const char* reason=tv_denoise_ineligibility(input,workspace,parameters,trace,capacity))return reason;
+    if(input.type==TvScalarType::float64)result=run<double,double>(input,workspace,parameters,trace);
+    else if(parameters.reduction.profile==TvReductionProfile::numpy_1244_buffered)result=run<float,double>(input,workspace,parameters,trace);
+    else result=run<float,float>(input,workspace,parameters,trace);
+    return nullptr;
+}
+
 TvDenoiseResult tv_denoise_finite_into(const TvConstView& input,const TvDenoiseWorkspace& workspace,
     const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,std::size_t capacity) {
-    if(const char* reason=tv_denoise_ineligibility(input,workspace,parameters,trace,capacity))throw std::invalid_argument(reason);
-    if(input.type==TvScalarType::float64)return run<double,double>(input,workspace,parameters,trace);
-    if(parameters.reduction.profile==TvReductionProfile::numpy_1244_buffered)return run<float,double>(input,workspace,parameters,trace);
-    return run<float,float>(input,workspace,parameters,trace);
+    TvDenoiseResult result{};
+    if(const char* reason=detail::tv_denoise_try_finite_into(input,workspace,parameters,result,trace,capacity))throw std::invalid_argument(reason);
+    return result;
 }
 } // namespace skimagexx
