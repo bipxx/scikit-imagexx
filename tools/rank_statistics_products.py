@@ -151,12 +151,17 @@ def qualification_scope_text(text):
         # Original authenticated rank14 controllers predate the explicit census.
         require(len(families) == 14, 'original source SDK14 incomplete')
         return dict(name='rank14', families=list(families), members=104, sdk=59)
-    require(set(values) == {'FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS'}
-            and values['PRODUCT_SCOPE'] == 'tv17' and values['PRODUCT_MEMBERS'] == 108
-            and values['SDK_MEMBERS'] == 62 and len(families) == 17
-            and families[-3:] == ('tv_chambolle', 'tv_reductions', 'tv_denoise'),
-            'source TV17/108/62 scope incomplete')
-    return dict(name='tv17', families=list(families), members=108, sdk=62)
+    require(set(values) == {'FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS'},
+            'source explicit product scope incomplete')
+    scopes = {'tv17': (108, 62, ('tv_chambolle', 'tv_reductions', 'tv_denoise')),
+              'bregman18': (110, 63, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman'))}
+    require(values['PRODUCT_SCOPE'] in scopes, 'source TV/Bregman scope incomplete')
+    members, sdk, suffix = scopes[values['PRODUCT_SCOPE']]
+    require(type(values['PRODUCT_MEMBERS']) is int and type(values['SDK_MEMBERS']) is int
+            and values['PRODUCT_MEMBERS'] == members and values['SDK_MEMBERS'] == sdk
+            and len(families) == 14 + len(suffix) and families[-len(suffix):] == suffix,
+            'source TV/Bregman product/SDK scope incomplete')
+    return dict(name=values['PRODUCT_SCOPE'], families=list(families), members=members, sdk=sdk)
 
 
 def validate_payload(path, qualification, profile, compare):
@@ -249,12 +254,14 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
                 == q['source']['files_sha256']['tools/public_qualification.py'],
                 'qualified source controller differs before registry admission')
         scope = qualification_scope_text(text.decode('utf-8'))
-    image_count = 191 if scope['name'] == 'tv17' else 190
+    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
             f'genuine{image_count}+3 registry qualification required')
-    require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] == 'tv17'),
+    require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] == 'bregman18'),
+            'qualified Bregman registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')
     binding = q.get('build_identity')

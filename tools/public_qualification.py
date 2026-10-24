@@ -280,17 +280,23 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
             'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise')
+            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman')
 ORIGINAL_FAMILIES = FAMILIES[:14]
-PRODUCT_SCOPE = 'tv17'
-PRODUCT_MEMBERS = 108
-SDK_MEMBERS = 62
+TV_FAMILIES = FAMILIES[:17]
+PRODUCT_SCOPE = 'bregman18'
+PRODUCT_MEMBERS = 110
+SDK_MEMBERS = 63
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
     'src/tv_denoise.cpp', 'src/bind_tv_chambolle.cpp', 'python/skimagexx/_tv_chambolle.py',
     'coverage/contracts/tv-chambolle.json',
     'coverage/evidence/tv-chambolle-public-assertion-migration.json')
+BREGMAN_PATH = 'restoration.denoise_tv_bregman'
+BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp',
+    'src/simd_tv_bregman_avx2.cpp', 'src/bind_tv_bregman.cpp', 'python/skimagexx/_tv_bregman.py',
+    'tests/test_tv_bregman_native.cpp', 'tests/test_tv_bregman_native_pipeline.py',
+    'tests/test_tv_bregman_public.py', 'coverage/contracts/tv-bregman.json')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -302,6 +308,7 @@ GROUPS = {
     'public-decisions': ('test_rank_decisions_contracts.py', 'test_rank_decisions_public.py',
                          'test_rank_decisions_endian_public.py'),
     'public-TV': ('test_tv_chambolle_contracts.py', 'test_tv_chambolle_native_pipeline.py'),
+    'public-Bregman': ('test_tv_bregman_contracts.py', 'test_tv_bregman_public.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -423,6 +430,11 @@ def plan(root, profile, expected=None):
     for name in TV_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required TV source: ' + name)
+    if BREGMAN_PATH not in registry['functions']:
+        blockers.append('missing public Bregman registry: ' + BREGMAN_PATH)
+    for name in BREGMAN_SOURCE_PATHS:
+        if not (root / name).is_file():
+            blockers.append('missing required Bregman source: ' + name)
     if expected is not None and registry['image_count'] != expected:
         blockers.append('explicit image count differs from source registry')
     for name in R5:
@@ -511,9 +523,10 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Explicit historical metadata scope; production qualification uses TV17."""
-    require(scope in ('rank14', 'tv17'), 'unknown authenticated product scope')
-    return (104, 59) if scope == 'rank14' else (PRODUCT_MEMBERS, SDK_MEMBERS)
+    """Exact historical scopes; production qualification requires Bregman18."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63)}
+    require(scope in census, 'unknown authenticated product scope')
+    return census[scope]
 
 
 def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
@@ -528,8 +541,11 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope == 'tv17' else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
+        bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
+        require((bregman <= set(source.namelist())) if scope == 'bregman18' else not (bregman & set(source.namelist())),
+                'Bregman product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -856,6 +872,28 @@ def tv_admission(core, restoration, wrapper, registered):
             'TV public signature differs')
 
 
+def bregman_admission(core, restoration, wrapper, registered):
+    """Require the real public wrapper and builtin before fixtures or providers."""
+    paths = tuple(registered)
+    require(paths.count(BREGMAN_PATH) == 1, 'missing/duplicate public Bregman registry')
+    require(getattr(wrapper, '_core', None) is core, 'Bregman alternate core worker state')
+    require(core.get_num_threads() == 1, 'Bregman initial global workers must be1')
+    for name, value in {'tv_bregman_interface': 'tv-bregman-prepared-v1',
+                        'tv_bregman_capabilities': 3, 'tv_bregman_parallel_sweep': False}.items():
+        actual = getattr(core, name, None)
+        require(type(actual) is type(value) and actual == value, 'missing/wrong public Bregman capability: ' + name)
+    entry = getattr(core, 'tv_bregman_run', None)
+    require(inspect.isbuiltin(entry) and entry.__name__ == 'tv_bregman_run'
+            and entry.__module__ == core.__name__, 'missing owned compiled Bregman entry')
+    function = vars(restoration).get('denoise_tv_bregman')
+    require(callable(function) and function is vars(wrapper).get('denoise_tv_bregman'),
+            'Bregman own public function identity mismatch')
+    require(inspect.unwrap(function).__module__ == 'skimagexx._tv_bregman'
+            and function.__name__ == 'denoise_tv_bregman', 'upstream Bregman algorithm forwarding')
+    require(str(inspect.signature(function)) == '(image, weight=5.0, max_num_iter=100, eps=0.001, isotropic=True, *, channel_axis=None)',
+            'Bregman public signature differs')
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -868,7 +906,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -895,6 +933,8 @@ def admission(out, state):
     decisions_admission(xx._core, rank, generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
     tv_admission(xx._core, importlib.import_module('skimagexx.restoration'),
                  importlib.import_module('skimagexx._tv_chambolle'), coverage.native_functions())
+    bregman_admission(xx._core, importlib.import_module('skimagexx.restoration'),
+                      importlib.import_module('skimagexx._tv_bregman'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1161,7 +1201,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = ORIGINAL_FAMILIES if scope == 'rank14' else FAMILIES
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 

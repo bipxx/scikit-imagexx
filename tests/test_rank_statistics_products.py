@@ -58,14 +58,15 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17')
+    assert scope in ('rank14','tv17','bregman18')
     families = ['synthetic-family-' + str(i) for i in range(14)]
-    if scope=='tv17':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    expected_sdk=62 if scope=='tv17' else 59
-    expected_members=108 if scope=='tv17' else 104
+    if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
+    if scope=='bregman18':families += ['tv_bregman']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
-    source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+("PRODUCT_SCOPE='tv17'\nPRODUCT_MEMBERS=108\nSDK_MEMBERS=62\n" if scope=='tv17' else '')).encode()
+    source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
     cfg = {'source_text_sha256': {'tools/rank_statistics_products.py': body_hash(source['tools/rank_statistics_products.py'])},
            'case_contract_sha256': '1' * 64,
            'profiles': {'modern': {'numpy': '2.5.4', 'scipy': '1.18.1'}}}
@@ -75,9 +76,12 @@ def synthetic(tmp_path, monkeypatch, request):
     source['python/skimagexx/_rank.py'] = b'# inert Python metadata\n'
     source['include/skimagexx/rank.hpp'] = b'// inert installed header\n'
     source['include/skimagexx/image.hpp'] = b'// inert installed header\n'
-    if scope=='tv17':
+    if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
+    if scope=='bregman18':
+        source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
+        source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -133,8 +137,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': 191 if scope=='tv17' else 190, 'metadata_count': 3, 'registered_count': 194 if scope=='tv17' else 193,
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope=='tv17' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope=='bregman18' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -410,3 +414,53 @@ def test_tv_registry_cannot_be_promoted_from_legacy_or_missing_function(syntheti
     s.reseal()
     with pytest.raises(RuntimeError):run(s)
     assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic',['bregman18'],indirect=True)
+def test_bregman_full110_63_sdk18_stage_is_bounded_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json');assert len(sdk['SDK_sha256'])==63 and len(sdk['families'])==18 and sdk['checks']==36
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==110
+    assert p.qualification_scope(s.output/'source')['name']=='bregman18'
+    assert p.load(s.output/'qualification.json')['expected_registry']['image_count']==192
+    assert not any(name in p.load(s.output/'product.json') for name in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('fault',('SDK62','wheel108','family17','wrong-family','duplicate-family','missing-scope','tv-scope-with-new-counts'))
+def test_bregman_authenticated_source_literals_reject_census_downgrades(fault):
+    families=tuple('tooling-original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise','tv_bregman')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='bregman18',PRODUCT_MEMBERS=110,SDK_MEMBERS=63)
+    control='\n'.join(name+' = '+repr(value) for name,value in values.items())
+    assert p.qualification_scope_text(control)['name']=='bregman18'
+    if fault=='SDK62':values['SDK_MEMBERS']=62
+    elif fault=='wheel108':values['PRODUCT_MEMBERS']=108
+    elif fault=='family17':values['FAMILIES']=families[:-1]
+    elif fault=='wrong-family':values['FAMILIES']=families[:-1]+('private_family',)
+    elif fault=='duplicate-family':values['FAMILIES']=families[:-1]+('tv_denoise',)
+    elif fault=='missing-scope':del values['PRODUCT_SCOPE']
+    else:values['PRODUCT_SCOPE']='tv17'
+    with pytest.raises(RuntimeError):p.qualification_scope_text('\n'.join(name+' = '+repr(value) for name,value in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['bregman18'],indirect=True)
+@pytest.mark.parametrize('fault',('image191','missing-Bregman','duplicate-Bregman','missing-TV'))
+def test_bregman192_registry_requires_both_real_public_paths(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='image191':expected['image_count']=191
+    elif fault=='missing-Bregman':expected['functions'][-1]='unit-only-replacement'
+    elif fault=='duplicate-Bregman':expected['functions'][0]=expected['functions'][-1]
+    else:expected['functions'][-2]='unit-only-replacement'
+    s.reseal()
+    match={'image191':'genuine192','missing-Bregman':'Bregman registry/source','duplicate-Bregman':'genuine192','missing-TV':'TV registry/source'}[fault]
+    with pytest.raises(RuntimeError,match=match):run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('scope,members,sdk,suffix',(('tv17',108,62,('tv_chambolle','tv_reductions','tv_denoise')),('bregman18',110,63,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman'))))
+@pytest.mark.parametrize('field',('PRODUCT_MEMBERS','SDK_MEMBERS'))
+def test_authenticated_census_counts_are_integer_literals_not_equal_floats(scope,members,sdk,suffix,field):
+    values=dict(FAMILIES=tuple('tooling-'+str(i) for i in range(14))+suffix,PRODUCT_SCOPE=scope,PRODUCT_MEMBERS=members,SDK_MEMBERS=sdk)
+    values[field]=float(values[field])
+    with pytest.raises(RuntimeError,match='scope incomplete'):
+        p.qualification_scope_text('\n'.join(name+' = '+repr(value) for name,value in values.items()))
