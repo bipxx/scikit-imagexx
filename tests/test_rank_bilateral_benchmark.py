@@ -257,7 +257,7 @@ def test_source_header_omitted_from_wheel_and_installed_set_still_rejected(monke
  manifest=tmp_path/'manifest.json';manifest.write_bytes(b'{}');monkeypatch.setattr(h,'ROOT',source);monkeypatch.setattr(h,'MANIFEST',manifest)
  monkeypatch.setattr(h,'source_fingerprint',lambda root:{'scope':'UNIT-TOOLING-ONLY'})
  source_files={p.relative_to(source).as_posix():h.text_sha(p) for p in source.rglob('*') if p.is_file()}
- runtime=dict(source=dict(files_sha256=source_files),runtime=dict(sdk_sha256={str(i):'unit-only' for i in range(59)}))
+ runtime=dict(source=dict(files_sha256=source_files),runtime=dict(sdk_sha256={str(i):'unit-only' for i in range(h.SDK_MEMBERS)}))
  monkeypatch.setattr(h.artifacts,'verify',lambda *args:runtime)
  capsule=tmp_path/'capsule';wheels=capsule/'wheels';wheels.mkdir(parents=True);(capsule/'rank-bilateral-runtime.json').write_bytes(b'{}')
  with zipfile.ZipFile(capsule/'source.zip','w') as z:
@@ -270,7 +270,12 @@ def test_source_header_omitted_from_wheel_and_installed_set_still_rejected(monke
   for n,data in members.items():z.writestr(n,data)
  info=dict(schema='rank-bilateral-exact-offline-v1',runtime_manifest_sha256=h.artifacts.sha(capsule/'rank-bilateral-runtime.json'),corpus_manifest_sha256=h.artifacts.sha(manifest),product_source={'scope':'UNIT-TOOLING-ONLY'},files_sha256=h.capsule_tree(capsule))
  (capsule/'rank-bilateral-artifacts.json').write_text(json.dumps(info))
+ checked_records=[];verify_record=h.verify_record
+ def checked_record(path):
+  verify_record(path);checked_records.append(path)
+ monkeypatch.setattr(h,'verify_record',checked_record)
  with pytest.raises(AssertionError):h.verify(capsule)
+ assert checked_records==[wheels/'unit.whl'] # Intake and RECORD passed; the source-header guard rejected the omission.
 
 
 def test_preparation_cannot_reduce_mandatory_worker_checks(monkeypatch):

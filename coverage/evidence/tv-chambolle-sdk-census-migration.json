@@ -73,5 +73,23 @@
     "before_canonical_sha256": "5bb9e2ec6e306fc21554bd7988804d6b563ed29225d53ed054dad7ab5a2a9799",
     "after_canonical_sha256": "31ca3175f56ed958ff852f64992407d19c71f200291cd44091cf456ce1bc5cef",
     "scope": "Generated original-library identity alias metadata only; implementation, signatures, classification and scientific fixtures unchanged."
+  },
+  "metadata_guard_followup": {
+    "changes": {
+      "tests/test_rank_bilateral_benchmark.py": {
+        "before_canonical_sha256": "841b8db34c716cedeaa2d58906f08301e92a9b60944348faa3e687f1962defea",
+        "after_canonical_sha256": "2bbd0cd6407392124c23f4453b7eab6e5b1acaa804a1c670b9979e30e60c0f65",
+        "unchanged_other_function_ASTs": 34,
+        "changed_metadata_guard": "test_source_header_omitted_from_wheel_and_installed_set_still_rejected"
+      },
+      "tests/test_rank_decisions_benchmark.py": {
+        "before_canonical_sha256": "a2790b4a32285a4a7c7e45b141a2f2d1df9053ae6912452dba1fb08c76993c10",
+        "after_canonical_sha256": "9e599931af40ce6b1ddcec9456548805286237c198f90be0a4ec8a39e201d5cf",
+        "unchanged_other_function_ASTs": 36,
+        "changed_metadata_guard": "test_source_header_omitted_from_wheel_and_installed_set_still_rejected"
+      }
+    },
+    "four_benchmark_guard_module_checks": 173,
+    "scope": "Synthetic SDK count follows exact declared scope; a RECORD witness proves omitted-header tests reach their intended guard. All other existing checks and scientific data unchanged."
   }
 }
