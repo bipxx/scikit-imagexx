@@ -18,7 +18,7 @@ classification, not verified parity or performance.
 The accepted whole6 product adds finite/min-max metrics SIMD classification and
 qualified R2 aliases without changing the 163-path inventory. Four newly verified
 hosted campaigns retain all samples and regressions. Three workers now qualify
-reversed-stride metrics transport, implement nine percentile kernels, and prepare
+percentile benchmark contracts, implement nine percentile kernels, and prepare
 whole7 qualification of frozen consumer/R4 public changes. The candidate predicts
 171 image paths; that count requires actual cumulative package gates. The
 integrator owns shared wiring, hosted measurements, prompt merges and cleanup.
@@ -44,7 +44,7 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
 | Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole6 accepted: 163 image paths, 303 upstream-only. Four verified campaigns merged; whole7 source frozen7aaa747, actual package gates pending |
-| Worker 1 | `metrics_reductions` | Reversed-stride metrics transport and exact floating-point behavior | Actual route/counter and disassembly evidence identifies recursive reversed-load overhead. Private candidate preserves lane/reduction order; genuine public and hosted performance pending |
+| Worker 1 | `metrics_reductions` | Nine percentile benchmark contracts and hosted workflow | Reversed metrics transport5d2975 has a sealed qualified private proof; three original capfd policy handles remain live/excluded. Next original-only benchmark packet freezes1544 reference IDs and balanced safe rasters; public/performance gates pending |
 | Worker 2 | `resize_api` | Nine percentile C++ kernels and binding contracts | Original reference frozenb928; private kernels preserve54 provider traces and old-op interfaces. Normal/scalar/Debug/portable/sanitizer gates underway; public registration pending |
 | Worker 3 | `resize_bench` | Whole7 actual package/corpus/SDK qualification | R4 wrappers and benchmark Phase1 frozen. Read-only toolchain health precedes exclusive build lease; all actual public gates and independent171-path inventory remain required |
 

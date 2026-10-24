@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-10-24T00:20:23.264123+00:00",
+  "scope": "Archive-first retirement of two additional validated, dependency-released worktrees after report publication.",
+  "removed_worktrees": [
+    {
+      "former_path": "build/worktrees/terminal-campaign-publication",
+      "source_head": "463c4e84024f18084fcdb5612729268e9b7bd191",
+      "source_clean": true,
+      "ancestor_of_main": true,
+      "archive": "build/cleanup/merged-report-worktrees-20261023/terminal-campaign-publication.zip",
+      "archive_sha256": "ebe81f1c256349685bdd1a665e4c9315110b452db39c6cbfc0126805bca8297a",
+      "members": 944
+    },
+    {
+      "former_path": "build/worktrees/rank-statistics-contracts",
+      "source_head": "b362aae905ae8ea9312007f701ba7467e29d55f9",
+      "source_clean": true,
+      "ancestor_of_main": true,
+      "archive": "build/cleanup/merged-report-worktrees-20261023/rank-statistics-contracts.zip",
+      "archive_sha256": "ce9cb7c4d4f2ee986180477cf2f1785701625ace565090939b75f4fac2287493",
+      "members": 942
+    }
+  ],
+  "logical_net_bytes_recovered": 484187846,
+  "preservation_index": {
+    "path": "build/cleanup/merged-report-worktrees-20261023/manifest.json",
+    "sha256": "1998694d8dafa8972782d1320612b9dba88e3dc2d49f87ea30edc5169b9eb254"
+  },
+  "safety": "Resolved exact paths checked within workspace; complete per-member hashes rechecked against ZIP and source before git worktree remove. No active jobs, caches, environments, raw benchmark evidence or unfinished source removed.",
+  "retained_reparse_tree": "rank-statistics-benchmark remains retained, including16 historical pytest current reparse entries; not removed or followed.",
+  "drive_free_bytes_at_completion": 16641036288
+}

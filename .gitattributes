@@ -16,3 +16,5 @@ coverage/evidence/temp-build-cleanup-20261023.json -text
 benchmarks/rank-intensity-public-*.json -text
 coverage/contracts/rank-statistics-benchmark.json -text
 coverage/contracts/rank-percentile.json -text
+coverage/evidence/terminal-campaigns-20261023.json -text
+coverage/evidence/merged-report-worktree-cleanup-20261023.json -text

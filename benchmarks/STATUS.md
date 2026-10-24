@@ -50,9 +50,10 @@ All four new campaigns completed their three-profile preparation barrier and
 fresh artifact-only measurement jobs; their samples and classifications are now
 independently verified offline. No local image-operation timing was used.
 Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
-scans remain bottlenecks. Three workers now qualify direct reversed metrics
-transport privately, implement nine percentile kernels, and prepare actual
-whole7 packages combining consumer scans and four new rank algorithms. Candidate
+scans remain bottlenecks. Reversed metrics transport has a scoped private proof;
+three original policy trials remain live and excluded. Three workers now prepare
+percentile benchmark contracts, implement nine percentile kernels, and qualify
+actual whole7 packages combining consumer scans and four new rank algorithms. Candidate
 171-path metadata is a prediction until genuine cumulative gates pass; accepted
 main remains at 163 image paths.
 

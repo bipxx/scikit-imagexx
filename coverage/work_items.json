@@ -19560,7 +19560,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-statistics-contracts",
+            "archive": "build/cleanup/merged-report-worktrees-20261023/rank-statistics-contracts.zip"
+          }
+        ]
       },
       "dependency_requirements": {},
       "proofs": {
@@ -19568,7 +19574,7 @@
           "status": "verified",
           "source_sha": "b362aae905ae8ea9312007f701ba7467e29d55f9",
           "manifest": {
-            "path": "build/worktrees/rank-statistics-contracts/build/rank-statistics-contract-proof.json",
+            "path": "build/cleanup/merged-report-worktrees-20261023/rank-statistics-contracts/retained-proofs/build/rank-statistics-contract-proof.json",
             "sha256": "4e672c3b9781b218facfe37032ea08398d5d6bbb357a6cb3ce0fc20e54ce1a0d"
           },
           "passing_contract_checks": 6257,
@@ -20671,6 +20677,12 @@
           "build/footprints-setup-trial-publication-evidence/d5d4959/manifest.json",
           "build/components-short-run-trial-publication-evidence/993a52d/manifest.json",
           "build/rank-intensity-initial-publication-evidence/463c4e8/manifest.json"
+        ],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/terminal-campaign-publication",
+            "archive": "build/cleanup/merged-report-worktrees-20261023/terminal-campaign-publication.zip"
+          }
         ]
       },
       "dependency_requirements": {},
@@ -20708,11 +20720,111 @@
           "evidence_scope": "isolated_performance"
         }
       },
-      "state": "implementing",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": "tests/test_metrics_reverse_simd.py",
         "uncovered_cases": [
-          "Direct native-endian negative-unit f32/f64 transport preserves existing lane reversal, exact reduction tree, floating-point flags, NaN payloads and callback order. Actual route/counter evidence precedes optimization. Genuine cumulative parity and hosted performance remain required."
+          "Direct native-endian negative-unit f32/f64 transport preserves existing lane reversal, exact reduction tree, floating-point flags, NaN payloads and callback order. Actual route/counter evidence precedes optimization. Genuine cumulative parity and hosted performance remain required.",
+          "Qualified private transport proof sealed329records. Three original Linux normal-policy capfd handles remain live and excluded; all preserved. Exact actual cumulative public-package and hosted performance acceptance remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": "5d2975ffd28dc35e9f8ffd014810d07d90ea1b37",
+        "artifact_sha256": "cf85cbf44c6bd17aafa5a37bf312aca7b55a21421ed33e1e4945d243dd9fdc96",
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/metrics-reverse-stride"
+        ],
+        "protected_artifacts": [
+          "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json"
+        ]
+      },
+      "live_observations": {
+        "handles": [
+          77001,
+          47319,
+          48847
+        ],
+        "state": "Preserved original capfd/NTFS p9 waits; not cancelled/restarted or included in sealed passing counts."
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "5d2975ffd28dc35e9f8ffd014810d07d90ea1b37",
+          "manifest": {
+            "path": "build/metrics-reverse-stride-evidence/5d2975f/qualified-v1/manifest.json",
+            "sha256": "cf85cbf44c6bd17aafa5a37bf312aca7b55a21421ed33e1e4945d243dd9fdc96"
+          },
+          "native_contract_checks": 36870,
+          "native_pending": 0,
+          "scope": "Direct native-endian float32/float64 negative-unit transport only; no reduction/arithmetic/provider/half/classification/tree changes. Private narrow actual binding, distinct whole-core state; no public or speed acceptance.",
+          "excluded_live_normal_policy_trials": [
+            {
+              "child_pid": 26400,
+              "exec_handle": 77001,
+              "log": "build\\worktrees\\metrics-reverse-stride\\build\\modern-normal-policies-v2.log",
+              "profile": "modern",
+              "reason": "Explicit capfd anonymous tempfile on/mnt-c stalls p9_client_rpc; unchanged live process preserved, not accepted"
+            },
+            {
+              "child_pid": 30704,
+              "exec_handle": 47319,
+              "log": "build\\worktrees\\metrics-reverse-stride\\build\\minimum-normal-policies-v2.log",
+              "profile": "minimum",
+              "reason": "Explicit capfd anonymous tempfile on/mnt-c stalls p9_client_rpc; unchanged live process preserved, not accepted"
+            },
+            {
+              "child_pid": 31977,
+              "exec_handle": 48847,
+              "log": "build\\worktrees\\metrics-reverse-stride\\build\\asan-normal-policies-v2.log",
+              "profile": "asan",
+              "reason": "Explicit capfd anonymous tempfile on/mnt-c stalls p9_client_rpc; unchanged live process preserved, not accepted"
+            }
+          ],
+          "boundary": "Qualified transport-only checks; original live policy handles are excluded, and actual cumulative public-package qualification and isolated performance remain pending."
+        }
+      }
+    },
+    {
+      "id": "rank-percentile-benchmark-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-percentile-benchmark",
+      "base_sha": "a464030",
+      "owns": [
+        "benchmarks/rank_percentile.py",
+        "tests/test_rank_percentile_benchmark.py",
+        "coverage/contracts/rank-percentile-benchmark.json",
+        ".github/workflows/rank-percentile-benchmark.yml"
+      ],
+      "depends_on": [
+        "rank-percentile-contracts"
+      ],
+      "dependency_requirements": {
+        "rank-percentile-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-percentile.json",
+        "uncovered_cases": [
+          "Phase1 original/reference only: freeze1544 canonical IDs and balanced source-safe raster candidates across all9actualalgorithms. Metadata/aliases/providertraces/policies/errors untimed. Native/public whole-core qualification and isolated performance remain pending; native0 and no dispatch at this stage."
         ]
       },
       "parity": {
@@ -20733,9 +20845,7 @@
         "main_commit": null
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/metrics-reverse-stride"
-        ],
+        "active_paths": [],
         "protected_artifacts": []
       }
     }
@@ -21479,7 +21589,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "metrics-reverse-stride"
+        "rank-percentile-benchmark-tooling"
       ],
       "resize_api": [
         "rank-percentile-native"
@@ -21865,6 +21975,18 @@
       "archive": "build/transform-public-evidence/transform-public-4ae8-source.zip",
       "archive_sha256": "94cc869c6e28ffdf97b8bc416b967a4770ce72a8d18033804fdd22578b90015d",
       "member_rule": "Remove former_prefix/; exact raw source bytes in existing sealed ZIP."
+    },
+    {
+      "former_prefix": "build/worktrees/terminal-campaign-publication",
+      "archive": "build/cleanup/merged-report-worktrees-20261023/terminal-campaign-publication.zip",
+      "archive_sha256": "ebe81f1c256349685bdd1a665e4c9315110b452db39c6cbfc0126805bca8297a",
+      "member_rule": "Remove former_prefix/; exact original raw files retained in verified ZIP."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-statistics-contracts",
+      "archive": "build/cleanup/merged-report-worktrees-20261023/rank-statistics-contracts.zip",
+      "archive_sha256": "ce9cb7c4d4f2ee986180477cf2f1785701625ace565090939b75f4fac2287493",
+      "member_rule": "Remove former_prefix/; exact original raw files retained in verified ZIP."
     }
   ]
 }
