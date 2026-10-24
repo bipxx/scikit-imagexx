@@ -1,5 +1,6 @@
 #include "skimagexx/tv_chambolle.hpp"
 #include "skimagexx/tv_denoise.hpp"
+#include "tv_denoise_internal.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cstddef>
@@ -141,15 +142,11 @@ void bind_tv_chambolle(py::module_& module) {
             const char* reason = nullptr;
             {
                 py::gil_scoped_release release;
-                reason = skimagexx::tv_denoise_ineligibility(input, workspace, parameters,
-                    trace ? rows.data() : nullptr, rows.size());
-                if (reason == nullptr) {
-                    // The native entry rechecks before any write. Unexpected
-                    // loop exceptions propagate; never hide partial work by
-                    // translating all exceptions into a provider retry.
-                    result = skimagexx::tv_denoise_finite_into(input, workspace, parameters,
-                        trace ? rows.data() : nullptr, rows.size());
-                }
+                // One complete native guard, with no Python callback between
+                // validation and execution. Unexpected loop exceptions still
+                // propagate; only an explicit rejection becomes a provider retry.
+                reason = skimagexx::detail::tv_denoise_try_finite_into(input, workspace,
+                    parameters, result, trace ? rows.data() : nullptr, rows.size());
             }
             if (reason != nullptr) {
                 PyErr_SetString(PyExc_NotImplementedError, reason);
