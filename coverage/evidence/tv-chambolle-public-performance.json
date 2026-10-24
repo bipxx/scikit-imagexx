@@ -1,0 +1,529 @@
+{
+  "schema": 1,
+  "accepted_measured_baseline": true,
+  "performance_target_met": false,
+  "run": 40103617685,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40103617685",
+  "controller_source": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
+  "qualified_product_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+  "inherited_qualification_run": 40087742726,
+  "qualified_image_paths": 191,
+  "wheel_members": 108,
+  "SDK_members": 62,
+  "SDK_families": 17,
+  "root_admission": {
+    "path": "build/decisions-readiness/TV191-performance-root-audit/manifest.json",
+    "bytes": 12817,
+    "sha256": "988501a3a64d8af23905aafee9f13f0b49bba18540632316da76e5b455c80737"
+  },
+  "full_closure": {
+    "path": "build/tv-chambolle-benchmark-lifecycle-runs/40103617685/offline-full-closure.json",
+    "bytes": 63346,
+    "sha256": "0d6e217889953382143da1b4a268bb88b15a73cd581190d749a91c6113a0930e"
+  },
+  "samples_barrier_CPU": {
+    "path": "build/tv-chambolle-benchmark-lifecycle-runs/40103617685/offline-samples-barrier-cpu.json",
+    "bytes": 109107360,
+    "sha256": "ea276743897589a527fd2fadfcef09a84e2fb392ab15eb0649075e5704ed8be9"
+  },
+  "handoff": {
+    "path": "build/tv-chambolle-benchmark-lifecycle-runs/handoff.json",
+    "bytes": 83118,
+    "sha256": "45ae98fe78ff0089f16d88ea26fa3eebfdb7646cf366e66c9f2bff1d7da4e2be"
+  },
+  "root_records_rehashed": 289,
+  "root_bytes_rehashed": 597021367,
+  "workers": 1,
+  "paired_rounds": 7,
+  "case_count_per_profile": 70,
+  "total_rows": 210,
+  "total_timed_samples": 2940,
+  "summaries": {
+    "windows": {
+      "case_count": 70,
+      "primary": true,
+      "geometric_mean_speedup": 1.1436765645501177,
+      "minimum_speedup": 0.16931328288663988,
+      "maximum_speedup": 22.50150022618795,
+      "faster_cases": 36,
+      "slower_cases": [
+        {
+          "case_index": 330,
+          "speedup": 0.8982510416867518
+        },
+        {
+          "case_index": 334,
+          "speedup": 0.8294805611589949
+        },
+        {
+          "case_index": 338,
+          "speedup": 0.8248725889090989
+        },
+        {
+          "case_index": 342,
+          "speedup": 0.7018895016302359
+        },
+        {
+          "case_index": 343,
+          "speedup": 0.7182205226653455
+        },
+        {
+          "case_index": 346,
+          "speedup": 0.6986086453790297
+        },
+        {
+          "case_index": 347,
+          "speedup": 0.6718170011560763
+        },
+        {
+          "case_index": 350,
+          "speedup": 0.6287454340352384
+        },
+        {
+          "case_index": 351,
+          "speedup": 0.6603564311042396
+        },
+        {
+          "case_index": 354,
+          "speedup": 0.6387615432646488
+        },
+        {
+          "case_index": 355,
+          "speedup": 0.42199115397937703
+        },
+        {
+          "case_index": 358,
+          "speedup": 0.3070091006800226
+        },
+        {
+          "case_index": 359,
+          "speedup": 0.16931328288663988
+        },
+        {
+          "case_index": 360,
+          "speedup": 0.32800705813155573
+        },
+        {
+          "case_index": 362,
+          "speedup": 0.5365991805254278
+        },
+        {
+          "case_index": 363,
+          "speedup": 0.4198451611179394
+        },
+        {
+          "case_index": 364,
+          "speedup": 0.7940558023596339
+        },
+        {
+          "case_index": 366,
+          "speedup": 0.39106340716559657
+        },
+        {
+          "case_index": 367,
+          "speedup": 0.2562372179086506
+        },
+        {
+          "case_index": 370,
+          "speedup": 0.39897164106004795
+        },
+        {
+          "case_index": 371,
+          "speedup": 0.17518920743887686
+        },
+        {
+          "case_index": 372,
+          "speedup": 0.3861449318937488
+        },
+        {
+          "case_index": 374,
+          "speedup": 0.35378368370127805
+        },
+        {
+          "case_index": 375,
+          "speedup": 0.24946319440621043
+        },
+        {
+          "case_index": 376,
+          "speedup": 0.5500755814399607
+        },
+        {
+          "case_index": 378,
+          "speedup": 0.5574569023305267
+        },
+        {
+          "case_index": 380,
+          "speedup": 0.6422976665910725
+        },
+        {
+          "case_index": 382,
+          "speedup": 0.5269028446787238
+        },
+        {
+          "case_index": 384,
+          "speedup": 0.30313776700029904
+        },
+        {
+          "case_index": 386,
+          "speedup": 0.2637087015632799
+        },
+        {
+          "case_index": 387,
+          "speedup": 0.9680888252625972
+        },
+        {
+          "case_index": 388,
+          "speedup": 0.2835399220266088
+        },
+        {
+          "case_index": 398,
+          "speedup": 0.44790883846863117
+        },
+        {
+          "case_index": 399,
+          "speedup": 0.4560544212231543
+        }
+      ]
+    },
+    "modern": {
+      "case_count": 70,
+      "primary": true,
+      "geometric_mean_speedup": 0.8893110806962985,
+      "minimum_speedup": 0.13498256097104122,
+      "maximum_speedup": 23.091467879536836,
+      "faster_cases": 32,
+      "slower_cases": [
+        {
+          "case_index": 330,
+          "speedup": 0.867085951990021
+        },
+        {
+          "case_index": 334,
+          "speedup": 0.8554879322536043
+        },
+        {
+          "case_index": 338,
+          "speedup": 0.8386841275703799
+        },
+        {
+          "case_index": 342,
+          "speedup": 0.5310715382985651
+        },
+        {
+          "case_index": 343,
+          "speedup": 0.592427285538071
+        },
+        {
+          "case_index": 346,
+          "speedup": 0.5625279062705508
+        },
+        {
+          "case_index": 347,
+          "speedup": 0.6032183876543412
+        },
+        {
+          "case_index": 350,
+          "speedup": 0.43126287506271466
+        },
+        {
+          "case_index": 351,
+          "speedup": 0.5331933444979271
+        },
+        {
+          "case_index": 354,
+          "speedup": 0.1779663729038324
+        },
+        {
+          "case_index": 355,
+          "speedup": 0.1964129058747049
+        },
+        {
+          "case_index": 356,
+          "speedup": 0.8788532519679598
+        },
+        {
+          "case_index": 358,
+          "speedup": 0.1618214197429512
+        },
+        {
+          "case_index": 359,
+          "speedup": 0.13498256097104122
+        },
+        {
+          "case_index": 360,
+          "speedup": 0.27660235119358473
+        },
+        {
+          "case_index": 362,
+          "speedup": 0.17049841904467994
+        },
+        {
+          "case_index": 363,
+          "speedup": 0.1919607341605806
+        },
+        {
+          "case_index": 364,
+          "speedup": 0.43437851628373825
+        },
+        {
+          "case_index": 366,
+          "speedup": 0.21526524931897514
+        },
+        {
+          "case_index": 367,
+          "speedup": 0.2023123938262959
+        },
+        {
+          "case_index": 368,
+          "speedup": 0.9906100071177285
+        },
+        {
+          "case_index": 370,
+          "speedup": 0.23060265404965966
+        },
+        {
+          "case_index": 371,
+          "speedup": 0.15279748767707893
+        },
+        {
+          "case_index": 372,
+          "speedup": 0.3533324570275228
+        },
+        {
+          "case_index": 374,
+          "speedup": 0.20154039987858072
+        },
+        {
+          "case_index": 375,
+          "speedup": 0.19640511701069527
+        },
+        {
+          "case_index": 376,
+          "speedup": 0.4535713240914657
+        },
+        {
+          "case_index": 378,
+          "speedup": 0.35428848111767514
+        },
+        {
+          "case_index": 380,
+          "speedup": 0.441268650356308
+        },
+        {
+          "case_index": 382,
+          "speedup": 0.3347188840900226
+        },
+        {
+          "case_index": 384,
+          "speedup": 0.22239661078541692
+        },
+        {
+          "case_index": 385,
+          "speedup": 0.8702476079132868
+        },
+        {
+          "case_index": 386,
+          "speedup": 0.20965760042150464
+        },
+        {
+          "case_index": 387,
+          "speedup": 0.8310970309080923
+        },
+        {
+          "case_index": 388,
+          "speedup": 0.20270005382414233
+        },
+        {
+          "case_index": 389,
+          "speedup": 0.8894821648022676
+        },
+        {
+          "case_index": 398,
+          "speedup": 0.45467514518043084
+        },
+        {
+          "case_index": 399,
+          "speedup": 0.4652349690068478
+        }
+      ]
+    },
+    "minimum": {
+      "case_count": 70,
+      "primary": true,
+      "geometric_mean_speedup": 0.817938004401213,
+      "minimum_speedup": 0.10603635675789107,
+      "maximum_speedup": 19.401041859084298,
+      "faster_cases": 34,
+      "slower_cases": [
+        {
+          "case_index": 338,
+          "speedup": 0.9729599448883758
+        },
+        {
+          "case_index": 342,
+          "speedup": 0.58806731768128
+        },
+        {
+          "case_index": 343,
+          "speedup": 0.5059452322365965
+        },
+        {
+          "case_index": 346,
+          "speedup": 0.6949618188875956
+        },
+        {
+          "case_index": 347,
+          "speedup": 0.5230130038921936
+        },
+        {
+          "case_index": 350,
+          "speedup": 0.5028746829572883
+        },
+        {
+          "case_index": 351,
+          "speedup": 0.4735655698365267
+        },
+        {
+          "case_index": 354,
+          "speedup": 0.2231839906875925
+        },
+        {
+          "case_index": 355,
+          "speedup": 0.1691967837763473
+        },
+        {
+          "case_index": 356,
+          "speedup": 0.8956510301479804
+        },
+        {
+          "case_index": 358,
+          "speedup": 0.21009381420412046
+        },
+        {
+          "case_index": 359,
+          "speedup": 0.10603635675789107
+        },
+        {
+          "case_index": 360,
+          "speedup": 0.21559618521698634
+        },
+        {
+          "case_index": 362,
+          "speedup": 0.2035000361014161
+        },
+        {
+          "case_index": 363,
+          "speedup": 0.1593591750976048
+        },
+        {
+          "case_index": 364,
+          "speedup": 0.33792294093392145
+        },
+        {
+          "case_index": 366,
+          "speedup": 0.2356192531266674
+        },
+        {
+          "case_index": 367,
+          "speedup": 0.1538148900904214
+        },
+        {
+          "case_index": 368,
+          "speedup": 0.841948162633766
+        },
+        {
+          "case_index": 370,
+          "speedup": 0.26344393418212136
+        },
+        {
+          "case_index": 371,
+          "speedup": 0.11364038345127864
+        },
+        {
+          "case_index": 372,
+          "speedup": 0.211061329885728
+        },
+        {
+          "case_index": 374,
+          "speedup": 0.2190182263752857
+        },
+        {
+          "case_index": 375,
+          "speedup": 0.14855965645396546
+        },
+        {
+          "case_index": 376,
+          "speedup": 0.3100101842417036
+        },
+        {
+          "case_index": 378,
+          "speedup": 0.38989613707256976
+        },
+        {
+          "case_index": 380,
+          "speedup": 0.5432166793083592
+        },
+        {
+          "case_index": 382,
+          "speedup": 0.37034338562863517
+        },
+        {
+          "case_index": 384,
+          "speedup": 0.1838976115968289
+        },
+        {
+          "case_index": 385,
+          "speedup": 0.6498282902343755
+        },
+        {
+          "case_index": 386,
+          "speedup": 0.18553327877430736
+        },
+        {
+          "case_index": 387,
+          "speedup": 0.6505639449627731
+        },
+        {
+          "case_index": 388,
+          "speedup": 0.17483530112660328
+        },
+        {
+          "case_index": 389,
+          "speedup": 0.656597820541537
+        },
+        {
+          "case_index": 398,
+          "speedup": 0.4648520441682372
+        },
+        {
+          "case_index": 399,
+          "speedup": 0.4811303636312515
+        }
+      ]
+    }
+  },
+  "every_slower_case_retained": true,
+  "same_process_paired_callbacks": true,
+  "CSV": {
+    "path": "benchmarks/tv-chambolle-public-initial.csv",
+    "bytes": 106792,
+    "sha256": "03c07d07078a21e5aea45258db252d2824efceb9ca275f857b30587146a9b88b"
+  },
+  "raw_archive": {
+    "path": "benchmarks/tv-chambolle-public-initial-raw.zip",
+    "bytes": 7401525,
+    "sha256": "56aca9adcceb69b6879377a0b919b297cf7b745f9b5357d70ad81860457b64df"
+  },
+  "report": "benchmarks/tv-chambolle-public-initial.md",
+  "all_cases_faster": false,
+  "regression_source_review": {
+    "path": "build/tv-chambolle-one-thread-bottlenecks/manifest.json",
+    "bytes": 5922,
+    "sha256": "a775713a1b97ee783a4e2c9d5e83761632ee17a9d99c3c0c35d1686ecb2d3e64"
+  },
+  "failed_predecessor_runs_retained": [
+    40094239260,
+    40097514733
+  ],
+  "scope": "Exact frozen f871 product and recorded hosts; mixed/negative baseline, not a causal patch result or timing of Bregman192."
+}

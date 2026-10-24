@@ -26515,7 +26515,7 @@
         "tv-chambolle-finite-bridge"
       ],
       "dependency_requirements": {},
-      "state": "performance_pending",
+      "state": "measured",
       "contract": {
         "case_manifest": "coverage/contracts/tv-chambolle.json",
         "uncovered_cases": [
@@ -26535,8 +26535,558 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          {
+            "path": "benchmarks/tv-chambolle-public-initial-raw.zip",
+            "bytes": 7401525,
+            "sha256": "56aca9adcceb69b6879377a0b919b297cf7b745f9b5357d70ad81860457b64df"
+          }
+        ],
+        "regressions": [
+          {
+            "profile": "windows",
+            "case_index": 330,
+            "speedup": 0.8982510416867518
+          },
+          {
+            "profile": "windows",
+            "case_index": 334,
+            "speedup": 0.8294805611589949
+          },
+          {
+            "profile": "windows",
+            "case_index": 338,
+            "speedup": 0.8248725889090989
+          },
+          {
+            "profile": "windows",
+            "case_index": 342,
+            "speedup": 0.7018895016302359
+          },
+          {
+            "profile": "windows",
+            "case_index": 343,
+            "speedup": 0.7182205226653455
+          },
+          {
+            "profile": "windows",
+            "case_index": 346,
+            "speedup": 0.6986086453790297
+          },
+          {
+            "profile": "windows",
+            "case_index": 347,
+            "speedup": 0.6718170011560763
+          },
+          {
+            "profile": "windows",
+            "case_index": 350,
+            "speedup": 0.6287454340352384
+          },
+          {
+            "profile": "windows",
+            "case_index": 351,
+            "speedup": 0.6603564311042396
+          },
+          {
+            "profile": "windows",
+            "case_index": 354,
+            "speedup": 0.6387615432646488
+          },
+          {
+            "profile": "windows",
+            "case_index": 355,
+            "speedup": 0.42199115397937703
+          },
+          {
+            "profile": "windows",
+            "case_index": 358,
+            "speedup": 0.3070091006800226
+          },
+          {
+            "profile": "windows",
+            "case_index": 359,
+            "speedup": 0.16931328288663988
+          },
+          {
+            "profile": "windows",
+            "case_index": 360,
+            "speedup": 0.32800705813155573
+          },
+          {
+            "profile": "windows",
+            "case_index": 362,
+            "speedup": 0.5365991805254278
+          },
+          {
+            "profile": "windows",
+            "case_index": 363,
+            "speedup": 0.4198451611179394
+          },
+          {
+            "profile": "windows",
+            "case_index": 364,
+            "speedup": 0.7940558023596339
+          },
+          {
+            "profile": "windows",
+            "case_index": 366,
+            "speedup": 0.39106340716559657
+          },
+          {
+            "profile": "windows",
+            "case_index": 367,
+            "speedup": 0.2562372179086506
+          },
+          {
+            "profile": "windows",
+            "case_index": 370,
+            "speedup": 0.39897164106004795
+          },
+          {
+            "profile": "windows",
+            "case_index": 371,
+            "speedup": 0.17518920743887686
+          },
+          {
+            "profile": "windows",
+            "case_index": 372,
+            "speedup": 0.3861449318937488
+          },
+          {
+            "profile": "windows",
+            "case_index": 374,
+            "speedup": 0.35378368370127805
+          },
+          {
+            "profile": "windows",
+            "case_index": 375,
+            "speedup": 0.24946319440621043
+          },
+          {
+            "profile": "windows",
+            "case_index": 376,
+            "speedup": 0.5500755814399607
+          },
+          {
+            "profile": "windows",
+            "case_index": 378,
+            "speedup": 0.5574569023305267
+          },
+          {
+            "profile": "windows",
+            "case_index": 380,
+            "speedup": 0.6422976665910725
+          },
+          {
+            "profile": "windows",
+            "case_index": 382,
+            "speedup": 0.5269028446787238
+          },
+          {
+            "profile": "windows",
+            "case_index": 384,
+            "speedup": 0.30313776700029904
+          },
+          {
+            "profile": "windows",
+            "case_index": 386,
+            "speedup": 0.2637087015632799
+          },
+          {
+            "profile": "windows",
+            "case_index": 387,
+            "speedup": 0.9680888252625972
+          },
+          {
+            "profile": "windows",
+            "case_index": 388,
+            "speedup": 0.2835399220266088
+          },
+          {
+            "profile": "windows",
+            "case_index": 398,
+            "speedup": 0.44790883846863117
+          },
+          {
+            "profile": "windows",
+            "case_index": 399,
+            "speedup": 0.4560544212231543
+          },
+          {
+            "profile": "modern",
+            "case_index": 330,
+            "speedup": 0.867085951990021
+          },
+          {
+            "profile": "modern",
+            "case_index": 334,
+            "speedup": 0.8554879322536043
+          },
+          {
+            "profile": "modern",
+            "case_index": 338,
+            "speedup": 0.8386841275703799
+          },
+          {
+            "profile": "modern",
+            "case_index": 342,
+            "speedup": 0.5310715382985651
+          },
+          {
+            "profile": "modern",
+            "case_index": 343,
+            "speedup": 0.592427285538071
+          },
+          {
+            "profile": "modern",
+            "case_index": 346,
+            "speedup": 0.5625279062705508
+          },
+          {
+            "profile": "modern",
+            "case_index": 347,
+            "speedup": 0.6032183876543412
+          },
+          {
+            "profile": "modern",
+            "case_index": 350,
+            "speedup": 0.43126287506271466
+          },
+          {
+            "profile": "modern",
+            "case_index": 351,
+            "speedup": 0.5331933444979271
+          },
+          {
+            "profile": "modern",
+            "case_index": 354,
+            "speedup": 0.1779663729038324
+          },
+          {
+            "profile": "modern",
+            "case_index": 355,
+            "speedup": 0.1964129058747049
+          },
+          {
+            "profile": "modern",
+            "case_index": 356,
+            "speedup": 0.8788532519679598
+          },
+          {
+            "profile": "modern",
+            "case_index": 358,
+            "speedup": 0.1618214197429512
+          },
+          {
+            "profile": "modern",
+            "case_index": 359,
+            "speedup": 0.13498256097104122
+          },
+          {
+            "profile": "modern",
+            "case_index": 360,
+            "speedup": 0.27660235119358473
+          },
+          {
+            "profile": "modern",
+            "case_index": 362,
+            "speedup": 0.17049841904467994
+          },
+          {
+            "profile": "modern",
+            "case_index": 363,
+            "speedup": 0.1919607341605806
+          },
+          {
+            "profile": "modern",
+            "case_index": 364,
+            "speedup": 0.43437851628373825
+          },
+          {
+            "profile": "modern",
+            "case_index": 366,
+            "speedup": 0.21526524931897514
+          },
+          {
+            "profile": "modern",
+            "case_index": 367,
+            "speedup": 0.2023123938262959
+          },
+          {
+            "profile": "modern",
+            "case_index": 368,
+            "speedup": 0.9906100071177285
+          },
+          {
+            "profile": "modern",
+            "case_index": 370,
+            "speedup": 0.23060265404965966
+          },
+          {
+            "profile": "modern",
+            "case_index": 371,
+            "speedup": 0.15279748767707893
+          },
+          {
+            "profile": "modern",
+            "case_index": 372,
+            "speedup": 0.3533324570275228
+          },
+          {
+            "profile": "modern",
+            "case_index": 374,
+            "speedup": 0.20154039987858072
+          },
+          {
+            "profile": "modern",
+            "case_index": 375,
+            "speedup": 0.19640511701069527
+          },
+          {
+            "profile": "modern",
+            "case_index": 376,
+            "speedup": 0.4535713240914657
+          },
+          {
+            "profile": "modern",
+            "case_index": 378,
+            "speedup": 0.35428848111767514
+          },
+          {
+            "profile": "modern",
+            "case_index": 380,
+            "speedup": 0.441268650356308
+          },
+          {
+            "profile": "modern",
+            "case_index": 382,
+            "speedup": 0.3347188840900226
+          },
+          {
+            "profile": "modern",
+            "case_index": 384,
+            "speedup": 0.22239661078541692
+          },
+          {
+            "profile": "modern",
+            "case_index": 385,
+            "speedup": 0.8702476079132868
+          },
+          {
+            "profile": "modern",
+            "case_index": 386,
+            "speedup": 0.20965760042150464
+          },
+          {
+            "profile": "modern",
+            "case_index": 387,
+            "speedup": 0.8310970309080923
+          },
+          {
+            "profile": "modern",
+            "case_index": 388,
+            "speedup": 0.20270005382414233
+          },
+          {
+            "profile": "modern",
+            "case_index": 389,
+            "speedup": 0.8894821648022676
+          },
+          {
+            "profile": "modern",
+            "case_index": 398,
+            "speedup": 0.45467514518043084
+          },
+          {
+            "profile": "modern",
+            "case_index": 399,
+            "speedup": 0.4652349690068478
+          },
+          {
+            "profile": "minimum",
+            "case_index": 338,
+            "speedup": 0.9729599448883758
+          },
+          {
+            "profile": "minimum",
+            "case_index": 342,
+            "speedup": 0.58806731768128
+          },
+          {
+            "profile": "minimum",
+            "case_index": 343,
+            "speedup": 0.5059452322365965
+          },
+          {
+            "profile": "minimum",
+            "case_index": 346,
+            "speedup": 0.6949618188875956
+          },
+          {
+            "profile": "minimum",
+            "case_index": 347,
+            "speedup": 0.5230130038921936
+          },
+          {
+            "profile": "minimum",
+            "case_index": 350,
+            "speedup": 0.5028746829572883
+          },
+          {
+            "profile": "minimum",
+            "case_index": 351,
+            "speedup": 0.4735655698365267
+          },
+          {
+            "profile": "minimum",
+            "case_index": 354,
+            "speedup": 0.2231839906875925
+          },
+          {
+            "profile": "minimum",
+            "case_index": 355,
+            "speedup": 0.1691967837763473
+          },
+          {
+            "profile": "minimum",
+            "case_index": 356,
+            "speedup": 0.8956510301479804
+          },
+          {
+            "profile": "minimum",
+            "case_index": 358,
+            "speedup": 0.21009381420412046
+          },
+          {
+            "profile": "minimum",
+            "case_index": 359,
+            "speedup": 0.10603635675789107
+          },
+          {
+            "profile": "minimum",
+            "case_index": 360,
+            "speedup": 0.21559618521698634
+          },
+          {
+            "profile": "minimum",
+            "case_index": 362,
+            "speedup": 0.2035000361014161
+          },
+          {
+            "profile": "minimum",
+            "case_index": 363,
+            "speedup": 0.1593591750976048
+          },
+          {
+            "profile": "minimum",
+            "case_index": 364,
+            "speedup": 0.33792294093392145
+          },
+          {
+            "profile": "minimum",
+            "case_index": 366,
+            "speedup": 0.2356192531266674
+          },
+          {
+            "profile": "minimum",
+            "case_index": 367,
+            "speedup": 0.1538148900904214
+          },
+          {
+            "profile": "minimum",
+            "case_index": 368,
+            "speedup": 0.841948162633766
+          },
+          {
+            "profile": "minimum",
+            "case_index": 370,
+            "speedup": 0.26344393418212136
+          },
+          {
+            "profile": "minimum",
+            "case_index": 371,
+            "speedup": 0.11364038345127864
+          },
+          {
+            "profile": "minimum",
+            "case_index": 372,
+            "speedup": 0.211061329885728
+          },
+          {
+            "profile": "minimum",
+            "case_index": 374,
+            "speedup": 0.2190182263752857
+          },
+          {
+            "profile": "minimum",
+            "case_index": 375,
+            "speedup": 0.14855965645396546
+          },
+          {
+            "profile": "minimum",
+            "case_index": 376,
+            "speedup": 0.3100101842417036
+          },
+          {
+            "profile": "minimum",
+            "case_index": 378,
+            "speedup": 0.38989613707256976
+          },
+          {
+            "profile": "minimum",
+            "case_index": 380,
+            "speedup": 0.5432166793083592
+          },
+          {
+            "profile": "minimum",
+            "case_index": 382,
+            "speedup": 0.37034338562863517
+          },
+          {
+            "profile": "minimum",
+            "case_index": 384,
+            "speedup": 0.1838976115968289
+          },
+          {
+            "profile": "minimum",
+            "case_index": 385,
+            "speedup": 0.6498282902343755
+          },
+          {
+            "profile": "minimum",
+            "case_index": 386,
+            "speedup": 0.18553327877430736
+          },
+          {
+            "profile": "minimum",
+            "case_index": 387,
+            "speedup": 0.6505639449627731
+          },
+          {
+            "profile": "minimum",
+            "case_index": 388,
+            "speedup": 0.17483530112660328
+          },
+          {
+            "profile": "minimum",
+            "case_index": 389,
+            "speedup": 0.656597820541537
+          },
+          {
+            "profile": "minimum",
+            "case_index": 398,
+            "speedup": 0.4648520441682372
+          },
+          {
+            "profile": "minimum",
+            "case_index": 399,
+            "speedup": 0.4811303636312515
+          }
+        ],
+        "report": "benchmarks/tv-chambolle-public-initial.md",
+        "accepted_measured_baseline": true,
+        "performance_target_met": false
       },
       "merge": {
         "commit": "f87120cda4e6ca9246c30f837479babe0bce0b92",
@@ -26582,6 +27132,16 @@
             "debug"
           ],
           "scope_note": "Conservative actual C++ stage floor only in the frozen70 finite projection scope; not all mixed698448 checks, all arguments or TV performance."
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+          "manifest": {
+            "path": "coverage/evidence/tv-chambolle-public-performance.json",
+            "bytes": 13070,
+            "sha256": "8000ef9b3bd1a82b60025cb12848027dcf4962e933e4fe723c1b259a97931713"
+          },
+          "scope": "Exact frozen f871 product and recorded hosts; mixed/negative baseline, not a causal patch result or timing of Bregman192."
         }
       },
       "retained_failed_run": {
@@ -27020,11 +27580,12 @@
           "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e"
         }
       },
-      "state": "validating",
+      "state": "queued",
       "contract": {
         "case_manifest": "coverage/contracts/matrix-transform.json",
         "uncovered_cases": [
-          "Real builtin ownership/completed arithmetic counters, dtype/layout/provider conversion order, sole native workers, source-faithful full Python pipeline; no upstream image algorithm forwarding. Public/full-domain/performance acceptance remains pending."
+          "Real builtin ownership/completed arithmetic counters, dtype/layout/provider conversion order, sole native workers, source-faithful full Python pipeline; no upstream image algorithm forwarding. Public/full-domain/performance acceptance remains pending.",
+          "Frozen7b provider implementation is the predecessor for separate strictv2 runtime-profile expansion; no unverified full-runtime promotion."
         ]
       },
       "parity": {
@@ -27048,7 +27609,8 @@
         "active_paths": [],
         "protected_artifacts": []
       },
-      "public_registration": false
+      "public_registration": false,
+      "superseded_by_active_packet": "matrix-transform-profile-binding"
     },
     {
       "id": "tv-bregman-binding",
@@ -27288,7 +27850,7 @@
           "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
         }
       },
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -27305,8 +27867,558 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          {
+            "path": "benchmarks/tv-chambolle-public-initial-raw.zip",
+            "bytes": 7401525,
+            "sha256": "56aca9adcceb69b6879377a0b919b297cf7b745f9b5357d70ad81860457b64df"
+          }
+        ],
+        "regressions": [
+          {
+            "profile": "windows",
+            "case_index": 330,
+            "speedup": 0.8982510416867518
+          },
+          {
+            "profile": "windows",
+            "case_index": 334,
+            "speedup": 0.8294805611589949
+          },
+          {
+            "profile": "windows",
+            "case_index": 338,
+            "speedup": 0.8248725889090989
+          },
+          {
+            "profile": "windows",
+            "case_index": 342,
+            "speedup": 0.7018895016302359
+          },
+          {
+            "profile": "windows",
+            "case_index": 343,
+            "speedup": 0.7182205226653455
+          },
+          {
+            "profile": "windows",
+            "case_index": 346,
+            "speedup": 0.6986086453790297
+          },
+          {
+            "profile": "windows",
+            "case_index": 347,
+            "speedup": 0.6718170011560763
+          },
+          {
+            "profile": "windows",
+            "case_index": 350,
+            "speedup": 0.6287454340352384
+          },
+          {
+            "profile": "windows",
+            "case_index": 351,
+            "speedup": 0.6603564311042396
+          },
+          {
+            "profile": "windows",
+            "case_index": 354,
+            "speedup": 0.6387615432646488
+          },
+          {
+            "profile": "windows",
+            "case_index": 355,
+            "speedup": 0.42199115397937703
+          },
+          {
+            "profile": "windows",
+            "case_index": 358,
+            "speedup": 0.3070091006800226
+          },
+          {
+            "profile": "windows",
+            "case_index": 359,
+            "speedup": 0.16931328288663988
+          },
+          {
+            "profile": "windows",
+            "case_index": 360,
+            "speedup": 0.32800705813155573
+          },
+          {
+            "profile": "windows",
+            "case_index": 362,
+            "speedup": 0.5365991805254278
+          },
+          {
+            "profile": "windows",
+            "case_index": 363,
+            "speedup": 0.4198451611179394
+          },
+          {
+            "profile": "windows",
+            "case_index": 364,
+            "speedup": 0.7940558023596339
+          },
+          {
+            "profile": "windows",
+            "case_index": 366,
+            "speedup": 0.39106340716559657
+          },
+          {
+            "profile": "windows",
+            "case_index": 367,
+            "speedup": 0.2562372179086506
+          },
+          {
+            "profile": "windows",
+            "case_index": 370,
+            "speedup": 0.39897164106004795
+          },
+          {
+            "profile": "windows",
+            "case_index": 371,
+            "speedup": 0.17518920743887686
+          },
+          {
+            "profile": "windows",
+            "case_index": 372,
+            "speedup": 0.3861449318937488
+          },
+          {
+            "profile": "windows",
+            "case_index": 374,
+            "speedup": 0.35378368370127805
+          },
+          {
+            "profile": "windows",
+            "case_index": 375,
+            "speedup": 0.24946319440621043
+          },
+          {
+            "profile": "windows",
+            "case_index": 376,
+            "speedup": 0.5500755814399607
+          },
+          {
+            "profile": "windows",
+            "case_index": 378,
+            "speedup": 0.5574569023305267
+          },
+          {
+            "profile": "windows",
+            "case_index": 380,
+            "speedup": 0.6422976665910725
+          },
+          {
+            "profile": "windows",
+            "case_index": 382,
+            "speedup": 0.5269028446787238
+          },
+          {
+            "profile": "windows",
+            "case_index": 384,
+            "speedup": 0.30313776700029904
+          },
+          {
+            "profile": "windows",
+            "case_index": 386,
+            "speedup": 0.2637087015632799
+          },
+          {
+            "profile": "windows",
+            "case_index": 387,
+            "speedup": 0.9680888252625972
+          },
+          {
+            "profile": "windows",
+            "case_index": 388,
+            "speedup": 0.2835399220266088
+          },
+          {
+            "profile": "windows",
+            "case_index": 398,
+            "speedup": 0.44790883846863117
+          },
+          {
+            "profile": "windows",
+            "case_index": 399,
+            "speedup": 0.4560544212231543
+          },
+          {
+            "profile": "modern",
+            "case_index": 330,
+            "speedup": 0.867085951990021
+          },
+          {
+            "profile": "modern",
+            "case_index": 334,
+            "speedup": 0.8554879322536043
+          },
+          {
+            "profile": "modern",
+            "case_index": 338,
+            "speedup": 0.8386841275703799
+          },
+          {
+            "profile": "modern",
+            "case_index": 342,
+            "speedup": 0.5310715382985651
+          },
+          {
+            "profile": "modern",
+            "case_index": 343,
+            "speedup": 0.592427285538071
+          },
+          {
+            "profile": "modern",
+            "case_index": 346,
+            "speedup": 0.5625279062705508
+          },
+          {
+            "profile": "modern",
+            "case_index": 347,
+            "speedup": 0.6032183876543412
+          },
+          {
+            "profile": "modern",
+            "case_index": 350,
+            "speedup": 0.43126287506271466
+          },
+          {
+            "profile": "modern",
+            "case_index": 351,
+            "speedup": 0.5331933444979271
+          },
+          {
+            "profile": "modern",
+            "case_index": 354,
+            "speedup": 0.1779663729038324
+          },
+          {
+            "profile": "modern",
+            "case_index": 355,
+            "speedup": 0.1964129058747049
+          },
+          {
+            "profile": "modern",
+            "case_index": 356,
+            "speedup": 0.8788532519679598
+          },
+          {
+            "profile": "modern",
+            "case_index": 358,
+            "speedup": 0.1618214197429512
+          },
+          {
+            "profile": "modern",
+            "case_index": 359,
+            "speedup": 0.13498256097104122
+          },
+          {
+            "profile": "modern",
+            "case_index": 360,
+            "speedup": 0.27660235119358473
+          },
+          {
+            "profile": "modern",
+            "case_index": 362,
+            "speedup": 0.17049841904467994
+          },
+          {
+            "profile": "modern",
+            "case_index": 363,
+            "speedup": 0.1919607341605806
+          },
+          {
+            "profile": "modern",
+            "case_index": 364,
+            "speedup": 0.43437851628373825
+          },
+          {
+            "profile": "modern",
+            "case_index": 366,
+            "speedup": 0.21526524931897514
+          },
+          {
+            "profile": "modern",
+            "case_index": 367,
+            "speedup": 0.2023123938262959
+          },
+          {
+            "profile": "modern",
+            "case_index": 368,
+            "speedup": 0.9906100071177285
+          },
+          {
+            "profile": "modern",
+            "case_index": 370,
+            "speedup": 0.23060265404965966
+          },
+          {
+            "profile": "modern",
+            "case_index": 371,
+            "speedup": 0.15279748767707893
+          },
+          {
+            "profile": "modern",
+            "case_index": 372,
+            "speedup": 0.3533324570275228
+          },
+          {
+            "profile": "modern",
+            "case_index": 374,
+            "speedup": 0.20154039987858072
+          },
+          {
+            "profile": "modern",
+            "case_index": 375,
+            "speedup": 0.19640511701069527
+          },
+          {
+            "profile": "modern",
+            "case_index": 376,
+            "speedup": 0.4535713240914657
+          },
+          {
+            "profile": "modern",
+            "case_index": 378,
+            "speedup": 0.35428848111767514
+          },
+          {
+            "profile": "modern",
+            "case_index": 380,
+            "speedup": 0.441268650356308
+          },
+          {
+            "profile": "modern",
+            "case_index": 382,
+            "speedup": 0.3347188840900226
+          },
+          {
+            "profile": "modern",
+            "case_index": 384,
+            "speedup": 0.22239661078541692
+          },
+          {
+            "profile": "modern",
+            "case_index": 385,
+            "speedup": 0.8702476079132868
+          },
+          {
+            "profile": "modern",
+            "case_index": 386,
+            "speedup": 0.20965760042150464
+          },
+          {
+            "profile": "modern",
+            "case_index": 387,
+            "speedup": 0.8310970309080923
+          },
+          {
+            "profile": "modern",
+            "case_index": 388,
+            "speedup": 0.20270005382414233
+          },
+          {
+            "profile": "modern",
+            "case_index": 389,
+            "speedup": 0.8894821648022676
+          },
+          {
+            "profile": "modern",
+            "case_index": 398,
+            "speedup": 0.45467514518043084
+          },
+          {
+            "profile": "modern",
+            "case_index": 399,
+            "speedup": 0.4652349690068478
+          },
+          {
+            "profile": "minimum",
+            "case_index": 338,
+            "speedup": 0.9729599448883758
+          },
+          {
+            "profile": "minimum",
+            "case_index": 342,
+            "speedup": 0.58806731768128
+          },
+          {
+            "profile": "minimum",
+            "case_index": 343,
+            "speedup": 0.5059452322365965
+          },
+          {
+            "profile": "minimum",
+            "case_index": 346,
+            "speedup": 0.6949618188875956
+          },
+          {
+            "profile": "minimum",
+            "case_index": 347,
+            "speedup": 0.5230130038921936
+          },
+          {
+            "profile": "minimum",
+            "case_index": 350,
+            "speedup": 0.5028746829572883
+          },
+          {
+            "profile": "minimum",
+            "case_index": 351,
+            "speedup": 0.4735655698365267
+          },
+          {
+            "profile": "minimum",
+            "case_index": 354,
+            "speedup": 0.2231839906875925
+          },
+          {
+            "profile": "minimum",
+            "case_index": 355,
+            "speedup": 0.1691967837763473
+          },
+          {
+            "profile": "minimum",
+            "case_index": 356,
+            "speedup": 0.8956510301479804
+          },
+          {
+            "profile": "minimum",
+            "case_index": 358,
+            "speedup": 0.21009381420412046
+          },
+          {
+            "profile": "minimum",
+            "case_index": 359,
+            "speedup": 0.10603635675789107
+          },
+          {
+            "profile": "minimum",
+            "case_index": 360,
+            "speedup": 0.21559618521698634
+          },
+          {
+            "profile": "minimum",
+            "case_index": 362,
+            "speedup": 0.2035000361014161
+          },
+          {
+            "profile": "minimum",
+            "case_index": 363,
+            "speedup": 0.1593591750976048
+          },
+          {
+            "profile": "minimum",
+            "case_index": 364,
+            "speedup": 0.33792294093392145
+          },
+          {
+            "profile": "minimum",
+            "case_index": 366,
+            "speedup": 0.2356192531266674
+          },
+          {
+            "profile": "minimum",
+            "case_index": 367,
+            "speedup": 0.1538148900904214
+          },
+          {
+            "profile": "minimum",
+            "case_index": 368,
+            "speedup": 0.841948162633766
+          },
+          {
+            "profile": "minimum",
+            "case_index": 370,
+            "speedup": 0.26344393418212136
+          },
+          {
+            "profile": "minimum",
+            "case_index": 371,
+            "speedup": 0.11364038345127864
+          },
+          {
+            "profile": "minimum",
+            "case_index": 372,
+            "speedup": 0.211061329885728
+          },
+          {
+            "profile": "minimum",
+            "case_index": 374,
+            "speedup": 0.2190182263752857
+          },
+          {
+            "profile": "minimum",
+            "case_index": 375,
+            "speedup": 0.14855965645396546
+          },
+          {
+            "profile": "minimum",
+            "case_index": 376,
+            "speedup": 0.3100101842417036
+          },
+          {
+            "profile": "minimum",
+            "case_index": 378,
+            "speedup": 0.38989613707256976
+          },
+          {
+            "profile": "minimum",
+            "case_index": 380,
+            "speedup": 0.5432166793083592
+          },
+          {
+            "profile": "minimum",
+            "case_index": 382,
+            "speedup": 0.37034338562863517
+          },
+          {
+            "profile": "minimum",
+            "case_index": 384,
+            "speedup": 0.1838976115968289
+          },
+          {
+            "profile": "minimum",
+            "case_index": 385,
+            "speedup": 0.6498282902343755
+          },
+          {
+            "profile": "minimum",
+            "case_index": 386,
+            "speedup": 0.18553327877430736
+          },
+          {
+            "profile": "minimum",
+            "case_index": 387,
+            "speedup": 0.6505639449627731
+          },
+          {
+            "profile": "minimum",
+            "case_index": 388,
+            "speedup": 0.17483530112660328
+          },
+          {
+            "profile": "minimum",
+            "case_index": 389,
+            "speedup": 0.656597820541537
+          },
+          {
+            "profile": "minimum",
+            "case_index": 398,
+            "speedup": 0.4648520441682372
+          },
+          {
+            "profile": "minimum",
+            "case_index": 399,
+            "speedup": 0.4811303636312515
+          }
+        ],
+        "report": "benchmarks/tv-chambolle-public-initial.md",
+        "accepted_measured_baseline": true,
+        "performance_target_met": false
       },
       "merge": {
         "commit": null,
@@ -27359,8 +28471,8 @@
         "id": 40103617685,
         "controller": "20b78d5ff4c6182d64c57b76cc262ed62ac0294d",
         "qualified_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
-        "status": "queued-or-preparing",
-        "performance_accepted": false
+        "status": "all-six-terminal-success-root-verified-mixed-baseline",
+        "performance_accepted": true
       },
       "successor_proposal": {
         "path": "build/tv-chambolle-benchmark-lifecycle-proposal/manifest.json",
@@ -27371,6 +28483,18 @@
         "path": "build/decisions-readiness/TV-controller-lifecycle-summary-root-review/proposal-review.json",
         "bytes": 766,
         "sha256": "b7f6df07e883dc534a36f55f9ea646dbf499d85ffb337cf9c5cffcc5dd98fba6"
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+          "manifest": {
+            "path": "coverage/evidence/tv-chambolle-public-performance.json",
+            "bytes": 13070,
+            "sha256": "8000ef9b3bd1a82b60025cb12848027dcf4962e933e4fe723c1b259a97931713"
+          },
+          "scope": "Exact frozen f871 product and recorded hosts; mixed/negative baseline, not a causal patch result or timing of Bregman192."
+        }
       }
     },
     {
@@ -27620,7 +28744,7 @@
       },
       "merge": {
         "commit": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
-        "main_commit": null
+        "main_commit": "6286c45c3317cbd757f34c8f9491de2c857f2521"
       },
       "retention": {
         "active_paths": [
@@ -27832,6 +28956,133 @@
         "path": "build/decisions-readiness/matrix-cooperlake-diagnostic-root-review/manifest.json",
         "bytes": 2428,
         "sha256": "4422666138d750754fcf4dafd55609b2ed6a1d3ec4fd784613512344c1f17329"
+      }
+    },
+    {
+      "id": "matrix-transform-profile-binding",
+      "kind": "private_binding",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-profile-binding",
+      "base_sha": "235174d565d9e1c79d9f0b12a516c06003b791c9",
+      "owns": [
+        "src/bind_matrix_transform.cpp",
+        "python/skimagexx/_matrix_transform.py",
+        "tests/test_matrix_transform_native_pipeline.py",
+        "tests/test_matrix_transform_binding.py"
+      ],
+      "depends_on": [
+        "matrix-transform-general-kernel",
+        "matrix-transform-cooperlake-n1-kernel"
+      ],
+      "dependency_requirements": {
+        "matrix-transform-general-kernel": {
+          "evidence_scope": "native_private",
+          "source_sha": "7ae1b77951542cdf5fbbdb62271ec84f9bd0e72e"
+        },
+        "matrix-transform-cooperlake-n1-kernel": {
+          "evidence_scope": "native_private",
+          "source_sha": "235174d565d9e1c79d9f0b12a516c06003b791c9"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Strict separatev2/cap63 builtin and exact loaded-UMATH/BLAS certificates; preserve legacyv1/cap31 guards. Replays and actual unforced runtime pipeline evidence remain separate. Full4000/374, realCP311/CP313, normal/scalar1/4, portable/sanitizer and whole public/SDK/performance gates remain required."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/matrix-transform-profile-binding"
+        ],
+        "protected_artifacts": []
+      },
+      "runtime_arithmetic_root_review": {
+        "path": "build/decisions-readiness/matrix-runtime-arithmetic-root-review/manifest.json",
+        "bytes": 4623,
+        "sha256": "608103349e27aebc9da04d1242a260311f0ce5d2c9cb75450608e84917dbee00"
+      }
+    },
+    {
+      "id": "tv-chambolle-strided-cursor",
+      "kind": "private_optimization",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/tv-strided-cursor",
+      "base_sha": "3040d4ff89678e9fa947b2d3cd25f7d90b52bb14",
+      "owns": [
+        "src/tv_denoise.cpp",
+        "src/tv_chambolle.cpp",
+        "tests/test_tv_denoise_cursor_native.cpp",
+        "tests/test_tv_chambolle_cursor_pipeline.py"
+      ],
+      "depends_on": [
+        "tv-chambolle-public-191",
+        "tv-chambolle-public-benchmark"
+      ],
+      "dependency_requirements": {
+        "tv-chambolle-public-191": {
+          "evidence_scope": "public_native",
+          "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
+        },
+        "tv-chambolle-public-benchmark": {
+          "evidence_scope": "isolated_performance",
+          "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Replace only non-C logical address division; preserve duplicate validation, contiguous path, arithmetic/FP/provider/ABI and every fixed case. Actual route/counter proof, private byte/trace/control gates, genuine currentpublic192/SDK18 and fresh common-host original/before/after70x7 performance remain required."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-strided-cursor",
+          "build/tv-chambolle-one-thread-bottlenecks"
+        ],
+        "protected_artifacts": []
+      },
+      "bottleneck_evidence": {
+        "path": "build/tv-chambolle-one-thread-bottlenecks/manifest.json",
+        "bytes": 5922,
+        "sha256": "a775713a1b97ee783a4e2c9d5e83761632ee17a9d99c3c0c35d1686ecb2d3e64"
       }
     }
   ],
@@ -28558,19 +29809,18 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "tv-chambolle-public-benchmark"
+        "tv-chambolle-strided-cursor"
       ],
       "resize_bench": [
-        "matrix-transform-cooperlake-n1-kernel",
-        "matrix-transform-hosted-profiles"
+        "matrix-transform-profile-binding"
       ],
       "resize_api": [
         "max-tree-integer-sort"
       ]
     },
     "current_three_agent_packets": {
-      "metrics_reductions": "tv-chambolle-public-benchmark",
-      "resize_bench": "matrix-transform-hosted-profiles",
+      "metrics_reductions": "tv-chambolle-strided-cursor",
+      "resize_bench": "matrix-transform-profile-binding",
       "resize_api": "max-tree-integer-sort"
     },
     "current_source_staging": {
@@ -28700,6 +29950,13 @@
       "image_paths": 192,
       "SDK_families": 18,
       "performance_accepted": false
+    },
+    "current_TV_one_worker_baseline": {
+      "run_id": 40103617685,
+      "evidence": "coverage/evidence/tv-chambolle-public-performance.json",
+      "accepted_measured_baseline": true,
+      "performance_target_met": false,
+      "all108_regressions_retained": true
     }
   },
   "parallel_review": {

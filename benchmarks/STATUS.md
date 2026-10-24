@@ -1,8 +1,8 @@
 # Performance verification
 
-The current API inventory has 191 partially native image paths, three metadata
-helpers, four partially native transform classes and 278 upstream-only paths.
-Per-function tests and benchmark harnesses cover all 191 image paths; measured
+The current API inventory has 192 partially native image paths, three metadata
+helpers, four partially native transform classes and 277 upstream-only paths.
+Per-function tests and benchmark harnesses cover all 192 image paths; measured
 acceptance remains specific to each report's source revision and workload.
 
 Recent isolated one-worker measurements against scikit-image 0.26.0:
@@ -14,6 +14,7 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 | Rank four intensity algorithms | 2.089x | 2.244x | 2.402x | 384 timed cases; 92/81/81 slower |
 | Rank statistics/vector algorithms | 2.576x | 2.694x | 3.094x | 376 timed cases; 56/36/28 slower; scalar/vector cohorts separate |
 | Controlled rank statistics/vector counts update | 2.701x | 2.851x | 2.906x | 376 fixed cases; 43/24/30 slower; exact qualified before/after pair |
+| TV-Chambolle whole-call baseline | 1.144x | 0.889x | 0.818x | 70 fixed cases; 34/38/36 slower; mixed baseline, optimization required |
 | Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
 | Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
 | Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
@@ -29,6 +30,7 @@ These geometric means apply to the exact sources and workloads in the
 [R3 intensity](rank-intensity-public-initial.md),
 [R4 statistics/vector](rank-statistics-public-initial.md),
 [controlled R4 counts](rank-statistics-counts-comparison.md),
+[TV-Chambolle](tv-chambolle-public-initial.md),
 [consumer](component-consumers-public-initial.md),
 [controlled resize](resize-public-controlled.md),
 [transform](transform-classes-public-initial.md),
@@ -57,11 +59,11 @@ Reversed-stride MSE, stepped PSNR, relabeling, object filtering and sparse rank
 scans remain bottlenecks. Reversed metrics transport has completed its private
 checks; actual cumulative public/performance qualification remains pending.
 
-The accepted [whole12 products](../coverage/evidence/public-wave12.json) cover
-191 partially native image paths, including TV-Chambolle, the percentile/bilateral
-families and local Otsu/majority aliases. Source `f87120c` passes 698,448 mixed
+The accepted [whole13 products](../coverage/evidence/public-wave13.json) cover
+192 partially native image paths, including TV-Bregman, TV-Chambolle, the percentile/bilateral
+families and local Otsu/majority aliases. Source `3cdd363` passes 704,760 mixed
 public/reference/metadata checks across four normal/scalar runtime profiles,
-with 136 installed-SDK client checks. Its source includes the accepted rank
+with 144 installed-SDK client checks across 18 families. Its source includes the accepted rank
 counts optimization. Earlier failed qualification records remain unchanged.
 
 The [controlled R4 counts comparison](rank-statistics-counts-comparison.md)
@@ -73,15 +75,23 @@ and 43/24/30 slower-upstream observations remain in the full CSV and permanent
 raw ZIP. Unchanged scalar API fluctuations are not attributed to this patch.
 
 The joined TV source `f87120c`, run40087742726, has passed the complete retained
-product audit and scoped parity admission. Its fresh one-worker original-library
-benchmark remains pending; parity is not a speed claim.
+product audit and scoped parity admission. Its [verified one-worker benchmark](tv-chambolle-public-initial.md),
+run40103617685/controller20b, retains all 210 full-precision rows and 2,940 samples.
+It is faster on average on the recorded Windows host and slower on both Linux
+hosts; every regression remains visible. These are timings of the frozen191-path
+product, rather than the later Bregman192 product or a causal source-patch comparison.
 The first [TV measurement trial](https://github.com/bipxx/scikit-imagexx/actions/runs/40094239260)
 failed during preparation report serialization after 3,321 tests per host passed;
 no timing jobs ran. The [reviewed controller correction](../coverage/evidence/tv-chambolle-controller-correction.json)
 keeps the qualified product unchanged and binds its source separately from the
 corrected harness. All failed reports and logs remain retained.
-Matrix and Bregman kernel/binding proofs are scoped private evidence. Max-tree
-reference/native work advances six more APIs without public registration yet.
+The second TV preparation trial40097514733 also failed before timing, at a
+fresh-process policy guard. Both failed trials and their raw reports remain
+unchanged. The final lifecycle/reporting controller preserves all 400 checks,
+all 70 timing IDs and every slower row.
+Matrix and max-tree kernel/binding proofs remain private evidence. Max-tree
+work advances six more APIs without public registration yet; Bregman has passed
+public192 qualification and its original-library timing remains pending.
 
 ## Retained whole-library checkpoints
 
