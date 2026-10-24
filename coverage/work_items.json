@@ -21378,7 +21378,7 @@
       "contract": {
         "case_manifest": "coverage/contracts/rank-bilateral.json",
         "uncovered_cases": [
-          "3ops26..28/v1/cap1c, exactIndexbuffer/shift/centre order, signedrange queries/Sumcount0 ghostfeedback, certified708safeIDs inclaliases, scalar/SIMD/optionalglobal. Old0..25 untouched. Allprivate/public/perf gates pending."
+          "Frozen d08 private708/96 scope qualified; independently reviewed516members+6Git/sourceZIP. Public/core/SDK/performance remainpending. Newproven zero-pop u16Index-hook captured-bin mismatch outside708/96 is under correctness followup; priorqualified bytes retained, not presented as covering that corner."
         ]
       },
       "retention": {
@@ -21407,6 +21407,14 @@
       "merge": {
         "commit": null,
         "main_commit": null
+      },
+      "provided_interfaces": {
+        "rank-bilateral-v1": {
+          "state": "frozen",
+          "definition": "rank-bilateral-v1; opcodes26mean_bilateral,27pop_bilateral,28sum_bilateral; capabilities0x1c000000; rank_bilateral_run(image,footprint,mask,out,shifts,bins,operation,s0_object,s1_object); capture buffers and signed-char shifts before exact Index radii s0 then s1; shared sole native default1/global optional workers; RankView and old0..25 ABI unchanged.",
+          "sha256": "428ffd83e2e83c6c4add27e036960c9b99281aa30f78ea81d7e580b2adec256d",
+          "source_sha": "d08cfbf4eb37385338bf51de501652706f31b26b"
+        }
       }
     },
     {
@@ -21432,7 +21440,7 @@
       "contract": {
         "case_manifest": "coverage/contracts/rank-bilateral.json",
         "uncovered_cases": [
-          "Reference-only native0,708frozenIDs+96traces untimed plusbalancedcandidates;3algorithms/6publicpaths (new3nested aliases pendinginventoryassessment). Exactv1/cap/Builtin/default1/identity/capsuleguards beforefixtures. Futureall3prep1/4bothmodes thenfresh7-pairedone-worker timing; no dispatch."
+          "Phase1 original/reference/tooling only; actual6public paths, genuine package/source/SDK/capsules and one-worker performance remain pending. All708original IDs untimed,288defined balanced cases plus12retained untimed layout IDs; no source case removed. Publicbilateral3aliases are assessed in477-path inventory. Fullfixturepin requires authenticated assertion migration at integration."
         ]
       },
       "retention": {
@@ -21440,11 +21448,12 @@
           "build/worktrees/rank-decisions-contracts"
         ],
         "protected_artifacts": [
-          "build/worktrees/rank-decisions-contracts/build/rank-decisions-reference-proof.json"
+          "build/worktrees/rank-decisions-contracts/build/rank-decisions-reference-proof.json",
+          "build/worktrees/rank-decisions-contracts/build/bilateral-benchmark/phase1-proof.json"
         ]
       },
       "apis": [],
-      "state": "implementing",
+      "state": "parity_passed",
       "parity": {
         "source_sha": null,
         "artifact_sha256": null,
@@ -21459,8 +21468,19 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "d03dc0d2c9b283a3096215bb273431c9e6e403d2",
+        "main_commit": "71949446ea8ee6bcd689bc12f6c12f74e6dd1dec"
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "d03dc0d2c9b283a3096215bb273431c9e6e403d2",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/bilateral-benchmark/phase1-proof.json",
+            "sha256": "82a77cde9e1e657f4ae4e0bc74e07734d30c5852e2afe2d5193f5e97f4706a73"
+          },
+          "scope": "83retained+4Gitmembers independently rehashed;5203checks/runtime x3,1008original+96providers+18policies+3alias identities,288eligible/native0/no timing.52tooling guards independently rerun onmain pass."
+        }
       }
     },
     {
@@ -21552,6 +21572,58 @@
           "sha256": "4842e9ab2dcfc521df5b93524a4f365ec4d37ba04383899dddb051bef0326c6c"
         },
         "policy": "Exactrun throughterminal; no cancel/restart solelyobservationtimeout. Allfour genuineproduct/corpus/SDK scopes required; private/prototype or old171metadata probes notactual180."
+      }
+    },
+    {
+      "id": "rank-bilateral-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-bilateral-public",
+      "base_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_bilateral_public.py",
+        "coverage/contracts/rank-bilateral-public.json"
+      ],
+      "depends_on": [
+        "rank-bilateral-native"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-native": {
+          "interface": "rank-bilateral-v1"
+        }
+      },
+      "public_registration": false,
+      "state": "implementing",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-bilateral.json",
+        "uncovered_cases": [
+          "Private wrapper prototype only;6paths for3algorithms with publicbilateral identities, no inventedgeneric aliases. All708/96 original assertions frozen. Qualify proven zero-pop correction on corrected backend before public handoff. Actualnamespace/registry/export/CMake ownership staysroot; privateproof is not genuine public acceptance."
+        ]
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/rank-decisions-contracts"
+        ],
+        "protected_artifacts": []
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
       }
     }
   ],
