@@ -62,6 +62,8 @@ def cases():
     def add(name,identifier,**kwargs):rows.append(dict(id=name+'/'+identifier,function=name,**kwargs))
     for name in NAMES:
         for dtype,layout in itertools.product(DTYPES,LAYOUTS):add(name,'default-'+dtype+'-'+layout,dtype=dtype,layout=layout)
+        for dtype,storage in itertools.product(('u2','f4','f8'),('unaligned','tagged')):
+            add(name,'storage-'+dtype+'-'+storage,dtype=dtype,layout=storage)
     for dtype in ('i2','f4','f8'):
         for initial in ('scalar','mean','quantile','mutate','raise','invalid'):
             add('threshold_li','initial-'+dtype+'-'+initial,dtype=dtype,initial=initial,callback='record')
@@ -98,6 +100,7 @@ def cases():
 
 
 def layout(a,mode):
+    if mode=='tagged':return a.astype(np.dtype(a.dtype,metadata={'tag':'threshold-contract'})).view(Tagged)
     if mode=='F':return np.asfortranarray(a)
     if mode=='reverse':return a[(slice(None,None,-1),)*a.ndim]
     if mode=='step':
