@@ -29,6 +29,7 @@ ENV_KEYS=(*FORCING,*POOLS,'OMP_WAIT_POLICY','LD_PRELOAD','LD_AUDIT','PYTHONPATH'
 METADATA_FUNCTIONS={'_unforced','_loaded_blas','_pe_imports','_authenticate_runtime','_runtime_profile','resolve','module_path'}
 ADMISSION_IMPORTS=('_rank','_components','_component_consumers','_metrics','_geometric',
     '_footprint_dense','_footprint_decomposition','_footprint_util','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform')
+ADMISSION_PUBLIC_IMPORTS=('coverage','filters.rank','filters.rank.generic','filters.rank.bilateral','restoration','morphology','transform')
 
 def require(value,message):
     if not value:raise ValueError(message)
@@ -59,6 +60,15 @@ def verify_admission_imports(qsource):
     candidates=[ast.literal_eval(n) for n in tuples
                 if any(isinstance(e,ast.Constant) and e.value=='_matrix_transform' for e in n.elts)]
     require(candidates==[ADMISSION_IMPORTS],'frozen admission import order differs')
+    public=[]
+    for call in sorted((n for n in ast.walk(admission) if isinstance(n,ast.Call)),key=lambda n:(n.lineno,n.col_offset)):
+        if (isinstance(call.func,ast.Attribute) and call.func.attr=='import_module' and call.args
+                and isinstance(call.args[0],ast.Constant) and isinstance(call.args[0].value,str)):
+            name=call.args[0].value
+            if name.startswith('skimagexx.') and not name.removeprefix('skimagexx.').startswith('_'):
+                name=name.removeprefix('skimagexx.')
+                if name not in public:public.append(name)
+    require(tuple(public)==ADMISSION_PUBLIC_IMPORTS,'frozen public admission import order differs')
 
 
 def wheel_records(raw):
@@ -247,6 +257,7 @@ def probe(out):
     for name in ADMISSION_IMPORTS:
         module=importlib.import_module('skimagexx.'+name)
         require(module._core is xx._core,'alternate worker core in admission context')
+    for name in ADMISSION_PUBLIC_IMPORTS:importlib.import_module('skimagexx.'+name)
     import numpy as np
     wrapper=importlib.import_module('skimagexx._matrix_transform')
     require(Path(xx.__file__).resolve()==site/'skimagexx/__init__.py' and wrapper._core is xx._core,'not genuine whole-core context')
@@ -261,17 +272,19 @@ def probe(out):
         interpreter=file_record(sys.executable),original_interpreter_sha256=ORIGINAL_PYTHON_SHA,
         same_interpreter_binary=file_record(sys.executable)['sha256']==ORIGINAL_PYTHON_SHA,
         python=sys.version,prefix=sys.prefix,base_prefix=sys.base_prefix,sys_path=sys.path,platform=platform.uname()._asdict(),
-        admission_import_order=['skimagexx',*ADMISSION_IMPORTS,'numpy-explicit'],fallback_enabled=False,
+        admission_import_order=['skimagexx',*ADMISSION_IMPORTS,*ADMISSION_PUBLIC_IMPORTS,'numpy-explicit'],fallback_enabled=False,
         environment=env,package=file_record(xx.__file__),core=file_record(xx._core.__file__),helper=file_record(wrapper.__file__),
         certificate=payload,counter_before=before,
         workers=xx._core.get_num_threads(),has_openmp=xx._core.has_openmp,
         legacy_interface=xx._core.matrix_transform_interface,legacy_capabilities=xx._core.matrix_transform_capabilities,
         v2_interface=xx._core.matrix_transform_v2_interface,v2_capabilities=xx._core.matrix_transform_v2_capabilities)
     after=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed())
-    require(before==after==(0,0),'matrix completion counter changed unexpectedly')
     observation['counter_after']=after
+    observation['matrix_counters_zero']=before==after==(0,0)
+    dump(out/'observations.json',observation) # preserve even unexpected counters
+    require(observation['matrix_counters_zero'],'matrix completion counter changed unexpectedly')
     # Rehash all input wheel files after imports; new caches are neither inputs
-    # nor silently substituted source. No fixture/native algorithm is executed.
+    # nor silently substituted source. No fixture/native algorithm is requested.
     for name,row in auth['files'].items():
         require(file_record(site/name)['sha256']==row['sha256'],'genuine extracted input mutated')
     dump(out/'observations.json',observation)

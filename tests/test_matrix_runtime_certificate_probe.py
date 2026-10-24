@@ -86,9 +86,11 @@ def test_source_pins_are_distinct_raw_and_canonical_artifact_facts():
 
 
 def test_import_order_is_checked_from_archived_source_before_probe():
-    source='def admission():\n    for module in '+repr(c.ADMISSION_IMPORTS)+':\n        pass\n'
+    source='def admission():\n    for module in '+repr(c.ADMISSION_IMPORTS)+':\n        pass\n'+''.join("    importlib.import_module('skimagexx."+name+"')\n" for name in c.ADMISSION_PUBLIC_IMPORTS)
     c.verify_admission_imports(source)
     with pytest.raises(ValueError):c.verify_admission_imports(source.replace("'_matrix_transform'","'unverified_context'"))
+    with pytest.raises(ValueError,match='public admission'):
+        c.verify_admission_imports(source.replace("'skimagexx.coverage'","'skimagexx.unverified_context'"))
     probe=next(n for n in ast.parse((ROOT/'tools/matrix_runtime_certificate_probe.py').read_text()).body if isinstance(n,ast.FunctionDef) and n.name=='probe')
     imports=[ast.unparse(n) for n in probe.body if isinstance(n,ast.Import)]
     assert imports==['import skimagexx as xx','import numpy as np']
