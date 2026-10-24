@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "status": "private-guarded-typed-parity-verified-public-pending",
+  "source": "ea7c2370a74737ca63a4cb8536827a1b8b14c9b3",
+  "root_review": {
+    "path": "build/decisions-readiness/bregman-public-readiness/guarded-manifest.json",
+    "bytes": 890,
+    "sha256": "c78e47cf2aa61e2f7253f7e6dcf4f17bbb422d34bb31166ce3607d902b7d89e4"
+  },
+  "private_manifest": {
+    "path": "build/worktrees/tv-bregman-public/build/bregman192-intake/v3/proof/manifest.json",
+    "bytes": 84418,
+    "sha256": "2c398a01b0ea9b0a7cebb31d5f95ac358fdb90ff4936af047d94ec30bb84dab3"
+  },
+  "original_bridge_source": "54dcc71c26e5732797a7fa7b7015bbdf015dacf4",
+  "original_bridge_review": {
+    "path": "build/decisions-readiness/bregman-public-readiness/manifest.json",
+    "bytes": 3006,
+    "sha256": "15a63cba7052205f9da9db680180256950b5f1dc999a93b50e30e6cf23cfb607"
+  },
+  "ordinary_profiles": [
+    "windows",
+    "modern",
+    "minimum",
+    "Debug-GIL-ASan-UBSan"
+  ],
+  "ordinary_normal_scalar_checks": 2760,
+  "portable_passes": 400,
+  "portable_worker4_rejection_skips": 290,
+  "safe_original_numeric_ids": 112,
+  "frozen_numeric_case_projections": 2016,
+  "boundary_metadata_ids": 23,
+  "source_members": 18,
+  "new_real_modules": 5,
+  "unchanged_imported_math_archives": 5,
+  "kernel_recompilations_for_guard_and_tag_fix": 0,
+  "whole_product_builds": 0,
+  "operation_timings": 0,
+  "fixes": [
+    "Reject input metadata/owner extent changes during scalar conversion before typed access.",
+    "Accept equivalent native float descriptors and preserve dtype metadata; opposite-endian rejection remains."
+  ],
+  "public_acceptance": false,
+  "SDK18_acceptance": false,
+  "performance_acceptance": false,
+  "parallel_sweep": false,
+  "workers": "Sole process-global default1/optional4; only independent initialization/copy stages parallel. Ordered Gauss-Seidel sweep remains serial.",
+  "remaining": "Genuine installed public wrapper/sole production core,110-member whole package,63-member SDK/18clients,shared safe geometry and isolated original-library one-worker measurements."
+}

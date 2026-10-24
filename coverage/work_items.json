@@ -27072,7 +27072,7 @@
           "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47"
         }
       },
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/tv-bregman.json",
         "uncovered_cases": [
@@ -27080,7 +27080,7 @@
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "ea7c2370a74737ca63a4cb8536827a1b8b14c9b3",
         "artifact_sha256": null,
         "runs": []
       },
@@ -27110,7 +27110,21 @@
         "passing_private_checks": 2780,
         "portable_worker4_rejections": 290,
         "public_acceptance": false,
-        "integrator_review": "pending"
+        "integrator_review": "Verified guarded ea7 source and277new/419inherited records; actual public registration/SDK/performance still pending."
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ea7c2370a74737ca63a4cb8536827a1b8b14c9b3",
+          "manifest": {
+            "path": "build/worktrees/tv-bregman-public/build/bregman192-intake/v3/proof/manifest.json",
+            "bytes": 84418,
+            "sha256": "2c398a01b0ea9b0a7cebb31d5f95ac358fdb90ff4936af047d94ec30bb84dab3"
+          },
+          "native_contract_checks": 2016,
+          "native_pending": 0,
+          "scope_note": "Only frozen112 safe typed numerical IDs at actual1/4 and normal/scalar; portable4 is rejected,23 boundary rows are metadata. Tagged/default callback supplements pass separately. No public/full-domain/performance claim."
+        }
       }
     },
     {
@@ -27286,6 +27300,24 @@
           "build/tv-chambolle-benchmark-dispatch"
         ],
         "protected_artifacts": []
+      },
+      "retained_failed_runs": [
+        {
+          "id": 40094239260,
+          "source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+          "accepted": false,
+          "closure": {
+            "path": "build/tv-chambolle-benchmark-runs/40094239260/failed-closure-independent-verification.json",
+            "bytes": 2364,
+            "sha256": "926508dde9e6c633a29d1c60e2f585ad27c2a46341a7e6b5178c1abf098fafd0"
+          }
+        }
+      ],
+      "corrected_controller": {
+        "source": "bd384a30e569695cf4041baa1c668f50bc4c4b65",
+        "qualified_source": "f87120cda4e6ca9246c30f837479babe0bce0b92",
+        "evidence": "coverage/evidence/tv-chambolle-controller-correction.json",
+        "successor_dispatch_pending": true
       }
     },
     {
@@ -27304,15 +27336,15 @@
         "matrix-transform-general-binding"
       ],
       "dependency_requirements": {},
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Four default-host loaded-BLAS/UMath/CPU dispatch profiles, real4000-row native candidate words/counters, no forced coretype or automatic match admission. Discovery is not public parity; source/kernel/disassembly,374pipeline and genuine whole-product qualification remain required. No dispatch before root review."
+          "Actual four-host diagnostic is running. First Windows CMake escape failure retained; separately frozen path/upload fix052668b awaits root review. No CPU profile is accepted from candidate matches."
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "d9df9bb093a3a1f18397088a22143ee958fbe223",
         "artifact_sha256": null,
         "runs": []
       },
@@ -27333,6 +27365,24 @@
           "build/worktrees/matrix-transform-contracts/build/matrix-hosted-profile-design"
         ],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+          "manifest": {
+            "path": "build/decisions-readiness/matrix-profile-tooling-root-review/manifest.json",
+            "bytes": 967,
+            "sha256": "0a8e20ac397b95adb6f810d6f9a6a6aa8d9e5db76c2c268a43e5b30073668c42"
+          },
+          "scope": "41 original metadata records+17exact frozen source pins; no actual profile/public admission."
+        }
+      },
+      "hosted_run": {
+        "id": 40096175414,
+        "controller": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+        "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
+        "acceptance": false
       }
     },
     {
@@ -27384,6 +27434,75 @@
           "build/worktrees/max-tree-contracts"
         ],
         "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-bregman-public-192",
+      "kind": "integration",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/tv-bregman-public",
+      "base_sha": "ea7c2370a74737ca63a4cb8536827a1b8b14c9b3",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/restoration.py",
+        "python/skimagexx/coverage.py",
+        "tests/cmake_consumer/CMakeLists.txt",
+        "tests/test_tv_bregman_public.py",
+        "tests/test_api.py",
+        "benchmarks/coverage.py",
+        "tools/inventory.py"
+      ],
+      "depends_on": [
+        "tv-bregman-native",
+        "tv-bregman-binding"
+      ],
+      "dependency_requirements": {
+        "tv-bregman-native": {
+          "evidence_scope": "native_private",
+          "source_sha": "7552b4b7416230ec0a91f13df158c8cc64acfb47"
+        },
+        "tv-bregman-binding": {
+          "evidence_scope": "native_private",
+          "source_sha": "ea7c2370a74737ca63a4cb8536827a1b8b14c9b3"
+        }
+      },
+      "public_registration": true,
+      "state": "validating",
+      "contract": {
+        "case_manifest": "coverage/contracts/tv-bregman.json",
+        "uncovered_cases": [
+          "Fresh whole-product public admission,192image+3metadata/110wheel/63SDK/18families,normal/scalar and default1/optional4. Frozen135observations/112numeric/23boundary remain unchanged; unsafe original geometry stays blocked. Original-library one-worker performance remains pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-bregman-public"
+        ],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
       }
     }
   ],
@@ -28238,7 +28357,7 @@
       }
     },
     "integrator_queue": [
-      "tv-bregman-binding",
+      "tv-bregman-public-192",
       "max-tree-native",
       "matrix-transform-general-binding"
     ]

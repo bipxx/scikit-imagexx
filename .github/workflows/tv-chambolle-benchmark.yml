@@ -2,6 +2,10 @@ name: tv-chambolle-benchmark
 on:
   workflow_dispatch:
     inputs:
+      controller_source:
+        description: Exact separately reviewed controller revision (unchanged qualified product source remains distinct)
+        required: true
+        type: string
       qualified_run:
         description: Independently accepted whole-product qualification run
         required: true
@@ -40,12 +44,20 @@ jobs:
       QUALIFIED_RUN: ${{ inputs.qualified_run }}
       QUALIFIED_SOURCE: ${{ inputs.qualified_source }}
       CERTIFICATE_JSON: ${{ inputs.certificate_json }}
+      TV_CONTROLLER_SOURCE: ${{ inputs.controller_source }}
+      TV_QUALIFIED_SOURCE_ROOT: ${{ github.workspace }}/build/qualified-source
       TV_PROFILE: ${{ matrix.profile }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.controller_source }}
+      - name: Separate exact unchanged qualified product source
+        uses: actions/checkout@v4
+        with:
           ref: ${{ inputs.qualified_source }}
+          path: build/qualified-source
+          persist-credentials: false
       - name: Authenticate exact qualification run and bounded outer artifact
         id: certificate
         shell: bash
@@ -54,6 +66,7 @@ jobs:
           mkdir -p build/preparation
           python - <<'PY'
           import hashlib,json,os,pathlib,re,urllib.request
+          assert re.fullmatch('[0-9a-f]{40}',os.environ['TV_CONTROLLER_SOURCE']) and os.environ['TV_CONTROLLER_SOURCE']==os.environ['GITHUB_SHA']
           c=json.loads(os.environ['CERTIFICATE_JSON']);p=c['profiles'][os.environ['TV_PROFILE']]
           assert c['schema']=='tv-qualified-product-certificate-v1' and c['status']=='accepted-qualified-tv'
           assert c['qualified_run']==os.environ['QUALIFIED_RUN'] and c['qualified_source']==os.environ['QUALIFIED_SOURCE']
@@ -158,17 +171,26 @@ jobs:
       BLIS_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
       CERTIFICATE_JSON: ${{ inputs.certificate_json }}
+      TV_CONTROLLER_SOURCE: ${{ inputs.controller_source }}
+      TV_QUALIFIED_SOURCE_ROOT: ${{ github.workspace }}/build/qualified-source
       TV_PROFILE: ${{ matrix.profile }}
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.controller_source }}
+      - name: Separate exact unchanged qualified product source
+        uses: actions/checkout@v4
+        with:
           ref: ${{ inputs.qualified_source }}
+          path: build/qualified-source
+          persist-credentials: false
       - name: Select exact already-qualified interpreter version
         id: certificate
         shell: bash
         run: |
           python - <<'PY'
           import json,os,re
+          assert re.fullmatch('[0-9a-f]{40}',os.environ['TV_CONTROLLER_SOURCE']) and os.environ['TV_CONTROLLER_SOURCE']==os.environ['GITHUB_SHA']
           p=json.loads(os.environ['CERTIFICATE_JSON'])['profiles'][os.environ['TV_PROFILE']]
           assert re.fullmatch(r'3\.(11|13)\.[0-9]+',p['python_version'])
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('python='+p['python_version']+'\n')

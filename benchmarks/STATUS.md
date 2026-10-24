@@ -75,6 +75,11 @@ raw ZIP. Unchanged scalar API fluctuations are not attributed to this patch.
 The joined TV source `f87120c`, run40087742726, has passed the complete retained
 product audit and scoped parity admission. Its fresh one-worker original-library
 benchmark remains pending; parity is not a speed claim.
+The first [TV measurement trial](https://github.com/bipxx/scikit-imagexx/actions/runs/40094239260)
+failed during preparation report serialization after 3,321 tests per host passed;
+no timing jobs ran. The [reviewed controller correction](../coverage/evidence/tv-chambolle-controller-correction.json)
+keeps the qualified product unchanged and binds its source separately from the
+corrected harness. All failed reports and logs remain retained.
 Matrix and Bregman kernel/binding proofs are scoped private evidence. Max-tree
 reference/native work advances six more APIs without public registration yet.
 

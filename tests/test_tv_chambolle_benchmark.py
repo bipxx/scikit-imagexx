@@ -222,15 +222,17 @@ def tooling_barrier(tmp_path,monkeypatch):
     """No native code: exercise the pre-fixture receipt boundary only."""
     monkeypatch.setenv('GITHUB_ACTIONS','true');monkeypatch.setenv('GITHUB_RUN_ID','999');monkeypatch.setenv('GITHUB_RUN_ATTEMPT','2')
     capsule=tmp_path/'capsule';capsule.mkdir();c=tooling_certificate();cert=capsule/'tv-certificate.json';cert.write_text(json.dumps(c))
-    seal=capsule/'tv-chambolle-artifacts.json';seal.write_bytes(b'synthetic metadata seal')
+    controller={'controller_source':{'revision':'c'*40},'tooling_only':True}
+    monkeypatch.setenv('TV_CONTROLLER_SOURCE','c'*40)
+    seal=capsule/'tv-chambolle-artifacts.json';seal.write_text(json.dumps({'qualified':{'controller':controller}}))
     barrier=tmp_path/'barrier';barrier.mkdir()
     for name,pin in c['profiles'].items():
-        row=dict(schema='tv-preparation-receipt-v1',status='ready',profile=name,workflow_run='999',workflow_attempt='2',qualified_run='123',qualified_source='a'*40,certificate_sha256=h.artifacts.sha(cert),product_sha256=pin['product_sha256'],capsule_sha256=h.artifacts.sha(seal),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,native_checks_per_mode=800,pipeline_default_finite_required=True)
+        row=dict(schema='tv-preparation-receipt-v2',status='ready',profile=name,workflow_run='999',workflow_attempt='2',qualified_run='123',qualified_source='a'*40,certificate_sha256=h.artifacts.sha(cert),product_sha256=pin['product_sha256'],capsule_sha256=h.artifacts.sha(seal),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,native_checks_per_mode=800,pipeline_default_finite_required=True,controller_revision='c'*40,controller_sha256=h.digest(controller))
         (barrier/('tv-receipt-'+name+'.json')).write_text(json.dumps(row))
     return barrier,capsule
 
 
-@pytest.mark.parametrize('fault',('missing','duplicate','stale-run','stale-attempt','reference','one-worker','normal-only','partial-rows','wrong-product','wrong-source','wrong-cert','wrong-capsule','no-default-loop'))
+@pytest.mark.parametrize('fault',('missing','duplicate','stale-run','stale-attempt','reference','one-worker','normal-only','partial-rows','wrong-product','wrong-source','wrong-cert','wrong-capsule','no-default-loop','wrong-controller','wrong-controller-digest'))
 def test_preparation_barrier_rejects_before_any_fixture_or_timer(tmp_path,monkeypatch,fault):
     barrier,capsule=tooling_barrier(tmp_path,monkeypatch)
     assert len(h.preparation_barrier(barrier,capsule))==3  # Inert metadata control only.
@@ -238,7 +240,7 @@ def test_preparation_barrier_rejects_before_any_fixture_or_timer(tmp_path,monkey
     if fault=='missing':path.unlink()
     elif fault=='duplicate':(barrier/'tv-receipt-extra.json').write_text(path.read_text())
     else:
-        key,value={'stale-run':('workflow_run','998'),'stale-attempt':('workflow_attempt','1'),'reference':('status','reference-only'),'one-worker':('workers',[1]),'normal-only':('modes',['normal']),'partial-rows':('case_count',399),'wrong-product':('product_sha256','0'*64),'wrong-source':('qualified_source','0'*40),'wrong-cert':('certificate_sha256','0'*64),'wrong-capsule':('capsule_sha256','0'*64),'no-default-loop':('pipeline_default_finite_required',False)}[fault]
+        key,value={'stale-run':('workflow_run','998'),'stale-attempt':('workflow_attempt','1'),'reference':('status','reference-only'),'one-worker':('workers',[1]),'normal-only':('modes',['normal']),'partial-rows':('case_count',399),'wrong-product':('product_sha256','0'*64),'wrong-source':('qualified_source','0'*40),'wrong-cert':('certificate_sha256','0'*64),'wrong-capsule':('capsule_sha256','0'*64),'no-default-loop':('pipeline_default_finite_required',False),'wrong-controller':('controller_revision','e'*40),'wrong-controller-digest':('controller_sha256','e'*64)}[fault]
         row[key]=value;path.write_text(json.dumps(row))
     monkeypatch.setattr(h,'contracts',lambda:pytest.fail('fixture import reached'));monkeypatch.setattr(h,'measure',lambda *_:pytest.fail('timer reached'))
     with pytest.raises(AssertionError):h.preparation_barrier(barrier,capsule)
@@ -290,12 +292,13 @@ def test_qualified_artifact_uses_complete_generic_verifier_plus_tv_specific_scop
     qualified=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='qualified_product')
     text=ast.unparse(qualified)
     assert 'controller.verify_product(' in text and 'artifacts.verify(' in text
-    assert "q['source'] == artifacts.source_state(ROOT)" in text
+    assert "q['source'] == controller_info['qualified_source']" in text
+    assert 'artifacts.verify(qualified_root,' in text and 'controller_identity(qualified_root, cert)' in text
     assert "API in q['expected_registry']['functions']" in text
     assert "mode + '-public-TV'" in text and "len(package['members_sha256']) == 108" in text
     assert 'independent-verification.json' in text and 'core_sha256' in text
     main=ast.unparse(next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main'))
-    assert main.index('preparation_barrier(args.barrier')<main.index('qualified = contracts()')<main.index('timing = measure(')
+    assert main.index('preparation_barrier(args.barrier')<main.index('contract_module = contracts()')<main.index('timing = measure(')
     assert 'pip wheel' not in source and 'subprocess.run' not in source
 
 
@@ -348,3 +351,75 @@ def test_workflow_certificate_utf8_bytes_are_identical_across_newline_platforms(
         legacy_hashes.append(hashlib.sha256(legacy.read_bytes()).hexdigest())
     assert hashes[0]==hashes[1]
     assert legacy_hashes[0]!=legacy_hashes[1]  # The old text writer reproduces the actual barrier bug.
+
+
+def test_native_check_only_report_keeps_qualified_dictionary_serializable(monkeypatch,tmp_path):
+    """Inert metadata-only case exercises actual main/save; no numerical parity proof."""
+    product={'profile':h.profile(),'product_sha256':'b'*64,'metadata_only_tooling':True,'controller':{'controller_source':{'revision':'c'*40}}}
+    module=types.ModuleType('metadata-only-contract-module')
+    module.source_sha=lambda function:'a'*64
+    marker=dict(error=None,warnings=[],events=[],metadata_only=True)
+    case=types.SimpleNamespace(source_id=None,timed=False,id='metadata-only-not-image')
+    inventory={'id':case.id,'timed':False};spec={'metadata_only':True}
+    original=lambda image:None  # Never called by this metadata control.
+    source=tmp_path/'source.json';source.write_text(json.dumps({'signature':str(h.inspect.signature(original)),'source_sha256':'a'*64,'helper_sha256':'a'*64}))
+    manifest_path=tmp_path/'manifest.json'
+    manifest_path.write_text(json.dumps(dict(source_contract_sha256=h.text_sha(source),fixture_source_sha256={},case_inventory=[inventory],case_contract_sha256=h.digest([inventory]),reference_profiles={h.profile():dict(case_spec_sha256=h.digest([spec]),observations={'0':h.digest(marker)})})))
+    monkeypatch.setattr(h,'MANIFEST',manifest_path);monkeypatch.setattr(h,'SOURCE_CONTRACT',source)
+    monkeypatch.setattr(h,'contracts',lambda:module);monkeypatch.setattr(h,'corpus',lambda:(case,))
+    monkeypatch.setattr(h,'inventory',lambda value:inventory);monkeypatch.setattr(h,'case_spec',lambda value:spec)
+    monkeypatch.setattr(h,'resolve',lambda original_flag=False:original)
+    monkeypatch.setattr(h,'observe',lambda *args:copy.deepcopy(marker));monkeypatch.setattr(h,'native_observe',lambda *args:copy.deepcopy(marker))
+    monkeypatch.setattr(h,'comparison',lambda value:value)
+    calls=[]
+    def qualified(*args):calls.append('qualified');return copy.deepcopy(product)
+    monkeypatch.setattr(h,'qualified_product',qualified)
+    monkeypatch.setattr(h,'public_admission',lambda manifest,value:calls.append(('admission',copy.deepcopy(value))))
+    monkeypatch.setattr(h,'measure',lambda *args:pytest.fail('metadata-only check reached timer'))
+    monkeypatch.setattr(h,'source_fingerprint',lambda root:{'source_sha256':'c'*64})
+    output=tmp_path/'report.json'
+    assert h.main(['--prepare-capsule','--check-only','--threads','1','4','--capsule',str(tmp_path/'capsule'),'--certificate',str(tmp_path/'certificate.json'),'--qualified-run','123','--qualified-source','d'*40,'--output',str(output)])==0
+    result=json.loads(output.read_text())
+    assert result['metadata']['artifacts']==product
+    assert result['status']=='complete-parity-check' and not result['results'] and not result['failures']
+    assert len(result['checks'])==1 and set(result['checks'][0]['actual_by_workers'])=={'1','4'}
+    assert calls==['qualified',('admission',product),'qualified']
+
+
+@pytest.mark.parametrize('fault',('none','wrong-controller-revision','wrong-qualified-revision','unexpected-path','native-change','missing-reviewed-path','wrong-native-fingerprint','same-root'))
+def test_two_source_roots_bind_exact_reviewed_controller_delta_without_product_rebuild(tmp_path,monkeypatch,fault):
+    """Only source-map metadata stubs; never installed runtime/native evidence."""
+    controller=tmp_path/'controller';controller.mkdir();qualified=tmp_path/'qualified';qualified.mkdir()
+    policy=json.loads((h.ROOT/'coverage/contracts/tv-chambolle-controller.json').read_text())
+    p=controller/'coverage/contracts/tv-chambolle-controller.json';p.parent.mkdir(parents=True);p.write_text(json.dumps(policy))
+    native={'CMakeLists.txt':'a'*64,'pyproject.toml':'a'*64,**{'src/tooling'+str(i)+'.cpp':'a'*64 for i in range(253)}}
+    before=dict(native,**{name:'b'*64 for name in policy['allowed_controller_paths'] if name!='coverage/contracts/tv-chambolle-controller.json'})
+    after=dict(native,**{name:'c'*64 for name in policy['allowed_controller_paths']})
+    states={qualified:{'revision':policy['qualified_source'],'files_sha256':before},controller:{'revision':'d'*40,'files_sha256':after}}
+    fingerprint=dict(source_sha256=policy['product_source_sha256'],source_hash_schema='metadata-only-tooling')
+    monkeypatch.setattr(h,'ROOT',controller);monkeypatch.setenv('TV_CONTROLLER_SOURCE','d'*40)
+    monkeypatch.setattr(h.artifacts,'source_state',lambda root:copy.deepcopy(states[Path(root)]))
+    monkeypatch.setattr(h,'source_fingerprint',lambda root:dict(fingerprint,source_sha256='f'*64) if fault=='wrong-native-fingerprint' and Path(root)==controller else copy.deepcopy(fingerprint))
+    cert={'qualified_source':policy['qualified_source'],'profiles':{name:{'product_source_sha256':policy['product_source_sha256']} for name in h.PROFILES}}
+    if fault=='wrong-controller-revision':states[controller]['revision']='e'*40
+    elif fault=='wrong-qualified-revision':states[qualified]['revision']='e'*40
+    elif fault=='unexpected-path':after['python/unreviewed.py']='f'*64
+    elif fault=='native-change':after['src/tooling0.cpp']='f'*64
+    elif fault=='missing-reviewed-path':after['benchmarks/tv_chambolle.py']=before['benchmarks/tv_chambolle.py']
+    target=controller if fault=='same-root' else qualified
+    if fault=='none':
+        result=h.controller_identity(target,cert)
+        assert result['controller_source']==states[controller] and result['qualified_source']==states[qualified]
+        assert set(result['delta'])==set(policy['allowed_controller_paths']) and result['native_source']==fingerprint
+    else:
+        with pytest.raises(AssertionError):h.controller_identity(target,cert)
+
+
+def test_workflow_separates_frozen_product_and_explicit_controller_sources():
+    text=(h.ROOT/'.github/workflows/tv-chambolle-benchmark.yml').read_text()
+    assert 'controller_source:' in text
+    for job in text.split('  measure:\n'):
+        assert 'ref: ${{ inputs.controller_source }}' in job
+        assert 'ref: ${{ inputs.qualified_source }}' in job and 'path: build/qualified-source' in job
+        assert 'TV_QUALIFIED_SOURCE_ROOT: ${{ github.workspace }}/build/qualified-source' in job
+        assert "os.environ['TV_CONTROLLER_SOURCE']==os.environ['GITHUB_SHA']" in job

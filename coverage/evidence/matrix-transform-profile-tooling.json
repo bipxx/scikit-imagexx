@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "tooling-verified-first-hosted-diagnostic-unaccepted",
+  "controller_source": "d9df9bb093a3a1f18397088a22143ee958fbe223",
+  "private_source": "7b8094fdc321f789c40b3d6f2a4bb25436469bc6",
+  "root_review": {
+    "path": "build/decisions-readiness/matrix-profile-tooling-root-review/manifest.json",
+    "bytes": 967,
+    "sha256": "0a8e20ac397b95adb6f810d6f9a6a6aa8d9e5db76c2c268a43e5b30073668c42"
+  },
+  "metadata_proof": {
+    "path": "build/worktrees/matrix-transform-contracts/build/matrix-profile-tooling/manifest.json",
+    "bytes": 7198,
+    "sha256": "936700ac94d2bb999f263ef9283a939dd0d3f870aab6215224294998fadee1a0"
+  },
+  "header_closure_proof": {
+    "path": "build/worktrees/matrix-transform-contracts/build/matrix-profile-header-closure/manifest.json",
+    "bytes": 2751,
+    "sha256": "93af4e47759560ad8cea5f8c2e94df16c08a0f1924d5d5989a85f094b6cd58f5"
+  },
+  "run": 40096175414,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40096175414",
+  "source_pins": 17,
+  "full_original_cases_per_host": 4000,
+  "explicit_candidates": 5,
+  "workers": [
+    1,
+    4
+  ],
+  "normal_and_scalar": true,
+  "forced_CPU_coretype": false,
+  "operation_timings": 0,
+  "public_or_new_CPU_profile_acceptance": false,
+  "scope": "Observe actual UMATH-linked loaded BLAS/default CPU dispatch and genuine private candidate words. Matching words require later vendor-source/disassembly,374-pipeline and production-core qualification. First Windows CMake-path failure is retained; controller-only fixes are separate reviewed increments."
+}
