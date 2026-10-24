@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "status": "dispatched-results-pending",
+  "run": 40119412201,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201",
+  "controller_source": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+  "source_branch": "feature/tv-chambolle-compare",
+  "inputs": {
+    "experiment_run": "40118914870",
+    "experiment_artifact": "tv-chambolle-compare-experiment",
+    "experiment_sha256": "f547ba16f384f85df7851b23e05636314f0718da15ec9ba8c1f2fefe16e71afa"
+  },
+  "before_product_source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+  "intended_before_source": "6ff02f63f6033cb186d3b93d22a778fd8d0624a3",
+  "after_product_source": "5e068a5a2267c3a917701d5348449972fad162a7",
+  "product_scope": {
+    "image_paths": 192,
+    "metadata_paths": 3,
+    "wheel_members": 110,
+    "sdk_members": 63,
+    "sdk_families": 18
+  },
+  "preparations": {
+    "profiles": [
+      "windows",
+      "modern",
+      "minimum"
+    ],
+    "roles": [
+      "original",
+      "before",
+      "after"
+    ],
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "observations": 400,
+    "complete_barrier_required": true
+  },
+  "measurements": {
+    "workers": 1,
+    "cases": 70,
+    "inclusive_original_index_range": [
+      330,
+      399
+    ],
+    "rounds": 7,
+    "method": "Three isolated ordinary-name worker processes and rotating paired triads; all raw samples and regressions retained."
+  },
+  "publisher_artifact_root_review": {
+    "path": "build/decisions-readiness/tv-cursor-published-experiment-admission/manifest.json",
+    "bytes": 801,
+    "sha256": "df5336ce0a09a921156fec3aa3fe7213bc38615c3ec0c1d25e11f5b1682e41fb"
+  },
+  "controller_root_review": {
+    "path": "build/decisions-readiness/tv-cursor-comparison-root-review/manifest.json",
+    "bytes": 1882,
+    "sha256": "90b76dd5da544717f9a17b026bb9e022fbea005b70f09a1fff01a64bd601666b"
+  },
+  "blocked_numerical_import_bootstrap": {
+    "passing_checks": 72,
+    "numerical_import_attempts": 0,
+    "numerical_modules_loaded": 0,
+    "XML": {
+      "path": "build/decisions-readiness/tv-cursor-comparison-root-review/blocked-bootstrap.xml",
+      "bytes": 10259,
+      "sha256": "763ac9f446095bfb3ae6f908b24e10eea08a8c549b2bd61c5d6eed329c655a6a"
+    }
+  },
+  "once_request": {
+    "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/request-body.json",
+    "bytes": 254,
+    "sha256": "9f0f4cf500e30d981eb8c235753fad0a7ba48de0eba9f8a265d6275b70203ef2"
+  },
+  "permanent_once_marker": {
+    "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/permanent-once.json",
+    "bytes": 293,
+    "sha256": "8a7e187ea50800cbae122003bc6fb949c628b69cb231408b669c8c4b0a9e7e2d"
+  },
+  "resolved_run": {
+    "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/resolved-run.json",
+    "bytes": 13503,
+    "sha256": "c23c213a4b8c5f698358dd4eb2d94bfc4f0baf7be462abb5382e0ae7c54310a5"
+  },
+  "performance_acceptance": false,
+  "new_public_image_paths": 0,
+  "pending": "All three complete fresh preparations, then three fresh artifact-only measurement hosts; inspect results and retain every slower observation before accepting performance."
+}

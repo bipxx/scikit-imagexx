@@ -29643,11 +29643,14 @@
       "retention": {
         "active_paths": [
           "build/worktrees/tv-chambolle-compare",
-          "build/tv-chambolle-cursor-compare-experiment-proposal"
+          "build/tv-chambolle-cursor-compare-experiment-proposal",
+          "build/tv-chambolle-cursor-compare-runs",
+          "build/tv-cursor-experiment-publication/115708a"
         ],
         "protected_artifacts": [
           "build/decisions-readiness/tv-cursor-comparison-root-review/manifest.json",
-          "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json"
+          "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json",
+          "coverage/evidence/tv-cursor-comparison-dispatch.json"
         ]
       },
       "tooling_root_review": {
@@ -29659,6 +29662,33 @@
         "path": "build/tv-chambolle-cursor-compare-experiment-proposal/experiment.json",
         "bytes": 78007,
         "sha256": "f547ba16f384f85df7851b23e05636314f0718da15ec9ba8c1f2fefe16e71afa"
+      },
+      "publication": {
+        "run": 40118914870,
+        "source": "115708ab6bfe5e1ac53a37debc43e635ab3285d9",
+        "artifact_id": 12570042927,
+        "root_review": {
+          "path": "build/decisions-readiness/tv-cursor-published-experiment-admission/manifest.json",
+          "bytes": 801,
+          "sha256": "df5336ce0a09a921156fec3aa3fe7213bc38615c3ec0c1d25e11f5b1682e41fb"
+        }
+      },
+      "execution": {
+        "run": 40119412201,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201",
+        "source": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+        "status": "dispatched-results-pending",
+        "request": {
+          "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/request-body.json",
+          "bytes": 254,
+          "sha256": "9f0f4cf500e30d981eb8c235753fad0a7ba48de0eba9f8a265d6275b70203ef2"
+        },
+        "permanent_once_marker": {
+          "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/permanent-once.json",
+          "bytes": 293,
+          "sha256": "8a7e187ea50800cbae122003bc6fb949c628b69cb231408b669c8c4b0a9e7e2d"
+        },
+        "no_retry_for_queue_or_observation_timeout": true
       }
     }
   ],
