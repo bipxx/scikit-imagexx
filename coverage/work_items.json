@@ -29095,13 +29095,10 @@
       "branch": "feature/tv-strided-cursor",
       "base_sha": "3040d4ff89678e9fa947b2d3cd25f7d90b52bb14",
       "owns": [
-        "src/tv_denoise.cpp",
-        "src/tv_chambolle.cpp",
-        "tests/test_tv_denoise_cursor_native.cpp",
-        "tests/test_tv_chambolle_cursor_pipeline.py",
-        "CMakeLists.txt",
-        "tools/public_qualification.py",
-        "tests/test_public_qualification.py"
+        "benchmarks/tv_chambolle_compare.py",
+        "tools/tv_chambolle_compare_artifacts.py",
+        "tests/test_tv_chambolle_compare.py",
+        ".github/workflows/tv-chambolle-compare.yml"
       ],
       "depends_on": [
         "tv-chambolle-public-191",
@@ -29117,7 +29114,7 @@
           "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
         }
       },
-      "state": "validating",
+      "state": "performance_pending",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -29139,8 +29136,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "main_commit": "3ab21aa790c2b71dd29885940668020a80343021"
       },
       "retention": {
         "active_paths": [
@@ -29167,6 +29164,18 @@
           "native_contract_checks": 6367333,
           "native_pending": 0,
           "scope": "Private address-transport native controls (6367333 assertions in each full dynamic native mode), actual full pipelines/fixed400/portable explicitworker4 rejection. All failures/recovery retained. Whole public/SDK and speed pending."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "manifest": {
+            "path": "build/genuine192-tv-cursor-hosted-observation/40111184948/retained-v1/manifest.json",
+            "bytes": 3875202,
+            "sha256": "27865418ba3d319d1312541466cbe33ccbb14871064afb90f548461188615b4f"
+          },
+          "native_contract_checks": 5024,
+          "native_pending": 0,
+          "scope": "Actual complete public192/SDK18 four-profile qualification;5024 is a conservative compiled-default TV check floor, not all707800 mixed XML assertions."
         }
       },
       "root_review": {
@@ -29175,7 +29184,17 @@
         "sha256": "29093dfe5955bc4935d33e41a2639adfdd040e21683ebe469b15c5e0a24bffbf"
       },
       "qualification_branch": "integration/tv-strided-cursor",
-      "current_scope": "Fresh public192/SDK18 full four-profile qualification from exact main6ff02f6 plus514f; all110/63 members and18 SDK families unchanged. Then common-host original/before/after70x7 one-thread comparison."
+      "current_scope": "Merged whole-qualified5e cursor into main; performance remains pending exact192-source original/before/after controlled experiment. Combined seven-API public199 source includes this same cursor.",
+      "public_root_admission": {
+        "path": "build/decisions-readiness/TV-cursor192-admission/manifest.json",
+        "bytes": 2507,
+        "sha256": "1aaeb34882534e1fd3e1123acdfa5fbe739b23814636eacb523f9a127d18a6ab"
+      },
+      "public_runtime_source_equivalence": {
+        "path": "build/decisions-readiness/TV-cursor192-admission/source-equivalence.json",
+        "bytes": 48540,
+        "sha256": "98b818dadf16a09a2e0a00df3d6290def078dc8fe6d35a46eaf96e1dab13af3b"
+      }
     },
     {
       "id": "max-tree-root-compression",
