@@ -19718,10 +19718,14 @@
         "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/rank-statistics-native"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-statistics-native",
+            "archive": "build/cleanup/merged-kernel-worktrees-20261024/rank-statistics-native.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "rank-statistics-contracts": {
@@ -19733,7 +19737,7 @@
           "status": "verified",
           "source_sha": "f7fc78fd7392ad3a404dbef0ef82024de2836f75",
           "manifest": {
-            "path": "build/worktrees/rank-statistics-native/build/rank-statistics-private-proof.json",
+            "path": "build/cleanup/merged-kernel-worktrees-20261024/rank-statistics-native/retained-proofs/build/rank-statistics-private-proof.json",
             "sha256": "234213206822248884df3b7bafbdac281f0b4e5134a4aa4a694066f85f721f60"
           },
           "native_contract_checks": 2706,
@@ -19786,10 +19790,14 @@
         "main_commit": "a9a29f41e4fc46ea86e3c2e054f40f06b7653d51"
       },
       "retention": {
-        "active_paths": [
-          "build/worktrees/consumer-layout-scan"
-        ],
-        "protected_artifacts": []
+        "active_paths": [],
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/consumer-layout-scan",
+            "archive": "build/cleanup/merged-kernel-worktrees-20261024/consumer-layout-scan.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "component-consumers-measurement": {
@@ -20282,7 +20290,13 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/rank-statistics-public",
+            "archive": "build/cleanup/merged-kernel-worktrees-20261024/rank-statistics-public.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "rank-statistics-native": {
@@ -20662,10 +20676,15 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/wave7-rank-consumer",
           "build/main-core-wave7-evidence"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "archived_worktrees": [
+          {
+            "former_path": "build/worktrees/wave7-rank-consumer",
+            "archive": "build/cleanup/merged-kernel-worktrees-20261024/wave7-rank-consumer.zip"
+          }
+        ]
       },
       "dependency_requirements": {
         "combined-public-wave6": {
@@ -22677,6 +22696,30 @@
       "archive": "build/cleanup/rank-percentile-benchmark-retirement-20261023/rank-percentile-benchmark.tar.gz",
       "archive_sha256": "7db2bcdf25ccc3f80cfd8b21b1dba64ad055d8d25e52df3e4ede71cf9306f5db",
       "member_rule": "Remove former_prefix/; tar uses ./ prefix. Exact regular bytes and36 Lxsymlink targets retained without following links."
+    },
+    {
+      "former_prefix": "build/worktrees/consumer-layout-scan",
+      "archive": "build/cleanup/merged-kernel-worktrees-20261024/consumer-layout-scan.zip",
+      "archive_sha256": "0be8c134b49a7b5e8ea0e50b72b47c8b8ae86d210363ed9d763d49ffd93fdf83",
+      "member_rule": "Remove former_prefix/; all exact original regular files retained in verified ZIP. No reparse points present; only obsolete .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-statistics-native",
+      "archive": "build/cleanup/merged-kernel-worktrees-20261024/rank-statistics-native.zip",
+      "archive_sha256": "1bf993ef2074b56c7ad51eb989758a1899a74bded0d2e78a4f6d7e0f50a19b7f",
+      "member_rule": "Remove former_prefix/; all exact original regular files retained in verified ZIP. No reparse points present; only obsolete .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/rank-statistics-public",
+      "archive": "build/cleanup/merged-kernel-worktrees-20261024/rank-statistics-public.zip",
+      "archive_sha256": "bf879b12bba978a169cef2e5577ecbc69bb54e03d1e0a5e4b34a468c9008c402",
+      "member_rule": "Remove former_prefix/; all exact original regular files retained in verified ZIP. No reparse points present; only obsolete .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/worktrees/wave7-rank-consumer",
+      "archive": "build/cleanup/merged-kernel-worktrees-20261024/wave7-rank-consumer.zip",
+      "archive_sha256": "e9a093d560c4f62f45413896a71d293503dd3c80f1c2746349282d21aff3d16b",
+      "member_rule": "Remove former_prefix/; all exact original regular files retained in verified ZIP. No reparse points present; only obsolete .git administrative pointer omitted."
     }
   ],
   "inventory_assessment_pending": {
