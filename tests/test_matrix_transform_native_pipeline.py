@@ -31,6 +31,8 @@ BACKEND = (load('_matrix_math_core', Path(os.environ['MATRIX_TRANSFORM_PRIVATE_B
 if BACKEND is not xx._core:
     native._core = BACKEND
 ENTRY = BACKEND.matrix_transform_run
+ENTRY_V2 = BACKEND.matrix_transform_run_v2
+assert inspect.isbuiltin(ENTRY_V2) and ENTRY_V2.__module__ == BACKEND.__name__
 assert inspect.isbuiltin(ENTRY) and ENTRY.__module__ == BACKEND.__name__
 assert native._core is BACKEND
 # Exact prior376f9 certified-ID superset: preserving all old native dtype/
@@ -311,7 +313,7 @@ def guarded(call):
     before=BACKEND.matrix_transform_completed()
     previous=sys.getprofile()
     def guard(frame,event,arg):
-        if event == 'c_call' and arg is ENTRY:
+        if event == 'c_call' and (arg is ENTRY or arg is ENTRY_V2):
             calls.append('real-checked-C++')
         if event == 'call' and frame.f_globals.get('__name__','').startswith('skimage.transform'):
             raise AssertionError('upstream transform algorithm/class forwarding: '+frame.f_code.co_name)
@@ -573,3 +575,99 @@ def test_all_4000_general_cohorts_end_to_end_actual_cpp(spec,workers):
     PIPELINE_GENERAL_ROWS.append(row)
     assert actual==expected and calls==['real-checked-C++']
     assert before==(coords.tobytes(),matrix.tobytes())
+
+
+@pytest.mark.parametrize('key',native._FORCED_CPU)
+def test_explicit_cpu_forcing_rejects_cached_certificate_without_algorithm(monkeypatch,key):
+    # Metadata guard only: even a previously authenticated cache cannot bypass
+    # a newly introduced forcing policy. No original/native image call here.
+    native._runtime_profile()
+    monkeypatch.setenv(key,'Haswell')
+    assert native._runtime_profile() is None
+    assert native._THREAD_QUERY is None and native._RUNTIME_CORENAME is None
+
+
+def test_actual_loaded_runtime_certificate_records_real_unforced_owner():
+    version=native._runtime_profile()
+    assert version==np.__version__ and native._THREAD_QUERY()==1
+    cert=native._authenticate_runtime()
+    assert cert[1] in native._RUNTIME_CORES
+    assert native._RUNTIME_CORENAME in native._RUNTIME_CORES[cert[1]]
+    assert len(cert[-1])==2
+    assert all(Path(p).is_file() and Path(p).stat().st_size==size for p,size,stamp in cert[-1])
+
+
+@pytest.mark.parametrize('attribute,value',(
+    ('matrix_transform_v2_interface',None),
+    ('matrix_transform_v2_interface','matrix-transform-math-v1'),
+    ('matrix_transform_v2_capabilities',31),
+    ('matrix_transform_v2_capabilities',62),
+    ('matrix_transform_v2_capabilities',None)))
+def test_v2_negotiation_is_strict_and_legacy_entry_is_independent(monkeypatch,attribute,value):
+    assert native._checked_entry(6) is ENTRY_V2
+    monkeypatch.setattr(BACKEND,attribute,value)
+    assert native._checked_entry(6) is None
+    assert native._checked_entry() is ENTRY
+
+
+def test_unqualified_v2_callable_cannot_impersonate_native_entry(monkeypatch):
+    monkeypatch.setattr(BACKEND,'matrix_transform_run_v2',lambda *a:None)
+    assert native._checked_entry(6) is None and native._checked_entry() is ENTRY
+
+
+def test_wrong_loaded_symbol_owner_rejects_before_metadata_getter_calls(monkeypatch):
+    cert=native._authenticate_runtime()
+    assert cert is not None
+    # Synthetic metadata rejection control, never arithmetic/runtime acceptance.
+    library=cert[4]
+    if sys.platform=='win32':
+        actual_path=Path(cert[-1][1][0])
+    else:
+        actual_path=None
+    monkeypatch.setattr(native,'_loaded_blas',lambda *a:(library,actual_path,lambda f:Path(BACKEND.__file__).resolve()))
+    native._runtime_profile.cache_clear()
+    try:assert native._runtime_profile() is None
+    finally:native._runtime_profile.cache_clear()
+
+
+def test_wrong_bundled_library_bytes_fail_closed(monkeypatch):
+    pins={k:('0'*64,v[1]) for k,v in native._RUNTIME_PINS.items()}
+    monkeypatch.setattr(native,'_RUNTIME_PINS',pins)
+    native._runtime_profile.cache_clear()
+    try:assert native._runtime_profile() is None
+    finally:native._runtime_profile.cache_clear()
+
+
+@pytest.mark.parametrize('name',('Unknown','Cooperlake-unqualified'))
+def test_unknown_live_corename_fails_closed_with_otherwise_valid_metadata(monkeypatch,name):
+    certificate=native._authenticate_runtime()
+    assert certificate is not None
+    fields=list(certificate);fields[2]=lambda:name.encode('ascii')
+    # Explicit synthetic control; no mutation of actual vendor worker/coretype.
+    monkeypatch.setattr(native,'_authenticate_runtime',lambda:tuple(fields))
+    assert native._runtime_profile() is None
+
+
+@pytest.mark.parametrize('version,core,expected',(
+    ('1.24.4','Haswell',4),('1.24.4','Zen',4),
+    ('1.24.4','Cooperlake',6),('2.5.4','SkylakeX',6),('2.5.4','Haswell',4)))
+def test_audited_prepared_shape_selection_is_not_runtime_authentication(version,core,expected):
+    h=np.ones((1,3));matrix=np.array([[1.,2.,3.],[4.,5.,6.],[7.,8.,9.]],order='F')
+    assert native._prepared_profile(h,matrix,version,core)==expected
+    # Aligned matrixC instead reaches transposed GEMV for every audited core.
+    assert native._prepared_profile(h,matrix.copy(order='C'),version,core)==3
+    assert native._prepared_profile(np.ones((2,3)),matrix,version,core)==1
+
+
+@pytest.mark.parametrize('name',('LD_PRELOAD','LD_AUDIT'))
+def test_unknown_linker_interposition_rejects_ordinary_certificate(monkeypatch,name):
+    # Never executed or loaded: explicit environmental admission metadata.
+    monkeypatch.setenv(name,'/unqualified/not-loaded.so')
+    assert native._runtime_profile() is None
+    assert native._THREAD_QUERY is None and native._RUNTIME_CORENAME is None
+
+
+@pytest.mark.parametrize('name',('LD_PRELOAD','LD_AUDIT'))
+def test_empty_linker_variable_does_not_invent_an_interposer(monkeypatch,name):
+    monkeypatch.setenv(name,'')
+    assert native._runtime_profile()==np.__version__

@@ -100,3 +100,48 @@ def test_portable_worker_policy_is_explicit():
     else:
         backend.set_num_threads(4);assert backend.get_num_threads()==4
         backend.set_num_threads(1)
+
+
+
+def test_strict_v2_is_owned_builtin_and_legacy_rejects_new_profile():
+    assert backend.matrix_transform_interface=='matrix-transform-math-v1'
+    assert backend.matrix_transform_capabilities==31
+    assert backend.matrix_transform_v2_interface=='matrix-transform-math-v2'
+    assert backend.matrix_transform_v2_capabilities==63
+    assert inspect.isbuiltin(backend.matrix_transform_run_v2)
+    assert backend.matrix_transform_run_v2.__module__==backend.__name__
+    p=np.array([[1.125,2.25]]);m=np.eye(3)
+    before=(backend.matrix_transform_completed(),backend.matrix_transform_v2_completed())
+    out,status=backend.matrix_transform_run(p,m,6)
+    assert out is None and status==1
+    assert before==(backend.matrix_transform_completed(),backend.matrix_transform_v2_completed())
+    out,status=backend.matrix_transform_run_v2(p,m,6)
+    assert status==0 and out.tobytes()==p.tobytes()
+    assert out.flags.owndata and out.flags.c_contiguous
+    assert (backend.matrix_transform_completed(),backend.matrix_transform_v2_completed())==(before[0]+1,before[1]+1)
+
+
+@pytest.mark.parametrize('profile,status',((0,1),(1000,1),(6,2)))
+def test_v2_prewrite_rejection_keeps_counter_and_readonly_inputs(profile,status):
+    p=np.array([[1.125,2.25],[3.5,4.75]]);m=np.eye(3)
+    p.flags.writeable=False;m.flags.writeable=False
+    before=(p.tobytes(),m.tobytes(),backend.matrix_transform_completed(),backend.matrix_transform_v2_completed())
+    out,actual=backend.matrix_transform_run_v2(p,m,profile)
+    assert out is None and actual==status
+    assert before==(p.tobytes(),m.tobytes(),backend.matrix_transform_completed(),backend.matrix_transform_v2_completed())
+
+
+@pytest.mark.parametrize('dtype',('f4','i8','>f8','c16'))
+def test_v2_dtype_rejects_without_conversion_or_completion(dtype):
+    p=np.array([[1.,2.]],dtype=dtype);before=(p.tobytes(),backend.matrix_transform_completed())
+    with pytest.raises(TypeError,match='native float64'):
+        backend.matrix_transform_run_v2(p,np.eye(3),6)
+    assert before==(p.tobytes(),backend.matrix_transform_completed())
+
+
+def test_v2_does_not_run_array_protocol():
+    calls=[]
+    class Coordinates:
+        def __array__(self,*args,**kwargs):calls.append('array');return np.ones((1,2))
+    with pytest.raises(TypeError):backend.matrix_transform_run_v2(Coordinates(),np.eye(3),6)
+    assert not calls

@@ -4,7 +4,7 @@
 #include <atomic>
 namespace py=pybind11;
 namespace {
-std::atomic<std::uint64_t> completed{0};
+std::atomic<std::uint64_t> completed{0}, completed_v2{0};
 bool owner(const py::array& a,skimagexx::MatrixReadView& v) {
     py::array root=a;
     for(int depth=0;depth<64;++depth) {
@@ -27,7 +27,7 @@ bool owner(const py::array& a,skimagexx::MatrixReadView& v) {
     }
     return false;
 }
-py::tuple run(py::array points,py::array matrix,unsigned profile) {
+py::tuple run_impl(py::array points,py::array matrix,unsigned profile,bool v2) {
     for(const auto& a:{points,matrix}) {
         if(a.dtype().kind()!='f' || a.itemsize()!=8 || !a.dtype().attr("isnative").cast<bool>())
             throw py::type_error("matrix transform requires native float64 arrays");
@@ -42,15 +42,23 @@ py::tuple run(py::array points,py::array matrix,unsigned profile) {
     const skimagexx::MatrixWriteView o{output.mutable_data(),p.rows,p.columns,std::size_t(output.nbytes())};
     skimagexx::MatrixMapStatus status;
     {py::gil_scoped_release release;
-        status=skimagexx::matrix_transform_into(p,m,o,skimagexx::MatrixArithmeticProfile(profile));}
+        status=v2 ? skimagexx::matrix_transform_into_v2(p,m,o,skimagexx::MatrixArithmeticProfile(profile))
+                  : skimagexx::matrix_transform_into(p,m,o,skimagexx::MatrixArithmeticProfile(profile));}
     if(status!=skimagexx::MatrixMapStatus::ok)return py::make_tuple(py::none(),unsigned(status));
     completed.fetch_add(1,std::memory_order_relaxed);
+    if(v2)completed_v2.fetch_add(1,std::memory_order_relaxed);
     return py::make_tuple(output,0u);
 }
+py::tuple run(py::array p,py::array m,unsigned profile) {return run_impl(p,m,profile,false);}
+py::tuple run_v2(py::array p,py::array m,unsigned profile) {return run_impl(p,m,profile,true);}
 }
 void bind_matrix_transform(py::module_& m) {
     m.attr("matrix_transform_interface")="matrix-transform-math-v1";
     m.attr("matrix_transform_capabilities")=31;
     m.def("matrix_transform_run",&run,py::arg("points").noconvert(),py::arg("matrix").noconvert(),py::arg("profile"));
+    m.attr("matrix_transform_v2_interface")=skimagexx::matrix_transform_math_v2_interface;
+    m.attr("matrix_transform_v2_capabilities")=skimagexx::matrix_transform_math_v2_capabilities;
+    m.def("matrix_transform_run_v2",&run_v2,py::arg("points").noconvert(),py::arg("matrix").noconvert(),py::arg("profile"));
+    m.def("matrix_transform_v2_completed",[]{return completed_v2.load(std::memory_order_relaxed);});
     m.def("matrix_transform_completed",[]{return completed.load(std::memory_order_relaxed);});
 }
