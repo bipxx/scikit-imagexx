@@ -1,0 +1,57 @@
+name: rank-statistics-experiment-publication
+on:
+  workflow_dispatch:
+    inputs:
+      payload_base64:
+        description: Exact reviewed experiment.json encoded as base64
+        type: string
+        required: true
+      payload_sha256:
+        description: Reviewed raw SHA256 of experiment.json
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Authenticate exact metadata and the frozen controller contract
+        shell: bash
+        env:
+          PAYLOAD_BASE64: ${{ inputs.payload_base64 }}
+          PAYLOAD_SHA256: ${{ inputs.payload_sha256 }}
+        run: |
+          python - <<'PY'
+          import base64, hashlib, json, os, pathlib, re, runpy
+          raw = base64.b64decode(os.environ['PAYLOAD_BASE64'], validate=True)
+          expected = os.environ['PAYLOAD_SHA256']
+          assert re.fullmatch('[0-9a-f]{64}', expected)
+          assert hashlib.sha256(raw).hexdigest() == expected
+          value = json.loads(raw)
+          assert set(value) == {'schema', 'template_sha256', 'accepted_products'}
+          assert value['schema'] == 'rank-statistics-experiment-v1'
+          assert set(value['accepted_products']) == {'before', 'after'}
+          assert all(set(v) == {'windows', 'modern', 'minimum'} for v in value['accepted_products'].values())
+          out = pathlib.Path('build/experiment')
+          out.mkdir(parents=True)
+          target = out / 'experiment.json'
+          target.write_bytes(raw)
+          tool = runpy.run_path('benchmarks/rank_statistics_compare.py')
+          config = tool['config'](target, expected)
+          for role in ('before', 'after'):
+              for profile in ('windows', 'modern', 'minimum'):
+                  tool['accepted_pin'](config, role, profile)
+          assert target.read_bytes() == raw
+          print('Authenticated experiment SHA256:', expected)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rank-statistics-experiment
+          path: build/experiment/experiment.json
+          if-no-files-found: error
+          retention-days: 90
