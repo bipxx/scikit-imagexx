@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "scope": "Private-only parity/runtime increments; public coverage remains192 partial image paths plus3metadata.",
+  "root_review": {
+    "path": "build/decisions-readiness/current-private-increments-root-review/manifest.json",
+    "bytes": 3941,
+    "sha256": "29093dfe5955bc4935d33e41a2639adfdd040e21683ebe469b15c5e0a24bffbf"
+  },
+  "verified_record_count": 949,
+  "verified_record_bytes": 1181972442,
+  "verified_Git_members": 8,
+  "tv_cursor": {
+    "source": "514f9f4bb2f9f80827cd63e3f078602e0b670265",
+    "manifest": {
+      "path": "build/worktrees/tv-strided-cursor/build/cursor-v1/manifest.json",
+      "bytes": 125826,
+      "sha256": "68cb67c6f5e48154b7ac4b1c26034bd5c0fb97b6a26d0aa145e108e309b111fc"
+    },
+    "production_change": "Non-C logical address cursors in bounded-input/image+d and first gradient; duplicate validation, arithmetic, FP, stopping and ABI unchanged.",
+    "dynamic_profile_pipeline_checks_per_mode": 2528,
+    "portable_passes_per_mode": 1277,
+    "portable_explicit_worker4_skips_per_mode": 1251,
+    "native_assertions_per_dynamic_mode": 6367333,
+    "portable_no_AVX_objects": 9,
+    "normal_scalar_workers": [
+      1,
+      4
+    ],
+    "initial_metadata_setup_failures_preserved": true,
+    "pending": "Fresh whole public192/SDK18 four-profile qualification and fixed70x7 original/before/after one-worker measurement."
+  },
+  "matrix_binding": {
+    "source": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
+    "manifest": {
+      "path": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v2/manifest.json",
+      "bytes": 23962,
+      "sha256": "b1f0a74df55df70f99cf45af7ef631baa930bce55bee39f7c0fd745915e34d63"
+    },
+    "inherited_v1": {
+      "path": "build/worktrees/matrix-transform-profile-binding/build/profile-binding-v1/manifest.json",
+      "bytes": 50764,
+      "sha256": "d91a48ec5e980a0ca683ed166c2368a78b4d296d21ec2d630c4ba2c868b04e9f"
+    },
+    "production_change": "Strict separatev2 capability63/owned builtin plus exact loaded UMATH/BLAS symbol-owner/runtime admission; legacyv1 capability31 unchanged.",
+    "pipeline_checks_per_dynamic_mode": 8894,
+    "portable_passes_per_mode": 4477,
+    "portable_explicit_worker4_skips_per_mode": 4417,
+    "actual_unforced_local_corenames": [
+      "Haswell"
+    ],
+    "ASAN_host": "Truthfully distinct one-TU shared-CPython embedding, actual existing libpython/runtime hashes; natural certificate without preload exemption. Earlier static-host denial and failed embedding preflight preserved.",
+    "prepared_donor_replays": "216000 observations including3600 ID6 completions; prepared Cooperlake/SkylakeX/Zen associations are not actual-host authentication.",
+    "pending": "Fresh hosted actual-default runtime validation, followed by genuine public-core/SDK and isolated speed measurements."
+  },
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "new_public_image_paths": 0,
+  "new_operation_timings": 0
+}

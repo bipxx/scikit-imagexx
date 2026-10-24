@@ -16,8 +16,16 @@
 #endif
 
 using namespace skimagexx;
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+namespace skimagexx {
+std::int64_t max_tree_test_representative(std::int64_t*,std::int64_t,std::size_t&) noexcept;
+}
+#endif
 namespace {
 std::size_t checks=0,source_rows=0;
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+std::size_t root_helper_steps=0,fixed_index_steps=0,root_work_cases=0;
+#endif
 std::string context;
 void require(bool condition,const char* message) {
     ++checks;if(!condition)throw std::runtime_error(context+": "+message);
@@ -338,6 +346,83 @@ template<class T> void integer_sort_controls(MaxTreeType type,int workers) {
         }
     }
 }
+template<class T> void branched_tree_definition(MaxTreeType type) {
+    context="independent-branched-tree-representatives";
+    std::vector<T> levels(20,T(0));levels[6]=levels[7]=T(2);levels[8]=T(3);levels[13]=T(4);
+    const std::vector<std::int64_t> order={0,1,2,3,4,5,9,10,11,12,14,15,16,17,18,19,6,7,8,13};
+    std::vector<std::int64_t> parent(20,0);parent[7]=parent[8]=6;parent[13]=8;
+    for(int operation=0;operation<6;++operation) {
+        const bool closed=operation==3 || operation==5;
+        auto input=levels;if(closed)for(auto& pixel:input)pixel=inverse(pixel);
+        Arena<T> a(input,type,MaxTreeOperation(operation),2,{{4,5,1}},1,3);
+        max_tree_into(a.input,a.params,a.workspace(),a.output());
+        require(a.parent==parent && a.traverser==order,"branch representative/canonical parent differs from component definition");
+        for(std::size_t i=0;i<20;++i) {
+            if(operation==1)require(a.labels[i]==std::uint64_t(i==13),"unique high branch maximum label");
+            else if(operation) {
+                // The level-2 component has area4 and diameter3; its higher
+                // branches have area<=2 and diameter<=2, so both filters at3
+                // flatten only those branches. Closing is the exact dual.
+                const T expected=i==6 || i==7 || i==8 || i==13?T(2):T(0);
+                require(a.out[i]==(closed?inverse(expected):expected),"independent branch area/diameter filtering");
+            }
+        }
+        require(a.image==input,"branch input mutated");
+    }
+}
+template<class T> void long_chain_definition(MaxTreeType type) {
+    const std::size_t columns=sizeof(T)==1?30:1024,n=4*columns;
+    context="independent-long-monotone-chain";
+    std::vector<T> levels(n);for(std::size_t i=0;i<n;++i)levels[i]=T(i);
+    for(int operation=0;operation<6;++operation) {
+        const bool closed=operation==3 || operation==5;
+        auto input=levels;if(closed)for(auto& pixel:input)pixel=inverse(pixel);
+        Arena<T> a(input,type,MaxTreeOperation(operation),2,{{4,columns,1}},1,5);
+        max_tree_into(a.input,a.params,a.workspace(),a.output());
+        for(std::size_t i=0;i<n;++i) {
+            require(a.traverser[i]==std::int64_t(i) && a.parent[i]==std::int64_t(i?i-1:0),"long chain stable order/canonical parent");
+            if(operation==1)require(a.labels[i]==std::uint64_t(i==n-1),"long chain unique maximum");
+            else if(operation) {
+                const T expected=T(std::min(i,n-5));
+                require(a.out[i]==(closed?inverse(expected):expected),"long chain analytic area/diameter result");
+            }
+        }
+        require(a.image==input,"long chain input mutated");
+    }
+}
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+void root_representative_work() {
+    context="actual-helper-forest-representatives-and-work";
+    constexpr std::size_t n=4097;
+    std::vector<std::int64_t> moving(n),fixed(n);
+    for(std::size_t i=0;i<n;++i)moving[i]=fixed[i]=std::int64_t(i?i-1:0);
+    std::size_t actual_steps=0,replay_steps=0;
+    auto replay=[&](std::int64_t index) {
+        // Literal pinned0.26/frozen823 fixed-index loop, not a timer or a
+        // different image backend. Only loop-body work is counted.
+        while(fixed[index]!=fixed[fixed[index]]){fixed[index]=fixed[fixed[index]];++replay_steps;}
+        return fixed[index];
+    };
+    for(std::size_t i=n;i-->0;) {
+        require(max_tree_test_representative(moving.data(),std::int64_t(i),actual_steps)==0,"actual helper lost chain root");
+        require(replay(std::int64_t(i))==0,"fixed-index source replay lost chain root");
+    }
+    require(replay_steps==(n-1)*(n-2)/2,"fixed-index unit-chain work closed form");
+    require(actual_steps<n*16 && actual_steps*32<replay_steps,"moving-node amortized chain work regression");
+    root_helper_steps+=actual_steps;fixed_index_steps+=replay_steps;++root_work_cases;
+    // Seven disjoint components, followed by unions of their known roots.
+    // Representative identity must remain exact after the forest changes.
+    for(std::size_t i=0;i<n;++i)moving[i]=fixed[i]=std::int64_t(i<7?i:i-7);
+    for(std::size_t i=n;i-->0;) {
+        require(max_tree_test_representative(moving.data(),std::int64_t(i),actual_steps)==std::int64_t(i%7),"component representative");
+        require(replay(std::int64_t(i))==std::int64_t(i%7),"source component representative");
+    }
+    for(std::size_t i=1;i<7;++i)moving[i]=fixed[i]=0;
+    for(std::size_t i=n;i-->0;) {
+        require(max_tree_test_representative(moving.data(),std::int64_t(i),actual_steps)==0 && replay(std::int64_t(i))==0,"representative after root union");
+    }
+}
+#endif
 }
 int main(int argc,char** argv) {
     try {
@@ -351,6 +436,15 @@ int main(int argc,char** argv) {
 #define CONTROL(name,T) context="independent-" #name;independent_ramps<T>(MaxTreeType::name,workers);
             TYPES(CONTROL)
 #undef CONTROL
+#define BRANCH(name,T) branched_tree_definition<T>(MaxTreeType::name);
+            TYPES(BRANCH)
+#undef BRANCH
+#define CHAIN(name,T) long_chain_definition<T>(MaxTreeType::name);
+            TYPES(CHAIN)
+#undef CHAIN
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+            root_representative_work();
+#endif
             exact_key_controls<std::uint64_t>(MaxTreeType::u64,true);
             exact_key_controls<std::int64_t>(MaxTreeType::i64,false);
             exact_key_controls<std::int64_t>(MaxTreeType::i64,true);
@@ -361,6 +455,10 @@ int main(int argc,char** argv) {
         }
         set_num_threads(1);
         std::cout<<"PASS checks="<<checks<<" source_numeric_projections="<<source_rows<<" unique_source_ids=233 metadata_excluded=118 parallel_traversal=false\n";
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+        std::cout<<"ALGORITHMIC_WORK unit_chain_nodes=4097 queries_per_run=4097 runs="<<root_work_cases
+                 <<" moving_steps="<<root_helper_steps<<" fixed_index_steps="<<fixed_index_steps<<" timing=false cycles=false\n";
+#endif
         return 0;
     }catch(const std::exception& error){std::cerr<<"FAIL "<<error.what()<<" checks="<<checks<<" source_rows="<<source_rows<<'\n';return 1;}
 }
