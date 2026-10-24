@@ -25154,10 +25154,17 @@
       },
       "retention": {
         "active_paths": [
-          "build/genuine190-baseline-hosted-observation/40071624250",
-          "build/worktrees/public-decisions-qualification"
+          "build/genuine190-baseline-hosted-observation/40071624250"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [],
+        "retired_merged_worktrees": [
+          {
+            "path": "build/worktrees/public-decisions-qualification",
+            "head": "66860aef0d2483ca1d728589d9b3b0952433db91",
+            "source_preserved_in_Git": true,
+            "receipt": "coverage/evidence/merged-tv-worktree-cleanup-20261024.json"
+          }
+        ]
       },
       "source_freeze": {
         "source_sha": "e15c6e44dde62aa2aafd743729177eda7d5509f1",
@@ -26533,7 +26540,7 @@
       },
       "merge": {
         "commit": "f87120cda4e6ca9246c30f837479babe0bce0b92",
-        "main_commit": null
+        "main_commit": "4d8770f856dcb72ed7cf47135e1aeb119e0ce9d7"
       },
       "retention": {
         "active_paths": [
@@ -28776,9 +28783,8 @@
     ]
   },
   "latest_cleanup": {
-    "receipt": "coverage/evidence/temp-build-cleanup-followup-20261024.json",
-    "previous_receipt": "coverage/evidence/temp-build-cleanup-20261024.json",
-    "logical_net_bytes_recovered": 779945608,
+    "receipt": "coverage/evidence/merged-tv-worktree-cleanup-20261024.json",
+    "logical_net_bytes_recovered": 1263671689,
     "active_envs_baselines_raw_results_and_unfinished_sources_preserved": true
   }
 }
