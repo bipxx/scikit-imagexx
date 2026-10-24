@@ -451,9 +451,16 @@ def test_compiler_architecture_and_runtime_are_observed_not_assumed():
 
 
 # These synthetic modules test metadata rejection only, never native/public proof.
-def bilateral_metadata():
+def bilateral_metadata(monkeypatch):
+    # The positive admission object is a deliberately marked harness stub. Only
+    # that exact object is classified as builtin here; negatives still exercise
+    # the real inspect.isbuiltin predicate, and no image call is allowed.
+    def entry(*args):raise AssertionError('metadata stub cannot execute native work')
+    entry.__name__='rank_bilateral_run';entry.__module__='builtins'
+    original=q.inspect.isbuiltin
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:value is entry or original(value))
     core=types.SimpleNamespace(__name__='builtins',rank_bilateral_interface='rank-bilateral-v1',
-        rank_bilateral_capabilities=0x1c000000,rank_bilateral_run=len,get_num_threads=lambda:1)
+        rank_bilateral_capabilities=0x1c000000,rank_bilateral_run=entry,get_num_threads=lambda:1)
     wrapper=types.SimpleNamespace(_core=core)
     rank=types.SimpleNamespace(__all__=list(q.R6));nested=types.SimpleNamespace(__all__=list(q.R6))
     generic=types.SimpleNamespace(__all__=[]);rank.bilateral=nested
@@ -464,13 +471,13 @@ def bilateral_metadata():
     return core,rank,nested,generic,wrapper,set(q.R6_PATHS)
 
 
-def test_bilateral_metadata_guard_has_no_fixture_calls():
-    q.bilateral_admission(*bilateral_metadata())
+def test_bilateral_metadata_guard_has_no_fixture_calls(monkeypatch):
+    q.bilateral_admission(*bilateral_metadata(monkeypatch))
 
 
 @pytest.mark.parametrize('failure',['version','capability','partial-bits','entry','entry-owner','registry','identity','core','worker','forwarding','generic','nested-exports'])
-def test_bilateral_admission_rejects_incomplete_or_private_metadata(failure):
-    args=list(bilateral_metadata());core,rank,nested,generic,wrapper,registered=args
+def test_bilateral_admission_rejects_incomplete_or_private_metadata(failure,monkeypatch):
+    args=list(bilateral_metadata(monkeypatch));core,rank,nested,generic,wrapper,registered=args
     if failure=='version':core.rank_bilateral_interface='rank-bilateral-v0'
     elif failure=='capability':del core.rank_bilateral_capabilities
     elif failure=='partial-bits':core.rank_bilateral_capabilities=0x4000000
@@ -557,3 +564,29 @@ def test_actual_sdk_discovery_cannot_accept_twelve_or_substituted_clients(change
     elif change=='duplicate':listing['tests'].append(dict(listing['tests'][0]))
     else:listing['tests'][-1]['name']='installed_private_adapter_consumer'
     with pytest.raises(q.QualificationError,match='SDK test discovery'):q.validate_sdk_listing(listing)
+
+
+@pytest.mark.parametrize('failure',['float-capability','integer-subclass','boolean-capability','borrowed-builtin','spoof-class','duplicate-exports','reordered-exports'])
+def test_bilateral_strict_metadata_rejection_precedes_fixture_engine(tmp_path,monkeypatch,failure):
+    args=list(bilateral_metadata(monkeypatch));core,rank,nested,generic,wrapper,registered=args
+    if failure=='float-capability':core.rank_bilateral_capabilities=float(0x1c000000)
+    elif failure=='integer-subclass':
+        class Capability(int):pass
+        core.rank_bilateral_capabilities=Capability(0x1c000000)
+    elif failure=='boolean-capability':core.rank_bilateral_capabilities=True
+    elif failure=='borrowed-builtin':core.rank_bilateral_run=len
+    elif failure=='spoof-class':
+        Spoof=type('builtin_function_or_method',(),{'__module__':'builtins','__name__':'rank_bilateral_run'})
+        core.rank_bilateral_run=Spoof()
+    elif failure=='duplicate-exports':nested.__all__.append(q.R6[0])
+    else:nested.__all__.reverse()
+    (tmp_path/'state.json').write_text(json.dumps({'source':{}}))
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'admission',lambda *_: q.bilateral_admission(*args))
+    original=builtins.__import__
+    def guard(name,*a,**kw):
+        if name=='pytest' or 'bilateral_contract' in name:raise AssertionError('fixture engine reached before strict R6 rejection')
+        return original(name,*a,**kw)
+    monkeypatch.setattr(builtins,'__import__',guard)
+    with pytest.raises(q.QualificationError):q.child(tmp_path,'public-bilateral')
+    assert not (tmp_path/'pytest-tmp').exists()

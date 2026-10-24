@@ -655,17 +655,18 @@ def headers(out, profile):
 
 def bilateral_admission(core, rank, nested, generic, wrapper, registered):
     """Metadata only; fail before importing any contracts or image fixtures."""
+    capability = getattr(core, 'rank_bilateral_capabilities', None)
     require(getattr(core, 'rank_bilateral_interface', None) == 'rank-bilateral-v1'
-            and getattr(core, 'rank_bilateral_capabilities', None) == 0x1c000000,
+            and type(capability) is int and capability == 0x1c000000,
             'missing/wrong public R6 capability')
     entry = getattr(core, 'rank_bilateral_run', None)
-    require(type(entry).__name__ == 'builtin_function_or_method' and entry.__module__ == core.__name__,
-            'missing owned compiled R6 entry')
+    require(inspect.isbuiltin(entry) and entry.__name__ == 'rank_bilateral_run'
+            and entry.__module__ == core.__name__, 'missing owned compiled R6 entry')
     require(R6_PATHS <= set(registered), 'missing/partial public R6 registry')
     require(wrapper._core is core, 'R6 alternate core worker state')
     require(core.get_num_threads() == 1, 'R6 initial global workers must be1')
     require(getattr(rank, 'bilateral', None) is nested, 'R6 nested module identity mismatch')
-    require(set(nested.__all__) == set(R6), 'R6 nested exports differ')
+    require(tuple(nested.__all__) == R6, 'R6 nested exports differ')
     for name in R6:
         function = getattr(rank, name, None)
         require(callable(function) and function is getattr(nested, name, None)
