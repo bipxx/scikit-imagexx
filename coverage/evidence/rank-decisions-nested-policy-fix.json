@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "common_test_source": "66860aef0d2483ca1d728589d9b3b0952433db91",
+  "before": "66860aef0d2483ca1d728589d9b3b0952433db91",
+  "after": "94d2d3f48a4cf58ae9a34be5133eed6816f322c7",
+  "source_change": "One shared nested-import test now requires own majority/Otsu wrappers and preserves disabled/enabled-warning/disabled checks using still-unported nested filter_forward. Eleven other function ASTs and the old geometric-mean block remain unchanged.",
+  "source_proof": {
+    "path": "build/worktrees/r7-nested-import-policy/build/nested-policy-proof/manifest.json",
+    "sha256": "39e47b70737bc79366db6318fa142ceb24a8d17f1c195a866db1654b8e593eb2"
+  },
+  "genuine_wheel_preflight": {
+    "path": "build/decisions-readiness/nested-import-preflight-v1/manifest.json",
+    "sha256": "881e20f9bd8323d342aa1f211c12cca327f1f7a39d642d677f7b4b9de7353b87"
+  },
+  "independent_preflight": {
+    "path": "build/decisions-readiness/nested-import-preflight-v1/independent-worker1-verification.json",
+    "sha256": "ae139210dd0ba07d41b1c77d80a6406b974c3340741e7934546f9d298cbb05d7"
+  },
+  "source_pair": {
+    "path": "build/decisions-readiness/nested-fix-frozen-pair/manifest.json",
+    "sha256": "9107154410e3660f230e40cd9f21e44a84b451ca50834163725f410e3b5c7c13"
+  },
+  "genuine_donor_source": "b19c9d75deb4dd9a3af9f2f80d8fc942e6316468",
+  "genuine_donor_run": 40072543741,
+  "genuine_donor_qualification_passed": false,
+  "donor_wheel_sha256": "105f9d356d49e005148f665b099d9289ac3dae07bef61ca05f7f7352baffe763",
+  "donor_core_sha256": "81c650dc38a4f1bf7bc15e76efd1f02197bf1280f5479e93dff4664934eb9a87",
+  "unchanged_product_members": 104,
+  "complete_SDK_members": 59,
+  "replaced_product_members": 0,
+  "corrected_test_checks": 88,
+  "normal_and_scalar": true,
+  "workers": [
+    1,
+    4
+  ],
+  "metadata_checks_each": 573,
+  "source_plans": 8,
+  "source_plan_blockers": 0,
+  "controlled_source_delta": [
+    "src/rank.cpp",
+    "tests/test_rank_windowed_counts_native.cpp",
+    "tests/test_rank_windowed_counts_pipeline.py"
+  ],
+  "new_runs": {
+    "before": {
+      "id": 40077192858,
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40077192858"
+    },
+    "after": {
+      "id": 40077194449,
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40077194449"
+    }
+  },
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "accepted_main_image_paths": 186,
+  "local_limitation": "Test-only genuine-wheel preflight uses CPython3.13.14; the retained hosted wheel used3.13.16. Fresh four-profile source qualification remains required.",
+  "previous_runs": "All failed seals stay failed. The inspected third-pair modern-before and Debug-after products captured complete build facts and passed remaining groups/corpora/SDK; shared tests failed the stale majority assertion. Other exact jobs continue through terminal without cancellation.",
+  "operation_timings": 0,
+  "new_environments": 0,
+  "native_builds": 0
+}

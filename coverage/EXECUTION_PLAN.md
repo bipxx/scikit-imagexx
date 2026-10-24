@@ -53,9 +53,9 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
 | Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole10 accepted: 186 partially native image paths; 477 total paths. Four genuine products, both SIMD modes, full selected corpora, runtime/source closure and 104 SDK checks passed. Main production, tests and contracts are byte-equivalent to tested `05e79eb`; no performance acceptance inferred. |
-| Worker 1 | `metrics_reductions` | Local Otsu/majority conversion parity | Expanded 694-case preflight found four endian gaps. A narrowly controlled provider flag fixes them and native integer lookup controls while preserving bilateral defaults. Private normal/scalar and bilateral regression gates passed; final evidence is being sealed. Public/SDK14 wiring remains separate. |
-| Worker 2 | `resize_api` | Controlled one-worker R4 comparison tooling | The counts/pop-only opcode16 source has qualified private evidence; its normal result is a verified case-ID union, and scalar runs pass all 5,681 cases. New comparison tooling keeps all 1,379 cases and 376 timing IDs, uses isolated original/before/after processes and requires complete preparation barriers. Product pins remain unset; no speedup claimed. |
-| Worker 3 | `resize_bench` | Audit corrected whole10 artifacts | All four jobs of run 40063203314 at `05e79eb` passed. Full artifact/source/runtime/parity review is complete; root acceptance and integration remain. Failed whole9 evidence is retained at 201.95 MiB and the corrected trial at 179.87 MiB. No performance or full-library claim. |
+| Worker 1 | `metrics_reductions` | Observe and authenticate the exact rank qualification products | Runs `40077192858`/`40077194449` qualify frozen `66860ae`/`94d2d3f`, after 573 metadata checks each, eight source plans and 88 corrected-test checks on an unchanged genuine wheel. Earlier failed seals and exact observers remain protected. Successful four-profile products and controlled benchmark pins are still required. |
+| Worker 2 | `resize_api` | Complete the TV public-signature wrapper using the whole C++ finite loop | Preserve all 330 original observations and 70 literal benchmark fixtures; eligible default calls must use the actual new finite-loop binding. Keep provider orchestration and explicitly forced stage tests separate. Validate return aliasing, iteration traces, callbacks and allocation hooks on all actual ABIs. |
+| Worker 3 | `resize_bench` | Qualify the tiny frozen TV finite-loop binding across ABIs | Kernel `f8f38b6` passes 28 private profile/mode runs with exact energy/stopping. Build only the bounded frozen binding/PIC closure against existing global-worker foundations, send actual binary hashes to Worker 2, and preserve raw failures. No whole-product build, new environment or local timing. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
@@ -182,14 +182,13 @@ continues while another packet builds, runs CI or waits for measurements.
 
 | Priority | Packet and scope | Shared dependency / handoff |
 |---|---|---|
-| Accepted cumulative increment | Qualified R2 overlap and SIMD metrics classification at frozen 61da | Actual 104-member products, 59-member SDKs, 23,668 logical checks/profile, 1,231-case corpus and 72 SDK checks pass. Test/data-only supplements and retained failures are explicit; caches released |
-| Private measured bottleneck | Consumer raster output scans at 237532d | Width dispatch and certified SIMD selects/fills pass private 2,937x10 and fixed 878-case gates. Genuine whole7/performance pending; sorting/hash/layout conversion unresolved |
-| Accepted public increment | Four R4 rank statistics algorithms | Whole7b f4 passes8profiles andstrict1379corpus; eightpaths acceptedpartial, initialone-worker run40049417301 preparing/measuring. Newwhole8 ninecanonicalpercentile paths remainpendingexacthostedrun40051495344 |
-| Active independent tooling | R4 original-only benchmark Phase1 | Worker1 includes all 995 reference IDs plus balanced scalar/vector workloads; aliases/errors untimed, actual-public gate precedes future timers |
-| Active reference coverage | Nine actual rank percentile functions | Worker2 audits source safety and p0/p1 conversion/arithmetic before original calls. equalize_percentile is absent; rank.percentile is a function, not an importable module |
-| Live R3 measurement | Four public R3 intensity algorithms | One-worker run 40034423731 from fbdfb46; all preparation gates passed, retain exact run through terminal/offline verification |
-| Live validated-family trials | Footprint setup and connected-component short runs | Runs 40035389599 and 40035393397 from 845608d; fixed 556/527 and 954/802 corpora, three preparation profiles before fresh artifact-only hosts |
-| Next accepted metrics trial | Stepped-half loads plus finite/min-max classification | Dispatch exact accepted main source with the unchanged 1,231/1,212 corpus and one native worker; keep all earlier slower cases and raw trials |
+| Accepted cumulative increment | Whole10 source `05e79eb`, run `40063203314` | 186 native-partial image paths; four genuine products in normal/scalar modes and complete selected corpora/SDK closure. Full argument and performance parity remain separate. |
+| Source qualification | Rank Otsu/majority plus their two generic aliases | Frozen before/after sources predict 190 image paths and 14 SDK families. Only three counts-optimization paths differ. The shared stale-majority test is corrected without removing fallback-policy assertions. Require both genuine four-profile runs before promotion. |
+| Isolated measured bottleneck | Counts-only R4 windowed histogram update | Private R7 portable/sanitizer gates pass. Keep all 1,379 fixed cases and 376 timing IDs. Obtain six accepted before/after products, then prepare all three runtime profiles and time only on fresh artifact-only hosts at one worker. |
+| Private native foundation | TV typed stages and spatial reductions | `2319db7` stages and `0eaf632` reductions have scoped private evidence. NumPy 1.24.4/2.5.4 reduction association and scalar promotion differ; preserve both exact profiles. These are not public function acceptance. |
+| Private complete finite loop | TV kernel `f8f38b6` | C++ now owns finite divergence/output, square/sum, gradient/norm/sum, denominator/dual, energy and strict stopping. Validate actual new bindings and default wrapper calls; stage capability 63 cannot substitute for finite-loop capability 3. |
+| Shared integration | Public TV core, registry and complete SDK | After private wrapper qualification, wire one global worker state and all required CMake/binding/SDK files; migrate hardcoded package/member counts to the actual complete product. Freeze and qualify genuine Release/Debug, normal/scalar products before registration acceptance. |
+| Performance follow-up | TV original-library comparison | The reference-only benchmark authoring has 330 untimed source cases and 70 fixed timing candidates. Consume actual qualified artifacts and exact wheel/SDK/source pins; finish the default-policy parity barrier before isolated one-worker samples. |
 
 Keep all other inventoried names explicitly unassigned until a bounded packet
 claims them. Repeat the process for remaining transforms/pyramids, measurements,
@@ -230,27 +229,27 @@ a fresh checkout needs those preserved artifacts before that check can pass.
 
 The next handoffs are executable in this order:
 
-1. Freeze and merge the preserved labeling contract increment after checking its
-   three-runtime evidence. Keep native-pending cases explicit, then give that
-   same worker the native packet. Footprint contracts are already merged.
-   Component-consumer contracts can be assigned independently.
-2. Keep the metrics agent on its private correctness/optimization follow-up.
-   Freeze and merge that increment after all parity/sanitizer gates. Handle
-   stateful NumPy callback policies in a separate stagewise packet; an explicit
-   fallback guard is a documented gap, not completed native parity.
-3. While those workers build or test, the integrator performs short shared
-   wiring steps, checks actual combined wheels and merges validated increments.
-   Never make independent contract/kernel work wait for an unrelated build.
-   After a safe terminal handoff, immediately give a free worker a disjoint ready
-   packet while integration or hosted measurements continue. Use the recorded
-   worker queues; do not spawn a fourth worker alongside the integrator.
-4. Register only the advertised, verified public contract, regenerate inventory,
-   then freeze its package and dispatch its original-library measurement job.
-   A private helper, original-only test, expected failure or development adapter
-   cannot satisfy the public registration gate.
-5. Return every measured regression to an owning optimization packet. Preserve
-   the complete corpus, raw samples and failed trials, then remeasure retained
-   improvements at one worker. Keep runtime-specific results separate.
+1. Worker 1 follows the two exact rank candidate runs and every earlier live
+   handle through terminal. The integrator authenticates passing whole products,
+   merges the validated rank increment and sets controlled-comparison product
+   pins only after complete source/build/runtime/SDK verification.
+2. Worker 3 sends each actual TV finite-loop binary and hash to Worker 2 as soon
+   as its ABI passes bounded controls. Worker 2 can validate that ABI while the
+   next ABI compiles. Both retain frozen prerequisites and old raw failures;
+   neither edits the other's owned source or creates another worker policy.
+3. The integrator reviews and authenticates private TV source/proofs, handles
+   shared CMake/public/SDK wiring, and promptly merges reviewable qualified
+   increments. A private whole finite loop does not establish the 330 protocol
+   cases, actual public core or complete installed SDK. Keep those gates explicit.
+4. Use genuine qualified before/after artifacts for the unchanged counts trial;
+   use an independently qualified public TV product for its fixed corpus.
+   Complete all preparation profiles before fresh isolated one-worker timing.
+   Preserve all workload IDs, raw samples and regressions.
+5. Return measured bottlenecks to their owning implementation packet, then
+   remeasure retained improvements against the same original-library baseline.
+   Continue remaining APIs, classes/state, nested namespaces, data and I/O;
+   186 accepted partial image paths and the current private TV work do not
+   satisfy the full-library objective.
 
 All active packets use their own ignored cache. An agent's handoff includes its
 live process handles; observation timeouts leave those jobs active. A finished
