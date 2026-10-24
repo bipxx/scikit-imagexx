@@ -40,6 +40,13 @@ def expected(spec):
     return frozen['observations'][frozen['profiles'][contracts.profile()]['snapshots'][spec['id']]]
 
 
+def record_observation(row):
+    path=os.environ.get('SKIMAGEXX_MAX_TREE_OBSERVATIONS')
+    if path:
+        with Path(path).open('a',encoding='utf-8',newline='\n') as stream:
+            stream.write(json.dumps(row,sort_keys=True,allow_nan=False)+'\n')
+
+
 def fixture_without_upstream(spec,actual_provided_tree=False):
     # The literal original fixture's metadata construction is retained. For the
     # five real-tree reuse rows, materialize the frozen actual-source tree bytes
@@ -103,8 +110,10 @@ def test_all_source_observations_real_stages(spec,workers,implementation,monkeyp
     observer=types.FunctionType(contracts.observe.__code__,
         dict(contracts.observe.__globals__,original=module,fixture=fixture_without_upstream))
     with forbid_original(monkeypatch):actual=observer(spec)
-    assert actual==expected(spec),spec['id']
     counts=core.max_tree_counts()
+    record_observation({'scope':'source-stages','case':spec['id'],'profile':contracts.profile(),'workers':workers,
+        'digest':contracts.digest(actual),'counts':counts,'actual_failure':actual if actual!=expected(spec) else None})
+    assert actual==expected(spec),spec['id']
     assert counts['aggregate']=={'attempted':0,'completed':0}
     for source,stage in MAP.items():
         completed=sum(row['name']==source and 'after' in row for row in actual['entries'])
@@ -215,6 +224,116 @@ def test_scalar_metadata_mutations_rejected_before_native_access(kind,entry,impl
         if entry=='aggregate':core.max_tree_run(image,output,parent,order,2,1,Mutation(),False)
         else:core.max_tree_filter_stage(image,output,parent,order,attribute,Mutation())
     assert output.tobytes()==before and core.max_tree_counts()[entry]=={'attempted':1,'completed':0}
+
+
+def test_reference_ownership_released_on_success_and_cpp_rejection(implementation):
+    _,core=implementation
+    image=np.arange(20,dtype='f4');out=image.copy();parent=np.zeros(20,dtype='i8');order=np.arange(20,dtype='i8');attribute=np.ones(20,dtype='f8')
+    values=(image,out,parent,order,attribute);before=tuple(sys.getrefcount(value) for value in values)
+    for _ in range(128):
+        core.max_tree_filter_stage(image,out,parent,order,attribute,3.)
+        parent[-1]=99
+        with pytest.raises(ValueError):core.max_tree_filter_stage(image,out,parent,order,attribute,3.)
+        parent[-1]=0
+    assert tuple(sys.getrefcount(value) for value in values)==before
+
+
+def callback_observation(module,name,action,monkeypatch,reference=False):
+    """Source-safe bounded scalar hooks; no resizing or unsafe index mutation."""
+    image=(np.arange(20,dtype='f4')%4).reshape(4,5)
+    events=[];held={};error=None;result=None
+    saved={key:getattr(module._max_tree,key) for key in contracts.ENTRIES}
+    class HookError(RuntimeError):pass
+    class Threshold:
+        def __float__(self):
+            events.append('threshold.float')
+            if action=='attribute':held['attribute'][...]=0.
+            else:held['out'][-1]=42.;raise HookError('threshold rejected after output capture')
+            return 3.
+    def wrap(key,function):
+        def call(*args):
+            if reference:
+                # All actual array/index inputs satisfy the unchanged source
+                # certificate. The only hook is known to return3 or raise;
+                # it writes bounded allocated attribute/output elements only.
+                certified=list(args)
+                if key=='_direct_filter':certified[-1]=3.
+                contracts.certify_entry(key,tuple(certified),image.shape)
+            if key=='_direct_filter':held['out']=args[1];events.append('filter.entry')
+            value=function(*args)
+            if key in ('_compute_area','_compute_extension'):
+                held['attribute']=value;events.append('attribute.done')
+            if key=='_direct_filter':events.append('filter.done')
+            return value
+        return call
+    options={'area_threshold' if name.startswith('area') else 'diameter_threshold':Threshold()}
+    with monkeypatch.context() as local:
+        for key,function in saved.items():local.setattr(module._max_tree,key,wrap(key,function))
+        with warnings.catch_warnings(record=True) as caught,np.errstate(all='warn'):
+            warnings.simplefilter('always')
+            try:result=getattr(module,name)(image,**options)
+            except Exception as exc:error={'type':type(exc).__name__,'message':str(exc)}
+    return {'events':events,'error':error,'input':contracts.array(image),
+        'attribute':contracts.array(held['attribute']) if 'attribute' in held else None,
+        'out':contracts.array(held['out']) if 'out' in held else None,
+        'result':contracts.array(result) if result is not None else None,
+        'warnings':[{'type':type(row.message).__name__,'message':str(row.message)} for row in caught]}
+
+
+@pytest.mark.parametrize('name',('area_opening','area_closing','diameter_opening','diameter_closing'))
+@pytest.mark.parametrize('action',('attribute','raise'))
+def test_actual_source_scalar_stage_order_and_current_attributes(name,action,workers,implementation,monkeypatch):
+    module,core=implementation
+    reference=callback_observation(contracts.original,name,action,monkeypatch,True)
+    core.max_tree_counts(True)
+    with forbid_original(monkeypatch):actual=callback_observation(module,name,action,monkeypatch)
+    counts=core.max_tree_counts()
+    record_observation({'scope':'bounded-scalar-provider','case':name+'/'+action,'profile':contracts.profile(),
+        'workers':workers,'reference':reference,'actual':actual,'counts':counts})
+    assert actual==reference
+    assert counts['aggregate']=={'attempted':0,'completed':0}
+    assert counts['filter']=={'attempted':1,'completed':int(action!='raise')}
+    assert counts['extension' if name.startswith('diameter') else 'area']['completed']==1
+
+
+@pytest.mark.parametrize('name',('area_closing','diameter_closing'))
+def test_actual_inversion_provider_data_with_provided_tree(name,workers,implementation,monkeypatch):
+    module,core=implementation
+    spec=next(row for row in NUMERIC if row['function']==name and row.get('reuse')=='both')
+    def run(owner,reference):
+        passed,image,_,options,_=fixture_without_upstream(spec,True)
+        source_subtract=np.subtract;calls=[]
+        def subtract(*args,**kwargs):
+            result=source_subtract(*args,**kwargs);calls.append(contracts.array(result))
+            if len(calls)==1:
+                # Positive monotone scaling preserves the frozen provided tree,
+                # but changes actual inverted pixels consumed by the filter.
+                # Use float input to keep all values finite and exact.
+                result[...] = result*result.dtype.type(.5)
+            return result
+        image=image.astype('f4');passed=image
+        saved={key:getattr(owner._max_tree,key) for key in contracts.ENTRIES}
+        def guarded(key,function):
+            def call(*args):
+                if reference:contracts.certify_entry(key,args,image.shape)
+                return function(*args)
+            return call
+        with monkeypatch.context() as local:
+            local.setattr(np,'subtract',subtract)
+            if reference:
+                for key,function in saved.items():local.setattr(owner._max_tree,key,guarded(key,function))
+            result=getattr(owner,name)(passed,**options)
+        return {'result':contracts.array(result),'calls':calls,'parent':contracts.array(options['parent']),
+                'traverser':contracts.array(options['tree_traverser'])}
+    # The uint8 inversion tree is also the tree of1-float(image): both reverse
+    # exactly the same finite plateau ordering, so the provided indices remain
+    # source-certified. Positive scaling leaves that ordering unchanged.
+    reference=run(contracts.original,True);core.max_tree_counts(True)
+    with forbid_original(monkeypatch):actual=run(module,False)
+    assert actual==reference
+    assert len(actual['calls'])==2 and core.max_tree_counts()['filter']['completed']==1
+    record_observation({'scope':'inversion-provider','case':name,'profile':contracts.profile(),'workers':workers,
+        'reference':reference,'actual':actual,'counts':core.max_tree_counts()})
 
 
 @pytest.mark.parametrize('name',contracts.NAMES[1:])
