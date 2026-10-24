@@ -94,4 +94,5 @@ coverage/evidence/tv-bregman-benchmark-source-migration.json -text
 coverage/evidence/released-build-cache-cleanup-20261024.json -text
 coverage/evidence/current-private-increments-root-review.json -text
 coverage/evidence/matrix-transform-public-assertion-migration.json -text
+tests/cmake_consumer/max_tree_source_oracle.bin -text
 coverage/evidence/matrix-final-hosted-private.json -text
