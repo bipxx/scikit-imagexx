@@ -6,7 +6,8 @@ ROOT=Path(__file__).resolve().parents[1]
 PROFILES=('windows','modern','minimum')
 RUNTIME_SOURCE_PINS={
     'src/max_tree.cpp':'1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135',
-    'include/skimagexx/max_tree.hpp':'7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6',
+    # a567 public header: authenticated comment-only evolution from private7d662.
+    'include/skimagexx/max_tree.hpp':'60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',
     'src/simd_max_tree_avx2.cpp':'2bdb72ade563581161038b8cf32260c6330e028e938590c7a382dc7c5fa92de4',
     'src/max_tree_stages.hpp':'8afefbbdfe06282b5524607c4a5a831ceaeddb59cf75047e33fbbaabee125184',
     'src/max_tree_stages.cpp':'d1961c7d0b4dd0940a765e76e7fb6f64aee8edfcfb3255c69b4e030f3b42d9e6',

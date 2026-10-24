@@ -363,3 +363,11 @@ def test_prior_closing_allocation_source_is_not_admitted(tmp_path):
     value=synthetic_certificate();value['max_tree_runtime_source_sha256']['python/skimagexx/_max_tree.py']='faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53'
     path=write(tmp_path/'old-source.json',value)
     with pytest.raises(RuntimeError,match='runtime source differs'):a.certificate(path,a.sha(path),'7'*40)
+
+
+def test_private_header_source_pin_cannot_admit_public_product(tmp_path):
+    value=synthetic_certificate()
+    value['max_tree_runtime_source_sha256']['include/skimagexx/max_tree.hpp']='7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6'
+    path=write(tmp_path/'private-header-source.json',value)
+    with pytest.raises(RuntimeError,match='runtime source differs'):
+        a.certificate(path,a.sha(path),'7'*40)
