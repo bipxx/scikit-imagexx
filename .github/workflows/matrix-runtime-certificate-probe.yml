@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           python tools/matrix_runtime_certificate_probe.py plan --output build/matrix-certificate-probe
-      - name: Exact failed artifact and unchanged helper; no image or matmul call
+      - name: Exact failed artifact and unchanged helper; no explicit image or matmul request
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}

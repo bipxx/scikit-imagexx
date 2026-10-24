@@ -1,7 +1,8 @@
 """Artifact-only, NEW HOST metadata diagnosis; never image/native acceptance.
 
-The frozen helper is traced, not patched. No matrix, BLAS arithmetic, build,
-installation, numerical calibration, thread setter or CPU forcing is executed.
+The frozen helper is traced, not patched. The probe makes no explicit image,
+matmul/BLAS arithmetic, build, numerical calibration, thread-setter or CPU-force
+requests. Original package imports retain their ordinary initialization.
 """
 from __future__ import annotations
 import argparse,ast,base64,csv,ctypes,hashlib,importlib,inspect,io,json,os
@@ -43,6 +44,21 @@ def safe_member(name):
     p=PurePosixPath(name)
     require(bool(p.parts) and not p.is_absolute() and '..' not in p.parts and '\\' not in name and ':' not in name,'archive path escape')
     return p
+
+
+def verify_helper_bytes(raw):
+    require(H(raw)==HELPER_RAW_SHA,'raw frozen Windows helper differs')
+    require(H(raw.replace(b'\r\n',b'\n'))==HELPER_SHA,'canonical frozen helper differs')
+
+
+def verify_admission_imports(qsource):
+    """Authenticate the context from donor source, not the controller tree."""
+    tree=ast.parse(qsource)
+    admission=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='admission')
+    tuples=[n.iter for n in ast.walk(admission) if isinstance(n,ast.For) and isinstance(n.iter,ast.Tuple)]
+    candidates=[ast.literal_eval(n) for n in tuples
+                if any(isinstance(e,ast.Constant) and e.value=='_matrix_transform' for e in n.elts)]
+    require(candidates==[ADMISSION_IMPORTS],'frozen admission import order differs')
 
 
 def wheel_records(raw):
@@ -108,8 +124,8 @@ def extract_inputs(raw,out):
         with zipfile.ZipFile(io.BytesIO(source)) as archive:
             require(archive.comment.decode()==FAILED_SOURCE,'source identity differs')
             frozen=archive.read('python/skimagexx/_matrix_transform.py')
-            require(H(frozen)==HELPER_RAW_SHA,'raw frozen Windows helper differs')
-            require(H(frozen.replace(b'\r\n',b'\n'))==HELPER_SHA,'frozen helper differs')
+            verify_helper_bytes(frozen)
+            verify_admission_imports(archive.read('tools/public_qualification.py'))
         native=[n for n,r in index.items() if n.startswith(PREFIX+'product-wheels/') and n.endswith('.whl') and r['sha256']==WHEEL_SHA]
         require(len(native)==1,'exact built wheel absent')
         inputs={native[0]:dict(sha256=WHEEL_SHA,kind='failed-built-product')}
@@ -131,7 +147,7 @@ def extract_inputs(raw,out):
                     target=site/safe_member(relative);target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(wheel.read(relative))
                     files[relative]=row
         helper=(site/'skimagexx/_matrix_transform.py').read_bytes()
-        require(H(helper)==HELPER_RAW_SHA and H(helper.replace(b'\r\n',b'\n'))==HELPER_SHA,'extracted helper differs')
+        verify_helper_bytes(helper)
         receipt=dict(donor_run=FAILED_RUN,donor_source=FAILED_SOURCE,donor_outer_sha256=ARTIFACT_SHA,all_members=index,
             source_zip_sha256=H(source),inputs=inputs,files=files,package=package,status='FAILED_ORIGINAL_PRODUCT_NOT_ACCEPTED')
         dump(out/'input-authentication.json',receipt)
@@ -152,7 +168,7 @@ def safe_value(value):
 def trace_natural_profile(wrapper):
     """Trace exact unmodified metadata code and its FIRST natural return."""
     source=Path(wrapper.__file__).resolve();lines=source.read_text().splitlines();events=[]
-    wanted=('key','pin','names','path','origin','description','actual','corename','identities','version','digest')
+    wanted=('key','pin','names','path','origin','description','actual','corename','identities','version','digest','n','u','handle')
     previous=sys.gettrace();require(previous is None,'external tracer would change diagnostic context')
     def trace(frame,event,arg):
         if frame.f_code.co_name not in METADATA_FUNCTIONS:return None
@@ -214,7 +230,7 @@ def certificate_payload(wrapper,np):
 
 
 def probe(out):
-    """NEW HOST only; no images, array construction, matmul or thread setters."""
+    """NEW HOST; no explicit image/matmul requests, ordinary imports unchanged."""
     require(os.name=='nt' and sys.version_info[:3]==(3,13,16) and struct.calcsize('P')==8,'exact Windows CP313.16 host required')
     env={k:os.environ.get(k) for k in ENV_KEYS}
     dump(out/'environment-before-import.json',dict(environment=env,new_host=True,original_failed_host=False))
@@ -237,7 +253,7 @@ def probe(out):
     require(Path(np.__file__).resolve()==site/'numpy/__init__.py','wrong NumPy origin')
     require(file_record(xx._core.__file__)['sha256']==auth['package']['members_sha256'][auth['package']['sole_core']],'wrong core bytes')
     helper=Path(wrapper.__file__).read_bytes()
-    require(H(helper)==HELPER_RAW_SHA and H(helper.replace(b'\r\n',b'\n'))==HELPER_SHA,'helper changed')
+    verify_helper_bytes(helper)
     before=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed())
     payload=certificate_payload(wrapper,np)
     observation=dict(scope='NEW HOST METADATA ONLY; NEVER original failed-host provenance or native acceptance',
@@ -252,7 +268,7 @@ def probe(out):
         legacy_interface=xx._core.matrix_transform_interface,legacy_capabilities=xx._core.matrix_transform_capabilities,
         v2_interface=xx._core.matrix_transform_v2_interface,v2_capabilities=xx._core.matrix_transform_v2_capabilities)
     after=(xx._core.matrix_transform_completed(),xx._core.matrix_transform_v2_completed())
-    require(before==after==(0,0),'image/native arithmetic executed unexpectedly')
+    require(before==after==(0,0),'matrix completion counter changed unexpectedly')
     observation['counter_after']=after
     # Rehash all input wheel files after imports; new caches are neither inputs
     # nor silently substituted source. No fixture/native algorithm is executed.
