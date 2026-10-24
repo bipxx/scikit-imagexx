@@ -54,7 +54,7 @@ def test_source_signatures_canonical_exports_and_generic_handoff():
     assert len(source_wrapper._GENERIC_FUNCTIONS)==17
     assert source_wrapper._PERCENTILE_FUNCTIONS==NAMES
     assert not set(NAMES)&set(source_wrapper._GENERIC_FUNCTIONS)
-    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+NAMES)
+    assert source_wrapper.__all__==list(source_wrapper._GENERIC_FUNCTIONS+NAMES+source_wrapper._BILATERAL_FUNCTIONS)
     for name in NAMES:assert inspect.signature(getattr(source_wrapper,name))==inspect.signature(getattr(reference,name))
     assert not hasattr(source_wrapper,'equalize_percentile')
     assert reference.percentile is contracts.percentile_module.percentile

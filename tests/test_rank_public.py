@@ -107,8 +107,10 @@ def test_pending_r2_alias_is_explicit_safely_rejected(name):
 
 def test_unported_names_preserve_policy_and_are_not_native_aliases():
     assert len(RANK_CANONICAL_FUNCTIONS)==len(rank.__all__)
-    expected_aliases={'filters.rank.generic.'+name:'filters.rank.'+name for name in rank.__all__
-                      if hasattr(reference_generic,name) and getattr(reference_generic,name) is getattr(reference,name)}
+    expected_aliases={f'filters.rank.{module}.'+name:'filters.rank.'+name
+                      for module in ('generic','bilateral') for name in rank.__all__
+                      if hasattr(importlib.import_module('skimage.filters.rank.'+module),name)
+                      and getattr(importlib.import_module('skimage.filters.rank.'+module),name) is getattr(reference,name)}
     assert RANK_IDENTITY_ALIASES==expected_aliases
     assert 'majority' not in rank.__all__ and 'majority' not in generic.__all__
     image=np.arange(35,dtype=np.uint8).reshape(5,7);fp=np.ones((3,3),np.uint8)
@@ -122,7 +124,14 @@ def test_unported_names_preserve_policy_and_are_not_native_aliases():
 
 
 def test_fresh_process_native_imports_without_scikit_image():
-    script=r'''
+    # Derive aliases from pinned ORIGINAL parent references independently of
+    # the native registry. Canonical-only percentile/bilateral names must not
+    # acquire generic attributes merely because they are native callables.
+    expected_generic=tuple(name for name in rank.__all__
+                           if hasattr(reference_generic,name)
+                           and getattr(reference_generic,name) is getattr(reference,name))
+    assert len(expected_generic)==17
+    script="expected_generic="+repr(expected_generic)+"\n"+r'''
 import importlib.abc,sys
 class NoUpstream(importlib.abc.MetaPathFinder):
     def find_spec(self,fullname,path=None,target=None):
@@ -141,12 +150,25 @@ xx.set_fallback_enabled(False)
 image=np.arange(35,dtype=np.uint8).reshape(5,7)
 for workers in (1,4):
     xx.set_num_threads(workers)
+    assert xx.get_num_threads()==workers
     for name in rank.__all__:
-        assert getattr(rank,name) is getattr(generic,name) is getattr(_rank,name)
+        function=getattr(rank,name)
+        assert function is getattr(_rank,name)
+        if name in expected_generic:
+            assert function is getattr(generic,name)
+        else:
+            assert name not in generic.__dict__ and name not in generic.__all__
         expected=image.shape+(int(image.max())+1,) if name=='windowed_histogram' else image.shape
-        assert getattr(rank,name)(image,np.ones((3,3),np.uint8)).shape==expected
+        assert function(image,np.ones((3,3),np.uint8)).shape==expected
+    if 'mean_bilateral' in rank.__all__:
+        import skimagexx.filters.rank.bilateral as bilateral
+        assert bilateral is rank.bilateral
+        assert bilateral.__all__==['mean_bilateral','pop_bilateral','sum_bilateral']
+        for name in bilateral.__all__:
+            assert getattr(bilateral,name) is getattr(rank,name)
+            assert getattr(bilateral,name)(image,np.ones((3,3),np.uint8)).shape==image.shape
 assert not any(n=='skimage' or n.startswith('skimage.') for n in sys.modules)
-print('native nested imports/default1/shared core/workers1+4 passed without skimage')
+print('native canonical/default1/shared core/workers1+4, independent17generic aliases passed without skimage')
 '''
     result=subprocess.run([sys.executable,'-c',script],capture_output=True,text=True,env=os.environ.copy())
     assert result.returncode==0,(result.stdout,result.stderr)

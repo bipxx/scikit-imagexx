@@ -30,7 +30,7 @@
   },
   "source_contract_sha256": "a2f499256e08e94e5e63e29a05ce8e20586e33718161351fd3cec71e761b5c14",
   "fixture_source_sha256": {
-    "tests/test_rank_bilateral_contracts.py": "2ca00afc72408e79303472c9a8ce814a9be60b7aa5c79cc9698e318a93536f52",
+    "tests/test_rank_bilateral_contracts.py": "9fb6411bb69a92bbc40bc4ebab37f553328476a19d010c895ea7c0c2dc9d1f16",
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368"
   },
   "reference_functions": {

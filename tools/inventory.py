@@ -9,7 +9,7 @@ import skimage
 import numpy as np
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract, class_metadata_providers
 
-MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.generic', 'future',
+MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.bilateral', 'filters.rank.generic', 'future',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
            'restoration', 'segmentation', 'transform', 'util')
 
@@ -36,6 +36,9 @@ for _names, _test, _benchmark in (
     (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.generic')
            for name in ('geometric_mean','noise_filter','subtract_mean','windowed_histogram')),
      'tests/test_rank_statistics_public.py','benchmarks/rank_statistics.py'),
+    (tuple(namespace+'.'+name for namespace in ('filters.rank','filters.rank.bilateral')
+           for name in ('mean_bilateral','pop_bilateral','sum_bilateral')),
+     'tests/test_rank_bilateral_public.py','benchmarks/rank_bilateral.py'),
     (tuple('filters.rank.'+name for name in ('autolevel_percentile', 'enhance_contrast_percentile', 'gradient_percentile', 'mean_percentile', 'pop_percentile', 'subtract_mean_percentile', 'threshold_percentile', 'sum_percentile', 'percentile')),
      'tests/test_rank_percentile_public.py','benchmarks/rank_percentile.py'),
 ):
@@ -116,7 +119,7 @@ def inventory():
                             'execution_kind': execution_kind(path) if path in native else 'upstream',
                             'parity_test': evidence[0] if path in native else None,
                             'benchmark': evidence[1] if path in native else None})
-            if module=='filters.rank.generic':
+            if module in ('filters.rank.generic','filters.rank.bilateral'):
                 canonical=getattr(importlib.import_module('skimage.filters.rank'),name)
                 if value is not canonical:raise ValueError(f'Rank alias identity changed: {path}')
                 entries[-1]['alias_of']='filters.rank.'+name

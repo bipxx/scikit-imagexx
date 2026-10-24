@@ -520,8 +520,9 @@ _BILATERAL_SCOPE_DOC="""Apply a qualified native 2D bilateral rank filter.
 
 Bounded source-qualified uint8/uint16 neighborhoods, conversions and feedback
 forms are supported. Unqualified or unsafe native scopes raise
-NotImplementedError. Namespace/public registration requires separate wiring.
+NotImplementedError. Qualified masked centers and feedback obey explicit native safety certificates.
 """
 for _bilateral_name in _BILATERAL_FUNCTIONS:
     globals()[_bilateral_name].__doc__=_BILATERAL_SCOPE_DOC
 del _bilateral_name
+__all__+=list(_BILATERAL_FUNCTIONS)

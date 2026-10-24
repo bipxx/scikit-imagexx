@@ -1,7 +1,8 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'segmentation': ('clear_border','relabel_sequential'),
-    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile'),
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral'),
+    'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
@@ -33,7 +34,9 @@ def native_functions():
 
 
 RANK_CANONICAL_FUNCTIONS=tuple('filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank'])
-RANK_IDENTITY_ALIASES={'filters.rank.generic.'+name:'filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank.generic']}
+RANK_IDENTITY_ALIASES={module+'.'+name:'filters.rank.'+name
+                       for module in ('filters.rank.generic','filters.rank.bilateral')
+                       for name in NATIVE_FUNCTIONS[module]}
 
 
 def rank_contract(api):
@@ -41,6 +44,22 @@ def rank_contract(api):
     canonical=RANK_IDENTITY_ALIASES.get(api,api)
     if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
     name=canonical.rsplit('.',1)[1]
+    bilateral=('mean_bilateral','pop_bilateral','sum_bilateral')
+    if name in bilateral:
+        return dict(version='rank-bilateral-v1',canonical=canonical,
+            identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
+            implementation='cpp-rolling-histogram-runtime-simd',operation=26+bilateral.index(name),
+            capability=0x1c000000,interface='rank_bilateral_interface',
+            arithmetic='Strict g-s1<i<g+s0 occupied-bin count/weighted sums, signed integer division and raw unsigned/bool stores; no reassociation',
+            providers='Own C++ histogram/conversion foundations; NumPy metadata and structural output operations. Buffers/char shifts precede s0/s1 index hooks; no upstream image algorithm forwarding',
+            workers='Sole process-global native worker limit, default one; optional parallel workers, serial certified feedback',
+            buffers='Source-qualified 2D prepared buffers, captured-bin-safe radii, permanent masked centers and certified same-word feedback; unsafe scopes explicitly rejected',
+            protocol_scope='Frozen708/96 plus680 zero-population and396 masked-center observations; unrepresented mutation/feedback scopes remain unassessed',
+            public_parity_test='tests/test_rank_bilateral_public.py',
+            frozen_contract='coverage/contracts/rank-bilateral.json',
+            public_contract='coverage/contracts/rank-bilateral-public.json',
+            masked_center_public_test='tests/test_rank_bilateral_masked_center_public.py',
+            parity_evidence=None,performance_evidence=None)
     percentiles=('autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile',
                  'pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile')
     if name in percentiles:
