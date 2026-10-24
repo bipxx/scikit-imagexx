@@ -100,3 +100,6 @@ coverage/evidence/max-tree-benchmark-reference.json -text
 coverage/evidence/tv-cursor-comparison-controller.json -text
 coverage/evidence/tv-cursor-comparison-dispatch.json -text
 coverage/evidence/merged-tv-publisher-worktree-cleanup-20261024.json -text
+benchmarks/tv-chambolle-cursor-comparison.csv -text
+benchmarks/tv-chambolle-cursor-comparison-raw.zip -text
+coverage/evidence/tv-chambolle-cursor-performance.json -text
