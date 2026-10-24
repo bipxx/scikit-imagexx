@@ -17,6 +17,9 @@ def load(name,path):
     return module
 
 
+if 'SKIMAGEXX_RANK_PERCENTILE_BACKEND' not in os.environ and importlib.util.find_spec('_rank_percentile_core') is None:
+    pytest.skip('Private compiled fixture _rank_percentile_core unavailable; supplementary private tests are not public parity',allow_module_level=True)
+
 contracts=load('rank_percentile_private_contracts',Path(__file__).with_name('test_rank_percentile_contracts.py'))
 core=importlib.import_module(os.environ.get('SKIMAGEXX_RANK_PERCENTILE_BACKEND','_rank_percentile_core'))
 shell=load('skimagexx._rank_percentile_private_shell',Path(__file__).parents[1]/'python/skimagexx/_rank.py');shell._core=core
