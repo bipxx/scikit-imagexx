@@ -19790,7 +19790,7 @@
   ],
   "fixture_source_sha256": {
     "tests/test_rank_neighborhood_contracts.py": "3e4ed988044f8222acf1808c5e39b0fb8e82c982b23e83c9b18d1595bc097368",
-    "tests/test_rank_statistics_contracts.py": "0105e2ade22e8b555df8944dd20f3bc124031f2a5ba287b0d93a8395d2b32212"
+    "tests/test_rank_statistics_contracts.py": "6a9b382a6df14f2b6a6e3de4dfdbdc56e9eebf28098fa621b0cabfad56c38e53"
   },
   "identity_aliases": [
     "filters.rank.generic.geometric_mean",
