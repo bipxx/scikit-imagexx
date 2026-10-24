@@ -43,7 +43,8 @@ def test_own_wrapper_identity_signature_and_registry(name):
     assert getattr(rank,name) is not getattr(reference,name)
     assert getattr(reference_generic,name) is getattr(reference,name)
     assert inspect.signature(getattr(rank,name))==inspect.signature(getattr(reference,name))
-    assert rank.__all__==generic.__all__==_rank.__all__
+    assert rank.__all__==_rank.__all__
+    assert generic.__all__==[n for n in rank.__all__ if n in reference_generic.__all__]
     assert rank.__all__[:len(NAMES)]==list(NAMES)
     assert tuple('filters.rank.'+n for n in rank.__all__)==RANK_CANONICAL_FUNCTIONS
     assert _rank._core is _core
@@ -140,7 +141,8 @@ for workers in (1,4):
     xx.set_num_threads(workers)
     for name in rank.__all__:
         assert getattr(rank,name) is getattr(generic,name) is getattr(_rank,name)
-        assert getattr(rank,name)(image,np.ones((3,3),np.uint8)).shape==image.shape
+        expected=image.shape+(int(image.max())+1,) if name=='windowed_histogram' else image.shape
+        assert getattr(rank,name)(image,np.ones((3,3),np.uint8)).shape==expected
 assert not any(n=='skimage' or n.startswith('skimage.') for n in sys.modules)
 print('native nested imports/default1/shared core/workers1+4 passed without skimage')
 '''

@@ -9,6 +9,7 @@
 using namespace skimagexx;
 void require(bool ok){if(!ok)throw std::runtime_error("rank statistics native check failed");}
 int main(){
+ require(get_num_threads()==1);
  require(rank_histogram_capabilities()==8191 && rank_alias_capabilities()==480);
  require(rank_statistics_capabilities()==0xe000 && rank_vector_capabilities()==0x10000);
  std::array<std::uint8_t,6> image{0,1,3,7,15,0},fp{1,1,1,1,1,1};
@@ -26,7 +27,13 @@ int main(){
  std::uint8_t one=1;std::vector<unsigned char> a(n*7*4+3,0xa5),b(a.size(),0xa5);
  v.image=large.data();v.footprint=&one;v.shape={1,513,519};v.footprint_shape={1,1,1};v.center={0,0,0};v.output_type=PixelType::float32;v.output_strides={0,519*7*4,7*4};
  v.output=a.data()+1;set_num_threads(1);rank_windowed_histogram_into(v,7);
- v.output=b.data()+1;set_num_threads(4);rank_windowed_histogram_into(v,7);require(a==b);require(a.front()==0xa5 && a.back()==0xa5);
+ v.output=b.data()+1;
+#ifdef _OPENMP
+ set_num_threads(4);
+#else
+ rejected([&]{set_num_threads(4);});require(get_num_threads()==1);
+#endif
+ rank_windowed_histogram_into(v,7);require(a==b);require(a.front()==0xa5 && a.back()==0xa5);
  for(std::size_t p=0;p<n;++p)for(std::size_t c=0;c<7;++c){float value;std::memcpy(&value,a.data()+1+(p*7+c)*4,4);require(value==(c==large[p] ? 1.f:0.f));}
  set_num_threads(1);std::cout<<"rank statistics native checks passed\n";
 }

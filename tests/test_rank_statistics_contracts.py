@@ -173,8 +173,10 @@ def snapshot():
 def frozen():return json.loads(MATRIX.read_text())
 
 
-def test_source_integrity_safety_and_explicit_native_pending(frozen):
+def test_source_integrity_safety_and_original_only_capture(frozen):
     assert frozen['pinned_skimage']==skimage.__version__=='0.26.0'
+    # These are historical reference-capture facts. Current public execution
+    # below supplies native evidence without rewriting the original snapshot.
     assert frozen['native_checks']==0 and frozen['native_pending']==len(CASES)
     assert len({key for key,_,_ in CASES})==len(CASES)==frozen['canonical_cases']
     assert text_sha(Path(__file__).with_name('test_rank_neighborhood_contracts.py'))==frozen['fixture_source_sha256']
@@ -203,13 +205,13 @@ def test_original_frozen_contract(case,namespace,frozen):
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('namespace',('filters.rank','filters.rank.generic'))
 @pytest.mark.parametrize('case',CASES,ids=[c[0] for c in CASES])
-def test_strict_pending_never_counts_forwarding(case,namespace,workers):
-    _,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
+def test_public_native_preserves_frozen_contract(case,namespace,workers,frozen):
+    key,name,parameters=case;policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
     try:
-        if 'filters.rank.'+name in native_functions():pytest.skip('native transition requires separately sealed actual public implementation proof')
+        assert 'filters.rank.'+name in native_functions()
+        assert namespace+'.'+name in native_functions()
         actual=observe(getattr(importlib.import_module('skimagexx.'+namespace),name),name,parameters)
-        assert actual['error']['type']=='NotImplementedError' and 'fallback is disabled' in actual['error']['message']
-        assert actual['result'] is None and not actual['warnings'] and actual['before']==actual['after']
+        assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],key
     finally:xx.set_num_threads(threads);xx.set_fallback_enabled(policy)
 
 
