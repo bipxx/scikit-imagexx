@@ -24,7 +24,7 @@ import inspect
 import json
 import os
 import platform
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import runpy
 import shutil
@@ -806,6 +806,74 @@ def validate_metrics(path):
             require(set(row.get('actual_scalar_by_workers',{})) == {'1','4'}, 'metrics scalar not checked at both workers')
 
 
+def windows_toolchain_model(cache_text, compiler_text, project_text, config):
+    """Read actual CMake/MSVC output; do not infer a toolset from a year label."""
+    cache = dict(re.findall(r'^([^#/\n:=]+):[^=\n]+=(.*)$', cache_text, re.M))
+    compiler = dict(re.findall(r'^set\(\s*(\w+)\s+"?([^"\n)]*?)"?\s*\)', compiler_text, re.M))
+    generator = cache.get('CMAKE_GENERATOR','')
+    require(re.fullmatch(r'Visual Studio \d+ .+',generator) is not None, 'sealed Windows wheel must expose its actual Visual Studio toolchain')
+    require(compiler.get('CMAKE_CXX_COMPILER_ID') == 'MSVC', 'sealed Windows compiler is not MSVC')
+    architecture = compiler.get('CMAKE_CXX_COMPILER_ARCHITECTURE_ID') or compiler.get('MSVC_CXX_ARCHITECTURE_ID')
+    require(architecture == cache.get('CMAKE_GENERATOR_PLATFORM') == 'x64', 'sealed Windows architecture must be x64')
+    executable = compiler.get('CMAKE_CXX_COMPILER','')
+    tool = re.search(r'[/\\]MSVC[/\\](\d+\.\d+\.\d+(?:\.\d+)?)[/\\]bin[/\\]Host(x64|x86)[/\\]x64[/\\]cl\.exe$',executable,re.I)
+    require(tool is not None, 'cannot authenticate exact MSVC toolset/host from compiler path')
+    require(bool(compiler.get('CMAKE_CXX_COMPILER_VERSION')), 'sealed compiler version absent')
+    instance = cache.get('CMAKE_GENERATOR_INSTANCE','')
+    require(instance and PureWindowsPath(executable).is_relative_to(PureWindowsPath(instance)), 'compiler is outside sealed Visual Studio instance')
+    project = ET.fromstring(project_text)
+    def tag(node):return node.tag.rsplit('}',1)[-1]
+    platform_toolsets=set(); runtimes=set()
+    for group in project:
+        condition=group.get('Condition','').replace(' ','')
+        if '==' not in condition or condition.split('==',1)[1].strip("'\"") != config+'|x64':continue
+        for node in group.iter():
+            if tag(node)=='PlatformToolset' and node.text:platform_toolsets.add(node.text)
+            if tag(node)=='RuntimeLibrary' and node.text:runtimes.add(node.text)
+    require(len(platform_toolsets)==1 and len(runtimes)==1, 'sealed platform toolset/runtime ambiguous or absent')
+    platform_toolset=platform_toolsets.pop();runtime=runtimes.pop()
+    require(re.fullmatch(r'v\d+',platform_toolset) is not None, 'unrecognized sealed platform toolset')
+    require(runtime in ('MultiThreaded','MultiThreadedDLL','MultiThreadedDebug','MultiThreadedDebugDLL'), 'unrecognized sealed MSVC runtime')
+    return dict(generator=generator,instance=instance,architecture=architecture,compiler=executable,
+                compiler_version=compiler['CMAKE_CXX_COMPILER_VERSION'],toolset_version=tool.group(1),
+                host_architecture=tool.group(2).lower(),platform_toolset=platform_toolset,runtime=runtime,config=config)
+
+
+def read_windows_toolchain(build, config, target='skimagexx'):
+    compiler_files=list((build/'CMakeFiles').glob('*/CMakeCXXCompiler.cmake'))
+    require(len(compiler_files)==1,'successful wheel/compiler provenance missing or ambiguous')
+    paths=[build/'CMakeCache.txt',compiler_files[0],build/(target+'.vcxproj')]
+    model=windows_toolchain_model(*(p.read_text(encoding='utf-8-sig') for p in paths),config)
+    compiler=Path(model['compiler']).resolve(strict=True)
+    require(compiler.is_file(),'sealed MSVC compiler no longer available')
+    model['compiler']=str(compiler);model['compiler_sha256']=sha(compiler)
+    model['evidence']={p.relative_to(build).as_posix():sha(p) for p in paths}
+    return model
+
+
+def select_visual_studio(model, capabilities, instances):
+    candidates=[g for g in capabilities.get('generators',[]) if g.get('name')==model['generator']]
+    require(len(candidates)==1 and candidates[0].get('platformSupport') and candidates[0].get('toolsetSupport'), 'sealed Visual Studio generator unavailable in actual CMake')
+    require(model['architecture'] in candidates[0].get('supportedPlatforms',[]), 'sealed architecture unavailable in actual CMake generator')
+    matching=[i for i in instances if i.get('isComplete') is True and i.get('isLaunchable') is True
+              and PureWindowsPath(i.get('installationPath',''))==PureWindowsPath(model['instance'])]
+    require(len(matching)==1,'sealed Visual Studio instance unavailable or ambiguous')
+    instance=matching[0]
+    major=re.fullmatch(r'Visual Studio (\d+) .+',model['generator']).group(1)
+    require(str(instance.get('installationVersion','')).split('.')[0]==major,'sealed generator and installed instance version mismatch')
+    require(PureWindowsPath(model['compiler']).is_relative_to(PureWindowsPath(instance['installationPath'])), 'sealed compiler belongs to another instance')
+    return dict(generator=model['generator'],instance=instance['installationPath'],
+                installation_version=instance['installationVersion'],architecture=model['architecture'],runtime=model['runtime'],
+                toolset=model['platform_toolset']+',version='+model['toolset_version']+',host='+model['host_architecture'])
+
+
+def require_same_windows_toolchain(wheel, sdk_model):
+    for key in ('generator','architecture','compiler_version','toolset_version','host_architecture','platform_toolset','runtime','compiler_sha256'):
+        require(wheel[key]==sdk_model[key], 'SDK/wheel toolchain mismatch: '+key)
+    for key in ('instance','compiler'):
+        require(PureWindowsPath(wheel[key])==PureWindowsPath(sdk_model[key]), 'SDK/wheel toolchain mismatch: '+key)
+
+
 def sdk(out, state, journal):
     prefix = out / 'relocated sdk'; prefix.mkdir(); record = json.loads((out / 'package.json').read_text())
     for name, digest in record['SDK_sha256'].items():
@@ -822,8 +890,27 @@ def sdk(out, state, journal):
                  '-DCMAKE_PREFIX_PATH=' + str(prefix), '-DSKIMAGEXX_EXPECT_PREFIX=' + str(prefix), '-DSKIMAGEXX_EXPECT_OPENMP=ON',
                  '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF', '-DCMAKE_DISABLE_FIND_PACKAGE_Python=ON', '-DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON']
     if os.name == 'nt':
-        configure += ['-G', 'Visual Studio 17 2022']
+        wheel_toolchain=read_windows_toolchain(out/'native-build',config)
+        vswhere=shutil.which('vswhere')
+        if vswhere is None:
+            program_files=os.environ.get('ProgramFiles(x86)')
+            require(program_files is not None,'vswhere location unavailable')
+            vswhere=str(Path(program_files)/'Microsoft Visual Studio/Installer/vswhere.exe')
+        require(Path(vswhere).is_file(),'vswhere executable unavailable')
+        must_run(journal,'toolchain-cmake-capabilities',[cmake,'-E','capabilities'],env)
+        must_run(journal,'toolchain-visual-studio-instances',[vswhere,'-all','-products','*','-format','json','-utf8'],env)
+        capabilities=json.loads((out/'toolchain-cmake-capabilities.log').read_text(encoding='utf-8-sig'))
+        instances=json.loads((out/'toolchain-visual-studio-instances.log').read_text(encoding='utf-8-sig'))
+        selection=select_visual_studio(wheel_toolchain,capabilities,instances)
+        dump(out/'windows-sdk-selection.json',dict(wheel=wheel_toolchain,selection=selection,
+             capabilities_sha256=sha(out/'toolchain-cmake-capabilities.log'),instances_sha256=sha(out/'toolchain-visual-studio-instances.log')))
+        configure += ['-G',selection['generator'],'-A',selection['architecture'],'-T',selection['toolset'],
+                      '-DCMAKE_GENERATOR_INSTANCE='+selection['instance'],'-DCMAKE_MSVC_RUNTIME_LIBRARY='+selection['runtime']]
     must_run(journal, 'sdk-configure', configure, env)
+    if os.name == 'nt':
+        sdk_toolchain=read_windows_toolchain(build,config,FAMILIES[0]+'_consumer')
+        require_same_windows_toolchain(wheel_toolchain,sdk_toolchain)
+        dump(out/'windows-sdk-toolchain-verification.json',dict(wheel=wheel_toolchain,sdk=sdk_toolchain,matched=True))
     must_run(journal, 'sdk-build', [cmake, '--build', build, '--config', config, '--parallel', '2', '--target', *[f + '_consumer' for f in FAMILIES]], env)
     pattern = '^installed_(' + '|'.join(FAMILIES) + ')_consumer$'
     must_run(journal, 'sdk-list', [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--show-only=json-v1'], env)
