@@ -254,7 +254,7 @@ def gnu(native, cache, info, capture):
     all_args = [a for row in units for a in row['argv']]
     require(not any(a.startswith(('-B','-specs','--specs','--sysroot','-isysroot','-fuse-ld=','-fplugin=','-wrapper')) for a in all_args), 'custom compiler tool/header routing needs an explicit capture provider')
     for role, name in [('backend','cc1plus'),('assembler','as'),('linker','ld'),('link_driver','collect2'),('archiver','ar'),('ranlib','ranlib')]:
-        resolved = capture.query('resolve-'+role, [compiler, '-print-prog-name='+name], native)
+        resolved = capture.query('resolve-'+role.replace('_','-'), [compiler, '-print-prog-name='+name], native)
         selected = Path(resolved) if Path(resolved).is_absolute() else Path(shutil.which(resolved) or '')
         require(selected.is_absolute(), 'unresolved actual compiler tool: '+name); actual(selected);binaries[role] = str(selected)
     if cache.get('CMAKE_STRIP'):actual(cache['CMAKE_STRIP']);binaries['stripper']=str(Path(cache['CMAKE_STRIP']).absolute())
