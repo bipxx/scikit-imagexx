@@ -292,7 +292,8 @@ TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_r
     'src/tv_denoise.cpp', 'src/bind_tv_chambolle.cpp', 'python/skimagexx/_tv_chambolle.py',
     'coverage/contracts/tv-chambolle.json',
     'coverage/evidence/tv-chambolle-public-assertion-migration.json',
-    'tests/test_tv_denoise_cursor_native.cpp', 'tests/test_tv_chambolle_cursor_pipeline.py')
+    'tests/test_tv_denoise_cursor_native.cpp', 'tests/test_tv_chambolle_cursor_pipeline.py',
+    'src/tv_denoise_internal.hpp', 'tests/test_tv_denoise_admission_native.cpp')
 BREGMAN_PATH = 'restoration.denoise_tv_bregman'
 BREGMAN_SOURCE_PATHS = ('include/skimagexx/tv_bregman.hpp', 'src/tv_bregman.cpp',
     'src/simd_tv_bregman_avx2.cpp', 'src/bind_tv_bregman.cpp', 'python/skimagexx/_tv_bregman.py',
