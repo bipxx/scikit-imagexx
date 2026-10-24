@@ -55,6 +55,12 @@ compatibility dispatch, without adding native algorithm coverage.
 Each has partial native input coverage with a dedicated parity and benchmark
 case. Their unsupported options still require upstream compatibility fallback.
 
+The [controlled TV cursor report](../benchmarks/tv-chambolle-cursor-comparison.md)
+now publishes all 210 one-worker comparisons and 4,410 raw samples. Aggregate
+speedups coexist with 129 cases slower than at least one comparator; raster,
+channel and volume workloads remain optimization targets. The next private
+single-admission candidate needs whole-product and performance qualification.
+
 The NumPy 1.x color-distance promotion gaps are fixed in native code. CIE76/CIE94
 scalar paths preserve float32 differences/chroma before promoted double math;
 CIE94 also preserves NumPy-float32 weight-product rounding. CIEDE2000 selects a

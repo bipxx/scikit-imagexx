@@ -48,10 +48,20 @@ adding API paths. All four normal/scalar profiles pass 707,800 mixed checks and
 observations before timing the fixed 70 cases in seven paired one-worker rounds.
 The [reviewed controller and certificate](evidence/tv-cursor-comparison-controller.json)
 preserve actual before `3cdd363` and after `5e068a5` product labels.
+Run `40119412201` is now complete and independently accepted. Its [published
+report, full CSV and raw archive](../benchmarks/tv-chambolle-cursor-comparison.md)
+retain all 210 rows, 4,410 samples and 129 cases slower than either comparator.
+One-worker geometric means are 1.316x/1.152x/1.244x versus original and
+1.207x/1.306x/1.194x versus prior C++; remaining regressions stay open.
 The combined 199-path/114-wheel/65-SDK20 candidate remains unaccepted: run
-`40117331038` built Windows artifacts but rejected matrix runtime authentication
-before public parity groups. Its retained failure is a certificate boundary,
-not evidence of a numerical mismatch. Private matrix binding and six max-tree
+`40117331038` failed all four jobs. Windows rejected matrix runtime authentication
+before public parity groups; Linux exposed closing-result dtype metadata and
+a missing original-oracle argument in the standalone max-tree SDK client.
+Private dtype fix `c98ec8e` and SDK registration fix `ca32dfa` have executed
+evidence but still need genuine whole-product integration. Fresh metadata probe
+`40121459877` identifies the unforced Windows OpenBLAS SkylakeX runtime; it
+does not execute or admit matrix arithmetic. Original-only characterization is
+the next independent runtime gate. Private matrix binding and six max-tree
 APIs have separate scoped parity proofs; neither increases accepted public counts.
 The [max-tree benchmark reference](evidence/max-tree-benchmark-reference.json)
 preserves all 351 source observations and 252 finite candidates per runtime;
@@ -79,10 +89,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Qualified 192-path source `5e068a5` is merged; 199 remains a separate candidate. Review artifact/runtime boundaries, retain failures, merge validated increments and remove released caches. |
-| Worker 1 | `metrics_reductions` | Qualified TV cursor original/before/after comparison | Frozen controller `d48a17e` and exact certificate are reviewed; publisher `40118914870` preserves the unchanged certificate. Complete all three preparation profiles before fresh one-worker measurements; retain every raw sample and regression. |
-| Worker 2 | `resize_api` | Six-API max-tree public benchmark consumer | Optimized aggregate/staged composition passes private parity. Original-only source `ae57e3e` and all 252 benchmark candidates are merged. Implement the separate public199/SDK20 consumer, with static admission pending genuine qualification and all three preparation barriers. |
-| Worker 3 | `resize_bench` | Genuine public199 qualification and matrix certificate diagnosis | Follow the same `40117331038` observer/retainer to terminal. Diagnose the rejected Windows certificate using exact artifact/library bytes and a separate metadata-only fresh-host probe; preserve the missing failed-host getter evidence as a limitation. No forced CPU or relaxed guards. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Qualified 192-path source `5e068a5` and its controlled TV report are merged; 199 remains a separate candidate. Review private fixes, retain failures and promptly merge validated increments. The clean merged report worktree is retired. |
+| Worker 1 | `metrics_reductions` | Next TV single-admission qualification and comparison readiness | Private source `585d568` has an independent old-source control proof. Prepare exact192 source/common-input qualification; the test-only renamed control stays outside public products/SDKs. Whole-product and new speed evidence remain pending. |
+| Worker 2 | `resize_api` | Six-API max-tree benchmark consumer and released-cache cleanup | Consumer `3284541` fixes fresh-worker fallback policy, preserves the global exclusive claim and retains raw authentication bytes. Its 114 metadata guards pass per runtime; root review and genuine public199/SDK20 admission remain pending, with static product pins null. |
+| Worker 3 | `resize_bench` | Original-only Windows SkylakeX characterization | Implement a separate artifact-only controller with owner-bounded live table metadata and unchanged full374/4000 cohorts plus fixed boundary cases. Existing arithmetic profiles are conditionally sufficient; no production profile/allowlist changes or native acceptance before actual-host evidence. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

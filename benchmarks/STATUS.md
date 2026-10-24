@@ -15,6 +15,7 @@ Recent isolated one-worker measurements against scikit-image 0.26.0:
 | Rank statistics/vector algorithms | 2.576x | 2.694x | 3.094x | 376 timed cases; 56/36/28 slower; scalar/vector cohorts separate |
 | Controlled rank statistics/vector counts update | 2.701x | 2.851x | 2.906x | 376 fixed cases; 43/24/30 slower; exact qualified before/after pair |
 | TV-Chambolle whole-call baseline | 1.144x | 0.889x | 0.818x | 70 fixed cases; 34/38/36 slower; mixed baseline, optimization required |
+| Controlled TV-Chambolle cursor update | 1.316x | 1.152x | 1.244x | 70 fixed cases; 30/34/30 slower than original; 30/5/23 slower than prior C++ |
 | Component consumers | 0.882x | 1.101x | 1.230x | 205 timed cases; 134/101/93 slower |
 | Controlled resize/rescale | 1.261x | 1.520x | 1.557x | 372 timed cases; 57/34/23 slower than original |
 | Transform coordinate calls | 2.304x | 3.030x | 3.370x | All 204 coordinate cases faster; providers/state separate |
@@ -31,6 +32,7 @@ These geometric means apply to the exact sources and workloads in the
 [R4 statistics/vector](rank-statistics-public-initial.md),
 [controlled R4 counts](rank-statistics-counts-comparison.md),
 [TV-Chambolle](tv-chambolle-public-initial.md),
+[controlled TV cursor](tv-chambolle-cursor-comparison.md),
 [consumer](component-consumers-public-initial.md),
 [controlled resize](resize-public-controlled.md),
 [transform](transform-classes-public-initial.md),
@@ -45,6 +47,12 @@ The controlled resize run compares complete current/initial/original products
 on each host: current/initial means are 1.012x/1.012x/1.014x, with mixed workload
 changes. It does not isolate an individual patch. Other reports compare against
 original; cross-run CPU changes prevent causal comparisons between patches.
+The controlled TV cursor run uses the exact qualified `3cdd363`/`5e068a5`
+192-path pair. Speedups versus prior C++ are 1.207x/1.306x/1.194x;
+all 210 rows, 4,410 samples and 129 cases slower than either comparator are
+preserved in the report, CSV and raw archive. Raster/channel/volume cohorts
+remain slower than original on aggregate. A private single-admission candidate
+has parity evidence; its whole-product qualification and performance remain pending.
 R1/R2 and older-family artifacts retain runtime pins/freeze without claiming
 complete dependency-binary closures. Metrics verifies all 59 wheel SDK files but
 has no separately serialized installed-SDK seal. R3 verifies its runtime/product/

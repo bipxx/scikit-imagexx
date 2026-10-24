@@ -29114,7 +29114,7 @@
           "source_sha": "f87120cda4e6ca9246c30f837479babe0bce0b92"
         }
       },
-      "state": "performance_pending",
+      "state": "measured",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -29132,8 +29132,33 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          "benchmarks/tv-chambolle-cursor-comparison.csv",
+          "benchmarks/tv-chambolle-cursor-comparison-raw.zip"
+        ],
+        "regressions": [
+          "All129 union rows retained in full CSV/raw archive."
+        ],
+        "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "before_source_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "controller_source_sha": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+        "run": 40119412201,
+        "slower_than_original": [
+          30,
+          34,
+          30
+        ],
+        "slower_than_before": [
+          30,
+          5,
+          23
+        ],
+        "profiles": [
+          "windows",
+          "modern",
+          "minimum"
+        ],
+        "optimization_complete": false
       },
       "merge": {
         "commit": "5e068a5a2267c3a917701d5348449972fad162a7",
@@ -29176,6 +29201,19 @@
           "native_contract_checks": 5024,
           "native_pending": 0,
           "scope": "Actual complete public192/SDK18 four-profile qualification;5024 is a conservative compiled-default TV check floor, not all707800 mixed XML assertions."
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "manifest": {
+            "path": "coverage/evidence/tv-chambolle-cursor-performance.json",
+            "bytes": 136019,
+            "sha256": "3d876971e4dc383882ccc920cf96fb65ffb96c92cf538422dc2cd64d8f7b0284"
+          },
+          "measured_rows": 210,
+          "raw_samples": 4410,
+          "native_workers": 1,
+          "limitation": "Every regression retained; no universal win or completed optimization claim."
         }
       },
       "root_review": {
@@ -29469,10 +29507,33 @@
         "source": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
         "run": 40117331038,
         "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40117331038",
-        "status": "running-not-accepted",
+        "status": "terminal-failed-not-accepted",
         "previous_failed_run": 40115365507,
         "previous_failure": "Before product build: synthetic metadata fixture incorrectly imported NumPy; minimum interpreter AST witness was version-specific. Both fixed in metadata only;570 bootstrap guards pass on3.11 and3.13 with numerical imports blocked.",
-        "runtime_source_changed_from_c05": false
+        "runtime_source_changed_from_c05": false,
+        "all_four_jobs_failed": true,
+        "retained_manifest": {
+          "path": "build/genuine199-corrected-hosted-observation/40117331038/retained-v1/manifest.json",
+          "bytes": 899847,
+          "sha256": "dbab8e1490c5c05c8cd91a6eee76a8a4a70eabb581dba70138851791170b7397"
+        },
+        "failures": [
+          "Windows: natural initial certificate refuses actual SkylakeX runtime before public groups.",
+          "Linux:12shared closing dtype metadata failures;19of20SDKclients pass, max-tree client lacks original-oracle argument."
+        ],
+        "private_fixes": {
+          "dtype_source": "c98ec8e026a8e067ad1ecc6d90bb6d3a7c567b83",
+          "SDK_registration_source": "ca32dfa1679393a512f449e0939fd690b00f747c"
+        },
+        "next": "Original-only Windows runtime characterization, then compose/requalify exact fixes; no public199 acceptance."
+      },
+      "diagnostic_probe": {
+        "run": 40121459877,
+        "status": "terminal-success-diagnostic-only",
+        "source": "d61b390d20d3d052e34a8282f962a42ed98d3bd4",
+        "native_acceptance": false,
+        "original_arithmetic_calls": 0,
+        "result": "New unforced Windows host selects SkylakeX from the same authenticated DLL; natural runtime profile refusal captured."
       }
     },
     {
@@ -29544,8 +29605,8 @@
       "kind": "measurement",
       "apis": [],
       "owner": "resize_api",
-      "branch": "feature/max-tree-compare",
-      "base_sha": "9e374ba65f0ee9567fb86cf21335b3d0675dba69",
+      "branch": "feature/max-tree-compare-followup",
+      "base_sha": "a353c074850d15908eeafd9a790c0b9dec50a320",
       "owns": [
         "benchmarks/max_tree_compare.py",
         "tools/max_tree_compare_artifacts.py",
@@ -29562,21 +29623,23 @@
           "source_sha": "ae57e3e4aab6c1c2691c19cd8e9e02d9df09e3d2"
         },
         "max-tree-public198-integration": {
-          "evidence_scope": "public_native",
-          "source_sha": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679"
+          "evidence_scope": "public_native"
         }
       },
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": "coverage/contracts/max-tree-benchmark.json",
         "uncovered_cases": [
-          "Implement only separate strict public199/SDK20 artifact consumer and metadata guards; retain null static pins. All351 observations and252 finite cases through real public exports with all3 workers1/4 normal/scalar preparation barriers, then fresh artifact-only one-worker7paired original/native rounds. Genuine product qualification, final pins and every numerical/timing execution remain pending."
+          "Root review of frozen3284541 consumer/fresh fallback policy/raw global claim retention and c98wrapperpin.",
+          "Genuine future public199/SDK20 exact-source certificate; all351+252 preparations on3profiles/workers1+4normal+scalar, then fresh artifact-only7paired original/native one-worker rounds. Static accepted product pins remain null."
         ]
       },
       "parity": {
-        "source_sha": null,
+        "source_sha": "328454191986a2334b51d4c5e03d31194d76eea3",
         "artifact_sha256": null,
-        "runs": []
+        "runs": [
+          "build/worktrees/max-tree-compare-followup/build/max-tree-compare-followup-evidence/manifest.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -29592,9 +29655,19 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/max-tree-compare"
+          "build/worktrees/max-tree-compare",
+          "build/worktrees/max-tree-compare-followup"
         ],
         "protected_artifacts": []
+      },
+      "tooling_handoff": {
+        "path": "build/worktrees/max-tree-compare-followup/build/max-tree-compare-followup-evidence/manifest.json",
+        "bytes": 7869,
+        "sha256": "71ac64831a33335d98334bcb678276d142007766d1528ddc4ea12b4c5b5c051b",
+        "metadata_guards_per_runtime": 114,
+        "root_review": "pending",
+        "native_acceptance": false,
+        "operation_timings": 0
       }
     },
     {
@@ -29616,12 +29689,10 @@
           "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7"
         }
       },
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": "coverage/contracts/tv-chambolle-benchmark.json",
-        "uncovered_cases": [
-          "New separate metadata-only tiny certificate publisher source review and immutable artifact authentication, then exactly one frozen d48 comparison run; complete original/before/after all400 observations on all3 profiles workers1/4 normal/scalar before fresh70x7 one-worker measurement. Before actual3cdd is never relabeled as intended6ff; after actual5e remains192 even when futuremain199."
-        ]
+        "uncovered_cases": []
       },
       "parity": {
         "source_sha": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
@@ -29633,12 +29704,37 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          "benchmarks/tv-chambolle-cursor-comparison.csv",
+          "benchmarks/tv-chambolle-cursor-comparison-raw.zip"
+        ],
+        "regressions": [
+          "All129 union rows retained in full CSV/raw archive."
+        ],
+        "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+        "before_source_sha": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
+        "controller_source_sha": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
+        "run": 40119412201,
+        "slower_than_original": [
+          30,
+          34,
+          30
+        ],
+        "slower_than_before": [
+          30,
+          5,
+          23
+        ],
+        "profiles": [
+          "windows",
+          "modern",
+          "minimum"
+        ],
+        "optimization_complete": false
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "f0c970b57433b0551e5691a7f506abbe6faca9ef",
+        "main_commit": "a471ffb3c5107965b66a6c653c2ce909be308e65"
       },
       "retention": {
         "active_paths": [
@@ -29671,13 +29767,20 @@
           "path": "build/decisions-readiness/tv-cursor-published-experiment-admission/manifest.json",
           "bytes": 801,
           "sha256": "df5336ce0a09a921156fec3aa3fe7213bc38615c3ec0c1d25e11f5b1682e41fb"
+        },
+        "report_source": "f0c970b57433b0551e5691a7f506abbe6faca9ef",
+        "report_main_merge": "a471ffb3c5107965b66a6c653c2ce909be308e65",
+        "report_evidence": {
+          "path": "coverage/evidence/tv-chambolle-cursor-performance.json",
+          "bytes": 136019,
+          "sha256": "3d876971e4dc383882ccc920cf96fb65ffb96c92cf538422dc2cd64d8f7b0284"
         }
       },
       "execution": {
         "run": 40119412201,
         "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40119412201",
         "source": "d48a17ed41376eecac63f5a5f75bd6ec72a0d6f1",
-        "status": "dispatched-results-pending",
+        "status": "terminal-success-independently-audited",
         "request": {
           "path": "build/tv-chambolle-cursor-compare-runs/dispatch-d48a17e/request-body.json",
           "bytes": 254,
@@ -29689,6 +29792,150 @@
           "sha256": "8a7e187ea50800cbae122003bc6fb949c628b69cb231408b669c8c4b0a9e7e2d"
         },
         "no_retry_for_queue_or_observation_timeout": true
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+          "manifest": {
+            "path": "coverage/evidence/tv-chambolle-cursor-performance.json",
+            "bytes": 136019,
+            "sha256": "3d876971e4dc383882ccc920cf96fb65ffb96c92cf538422dc2cd64d8f7b0284"
+          },
+          "measured_rows": 210,
+          "raw_samples": 4410,
+          "native_workers": 1,
+          "limitation": "Every regression retained; no universal win or completed optimization claim."
+        }
+      },
+      "root_performance_admission": {
+        "path": "build/decisions-readiness/TV-cursor192-performance-root-audit/admission.json",
+        "bytes": 45427,
+        "sha256": "24f413f42091d4b0e7f4847d6715302d54c10df2d88c62b5455c329ed2e1e8ad"
+      },
+      "root_publication_review": {
+        "path": "build/decisions-readiness/tv-cursor-publication-root-review/manifest.json",
+        "bytes": 1156,
+        "sha256": "66bf1baf26a2a40b7244349a5a1068eb38134f8f3132437def96e0ff585ae6b9"
+      },
+      "retired_report_worktree": {
+        "path": "build/worktrees/tv-cursor-report-publication",
+        "head": "f0c970b57433b0551e5691a7f506abbe6faca9ef",
+        "main_ancestor": true,
+        "clean": true,
+        "ignored_files": 0,
+        "normal_git_worktree_remove": true,
+        "force": false,
+        "raw_report_bytes_retained_in_main": true
+      }
+    },
+    {
+      "id": "tv-finite-single-admission",
+      "kind": "private_optimization",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/tv-finite-admission",
+      "base_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
+      "state": "validating",
+      "owns": [
+        "src/tv_denoise.cpp",
+        "src/bind_tv_chambolle.cpp",
+        "src/tv_denoise_internal.hpp",
+        "tests/test_tv_denoise_admission_native.cpp"
+      ],
+      "depends_on": [
+        "tv-chambolle-strided-cursor"
+      ],
+      "dependency_requirements": {
+        "tv-chambolle-strided-cursor": {
+          "evidence_scope": "public_native",
+          "source_sha": "5e068a5a2267c3a917701d5348449972fad162a7"
+        }
+      },
+      "contract": {
+        "case_manifest": "coverage/contracts/tv-chambolle-benchmark.json",
+        "uncovered_cases": [
+          "Root source/privateproof review; genuine192 whole-product/SDK18 qualification; separately reviewed exact-header common-input adapter and isolated controlled one-worker comparison."
+        ]
+      },
+      "parity": {
+        "source_sha": "585d56819a7679cc740a3f9bc412e83ce31190a8",
+        "artifact_sha256": null,
+        "runs": [
+          "build/worktrees/tv-finite-admission/build/tv-finite-admission-evidence-v3/manifest.json"
+        ]
+      },
+      "private_handoff": {
+        "path": "build/worktrees/tv-finite-admission/build/tv-finite-admission-evidence-v3/manifest.json",
+        "bytes": 169760,
+        "sha256": "ab8e35efe6f568b21d9abd2c1abe90ca8e86484284fb3d49ef502780cb9fcebe"
+      },
+      "public_acceptance": false,
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/tv-finite-admission"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "matrix-transform-skylakex-reference",
+      "kind": "contract_reference",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "feature/matrix-transform-skylakex",
+      "base_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
+      "state": "implementing",
+      "owns": [
+        "tools/matrix_transform_skylakex_reference.py",
+        "tests/test_matrix_transform_skylakex_reference.py",
+        ".github/workflows/matrix-transform-skylakex-reference.yml"
+      ],
+      "depends_on": [],
+      "contract": {
+        "case_manifest": "coverage/contracts/matrix-transform.json",
+        "uncovered_cases": [
+          "Implement/review original-only artifact controller, authenticated actual livePQR/uM/uN and unchanged full374/4000 cohorts plus fixed source-derived boundary/adversarial controls; one hosted dispatch only after root code/pin review."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "acceptance": {
+        "native_acceptance": 0,
+        "public_acceptance": 0,
+        "operation_timings": 0,
+        "preserve_legacy_caps": [
+          31,
+          63
+        ],
+        "no_CPU_forcing": true,
+        "no_adaptive_fitting": true
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/matrix-transform-skylakex",
+          "build/matrix-windows-skylakex-arithmetic-audit"
+        ],
+        "protected_artifacts": []
       }
     }
   ],
@@ -30415,10 +30662,11 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "metrics_reductions": [
-        "tv-chambolle-cursor-comparison",
+        "tv-finite-single-admission",
         "tv-chambolle-strided-cursor"
       ],
       "resize_bench": [
+        "matrix-transform-skylakex-reference",
         "matrix-transform-public199-integration",
         "matrix-transform-profile-binding"
       ],
@@ -30428,9 +30676,9 @@
       ]
     },
     "current_three_agent_packets": {
-      "metrics_reductions": "tv-chambolle-cursor-comparison",
-      "resize_bench": "matrix-transform-public199-integration",
-      "resize_api": "max-tree-public-benchmark-consumer"
+      "metrics_reductions": "tv-finite-single-admission",
+      "resize_api": "max-tree-public-benchmark-consumer",
+      "resize_bench": "matrix-transform-skylakex-reference"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31252,8 +31500,27 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/released-build-cache-cleanup-20261024.json",
-    "bytes": 2345,
-    "sha256": "d0dd994f0d36423ddd8dc08d4b5138f1ab382d92c77aa5294270503eeab360a6"
+    "path": "coverage/evidence/released-opaque-test-cache-cleanup-20261024.json",
+    "bytes": 1893,
+    "sha256": "ae45bff7a58c95fbf7ba2cd2dbdf7a7647fc722d67ad3625ba4a6d3adddc78cc"
+  },
+  "post_cursor_cleanup": {
+    "proofs": [
+      {
+        "path": "coverage/evidence/released-test-cache-cleanup-20261024.json",
+        "bytes": 1831,
+        "sha256": "09001f97cfda6c7307438296d9e5bae8489969b57c9d61ced51f2c7eb31a276a"
+      },
+      {
+        "path": "coverage/evidence/released-opaque-test-cache-cleanup-20261024.json",
+        "bytes": 1893,
+        "sha256": "ae45bff7a58c95fbf7ba2cd2dbdf7a7647fc722d67ad3625ba4a6d3adddc78cc"
+      }
+    ],
+    "removed_test_cache_directories": 30,
+    "regular_files_preserved": 436,
+    "net_payload_reclaimed_bytes": 2846105,
+    "receipt_overhead_excluded": true,
+    "merged_clean_report_worktree_retired": true
   }
 }

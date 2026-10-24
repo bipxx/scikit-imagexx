@@ -104,3 +104,5 @@ coverage/evidence/released-test-cache-cleanup-20261024.json -text
 benchmarks/tv-chambolle-cursor-comparison.csv -text
 benchmarks/tv-chambolle-cursor-comparison-raw.zip -text
 coverage/evidence/tv-chambolle-cursor-performance.json -text
+coverage/work_items.json -text
+coverage/evidence/released-opaque-test-cache-cleanup-20261024.json -text

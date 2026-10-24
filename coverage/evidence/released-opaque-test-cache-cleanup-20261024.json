@@ -1,0 +1,42 @@
+{
+  "schema": "released-opaque-test-cache-cleanup-v1",
+  "completed": true,
+  "removed_directories": 6,
+  "opaque_LX_reparse_objects_removed": 38,
+  "regular_files_preserved": 218,
+  "archive_members_SHA_CRC_verified": 296,
+  "regular_payload_bytes_removed": 563412,
+  "preservation_archive_bytes": 259650,
+  "net_regular_payload_reclaimed_bytes": 303762,
+  "size_accounting": "Regular payload minus preservation archive; no reparse allocation estimate; receipt overhead excluded.",
+  "independent_root_check": true,
+  "target_strings_followed": false,
+  "deletion": "Native PowerShell with exact workspace/ancestor guards; each LX point unlinked through the same OPEN_REPARSE_POINT handle that verified its raw bytes. Ordinary tree deletion followed only after all38points were absent.",
+  "archive": {
+    "path": "build/cleanup/20261024-followup-links/opaque-preserved-caches.zip",
+    "sha256": "95c4b33e706432745f1152c44713a3da46b52272c38ec1f8fffd451a46ab755c"
+  },
+  "preservation_index": {
+    "path": "build/cleanup/20261024-followup-links/opaque-preservation-index.json",
+    "sha256": "6e73a00242dcd1032ab839c53af28081329b1a87f67586ccada11b8720787b20"
+  },
+  "terminal_receipt": {
+    "path": "build/cleanup/20261024-followup-links/cleanup-final-receipt-v2.json",
+    "sha256": "12cc472ef81fe62053d5e0b8481fe9c1fd2d08c9f6e8475f951b045291b1cf25"
+  },
+  "prior24_directory_cleanup_unchanged": true,
+  "protected_manifests_unchanged": 5,
+  "source_worktrees_removed": 0,
+  "environments_packages_raw_benchmarks_unchanged": true,
+  "merged_report_worktree": {
+    "path": "build/worktrees/tv-cursor-report-publication",
+    "head": "f0c970b57433b0551e5691a7f506abbe6faca9ef",
+    "main_merge": "a471ffb",
+    "clean": true,
+    "ignored_files": 0,
+    "main_ancestor": true,
+    "normal_git_worktree_remove": true,
+    "force": false,
+    "raw_report_bytes_retained_in_main": true
+  }
+}
