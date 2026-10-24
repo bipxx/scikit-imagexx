@@ -279,7 +279,18 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
     'kitchen', 'hessian', 'shape_index', 'hessian_det', 'sato', 'meijering', 'frangi'))
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
-            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions')
+            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
+            'tv_chambolle', 'tv_reductions', 'tv_denoise')
+ORIGINAL_FAMILIES = FAMILIES[:14]
+PRODUCT_SCOPE = 'tv17'
+PRODUCT_MEMBERS = 108
+SDK_MEMBERS = 62
+TV_PATH = 'restoration.denoise_tv_chambolle'
+TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
+    'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
+    'src/tv_denoise.cpp', 'src/bind_tv_chambolle.cpp', 'python/skimagexx/_tv_chambolle.py',
+    'coverage/contracts/tv-chambolle.json',
+    'coverage/evidence/tv-chambolle-public-assertion-migration.json')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -290,6 +301,7 @@ GROUPS = {
                          'test_rank_bilateral_masked_center_public.py', 'test_rank_bilateral_endian_public.py'),
     'public-decisions': ('test_rank_decisions_contracts.py', 'test_rank_decisions_public.py',
                          'test_rank_decisions_endian_public.py'),
+    'public-TV': ('test_tv_chambolle_contracts.py', 'test_tv_chambolle_native_pipeline.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
@@ -388,7 +400,7 @@ def registry_expectation(root):
 def sdk_family_declarations(cmake):
     """Read the repo's explicit literal/foreach ITEMS declarations, not execute CMake.
 
-    Actual target existence and exact14 CTest discovery are independently required
+    Actual target existence and exact17 CTest discovery are independently required
     after relocation; this early source check is not native client proof.
     """
     names = list(re.findall(r'add_executable\(\s*(\w+)_consumer\b', cmake))
@@ -406,6 +418,11 @@ def declared_sdk_families(cmake):
 def plan(root, profile, expected=None):
     registry = registry_expectation(root)
     blockers = []
+    if TV_PATH not in registry['functions']:
+        blockers.append('missing public TV registry: ' + TV_PATH)
+    for name in TV_SOURCE_PATHS:
+        if not (root / name).is_file():
+            blockers.append('missing required TV source: ' + name)
     if expected is not None and registry['image_count'] != expected:
         blockers.append('explicit image count differs from source registry')
     for name in R5:
@@ -452,6 +469,7 @@ def plan(root, profile, expected=None):
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
                 public_groups=groups, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
+                product_scope=PRODUCT_SCOPE, product_members=PRODUCT_MEMBERS, SDK_members=SDK_MEMBERS, SDK_checks=2*len(FAMILIES),
                 R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
                 count_semantics='image_count counts registered image paths including identity aliases, excludes metadata; registered_count adds metadata, neither is algorithm count',
                 exclusions='No full-library, private-adapter, portable/no-OpenMP/sanitizer or performance claim. No cross-build NaN guarantee.')
@@ -492,16 +510,26 @@ def wheel_members(path):
     return members
 
 
-def inspect_wheel(wheel, source_archive, revision):
+def product_census(scope=PRODUCT_SCOPE):
+    """Explicit historical metadata scope; production qualification uses TV17."""
+    require(scope in ('rank14', 'tv17'), 'unknown authenticated product scope')
+    return (104, 59) if scope == 'rank14' else (PRODUCT_MEMBERS, SDK_MEMBERS)
+
+
+def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     require(wheel_metadata(wheel)['name'] == 'scikit-imagexx', 'not the product wheel')
     members = wheel_members(wheel)
-    require(len(members) == 104, 'expected complete104-member product')
+    product_count, sdk_count = product_census(scope)
+    require(len(members) == product_count, f'expected complete{product_count}-member product')
     sdk = {n: v for n, v in members.items() if n.startswith(('include/', 'lib/', 'share/'))}
-    require(len(sdk) == 59, 'expected complete59-member SDK')
+    require(len(sdk) == sdk_count, f'expected complete{sdk_count}-member SDK')
     cores = [n for n in members if n.startswith('skimagexx/_core.') and n.endswith(('.so', '.pyd'))]
     require(len(cores) == 1, 'require exactly one production core')
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
+        tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
+        require((tv <= set(source.namelist())) if scope == 'tv17' else not (tv & set(source.namelist())),
+                'TV product scope/source headers or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -509,7 +537,7 @@ def inspect_wheel(wheel, source_archive, revision):
             require(set(mapping.values()) == actual, 'complete source Python/header file set differs')
             for name, destination in mapping.items():
                 require(source.read(name).replace(b'\r\n', b'\n') == product.read(destination).replace(b'\r\n', b'\n'), 'source bytes differ: ' + name)
-    return dict(source_revision=revision, source_archive_sha256=sha(source_archive), wheel_sha256=sha(wheel),
+    return dict(source_revision=revision, source_archive_sha256=sha(source_archive), wheel_sha256=sha(wheel), product_scope=scope,
                 members_sha256=members, SDK_sha256=sdk, sole_core=cores[0], record_verified=True,
                 scope='Metadata-only complete product authentication; no algorithm or whole8 acceptance.')
 
@@ -800,6 +828,34 @@ def decisions_admission(core, rank, generic, wrapper, registered):
             'R7 generic star exports differ')
 
 
+def tv_admission(core, restoration, wrapper, registered):
+    """Reject missing TV implementation before any contract fixture is built."""
+    paths = tuple(registered)
+    require(paths.count(TV_PATH) == 1, 'missing/duplicate public TV registry')
+    require(getattr(wrapper, '_core', None) is core, 'TV alternate core worker state')
+    require(core.get_num_threads() == 1, 'TV initial global workers must be1')
+    for name, value in {'tv_chambolle_interface': 'tv-chambolle-stages-v1',
+                        'tv_chambolle_capabilities': 63,
+                        'tv_chambolle_finite_interface': 'tv-chambolle-finite-v1',
+                        'tv_chambolle_finite_capabilities': 3}.items():
+        actual = getattr(core, name, None)
+        require(type(actual) is type(value) and actual == value, 'missing/wrong public TV capability: ' + name)
+    require(getattr(core, 'tv_chambolle_finite_profiles', None) == ('1.24.4', '2.5.4'),
+            'TV audited scalar/reduction profiles differ')
+    for name in ('tv_chambolle_divergence_into', 'tv_chambolle_gradient_into',
+                 'tv_chambolle_norm_into', 'tv_chambolle_dual_into', 'tv_chambolle_finite_run'):
+        function = getattr(core, name, None)
+        require(inspect.isbuiltin(function) and function.__name__ == name
+                and function.__module__ == core.__name__, 'missing owned compiled TV entry: ' + name)
+    function = vars(restoration).get('denoise_tv_chambolle')
+    require(callable(function) and function is vars(wrapper).get('denoise_tv_chambolle'),
+            'TV own public function identity mismatch')
+    require(inspect.unwrap(function).__module__ == 'skimagexx._tv_chambolle'
+            and function.__name__ == 'denoise_tv_chambolle', 'upstream TV algorithm forwarding')
+    require(str(inspect.signature(function)) == '(image, weight=0.1, eps=0.0002, max_num_iter=200, *, channel_axis=None)',
+            'TV public signature differs')
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -812,7 +868,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -837,6 +893,8 @@ def admission(out, state):
     bilateral_admission(xx._core, rank, importlib.import_module('skimagexx.filters.rank.bilateral'),
                         generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
     decisions_admission(xx._core, rank, generic, importlib.import_module('skimagexx._rank'), coverage.native_functions())
+    tv_admission(xx._core, importlib.import_module('skimagexx.restoration'),
+                 importlib.import_module('skimagexx._tv_chambolle'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1101,9 +1159,11 @@ def require_same_windows_toolchain(wheel, sdk_model):
         require(PureWindowsPath(wheel[key])==PureWindowsPath(sdk_model[key]), 'SDK/wheel toolchain mismatch: '+key)
 
 
-def validate_sdk_listing(listing):
-    require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in FAMILIES}
-            and len(listing['tests']) == len(FAMILIES), 'SDK test discovery differs/empty')
+def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
+    product_census(scope)
+    families = ORIGINAL_FAMILIES if scope == 'rank14' else FAMILIES
+    require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
+            and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 
 
 def sdk(out, state, journal):
@@ -1152,7 +1212,7 @@ def sdk(out, state, journal):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=FAMILIES, checks=28, SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,14 independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=FAMILIES, checks=2*len(FAMILIES), SDK_sha256=record['SDK_sha256'], scope='Relocated complete SDK,17 independently linked installed clients normal/scalar; no source includes or Python dependency'))
 
 
 def qualify(out):
@@ -1210,7 +1270,7 @@ def seal(out):
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
                  build_identity=state['build_identity'],
                  interpreter_provenance=state['interpreter_provenance'],
-                 counts=counts, SDK_checks=28, expected_registry=state['expected'], command_count=len(commands), records=records,
+                 counts=counts, SDK_checks=2*len(FAMILIES), expected_registry=state['expected'], command_count=len(commands), records=records,
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')

@@ -131,6 +131,34 @@ def source_members(path):
                 yield info, archive.read(info)
 
 
+def qualification_scope(source):
+    """Read authenticated source literals; never execute a source checkout."""
+    return qualification_scope_text((source / 'tools/public_qualification.py').read_text(encoding='utf-8'))
+
+
+def qualification_scope_text(text):
+    module = ast.parse(text)
+    values = {}
+    for node in module.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id in ('FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS'):
+                    require(target.id not in values, 'duplicate source qualification literal')
+                    values[target.id] = ast.literal_eval(node.value)
+    families = values.get('FAMILIES')
+    require(type(families) is tuple and len(families) == len(set(families)), 'source SDK family identities differ')
+    if set(values) == {'FAMILIES'}:
+        # Original authenticated rank14 controllers predate the explicit census.
+        require(len(families) == 14, 'original source SDK14 incomplete')
+        return dict(name='rank14', families=list(families), members=104, sdk=59)
+    require(set(values) == {'FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS'}
+            and values['PRODUCT_SCOPE'] == 'tv17' and values['PRODUCT_MEMBERS'] == 108
+            and values['SDK_MEMBERS'] == 62 and len(families) == 17
+            and families[-3:] == ('tv_chambolle', 'tv_reductions', 'tv_denoise'),
+            'source TV17/108/62 scope incomplete')
+    return dict(name='tv17', families=list(families), members=108, sdk=62)
+
+
 def validate_payload(path, qualification, profile, compare):
     """Validate a staged tree without manufacturing accepted product pins."""
     source = path / 'source'
@@ -165,18 +193,19 @@ def validate_payload(path, qualification, profile, compare):
             and all(wheels[n]['version'] == cfg['profiles'][profile][n] for n in ('numpy', 'scipy')),
             'reference runtime pins differ')
     product = wheels['scikit-imagexx']
+    scope = qualification_scope(source)
+    require(len(product['members']) == scope['members'], 'complete product member census differs')
+    require(len([n for n in product['members'] if n.startswith('skimagexx/_core.')
+                 and n.endswith(('.so', '.pyd'))]) == 1, 'sole production core differs')
     sdk = {n: h for n, h in product['members'].items()
            if n.startswith(('include/skimagexx/', 'lib/cmake/skimagexx/', 'share/licenses/scikit-imagexx/'))
            or n in ('lib/skimagexx.lib', 'lib/libskimagexx.a')}
     receipt = load(path / 'sdk.json')
-    require(len(sdk) == 59 and sdk == receipt['SDK_sha256'] == runtime['runtime']['sdk_sha256'],
-            'complete59 SDK differs')
-    module = ast.parse((source / 'tools/public_qualification.py').read_text(encoding='utf-8'))
-    families = [ast.literal_eval(n.value) for n in module.body if isinstance(n, ast.Assign)
-                and any(isinstance(t, ast.Name) and t.id == 'FAMILIES' for t in n.targets)]
-    require(len(families) == 1 and list(families[0]) == receipt['families'], 'source SDK family identities differ')
-    require(len(receipt['families']) == len(set(receipt['families'])) == 14
-            and receipt['checks'] == qualification['SDK_checks'] == 28, 'SDK14/28 incomplete')
+    require(len(sdk) == scope['sdk'] and sdk == receipt['SDK_sha256'] == runtime['runtime']['sdk_sha256'],
+            'complete SDK differs: ' + scope['name'])
+    require(scope['families'] == receipt['families'], 'source SDK family identities differ')
+    require(len(receipt['families']) == len(set(receipt['families'])) == len(scope['families'])
+            and receipt['checks'] == qualification['SDK_checks'] == 2*len(scope['families']), 'SDK family/check count incomplete')
     for prefix, directory, suffix in [('include/skimagexx/', source / 'include/skimagexx', None),
                                       ('skimagexx/', source / 'python/skimagexx', '.py')]:
         actual = {n: h for n, h in product['members'].items()
@@ -214,9 +243,18 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
     require(verified == dict(passed=True, manifest_sha256=sha(qpath), records_rehashed=len(q['records'])),
             'independent successful verification receipt differs')
     expected = q['expected_registry']
-    require(expected['image_count'] == 190 and expected['metadata_count'] == 3
-            and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == 193,
-            'genuine190+3 registry qualification required')
+    with zipfile.ZipFile(checked(qout, 'source.zip', q)) as archive:
+        text = archive.read('tools/public_qualification.py')
+        require(hashlib.sha256(text.replace(b'\r\n', b'\n')).hexdigest()
+                == q['source']['files_sha256']['tools/public_qualification.py'],
+                'qualified source controller differs before registry admission')
+        scope = qualification_scope_text(text.decode('utf-8'))
+    image_count = 191 if scope['name'] == 'tv17' else 190
+    require(expected['image_count'] == image_count and expected['metadata_count'] == 3
+            and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
+            f'genuine{image_count}+3 registry qualification required')
+    require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] == 'tv17'),
+            'qualified TV registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')
     binding = q.get('build_identity')

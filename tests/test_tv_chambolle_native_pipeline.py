@@ -162,7 +162,17 @@ def default_policy_observe(function,spec):
 def test_signature_frozen_source_and_explicit_pending_scope():
     assert str(inspect.signature(wrapper.denoise_tv_chambolle))==MATRIX['signature']
     assert len(contracts.CASES)==330 and contracts.digest(contracts.CASES)==MATRIX['case_contract_sha256']
-    assert hashlib.sha256((ROOT/'tests/test_tv_chambolle_contracts.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()==MATRIX['test_source_canonical_lf_sha256']
+    source_sha=hashlib.sha256((ROOT/'tests/test_tv_chambolle_contracts.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    migration_path=ROOT/'coverage/evidence/tv-chambolle-public-assertion-migration.json'
+    if not BACKEND:assert migration_path.is_file(),'public assertion transition needs its authenticated source record'
+    if migration_path.is_file():
+        migration=json.loads(migration_path.read_bytes())
+        assert migration['schema']=='tv-chambolle-public-assertion-migration-v1'
+        assert migration['source_file']=='tests/test_tv_chambolle_contracts.py'
+        assert migration['original_source_sha256']==MATRIX['test_source_canonical_lf_sha256']
+        assert migration['reference_matrix_sha256']==hashlib.sha256(contracts.MATRIX.read_bytes()).hexdigest()
+        assert source_sha==migration['public_source_sha256']
+    else:assert source_sha==MATRIX['test_source_canonical_lf_sha256']
     assert not any('skimage.restoration' in str(getattr(value,'__module__','')) for name,value in vars(wrapper).items() if callable(value))
     # Materialized stages alone do not create a public registered denoiser.
     assert MATRIX['native_checks']==0

@@ -2,13 +2,21 @@ name: tv-chambolle-benchmark
 on:
   workflow_dispatch:
     inputs:
-      workers:
-        description: One-worker whole-call measurements (mandatory preparation validates1+4)
-        type: choice
-        options: ['1']
-        default: '1'
+      qualified_run:
+        description: Independently accepted whole-product qualification run
+        required: true
+        type: string
+      qualified_source:
+        description: Exact accepted source revision (40 hex characters)
+        required: true
+        type: string
+      certificate_json:
+        description: Reviewed immutable TV certificate with all three product and outer artifact pins
+        required: true
+        type: string
 permissions:
   contents: read
+  actions: read
 jobs:
   prepare:
     strategy:
@@ -16,125 +24,186 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            runtime: modern
-            python: '3.13'
-            numpy: '2.5.4'
-            scipy: '1.18.1'
+            profile: windows
           - os: ubuntu-latest
-            runtime: modern
-            python: '3.13'
-            numpy: '2.5.4'
-            scipy: '1.18.1'
+            profile: modern
           - os: ubuntu-latest
-            runtime: minimum
-            python: '3.11'
-            numpy: '1.24.4'
-            scipy: '1.15.3'
+            profile: minimum
     runs-on: ${{ matrix.os }}
     env:
-      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+      PYTHONDONTWRITEBYTECODE: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       BLIS_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
-      TV_CHAMBOLLE_WORKERS: ${{ inputs.workers }}
+      QUALIFIED_RUN: ${{ inputs.qualified_run }}
+      QUALIFIED_SOURCE: ${{ inputs.qualified_source }}
+      CERTIFICATE_JSON: ${{ inputs.certificate_json }}
+      TV_PROFILE: ${{ matrix.profile }}
+      GH_TOKEN: ${{ github.token }}
     steps:
-      # Phase1 native0: accepted_public/product pins are NULL until independently qualified TV integration.
-      # No proposed stage capability alone can open this workflow gate.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.qualified_source }}
+      - name: Authenticate exact qualification run and bounded outer artifact
+        id: certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/preparation
+          python - <<'PY'
+          import hashlib,json,os,pathlib,re,urllib.request
+          c=json.loads(os.environ['CERTIFICATE_JSON']);p=c['profiles'][os.environ['TV_PROFILE']]
+          assert c['schema']=='tv-qualified-product-certificate-v1' and c['status']=='accepted-qualified-tv'
+          assert c['qualified_run']==os.environ['QUALIFIED_RUN'] and c['qualified_source']==os.environ['QUALIFIED_SOURCE']
+          assert re.fullmatch('[0-9a-f]{40}',c['qualified_source']) and c['qualified_run'].isdigit()
+          assert p['artifact_run']==c['qualified_run'] and p['artifact_name']=='rank-statistics-product-'+os.environ['TV_PROFILE']
+          assert re.fullmatch(r'3\.(11|13)\.[0-9]+',p['python_version'])
+          base='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/'
+          def get(url):
+              r=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(r) as f:return json.load(f)
+          run=get(base+'runs/'+c['qualified_run']);assert run['head_sha']==c['qualified_source'] and run['conclusion']=='success'
+          artifact=get(base+'artifacts/'+p['artifact_id'])
+          assert artifact['name']==p['artifact_name'] and not artifact['expired'] and artifact['workflow_run']['id']==int(c['qualified_run'])
+          assert artifact['digest']=='sha256:'+p['artifact_digest']
+          pathlib.Path('build/tv-certificate.json').write_bytes(os.environ['CERTIFICATE_JSON'].encode('utf-8'))
+          pathlib.Path('build/preparation/outer-artifact.json').write_text(json.dumps(artifact,indent=2))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('python='+p['python_version']+'\n')
+          PY
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
-      - name: Build exact complete public wheel
+          python-version: ${{ steps.certificate.outputs.python }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: rank-statistics-product-${{ matrix.profile }}
+          run-id: ${{ inputs.qualified_run }}
+          github-token: ${{ github.token }}
+          path: build/capsule/product
+      - name: Install only the exact qualified offline runtime and unchanged product wheel
         shell: bash
         run: |
-          mkdir -p build/preparation
-          python -m pip wheel . --no-deps --wheel-dir build/capsule/wheels --verbose 2>&1 | tee build/preparation/build.log
-          python -m pip install numpy==${{ matrix.numpy }} scipy==${{ matrix.scipy }} scikit-image==0.26.0 pytest
-          python -m pip install --no-deps build/capsule/wheels/*.whl
-      - name: Require actual public TV before creating test fixtures
-        run: python -c "import json; from benchmarks.tv_chambolle import public_admission, MANIFEST; import skimagexx as xx; xx.set_fallback_enabled(False); public_admission(json.loads(MANIFEST.read_text()))"
-      - name: Source contracts and harness guards
-        run: >-
-          python -m pytest -q tests/test_tv_chambolle_contracts.py
-          tests/test_tv_chambolle_benchmark.py
-      - name: Scalar source contracts and guards
-        run: python -m pytest -q tests/test_tv_chambolle_contracts.py tests/test_tv_chambolle_benchmark.py
-        env:
-          SKIMAGEXX_DISABLE_SIMD: '1'
-      - name: Freeze complete offline runtime wheelhouse
+          set -euo pipefail
+          python -m pip install --force-reinstall --no-index --no-deps --require-hashes --find-links build/capsule/product/wheels -r build/capsule/product/runtime-lock.txt
+      - name: Require complete actual qualified TV product before numerical fixtures
         shell: bash
         run: |
-          python -m pip freeze > build/capsule/runtime-freeze.txt
-          python -m pip wheel --find-links build/capsule/wheels --wheel-dir build/capsule/wheels -r build/capsule/runtime-freeze.txt
-      - name: Seal current source, complete package, SDK, corpus and runtime; check every case
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          import skimagexx as xx
+          from benchmarks.tv_chambolle import qualified_product,public_admission,MANIFEST
+          xx.set_fallback_enabled(False)
+          q=qualified_product(Path('build/capsule'),Path('build/tv-certificate.json'),os.environ['QUALIFIED_RUN'],os.environ['QUALIFIED_SOURCE'])
+          public_admission(json.loads(MANIFEST.read_text()),q)
+          PY
+      - name: Full installed pipeline and harness guards including default finite-loop counters
         shell: bash
-        run: python benchmarks/tv_chambolle.py --capsule build/capsule --prepare-capsule --check-only --threads 1 4 --output build/preparation/tv-chambolle-check.json
-      - name: Check scalar paths on the same immutable package
+        run: |
+          set -euo pipefail
+          python -m pytest -q --capture=sys tests/test_tv_chambolle_contracts.py tests/test_tv_chambolle_native_pipeline.py tests/test_tv_chambolle_benchmark.py --junitxml build/preparation/pipeline-normal.xml
+          python benchmarks/tv_chambolle.py --capsule build/capsule --certificate build/tv-certificate.json --qualified-run "$QUALIFIED_RUN" --qualified-source "$QUALIFIED_SOURCE" --prepare-capsule --check-only --threads 1 4 --output build/preparation/normal.json
+      - name: Mandatory scalar workers one and four on the same unchanged product
         shell: bash
-        run: python benchmarks/tv_chambolle.py --capsule build/capsule --check-only --threads 1 4 --output build/preparation/tv-chambolle-scalar-check.json
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+        run: |
+          set -euo pipefail
+          python -m pytest -q --capture=sys tests/test_tv_chambolle_contracts.py tests/test_tv_chambolle_native_pipeline.py tests/test_tv_chambolle_benchmark.py --junitxml build/preparation/pipeline-scalar.xml
+          python benchmarks/tv_chambolle.py --capsule build/capsule --certificate build/tv-certificate.json --qualified-run "$QUALIFIED_RUN" --qualified-source "$QUALIFIED_SOURCE" --prepare-capsule --check-only --threads 1 4 --output build/preparation/scalar.json
+      - name: Seal exact product, all correctness evidence and fresh preparation receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/tv_chambolle.py --seal-preparation --check-only --capsule build/capsule --certificate build/tv-certificate.json --qualified-run "$QUALIFIED_RUN" --qualified-source "$QUALIFIED_SOURCE" --preparation-dir build/preparation --receipt-output build/tv-receipt-${{ matrix.profile }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tv-chambolle-prepared-${{ matrix.profile }}
+          include-hidden-files: true
+          retention-days: 90
+          path: build/capsule/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tv-chambolle-receipt-${{ matrix.profile }}
+          retention-days: 90
+          path: build/tv-receipt-${{ matrix.profile }}.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tv-chambolle-prepared-${{ matrix.os }}-${{ matrix.runtime }}
+          name: tv-chambolle-preparation-raw-${{ matrix.profile }}
           include-hidden-files: true
           retention-days: 90
-          path: |
-            build/capsule/
-            build/preparation/
+          path: build/preparation/
   measure:
-    # All3 correctness/preparation jobs complete before fresh measurement VMs.
+    # All three successful preparation profiles gate fresh measurement hosts.
     needs: prepare
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: windows-latest
-            runtime: modern
-            python: '3.13'
+            profile: windows
           - os: ubuntu-latest
-            runtime: modern
-            python: '3.13'
+            profile: modern
           - os: ubuntu-latest
-            runtime: minimum
-            python: '3.11'
+            profile: minimum
     runs-on: ${{ matrix.os }}
     env:
+      PYTHONDONTWRITEBYTECODE: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       BLIS_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
-      TV_CHAMBOLLE_WORKERS: ${{ inputs.workers }}
+      CERTIFICATE_JSON: ${{ inputs.certificate_json }}
+      TV_PROFILE: ${{ matrix.profile }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: tv-chambolle-prepared-${{ matrix.os }}-${{ matrix.runtime }}
-          path: build/prepared
-      - name: Install only exact prepared runtime/product wheels
+          ref: ${{ inputs.qualified_source }}
+      - name: Select exact already-qualified interpreter version
+        id: certificate
         shell: bash
         run: |
-          python -m pip install --no-index --no-deps --require-hashes --find-links build/prepared/capsule/wheels -r build/prepared/capsule/runtime-lock.txt
-      - name: Preflight full fixed corpus before paired one-worker-primary samples
+          python - <<'PY'
+          import json,os,re
+          p=json.loads(os.environ['CERTIFICATE_JSON'])['profiles'][os.environ['TV_PROFILE']]
+          assert re.fullmatch(r'3\.(11|13)\.[0-9]+',p['python_version'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('python='+p['python_version']+'\n')
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.certificate.outputs.python }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: tv-chambolle-prepared-${{ matrix.profile }}
+          path: build/capsule
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: tv-chambolle-receipt-*
+          path: build/barrier
+      - name: Install only exact prepared offline runtime/product wheels
         shell: bash
-        run: python benchmarks/tv_chambolle.py --capsule build/prepared/capsule --threads 1 --repeat 7 --output build/results/tv-chambolle-performance.json
-      - name: Verify complete source runtime and capsule after measurement
+        run: |
+          set -euo pipefail
+          python -m pip install --force-reinstall --no-index --no-deps --require-hashes --find-links build/capsule/product/wheels -r build/capsule/product/runtime-lock.txt
+      - name: Verify all fresh receipts before corpus and seven paired one-worker rounds
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/tv_chambolle.py --capsule build/capsule --barrier build/barrier --threads 1 --repeat 7 --output build/results/tv-chambolle-performance.json
+      - name: Rehash unchanged complete artifact after measurement
         if: always()
-        run: python -c "from pathlib import Path; from benchmarks.tv_chambolle import verify; verify(Path('build/prepared/capsule'))"
+        run: python -c "from pathlib import Path; from benchmarks.tv_chambolle import verify; verify(Path('build/capsule'))"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tv-chambolle-performance-${{ matrix.os }}-${{ matrix.runtime }}
+          name: tv-chambolle-performance-${{ matrix.profile }}
           include-hidden-files: true
           retention-days: 90
           path: |
             build/results/
-            build/prepared/capsule/
-            build/prepared/preparation/
+            build/capsule/
+            build/barrier/

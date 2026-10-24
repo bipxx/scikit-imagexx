@@ -20181,7 +20181,7 @@
     "coverage/contracts/rank-statistics.json": "5b8d2e7f80259a442eace9b63226fd385166d88614385dd9ecb484b6b32026fd",
     "coverage/contracts/rank-statistics-benchmark.json": "113e24c84a01e49e2e47a612ab905878726befdbf383e6fd728e767e45236dd1",
     "benchmarks/rank_statistics_compare.py": "286c616d3b502fe38f5db6d614aa699bab1d1b920635a2e185adfba5eac949bf",
-    "tests/test_rank_statistics_compare.py": "aab789a28ec0a2825c255be39df402be317115ebe5899dff47069c27471483b6",
+    "tests/test_rank_statistics_compare.py": "884eeb2d473d3db692863376f0a8afa74c0e5f21960887b3f4882b0dad45ba99",
     ".github/workflows/rank-statistics-comparison.yml": "03d11ca8c0c37b8f1b61a5998f0debc726de350bb09672c4069d760dac7b5537"
   },
   "profiles": {
@@ -20247,10 +20247,10 @@
     "minimum": "ef703fb62132e9729c255de2ef88c546bcbdd28d51ea71968c3e127eac85657e"
   },
   "planned_scope": {
-    "image_paths": 190,
+    "image_paths": 191,
     "metadata_paths": 3,
-    "sdk_families": 14,
-    "sdk_members": 59,
+    "sdk_families": 17,
+    "sdk_members": 62,
     "sdk_family_names": [
       "components",
       "component_consumers",
@@ -20265,7 +20265,10 @@
       "consumer_layout",
       "rank_percentile",
       "rank_bilateral",
-      "rank_decisions"
+      "rank_decisions",
+      "tv_chambolle",
+      "tv_reductions",
+      "tv_denoise"
     ]
   },
   "allowed_source_delta": [

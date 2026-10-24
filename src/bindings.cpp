@@ -46,6 +46,7 @@ void bind_components(pybind11::module_&);
 void bind_component_consumers(pybind11::module_&);
 void bind_rank(pybind11::module_&);
 void bind_projective(pybind11::module_&);
+void bind_tv_chambolle(pybind11::module_&);
 
 namespace py = pybind11;
 namespace {
@@ -872,6 +873,7 @@ PYBIND11_MODULE(_core, m) {
     bind_component_consumers(m);
     bind_rank(m);
     bind_projective(m);
+    bind_tv_chambolle(m);
     m.def("clahe_has_zero", [](py::array_t<float,py::array::c_style|py::array::forcecast> image) {
         if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
         py::gil_scoped_release release;

@@ -1,7 +1,8 @@
-"""TV-Chambolle reference corpus and future strictly gated public benchmark.
+"""TV-Chambolle corpus and qualified-artifact-only public benchmark.
 
-Phase1 is original-only/native0. A staged stencil capability is not admission
-of the public denoiser. All330 original IDs remain untimed and immutable.
+Tracked acceptance pins remain NULL until a reviewed external certificate and
+complete genuine products are supplied. Stage capabilities alone cannot admit
+the denoiser. All330 original IDs and70 timing fixtures remain immutable.
 """
 import argparse
 from dataclasses import dataclass
@@ -56,39 +57,34 @@ def resolve(original=False):
     return importlib.import_module(('skimage' if original else 'skimagexx')+'.restoration').denoise_tv_chambolle
 
 
-def public_admission(manifest):
-    """Run before contract imports/fixtures/capsules/timers; no guessed cap."""
+def public_admission(manifest,qualified=None):
+    """Actual public guard; certificate/product validation precedes fixtures."""
     import skimagexx as xx
     coverage=importlib.import_module('skimagexx.coverage')
-    if API not in coverage.native_functions():raise RuntimeError('actual public TV native path is unregistered; Phase1 native0')
-    accepted=manifest.get('accepted_public')
-    if not isinstance(accepted,dict):raise RuntimeError('independently qualified whole public TV admission pending; stage-only capabilities are insufficient')
-    products=manifest.get('accepted_products',{})
-    if not all(isinstance(products.get(p),dict) for p in ('windows','modern','minimum')):raise RuntimeError('all3 independently qualified public TV product pins required before fixture admission')
-    required={'wrapper_module','interface_attribute','interface','capability_attribute','capability','entries','qualified_source','qualified_proof_sha256'}
-    assert set(accepted)==required and re.fullmatch('[0-9a-f]{40}',accepted['qualified_source']) and re.fullmatch('[0-9a-f]{64}',accepted['qualified_proof_sha256'])
-    for pin in products.values():
-        assert set(pin)=={'revision','qualification_sha256','wheel_sha256','core_sha256','source_sha256'}
-        assert pin['revision']==accepted['qualified_source']
-        assert all(re.fullmatch('[0-9a-f]{64}',pin[k]) for k in pin if k!='revision')
-    core=xx._core;wrapper=importlib.import_module(accepted['wrapper_module']);function=resolve()
-    assert artifacts.sha(Path(core.__file__))==products[profile()]['core_sha256']
-    assert source_fingerprint(ROOT)['source_sha256']==products[profile()]['source_sha256']
-    assert wrapper._core is core and getattr(wrapper,'denoise_tv_chambolle') is function
-    assert function.__module__==accepted['wrapper_module'] and inspect.unwrap(function).__globals__.get('_core') is core
+    if API not in coverage.native_functions():raise RuntimeError('actual public TV native path is unregistered')
+    if not isinstance(qualified,dict):raise RuntimeError('independently qualified public TV admission pending; static NULL pins and stage-only capabilities cannot admit it')
+    core=xx._core;wrapper=importlib.import_module('skimagexx._tv_chambolle');function=resolve()
+    assert artifacts.sha(Path(core.__file__))==qualified['core_sha256']
+    assert source_fingerprint(ROOT)['source_sha256']==qualified['product_source_sha256']
+    assert wrapper._core is core and wrapper.denoise_tv_chambolle is function
+    assert inspect.isfunction(function) and function.__module__=='skimagexx._tv_chambolle'
+    assert inspect.getmodule(function) is wrapper and function.__globals__.get('_core') is core
     assert function is not resolve(True) and inspect.signature(function)==inspect.signature(resolve(True))
-    assert getattr(core,accepted['interface_attribute'],None)==accepted['interface']
-    cap=getattr(core,accepted['capability_attribute'],None)
-    assert type(cap) is int and type(accepted['capability']) is int and cap==accepted['capability']
-    assert accepted['entries'] and len(set(accepted['entries']))==len(accepted['entries'])
-    for name in accepted['entries']:
+    for attribute,version,capability,expected in (
+        ('tv_chambolle_interface','tv-chambolle-stages-v1','tv_chambolle_capabilities',63),
+        ('tv_chambolle_finite_interface','tv-chambolle-finite-v1','tv_chambolle_finite_capabilities',3)):
+        assert getattr(core,attribute,None)==version
+        cap=getattr(core,capability,None);assert type(cap) is int and cap==expected
+    assert getattr(core,'tv_chambolle_finite_profiles',None)==('1.24.4','2.5.4')
+    for name in ('tv_chambolle_divergence_into','tv_chambolle_gradient_into','tv_chambolle_norm_into','tv_chambolle_dual_into','tv_chambolle_finite_run'):
         entry=getattr(core,name,None);assert inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__
     assert xx.get_num_threads is core.get_num_threads and xx.set_num_threads is core.set_num_threads
     assert xx.get_num_threads()==1
     for workers in (4,1):xx.set_num_threads(workers);assert core.get_num_threads()==workers
-    assert xx.set_fallback_enabled(False) is False,'native benchmark requires caller fallback already disabled'
+    assert xx.set_fallback_enabled(False) is False
+    assert all(os.environ.get(name)=='1' for name in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')),'reference provider pool limits must be1'
     assert not any(k.startswith('SKIMAGEXX_') and k!='SKIMAGEXX_DISABLE_SIMD' for k in os.environ),'private selectors forbidden'
-    return accepted
+    return qualified
 
 
 @dataclass(frozen=True)
@@ -156,13 +152,17 @@ def native_observe(function,case):
     """Detect exact original Python/Cython identities during untimed native calls."""
     original=resolve(True);module=importlib.import_module('skimage.restoration._denoise')
     forbidden={inspect.unwrap(original).__code__,module._denoise_tv_chambolle_nd.__code__}
-    previous=sys.getprofile()
+    previous=sys.getprofile();attempted=[]
     def guard(frame,event,arg):
-        if event=='call' and frame.f_code in forbidden:raise AssertionError('upstream TV algorithm forwarding detected')
-        if event=='c_call' and (arg is original or arg is module._denoise_tv_chambolle_nd):raise AssertionError('upstream TV compiled forwarding detected')
+        if event=='call' and frame.f_code in forbidden:
+            attempted.append('python');raise AssertionError('upstream TV algorithm forwarding detected')
+        if event=='c_call' and (arg is original or arg is module._denoise_tv_chambolle_nd):
+            attempted.append('compiled');raise AssertionError('upstream TV compiled forwarding detected')
         if previous is not None:previous(frame,event,arg)
-    try:sys.setprofile(guard);return observe(function,case)
+    try:sys.setprofile(guard);actual=observe(function,case)
     finally:sys.setprofile(previous)
+    assert not attempted,'upstream TV forwarding detected (including caught attempts)'
+    return actual
 
 
 def timing_callback(function,case):
@@ -197,61 +197,180 @@ def capsule_tree(capsule):
     return {p.relative_to(capsule).as_posix():artifacts.sha(p) for p in capsule.rglob('*') if p.is_file() and p.name!='tv-chambolle-artifacts.json' and '__pycache__' not in p.parts and p.suffix!='.pyc'}
 
 
-def seal(capsule):
-    manifest=json.loads(MANIFEST.read_text());public_admission(manifest)
-    path=capsule/'tv-chambolle-artifacts.json';assert not path.exists()
-    qualification=json.loads((capsule/'qualification.json').read_text());pin=manifest['accepted_products'][profile()]
-    assert artifacts.sha(capsule/'qualification.json')==pin['qualification_sha256']
-    assert qualification['passed'] is True and not qualification['failures'] and qualification['source']['revision']==pin['revision']
-    assert API in qualification['expected_registry']['functions'] and qualification['profile']==profile()
-    runtime=artifacts.freeze(ROOT,capsule/'wheels',capsule/'tv-chambolle-runtime.json')
-    assert any(artifacts.sha(p)==pin['wheel_sha256'] for p in (capsule/'wheels').glob('*.whl'))
-    with zipfile.ZipFile(capsule/'source.zip','w',zipfile.ZIP_DEFLATED) as archive:
-        for name in runtime['source']['files_sha256']:archive.write(ROOT/name,name)
-    info=dict(schema='tv-chambolle-exact-offline-v1',runtime_manifest_sha256=artifacts.sha(capsule/'tv-chambolle-runtime.json'),corpus_manifest_sha256=artifacts.sha(MANIFEST),product_source=source_fingerprint(ROOT),files_sha256=capsule_tree(capsule))
-    path.write_text(json.dumps(info,indent=2)+'\n');return verify(capsule)
+PROFILES=('windows','modern','minimum')
+TV_SCOPE=dict(image_paths=191,metadata_paths=3,sdk_families=17,sdk_members=62)
+
+
+def certificate(path,run=None,revision=None):
+    value=json.loads(Path(path).read_text())
+    assert set(value)=={'schema','status','qualified_run','qualified_source','profiles'}
+    assert value['schema']=='tv-qualified-product-certificate-v1' and value['status']=='accepted-qualified-tv'
+    assert isinstance(value['qualified_run'],str) and value['qualified_run'].isdigit()
+    assert re.fullmatch('[0-9a-f]{40}',value['qualified_source'])
+    if run is not None:assert value['qualified_run']==run
+    if revision is not None:assert value['qualified_source']==revision
+    assert set(value['profiles'])==set(PROFILES)
+    for name,pin in value['profiles'].items():
+        assert set(pin)=={'revision','qualification_sha256','product_sha256','wheel_sha256','source_sha256','core_sha256','product_source_sha256','scope','artifact_run','artifact_name','artifact_id','artifact_digest','python_version'}
+        assert pin['revision']==value['qualified_source'] and pin['artifact_run']==value['qualified_run']
+        assert pin['artifact_name']=='rank-statistics-product-'+name
+        assert isinstance(pin['artifact_id'],str) and pin['artifact_id'].isdigit()
+        assert re.fullmatch(r'3\.(11|13)\.[0-9]+',pin['python_version'])
+        assert pin['python_version'].split('.')[1]==('11' if name=='minimum' else '13')
+        for key in ('qualification_sha256','product_sha256','wheel_sha256','source_sha256','core_sha256','product_source_sha256','artifact_digest'):assert re.fullmatch('[0-9a-f]{64}',pin[key])
+        assert set(pin['scope'])==set(TV_SCOPE)|{'sdk_family_names'}
+        assert all(type(pin['scope'][k]) is int and pin['scope'][k]==v for k,v in TV_SCOPE.items())
+        families=pin['scope']['sdk_family_names'];assert type(families) is list and len(families)==len(set(families))==17
+        assert families[-3:]==['tv_chambolle','tv_reductions','tv_denoise']
+    assert len({p['artifact_id'] for p in value['profiles'].values()})==3,'distinct profile artifacts required'
+    return value
+
+
+def qualified_product(capsule,certificate_path,run=None,revision=None):
+    """Standard-library artifact checks before any fixture or image operation."""
+    from benchmarks import rank_statistics_compare as controller
+    cert=certificate(certificate_path,run,revision);pin=cert['profiles'][profile()];product=capsule/'product'
+    cfg=json.loads((ROOT/'coverage/contracts/rank-statistics-comparison.json').read_text())
+    keys={'revision','qualification_sha256','product_sha256','wheel_sha256','source_sha256','scope','artifact_run','artifact_name'}
+    cfg['accepted_products']={'before':{profile():{k:pin[k] for k in keys}}}
+    verified=controller.verify_product(product,'before',profile(),cfg)
+    q=json.loads((product/'qualification.json').read_text())
+    assert API in q['expected_registry']['functions']
+    assert q['source']==artifacts.source_state(ROOT),'complete current/qualified source index differs'
+    assert source_fingerprint(ROOT)['source_sha256']==pin['product_source_sha256']
+    provenance=json.loads((product/'product.json').read_text())['provenance']
+    assert provenance['original_run']==cert['qualified_run'] and provenance['original_manifest_sha256']==pin['qualification_sha256']
+    assert provenance['original_artifact']=='public-qualification-'+profile()
+    verified_receipt=json.loads((product/'qualification-evidence/independent-verification.json').read_text())
+    assert verified_receipt==dict(passed=True,manifest_sha256=pin['qualification_sha256'],records_rehashed=len(q['records']))
+    package=json.loads((product/'qualification-evidence/package.json').read_text())
+    assert package['wheel_sha256']==pin['wheel_sha256'] and len(package['members_sha256'])==108
+    # Qualification must genuinely execute the installed public TV scope in both modes.
+    for mode in ('normal','scalar'):
+        row=q['counts'][mode+'-public-TV']
+        assert row['tests']>=2148 and not any(row[k] for k in ('failures','errors','skipped'))
+    runtime=artifacts.verify(ROOT,product/'wheels',product/'runtime.json')
+    assert len(runtime['runtime']['sdk_sha256'])==62
+    cores={n:h for n,h in runtime['runtime']['packages_sha256']['skimagexx'].items() if n.startswith('_core.') and n.endswith(('.so','.pyd'))}
+    assert list(cores.values())==[pin['core_sha256']]
+    return dict(**pin,profile=profile(),certificate_sha256=artifacts.sha(certificate_path),verified_product=verified)
+
+
+def preparation_reports(directory):
+    rows={}
+    for mode in ('normal','scalar'):
+        path=directory/(mode+'.json');row=json.loads(path.read_text())
+        assert row['status']=='complete-parity-check' and not row['failures'] and not row['results']
+        m=row['metadata'];assert m['check_only'] is True and m['reference_only'] is False
+        assert m['workers']==[1,4] and m['case_count']==400 and m['timing_eligible']==70 and m['native_checks']==800
+        assert m['simd_mode']==mode and m['case_contract_sha256']==json.loads(MANIFEST.read_text())['case_contract_sha256']
+        inventory=json.loads(MANIFEST.read_text())['case_inventory']
+        assert len(row['checks'])==len(inventory)==400
+        assert all(r['index']==i and {k:r[k] for k in spec}==spec for i,(r,spec) in enumerate(zip(row['checks'],inventory)))
+        assert all(r['status']=='passed' and set(r['actual_by_workers'])=={'1','4'} for r in row['checks'])
+        import xml.etree.ElementTree as ET
+        suites=ET.parse(directory/('pipeline-'+mode+'.xml')).getroot().findall('testsuite')
+        assert suites and sum(int(s.get('tests','0')) for s in suites)>=2148
+        assert all(not int(s.get(k,'0')) for s in suites for k in ('failures','errors','skipped'))
+        cases=[c for suite in suites for c in suite.findall('testcase')]
+        assert len(cases)==sum(int(s.get('tests','0')) for s in suites) and len({c.get('name') for c in cases})==len(cases)
+        defaults=[c for c in cases if c.get('name','').startswith('test_actual_default_finite_loop_once_per_spatial_channel[')]
+        assert len(defaults)==632,'all316 default finite projections at workers1/4 required'
+        compiled=0
+        for case in defaults:
+            props={p.get('name'):p.get('value') for p in case.findall('properties/property')}
+            assert props.get('actual_default')=='True'
+            loops=json.loads(props['actual_compiled_finite_loops']);stages=json.loads(props['actual_compiled_stage_calls'])
+            if 'layout/tagged/' in case.get('name',''):
+                assert not loops and stages.get('tv_chambolle_norm_into',0)>0 and stages.get('tv_chambolle_dual_into',0)>0
+            else:assert loops and not stages;compiled+=1
+        assert compiled==628,'tagged4 retain stages; other628 default rows must execute real finite loop'
+        rows[mode]=row
+    assert rows['normal']['metadata']['artifacts']==rows['scalar']['metadata']['artifacts']
+    assert rows['normal']['metadata']['case_spec_sha256']==rows['scalar']['metadata']['case_spec_sha256']
+    return rows
+
+
+def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revision):
+    import shutil
+    assert os.environ.get('GITHUB_ACTIONS')=='true'
+    workflow_run=os.environ['GITHUB_RUN_ID'];attempt=os.environ['GITHUB_RUN_ATTEMPT']
+    assert workflow_run.isdigit() and attempt.isdigit() and not receipt_output.exists()
+    qualified=qualified_product(capsule,certificate_path,run,revision);public_admission(json.loads(MANIFEST.read_text()),qualified)
+    rows=preparation_reports(directory)
+    assert all(r['metadata']['artifacts']==qualified for r in rows.values())
+    assert not (capsule/'tv-chambolle-artifacts.json').exists() and not (capsule/'checks').exists()
+    shutil.copyfile(certificate_path,capsule/'tv-certificate.json');(capsule/'checks').mkdir()
+    for name in ('normal.json','scalar.json','pipeline-normal.xml','pipeline-scalar.xml'):shutil.copyfile(directory/name,capsule/'checks'/name)
+    info=dict(schema='tv-chambolle-qualified-offline-v2',corpus_manifest_sha256=artifacts.sha(MANIFEST),qualified=qualified,files_sha256=capsule_tree(capsule))
+    path=capsule/'tv-chambolle-artifacts.json';path.write_text(json.dumps(info,indent=2)+'\n')
+    receipt=dict(schema='tv-preparation-receipt-v1',status='ready',profile=profile(),workflow_run=workflow_run,workflow_attempt=attempt,qualified_run=run,qualified_source=revision,certificate_sha256=qualified['certificate_sha256'],product_sha256=qualified['product_sha256'],capsule_sha256=artifacts.sha(path),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,native_checks_per_mode=800,pipeline_default_finite_required=True)
+    receipt_output.parent.mkdir(parents=True,exist_ok=True);receipt_output.write_text(json.dumps(receipt,indent=2)+'\n')
+    return verify(capsule)
+
+
+def seal(*args):raise RuntimeError('use genuine qualified product plus complete normal/scalar preparation; no wheel build/seal shortcut')
 
 
 def verify(capsule):
-    info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-exact-offline-v1'
-    assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST) and info['product_source']==source_fingerprint(ROOT)
-    assert info['runtime_manifest_sha256']==artifacts.sha(capsule/'tv-chambolle-runtime.json')
-    runtime=artifacts.verify(ROOT,capsule/'wheels',capsule/'tv-chambolle-runtime.json');assert len(runtime['runtime']['sdk_sha256'])==59
-    with zipfile.ZipFile(capsule/'source.zip') as archive:
-        assert set(archive.namelist())==set(runtime['source']['files_sha256'])
-        assert all(hashlib.sha256(archive.read(n).replace(b'\r\n',b'\n')).hexdigest()==h for n,h in runtime['source']['files_sha256'].items())
-    for wheel in (capsule/'wheels').glob('*.whl'):
-        verify_record(wheel)
-        with zipfile.ZipFile(wheel) as archive:
-            if 'skimagexx/__init__.py' not in archive.namelist():continue
-            headers={n for n in archive.namelist() if n.startswith('include/skimagexx/') and not n.endswith('/')}
-            assert headers=={p.relative_to(ROOT).as_posix() for p in (ROOT/'include/skimagexx').rglob('*') if p.is_file()}
-            assert all(archive.read(n).replace(b'\r\n',b'\n')==(ROOT/n).read_bytes().replace(b'\r\n',b'\n') for n in headers)
-            actual={n.removeprefix('skimagexx/'):archive.read(n).replace(b'\r\n',b'\n') for n in archive.namelist() if n.startswith('skimagexx/') and n.endswith('.py')}
-            expected={p.relative_to(ROOT/'python/skimagexx').as_posix():p.read_bytes().replace(b'\r\n',b'\n') for p in (ROOT/'python/skimagexx').rglob('*.py')}
-            assert actual==expected
+    info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-qualified-offline-v2'
+    assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST)
+    qualified=qualified_product(capsule,capsule/'tv-certificate.json')
+    assert qualified==info['qualified']
+    rows=preparation_reports(capsule/'checks');assert all(r['metadata']['artifacts']==qualified for r in rows.values())
     return dict(manifest_sha256=artifacts.sha(capsule/'tv-chambolle-artifacts.json'),**info)
+
+
+def preparation_barrier(directory,capsule):
+    assert os.environ.get('GITHUB_ACTIONS')=='true'
+    cert=certificate(capsule/'tv-certificate.json');paths=list(directory.rglob('tv-receipt-*.json'))
+    assert len(paths)==3,'all3 preparation receipts required before fixture/timer work'
+    rows={}
+    for path in paths:
+        row=json.loads(path.read_text());name=row['profile'];assert name in PROFILES and name not in rows
+        assert row['schema']=='tv-preparation-receipt-v1' and row['status']=='ready'
+        assert row['workflow_run']==os.environ['GITHUB_RUN_ID'] and row['workflow_attempt']==os.environ['GITHUB_RUN_ATTEMPT'],'stale/reused preparation receipt'
+        assert row['qualified_run']==cert['qualified_run'] and row['qualified_source']==cert['qualified_source']
+        assert row['certificate_sha256']==artifacts.sha(capsule/'tv-certificate.json')
+        assert row['product_sha256']==cert['profiles'][name]['product_sha256']
+        assert row['modes']==['normal','scalar'] and row['workers']==[1,4]
+        assert row['case_count']==400 and row['timed_count']==70 and row['native_checks_per_mode']==800 and row['pipeline_default_finite_required'] is True
+        assert re.fullmatch('[0-9a-f]{64}',row['capsule_sha256']);rows[name]=row
+    assert rows[profile()]['capsule_sha256']==artifacts.sha(capsule/'tv-chambolle-artifacts.json')
+    return rows
 
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,nargs='+',default=[1]);parser.add_argument('--repeat',type=int,default=7);parser.add_argument('--target-ms',type=float,default=15.)
+    parser.add_argument('--certificate',type=Path);parser.add_argument('--qualified-run');parser.add_argument('--qualified-source');parser.add_argument('--seal-preparation',action='store_true');parser.add_argument('--preparation-dir',type=Path);parser.add_argument('--receipt-output',type=Path);parser.add_argument('--barrier',type=Path)
     parser.add_argument('--check-only',action='store_true');parser.add_argument('--reference-only',action='store_true');parser.add_argument('--prepare-capsule',action='store_true');parser.add_argument('--capsule',type=Path);parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
     if not args.threads or len(set(args.threads))!=len(args.threads) or 1 not in args.threads or min(args.threads)<1 or max(args.threads)>1024 or args.repeat!=7 or not math.isfinite(args.target_ms) or args.target_ms<=0:parser.error('distinct positive workers including1; seven rounds and positive target-ms required')
     if args.reference_only and (not args.check_only or args.capsule):parser.error('reference-only requires check-only without capsule')
     if args.prepare_capsule and (not args.check_only or args.reference_only or not args.capsule or set(args.threads)!={1,4}):parser.error('preparation requires check-only native capsule and workers1/4')
     if not args.check_only and (os.environ.get('GITHUB_ACTIONS')!='true' or args.capsule is None or args.output is None or args.threads!=[1]):parser.error('timing requires isolated Actions capsule/output, one native worker only')
+    if args.seal_preparation:
+        if not all((args.capsule,args.certificate,args.qualified_run,args.qualified_source,args.preparation_dir,args.receipt_output)) or not args.check_only:parser.error('complete qualified preparation seal inputs required')
+        seal_preparation(args.capsule,args.certificate,args.preparation_dir,args.receipt_output,args.qualified_run,args.qualified_source);return 0
+    if args.prepare_capsule and not all((args.certificate,args.qualified_run,args.qualified_source)):parser.error('explicit qualified artifact certificate/run/source required')
+    if not args.reference_only and not args.prepare_capsule and args.capsule is None:parser.error('qualified sealed capsule required')
+    if not args.check_only and args.barrier is None:parser.error('all3 fresh preparation barrier required')
     import skimagexx as xx
     import numpy as np
     import scipy,skimage
     previous=xx.get_num_threads();policy=xx.set_fallback_enabled(False)
     manifest=json.loads(MANIFEST.read_text());source=source_fingerprint(ROOT);manifest_sha=artifacts.sha(MANIFEST)
-    report=dict(version=VERSION,status='preflight',scope='reference-only/native0' if args.reference_only else 'strict actual public TV',metadata=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,skimage=skimage.__version__,source_revision=source_revision(ROOT),source=source,workers=args.threads,primary_workers=1,repeat=7,check_only=args.check_only,reference_only=args.reference_only,session_id=str(uuid.uuid4()),cpu=cpu_metadata(),timing_scope='Whole public call including conversion/allocation/result destruction; fixture construction excluded; errors/protocols/NaN cases untimed'),checks=[],results=[],failures=[])
+    report=dict(version=VERSION,status='preflight',scope='reference-only/native0' if args.reference_only else 'strict actual public TV',metadata=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,skimage=skimage.__version__,source_revision=source_revision(ROOT),source=source,workers=args.threads,primary_workers=1,repeat=7,check_only=args.check_only,reference_only=args.reference_only,simd_mode="scalar" if os.environ.get("SKIMAGEXX_DISABLE_SIMD")=="1" else "normal",session_id=str(uuid.uuid4()),cpu=cpu_metadata(),timing_scope='Whole public call including conversion/allocation/result destruction; fixture construction excluded; errors/protocols/NaN cases untimed'),checks=[],results=[],failures=[])
     save(report,args.output)
     try:
         assert skimage.__version__=='0.26.0'
-        if not args.reference_only:public_admission(manifest)
+        if not args.reference_only:
+            if args.prepare_capsule:qualified=qualified_product(args.capsule,args.certificate,args.qualified_run,args.qualified_source)
+            else:
+                if not args.check_only:report['metadata']['preparation_barrier']=preparation_barrier(args.barrier,args.capsule)
+                sealed=verify(args.capsule);qualified=sealed['qualified']
+            public_admission(manifest,qualified)
         assert text_sha(SOURCE_CONTRACT)==manifest['source_contract_sha256']
         assert all(text_sha(ROOT/n)==h for n,h in manifest['fixture_source_sha256'].items())
         qualified=contracts();frozen=json.loads(SOURCE_CONTRACT.read_text())
@@ -263,7 +382,7 @@ def main(argv=None):
         report['metadata'].update(case_spec_sha256=digest(specs),case_contract_sha256=manifest['case_contract_sha256'],case_specs=specs,profile=profile())
         if not args.reference_only:
             assert expected_profile is not None and args.capsule is not None
-            report['metadata']['artifacts']=seal(args.capsule) if args.prepare_capsule else verify(args.capsule)
+            report['metadata']['artifacts']=qualified
         for index,case in enumerate(cases):
             row=dict(index=index,**inventory(case))
             try:
@@ -288,7 +407,9 @@ def main(argv=None):
         if report['failures']:report['status']='failed-parity';return 1
         def integrity():
             assert source_fingerprint(ROOT)==source and artifacts.sha(MANIFEST)==manifest_sha
-            if not args.reference_only:assert verify(args.capsule)==report['metadata']['artifacts']
+            if not args.reference_only:
+                current=qualified_product(args.capsule,args.certificate,args.qualified_run,args.qualified_source) if args.prepare_capsule else verify(args.capsule)['qualified']
+                assert current==report['metadata']['artifacts']
         integrity()
         if args.check_only:report['status']='complete-reference-check' if args.reference_only else 'complete-parity-check';return 0
         # Complete original+both-worker validation occurs before entering here.

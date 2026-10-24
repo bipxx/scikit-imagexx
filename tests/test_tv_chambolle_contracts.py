@@ -1,4 +1,4 @@
-"""Pinned original TV-Chambolle contracts; native implementation remains pending.
+"""Pinned original TV-Chambolle observations and owned public parity checks.
 
 All reference calls are bounded NumPy code, not unchecked Cython probes. The
 closed-form first dual update supplies an independent two-iteration oracle.
@@ -307,7 +307,12 @@ def test_source_signature_safety_and_native0(frozen):
     assert reference is original_module.denoise_tv_chambolle
     assert source_sha(reference)==frozen['source_sha256']
     assert source_sha(original_module._denoise_tv_chambolle_nd)==frozen['helper_sha256']
-    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==frozen['test_source_canonical_lf_sha256']
+    migration=json.loads((ROOT/'coverage/evidence/tv-chambolle-public-assertion-migration.json').read_bytes())
+    assert migration['schema']=='tv-chambolle-public-assertion-migration-v1'
+    assert migration['source_file']=='tests/test_tv_chambolle_contracts.py'
+    assert migration['original_source_sha256']==frozen['test_source_canonical_lf_sha256']
+    assert migration['reference_matrix_sha256']==hashlib.sha256(MATRIX.read_bytes()).hexdigest()
+    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==migration['public_source_sha256']
     assert list(CASES)==frozen['cases'] and digest(CASES)==frozen['case_contract_sha256']
     assert frozen['safety']['max_elements']==max(math.prod(p['shape']) for p in CASES)
     assert all(math.prod(p['shape'])<=64 and len(p['shape'])<=4 for p in CASES)
@@ -325,15 +330,30 @@ def test_original_frozen_values_errors_warnings_providers_ownership(spec,frozen)
 
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('spec',CASES,ids=[p['id'] for p in CASES])
-def test_strict_native_pending_never_counts_forwarding(spec,workers):
-    assert API not in native_functions(),'native transition requires a separately qualified implementation, not an automatic skip'
+def test_strict_native_owned_values_without_forwarding(spec,workers,frozen):
+    assert API in native_functions(),'actual public registration is required; no automatic skip or source adapter'
     policy=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
     try:
         function=importlib.import_module('skimagexx.restoration').denoise_tv_chambolle
-        actual=observe(function,spec)
-        assert actual['error']['type']=='NotImplementedError' and 'fallback is disabled' in actual['error']['message']
-        assert actual['result'] is None and not actual['warnings'] and not actual['events']
-        assert actual['before']==actual['after'] and actual['pointer_stable']
+        native=importlib.import_module('skimagexx._tv_chambolle')
+        assert function is native.denoise_tv_chambolle and function is not reference
+        assert function.__module__=='skimagexx._tv_chambolle'
+        assert inspect.signature(function)==inspect.signature(reference)
+        forbidden={reference.__code__,original_module._denoise_tv_chambolle_nd.__code__}
+        forwarded=[]
+        previous=sys.getprofile()
+        def guard(frame,event,arg):
+            if event=='call' and frame.f_code in forbidden:
+                forwarded.append(frame.f_code.co_name)
+                raise AssertionError('upstream TV algorithm/helper forwarding')
+            if previous is not None:previous(frame,event,arg)
+        try:
+            sys.setprofile(guard)
+            actual=observe(function,spec)
+        finally:sys.setprofile(previous)
+        assert not forwarded,'upstream TV algorithm/helper forwarding'
+        expected=frozen['observations'][frozen['profiles'][profile()]['snapshots'][spec['id']]]
+        assert result_nan_encoding_contract(actual)==result_nan_encoding_contract(expected),spec['id']
     finally:xx.set_num_threads(threads);xx.set_fallback_enabled(policy)
 
 

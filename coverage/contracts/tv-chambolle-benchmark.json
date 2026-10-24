@@ -1,11 +1,29 @@
 {
   "schema": "tv-chambolle-benchmark-contract-v1",
   "version": "tv-chambolle-benchmark-v1",
-  "scope": "Phase1reference-only/native0; stagedcapability is not publicalgorithm admission",
+  "scope": "Reference authoring complete/native0; executable qualified-product consumer pending genuine191 certificate and actual artifacts",
+  "qualified_artifact_protocol": {
+    "certificate_schema": "tv-qualified-product-certificate-v1",
+    "certificate_location": "external immutable run/source/product/outer-artifact pins; tracked accepted pins remain NULL",
+    "bounded_product_schema": "rank-statistics-comparison-product-v1",
+    "offline_schema": "tv-chambolle-qualified-offline-v2",
+    "product_members": 108,
+    "sdk_members": 62,
+    "sdk_families": 17,
+    "sdk_checks": 34,
+    "image_paths": 191,
+    "metadata_paths": 3,
+    "stage_interface": "tv-chambolle-stages-v1",
+    "stage_capability": 63,
+    "finite_interface": "tv-chambolle-finite-v1",
+    "finite_capability": 3,
+    "preparation": "consume exact qualified wheel/source/runtime/SDK/build-identity bytes without rebuild; both SIMD modes and workers1/4; all400 rows and installed default-loop counter pipeline",
+    "measurement": "fresh artifact-only hosts after all3 same-run/attempt preparation receipts; one worker and seven paired rounds"
+  },
   "api": "restoration.denoise_tv_chambolle",
   "source_contract_sha256": "e9ea5775b97f5bce2d5926a6eb411449908fdc219e88fb663b7fb1424edcb539",
   "fixture_source_sha256": {
-    "tests/test_tv_chambolle_contracts.py": "5cb0b8501c0f8b6da990bcd49ef6500d2f86455dc98bec53f648b7a7b8f3a932"
+    "tests/test_tv_chambolle_contracts.py": "48a3660fa0d4d467bd03bf65246fdeb7a9a81daf9afc0beb6781e1715e56b4e3"
   },
   "case_inventory": [
     {
