@@ -278,6 +278,66 @@ void large_team(int workers) {
     require(result.preparation_workers==workers,"actual independent team");
     for(std::size_t i=0;i<n;++i)require(a.out[i]==0 && a.parent[i]==0 && a.traverser[i]==std::int64_t(i),"large flat identity/tail");
 }
+template<class T> struct Canary {
+    std::vector<T> values;
+    explicit Canary(std::size_t count):values(count+2,T(37)) {}
+    T* data(){return values.data()+1;}
+    std::size_t size() const{return values.size()-2;}
+    MaxTreeSpan<T> span(){return {data(),size()};}
+    void check() const{require(values.front()==T(37) && values.back()==T(37),"integer sort/workspace canary overwritten");}
+};
+template<class T> void integer_sort_controls(MaxTreeType type,int workers) {
+    for(auto shape:{std::array<std::size_t,3>{{3,3,1}},{{3,31,1}},{{3,32,1}},{{3,33,1}},
+                   {{3,255,1}},{{3,256,1}},{{3,257,1}},{{4,5,7}},{{257,257,1}},{{513,519,1}}}) {
+        const auto rank=shape[2]==1?std::size_t(2):std::size_t(3),n=shape[0]*shape[1]*shape[2];
+        for(int pattern=0;pattern<3;++pattern) {
+            std::vector<T> values(n);
+            constexpr std::uint16_t edges[]={0,1,254,255,256,257,511,512,65279,65280,65534,65535};
+            for(std::size_t i=0;i<n;++i) {
+                if(pattern==0)values[i]=T(std::numeric_limits<T>::max());
+                else if(pattern==1)values[i]=T(edges[(i*7+i/13)%12]);
+                else values[i]=T((i*40503u+17u)&65535u);
+            }
+            for(int operation=0;operation<6;++operation) {
+                // Large rows exercise every key and ties without multiplying
+                // all filter costs; all six routes retain moderate controls.
+                if(n>100000 && operation!=0 && operation!=3)continue;
+                context="integer-sort-"+std::to_string(sizeof(T))+"/"+std::to_string(n)+"/"+std::to_string(pattern)+"/"+std::to_string(operation);
+                const auto op=MaxTreeOperation(operation);const bool closed=operation==3 || operation==5;
+                Arena<T> a(values,type,op,rank,shape,1,11);
+                std::vector<std::int64_t> expected(n);for(std::size_t i=0;i<n;++i)expected[i]=std::int64_t(i);
+                std::stable_sort(expected.begin(),expected.end(),[&](auto left,auto right) {
+                    const auto x=closed?inverse(values[std::size_t(left)]):values[std::size_t(left)];
+                    const auto y=closed?inverse(values[std::size_t(right)]):values[std::size_t(right)];return x<y;
+                });
+                Canary<std::int64_t> parent(n),order(n),roots(n),scratch(n),minimum(n*rank),maximum(n*rank);
+                Canary<T> inverted(n),output(n);Canary<double> attribute(n);Canary<std::uint64_t> labels(n);
+                MaxTreeWorkspace w{parent.span(),order.span(),roots.span(),scratch.span(),{inverted.data(),n},
+                                   attribute.span(),minimum.span(),maximum.span()};
+                MaxTreeBuffer out=operation==0?MaxTreeBuffer{nullptr,0}:operation==1?MaxTreeBuffer{labels.data(),n}:MaxTreeBuffer{output.data(),n};
+                const auto result=max_tree_into(a.input,a.params,w,out);
+                require(std::equal(expected.begin(),expected.end(),order.data()),"count/radix permutation differs from independent std::stable_sort");
+                require(a.image==values && get_num_threads()==workers,"integer sorting changed source/global worker state");
+                require(result.preparation_workers==(n>=std::size_t(1<<18)?workers:1),"integer control preparation worker team");
+                parent.check();order.check();roots.check();scratch.check();minimum.check();maximum.check();
+                inverted.check();output.check();attribute.check();labels.check();
+                // Reusing the actual tree with no sort storage proves supplied
+                // parent/traverser remain readonly and bypass both new sorts.
+                if(operation!=0) {
+                    const auto original_parent=parent.values,original_order=order.values;
+                    auto reused=w;reused.parent=reused.traverser=reused.roots=reused.sort_scratch={nullptr,0};
+                    const MaxTreeProvided supplied{{parent.data(),n},{order.data(),n}};
+                    auto parameters=a.params;parameters.connectivity=-99;
+                    std::vector<unsigned char> expected_output(n*(operation==1?sizeof(std::uint64_t):sizeof(T)));
+                    std::memcpy(expected_output.data(),out.data,expected_output.size());
+                    require(max_tree_into(a.input,parameters,reused,out,supplied).tree_reused,"integer supplied tree did not bypass sorting");
+                    require(parent.values==original_parent && order.values==original_order,"integer supplied tree changed");
+                    require(std::memcmp(expected_output.data(),out.data,expected_output.size())==0,"integer filtered supplied-tree output changed");
+                }
+            }
+        }
+    }
+}
 }
 int main(int argc,char** argv) {
     try {
@@ -296,6 +356,8 @@ int main(int argc,char** argv) {
             exact_key_controls<std::int64_t>(MaxTreeType::i64,true);
             exact_float_keys<float>(MaxTreeType::f32);exact_float_keys<double>(MaxTreeType::f64);
             guard_controls();large_team(workers);
+            integer_sort_controls<std::uint8_t>(MaxTreeType::u8,workers);
+            integer_sort_controls<std::uint16_t>(MaxTreeType::u16,workers);
         }
         set_num_threads(1);
         std::cout<<"PASS checks="<<checks<<" source_numeric_projections="<<source_rows<<" unique_source_ids=233 metadata_excluded=118 parallel_traversal=false\n";
