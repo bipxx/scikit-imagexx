@@ -44,3 +44,6 @@ coverage/evidence/qualification-checkpoint-cleanup-20261024.json -text
 coverage/evidence/rank-decisions-source-staging.json -text
 coverage/evidence/private-rank-collection-migration.json -text
 coverage/contracts/tv-chambolle.json -text
+coverage/evidence/rank-counts-r7-private.json -text
+coverage/evidence/tv-chambolle-reference.json -text
+coverage/contracts/tv-chambolle-benchmark.json -text

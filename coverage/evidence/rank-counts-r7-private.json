@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "source": "3269977b12df75cf406d7465f97891ab6a84e1de",
+  "proof": {
+    "path": "build/rank-windowed-counts-r7-compiled/manifest.json",
+    "sha256": "15b5e4932fda0cf23575095239119559b33a25969263f08ff6af188105ae0ca9"
+  },
+  "root_review": {
+    "path": "build/decisions-readiness/private-counts-root-review.json",
+    "sha256": "77fc180ccf1c342347788d49e4e59ca3378f3883abc456f908922af334d9397f"
+  },
+  "Python_passed": 11387,
+  "native_counts_cases_passed": 5324,
+  "native_R7_control_modes_passed": 2,
+  "modes": [
+    "normal",
+    "scalar"
+  ],
+  "portable_parallel_scope": "Worker1 parity and explicit worker4 rejection; not parallel parity.",
+  "Debug_scope": "GIL assertions, ASan/UBSan and native LeakSanitizer passed at shared workers1/4. Python leak checking disabled explicitly.",
+  "source_members_verified": 105,
+  "raw_records_verified": 179,
+  "AVX_in_portable_baseline": false,
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "scope": "Private rank-runtime proof for the exact R7 histogram port. Whole-product parity and one-worker controlled comparisons remain separate required gates."
+}

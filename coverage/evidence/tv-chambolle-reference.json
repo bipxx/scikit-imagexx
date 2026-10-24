@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "source": "67da08fa4e7417d3895edc91fe76954ac5a8f473",
+  "main_commit": "5570602c0b7a3a7c1a39c46dfde7ca311f6d5351",
+  "API": "restoration.denoise_tv_chambolle",
+  "proof": {
+    "path": "build/worktrees/tv-chambolle-contracts/build/tv-reference/manifest.json",
+    "sha256": "b714da573b0f9bb025274d0d071fa53f01acaee2f1b24972184364c8746b5e9e"
+  },
+  "root_review": {
+    "path": "build/decisions-readiness/tv-reference-root-review.json",
+    "sha256": "bc70756899e8162f683c54e2c067e81cadfd12ae9569d0e234b3ffd9c64db532"
+  },
+  "fixed_reference_cases": 330,
+  "checks_each_runtime": 1025,
+  "runtimes": [
+    "windows",
+    "modern",
+    "minimum"
+  ],
+  "independent_stencil_energy_checks_each": 24,
+  "native_checks": 0,
+  "comparison": "tv-result-nan-encoding-v1",
+  "comparison_scope": "Only result floating NaN sign/payload encodings are excluded after original repeated calls varied. NaN positions, every non-NaN word including signed zero/Inf, input bytes, metadata, aliasing, warnings, errors and provider events remain exact. Raw observations and all14 initial minimum-runtime repeated-call failures remain retained.",
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "next": "Private C++/SIMD stage implementation, real binding/wrapper parity, public integration and isolated original-scikit-image benchmarks."
+}
