@@ -36,7 +36,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA = 'public-qualification-v1'
+SCHEMA = 'public-qualification-v2'
 PROFILES = {
     'windows': dict(python='3.13', numpy='2.5.4', scipy='1.18.1', headers='2.5.4', config='Release'),
     'modern': dict(python='3.13', numpy='2.5.4', scipy='1.18.1', headers='2.5.4', config='Release'),
@@ -471,6 +471,76 @@ def tool_in(prefix, name):
     return prefix / ('Scripts' if os.name == 'nt' else 'bin') / (name + '.exe' if os.name == 'nt' else name)
 
 
+def base_interpreter():
+    path = Path(getattr(sys, '_base_executable', None) or sys.executable).resolve(strict=True)
+    return dict(path=str(path), sha256=sha(path), version=sys.version,
+                major_minor='.'.join(map(str, sys.version_info[:2])), cache_tag=sys.implementation.cache_tag,
+                os_name=os.name)
+
+
+def interpreter_link_paths(base):
+    # venv's POSIX aliases are the only permitted external references. Windows
+    # uses copied redirectors; arbitrary Scripts/ or other links are not admitted.
+    if base['os_name'] != 'posix':
+        return set()
+    return {env + '/bin/' + name for env in ('build-env','runtime-env')
+            for name in ('python','python3','python' + base['major_minor'])}
+
+
+def capture_interpreter_provenance(out, base):
+    links = {}
+    for name in sorted(interpreter_link_paths(base)):
+        path = out / name
+        if path.is_symlink():
+            require(path.parent.resolve().is_relative_to(out.resolve()), 'interpreter owner directory escapes output')
+            require(str(path.resolve(strict=True)) == base['path'] and sha(path) == base['sha256'], 'venv interpreter differs from declared base')
+            links[name] = dict(raw_target=os.readlink(path), resolved_target=base['path'], sha256=base['sha256'])
+    return dict(base=base, links=links)
+
+
+def validate_link_record(name, link, actual_link, provenance):
+    """Policy is independent of filesystem traversal, so all platforms test it."""
+    base = provenance['base']
+    require(name in interpreter_link_paths(base), 'unapproved external interpreter owner')
+    require(set(link) == {'raw_target','resolved_target','sha256'}, 'invalid interpreter link record')
+    require(link == actual_link, 'interpreter link target/bytes changed')
+    require(link['resolved_target'] == base['path'] and link['sha256'] == base['sha256'], 'interpreter link is not the declared base')
+
+
+def validate_interpreter_provenance(out, provenance):
+    require(provenance['base'] == base_interpreter(), 'actual base interpreter differs from declared provenance')
+    require(set(provenance['links']) <= interpreter_link_paths(provenance['base']), 'unapproved external interpreter record')
+    for name, link in provenance['links'].items():
+        path = out / name
+        require(path.parent.resolve().is_relative_to(out.resolve()), 'interpreter owner directory escapes output')
+        require(path.is_symlink() and path.is_file(), 'declared interpreter link replaced')
+        raw, resolved = os.readlink(path), str(path.resolve(strict=True))
+        require(raw == link['raw_target'] and resolved == link['resolved_target'] == provenance['base']['path'], 'interpreter link target changed')
+        actual = dict(raw_target=raw, resolved_target=resolved, sha256=sha(path))
+        validate_link_record(name, link, actual, provenance)
+    for path in out.rglob('*'):
+        if path.is_symlink() and not path.resolve(strict=True).is_relative_to(out.resolve()):
+            require(path.is_file() and path.relative_to(out).as_posix() in provenance['links'], 'unapproved outside output symlink')
+
+
+def verify_record(out, name, record, provenance):
+    lexical = PurePosixPath(name)
+    require(bool(lexical.parts) and not lexical.is_absolute() and '..' not in lexical.parts
+            and '\\' not in name and ':' not in lexical.parts[0], 'sealed record escapes output')
+    path = out / name
+    require(path.parent.resolve().is_relative_to(out.resolve()), 'sealed record parent escapes output')
+    link = provenance['links'].get(name)
+    if link is not None:
+        require(path.is_symlink(), 'declared interpreter link replaced')
+        raw, resolved = os.readlink(path), str(path.resolve(strict=True))
+        require(raw == link['raw_target'] and resolved == link['resolved_target'] == provenance['base']['path'], 'interpreter link target changed')
+        actual = dict(raw_target=raw, resolved_target=resolved, sha256=sha(path))
+        validate_link_record(name, link, actual, provenance)
+    else:
+        require(path.resolve(strict=True).is_relative_to(out.resolve()), 'sealed record escapes output')
+    require(path.is_file() and path.stat().st_size == record['bytes'] and sha(path) == record['sha256'], 'sealed artifact changed: ' + name)
+
+
 def must_run(journal, label, command, env=None):
     require(journal.run(label, command, env) == 0, 'command failed; raw log retained: ' + label)
 
@@ -483,10 +553,14 @@ def prepare(out, profile, expected):
     require('.'.join(map(str, sys.version_info[:2])) == PROFILES[profile]['python'], 'wrong host Python')
     require((os.name == 'nt') == (profile == 'windows'), 'wrong host platform')
     journal = Journal(out)
+    base = base_interpreter()  # Pin the actual bootstrap before creating venvs/installing wheels.
     archive = out / 'source.zip'
     must_run(journal, 'source-archive', ['git', '-C', ROOT, 'archive', '--format=zip', '--output=' + str(archive), source['revision']])
     for name in ('build-env', 'runtime-env'):
         must_run(journal, 'venv-' + name, [sys.executable, '-m', 'venv', str(out / name)])
+    interpreter = capture_interpreter_provenance(out, base)
+    validate_interpreter_provenance(out, interpreter)
+    dump(out / 'interpreter-provenance.json', interpreter)
     buildpy = python_in(out / 'build-env'); runtimepy = python_in(out / 'runtime-env')
     buildpins = planning['build_pins']; runtimepins = planning['runtime_pins']
     for label, pins, target, python in [('build', buildpins, out / 'build-wheels', buildpy), ('runtime', runtimepins, out / 'runtime-wheels', runtimepy)]:
@@ -530,6 +604,7 @@ def prepare(out, profile, expected):
     verify_tree(package, package_record['members_sha256'])
     dump(out / 'package.json', package_record)
     state = dict(schema=SCHEMA, profile=profile, source=source, expected=planning['registry'],
+                 interpreter_provenance=interpreter,
                  runtime_pins=runtimepins, product_wheel=products[0].name, profile_config=PROFILES[profile],
                  no_timing=True, public_scope=GROUPS, supplemental_scopes=['382 returned ArrayMap frozen protocols using installed public class'],
                  exclusions=planning['exclusions'])
@@ -541,6 +616,8 @@ def prepare(out, profile, expected):
 def headers(out, profile):
     import numpy, pybind11, scikit_build_core
     p = PROFILES[profile]
+    provenance = json.loads((out / 'interpreter-provenance.json').read_text())
+    require(base_interpreter() == provenance['base'], 'build venv base interpreter differs')
     require(numpy.__version__ == p['headers'] and pybind11.__version__ == BUILD['pybind11'] and scikit_build_core.__version__ == BUILD['scikit-build-core'], 'build dependency version mismatch')
     record = dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable),
                   numpy_build_headers=numpy.__version__, pybind11=pybind11.__version__, scikit_build_core=scikit_build_core.__version__,
@@ -550,12 +627,14 @@ def headers(out, profile):
     trees = {name: hashlib.sha256(json.dumps(files, sort_keys=True, separators=(',',':')).encode()).hexdigest() for name, files in record['include_files'].items()}
     require(trees == retained['trees'], 'complete build header file set/bytes differ from retained accepted inputs')
     record['retained_header_provenance'] = retained
+    record['base_interpreter'] = base_interpreter()
     dump(out / 'build-headers.json', record)
 
 
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
+    validate_interpreter_provenance(out, state['interpreter_provenance'])
     require(not any(k.startswith('SKIMAGEXX_') and k != 'SKIMAGEXX_DISABLE_SIMD' for k in os.environ), 'candidate/private selectors forbidden')
     require(not any(Path(p).resolve() == ROOT / 'python' for p in sys.path if p), 'source/python shadowing forbidden')
     import skimagexx as xx
@@ -607,7 +686,7 @@ def admission(out, state):
     for worker in (4, 1):
         xx.set_num_threads(worker); require(xx._core.get_num_threads() == worker, 'global setter identity mismatch')
     xx.set_fallback_enabled(False)
-    return dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable), platform=platform.platform(),
+    return dict(python=sys.version, executable=sys.executable, executable_sha256=sha(sys.executable), base_interpreter=base_interpreter(), platform=platform.platform(),
                 core=xx._core.__file__, core_sha256=sha(xx._core.__file__), default_workers=1, shared_workers=[1,4],
                 versions=versions, origins=origins, source_image_count=state['expected']['image_count'],
                 scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD') == '1', thread_pools={k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','BLIS_NUM_THREADS')},
@@ -660,8 +739,12 @@ def child(out, group):
     require(group in GROUPS, 'unknown public selector')
     mode = 'scalar' if facts['scalar'] else 'normal'
     xml = out / f'{mode}-{group}.xml'
+    temporary = out / 'pytest-tmp' / (mode + '-' + group)
+    require(not temporary.exists(), 'never reuse a prior pytest basetemp')
+    require(temporary.parent.resolve().is_relative_to(out.resolve()), 'pytest temporary parent escapes output')
+    temporary.parent.mkdir(parents=True, exist_ok=True)
     args = ['-q', '--capture=sys', '--tb=short', '--junitxml=' + str(xml),
-            '--basetemp=' + str(out / 'pytest-tmp' / (mode + '-' + group)), '-o', 'cache_dir=' + str(out / 'pytest-cache' / (mode + '-' + group))]
+            '--basetemp=' + str(temporary), '-o', 'cache_dir=' + str(out / 'pytest-cache' / (mode + '-' + group))]
     args += [str(ROOT / 'tests' / n) for n in GROUPS[group]]
     if group == 'metrics-policies':
         args += ['-k', POLICIES]
@@ -781,6 +864,7 @@ def seal(out):
         required_labels.update(mode + '-' + n for n in ('admission', *GROUPS, 'returned-maps','metrics-corpus'))
         required_labels.update(mode + '-' + n + '-corpus' for n in CORPORA)
     require(required_labels <= {r['label'] for r in commands}, 'missing required qualification command')
+    validate_interpreter_provenance(out, state['interpreter_provenance'])
     failures = [r['label'] for r in commands if r['returncode'] != 0]
     record = json.loads((out / 'package.json').read_text()); verify_tree(out / 'package', record['members_sha256'])
     require(sha(out / 'product-wheels' / state['product_wheel']) == record['wheel_sha256'], 'product wheel changed')
@@ -800,7 +884,10 @@ def seal(out):
         validate_metrics(out / (mode + '-metrics-corpus.json'))
     require(len([r for r in commands if r['label'].startswith('sdk-')]) == 5, 'SDK commands incomplete')
     records = {p.relative_to(out).as_posix(): dict(bytes=p.stat().st_size,sha256=sha(p)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    for name, row in records.items():
+        verify_record(out, name, row, state['interpreter_provenance'])
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
+                 interpreter_provenance=state['interpreter_provenance'],
                  counts=counts, SDK_checks=24, expected_registry=state['expected'], command_count=len(commands), records=records,
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
@@ -830,10 +917,9 @@ def main(argv=None):
     if args.stage == 'verify':
         proof = json.loads((out / 'manifest.json').read_text())
         require(proof['schema'] == SCHEMA and source_state(ROOT) == proof['source'], 'manifest source/schema differs')
+        validate_interpreter_provenance(out, proof['interpreter_provenance'])
         for name, record in proof['records'].items():
-            path = out / name
-            require(path.resolve().is_relative_to(out), 'sealed record escapes output')
-            require(path.stat().st_size == record['bytes'] and sha(path) == record['sha256'], 'sealed artifact changed: ' + name)
+            verify_record(out, name, record, proof['interpreter_provenance'])
         print(json.dumps(dict(passed=proof['passed'], manifest_sha256=sha(out / 'manifest.json'), records_rehashed=len(proof['records']))))
         return int(not proof['passed'])
     if args.stage == '_child':
