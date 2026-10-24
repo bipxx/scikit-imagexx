@@ -10,7 +10,7 @@ import pytest
 ROOT=Path(__file__).parents[1]
 MIGRATION=ROOT/'coverage/evidence/private-rank-collection-migration.json'
 DATA=json.loads(MIGRATION.read_text(encoding='utf-8'))
-EXPECTED_FAMILIES=('bilateral','percentile','statistics')
+EXPECTED_FAMILIES=('bilateral','percentile','statistics','decisions')
 SOURCES=DATA['sources']
 
 

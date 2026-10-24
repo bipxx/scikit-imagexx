@@ -17,6 +17,9 @@ def load(name,path):
     return module
 
 
+if 'SKIMAGEXX_RANK_DECISIONS_BACKEND' not in os.environ and importlib.util.find_spec('_rank_decisions_core') is None:
+    pytest.skip('Private compiled fixture _rank_decisions_core unavailable; supplementary private tests are not public parity',allow_module_level=True)
+
 core=importlib.import_module(os.environ.get('SKIMAGEXX_RANK_DECISIONS_BACKEND','_rank_decisions_core'))
 assert core.rank_decisions_interface=='rank-decisions-v1' and core.rank_decisions_capabilities==0x60000000
 assert isinstance(core.rank_decisions_run,BuiltinFunctionType)
