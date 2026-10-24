@@ -147,6 +147,16 @@ Neighborhood neighborhood(const MaxTreeImage& image,int connectivity) {
         }
     return result;
 }
+template<bool CountSteps=false> std::int64_t representative(std::int64_t* roots,std::int64_t cursor,
+                                                         std::size_t* steps=nullptr) noexcept {
+    while(roots[cursor]!=roots[roots[cursor]]) {
+        if constexpr(CountSteps)++*steps;
+        roots[cursor]=roots[roots[cursor]];
+        cursor=roots[cursor];
+    }
+    return roots[cursor];
+}
+
 template<class T> void build_tree(const T* values,const MaxTreeImage& image,int connectivity,
                                  const MaxTreeWorkspace& w,bool vectorized) {
     const auto n=image.elements;auto* parent=w.parent.data;auto* roots=w.roots.data;
@@ -202,12 +212,7 @@ template<class T> void build_tree(const T* values,const MaxTreeImage& image,int 
             if(parent[q]<0)continue;
             // Advance as well as shorten the path. Only the internal scratch
             // forest changes; its representative and parent writes stay fixed.
-            auto cursor=q;
-            while(roots[cursor]!=roots[roots[cursor]]) {
-                roots[cursor]=roots[roots[cursor]];
-                cursor=roots[cursor];
-            }
-            const auto root=roots[cursor];
+            const auto root=representative(roots,q);
             if(root!=p){roots[root]=p;parent[root]=p;}
         }
     }
@@ -353,4 +358,12 @@ MaxTreeResult max_tree_into(const MaxTreeImage& image,const MaxTreeParameters& p
     }
 }
 #undef MAX_TREE_TYPES
+#ifdef SKIMAGEXX_MAX_TREE_ROOT_WORK_TESTS
+// Private native test builds only. Ordinary kernels instantiate CountSteps=false;
+// a production build has neither this symbol nor a root-work counter.
+std::int64_t max_tree_test_representative(std::int64_t* roots,std::int64_t cursor,
+                                         std::size_t& steps) noexcept {
+    return representative<true>(roots,cursor,&steps);
+}
+#endif
 } // namespace skimagexx
