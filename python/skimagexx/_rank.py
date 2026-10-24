@@ -436,3 +436,92 @@ for _percentile_name in _PERCENTILE_FUNCTIONS:
     globals()[_percentile_name].__doc__=_PERCENTILE_SCOPE_DOC
 del _percentile_name
 __all__=list(_GENERIC_FUNCTIONS+_PERCENTILE_FUNCTIONS)
+
+def _require_bilateral(operation):
+    entry=getattr(_core,'rank_bilateral_run',None)
+    capabilities=getattr(_core,'rank_bilateral_capabilities',None)
+    if (getattr(_core,'rank_bilateral_interface',None)!='rank-bilateral-v1'
+            or type(capabilities) is not int or capabilities!=0x1c000000
+            or not 26<=operation<=28
+            or not isinstance(entry,BuiltinFunctionType)
+            or getattr(entry,'__module__',None)!=getattr(_core,'__name__',None)
+            or getattr(entry,'__name__',None)!='rank_bilateral_run'):
+        raise NotImplementedError('rank-bilateral-v1 compiled backend required for this operation')
+    return entry
+
+
+def _bilateral_call(function,*args):
+    try:return function(*args)
+    except (ValueError,OverflowError) as error:
+        # Native certificates for unqualified/unsafe domains do not invent
+        # original errors or send those buffers to unchecked upstream code.
+        # Python callback payloads with matching text retain their own type.
+        if error.__traceback__.tb_next is None and str(error) in (
+                'rank output pixel depth must be positive',
+                'rank output is smaller than image',
+                'rank mask storage is smaller than image',
+                'rank bilateral footprint/output alias is outside defined coverage',
+                'rank bilateral radius arithmetic outside defined coverage',
+                'rank bilateral mixed-type image feedback is outside defined coverage',
+                'rank bilateral mixed-byte image feedback is outside defined coverage',
+                'rank bilateral image feedback requires full histogram bounds',
+                'rank bilateral mixed-type mask feedback is outside defined coverage',
+                'rank bilateral signed histogram outside defined coverage',
+                'rank image exceeded histogram bounds'):
+            raise NotImplementedError('Outside qualified rank-bilateral-v1 coverage: '+str(error)) from None
+        raise
+
+
+def _bilateral_apply(operation,image,footprint,out,mask,shift_x,shift_y,s0,s1):
+    entry=_require_bilateral(operation)
+    # Pinned wrapper/common preprocessing each check_nD without replacing the
+    # caller's image. Lists therefore retain the original later dtype error.
+    for _ in range(2):
+        value=np.asanyarray(image)
+        if value.size==0:raise ValueError('The parameter `image` cannot be an empty array')
+        if value.ndim!=2:raise ValueError('The parameter `image` must be a 2-dimensional array')
+    dtype=image.dtype
+    if dtype==bool:raise ValueError('dtype cannot be bool.')
+    if dtype not in (np.uint8,np.uint16):
+        warnings.warn(f'Possible precision loss converting image of type {dtype} to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.',UserWarning,stacklevel=3)
+        image=_ubyte(image)
+    if _is_sequence(footprint):raise ValueError('footprint sequences are not currently supported by rank filters')
+    footprint=np.ascontiguousarray(_positive(footprint))
+    if footprint.ndim!=image.ndim:raise ValueError('Image dimensions and neighborhood dimensionsdo not match')
+    image=np.ascontiguousarray(image)
+    if mask is not None:mask=np.ascontiguousarray(_ubyte(mask))
+    if image is out:raise NotImplementedError('Cannot perform rank operation in place.')
+    if out is None:out=np.empty(image.shape+(1,),image.dtype)
+    elif len(out.shape)==2:out=out.reshape(out.shape+(1,))
+    bins=256 if image.dtype in (np.uint8,np.int8) else _core.rank_bins(image)
+    if bins>1024:warnings.warn(f'Bad rank filter performance is expected due to a large number of bins ({bins}), equivalent to an approximate bitdepth of {np.log2(bins):.1f}.',UserWarning,stacklevel=3)
+    for name,shift in zip(('shift_x','shift_y'),(shift_x,shift_y)):
+        if np.dtype(type(shift))==bool:warnings.warn(f'Paramter `{name}` is boolean and will be interpreted as int. This is not officially supported, use int instead.',UserWarning,stacklevel=3)
+    if out.ndim!=3 or not (out.dtype.kind in 'ub' and out.dtype.itemsize in (1,2) or out.dtype.kind=='f' and out.dtype.itemsize in (4,8)):raise TypeError('Function call with ambiguous argument types')
+    _bilateral_call(entry,image,footprint,mask,out,[shift_x,shift_y],bins,operation,s0,s1)
+    return out.reshape(out.shape[:2])
+
+
+
+def mean_bilateral(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,s0=10,s1=10):
+    return _bilateral_apply(26,image,footprint,out,mask,shift_x,shift_y,s0,s1)
+
+
+def pop_bilateral(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,s0=10,s1=10):
+    return _bilateral_apply(27,image,footprint,out,mask,shift_x,shift_y,s0,s1)
+
+
+def sum_bilateral(image,footprint,out=None,mask=None,shift_x=0,shift_y=0,s0=10,s1=10):
+    return _bilateral_apply(28,image,footprint,out,mask,shift_x,shift_y,s0,s1)
+
+
+_BILATERAL_FUNCTIONS=('mean_bilateral','pop_bilateral','sum_bilateral')
+_BILATERAL_SCOPE_DOC="""Apply a qualified native 2D bilateral rank filter.
+
+Bounded source-qualified uint8/uint16 neighborhoods, conversions and feedback
+forms are supported. Unqualified or unsafe native scopes raise
+NotImplementedError. Namespace/public registration requires separate wiring.
+"""
+for _bilateral_name in _BILATERAL_FUNCTIONS:
+    globals()[_bilateral_name].__doc__=_BILATERAL_SCOPE_DOC
+del _bilateral_name
