@@ -51,3 +51,4 @@ coverage/evidence/tv-reference-worktree-cleanup-20261024.json -text
 coverage/evidence/rank-decisions-nested-policy-fix.json -text
 coverage/evidence/tv-chambolle-private-loop.json -text
 coverage/contracts/matrix-transform.json -text
+coverage/contracts/tv-bregman.json -text
