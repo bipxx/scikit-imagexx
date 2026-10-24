@@ -4196,14 +4196,14 @@
     ]
   },
   "future_interface": {
-    "status": "proposal only, requires separate native ownership and validation",
+    "status": "parent-reserved interface only; implementation and native proof pending",
     "rank_view": "preserve existing ABI, byte strides, n_bins capacity and sole image.cpp worker state",
     "proposed_operations": {
-      "26": "otsu",
-      "27": "majority"
+      "29": "otsu",
+      "30": "majority"
     },
     "proposed_version": "rank-decisions-v1",
-    "proposed_capabilities": "0x0c000000",
+    "proposed_capabilities": "0x60000000",
     "proposed_entry": "rank_decisions_run(prepared_u8_or_u16_image, prepared_u8_footprint, prepared_u8_mask_or_None, typed_output_with_positive_depth, shifts, bins, operation)",
     "requirements": [
       "Preserve all old operation IDs, old entry signatures and existing independent capability values.",
@@ -4211,7 +4211,8 @@
       "Metadata conversion, integer signed-char shift behavior,3D bool warning and return view hooks precede/follow the native loop exactly as frozen.",
       "Exact source Otsu expression/strict ties; unsigned output narrowing only in defined source-qualified domains.",
       "Native workers1/4 default1, SIMD/scalar/portable/Debug/sanitizer gates, cumulative old-op regression and genuine whole-package public/core/SDK evidence remain unexecuted."
-    ]
+    ],
+    "nonoverlap_reservation": "Parent reserves26..28 for bilateral in a separate interface; decisions29..30 preserve all old0..25 values and capabilities."
   },
   "runtime_sources": {
     "windows": {
