@@ -660,7 +660,8 @@ def seal(out):
     # Actual Windows command/read tlogs; GNU dependency and command journals.
     if os.name=='nt':
         for p in (out/'native').rglob('*.tlog'):
-            dest=artifact/'tlogs'/p.relative_to(out/'native');dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
+            if p.is_file():
+                dest=artifact/'tlogs'/p.relative_to(out/'native');dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
     else:
         ninja=env_python(out/'build-env').parent/'ninja'
         for name in ('commands','deps'):
