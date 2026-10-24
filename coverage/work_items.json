@@ -16434,7 +16434,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -16456,7 +16456,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -23458,11 +23458,11 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "R7ops29/30,v1/cap60000000. Failed20providertraces preserved inWIP54f; dedicatedcharconverter now1858x8pass/noOMP929pass929skip.116additionaloldroutecontrols stilllive16248; nofinalproof/public/SDK/performance. <=150MB slimoutputs; original502/32/256 unchanged."
+          "Qualified private source 5286d95 only: 502 original IDs, 32 traces, 256 oracles, 80 accepted-hook mutations and 72 protocol checks. 1858 assertions x8, portable929pass/929skip; separate116 old-route controls x8, portable58pass/58skip. All handles terminal. Public wrappers/actual whole-core/SDK/performance remain pending; failed54f source/modules retained."
         ]
       },
       "parity": {
@@ -23484,7 +23484,22 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/rank-decisions-native-evidence/5286d95/root-verification-v1.json"
+        ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "5286d95bb12a01391a7ad8a66be06fe663c515c2",
+          "manifest": {
+            "path": "build/rank-decisions-native-evidence/5286d95/qualified-v1/manifest.json",
+            "sha256": "91a64164b10723835f8706d6c1f1a07212004c55316b3fcb22d6fa89f6b24c6d"
+          },
+          "scope": "316 regular records and six exact Git sources independently rehashed by root. Three Release runtimes plus one combined Debug-GIL/ASan/UBSan build, normal/scalar; portable no-OpenMP rejects four workers. Private module evidence only.",
+          "native_contract_checks": 502,
+          "native_pending": 0
+        }
       }
     },
     {
@@ -23603,7 +23618,7 @@
             "path": "build/worktrees/public-qualification-correction/build/sdk-5294020/manifest.json",
             "sha256": "d4fb202261fb4a0b5a1cc759d810222ca236867a9af9abd727d6e65356b7f704"
           },
-          "scope": "11records +parent777five-record proof. ActualVS18/instance/MSVC19.51/fulltoolset/v145/x64/MD andpinnedCMake4.4.4 metadata,77guards; mainreview/cherrypending."
+          "scope": "11 records plus parent777 five-record proof; actual retained VS18/instance/MSVC19.51/fulltoolset/v145/x64/MD and pinned CMake4.4.4 metadata. 77 guards and independent source review passed; cherry-picked to main. Actual new-product SDK execution remains a hosted gate."
         }
       }
     },
@@ -23696,11 +23711,11 @@
       ],
       "depends_on": [],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Original4failedartifacts retained via1GB sequentialRAM reads; fullZIPdigest/recordverification, exactproducts/source/buildinputs/losslessreports withSHA dedup againstprotectedR4ZIP runtimewheels. <=300MiB newlocaloutput. No caches/fullenvs/newworkflow/nativeacceptance."
+          "Completed bounded lossless retention of the four failed original artifacts. 86055 ZIP members hashed; 72200 available declared checks verified. 312532150 new bytes stay below300MiB, including manifest. Runtime wheel bytes deduplicated against immutable R4 ZIPs. Original acceptance remains false."
         ]
       },
       "parity": {
@@ -23722,7 +23737,20 @@
       },
       "retention": {
         "active_paths": [],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/whole8-hosted-dispatch/cc13165/retention-independent-verification.json"
+        ]
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "cc1316556a1c5fb6a65cf8e773d6c3e26f5e8f7a",
+          "manifest": {
+            "path": "build/whole8-hosted-dispatch/cc13165/bounded-retention-v1/manifest.json",
+            "sha256": "32d355d4a6cd8fe00edde0fb5063196fdbc77c5e734026b709db1764627d6d10"
+          },
+          "scope": "Independent verification rehashed281 stored blobs,24 unique runtime wheels/3 outer ZIPs and existing Windows wheel. No failed trial accepted."
+        }
       }
     },
     {
@@ -23731,7 +23759,7 @@
       "apis": [],
       "owner": "integrator",
       "branch": "integration/wave9-bilateral",
-      "base_sha": "b7f3e715787f4db5583292a02ae0d52041efa95e",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
       "owns": [
         "CMakeLists.txt",
         "tools/public_qualification.py",
@@ -23768,13 +23796,121 @@
         },
         "public-qualification-correction": {
           "evidence_scope": "tooling"
+        },
+        "rank-bilateral-namespace": {
+          "evidence_scope": "tooling"
         }
       },
-      "state": "preparing",
+      "state": "validating",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "PREDICTED186images/477total; acceptedmainremains171. RootcombineCMakeSDK13/R6GROUP/corpora+396, namespace, tools fixes, actualinventorysupplement; fresh4profilesnormal/scalar/solecore/default1/1+4/allold+R4+R5+R6/SDK beforeacceptance. Failedwhole8neveraccepted."
+          "Frozen186-image prediction/477 total; accepted main remains171. Exactrun40059399856 requires four genuine products xnormal/scalar,104-member wheels/59-member SDKs,13 relocated SDK families, sole core/default1/global1+4, old/R4/R5/R6 scopes and complete corpora. 174 metadata guards and four zero-blocker source plans passed; metadata is not execution or acceptance. No local builds/timings, no duplicate dispatch."
+        ]
+      },
+      "parity": {
+        "source_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+        "artifact_sha256": null,
+        "runs": [
+          "https://github.com/bipxx/scikit-imagexx/actions/runs/40059399856"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/wave8-percentile-metrics"
+        ],
+        "protected_artifacts": []
+      },
+      "hosted_run": {
+        "run_id": 40059399856,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40059399856",
+        "source_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+        "branch": "integration/wave9-bilateral",
+        "profiles": [
+          "windows",
+          "modern",
+          "minimum",
+          "debug"
+        ],
+        "dispatches": 1,
+        "source_frozen": true,
+        "expected_native_images_predicted_only": 186,
+        "registered_functions_predicted_only": 189,
+        "sdk_families_required": 13,
+        "observer": "resize_bench",
+        "observation_path": "build/genuine186-hosted-observation/40059399856",
+        "policy": "Observe this exact run through all terminal outcomes; do not cancel or restart for an observation timeout. Full independent evidence review is required before acceptance.",
+        "known_terminal_jobs": {
+          "windows": {
+            "job_id": 120769418446,
+            "outcome": "failure",
+            "log": {
+              "path": "build/genuine186-hosted-observation/40059399856/windows-failed-job.log",
+              "sha256": "a858855b9dfbf66457892862149e4d9cb1d79325511d5ff734a1ef12cc159bf5"
+            },
+            "classification": "Fixed-corpus seal refusal; bounded underlying failure investigation pending. No numerical vs schema cause inferred."
+          },
+          "modern": {
+            "job_id": 120769418400,
+            "outcome": "failure",
+            "log": {
+              "path": "build/genuine186-hosted-observation/40059399856/modern-failed-job.log",
+              "sha256": "2ef9038e4ba52027832fc1f78a7443e85c93fd8f1892a9d3ce67a457c2436d56"
+            },
+            "classification": "Fixed-corpus seal refusal; only Windows underlying reports inspected so far."
+          }
+        },
+        "all_four_jobs_terminal": false,
+        "latest_root_observation_utc": "2026-10-24T04:04:28.247615+00:00",
+        "windows_partial_diagnostics": {
+          "path": "build/genuine186-hosted-observation/40059399856/windows-diagnostics-v1/range-diagnosis.json",
+          "sha256": "4feb1886635b66e65cb4412a69596f8db14bd3de489b91071b96d2909ac6eaf3",
+          "outer_zip_digest_verified": false,
+          "scope": "Partial Range diagnostics only; not public acceptance. 3defined endian error-parity failures in bilateral corpus; stale masked-public wrapper sourcepin and independent API registry enumeration omits3nestedbilateralaliases. Original failed evidence retained."
+        }
+      }
+    },
+    {
+      "id": "rank-decisions-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-decisions-wrapper",
+      "base_sha": "5116d3ea30e61a5c7f7e4e8640b62415b080ac1e",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_decisions_public.py",
+        "coverage/contracts/rank-decisions-public.json"
+      ],
+      "depends_on": [
+        "rank-decisions-native",
+        "rank-bilateral-namespace"
+      ],
+      "dependency_requirements": {
+        "rank-decisions-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-bilateral-namespace": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Private wrapper c6f4126 using immutable qualified5286 modules only:1799pass+1explicitpublicpending x8; defaultwithoutprototype3pass/1005pending/792deselected x3. Old46functions/66top-levelAST nodes and internal __all__29/generic17 unchanged. Exact version/capability/owned builtin admission precedes metadata. No namespace/registry/public count or performance acceptance."
         ]
       },
       "parity": {
@@ -23796,8 +23932,300 @@
       },
       "retention": {
         "active_paths": [
-          "build/worktrees/wave8-percentile-metrics"
+          "build/worktrees/rank-bilateral-contracts/build/rank-decisions-wrapper"
         ],
+        "protected_artifacts": []
+      },
+      "public_registration": false,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c6f41267adbe61025e253a101103fbc51735c901",
+          "manifest": {
+            "path": "build/rank-decisions-wrapper-evidence/c6f4126/qualified-v1/manifest.json",
+            "sha256": "62fa27cc22a080e1073ed31839223aa2d8ca081a948882b54676a3e9aed6e5d1"
+          },
+          "scope": "34 records independently rehashed; exact three-file wrapper delta and six qualified prerequisite C++ blobs verified. Eight private modes include one combined Debug-GIL/ASan build. Actual public/sole-core/SDK/performance admission remains pending.",
+          "native_contract_checks": 502,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "rank-statistics-bottleneck-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/qualification-bilateral",
+      "base_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+      "owns": [
+        "build/rank-statistics-bottleneck-review"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Read-only measured-case and source investigation. Unused windowed-histogram sums/occupancy maintenance and short noise-filter update runs are candidates, not measured causal conclusions or speedup claims. Separate implementation and isolated one-worker controlled trials remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "ed8ca5cba87eeab4b1227a046316cb58ec587161",
+          "manifest": {
+            "path": "build/rank-statistics-bottleneck-review/receipt.json",
+            "sha256": "00cbb8785c84196e9ea762f20202d6e0256397ee91d39d289a2da58ffacaff0c"
+          },
+          "scope": "Ten retained notes/source/count records; all three published raw result hashes and pinned Cython hashes verified. No operation calls, builds, timings or source edits."
+        }
+      }
+    },
+    {
+      "id": "rank-decisions-public-readiness",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-decisions-wrapper",
+      "base_sha": "c6f41267adbe61025e253a101103fbc51735c901",
+      "owns": [
+        "build/rank-decisions-public-readiness"
+      ],
+      "depends_on": [
+        "rank-decisions-public"
+      ],
+      "dependency_requirements": {
+        "rank-decisions-public": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Read-only readiness plan complete: four actual paths, canonical31/generic19callables/star16 with old17 tuple preserved, exact original-fixture assertion migration, SDK14/tooling28checks and future genuine190 gates. No source edits/builds/dispatch or public acceptance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "c6f41267adbe61025e253a101103fbc51735c901",
+          "manifest": {
+            "path": "build/rank-decisions-public-readiness/receipt.json",
+            "sha256": "20bd82a3284c072db46a841fd9f45b080bda8f9ec890e0fb63879aac1f9135cf"
+          },
+          "scope": "Read-only source/contract/SDK integration readiness; not actual public admission."
+        }
+      }
+    },
+    {
+      "id": "rank-windowed-counts-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-windowed-counts",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+      "owns": [
+        "src/rank.cpp",
+        "tests/test_rank_windowed_counts_native.cpp",
+        "tests/test_rank_windowed_counts_pipeline.py"
+      ],
+      "depends_on": [
+        "rank-statistics-native",
+        "rank-bilateral-native",
+        "rank-statistics-bottleneck-review"
+      ],
+      "dependency_requirements": {
+        "rank-statistics-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-bilateral-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-statistics-bottleneck-review": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "state": "implementing",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Small private opcode16 counts/pop-only histogram policy; preserve prevalidation, scan/update/output order, normalization SIMD, aliases, workers, ABI/caps and every other operation. Source review before narrow private builds. No local timing or speedup claim; future isolated same-host before/after/original one-worker comparison required."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [
+          "build/worktrees/rank-decisions-contracts/build/rank-windowed-counts"
+        ],
+        "protected_artifacts": []
+      }
+    },
+    {
+      "id": "rank-windowed-counts-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-windowed-counts",
+      "base_sha": "54ae967b4eb872c9f46c1a158eed3f91a53fae0b",
+      "owns": [
+        "build/rank-windowed-counts-independent-review"
+      ],
+      "depends_on": [
+        "rank-statistics-bottleneck-review"
+      ],
+      "dependency_requirements": {
+        "rank-statistics-bottleneck-review": {
+          "evidence_scope": "tooling"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Independent source review complete; later integer/f64 high-bin test supplement and final composed R7 source need their own scope checks. No test execution or measured speedup inferred."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "54ae967b4eb872c9f46c1a158eed3f91a53fae0b",
+          "manifest": {
+            "path": "build/rank-windowed-counts-independent-review/receipt.json",
+            "sha256": "26fdfa0c2a8dff2148ed9bc644819356e381d43b0e6cd6561f9142d4370765ba"
+          },
+          "scope": "Read-only review of immutable a5 production/54ae tests: no source blocker. Other-op defaults, scalar/uniform SIMD paths, unchanged validation/vector writer/995 cases checked. Static test case counts are not execution evidence; private qualification and performance remain pending."
+        }
+      }
+    },
+    {
+      "id": "rank-bilateral-endian-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "integration/wave9-bilateral",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+      "owns": [
+        "build/rank-bilateral-endian-review"
+      ],
+      "depends_on": [
+        "rank-bilateral-benchmark-tooling",
+        "rank-bilateral-public"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-benchmark-tooling": {
+          "evidence_scope": "tooling"
+        },
+        "rank-bilateral-public": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": "coverage/contracts/rank-bilateral-benchmark.json",
+        "uncovered_cases": [
+          "Read-only investigate genuine Windows3 endian error-parity failures at corpusIDs77/177/277. Compare original high/low >u2 warning/conversion/error order on all3 retained runtime references; propose smallest family-scoped correction, preserving all1008cases/12metadataIDs and not blanket-rejecting source-accepted inputs. No source edits/builds/timings or new dispatch."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
         "protected_artifacts": []
       }
     }
@@ -24967,6 +25395,30 @@
       "archive": "build/cleanup/merged-kernel-worktrees-20261024/wave7-rank-consumer.zip",
       "archive_sha256": "e9a093d560c4f62f45413896a71d293503dd3c80f1c2746349282d21aff3d16b",
       "member_rule": "Remove former_prefix/; all exact original regular files retained in verified ZIP. No reparse points present; only obsolete .git administrative pointer omitted."
+    },
+    {
+      "former_prefix": "build/cp311-cp311-linux_x86_64",
+      "archive": "build/cleanup/residual-temp-caches-20261024/build--cp311-cp311-linux_x86_64.zip",
+      "archive_sha256": "4e962e780f97176d44070544cccfbb2d09dfb7cd9bc30be5e4577c6f4cbee45f",
+      "member_rule": "Remove former_prefix/; every original regular file remains byte-exact in the verified ZIP. Released temporary cache only; no package/environment/source/raw evidence removed."
+    },
+    {
+      "former_prefix": "build/cp313-cp313-linux_x86_64",
+      "archive": "build/cleanup/residual-temp-caches-20261024/build--cp313-cp313-linux_x86_64.zip",
+      "archive_sha256": "60c15a14337d0d885bdb81226682bc70b9f98c76a8bfd3fe9d5758fb1ea7fd3c",
+      "member_rule": "Remove former_prefix/; every original regular file remains byte-exact in the verified ZIP. Released temporary cache only; no package/environment/source/raw evidence removed."
+    },
+    {
+      "former_prefix": "build/cmake-installed-consumer/initial-build",
+      "archive": "build/cleanup/residual-temp-caches-20261024/build--cmake-installed-consumer--initial-build.zip",
+      "archive_sha256": "b5d9f53e780bc28f222f40ec8ab54598b2bd64b9d0b7f2444a8121899feca8f8",
+      "member_rule": "Remove former_prefix/; every original regular file remains byte-exact in the verified ZIP. Released temporary cache only; no package/environment/source/raw evidence removed."
+    },
+    {
+      "former_prefix": ".pytest_cache",
+      "archive": "build/cleanup/residual-temp-caches-20261024/_pytest_cache.zip",
+      "archive_sha256": "5ec95b2d9dd36049347981c696aaf766f600c0acc3eb86581e487c425d889fa1",
+      "member_rule": "Remove former_prefix/; every original regular file remains byte-exact in the verified ZIP. Released temporary cache only; no package/environment/source/raw evidence removed."
     }
   ],
   "inventory_assessment_pending": {

@@ -19,11 +19,15 @@ The accepted whole7b product adds four R4 algorithms/eight public paths and
 byte-preserving consumer scans:171 partially native image paths. Eight actual
 normal/scalar Release/Debug profiles and fresh strict1379-case corpus checks
 pass; full104-member packages and59-member SDK/source equality authenticate
-explicitly inherited unaffected scopes. One-worker R4 and scan timing is next.
-Nine percentile kernels, wrapper prototypes and benchmark tooling are frozen
-privately for whole8. Three workers independently freeze bilateral and local
-Otsu/majority originals and prepare portable hosted qualification; the integrator
-owns shared wiring, exact-source performance dispatch, prompt merges and cleanup.
+explicitly inherited unaffected scopes. The published one-worker R4 comparison
+retains all 376 timings per runtime and all 120 slower cases. Large windowed
+histograms and selected noise-filter cases remain optimization targets.
+The failed whole8 trial is retained without public acceptance. Its tooling and
+namespace corrections, nine percentile algorithms, three bilateral algorithms,
+and the private reverse-stride metrics change are frozen at `65c0741` for fresh
+four-profile qualification. Its 186 image paths are a prediction; accepted main
+remains at 171. The integrator owns shared wiring, exact-source performance
+dispatch, prompt merges and cleanup.
 
 ## What changed after review
 
@@ -45,10 +49,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted171images; current20-module snapshot477paths/298upstream. Additional3publicbilateralaliases areupstream-only, notnewalgorithms. Whole8 andR4performanceexacthostedruns active |
-| Worker 1 | `metrics_reductions` | Three rank bilateral private C++ kernels | Original5151x3 frozeneae7/native0. New3ops26..28/v1/cap1c sourcefrozen:3284normal/scalar checks onWin/modern/min/Debug/portableOMP; old25/ASan/noOMP gates ongoing. No public/perfadmission |
-| Worker 2 | `resize_api` | Rank bilateral benchmark contracts and hosted workflow | Decisions2algorithms/4paths frozen3304x3/native0. Next708frozenuntimedIDs+balanced3algorithm candidates,96providertraces,6publicpaths, strictcapsule/barrier/default1 guards; no dispatch |
-| Worker 3 | `resize_bench` | Exactsource hosted whole8 qualification | Tooling45guards/4metadata probes accepted. Run40051495344 followsfrozencc131;4genuineproductjobs/8modes andSDK12/corpora neededbeforepredicted180acceptance. No localfullbuilds or privatefacades |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted: 171 image paths; 477 total paths. Candidate `65c0741` is frozen for run 40059399856, requiring four actual products, both SIMD modes, complete corpora and 13 SDK clients. No candidate acceptance yet. |
+| Worker 1 | `metrics_reductions` | Parity and integration reviews | Local Otsu/majority C++ and wrapper have qualified private evidence; public/SDK14 readiness and independent counts-policy review are recorded. Current task investigates the three defined bilateral endian error-parity failures without changing frozen candidate 186. |
+| Worker 2 | `resize_api` | Windowed-histogram bookkeeping optimization | Measured-case investigation identifies unused sum and occupancy maintenance. A separate private opcode16 counts/pop-only packet preserves validation, traversal, normalization SIMD and other operations. Parity and controlled one-worker performance remain pending. |
+| Worker 3 | `resize_bench` | Observe exact hosted whole9 qualification | Watch only run 40059399856 at `65c0741` through all four terminal outcomes. Windows and modern Linux have failed; minimum NumPy and Debug remain under observation. Bounded Windows diagnostics identify error parity and metadata failures; no restart or acceptance from partial artifacts. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are
