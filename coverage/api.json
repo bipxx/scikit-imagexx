@@ -2775,11 +2775,15 @@
       "api": "filters.rank.geometric_mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py"
     },
     {
       "api": "filters.rank.gradient",
@@ -2909,11 +2913,15 @@
       "api": "filters.rank.noise_filter",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py"
     },
     {
       "api": "filters.rank.otsu",
@@ -2973,11 +2981,15 @@
       "api": "filters.rank.subtract_mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py"
     },
     {
       "api": "filters.rank.subtract_mean_percentile",
@@ -3051,11 +3063,15 @@
       "api": "filters.rank.windowed_histogram",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, n_bins=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py"
     },
     {
       "api": "filters.rank.generic.autolevel",
@@ -3121,11 +3137,15 @@
       "api": "filters.rank.generic.geometric_mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py",
       "alias_of": "filters.rank.geometric_mean"
     },
     {
@@ -3233,11 +3253,15 @@
       "api": "filters.rank.generic.noise_filter",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py",
       "alias_of": "filters.rank.noise_filter"
     },
     {
@@ -3270,11 +3294,15 @@
       "api": "filters.rank.generic.subtract_mean",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, shift_z=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py",
       "alias_of": "filters.rank.subtract_mean"
     },
     {
@@ -3311,11 +3339,15 @@
       "api": "filters.rank.generic.windowed_histogram",
       "kind": "callable",
       "signature": "(image, footprint, out=None, mask=None, shift_x=0, shift_y=0, n_bins=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null,
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rank_statistics_public.py",
+      "benchmark": "benchmarks/rank_statistics.py",
       "alias_of": "filters.rank.windowed_histogram"
     },
     {

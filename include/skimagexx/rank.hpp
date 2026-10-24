@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 namespace skimagexx {
-enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8,autolevel=9,equalize=10,enhance_contrast=11,threshold=12 };
+enum class RankOperation { minimum=0,maximum=1,mean=2,sum=3,pop=4,gradient=5,median=6,modal=7,entropy=8,autolevel=9,equalize=10,enhance_contrast=11,threshold=12,geometric_mean=13,noise_filter=14,subtract_mean=15,windowed_histogram=16 };
 // Capabilities come from the linked implementation, not just a header version.
 std::uint32_t rank_histogram_capabilities() noexcept;
 // Prepared C-order image/mask and binary footprint;2D uses a singleton plane.
@@ -22,6 +22,14 @@ struct RankView {
     bool uint16=false,serial_alias=false;
 };
 void rank_filter_into(const RankView&,RankOperation);
+// rank-statistics-v1: disjoint prepared buffers only. The caller performs the
+// noise footprint copy/center-clear stage before constructing this view.
+std::uint32_t rank_statistics_capabilities() noexcept;
+void rank_statistics_into(const RankView&,RankOperation);
+// rank-vector-v1: singleton-plane 2D, contiguous channels of positive depth
+// no greater than bins. Spatial strides remain bytes; RankView ABI is unchanged.
+std::uint32_t rank_vector_capabilities() noexcept;
+void rank_windowed_histogram_into(const RankView&,std::size_t output_depth);
 // Actual accessed stores, after image/mask normalization. Distinct from the
 // conservative legacy serial_alias flag; the RankView ABI is unchanged.
 struct RankAliases {bool image_output=false,mask_output=false;};
@@ -41,5 +49,7 @@ std::int64_t rank_count_prefix(const std::int64_t*,std::size_t);
 bool rank_uniform(const void*,bool,std::uint32_t&);
 std::uint16_t rank_max_u16(const std::uint16_t*,std::size_t);
 std::size_t rank_positive(const void*,std::uint8_t*,std::size_t,PixelType);
+// Counts must be nonnegative and <= INT32_MAX; returns the processed prefix.
+std::size_t rank_histogram_normalized(const std::int64_t*,void*,std::size_t,double,bool);
 }
 #endif

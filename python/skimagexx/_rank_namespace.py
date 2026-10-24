@@ -8,8 +8,11 @@ def initialize(module):
     relative=module.__name__.split('.',1)[1]
     module.__doc__='Native rolling-histogram rank filters with explicit compatibility boundaries.'
     module.__path__=[]
-    module.__all__=list(_rank.__all__)
-    for name in module.__all__:
+    # The pinned generic module exposes these callables as identity aliases
+    # but omits them from star imports. Keep availability and star exports separate.
+    module.__all__=[name for name in _rank.__all__
+                    if relative!='filters.rank.generic' or name not in ('sum','windowed_histogram')]
+    for name in _rank.__all__:
         setattr(module,name,getattr(_rank,name))
     def missing(name):
         if relative=='filters.rank' and name=='generic':

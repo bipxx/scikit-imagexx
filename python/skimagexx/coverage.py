@@ -1,8 +1,8 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 NATIVE_FUNCTIONS = {
     'segmentation': ('clear_border','relabel_sequential'),
-    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold'),
-    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold'),
+    'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
+    'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram'),
     'measure': ('label',),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
@@ -41,6 +41,29 @@ def rank_contract(api):
     canonical=RANK_IDENTITY_ALIASES.get(api,api)
     if canonical not in RANK_CANONICAL_FUNCTIONS:raise KeyError(api)
     name=canonical.rsplit('.',1)[1]
+    statistics=('geometric_mean','noise_filter','subtract_mean','windowed_histogram')
+    if name in statistics:
+        vector=name=='windowed_histogram'
+        return dict(version='rank-vector-v1' if vector else 'rank-statistics-v1',canonical=canonical,
+            identity_alias=api in RANK_IDENTITY_ALIASES,registered=api in native_functions(),
+            implementation='cpp-rolling-histogram-runtime-simd',operation=13+statistics.index(name),
+            capability=0x10000 if vector else 0xe000,
+            interface='rank_vector_interface' if vector else 'rank_statistics_interface',
+            arithmetic={
+                'geometric_mean':'Ascending occupied-bin count*log(bin+1), exp(weighted/pop)-1 and original integer rounding before all output stores',
+                'noise_filter':'Nearest occupied lower/upper bins with original missing-side bounds; copied-footprint clearing preserves the original3D x/y center quirk',
+                'subtract_mean':'Original floating weighted mean, half residual and mid-bin bias in the original expression order; undefined unsigned stores excluded',
+                'windowed_histogram':'Count times reciprocal population, independent prepared histogram capacity and positive output channel depth; output dtype rounding retained',
+            }[name],
+            providers='Own C++ kernels; explicit NumPy preparation/allocation/index providers and literal source-ordered protocol metadata, without upstream rank algorithm forwarding',
+            workers='Sole process-global native worker limit, default one; optional parallel workers; NumPy provider pools external',
+            simd='Existing rolling histogram/extrema/sum transport and typed AVX2 vector-channel multiplication with scalar-compatible arithmetic order',
+            buffers='Qualified disjoint prepared read/output domains; overlapping or unsafe scalar/vector storage rejected before writes',
+            protocol_scope='Frozen995 cases plus explicit noise shape/copy/shift and vector premax/depth provider checks; unrepresented protocols remain unassessed',
+            public_parity_test='tests/test_rank_statistics_public.py',
+            frozen_contract='coverage/contracts/rank-statistics.json',
+            public_contract='coverage/contracts/rank-statistics-public.json',
+            parity_evidence=None,performance_evidence=None)
     if name in ('autolevel','equalize','enhance_contrast','threshold'):
         arithmetic={
             'autolevel':'Signed64 (bins-1)*(center-min)/(max-min), integer truncation toward zero before all output stores; unsigned narrowing is modular, floating stores retain the signed quotient',
@@ -194,7 +217,10 @@ def default_call(api, image):
     if api=='segmentation.relabel_sequential':return (image,),{'offset':3}
     if api.startswith('filters.rank.'):
         import numpy as np
-        return (image,np.ones((3,)*image.ndim,np.uint8)),{}
+        # Keep the shared smoke workload bounded; the dedicated vector corpus
+        # separately tests default and wide channel depths.
+        options={'n_bins':16} if api.rsplit('.',1)[1]=='windowed_histogram' else {}
+        return (image,np.ones((3,)*image.ndim,np.uint8)),options
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):

@@ -105,18 +105,28 @@ def test_from_import_signature_and_policy():
 
 
 def test_unported_rank_keeps_explicit_fallback_policy():
-    from skimagexx.filters.rank import geometric_mean
-    from skimage.filters.rank import geometric_mean as original
+    from skimagexx.filters.rank import geometric_mean,majority
+    from skimage.filters.rank import geometric_mean as original,majority as unported_original
+    from skimagexx import _rank
     image=np.arange(25,dtype=np.uint8).reshape(5,5);footprint=np.ones((3,3),bool)
     assert inspect.signature(geometric_mean)==inspect.signature(original)
-    with pytest.raises(NotImplementedError,match='fallback is disabled'):
-        geometric_mean(image,footprint)
-    xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning,match='skimage.filters.rank.geometric_mean'):
-        actual=geometric_mean(image,footprint)
-    np.testing.assert_array_equal(actual,original(image,footprint))
+    assert geometric_mean is _rank.geometric_mean and geometric_mean is not original
+    for policy in (False,True):
+        xx.set_fallback_enabled(policy)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always');actual=geometric_mean(image,footprint)
+        assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
+        np.testing.assert_array_equal(actual,original(image,footprint))
     xx.set_fallback_enabled(False)
-    with pytest.raises(NotImplementedError):geometric_mean(image,footprint)
+    assert inspect.signature(majority)==inspect.signature(unported_original)
+    with pytest.raises(NotImplementedError,match='fallback is disabled'):
+        majority(image,footprint)
+    xx.set_fallback_enabled(True)
+    with pytest.warns(xx.FallbackWarning,match='skimage.filters.rank.majority'):
+        actual=majority(image,footprint)
+    np.testing.assert_array_equal(actual,unported_original(image,footprint))
+    xx.set_fallback_enabled(False)
+    with pytest.raises(NotImplementedError):majority(image,footprint)
 
 
 def test_deep_import_and_native_precedence():
