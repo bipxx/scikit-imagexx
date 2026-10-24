@@ -598,7 +598,16 @@ def test_actual_loaded_runtime_certificate_records_real_unforced_owner():
     assert version==np.__version__ and native._THREAD_QUERY()==1
     cert=native._authenticate_runtime()
     assert cert[1] in native._RUNTIME_CORES
-    assert native._RUNTIME_CORENAME in native._RUNTIME_CORES[cert[1]]
+    if native._RUNTIME_CORENAME in native._RUNTIME_CORES[cert[1]]:
+        assert native._RUNTIME_CORENAME in native._RUNTIME_CORES[cert[1]]
+        assert native._RUNTIME_DRIVER is None
+    else:
+        # New exact ed4 driver admission; the legacy arithmetic allowsets stay
+        # unchanged. This requires a real loaded-owner/page-bounded live read.
+        assert native._RUNTIME_CORENAME == 'SkylakeX' and cert[0] == '2.5.4'
+        assert cert[1] == 'ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8'
+        assert native._skylakex_driver_fields(native._RUNTIME_DRIVER)
+        assert native._windows_skylakex_driver(cert) == native._RUNTIME_DRIVER
     assert len(cert[-1])==2
     assert all(Path(p).is_file() and Path(p).stat().st_size==size for p,size,stamp in cert[-1])
 

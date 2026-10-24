@@ -327,7 +327,8 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'src/simd_matrix_transform_avx2.cpp', 'src/bind_matrix_transform.cpp', 'python/skimagexx/_matrix_transform.py',
     'tests/test_matrix_transform_native.cpp', 'tests/test_matrix_transform_contracts.py',
     'tests/test_matrix_transform_native_pipeline.py', 'tests/test_matrix_transform_binding.py',
-    'tests/test_matrix_transform_public.py', 'coverage/contracts/matrix-transform.json',
+    'tests/test_matrix_transform_public.py', 'tests/test_matrix_transform_skylakex_routing.py',
+    'coverage/contracts/matrix-transform.json',
     'coverage/evidence/matrix-transform-public-assertion-migration.json')
 GROUPS = {
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
@@ -343,7 +344,8 @@ GROUPS = {
                   'test_tv_chambolle_cursor_pipeline.py'),
     'public-Bregman': ('test_tv_bregman_contracts.py', 'test_tv_bregman_public.py'),
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
-                      'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py'),
+                      'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
+                      'test_matrix_transform_skylakex_routing.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),

@@ -88,7 +88,7 @@ def synthetic(tmp_path, monkeypatch, request):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
         # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
         for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
-            source[name]=(ROOT/name).read_bytes()
+            source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
     if scope=='matrix20':
@@ -613,3 +613,25 @@ def private_header_from_public(raw):
     raw=raw.replace(b'// Rechecks admission before writes. Stable typed ordering (U8 counting/U16\n// radix, otherwise merge; ties in original flat-index order), descending\n// union/find and ascending canonicalization; reverse',b'// Rechecks admission before writes. Stable typed mergesort (ties in original\n// flat-index order), descending union/find, ascending canonicalization; reverse')
     assert body_hash(raw)=='7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6'
     return raw
+
+
+@pytest.mark.parametrize('synthetic', ['matrix20'], indirect=True)
+@pytest.mark.parametrize('line_endings', ('LF', 'CRLF'))
+def test_corrected_text_fixture_models_canonical_archive_but_keeps_binary_oracle(synthetic, line_endings):
+    with zipfile.ZipFile(synthetic.q / 'source.zip') as archive:
+        source = {name: archive.read(name) for name in archive.namelist()}
+    oracle = source[p.MAX_TREE_ORACLE_PATH]
+    for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
+        assert b'\r\n' not in source[name]
+        if line_endings == 'CRLF':
+            source[name] = source[name].replace(b'\n', b'\r\n')
+    snapshot = {'files_sha256': {
+        name: body_hash(data.replace(b'\r\n', b'\n') if name in p.MAX_TREE_RUNTIME_SOURCE_PINS else data)
+        for name, data in source.items()}}
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        for name, data in source.items():
+            archive.writestr(name, data)
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
+        p.validate_max_tree_source(archive, snapshot, {'name': 'matrix20'})
+    assert source[p.MAX_TREE_ORACLE_PATH] == oracle == (ROOT / p.MAX_TREE_ORACLE_PATH).read_bytes()

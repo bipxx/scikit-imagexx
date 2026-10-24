@@ -1315,6 +1315,30 @@ def require_matrix_projection_witness(row,projection,minor=None):
     assert hashlib.sha256(projection.encode()).hexdigest()==by_minor[minor]
 
 
+def require_matrix_runtime_admission_successor(frozen, current, row):
+    """Authenticate new admission metadata while preserving old math evidence."""
+    assert row['schema'] == 'matrix-Windows-ed4-runtime-admission-successor-v1'
+    assert row['original_revision'] == 'cfb5c4036a7b4d523ec1689454a75a5b23f489c2'
+    assert row['current_revision'] == '4591b711583fb7a8d51c9af3199e82bc8696cc44'
+    old = row['original_utf8'].encode()
+    assert hashlib.sha256(old).hexdigest() == row['original_raw_git_sha256']
+    assert hashlib.sha256(old.replace(b'\r\n', b'\n')).hexdigest() == row['original_canonical_lf_sha256'] == frozen
+    assert hashlib.sha256(current).hexdigest() == row['current_canonical_lf_sha256']
+    assert row['allowed_function_changes'] == ['_runtime_profile']
+    assert row['allowed_function_additions'] == ['_skylakex_driver_fields', '_skylakex_table_readable', '_windows_skylakex_driver']
+    assert row['allowed_assignment_additions'] == ['_RUNTIME_DRIVER']
+    def project(raw):
+        nodes = []
+        for node in ast.parse(raw).body:
+            if isinstance(node, ast.FunctionDef) and node.name in row['allowed_function_changes'] + row['allowed_function_additions']:
+                continue
+            if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id in row['allowed_assignment_additions'] for t in node.targets):
+                continue
+            nodes.append(node)
+        return ast.dump(ast.Module(body=nodes, type_ignores=[]), include_attributes=False)
+    assert project(old) == project(current)
+
+
 def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources():
     migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     for name,row in migration['modules'].items():
@@ -1333,8 +1357,39 @@ def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources()
             return ast.dump(ast.Module(body=nodes,type_ignores=[]),include_attributes=False)
         assert project(old)==project(new)
         require_matrix_projection_witness(row,project(old))
+    updates = migration['qualified_implementation_updates']
+    assert set(updates) == {'python/skimagexx/_matrix_transform.py'}
     for name,want in migration['frozen_implementation'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==want
+        current = (ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name in updates:
+            require_matrix_runtime_admission_successor(want, current, updates[name])
+        else:
+            assert hashlib.sha256(current).hexdigest()==want
+
+
+@pytest.mark.parametrize('fault', (None, 'schema', 'old-source', 'old-pin', 'new-pin',
+    'unbounded-functions', 'math-change', 'legacy-allowset-change'))
+def test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection(fault):
+    migration = json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
+    name = 'python/skimagexx/_matrix_transform.py'
+    row = migration['qualified_implementation_updates'][name]
+    current = (ROOT/name).read_bytes().replace(b'\r\n', b'\n')
+    if fault == 'schema':row['schema'] = 'unknown'
+    elif fault == 'old-source':row['original_utf8'] += '\nchanged'
+    elif fault == 'old-pin':row['original_canonical_lf_sha256'] = '0' * 64
+    elif fault == 'new-pin':row['current_canonical_lf_sha256'] = '0' * 64
+    elif fault == 'unbounded-functions':row['allowed_function_changes'].append('_materialized')
+    elif fault in ('math-change', 'legacy-allowset-change'):
+        if fault == 'math-change':
+            current = current.replace(b'transformed = homogeneous @ matrix.T', b'transformed = matrix @ homogeneous.T')
+        else:
+            current = current.replace(b"frozenset(('Haswell',)),", b"frozenset(('Haswell', 'Unknown')),")
+        row['current_canonical_lf_sha256'] = hashlib.sha256(current).hexdigest()
+    if fault is None:
+        require_matrix_runtime_admission_successor(migration['frozen_implementation'][name], current, row)
+    else:
+        with pytest.raises(AssertionError):
+            require_matrix_runtime_admission_successor(migration['frozen_implementation'][name], current, row)
 
 
 @pytest.mark.parametrize('fault',(None,'missing-version','wrong-version','unknown-interpreter','schema','authored-witness'))
@@ -1604,4 +1659,20 @@ def test_corrected_source_hash_mismatch_blocks_before_any_build(tmp_path,monkeyp
     assert not q.plan(tmp_path,'windows',199)['blockers']
     path=tmp_path/name;path.write_bytes(path.read_bytes()+b'\r\nnot-authorized')
     assert 'corrected max-tree source pin differs: '+name in q.plan(tmp_path,'windows',199)['blockers']
+
+
+def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, monkeypatch):
+    name = 'tests/test_matrix_transform_skylakex_routing.py'
+    assert name in q.MATRIX_SOURCE_PATHS
+    assert q.GROUPS['public-Matrix'] == (
+        'test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
+        'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
+        'test_matrix_transform_skylakex_routing.py')
+    synthetic_complete_plan(tmp_path)
+    functions = ['filters.rank.' + n for n in q.R5] + sorted(
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH} | set(q.MAX_TREE_PATHS))
+    monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(functions=functions, image_count=199))
+    assert not q.plan(tmp_path, 'windows', 199)['blockers']
+    (tmp_path / name).unlink()
+    assert 'missing required matrix source: ' + name in q.plan(tmp_path, 'windows', 199)['blockers']
 
