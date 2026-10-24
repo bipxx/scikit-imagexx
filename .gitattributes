@@ -100,3 +100,4 @@ coverage/evidence/max-tree-benchmark-reference.json -text
 coverage/evidence/tv-cursor-comparison-controller.json -text
 coverage/evidence/tv-cursor-comparison-dispatch.json -text
 coverage/evidence/merged-tv-publisher-worktree-cleanup-20261024.json -text
+coverage/evidence/released-test-cache-cleanup-20261024.json -text
