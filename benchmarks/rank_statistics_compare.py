@@ -1,0 +1,542 @@
+"""Controlled R4 triads. Phase1 is reference-only/native0; products need root pins.
+
+Private modules and failed65c are never baseline admission. The existing
+rank_statistics.py corpus and timing_callback are the sole fixture/call source.
+"""
+from __future__ import annotations
+import argparse
+import base64
+from contextlib import contextmanager
+import csv
+from email.parser import BytesParser
+import hashlib
+import importlib.util
+import inspect
+import io
+import json
+import math
+import os
+from pathlib import Path, PurePosixPath
+import platform
+import random
+import statistics
+import subprocess
+import sys
+import traceback
+import uuid
+import warnings
+import zipfile
+
+ROOT=Path(__file__).resolve().parents[1]
+CONTRACT=ROOT/'coverage/contracts/rank-statistics-comparison.json'
+PROFILES=('windows','modern','minimum')
+ROLES=('original','before','after')
+BLOCKED_SOURCE='65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3'
+
+
+def require(ok,message):
+    if not ok:raise RuntimeError(message)
+
+def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def digest(value):return hashlib.sha256(json.dumps(value,sort_keys=True,allow_nan=False).encode()).hexdigest()
+def text_sha(path):return hashlib.sha256(Path(path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+def load_json(path):return json.loads(Path(path).read_text(encoding='utf-8'))
+def write_new(path,value):
+    path=Path(path)
+    if os.name=='nt' and len(str(path.absolute()))>=248 and not str(path).startswith('\\\\?\\'):
+        path=Path('\\\\?\\'+str(path.absolute()))
+    path.parent.mkdir(parents=True,exist_ok=True)
+    with path.open('x',encoding='utf-8',newline='\n') as stream:json.dump(value,stream,indent=2);stream.write('\n')
+    return path
+def config(experiment=None,expected_sha=None):
+    cfg=load_json(CONTRACT)
+    if experiment is None:return cfg
+    require(expected_sha and sha(experiment)==expected_sha,'external immutable experiment hash required')
+    external=load_json(experiment)
+    require(external.get('schema')=='rank-statistics-experiment-v1' and external.get('template_sha256')==text_sha(CONTRACT),'external experiment/template differs')
+    cfg['accepted_products']=external['accepted_products'];cfg['experiment_sha256']=expected_sha;cfg['experiment_path']=str(Path(experiment).resolve())
+    for role in ('before','after'):
+        require(set(cfg['accepted_products'][role])==set(PROFILES),'all3 product profiles required')
+        pins=[accepted_pin(cfg,role,p) for p in PROFILES]
+        require(len({pin['revision'] for pin in pins})==1,'one qualified source per backend acrossall3 runtimes required')
+    for profile in PROFILES:require(accepted_pin(cfg,'before',profile)['scope']==accepted_pin(cfg,'after',profile)['scope'],'cross-coverage before/after products forbidden')
+    return cfg
+
+def safe_name(name):
+    path=PurePosixPath(name)
+    require(name and not path.is_absolute() and '..' not in path.parts and '\\' not in name and ':' not in name,'unsafe artifact member')
+    return path
+
+def tree(path,exclude=()):
+    result={}
+    for item in Path(path).rglob('*'):
+        require(not item.is_symlink(),'artifact symlink forbidden')
+        if item.is_file() and item.relative_to(path).as_posix() not in exclude:
+            result[item.relative_to(path).as_posix()]=sha(item)
+    return result
+
+def accepted_pin(cfg,role,profile):
+    require(role in ('before','after') and profile in PROFILES,'invalid product selector')
+    pin=cfg['accepted_products'][role][profile]
+    require(isinstance(pin,dict),'independently qualified public product pending; Phase1 is native0')
+    required={'revision','qualification_sha256','product_sha256','wheel_sha256','source_sha256','scope','artifact_run','artifact_name'}
+    require(set(pin)==required,'accepted product pin fields differ')
+    require(len(pin['revision'])==40 and pin['revision']!=BLOCKED_SOURCE,'failed65c/private source not admitted')
+    require(all(isinstance(pin[k],str) and len(pin[k])==64 for k in ('qualification_sha256','product_sha256','wheel_sha256','source_sha256')),'invalid accepted product hash')
+    scope=pin['scope'];require(set(scope)=={'image_paths','metadata_paths','sdk_families','sdk_members','sdk_family_names'},'coverage/SDK scope absent')
+    require(all(type(scope[k]) is int and scope[k]>0 for k in ('image_paths','metadata_paths','sdk_families','sdk_members')),'coverage/SDK counts absent or invalid')
+    require(type(scope['sdk_family_names']) is list and len(scope['sdk_family_names'])==len(set(scope['sdk_family_names']))==scope['sdk_families'],'SDK family identities absent/differ')
+    require(isinstance(pin['artifact_run'],str) and pin['artifact_run'].isdigit() and isinstance(pin['artifact_name'],str) and pin['artifact_name'],'qualified run/artifact binding absent')
+    return pin
+
+def verify_wheel(path):
+    with zipfile.ZipFile(path) as archive:
+        names=[n for n in archive.namelist() if not n.endswith('/')]
+        require(len(names)==len(set(names)),'duplicate wheel member')
+        for name in names:safe_name(name)
+        records=[n for n in names if n.endswith('.dist-info/RECORD')];require(len(records)==1,'wheel RECORD missing/ambiguous')
+        rows=list(csv.reader(io.StringIO(archive.read(records[0]).decode())))
+        require(len(rows)==len(names) and {r[0] for r in rows}==set(names),'wheel RECORD file set differs')
+        for name,encoded,size in rows:
+            if not encoded:require(name==records[0],'unhashed wheel member');continue
+            body=archive.read(name);expected='sha256='+base64.urlsafe_b64encode(hashlib.sha256(body).digest()).rstrip(b'=').decode()
+            require(encoded==expected and str(len(body))==size,'wheel RECORD bytes differ')
+        metadata=[n for n in names if n.endswith('.dist-info/METADATA')];require(len(metadata)==1,'wheel METADATA ambiguous')
+        info=BytesParser().parsebytes(archive.read(metadata[0]))
+        return dict(name=info['Name'].lower().replace('_','-'),version=info['Version'],sha256=sha(path),members={n:hashlib.sha256(archive.read(n)).hexdigest() for n in names})
+
+def verify_product(path,role,profile,cfg):
+    """Standard-library validation BEFORE importing fixtures or numerical code.
+
+    Input format is a root-qualified complete product directory with wheels/,
+    source.zip, extracted source/, qualification.json and product.json. No
+    archive extraction, pip, compiler or acceptance invention happens here.
+    """
+    path=Path(path).resolve();pin=accepted_pin(cfg,role,profile)
+    require(sha(path/'product.json')==pin['product_sha256'],'product seal differs from accepted pin')
+    manifest=load_json(path/'product.json')
+    require(manifest['schema']=='rank-statistics-comparison-product-v1' and manifest['revision']==pin['revision'] and manifest['profile']==profile,'wrong product source/runtime')
+    require(manifest['files_sha256']==tree(path,('product.json',)),'complete product file set/bytes differ')
+    require(sha(path/'qualification.json')==pin['qualification_sha256'],'qualification receipt differs')
+    qualification=load_json(path/'qualification.json')
+    require(qualification.get('passed') is True and qualification.get('source',{}).get('revision')==pin['revision'] and qualification.get('profile')==profile,'not the qualified actual public source')
+    scope=pin['scope']
+    require(qualification.get('schema')=='public-qualification-v2' and qualification.get('SDK_checks')==2*scope['sdk_families'] and qualification.get('no_timing') is True and not qualification.get('failures'),'failed/incomplete public+SDK qualification cannot admit product')
+    expected=qualification.get('expected_registry',{})
+    require(expected.get('image_count')==scope['image_paths'] and expected.get('metadata_count')==scope['metadata_paths']
+            and expected.get('registered_count')==scope['image_paths']+scope['metadata_paths']
+            and len(expected.get('functions',[]))==len(set(expected.get('functions',[])))==scope['image_paths']+scope['metadata_paths'],'qualified image/metadata registry scope differs')
+    sdk_receipt=load_json(path/'sdk.json');sdk_record=qualification['records']['sdk.json']
+    require(sha(path/'sdk.json')==sdk_record['sha256'] and (path/'sdk.json').stat().st_size==sdk_record['bytes'],'SDK qualification envelope record differs')
+    require(sdk_receipt['families']==scope['sdk_family_names'] and sdk_receipt['checks']==2*scope['sdk_families'],'qualified SDK families differ')
+    require(sha(path/'source.zip')==pin['source_sha256'],'source archive differs')
+    source=path/'source'
+    with zipfile.ZipFile(path/'source.zip') as archive:
+        names=[n for n in archive.namelist() if not n.endswith('/')]
+        require(len(names)==len(set(names)),'duplicate source ZIP member')
+        for name in names:safe_name(name)
+        require({n:hashlib.sha256(archive.read(n)).hexdigest() for n in names}==tree(source),'complete source ZIP/extracted bytes differ')
+    for name,value in cfg['source_text_sha256'].items():require(text_sha(source/name)==value,'fixed R4 fixture/harness source differs: '+name)
+    corpus=load_json(source/'coverage/contracts/rank-statistics-benchmark.json')
+    require(corpus['case_contract_sha256']==cfg['case_contract_sha256'] and len(corpus['case_inventory'])==1379,'R4 corpus differs')
+    wheel_rows={}
+    for wheel in sorted((path/'wheels').glob('*.whl')):
+        row=verify_wheel(wheel);require(row['name'] not in wheel_rows,'duplicate runtime distribution');wheel_rows[row['name']]=row
+    require({'scikit-imagexx','scikit-image','numpy','scipy'}<=wheel_rows.keys(),'incomplete wheel closure')
+    runtime=load_json(path/'runtime.json')
+    require(runtime['schema']=='ci-offline-measurement-v1' and runtime['source']['revision']==pin['revision'],'runtime/source manifest differs')
+    require({r['name']:dict(name=r['name'],version=r['version'],sha256=r['sha256']) for r in wheel_rows.values()}=={r['name']:r for r in runtime['wheels'].values()},'runtime wheel closure differs')
+    require(sha(path/'runtime-lock.txt')==runtime['lock_sha256'],'runtime lock differs')
+    product=wheel_rows['scikit-imagexx'];require(product['sha256']==pin['wheel_sha256'],'wrong accepted wheel')
+    require(wheel_rows['scikit-image']['version']=='0.26.0' and wheel_rows['numpy']['version']==cfg['profiles'][profile]['numpy'] and wheel_rows['scipy']['version']==cfg['profiles'][profile]['scipy'],'wrong reference runtime')
+    sdk={n:h for n,h in product['members'].items() if n.startswith(('include/skimagexx/','lib/cmake/skimagexx/','share/licenses/scikit-imagexx/')) or n in ('lib/skimagexx.lib','lib/libskimagexx.a')}
+    require(len(sdk)==scope['sdk_members'] and sdk==runtime['runtime']['sdk_sha256']==sdk_receipt['SDK_sha256'],'complete configured SDK differs')
+    with zipfile.ZipFile(next(w for w in (path/'wheels').glob('*.whl') if sha(w)==pin['wheel_sha256'])) as archive:
+        headers={n for n in archive.namelist() if n.startswith('include/skimagexx/') and not n.endswith('/')}
+        require(headers=={p.relative_to(source).as_posix() for p in (source/'include/skimagexx').rglob('*') if p.is_file()},'full source/header set differs')
+        for name in headers:require(archive.read(name).replace(b'\r\n',b'\n')==(source/name).read_bytes().replace(b'\r\n',b'\n'),'source/header bytes differ')
+        python={n.removeprefix('skimagexx/'):archive.read(n).replace(b'\r\n',b'\n') for n in archive.namelist() if n.startswith('skimagexx/') and n.endswith('.py')}
+        require(python=={p.relative_to(source/'python/skimagexx').as_posix():p.read_bytes().replace(b'\r\n',b'\n') for p in (source/'python/skimagexx').rglob('*.py')},'complete Python source/wheel differs')
+    return dict(role=role,profile=profile,revision=pin['revision'],product_sha256=pin['product_sha256'],wheel_sha256=pin['wheel_sha256'],qualification_sha256=pin['qualification_sha256'],scope=scope,artifact_run=pin['artifact_run'],artifact_name=pin['artifact_name'],runtime_sha256=sha(path/'runtime.json'))
+
+def canonical_source_bytes(path):
+    body=Path(path).read_bytes()
+    text_suffixes={'.cpp','.cc','.c','.h','.hpp','.hxx','.py','.pyi','.toml','.txt','.cmake','.json','.md','.rst','.yml','.yaml','.in','.csv','.ps1','.sh','.bat','.cmd'}
+    return body.replace(b'\r\n',b'\n') if Path(path).suffix in text_suffixes or Path(path).name in ('.gitattributes','.gitignore','CMakeLists.txt') else body
+
+
+def apply_counts_patch(before,patch):
+    """Exact approved unified hunks, in memory, allowing only line offsets."""
+    hunks=[];old=[];new=[];active=False
+    for line in patch.splitlines(keepends=True):
+        if line.startswith('@@'):
+            if active:hunks.append((''.join(old),''.join(new)))
+            active=True;old=[];new=[]
+        elif active:
+            require(line[:1] in (' ','+','-'),'unsupported counts patch directive')
+            if line[0] in (' ','-'):old.append(line[1:])
+            if line[0] in (' ','+'):new.append(line[1:])
+    if active:hunks.append((''.join(old),''.join(new)))
+    require(hunks,'counts patch missing')
+    for previous,replacement in hunks:
+        require(previous and before.count(previous)==1,'approved counts hunk absent/ambiguous')
+        before=before.replace(previous,replacement,1)
+    return before
+
+
+def verify_pair_sources(before,after,profile,cfg):
+    left=accepted_pin(cfg,'before',profile);right=accepted_pin(cfg,'after',profile)
+    require(left['scope']==right['scope'],'cross-coverage before/after product scope')
+    lq=load_json(Path(before)/'qualification.json');rq=load_json(Path(after)/'qualification.json')
+    require(lq['expected_registry']==rq['expected_registry'],'different full public registries forbidden')
+    directories=[Path(before)/'source',Path(after)/'source'];indices=[]
+    for directory in directories:indices.append({p.relative_to(directory).as_posix():hashlib.sha256(canonical_source_bytes(p)).hexdigest() for p in directory.rglob('*') if p.is_file()})
+    changed=sorted(n for n in set(indices[0])|set(indices[1]) if indices[0].get(n)!=indices[1].get(n))
+    require('src/rank.cpp' in changed and set(changed)<=set(cfg['allowed_source_delta']),'source delta outside isolated counts packet')
+    patch=cfg['counts_cpp_patch'];require(hashlib.sha256(patch.encode()).hexdigest()==cfg['counts_cpp_patch_sha256'],'approved counts patch changed')
+    expected=apply_counts_patch(canonical_source_bytes(directories[0]/'src/rank.cpp').decode(),patch)
+    require(expected.encode()==canonical_source_bytes(directories[1]/'src/rank.cpp'),'rank.cpp has changes beyond approved counts optimization')
+    for name,value in cfg['counts_test_sha256'].items():
+        if name in changed:require(text_sha(directories[1]/name)==value,'focused counts test delta differs')
+    return dict(changed=changed,patch_sha256=cfg['counts_cpp_patch_sha256'],full_source_index_sha256=[digest(i) for i in indices],scope=left['scope'])
+
+
+def validate_preparation_report(report,cfg,profile):
+    require(report.get('schema')=='rank-statistics-controlled-v1' and report.get('status')=='complete-parity-check'
+            and report.get('check_only') is True and report.get('reference_only') is False
+            and report.get('profile')==profile and not report.get('results') and not report.get('failures'), 'preparation report failed/partial/timed')
+    require(report.get('contract_sha256')==text_sha(CONTRACT) and report.get('experiment_sha256')==cfg.get('experiment_sha256'),'preparation report contract differs')
+    require(report.get('source_comparison',{}).get('patch_sha256')==cfg['counts_cpp_patch_sha256']
+            and 'src/rank.cpp' in report['source_comparison'].get('changed',[])
+            and set(report['source_comparison']['changed'])<=set(cfg['allowed_source_delta'])
+            and report['source_comparison'].get('scope')==accepted_pin(cfg,'before',profile)['scope']==accepted_pin(cfg,'after',profile)['scope'],'isolated source attribution absent')
+    require(len(report['source_comparison'].get('full_source_index_sha256',[]))==2 and all(isinstance(v,str) and len(v)==64 for v in report['source_comparison']['full_source_index_sha256']),'full source indices absent')
+    require(set(report.get('checks',{}))=={'normal','scalar'} and set(report.get('worker_identities',{}))=={'normal','scalar'},'preparation modes missing')
+    for mode in ('normal','scalar'):
+        identities=report['worker_identities'][mode];require(set(identities)==set(ROLES),'backend identity missing')
+        require(all(type(r.get('pid')) is int and r['pid']>0 for r in identities.values()) and len({r['pid'] for r in identities.values()})==3,'preparation processes not distinct')
+        for role,identity in identities.items():
+            require(identity['role']==role and identity['profile']==profile and type(identity['default_workers']) is int and identity['default_workers']==1
+                    and identity['scalar']==(mode=='scalar') and identity['has_avx2']==(mode=='normal'),'wrong worker metadata/mode')
+            product_role='before' if role=='original' else role;pin=accepted_pin(cfg,product_role,profile)
+            require(identity['source']==pin['revision'] and identity['product_sha256']==pin['product_sha256'],'worker source/product not accepted')
+        require(identities['before']['core_sha256']!=identities['after']['core_sha256'] and identities['before']['core_path']!=identities['after']['core_path'],'same native core cannot be before and after')
+        require(set(report['checks'][mode])==set(ROLES),'backend parity missing')
+        for role,value in report['checks'][mode].items():
+            require(value['aliases']==cfg['algorithm_names'] and not value['mismatches'],'aliases/mismatches incomplete')
+            require([v['workers'] for v in value['checks']]==[1,4] and all(type(v['workers']) is int for v in value['checks']),'preparation workers incomplete')
+            for observations in value['checks']:
+                require(len(observations['digests'])==len(observations['errors'])==len(observations['warnings'])==1379
+                        and digest(observations['digests'])==cfg['expected_observation_vectors'][profile],'frozen observations incomplete/different')
+
+
+def claim_measurement(receipts,profile,generation,attempt,claim_root):
+    require(generation and attempt and claim_root,'measurement session provenance absent')
+    key=digest(dict(profile=profile,generation=generation,attempt=attempt,receipts=[sha(p) for p in receipts]))
+    path=Path(claim_root)/'rank-statistics-comparison-claims'/(key+'.json')
+    return write_new(path,dict(profile=profile,generation=generation,attempt=attempt,receipt_hashes=[sha(p) for p in receipts]))
+
+
+def receipt_barrier(paths,cfg,generation,attempt):
+    require(len(paths)==3,'all3 preparation receipts required before fixture imports/timers')
+    receipts=[load_json(p) for p in paths]
+    require({r.get('profile') for r in receipts}==set(PROFILES),'partial/duplicate preparation profile barrier')
+    require(len({r.get('receipt_id') for r in receipts})==3,'preparation receipt reused')
+    for receipt_path,row in zip(paths,receipts):
+        require(row.get('schema')=='rank-statistics-comparison-preparation-v1' and row.get('native_admission') is True and row.get('reference_only') is False,'reference-only/private receipt cannot admit measurement')
+        require(row.get('generation')==generation and row.get('attempt')==attempt and row.get('contract_sha256')==text_sha(CONTRACT) and row.get('experiment_sha256')==cfg.get('experiment_sha256'),'stale/reused preparation receipt')
+        require(type(row.get('canonical_cases')) is int and type(row.get('alias_checks')) is int and all(type(w) is int for w in row.get('workers',[])) and all(type(i) is int for i in row.get('timed_ids',[])),'preparation counts/workers must be exact integers')
+        require(row.get('modes')==['normal','scalar'] and row.get('workers')==[1,4] and row.get('canonical_cases')==1379 and row.get('alias_checks')==4 and row.get('timed_ids')==cfg['timed_ids'],'preparation scope incomplete')
+        report_path=Path(receipt_path).parent/'report.json'
+        require(sha(report_path)==row.get('report_sha256'),'preparation report seal differs')
+        validate_preparation_report(load_json(report_path),cfg,row['profile'])
+        for role in ('before','after'):
+            pin=accepted_pin(cfg,role,row['profile']);require(row['products'][role]['product_sha256']==pin['product_sha256'],'prepared product differs')
+    return receipts
+
+def seeded_triads(seed,rounds=7):
+    require(rounds==7,'exact7 paired rounds required');rng=random.Random(seed);result=[]
+    for _ in range(rounds):
+        order=list(ROLES);rng.shuffle(order);result.append(order)
+    return result
+
+class SerialScheduler:
+    def __init__(self):self.active=False
+    def request(self,worker,command):
+        require(not self.active,'overlapping backend operation forbidden');self.active=True
+        try:return worker.request(command)
+        finally:self.active=False
+
+
+def harness(source):
+    """Called only after admission metadata is authenticated."""
+    source=Path(source);sys.path.insert(0,str(source/'benchmarks'));sys.path.insert(0,str(source))
+    spec=importlib.util.spec_from_file_location('controlled_r4_frozen_harness',source/'benchmarks/rank_statistics.py')
+    module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
+    return module
+
+def early_native_admission():
+    # Imports public package metadata only; no fixture/benchmark imports yet.
+    import importlib
+    import skimagexx as xx
+    from skimagexx.coverage import native_functions
+    names=('geometric_mean','noise_filter','subtract_mean','windowed_histogram')
+    registered=set(native_functions())
+    require({prefix+n for prefix in ('filters.rank.','filters.rank.generic.') for n in names}<=registered,'R4 public paths absent')
+    core=xx._core;xx.set_fallback_enabled(False)
+    require(xx.get_num_threads()==1 and xx.get_num_threads is core.get_num_threads and xx.set_num_threads is core.set_num_threads,'sole core/default1 missing')
+    for interface,bits in (('statistics',0xe000),('vector',0x10000)):
+        capability=getattr(core,'rank_'+interface+'_capabilities',None)
+        require(getattr(core,'rank_'+interface+'_interface',None)=='rank-'+interface+'-v1' and type(capability) is int and capability>=0 and capability&bits==bits,'R4 interface/capability missing')
+    for name in ('rank_statistics_run','rank_windowed_histogram_run','rank_noise_footprint'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,'owned R4 compiled entry missing')
+    rank=importlib.import_module('skimagexx.filters.rank');generic=importlib.import_module('skimagexx.filters.rank.generic')
+    for name in names:
+        function=getattr(rank,name,None)
+        require(callable(function) and function is getattr(generic,name,None),'actual canonical/generic identity differs')
+        require(inspect.unwrap(function).__module__=='skimagexx._rank' and inspect.unwrap(function).__globals__.get('_core') is core,'forwarded/alternate-core R4 wrapper')
+    return xx
+
+
+@contextmanager
+def no_forwarding(h):
+    generic=__import__('skimage.filters.rank.generic',fromlist=['generic_cy']);cy=generic.generic_cy
+    python=[h.resolve(n,True) for n in h.NAMES];codes={f.__code__ for f in python}
+    fields={n:v for n,v in vars(cy).items() if callable(v) and any(part in n for part in ('geometric_mean','noise_filter','subtract_mean','windowed_hist'))}
+    require(len(fields)>=4,'pinned original Cython entries missing')
+    identities=tuple(fields.values());previous=sys.getprofile();hits=[]
+    def forbidden(*a,**k):hits.append('Cython attribute');raise AssertionError('original rank algorithm forwarding')
+    def profile(frame,event,arg):
+        if event=='call' and frame.f_code in codes or event=='c_call' and any(arg is value for value in identities):
+            hits.append(event);raise AssertionError('original rank algorithm identity forwarding')
+    try:
+        for name in fields:setattr(cy,name,forbidden)
+        sys.setprofile(profile);yield
+    finally:
+        sys.setprofile(previous)
+        for name,value in fields.items():setattr(cy,name,value)
+    require(not hits,'original algorithm forwarding observed')
+
+
+def reference_characterization(output):
+    """Every original observation, never a timer or native admission."""
+    cfg=config();h=harness(ROOT);manifest=load_json(h.MANIFEST)
+    for name in h.NAMES:
+        function=h.resolve(name,True);facts=manifest['reference_functions'][name]
+        require(str(inspect.signature(function))==facts['signature'] and hashlib.sha256(inspect.getsource(function).encode()).hexdigest()==facts['python_source_sha256'],'pinned original Python function differs')
+    cases=list(h.corpus());require(len(cases)==1379,'fixed1379 differs')
+    require(h.digest([h.inventory(c) for c in cases])==cfg['case_contract_sha256'],'case IDs/fixtures differ')
+    frozen=manifest['reference_profiles'][h.runtime_profile()];rows=[];timed=[];failures=[]
+    for index,case in enumerate(cases):
+        actual=h.observe_case(h.resolve(case.name,True),case);value=h.digest(actual);eligible=case.timed and actual['error'] is None
+        row=dict(case_index=index,id=h.inventory(case),observation_sha256=value,error=actual['error'],warnings=actual['warnings'],timing_eligible=eligible)
+        if value!=frozen['observations'][str(index)]:row.update(actual=actual,expected_sha256=frozen['observations'][str(index)]);failures.append(row)
+        rows.append(row)
+        if eligible:timed.append(index)
+    aliases=h.check_aliases([1],True)
+    require(timed==cfg['timed_ids'] and len(timed)==376,'all376 timed IDs must remain unchanged')
+    report=dict(schema='rank-statistics-comparison-reference-v1',reference_only=True,native_admission=False,barrier_eligible=False,performance_eligible=False,profile=h.runtime_profile(),status='failed' if failures else 'complete-reference-check',checks=rows,alias_checks=aliases,failures=failures,operation_timer_calls=0,contract_sha256=text_sha(CONTRACT),experiment_sha256=cfg.get('experiment_sha256'))
+    write_new(output,report);require(not failures,'original observation differs; full failures retained');return report
+
+
+def sample_admission(validated,measure,actions,workers,scalar,index,timed_ids):
+    require(validated and measure and actions=='true','timers forbidden in check-only/Phase1')
+    require(type(workers) is int and workers==1 and not scalar,'measurement must be normal/defaultworker1')
+    require(index in timed_ids,'untimed/error case cannot become timed')
+
+
+def worker_permit(path,profile,cfg):
+    require(path is not None and os.getenv('GITHUB_ACTIONS')=='true','direct worker timing without preparation permit forbidden')
+    permit=load_json(path)
+    require(permit['profile']==profile and permit['controller_pid']==os.getppid() and permit['tool_sha256']==sha(__file__),'wrong controller/source permit')
+    receipt_barrier([Path(p) for p in permit['receipts']],cfg,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'))
+    require(sha(permit['claim'])==permit['claim_sha256'],'measurement claim differs')
+    claim=load_json(permit['claim'])
+    require(claim['profile']==profile and claim['generation']==os.getenv('GITHUB_RUN_ID') and claim['attempt']==os.getenv('GITHUB_RUN_ATTEMPT')
+            and claim['receipt_hashes']==[sha(p) for p in permit['receipts']],'measurement claim receipt binding differs')
+
+
+def worker_main(args):
+    cfg=config(args.experiment,args.experiment_sha256);product_role='before' if args.role=='original' else args.role
+    if args.measure:worker_permit(args.permit,args.profile,cfg)
+    seal=verify_product(args.product,product_role,args.profile,cfg) # BEFORE numerical/fixture imports.
+    early_native_admission() # mandatory BEFORE harness/contract fixture import.
+    h=harness(Path(args.product)/'source');xx=h.xx;runtime=load_json(Path(args.product)/'runtime.json')
+    # Full installed dependency, .libs, product and configured SDK against exact wheels.
+    require(h.artifacts.installed_state(Path(args.product)/'wheels',runtime['wheels'])==runtime['runtime'],'installed runtime/package/SDK closure differs')
+    require(Path(xx.__file__).resolve().is_relative_to(Path(sys.prefix).resolve()),'product outside ordinary worker prefix')
+    core=xx._core;pkg=Path(xx.__file__).parent
+    require(list(pkg.glob('*.pyd'))+list(pkg.glob('*.so'))==[Path(core.__file__)],'one actual ordinary-name core required')
+    require(not any(k.startswith('SKIMAGEXX_') and k!='SKIMAGEXX_DISABLE_SIMD' for k in os.environ),'prototype/private selector forbidden')
+    previous=xx.get_num_threads();xx.set_fallback_enabled(False);h.admit_native(previous)
+    cases=list(h.corpus());require(len(cases)==1379 and h.digest([h.inventory(c) for c in cases])==cfg['case_contract_sha256'],'fixed corpus changed')
+    identity=dict(role=args.role,pid=os.getpid(),source=seal['revision'],product_sha256=seal['product_sha256'],core_sha256=sha(core.__file__),core_path=str(Path(core.__file__).resolve()),python=sys.version,cpu=h.cpu_metadata(),profile=args.profile,scalar=bool(os.getenv('SKIMAGEXX_DISABLE_SIMD')),default_workers=previous,has_avx2=xx.has_avx2())
+    print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=False;callbacks={};expected_after={}
+    for line in sys.stdin:
+        request=json.loads(line)
+        try:
+            operation=request['operation']
+            if operation=='validate':
+                require(request['workers']==[1,4],'preflight workers1/4 mandatory');checks=[];mismatches=[]
+                frozen=load_json(h.MANIFEST)['reference_profiles'][h.runtime_profile()]['observations']
+                for workers in (1,4):
+                    xx.set_num_threads(workers);observations=[];eligible=[]
+                    for index,case in enumerate(cases):
+                        function=h.resolve(case.name,args.role=='original')
+                        if args.role=='original':observation=h.observe_case(function,case)
+                        else:
+                            with no_forwarding(h):observation=h.observe_case(function,case)
+                        observations.append(observation);expected_after[index]=observation['after']
+                        if case.timed and observation['error'] is None:eligible.append(index)
+                        if h.digest(observation)!=frozen[str(index)]:mismatches.append(dict(case_index=index,workers=workers,actual=observation,expected_sha256=frozen[str(index)]))
+                    require(eligible==cfg['timed_ids'],'all376 eligible source IDs must remain unchanged')
+                    checks.append(dict(workers=workers,digests=[h.digest(v) for v in observations],errors=[v['error'] for v in observations],warnings=[v['warnings'] for v in observations]))
+                xx.set_num_threads(1);aliases=[]
+                for name in h.NAMES:
+                    require(h.resolve(name,args.role=='original') is h.resolve(name,args.role=='original',alias=True),'canonical/alias identity differs')
+                    index=next(i for i,c in enumerate(cases) if c.name==name);function=h.resolve(name,args.role=='original',alias=True)
+                    if args.role=='original':value=h.observe_case(function,cases[index])
+                    else:
+                        with no_forwarding(h):value=h.observe_case(function,cases[index])
+                    require(h.digest(value)==checks[0]['digests'][index],'alias observation differs');aliases.append(name)
+                validated=True;reply=dict(checks=checks,aliases=aliases,mismatches=mismatches)
+            elif operation in ('warm','sample'):
+                index=request['case_index']
+                sample_admission(validated,args.measure,os.getenv('GITHUB_ACTIONS'),xx.get_num_threads(),identity['scalar'],index,cfg['timed_ids'])
+                if index not in callbacks:callbacks[index]=h.timing_callback(h.resolve(cases[index].name,args.role=='original'),cases[index])
+                callback,tracked=callbacks[index]
+                with warnings.catch_warnings():
+                    warnings.simplefilter('ignore')
+                    if operation=='warm':result=callback();del result;reply=dict(warmed=True)
+                    else:
+                        loops=request['loops'];require(type(loops) is int and 1<=loops<=1000,'invalid sample loops')
+                        # IPC, fixture setup, validation and serialization remain outside.
+                        from time import perf_counter_ns,sleep
+                        sleep(.02) # same cooldown as existing run.batch, outside timer.
+                        start=perf_counter_ns()
+                        for _ in range(loops):result=callback();del result
+                        elapsed=perf_counter_ns()-start
+                        reply=dict(ms=elapsed/loops/1e6,elapsed_ns=elapsed,loops=loops,identity=identity)
+                require({k:h.qualified.array(v) for k,v in tracked.items()}==expected_after[index],'timed callback changed workload state')
+                require(identity['cpu']==h.cpu_metadata(),'worker CPU identity changed')
+            elif operation=='integrity':
+                require(verify_product(args.product,product_role,args.profile,cfg)==seal,'capsule changed')
+                require(h.artifacts.installed_state(Path(args.product)/'wheels',runtime['wheels'])==runtime['runtime'],'installed closure changed');reply=dict(seal=seal)
+            elif operation=='close':print(json.dumps(dict(ok=True,result={})),flush=True);return
+            else:raise RuntimeError('unknown worker request')
+            print(json.dumps(dict(ok=True,result=reply)),flush=True)
+        except BaseException as error:print(json.dumps(dict(ok=False,error=type(error).__name__,message=str(error),traceback=traceback.format_exc(),operation=request,last_case=locals().get('index'),partial_checks=locals().get('checks'),last_observation=locals().get('observation'))),flush=True)
+
+
+class Worker:
+    def __init__(self,python,product,role,profile,output,measure=False,scalar=False,permit=None,experiment=None,experiment_sha256=None):
+        self.stderr=Path(output).open('x',encoding='utf-8');env=dict(os.environ)
+        for key in list(env):
+            if key.startswith('SKIMAGEXX_') or key in ('PYTHONPATH','PYTHONHOME'):env.pop(key)
+        env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',OMP_NUM_THREADS='1',BLIS_NUM_THREADS='1',OMP_WAIT_POLICY='PASSIVE')
+        if scalar:env['SKIMAGEXX_DISABLE_SIMD']='1'
+        command=[str(python),'-u',str(Path(__file__).resolve()),'worker','--profile',profile,'--product',str(Path(product).resolve()),'--role',role]
+        if experiment:command+=['--experiment',str(experiment),'--experiment-sha256',experiment_sha256]
+        if measure:command+=['--measure','--permit',str(permit)]
+        self.process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.stderr,text=True,env=env)
+        hello=self._read();self.identity=hello['identity']
+    def _read(self):
+        line=self.process.stdout.readline();require(bool(line),'worker exited; retained stderr contains failure')
+        reply=json.loads(line);require(reply.get('ok') is True,'worker failure: '+json.dumps(reply));return reply
+    def request(self,command):
+        self.process.stdin.write(json.dumps(command)+'\n');self.process.stdin.flush();return self._read()['result']
+    def close(self):
+        self.request(dict(operation='close'));require(self.process.wait()==0,'worker terminal failure');self.stderr.close()
+
+
+def validate_workers(workers,scheduler):
+    observations={role:scheduler.request(worker,dict(operation='validate',workers=[1,4])) for role,worker in workers.items()}
+    reference=observations['original']
+    if not all(value==reference and not value['mismatches'] for value in observations.values()):
+        error=RuntimeError('full1379/4alias observations differ');error.observations=observations;raise error
+    require(len(reference['checks'])==2 and all(len(r['digests'])==1379 for r in reference['checks']) and len(reference['aliases'])==4,'incomplete worker parity')
+    require(reference['checks'][0]['digests']==reference['checks'][1]['digests'],'worker1/4 bits differ')
+    return observations
+
+
+def operation_profiles(profile):return [('original','before'),('before','before'),('after','after')]
+def controller(args):
+    cfg=config(args.experiment,args.experiment_sha256);require(args.output and not Path(args.output).exists(),'fresh output required; never reuse receipts/results')
+    products={role:Path(getattr(args,role)) for role in ('before','after')}
+    for role,path in products.items():verify_product(path,role,args.profile,cfg)
+    source_comparison=verify_pair_sources(products['before'],products['after'],args.profile,cfg)
+    measure=not args.check_only
+    if measure:
+        require(os.getenv('GITHUB_ACTIONS')=='true','no local operation timings')
+        receipt_barrier(args.receipts,cfg,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'))
+        require(args.repeat==7,'exact7 paired triads required')
+    else:require(not args.receipts,'check-only cannot consume measurement barrier')
+    output=Path(args.output);output.mkdir(parents=True);report=dict(schema='rank-statistics-controlled-v1',session_id=str(uuid.uuid4()),source_comparison=source_comparison,worker_identities={},status='preflight',profile=args.profile,check_only=args.check_only,reference_only=False,results=[],checks={},failures=[],contract_sha256=text_sha(CONTRACT),experiment_sha256=cfg.get('experiment_sha256'))
+    # Exclusive local marker plus run/attempt binding rejects rerun/replay.
+    permit=None
+    if measure:
+        claim=claim_measurement(args.receipts,args.profile,os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'),os.getenv('RUNNER_TEMP'))
+        write_new(output/'receipt-claim.json',dict(claim_path=str(claim),receipts={str(p):sha(p) for p in args.receipts}))
+        permit=output/'worker-permit.json'
+        write_new(permit,dict(profile=args.profile,controller_pid=os.getpid(),tool_sha256=sha(__file__),claim=str(claim),claim_sha256=sha(claim),receipts=[str(Path(p).resolve()) for p in args.receipts]))
+    scheduler=SerialScheduler();workers={}
+    try:
+        modes=('normal','scalar') if args.check_only else ('normal',)
+        for mode in modes:
+            workers={}
+            for role,product_role in operation_profiles(args.profile):
+                workers[role]=Worker(getattr(args,product_role+'_python'),products[product_role],role,args.profile,output/(role+'-'+mode+'.stderr'),measure,mode=='scalar',permit,args.experiment,args.experiment_sha256)
+            require(len({w.identity['pid'] for w in workers.values()})==3,'separate ordinary worker processes required')
+            require(workers['before'].identity['core_path']!=workers['after'].identity['core_path'] and workers['before'].identity['core_sha256']!=workers['after'].identity['core_sha256'],'before/after cores must be physically and byte-distinct')
+            require(all(w.identity['cpu']==workers['original'].identity['cpu'] for w in workers.values()),'same-host CPU session required')
+            report['worker_identities'][mode]={role:worker.identity for role,worker in workers.items()}
+            report['checks'][mode]=validate_workers(workers,scheduler)
+            if measure:
+                report['triad_order']={}
+                for index in cfg['timed_ids']:
+                    orders=seeded_triads(cfg['seed']+index,7);report['triad_order'][str(index)]=orders
+                    for worker in workers.values():scheduler.request(worker,dict(operation='warm',case_index=index))
+                    first={role:scheduler.request(workers[role],dict(operation='sample',case_index=index,loops=1)) for role in ROLES}
+                    loops={role:max(1,min(1000,int(15/max(first[role]['ms'],.001)))) for role in ROLES};samples={role:[] for role in ROLES}
+                    raw=[]
+                    for round_index,order in enumerate(orders):
+                        for role in order:
+                            sample=scheduler.request(workers[role],dict(operation='sample',case_index=index,loops=loops[role]));samples[role].append(sample['ms']);raw.append(dict(round=round_index,role=role,**sample))
+                    medians={role:statistics.median(samples[role]) for role in ROLES}
+                    report['results'].append(dict(case_index=index,inventory=cfg['case_inventory'][index],calibration=first,samples_ms=samples,raw_samples=raw,medians_ms=medians,before_speedup=medians['original']/medians['before'],after_speedup=medians['original']/medians['after'],improvement=medians['before']/medians['after'],slower_than_before=medians['after']>medians['before'],slower_than_original=medians['after']>medians['original']))
+                    (output/'progress.json').write_text(json.dumps(report,indent=2)+'\n')
+            for worker in workers.values():scheduler.request(worker,dict(operation='integrity'));worker.close()
+            workers={}
+        require(verify_pair_sources(products['before'],products['after'],args.profile,cfg)==source_comparison,'source comparison changed')
+        report['status']='complete-parity-check' if args.check_only else 'complete-controlled-measurement'
+    except BaseException as error:report['status']='failed';report['failures'].append(dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc(),observations=getattr(error,'observations',None)));raise
+    finally:
+        # Never cancel/restart a running operation; close only at message boundaries.
+        for worker in workers.values():
+            if worker.process.poll() is None:worker.close()
+        write_new(output/'report.json',report)
+    if args.check_only:
+        validate_preparation_report(report,cfg,args.profile)
+        write_new(output/'preparation.json',dict(schema='rank-statistics-comparison-preparation-v1',receipt_id=str(uuid.uuid4()),generation=os.getenv('GITHUB_RUN_ID'),attempt=os.getenv('GITHUB_RUN_ATTEMPT'),profile=args.profile,contract_sha256=text_sha(CONTRACT),experiment_sha256=cfg.get('experiment_sha256'),report_sha256=sha(output/'report.json'),reference_only=False,native_admission=True,modes=['normal','scalar'],workers=[1,4],canonical_cases=1379,alias_checks=4,timed_ids=cfg['timed_ids'],products={role:verify_product(path,role,args.profile,cfg) for role,path in products.items()}))
+    return report
+
+
+def main(argv=None):
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['plan','reference','worker','compare','verify-product','barrier','selectors'])
+    p.add_argument('--check-only',action='store_true');p.add_argument('--reference-only',action='store_true');p.add_argument('--measure',action='store_true');p.add_argument('--profile',choices=PROFILES)
+    for name in ('output','product','before','after','before-python','after-python','permit','experiment'):p.add_argument('--'+name,type=Path)
+    p.add_argument('--experiment-sha256');p.add_argument('--role',choices=ROLES);p.add_argument('--receipts',type=Path,nargs='*',default=[]);p.add_argument('--repeat',type=int,default=7)
+    args=p.parse_args(argv)
+    if args.mode=='plan':print(json.dumps(dict(phase='Phase1 original-only/native0',products=config()['accepted_products'],canonical_cases=1379,aliases=4,timed_cases=376,worker_limits=[1,4],measurement_workers=[1],rounds=7,planned_scope=config()['planned_scope'],external_experiment_required=True,blocked_source=BLOCKED_SOURCE),indent=2));return
+    if args.mode=='reference':require(args.reference_only and args.check_only and not args.measure and args.output,'reference requires --reference-only --check-only/output');reference_characterization(args.output);return
+    require(not args.reference_only,'reference receipt cannot enter native/barrier/measurement')
+    if args.mode=='worker':require(args.product and args.role and args.profile,'worker product/profile/role required');worker_main(args)
+    elif args.mode=='verify-product':print(json.dumps(verify_product(args.product,args.role,args.profile,config(args.experiment,args.experiment_sha256)),indent=2))
+    elif args.mode=='barrier':receipt_barrier(args.receipts,config(args.experiment,args.experiment_sha256),os.getenv('GITHUB_RUN_ID'),os.getenv('GITHUB_RUN_ATTEMPT'))
+    elif args.mode=='selectors':
+        cfg=config(args.experiment,args.experiment_sha256)
+        for role in ('before','after'):
+            pin=accepted_pin(cfg,role,args.profile);print(role+'_run='+pin['artifact_run']);print(role+'_artifact='+pin['artifact_name'])
+    else:require(args.profile and args.before and args.after and args.before_python and args.after_python,'two complete products/ordinary interpreters required');controller(args)
+if __name__=='__main__':main()
