@@ -47,7 +47,7 @@ struct MaxTreeResult {
 // allocation of its declared type, native and naturally aligned. Shape entries
 // are >=3 and <=INT32_MAX; products/byte extents fit ptrdiff_t and signed64.
 // All active input/provided/workspace/output extents must be disjoint. No
-// initial workspace contents are required; inactive buffers are untouched.
+// initial workspace contents are required; inactive buffers are not accessed.
 // Source-proven reference parity presently covers dimensions>=4, not unsafe
 // original tiny/empty shapes. Finite typed input and nearest/gradual FP only.
 // No provided tree: parent/traverser/roots/scratch required. Provided tree:
@@ -67,7 +67,7 @@ const char* max_tree_ineligibility(const MaxTreeImage&, const MaxTreeParameters&
 // Rechecks admission before writes. Stable typed mergesort (ties in original
 // flat-index order), descending union/find, ascending canonicalization; reverse
 // F64 attributes and source-ordered maxima labels, then forward direct filter.
-// Root below threshold emits typed zero; comparisons are strictly attribute<T.
+// Root below threshold emits typed zero; comparisons are attribute<threshold.
 // Inversion/copies/coordinate preparation may use runtime SIMD/shared optional
 // workers (default1). Dependency traversals and scalar association stay serial.
 // Never mutates source/provided trees. No Python provider, error/warning text,
