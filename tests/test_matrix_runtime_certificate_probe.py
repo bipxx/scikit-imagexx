@@ -76,22 +76,32 @@ def test_payload_does_not_invoke_arbitrary_repr_or_str():
     assert c.safe_value(b'Haswell')['hex']==b'Haswell'.hex()
 
 
-def test_source_pins_match_frozen_helper_without_importing_it():
-    raw=(ROOT/'python/skimagexx/_matrix_transform.py').read_bytes().replace(b'\r\n',b'\n')
-    assert hashlib.sha256(raw).hexdigest()==c.HELPER_SHA
+def test_source_pins_are_distinct_raw_and_canonical_artifact_facts():
+    # The controller must be mergeable without the unqualified product source.
+    # Actual donor bytes are checked by extract_inputs, not imported here.
+    assert c.HELPER_RAW_SHA=='8f9937b65467265d4a6f55921af19c163083f02b08d45988f7b76e8904f235b7'
+    assert c.HELPER_SHA=='deb219b0cfb0f38d04e53d13e09ebfc40196f29de97c1e3c4c3d4273e416e9b8'
     assert c.FAILED_SOURCE=='a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679'
     assert c.ARTIFACT_ID==12569527308 and c.ARTIFACT_SIZE==400047839
 
 
-def test_import_order_matches_failed_public_admission():
-    tree=ast.parse((ROOT/'tools/public_qualification.py').read_text())
-    admission=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='admission')
-    tuples=[n.iter for n in ast.walk(admission) if isinstance(n,ast.For) and isinstance(n.iter,ast.Tuple)]
-    expected=next(ast.literal_eval(n) for n in tuples if any(isinstance(e,ast.Constant) and e.value=='_matrix_transform' for e in n.elts))
-    assert c.ADMISSION_IMPORTS==expected
+def test_import_order_is_checked_from_archived_source_before_probe():
+    source='def admission():\n    for module in '+repr(c.ADMISSION_IMPORTS)+':\n        pass\n'
+    c.verify_admission_imports(source)
+    with pytest.raises(ValueError):c.verify_admission_imports(source.replace("'_matrix_transform'","'unverified_context'"))
     probe=next(n for n in ast.parse((ROOT/'tools/matrix_runtime_certificate_probe.py').read_text()).body if isinstance(n,ast.FunctionDef) and n.name=='probe')
     imports=[ast.unparse(n) for n in probe.body if isinstance(n,ast.Import)]
     assert imports==['import skimagexx as xx','import numpy as np']
+
+
+def test_helper_validator_requires_both_byte_identities(monkeypatch):
+    raw=b'# inert metadata fixture\r\n';canonical=raw.replace(b'\r\n',b'\n')
+    monkeypatch.setattr(c,'HELPER_RAW_SHA',hashlib.sha256(raw).hexdigest())
+    monkeypatch.setattr(c,'HELPER_SHA',hashlib.sha256(canonical).hexdigest())
+    c.verify_helper_bytes(raw)
+    with pytest.raises(ValueError,match='raw'):c.verify_helper_bytes(canonical)
+    monkeypatch.setattr(c,'HELPER_SHA','0'*64)
+    with pytest.raises(ValueError,match='canonical'):c.verify_helper_bytes(raw)
 
 
 def test_no_algorithm_build_timer_force_or_library_replacement_calls():
