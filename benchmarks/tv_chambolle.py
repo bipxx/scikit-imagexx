@@ -327,6 +327,21 @@ def preparation_reports(directory):
     return rows
 
 
+def native_policy_scope(function):
+    """Keep every fresh controller entry scoped to strict native fallback policy."""
+    import functools
+    @functools.wraps(function)
+    def scoped(*args,**kwargs):
+        import skimagexx as xx
+        workers=xx.get_num_threads();fallback=xx.set_fallback_enabled(False)
+        try:return function(*args,**kwargs)
+        finally:
+            try:xx.set_num_threads(workers)
+            finally:xx.set_fallback_enabled(fallback)
+    return scoped
+
+
+@native_policy_scope
 def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revision):
     import shutil
     assert os.environ.get('GITHUB_ACTIONS')=='true'
@@ -348,6 +363,7 @@ def seal_preparation(capsule,certificate_path,directory,receipt_output,run,revis
 def seal(*args):raise RuntimeError('use genuine qualified product plus complete normal/scalar preparation; no wheel build/seal shortcut')
 
 
+@native_policy_scope
 def verify(capsule):
     info=json.loads((capsule/'tv-chambolle-artifacts.json').read_text());assert info['schema']=='tv-chambolle-qualified-offline-v3'
     assert info['files_sha256']==capsule_tree(capsule) and info['corpus_manifest_sha256']==artifacts.sha(MANIFEST)
@@ -380,6 +396,7 @@ def preparation_barrier(directory,capsule):
     return rows
 
 
+@native_policy_scope
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,nargs='+',default=[1]);parser.add_argument('--repeat',type=int,default=7);parser.add_argument('--target-ms',type=float,default=15.)

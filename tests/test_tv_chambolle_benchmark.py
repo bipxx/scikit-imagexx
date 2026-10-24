@@ -148,7 +148,7 @@ def test_timing_profiles_have_no_protocol_nonfinite_or_error_reclassification():
     assert not any(any(k in p for k in ('intake','parameter','warning_hook','fp_action','allocation','policy')) for p in rows)
 
 
-@pytest.mark.parametrize('fault',('version','finite-version','float-cap','bool-cap','entry-name','spoof-entry','other-core','default4','signature','source-pin','binary-pin','profile','private-env','reference-pool4'))
+@pytest.mark.parametrize('fault',('version','finite-version','float-cap','bool-cap','entry-name','spoof-entry','other-core','default4','signature','source-pin','binary-pin','profile','private-env','reference-pool4','enabled-fallback'))
 def test_public_guard_metadata_stubs_reject_before_any_fixture(tmp_path,monkeypatch,fault):
     """Inert metadata-only entry stubs; never actual native/public proof."""
     binary=tmp_path/'tooling-core-not-a-binary';binary.write_bytes(b'harness-only')
@@ -187,6 +187,7 @@ def test_public_guard_metadata_stubs_reject_before_any_fixture(tmp_path,monkeypa
     elif fault=='binary-pin':pin['core_sha256']='e'*64
     elif fault=='profile':core.tv_chambolle_finite_profiles=('2.5.4',)
     elif fault=='private-env':monkeypatch.setenv('SKIMAGEXX_TV_CHAMBOLLE_STAGE_CORE','forbidden-private-path')
+    elif fault=='enabled-fallback':monkeypatch.setattr(xx,'set_fallback_enabled',lambda value:True)
     else:monkeypatch.setenv('OPENBLAS_NUM_THREADS','4')
     with pytest.raises(AssertionError):h.public_admission(manifest(),pin)
 
@@ -423,3 +424,81 @@ def test_workflow_separates_frozen_product_and_explicit_controller_sources():
         assert 'ref: ${{ inputs.qualified_source }}' in job and 'path: build/qualified-source' in job
         assert 'TV_QUALIFIED_SOURCE_ROOT: ${{ github.workspace }}/build/qualified-source' in job
         assert "os.environ['TV_CONTROLLER_SOURCE']==os.environ['GITHUB_SHA']" in job
+
+
+@pytest.mark.parametrize('entry',('seal-cli','measure-cli','verify-api'))
+@pytest.mark.parametrize('failure',(False,True))
+@pytest.mark.parametrize('initial_workers',(1,4))
+def test_fresh_controller_entries_scope_true_fallback_and_restore_state(tmp_path,entry,failure,initial_workers):
+    """Fresh-process exact controller AST with inert metadata, not numerical proof."""
+    import subprocess
+    child=tmp_path/'entry.py'
+    child.write_text(r'''
+import argparse,ast,functools,gzip,hashlib,importlib,inspect,json,math,os,sys,traceback,types,uuid
+from pathlib import Path
+source,entry,failure,initial_workers=sys.argv[1:]
+failure=json.loads(failure);initial_workers=int(initial_workers)
+workers=[initial_workers];fallback=[True];events=[]
+def set_workers(n):old=workers[0];workers[0]=n;return old
+def set_fallback(n):old=fallback[0];fallback[0]=n;return old
+sys.modules['skimagexx']=types.SimpleNamespace(get_num_threads=lambda:workers[0],set_num_threads=set_workers,set_fallback_enabled=set_fallback)
+sys.modules['numpy']=types.SimpleNamespace(__version__='metadata-only')
+sys.modules['scipy']=types.SimpleNamespace(__version__='metadata-only')
+sys.modules['skimage']=types.SimpleNamespace(__version__='0.26.0')
+sys.modules['skimage.restoration._denoise']=types.SimpleNamespace(_denoise_tv_chambolle_nd=lambda:None)
+os.environ.update(GITHUB_ACTIONS='true',GITHUB_RUN_ID='123',GITHUB_RUN_ATTEMPT='1')
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+root=Path.cwd();capsule=root/'capsule';capsule.mkdir();preparation=root/'preparation';preparation.mkdir()
+for name in ('normal.json','scalar.json','pipeline-normal.xml','pipeline-scalar.xml'):(preparation/name).write_bytes(b'metadata-only fixture')
+certificate=root/'certificate.json';certificate.write_bytes(b'metadata-only certificate')
+module=types.ModuleType('metadata-only-contract');module.source_sha=lambda fn:'a'*64
+original=lambda image:None
+source_contract=root/'source.json';source_contract.write_text(json.dumps(dict(signature=str(inspect.signature(original)),source_sha256='a'*64,helper_sha256='a'*64)))
+digest=lambda value:hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+manifest=root/'manifest.json';manifest.write_text(json.dumps(dict(source_contract_sha256=sha(source_contract),fixture_source_sha256={},case_inventory=[],case_contract_sha256=digest([]),reference_profiles={'modern':dict(case_spec_sha256=digest([]),observations={})})))
+qualified=dict(metadata_only=True,controller={'controller_source':{'revision':'c'*40}},certificate_sha256='a'*64,product_sha256='b'*64)
+def product(*args,**kwargs):
+    assert fallback[0] is False,'provider reached with enabled fallback'
+    events.append('product')
+    if failure and entry=='verify-api':workers[0]=7;raise RuntimeError('injected metadata error')
+    return qualified
+def admission(*args):
+    assert fallback[0] is False,'strict public guard requires disabled fallback'
+    events.append('admission')
+    if failure:workers[0]=7;raise RuntimeError('injected metadata error')
+def forbidden(*args,**kwargs):raise AssertionError('metadata test reached image or timer')
+ns=dict(globals(),ROOT=root,MANIFEST=manifest,SOURCE_CONTRACT=source_contract,API='metadata-only',VERSION='metadata-only',
+    artifacts=types.SimpleNamespace(sha=sha),profile=lambda:'modern',qualified_product=product,public_admission=admission,
+    capsule_tree=lambda root:{'metadata-only':'a'*64},preparation_reports=lambda root:{mode:{'metadata':{'artifacts':qualified}} for mode in ('normal','scalar')},
+    preparation_barrier=lambda *args:{'metadata-only':True},source_revision=lambda root:'metadata-only',source_fingerprint=lambda root:{'source_sha256':'d'*64},
+    cpu_metadata=lambda:{'metadata-only':True},contracts=lambda:module,resolve=lambda original_flag=False:original,corpus=lambda:(),
+    summarize=lambda *args:{'metadata-only':True},observe=forbidden,native_observe=forbidden,measure=forbidden)
+names={'native_policy_scope','digest','text_sha','save','seal_preparation','verify','main'}
+nodes=[node for node in ast.parse(Path(source).read_text()).body if isinstance(node,ast.FunctionDef) and node.name in names]
+assert {node.name for node in nodes}==names
+exec(compile(ast.Module(body=nodes,type_ignores=[]),'<exact-fresh-entry-controller-AST>','exec'),ns)
+if entry!='seal-cli':
+    (capsule/'tv-chambolle-artifacts.json').write_text(json.dumps(dict(schema='tv-chambolle-qualified-offline-v3',files_sha256={'metadata-only':'a'*64},corpus_manifest_sha256=sha(manifest),qualified=qualified)))
+error=None;result=None
+try:
+    if entry=='seal-cli':result=ns['main'](['--seal-preparation','--check-only','--capsule',str(capsule),'--certificate',str(certificate),'--qualified-run','456','--qualified-source','e'*40,'--preparation-dir',str(preparation),'--receipt-output',str(root/'receipt.json')])
+    elif entry=='measure-cli':result=ns['main'](['--capsule',str(capsule),'--barrier',str(root/'barrier'),'--output',str(root/'report.json')])
+    else:result=ns['verify'](capsule)
+except Exception as exc:error=dict(type=type(exc).__name__,message=str(exc))
+print(json.dumps(dict(entry=entry,initial_fallback=True,fallback=fallback[0],initial_workers=initial_workers,workers=workers[0],result=result,error=error,events=events,native_image_timer_calls=0)))
+''')
+    result=subprocess.run([sys.executable,'-B',str(child),str(h.__file__),entry,json.dumps(failure),str(initial_workers)],cwd=tmp_path,capture_output=True,text=True)
+    (tmp_path/'child-stdout.txt').write_text(result.stdout)
+    (tmp_path/'child-stderr.txt').write_text(result.stderr)
+    (tmp_path/'child-exit.json').write_text(json.dumps({'exit':result.returncode}))
+    assert result.returncode==0,result.stderr
+    row=json.loads(result.stdout)
+    assert row['initial_fallback'] is True and row['fallback'] is True
+    assert row['workers']==row['initial_workers']==initial_workers
+    assert row['native_image_timer_calls']==0 and 'product' in row['events']
+    if failure:
+        if entry=='measure-cli':assert row['result']==1 and row['error'] is None
+        else:assert row['error']==dict(type='RuntimeError',message='injected metadata error')
+    else:
+        assert row['error'] is None
+        if entry!='verify-api':assert row['result']==0
