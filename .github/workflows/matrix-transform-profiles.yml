@@ -74,6 +74,7 @@ jobs:
           name: matrix-default-discovery-${{ matrix.profile }}
           retention-days: 90
           if-no-files-found: warn
+          include-hidden-files: true
           compression-level: 6
           path: |
             build/matrix-default-${{ matrix.profile }}/artifact/**
