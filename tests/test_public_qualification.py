@@ -377,3 +377,72 @@ def test_owned_regular_file_digest_still_authenticated(tmp_path):
     path.write_bytes(b'different')
     with pytest.raises(q.QualificationError,match='artifact changed'):
         q.verify_record(tmp_path,'owned',record,provenance)
+
+
+def msvc_provenance_fixture(major=18):
+    year,tools,compiler,platform_toolset=(2026,'14.51.36231','19.51.36260.0','v145') if major==18 else (2022,'14.44.35207','19.44.35217.0','v143')
+    instance=f'C:/VS/{major}/Enterprise';executable=instance+f'/VC/Tools/MSVC/{tools}/bin/Hostx64/x64/cl.exe'
+    cache=f'CMAKE_GENERATOR:INTERNAL=Visual Studio {major} {year}\nCMAKE_GENERATOR_INSTANCE:INTERNAL={instance}\nCMAKE_GENERATOR_PLATFORM:INTERNAL=x64\n'
+    fields=f'set(CMAKE_CXX_COMPILER "{executable}")\nset(CMAKE_CXX_COMPILER_ID "MSVC")\nset(CMAKE_CXX_COMPILER_VERSION "{compiler}")\nset(CMAKE_CXX_COMPILER_ARCHITECTURE_ID "x64")\n'
+    project=f'''<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><PlatformToolset>{platform_toolset}</PlatformToolset></PropertyGroup>
+      <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><ClCompile><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary></ClCompile></ItemDefinitionGroup>
+      <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><ClCompile><RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary></ClCompile></ItemDefinitionGroup>
+    </Project>'''
+    model=q.windows_toolchain_model(cache,fields,project,'Release')
+    capabilities=dict(generators=[dict(name=model['generator'],platformSupport=True,toolsetSupport=True,supportedPlatforms=['x64'])])
+    instances=[dict(installationPath=instance,installationVersion=f'{major}.0.12345',isComplete=True,isLaunchable=True)]
+    return model,capabilities,instances,(cache,fields,project)
+
+
+@pytest.mark.parametrize('major',[17,18])
+def test_sdk_uses_actual_successful_wheel_instance_and_exact_toolset(major):
+    model,capabilities,instances,_=msvc_provenance_fixture(major)
+    selected=q.select_visual_studio(model,capabilities,instances)
+    assert selected['generator']==model['generator']
+    assert selected['instance']==model['instance']
+    assert selected['architecture']=='x64'
+    assert selected['runtime']=='MultiThreadedDLL'
+    assert selected['toolset']==model['platform_toolset']+',version='+model['toolset_version']+',host=x64'
+
+
+def test_vs2026_only_does_not_require_uninstalled_vs2022():
+    model,capabilities,instances,_=msvc_provenance_fixture(18)
+    assert q.select_visual_studio(model,capabilities,instances)['generator']=='Visual Studio 18 2026'
+
+
+def test_vs2022_wheel_does_not_silently_select_newer_installed_instance():
+    model,capabilities,instances,_=msvc_provenance_fixture(17)
+    other,other_cap,other_instances,_=msvc_provenance_fixture(18)
+    capabilities['generators']+=other_cap['generators'];instances+=other_instances
+    selected=q.select_visual_studio(model,capabilities,instances)
+    assert selected['generator']=='Visual Studio 17 2022' and selected['instance']==model['instance']
+
+
+@pytest.mark.parametrize('failure',['missing-generator','missing-instance','wrong-version','incomplete','ambiguous','wrong-compiler-owner','unsupported-architecture'])
+def test_unavailable_or_mismatched_sdk_toolchain_is_never_skipped(failure):
+    model,capabilities,instances,_=msvc_provenance_fixture()
+    if failure=='missing-generator':capabilities['generators']=[]
+    elif failure=='missing-instance':instances=[]
+    elif failure=='wrong-version':instances[0]['installationVersion']='17.0.1'
+    elif failure=='incomplete':instances[0]['isComplete']=False
+    elif failure=='ambiguous':instances*=2
+    elif failure=='unsupported-architecture':capabilities['generators'][0]['supportedPlatforms']=['ARM64']
+    else:model['compiler']='C:/another-instance/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
+    with pytest.raises(q.QualificationError):q.select_visual_studio(model,capabilities,instances)
+
+
+@pytest.mark.parametrize('field',['compiler_version','toolset_version','runtime','architecture','compiler_sha256','instance'])
+def test_sdk_configure_must_match_sealed_wheel_before_compiling_clients(field):
+    model,_,_,_=msvc_provenance_fixture();model['compiler_sha256']='a'*64
+    changed=dict(model);changed[field]='mismatch'
+    with pytest.raises(q.QualificationError,match='SDK/wheel toolchain mismatch'):
+        q.require_same_windows_toolchain(model,changed)
+
+
+def test_compiler_architecture_and_runtime_are_observed_not_assumed():
+    _,_,_,(cache,fields,project)=msvc_provenance_fixture()
+    with pytest.raises(q.QualificationError,match='architecture'):
+        q.windows_toolchain_model(cache,fields.replace('"x64"','"x86"'),project,'Release')
+    with pytest.raises(q.QualificationError,match='runtime'):
+        q.windows_toolchain_model(cache,fields,project.replace('MultiThreadedDLL','UnknownRuntime'),'Release')
