@@ -75,8 +75,10 @@ struct Stamp {
 };
 long integer(py::handle value) {
     py::object index=py::reinterpret_steal<py::object>(PyNumber_Index(value.ptr()));
-    if(!index)throw py::error_already_set();auto result=PyLong_AsLong(index.ptr());
-    if(PyErr_Occurred())throw py::error_already_set();return result;
+    if(!index)throw py::error_already_set();
+    auto result=PyLong_AsLong(index.ptr());
+    if(PyErr_Occurred())throw py::error_already_set();
+    return result;
 }
 double scalar(py::handle value) {double result=PyFloat_AsDouble(value.ptr());if(PyErr_Occurred())throw py::error_already_set();return result;}
 }
@@ -91,7 +93,8 @@ void bind_max_tree(py::module_& m) {
     m.def("max_tree_counts",[](bool reset) {
         py::dict result;
         for(std::size_t i=0;i<counts.size();++i){py::dict row;row["attempted"]=counts[i].attempted;row["completed"]=counts[i].completed;result[names[i]]=row;}
-        if(reset)counts={};return result;
+        if(reset)counts={};
+        return result;
     },py::arg("reset")=false);
     m.def("max_tree_run",[](py::object input_obj,py::object output_obj,py::object parent_obj,py::object order_obj,
         py::object operation_obj,py::object connectivity_obj,py::object threshold_obj,bool provided) {

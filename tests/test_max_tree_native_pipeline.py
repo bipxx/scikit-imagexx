@@ -220,10 +220,17 @@ def test_scalar_metadata_mutations_rejected_before_native_access(kind,entry,impl
             elif kind=='rank':image.shape=(20,) if entry=='aggregate' else (4,5)
             else:image.flags.writeable=False
             return 3.
-    with pytest.raises(ValueError,match='changed during scalar conversion'):
-        if entry=='aggregate':core.max_tree_run(image,output,parent,order,2,1,Mutation(),False)
-        else:core.max_tree_filter_stage(image,output,parent,order,attribute,Mutation())
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter('always')
+        with pytest.raises(ValueError,match='changed during scalar conversion'):
+            if entry=='aggregate':core.max_tree_run(image,output,parent,order,2,1,Mutation(),False)
+            else:core.max_tree_filter_stage(image,output,parent,order,attribute,Mutation())
+    expected_warnings=int(tuple(map(int,np.__version__.split('.')[:2]))>=(2,5) and kind in ('dtype','rank'))
+    assert len(caught)==expected_warnings and all(issubclass(row.category,DeprecationWarning) for row in caught)
     assert output.tobytes()==before and core.max_tree_counts()[entry]=={'attempted':1,'completed':0}
+    record_observation({'scope':'native-metadata-guard-not-upstream-parity','case':entry+'/'+kind,
+        'profile':contracts.profile(),'warnings':[str(row.message) for row in caught],
+        'output_unchanged':output.tobytes()==before,'counts':core.max_tree_counts()})
 
 
 def test_reference_ownership_released_on_success_and_cpp_rejection(implementation):
