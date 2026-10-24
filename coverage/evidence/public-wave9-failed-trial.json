@@ -1,0 +1,30 @@
+{
+  "schema": "failed-genuine186-trial-v1",
+  "source": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+  "run": "https://github.com/bipxx/scikit-imagexx/actions/runs/40059399856",
+  "accepted": false,
+  "accepted_main_images": 171,
+  "retention": {
+    "path": "build/genuine186-hosted-observation/40059399856/retained-v1/manifest.json",
+    "sha256": "df3f08a22f138cb7b6e033be16eeb16fbeb6ee352c8b260e9b815744139b930f"
+  },
+  "independent_retention": {
+    "path": "build/genuine186-hosted-observation/40059399856/retained-v1/independent-verification.json",
+    "sha256": "d59d49b2fdcefc1860ff462551d1ac3ed9d94c402eb697340e2f6744ee071776"
+  },
+  "verified_zip_files": 86595,
+  "available_declared_checks": 45091,
+  "new_retained_bytes": 211763396,
+  "SDK_checks_passed": 104,
+  "failures": [
+    "Three defined bilateral endian error-parity rows in bothmodes/all4profiles",
+    "Masked source pins stale after namespace migration",
+    "Shared test enumeration omitted3nested bilateral aliases"
+  ],
+  "no_failure_data_or_cases_dropped": true,
+  "successor": {
+    "source": "05e79eba67b05b4acccd47480ae917a833487b81",
+    "run": "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314",
+    "accepted": false
+  }
+}

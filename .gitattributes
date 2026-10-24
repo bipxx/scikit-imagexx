@@ -33,3 +33,4 @@ coverage/evidence/rank-bilateral-public-assessment.json -text
 benchmarks/rank-statistics-public-*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 coverage/evidence/rank-statistics-performance-initial.json -text
 coverage/contracts/rank-decisions-benchmark.json -text
+coverage/contracts/rank-statistics-comparison.json -text

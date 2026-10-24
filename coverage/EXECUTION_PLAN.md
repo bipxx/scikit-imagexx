@@ -22,12 +22,14 @@ pass; full104-member packages and59-member SDK/source equality authenticate
 explicitly inherited unaffected scopes. The published one-worker R4 comparison
 retains all 376 timings per runtime and all 120 slower cases. Large windowed
 histograms and selected noise-filter cases remain optimization targets.
-The failed whole8 trial is retained without public acceptance. Its tooling and
-namespace corrections, nine percentile algorithms, three bilateral algorithms,
-and the private reverse-stride metrics change are frozen at `65c0741` for fresh
-four-profile qualification. Its 186 image paths are a prediction; accepted main
-remains at 171. The integrator owns shared wiring, exact-source performance
-dispatch, prompt merges and cleanup.
+Failed whole8 and whole9 trials are retained without public acceptance. The
+whole9 products passed all 104 SDK checks but exposed three bilateral endian
+error-parity rows and two metadata issues. The corrected source `05e79eb` is
+frozen for run 40063203314, including the nine percentile algorithms, three
+bilateral algorithms and reverse-stride metrics change. Its 186 image paths
+remain a prediction; accepted main stays at 171 until all four actual products
+pass and their artifacts are independently verified. The integrator owns shared
+wiring, exact-source performance dispatch, prompt merges and cleanup.
 
 ## What changed after review
 
@@ -49,10 +51,10 @@ those separately in [work_items.json](work_items.json) and packet evidence.
 
 | Lane | Agent | Independent responsibility | Current checkpoint |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted: 171 image paths; 477 total paths. Candidate `65c0741` is frozen for run 40059399856, requiring four actual products, both SIMD modes, complete corpora and 13 SDK clients. No candidate acceptance yet. |
-| Worker 1 | `metrics_reductions` | Parity and integration reviews | Local Otsu/majority C++ and wrapper have qualified private evidence; public/SDK14 readiness and independent counts-policy review are recorded. Current task investigates the three defined bilateral endian error-parity failures without changing frozen candidate 186. |
-| Worker 2 | `resize_api` | Windowed-histogram bookkeeping optimization | Measured-case investigation identifies unused sum and occupancy maintenance. A separate private opcode16 counts/pop-only packet preserves validation, traversal, normalization SIMD and other operations. Parity and controlled one-worker performance remain pending. |
-| Worker 3 | `resize_bench` | Observe exact hosted whole9 qualification | Watch only run 40059399856 at `65c0741` through all four terminal outcomes. Windows and modern Linux have failed; minimum NumPy and Debug remain under observation. Bounded Windows diagnostics identify error parity and metadata failures; no restart or acceptance from partial artifacts. |
+| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Whole7b accepted: 171 image paths; 477 total paths. Corrected candidate `05e79eb` passes 177 tooling guards and targeted modified-wheel preflight. Run 40063203314 requires four genuine products, both SIMD modes, complete corpora and 13 SDK clients before acceptance. |
+| Worker 1 | `metrics_reductions` | Local Otsu/majority conversion parity | Expanded 694-case preflight found four endian gaps. A narrowly controlled provider flag fixes them and native integer lookup controls while preserving bilateral defaults. Private normal/scalar and bilateral regression gates passed; final evidence is being sealed. Public/SDK14 wiring remains separate. |
+| Worker 2 | `resize_api` | Controlled one-worker R4 comparison tooling | The counts/pop-only opcode16 source has qualified private evidence; its normal result is a verified case-ID union, and scalar runs pass all 5,681 cases. New comparison tooling keeps all 1,379 cases and 376 timing IDs, uses isolated original/before/after processes and requires complete preparation barriers. Product pins remain unset; no speedup claimed. |
+| Worker 3 | `resize_bench` | Audit corrected whole10 artifacts | All four jobs of run 40063203314 at `05e79eb` passed. Full artifact/source/runtime/parity review is complete; root acceptance and integration remain. Failed whole9 evidence is retained at 201.95 MiB and the corrected trial at 179.87 MiB. No performance or full-library claim. |
 
 The agent names are reused from earlier packets; they do not describe their
 current assignments. The recorded three-agent review and safe checkpoints are

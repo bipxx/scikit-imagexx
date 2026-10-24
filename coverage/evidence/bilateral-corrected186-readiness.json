@@ -1,0 +1,19 @@
+{
+  "schema": "corrected186-source-readiness-v1",
+  "source": "05e79eba67b05b4acccd47480ae917a833487b81",
+  "proof": {
+    "path": "build/whole10-readiness/proof.json",
+    "sha256": "6237aa042c8b32a27d01bb01ec471ad1778769fd4ed3fb5da6c473d6ab1097af"
+  },
+  "private_endian_proof": {
+    "path": "build/rank-bilateral-endian-evidence/d6f0656/qualified-v1/manifest.json",
+    "sha256": "14e1384f75e0138db97f0a598ea3317e9148f95a518c1116fb8fbafb614150f5"
+  },
+  "expected_images_prediction": 186,
+  "expected_registered_prediction": 189,
+  "inventory_paths": 477,
+  "accepted_main_images": 171,
+  "hosted_run": "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314",
+  "actual_genuine_public_acceptance": false,
+  "scope": "177metadata guards and modified-wheel regression preflight; fresh all4 genuine product results and independent artifact audit still required."
+}

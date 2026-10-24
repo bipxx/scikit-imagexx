@@ -23760,11 +23760,7 @@
       "owner": "integrator",
       "branch": "integration/wave9-bilateral",
       "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
-      "owns": [
-        "CMakeLists.txt",
-        "tools/public_qualification.py",
-        "coverage/api.json"
-      ],
+      "owns": [],
       "depends_on": [
         "rank-percentile-native",
         "rank-percentile-public",
@@ -23801,11 +23797,11 @@
           "evidence_scope": "tooling"
         }
       },
-      "state": "validating",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Frozen186-image prediction/477 total; accepted main remains171. Exactrun40059399856 requires four genuine products xnormal/scalar,104-member wheels/59-member SDKs,13 relocated SDK families, sole core/default1/global1+4, old/R4/R5/R6 scopes and complete corpora. 174 metadata guards and four zero-blocker source plans passed; metadata is not execution or acceptance. No local builds/timings, no duplicate dispatch."
+          "All4 actual65c profiles failed: bilateral fixed1008 corpus1005pass/3defined endian error-parity mismatches in bothmodes; stale masked source pins and missing3nestedalias shared-test enumeration. SDK13x2x4=104pass and other old/R4/R5/metrics/consumer scopes passed but186 remains unaccepted. All failed evidence retained losslessly and source remains immutable."
         ]
       },
       "parity": {
@@ -23872,15 +23868,18 @@
             "classification": "Fixed-corpus seal refusal; only Windows underlying reports inspected so far."
           }
         },
-        "all_four_jobs_terminal": false,
+        "all_four_jobs_terminal": true,
         "latest_root_observation_utc": "2026-10-24T04:04:28.247615+00:00",
         "windows_partial_diagnostics": {
           "path": "build/genuine186-hosted-observation/40059399856/windows-diagnostics-v1/range-diagnosis.json",
           "sha256": "4feb1886635b66e65cb4412a69596f8db14bd3de489b91071b96d2909ac6eaf3",
           "outer_zip_digest_verified": false,
           "scope": "Partial Range diagnostics only; not public acceptance. 3defined endian error-parity failures in bilateral corpus; stale masked-public wrapper sourcepin and independent API registry enumeration omits3nestedbilateralaliases. Original failed evidence retained."
-        }
-      }
+        },
+        "terminal_outcome": "failure",
+        "authoritative_watcher_terminal": true
+      },
+      "superseded_by": "combined-public-wave10"
     },
     {
       "id": "rank-decisions-public",
@@ -24089,11 +24088,11 @@
           "evidence_scope": "tooling"
         }
       },
-      "state": "implementing",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
-          "Small private opcode16 counts/pop-only histogram policy; preserve prevalidation, scan/update/output order, normalization SIMD, aliases, workers, ABI/caps and every other operation. Source review before narrow private builds. No local timing or speedup claim; future isolated same-host before/after/original one-worker comparison required."
+          "Private bb38 source only. Normal5681 is an authenticated union of5457 unchanged passing nodes and224 corrected original-return-view controls; scalar full5681x4 passes. Initial224 new-test oracle failures retained per profile.64 native executions include combinedDebugGIL/ASan/UBSan; no new portable/OpenMP-OFF build, actual whole-product or performance acceptance."
         ]
       },
       "parity": {
@@ -24117,7 +24116,22 @@
         "active_paths": [
           "build/worktrees/rank-decisions-contracts/build/rank-windowed-counts"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/rank-windowed-counts-root-verification-v1.json"
+        ]
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "bb38af37b4ad978d47fcb1631100c193e866f3fd",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/rank-windowed-counts/qualified-v1/manifest.json",
+            "sha256": "3fe35f6df9982310644d81365f878e8e591d3ae1d55752bdd92cb5f789c75e0c"
+          },
+          "scope": "169 records+6Git members independently rehashed; production CPP blob unchanged after664 compilation. Source change only opcode16 counts/pop bookkeeping; no timing/source-corpus/binding changes.",
+          "native_contract_checks": 995,
+          "native_pending": 0
+        }
       }
     },
     {
@@ -24200,7 +24214,7 @@
           "evidence_scope": "native_private"
         }
       },
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/rank-bilateral-benchmark.json",
         "uncovered_cases": [
@@ -24227,6 +24241,523 @@
       "retention": {
         "active_paths": [],
         "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+          "manifest": {
+            "path": "build/rank-bilateral-endian-review/receipt.json",
+            "sha256": "04362402f42394b98c0986a0fcdb3adf6d9cd44b5ad63cb7e8d7359c192dbb9a"
+          },
+          "scope": "Read-only132 original boundary/hook observations per3runtimes establish low/high endian allocation/warning/floor order. No native/public acceptance."
+        }
+      }
+    },
+    {
+      "id": "whole9-failed-artifact-retention",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "integration/wave9-bilateral",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+      "owns": [
+        "build/genuine186-hosted-observation/40059399856/retained-v1"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "All4 outer ZIPs/every86595 files authenticated;45091 available declarations, exact104-member wheels/59SDKs/RECORD/source and all scientific reports retained.211763396 newbytes below250MiB. All4 lack terminal manifests; no native public acceptance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+          "manifest": {
+            "path": "build/genuine186-hosted-observation/40059399856/retained-v1/manifest.json",
+            "sha256": "df3f08a22f138cb7b6e033be16eeb16fbeb6ee352c8b260e9b815744139b930f"
+          },
+          "scope": "Independent298new blobs/67protected refs verified, including43oldwhole8 blobs and24R4runtime wheels/3outerZIPs. SDK104pass verified; initial SDK-verifier wording failure preserved. All handles terminal."
+        }
+      }
+    },
+    {
+      "id": "rank-bilateral-endian-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-bilateral-endian",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_bilateral_endian_public.py",
+        "coverage/contracts/rank-bilateral-endian-public.json"
+      ],
+      "depends_on": [
+        "rank-bilateral-native"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Family-scoped nonnative integer conversion provider; no global/R7 or arbitrary native NumPy lookup parity claim. Private2282pass+1pending distinct-case union/profile across8modes, not one full2283process. Existing1008 and132raw observations unchanged."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "d6f065624f5617ee210cf64b91ccf2e22c293471",
+          "manifest": {
+            "path": "build/rank-bilateral-endian-evidence/d6f0656/qualified-v1/manifest.json",
+            "sha256": "14e1384f75e0138db97f0a598ea3317e9148f95a518c1116fb8fbafb614150f5"
+          },
+          "scope": "57records and exact3-file delta independently rehashed. ImmutableB7 cores, all1008 worker1/4 cases plus132 boundary/hook rows. Production is two call replacements+owned provider. No builds/timing/public acceptance.",
+          "native_contract_checks": 1008,
+          "native_pending": 0
+        }
+      }
+    },
+    {
+      "id": "bilateral-qualification-corrections",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/wave10-bilateral",
+      "base_sha": "65c07410cde05cb5e60a9c8baf8f5b1953e2b7a3",
+      "owns": [],
+      "depends_on": [
+        "rank-bilateral-endian-public"
+      ],
+      "dependency_requirements": {
+        "rank-bilateral-endian-public": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Independent source/authentication review,177 tooling guards,4zero-blocker plans, modified-Windows-wheel3108masked/endian+122API checks per mode pass. Only_rank.py overlaid;103other wheel members exact. Not genuine source/product acceptance."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+          "manifest": {
+            "path": "build/whole10-readiness/proof.json",
+            "sha256": "6237aa042c8b32a27d01bb01ec471ad1778769fd4ed3fb5da6c473d6ab1097af"
+          },
+          "scope": "16retained metadata records+10Git members. All old masked/API numerical ASTs and all396 source contract data preserved; only3source pins migrated. Added endian public selector and required fixtures; no CPP/CMake changes vs65c."
+        }
+      }
+    },
+    {
+      "id": "combined-public-wave10",
+      "kind": "integration",
+      "apis": [],
+      "owner": "resize_bench",
+      "branch": "integration/wave10-bilateral",
+      "base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+      "owns": [
+        "build/genuine186-corrected-hosted-observation/40063203314"
+      ],
+      "depends_on": [
+        "bilateral-qualification-corrections",
+        "rank-bilateral-endian-public",
+        "rank-bilateral-native",
+        "rank-percentile-native",
+        "metrics-reverse-stride"
+      ],
+      "dependency_requirements": {
+        "bilateral-qualification-corrections": {
+          "evidence_scope": "tooling"
+        },
+        "rank-bilateral-endian-public": {
+          "evidence_scope": "native_private"
+        },
+        "rank-bilateral-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-percentile-native": {
+          "evidence_scope": "native_private"
+        },
+        "metrics-reverse-stride": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "All4 hosted05e products passed. Fullretention andindependentdata review complete; rootintegration/acceptance stillpending. Source prediction186/477, currentmain171 untilatomicmerge. No performance/fullAPI/fullargument/pureCppclass claim."
+        ]
+      },
+      "parity": {
+        "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+        "artifact_sha256": null,
+        "runs": [
+          "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314"
+        ]
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "hosted_run": {
+        "run_id": 40063203314,
+        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40063203314",
+        "source_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+        "branch": "integration/wave10-bilateral",
+        "dispatches": 1,
+        "source_frozen": true,
+        "observer": "resize_bench",
+        "observation_path": "build/genuine186-corrected-hosted-observation/40063203314",
+        "all_four_jobs_terminal": true,
+        "expected_native_images_predicted_only": 186,
+        "known_terminal_jobs": {
+          "modern": {
+            "outcome": "success",
+            "artifact_acceptance": false
+          },
+          "minimum": {
+            "outcome": "success",
+            "artifact_acceptance": false
+          },
+          "windows": {
+            "outcome": "success",
+            "artifact_acceptance": false
+          },
+          "debug": {
+            "outcome": "success",
+            "artifact_acceptance": false
+          }
+        },
+        "policy": "Observe exact run/session39098 through all terminal outcomes. No cancel/restart for observation timeout, source edits, local timing or acceptance from status alone.",
+        "terminal_outcome": "success",
+        "observer_terminal": true,
+        "retention_path": "build/genuine186-corrected-hosted-observation/40063203314/retained-v1"
+      }
+    },
+    {
+      "id": "rank-statistics-comparison-tooling",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/rank-statistics-comparison",
+      "base_sha": "bb38af37b4ad978d47fcb1631100c193e866f3fd",
+      "owns": [
+        "benchmarks/rank_statistics_compare.py",
+        "tests/test_rank_statistics_compare.py",
+        "coverage/contracts/rank-statistics-comparison.json",
+        ".github/workflows/rank-statistics-comparison.yml"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "validating",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Phase1 source054:97metadata+1379original/4aliases/376eligible pass x3, native0. RootrealWindowsvenv topology exposed direct-parent guard defect; followup69e usesone-use source/run/role stdio startup authentication,108guards andrealvenv probes pass x3. All productpinsNULL; rootreview/integration ongoing, no native/performance admission."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "69e7bc5b6cad4ce53e62ef9eab4dddb6cc8ed8da",
+          "manifest": {
+            "path": "build/worktrees/rank-decisions-contracts/build/rank-statistics-comparison/startup-auth-followup/qualified-v1/manifest.json",
+            "sha256": "fe31ea55bac880e122a1470dc9f189571ae39a29e56bd958394c9c0e293655d1"
+          },
+          "scope": "Phase1 only, metadata/reference/native0. Original054 evidence retained; Windowsredirector/directPOSIX startup authenticates without arbitraryancestor acceptance. Real product/capsule integration pending."
+        }
+      }
+    },
+    {
+      "id": "rank-decisions-expanded-preflight",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-decisions-wrapper",
+      "base_sha": "c6f41267adbe61025e253a101103fbc51735c901",
+      "owns": [
+        "build/rank-decisions-expanded-preflight"
+      ],
+      "depends_on": [],
+      "dependency_requirements": {},
+      "state": "contracted",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "694 fresh-original digests/specs match on3runtimes. C6+real5286 passes690/694 perworker;4endian gaps49/67/145/163 eachworker. All16metadata rows retained; this failed private preflight is not native/public admission."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "c6f41267adbe61025e253a101103fbc51735c901",
+          "manifest": {
+            "path": "build/rank-decisions-expanded-preflight/receipt.json",
+            "sha256": "11c8038682c60f90ec62147401ddd7c4e1d66e3a7a592c22640800b9cde7229e"
+          },
+          "scope": "21read-only frozen original/private mismatch records; no source edits/builds/timers."
+        }
+      }
+    },
+    {
+      "id": "rank-decisions-endian-public",
+      "kind": "integration",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-decisions-endian",
+      "base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+      "owns": [
+        "python/skimagexx/_rank.py",
+        "tests/test_rank_decisions_endian_public.py",
+        "coverage/contracts/rank-decisions-endian-public.json"
+      ],
+      "depends_on": [
+        "rank-decisions-native",
+        "rank-decisions-public",
+        "rank-bilateral-endian-public"
+      ],
+      "dependency_requirements": {
+        "rank-decisions-native": {
+          "evidence_scope": "native_private"
+        },
+        "rank-decisions-public": {
+          "evidence_scope": "native_private"
+        },
+        "rank-bilateral-endian-public": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Private ae2ce8a only: R7 4125pass+2publicpending and1known c6 prerequisite metadata deselection per8profiles; R6defaultFalse2280pass per8profiles. All694/468rows/originalprotocol assertions pass; initial8native-mask trace failures retained, not weakened. Genuine190 namespace/SDK/fullproduct gates remain pending."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ae2ce8a818d40aeb77a5c08425e37d389332a6c5",
+          "manifest": {
+            "path": "build/rank-decisions-endian-evidence/ae2ce8a/qualified-v1/manifest.json",
+            "sha256": "b68664806fd3f4182a9b95d8a0699471171fdfde45f0ed18c7476a26122288c2"
+          },
+          "native_contract_checks": 694,
+          "native_pending": 0,
+          "scope": "56records rehashed; exact5286 native blobs/c6 fixtures, reversible d6 defaultFalse helper and two R7True kwargs. No genuine public or performance acceptance."
+        }
+      }
+    },
+    {
+      "id": "rank-windowed-counts-portable",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "metrics_reductions",
+      "branch": "feature/rank-windowed-counts",
+      "base_sha": "bb38af37b4ad978d47fcb1631100c193e866f3fd",
+      "owns": [
+        "build/rank-windowed-counts-portable"
+      ],
+      "depends_on": [
+        "rank-windowed-counts-native"
+      ],
+      "dependency_requirements": {
+        "rank-windowed-counts-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "state": "parity_passed",
+      "contract": {
+        "case_manifest": null,
+        "uncovered_cases": [
+          "Portable noAVX/noOpenMP narrow Linux build qualified:1331native+1489Python pass, all995cases atworker1. Frozen1487worker4cases explicitly deselected and censused; actualunsupported4fixture error retained, separate4rejection/default1/stateunchanged verified. No fullproduct/SDK/performance claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "retention": {
+        "active_paths": [],
+        "protected_artifacts": []
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "bb38af37b4ad978d47fcb1631100c193e866f3fd",
+          "manifest": {
+            "path": "build/rank-windowed-counts-portable/manifest.json",
+            "sha256": "61c0a325f0d10b766bd198b861a6cb8efea2bbb09121fac3205d16c110f84687"
+          },
+          "native_contract_checks": 995,
+          "native_pending": 0,
+          "scope": "70records/17.4MB. Exact19-file bb38 closure, sixbaselineISA TUs/noAVX instructions/noOMP deps; runtime featureFalse and unsupported worker4 rejection. Separate private portability supplement."
+        }
       }
     }
   ],
