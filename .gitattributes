@@ -155,3 +155,17 @@ tests/test_reconstruction_owner_guards.py -text
 tests/test_reconstruction_offset_guards.py -text
 src/simd_reconstruction_avx2.cpp -text
 coverage/evidence/reconstruction-descriptor-source-successor.json -text
+coverage/contracts/h-extrema-integer.json -text
+coverage/contracts/h-extrema-plan.json -text
+coverage/contracts/h-extrema.json -text
+include/skimagexx/h_extrema.hpp -text
+python/skimagexx/_h_extrema.py -text
+src/bind_h_extrema.cpp -text
+src/h_extrema.cpp -text
+tests/h_extrema_reference.py -text
+tests/test_h_extrema_boundaries.py -text
+tests/test_h_extrema_contracts.py -text
+tests/test_h_extrema_native.cpp -text
+tests/test_h_extrema_native_pipeline.py -text
+tests/cmake_consumer/h_extrema_source_oracle.bin -text
+coverage/evidence/h-extrema-public-source-composition.json -text
