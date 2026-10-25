@@ -1,0 +1,43 @@
+{
+  "schema": "root-li-u16-private-source-admission-v1",
+  "source": "2abd0acc9b421d80a6554a840e603c0bc731f5fc",
+  "root_accepted": true,
+  "scope": "Bounded private uint16 values0..255, at most2^31-1 samples, known ndarray-backed owners, existing callback/error-policy restrictions; not full uint16 or whole threshold_li.",
+  "author_proof": {
+    "path": "build/worktrees/li-u16-bounded/build/private/proof-v1/manifest.json",
+    "bytes": 69441,
+    "sha256": "8296464533fdfd73bb3d86c97aa03cfcc7841fa53034a9eeb80d7b298a4ff252"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/li-u16-review/final-private-review.json",
+    "bytes": 6536,
+    "sha256": "669e9a451c5883e7446bfd1a1b3924922e95b47e93dd7e8281aeb9155ea1f681"
+  },
+  "exact_imported_blobs": {
+    "CMakeLists.txt": "272bc764cb5259ad41c47a45b8764bd19d744cef38ee62e210340363ec3116ef",
+    "coverage/contracts/li-u16-bounded.json": "b4415a40d450754c87a37f6b37a727ea8dab0740ce51645ecb5c038c4280dc0f",
+    "include/skimagexx/li.hpp": "358c2e636e804b544cda27ba12f41545702ca4decfa1f3bbc838c4430205d759",
+    "python/skimagexx/filters.py": "ece24456c351b3efba677ea6e288a0411646ad60324e177e1691c4310d36a419",
+    "src/bind_li.cpp": "6fc00f998fc2bc164caa61b62aae30e0794ae61137f6d99218d24ec266f28d4b",
+    "src/bindings.cpp": "dc6570eff5a5e838fd299e30ce2f00c7d1e7de7cb70a4b960318206dae1f5c4d",
+    "src/li.cpp": "3c7088f3fbc30a880fff588bc26eb83166074857c851a9f3af8c31f14a2fa86a",
+    "src/li_u16_intake.hpp": "f36481cf76c3a50c0e522f3e3a0cd9f7c7e64539588494c9cee89ee021cb2255",
+    "tests/test_li_u16_bounded.py": "2057a6a3aad4679c84c339f2012d06d019ebe01e3173b3503c9a4754e95ca5f0",
+    "tests/test_li_u16_native.cpp": "7e5d138da70b2477161d1334f547970e318931e7d94a5d4b597866d67240ad05"
+  },
+  "API_observations": 2700,
+  "CPP_solver_completions": 708,
+  "safe_owner_controls": 132,
+  "native_guard_runs": 6,
+  "workers": [
+    1,
+    4
+  ],
+  "normal_and_scalar": true,
+  "algorithm": "Alignment-safe checked copy/packing followed by unchanged byte histogram and Li solver; unchanged prior binding extracted to its own TU.",
+  "public_product_accepted": false,
+  "SDK_accepted": false,
+  "performance_accepted": false,
+  "remaining": "Add actual-installed public regression gate and native CTest registration before cumulative hosted whole qualification. No old product binary covers this source.",
+  "direct_source_review": "Root read complete typed intake, binder extraction, wrapper/kernel diffs and safe native tests; independent reviewer inverted old math/binding bodies and authenticated all284 records plus11 Git members."
+}

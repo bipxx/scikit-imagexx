@@ -140,3 +140,5 @@ tests/cmake_consumer/max_tree_source_oracle.bin -text
 coverage/evidence/matrix-transform-public-source-successor-assertion.json -text
 coverage/evidence/public199-whole-product-admission.json -text
 coverage/evidence/tv-admission-comparison-policy-gap.json -text
+coverage/contracts/li-u16-bounded.json -text
+coverage/evidence/li-u16-private-admission.json -text
