@@ -30809,7 +30809,7 @@
       "kind": "tooling",
       "apis": [],
       "owner": "astra_max_api_paths",
-      "state": "validating",
+      "state": "accepted",
       "branch": "feature/tv-positive-zero-compare",
       "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
       "owns": [
@@ -30819,7 +30819,17 @@
         "coverage/contracts/tv-positive-zero-comparison-plan.json"
       ],
       "depends_on": [],
-      "current_checkpoint": "Frozen5cec source independently reviewed10cd04d3 with235 metadata PASS; root source-only admission. Main integration needs exact rank_statistics_products.py dependency delta review; all other10 pins match. Do not merge failed741 production ancestry. AFTER remains unaccepted; no benchmark execution."
+      "current_checkpoint": "Reviewed5cec controller source projected with exact generic metadata dependency only, mainf3c35bf/f9df2f3.702 metadata PASS, all11 frozen pins match; no production/registry/data ancestry merged. Tooling source accepted; AFTER741 remains unqualified, no benchmark execution or performance acceptance.",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "c79eecbb3c0aaff2f72422aefcbafc1d52c8de85",
+          "manifest": {
+            "path": "coverage/evidence/tv-positive-zero-comparison-main-integration.json",
+            "sha256": "98b118cd34446026b0cc505df34d5ce4e188e0cb6d3a5af5137f5509e126f205"
+          }
+        }
+      }
     },
     {
       "id": "h203-failure-diagnostic-projection",
