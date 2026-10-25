@@ -1,0 +1,37 @@
+{
+  "schema": "root-reconstruction-terrain-reference-admission-v1",
+  "source": "18049dce7293b248918b08325a560101457b714b",
+  "pre_output_source": "047feb819a04ed9736e268da65d623b6dc1abae1",
+  "root_reference_accepted": true,
+  "author_proof": {
+    "path": "build/worktrees/reconstruction-terrain/build/reference-v1/manifest.json",
+    "bytes": 7075,
+    "sha256": "f3a471b98c2235ab725f4f551575e7516f073fce2c43620cec1f908c11432e39"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/reconstruction-terrain-review/final-review.json",
+    "bytes": 18084,
+    "sha256": "43925daa0f8c62f502cffee409c5e9b9f24299f7851b8aae3786f62ff7cb52e8"
+  },
+  "cases": 16,
+  "original_first_captures": 48,
+  "exact_original_repeats": 48,
+  "reference_checks": 72,
+  "lossless_profile_assets": 234,
+  "decoded_profile_asset_bytes": 53163924,
+  "unique_assets": 78,
+  "decoded_unique_bytes": 17721308,
+  "closes": [
+    "Multiple markers with distinct levels.",
+    "Full cut-plane barrier and bounded gate/corridor in2D/3D.",
+    "High-cardinality exact dyadic f32/f64 masks with66563/35805 distinct values."
+  ],
+  "original_48_three_blobs_preserved": true,
+  "post_output_changes": "Only phase/profiles; fixtures, specifications, policy, source helper ASTs and input hashes unchanged.",
+  "witness_boundary": "Complete input/result/base and stride assets retained; prepared rank/link SHA witnesses are hashes, not full raw rank/link arrays.",
+  "outcomes": "All16 change N-minus-marker_count pixels and differ from mask; exact cut-plane and high-cardinality witnesses independently checked from retained words.",
+  "whole_product_accepted": false,
+  "native_acceptance": false,
+  "performance_accepted": false,
+  "remaining": "Source/public200 qualification plus actual native parity and an independently reviewed exact timed-policy/dispatch controller before first one-worker timing. All-warn originals alone do not supply fresh-host default-policy acceptance."
+}

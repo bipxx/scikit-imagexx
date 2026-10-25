@@ -150,3 +150,5 @@ coverage/evidence/public200-cumulative-source-preflight.json -text
 coverage/evidence/tv-default-certificate-publication-dispatch.json -text
 coverage/evidence/reconstruction-descriptor-private-admission.json -text
 coverage/evidence/h-extrema-private-admission.json -text
+coverage/evidence/reconstruction-terrain-reference-admission.json -text
+coverage/contracts/reconstruction-terrain.json -text
