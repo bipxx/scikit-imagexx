@@ -1,6 +1,7 @@
 """The executable plan must reject unsafe parallel ownership and invalid DAGs."""
 from copy import deepcopy
 import hashlib
+from pathlib import Path
 
 import pytest
 
@@ -100,6 +101,32 @@ def test_retained_manifest_bytes_must_match_the_recorded_proof(tmp_path):
     manifest.write_bytes(b'{"native_checks":0}')
     with pytest.raises(ValueError, match='hash differs'):
         verify_local_proofs(doc, tmp_path)
+
+
+@pytest.mark.parametrize('conflicting', [False, True])
+def test_shared_manifest_is_read_once_but_each_digest_is_checked(tmp_path, monkeypatch, conflicting):
+    manifest = tmp_path / 'evidence.json'
+    manifest.write_bytes(b'{"native_checks":3}')
+    expected = hashlib.sha256(manifest.read_bytes()).hexdigest()
+    providers = [dict(packet(name), proofs=proof('native_private')) for name in ('a', 'b')]
+    for provider in providers:
+        provider['proofs']['native_private']['manifest'] = dict(path='evidence.json', sha256=expected)
+    # Aliased spellings still identify one immutable input in this invocation.
+    providers[1]['proofs']['native_private']['manifest']['path'] = './evidence.json'
+    if conflicting:
+        providers[1]['proofs']['native_private']['manifest']['sha256'] = '0' * 64
+    original_read = Path.read_bytes
+    reads = []
+    def read(path):
+        reads.append(path.resolve())
+        return original_read(path)
+    monkeypatch.setattr(Path, 'read_bytes', read)
+    if conflicting:
+        with pytest.raises(ValueError, match='hash differs'):
+            verify_local_proofs(ledger(*providers), tmp_path)
+    else:
+        assert verify_local_proofs(ledger(*providers), tmp_path) == 1
+    assert reads == [manifest.resolve()]
 
 
 def test_measurement_can_require_completed_performance_dependencies():

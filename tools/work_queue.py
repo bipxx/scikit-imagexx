@@ -143,20 +143,22 @@ def ready_packets(document):
 
 def verify_local_proofs(document, root=ROOT):
     """Verify retained manifest bytes when running in the evidence workspace."""
-    checked = set()
+    checked = {}
     for packet in document['packets']:
         for proof in packet.get('proofs', {}).values():
             if proof['status'] != 'verified':
                 continue
             manifest = proof['manifest']
             path = Path(root)/manifest['path']
-            try:
-                digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            except OSError as error:
-                raise ValueError(f'retained proof is unavailable: {path}') from error
+            resolved = path.resolve()
+            if resolved not in checked:
+                try:
+                    checked[resolved] = hashlib.sha256(path.read_bytes()).hexdigest()
+                except OSError as error:
+                    raise ValueError(f'retained proof is unavailable: {path}') from error
+            digest = checked[resolved]
             if digest != manifest['sha256']:
                 raise ValueError(f'retained proof hash differs: {path}')
-            checked.add(manifest['path'])
     return len(checked)
 
 
