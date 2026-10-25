@@ -1,4 +1,4 @@
-"""Publish exact reviewed metadata through two fixed, existing validators.
+"""Publish exact reviewed metadata through fixed, existing validators.
 
 Payloads are read from the runner event file, never step environment values or
 command-line arguments, which GitHub may display in workflow logs.
@@ -27,8 +27,10 @@ MAX_COMPRESSED = 30_000
 MAX_RAW = 256 * 1024
 RANK_SCHEMA = 'rank-statistics-experiment-v1'
 TV_SCHEMA = 'tv-chambolle-admission-experiment-v1'
+TV_POSITIVE_ZERO_SCHEMA = 'tv-positive-zero-experiment-v2'
 RANK_SOURCE = 'benchmarks/rank_statistics_compare.py'
 TV_SOURCE = 'tools/tv_chambolle_admission_artifacts.py'
+TV_POSITIVE_ZERO_SOURCE = 'tools/tv_positive_zero_artifacts.py'
 CONTROLLER_INPUTS = {
     RANK_SCHEMA: (RANK_SOURCE, 'coverage/contracts/rank-statistics-comparison.json'),
     TV_SCHEMA: (TV_SOURCE, 'benchmarks/tv_chambolle_admission_compare.py',
@@ -37,6 +39,17 @@ CONTROLLER_INPUTS = {
                 RANK_SOURCE, 'coverage/contracts/rank-statistics-comparison.json',
                 'benchmarks/tv_chambolle.py',
                 'coverage/contracts/tv-chambolle-benchmark.json'),
+    TV_POSITIVE_ZERO_SCHEMA: (TV_POSITIVE_ZERO_SOURCE, 'benchmarks/tv_positive_zero_compare.py',
+                'tests/test_tv_positive_zero_compare.py',
+                '.github/workflows/tv-positive-zero-compare.yml',
+                'coverage/contracts/tv-positive-zero-comparison-plan.json',
+                'benchmarks/tv_chambolle_admission_compare.py', TV_SOURCE, RANK_SOURCE,
+                'benchmarks/tv_chambolle.py', 'benchmarks/provenance.py',
+                'benchmarks/resize.py', 'tools/ci_measurement_artifacts.py',
+                'tools/rank_statistics_products.py',
+                'coverage/contracts/rank-statistics-comparison.json',
+                'coverage/contracts/tv-chambolle-benchmark.json',
+                'tests/test_tv_chambolle_contracts.py'),
 }
 
 
@@ -101,10 +114,10 @@ def verify_controller_sources(schema, revision):
         require(actual == expected, 'declared controller dependency differs')
 
 
-@lru_cache(maxsize=2)
+@lru_cache(maxsize=3)
 def _helper(relative):
     # Only literals from the registry below can reach this loader.
-    require(relative in (RANK_SOURCE, TV_SOURCE), 'unknown validator')
+    require(relative in (RANK_SOURCE, TV_SOURCE, TV_POSITIVE_ZERO_SOURCE), 'unknown validator')
     spec = importlib.util.spec_from_file_location(
         '_publication_' + Path(relative).stem, ROOT / relative)
     module = importlib.util.module_from_spec(spec)
@@ -134,7 +147,12 @@ def _validate_tv(value, raw, revision, scratch):
     _helper(TV_SOURCE).validate_experiment(value, revision)
 
 
-VALIDATORS = {RANK_SCHEMA: _validate_rank, TV_SCHEMA: _validate_tv}
+def _validate_tv_positive_zero(value, raw, revision, scratch):
+    _helper(TV_POSITIVE_ZERO_SOURCE).validate_experiment(value, revision)
+
+
+VALIDATORS = {RANK_SCHEMA: _validate_rank, TV_SCHEMA: _validate_tv,
+              TV_POSITIVE_ZERO_SCHEMA: _validate_tv_positive_zero}
 
 
 def validate_certificate(raw, revision, scratch):

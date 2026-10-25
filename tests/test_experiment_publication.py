@@ -250,3 +250,78 @@ def test_workflow_uploads_one_file_with_readonly_permissions():
     assert 'python tools/experiment_publication.py' in source
     assert 'echo ' not in source and '${{ inputs.payload' not in source
     assert 'PAYLOAD_GZIP_BASE64:' not in source
+
+
+@pytest.fixture
+def positive_zero_certificate():
+    # Reuse the existing synthetic certificate; its fabricated AFTER frame
+    # remains test-only and never becomes the real external experiment.
+    spec = importlib.util.spec_from_file_location('positive_zero_publication_fixture',
+        ROOT / 'tests/test_tv_positive_zero_compare.py')
+    fixtures = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fixtures)
+    return fixtures.experiment.__wrapped__()
+
+
+def test_positive_zero_fixed_registry_covers_its_frozen_dependencies():
+    helper = p._helper(p.TV_POSITIVE_ZERO_SOURCE)
+    expected = set(helper.PLAN['dependency_pins']) | {
+        p.TV_POSITIVE_ZERO_SOURCE, 'benchmarks/tv_positive_zero_compare.py',
+        'tests/test_tv_positive_zero_compare.py',
+        '.github/workflows/tv-positive-zero-compare.yml', helper.PLAN_PATH}
+    assert set(p.CONTROLLER_INPUTS[p.TV_POSITIVE_ZERO_SCHEMA]) == expected
+    assert len(p.CONTROLLER_INPUTS[p.TV_POSITIVE_ZERO_SCHEMA]) == len(expected) == 16
+    assert set(p.VALIDATORS) == {p.RANK_SCHEMA, p.TV_SCHEMA, p.TV_POSITIVE_ZERO_SCHEMA}
+
+
+def test_positive_zero_publishes_exact_bytes_through_existing_validator(
+        tmp_path, monkeypatch, positive_zero_certificate):
+    calls = []
+    monkeypatch.setattr(p, 'verify_controller_sources', lambda *args: calls.append(args))
+    raw, (encoded, digest) = encoded_document(positive_zero_certificate)
+    revision = positive_zero_certificate['controller_revision']
+    result = p.publish(encoded, digest, revision, tmp_path)
+    assert calls == [(p.TV_POSITIVE_ZERO_SCHEMA, revision)]
+    assert result['schema'] == p.TV_POSITIVE_ZERO_SCHEMA
+    assert (tmp_path / 'experiment.json').read_bytes() == raw
+    assert [x.name for x in tmp_path.iterdir()] == ['experiment.json']
+
+
+@pytest.mark.parametrize('mutation', ['draft', 'wrongcontroller', 'failed741', 'missingdebug'])
+def test_positive_zero_semantic_rejection_precedes_publication(
+        tmp_path, monkeypatch, positive_zero_certificate, mutation):
+    monkeypatch.setattr(p, 'verify_controller_sources', lambda *args: None)
+    value = positive_zero_certificate
+    revision = value['controller_revision']
+    if mutation == 'draft': value['status'] = 'draft-root-review-pending'
+    elif mutation == 'wrongcontroller': value['controller_revision'] = 'd' * 40
+    elif mutation == 'failed741': value['root_after_admission']['run'] = '40200919182'
+    else: value['root_after_admission']['profiles'].pop('debug')
+    raw, (encoded, digest) = encoded_document(value)
+    with pytest.raises(RuntimeError):
+        p.publish(encoded, digest, revision, tmp_path)
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_positive_zero_workflow_keeps_complete_preparation_barrier_and_isolated_measurement():
+    source = (ROOT / '.github/workflows/tv-positive-zero-compare.yml').read_text()
+    assert 'default: reviewed-experiment' in source
+    assert 'source_revision:' in source and "os.environ['GITHUB_SHA'] != expected" in source
+    assert "['git', 'rev-parse', 'HEAD']" in source
+    assert 'contents: read' in source and 'actions: read' in source and ': write' not in source
+    preparation = source.split('  prepare:\n', 1)[1].split('  barrier:\n', 1)[0]
+    barrier = source.split('  barrier:\n', 1)[1].split('  measure:\n', 1)[0]
+    measurement = source.split('  measure:\n', 1)[1]
+    for profile in ('windows', 'modern', 'minimum'):
+        assert 'profile: ' + profile in preparation and 'profile: ' + profile in measurement
+        assert 'build/receipts/tv-positive-zero-receipt-' + profile + '/preparation.json' in barrier
+        assert 'build/receipts/tv-positive-zero-receipt-' + profile + '/preparation.json' in measurement
+    assert 'needs: prepare' in barrier and 'needs: [prepare, barrier]' in measurement
+    assert 'compare --check-only' in preparation and '--check-only' not in measurement
+    assert 'Legacy400 plus fresh default70' in preparation
+    assert 'one worker seven paired triads' in measurement
+    assert 'pip install --no-index --no-deps --require-hashes --only-binary=:all: --no-compile' in measurement
+    assert 'pytest' not in measurement.split('      - name: Fresh host', 1)[0]
+    assert 'cmake' not in measurement and 'pip wheel' not in measurement
+    assert 'if: always()' in preparation and 'if: always()' in measurement
+    assert 'build/results/' in measurement and 'build/experiment/' in measurement
