@@ -56,6 +56,10 @@ def main():
         parser.error('module selection matches no registered entry points')
     if 'restoration.denoise_tv_bregman' in apis and min(args.sizes) < 4:
         parser.error('Bregman original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
+    max_tree_paths={'morphology.'+name for name in ('max_tree','max_tree_local_maxima',
+                    'area_opening','area_closing','diameter_opening','diameter_closing')}
+    if max_tree_paths.intersection(apis) and min(args.sizes) < 4:
+        parser.error('max-tree original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []

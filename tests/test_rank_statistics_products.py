@@ -58,12 +58,14 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18')
+    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope=='bregman18':families += ['tv_bregman']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110}[scope]
+    if scope in ('bregman18','max_tree19','matrix20'):families += ['tv_bregman']
+    if scope in ('max_tree19','matrix20'):families += ['max_tree']
+    if scope=='matrix20':families += ['matrix_transform']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -79,9 +81,19 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope=='bregman18':
+    if scope in ('bregman18','max_tree19','matrix20'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
+    if scope in ('max_tree19','matrix20'):
+        source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
+        # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
+        for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
+            source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
+        source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
+    if scope=='matrix20':
+        source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
+        source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -137,8 +149,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope=='bregman18' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20') else [])+(['transform.matrix_transform'] if scope=='matrix20' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -457,10 +469,169 @@ def test_bregman192_registry_requires_both_real_public_paths(synthetic,fault):
     assert not s.output.exists()
 
 
-@pytest.mark.parametrize('scope,members,sdk,suffix',(('tv17',108,62,('tv_chambolle','tv_reductions','tv_denoise')),('bregman18',110,63,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman'))))
+@pytest.mark.parametrize('scope,members,sdk,suffix',(('tv17',108,62,('tv_chambolle','tv_reductions','tv_denoise')),('bregman18',110,63,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman')),('max_tree19',112,64,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree'))))
 @pytest.mark.parametrize('field',('PRODUCT_MEMBERS','SDK_MEMBERS'))
 def test_authenticated_census_counts_are_integer_literals_not_equal_floats(scope,members,sdk,suffix,field):
     values=dict(FAMILIES=tuple('tooling-'+str(i) for i in range(14))+suffix,PRODUCT_SCOPE=scope,PRODUCT_MEMBERS=members,SDK_MEMBERS=sdk)
     values[field]=float(values[field])
     with pytest.raises(RuntimeError,match='scope incomplete'):
         p.qualification_scope_text('\n'.join(name+' = '+repr(value) for name,value in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19'],indirect=True)
+def test_max_tree_full112_64_sdk19_stage_stays_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==64 and len(sdk['families'])==19 and sdk['checks']==38
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==112
+    assert p.qualification_scope(s.output/'source')['name']=='max_tree19'
+    assert p.load(s.output/'qualification.json')['expected_registry']['image_count']==198
+    assert not any(n in p.load(s.output/'product.json') for n in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('fault',('SDK63','wheel110','family18','wrong-family','duplicate-family','missing-scope','bregman-scope-with-new-counts','unknown-scope'))
+def test_max_tree_authenticated_literals_reject_census_downgrades(fault):
+    families=tuple('tooling-original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='max_tree19',PRODUCT_MEMBERS=112,SDK_MEMBERS=64)
+    assert p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))['name']=='max_tree19'
+    if fault=='SDK63':values['SDK_MEMBERS']=63
+    elif fault=='wheel110':values['PRODUCT_MEMBERS']=110
+    elif fault=='family18':values['FAMILIES']=families[:-1]
+    elif fault=='wrong-family':values['FAMILIES']=families[:-1]+('private_family',)
+    elif fault=='duplicate-family':values['FAMILIES']=families[:-1]+('tv_denoise',)
+    elif fault=='missing-scope':del values['PRODUCT_SCOPE']
+    elif fault=='unknown-scope':values['PRODUCT_SCOPE']='max_tree20'
+    else:values['PRODUCT_SCOPE']='bregman18'
+    with pytest.raises(RuntimeError):p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19'],indirect=True)
+@pytest.mark.parametrize('fault',('image192','missing-max-tree','duplicate-max-tree','missing-Bregman','missing-TV'))
+def test_max_tree198_registry_requires_all_six_and_prior_public_paths(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='image192':expected['image_count']=192
+    elif fault=='missing-max-tree':expected['functions'][-1]='unit-only-replacement'
+    elif fault=='duplicate-max-tree':expected['functions'][0]=expected['functions'][-1]
+    elif fault=='missing-Bregman':expected['functions'][-7]='unit-only-replacement'
+    else:expected['functions'][-8]='unit-only-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic',['matrix20'],indirect=True)
+def test_matrix199_full114_65_sdk20_stage_remains_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==65 and len(sdk['families'])==20 and sdk['checks']==40
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==114
+    assert p.qualification_scope(s.output/'source')['name']=='matrix20'
+    assert p.load(s.output/'qualification.json')['expected_registry']['image_count']==199
+    assert not any(n in p.load(s.output/'product.json') for n in ('accepted_products','before','after'))
+
+
+@pytest.mark.parametrize('fault',('SDK64','wheel112','family19','wrong-family','duplicate-family','missing-scope','max-tree-scope','float-count'))
+def test_matrix_source_literals_cannot_downgrade_closed_scope(fault):
+    families=tuple('tooling-original-'+str(i) for i in range(14))+('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform')
+    values=dict(FAMILIES=families,PRODUCT_SCOPE='matrix20',PRODUCT_MEMBERS=114,SDK_MEMBERS=65)
+    assert p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))['name']=='matrix20'
+    if fault=='SDK64':values['SDK_MEMBERS']=64
+    elif fault=='wheel112':values['PRODUCT_MEMBERS']=112
+    elif fault=='family19':values['FAMILIES']=families[:-1]
+    elif fault=='wrong-family':values['FAMILIES']=families[:-1]+('private_family',)
+    elif fault=='duplicate-family':values['FAMILIES']=families[:-1]+('max_tree',)
+    elif fault=='missing-scope':del values['PRODUCT_SCOPE']
+    elif fault=='float-count':values['PRODUCT_MEMBERS']=114.
+    else:values['PRODUCT_SCOPE']='max_tree19'
+    with pytest.raises(RuntimeError):p.qualification_scope_text('\n'.join(k+' = '+repr(v) for k,v in values.items()))
+
+
+@pytest.mark.parametrize('synthetic',['matrix20'],indirect=True)
+@pytest.mark.parametrize('fault',('image198','missing-matrix','duplicate-matrix','missing-max-tree','missing-TV','missing-Bregman'))
+def test_matrix199_requires_prior_paths_and_one_matrix_registration(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='image198':expected['image_count']=198
+    elif fault=='missing-matrix':expected['functions'][-1]='unit-replacement'
+    elif fault=='duplicate-matrix':expected['functions'][0]=expected['functions'][-1]
+    else:
+        target={'missing-max-tree':'morphology.max_tree','missing-TV':'restoration.denoise_tv_chambolle','missing-Bregman':'restoration.denoise_tv_bregman'}[fault]
+        expected['functions'][expected['functions'].index(target)]='unit-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic',['max_tree19','matrix20'],indirect=True)
+@pytest.mark.parametrize('fault',('missing-declaration','old-wrapper-declaration','missing-wrapper','old-wrapper-bytes','changed-other-runtime','missing-oracle','binary-CRLF','missing-snapshot-pin','forged-snapshot-pin','old-header-declaration','old-header-bytes'))
+def test_corrected_max_tree_source_archive_refuses_partial_or_stale(synthetic,fault):
+    """Real source bytes in inert metadata only: no algorithm/native execution."""
+    s=synthetic
+    with zipfile.ZipFile(s.q/'source.zip') as z:source={name:z.read(name) for name in z.namelist()}
+    snapshot={'files_sha256':{name:body_hash(raw) for name,raw in source.items()}}
+    wrapper='python/skimagexx/_max_tree.py';header='include/skimagexx/max_tree.hpp'
+    if fault=='missing-declaration':source['tools/public_qualification.py']+=b'\nMAX_TREE_RUNTIME_SOURCE_PINS={}\n'
+    elif fault=='old-wrapper-declaration':
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(b'3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae',b'faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53')
+    elif fault=='missing-wrapper':del source[wrapper]
+    elif fault=='old-wrapper-bytes':
+        block=b"    elif operation in (3,5):\n        # The literal closing route allocates through subtract's canonical\n        # scalar dtype before filtering. Unlike opening's copy, it drops tags.\n        output=np.empty(image.shape,dtype=image.dtype.type)\n"
+        assert block in source[wrapper]
+        source[wrapper]=source[wrapper].replace(block,b'')
+        assert body_hash(source[wrapper])=='faf537524b273dcdbb25a702590d139fdf94f8823b480bf7cef0f2cd3aa8eb53'
+        snapshot['files_sha256'][wrapper]=body_hash(source[wrapper])
+    elif fault=='changed-other-runtime':source[header]+=b'\n// caller resealed an unauthorized header';snapshot['files_sha256'][header]=body_hash(source[header])
+    elif fault=='old-header-declaration':
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(b'60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',b'7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6')
+    elif fault=='old-header-bytes':
+        source[header]=private_header_from_public(source[header])
+        snapshot['files_sha256'][header]=body_hash(source[header])
+    elif fault=='missing-oracle':del source[p.MAX_TREE_ORACLE_PATH]
+    elif fault=='binary-CRLF':
+        raw=source[p.MAX_TREE_ORACLE_PATH];assert b'\n' in raw
+        source[p.MAX_TREE_ORACLE_PATH]=raw.replace(b'\n',b'\r\n',1)
+        assert hashlib.sha256(source[p.MAX_TREE_ORACLE_PATH].replace(b'\r\n',b'\n')).hexdigest()==snapshot['files_sha256'][p.MAX_TREE_ORACLE_PATH]
+    elif fault=='missing-snapshot-pin':del snapshot['files_sha256'][wrapper]
+    else:snapshot['files_sha256'][wrapper]='0'*64
+    stream=io.BytesIO()
+    with zipfile.ZipFile(stream,'w') as z:
+        for name,raw in source.items():z.writestr(name,raw)
+    stream.seek(0)
+    with zipfile.ZipFile(stream) as z:
+        with pytest.raises(RuntimeError,match='max-tree source'):p.validate_max_tree_source(z,snapshot,p.qualification_scope(s.root))
+
+
+@pytest.mark.parametrize('scope',('rank14','tv17','bregman18'))
+def test_prior_scopes_do_not_invent_max_tree_source_requirements(scope):
+    class NotAnArchive:
+        def read(self,*args):raise AssertionError('legacy scope touched new max-tree archive')
+    p.validate_max_tree_source(NotAnArchive(),{},dict(name=scope))
+
+def private_header_from_public(raw):
+    raw=raw.replace(b'// six prepared operations',b'// private six-operation surface')
+    raw=raw.replace(b'// Rechecks admission before writes. Stable typed ordering (U8 counting/U16\n// radix, otherwise merge; ties in original flat-index order), descending\n// union/find and ascending canonicalization; reverse',b'// Rechecks admission before writes. Stable typed mergesort (ties in original\n// flat-index order), descending union/find, ascending canonicalization; reverse')
+    assert body_hash(raw)=='7d66238905451f5ec2ecc7a1a8de6649dcb324c8f26bfa7c2e42dc00909be8e6'
+    return raw
+
+
+@pytest.mark.parametrize('synthetic', ['matrix20'], indirect=True)
+@pytest.mark.parametrize('line_endings', ('LF', 'CRLF'))
+def test_corrected_text_fixture_models_canonical_archive_but_keeps_binary_oracle(synthetic, line_endings):
+    with zipfile.ZipFile(synthetic.q / 'source.zip') as archive:
+        source = {name: archive.read(name) for name in archive.namelist()}
+    oracle = source[p.MAX_TREE_ORACLE_PATH]
+    for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
+        assert b'\r\n' not in source[name]
+        if line_endings == 'CRLF':
+            source[name] = source[name].replace(b'\n', b'\r\n')
+    snapshot = {'files_sha256': {
+        name: body_hash(data.replace(b'\r\n', b'\n') if name in p.MAX_TREE_RUNTIME_SOURCE_PINS else data)
+        for name, data in source.items()}}
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        for name, data in source.items():
+            archive.writestr(name, data)
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
+        p.validate_max_tree_source(archive, snapshot, {'name': 'matrix20'})
+    assert source[p.MAX_TREE_ORACLE_PATH] == oracle == (ROOT / p.MAX_TREE_ORACLE_PATH).read_bytes()

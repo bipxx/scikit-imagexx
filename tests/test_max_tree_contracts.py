@@ -1,4 +1,4 @@
-"""Pinned0.26 max-tree reference contracts: six upstream-only APIs, native0.
+"""Pinned0.26 max-tree reference contracts and owned public observations.
 
 Unchecked Cython calls require a source-derived certificate. Unsafe intake and
 index protocols stop at an explicit entry observer and are never numeric proof.
@@ -12,6 +12,7 @@ import math
 import os
 from pathlib import Path
 import sys
+import types
 import warnings
 
 import numpy as np
@@ -373,7 +374,10 @@ def test_source_fixed_ids_safety_and_native0(frozen):
     assert frozen['profiles'][profile()]['numpy']==np.__version__ and frozen['profiles'][profile()]['scipy']==scipy.__version__
     for name in NAMES: assert str(inspect.signature(getattr(original,name)))==frozen['signatures'][name]
     for row in frozen['sources'].values(): assert hashlib.sha256(row['utf8'].encode()).hexdigest()==row['sha256']
-    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==frozen['test_source_canonical_lf_sha256']
+    migration=json.loads((ROOT/'coverage/evidence/max-tree-public-assertion-migration.json').read_bytes())
+    assert frozen['test_source_canonical_lf_sha256']==migration['original_source_sha256']
+    assert hashlib.sha256(MATRIX.read_bytes()).hexdigest()==migration['reference_matrix_sha256']
+    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==migration['public_source_sha256']
 
 
 @pytest.mark.parametrize('spec',CASES,ids=lambda row:row['id'])
@@ -390,15 +394,24 @@ def test_original_exact_repeated_observation(spec,frozen):
 
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('spec',CASES,ids=lambda row:row['id'])
-def test_future_native_pending_rejects_forwarding(spec,workers,monkeypatch):
-    name='morphology.'+spec['function'];assert name not in native_functions()
-    def forbidden(*args,**kwargs):raise AssertionError('original max-tree kernel forbidden in native-pending call')
-    for entry in ENTRIES:monkeypatch.setattr(original._max_tree,entry,forbidden)
+def test_strict_owned_public_observations_without_forwarding(spec,workers,monkeypatch,frozen):
+    from test_max_tree_native_pipeline import fixture_without_upstream,forbid_original
+    module=importlib.import_module('skimagexx._max_tree')
+    name='morphology.'+spec['function']
+    assert tuple(native_functions()).count(name)==1
+    assert getattr(xx.morphology,spec['function']) is getattr(module,spec['function'])
+    core=module._require_core();assert core is xx._core
+    observer=types.FunctionType(observe.__code__,dict(observe.__globals__,original=module,fixture=fixture_without_upstream))
     previous=xx.get_num_threads();fallback=xx.set_fallback_enabled(False);xx.set_num_threads(workers)
     try:
-        # Only the independent bounded metadata fixture is built; all original entries are forbidden.
-        passed,_,_,options,_=fixture(spec)
-        with pytest.raises(NotImplementedError):getattr(xx.morphology,spec['function'])(passed,**options)
+        core.max_tree_counts(True)
+        with forbid_original(monkeypatch):actual=observer(spec)
+        expected=frozen['observations'][frozen['profiles'][profile()]['snapshots'][spec['id']]]
+        assert actual==expected
+        if spec['mode']=='numeric':
+            assert actual['error'] is None and sum(row['completed'] for row in core.max_tree_counts().values())>0
+        else:
+            assert actual['error'] is not None  # Boundary/protocol observations never count as native image success.
     finally:xx.set_num_threads(previous);xx.set_fallback_enabled(fallback)
 
 

@@ -133,3 +133,8 @@ coverage/evidence/reconstruction-offset-private-review.json -text
 coverage/evidence/public199-corrected-dispatch.json -text
 coverage/evidence/metrics-endian-range-private.json -text
 coverage/evidence/reconstruction-public200-source-review.json -text
+coverage/evidence/max-tree-public-assertion-migration.json -text
+coverage/evidence/max-tree-sdk-census-migration.json -text
+coverage/evidence/matrix-transform-public-assertion-migration.json -text
+tests/cmake_consumer/max_tree_source_oracle.bin -text
+coverage/evidence/matrix-transform-public-source-successor-assertion.json -text

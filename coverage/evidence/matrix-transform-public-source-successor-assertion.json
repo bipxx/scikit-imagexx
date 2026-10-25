@@ -1,0 +1,32 @@
+{
+  "schema": "matrix-transform-public-source-successor-assertion-v1",
+  "base_source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+  "failed_run": 40161615893,
+  "failed_profile": "modern",
+  "failed_modes": [
+    "normal",
+    "scalar"
+  ],
+  "per_mode_passed": 10069,
+  "per_mode_failed": 1,
+  "failure_kind": "metadata assertion used original helper digest despite existing authenticated successor record",
+  "changed_test": "test_actual_public_source_is_frozen_520_and_scope_is_partial",
+  "original_test_function_utf8": "def test_actual_public_source_is_frozen_520_and_scope_is_partial(public_matrix):\n    module,core=public_matrix\n    migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())\n    assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==migration['frozen_implementation']['python/skimagexx/_matrix_transform.py']\n    scope=matrix_transform_contract()\n    assert scope['implementation']=='native-partial'\n    assert scope['actual_runtime_evidence']==('Haswell','Zen')\n    assert scope['prepared_only_runtime_evidence']==('Cooperlake','SkylakeX')",
+  "allowed_change": "Use existing exact successor hash, and require its original hash matches unchanged frozen implementation record. All other test AST nodes, product sources and original oracle files unchanged.",
+  "existing_migration_raw_sha256": "d09b1f124feef0484e81eedfadb89b9e2cf208600a55be2557b4c0584e6e3440",
+  "original_helper_sha256": "deb219b0cfb0f38d04e53d13e09ebfc40196f29de97c1e3c4c3d4273e416e9b8",
+  "current_helper_sha256": "04d4438b7def68598d3dea57e4f2a6c0422053f2b9b1f19df56a90a3465f08b9",
+  "public_acceptance": false,
+  "new_numerical_runs": 0,
+  "performance_claim": false,
+  "independent_failure_diagnosis": {
+    "path": "build/genuine199-skylakex-hosted/3c87fbf/40161615893/modern-failure-decoded/diagnosis.json",
+    "bytes": 6026,
+    "sha256": "2556385d8d87b880aac0c2a3b43b0102d467e4ba443c1663ecaee7f1bb282dd4"
+  },
+  "isolated_metadata_replay": {
+    "path": "build/resume-20261025/public199-matrix-repair/metadata-replay.json",
+    "bytes": 858,
+    "sha256": "f0fc559d4458d461829b56f0fde0da8d4a017555f5591d7a196a8f01209663e5"
+  }
+}

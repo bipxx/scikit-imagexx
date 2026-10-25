@@ -301,11 +301,10 @@ def test_original_contract(spec):
 
 @pytest.mark.parametrize('workers', (1, 4))
 @pytest.mark.parametrize('spec', cases(), ids=lambda s:s['id'])
-def test_native_pending_function_contract(spec, workers):
+def test_native_public_function_contract(spec, workers):
     import skimagexx as xx
     from skimagexx.coverage import native_functions
-    if API not in native_functions():
-        pytest.xfail('native matrix_transform function pending; own ProjectiveTransform class is not function acceptance')
+    assert tuple(native_functions()).count(API)==1, 'registered own function required before public parity'
     previous = xx.set_fallback_enabled(False); old_workers = xx.get_num_threads()
     try:
         function = xx.transform.matrix_transform
@@ -356,7 +355,13 @@ def test_signature_source_and_inventory_integrity():
     assert data['case_contract_sha256'] == digest(cases()) and data['cases'] == cases()
     current = source_facts(); recorded = data['profiles'][profile()]['source']
     assert current == recorded
-    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==data['test_source_canonical_lf_sha256']
+    migration = json.loads((Path(__file__).parents[1] / 'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
+    transition = migration['modules']['tests/test_matrix_transform_contracts.py']
+    assert hashlib.sha256(MATRIX.read_bytes()).hexdigest() == migration['frozen_matrix_raw_sha256']
+    original_helper = transition['original_utf8'].encode('utf-8')
+    assert hashlib.sha256(original_helper.replace(b'\r\n',b'\n')).hexdigest() == data['test_source_canonical_lf_sha256']
+    assert hashlib.sha256(original_helper).hexdigest() == transition['original_raw_sha256']
+    assert hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == transition['current_canonical_lf_sha256']
     assert data['native_function_implementations'] == 0 and data['native_contract_status'] == 'pending'
 
 
