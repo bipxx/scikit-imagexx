@@ -20,11 +20,12 @@ void check(const py::array& input){
     for(unsigned i=0;i<64;++i){
         if(std::any_of(chain.begin(),chain.end(),[&](auto x){return x.ptr()==current.ptr();}))throw py::value_error("footprint owner cycle");
         chain.push_back(current);auto base=current.base();
-        if(base.is_none())break;
+        if(!base||base.is_none())break;
         if(!py::isinstance<py::array>(base))throw py::value_error("footprint requires ndarray-backed storage");
         current=py::reinterpret_borrow<py::array>(base);
     }
-    if(!current.base().is_none()||!current.owndata()||!(current.flags()&(py::array::c_style|py::array::f_style)))throw py::value_error("footprint requires bounded contiguous root");
+    const auto base=current.base();
+    if((base&&!base.is_none())||!current.owndata()||!(current.flags()&(py::array::c_style|py::array::f_style)))throw py::value_error("footprint requires bounded contiguous root");
     const auto limit=std::numeric_limits<std::uintptr_t>::max();
     const auto root=reinterpret_cast<std::uintptr_t>(current.data());
     if(current.nbytes()<0||std::size_t(current.nbytes())>limit-root)throw py::value_error("footprint root overflows");
@@ -72,14 +73,14 @@ void bind_footprint_shapes(py::module_& m){
         auto out=target(result);auto in=source(input);
         {py::gil_scoped_release release;skimagexx::footprint_shapes_hull(in,out,std::size_t(input.shape(0)),std::size_t(input.shape(1)));}return result;
     },py::arg("input").noconvert());
-    m.def("footprint_shapes_l1",[](py::array x,py::array y,py::array z,double radius){
+    m.def("footprint_shapes_l1",[](py::array x,py::array y,py::array z,double radius,bool inclusive){
         for(const auto& a:{x,y,z}){dense(a);if(a.dtype().kind()!='f'||a.itemsize()!=8||!a.dtype().is(py::dtype::of<double>()))throw py::type_error("mgrid requires native float64");}
         if(x.ndim()!=3||y.ndim()!=3||z.ndim()!=3)throw py::value_error("mgrid shapes differ");
         for(py::ssize_t d=0;d<3;++d)if(x.shape(d)!=y.shape(d)||x.shape(d)!=z.shape(d))throw py::value_error("mgrid shapes differ");
         py::array_t<std::uint8_t> result({x.shape(0),x.shape(1),x.shape(2)});
         for(const auto& a:{x,y,z})dense(a);const auto a=source(x),b=source(y),c=source(z);auto out=target(result);
-        {py::gil_scoped_release release;skimagexx::footprint_shapes_l1(a,b,c,out,std::size_t(x.size()),radius);}return result;
-    },py::arg("x").noconvert(),py::arg("y").noconvert(),py::arg("z").noconvert(),py::arg("radius"));
+        {py::gil_scoped_release release;skimagexx::footprint_shapes_l1(a,b,c,out,std::size_t(x.size()),radius,inclusive);}return result;
+    },py::arg("x").noconvert(),py::arg("y").noconvert(),py::arg("z").noconvert(),py::arg("radius"),py::arg("inclusive")=true);
     m.def("footprint_shapes_atoms",[](py::array mask,py::array output,py::array zero,py::array one){
         u8(mask);for(const auto& a:{output,zero,one}){dense(a);if(a.dtype().has_fields()||a.dtype().attr("hasobject").cast<bool>())throw py::type_error("reference-free atoms required");}
         if(mask.size()!=output.size()||zero.size()!=1||one.size()!=1||!zero.dtype().is(output.dtype())||!one.dtype().is(output.dtype()))throw py::value_error("footprint atoms mismatch");

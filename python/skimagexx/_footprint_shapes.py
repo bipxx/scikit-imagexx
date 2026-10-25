@@ -1,7 +1,7 @@
 """Owned shape/sequence orchestration; private staged implementation.
 
 Geometry/raster/fill/dilation are compiled stages. NumPy owns source allocation,
-dtype conversion, mgrid coordinate preparation and cross SUM warning/error
+dtype conversion, mgrid/complex-magnitude preparation and cross SUM warning/error
 semantics. These provider stages are explicit, not full C++ API credit.
 No upstream footprint generator, hull or dilation algorithm is called.
 """
@@ -66,7 +66,14 @@ def octahedron(radius, dtype=np.uint8, *, decomposition=None):
         Z, Y, X = np.mgrid[-radius:radius:n*1j, -radius:radius:n*1j, -radius:radius:n*1j]
         # mgrid determines original rounding/count and owns all coordinate
         # buffers. Native L1 comparison is the pixel stage, not NumPy's sum.
-        mask = _core.footprint_shapes_l1(X, Y, Z, radius)
+        if X.dtype.kind == 'c':
+            # Keep NumPy's complex absolute-value provider. Its finite complex
+            # ordering compares real parts first, then 0 <= radius.imag on a
+            # tie; the owned stage still computes (absX+absY)+absZ and the mask.
+            mask = _core.footprint_shapes_l1(np.abs(X), np.abs(Y), np.abs(Z),
+                                             radius.real, radius.imag >= 0)
+        else:
+            mask = _core.footprint_shapes_l1(X, Y, Z, radius)
         footprint = np.array(mask.astype(bool), dtype=dtype)
     elif decomposition == 'sequence':
         fp = octahedron(1, dtype=dtype, decomposition=None)

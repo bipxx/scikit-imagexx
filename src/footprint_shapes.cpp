@@ -102,13 +102,14 @@ void footprint_shapes_hull(FootprintConstBytes input,FootprintBytes target,std::
     Fenv keep;for(std::size_t r=0;r<rows;++r)
         for(std::size_t c=0;c<columns;++c)static_cast<unsigned char*>(target.data)[r*columns+c]=inside(hull,double(r),double(c));
 }
-void footprint_shapes_l1(FootprintConstBytes x,FootprintConstBytes y,FootprintConstBytes z,FootprintBytes target,std::size_t n,double radius){
+void footprint_shapes_l1(FootprintConstBytes x,FootprintConstBytes y,FootprintConstBytes z,FootprintBytes target,std::size_t n,double radius,bool inclusive){
     const auto bytes=product(n,sizeof(double));out(target,n);
     if(!std::isfinite(radius)||std::fegetround()!=FE_TONEAREST)throw std::invalid_argument("unsupported octahedron geometry");
     for(auto source:{x,y,z}){if(source.bytes!=bytes)throw std::invalid_argument("octahedron grid size mismatch");range(source.data,bytes);disjoint(target,source);}
     Fenv keep;for(std::size_t i=0;i<n;++i){
         double a,b,c;std::memcpy(&a,static_cast<const char*>(x.data)+8*i,8);std::memcpy(&b,static_cast<const char*>(y.data)+8*i,8);std::memcpy(&c,static_cast<const char*>(z.data)+8*i,8);
-        static_cast<unsigned char*>(target.data)[i]=(std::abs(a)+std::abs(b)+std::abs(c))<=radius;
+        const double sum=(std::abs(a)+std::abs(b))+std::abs(c);
+        static_cast<unsigned char*>(target.data)[i]=inclusive?sum<=radius:sum<radius;
     }
 }
 void footprint_shapes_atoms(FootprintConstBytes mask,FootprintBytes target,FootprintConstBytes zero,FootprintConstBytes one,std::size_t n,std::size_t item){

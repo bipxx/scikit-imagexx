@@ -36,6 +36,11 @@ void run(){
     std::array<double,5> x{-2,-1,0,1,2},y{},z{};std::array<unsigned char,5> l1{};
     footprint_shapes_l1({x.data(),40},{y.data(),40},{z.data(),40},{l1.data(),5},5,1);
     require((l1==std::array<unsigned char,5>{0,1,1,1,0}));
+    std::array<unsigned char,5> boundary{};
+    footprint_shapes_l1({x.data(),40},{y.data(),40},{z.data(),40},{boundary.data(),5},5,1,false);
+    require((boundary==std::array<unsigned char,5>{0,0,1,0,0}));
+    footprint_shapes_l1({x.data(),40},{y.data(),40},{z.data(),40},{boundary.data(),5},5,1,true);
+    require(boundary==l1);
     std::array<std::uint16_t,5> atoms{};const std::uint16_t zero=0x1234,one=0xabcd;
     footprint_shapes_atoms({l1.data(),5},{atoms.data(),10},{&zero,2},{&one,2},5,2);
     for(std::size_t i=0;i<5;++i)require(atoms[i]==(l1[i]?one:zero));

@@ -19,8 +19,10 @@ void footprint_shapes_hull(FootprintConstBytes input,FootprintBytes output,
                            std::size_t rows,std::size_t columns);
 // Actual original mgrid arrays, not reconstructed radius coordinates. Each
 // source contains count native binary64 values; expression is (absX+absY)+absZ.
+// Complex grids use NumPy-prepared magnitudes. Inclusive=false implements the
+// strict real-part boundary when the finite complex radius has negative imag.
 void footprint_shapes_l1(FootprintConstBytes x,FootprintConstBytes y,FootprintConstBytes z,
-                         FootprintBytes output,std::size_t count,double radius);
+                         FootprintBytes output,std::size_t count,double radius,bool inclusive=true);
 // Reference-free dtype atoms. Numeric/string zero and one are prepared by the
 // original NumPy conversion stage. No object pointer/reference copying.
 void footprint_shapes_atoms(FootprintConstBytes mask,FootprintBytes output,

@@ -136,3 +136,18 @@ def test_cross_plan_rejects_owned_unaligned_before_typed_read(runtime):
     with pytest.raises(ValueError,match='cross sums must be aligned'):
         core.footprint_shapes_cross_plan(sums,1)
     assert owner.tobytes()==before
+
+
+def test_metadata_check_accepts_owned_roots_views_and_empty_arrays(runtime):
+    np,core=runtime['np'],runtime['core']
+    owner=np.zeros(6,dtype=np.uint8)
+    empty=np.zeros(0,dtype=np.uint8)
+    arrays=(owner,owner[1:5],empty,owner[3:3])
+    assert owner.flags.owndata and empty.flags.owndata
+    assert arrays[1].base is owner and arrays[3].base is owner
+    before=owner.tobytes()
+    for array in arrays:
+        metadata=(array.shape,array.strides,array.dtype,array.flags.owndata)
+        assert core.footprint_shapes_check(array) is None
+        assert (array.shape,array.strides,array.dtype,array.flags.owndata)==metadata
+    assert owner.tobytes()==before
