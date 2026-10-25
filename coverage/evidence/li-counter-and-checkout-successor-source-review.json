@@ -1,0 +1,85 @@
+{
+  "schema": "root-Li-counter-and-checkout-successor-source-admission-v1",
+  "base": "481369481e4756616773cac7a3836c9aed19da5b",
+  "disposition": "Admitted coherent source for one fresh hosted same-failed-product diagnostic. Not product or performance acceptance.",
+  "old_diagnostic": {
+    "run": 40183231914,
+    "source": "92f2a794d4aaa143a9362932b815e2822eb78d87",
+    "terminal": "failure",
+    "observer_reaped_exit": 1,
+    "Windows": "raw gate checkout hash mismatch before image calls; artifact12594813216 retained",
+    "modern": "both children stop at old counter after one genuine solver return; artifact12595805917 retained",
+    "all33artifactmembers_authenticated": true,
+    "mutated": false
+  },
+  "source_pins": {
+    "tools/li_installed_diagnostic.py": {
+      "bytes": 10116,
+      "sha256": "3a86441c81f5cc7950353a9048f80d7301741cde32e585198ee8fbbcd5301a68"
+    },
+    ".github/workflows/li-installed-diagnostic.yml": {
+      "bytes": 2200,
+      "sha256": "842354b6d82642154283464231b5a4fe1c342e1a6466b417998536616fc893d1"
+    },
+    "coverage/evidence/li-failed-product-diagnostic-inputs.json": {
+      "bytes": 15478,
+      "sha256": "070d398fc970cf4ce91501cd0c3837dcca16d14b695a52adccaf6127bf81aa22"
+    },
+    "tests/test_li_installed_diagnostic.py": {
+      "bytes": 15764,
+      "sha256": "3ccfdc70eb96f002bbb62b5d41b7562aaf1441d7df0db737eee0649a4711bf2f"
+    },
+    "tests/test_li_u16_pipeline.py": {
+      "bytes": 6472,
+      "sha256": "91587055f960211a2cf7d86e04d644dd13308acc7805316f55724e57de97eaf0"
+    },
+    ".gitattributes": {
+      "bytes": 9777,
+      "sha256": "5aebb55659fc1d739fa16bc2281a8f38a591cd9a9bf235678fe43a54b9a8c374"
+    },
+    "tests/test_li_u16_pipeline_metadata.py": {
+      "bytes": 3628,
+      "sha256": "c5bba2ea08da15dd7e3fe85cd56bf089c39cb88c3592fd75d6cf08f4cbcbb8d9"
+    }
+  },
+  "counter_review": {
+    "path": "build/resume-20261025/li-same-product-diagnostic/independent-outcome-review/counter-source-review.json",
+    "sha256": "6348fdfcf68dd7771f3e78411874455ece8f996389d9c412de7bf9ad1fc2fb7d"
+  },
+  "outcome_review": {
+    "path": "build/resume-20261025/li-same-product-diagnostic/independent-outcome-review/final-outcome-review.json",
+    "sha256": "a6e902d21467621d026e87eb4110dc85b87885adca1d1e643bbd4f8f9ec8ddf0"
+  },
+  "controller_checkout_review": {
+    "path": "build/resume-20261025/li-diagnostic-eol-v2-review/review.json",
+    "sha256": "4f2482b18f4c72b429b150b317dd9203fa84a389a338f7a2ca4b051558d3a301"
+  },
+  "proof": {
+    "path": "build/resume-20261025/li-diagnostic-eol-v2-review/manifest.json",
+    "sha256": "69fe74c24aa02943d57109a31b93d1c4c645ff1e1cc675cd195db2561001042c"
+  },
+  "validation": {
+    "counter_metadata": 4,
+    "checkout_controller_tests_per_profile": 21,
+    "additional_subtests_per_profile": 25,
+    "XML_checks_per_profile": 46,
+    "profiles": [
+      "windows",
+      "modern",
+      "minimum"
+    ],
+    "failures_errors_skips": 0,
+    "actual_Git_autocrlf_true_witness": "unruled6593B/121CRLF -> explicit-text6472B/0CRLF exact91587055",
+    "proof_records_rehashed": 19
+  },
+  "root_attrs_finalization": "Reviewed attribute bytes preserved as prefix; only this proof path -text rule appended after review. Exact gate -text declaration unchanged.",
+  "unchanged": [
+    "Original283failedbinary/source/artifact/interpreter/runtime wheel pins",
+    "Original43case factory/policy and all42solver/86observation assertions",
+    "Every existing audit assertion AST and original pre-candidate capture order",
+    "No ABItypename in completion predicate; count genuine named C_return from callable OR bound-owner module",
+    "All old raw artifacts/reviews remain immutable"
+  ],
+  "source_evolution": "Inputs v2 bind exact current gate SHA in exact controller Git revision;87 retained only as predecessor. Raw gate hash checked before interpreter/artifactAPI/download.",
+  "not_done": "No complete42/86 installed parity result on either host; next diagnostic must establish it without rebuilding/timing."
+}

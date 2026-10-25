@@ -12,7 +12,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ROOT / 'coverage/evidence/li-failed-product-diagnostic-inputs.json'
-INPUTS_SHA256 = '57eba925bba327b77b29f9f1893996004bff14bdc091c81984a59b4b19a362d5'
+INPUTS_SHA256 = '070d398fc970cf4ce91501cd0c3837dcca16d14b695a52adccaf6127bf81aa22'
 FAILED_SOURCE = '28350015823b36333085ce8ce04e3dcc70065572'
 FAILED_RUN = 40174473080
 SOURCE_FILES = frozenset(('tests/test_li_u16_bounded.py',
@@ -72,7 +72,9 @@ def command(out, label, args, env=None):
 
 
 def validate_inputs(data, profile):
-    require(data['schema'] == 'li-same-failed-product-fixed-inputs-v1'
+    require(data['schema'] == 'li-same-failed-product-fixed-inputs-v2'
+            and data['gate_source'] == 'controller'
+            and data['gate_predecessor_source'] == '87b99a57b935e09d64ff569fe2ed900122118603'
             and set(data['products']) == {'modern', 'windows'}
             and data['no_product_acceptance'] is True, 'fixed diagnostic inputs differ')
     product = data['products'][profile]
@@ -90,6 +92,8 @@ def diagnostic(profile, output, revision):
     require(sha(INPUTS) == INPUTS_SHA256, 'input bytes changed')
     data = json.loads(INPUTS.read_bytes())
     product = validate_inputs(data, profile)
+    gate = ROOT / 'tests/test_li_u16_pipeline.py'
+    require(sha(gate) == data['gate_sha256'], 'diagnostic gate differs from reviewed counter successor')
     require(sha(sys.executable) == product['interpreter']['sha256'], 'interpreter bytes differ')
     require(sys.implementation.cache_tag == product['interpreter']['cache_tag'], 'Python ABI differs')
     require(not output.exists() and output.resolve().is_relative_to((ROOT / 'build').resolve()),
@@ -134,8 +138,6 @@ def diagnostic(profile, output, revision):
             target = source / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(selected_member(archive, name, pin['bytes'], pin['sha256']))
-    gate = ROOT / 'tests/test_li_u16_pipeline.py'
-    require(sha(gate) == data['gate_sha256'], 'diagnostic gate differs from reviewed87b')
     target_gate = source / 'tests/test_li_u16_pipeline.py'
     target_gate.write_bytes(gate.read_bytes())
     requirements = output / 'requirements.txt'

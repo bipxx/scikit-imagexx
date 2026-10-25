@@ -5,6 +5,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -89,6 +90,9 @@ class FixedInputsTests(unittest.TestCase):
 
     def test_actual_fixed_input_hash_and_profiles(self):
         self.assertEqual(hashlib.sha256(self.raw).hexdigest(), D.INPUTS_SHA256)
+        self.assertEqual(self.data['schema'], 'li-same-failed-product-fixed-inputs-v2')
+        self.assertEqual(self.data['gate_source'], 'controller')
+        self.assertEqual(self.data['gate_predecessor_source'], '87b99a57b935e09d64ff569fe2ed900122118603')
         for profile in ('windows', 'modern'):
             product = D.validate_inputs(self.data, profile)
             self.assertEqual(product['source'], '28350015823b36333085ce8ce04e3dcc70065572')
@@ -96,6 +100,15 @@ class FixedInputsTests(unittest.TestCase):
             self.assertEqual(set(product['source_files']), D.SOURCE_FILES)
             self.assertEqual({x['name']: x['version'] for x in product['runtime_wheels'].values()}, product['runtime_pins'])
             self.assertTrue(product['core']['RECORD_verified'])
+
+    def test_predecessor_is_not_relabelled_as_current_controller(self):
+        for key, value in (('schema', 'li-same-failed-product-fixed-inputs-v1'),
+                           ('gate_source', '87b99a57b935e09d64ff569fe2ed900122118603'),
+                           ('gate_predecessor_source', 'f' * 40)):
+            changed = copy.deepcopy(self.data)
+            changed[key] = value
+            with self.subTest(key=key), self.assertRaises(RuntimeError):
+                D.validate_inputs(changed, 'modern')
 
     def test_changed_failed_source_or_run_rejected(self):
         for key, value in (('source', 'f' * 40), ('run', 1)):
@@ -188,6 +201,9 @@ class SourceBoundaryTests(unittest.TestCase):
         self.assertLess(core, admission)
         self.assertLess(admission, modes)
         self.assertIn("sha(gate) == data['gate_sha256']", self.body[:install])
+        gate = self.body.index("sha(gate) == data['gate_sha256']")
+        self.assertLess(gate, interpreter)
+        self.assertLess(gate, self.body.index("subprocess.check_output(['gh', 'api', endpoint])"))
 
     def test_offline_binary_hash_install_only(self):
         for flag in ('--no-index', '--no-deps', '--require-hashes', '--only-binary=:all:', '--force-reinstall', '--find-links'):
@@ -219,6 +235,59 @@ class SourceBoundaryTests(unittest.TestCase):
         self.assertIn('build/li-diagnostic-metadata-${{ matrix.profile }}.log', workflow[workflow.index('actions/upload-artifact@v4'):])
         for forbidden in ('cmake --build', 'pip wheel', 'build-whole-product', 'workflow run'):
             self.assertNotIn(forbidden, workflow)
+
+
+class GateCheckoutTests(unittest.TestCase):
+    def test_exact_current_gate_declares_raw_text_policy(self):
+        data = json.loads(D.INPUTS.read_bytes())
+        raw = (ROOT / 'tests/test_li_u16_pipeline.py').read_bytes()
+        self.assertNotIn(b'\r\n', raw)
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), data['gate_sha256'])
+        rules = (ROOT / '.gitattributes').read_bytes().splitlines()
+        self.assertEqual(rules.count(b'tests/test_li_u16_pipeline.py -text'), 1)
+
+    def test_real_autocrlf_checkout_with_and_without_exact_rule(self):
+        """Git only; two new synthetic repos, no old source/archive mutation."""
+        raw = (ROOT / 'tests/test_li_u16_pipeline.py').read_bytes()
+        expected = json.loads(D.INPUTS.read_bytes())['gate_sha256']
+        witnesses = []
+        with tempfile.TemporaryDirectory(prefix='li-gate-checkout-', dir=ROOT / 'build') as temporary:
+            for declared in (False, True):
+                repo = Path(temporary) / ('declared' if declared else 'unruled')
+                repo.mkdir()
+                (repo / 'tests').mkdir()
+                (repo / 'tests/test_li_u16_pipeline.py').write_bytes(raw)
+                (repo / '.gitattributes').write_bytes(b'tests/test_li_u16_pipeline.py -text\n' if declared else b'')
+                commands = []
+
+                def git(*args):
+                    command = ['git', '-c', 'core.autocrlf=false', '-C', str(repo), *args]
+                    result = subprocess.run(command, check=True, capture_output=True)
+                    commands.append(dict(args=command, stdout=result.stdout.decode('utf-8', 'replace'),
+                                         stderr=result.stderr.decode('utf-8', 'replace')))
+                    return result.stdout
+
+                git('init', '--quiet')
+                git('add', '--', '.gitattributes', 'tests/test_li_u16_pipeline.py')
+                destination = repo / 'checkout'
+                destination.mkdir()
+                command = ['git', '-c', 'core.autocrlf=true', '-C', str(repo), 'checkout-index',
+                           '--all', '--force', '--prefix=' + str(destination).replace(os.sep, '/') + '/']
+                result = subprocess.run(command, check=True, capture_output=True)
+                commands.append(dict(args=command, stdout=result.stdout.decode('utf-8', 'replace'),
+                                     stderr=result.stderr.decode('utf-8', 'replace')))
+                actual = (destination / 'tests/test_li_u16_pipeline.py').read_bytes()
+                digest = hashlib.sha256(actual).hexdigest()
+                if declared:
+                    self.assertEqual(actual, raw)
+                    self.assertEqual(digest, expected)
+                else:
+                    self.assertEqual(actual, raw.replace(b'\n', b'\r\n'))
+                    self.assertNotEqual(digest, expected)
+                witnesses.append(dict(declared_text_false=declared, expected_raw_sha256=expected,
+                                      actual_raw_sha256=digest, bytes=len(actual), CRLF=actual.count(b'\r\n'),
+                                      commands=commands))
+        print('LI_GATE_GIT_EOL_WITNESS ' + json.dumps(witnesses, sort_keys=True))
 
 
 if __name__ == '__main__':

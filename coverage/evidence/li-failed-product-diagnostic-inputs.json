@@ -1,8 +1,8 @@
 {
-  "schema": "li-same-failed-product-fixed-inputs-v1",
+  "schema": "li-same-failed-product-fixed-inputs-v2",
   "original_independent_pins_sha256": "c5b49b4798bded91f87289774bf6590a0f6b62d85f47ba56afe0154dcbdfd8e6",
-  "gate_source": "87b99a57b935e09d64ff569fe2ed900122118603",
-  "gate_sha256": "f869d60773fd56529857a1b7dfcf69d11b9225177a611ec522012f8961ea5844",
+  "gate_source": "controller",
+  "gate_sha256": "91587055f960211a2cf7d86e04d644dd13308acc7805316f55724e57de97eaf0",
   "products": {
     "modern": {
       "source": "28350015823b36333085ce8ce04e3dcc70065572",
@@ -333,5 +333,7 @@
       }
     }
   },
-  "no_product_acceptance": true
+  "no_product_acceptance": true,
+  "gate_predecessor_source": "87b99a57b935e09d64ff569fe2ed900122118603",
+  "gate_evolution": "Only C-return completion attribution uses callable module OR bound-owner module; unchanged42solver/86observation and all original parity assertions. Exact gate belongs to frozen controller Git revision."
 }
