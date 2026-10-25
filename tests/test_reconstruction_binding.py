@@ -14,7 +14,7 @@ def inputs():
 def test_scalar_conversion_cannot_invalidate_buffer(backend,field):
     core,_=backend;a,b,fp,off=inputs();target={'seed':a,'mask':b,'footprint':fp,'offset':off}[field]
     class Mutator:
-        def __bool__(self):target.shape=(target.size,);return False
+        def __bool__(self):target.shape=(1,target.size);return False
     before=core.reconstruction_counts(True)
     with pytest.raises(ValueError,match='metadata changed'):core.reconstruction_run(a,b,fp,off,0,Mutator())
     assert core.reconstruction_counts(False)['run']==dict(attempted=1,completed=0)
