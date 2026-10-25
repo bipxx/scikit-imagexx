@@ -92,13 +92,6 @@ def _clipped_seed(image, h, image_guard, height_guard, minima):
     if h > high - low:
         word = 'added' if minima else 'subtracted'
         raise ValueError('The ' + word + ' constant is not compatiblewith the image data type.')
-    if (type(image) is np.ndarray and image.dtype.kind in 'iu'
-            and type(h) is image.dtype.type and h >= 0):
-        # Integral floating heights were source-cast to this exact scalar dtype.
-        # Their source clipping arithmetic has no promotion or warning boundary.
-        _check(image_guard, height_guard)
-        shifted, _ = _core.h_extrema_integer_seed(image, int(h), 1 if minima else 0)
-        return shifted
     _check(image_guard, height_guard)
     result = image + h if minima else image - h
     result_guard = _storage(result)
