@@ -84,7 +84,7 @@ jobs:
           build/before-env/$PYSUB -m pip install --no-index --no-deps --require-hashes --only-binary=:all: --no-compile --find-links build/prepared/before/wheels -r build/prepared/before/runtime-lock.txt
           build/after-env/$PYSUB -m pip install --no-index --no-deps --require-hashes --only-binary=:all: --no-compile --find-links build/prepared/after/wheels -r build/prepared/after/runtime-lock.txt
           printf 'BEFORE_PY=%s\nAFTER_PY=%s\n' "build/before-env/$PYSUB" "build/after-env/$PYSUB" >> "$GITHUB_ENV"
-      - name: Exact400 observations original before after workers1and4 normalandscalar
+      - name: Legacy400 plus fresh default70 outputs and accepted builtin calls workers1and4 normalandscalar
         shell: bash
         run: |
           set -euo pipefail
@@ -189,7 +189,7 @@ jobs:
           build/before-env/$PYSUB -m pip install --no-index --no-deps --require-hashes --only-binary=:all: --no-compile --find-links build/prepared/before/wheels -r build/prepared/before/runtime-lock.txt
           build/after-env/$PYSUB -m pip install --no-index --no-deps --require-hashes --only-binary=:all: --no-compile --find-links build/prepared/after/wheels -r build/prepared/after/runtime-lock.txt
           printf 'BEFORE_PY=%s\nAFTER_PY=%s\n' "build/before-env/$PYSUB" "build/after-env/$PYSUB" >> "$GITHUB_ENV"
-      - name: One worker seven rotating paired triads all70 no builds or pytest
+      - name: Fresh host default70 and dispatch before one worker seven paired triads no builds or pytest
         shell: bash
         run: |
           set -euo pipefail

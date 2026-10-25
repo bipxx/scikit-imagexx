@@ -38,9 +38,10 @@ def rotating_triads(index):
     order=list(ROLES);random.Random(81+index).shuffle(order)
     return [order[r%3:]+order[:r%3] for r in range(7)]
 
-def sample_admission(validated,measure,actions,workers,scalar,index):
+def sample_admission(validated,measure,actions,workers,scalar,index,*,default_validated=False):
     require(validated and measure and actions=='true' and type(workers) is int and workers==1 and scalar is False,'timing before strict validation/primary worker forbidden')
     require(type(index) is int and 330<=index<400,'only frozen70 raster IDs may time')
+    require(validated is True and default_validated is True,'fresh default70 path not validated before timers')
 
 def verify_environment(product):
     spec=importlib.util.spec_from_file_location('_tv_compare_exact_runtime',ROOT/'tools/ci_measurement_artifacts.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
@@ -88,6 +89,128 @@ def verify_authentication_artifacts(output,report):
     result=dict(schema='tv-admission-original-auth-artifacts-v1',original_raw_upload=True,claim=record(claim_path),startup_receipts=startup,permit=record(permit_path))
     validate_authentication_index(dict(report,authentication_artifacts=result));return result
 
+def default_state(np,xx,wrapper,workers):
+    state=dict(policy=np.geterr(),handler_is_none=np.geterrcall() is None,buffer_elements=np.getbufsize(),
+               providers_pristine=wrapper._providers_pristine(),workers=xx.get_num_threads())
+    a.validate_default_state(state,workers);return state
+
+
+class DefaultWitness:
+    """Passive profile events; logs contain primitives, never frames/arrays.
+
+    Only immutable code/builtin identities are retained. A frame-id maps to
+    primitive call metadata until its return, then is removed. No function,
+    allocation provider, NumPy policy/handler, or numerical call is replaced.
+    """
+    def __init__(self,np,core,wrapper,role,original,inner):
+        self.array_type=np.ndarray;self.role=role;self.finite=core.tv_chambolle_finite_run;self.helper=wrapper._finite_call.__code__
+        require(inspect.isbuiltin(self.finite) and self.finite.__name__=='tv_chambolle_finite_run' and self.finite.__module__==core.__name__,'real owned finite builtin required')
+        require(inspect.isfunction(wrapper._finite_call) and wrapper._finite_call.__module__=='skimagexx._tv_chambolle' and wrapper._core is core,'real owned finite helper required')
+        self.original=original;self.inner=inner;self.outer_code=inspect.unwrap(original).__code__;self.inner_code=inner.__code__
+        self.stages={name:getattr(core,'tv_chambolle_'+name+'_into') for name in ('divergence','gradient','norm','dual')}
+        require(all(inspect.isbuiltin(fn) and fn.__name__=='tv_chambolle_'+name+'_into' and fn.__module__==core.__name__ for name,fn in self.stages.items()),'owned materialized stage builtins required')
+        self.active={}
+        self.data=dict(finite=dict(helper_calls=0,c_call=0,c_return=0,c_exception=0,accepted=0,rejected=0,returns=[]),
+            stages={n:dict(c_call=0,c_return=0,c_exception=0) for n in self.stages},
+            original=dict(outer=0,inner=0,denied=0),helper_marker='owned-_finite_call-real-builtin-v1')
+
+    def __call__(self,frame,event,arg):
+        source=self.data['original'];finite=self.data['finite']
+        if event=='call' and frame.f_code in (self.outer_code,self.inner_code):
+            if self.role!='original':source['denied']+=1;raise AssertionError('pristine original algorithm forwarding forbidden')
+            source['outer' if frame.f_code is self.outer_code else 'inner']+=1
+        if event=='c_call' and (arg is self.original or arg is self.inner) and self.role!='original':
+            source['denied']+=1;raise AssertionError('pristine original compiled forwarding forbidden')
+        if event=='call' and frame.f_code is self.helper:
+            arguments=frame.f_locals.get('arguments');function=frame.f_locals.get('function')
+            require(function is self.finite and type(arguments) is tuple and len(arguments)==9,'finite helper must invoke exact real builtin')
+            image=arguments[0];require(type(image) is self.array_type,'finite helper input must be plain ndarray')
+            finite['helper_calls']+=1
+            self.active[id(frame)]=dict(dtype=image.dtype.name,shape=[int(v) for v in image.shape],weight=arguments[4],eps=arguments[5],max_iterations=arguments[6],profile=arguments[7],buffer_elements=arguments[8],called=0,returned=0,exceptions=0)
+        if event in ('c_call','c_return','c_exception'):
+            if arg is self.finite:
+                require(frame.f_code is self.helper and id(frame) in self.active,'finite builtin bypassed owned helper')
+                finite[event]+=1;context=self.active[id(frame)];context[{'c_call':'called','c_return':'returned','c_exception':'exceptions'}[event]]+=1
+            for name,function in self.stages.items():
+                if arg is function:self.data['stages'][name][event]+=1
+        if event=='return' and frame.f_code is self.helper:
+            context=self.active.pop(id(frame));valid=(context['called']==context['returned']==1 and context['exceptions']==0 and type(arg) is tuple and len(arg)==4)
+            if valid:
+                value,iterations,alias,trace=arg
+                valid=(type(value) is self.array_type and type(iterations) is int and type(alias) is bool and type(trace) is list and not trace
+                       and value.dtype.name==context['dtype'] and list(value.shape)==context['shape']
+                       and (value is frame.f_locals['arguments'][0])==alias)
+            if valid:
+                finite['accepted']+=1;record={k:v for k,v in context.items() if k not in ('called','returned','exceptions')};record.update(iterations=iterations,input_alias=alias);finite['returns'].append(record)
+            else:finite['rejected']+=1
+
+    def finish(self):
+        require(not self.active,'unfinished finite helper frames');return self.data
+
+
+def default_bases(value,np,h):
+    result=[];seen=set()
+    while isinstance(value,np.ndarray) and value.base is not None:
+        base=value.base;require(id(base) not in seen and len(result)<32,'bounded base chain required');seen.add(id(base))
+        result.append(dict(array=h.contracts().array(base),offset=None if not isinstance(base,np.ndarray) else int(value.ctypes.data-base.ctypes.data)))
+        value=base
+    return result
+
+
+def observe_default(function,case,h,np,xx,wrapper,role,workers):
+    # Setup/serialization is untimed. Unlike frozen legacy observe(), this
+    # routine never sets NumPy policy/handler or installs allocation providers.
+    before_state=default_state(np,xx,wrapper,workers)
+    passed,image,owner,options,events=h.fixture(case);require(not events,'default timed fixture contains custom protocols')
+    require(default_state(np,xx,wrapper,workers)==before_state,'fixture changed default state')
+    before=dict(image=h.contracts().array(image),owner=h.contracts().array(owner));pointer=image.ctypes.data
+    bases_before=dict(image=default_bases(image,np,h),owner=default_bases(owner,np,h))
+    module=importlib.import_module('skimage.restoration._denoise');original=h.resolve(True)
+    witness=DefaultWitness(np,xx._core,wrapper,role,original,module._denoise_tv_chambolle_nd)
+    previous=sys.getprofile();require(previous is None,'pristine default profiling state required')
+    value=None;error=None
+    try:
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            try:
+                sys.setprofile(witness);value=function(passed,**options)
+            except Exception as caught:error=dict(type=type(caught).__name__,message=str(caught))
+            finally:sys.setprofile(previous)
+        result=None
+        if value is not None:
+            result=dict(array=h.contracts().array(value),identity_image=value is image,identity_owner=value is owner,
+                shares_image=bool(np.shares_memory(value,image)),shares_owner=bool(np.shares_memory(value,owner)),
+                base_is_image=value.base is image,base_is_owner=value.base is owner)
+        observation=dict(result=result,error=error,warnings=[dict(type=type(w.message).__name__,message=str(w.message)) for w in notices],events=events,
+            before=before,after=dict(image=h.contracts().array(image),owner=h.contracts().array(owner)),pointer_stable=image.ctypes.data==pointer,
+            bases=dict(before=bases_before,after=dict(image=default_bases(image,np,h),owner=default_bases(owner,np,h)),result=default_bases(value,np,h)))
+        after_state=default_state(np,xx,wrapper,workers);require(after_state==before_state,'default policy/handler/buffer/provider/globalworker changed')
+        # These70 are declared finite. Preserve raw words rather than silently
+        # using the legacy NaN-only normalization to admit a nonfinite result.
+        require(h.comparison(observation)==observation,'default finite result unexpectedly needs NaN normalization')
+        return dict(observation_digest=a.digest(observation),observation_payload=a.pack_default_observation(observation),state_before=before_state,state_after=after_state,dispatch=witness.finish())
+    finally:
+        require(sys.getprofile() is previous,'default profiler was not restored')
+
+
+def check_default_worker(h,np,xx,wrapper,role,profile,scalar,cases,value):
+    value.update(schema=a.DEFAULT_SCHEMA,role=role,profile=profile,mode='scalar' if scalar else 'normal',checks=[],mismatches=[])
+    try:
+        for workers in (1,4):
+            xx.set_num_threads(workers);records=[]
+            check=dict(workers=workers,records=records,digests=[]);value['checks'].append(check)
+            for index in range(330,400):
+                row=observe_default(h.resolve(role=='original'),cases[index],h,np,xx,wrapper,role,workers);row['case_index']=index
+                records.append(row);check['digests'].append(row['observation_digest'])
+                observation=a.unpack_default_observation(row['observation_payload'])
+                a.validate_default_dispatch(row['dispatch'],role,profile,a.default_rule(index,h.inventory(cases[index])))
+                require(observation['error'] is None,'default finite timed fixture failed')
+        require(value['checks'][0]['digests']==value['checks'][1]['digests'],'default workers1/4 output differs')
+        require([r['dispatch'] for r in value['checks'][0]['records']]==[r['dispatch'] for r in value['checks'][1]['records']],'default workers1/4 dispatch differs')
+        return value
+    finally:xx.set_num_threads(1)
+
+
 def worker_main(args):
     cfg=experiment(args);product=Path(args.product);product_role='before' if args.role=='original' else args.role
     startup=worker_permit(args.permit,args.profile,cfg,args.role) if args.measure else None
@@ -108,7 +231,8 @@ def worker_main(args):
     cpu_ns=dict(np=np,os=os,platform=platform,Path=Path);exec(compile(ast.Module(body=[cpu_node],type_ignores=[]),'<exact-shared-CPU-metadata>','exec'),cpu_ns)
     cpu=cpu_ns['cpu_metadata']()
     identity=dict(role=args.role,pid=os.getpid(),source=seal['revision'],product_sha256=seal['product_sha256'],core_sha256=sha(xx._core.__file__),core_path=str(Path(xx._core.__file__).resolve()),profile=args.profile,cpu=cpu,python=sys.version,numpy=np.__version__,scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD')=='1',default_workers=previous,has_avx2=xx.has_avx2(),fallback_enabled=False,startup_authentication=startup)
-    print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=False;callbacks={}
+    print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=False;default_validated=False;callbacks={}
+    wrapper=importlib.import_module('skimagexx._tv_chambolle');default_state(np,xx,wrapper,1)
     for line in sys.stdin:
         request=json.loads(line)
         try:
@@ -123,8 +247,12 @@ def worker_main(args):
                         if observed!=expected:mismatches.append(dict(index=index,id=case.id,worker=workers,expected=expected,actual=value))
                     checks.append(dict(workers=workers,digests=digests))
                 xx.set_num_threads(1);require(checks[0]['digests']==checks[1]['digests'] and not mismatches,'frozen400 exact observation differs');validated=True;reply=dict(checks=checks,mismatches=mismatches)
+            elif operation=='validate-default':
+                require(validated and request['workers']==[1,4],'legacy400 validation required before default70')
+                default_checks={};check_default_worker(h,np,xx,wrapper,args.role,args.profile,identity['scalar'],cases,default_checks);default_validated=True;reply=default_checks
             elif operation in ('warm','sample'):
-                index=request['case_index'];sample_admission(validated,args.measure,os.environ.get('GITHUB_ACTIONS'),xx.get_num_threads(),identity['scalar'],index)
+                index=request['case_index'];sample_admission(validated,args.measure,os.environ.get('GITHUB_ACTIONS'),xx.get_num_threads(),identity['scalar'],index,default_validated=default_validated)
+                default_state(np,xx,wrapper,1)
                 if index not in callbacks:callbacks[index]=h.timing_callback(h.resolve(args.role=='original'),cases[index])
                 call,unchanged=callbacks[index]
                 with warnings.catch_warnings():
@@ -136,12 +264,13 @@ def worker_main(args):
                         for _ in range(loops):result=call();del result
                         elapsed=time.perf_counter_ns()-start;reply=dict(ms=elapsed/loops/1e6,elapsed_ns=elapsed,loops=loops,identity=identity)
                 require(unchanged(),'timed input/owner state changed')
+                default_state(np,xx,wrapper,1)
             elif operation=='integrity':
                 require(c.verify_product(product,product_role,args.profile,validation)==seal,'product source/identity changed');verify_environment(product);require(cpu_ns['cpu_metadata']()==cpu,'worker CPU identity changed');reply=dict(seal=seal)
             elif operation=='close':print(json.dumps(dict(ok=True,result={})),flush=True);return
             else:raise RuntimeError('unknown worker operation')
             print(json.dumps(dict(ok=True,result=reply)),flush=True)
-        except BaseException as error:print(json.dumps(dict(ok=False,error=type(error).__name__,message=str(error),traceback=traceback.format_exc(),operation=request,last_case=locals().get('index'),partial_checks=locals().get('checks'),mismatches=locals().get('mismatches'),last_observation=locals().get('value'))),flush=True)
+        except BaseException as error:print(json.dumps(dict(ok=False,error=type(error).__name__,message=str(error),traceback=traceback.format_exc(),operation=request,last_case=locals().get('index'),partial_checks=locals().get('checks'),partial_default_checks=locals().get('default_checks'),mismatches=locals().get('mismatches'),last_observation=locals().get('value'))),flush=True)
 
 
 def summarize(rows):
@@ -153,7 +282,7 @@ def summarize(rows):
 
 
 def validate_report(report,e,*,preflight_only=False):
-    require(report.get('schema')=='tv-admission-controlled-v1' and report.get('status') in ('complete-parity-check','complete-controlled-measurement') and not report.get('failures'),'failed/partial controlled report')
+    require(report.get('schema')=='tv-admission-controlled-v2' and report.get('status') in ('complete-parity-check','complete-controlled-measurement') and not report.get('failures'),'failed/partial controlled report')
     require(report['controller_revision']==e['controller_revision'] and report['before_product_source']==a.BEFORE_PRODUCT and report['intended_before_source']==a.BEFORE_ANCHOR and report['after_product_source']==a.AFTER_PRODUCT,'report source labels differ')
     require(type(report['check_only']) is bool,'check-only flag must be literal bool');modes=('normal','scalar') if report['check_only'] else ('normal',);require(set(report['checks'])==set(modes),'missing normal/scalar preparation')
     M=a.read_json(ROOT/'coverage/contracts/tv-chambolle-benchmark.json');expected=[M['reference_profiles'][report['profile']]['observations'][str(i)] for i in range(400)]
@@ -168,6 +297,7 @@ def validate_report(report,e,*,preflight_only=False):
         require(set(report['checks'][mode])==set(ROLES),'backend observations missing')
         for role,value in report['checks'][mode].items():
             require(not value['mismatches'] and len(value['checks'])==2 and [v['workers'] for v in value['checks']]==[1,4] and all(v['digests']==expected for v in value['checks']),'complete exact400 workers1/4 observations required')
+    a.validate_default_checks(report,M['case_inventory'])
     if not preflight_only:require(bool(report['results'])!=report['check_only'],'preparation cannot time')
     if not report['check_only'] and not preflight_only:
         require([r['case_index'] for r in report['results']]==list(range(330,400)),'all70 original canonical indices required')
@@ -195,6 +325,7 @@ def verify_barrier(paths,e,experiment_sha,run,attempt):
         receipt=a.read_json(path);report_path=Path(path).parent/'report.json';require(sha(report_path)==receipt['report_sha256'],'preparation report bytes differ');r=validate_report(a.read_json(report_path),e)
         require(r['check_only'] is True and receipt['controller_revision']==e['controller_revision'] and r['experiment_sha256']==experiment_sha and r['profile']==receipt['profile'],'receipt/report provenance differs')
         require(receipt['common_build_sha256']==r['source_comparison']['common_sha256'] and receipt['reports']=={mode:a.digest(r['checks'][mode]) for mode in ('normal','scalar')},'receipt/check/common build binding differs')
+        require(receipt['default_reports']=={mode:a.digest(dict(checks=r['default_checks'][mode],assets=r['default_observation_assets'])) for mode in ('normal','scalar')},'receipt/default70 dispatch/state/raw observation binding differs')
     return rows
 
 
@@ -203,7 +334,7 @@ def controller(args):
     products={r:Path(getattr(args,r)) for r in ('before','after')};pair=a.verify_pair(products['before'],products['after'],args.profile,cfg);measure=not args.check_only
     if measure:verify_barrier(args.receipts,cfg,args.experiment_sha256,*generation())
     else:require(not args.receipts,'check-only cannot consume measurement barrier')
-    output=Path(args.output);output.mkdir(parents=True);report=dict(schema='tv-admission-controlled-v1',controller_revision=cfg['controller_revision'],before_product_source=a.BEFORE_PRODUCT,intended_before_source=a.BEFORE_ANCHOR,after_product_source=a.AFTER_PRODUCT,session_id=str(uuid.uuid4()),profile=args.profile,check_only=args.check_only,experiment_sha256=args.experiment_sha256,source_comparison=pair,worker_identities={},checks={},results=[],failures=[],status='preflight')
+    output=Path(args.output);output.mkdir(parents=True);report=dict(schema='tv-admission-controlled-v2',controller_revision=cfg['controller_revision'],before_product_source=a.BEFORE_PRODUCT,intended_before_source=a.BEFORE_ANCHOR,after_product_source=a.AFTER_PRODUCT,session_id=str(uuid.uuid4()),profile=args.profile,check_only=args.check_only,experiment_sha256=args.experiment_sha256,source_comparison=pair,worker_identities={},checks={},default_validation_schema=a.DEFAULT_SCHEMA,default_checks={},default_observation_assets={},results=[],failures=[],status='preflight')
     permit=None;nonces={}
     if measure:
         nonces,authentication=startup_plan();run,attempt=generation();claim=output/'authentication'/'claim.json'
@@ -215,7 +346,8 @@ def controller(args):
             workers={role:Worker(getattr(args,('after' if role=='after' else 'before')+'_python'),products['after' if role=='after' else 'before'],role,args.profile,output/(role+'-'+mode+'.stderr'),measure,mode=='scalar',permit,args.experiment,args.experiment_sha256,nonces.get(role)) for role in ROLES}
             report['worker_identities'][mode]={r:w.identity for r,w in workers.items()}
             report['checks'][mode]={r:scheduler.request(w,dict(operation='validate',workers=[1,4])) for r,w in workers.items()}
-            # Complete all400/allthree before touching any warm/calibration path.
+            report['default_checks'][mode]={r:a.ingest_default_reply(report,scheduler.request(w,dict(operation='validate-default',workers=[1,4]))) for r,w in workers.items()}
+            # Complete legacy400 AND fresh default70/dispatch/allthree before any warm/calibration path.
             partial=dict(report,status='complete-parity-check',check_only=True,results=[]);validate_report(partial,cfg) if mode=='scalar' else None
             if measure:
                 validate_report(dict(report,status='complete-controlled-measurement'),cfg,preflight_only=True)
@@ -243,7 +375,7 @@ def controller(args):
                 except BaseException as error:report['failures'].append(dict(phase='close',type=type(error).__name__,message=str(error)))
         write_new(output/'report.json',report)
     if args.check_only:
-        run,attempt=generation();write_new(output/'preparation.json',dict(schema='tv-admission-preparation-v1',passed=True,profile=args.profile,controller_revision=cfg['controller_revision'],generation=run,attempt=attempt,experiment_sha256=args.experiment_sha256,report_sha256=sha(output/'report.json'),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256=pair['common_sha256'],reports={mode:a.digest(report['checks'][mode]) for mode in ('normal','scalar')}))
+        run,attempt=generation();write_new(output/'preparation.json',dict(schema='tv-admission-preparation-v2',passed=True,profile=args.profile,controller_revision=cfg['controller_revision'],generation=run,attempt=attempt,experiment_sha256=args.experiment_sha256,report_sha256=sha(output/'report.json'),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256=pair['common_sha256'],reports={mode:a.digest(report['checks'][mode]) for mode in ('normal','scalar')},default_validation_schema=a.DEFAULT_SCHEMA,default_timed_count=70,default_reports={mode:a.digest(dict(checks=report['default_checks'][mode],assets=report['default_observation_assets'])) for mode in ('normal','scalar')}))
     return report
 
 
