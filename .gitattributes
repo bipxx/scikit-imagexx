@@ -186,3 +186,7 @@ coverage/contracts/colocalization.json -text
 tests/colocalization_cases.py -text
 tests/colocalization_reference.py -text
 tests/test_colocalization_contracts.py -text
+
+# Preserve exact portable collection/assertion bytes under real autocrlf checkout.
+tests/test_colocalization_native_pipeline.py -text
+tests/test_colocalization_portable_collection_metadata.py -text
