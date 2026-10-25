@@ -10,7 +10,7 @@
     "src/bind_h_extrema.cpp": "0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86",
     "python/skimagexx/_h_extrema.py": "60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a",
     "tests/test_h_extrema_native.cpp": "4e43b71ce517afd7a36c573afb759326de05c64a08cedb44f3d204464a2eeb75",
-    "tests/test_h_extrema_native_pipeline.py": "19ca4bc50fa96a59cff68d15ac385ddbba456ee1d62399a27bce45ea1323a8f8",
+    "tests/test_h_extrema_native_pipeline.py": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
     "include/skimagexx/reconstruction.hpp": "334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8",
     "src/reconstruction.cpp": "09c6c55262782c8228f62f1fe62e3cd394904f22be0c91f69ffc4a44fc36d9bc",
     "src/simd_reconstruction_avx2.cpp": "f595d741a33f7180fa8881b97983ecd500b9dc0a9e8684ea4d538d905e8730b8",
@@ -1695,5 +1695,6 @@
   "full_API_complete": false,
   "builds_at_freeze": 0,
   "candidate_numerical_calls_at_freeze": 0,
-  "operation_timings": 0
+  "operation_timings": 0,
+  "prebuild_metadata_revision": "Private test collection requires explicit core; absent private modules are skipped without loading source/candidate. No oracle/partition/math or output change; prior a87 source retained."
 }

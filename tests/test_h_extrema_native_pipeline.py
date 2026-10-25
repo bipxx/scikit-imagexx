@@ -10,6 +10,9 @@ import types
 
 import pytest
 
+if not os.environ.get('SKIMAGEXX_H_EXTREMA_CORE'):
+    pytest.skip('private H-extrema core explicitly required; no native/public claim', allow_module_level=True)
+
 ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = ROOT/'coverage/contracts/h-extrema-integer.json'
 POLICY = json.loads(POLICY_PATH.read_bytes())
