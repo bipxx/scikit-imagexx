@@ -4,13 +4,14 @@
 
 Implementation is active. The [work queue](work_items.json) owns assignments and
 file ownership; older status paragraphs below are historical. Accepted coverage
-remains **199 native-partial image APIs**, against the unchanged full inventory.
+is **203 native-partial image APIs**, against the unchanged full inventory.
 
-Execution checkpoint: **2026-10-25 22:47 UTC**. Three workers are active: A owns
-independent genuine203 artifact verification, B the Windows footprint gate,
-and C saved-raw parity review plus the portable serial-family handoff. Root owns
-exact launches, integration and acceptance. The queue records ownership; live
-process handles and terminal receipts establish execution state.
+Execution checkpoint: **public203 main integration, 2026-10-25**. A prepared
+the artifact-only TV workflow/publication/certificate handoff; B prepared the
+validated public203 source composition; C completed saved-raw profile reviews
+and prepared the sanitizer runtime handoff. Root owns exact launches, integration
+and acceptance. The queue records ownership; live handles and terminal receipts
+establish execution state. Completed handoffs are not active processes.
 
 Modern [colocalization private parity](evidence/colocalization-modern-private-parity-checkpoint.json)
 now has **1,072 passing normal assertion replays** and a fresh **1,073-pass scalar
@@ -18,9 +19,11 @@ gate**. The original normal pytest outcome remains 1,055 passed / 18 failed;
 the source-derived test-only repair preserves every semantic assertion and zero
 native credit for provider-only rows. Windows normal/scalar each passed 1,073
 tests; its independent raw review verifies 2,144 exact observations. Minimum
-normal/scalar each passed 1,073 tests, with raw review next. Corrected Windows
-and minimum native controls each passed 387. Portable/sanitizer family parity
-and public/SDK/performance gates remain pending. Windows raw receipt:
+normal/scalar each passed 1,073 tests and independently verified 2,144 rows,
+retaining all 141 original profile differences. Corrected Windows and minimum
+native controls each passed 387. Portable normal passed 538 nodes/536 serial
+observations; scalar is running. Sanitizer family parity and public/SDK/performance
+gates remain pending. Windows raw receipt:
 `build/resume-20261025/colocalization-windows-private-parity-independent-review-v1/final-review.json`.
 
 Footprint source `ad6f4cf` repairs the actual null-root and finite-complex
@@ -31,10 +34,14 @@ also passed 454 tests per mode and independently verified all 904 observations,
 including the three original profile differences. Native controls passed
 minimum 2,925 and portable 1,464. Windows v1 CRT-link and v2 resource-tool failures
 are preserved; v3 relink passed independent review without recompilation.
-Portable's reviewed test successor has 226 serial observations plus two existing
+Windows normal/scalar each passed 454 tests; portable normal/scalar each passed
+229. Independent saved-raw review verifies all 1,356 observations across those
+profiles. Portable's reviewed test successor has 226 serial observations plus two existing
 metadata guards and one global worker-budget refusal control: 229 nodes, zero
-parallel numerical credit. Windows/portable/sanitizer family gates and public,
-SDK and performance acceptance remain pending. NumPy providers remain explicit.
+parallel numerical credit. Sanitizer native normal/scalar each passed 2,925
+controls, with four new TUs instrumented and SDK primitives/worker explicitly
+uninstrumented. Sanitizer Python family gates and public, SDK and performance
+acceptance remain pending. NumPy providers remain explicit.
 The [original causal diagnoses](evidence/private-normal-gate-failure-diagnosis.json)
 and failed ce3d run remain unchanged. Raw review:
 `build/resume-20261025/footprint-ad6-modern-parity-independent-review/final-review.json`.
@@ -43,10 +50,13 @@ The [four-profile H diagnostic](evidence/h-four-profile-installed-diagnostic.jso
 passed on exact failed741 binaries: **28,352 rows**, including 448 blocked
 zero-call cases. Windows-only successor `40231513839` passed. Fresh ea35
 whole-product qualification [40237475475](https://github.com/bipxx/scikit-imagexx/actions/runs/40237475475)
-finished successfully on all four profiles. Sequential retention and independent
-verification of all seven exact archives are in progress; public coverage stays
-199 until those admission gates pass.
-Original whole qualification `40200919182` stays failed.
+has [root whole-product admission](evidence/public203-whole-product-admission.json):
+four profiles, **828,304 XML checks**, zero failures/errors/skips, three Release
+products, 68 SDK members and 23 families. All seven raw archives are retained and
+independently verified. The [main composition](evidence/public203-main-integration.json)
+matches all 298 qualified computational Git paths and preserves newer tooling.
+The exact admitted binaries remain ea35; this source merge is not a new binary
+qualification. Original whole qualification `40200919182` stays failed.
 
 Max-tree comparison `40200431797` ended cancelled: minimum preparation hit the
 explicit six-hour limit; Windows and modern preparation passed, measurement was
@@ -60,9 +70,9 @@ old partial receipts. No new timing is accepted. See the
 
 The [TV comparator successor](evidence/tv-positive-zero-ea35-source-admission.json)
 `6662516` explicitly requires ea35/run40237475475, with 723 metadata checks.
-All cases, before-product pins and timing bodies remain unchanged. No failed
-production ancestry was merged. Product admission and a real artifact-only
-comparison remain required; no zero-helper speedup is established. Retained
+All cases, before-product pins and timing bodies remain unchanged. Workflow and
+certificate source `9845cad8` is ready for root review; publication/dispatch and
+the actual isolated comparison remain. No zero-helper speedup is established. Retained
 af7 results identify short-iteration F-order rasters as an absolute-cost target,
 with a maximum minimum-profile median penalty of 1.477 ms. This is an existing
 measurement, not attribution to a particular scan or a new optimization result.

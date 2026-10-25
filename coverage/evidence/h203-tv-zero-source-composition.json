@@ -1,0 +1,51 @@
+{
+  "schema": "h203-TV-zero-source-composition-v1",
+  "parent_H203": "fa80587e9b36793f30fe3d0d2c4c47da47c1efdc",
+  "private_TV": "b5484fcb4b6b4184a53955150ecb56c69da0b085",
+  "changed_production": "Only zero_bytes helper in src/tv_denoise.cpp; full raw inverse to H203 parent verified.",
+  "exact_private_source_pins": {
+    "src/tv_denoise.cpp": {
+      "bytes": 14044,
+      "sha256": "67a2b9727f8ede1185c8bd19aee0c6910a5f49145487e4e09ae917f262cc43b0"
+    },
+    "tests/test_tv_positive_zero_native.cpp": {
+      "bytes": 16303,
+      "sha256": "ce0fabba201e80635c74cc7b45d8526479387c80adb1f77586131cb40e6c4bb5"
+    }
+  },
+  "private_admission_sha256": "e67f85c36a87e11c010fa7d255d32541a58ba9f32993cbde4c265d9a4ab35b9f",
+  "dry_plans": [
+    {
+      "profile": "windows",
+      "path": "build\\composition-v1\\windows-plan.json",
+      "bytes": 11543,
+      "sha256": "4e4c6d63e9a1f13de1b30b890e4a0ebce3642ab86a09d5226166498d2f8c9a3a"
+    },
+    {
+      "profile": "modern",
+      "path": "build\\composition-v1\\modern-plan.json",
+      "bytes": 11517,
+      "sha256": "d6044761b7f0c74f63040b41f7dd64d50218a59de92a0c246ff39e38a40030ca"
+    },
+    {
+      "profile": "minimum",
+      "path": "build\\composition-v1\\minimum-plan.json",
+      "bytes": 11520,
+      "sha256": "d6dd66d4b6e25b0cfcf436d1038be2f5b0ef903737833f01d58b9b847a0ea33c"
+    },
+    {
+      "profile": "debug",
+      "path": "build\\composition-v1\\debug-plan.json",
+      "bytes": 11514,
+      "sha256": "915567c7402604401b23200cdbbfebf70c2f62c69d01dc7ee22e7da1dfe999d2"
+    }
+  ],
+  "scientific_imports": 0,
+  "image_calls": 0,
+  "builds": 0,
+  "timings": 0,
+  "public_accepted": false,
+  "performance_accepted": false,
+  "native_control_scope": "New focused test remains the existing private diagnostic with renamed af7 control; not registered as a new whole-product CTest. Existing complete public TV native and pipeline suites remain unchanged.",
+  "next": "Independent H203 source review plus this two-file composition delta before one genuine combined hosted qualification."
+}

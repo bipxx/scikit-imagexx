@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           mkdir -p build
           python -m pip install pytest==9.1.1
-          python -m pytest -q --capture=sys tests/test_public_qualification.py tests/test_build_identity_facts.py tests/test_rank_statistics_products.py -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml 2>&1 | tee build/qualification-tool-guards.log
+          python -m pytest -q --capture=sys tests/test_public_qualification.py tests/test_build_identity_facts.py tests/test_rank_statistics_products.py tests/test_reconstruction_trace_policy.py tests/test_reconstruction_source_migration_metadata.py tests/test_h_extrema_public_metadata.py tests/test_h_extrema_source_provenance.py -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml 2>&1 | tee build/qualification-tool-guards.log
       - name: Build and qualify one genuine whole product on this fresh host
         shell: bash
         run: |

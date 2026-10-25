@@ -15,6 +15,9 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('morphology.h_maxima','morphology.h_minima'),'tests/test_h_extrema_public.py','benchmarks/coverage.py'),
+    (('metrics.normalized_mutual_information',),'tests/test_normalized_mutual_information_public.py','benchmarks/coverage.py'),
+    (('morphology.reconstruction',),'tests/test_reconstruction_public.py','benchmarks/coverage.py'),
     (tuple('morphology.'+name for name in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')),'tests/test_max_tree_public.py','benchmarks/coverage.py'),
     (('restoration.denoise_tv_bregman',),'tests/test_tv_bregman_public.py','benchmarks/coverage.py'),
     (('restoration.denoise_tv_chambolle',),'tests/test_tv_chambolle_contracts.py','benchmarks/tv_chambolle.py'),

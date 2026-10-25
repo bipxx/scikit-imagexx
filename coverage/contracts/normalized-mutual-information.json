@@ -67,5 +67,18 @@
     "no_performance_claim": true,
     "future_measurement": "tests/test_normalized_mutual_information_cases.py benchmark_cases; original0.26 vs native, isolated process, global workers1, construction/warmup outside interval"
   },
-  "validation_scope": "Three existing pinned runtime profiles; private SDK/module only. Public registry/CMake/core and whole-product qualification are pending integration."
+  "validation_scope": "Three existing pinned runtime profiles; private SDK/module only. Public registry/CMake/core and whole-product qualification are pending integration.",
+  "intake_boundary": {
+    "pinning": "Both inputs use direct NumPy C base-chain metadata, owner references and builtin-buffer export leases through released-GIL work; metadata is restamped before pixel reads.",
+    "supported_owners": "Contiguous owned ndarray roots and bounded bytes/bytearray/memoryview/mmap exporters; arbitrary in-allocation strides and unaligned bytearray fixtures remain covered.",
+    "unsupported_owners": "Unknown/opaque owners, stride-tricks DummyArray owners, cycles and overlong chains are rejected by the private binding before pixels; safe foreign-owner provider routing is a pending public-integration boundary. Overreaching/stale views are never passed to an upstream oracle.",
+    "unsafe_tests": "Metadata-only entry tests resized-owner stale views and as_strided overreach without any pixel read."
+  },
+  "native_followups": [
+    "Close ill-conditioned nonconstant distributions with source-faithful normalization and stable entropy, using the retained rare-event original cases; the pmax gate is temporary native scope, not API completion.",
+    "Replace O(bins) provider edge preparation/warning bridge only after provider-version structural parity is retained.",
+    "Close authenticated foreign-owner/public wrapper compatibility; integrate CMake/core/registry and qualify complete products separately.",
+    "Measure all fixed benchmark cases, including rare-event, narrow/extreme and custom-edge provider cases; report native/provider coverage rather than dropping unsupported cases."
+  ],
+  "direct_cpp_boundary": "Caller supplies positive finite widths within [1e-100,1e100] and prepared finite views; direct nonuniform density normalization may underflow a tiny probability to zero, whose entropy contribution is exactly zero. No NumPy warning policy is claimed for the standalone C++ API."
 }

@@ -30693,7 +30693,7 @@
       "state": "parity_passed",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "All five private profiles normal/scalar terminal0/reaped; independent74e695b1 and root admission accepted. Exact helper merged main4689217; combined741 genuine qualification40200919182 live. Scalar word scan, no new SIMD/speed credit."
+      "current_checkpoint": "Fiveprivateprofile zero-helper correctness admitted; exactcode nowinwhole203qualifiedEA35. No speedclaim. Explicitaf7-versusEA35 comparator666 integrated; artifact-onlyworkflow/publication successor underA review before realoneworker70casecomparison."
     },
     {
       "id": "li-original-observer-collection-policy",
@@ -30719,8 +30719,21 @@
         "tests/test_li_u16_pipeline.py"
       ],
       "depends_on": [],
-      "state": "preparing",
-      "current_checkpoint": "f82/run40189753345 TERMINALoverallFAIL; Windows/modern/minimumSUCCESSverify+stager,Debugonly17originalreferencebackendorderingfailures\u00d72 modes. Publicresults andallotherfields EXACT; forensic722158e0. All7rawarchivesretainedorremainingretainer10705finishing; no productacceptance. Closedtie-listvalidation-policy successor underway, no library/numericdata changes; nextgenuinequalification intendedcombinedrepairedH203."
+      "state": "accepted",
+      "current_checkpoint": "Closed by exactEA35/run40237475475 public203admission35e777:all4profiles828304XML/zero failures,3Releaseproducts,68SDK/23families/46checksperprofile. Compositiond434 imports exact298computationalpaths whilepreserving89newermainpaths. Oldf82/741failedruns stayfailed; no newperformance.",
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+          "manifest": {
+            "path": "coverage/evidence/public203-whole-product-admission.json",
+            "sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb"
+          },
+          "native_contract_checks": 184,
+          "native_pending": 0,
+          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+        }
+      }
     },
     {
       "id": "h-extrema-object-preentry-metadata",
@@ -30766,7 +30779,7 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Modern boundedprivate checkpoint retained. Windows normal1073PASS+scalar1073PASS,2144rows/6438phases, freshrawreview underway; minimum normal1073PASS/scalar71895live. BothWin/min correctednative387PASS; originalmodule actualf07 admitted. Portable/sanitizer/public/SDK/performance pending.",
+      "current_checkpoint": "Modern/minimum/Windows boundedprivate rawparity accepted:Win06fa/minc5e809 each2144exactrows; all141minimumprofiledifferences retained. Portable538normalPASS/scalar81247live; source24a attrs-first415,0worker4numericcredit. Nativeall5profiles focusedcontrols passed; sanitizerfullfamilygate andpublic/SDK/performance pending.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849",
       "next_gate": {
@@ -30891,7 +30904,7 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Modern and minimum bounded original-observable private parity accepted:454normal+454scalar each profile; each904exactrawrows,0forwarding,3minimumdifferences preserved. Minimum root private checkpoint now linked; native2925PASS, portable1464PASS. Windowsv1 CRT-linkfailure andv2 rc-tool failure preserved; v3zero-compile relinkPASS, independentactualreview pending. Portable serial-only229node test successor4e75+attrs575 readyrootreview; sanitizer/public/SDK/performance pending.",
+      "current_checkpoint": "Modern/minimum/Windows/portable boundedprivate rawparity accepted (portable229nodes/226serial rows/1budgetrefusal,0parallelcredit). Win/min/native2925PASS,portable1464PASS; sanitizer4TUbuild/actualc15 andnative2925normal+scalarPASS, fullPythonfamilygate source188352 pendingrootstartup/runtimeauthorization. No publicAPI/SDK/performancecredit yet.",
       "modern_private_checkpoint": {
         "path": "coverage/evidence/footprint-modern-private-parity-checkpoint.json",
         "sha256": "17665b6f36aa3ed64cc51b7137b3eef7e7990faa3988f815bc87ecc458141588"
@@ -30924,7 +30937,7 @@
       "depends_on": [
         "h203-failure-diagnostic-projection"
       ],
-      "current_checkpoint": "Exact failed741 products passed installedH diagnostics all4profiles:Linux493/run40228411066;Windows869/run40231513839.28352rawrows/rootca1029b7 report verification, unsafe448zero calls. Oldwhole741qualification andold493Windowsmetadata failure remain failed. FreshEA35 fourprofilewhole203qualification40237475475 nowlive; no publicacceptance yet."
+      "current_checkpoint": "All4samefailed741diagnostics accepted; exactfreshEA35whole203 nowrootadmitted35e777 after4profiles828304XML/3Releaseproducts/7rawarchives. No speedclaim, oldfailureidentities preserved."
     },
     {
       "id": "colocalization-profile-actual-link-review",
@@ -31621,12 +31634,12 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 192,
+    "native_partial_image_names": 203,
     "metadata_names": 3,
-    "upstream_only_names": 277,
+    "upstream_only_names": 266,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Accepted public-wave13 source3cdd:192partial image paths,3metadata,4partialclasses,1exception,277upstream-only/477. Full argument/class/state/data/I/O and performance objective remains incomplete.",
+    "note": "Accepted exactea35/run40237475475:203partialimage paths,3metadata,4partialclasses,1exception,266upstream-only/477; maincompositiond434 matches all298 computationalGitpaths. Full argument/class/state/data/I/O/performance scope remains incomplete.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1
   },
@@ -32036,8 +32049,9 @@
       }
     },
     "current_review_assignments": {
-      "astra_max_plan_audit": "FootprintWindowsv3 independentactualreview",
-      "resize_api": "ColocalizationWindows2144savedrawreview; footprintminimum904raw review accepted19347c4b"
+      "astra_max_plan_audit": "TVpositivezero artifact-onlyworkflow/publication/certificate source",
+      "astra_max_api_paths": "Public203maincompositiond434 validated andhandedoff; footprint/colocprivatefrozenhandoffs ready",
+      "resize_api": "Footprintsanitizer454gate source188352 handedoff; private4profilefoot/raw3profilecoloc accepted"
     }
   },
   "parallel_review": {
@@ -32809,8 +32823,8 @@
     "per_api_roadmap": "coverage/API_IMPLEMENTATION_PATHS.json",
     "human_roadmap": "coverage/API_IMPLEMENTATION_PATHS.md",
     "audit": "coverage/PLAN_REVIEW_ASTRA.md",
-    "accepted_image_paths": 199,
-    "upstream_only_paths": 270,
+    "accepted_image_paths": 203,
+    "upstream_only_paths": 266,
     "public_inventory_paths": 477,
     "historical_packets_not_completion_evidence": true,
     "review_completed_date": "2026-10-25",

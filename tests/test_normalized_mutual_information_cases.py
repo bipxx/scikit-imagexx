@@ -101,5 +101,12 @@ def cases():
 
 
 def benchmark_cases():
-    """Fixed future one-worker subset; no warmup, timer, or execution here."""
-    return [case for case in cases() if case['timed']]
+    """One-worker cases include adverse/provider routes; report every route.
+
+    These cases must stay in benchmark coverage even while their native route
+    is pending. No timer or execution is provided by this factory.
+    """
+    adverse = {'ill-conditioned-rare-event', 'narrow-float16', 'narrow-float32',
+               'extreme-float16', 'extreme-float32', 'integer-inexact-uint64',
+               'constant-(2, 3)', 'one-constant', 'custom-bins-edges'}
+    return [case for case in cases() if case['timed'] or case['id'] in adverse]
