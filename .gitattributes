@@ -166,3 +166,4 @@ tests/test_li_u16_pipeline.py -text
 coverage/evidence/li-counter-and-checkout-successor-source-review.json -text
 coverage/evidence/li-same-failed-product-installed-admission.json -text
 coverage/evidence/h-extrema-object-preentry-metadata-admission.json -text
+coverage/evidence/public201-repaired-source-admission.json -text

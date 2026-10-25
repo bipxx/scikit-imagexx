@@ -1,0 +1,50 @@
+{
+  "schema": "root-public201-repaired-source-admission-v1",
+  "source": "f82c0c26433fb60c233bfc888a5e8e1a0a925bb6",
+  "branch": "integration/public201-failure-repair",
+  "disposition": "Admitted exact source for fresh hosted four-profile untimed whole-product qualification; no inherited product acceptance.",
+  "independent_review": {
+    "path": "build/resume-20261025/public201-counter-independent-review/independent-review.json",
+    "bytes": 14265,
+    "sha256": "a07c7209d347c9e25a7bbc97d8f161692b5e67d38ac8df829adbe05f32aa8f05"
+  },
+  "proof": {
+    "path": "build/resume-20261025/public201-counter-independent-review/manifest.json",
+    "bytes": 2277,
+    "sha256": "8529efd9ea0b9ae691bab4a2be71a07a8f9d12de89a44417eba69103870f8938"
+  },
+  "source_members_rehashed": 19,
+  "proof_records_rehashed": 13,
+  "four_plans": "zero blockers with scientific imports denied",
+  "predicted": {
+    "images": 201,
+    "registered": 204,
+    "metadata": 3,
+    "wheel": 118,
+    "SDK": 67,
+    "families": 22,
+    "checks": 44,
+    "physical_headers": 55,
+    "physical_Python": 40
+  },
+  "validation": {
+    "initial_full_metadata_suite": "856PASS/1FAIL retained; not relabeled success",
+    "corrected_affected_tests": 7,
+    "independent_corrected_tests": 7,
+    "Li_same_failed_product_diagnostic": "separate cb371e9/run40186407587 root accepted86permode; no 201 product yet"
+  },
+  "unchanged": [
+    "No production/solver/oracle delta from87 in f82",
+    "All original failures and frozen raw science retained",
+    "Exact gate915 with -text; real completion counter identities and raw/LF provenance consumers corrected"
+  ],
+  "requirements": [
+    "Fresh4profilewholequalification fromexactf82; failed283/92admission NOTinherited",
+    "Actualsolecompiledcore+complete runtime/wheelRECORD+worker1/4+normal/scalar allgroups/corpora/sourceinventory/SDK22families44checks",
+    "Actualbuildidentity/compiler/flags/dependency/LTO/header/SDK closure andindependentterminalverification+stager",
+    "Broad automaticpytest observercollection separate/unimplemented; currentexplicitselectors unaffected",
+    "Metadata/sourceplans cannot prove product/CPP numeric/SDK/performance acceptance"
+  ],
+  "whole_product_accepted": false,
+  "performance_measured": false
+}
