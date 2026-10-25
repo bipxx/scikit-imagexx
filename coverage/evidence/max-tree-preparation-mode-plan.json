@@ -1,0 +1,46 @@
+{
+  "schema": "max-tree-preparation-mode-plan-v1",
+  "status": "prospective-source-only",
+  "base": "6b4a5635e4d55cd219d11ad2c13f90888bded310",
+  "cause": {
+    "run": "40200431797",
+    "minimum_job": "121190262169",
+    "annotation": "The job has exceeded the maximum execution time of 6h0m0s.",
+    "independent_review_sha256": "0ed528d485bdf00e3275523a05c97f393ed3a16a351a532bdeec7d2555941324",
+    "boundary": "Minimum normal preparation completed; scalar worker1 default checks completed, but scalar worker4 legacy validation did not emit its completion checkpoint. No measurement ran. The interrupted individual case and CPU cause are unknown."
+  },
+  "owned_paths": [
+    ".github/workflows/max-tree-compare.yml",
+    "benchmarks/max_tree_compare.py",
+    "tools/max_tree_compare_artifacts.py",
+    "tests/test_max_tree_compare.py",
+    ".gitattributes",
+    "coverage/evidence/max-tree-preparation-mode-plan.json"
+  ],
+  "preparation": {
+    "profiles": ["windows", "modern", "minimum"],
+    "modes": ["normal", "scalar"],
+    "jobs": 6,
+    "workers_per_job": [1, 4],
+    "scope_per_job": "The unchanged worker validate operation: all351 original observations, all252 original source observations, native351 source/pristine233/source252/pristine252 and all252 ordinary-default original/native checks at EACH worker count.",
+    "receipt_schema": "max-tree-preparation-v2",
+    "report_schema": "max-tree-public-comparison-v2",
+    "identity": "One selected mode per report/receipt, bound to actual worker scalar dispatch, source/core/product/certificate/run/attempt, default policy and complete raw journal.",
+    "barrier": "Exactly one current successful receipt for each of the six (profile, mode) pairs; reject old v1, missing, duplicate, substituted mode/profile, partial or relabelled worker evidence before fixtures or timers.",
+    "products": "Each preparation job independently verifies the same accepted profile product. Only the normal job uploads the reusable product artifact, avoiding duplicate upload names; all six jobs still gate measurement."
+  },
+  "measurement": {
+    "hosts": 3,
+    "workers": 1,
+    "rounds": 7,
+    "cases": 252,
+    "preserved": "Fresh hosts and one-use claims, installed product/runtime/core/SDK authentication, full default sweep before any timer, actual-fixture prechecks, paired ordering, clocks/calibration/statistics and all regressions."
+  },
+  "source_closure": {
+    "unchanged": ["worker_main", "validate_all", "old_fixture", "old_outcome", "candidate_outcome", "certify_original", "callback_pair", "default_binding", "default_events", "validate_default_case", "validate_default_rows", "retain_default_mismatch", "default_precheck", "default_sweep", "expected_default_journal", "verify_default_journal", "startup", "sample_admission", "orders", "summarize"],
+    "unchanged_data_and_products": "All frozen351/233/252 cases, observations, source/provider pins, contracts, numerical library code, accepted product/certificate schema and complete product verifier remain unchanged.",
+    "certificate": "A new explicit controller_revision and exact raw certificate SHA are required for a future campaign. Old cancelled partial reports remain diagnostic evidence only and cannot be admitted as new preparation."
+  },
+  "validation": "Standard-library-only metadata models, complete report/journal validation, six-pair barrier negatives, workflow matrix checks, exact preserved source/AST comparison and actionlint. No scientific imports, arrays, native execution, build, installation, measurement or dispatch is authorized.",
+  "cost": "Bounded edits to the existing workflow/controller/validator, targeting fewer than120 changed production lines plus focused metadata tests; no new framework, cache, retry or orchestration service."
+}

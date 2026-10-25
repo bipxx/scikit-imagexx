@@ -1,0 +1,164 @@
+{
+  "schema": "max-tree-public-product-v1",
+  "status": "root-accepted-qualified-public199",
+  "source": "d92d9ff522047f4dd91c21620323454a0010863e",
+  "run": "40166462583",
+  "controller_revision": "19fc90121300f7333c2a855824cd4ab3235bfddf",
+  "baseline": {
+    "benchmarks/max_tree.py": "4b2419f98bd282585dbc041c090230653c421b38706f83ce3a6d7460a6547d13",
+    "coverage/contracts/max-tree-benchmark.json": "09c9d36b548940d25dcd73cd9e59d5b5d8440bb4ae99ca1a0bdb404a8bb163bf",
+    "coverage/contracts/max-tree.json": "45d5999d49f3b1a5cdb8c7ec5767de470e74b158f5fb489f288132722edc6365"
+  },
+  "profiles": {
+    "windows": {
+      "pin": {
+        "revision": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "qualification_sha256": "5ad1494d64644d43d7db0b113eeb878e689670a1081ddff3903026e3036c732e",
+        "product_sha256": "2840084d9d4f440ab5cde1b43eacc33f698536c2e0881df150939bca5a097ac0",
+        "wheel_sha256": "5aee84072fda72c0663e2da81fc7bca62449ce181ea0be8b28622cac33a8af9c",
+        "source_sha256": "85093669aa6b32950fa7cc25144eb29ede80572ed97c964dc21f43493cff2fca",
+        "scope": {
+          "image_paths": 199,
+          "metadata_paths": 3,
+          "sdk_families": 20,
+          "sdk_members": 65,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform"
+          ]
+        },
+        "artifact_run": "40166462583",
+        "artifact_name": "rank-statistics-product-windows"
+      },
+      "artifact": {
+        "id": "12589250538",
+        "run": "40166462583",
+        "name": "rank-statistics-product-windows",
+        "digest": "761eed5db891087d2c316db1f9aca3b194930b0fe19de191b892894d6cb84a34"
+      },
+      "core_sha256": "f50b79b7e90ae98886232f5ca3c1170db6f7c1cac25069b38148cbf392669f29",
+      "python_version": "3.13.16"
+    },
+    "modern": {
+      "pin": {
+        "revision": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "qualification_sha256": "565a7d5bacff3a2924efbf736e421c22d71adedc37cbf71a1bb1400facbbe3e2",
+        "product_sha256": "70e21065ecbcc1337039b43fe05f1275fe560cbdec172b984742bb0d7abb92a0",
+        "wheel_sha256": "4fc9902cc1ca2a04caf54f33e641b161585f50b115a682ca8e56834d0bff440d",
+        "source_sha256": "63699412db1a4411106ca010548219200a0dd83e68ae45e200b3453ba5018f05",
+        "scope": {
+          "image_paths": 199,
+          "metadata_paths": 3,
+          "sdk_families": 20,
+          "sdk_members": 65,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform"
+          ]
+        },
+        "artifact_run": "40166462583",
+        "artifact_name": "rank-statistics-product-modern"
+      },
+      "artifact": {
+        "id": "12588948249",
+        "run": "40166462583",
+        "name": "rank-statistics-product-modern",
+        "digest": "5e0ecf036b408fb80f556d1882655b4e356259c9d23b20c7bd3ae04943cc2887"
+      },
+      "core_sha256": "1538b302ed80a033e122a6f86212770a314853dc9634827e8bd8b7400e319b01",
+      "python_version": "3.13.16"
+    },
+    "minimum": {
+      "pin": {
+        "revision": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "qualification_sha256": "4863d0816fa9f76be1e0d791a01b7649f41a570f8b7750bcea18f15ff397325d",
+        "product_sha256": "fb94912844259edce98eb56d6ea02cc3cbf422239de0b8d2011a13be5ba56650",
+        "wheel_sha256": "1dead87aac1fe3e6f1576c55be48840eca93ab34ae129a78e528d68353a2d37c",
+        "source_sha256": "63699412db1a4411106ca010548219200a0dd83e68ae45e200b3453ba5018f05",
+        "scope": {
+          "image_paths": 199,
+          "metadata_paths": 3,
+          "sdk_families": 20,
+          "sdk_members": 65,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform"
+          ]
+        },
+        "artifact_run": "40166462583",
+        "artifact_name": "rank-statistics-product-minimum"
+      },
+      "artifact": {
+        "id": "12589764654",
+        "run": "40166462583",
+        "name": "rank-statistics-product-minimum",
+        "digest": "9c9779c05ebfcc35d464b511c82e31785fcc4ae1042ab56f614223495160ae8e"
+      },
+      "core_sha256": "f9795e69ff491313ce60c5fd12a860273195a52cbd4a7324dd4accbdd8e081f5",
+      "python_version": "3.11.17"
+    }
+  },
+  "max_tree_runtime_source_sha256": {
+    "src/max_tree.cpp": "1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135",
+    "include/skimagexx/max_tree.hpp": "60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c",
+    "src/simd_max_tree_avx2.cpp": "2bdb72ade563581161038b8cf32260c6330e028e938590c7a382dc7c5fa92de4",
+    "src/max_tree_stages.hpp": "8afefbbdfe06282b5524607c4a5a831ceaeddb59cf75047e33fbbaabee125184",
+    "src/max_tree_stages.cpp": "d1961c7d0b4dd0940a765e76e7fb6f64aee8edfcfb3255c69b4e030f3b42d9e6",
+    "src/bind_max_tree.cpp": "f4764b61180293ab98e474d68b40b214774ff367fd07e0ca4034c3705bbee2c5",
+    "python/skimagexx/_max_tree.py": "3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae"
+  }
+}

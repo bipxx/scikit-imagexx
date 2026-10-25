@@ -34,6 +34,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        profile: [windows, modern, minimum]
+        mode: [normal, scalar]
         include:
           - os: windows-latest
             profile: windows
@@ -71,13 +73,14 @@ jobs:
           set -euo pipefail
           python benchmarks/max_tree_compare.py fetch --profile '${{ matrix.profile }}' --certificate build/certificate.json --certificate-sha256 "$CERTIFICATE_SHA256" --output build/product
           python -m pip install --no-index --no-deps --no-compile --only-binary=:all: --force-reinstall --require-hashes --find-links build/product/wheels -r build/product/runtime-lock.txt
-      - name: Metadata controls, then full normal and scalar workers1/4 parity
+      - name: Metadata controls, then complete selected-mode workers1/4 parity
         shell: bash
         run: |
           set -euo pipefail
           python -m pytest tests/test_max_tree_compare.py -q --capture=sys --junitxml build/metadata-guards.xml
-          python benchmarks/max_tree_compare.py prepare --profile '${{ matrix.profile }}' --certificate build/certificate.json --certificate-sha256 "$CERTIFICATE_SHA256" --product build/product --output build/preparation
+          python benchmarks/max_tree_compare.py prepare --profile '${{ matrix.profile }}' --mode '${{ matrix.mode }}' --certificate build/certificate.json --certificate-sha256 "$CERTIFICATE_SHA256" --product build/product --output build/preparation
       - uses: actions/upload-artifact@v4
+        if: matrix.mode == 'normal'
         with:
           name: max-tree-prepared-${{ matrix.profile }}
           include-hidden-files: true
@@ -86,14 +89,14 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: max-tree-receipt-${{ matrix.profile }}
+          name: max-tree-receipt-${{ matrix.profile }}-${{ matrix.mode }}
           include-hidden-files: true
           retention-days: 90
           path: |
             build/preparation/
             build/metadata-guards.xml
   measure:
-    # Every successful preparation profile gates NEW artifact-only hosts.
+    # All six successful profile/mode preparations gate NEW artifact-only hosts.
     needs: prepare
     timeout-minutes: 360
     strategy:
@@ -141,7 +144,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --no-index --no-deps --no-compile --only-binary=:all: --force-reinstall --require-hashes --find-links build/product/wheels -r build/product/runtime-lock.txt
-      - name: All3 fresh barrier before fixtures and seven paired one-worker rounds
+      - name: All6 fresh barrier before fixtures and seven paired one-worker rounds
         shell: bash
         run: |
           set -euo pipefail

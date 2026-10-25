@@ -170,22 +170,33 @@ def synthetic_preparation():
     plain=[dict(id=row['id'],digest=a.digest(row['observation']['result']),counts=counters(aggregate=1)) for row in M['profiles'][profile]['cases']]
     checks=[dict(workers=n,source351=old,pristine233=pristine,source252=candidates,pristine252=plain) for n in (1,4)]
     identity=dict(pid=42,profile=profile,source='8'*40,product_sha256='2'*64,core_sha256='6'*64,default_workers=1,fallback_enabled=False,scalar=False,has_avx2=True,cpu={'cpu_model':'HARNESS_ONLY_NOT_MEASURED'},authentication=dict(worker_pid=42,worker_parent=41,launcher_pid=42,receipt_sha256='a'*64),default_policy=dict(c.DEFAULT_POLICY),python_optimize=0)
-    scalar=copy.deepcopy(identity);scalar.update(scalar=True,has_avx2=False)
     row=dict(original351=[r['digest'] for r in old],original252=[r['digest'] for r in candidates],checks=checks)
-    report=dict(schema='max-tree-public-comparison-v1',passed=True,failures=[],profile=profile,source='8'*40,product_sha256='2'*64,controller_sha256=a.sha(c.__file__),counts=copy.deepcopy(c.COUNTS),check_only=True,results=[],identities={'normal':identity,'scalar':scalar},checks={'normal':row,'scalar':copy.deepcopy(row)},default_policy=dict(c.DEFAULT_POLICY),integrity={mode:integrity_model() for mode in ('normal','scalar')})
-    for mode in ('normal','scalar'):
-        for worker in report['checks'][mode]['checks']:worker['default252']=default_model(M,report['identities'][mode],worker['workers'],'preparation')
+    report=dict(schema='max-tree-public-comparison-v2',passed=True,failures=[],profile=profile,mode='normal',source='8'*40,product_sha256='2'*64,controller_sha256=a.sha(c.__file__),counts=copy.deepcopy(c.COUNTS),check_only=True,results=[],identities={'normal':identity},checks={'normal':row},default_policy=dict(c.DEFAULT_POLICY),integrity={'normal':integrity_model()})
+    for worker in report['checks']['normal']['checks']:worker['default252']=default_model(M,identity,worker['workers'],'preparation')
     return report
 
 
-def test_full_metadata_model_is_valid_without_executing_products(synthetic_preparation):
-    assert c.validate_report(synthetic_preparation,synthetic_certificate()) is synthetic_preparation
+def mode_model(report,mode):
+    report=copy.deepcopy(report);old=report['mode'];report['mode']=mode
+    for key in ('identities','checks','integrity'):report[key]={mode:report[key][old]}
+    report['identities'][mode].update(scalar=mode=='scalar',has_avx2=mode!='scalar')
+    return report
 
 
-@pytest.mark.parametrize('fault',['normal-only','worker1-only','bool-worker','source-id','metadata-mode','partial351','partial233','partial252','pristine252','wrong-digest','zero-cpp','partial-stages','worker-core','source','cpu','scalar','startup','timing-in-prepare'])
+@pytest.mark.parametrize('mode',a.MODES)
+def test_full_metadata_model_is_valid_without_executing_products(synthetic_preparation,mode):
+    report=mode_model(synthetic_preparation,mode)
+    assert c.validate_report(report,synthetic_certificate()) is report
+
+
+@pytest.mark.parametrize('fault',['missing-mode','unknown-mode','substituted-mode','extra-mode','old-schema','worker1-only','bool-worker','source-id','metadata-mode','partial351','partial233','partial252','pristine252','wrong-digest','zero-cpp','partial-stages','worker-core','source','cpu','scalar','startup','timing-in-prepare'])
 def test_report_rejects_missing_or_relabelled_parity(synthetic_preparation,fault):
     r=copy.deepcopy(synthetic_preparation);workers=r['checks']['normal']['checks'][0]
-    if fault=='normal-only':r['checks'].pop('scalar')
+    if fault=='missing-mode':r['checks'].pop('normal')
+    elif fault=='unknown-mode':r['mode']='automatic'
+    elif fault=='substituted-mode':r['mode']='scalar'
+    elif fault=='extra-mode':r['checks']['scalar']=copy.deepcopy(r['checks']['normal'])
+    elif fault=='old-schema':r['schema']='max-tree-public-comparison-v1'
     elif fault=='worker1-only':r['checks']['normal']['checks'].pop()
     elif fault=='bool-worker':workers['workers']=True
     elif fault=='source-id':workers['source351'][0]['id']='renamed'
@@ -200,7 +211,7 @@ def test_report_rejects_missing_or_relabelled_parity(synthetic_preparation,fault
     elif fault=='worker-core':r['identities']['normal']['core_sha256']='0'*64
     elif fault=='source':r['source']='0'*40
     elif fault=='cpu':r['identities']['normal']['cpu']={}
-    elif fault=='scalar':r['identities']['scalar']['has_avx2']=True
+    elif fault=='scalar':r['identities']['normal']['scalar']=True
     elif fault=='startup':r['identities']['normal']['authentication']['worker_pid']=999
     else:r['results']=[{'fake':'timing'}]
     with pytest.raises(RuntimeError):c.validate_report(r,synthetic_certificate())
@@ -250,18 +261,21 @@ def test_corrupt_raw_paired_report_is_rejected(synthetic_measurement,fault):
     with pytest.raises(RuntimeError):c.validate_report(r,synthetic_certificate())
 
 
-def synthetic_receipt(profile,cert_sha='a'*64):
-    return dict(schema='max-tree-preparation-v1',passed=True,profile=profile,certificate_sha256=cert_sha,generation='99',attempt='1',modes=['normal','scalar'],workers=[1,4],counts=copy.deepcopy(c.COUNTS),report_sha256='b'*64,product_sha256='2'*64,controller_sha256='c'*64)
+def synthetic_receipt(profile,mode='normal',cert_sha='a'*64):
+    return dict(schema='max-tree-preparation-v2',passed=True,profile=profile,mode=mode,certificate_sha256=cert_sha,generation='99',attempt='1',workers=[1,4],counts=copy.deepcopy(c.COUNTS),report_sha256='b'*64,product_sha256='2'*64,controller_sha256='c'*64)
 
 
-@pytest.mark.parametrize('fault',['profile','run','attempt','scalar','workers','count','status','reference','certificate','report','product'])
+@pytest.mark.parametrize('fault',['profile','run','attempt','mode','missing-mode','old-schema','workers','bool-worker','count','status','reference','certificate','report','product'])
 def test_preparation_receipts_cannot_be_partial_or_reused(fault):
     row=synthetic_receipt('windows')
     if fault=='profile':row['profile']='debug'
     elif fault=='run':row['generation']='98'
     elif fault=='attempt':row['attempt']='0'
-    elif fault=='scalar':row['modes']=['normal']
+    elif fault=='mode':row['mode']='automatic'
+    elif fault=='missing-mode':row.pop('mode')
+    elif fault=='old-schema':row['schema']='max-tree-preparation-v1';row['modes']=['normal','scalar']
     elif fault=='workers':row['workers']=[1]
+    elif fault=='bool-worker':row['workers']=[True,4]
     elif fault=='count':row['counts']['candidates']=251
     elif fault=='status':row['passed']=False
     elif fault=='reference':row['schema']='max-tree-benchmark-reference-v1'
@@ -271,16 +285,46 @@ def test_preparation_receipts_cannot_be_partial_or_reused(fault):
     with pytest.raises(RuntimeError):a.validate_receipt(row,'a'*64,'99','1')
 
 
-@pytest.mark.parametrize('n',[0,1,2,4])
-def test_three_profile_barrier_precedes_any_report_or_fixture(n):
-    with pytest.raises(RuntimeError,match='ALL3'):a.barrier([Path('unreadable')]*n,'a'*64,'99','1',synthetic_certificate())
+@pytest.mark.parametrize('n',[0,1,2,3,4,5,7])
+def test_six_pair_barrier_precedes_any_report_or_fixture(n):
+    with pytest.raises(RuntimeError,match='ALL6'):a.barrier([Path('unreadable')]*n,'a'*64,'99','1',synthetic_certificate())
+
+
+@pytest.mark.parametrize('fault',[None,'duplicate-mode','substituted-profile','old-schema','stale-attempt','partial-workers','report-hash'])
+def test_barrier_requires_each_closed_profile_mode_pair(tmp_path,fault):
+    paths=[]
+    for index,(profile,mode) in enumerate((p,m) for p in a.PROFILES for m in a.MODES):
+        directory=tmp_path/str(index);directory.mkdir();report=write(directory/'report.json',{'synthetic_metadata_only':index})
+        row=synthetic_receipt(profile,mode);row['report_sha256']=a.sha(report)
+        if index==5:
+            if fault=='duplicate-mode':row['mode']='normal'
+            elif fault=='substituted-profile':row['profile']='modern'
+            elif fault=='old-schema':row['schema']='max-tree-preparation-v1'
+            elif fault=='stale-attempt':row['attempt']='0'
+            elif fault=='partial-workers':row['workers']=[1]
+            elif fault=='report-hash':row['report_sha256']='0'*64
+        paths.append(write(directory/'preparation.json',row))
+    if fault is None:
+        rows=a.barrier(paths,'a'*64,'99','1',synthetic_certificate())
+        assert {(p,m) for p,modes in rows.items() for m in modes}=={(p,m) for p in a.PROFILES for m in a.MODES}
+    else:
+        with pytest.raises(RuntimeError):a.barrier(paths,'a'*64,'99','1',synthetic_certificate())
+
+
+@pytest.mark.parametrize('stage,mode',[('prepare',None),('measure','normal'),('measure','scalar'),('worker','scalar'),('selectors','normal')])
+def test_mode_argument_boundary_precedes_certificate_or_science(monkeypatch,stage,mode):
+    def forbidden(*args):raise AssertionError('certificate must not be read')
+    monkeypatch.setattr(a,'certificate',forbidden)
+    args=[stage,'--certificate','unreadable','--certificate-sha256','a'*64]
+    if mode is not None:args+=['--mode',mode]
+    with pytest.raises(RuntimeError,match='--mode'):c.main(args)
 
 
 def test_claim_is_exclusive_and_tied_to_receipts(tmp_path,monkeypatch):
     monkeypatch.setenv('RUNNER_TEMP',str(tmp_path))
     monkeypatch.setattr(a,'barrier',lambda *args:{'HARNESS_ONLY':'metadata no product'})
     receipts=[]
-    for i in range(3):p=tmp_path/str(i);p.write_text(str(i));receipts.append(p)
+    for i in range(6):p=tmp_path/str(i);p.write_text(str(i));receipts.append(p)
     claim,_=a.claim(receipts,'a'*64,'99','1',synthetic_certificate(),'windows','n'*64)
     assert a.read(claim)['receipt_sha256']==[a.sha(p) for p in receipts]
     with pytest.raises(FileExistsError):a.claim(receipts,'a'*64,'99','1',synthetic_certificate(),'windows','z'*64)
@@ -324,7 +368,10 @@ def test_workflow_fresh_hosts_no_build_or_test_in_measurement():
     assert 'write_bytes(raw)' in prepare and 'write_bytes(raw)' in measure
     assert 'max_tree_compare.py fetch' in prepare and 'max_tree_compare.py measure' in measure
     assert 'build/barrier/max-tree-receipt-*/preparation/preparation.json' in measure
-    assert prepare.count('profile: ')==3 and measure.count('profile: ')==3
+    assert 'profile: [windows, modern, minimum]' in prepare and 'mode: [normal, scalar]' in prepare
+    assert prepare.count('profile: ')==4 and measure.count('profile: ')==3 and 'mode:' not in measure
+    assert "--mode '${{ matrix.mode }}'" in prepare and "if: matrix.mode == 'normal'" in prepare
+    assert 'name: max-tree-receipt-${{ matrix.profile }}-${{ matrix.mode }}' in prepare
 
 
 @pytest.mark.parametrize('initial',[True,False])
@@ -358,7 +405,7 @@ def test_retained_claim_does_not_weaken_global_once_guard(tmp_path,monkeypatch):
     monkeypatch.setenv('RUNNER_TEMP',str(tmp_path))
     monkeypatch.setattr(a,'barrier',lambda *args:[])
     receipts=[]
-    for i in range(3):
+    for i in range(6):
         p=tmp_path/str(i);p.write_bytes(str(i).encode());receipts.append(p)
     anchor,_=a.claim(receipts,'a'*64,'99','1',synthetic_certificate(),'windows','n'*64)
     raw=anchor.read_bytes();output=tmp_path/'upload-one';output.mkdir();a.retain_claim(anchor,output)
@@ -474,22 +521,28 @@ def test_flushed_default_journal_is_bound_to_complete_report(synthetic_preparati
         with pytest.raises(RuntimeError):c.verify_default_journal(path,r,'normal')
 
 
-@pytest.mark.parametrize('fault',[None,'old-receipt','partial','wrong-policy','relabelled'])
-def test_barrier_requires_bound_default_coverage_and_raw_journals(synthetic_preparation,tmp_path,monkeypatch,fault):
-    r=copy.deepcopy(synthetic_preparation);r['certificate_sha256']='a'*64
-    for mode in ('normal','scalar'):
+@pytest.mark.parametrize('mode',a.MODES)
+@pytest.mark.parametrize('fault',[None,'old-receipt','partial','wrong-policy','relabelled','substituted-mode','substituted-profile','worker-identity','scalar-dispatch','actual-simd'])
+def test_barrier_requires_bound_default_coverage_and_raw_journals(synthetic_preparation,tmp_path,monkeypatch,fault,mode):
+    r=mode_model(synthetic_preparation,mode);r['certificate_sha256']='a'*64
+    if fault=='worker-identity':r['identities'][mode]['authentication']['worker_pid']=999
+    elif fault=='scalar-dispatch':r['identities'][mode]['scalar']=mode!='scalar'
+    elif fault=='actual-simd':r['identities'][mode]['has_avx2']=True if mode=='scalar' else 1
+    for mode in r['checks']:
         prefix=tmp_path/mode;prefix.mkdir();journal=prefix/'default-observations.jsonl'
         rows=c.expected_default_journal(r,mode)
         journal.write_text(''.join(json.dumps(row)+'\n' for row in rows),encoding='utf-8')
         r['integrity'][mode].update(journal_sha256=a.sha(journal),journal_bytes=journal.stat().st_size,journal_records=len(rows))
     write(tmp_path/'report.json',r)
-    receipt=dict(controller_sha256=a.sha(c.__file__),default_policy=dict(c.DEFAULT_POLICY),default_coverage=c.default_coverage(r))
+    receipt=dict(profile=r['profile'],mode=r['mode'],controller_sha256=a.sha(c.__file__),default_policy=dict(c.DEFAULT_POLICY),default_coverage=c.default_coverage(r))
     if fault=='old-receipt':receipt.pop('default_coverage')
-    elif fault=='partial':receipt['default_coverage']['normal'][0]['cases']=251
+    elif fault=='partial':receipt['default_coverage'][mode][0]['cases']=251
     elif fault=='wrong-policy':receipt['default_policy']['under']='warn'
-    elif fault=='relabelled':receipt['default_coverage']['normal'][0]['sha256']=a.digest(r['checks']['normal']['checks'][0]['pristine252'])
+    elif fault=='relabelled':receipt['default_coverage'][mode][0]['sha256']=a.digest(r['checks'][mode]['checks'][0]['pristine252'])
+    elif fault=='substituted-mode':receipt['mode']='normal' if mode=='scalar' else 'scalar'
+    elif fault=='substituted-profile':receipt['profile']='modern'
     path=write(tmp_path/'preparation.json',receipt)
-    # Existing certificate/product/three-host controls have separate tests;
+    # Existing certificate/product/six-pair controls have separate tests;
     # this explicitly synthetic test exercises the added barrier evidence.
     monkeypatch.setattr(a,'barrier',lambda *args:[])
     monkeypatch.setenv('GITHUB_RUN_ID','99');monkeypatch.setenv('GITHUB_RUN_ATTEMPT','1')
