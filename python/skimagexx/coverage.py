@@ -12,7 +12,7 @@ NATIVE_FUNCTIONS = {
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
-                   'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing'),
+                   'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -276,6 +276,7 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='morphology.reconstruction':return (image,image),{}
     if api=='morphology.remove_small_objects':
         # Random uint8 IDs have mixed counts around this threshold, so both
         # retained and removed IDs are represented without input conversion.

@@ -28,6 +28,9 @@ MAX_TREE_RUNTIME_SOURCE_PINS = {'src/max_tree.cpp': '1808c8581b465a96a5d5ee9cccd
  'python/skimagexx/_max_tree.py': '3519902c42187e3f79ebe1bf5e17bdf05b562518e773fee05d743f79160db3ae'}
 MAX_TREE_ORACLE_PATH = 'tests/cmake_consumer/max_tree_source_oracle.bin'
 MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab61bc39d93b5'
+RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': '09c6c55262782c8228f62f1fe62e3cd394904f22be0c91f69ffc4a44fc36d9bc', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': '35b91fccde1364128b02388a6ef77b0f18e2b9146b8d9774611e92a563873c88'}
+RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
+RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
 CONTROLLERS = ('tools/rank_statistics_products.py', 'tools/public_qualification.py',
                'tools/build_identity_facts.py', 'benchmarks/rank_statistics_compare.py',
                'benchmarks/rank_statistics.py', 'tools/ci_measurement_artifacts.py',
@@ -165,7 +168,8 @@ def qualification_scope_text(text):
     scopes = {'tv17': (108, 62, ('tv_chambolle', 'tv_reductions', 'tv_denoise')),
               'bregman18': (110, 63, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman')),
               'max_tree19': (112, 64, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree')),
-              'matrix20': (114, 65, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform'))}
+              'matrix20': (114, 65, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform')),
+              'reconstruction21': (116,66,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction'))}
     require(values['PRODUCT_SCOPE'] in scopes, 'source TV/Bregman scope incomplete')
     members, sdk, suffix = scopes[values['PRODUCT_SCOPE']]
     require(type(values['PRODUCT_MEMBERS']) is int and type(values['SDK_MEMBERS']) is int
@@ -175,9 +179,25 @@ def qualification_scope_text(text):
     return dict(name=values['PRODUCT_SCOPE'], families=list(families), members=members, sdk=sdk)
 
 
+def validate_reconstruction_source(archive,snapshot,scope):
+    if scope['name']!='reconstruction21':return
+    tree=ast.parse(archive.read('tools/public_qualification.py'));declared={}
+    for node in tree.body:
+        if isinstance(node,ast.Assign):
+            for target in node.targets:
+                if isinstance(target,ast.Name) and target.id in ('RECONSTRUCTION_RUNTIME_SOURCE_PINS','RECONSTRUCTION_ORACLE_PATH','RECONSTRUCTION_ORACLE_SHA256'):
+                    require(target.id not in declared,'duplicate reconstruction source pin declaration')
+                    declared[target.id]=ast.literal_eval(node.value)
+    require(declared==dict(RECONSTRUCTION_RUNTIME_SOURCE_PINS=RECONSTRUCTION_RUNTIME_SOURCE_PINS,RECONSTRUCTION_ORACLE_PATH=RECONSTRUCTION_ORACLE_PATH,RECONSTRUCTION_ORACLE_SHA256=RECONSTRUCTION_ORACLE_SHA256),'reconstruction source pins absent or changed')
+    for name,want in {**RECONSTRUCTION_RUNTIME_SOURCE_PINS,RECONSTRUCTION_ORACLE_PATH:RECONSTRUCTION_ORACLE_SHA256}.items():
+        require(name in archive.namelist(),'reconstruction source absent: '+name)
+        raw=archive.read(name);canonical=raw if name==RECONSTRUCTION_ORACLE_PATH else raw.replace(b'\r\n',b'\n')
+        require(hashlib.sha256(canonical).hexdigest()==want and snapshot['files_sha256'].get(name)==want,'reconstruction source bytes differ: '+name)
+
+
 def validate_max_tree_source(archive, snapshot, scope):
     """Data-only source admission; old rank/TV/Bregman envelopes keep their scope."""
-    if scope['name'] not in ('max_tree19', 'matrix20'):
+    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21'):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = {}
@@ -290,20 +310,23 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
                 'qualified source controller differs before registry admission')
         scope = qualification_scope_text(text.decode('utf-8'))
         validate_max_tree_source(archive, q['source'], scope)
-    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199}[scope['name']]
+        validate_reconstruction_source(archive,q['source'],scope)
+    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
             f'genuine{image_count}+3 registry qualification required')
     require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
-    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20')),
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21')),
             'qualified Bregman registry/source scope differs')
     max_tree = tuple('morphology.' + name for name in ('max_tree', 'max_tree_local_maxima',
                      'area_opening', 'area_closing', 'diameter_opening', 'diameter_closing'))
-    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20')
+    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21')
             else not any(name in expected['functions'] for name in max_tree),
             'qualified max-tree registry/source scope differs')
-    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] == 'matrix20'),
+    require(('morphology.reconstruction' in expected['functions'])==(scope['name']=='reconstruction21'),
+            'source reconstruction scope/registry differs')
+    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21')),
             'qualified matrix registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')

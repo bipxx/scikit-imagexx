@@ -118,3 +118,8 @@ coverage/contracts/reconstruction.json -text
 tests/cmake_consumer/reconstruction_source_oracle.bin -text
 coverage/evidence/reconstruction-public-assertion-migration.json -text
 coverage/evidence/matrix-transform-public-source-successor-assertion.json -text
+tests/test_reconstruction_contracts.py -text
+tests/test_reconstruction_native_pipeline.py -text
+tests/test_reconstruction_owner_guards.py -text
+tests/test_reconstruction_offset_guards.py -text
+src/simd_reconstruction_avx2.cpp -text
