@@ -117,6 +117,25 @@ void residue() {
 #endif
     check(std::all_of(std::begin(result),std::end(result),[](auto x){return x==0xcc;}));
 }
+void descriptor_aliases() {
+    // One live sample only: even an unfixed first write cannot trigger a later
+    // pixel dereference. The repaired implementation must reject before writes.
+    const unsigned char pixel=5;const double rec=4.;
+    const std::size_t shape[]={1};const std::ptrdiff_t byte_stride[]={1},double_stride[]={8};
+    ReconstructionView image{&pixel,&pixel,sizeof(pixel),{shape,1},{byte_stride,1},ReconstructionType::uint8,false};
+    ReconstructionView reconstructed{&rec,&rec,sizeof(rec),{shape,1},{double_stride,1},ReconstructionType::float64,false};
+    unsigned char image_before[sizeof(image)],reconstructed_before[sizeof(reconstructed)];
+    std::memcpy(image_before,&image,sizeof(image));std::memcpy(reconstructed_before,&reconstructed,sizeof(reconstructed));
+    rejected([&]{h_extrema_integer_seed_into(image,1,ReconstructionMethod::dilation,
+        {reinterpret_cast<unsigned char*>(&image),1});});
+    check(std::memcmp(image_before,&image,sizeof(image))==0);
+    rejected([&]{h_extrema_integer_mask_into(image,reconstructed,1.,ReconstructionMethod::dilation,
+        {reinterpret_cast<unsigned char*>(&image),1});});
+    check(std::memcmp(image_before,&image,sizeof(image))==0);
+    rejected([&]{h_extrema_integer_mask_into(image,reconstructed,1.,ReconstructionMethod::dilation,
+        {reinterpret_cast<unsigned char*>(&reconstructed),1});});
+    check(std::memcmp(reconstructed_before,&reconstructed,sizeof(reconstructed))==0);
+}
 void parallel_seed(int workers) {
     const std::size_t n=65537,shape[]={n};const std::ptrdiff_t stride[]={2};
     std::vector<std::uint16_t> image(n),output(n);
@@ -138,7 +157,7 @@ int main() {
         set_num_threads(workers);
         for(std::size_t i=0;i<8;++i)for(bool swapped:{false,true})for(bool reverse:{false,true})
             boundary(types[i],std::size_t(1)<<(i/2),bool(i%2),swapped,reverse);
-        byte_exhaustion();residue();parallel_seed(workers);
+        byte_exhaustion();residue();descriptor_aliases();parallel_seed(workers);
     }
     set_num_threads(1);
     std::cout<<"H-extrema integer native assertions "<<assertions<<" PASS; default1, widths8/16/32/64, saturation, strided/endian/unaligned, raw wide rounding, allocation and FP guards; AVX2="<<has_avx2()<<'\n';

@@ -92,9 +92,11 @@ Range output_range(ReconstructionSpan<unsigned char> output,std::size_t needed,
                    const ReconstructionView* second=nullptr,const Validated* b=nullptr) {
     if(output.size<needed)throw std::invalid_argument("H-extrema output span too small");
     const auto out=range(output.data,needed);
-    if(overlaps(out,a.extent) || overlaps(out,metadata(first.shape)) || overlaps(out,metadata(first.strides)))
+    if(overlaps(out,range(&first,sizeof(first))) || overlaps(out,a.extent) ||
+       overlaps(out,metadata(first.shape)) || overlaps(out,metadata(first.strides)))
         throw std::invalid_argument("H-extrema output overlaps input or metadata");
-    if(second && (overlaps(out,b->extent) || overlaps(out,metadata(second->shape)) || overlaps(out,metadata(second->strides))))
+    if(second && (overlaps(out,range(second,sizeof(*second))) || overlaps(out,b->extent) ||
+                  overlaps(out,metadata(second->shape)) || overlaps(out,metadata(second->strides))))
         throw std::invalid_argument("H-extrema output overlaps input or metadata");
     return out;
 }

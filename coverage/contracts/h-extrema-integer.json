@@ -6,10 +6,10 @@
   "reference_matrix_sha256": "ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d",
   "source_sha256": {
     "include/skimagexx/h_extrema.hpp": "fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1",
-    "src/h_extrema.cpp": "374a42ead5ab52e55d90c610ec9d78c7f3f96a31d924ad92df0c3c62395d828f",
+    "src/h_extrema.cpp": "d67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f",
     "src/bind_h_extrema.cpp": "0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86",
     "python/skimagexx/_h_extrema.py": "60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a",
-    "tests/test_h_extrema_native.cpp": "4e43b71ce517afd7a36c573afb759326de05c64a08cedb44f3d204464a2eeb75",
+    "tests/test_h_extrema_native.cpp": "228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438",
     "tests/test_h_extrema_native_pipeline.py": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
     "include/skimagexx/reconstruction.hpp": "334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8",
     "src/reconstruction.cpp": "09c6c55262782c8228f62f1fe62e3cd394904f22be0c91f69ffc4a44fc36d9bc",
@@ -1696,5 +1696,13 @@
   "builds_at_freeze": 0,
   "candidate_numerical_calls_at_freeze": 0,
   "operation_timings": 0,
-  "prebuild_metadata_revision": "Private test collection requires explicit core; absent private modules are skipped without loading source/candidate. No oracle/partition/math or output change; prior a87 source retained."
+  "prebuild_metadata_revision": "Private test collection requires explicit core; absent private modules are skipped without loading source/candidate. No oracle/partition/math or output change; prior a87 source retained.",
+  "prebuild_descriptor_alias_repair": {
+    "prior_source": "b649f954eb23625231c91495d1653ad2b077b5b5",
+    "finding": "The output span must also reject the input ReconstructionView descriptor object bytes.",
+    "change": "Check &first/sizeof(first) and second/sizeof(*second), with safe one-sample rejection and unchanged-descriptor tests.",
+    "numerical_policy_or_oracle_changes": 0,
+    "candidate_calls_before_repair": 0,
+    "builds_before_repair": 0
+  }
 }
