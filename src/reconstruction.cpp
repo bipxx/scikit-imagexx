@@ -244,7 +244,8 @@ template<class T> ReconstructionInfo execute(const ReconstructionView& seed,cons
     Environment environment;environment.check();const bool erosion=method==ReconstructionMethod::erosion;
     std::array<Range,8> writable={span(b.output,r.output_bytes),span(b.mask,r.mask_bytes),span(b.to_padded,r.samples),span(b.from_padded,r.padded_samples),span(b.queue,r.samples),span(b.position,r.samples),span(b.heads,r.bucket_heads),span(b.neighbors,r.neighbor_capacity)};
     if(reinterpret_cast<std::uintptr_t>(b.output.data)%alignof(T) || reinterpret_cast<std::uintptr_t>(b.mask.data)%alignof(T))throw std::invalid_argument("unaligned reconstruction floating workspace");
-    std::array<Range,10> readonly={extent(seed),extent(mask),extent(f.values),span(seed.shape,seed.shape.size),span(seed.strides,seed.strides.size),span(mask.shape,mask.shape.size),span(mask.strides,mask.strides.size),span(f.values.shape,f.values.shape.size),span(f.values.strides,f.values.strides.size),span(f.offset,f.offset.size)};
+    // Descriptor fields are read again after workspace stores begin.
+    std::array<Range,14> readonly={range(&seed,sizeof(seed)),range(&mask,sizeof(mask)),range(&f,sizeof(f)),range(&b,sizeof(b)),extent(seed),extent(mask),extent(f.values),span(seed.shape,seed.shape.size),span(seed.strides,seed.strides.size),span(mask.shape,mask.shape.size),span(mask.strides,mask.strides.size),span(f.values.shape,f.values.shape.size),span(f.values.strides,f.values.strides.size),span(f.offset,f.offset.size)};
     for(std::size_t i=0;i<writable.size();++i){for(auto a:readonly)if(overlap(writable[i],a))throw std::invalid_argument("reconstruction workspace/input overlap");for(std::size_t j=0;j<i;++j)if(overlap(writable[i],writable[j]))throw std::invalid_argument("reconstruction workspace overlap");}
     bool integer_fast=false;
 #ifdef SKIMAGEXX_AVX2

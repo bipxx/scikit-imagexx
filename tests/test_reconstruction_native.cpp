@@ -69,6 +69,43 @@ template<class T> void run_case(const Case& c,ReconstructionQueue queue) {
 Array typed_double(std::size_t h,std::size_t w,double fill) {
     Array a;a.shape={h,w};a.strides={std::ptrdiff_t(w*8),8};a.type=ReconstructionType::float64;std::vector<double>x(h*w,fill);std::vector<unsigned char>b(x.size()*8);std::memcpy(b.data(),x.data(),b.size());a.allocate(b,false);return a;
 }
+
+void descriptor_alias_guards() {
+    const double seed_value=2.,mask_value=3.;const unsigned char footprint_value=1;
+    ReconstructionView seed{&seed_value,&seed_value,sizeof(seed_value),{},{},ReconstructionType::float64,false};
+    ReconstructionView mask{&mask_value,&mask_value,sizeof(mask_value),{},{},ReconstructionType::float64,false};
+    ReconstructionFootprint footprint{{&footprint_value,&footprint_value,sizeof(footprint_value),{},{},ReconstructionType::boolean,false},{}};
+    const auto requested=ReconstructionQueue::indexed_heap;
+    const auto requirements=reconstruction_requirements(seed,mask,footprint,requested);
+    check(requirements.samples==1&&requirements.padded_samples==1,"descriptor guard fixture is not one sample");
+    for(unsigned target=0;target<4;++target) {
+        Buffers<double> storage(requirements);auto spans=storage.get();
+        // Alias a size_t field used only before the first workspace write.
+        // Even if the guard regresses, this one-sample case cannot corrupt a
+        // later-dereferenced pointer or violate typed-store alignment/aliasing.
+        std::size_t* field=target==0 ? &seed.allocation_bytes : target==1 ? &mask.allocation_bytes
+            : target==2 ? &footprint.values.allocation_bytes : &spans.heads.size;
+        spans.from_padded={field,1};
+        unsigned char seed_before[sizeof(seed)],mask_before[sizeof(mask)];
+        unsigned char footprint_before[sizeof(footprint)],spans_before[sizeof(spans)];
+        std::memcpy(seed_before,&seed,sizeof(seed));std::memcpy(mask_before,&mask,sizeof(mask));
+        std::memcpy(footprint_before,&footprint,sizeof(footprint));std::memcpy(spans_before,&spans,sizeof(spans));
+        bool rejected=false;
+        try{reconstruction_into(seed,mask,footprint,ReconstructionMethod::dilation,spans,{},requested);}
+        catch(const std::invalid_argument&){rejected=true;}
+        check(rejected,"descriptor alias was not rejected");
+        check(storage.untouched(),"descriptor alias rejection wrote workspace");
+        check(std::memcmp(seed_before,&seed,sizeof(seed))==0,"descriptor alias changed seed descriptor");
+        check(std::memcmp(mask_before,&mask,sizeof(mask))==0,"descriptor alias changed mask descriptor");
+        check(std::memcmp(footprint_before,&footprint,sizeof(footprint))==0,"descriptor alias changed footprint descriptor");
+        check(std::memcmp(spans_before,&spans,sizeof(spans))==0,"descriptor alias changed workspace descriptor");
+        check(seed_value==2.&&mask_value==3.&&footprint_value==1,"descriptor alias changed input pixels");
+    }
+    Buffers<double> control(requirements);
+    reconstruction_into(seed,mask,footprint,ReconstructionMethod::dilation,control.get(),{},requested);
+    check(control.out[1]==seed_value&&control.mask[1]==mask_value,"disjoint descriptor control failed");
+    control.canaries();
+}
 template<class T> Array integer_image(std::size_t h,std::size_t w,T fill,ReconstructionType type) {
     Array a;a.type=type;a.shape={h,w};a.strides={std::ptrdiff_t(w*sizeof(T)),std::ptrdiff_t(sizeof(T))};std::vector<T> x(h*w,fill);std::vector<unsigned char> b(x.size()*sizeof(T));std::memcpy(b.data(),x.data(),b.size());a.allocate(b,false);return a;
 }
@@ -114,7 +151,7 @@ int main(int argc,char** argv) {
 #endif
             set_num_threads(workers);
             for(int arg=1;arg<argc;++arg){Reader input(argv[arg]);char magic[8];input.f.read(magic,8);check(std::memcmp(magic,"RECON01\0",8)==0,"invalid golden schema");auto count=input.integer(4);check(count==259,"incomplete numerical corpus");for(std::size_t i=0;i<count;++i){auto c=read_case(input);auto type=c.mask.type;bool single=type==ReconstructionType::float16||type==ReconstructionType::float32;if(single){run_case<float>(c,ReconstructionQueue::automatic);run_case<float>(c,ReconstructionQueue::indexed_heap);}else{run_case<double>(c,ReconstructionQueue::automatic);run_case<double>(c,ReconstructionQueue::indexed_heap);}++source_cases;}check(input.f.peek()==std::char_traits<char>::eof(),"trailing golden data");}
-            large_and_guards(workers);integer_fronts();
+            descriptor_alias_guards();large_and_guards(workers);integer_fronts();
         }
         set_num_threads(1);std::cout<<"PASS assertions="<<assertions<<" source_projections="<<source_cases<<" avx2="<<has_avx2()<<"\n";
     }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<" assertions="<<assertions<<"\n";return 1;}
