@@ -179,3 +179,10 @@ coverage/evidence/tv-positive-zero-private-admission.json -text
 coverage/evidence/h203-tv-zero-source-admission.json -text
 coverage/evidence/parallel-implementation-checkpoint-20261025-v2.json -text
 coverage/evidence/colocalization-original-reference-admission.json -text
+
+# Colocalization prospective scientific contracts and exact observer bytes.
+coverage/contracts/colocalization-plan.json -text
+coverage/contracts/colocalization.json -text
+tests/colocalization_cases.py -text
+tests/colocalization_reference.py -text
+tests/test_colocalization_contracts.py -text
