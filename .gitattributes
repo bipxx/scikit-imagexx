@@ -200,3 +200,10 @@ coverage/evidence/reconstruction-trace-policy-observations.json -text
 coverage/evidence/reconstruction-trace-policy-migration.json -text
 coverage/evidence/tv-positive-zero-private-admission.json -text
 coverage/evidence/h203-tv-zero-source-composition.json -text
+
+# TV positive-zero successor controller and prospective source policy.
+coverage/contracts/tv-positive-zero-comparison-plan.json -text
+benchmarks/tv_positive_zero_compare.py -text
+tools/tv_positive_zero_artifacts.py -text
+tests/test_tv_positive_zero_compare.py -text
+.github/workflows/tv-positive-zero-compare.yml -text
