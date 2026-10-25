@@ -31,6 +31,15 @@ MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab6
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
 RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
+NMI_PATH = 'metrics.normalized_mutual_information'
+NMI_IMPORTED_SOURCE_PINS = {'include/skimagexx/normalized_mutual_information.hpp': '76e3cf0e895650f2aa79c0c61c596b8ce29bdc5f26b4bccd130e9d34108167f4',
+ 'src/normalized_mutual_information.cpp': 'cc9150a323e2bee04cb18be0f32008b306c9ee312d8fa39569174fe5ad426ac3',
+ 'src/bind_normalized_mutual_information.cpp': '423ee0bf149c3280b36a9229c4f3f783749b459a579359644c3623101222620d',
+ 'python/skimagexx/_normalized_mutual_information.py': 'b968a0b15852178254be7f28d7384651bc0bd071b312714ac60ad720cf53c49d',
+ 'tests/test_normalized_mutual_information_native.cpp': '0a5369154f1011067b17435fa851d6cf066ba0b9482d8b0ab1bdd469796476ba',
+ 'tests/test_normalized_mutual_information.py': '98ec869f16cac1f0a9898218eeafa4a9a478ae79270fd61d5df694ebbc21bd0c',
+ 'tests/test_normalized_mutual_information_cases.py': '02209513c6b724db9b7cb9e6b1d7a0a8b5021e3a6e2b1837cb6d1b34bb327b8b',
+ 'coverage/contracts/normalized-mutual-information.json': 'b043549b814f9d2fc7aa4d31f6134eee2162782e8aec78c1b035e7f6b90845c1'}
 CONTROLLERS = ('tools/rank_statistics_products.py', 'tools/public_qualification.py',
                'tools/build_identity_facts.py', 'benchmarks/rank_statistics_compare.py',
                'benchmarks/rank_statistics.py', 'tools/ci_measurement_artifacts.py',
@@ -169,7 +178,8 @@ def qualification_scope_text(text):
               'bregman18': (110, 63, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman')),
               'max_tree19': (112, 64, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree')),
               'matrix20': (114, 65, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform')),
-              'reconstruction21': (116,66,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction'))}
+              'reconstruction21': (116,66,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction')),
+              'nmi22': (118,67,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction','normalized_mutual_information'))}
     require(values['PRODUCT_SCOPE'] in scopes, 'source TV/Bregman scope incomplete')
     members, sdk, suffix = scopes[values['PRODUCT_SCOPE']]
     require(type(values['PRODUCT_MEMBERS']) is int and type(values['SDK_MEMBERS']) is int
@@ -180,7 +190,7 @@ def qualification_scope_text(text):
 
 
 def validate_reconstruction_source(archive,snapshot,scope):
-    if scope['name']!='reconstruction21':return
+    if scope['name'] not in ('reconstruction21','nmi22'):return
     tree=ast.parse(archive.read('tools/public_qualification.py'));declared={}
     for node in tree.body:
         if isinstance(node,ast.Assign):
@@ -197,7 +207,7 @@ def validate_reconstruction_source(archive,snapshot,scope):
 
 def validate_max_tree_source(archive, snapshot, scope):
     """Data-only source admission; old rank/TV/Bregman envelopes keep their scope."""
-    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21'):
+    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22'):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = {}
@@ -217,6 +227,30 @@ def validate_max_tree_source(archive, snapshot, scope):
         require(hashlib.sha256(canonical).hexdigest() == expected
                 and snapshot['files_sha256'].get(name) == expected,
                 'corrected max-tree source bytes differ: ' + name)
+
+
+def validate_nmi_source(archive, snapshot, scope):
+    """Authenticate the frozen NMI imports without executing scientific code."""
+    if scope['name'] != 'nmi22':
+        return
+    tree = ast.parse(archive.read('tools/public_qualification.py'))
+    declared = None
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id == 'NMI_IMPORTED_SOURCE_PINS':
+                    require(declared is None, 'duplicate NMI source pin declaration')
+                    require(isinstance(node.value, ast.Dict), 'NMI source pins must be a literal dictionary')
+                    keys = [ast.literal_eval(key) for key in node.value.keys]
+                    require(len(keys) == len(set(keys)), 'duplicate NMI source pin key')
+                    declared = ast.literal_eval(node.value)
+    require(declared == NMI_IMPORTED_SOURCE_PINS, 'NMI source pins absent or changed')
+    for name, expected in NMI_IMPORTED_SOURCE_PINS.items():
+        require(archive.namelist().count(name) == 1, 'NMI source absent or duplicate: ' + name)
+        canonical = archive.read(name).replace(b'\r\n', b'\n')
+        require(hashlib.sha256(canonical).hexdigest() == expected
+                and snapshot['files_sha256'].get(name) == expected,
+                'NMI source bytes differ: ' + name)
 
 
 def validate_payload(path, qualification, profile, compare):
@@ -311,23 +345,26 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
         scope = qualification_scope_text(text.decode('utf-8'))
         validate_max_tree_source(archive, q['source'], scope)
         validate_reconstruction_source(archive,q['source'],scope)
-    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200}[scope['name']]
+        validate_nmi_source(archive,q['source'],scope)
+    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200,'nmi22':201}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
             f'genuine{image_count}+3 registry qualification required')
     require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
-    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21')),
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22')),
             'qualified Bregman registry/source scope differs')
     max_tree = tuple('morphology.' + name for name in ('max_tree', 'max_tree_local_maxima',
                      'area_opening', 'area_closing', 'diameter_opening', 'diameter_closing'))
-    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21')
+    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22')
             else not any(name in expected['functions'] for name in max_tree),
             'qualified max-tree registry/source scope differs')
-    require(('morphology.reconstruction' in expected['functions'])==(scope['name']=='reconstruction21'),
+    require(('morphology.reconstruction' in expected['functions'])==(scope['name'] in ('reconstruction21','nmi22')),
             'source reconstruction scope/registry differs')
-    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21')),
+    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21','nmi22')),
             'qualified matrix registry/source scope differs')
+    require(expected['functions'].count(NMI_PATH) == 1 if scope['name'] == 'nmi22'
+            else NMI_PATH not in expected['functions'], 'qualified NMI registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')
     binding = q.get('build_identity')
