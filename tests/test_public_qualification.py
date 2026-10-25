@@ -1999,7 +1999,9 @@ def test_reconstruction_library_binding_sdk_linkage_and_source_oracle_argument()
 def test_reconstruction_metadata_migration_preserves_all_scientific_AST_and_raw_data():
     record=json.loads((ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes())
     old=record['original_source_UTF8'];current=(ROOT/'tests/test_reconstruction_contracts.py').read_bytes().replace(b'\r\n',b'\n')
-    assert hashlib.sha256(old.encode()).hexdigest()==record['original_canonical_lf_sha256']
+    assert hashlib.sha256(old.encode()).hexdigest()==record['original_raw_sha256']
+    frozen=json.loads((ROOT/'coverage/contracts/reconstruction.json').read_bytes())
+    assert hashlib.sha256(old.encode().replace(b'\r\n',b'\n')).hexdigest()==record['original_canonical_lf_sha256']==record['original_normalized_lf_sha256']==frozen['test_canonical_lf_sha256']
     assert hashlib.sha256(current).hexdigest()==record['current_canonical_lf_sha256']
     assert hashlib.sha256((ROOT/'coverage/contracts/reconstruction.json').read_bytes()).hexdigest()==record['frozen_matrix_raw_sha256']
     left=ast.parse(old);right=ast.parse(current);assert len(left.body)==len(right.body)

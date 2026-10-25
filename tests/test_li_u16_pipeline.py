@@ -64,8 +64,8 @@ def audit_installed_product(observation_path):
                                 qualname=getattr(arg, '__qualname__', None),
                                 owner_module=owner_module,
                                 owner_type=type(owner).__name__ if owner is not None else None))
-                        if (event == 'c_return' and owner is not None
-                                and owner_module == 'skimagexx._core'
+                        if (event == 'c_return'
+                                and (module == 'skimagexx._core' or owner_module == 'skimagexx._core')
                                 and getattr(arg, '__name__', None) == 'run'):
                             completions.append('run')
 
