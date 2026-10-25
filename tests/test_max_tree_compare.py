@@ -125,6 +125,22 @@ def test_all252_randomized_pairs_and_separate_provided_summary():
 def counters(**completed):return {name:dict(attempted=completed.get(name,0),completed=completed.get(name,0)) for name in ('aggregate',*c.STAGES.values())}
 
 
+def default_model(M,identity,workers,phase):
+    # JSON-only models of the required records, never executed observations.
+    rows=[]
+    for index,case in enumerate(M['cases']):
+        expected=M['profiles'][identity['profile']]['cases'][index]['observation'];state=dict(**expected['before'],provided=expected['provided_before'])
+        row=c.default_binding(index,case,identity['profile'],identity,workers,phase)
+        row.update(setup=dict(error=None,warnings=[],state=state,policy_before=dict(c.DEFAULT_POLICY),policy_after=dict(c.DEFAULT_POLICY)),observations=[])
+        for backend in ('original','native'):
+            row['observations'].append(dict(backend=backend,result=expected['result'],error=None,warnings=[],counts=counters(aggregate=int(backend=='native')),state_before=state,state_after=state,policy_before=dict(c.DEFAULT_POLICY),policy_after=dict(c.DEFAULT_POLICY),workers_before=workers,workers_after=workers))
+        rows.append(row)
+    return rows
+
+
+def integrity_model():return dict(policy_before=dict(c.DEFAULT_POLICY),policy_after=dict(c.DEFAULT_POLICY),journal_sha256='d'*64,journal_bytes=12345,journal_records=9999)
+
+
 @pytest.mark.parametrize('fault',['none','bool','partial','attempted','aggregate','stage'])
 def test_real_completed_counter_floor(fault):
     row=counters(aggregate=1)
@@ -153,10 +169,13 @@ def synthetic_preparation():
     candidates=[dict(id=row['id'],digest=row['digest'],counts=stages(row['observation']['entries'])) for row in M['profiles'][profile]['cases']]
     plain=[dict(id=row['id'],digest=a.digest(row['observation']['result']),counts=counters(aggregate=1)) for row in M['profiles'][profile]['cases']]
     checks=[dict(workers=n,source351=old,pristine233=pristine,source252=candidates,pristine252=plain) for n in (1,4)]
-    identity=dict(pid=42,source='8'*40,product_sha256='2'*64,core_sha256='6'*64,default_workers=1,fallback_enabled=False,scalar=False,has_avx2=True,cpu={'cpu_model':'HARNESS_ONLY_NOT_MEASURED'},authentication=dict(worker_pid=42,worker_parent=41,launcher_pid=42,receipt_sha256='a'*64))
+    identity=dict(pid=42,profile=profile,source='8'*40,product_sha256='2'*64,core_sha256='6'*64,default_workers=1,fallback_enabled=False,scalar=False,has_avx2=True,cpu={'cpu_model':'HARNESS_ONLY_NOT_MEASURED'},authentication=dict(worker_pid=42,worker_parent=41,launcher_pid=42,receipt_sha256='a'*64),default_policy=dict(c.DEFAULT_POLICY),python_optimize=0)
     scalar=copy.deepcopy(identity);scalar.update(scalar=True,has_avx2=False)
     row=dict(original351=[r['digest'] for r in old],original252=[r['digest'] for r in candidates],checks=checks)
-    return dict(schema='max-tree-public-comparison-v1',passed=True,failures=[],profile=profile,source='8'*40,product_sha256='2'*64,controller_sha256=a.sha(c.__file__),counts=copy.deepcopy(c.COUNTS),check_only=True,results=[],identities={'normal':identity,'scalar':scalar},checks={'normal':row,'scalar':copy.deepcopy(row)})
+    report=dict(schema='max-tree-public-comparison-v1',passed=True,failures=[],profile=profile,source='8'*40,product_sha256='2'*64,controller_sha256=a.sha(c.__file__),counts=copy.deepcopy(c.COUNTS),check_only=True,results=[],identities={'normal':identity,'scalar':scalar},checks={'normal':row,'scalar':copy.deepcopy(row)},default_policy=dict(c.DEFAULT_POLICY),integrity={mode:integrity_model() for mode in ('normal','scalar')})
+    for mode in ('normal','scalar'):
+        for worker in report['checks'][mode]['checks']:worker['default252']=default_model(M,report['identities'][mode],worker['workers'],'preparation')
+    return report
 
 
 def test_full_metadata_model_is_valid_without_executing_products(synthetic_preparation):
@@ -191,14 +210,15 @@ def test_report_rejects_missing_or_relabelled_parity(synthetic_preparation,fault
 def synthetic_measurement(synthetic_preparation):
     # Fake numbers exercise REPORT ARITHMETIC ONLY; never exported as samples.
     import inspect
-    _,M=c.baseline();r=copy.deepcopy(synthetic_preparation);r.update(check_only=False,checks={},identities={'normal':r['identities']['normal']})
+    _,M=c.baseline();r=copy.deepcopy(synthetic_preparation);r.update(check_only=False,checks={},identities={'normal':r['identities']['normal']},integrity={'normal':integrity_model()})
+    r['default252']=default_model(M,r['identities']['normal'],1,'measurement-sweep');fixtures=default_model(M,r['identities']['normal'],1,'timed-fixture')
     source=inspect.getsource(c.callback_pair);node=next(n for n in ast.walk(ast.parse(source)) if isinstance(n,ast.FunctionDef) and n.name=='call');text=ast.get_source_segment(source,node);sha=hashlib.sha256(text.encode()).hexdigest()
     rows=[]
     for index,case in enumerate(M['cases']):
-        def sample(backend):return dict(elapsed_ns=1000000 if backend=='original' else 2000000,loops=1,ms=1. if backend=='original' else 2.,identity=r['identities']['normal'],callback_source_sha256=sha,counts=counters(aggregate=int(backend=='native')))
+        def sample(backend):return dict(elapsed_ns=1000000 if backend=='original' else 2000000,loops=1,ms=1. if backend=='original' else 2.,identity=r['identities']['normal'],callback_source_sha256=sha,counts=counters(aggregate=int(backend=='native')),policy_before=dict(c.DEFAULT_POLICY),policy_after=dict(c.DEFAULT_POLICY),default_precheck_sha256=a.digest(fixtures[index]))
         samples=[dict(round=i,backend=backend,**sample(backend)) for i,order in enumerate(c.orders(index)) for backend in order]
         expected=M['profiles']['windows']['cases'][index]['observation']
-        callback=dict(case=case,input_state=dict(**expected['before'],provided=expected['provided_before']),callback_source=text,callback_source_sha256=sha,callback_AST=ast.dump(node,include_attributes=False),actual_targets={k:dict(module='skimage.morphology.max_tree' if k=='original' else 'skimagexx._max_tree',name=case['function']) for k in ('original','native')})
+        callback=dict(case=case,input_state=dict(**expected['before'],provided=expected['provided_before']),callback_source=text,callback_source_sha256=sha,callback_AST=ast.dump(node,include_attributes=False),actual_targets={k:dict(module='skimage.morphology.max_tree' if k=='original' else 'skimagexx._max_tree',name=case['function']) for k in ('original','native')},default_precheck=fixtures[index])
         rows.append(dict(index=index,case=case,callback=callback,orders=c.orders(index),raw_samples=samples,calibration={k:sample(k) for k in ('original','native')},medians_ms={'original':1.,'native':2.},speedup=.5,slower=True))
     r['results']=rows;r['summary']=c.summarize(rows);return r
 
@@ -371,3 +391,156 @@ def test_private_header_source_pin_cannot_admit_public_product(tmp_path):
     path=write(tmp_path/'private-header-source.json',value)
     with pytest.raises(RuntimeError,match='runtime source differs'):
         a.certificate(path,a.sha(path),'7'*40)
+
+
+@pytest.mark.parametrize('fault',['under-warn','divide-ignore','missing-key','extra-key'])
+def test_nondefault_policy_is_retained_then_rejected_without_numerical_import(fault,tmp_path):
+    policy=dict(c.DEFAULT_POLICY)
+    if fault=='under-warn':policy['under']='warn'
+    elif fault=='divide-ignore':policy['divide']='ignore'
+    elif fault=='missing-key':policy.pop('invalid')
+    else:policy['all']='warn'
+    from types import SimpleNamespace
+    journal=tmp_path/'metadata-only.jsonl'
+    with pytest.raises(RuntimeError,match='ordinary default'):
+        c.policy_checkpoint(SimpleNamespace(geterr=lambda:dict(policy)),journal,'metadata-only-no-array')
+    assert json.loads(journal.read_text())['policy']==policy
+
+
+@pytest.mark.parametrize('fault',['partial','duplicate','phase','profile','mode','worker','bool-worker','policy','setup-policy','setup-warning','error','warning','outcome','ownership','mutation','counts','worker-change','missing-original','old-pristine'])
+def test_default_preparation_cannot_be_partial_or_relabelled(synthetic_preparation,fault):
+    r=copy.deepcopy(synthetic_preparation);worker=r['checks']['normal']['checks'][0];rows=worker['default252'];row=rows[0];actual=row['observations'][1]
+    if fault=='partial':rows.pop()
+    elif fault=='duplicate':rows[1]=copy.deepcopy(row)
+    elif fault=='phase':row['phase']='measurement-sweep'
+    elif fault=='profile':row['profile']='modern'
+    elif fault=='mode':row['identity']=dict(row['identity'],scalar=True)
+    elif fault=='worker':row['workers']=4
+    elif fault=='bool-worker':row['workers']=True
+    elif fault=='policy':actual['policy_after']['under']='warn'
+    elif fault=='setup-policy':row['setup']['policy_after']['invalid']='ignore'
+    elif fault=='setup-warning':row['setup']['warnings']=[{'category':'RuntimeWarning','message':'unexpected'}]
+    elif fault=='error':actual['error']={'type':'ValueError','message':'retained'}
+    elif fault=='warning':actual['warnings']=[{'category':'RuntimeWarning','message':'retained'}]
+    elif fault=='outcome':actual['result']=None
+    elif fault=='ownership':actual['result'][0]['is_input']=True
+    elif fault=='mutation':actual['state_after']=dict(actual['state_after'],provided={'foreign':{}})
+    elif fault=='counts':actual['counts']=counters()
+    elif fault=='worker-change':actual['workers_after']=4
+    elif fault=='missing-original':row['observations'].pop(0)
+    else:worker['default252']=worker['pristine252']
+    with pytest.raises((RuntimeError,KeyError)):c.validate_report(r,synthetic_certificate())
+
+
+@pytest.mark.parametrize('fault',['no-sweep','partial-sweep','relabelled-preparation','unbound-fixture','sample-policy','calibration-policy','sample-proof','optimized','bool-optimized','startup-policy','final-policy','journal','report-policy'])
+def test_measurement_requires_fresh_full_default_coverage(synthetic_measurement,fault):
+    r=copy.deepcopy(synthetic_measurement);first=r['results'][0]
+    if fault=='no-sweep':r['default252']=[]
+    elif fault=='partial-sweep':r['default252'].pop()
+    elif fault=='relabelled-preparation':r['default252'][0]['phase']='preparation'
+    elif fault=='unbound-fixture':first['callback']['default_precheck']=r['default252'][0]
+    elif fault=='sample-policy':first['raw_samples'][0]['policy_after']['under']='warn'
+    elif fault=='calibration-policy':first['calibration']['native']['policy_before']['under']='warn'
+    elif fault=='sample-proof':first['raw_samples'][0]['default_precheck_sha256']='0'*64
+    elif fault=='optimized':r['identities']['normal']['python_optimize']=1
+    elif fault=='bool-optimized':r['identities']['normal']['python_optimize']=False
+    elif fault=='startup-policy':r['identities']['normal']['default_policy']['under']='warn'
+    elif fault=='final-policy':r['integrity']['normal']['policy_after']['under']='warn'
+    elif fault=='journal':r['integrity']['normal']['journal_records']=0
+    else:r['default_policy']['under']='warn'
+    with pytest.raises(RuntimeError):c.validate_report(r,synthetic_certificate())
+
+
+@pytest.mark.parametrize('fault',[None,'missing','duplicate','relabelled','altered-value','policy','hash','missing-checkpoint','reordered'])
+def test_flushed_default_journal_is_bound_to_complete_report(synthetic_preparation,tmp_path,fault):
+    r=copy.deepcopy(synthetic_preparation);rows=c.expected_default_journal(r,'normal')
+    # Keep the source model independent from the deliberately corrupted journal.
+    rows=copy.deepcopy(rows)
+    observation=next(i for i,row in enumerate(rows) if row.get('kind')=='observation')
+    if fault=='missing':rows.pop(observation)
+    elif fault=='duplicate':rows.insert(observation,copy.deepcopy(rows[observation]))
+    elif fault=='relabelled':rows[observation]['binding']['phase']='measurement-sweep'
+    elif fault=='altered-value':rows[observation]['actual']['result']=None
+    elif fault=='policy':rows[-1]['policy']['under']='warn'
+    elif fault=='missing-checkpoint':rows.pop(0)
+    elif fault=='reordered':rows[0],rows[1]=rows[1],rows[0]
+    path=tmp_path/'synthetic-not-executed.jsonl'
+    with path.open('w',encoding='utf-8',newline='\n') as stream:
+        for row in rows:stream.write(json.dumps(row)+'\n')
+    r['integrity']['normal'].update(journal_sha256=a.sha(path),journal_bytes=path.stat().st_size,journal_records=len(rows))
+    if fault=='hash':r['integrity']['normal']['journal_sha256']='0'*64
+    if fault is None:assert c.verify_default_journal(path,r,'normal')==rows
+    else:
+        with pytest.raises(RuntimeError):c.verify_default_journal(path,r,'normal')
+
+
+@pytest.mark.parametrize('fault',[None,'old-receipt','partial','wrong-policy','relabelled'])
+def test_barrier_requires_bound_default_coverage_and_raw_journals(synthetic_preparation,tmp_path,monkeypatch,fault):
+    r=copy.deepcopy(synthetic_preparation);r['certificate_sha256']='a'*64
+    for mode in ('normal','scalar'):
+        prefix=tmp_path/mode;prefix.mkdir();journal=prefix/'default-observations.jsonl'
+        rows=c.expected_default_journal(r,mode)
+        journal.write_text(''.join(json.dumps(row)+'\n' for row in rows),encoding='utf-8')
+        r['integrity'][mode].update(journal_sha256=a.sha(journal),journal_bytes=journal.stat().st_size,journal_records=len(rows))
+    write(tmp_path/'report.json',r)
+    receipt=dict(controller_sha256=a.sha(c.__file__),default_policy=dict(c.DEFAULT_POLICY),default_coverage=c.default_coverage(r))
+    if fault=='old-receipt':receipt.pop('default_coverage')
+    elif fault=='partial':receipt['default_coverage']['normal'][0]['cases']=251
+    elif fault=='wrong-policy':receipt['default_policy']['under']='warn'
+    elif fault=='relabelled':receipt['default_coverage']['normal'][0]['sha256']=a.digest(r['checks']['normal']['checks'][0]['pristine252'])
+    path=write(tmp_path/'preparation.json',receipt)
+    # Existing certificate/product/three-host controls have separate tests;
+    # this explicitly synthetic test exercises the added barrier evidence.
+    monkeypatch.setattr(a,'barrier',lambda *args:[])
+    monkeypatch.setenv('GITHUB_RUN_ID','99');monkeypatch.setenv('GITHUB_RUN_ATTEMPT','1')
+    if fault is None:assert c.verify_barrier([path],synthetic_certificate(),'a'*64)==[]
+    else:
+        with pytest.raises((RuntimeError,KeyError)):c.verify_barrier([path],synthetic_certificate(),'a'*64)
+
+
+def test_measurement_journal_requires_full_sweep_before_first_sample(synthetic_measurement,tmp_path):
+    r=copy.deepcopy(synthetic_measurement);rows=c.expected_default_journal(r,'normal')
+    first_sample=next(i for i,row in enumerate(rows) if row.get('kind')=='sample')
+    sweep=[row for row in rows[:first_sample] if row.get('kind')=='setup' and row['binding']['phase']=='measurement-sweep']
+    assert [row['binding']['index'] for row in sweep]==list(range(252))
+    # Preserve every record and a fresh hash, but move a sample before the sweep.
+    rows.insert(2,rows.pop(first_sample));path=tmp_path/'reordered-timers.jsonl'
+    path.write_text(''.join(json.dumps(row)+'\n' for row in rows),encoding='utf-8')
+    r['integrity']['normal'].update(journal_sha256=a.sha(path),journal_bytes=path.stat().st_size,journal_records=len(rows))
+    with pytest.raises(RuntimeError):c.verify_default_journal(path,r,'normal')
+
+
+@pytest.mark.parametrize('scalar',[False,True])
+def test_child_environment_removes_optimization_and_plugin_inheritance(monkeypatch,scalar):
+    forbidden=('PYTHONPATH','PYTHONHOME','PYTHONOPTIMIZE','PYTEST_ADDOPTS','PYTEST_PLUGINS')
+    for name in forbidden:monkeypatch.setenv(name,'must-not-reach-child')
+    monkeypatch.setenv('SKIMAGEXX_DISABLE_SIMD','wrong')
+    env=c.child_environment(scalar)
+    assert not any(name in env for name in forbidden)
+    assert env.get('SKIMAGEXX_DISABLE_SIMD')==('1' if scalar else None)
+    assert env['PYTHONNOUSERSITE']=='1' and env['PYTHONDONTWRITEBYTECODE']=='1'
+
+
+@pytest.mark.parametrize('optimization',['-O','-OO','environment'])
+def test_real_optimized_child_rejects_before_controller_imports(optimization,tmp_path):
+    # This subprocess executes only the stdlib preamble. Block tools and every
+    # image package so a misplaced optimization check is observable.
+    child=tmp_path/'optimized-preamble.py'
+    child.write_text('import sys,importlib.util\nclass Deny:\n def find_spec(self,name,*args):\n  if name.split(".")[0] in ("tools","numpy","scipy","skimage","skimagexx"): raise RuntimeError("FORBIDDEN_IMPORT:"+name)\nsys.meta_path.insert(0,Deny())\ns=importlib.util.spec_from_file_location("optimized_control",'+repr(str(Path(c.__file__).resolve()))+');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)\n',encoding='utf-8')
+    env=c.child_environment(False);flags=[]
+    if optimization=='environment':env['PYTHONOPTIMIZE']='1'
+    else:flags=[optimization]
+    run=subprocess.run([sys.executable,*flags,str(child)],env=env,text=True,capture_output=True)
+    assert run.returncode!=0 and 'requires unoptimized Python before startup or imports' in run.stderr and 'FORBIDDEN_IMPORT' not in run.stderr
+
+
+def test_default_sweep_and_raw_retention_precede_timers_without_policy_override():
+    tree=ast.parse(Path(c.__file__).read_text());functions={n.name:n for n in tree.body if isinstance(n,ast.FunctionDef)}
+    assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='seterr' for n in ast.walk(tree))
+    controller=ast.unparse(functions['controller']);worker=ast.unparse(functions['worker_main'])
+    assert controller.index("operation='validate-default'")<controller.index("operation='prepare-case'")<controller.index("operation='sample'")
+    assert 'validated = False' in worker
+    assert "'measurement-sweep', journal)" in worker and worker.index('journal_append(journal, dict(kind=\'sample\'')<worker.index("require(state() == before, 'input changed during sample')")
+    precheck=ast.unparse(functions['default_precheck'])
+    assert precheck.index('journal_append(journal, default_events(row)[-1])')<precheck.index("complete=backend == 'native'")
+    old=functions['validate_all'];assert sum(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='errstate' for n in ast.walk(old))==2

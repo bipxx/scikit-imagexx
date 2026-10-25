@@ -5,6 +5,9 @@ public callables. Source/provider observers are UNTImed validation only. Timed
 callbacks contain only the complete public call; result destruction is timed.
 """
 from __future__ import annotations
+import sys
+if sys.flags.optimize != 0:
+    raise RuntimeError('max-tree comparison requires unoptimized Python before startup or imports')
 import argparse,ast,contextlib,hashlib,importlib,inspect,json,math,os,platform,random,secrets,statistics,subprocess,sys,time,traceback,types,uuid,warnings
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
@@ -12,6 +15,31 @@ from tools import max_tree_compare_artifacts as a
 require=a.require
 COUNTS={'reference':351,'numeric':233,'metadata':118,'candidates':252}
 STAGES={'_max_tree':'build','_compute_area':'area','_compute_extension':'extension','_direct_filter':'filter','_max_tree_local_maxima':'maxima'}
+DEFAULT_POLICY={'divide':'warn','over':'warn','under':'ignore','invalid':'warn'}
+
+
+def require_default_policy(policy):
+    require(policy==DEFAULT_POLICY,'ordinary default NumPy error policy required: '+str(policy))
+
+
+def child_environment(scalar):
+    env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1')
+    for key in ('PYTHONPATH','PYTHONHOME','PYTHONOPTIMIZE','PYTEST_ADDOPTS','PYTEST_PLUGINS'):env.pop(key,None)
+    if scalar:env['SKIMAGEXX_DISABLE_SIMD']='1'
+    else:env.pop('SKIMAGEXX_DISABLE_SIMD',None)
+    return env
+
+
+def journal_append(path,row):
+    # The worker creates this file exclusively. Flush actual observations before
+    # any parity assertion, including failures which never reach report.json.
+    with Path(path).open('a',encoding='utf-8',newline='\n') as stream:
+        stream.write(json.dumps(row,sort_keys=True,allow_nan=False)+'\n');stream.flush()
+
+
+def policy_checkpoint(np,journal,phase):
+    policy=dict(np.geterr());journal_append(journal,dict(schema='max-tree-policy-checkpoint-v1',phase=phase,policy=policy))
+    require_default_policy(policy);return policy
 
 
 def baseline():
@@ -145,6 +173,124 @@ def callback_pair(case,b,reference,wrapper):
     return callbacks,state,initial,metadata,image,options
 
 
+def default_binding(index,case,profile,identity,workers,phase):
+    return dict(schema='max-tree-default-precheck-v1',index=index,id=case['id'],profile=profile,identity=identity,workers=workers,phase=phase)
+
+
+def default_events(row):
+    binding={k:v for k,v in row.items() if k not in ('setup','observations')}
+    return [dict(kind='setup',binding=binding,actual=row['setup'])]+[dict(kind='observation',binding=binding,actual=v) for v in row['observations']]
+
+
+def validate_default_case(row,index,case,target,profile,identity,workers,phase,complete=True):
+    binding=default_binding(index,case,profile,identity,workers,phase)
+    require({k:row.get(k) for k in binding}==binding,'default precheck phase/worker/source/ID binding differs')
+    require(type(row['workers']) is int and row['workers'] in (1,4),'default precheck worker type differs')
+    require(target['error'] is None and target['warnings']==[] and target['before']==target['after'] and target['provided_before']==target['provided_after'],'frozen default cohort must have zero errors/warnings/mutations')
+    expected=dict(**target['before'],provided=target['provided_before']);setup=row['setup']
+    require(setup['error'] is None and setup['warnings']==[] and setup['state']==expected,'default fixture/error/warnings differ')
+    for policy in (setup['policy_before'],setup['policy_after']):require_default_policy(policy)
+    require([v['backend'] for v in row['observations']]==(['original','native'] if complete else ['original','native'][:len(row['observations'])]),'default precheck backends missing/relabelled')
+    for value in row['observations']:
+        require(value['error'] is None and value['warnings']==[] and value['result']==target['result'],'default actual value/ownership/error/warnings differ '+case['id'])
+        require(value['state_before']==value['state_after']==expected,'default actual input/provided state differs')
+        require(type(value['workers_before']) is int and type(value['workers_after']) is int and value['workers_before']==value['workers_after']==workers,'default actual shared worker changed')
+        for policy in (value['policy_before'],value['policy_after']):require_default_policy(policy)
+        counter_check(value['counts'],aggregate=int(value['backend']=='native'))
+
+
+def validate_default_rows(rows,M,profile,identity,workers,phase):
+    require(type(rows) is list and len(rows)==252,'all252 ordinary-default prechecks required before timing')
+    for index,(row,case,target) in enumerate(zip(rows,M['cases'],M['profiles'][profile]['cases'])):
+        validate_default_case(row,index,case,target['observation'],profile,identity,workers,phase)
+    return rows
+
+
+def retain_default_mismatch(prepared,result,b,np,journal):
+    if prepared is None:return
+    # The input view, provided trees, result and ndarray base chains use the
+    # frozen observer's lossless CAS only when a default precheck fails.
+    blobs=Path(journal).parent/'unexpected-default-raster';blobs.mkdir(exist_ok=True)
+    values=[prepared[4],*prepared[5].values(),*(result if isinstance(result,tuple) else (result,))];seen=set()
+    for value in values:
+        while isinstance(value,np.ndarray) and id(value) not in seen:
+            seen.add(id(value));b.array_record(value,np,blobs);value=value.base
+
+
+def default_precheck(index,b,M,reference,wrapper,core,identity,workers,phase,journal):
+    """Fresh genuine original/native calls, untimed, with compact actual records."""
+    case=b.CASES[index];profile=identity['profile'];np=reference.np
+    row=default_binding(index,case,profile,identity,workers,phase);target=M['profiles'][profile]['cases'][index]['observation']
+    policy=policy_checkpoint(np,journal,phase+':fixture-before');prepared=None;error=None
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter('always')
+        try:prepared=callback_pair(case,b,reference,wrapper)
+        except BaseException as exc:error=dict(type=type(exc).__name__,message=str(exc),traceback=traceback.format_exc())
+    row.update(setup=dict(policy_before=policy,policy_after=dict(np.geterr()),error=error,warnings=[dict(category=v.category.__name__,message=str(v.message)) for v in caught],state=prepared[2] if prepared else None),observations=[])
+    journal_append(journal,default_events(row)[0])
+    try:validate_default_case(row,index,case,target,profile,identity,workers,phase,complete=False)
+    except BaseException:retain_default_mismatch(prepared,None,b,np,journal);raise
+    callbacks,state,before,metadata,image,options=prepared
+    for backend in ('original','native'):
+        policy=policy_checkpoint(np,journal,phase+':'+backend+'-before');before=state();limit=core.get_num_threads();core.max_tree_counts(True);result=None;value=None;error=None
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always')
+            try:
+                with certify_original(reference,b,image.shape) if backend=='original' else no_forward(reference):result=callbacks[backend]()
+                value=candidate_outcome(result,image,options,b,np)
+            except BaseException as exc:error=dict(type=type(exc).__name__,message=str(exc),traceback=traceback.format_exc())
+        actual=dict(backend=backend,result=value,error=error,warnings=[dict(category=v.category.__name__,message=str(v.message)) for v in caught],counts=core.max_tree_counts(),state_before=before,state_after=state(),policy_before=policy,policy_after=dict(np.geterr()),workers_before=limit,workers_after=core.get_num_threads())
+        row['observations'].append(actual);journal_append(journal,default_events(row)[-1])
+        try:validate_default_case(row,index,case,target,profile,identity,workers,phase,complete=backend=='native')
+        except BaseException:
+            retain_default_mismatch(prepared,result,b,np,journal)
+            raise
+        finally:del result
+    return row,prepared
+
+
+def default_sweep(b,M,reference,wrapper,core,identity,workers,phase,journal):
+    rows=[]
+    for index in range(252):
+        row,prepared=default_precheck(index,b,M,reference,wrapper,core,identity,workers,phase,journal);rows.append(row);del prepared
+    validate_default_rows(rows,M,identity['profile'],identity,workers,phase);return rows
+
+
+def verify_default_journal(path,report,mode):
+    """Bind flushed raw records to complete report rows without image imports."""
+    integrity=report['integrity'][mode];require(a.sha(path)==integrity['journal_sha256'] and Path(path).stat().st_size==integrity['journal_bytes'],'default raw journal hash/size differs')
+    rows=[json.loads(line) for line in Path(path).read_text(encoding='utf-8').splitlines()]
+    require(len(rows)==integrity['journal_records'],'default raw journal record count differs')
+    require(rows==expected_default_journal(report,mode),'default raw observation/policy/sample sequence differs from complete report')
+    return rows
+
+
+def expected_default_journal(report,mode):
+    """Exact interleaving also proves the full sweep precedes the first sample."""
+    rows=[]
+    def checkpoint(phase,policy=DEFAULT_POLICY):
+        require_default_policy(policy);rows.append(dict(schema='max-tree-policy-checkpoint-v1',phase=phase,policy=policy))
+    def precheck(row):
+        events=default_events(row);phase=row['phase'];checkpoint(phase+':fixture-before',row['setup']['policy_before']);rows.append(events[0])
+        for event in events[1:]:checkpoint(phase+':'+event['actual']['backend']+'-before',event['actual']['policy_before']);rows.append(event)
+    def sample(index,backend,value):
+        checkpoint('sample-before:'+str(index)+':'+backend,value['policy_before']);rows.append(dict(kind='sample',index=index,backend=backend,actual=value))
+    checkpoint('worker-startup-before-reference',report['identities'][mode]['default_policy']);checkpoint('worker-ready')
+    if report['check_only']:
+        checkpoint('legacy-controls-before')
+        for worker in report['checks'][mode]['checks']:
+            checkpoint('legacy-controls-after-worker'+str(worker['workers']))
+            for row in worker['default252']:precheck(row)
+    else:
+        for row in report['default252']:precheck(row)
+        for row in report['results']:
+            precheck(row['callback']['default_precheck'])
+            for backend in ('original','native'):sample(row['index'],backend,row['calibration'][backend])
+            for value in row['raw_samples']:sample(row['index'],value['backend'],{k:v for k,v in value.items() if k not in ('round','backend')})
+    checkpoint('report-validation-before',report['integrity'][mode]['policy_before']);checkpoint('report-validation-after',report['integrity'][mode]['policy_after'])
+    return rows
+
+
 def validate_all(b,M,reference,matrix,wrapper,core,profile,workers,blobs):
     expected=M['profiles'][profile];rows=dict(source351=[],pristine233=[],source252=[],pristine252=[])
     def fixture(spec,actual_provided_tree=False):return old_fixture(reference,matrix,profile,spec,actual_provided_tree)
@@ -181,6 +327,7 @@ def validate_all(b,M,reference,matrix,wrapper,core,profile,workers,blobs):
 
 
 def startup(permit_path,stream):
+    require(sys.flags.optimize==0,'unoptimized Python required before startup')
     require(permit_path and not stream.isatty() and os.environ.get('GITHUB_ACTIONS')=='true','direct worker denied')
     permit=a.read(permit_path);line=stream.readline();require(bool(line),'startup handshake absent');frame=json.loads(line)
     require(frame.get('nonce') and hashlib.sha256(frame['nonce'].encode()).hexdigest()==permit['nonce_sha256'],'wrong inherited-stdio secret')
@@ -211,58 +358,68 @@ def worker_main(args):
     seal=a.verify_product(args.product,args.profile,cert);a.verify_installed(args.product)
     xx,wrapper,core=public_admission(args.product,args.profile,cert)
     require(sys.version.split()[0]==cert['profiles'][args.profile]['python_version'],'interpreter patch differs')
+    journal=Path(args.permit).parent/'default-observations.jsonl';journal.open('x',encoding='utf-8').close()
+    startup_policy=policy_checkpoint(importlib.import_module('numpy'),journal,'worker-startup-before-reference')
     b,M=baseline();reference,matrix=b.load_reference();require(reference.profile()==args.profile,'wrong original reference profile')
     for name in a.NAMES:require(str(inspect.signature(getattr(wrapper,name)))==matrix['signatures'][name] and getattr(wrapper,name) is not getattr(reference.original,name),'public signature/original forwarding differs')
     cpu_node=next(n for n in ast.parse((ROOT/'benchmarks/resize.py').read_bytes()).body if isinstance(n,ast.FunctionDef) and n.name=='cpu_metadata')
     ns=dict(np=reference.np,os=os,platform=platform,Path=Path);exec(compile(ast.Module(body=[cpu_node],type_ignores=[]),'<shared-exact-CPU-metadata>','exec'),ns);cpu=ns['cpu_metadata']()
-    identity=dict(pid=os.getpid(),profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],core_sha256=a.sha(core.__file__),core_path=str(Path(core.__file__).resolve()),cpu=cpu,python=sys.version,numpy=reference.np.__version__,scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD')=='1',default_workers=1,fallback_enabled=False,has_avx2=bool(xx.has_avx2()),authentication=authentication)
+    identity=dict(pid=os.getpid(),profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],core_sha256=a.sha(core.__file__),core_path=str(Path(core.__file__).resolve()),cpu=cpu,python=sys.version,numpy=reference.np.__version__,scalar=os.environ.get('SKIMAGEXX_DISABLE_SIMD')=='1',default_workers=1,fallback_enabled=False,has_avx2=bool(xx.has_avx2()),authentication=authentication,default_policy=startup_policy,python_optimize=sys.flags.optimize)
     require(not identity['scalar'] or identity['has_avx2'] is False,'scalar dispatch was not actually disabled')
-    print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=args.measure;prepared=None
+    policy_checkpoint(reference.np,journal,'worker-ready');print(json.dumps(dict(ok=True,identity=identity)),flush=True);validated=False;prepared=None
     for line in sys.stdin:
         request=json.loads(line)
         try:
             op=request['operation']
             if op=='validate':
-                require(not args.measure,'full correctness belongs to preparation hosts');original351=[];original252=[]
+                require(not args.measure and not validated,'full correctness belongs to fresh preparation hosts');original351=[];original252=[]
+                policy_checkpoint(reference.np,journal,'legacy-controls-before')
                 blobs=Path(args.permit).parent/'observed-raster';blobs.mkdir(exist_ok=False)
                 for spec in reference.CASES:
                     actual=reference.observe(spec);require(actual==matrix['observations'][matrix['profiles'][args.profile]['snapshots'][spec['id']]],'original351 differs');original351.append(reference.digest(actual))
                 for index,case in enumerate(b.CASES):
                     actual=b.observe_case(case,reference,blobs);require(actual==M['profiles'][args.profile]['cases'][index]['observation'],'original252 differs '+case['id']+' '+json.dumps(actual));original252.append(b.digest(actual))
                 checks=[]
-                for workers in (1,4):xx.set_num_threads(workers);checks.append(validate_all(b,M,reference,matrix,wrapper,core,args.profile,workers,blobs))
+                for workers in (1,4):
+                    xx.set_num_threads(workers);checks.append(validate_all(b,M,reference,matrix,wrapper,core,args.profile,workers,blobs))
+                    policy_checkpoint(reference.np,journal,'legacy-controls-after-worker'+str(workers))
+                    checks[-1]['default252']=default_sweep(b,M,reference,wrapper,core,identity,workers,'preparation',journal)
                 xx.set_num_threads(1);validated=True;reply=dict(original351=original351,original252=original252,checks=checks)
+            elif op=='validate-default':
+                require(args.measure and not validated and xx.get_num_threads()==1 and not identity['scalar'],'fresh normal measurement worker required')
+                reply=default_sweep(b,M,reference,wrapper,core,identity,1,'measurement-sweep',journal);validated=True
             elif op=='prepare-case':
                 index=request['index'];sample_admission(validated,args.measure,xx.get_num_threads(),identity['scalar'],index)
-                prepared=callback_pair(b.CASES[index],b,reference,wrapper);callbacks,state,before,metadata,image,options=prepared
-                target=M['profiles'][args.profile]['cases'][index]['observation'];expected=target['result']
-                require({k:before[k] for k in ('image','owner')}==target['before'] and before['provided']==target['provided_before'],'timed input/provided-tree data differs from frozen source fixture')
-                with certify_original(reference,b,image.shape):result=callbacks['original']()
-                require(candidate_outcome(result,image,options,b,reference.np)==expected,'original callback certification differs');del result
-                core.max_tree_counts(True)
-                with no_forward(reference):result=callbacks['native']()
-                require(candidate_outcome(result,image,options,b,reference.np)==expected and state()==before,'native callback certification differs');del result
-                counter_check(core.max_tree_counts(),aggregate=1);reply=metadata
+                row,prepared=default_precheck(index,b,M,reference,wrapper,core,identity,1,'timed-fixture',journal)
+                prepared[3]['default_precheck']=row;reply=prepared[3]
             elif op=='sample':
                 index=request['index'];sample_admission(validated,args.measure,xx.get_num_threads(),identity['scalar'],index)
                 require(prepared is not None and prepared[3]['case']==b.CASES[index] and request['backend'] in ('original','native'),'wrong prepared callback')
                 callbacks,state,before,metadata,image,options=prepared;require(state()==before,'input changed before sample')
                 loops=request['loops'];require(type(loops) is int and 1<=loops<=1000,'invalid sample loop count')
+                policy_before=policy_checkpoint(reference.np,journal,'sample-before:'+str(index)+':'+request['backend'])
                 core.max_tree_counts(True);call=callbacks[request['backend']]
-                with warnings.catch_warnings():
-                    warnings.simplefilter('ignore');old=reference.np.seterr(all='warn')
-                    try:
+                try:
+                    with warnings.catch_warnings():
+                        warnings.simplefilter('ignore')
                         start=time.perf_counter_ns()
                         for _ in range(loops):result=call();del result
                         elapsed=time.perf_counter_ns()-start
-                    finally:reference.np.seterr(**old)
-                require(state()==before,'input changed during sample');counts=core.max_tree_counts()
+                except BaseException as error:
+                    journal_append(journal,dict(kind='sample-error',index=index,backend=request['backend'],error=dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc()),policy_before=policy_before,policy_after=dict(reference.np.geterr()),counts=core.max_tree_counts()))
+                    raise
+                counts=core.max_tree_counts();policy_after=dict(reference.np.geterr())
+                reply=dict(elapsed_ns=elapsed,loops=loops,ms=elapsed/loops/1e6,identity=identity,callback_source_sha256=metadata['callback_source_sha256'],counts=counts,policy_before=policy_before,policy_after=policy_after,default_precheck_sha256=a.digest(metadata['default_precheck']))
+                journal_append(journal,dict(kind='sample',index=index,backend=request['backend'],actual=reply))
+                require_default_policy(policy_after);require(state()==before,'input changed during sample')
                 counter_check(counts,aggregate=loops if request['backend']=='native' else 0)
-                reply=dict(elapsed_ns=elapsed,loops=loops,ms=elapsed/loops/1e6,identity=identity,callback_source_sha256=metadata['callback_source_sha256'],counts=counts)
             elif op=='release':prepared=None;callbacks=state=before=metadata=image=options=call=None;reply={}
             elif op=='integrity':
-                require(a.verify_product(args.product,args.profile,cert)==seal,'product/source changed');a.verify_installed(args.product);public_admission(args.product,args.profile,cert);require(ns['cpu_metadata']()==cpu,'CPU identity changed');reply=dict(seal=seal)
-            elif op=='close':print(json.dumps(dict(ok=True,result={})),flush=True);return
+                policy_before=policy_checkpoint(reference.np,journal,'report-validation-before')
+                require(a.verify_product(args.product,args.profile,cert)==seal,'product/source changed');a.verify_installed(args.product);public_admission(args.product,args.profile,cert);require(ns['cpu_metadata']()==cpu,'CPU identity changed')
+                policy_after=policy_checkpoint(reference.np,journal,'report-validation-after')
+                reply=dict(seal=seal,policy_before=policy_before,policy_after=policy_after,journal_sha256=a.sha(journal),journal_bytes=journal.stat().st_size,journal_records=len(journal.read_text(encoding='utf-8').splitlines()))
+            elif op=='close':require_default_policy(dict(reference.np.geterr()));print(json.dumps(dict(ok=True,result={})),flush=True);return
             else:raise RuntimeError('unknown worker operation')
             print(json.dumps(dict(ok=True,result=reply)),flush=True)
         except BaseException as error:print(json.dumps(dict(ok=False,error=type(error).__name__,message=str(error),traceback=traceback.format_exc(),operation=request,partial_checks=locals().get('checks'),last_observation=locals().get('actual'))),flush=True)
@@ -273,9 +430,7 @@ class Worker:
         nonce=nonce or secrets.token_hex(32);permit=output/'worker-permit.json';run=os.environ['GITHUB_RUN_ID'];attempt=os.environ['GITHUB_RUN_ATTEMPT']
         values=dict(controller_pid=os.getpid(),controller_sha256=a.sha(__file__),generation=run,attempt=attempt,profile=args.profile,certificate_sha256=args.certificate_sha256,nonce_sha256=hashlib.sha256(nonce.encode()).hexdigest(),measure=measure,receipts=[str(Path(p).resolve()) for p in args.receipts])
         if measure:require(claim is not None,'measurement claim absent');values.update(claim=str(Path(claim).resolve()),claim_sha256=a.sha(claim))
-        a.save(permit,values);env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1');env.pop('PYTHONPATH',None)
-        if scalar:env['SKIMAGEXX_DISABLE_SIMD']='1'
-        else:env.pop('SKIMAGEXX_DISABLE_SIMD',None)
+        a.save(permit,values);env=child_environment(scalar)
         command=[sys.executable,str(Path(__file__).resolve()),'worker','--profile',args.profile,'--product',str(Path(args.product).resolve()),'--certificate',str(Path(args.certificate).resolve()),'--certificate-sha256',args.certificate_sha256,'--permit',str(permit.resolve())]
         if measure:command.append('--measure')
         self.error=(output/'worker-stderr.log').open('x',encoding='utf-8');self.process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.error,text=True,env=env,cwd=ROOT)
@@ -298,12 +453,18 @@ def validate_report(report,cert):
     profile=report['profile'];M,matrix,old=expected_digests(profile);frame=cert['profiles'][profile]
     require(report['source']==cert['source'] and report['product_sha256']==frame['pin']['product_sha256'] and report['counts']==COUNTS,'wrong source/product/scope')
     require(type(report['check_only']) is bool and report['controller_sha256']==a.sha(__file__),'wrong controller/check-only source')
+    require_default_policy(report['default_policy'])
     require(set(report['identities'])==({'normal','scalar'} if report['check_only'] else {'normal'}),'worker modes missing')
+    require(set(report['integrity'])==set(report['identities']),'worker final policy/journal binding missing')
     for mode,identity in report['identities'].items():
         require(type(identity['pid']) is int and identity['pid']>0 and identity['source']==cert['source'] and identity['product_sha256']==frame['pin']['product_sha256'] and identity['core_sha256']==frame['core_sha256'] and type(identity['default_workers']) is int and identity['default_workers']==1 and identity['fallback_enabled'] is False and type(identity['scalar']) is bool and identity['scalar']==(mode=='scalar'),'actual worker source/core/default policy differs')
         require(type(identity['has_avx2']) is bool and (mode!='scalar' or identity['has_avx2'] is False),'actual scalar dispatch differs')
         auth=identity['authentication'];require(auth['worker_pid']==identity['pid'] and all(type(auth[k]) is int and auth[k]>0 for k in ('worker_pid','worker_parent','launcher_pid')) and len(auth['receipt_sha256'])==64,'one-use startup identity missing')
         require(type(identity['cpu']) is dict and isinstance(identity['cpu'].get('cpu_model'),str) and identity['cpu']['cpu_model'],'actual CPU metadata missing')
+        require(identity['profile']==profile and type(identity['python_optimize']) is int and identity['python_optimize']==0,'wrong profile/optimized worker')
+        require_default_policy(identity['default_policy']);integrity=report['integrity'][mode]
+        for policy in (integrity['policy_before'],integrity['policy_after']):require_default_policy(policy)
+        require(type(integrity['journal_sha256']) is str and len(integrity['journal_sha256'])==64 and type(integrity['journal_bytes']) is int and integrity['journal_bytes']>0 and type(integrity['journal_records']) is int and integrity['journal_records']>=1512,'raw default journal absent/partial')
     if report['check_only']:
         require(set(report['checks'])=={'normal','scalar'} and not report['results'],'normal+scalar preparation cannot time')
         for mode,row in report['checks'].items():
@@ -326,8 +487,10 @@ def validate_report(report,cert):
                     expected=matrix['observations'][matrix['profiles'][profile]['snapshots'][spec['id']]]['result'];require(row['digest']==a.digest(expected),'pristine233 value differs');counter_check(row['counts'],minimum=1)
                 for row,expected in zip(workers['pristine252'],M['profiles'][profile]['cases']):
                     require(row['id']==expected['id'] and row['digest']==a.digest(expected['observation']['result']),'pristine252 differs');counter_check(row['counts'],aggregate=1)
+                validate_default_rows(workers['default252'],M,profile,identity,workers['workers'],'preparation')
     else:
         require(report['checks']=={} and [r['index'] for r in report['results']]==list(range(252)),'all252 IDs must be measured, no filtering')
+        validate_default_rows(report['default252'],M,profile,report['identities']['normal'],1,'measurement-sweep')
         for row,case in zip(report['results'],M['cases']):
             require(type(row['index']) is int and row['case']==case and len(row['raw_samples'])==14 and row['orders']==orders(row['index']),'fixed7paired rounds differ')
             source=inspect.getsource(callback_pair);node=next(n for n in ast.walk(ast.parse(source)) if isinstance(n,ast.FunctionDef) and n.name=='call');callback_source=ast.get_source_segment(source,node)
@@ -335,14 +498,19 @@ def validate_report(report,cert):
             require(row['callback']['actual_targets']=={k:dict(module='skimage.morphology.max_tree' if k=='original' else 'skimagexx._max_tree',name=case['function']) for k in ('original','native')},'timed public target differs')
             state=row['callback']['input_state'];expected=M['profiles'][profile]['cases'][row['index']]['observation']
             require({k:state[k] for k in ('image','owner')}==expected['before'] and state['provided']==expected['provided_before'],'raw timed fixture/provided-tree data differs')
+            validate_default_case(row['callback']['default_precheck'],row['index'],case,expected,profile,report['identities']['normal'],1,'timed-fixture')
             require([(v['round'],v['backend']) for v in row['raw_samples']]==[(i,backend) for i,order in enumerate(row['orders']) for backend in order],'raw paired order differs')
             for value in row['raw_samples']:
                 require(type(value['loops']) is int and 1<=value['loops']<=1000 and type(value['elapsed_ns']) is int and value['elapsed_ns']>0 and type(value['ms']) is float and math.isfinite(value['ms']) and value['ms']>0 and value['ms']==value['elapsed_ns']/value['loops']/1e6 and value['identity']==report['identities']['normal'] and value['callback_source_sha256']==row['callback']['callback_source_sha256'],'sample source/CPU/callback/elapsed differs')
                 counter_check(value['counts'],aggregate=value['loops'] if value['backend']=='native' else 0)
+                for policy in (value['policy_before'],value['policy_after']):require_default_policy(policy)
+                require(value['default_precheck_sha256']==a.digest(row['callback']['default_precheck']),'sample actual-fixture default precheck binding differs')
             require(set(row['calibration'])=={'original','native'},'calibration raw samples missing')
             for backend,value in row['calibration'].items():
                 require(type(value['loops']) is int and value['loops']==1 and type(value['elapsed_ns']) is int and value['elapsed_ns']>0 and type(value['ms']) is float and value['ms']==value['elapsed_ns']/1e6 and value['identity']==report['identities']['normal'] and value['callback_source_sha256']==row['callback']['callback_source_sha256'],'calibration identity/elapsed differs')
                 counter_check(value['counts'],aggregate=1 if backend=='native' else 0)
+                for policy in (value['policy_before'],value['policy_after']):require_default_policy(policy)
+                require(value['default_precheck_sha256']==a.digest(row['callback']['default_precheck']),'calibration actual-fixture default precheck binding differs')
             med={k:statistics.median([v['ms'] for v in row['raw_samples'] if v['backend']==k]) for k in ('original','native')}
             require(row['medians_ms']==med and row['speedup']==med['original']/med['native'] and row['slower']==(med['native']>med['original']),'paired statistics/regression flag differs')
         require(report['summary']==summarize(report['results']),'complete all-case summaries differ')
@@ -354,7 +522,14 @@ def verify_barrier(paths,cert,certificate_sha):
     for path in paths:
         receipt=a.read(path);report=validate_report(a.read(Path(path).parent/'report.json'),cert)
         require(report['check_only'] is True and report['controller_sha256']==receipt['controller_sha256']==a.sha(__file__) and report['certificate_sha256']==certificate_sha,'preparation report/receipt source differs')
+        require_default_policy(receipt['default_policy'])
+        require(receipt['default_coverage']==default_coverage(report),'preparation barrier lacks complete default coverage')
+        for mode in ('normal','scalar'):verify_default_journal(Path(path).parent/mode/'default-observations.jsonl',report,mode)
     return rows
+
+
+def default_coverage(report):
+    return {mode:[dict(workers=worker['workers'],cases=len(worker['default252']),sha256=a.digest(worker['default252'])) for worker in report['checks'][mode]['checks']] for mode in ('normal','scalar')}
 
 
 def orders(index):
@@ -380,13 +555,15 @@ def controller(args):
     # Product/receipt verification precedes numerical imports and worker startup.
     seal=a.verify_product(args.product,args.profile,cert);output=Path(args.output);require(not output.exists(),'fresh output required');output.mkdir(parents=True)
     retained_claim=a.retain_claim(claim,output) if claim is not None else None
-    report=dict(schema='max-tree-public-comparison-v1',profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False,measurement_claim=retained_claim)
+    report=dict(schema='max-tree-public-comparison-v1',profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False,measurement_claim=retained_claim,default_policy=dict(DEFAULT_POLICY),integrity={})
     worker=None
     try:
         for mode in (('normal','scalar') if args.stage=='prepare' else ('normal',)):
             prefix=output/mode;prefix.mkdir();worker=Worker(args,prefix,scalar=mode=='scalar',measure=args.stage=='measure',nonce=nonce,claim=claim);report['identities'][mode]=worker.identity
             if args.stage=='prepare':report['checks'][mode]=worker.request(dict(operation='validate'))
             else:
+                report['default252']=worker.request(dict(operation='validate-default'))
+                _,manifest=baseline();validate_default_rows(report['default252'],manifest,args.profile,worker.identity,1,'measurement-sweep')
                 for index in range(252):
                     callback=worker.request(dict(operation='prepare-case',index=index));samples=[]
                     calibration={backend:worker.request(dict(operation='sample',index=index,backend=backend,loops=1)) for backend in ('original','native')}
@@ -396,7 +573,8 @@ def controller(args):
                     med={k:statistics.median([v['ms'] for v in samples if v['backend']==k]) for k in ('original','native')}
                     report['results'].append(dict(index=index,case=callback['case'],callback=callback,orders=orders(index),calibration=calibration,raw_samples=samples,medians_ms=med,speedup=med['original']/med['native'],slower=med['native']>med['original']))
                     worker.request(dict(operation='release'));(output/'progress.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
-            worker.request(dict(operation='integrity'));worker.close();worker=None
+            report['integrity'][mode]=worker.request(dict(operation='integrity'));worker.close();worker=None
+            verify_default_journal(prefix/'default-observations.jsonl',report,mode)
         require(a.verify_product(args.product,args.profile,cert)==seal,'product changed after execution');report['passed']=True
         if args.stage=='measure':report['summary']=summarize(report['results'])
         validate_report(report,cert)
@@ -406,7 +584,7 @@ def controller(args):
             try:worker.close()
             except BaseException as error:report['failures'].append(dict(phase='close',message=str(error)))
         a.save(output/'report.json',report)
-    if args.stage=='prepare':a.save(output/'preparation.json',dict(schema='max-tree-preparation-v1',passed=True,profile=args.profile,certificate_sha256=args.certificate_sha256,generation=os.environ['GITHUB_RUN_ID'],attempt=os.environ['GITHUB_RUN_ATTEMPT'],modes=['normal','scalar'],workers=[1,4],counts=COUNTS,report_sha256=a.sha(output/'report.json'),product_sha256=seal['product_sha256'],controller_sha256=a.sha(__file__)))
+    if args.stage=='prepare':a.save(output/'preparation.json',dict(schema='max-tree-preparation-v1',passed=True,profile=args.profile,certificate_sha256=args.certificate_sha256,generation=os.environ['GITHUB_RUN_ID'],attempt=os.environ['GITHUB_RUN_ATTEMPT'],modes=['normal','scalar'],workers=[1,4],counts=COUNTS,report_sha256=a.sha(output/'report.json'),product_sha256=seal['product_sha256'],controller_sha256=a.sha(__file__),default_policy=dict(DEFAULT_POLICY),default_coverage=default_coverage(report)))
     return report
 
 
