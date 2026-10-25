@@ -288,12 +288,16 @@ def test_frozen_public_semantics(coloc_runtime, tmp_path, index, workers):
         assert actual["array_providers"] == [], (spec["id"], actual["array_providers"])
         assert any(row["admitted"] for row in actual["stage_returns"])
     if actual["error"] is None and not any(row["admitted"] for row in actual["stage_returns"]):
-        # Pure object/complex source paths may complete entirely through the
-        # declared literal primitives. They receive ZERO native completion
-        # credit; passing their public semantics must not manufacture one.
+        # Object/complex and the declared nonfinite MCC source frontier can
+        # complete through literal primitives. ZERO native completion remains
+        # ZERO; public semantic parity does not manufacture native credit.
         assert actual["array_providers"]
+        nonfinite_mcc = (spec["api"] == "manders_coloc_coeff" and
+                         spec["group"] in ("special", "fp") and
+                         spec.get("special", spec["name"]) in ("nan0", "inf0"))
         assert ((spec["group"] == "protocol" and spec["name"] == "object_numeric") or
-                (spec["group"] == "binary_control" and spec["name"] == "complex_binary")), spec["id"]
+                (spec["group"] == "binary_control" and spec["name"] == "complex_binary") or
+                nonfinite_mcc), spec["id"]
 
 
 def test_owner_metadata_only(coloc_runtime):
