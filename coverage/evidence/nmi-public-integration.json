@@ -155,7 +155,10 @@
     "source": "28350015823b36333085ce8ce04e3dcc70065572",
     "api": "morphology.reconstruction",
     "finding": "Registry is native but stored inventory row remains upstream-only. Independent Agent A owns a separate metadata successor, to compose before final NMI201 source.",
-    "status": "awaiting exact successor"
+    "status": "Exact separate metadata successor composed; original283/run unchanged",
+    "successor": "d7197bebce5b42e9289814532e1078cd2030cfb9",
+    "composition": "4a6696a",
+    "scope": "Only source declaration coherence/prebuild metadata; no public200 product acceptance"
   },
   "qualification": {
     "current_public200_run": 40174473080,
@@ -172,16 +175,82 @@
     "timings": 0,
     "dispatches": 0,
     "metadata_checks": {
-      "status": "755 passed before inventory successor; final source-only plans pending",
+      "status": "PASS; no numerical execution",
+      "counts": {
+        "tests": 776,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suite_files": [
+        "tests/test_public_qualification.py",
+        "tests/test_build_identity_facts.py",
+        "tests/test_rank_statistics_products.py"
+      ],
       "log": {
-        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.log",
-        "sha256": "ef569e72770691846aa8e545ef9e7941cab4dbda95d49e494c0c8f89f09b48cb"
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v3.log",
+        "bytes": 923,
+        "sha256": "805b3d5325d26c71d5b4f23d65a9c5effb3604464400a1890f8eb1a1c3c6e27e"
       },
       "XML": {
-        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.xml",
-        "sha256": "ff6b0d885c45ff8b4b60ca7bd04970a46e33df35c6b644620d1201337309568f"
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v3.xml",
+        "bytes": 122217,
+        "sha256": "5e2b6c6954cee36dfbf72e4dd04edc11156896b0ec707454b48333630bad2396"
       },
-      "failure_retained": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v1.log: systemPython had no pytest; reused existing .venv, no environment creation"
+      "pre_inventory_successor_pass": {
+        "tests": 755,
+        "log": {
+          "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.log",
+          "bytes": 913,
+          "sha256": "ef569e72770691846aa8e545ef9e7941cab4dbda95d49e494c0c8f89f09b48cb"
+        },
+        "XML": {
+          "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.xml",
+          "bytes": 119037,
+          "sha256": "ff6b0d885c45ff8b4b60ca7bd04970a46e33df35c6b644620d1201337309568f"
+        }
+      },
+      "retained_launcher_failure": {
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v1.log",
+        "bytes": 136,
+        "sha256": "71b812f47e4925899c3a42f656d0fc93a9b4a3eea50a474ea5fda9d619043af4"
+      },
+      "failure_boundary": "SystemPython had no pytest; reused existing .venv. No environment creation or source/numerical failure."
+    },
+    "qualification_static_plans": [
+      {
+        "profile": "windows",
+        "blockers": 0,
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/plan-windows.json",
+        "bytes": 11648,
+        "sha256": "687464319b38ddaed1aa99e963e205c56cbf2a43303a3123c4d98ecaf1beed78"
+      },
+      {
+        "profile": "modern",
+        "blockers": 0,
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/plan-modern.json",
+        "bytes": 11621,
+        "sha256": "cef41703e85f727eb745933e1f506d91764704dadfa222f8d10aed689d67927f"
+      },
+      {
+        "profile": "minimum",
+        "blockers": 0,
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/plan-minimum.json",
+        "bytes": 11624,
+        "sha256": "a1394da9c1b566be2c8dcd86a40e52ddd3fb5d83ca6b65401d6c71a4ae197ada"
+      },
+      {
+        "profile": "debug",
+        "blockers": 0,
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/plan-debug.json",
+        "bytes": 11618,
+        "sha256": "c486e8235d63512df05c656762a0855bd21d1d5e568a041d830322c561ed0ff4"
+      }
+    ],
+    "source_physical_census": {
+      "path": "build/worktrees/nmi-public201/build/public-plan-v1/physical-census.json",
+      "bytes": 6214,
+      "sha256": "701d786553dacefe0c86b9bcc008a84dcda24a88027b433b44552b467e958291"
     }
   },
   "no_performance_claim": true,
@@ -192,5 +261,10 @@
     "members": 3,
     "bytes": 7512,
     "sha256": "8a0a0a58a189a823876a04f5fc298bc5f4cea4aa0dba4f257bc55930d09d9cb3"
+  },
+  "AST_digest_cross_version_check": {
+    "python313": "metadata suite checks all5 original/fade canonical AST hashes",
+    "python311": "Existing minimum Python3.11.14 stdlib-only execution verified all5; NumPy not imported",
+    "helper_path": "build/worktrees/nmi-public201/build/public-plan-v1/check_ast_lineage.py"
   }
 }
