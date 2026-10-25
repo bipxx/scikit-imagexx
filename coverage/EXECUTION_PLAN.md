@@ -107,6 +107,21 @@ captures and exact repeats; implementation and independent final review continue
 Reconstruction's16-case terrain supplement is reviewed and merged as ccc6197.
 Earlier progress paragraphs above remain historical checkpoints.
 
+Latest bounded measurement: [TV default-policy campaign](TV_ADMISSION_PERFORMANCE.md)
+is root accepted for exact192 products,70fixtures/threeprofiles/globalworker1.
+All4410intervals/3780default observations are independently checked on Windows
+and Linux; allregressions remain in the210-rowCSV. After/original geometric
+mean speedups are1.557x/1.276x/1.358x;27/31/28cases remain slower. This is no
+full-API performance claim. B owns its measured-bottleneck follow-up plan.
+
+The exact archived failed283 Li products are being diagnosed by reviewed
+controller92f2a79/run40183231914, dispatched once with no build/timing. Original
+observer8118 remains the authority; source-only checkout portability follow-up
+does not mutate that source/run. C owns the exactzero-testobserver collection
+policy and metadata guards. H9b metadata migration is reviewed/admitted; A
+continues floating production, with source/donor review before any native calls.
+Earlier progress paragraphs retain their historical pending checkpoints.
+
 Historical paused planning snapshot (superseded by active execution above):
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.

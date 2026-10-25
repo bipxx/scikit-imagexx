@@ -160,3 +160,5 @@ coverage/evidence/li-installed-observation-journal-source-review.json -text
 coverage/evidence/li-failed-product-diagnostic-inputs.json -text
 coverage/evidence/h-extrema-metadata-migration-source-review.json -text
 coverage/evidence/li-same-failed-product-diagnostic-source-review.json -text
+coverage/evidence/tv-default-policy-performance-admission.json -text
+coverage/performance/tv-default-policy-40174240551.csv -text

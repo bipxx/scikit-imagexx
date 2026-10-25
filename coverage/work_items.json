@@ -29983,6 +29983,11 @@
           "bytes": 5949,
           "sha256": "1e79d4ce148c929e294b0aebb1ef60a493e7c0481f852330919a1bfb4602e43b"
         }
+      },
+      "bounded_performance": {
+        "path": "coverage/evidence/tv-default-policy-performance-admission.json",
+        "bytes": 15126,
+        "sha256": "a294bc1c6ee11a30d6aec94285cf5daa86fbb3989f14f53a8d8b0a889325a98e"
       }
     },
     {
@@ -30573,8 +30578,18 @@
         ".github/workflows/tv-chambolle-admission-compare.yml"
       ],
       "depends_on": [],
-      "state": "preparing",
-      "current_checkpoint": "Controller28c merged, certificate published/admitted; new40174240551 all8success,10artifacts retained, root raw audit4410intervals passed; independent performance review pending.",
+      "state": "measured",
+      "current_checkpoint": {
+        "run": 40174240551,
+        "status": "bounded-one-worker-performance-evidence-root-accepted",
+        "proof": {
+          "path": "coverage/evidence/tv-default-policy-performance-admission.json",
+          "bytes": 15126,
+          "sha256": "a294bc1c6ee11a30d6aec94285cf5daa86fbb3989f14f53a8d8b0a889325a98e"
+        },
+        "full_API_performance_target_met": false,
+        "all_regressions_retained": true
+      },
       "merge": {
         "commit": "2a487d34e75ab3a5d088c0b65ae0027a91a8f292",
         "main_commit": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99"
@@ -30633,22 +30648,58 @@
       "kind": "tooling",
       "apis": [],
       "owner": "resize_api",
-      "state": "contracting",
+      "state": "parity_passed",
       "owns": [
         "tests/test_h_extrema_contracts.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Prepare source-only plan for authenticated metadata-body migration of historical native-pending assertion; no oracle/source changes before root plan approval."
+      "current_checkpoint": "Closed metadata migration9b8cbd9 reviewed/admitted atf1bda84;15tests+4subtests/profile, 5oracleJSONexact; downstreamrootq/stager/composition stillpending."
     },
     {
       "id": "public200-failure-independent-review",
       "kind": "tooling",
       "apis": [],
       "owner": "astra_max_api_paths",
-      "state": "validating",
+      "state": "accepted",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "Authenticate retained original40174473080 per-profile logs/XML; diagnose all actual causes, no numerical rerun/success verifier. Then independently review TVv2raws."
+      "current_checkpoint": "Original200all4profiles205876XMLchecks/6failures each; same3nodesx2. Finalfailureproof4041f39b,87bsourceReview80cee51e. No success/productacceptance. Liunderlyingcause awaitsactualdiagnosticrow."
+    },
+    {
+      "id": "li-same-failed-product-diagnostic",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "state": "preparing",
+      "owns": [
+        "tools/li_installed_diagnostic.py",
+        ".github/workflows/li-installed-diagnostic.yml"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Reviewed92f2a79 dispatched once40183231914; same283failedbinaries, no builds/timing/productacceptance. Originalobserver8118 live; source-only WindowsgateEOL followup under review, no originalrun mutations."
+    },
+    {
+      "id": "tv-measured-followup-bottleneck-plan",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_api_paths",
+      "state": "contracting",
+      "owns": [],
+      "depends_on": [],
+      "current_checkpoint": "Plan only against accepted40174240551regressions, independent source attribution hypotheses; no production edits/images/build/timing before rootreview."
+    },
+    {
+      "id": "li-original-observer-collection-policy",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "state": "contracting",
+      "owns": [
+        "tests/conftest.py",
+        "tests/test_li_observer_collection.py"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Exactonezero-testobserver collectionpolicy approved; addmetadata guard, preserve43/86freshchildchecks and allrawscientificsource; checkoutEOL portability also under review."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31375,16 +31426,16 @@
         "h-extrema-floating-production"
       ],
       "astra_max_api_paths": [
-        "public200-failure-independent-review"
+        "tv-measured-followup-bottleneck-plan"
       ],
       "resize_api": [
-        "h-extrema-historical-assertion-migration"
+        "li-original-observer-collection-policy"
       ]
     },
     "current_three_agent_packets": {
       "astra_max_plan_audit": "h-extrema-floating-production",
-      "astra_max_api_paths": "public200-failure-independent-review",
-      "resize_api": "h-extrema-historical-assertion-migration"
+      "astra_max_api_paths": "tv-measured-followup-bottleneck-plan",
+      "resize_api": "li-original-observer-collection-policy"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31668,7 +31719,7 @@
       "source": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
       "run": 40174240551,
       "terminal": "all8 jobs successful",
-      "performance_accepted": false,
+      "performance_accepted": true,
       "root_raw_review": {
         "path": "build/resume-20261025/tv-default-final-review/root-raw-review.json",
         "bytes": 42083,
@@ -31684,7 +31735,13 @@
         "bytes": 553,
         "sha256": "1fff4b42bed8c106cd8a8e9f90aca5d70c33fe4c531a9d5e125b680607e2bfaf"
       },
-      "next": "independent full-evidence and profile-math review; old40163025231 remains diagnostic"
+      "next": "independent full-evidence and profile-math review; old40163025231 remains diagnostic",
+      "root_performance_admission": {
+        "path": "coverage/evidence/tv-default-policy-performance-admission.json",
+        "bytes": 15126,
+        "sha256": "a294bc1c6ee11a30d6aec94285cf5daa86fbb3989f14f53a8d8b0a889325a98e"
+      },
+      "full_API_performance_target_met": false
     },
     "current_failed_public200": {
       "source": "28350015823b36333085ce8ce04e3dcc70065572",
@@ -31702,6 +31759,13 @@
         "sha256": "8abdd2efde7068d43f12396350a0fc66b1ca19cb12ce93170bf687a00d20b0ed"
       },
       "diagnosis": "independent review in progress; stale inventory is a proven source blocker, not claimed sole job failure"
+    },
+    "current_li_same_failed_product_diagnostic": {
+      "run": 40183231914,
+      "source": "92f2a794d4aaa143a9362932b815e2822eb78d87",
+      "observer_session": 8118,
+      "status": "original observer live; no diagnostic conclusion yet",
+      "product_accepted": false
     }
   },
   "parallel_review": {
