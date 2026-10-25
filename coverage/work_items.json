@@ -16434,7 +16434,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -16456,7 +16456,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -25443,7 +25443,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
         }
       }
     },
@@ -30626,14 +30626,14 @@
         "python/skimagexx/_h_extrema.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Approved source policy and70-case factory frozen; preserve424integer+378followup+14unsafe; source/donor review before private builds or candidate calls."
+      "current_checkpoint": "Frozen829f953 production and five bounded builds complete; actual-link independent audit sealing. No numerical gate/import/timing yet; all886 fixed cases retained."
     },
     {
       "id": "h-extrema-floating-reference",
       "kind": "contract_reference",
       "apis": [],
       "owner": "integrator",
-      "state": "preparing",
+      "state": "contracted",
       "owns": [
         "tests/test_h_extrema_floating_cases.py",
         "tests/h_extrema_floating_reference.py",
@@ -30641,7 +30641,7 @@
         "coverage/contracts/h-extrema-floating.json"
       ],
       "depends_on": [],
-      "current_checkpoint": "Prospective14236 root approved; sealed8fb original-only70cases per3profiles with exact repeats, no native credit; independent review pending."
+      "current_checkpoint": "Exact8fb70-case original reference root accepted at e8de8bf;210first observations plus exact repeats,58Cython completions/profile/pass. Reference only; zero native/performance credit."
     },
     {
       "id": "h-extrema-historical-assertion-migration",
@@ -30663,30 +30663,30 @@
       "state": "accepted",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "Original200all4profiles205876XMLchecks/6failures each; same3nodesx2. Finalfailureproof4041f39b,87bsourceReview80cee51e. No success/productacceptance. Liunderlyingcause awaitsactualdiagnosticrow."
+      "current_checkpoint": "Original283/run401744 failed all4profiles,6failures each. Independent4041f39b retained; raw/LF metadata and inventory repairs frozen in201successor f82c0c2. Corrected Li86 same-binary diagnostic accepted separately, no whole-product acceptance."
     },
     {
       "id": "li-same-failed-product-diagnostic",
       "kind": "tooling",
       "apis": [],
       "owner": "integrator",
-      "state": "preparing",
+      "state": "accepted",
       "owns": [
         "tools/li_installed_diagnostic.py",
         ".github/workflows/li-installed-diagnostic.yml"
       ],
       "depends_on": [],
-      "current_checkpoint": "Reviewed92f2a79 dispatched once40183231914; same283failedbinaries, no builds/timing/productacceptance. Originalobserver8118 live; source-only WindowsgateEOL followup under review, no originalrun mutations."
+      "current_checkpoint": "Correctedcb371e9/run40186407587 terminalSUCCESS bothhosts; fourchildren344strictrows168genuineCPPsolverreturns. Independent4c7a0364 and root coverage/evidence/li-same-failed-product-installed-admission.json. Old92/run401832 failure immutable; no whole-product/API/performance credit."
     },
     {
       "id": "tv-measured-followup-bottleneck-plan",
       "kind": "tooling",
       "apis": [],
       "owner": "astra_max_api_paths",
-      "state": "contracting",
+      "state": "implementing",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "Plan only against accepted40174240551regressions, independent source attribution hypotheses; no production edits/images/build/timing before rootreview."
+      "current_checkpoint": "Frozenb5484fc positive-zero validation leaf and focused native tests; controller-v2 independent prebuild review found Git/env/count/binary-identity safeguards missing. Controller-only successor required before build. Optimization is unmeasured; fixed210historical targets retained."
     },
     {
       "id": "li-original-observer-collection-policy",
@@ -30699,7 +30699,34 @@
         "tests/test_li_observer_collection.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Exactonezero-testobserver collectionpolicy approved; addmetadata guard, preserve43/86freshchildchecks and allrawscientificsource; checkoutEOL portability also under review."
+      "current_checkpoint": "Bounded exact-one zero-test observer collection plan retained, not implemented. Hmetadata work took priority; no claim that broad collection is repaired. Future guard must use current gate91587055 pins."
+    },
+    {
+      "id": "public201-failure-repair-integration",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "owns": [
+        "tests/test_reconstruction_contracts.py",
+        "tests/test_public_qualification.py",
+        "tests/test_li_u16_pipeline.py"
+      ],
+      "depends_on": [],
+      "state": "preparing",
+      "current_checkpoint": "Frozenpushed f82c0c26433fb60c233bfc888a5e8e1a0a925bb6 on4b82e8/a55/d719/87b; Li915 exact and raw/LF source consumers corrected. Initial857suite856PASS1FAIL retained; affected7tests PASS after correction. Independent Csource/4plans review pending; no dispatch/product acceptance."
+    },
+    {
+      "id": "h-extrema-object-preentry-metadata",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "owns": [
+        "coverage/contracts/h-extrema-object-preentry.json",
+        "tests/test_h_extrema_contracts.py"
+      ],
+      "depends_on": [],
+      "state": "preparing",
+      "current_checkpoint": "Cfroze448b1bf on9b; six approved original-only objectpreentry calls TypeError beforeflood, all3profiles26metadataXMLchecksPASS. Root nonauthor source/proof review pending; no new native/API credit or public integration."
     }
   ],
   "unassigned_inventoried_apis": [
