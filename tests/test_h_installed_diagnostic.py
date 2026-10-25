@@ -8,6 +8,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -151,6 +152,67 @@ class HMetadataTests(unittest.TestCase):
                 if kind=='failure':r['failure']={'type':'AssertionError','message':'retained failure'}
                 path.write_text(json.dumps(r));path.with_suffix('.jsonl').write_text(''.join(json.dumps(x)+'\n' for x in r['observations']))
                 with self.assertRaises(RuntimeError):D.validate_reports(args[0],'normal',self.data['products']['modern'],*args[1:])
+
+
+class HelperCheckoutTests(unittest.TestCase):
+    def test_exact_raw_helper_declares_text_policy(self):
+        helper = ROOT / 'tools/li_installed_diagnostic.py'
+        self.assertEqual(D.sha(helper), '3a86441c81f5cc7950353a9048f80d7301741cde32e585198ee8fbbcd5301a68')
+        self.assertNotIn(b'\r\n', helper.read_bytes())
+        self.assertEqual((ROOT / '.gitattributes').read_bytes().splitlines().count(
+            b'tools/li_installed_diagnostic.py -text'), 1)
+
+    def test_real_autocrlf_checkout_of_raw_pinned_helper(self):
+        """Exercise the actual dependency bytes; never import the checkout copy."""
+        name = 'tools/li_installed_diagnostic.py'
+        raw = (ROOT / name).read_bytes()
+        expected = '3a86441c81f5cc7950353a9048f80d7301741cde32e585198ee8fbbcd5301a68'
+        witnesses = []
+        with tempfile.TemporaryDirectory(prefix='h-helper-checkout-', dir=ROOT / 'build') as temporary:
+            for declared in (False, True):
+                repo = Path(temporary) / ('declared' if declared else 'unruled')
+                (repo / 'tools').mkdir(parents=True)
+                (repo / name).write_bytes(raw)
+                (repo / '.gitattributes').write_bytes((name + ' -text\n').encode() if declared else b'')
+                commands = []
+                for args in (['-c', 'core.autocrlf=false', 'init', '--quiet'],
+                             ['-c', 'core.autocrlf=false', 'add', '--', '.gitattributes', name]):
+                    command = ['git', '-C', str(repo), *args]
+                    result = subprocess.run(command, check=True, capture_output=True)
+                    commands.append(dict(args=command, stdout=result.stdout.decode('utf-8', 'replace'),
+                                         stderr=result.stderr.decode('utf-8', 'replace')))
+                destination = repo / 'checkout'
+                destination.mkdir()
+                command = ['git', '-c', 'core.autocrlf=true', '-C', str(repo), 'checkout-index',
+                           '--all', '--force', '--prefix=' + str(destination).replace(os.sep, '/') + '/']
+                result = subprocess.run(command, check=True, capture_output=True)
+                commands.append(dict(args=command, stdout=result.stdout.decode('utf-8', 'replace'),
+                                     stderr=result.stderr.decode('utf-8', 'replace')))
+                actual = (destination / name).read_bytes()
+                digest = hashlib.sha256(actual).hexdigest()
+                if declared:
+                    self.assertEqual(actual, raw)
+                    self.assertEqual(digest, expected)
+                else:
+                    self.assertEqual(actual, raw.replace(b'\n', b'\r\n'))
+                    self.assertNotEqual(digest, expected)
+                witnesses.append(dict(declared_text_false=declared, expected_raw_sha256=expected,
+                                      actual_raw_sha256=digest, bytes=len(actual), CRLF=actual.count(b'\r\n'),
+                                      commands=commands))
+        print('H_HELPER_GIT_EOL_WITNESS ' + json.dumps(witnesses, sort_keys=True))
+
+    def test_workflow_profiles_preserve_closed_platform_mapping(self):
+        workflow = (ROOT / '.github/workflows/h-installed-diagnostic.yml').read_text(encoding='utf-8')
+        choice = workflow.split('      profiles:\n', 1)[1].split('\npermissions:', 1)[0]
+        self.assertIn('        type: choice\n', choice)
+        self.assertIn('        default: all\n', choice)
+        self.assertEqual(re.findall(r'^          - (\w+)$', choice, re.MULTILINE), ['all', 'windows'])
+        selector = re.search(r"profile: \$\{\{ fromJSON\(inputs\.profiles == 'windows' && '([^']+)' \|\| '([^']+)'\) \}\}", workflow)
+        self.assertIsNotNone(selector)
+        self.assertEqual(json.loads(selector[1]), ['windows'])
+        self.assertEqual(json.loads(selector[2]), ['minimum', 'modern', 'debug', 'windows'])
+        self.assertIn("runs-on: ${{ matrix.profile == 'windows' && 'windows-latest' || 'ubuntu-24.04' }}", workflow)
+        self.assertIn("python-version: ${{ matrix.profile == 'minimum' && '3.11.17' || '3.13.16' }}", workflow)
 
 
 if __name__ == '__main__':

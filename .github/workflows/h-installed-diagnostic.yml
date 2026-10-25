@@ -6,6 +6,14 @@ on:
         description: Exact reviewed controller commit, equal to the selected workflow ref
         type: string
         required: true
+      profiles:
+        description: Diagnostic profiles
+        type: choice
+        required: true
+        default: all
+        options:
+          - all
+          - windows
 permissions:
   contents: read
   actions: read
@@ -14,20 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - profile: minimum
-            os: ubuntu-24.04
-            python: '3.11.17'
-          - profile: modern
-            os: ubuntu-24.04
-            python: '3.13.16'
-          - profile: debug
-            os: ubuntu-24.04
-            python: '3.13.16'
-          - profile: windows
-            os: windows-latest
-            python: '3.13.16'
-    runs-on: ${{ matrix.os }}
+        profile: ${{ fromJSON(inputs.profiles == 'windows' && '["windows"]' || '["minimum","modern","debug","windows"]') }}
+    runs-on: ${{ matrix.profile == 'windows' && 'windows-latest' || 'ubuntu-24.04' }}
     timeout-minutes: 60
     env:
       GH_TOKEN: ${{ github.token }}
@@ -42,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.profile == 'minimum' && '3.11.17' || '3.13.16' }}
       - name: Standard-library guards before archived product preparation
         shell: bash
         run: |
