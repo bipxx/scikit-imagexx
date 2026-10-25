@@ -1,0 +1,49 @@
+name: experiment-publication
+on:
+  workflow_dispatch:
+    inputs:
+      payload_gzip_base64:
+        description: Exact reviewed experiment gzip bytes encoded as base64
+        type: string
+        required: true
+      payload_sha256:
+        description: Independently reviewed raw experiment.json SHA256
+        type: string
+        required: true
+      controller_revision:
+        description: Exact reviewed controller commit, lowercase 40 hexadecimal characters
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Fetch only the declared controller commit from this repository
+        env:
+          CONTROLLER_REVISION: ${{ inputs.controller_revision }}
+        run: |
+          python - <<'PY'
+          import os, re, subprocess
+          revision = os.environ['CONTROLLER_REVISION']
+          if re.fullmatch('[0-9a-f]{40}', revision) is None:
+              raise SystemExit('Invalid controller revision.')
+          subprocess.run(['git', 'fetch', '--no-tags', '--depth=1', 'origin', revision], check=True)
+          PY
+      - name: Authenticate bounded transport and existing metadata validators
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python tools/experiment_publication.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-experiment
+          path: build/reviewed-experiment/experiment.json
+          if-no-files-found: error
+          retention-days: 90
