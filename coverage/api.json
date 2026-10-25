@@ -6275,11 +6275,15 @@
       "api": "morphology.reconstruction",
       "kind": "callable",
       "signature": "(seed, mask, method='dilation', footprint=None, offset=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_reconstruction_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.remove_objects_by_distance",

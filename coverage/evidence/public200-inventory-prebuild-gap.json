@@ -1,0 +1,228 @@
+{
+  "schema": "public200-source-inventory-prebuild-gap-v1",
+  "original_source": "28350015823b36333085ce8ce04e3dcc70065572",
+  "original_run": 40174473080,
+  "finding": "Frozen283 registers morphology.reconstruction in coverage.py but coverage/api.json still has the five upstream-only derived metadata fields. The installed shared inventory set check and later actual-inventory comparison cannot pass this mismatch.",
+  "original_run_result": "No terminal result is inferred here. Original run/branch, observer and sequential retention continue unchanged.",
+  "previous_preflight_gap": "The 716 metadata checks and four source plans did not compare the checked-in API inventory against the source native registry. The earlier zero-blocker source review missed this invariant; those receipts remain preserved and are not rewritten.",
+  "original_inventory": {
+    "git": {
+      "path": "build/inventory-repair-v1/base-api-git.json",
+      "bytes": 306920,
+      "sha256": "87eef1c48057d89ab7eed8e0acd61d35278f0bdbbc5631fdd94d319dce12c428"
+    },
+    "frozen_worktree": {
+      "path": "build/inventory-repair-v1/base-api-frozen-worktree.json",
+      "bytes": 306920,
+      "sha256": "87eef1c48057d89ab7eed8e0acd61d35278f0bdbbc5631fdd94d319dce12c428"
+    },
+    "capture_boundary": "Copies authenticated from the unchanged frozen283 checkout and Git object while preparing this repair receipt; not represented as a pre-edit snapshot."
+  },
+  "corrected_inventory": {
+    "record": {
+      "path": "coverage/api.json",
+      "bytes": 307033,
+      "sha256": "85cd1ce4cc6fbb2966a8f2d69588fced1b3aa8a9319a0b35d36df97abedcfc55"
+    },
+    "entries": 477,
+    "unchanged_other_entries": 476,
+    "unchanged_entry_order": true,
+    "unchanged_signatures_classes_and_other_fields": true,
+    "changes": [
+      {
+        "field": "implementation",
+        "before": "upstream-only",
+        "after": "native-partial"
+      },
+      {
+        "field": "native_default_case_dtypes",
+        "before": [],
+        "after": [
+          "uint8",
+          "float32",
+          "float64"
+        ]
+      },
+      {
+        "field": "execution_kind",
+        "before": "upstream",
+        "after": "native"
+      },
+      {
+        "field": "parity_test",
+        "before": null,
+        "after": "tests/test_reconstruction_public.py"
+      },
+      {
+        "field": "benchmark",
+        "before": null,
+        "after": "benchmarks/coverage.py"
+      }
+    ]
+  },
+  "derived_from": {
+    "registry_source": {
+      "path": "python/skimagexx/coverage.py",
+      "bytes": 29689,
+      "sha256": "6b01dd737bb5cde8b663a0fac594283b21ab1d49c333759e14cf49e5b0a6b9e3"
+    },
+    "inventory_source": {
+      "path": "tools/inventory.py",
+      "bytes": 13589,
+      "sha256": "8549c754b57c0cc28fcb4be9157af2f8bd7a7ec7c51af68b71dafd23178ce15c"
+    },
+    "evidence_extraction": "AST-selected DEDICATED_EVIDENCE initialization/loop with tuple only; no inventory module or installed numerical package import.",
+    "expected_fields": {
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_reconstruction_public.py",
+      "benchmark": "benchmarks/coverage.py"
+    }
+  },
+  "guard": {
+    "entry": "registry_expectation -> validate_declared_inventory; plan/prepare use this before interpreter/environment/download/build work",
+    "checks": [
+      "unique API keys",
+      "exact native/metadata registration sets",
+      "callable implementation and execution classification",
+      "source-derived default dtypes",
+      "nonempty source evidence references with existing relative files"
+    ],
+    "unchanged_tool_functions": [
+      "admission",
+      "base_interpreter",
+      "bilateral_admission",
+      "bregman_admission",
+      "canonical",
+      "capture_build_identity",
+      "capture_interpreter_provenance",
+      "child",
+      "corpus_command",
+      "create_capsule",
+      "decisions_admission",
+      "declared_sdk_families",
+      "dump",
+      "environment",
+      "groups_for_source",
+      "headers",
+      "inspect_wheel",
+      "interpreter_link_paths",
+      "inventory",
+      "main",
+      "matrix_admission",
+      "max_tree_admission",
+      "must_run",
+      "plan",
+      "prepare",
+      "product_census",
+      "python_in",
+      "qualify",
+      "read_windows_toolchain",
+      "reconstruction_admission",
+      "require",
+      "require_same_windows_toolchain",
+      "returned_maps",
+      "runtime_pins",
+      "sdk",
+      "sdk_family_declarations",
+      "seal",
+      "select_visual_studio",
+      "sha",
+      "source_state",
+      "tool_in",
+      "tv_admission",
+      "validate_build_identity",
+      "validate_corpus",
+      "validate_interpreter_provenance",
+      "validate_link_record",
+      "validate_matrix_rows",
+      "validate_metrics",
+      "validate_sdk_listing",
+      "verify_record",
+      "verify_tree",
+      "wheel_members",
+      "wheel_metadata",
+      "windows_toolchain_model"
+    ],
+    "later_installed_inventory_gate_preserved": true,
+    "scope": "Cheap checked-in source consistency only. Does not establish upstream signatures, numerical parity, measured performance, whole-product qualification, or exact provenance of every evidence path; installed inventory comparison remains mandatory."
+  },
+  "validation": {
+    "focused": {
+      "record": {
+        "path": "build/inventory-repair-v1/focused.xml",
+        "bytes": 3690,
+        "sha256": "c6775aa1fbc0bedf40e87b5f4b0ea42a69dcee6cca8f99482149854b8f9e8ef9"
+      },
+      "counts": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "existing_metadata_suite": {
+      "record": {
+        "path": "build/inventory-repair-v1/metadata.xml",
+        "bytes": 115669,
+        "sha256": "bf7f64e44d4dd6281137d9c10d46aa2b165481e4e93872855ab36f6c617600af"
+      },
+      "counts": {
+        "tests": 737,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "final_source_derived_assertions": {
+      "record": {
+        "path": "build/inventory-repair-v1/final-source-tests.xml",
+        "bytes": 533,
+        "sha256": "cf236e7937733e283f093ed46fdf519c7657f5e6c01992ec105951cebdc14db7"
+      },
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "plans": [
+    {
+      "path": "build/inventory-repair-v1/plan-windows-v2.json",
+      "bytes": 11490,
+      "sha256": "926306c824a6df47c9c13c547c3291f0f5ca99e61831610b870be774cb62136b"
+    },
+    {
+      "path": "build/inventory-repair-v1/plan-modern-v2.json",
+      "bytes": 11463,
+      "sha256": "de982c317390a0b502cdb6ca7bf8d5e0a1fa91fb57d4ca87754fc94df5f7005a"
+    },
+    {
+      "path": "build/inventory-repair-v1/plan-minimum-v2.json",
+      "bytes": 11466,
+      "sha256": "9da92d66e0db774e0dcb773f6cbf6c2afdb03b32ec43bdd398e98895f2dd94d9"
+    },
+    {
+      "path": "build/inventory-repair-v1/plan-debug-v2.json",
+      "bytes": 11460,
+      "sha256": "c69ab7865ab214b509cbebbcb449a14362cca4c7c22ee03ad75867542941777c"
+    }
+  ],
+  "final_test_delta": "After the737-test pass, two new guard tests replaced fixed200/203 literals with source-derived counts and removed reconstruction from a synthetic registry through AST instead of assuming it is the last morphology entry. Both exact changed tests passed once. All preexisting tests except two now-complete synthetic registry census fixtures are AST-unchanged.",
+  "retained_validation_failure": "First read-only plan invocation omitted the existing required --output argument; raw empty plan-windows.json and plan-windows.stderr remain. Corrected v2 invocations changed only the command argument, not source.",
+  "candidate_cpp_or_scientific_source_changes": 0,
+  "local_image_calls": 0,
+  "local_builds": 0,
+  "local_environments": 0,
+  "operation_timings": 0,
+  "additional_workflow_dispatches": 0,
+  "whole_product_accepted": false,
+  "performance_accepted": false
+}
