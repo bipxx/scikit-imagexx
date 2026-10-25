@@ -11,17 +11,25 @@ namespace {
 bool same(double a,double b) {return std::memcmp(&a,&b,sizeof(a))==0;}
 void compare(const std::vector<std::uint8_t>& bytes) {
     const std::vector<std::uint16_t> wide(bytes.begin(),bytes.end());
+    std::vector<unsigned char> storage(wide.size()*sizeof(std::uint16_t)+1);
+    std::memcpy(storage.data()+1,wide.data(),wide.size()*sizeof(std::uint16_t));
     const skimagexx::LiImage old(bytes.data(),bytes.size(),skimagexx::PixelType::uint8);
     const skimagexx::LiImage added(wide.data(),wide.size(),skimagexx::PixelType::uint16);
+    const skimagexx::LiImage unaligned(storage.data()+1,wide.size(),skimagexx::PixelType::uint16);
     assert(added.kind()==old.kind());
+    assert(unaligned.kind()==old.kind());
     assert(same(added.value(),old.value()));
+    assert(same(unaligned.value(),old.value()));
     assert(same(added.minimum(),old.minimum()));
+    assert(same(unaligned.minimum(),old.minimum()));
     assert(same(added.maximum(),old.maximum()));
+    assert(same(unaligned.maximum(),old.maximum()));
     if(added.kind()==skimagexx::LiKind::ready) {
-        assert(added.spacing()==1. && old.spacing()==1.);
+        assert(added.spacing()==1. && old.spacing()==1. && unaligned.spacing()==1.);
         for(const double tolerance:{.5,.125,std::numeric_limits<double>::infinity()}) {
-            const auto a=added.run(tolerance),b=old.run(tolerance);
+            const auto a=added.run(tolerance),b=old.run(tolerance),c=unaligned.run(tolerance);
             assert(same(a.value,b.value) && a.updated==b.updated && a.status==b.status);
+            assert(same(c.value,b.value) && c.updated==b.updated && c.status==b.status);
         }
     }
 }
@@ -55,5 +63,5 @@ int main() {
         compare(large);
     }
     set_num_threads(1);
-    std::cout<<"Li uint16 bounded range, size-before-read, constants, exact byte-solver reuse and workers1/4 passed; AVX2="<<has_avx2()<<'\n';
+    std::cout<<"Li uint16 bounded range, size-before-read, constants, unaligned storage, exact byte-solver reuse and workers1/4 passed; AVX2="<<has_avx2()<<'\n';
 }
