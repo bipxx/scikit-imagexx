@@ -188,3 +188,4 @@ tests/colocalization_reference.py -text
 tests/test_colocalization_contracts.py -text
 coverage/evidence/h203-failed-qualification-diagnosis.json -text
 coverage/evidence/footprint-initial-capture-failure.json -text
+coverage/evidence/h203-diagnostic-projection-source-admission.json -text

@@ -1,0 +1,48 @@
+{
+  "schema": "root-H203-diagnostic-projection-source-admission-v1",
+  "source": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+  "parent_failed_source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "disposition": "Accepted source/metadata-only repair of one stale diagnostic projection, plus actual consumer regression. No compiled or scientific source change.",
+  "proof": {
+    "path": "build\\worktrees\\h203-diagnostic-repair\\build\\diagnostic-repair-v1\\manifest.json",
+    "bytes": 4061,
+    "sha256": "426ab2d9d29fa6133a53919fae0401a84a2945affcea8f042e13d139eec95b07"
+  },
+  "handoff": {
+    "path": "build\\worktrees\\h203-diagnostic-repair\\build\\diagnostic-repair-v1\\source-handoff.json",
+    "bytes": 1426,
+    "sha256": "c98ea59f4f1897ad17ad09594a0be24f938309d66a4d7eb19a06eb849dec32c2"
+  },
+  "root_rehashed_records": 25,
+  "Git_members": 2,
+  "metadata": [
+    {
+      "path": "build\\worktrees\\h203-diagnostic-repair\\build\\diagnostic-repair-v1\\metadata-v2-windows\\metadata.xml",
+      "bytes": 14328,
+      "sha256": "98c79f5da52b98d09808282c3c6f4127a2141734b27eed86af7b43f5c604fdd4"
+    },
+    {
+      "path": "build\\worktrees\\h203-diagnostic-repair\\build\\diagnostic-repair-v1\\metadata-v2-modern\\metadata.xml",
+      "bytes": 14329,
+      "sha256": "e001f1350417d30846cb9ac76e0b760ef53038b0d4eb22e32593140edcbf279c"
+    },
+    {
+      "path": "build\\worktrees\\h203-diagnostic-repair\\build\\diagnostic-repair-v1\\metadata-v2-minimum\\metadata.xml",
+      "bytes": 14329,
+      "sha256": "6d5260a054bd6d613f8bba24d4b4138fd119d279ce4601e32dbb4d961ab70dad"
+    }
+  ],
+  "metadata_PASS_per_profile": 85,
+  "exact_whole_child_inverse": true,
+  "all_old_metadata_test_ASTs_unchanged": true,
+  "failed_run": 40200919182,
+  "failed_run_remains_failed": true,
+  "next": "Review a bounded same-failed-product installed diagnostic using unchanged741 binaries before deciding any fresh whole-product build. No old failures or source labels are rewritten.",
+  "image_calls": 0,
+  "builds": 0,
+  "new_environments": 0,
+  "operation_timings": 0,
+  "new_API_credit": 0,
+  "public_accepted": false,
+  "performance_accepted": false
+}
