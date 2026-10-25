@@ -41,8 +41,10 @@ records the original run `40163025231`, still pending preparation and measuremen
 no new performance result is accepted. NMI's [original reference freeze](evidence/nmi-original-reference-audit.json) is
 merged as `b5fadfa`: 214 original cases on each of three profiles, with explicit
 raw-contract newline mapping and no new native/public acceptance. The repaired
-private candidate `fadef4c` has passed its six final runs and awaits independent
-closure review; public core/SDK wiring and whole qualification remain pending. Reconstruction's earlier `095ea3d` blocker has a separately tested
+private candidate `fadef4c` has [scoped private admission](evidence/nmi-private-native-review.json)
+after independent closure review: 2,464 passed checks and 206 explicit frontier
+skips. No donor product acceptance is inherited. Public core/SDK wiring, whole
+qualification and one-worker measurement remain pending. Reconstruction's earlier `095ea3d` blocker has a separately tested
 binder repair `e17ba10`, but root review identified a possible unchecked offset
 span extent, independently confirmed and [recorded as blocking](evidence/reconstruction-offset-extent-review.json), requiring repair before admission.
 Worker C prepares the actual public-200 integration on a separate branch; this
@@ -384,3 +386,5 @@ The following records remain authoritative only for their own exact sources:
 | Matrix and max-tree private work | [General matrix kernel](evidence/matrix-transform-general-kernel.json), [profile tooling](evidence/matrix-transform-profile-tooling.json), [max-tree bridge](evidence/max-tree-private-bridge.json), [closing dtype correction](evidence/max-tree-closing-dtype-private.json), and [SDK oracle correction](evidence/max-tree-sdk-oracle-private.json) retain their scoped private proofs. The failed combined run `40117331038` remains failed. |
 | Max-tree measurement preparation | [Benchmark reference](evidence/max-tree-benchmark-reference.json) retains 351 source observations and 252 finite candidates per runtime; it is not a native measurement result. |
 | Archive and worktree retention | [Released metadata scratch cleanup](evidence/released-metadata-scratch-cleanup-20261024.json) and [TV admission worktree retirement](evidence/tv-admission-public-worktree-retirement.json) preserve archived files, redirects, and protected/rejected paths. They are not instructions to delete other worktrees. |
+
+The merged publisher worktree has been [retired with all proof bytes archived](evidence/shared-publication-worktree-retirement.json); active environments, donor products and benchmark inputs remain protected.

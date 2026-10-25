@@ -127,3 +127,5 @@ coverage/evidence/reconstruction-offset-extent-review.json -text
 coverage/evidence/public199-matrix-source-failure.json -text
 coverage/contracts/normalized-mutual-information.json -text
 coverage/evidence/nmi-original-reference-audit.json -text
+coverage/evidence/nmi-private-native-review.json -text
+coverage/evidence/shared-publication-worktree-retirement.json -text

@@ -29496,7 +29496,7 @@
       "full_product_dispatch": {
         "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
         "run": 40161615893,
-        "status": "modern-and-debug-failed-original-remaining-profiles-running-no-acceptance",
+        "status": "Windows-Debug-modern-failed-minimum-running-original-unaccepted",
         "proof": {
           "path": "coverage/evidence/public199-skylakex-dispatch.json",
           "bytes": 1796,
@@ -30208,6 +30208,11 @@
         "path": "build/resume-20261025/tv-publication/retained/admission.json",
         "bytes": 918,
         "sha256": "113d7857cba96a893a13418ab93821a4f979b0fb5523a65dd068d99e79c51285"
+      },
+      "retired_worktree": {
+        "path": "coverage/evidence/shared-publication-worktree-retirement.json",
+        "bytes": 1348,
+        "sha256": "09253b24a0a20b1b638a68ec998f9c8a09562c6b706f37517cce6ce8e502144e"
       }
     },
     {
@@ -30217,7 +30222,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/nmi-native",
       "base_sha": "164fb40314cdfa9cb720e81554d2aecd7f2cee03",
-      "state": "validating",
+      "state": "parity_passed",
       "owns": [
         "build/worktrees/nmi-native"
       ],
@@ -30233,9 +30238,7 @@
         "default_global_workers": 1,
         "one_worker_benchmark_required": true
       },
-      "pending_review_findings": [
-        "Repairs frozen; independent exact-source and final six-runtime-mode gate review pending."
-      ],
+      "pending_review_findings": [],
       "candidate_source": "fadef4cf9994506017ab9d54f4e91917c77ea770",
       "original_reference_merge": {
         "source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
@@ -30246,7 +30249,13 @@
           "sha256": "a363603d0f5b0b973d822a4d26fe9405ef4243043e48aa63003afac73294ac65"
         },
         "new_public_acceptance": false
-      }
+      },
+      "private_admission": {
+        "path": "coverage/evidence/nmi-private-native-review.json",
+        "bytes": 1818,
+        "sha256": "027819289e2ef88ba232309244243e98f62a9015bb4706d4b10594e092db6ab2"
+      },
+      "next": "Actual public/SDK integration and fresh whole qualification; private packet is not installed public acceptance."
     },
     {
       "id": "reconstruction-owner-guard",
@@ -30315,6 +30324,25 @@
       "candidate_source": "d92d9ff522047f4dd91c21620323454a0010863e",
       "public_acceptance": false,
       "pending": "Independent metadata correction review passed; retain remaining original profiles, then freshly qualify exact corrected whole product before public acceptance."
+    },
+    {
+      "id": "reconstruction-offset-independent-review",
+      "kind": "independent_review",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "branch": "read-only-ceea7b45",
+      "base_sha": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8",
+      "state": "validating",
+      "owns": [
+        "build/resume-20261025/reconstruction-offset-review"
+      ],
+      "depends_on": [],
+      "acceptance": {
+        "read_only": true,
+        "numerical_calls": 0,
+        "source_author": "resize_api",
+        "scope": "Independent source, arithmetic-helper and final binder-gate proof audit only; no public acceptance."
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31038,6 +31066,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
+        "reconstruction-offset-independent-review",
         "nmi-native-private"
       ],
       "astra_max_api_paths": [
@@ -31048,7 +31077,7 @@
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "nmi-native-private",
+      "astra_max_plan_audit": "reconstruction-offset-independent-review",
       "astra_max_api_paths": "matrix-transform-public199-integration",
       "resize_api": "reconstruction-owner-guard"
     },
@@ -31938,6 +31967,13 @@
       "archive_sha256": "20b05f7dd96a5649c9cfea8c90fcd1a77d50b3fba12e1d872fcd9360ebd32f42",
       "preservation_index": "build/cleanup/max-consumer-retirement-20261025/preservation-index.json",
       "member_rule": "Find former full workspace-relative path in preservation-index.json, then read ZIP member sha256/<record.sha256>. Raw bytes are unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/experiment-publication-shared",
+      "archive": "build/cleanup/publication-retirement-20261025/preserved-ignored-proofs.zip",
+      "archive_sha256": "7a571dc1bd25edc2a8ba35a6ba776e7d9f01030cf55ed4969b2dac826486928e",
+      "preservation_index": "build/cleanup/publication-retirement-20261025/preservation-index.json",
+      "member_rule": "Find the exact former workspace-relative path in preservation-index.json and read its member sha256/<record.sha256>; bytes and original manifests are unchanged."
     }
   ],
   "inventory_assessment_pending": {
