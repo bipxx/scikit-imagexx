@@ -15,6 +15,17 @@ SOURCE='b3c61fcc565c15860465eb374b395cd143d84414'
 STAGES=('footprint_shapes_ellipse','footprint_shapes_hull','footprint_shapes_l1',
         'footprint_shapes_atoms','footprint_shapes_cross_plan','footprint_shapes_cross','footprint_shapes_dilate',
         'footprint_shapes_full_mask')
+
+# Collection policy only; binary/runtime authentication stays in the fixture.
+_collection_path=os.environ.get('FOOTPRINT_SHAPES_TEST_CONFIG')
+_collection_portable=False
+if _collection_path:
+    _collection_config=json.loads(Path(_collection_path).read_bytes())
+    assert _collection_config['profile'] in ('windows','modern','minimum','portable','sanitizer')
+    assert type(_collection_config['portable']) is bool
+    assert _collection_config['portable']==(_collection_config['profile']=='portable')
+    _collection_portable=_collection_config['portable']
+DECLARED_WORKERS=(1,) if _collection_portable else (1,4)
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path);module=importlib.util.module_from_spec(spec)
@@ -82,7 +93,7 @@ def runtime():
 
 
 @pytest.mark.parametrize('index',range(226))
-@pytest.mark.parametrize('workers',(1,4))
+@pytest.mark.parametrize('workers',DECLARED_WORKERS)
 def test_exact_frozen_shape_sequence(runtime,index,workers,tmp_path):
     core=runtime['core'];spec=runtime['factory'].cases()[index]
     if runtime['config']['portable'] and workers==4:
@@ -151,3 +162,24 @@ def test_metadata_check_accepts_owned_roots_views_and_empty_arrays(runtime):
         assert core.footprint_shapes_check(array) is None
         assert (array.shape,array.strides,array.dtype,array.flags.owndata)==metadata
     assert owner.tobytes()==before
+
+
+def test_declared_global_worker_budget(runtime,tmp_path):
+    core=runtime['core'];portable=runtime['config']['portable']
+    before=core.get_num_threads();error=None;observed=None
+    try:
+        core.set_num_threads(4)
+        observed=core.get_num_threads()
+    except Exception as exc:
+        error=dict(type=type(exc).__name__,message=str(exc))
+    finally:
+        core.set_num_threads(1)
+    after=core.get_num_threads()
+    (tmp_path/'worker-budget.json').write_text(json.dumps(dict(portable=portable,
+        before=before,requested=4,observed=observed,error=error,after=after,image_calls=0))+'\n')
+    assert before==after==1
+    if portable:
+        assert error==dict(type='ValueError',message='this build has no OpenMP support')
+        assert observed is None and core.has_avx2() is False
+    else:
+        assert error is None and observed==4
