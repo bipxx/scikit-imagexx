@@ -130,3 +130,6 @@ coverage/evidence/nmi-original-reference-audit.json -text
 coverage/evidence/nmi-private-native-review.json -text
 coverage/evidence/shared-publication-worktree-retirement.json -text
 coverage/evidence/reconstruction-offset-private-review.json -text
+coverage/evidence/public199-corrected-dispatch.json -text
+coverage/evidence/metrics-endian-range-private.json -text
+coverage/evidence/reconstruction-public200-source-review.json -text

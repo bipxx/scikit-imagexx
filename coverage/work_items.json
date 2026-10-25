@@ -29439,7 +29439,7 @@
       "owner": "astra_max_api_paths",
       "branch": "integration/public199-skylakex",
       "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
-      "state": "validating",
+      "state": "preparing",
       "owns": [
         "build/resume-20261025/public199-review",
         "build/genuine199-skylakex-hosted/3c87fbf"
@@ -29496,7 +29496,7 @@
       "full_product_dispatch": {
         "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
         "run": 40161615893,
-        "status": "Windows-Debug-modern-failed-minimum-running-original-unaccepted",
+        "status": "original-terminal-failed-retained-unaccepted",
         "proof": {
           "path": "coverage/evidence/public199-skylakex-dispatch.json",
           "bytes": 1796,
@@ -29532,6 +29532,18 @@
         "path": "coverage/evidence/public199-matrix-source-failure.json",
         "bytes": 2040,
         "sha256": "f9aff6f605b4a1a25bfe794c608aef67b4b9f3bb2b002141be0b43034e29db5f"
+      },
+      "corrected_full_product_dispatch": {
+        "source": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "run": 40166462583,
+        "state": "fresh-four-profile-qualification-running-unaccepted",
+        "proof": {
+          "path": "coverage/evidence/public199-corrected-dispatch.json",
+          "bytes": 2493,
+          "sha256": "649313b7d9697317fab885e3a33d3f2e6b8cbfe065852f8c924d4fad2fb179c6"
+        },
+        "observer_pid": 98680,
+        "retainer_pid": 92452
       }
     },
     {
@@ -30261,10 +30273,10 @@
       "id": "reconstruction-owner-guard",
       "kind": "private_fix",
       "apis": [],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/reconstruction-offset-guard",
       "base_sha": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
-      "state": "implementing",
+      "state": "preparing",
       "owns": [
         "build/worktrees/reconstruction-owner-guard",
         "build/worktrees/reconstruction-public200"
@@ -30285,7 +30297,7 @@
         "kernel_header_and_source_oracles_unchanged": true,
         "local_operation_timings": false
       },
-      "pending_root_review": "Exactceea repaired private binder admitted; actual public200 integration and fresh whole/SDK qualification pending.",
+      "pending_root_review": "Source composition reviewed, genuine cumulative product/SDK qualification pending. Metric0322181 will be composed before that qualification.",
       "public_candidate_preparation": {
         "worktree": "build/worktrees/reconstruction-public200",
         "branch": "integration/public200-reconstruction",
@@ -30299,6 +30311,12 @@
           "SDK_members": 66,
           "SDK_families": 21,
           "SDK_checks": 42
+        },
+        "source": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
+        "source_review": {
+          "path": "coverage/evidence/reconstruction-public200-source-review.json",
+          "bytes": 1368,
+          "sha256": "0cd3a58bba44c3433e3b0d87d028d519f223615c5355d6f1df1b69438a2ee585"
         }
       },
       "offset_extent_review": {
@@ -30320,7 +30338,7 @@
       "owner": "integrator",
       "branch": "integration/public199-matrix-repair",
       "base_sha": "3c87fbfdc425c953a280eaabf5934cada746f56d",
-      "state": "validating",
+      "state": "preparing",
       "owns": [
         "build/worktrees/public199-matrix-repair",
         "build/resume-20261025/public199-matrix-repair"
@@ -30328,7 +30346,7 @@
       "depends_on": [],
       "candidate_source": "d92d9ff522047f4dd91c21620323454a0010863e",
       "public_acceptance": false,
-      "pending": "Independent metadata correction review passed; retain remaining original profiles, then freshly qualify exact corrected whole product before public acceptance."
+      "pending": "Exact corrected d92 dispatchedonce40166462583; all4genuine fresh products and independent artifact acceptance remainrequired."
     },
     {
       "id": "reconstruction-offset-independent-review",
@@ -30361,7 +30379,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/metrics-endian-range",
       "base_sha": "044d7f5839d163435b56819a9b2c9d827212ff91",
-      "state": "contracting",
+      "state": "performance_pending",
       "owns": [
         "build/worktrees/metrics-endian-range",
         "build/resume-20261025/metric-bottleneck-diagnosis"
@@ -30382,7 +30400,89 @@
         "isolated_one_worker_comparison_required": true
       },
       "public_acceptance": false,
-      "performance_acceptance": false
+      "performance_acceptance": false,
+      "candidate_source": "0322181242535eb2337dd6ae717abeed1f9bfc75",
+      "private_admission": {
+        "path": "coverage/evidence/metrics-endian-range-private.json",
+        "bytes": 2106,
+        "sha256": "0670495680ad67958b8d9d5bd643003a40066fa199cfd23deaa1cbd1379e435a"
+      },
+      "merge": {
+        "source": "0322181242535eb2337dd6ae717abeed1f9bfc75",
+        "main_commit": "edb897e"
+      }
+    },
+    {
+      "id": "li-u16-bounded",
+      "kind": "native_breadth",
+      "apis": [],
+      "target_apis": [
+        "filters.threshold_li"
+      ],
+      "owner": "astra_max_api_paths",
+      "branch": "feature/li-u16-bounded",
+      "base_sha": "18442a1e260b9dd8489fb45bf60a3ff7072e5a4b",
+      "state": "implementing",
+      "owns": [
+        "build/worktrees/li-u16-bounded",
+        "build/resume-20261025/li-intake-diagnosis"
+      ],
+      "depends_on": [],
+      "reference_freeze": "6e5b442236cc913eb1f6bef7faff4cb868aacbc5",
+      "reference_manifest": {
+        "path": "build/worktrees/li-u16-bounded/build/reference/manifest.json",
+        "bytes": 4483,
+        "sha256": "009697e742843382cddbaa2d3743730c3396111c500d737e18667ae6b7ef759c"
+      },
+      "original_cases_per_profile": 43,
+      "profiles": 3,
+      "candidate_reference_calls": 0,
+      "timings": 0,
+      "binding_extraction_source": "18f45995af2534e8953a200b6d0006c506403ebd",
+      "root_source_review": "Verbatim Li binding/log extraction read; bounded production-TU design accepted. Typed uint16 intake delta must be reviewed before private builds.",
+      "public_acceptance": false
+    },
+    {
+      "id": "h-extrema-kernel",
+      "kind": "private_kernel",
+      "apis": [],
+      "target_apis": [
+        "morphology.h_maxima",
+        "morphology.h_minima"
+      ],
+      "owner": "astra_max_plan_audit",
+      "branch": "feature/h-extrema-kernel",
+      "base_sha": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
+      "state": "contracting",
+      "owns": [
+        "build/worktrees/h-extrema-kernel",
+        "build/resume-20261025/h-extrema-diagnosis"
+      ],
+      "depends_on": [],
+      "base_scope": "Explicit unqualified public200 source; cee private primitive only, no public/SDK acceptance inherited.",
+      "pending": "Freeze full contract/additive real-resolution and limit cases before new outputs; preserve468Windows originals/14unsafe guard blocks, fill Linux captures. Exact discrete masks, no allclose.",
+      "public_acceptance": false
+    },
+    {
+      "id": "reconstruction-benchmark-contracts",
+      "kind": "contract_reference",
+      "apis": [],
+      "target_apis": [
+        "morphology.reconstruction"
+      ],
+      "owner": "resize_api",
+      "branch": "feature/reconstruction-benchmark-contracts",
+      "base_sha": "18442a1e260b9dd8489fb45bf60a3ff7072e5a4b",
+      "state": "contracting",
+      "owns": [
+        "build/worktrees/reconstruction-benchmark-contracts"
+      ],
+      "depends_on": [],
+      "source_freeze": "2e4bb928b9e3ccb5c27bfe9e982441c7aec9c911",
+      "future_measurement_cases": 48,
+      "untimed_independent_oracles": 16,
+      "timings": 0,
+      "public_acceptance": false
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31106,20 +31206,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "metrics-endian-range",
-        "nmi-native-private"
+        "h-extrema-kernel"
       ],
       "astra_max_api_paths": [
-        "matrix-transform-public199-integration"
+        "li-u16-bounded"
       ],
       "resize_api": [
-        "reconstruction-owner-guard"
+        "reconstruction-benchmark-contracts"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "metrics-endian-range",
-      "astra_max_api_paths": "matrix-transform-public199-integration",
-      "resize_api": "reconstruction-owner-guard"
+      "astra_max_plan_audit": "h-extrema-kernel",
+      "astra_max_api_paths": "li-u16-bounded",
+      "resize_api": "reconstruction-benchmark-contracts"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31340,6 +31439,27 @@
         "exit": "build/resume-20261025/tv-admission-comparison/watch-exit.json"
       },
       "observer_log": "build/resume-20261025/tv-admission-comparison/watch-continuation-1.log"
+    },
+    "current_corrected_public199_qualification": {
+      "run": 40166462583,
+      "source": "d92d9ff522047f4dd91c21620323454a0010863e",
+      "proof": {
+        "path": "coverage/evidence/public199-corrected-dispatch.json",
+        "bytes": 2493,
+        "sha256": "649313b7d9697317fab885e3a33d3f2e6b8cbfe065852f8c924d4fad2fb179c6"
+      },
+      "public_acceptance": false
+    },
+    "current_metrics_endian_range": {
+      "path": "coverage/evidence/metrics-endian-range-private.json",
+      "bytes": 2106,
+      "sha256": "0670495680ad67958b8d9d5bd643003a40066fa199cfd23deaa1cbd1379e435a"
+    },
+    "next_public200_cumulative_source": {
+      "reconstruction_base": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
+      "metrics_increment": "0322181242535eb2337dd6ae717abeed1f9bfc75",
+      "state": "compose-before-whole-qualification",
+      "source_has_not_been_qualified": true
     }
   },
   "parallel_review": {

@@ -1,0 +1,63 @@
+{
+  "schema": "root-public199-corrected-dispatch-public-v1",
+  "source": "d92d9ff522047f4dd91c21620323454a0010863e",
+  "run": 40166462583,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40166462583",
+  "dispatched_once": true,
+  "root_admission": {
+    "path": "build/resume-20261025/public199-matrix-repair/root-qualification-admission.json",
+    "bytes": 1978,
+    "sha256": "c9123443df9e1419ad9d09c52cd5f91073f71c94228bedd489c857a6c10d75c5"
+  },
+  "once_marker": {
+    "path": "build/resume-20261025/public199-matrix-repair/dispatch/POST-once-marker.json",
+    "bytes": 575,
+    "sha256": "aabe165af3f4bfa674b3b1332ca7eb497191f51311dfc8e6cc5dd77f4588f85d"
+  },
+  "request": {
+    "path": "build/resume-20261025/public199-matrix-repair/dispatch/request.json",
+    "bytes": 173,
+    "sha256": "295d6e906db3612d4d3f6d508759b8d4c23c02177485dc69978019d09ad45a13"
+  },
+  "resolved_run": {
+    "path": "build/resume-20261025/public199-matrix-repair/dispatch/resolved-run.json",
+    "bytes": 13520,
+    "sha256": "4cba4a13bfa6a439ffaf05adad330fb8f09168012a7dc06b89c4ddbc13b028fd"
+  },
+  "observer_retainer_configuration": {
+    "path": "build/genuine199-matrix-repair-hosted/d92d9ff/configuration.json",
+    "bytes": 3836,
+    "sha256": "eb4ab75a350de6cde19acac78cb20479b8ff857a5dc1c7caf1a54015047953b6"
+  },
+  "original_run": 40161615893,
+  "original_run_state": "terminal-failed-unaccepted",
+  "original_retention_seal": {
+    "path": "build/genuine199-skylakex-hosted/3c87fbf/40161615893/retained-v1/manifest.json",
+    "bytes": 1316100,
+    "sha256": "87db68ca625055c437e28a6ac1ced2d9b589ad6cb0648e1347022415091f44de"
+  },
+  "independent_original_failure_review": {
+    "path": "build/genuine199-skylakex-hosted/3c87fbf/independent-original-failure-verification.json",
+    "bytes": 87385,
+    "sha256": "191caccba84662243a50646dd9ac9f543ff383ea67c9cee0662697a0bc7a6048"
+  },
+  "original_run_handoff": {
+    "path": "build/genuine199-skylakex-hosted/3c87fbf/original-run-handoff.json",
+    "bytes": 34617,
+    "sha256": "51eeae0fd26ab9a1348d3975af3ab3ebcb98294a9684bc4eef09cc5ba04d3d25"
+  },
+  "original_XML_checks": 813192,
+  "original_known_metadata_failures": 8,
+  "old_products_relabelled_or_admitted": false,
+  "expected_fresh_scope": {
+    "images": 199,
+    "functions": 202,
+    "wheel_members": 114,
+    "SDK_members": 65,
+    "SDK_families": 20,
+    "SDK_checks": 40
+  },
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "accepted_image_paths": 192
+}

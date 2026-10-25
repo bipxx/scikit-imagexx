@@ -1,11 +1,12 @@
 # Complete scikit-image implementation plan
 
 Execution resumed by explicit user request on 2026-10-25: implement this plan
-using three agents. Current assignments are in `work_items.json`: NMI native
-intake repair, public-199 observation and independent review, and reconstruction
-public integration. The paused planning snapshot below records the audit context;
-its prohibition on implementation has been superseded by this explicit resume.
-Existing acceptance gates and frozen evidence remain unchanged.
+using three agents. Current assignments are in `work_items.json`: H-extrema
+contracts/private source, checked uint16 Li intake, and reconstruction benchmark
+case contracts. Root owns cumulative public integration and final acceptance.
+The paused planning snapshot below records the audit context; its prohibition
+on implementation has been superseded by the explicit resume. Existing
+acceptance gates and frozen evidence remain unchanged.
 
 Resume progress: threshold references `1329cbb` and `337ba1b` are reviewed and
 merged as `767e2ca`. Their [expanded audit](evidence/iterative-threshold-expanded-audit.json)
@@ -16,15 +17,17 @@ native API paths or performance result.
 
 The independently reviewed TV comparison controller is merged as `9f834bb`;
 its root-reviewed experiment keeps actual `5e068a5` and `af7b2af` product labels.
-The [controller review](evidence/tv-admission-comparison-reviewed.json) has no
-new timing result. The [exact 199-path qualification](evidence/public199-skylakex-dispatch.json)
-was dispatched once as run `40161615893`; all four genuine outcomes and retained
-artifact acceptance are required before increasing coverage from 192. Modern Linux and Debug have since
-failed. The [retained modern diagnosis](evidence/public199-matrix-source-failure.json)
-identifies one stale helper-hash assertion in each mode, with 10,069 other Matrix
-checks passing per mode. Correction `d92d9ff` changes only that metadata assertion
-and its proof; it needs independent review and fresh whole qualification. The
-original run and products remain unaccepted.
+Run `40163025231` has passed all three preparations and the barrier. Windows and
+minimum measurements have completed; modern measurement and independent full
+raw-result acceptance remain pending. Raw preparation and completed measurement
+artifacts are retained byte-exactly. No new speedup is accepted yet.
+
+The original 199-path run `40161615893` is terminal failed and fully retained:
+each profile has the same stale Matrix helper-hash assertion failure in both
+modes. It grants no product acceptance. The [independently reviewed correction](evidence/public199-corrected-dispatch.json)
+`d92d9ff` was dispatched once as fresh run `40166462583`. Windows has passed;
+the remaining three profiles and independent complete artifact acceptance are
+required before increasing accepted coverage from 192.
 
 The [max-tree comparison consumer](evidence/max-tree-comparison-reviewed.json)
 is reviewed and merged as `9c18e27`, with 345 retained three-runtime metadata
@@ -34,26 +37,24 @@ measurement. Two merged consumer worktrees were [retired with archived proofs](e
 the remaining consumer worktree is retained for separate opaque-link review.
 
 The [shared experiment publisher](evidence/shared-experiment-publication.json)
-is merged as `c24f7b3` and its metadata-only publication run is `40162423182`.
-The published artifact has been authenticated against the reviewed raw SHA.
-The [TV comparison dispatch](evidence/tv-admission-comparison-dispatch.json)
-records the original run `40163025231`, still pending preparation and measurement;
-no new performance result is accepted. NMI's [original reference freeze](evidence/nmi-original-reference-audit.json) is
-merged as `b5fadfa`: 214 original cases on each of three profiles, with explicit
-raw-contract newline mapping and no new native/public acceptance. The repaired
-private candidate `fadef4c` has [scoped private admission](evidence/nmi-private-native-review.json)
-after independent closure review: 2,464 passed checks and 206 explicit frontier
-skips. No donor product acceptance is inherited. Public core/SDK wiring, whole
-qualification and one-worker measurement remain pending. Reconstruction's earlier `095ea3d` blocker has a separately tested
-binder repair `e17ba10`, but root review identified a possible unchecked offset
-span extent, independently confirmed and [recorded as blocking](evidence/reconstruction-offset-extent-review.json), requiring repair before admission.
-The [offset repair `ceea7b4`](evidence/reconstruction-offset-private-review.json)
-has scoped private admission after independent source and retained-gate review;
-the old findings remain unchanged. Worker C prepares the actual public-200
-integration on a separate branch; this adds no accepted public paths. Worker A
-now owns a measured PSNR byte-swapped-float32 range bottleneck, with unchanged
-reference inputs and exact scalar fallback; the SIMD hypothesis is unmeasured. Worker B reviews intake fixes while retaining and
-observing the same genuine qualification run `40161615893`.
+is merged as `c24f7b3`; its run `40162423182` published the authenticated TV
+certificate. Its merged worktree is retired with all ignored proof bytes archived.
+NMI's [original reference freeze](evidence/nmi-original-reference-audit.json)
+is merged as `b5fadfa`, while [private native admission](evidence/nmi-private-native-review.json)
+for `fadef4c` adds no public/SDK or performance acceptance.
+
+Reconstruction's [offset repair](evidence/reconstruction-offset-private-review.json)
+has scoped private admission. Its [public200 composition `b4a5c3a`](evidence/reconstruction-public200-source-review.json)
+has no source-review blocker, 1,947 metadata checks and four clean plans; its
+595 public checks were collected only. Whole-product/SDK acceptance is pending.
+
+The [metrics SIMD increment `0322181`](evidence/metrics-endian-range-private.json)
+is merged as `edb897e` after independent private source/parity/closure review:
+172,832 raw-range/FEnv controls, six full original case reports and 288 focused
+PSNR checks. It is an unmeasured optimization of a retained endian-float32
+bottleneck. Compose this exact delta into the next cumulative200 candidate
+before whole qualification, avoiding a separate product build solely for it.
+The current fresh199 run intentionally remains frozen at `d92d9ff`.
 
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.

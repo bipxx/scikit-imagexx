@@ -1,0 +1,46 @@
+{
+  "schema": "metrics-endian-range-root-private-admission-v1",
+  "source": "0322181242535eb2337dd6ae717abeed1f9bfc75",
+  "main_merge": "edb897e",
+  "state": "private-parity-admitted-source-merged-hosted-product-and-performance-pending",
+  "author_proof": {
+    "path": "build/worktrees/metrics-endian-range/build/proof-v1/manifest.json",
+    "bytes": 88223,
+    "sha256": "092c30ac7568087b49499178fb3f266d93df374db1b4757a36d8de217302e852"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/metrics-endian-range-review/final-private-review.json",
+    "bytes": 2412,
+    "sha256": "472221e281da5f80ae94f8f073270b66f4e8cebe70fb748ffc9f9b7239b805c6"
+  },
+  "prospective_contract": {
+    "path": "build/worktrees/metrics-endian-range/build/range-contract-v1.json",
+    "bytes": 4555,
+    "sha256": "4fcb6402e56b57cbc534ebaa12f3d52c04d81cc613255545e687a83e1f2e7516"
+  },
+  "measured_hypothesis": {
+    "path": "build/resume-20261025/metric-bottleneck-diagnosis/hypothesis.json",
+    "bytes": 18416,
+    "sha256": "dfd09123b12c51ec5ee97bf99d107cd42eb14ac9eaefa9391f6aad58a176980f"
+  },
+  "scope": "Two existing C++ numerical source files plus native tests; no installed-header/binder/wrapper/factory/signature/tolerance/worker changes. Integer IEEE-order SIMD scan for finite normal nonzero dense endian-f32; unchanged scalar C++ fallback otherwise.",
+  "native_raw_FEnv_controls": 172832,
+  "all_eight_tail_remainders": true,
+  "original_case_reports": 6,
+  "cases_per_report": 1231,
+  "workers_per_case": [
+    1,
+    4
+  ],
+  "expected_exception_cases_per_report": 19,
+  "focused_PSNR_checks": 288,
+  "whole_product_acceptance": false,
+  "performance_acceptance": false,
+  "new_public_paths": 0,
+  "next": "Include this exact source increment in the next cumulative product before whole qualification, then compare one worker with pinned original0.26 and retain all regressions.",
+  "root_admission": {
+    "path": "build/resume-20261025/metrics-endian-range-review/root-admission.json",
+    "bytes": 2759,
+    "sha256": "5b66f106454e23061c9e15daed0ea2da4deb6dcb5ded8a48faaa75c83dfa24d5"
+  }
+}
