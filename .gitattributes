@@ -205,3 +205,4 @@ tests/test_h_installed_diagnostic.py -text
 .github/workflows/h-installed-diagnostic.yml -text
 coverage/evidence/h-failed-product-diagnostic-inputs.json -text
 coverage/evidence/h-same-product-diagnostic-source-admission.json -text
+coverage/evidence/focused-native-validation-checkpoint.json -text

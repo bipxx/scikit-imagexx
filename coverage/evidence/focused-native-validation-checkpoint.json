@@ -1,0 +1,113 @@
+{
+  "schema": "root-focused-native-validation-checkpoint-v1",
+  "gates": [
+    {
+      "name": "colocalization-portable",
+      "controls": 195,
+      "exit": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-portable/exit.json",
+        "bytes": 75,
+        "sha256": "7abb05338c635e091a65026b77d63649aa2a029c0ddb2adbed8c44cd129db005"
+      },
+      "stdout": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-portable/native.stdout",
+        "bytes": 71,
+        "sha256": "2b073171ead5bc78b4d2a31042e9750bc528996ece4fb648329e848f2b677975"
+      },
+      "stderr": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-portable/native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "process": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-portable/process.json",
+        "bytes": 215,
+        "sha256": "efcbcbe649bd0808e98f17ce66a72c1dd2364f8b96627d7e03b418cceb6048c7"
+      }
+    },
+    {
+      "name": "colocalization-sanitizer",
+      "controls": 387,
+      "exit": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-sanitizer/exit.json",
+        "bytes": 75,
+        "sha256": "7abb05338c635e091a65026b77d63649aa2a029c0ddb2adbed8c44cd129db005"
+      },
+      "stdout": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-sanitizer/native.stdout",
+        "bytes": 71,
+        "sha256": "080d0de2c5ff41180996c0d8b2f50c181e2cb028f60c549ae2210813e1dec0f8"
+      },
+      "stderr": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-sanitizer/native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "process": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/colocalization-sanitizer/process.json",
+        "bytes": 216,
+        "sha256": "5e6652cde5b5788f497a32d56ef7df7ee5263c81869c2f3f335428327a240b25"
+      }
+    },
+    {
+      "name": "footprint-modern",
+      "controls": 2921,
+      "exit": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/footprint-modern/exit.json",
+        "bytes": 75,
+        "sha256": "7abb05338c635e091a65026b77d63649aa2a029c0ddb2adbed8c44cd129db005"
+      },
+      "stdout": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/footprint-modern/native.stdout",
+        "bytes": 31,
+        "sha256": "646bb38890c8df1a0e50a9bddcbe8592704100b7dab51f1a95984faea6af89c7"
+      },
+      "stderr": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/footprint-modern/native.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "process": {
+        "path": "build/resume-20261025/focused-native-gates-root-v1/footprint-modern/process.json",
+        "bytes": 201,
+        "sha256": "82911eff6205fa19c6f8d05ec8bcba6e56a0740bf94de9d81b40fa41156f24a3"
+      }
+    }
+  ],
+  "authorization": {
+    "path": "build/resume-20261025/focused-native-gates-root-v1/authorization.json",
+    "bytes": 1361,
+    "sha256": "8280eec492a4ea068e7cee4fc73ccce6e4f6eac721292dca7940142f8e1db4be"
+  },
+  "driver": {
+    "path": "build/resume-20261025/focused-native-gates-root-v1/run.py",
+    "bytes": 3688,
+    "sha256": "f640a539216ea9e8ce6f724d78b963740e7b62e4389993005e1d8569f69d2913"
+  },
+  "colocalization_actual_review": {
+    "path": "build/resume-20261025/colocalization-unbuilt-actual-link-independent-review/final-review.json",
+    "bytes": 20439,
+    "sha256": "2ce68e9321e651dcf0ba5bde45bf6fe12a4784d2e9a52afebdfd30b90442bd0e"
+  },
+  "footprint_actual_review": {
+    "path": "build/resume-20261025/footprint-modern-actual-link-independent-review/final-review.json",
+    "bytes": 9137,
+    "sha256": "88c5186f9442c03e6e86c7a6a80ab399cdb043613dcd69e154198e8a66e9e1b7"
+  },
+  "footprint_compile_successor": "ce3d10ae38fe5dd2bdc5b6b6293433c6c35aa1cc",
+  "footprint_failed_build_retained": {
+    "path": "build/worktrees/footprint-shapes-native/build/controller-v1/runs/modern-v1/terminal.json",
+    "bytes": 165,
+    "sha256": "36af63957592c0fa904e5f1d09ca0fbddb16b6d8aa7f00ea3675d2fae40f53f1"
+  },
+  "footprint_successor_build": {
+    "path": "build/worktrees/footprint-shapes-native/build/controller-v2/runs/modern-v1/terminal.json",
+    "bytes": 164,
+    "sha256": "732699addaa6e54231cc3f9d7a78fbe06df36fcd376b331819c700cb3484f0fa"
+  },
+  "scope": "Focused native controls only; complete Python family parity and installed public/SDK gates remain pending",
+  "colocalization_full536_accepted": false,
+  "footprint_full226_accepted": false,
+  "accepted_public_native_partial_apis": 199,
+  "performance_accepted": false
+}

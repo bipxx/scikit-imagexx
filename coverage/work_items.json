@@ -30754,7 +30754,7 @@
         "measure.manders_coloc_coeff",
         "measure.manders_overlap_coeff"
       ],
-      "owner": "astra_max_api_paths",
+      "owner": "astra_max_plan_audit",
       "state": "validating",
       "owns": [
         "include/skimagexx/colocalization.hpp",
@@ -30766,7 +30766,7 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Frozen2a2sevenfiles; independent71abed6 androotc0c36bce source/donorsadmitted. Author preparing exact5profile boundedcontroller; no C++compile/runtimegate yet. Hsameproductdiagnosticplan separate source-only work.",
+      "current_checkpoint": "Production2a built five profiles; modern387/portable195/sanitizer387 focused native controls PASS. Original normalv1 failed FD capture before collection; metadata smoke reproduced it and no-capture passed. Capture-only v2 runner root257a2638 full normal1073/1072 gate active3902; scalar not launched. Full536/private/public/performance acceptance pending.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
     },
@@ -30808,8 +30808,8 @@
       "id": "tv-positive-zero-comparison-successor",
       "kind": "tooling",
       "apis": [],
-      "owner": "astra_max_plan_audit",
-      "state": "implementing",
+      "owner": "astra_max_api_paths",
+      "state": "validating",
       "branch": "feature/tv-positive-zero-compare",
       "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
       "owns": [
@@ -30819,7 +30819,7 @@
         "coverage/contracts/tv-positive-zero-comparison-plan.json"
       ],
       "depends_on": [],
-      "current_checkpoint": "Source-only successor of fixed admitted TV methodology. BEFOREaf7, AFTER741 is unaccepted after failedqualification40200919182; fail-closed. No timings/builds/calls/dispatch."
+      "current_checkpoint": "Frozen5cec source independently reviewed10cd04d3 with235 metadata PASS; root source-only admission. Main integration needs exact rank_statistics_products.py dependency delta review; all other10 pins match. Do not merge failed741 production ancestry. AFTER remains unaccepted; no benchmark execution."
     },
     {
       "id": "h203-failure-diagnostic-projection",
@@ -30847,7 +30847,7 @@
         "morphology.footprint_from_sequence"
       ],
       "owner": "resize_api",
-      "state": "implementing",
+      "state": "validating",
       "branch": "feature/footprint-shapes-native",
       "base_sha": "09486ceffd1273c33c0cbdcab864a5ae9fd3d86f",
       "owns": [
@@ -30866,7 +30866,26 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Source-only own-stage implementation against admitted226reference; first concrete primitive/dependency/frontier reuse plan. No calls/builds before frozen source/link review."
+      "current_checkpoint": "Alignment9bfc source admitted; first build failed binder mixed-auto deduction. Exact compile-only ce3d successor built modern4TUs; actual-link review88c5186f PASS and focused native2921 controls PASS. Preparing full226-case normal/scalar private pipeline. No installed/public/performance acceptance."
+    },
+    {
+      "id": "h203-same-product-installed-diagnostic",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "integrator",
+      "state": "validating",
+      "branch": "feature/h203-same-product-diagnostic",
+      "base_sha": "36088f2fb447ecd27aeb2531e7cafd168f3c6645",
+      "owns": [
+        "tools/h_installed_diagnostic.py",
+        "tests/test_h_installed_diagnostic.py",
+        ".github/workflows/h-installed-diagnostic.yml",
+        "coverage/evidence/h-failed-product-diagnostic-inputs.json"
+      ],
+      "depends_on": [
+        "h203-failure-diagnostic-projection"
+      ],
+      "current_checkpoint": "493 source independently reviewed a7a99c4a/root61f92879; mergedbf201df with32 metadata PASS. One hosted diagnostic dispatched run40228411066 using exact four failed741 products, no rebuild/timing. Original whole qualification remains failed; diagnostic results pending."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31582,18 +31601,18 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "tv-positive-zero-comparison-successor"
+        "colocalization-native-production"
       ],
       "astra_max_api_paths": [
-        "colocalization-native-production"
+        "tv-positive-zero-comparison-successor"
       ],
       "resize_api": [
         "footprint-shapes-native-production"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "tv-positive-zero-comparison-successor",
-      "astra_max_api_paths": "colocalization-native-production",
+      "astra_max_plan_audit": "colocalization-native-production",
+      "astra_max_api_paths": "tv-positive-zero-comparison-successor",
       "resize_api": "footprint-shapes-native-production"
     },
     "current_source_staging": {
