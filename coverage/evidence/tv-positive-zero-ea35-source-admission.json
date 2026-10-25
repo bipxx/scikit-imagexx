@@ -1,0 +1,32 @@
+{
+  "schema": "root-tv-positive-zero-ea35-source-admission-v1",
+  "source": "66625168094de1d9f9f6d8678928fc664a6b1dd9",
+  "base": "178b91ce18ef2d241f22415d821cd590e1f0f3d3",
+  "source_handoff": {
+    "path": "build/worktrees/tv-positive-zero-ea35/build/source-successor-v1/source-handoff.json",
+    "bytes": 1198,
+    "sha256": "b34d0d462d96a7284c43e5a89c8848bacbd7289da39c7d935b1147f90c8eb6c5"
+  },
+  "manifest": {
+    "path": "build/worktrees/tv-positive-zero-ea35/build/source-successor-v1/manifest.json",
+    "bytes": 6805,
+    "sha256": "00ccb739a366cb52f21ea3f499ff0b4c06eb4fe28295db09045186b17ce7dbc4"
+  },
+  "manifest_records_verified": 37,
+  "plan": {
+    "path": "build/worktrees/tv-positive-zero-ea35/coverage/contracts/tv-positive-zero-comparison-plan.json",
+    "bytes": 94727,
+    "sha256": "c2f8d61020734f78582c9e74561369261d07b2426f3ccf31a76ad48f8b708023"
+  },
+  "root_review": "Reviewed complete four-file delta. Numerical controller differs only in docstring; helper changes explicit after/source/plan/schema literals and exact qualifying-run requirement. Plan changes only two test-source after pins and explicit predecessor/admission provenance. All400legacy/70default cases, beforeaf7 pins,18-fileTVslice,dependencies,7pairedrounds,worker1,callbacks/timers remain unchanged. All37manifestrecords and241XMLchecks per three runtimes verified.",
+  "metadata_checks": 723,
+  "before_source": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+  "after_source": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+  "required_after_qualification_run": "40237475475",
+  "failed741_run_unchanged": true,
+  "source_accepted": true,
+  "after_whole_product_accepted": false,
+  "certificate_or_artifact_ids_supplied": false,
+  "benchmark_execution_authorized": false,
+  "performance_accepted": false
+}

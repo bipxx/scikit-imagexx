@@ -6,25 +6,35 @@ Implementation is active. The [work queue](work_items.json) owns assignments and
 file ownership; older status paragraphs below are historical. Accepted coverage
 remains **199 native-partial image APIs**, against the unchanged full inventory.
 
-Status checked at **2026-10-25 22:05 UTC**. Three existing agents completed a
-parallel read-only review of the seven compilexx notebooks; no production builds
-were launched by that review. The queue's production assignments are recorded
-ownership, not a live process query. Applicable changes below refine existing
-handoffs and gates without adding another orchestration framework.
+Execution checkpoint: **2026-10-25 22:47 UTC**. Three workers are active: A owns
+independent genuine203 artifact verification, B the Windows footprint gate,
+and C saved-raw parity review plus the portable serial-family handoff. Root owns
+exact launches, integration and acceptance. The queue records ownership; live
+process handles and terminal receipts establish execution state.
 
 Modern [colocalization private parity](evidence/colocalization-modern-private-parity-checkpoint.json)
 now has **1,072 passing normal assertion replays** and a fresh **1,073-pass scalar
 gate**. The original normal pytest outcome remains 1,055 passed / 18 failed;
 the source-derived test-only repair preserves every semantic assertion and zero
-native credit for provider-only rows. Other-profile parity and public/SDK
-integration remain pending. Focused native controls passed modern 387,
-portable 195 and sanitizer 387; minimum/Windows corrected native controls are next.
+native credit for provider-only rows. Windows normal/scalar each passed 1,073
+tests; its independent raw review verifies 2,144 exact observations. Minimum
+normal/scalar each passed 1,073 tests, with raw review next. Corrected Windows
+and minimum native controls each passed 387. Portable/sanitizer family parity
+and public/SDK/performance gates remain pending. Windows raw receipt:
+`build/resume-20261025/colocalization-windows-private-parity-independent-review-v1/final-review.json`.
 
 Footprint source `ad6f4cf` repairs the actual null-root and finite-complex
 boundary defects. Modern normal and scalar gates each have **454 passed,
 zero failures/errors/skips**; independent review verifies **904 exact rows**
-against the frozen 226-case originals. NumPy providers remain explicit.
-Other profiles, public integration, SDK acceptance and performance are pending.
+against the frozen 226-case originals. [Minimum private parity](evidence/footprint-minimum-private-parity-checkpoint.json)
+also passed 454 tests per mode and independently verified all 904 observations,
+including the three original profile differences. Native controls passed
+minimum 2,925 and portable 1,464. Windows v1 CRT-link and v2 resource-tool failures
+are preserved; v3 relink passed independent review without recompilation.
+Portable's reviewed test successor has 226 serial observations plus two existing
+metadata guards and one global worker-budget refusal control: 229 nodes, zero
+parallel numerical credit. Windows/portable/sanitizer family gates and public,
+SDK and performance acceptance remain pending. NumPy providers remain explicit.
 The [original causal diagnoses](evidence/private-normal-gate-failure-diagnosis.json)
 and failed ce3d run remain unchanged. Raw review:
 `build/resume-20261025/footprint-ad6-modern-parity-independent-review/final-review.json`.
@@ -33,7 +43,9 @@ The [four-profile H diagnostic](evidence/h-four-profile-installed-diagnostic.jso
 passed on exact failed741 binaries: **28,352 rows**, including 448 blocked
 zero-call cases. Windows-only successor `40231513839` passed. Fresh ea35
 whole-product qualification [40237475475](https://github.com/bipxx/scikit-imagexx/actions/runs/40237475475)
-is in progress; retain and verify that exact run before accepting new coverage.
+finished successfully on all four profiles. Sequential retention and independent
+verification of all seven exact archives are in progress; public coverage stays
+199 until those admission gates pass.
 Original whole qualification `40200919182` stays failed.
 
 Max-tree comparison `40200431797` ended cancelled: minimum preparation hit the
@@ -46,10 +58,14 @@ measurement method. Require all six fresh receipts; do not redispatch or relabel
 old partial receipts. No new timing is accepted. See the
 [terminal record](evidence/max-tree-default-comparison-timeout.json).
 
-The TV comparator source and exact metadata dependency are integrated as
-`f3c35bf` / `f9df2f3`, with 702 metadata checks and all frozen pins matching.
-No failed production ancestry was merged. AFTER741 remains unaccepted;
-benchmark execution and new performance claims remain prohibited.
+The [TV comparator successor](evidence/tv-positive-zero-ea35-source-admission.json)
+`6662516` explicitly requires ea35/run40237475475, with 723 metadata checks.
+All cases, before-product pins and timing bodies remain unchanged. No failed
+production ancestry was merged. Product admission and a real artifact-only
+comparison remain required; no zero-helper speedup is established. Retained
+af7 results identify short-iteration F-order rasters as an absolute-cost target,
+with a maximum minimum-profile median penalty of 1.477 ms. This is an existing
+measurement, not attribution to a particular scan or a new optimization result.
 
 Manifest-read deduplication and queue ownership repairs are complete. Preserve
 policy-blocked scratch paths and active inputs. The [compilexx project notes](../../compilexx/scikit-imagexx-plan-inefficiencies.md)

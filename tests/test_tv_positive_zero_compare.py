@@ -30,6 +30,7 @@ old_tests = load('_tv_zero_legacy_metadata_fixtures', 'tests/test_tv_chambolle_a
 
 @pytest.fixture
 def experiment():
+    # Inert metadata only: these placeholder digests/IDs never admit a product.
     products = {'before': copy.deepcopy(a.PLAN['old_certificate']['products']), 'after': {}}
     qualification = {}
     for index, profile in enumerate((*a.PROFILES, 'debug')):
@@ -38,9 +39,9 @@ def experiment():
             continue
         pin = dict(revision=a.AFTER_PRODUCT, qualification_sha256=qualification[profile]['qualification_sha256'],
             product_sha256='2'*64, wheel_sha256='3'*64, source_sha256='4'*64,
-            scope=a._scope('after'), artifact_run='999999', artifact_name='rank-statistics-product-'+profile)
+            scope=a._scope('after'), artifact_run='40237475475', artifact_name='rank-statistics-product-'+profile)
         products['after'][profile] = dict(pin=pin, core_sha256='5'*64,
-            artifact=dict(id=100+index, digest='6'*64, run='999999', name=pin['artifact_name']))
+            artifact=dict(id=100+index, digest='6'*64, run='40237475475', name=pin['artifact_name']))
     return dict(schema=a.EXPERIMENT_SCHEMA, status='root-reviewed', controller_revision='c'*40,
         before_product_source=a.BEFORE_PRODUCT, after_product_source=a.AFTER_PRODUCT,
         original_version='0.26.0', rounds=7, workers=1, case_count=400, timed_count=70,
@@ -48,7 +49,7 @@ def experiment():
         manifest_sha256=a.sha(ROOT/'coverage/contracts/tv-chambolle-benchmark.json'), plan_sha256=a.PLAN_SHA256,
         root_before_admission=copy.deepcopy(a.PLAN['old_certificate']['root_admission']),
         root_after_admission=dict(source=a.AFTER_PRODUCT, passed=True, sha256='7'*64,
-            run='999999', profiles=qualification), products=products)
+            run='40237475475', profiles=qualification), products=products)
 
 
 def report(experiment, measure=False):
@@ -76,12 +77,19 @@ def test_valid_closed_synthetic_certificate_and_historical_frames(experiment):
     assert experiment['products']['after']['modern']['pin']['scope']['image_paths'] == 203
     assert a._legacy.BEFORE_PRODUCT == '5e068a5a2267c3a917701d5348449972fad162a7'
     assert a._legacy.AFTER_PRODUCT == a.BEFORE_PRODUCT
+    assert a.AFTER_PRODUCT == a.PLAN['after_source'] == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2'
+    assert a.PLAN['after_qualification_run'] == '40237475475'
+    assert a.PLAN['after_whole_product_accepted'] is False
+    assert a.PLAN['predecessor']['after_source'] == '7417676bbb628e75feac1be49aac900bc5af7b15'
+    assert a.PLAN['failed_after_run'] == a.PLAN['predecessor']['failed_after_run'] == '40200919182'
 
 
 @pytest.mark.parametrize('field,value', [
-    ('schema', 'tv-chambolle-admission-experiment-v1'), ('status', 'proposal'),
+    ('schema', 'tv-chambolle-admission-experiment-v1'), ('schema', 'tv-positive-zero-experiment-v1'),
+    ('status', 'proposal'),
     ('controller_revision', 'd'*40), ('before_product_source', a._legacy.BEFORE_PRODUCT),
-    ('after_product_source', a.BEFORE_PRODUCT), ('original_version', '0.25.2'),
+    ('after_product_source', a.BEFORE_PRODUCT),
+    ('after_product_source', '7417676bbb628e75feac1be49aac900bc5af7b15'), ('original_version', '0.25.2'),
     ('rounds', True), ('rounds', 6), ('workers', True), ('workers', 4),
     ('case_count', True), ('case_count', 399), ('timed_count', True), ('timed_count', 69),
     ('plan_sha256', '0'*64), ('factory_sha256', '0'*64), ('manifest_sha256', '0'*64),
@@ -93,7 +101,8 @@ def test_closed_certificate_negatives(experiment, field, value):
         a.validate_experiment(experiment, 'c'*40)
 
 
-@pytest.mark.parametrize('mutation', ['failed741', 'debug', 'faileddebug', 'boolpass',
+@pytest.mark.parametrize('mutation', ['failed741', 'unreviewedrun', 'run_type', 'failed_source', 'failed_product',
+    'debug', 'faileddebug', 'boolpass',
     'oldframe', 'oldscope', 'scope', 'boolscope', 'family', 'wheelpin', 'artifactrun',
     'artifactname', 'artifactid', 'artifactdigest', 'duplicateartifact', 'missingprofile',
     'qualification', 'unknownfield', 'oldrootbool'])
@@ -101,6 +110,13 @@ def test_product_roles_scope_and_actual_admission_are_closed(experiment, mutatio
     a.validate_experiment(experiment, 'c'*40)
     root = experiment['root_after_admission']; frame = experiment['products']['after']['modern']
     if mutation == 'failed741': root['run'] = a.PLAN['failed_after_run']
+    elif mutation == 'unreviewedrun':
+        root['run'] = '999999'
+        for product in experiment['products']['after'].values():
+            product['pin']['artifact_run'] = product['artifact']['run'] = root['run']
+    elif mutation == 'run_type': root['run'] = 40237475475
+    elif mutation == 'failed_source': root['source'] = a.PLAN['predecessor']['after_source']
+    elif mutation == 'failed_product': frame['pin']['revision'] = a.PLAN['predecessor']['after_source']
     elif mutation == 'debug': root['profiles'].pop('debug')
     elif mutation == 'faileddebug': root['profiles']['debug']['passed'] = False
     elif mutation == 'boolpass': root['passed'] = 1

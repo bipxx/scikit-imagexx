@@ -1,0 +1,55 @@
+{
+  "schema": "root-footprint-modern-private-parity-checkpoint-v1",
+  "source": "ad6f4cfb68e15426b0cd3ceac42615d399272536",
+  "reference_sha256": "2121657b2e5164414a492aa5a5f901c9a09a20ed5389ab44b39e441381460694",
+  "actual_core_sha256": "771654a0cc15dadb506d67d4eba85c2171dd8efa2a8a66262d410ad2be478b57",
+  "independent_raw_review": {
+    "path": "build/resume-20261025/footprint-ad6-modern-parity-independent-review/final-review.json",
+    "bytes": 4047,
+    "sha256": "dda85c3ca992495525d8853ea688f6db22764f7ba7e4babbddbc0bcaaaadaa16"
+  },
+  "non_author_source_link_review_sha256": "12d8b04bfab690e97cf10f2c09ae8d4eeb97effdc1768bf8112a63176f5578f7",
+  "modes": {
+    "normal": {
+      "terminal": {
+        "path": "build/worktrees/footprint-shapes-root-complex/build/gates-modern-v1/outputs/normal-v1/terminal.json",
+        "bytes": 1222,
+        "sha256": "c6d460a6f4150f74814c8eed50714955e8d27af0b31b02e5bcac7742ebf711cf"
+      },
+      "tests": 454,
+      "rows": 452,
+      "phases": 1362,
+      "full_cohort": true
+    },
+    "scalar": {
+      "terminal": {
+        "path": "build/worktrees/footprint-shapes-root-complex/build/gates-modern-v1/outputs/scalar-v1/terminal.json",
+        "bytes": 1223,
+        "sha256": "1e7b3966def6df22c2e2d5ab533a81f286904eac2df6a6f10618a87f2e8863eb"
+      },
+      "tests": 454,
+      "rows": 452,
+      "phases": 1362,
+      "full_cohort": true
+    }
+  },
+  "private_modern_bounded_contract_accepted": true,
+  "successful_rows": 776,
+  "source_error_rows": 128,
+  "compiled_stage_returns": 1548,
+  "forwarding_attempts": 0,
+  "native_control_assertions": 2925,
+  "worker_evidence": "Closed actual collection contains all226\u00d7workers1/4, unchanged source selects worker before each observation and resets in finally. Each ID has two identical retained rows and witnesses; raw files do not embed a worker label, so no separate per-file worker label is invented.",
+  "provider_boundary": "NumPy allocation/dtype conversion, mgrid, complex abs, cross SUM, padding and shell arithmetic remain explicit providers; no primitive provider-call census was instrumented or inferred.",
+  "provider_call_census": null,
+  "old_failed_run_unchanged": true,
+  "remaining_gates": [
+    "Windows/minimum/portable/sanitizer family parity",
+    "public namespace and SDK integration",
+    "whole-product qualification",
+    "isolated original-library one-thread performance"
+  ],
+  "public_accepted": false,
+  "new_API_count": 0,
+  "performance_accepted": false
+}

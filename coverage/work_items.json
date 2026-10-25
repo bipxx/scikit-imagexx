@@ -30766,9 +30766,14 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Modern private original-observable parity accepted:1072 retained normal rows passed exact e343 assertion replay; original1055/18 pytest unchanged. Fresh scalar1073PASS/1072rows/3219phases, independentdbcc31dd. All236ordinary rows per mode0providers/refusals; provider-only34credit0. Other profile numerical/public/SDK/performance gates pending.",
+      "current_checkpoint": "Modern boundedprivate checkpoint retained. Windows normal1073PASS+scalar1073PASS,2144rows/6438phases, freshrawreview underway; minimum normal1073PASS/scalar71895live. BothWin/min correctednative387PASS; originalmodule actualf07 admitted. Portable/sanitizer/public/SDK/performance pending.",
       "branch": "feature/colocalization-native",
-      "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
+      "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849",
+      "next_gate": {
+        "owner": "resize_api",
+        "action": "Minimum and Windows1073-node normal/scalar source handoffs frozen; root launch follows independent original-module and corrected-native actual-link admission.",
+        "integration_destination": "integrator: existing public measure namespace and installed SDK family after required private profile gates"
+      }
     },
     {
       "id": "remaining-footprint-prospective-contracts",
@@ -30808,10 +30813,10 @@
       "id": "tv-positive-zero-comparison-successor",
       "kind": "tooling",
       "apis": [],
-      "owner": "astra_max_api_paths",
+      "owner": "astra_max_plan_audit",
       "state": "accepted",
-      "branch": "feature/tv-positive-zero-compare",
-      "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
+      "branch": "feature/tv-positive-zero-ea35",
+      "base_sha": "178b91ce18ef2d241f22415d821cd590e1f0f3d3",
       "owns": [
         "benchmarks/tv_positive_zero_compare.py",
         "tools/tv_positive_zero_artifacts.py",
@@ -30819,8 +30824,18 @@
         "coverage/contracts/tv-positive-zero-comparison-plan.json"
       ],
       "depends_on": [],
-      "current_checkpoint": "Reviewed5cec controller source projected with exact generic metadata dependency only, mainf3c35bf/f9df2f3.702 metadata PASS, all11 frozen pins match; no production/registry/data ancestry merged. Tooling source accepted; AFTER741 remains unqualified, no benchmark execution or performance acceptance.",
+      "current_checkpoint": "Source6662516 reviewed/rootadmitted and merging: exactAFTERea35/run40237475475,723metadataPASS, timing/corpus/source-slice/beforepins unchanged; no artifactIDs/certificate invented. Freshwhole203 remainsunaccepted; no timingdispatch orspeedup. Absolute retainedaf7regressionpriority analysis e24aeb8a selects F-order short-iterationrasters; existingzerohelperstillunmeasured.",
       "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "66625168094de1d9f9f6d8678928fc664a6b1dd9",
+          "manifest": {
+            "path": "coverage/evidence/tv-positive-zero-ea35-source-admission.json",
+            "sha256": "7f3c6e31fe79463709ded73ebb1435746e4a94773fda7c0858dce5b48aa13845"
+          }
+        }
+      },
+      "historical_tooling_proof": {
         "tooling": {
           "status": "verified",
           "source_sha": "c79eecbb3c0aaff2f72422aefcbafc1d52c8de85",
@@ -30844,7 +30859,7 @@
         "tests/test_h_extrema_public_metadata.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Rootfourprofilefailurediagnosis/ea35exacttwofileprojectionfixsourceadmittedf39fb0a9,255metadataPASS/4dryplans. No numerical orproductacceptance; review samefailed741binarydiagnostic reuse beforeanotherfullbuild."
+      "current_checkpoint": "Exact two-file ea35 projection fix admittedf39fb0a9; samefailed741 installed diagnostics passed all4profiles with28352rows. Fresh genuine whole203 qualification40237475475 live, no new public acceptance; oldfailedrun unchanged."
     },
     {
       "id": "footprint-shapes-native-production",
@@ -30876,7 +30891,21 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Sourcead6/root564568ef fixes actualnull-base andcomplexL1 defects. Four-TU modern build/actual12d8/native2925 passed;4-node binding smoke passed. Full normal454PASS andscalar454PASS/904rawrows, module771654; independent fullrawreview underway. Oldce3d391fail preserved; otherprofiles/public/performance pending."
+      "current_checkpoint": "Modern and minimum bounded original-observable private parity accepted:454normal+454scalar each profile; each904exactrawrows,0forwarding,3minimumdifferences preserved. Minimum root private checkpoint now linked; native2925PASS, portable1464PASS. Windowsv1 CRT-linkfailure andv2 rc-tool failure preserved; v3zero-compile relinkPASS, independentactualreview pending. Portable serial-only229node test successor4e75+attrs575 readyrootreview; sanitizer/public/SDK/performance pending.",
+      "modern_private_checkpoint": {
+        "path": "coverage/evidence/footprint-modern-private-parity-checkpoint.json",
+        "sha256": "17665b6f36aa3ed64cc51b7137b3eef7e7990faa3988f815bc87ecc458141588"
+      },
+      "next_gate": {
+        "owner": "astra_max_api_paths",
+        "action": "Windowsv3 actual-link admission then native2925 and full226 normal/scalar; portable229 serial family gate then sanitizer.",
+        "integration_destination": "integrator: existing public Python namespace/sole core and installed SDK family after required private profile gates"
+      },
+      "minimum_private_checkpoint": {
+        "path": "coverage/evidence/footprint-minimum-private-parity-checkpoint.json",
+        "bytes": 2819,
+        "sha256": "1bdd8bc085b898371b425d8396f0feb6f761594490ad21febbadb15ccc89935b"
+      }
     },
     {
       "id": "h203-same-product-installed-diagnostic",
@@ -30896,6 +30925,19 @@
         "h203-failure-diagnostic-projection"
       ],
       "current_checkpoint": "Exact failed741 products passed installedH diagnostics all4profiles:Linux493/run40228411066;Windows869/run40231513839.28352rawrows/rootca1029b7 report verification, unsafe448zero calls. Oldwhole741qualification andold493Windowsmetadata failure remain failed. FreshEA35 fourprofilewhole203qualification40237475475 nowlive; no publicacceptance yet."
+    },
+    {
+      "id": "colocalization-profile-actual-link-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "state": "accepted",
+      "owns": [
+        "build/resume-20261025/colocalization-win-min-actual-review-v1/final-review.json"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Independentf07c18c2 actual-link PASS; Windows and minimum originalmodule closure verified, both correctednative387PASS; source reviewer path failure retained. Rootprofile numerical gates separate.",
+      "next_action": "Admit exact module/native artifacts before root executes profile controls and full family parity."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31611,7 +31653,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "h203-same-product-installed-diagnostic"
+        "tv-positive-zero-comparison-successor"
       ],
       "astra_max_api_paths": [
         "footprint-shapes-native-production"
@@ -31621,7 +31663,7 @@
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "h203-same-product-installed-diagnostic",
+      "astra_max_plan_audit": "tv-positive-zero-comparison-successor",
       "astra_max_api_paths": "footprint-shapes-native-production",
       "resize_api": "colocalization-native-production"
     },
@@ -31992,6 +32034,10 @@
         "source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
         "admission": "coverage/evidence/colocalization-native-source-admission.json"
       }
+    },
+    "current_review_assignments": {
+      "astra_max_plan_audit": "FootprintWindowsv3 independentactualreview",
+      "resize_api": "ColocalizationWindows2144savedrawreview; footprintminimum904raw review accepted19347c4b"
     }
   },
   "parallel_review": {
