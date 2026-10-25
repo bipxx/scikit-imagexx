@@ -134,3 +134,6 @@ tests/h_extrema_reference.py -text
 tests/h_extrema_source_provenance.py -text
 tests/test_h_extrema_source_provenance.py -text
 coverage/evidence/h-extrema-reference-assertion-migration.json -text
+
+coverage/contracts/h-extrema-object-preentry.json -text
+coverage/evidence/h-extrema-reference-assertion-migration-9b.json -text
