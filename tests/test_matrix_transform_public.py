@@ -40,7 +40,10 @@ def public_matrix():
 def test_actual_public_source_is_frozen_520_and_scope_is_partial(public_matrix):
     module,core=public_matrix
     migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
-    assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==migration['frozen_implementation']['python/skimagexx/_matrix_transform.py']
+    helper='python/skimagexx/_matrix_transform.py'
+    successor=migration['qualified_implementation_updates'][helper]
+    assert successor['original_canonical_lf_sha256']==migration['frozen_implementation'][helper]
+    assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==successor['current_canonical_lf_sha256']
     scope=matrix_transform_contract()
     assert scope['implementation']=='native-partial'
     assert scope['actual_runtime_evidence']==('Haswell','Zen')

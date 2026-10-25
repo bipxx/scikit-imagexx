@@ -114,3 +114,4 @@ coverage/evidence/tv-single-admission-private.json -text
 coverage/evidence/tv-single-admission-dispatch.json -text
 coverage/evidence/max-tree-closing-dtype-private.json -text
 coverage/evidence/max-tree-sdk-oracle-private.json -text
+coverage/evidence/matrix-transform-public-source-successor-assertion.json -text
