@@ -1016,8 +1016,8 @@ def next_action(entry, spec, canonical):
     status = entry["implementation"]
     if canonical != api:
         return f"Assert this namespace resolves to the canonical callable and preserves signature/visibility/fallback; run canonical cases through both paths. {spec['alias_evidence']}"
-    if spec.get("checkpoint") and spec["wave"] == "W0":
-        return "After implementation resumes, review the frozen checkpoint and close only its named gate: " + spec["checkpoint"]
+    if spec.get("checkpoint") and spec["wave"] == "W0" and status != "native-partial":
+        return "Consult the live work ledger before acting on this historical checkpoint; close only a still-open named gate: " + spec["checkpoint"]
     if entry["kind"] == "class":
         prefix = "Audit and extend the owned partial class" if status == "native-class-partial" else "Capture constructor/state/member contracts and implement the first owned class slice"
         return f"{prefix}; first use {spec['workload']}. Enumerate the static-member appendix and dynamic fields before declaring class parity."
@@ -1154,7 +1154,7 @@ def render_markdown(doc):
         "# Easiest credible implementation path for every inventoried API", "",
         "These are proposed routes and acceptance work, not new implementations, measured speedups or a change to the authoritative inventory. Frozen checkpoints describe the historical planning review. Current execution state and authorization are in `work_items.json` and `EXECUTION_PLAN.md`.", "",
         doc["scope_statement"], "",
-        "Current classification: 192 native-partial image entries, 277 upstream-only entries, four native-class-partial entries, three metadata functions and one exception-metadata-provider. Partial means partial; listed test/benchmark references do not prove the expanded proposal. " + doc["algorithm_count_note"], "",
+        f"Current classification: {summary['current_implementation'].get('native-partial', 0)} native-partial image entries, {summary['current_implementation'].get('upstream-only', 0)} upstream-only entries, {summary['current_implementation'].get('native-class-partial', 0)} native-class-partial entries, {summary['current_implementation'].get('metadata', 0)} metadata functions and {summary['current_implementation'].get('exception-metadata-provider', 0)} exception-metadata-provider. Partial means partial; listed test/benchmark references do not prove the expanded proposal. " + doc["algorithm_count_note"], "",
         "Generated from `coverage/api.json` (scikit-image " + doc["reference_version"] + ") by `python tools/generate_api_implementation_paths.py`; verify without writes using `python tools/generate_api_implementation_paths.py --check`. Inventory SHA-256: `" + doc["source_inventory_sha256"] + "`.", "",
         "## How to use the routes", "",
     ]

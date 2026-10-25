@@ -1,0 +1,30 @@
+{
+  "schema": "root-tv-admission-comparison-policy-gap-v1",
+  "run": 40163025231,
+  "source": "9f834bbff351ebbb66f98271bc30c07789495efb",
+  "before": "5e068a5a2267c3a917701d5348449972fad162a7",
+  "after": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+  "terminal_jobs": {
+    "success": 8
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/tv-final-review/campaign-review.json",
+    "bytes": 36290,
+    "sha256": "db28ee43684f111cc8e03de4bc76120eb3cbb657997320f5fdd6a76182b92fa7"
+  },
+  "review_seal": {
+    "path": "build/resume-20261025/tv-final-review/review-seal.json",
+    "bytes": 2673,
+    "sha256": "ee84d72d4c67a8ae6e5820e931881990ed894d63ace65e1bbf60c61eb5147e9b"
+  },
+  "raw_artifacts": 10,
+  "authenticated_ZIP_members": 7085,
+  "raw_timing_samples": 4410,
+  "transport_and_accounting_verified": true,
+  "performance_accepted": false,
+  "state": "terminal-diagnostic-policy-gap",
+  "gap": "Legacy observer changes NumPy policy to all-warn, bypassing the changed finite-loop path. Timed plain calls restore default policy. Fresh-host default-policy parity and actual compiled completion counts are missing.",
+  "repair": "Keep all original raw files, frozen400 corpus, frozen70 timing cases and timer unchanged. Add a separate exact-default-policy70 passive observer and fail-closed v2 receipts on every preparation and fresh measurement host, before warmup. Independently review and run one fresh campaign.",
+  "no_retroactive_acceptance": true,
+  "raw_ratios_are_diagnostic_only": true
+}

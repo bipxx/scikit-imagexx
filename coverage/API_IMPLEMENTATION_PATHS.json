@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "76fcd60398147c6a4e405725ae81afb0421a49f287539c925430d0d04b498069",
+  "source_inventory_sha256": "87eef1c48057d89ab7eed8e0acd61d35278f0bdbbc5631fdd94d319dce12c428",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 4,
-      "native-partial": 192,
-      "upstream-only": 277
+      "native-partial": 199,
+      "upstream-only": 270
     },
     "kinds": {
       "callable": 448,
@@ -7521,7 +7521,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: 1329/337 reference and private audit retained, not yet merged; accepted native-partial classification is unchanged.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered NaN/Inf admission, initial_guess callback, iteration callback/order and tolerance. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "NaN/Inf admission, initial_guess callback, iteration callback/order and tolerance",
       "parity_cases_to_freeze": "captured difficult initialization/iteration cases and histogram shapes",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -13069,22 +13069,26 @@
       "api": "morphology.area_closing",
       "kind": "callable",
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.area_closing",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse reviewed private inverted max-tree candidate; accumulate component area and reconstruct surviving minima",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse reviewed private inverted max-tree candidate; accumulate component area and reconstruct surviving minima",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Private candidate with closing dtype repair; retain original/reference cases and rerun genuine composed qualification only after resume.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered parent/tree_traverser reuse, inversion dtype, connectivity and threshold equality. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "parent/tree_traverser reuse, inversion dtype, connectivity and threshold equality",
       "parity_cases_to_freeze": "nested dark plateaus with/without supplied tree",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13095,10 +13099,10 @@
         "kind": "compute",
         "specific_workload": "nested dark plateaus with/without supplied tree",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Private candidate with closing dtype repair; retain original/reference cases and rerun genuine composed qualification only after resume."
     },
@@ -13106,22 +13110,26 @@
       "api": "morphology.area_opening",
       "kind": "callable",
       "signature": "(image, area_threshold=64, connectivity=1, parent=None, tree_traverser=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.area_opening",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse reviewed private max-tree area attribute filter",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse reviewed private max-tree area attribute filter",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Private max-tree candidate only; whole-product acceptance and timings pending.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered parent/traverser consistency, equal-area threshold and stable levels. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "parent/traverser consistency, equal-area threshold and stable levels",
       "parity_cases_to_freeze": "bright plateaus and supplied/recomputed trees",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13132,10 +13140,10 @@
         "kind": "compute",
         "specific_workload": "bright plateaus and supplied/recomputed trees",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Private max-tree candidate only; whole-product acceptance and timings pending."
     },
@@ -13497,22 +13505,26 @@
       "api": "morphology.diameter_closing",
       "kind": "callable",
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.diameter_closing",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse private inverted max-tree bounding-box extent filter",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse private inverted max-tree bounding-box extent filter",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Private candidate with closing dtype repair; no accepted public-path increment.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered closing output dtype, extent definition, connectivity and threshold equality. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "closing output dtype, extent definition, connectivity and threshold equality",
       "parity_cases_to_freeze": "long thin dark structures and dtype extremes",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13523,10 +13535,10 @@
         "kind": "compute",
         "specific_workload": "long thin dark structures and dtype extremes",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Private candidate with closing dtype repair; no accepted public-path increment."
     },
@@ -13534,22 +13546,26 @@
       "api": "morphology.diameter_opening",
       "kind": "callable",
       "signature": "(image, diameter_threshold=8, connectivity=1, parent=None, tree_traverser=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.diameter_opening",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse private max-tree component bounding-box extent filter",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse private max-tree component bounding-box extent filter",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Private max-tree candidate only; whole-product acceptance and timings pending.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered axis extents, supplied tree and threshold equality. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "axis extents, supplied tree and threshold equality",
       "parity_cases_to_freeze": "thin bright structures and anisotropic boxes",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13560,10 +13576,10 @@
         "kind": "compute",
         "specific_workload": "thin bright structures and anisotropic boxes",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Private max-tree candidate only; whole-product acceptance and timings pending."
     },
@@ -14245,22 +14261,26 @@
       "api": "morphology.max_tree",
       "kind": "callable",
       "signature": "(image, connectivity=1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.max_tree",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse private deterministic level sorting, union-find parent construction and traversal candidate",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse private deterministic level sorting, union-find parent construction and traversal candidate",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Six max-tree APIs remain private candidate scope; combined qualification and original baseline/one-worker measurements are pending.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered plateau canonicalization, parent dtype, connectivity and total order. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "plateau canonicalization, parent dtype, connectivity and total order",
       "parity_cases_to_freeze": "equal plateaus, NaNs if admitted, 2D/3D trees",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -14271,10 +14291,10 @@
         "kind": "compute",
         "specific_workload": "equal plateaus, NaNs if admitted, 2D/3D trees",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Six max-tree APIs remain private candidate scope; combined qualification and original baseline/one-worker measurements are pending."
     },
@@ -14282,22 +14302,26 @@
       "api": "morphology.max_tree_local_maxima",
       "kind": "callable",
       "signature": "(image, connectivity=1, parent=None, tree_traverser=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.max_tree_local_maxima",
       "identity_alias": false,
       "family": "tree",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse private max-tree leaf/plateau maxima labeling",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse private max-tree leaf/plateau maxima labeling",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Private max-tree candidate only; no accepted public-path increment.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered supplied tree, label numbering and equal-level plateaus. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "supplied tree, label numbering and equal-level plateaus",
       "parity_cases_to_freeze": "multiple equal maxima and tree reuse",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -14308,10 +14332,10 @@
         "kind": "compute",
         "specific_workload": "multiple equal maxima and tree reuse",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_max_tree_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Private max-tree candidate only; no accepted public-path increment."
     },
@@ -15242,7 +15266,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: af7b2af composed source is accepted; old-source adapter and new one-worker comparison remain pending. No speed claim for the merged single-admission change.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered energy stopping order, strided channels, weight/eps and provider calls. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "energy stopping order, strided channels, weight/eps and provider calls",
       "parity_cases_to_freeze": "frozen one-worker cases with all slower observations retained",
       "numerical_policy": "Freeze update order, stopping condition, dtype, callback and warning behavior; predeclare residual/output tolerance and test iteration count separately.",
@@ -17172,22 +17196,26 @@
       "api": "transform.matrix_transform",
       "kind": "callable",
       "signature": "(coords, matrix)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.matrix_transform",
       "identity_alias": false,
       "family": "resample",
       "wave": "W0",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse existing private native homogeneous coordinate candidate and public wrapper after whole-product acceptance",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse existing private native homogeneous coordinate candidate and public wrapper after whole-product acceptance",
       "mandatory_route_dependencies": [
         "array",
         "pointwise"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "After implementation resumes, review the frozen checkpoint and close only its named gate: Combined 199-path candidate remains unaccepted; ready metadata 1993c87 is not algorithm qualification. Review original/runtime and whole-product gate before implementation credit.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered dimensions, denominator zeros, dtype promotion and authenticated numerical profile. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "dimensions, denominator zeros, dtype promotion and authenticated numerical profile",
       "parity_cases_to_freeze": "frozen matrix profiles including ill-conditioned coordinates",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -17198,10 +17226,10 @@
         "kind": "compute",
         "specific_workload": "frozen matrix profiles including ill-conditioned coordinates",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_matrix_transform_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "Combined 199-path candidate remains unaccepted; ready metadata 1993c87 is not algorithm qualification. Review original/runtime and whole-product gate before implementation credit."
     },

@@ -2,8 +2,8 @@
 
 Execution resumed by explicit user request on 2026-10-25: implement this plan
 using three agents. Current assignments are in `work_items.json`: H-extrema
-contracts/private source, checked uint16 Li intake, and reconstruction benchmark
-case contracts. Root owns cumulative public integration and final acceptance.
+contracts/private source, reconstruction descriptor hardening, and TV exact-default-policy
+benchmark validation. Reviewed Li and reconstruction reference packets await root integration. Root owns cumulative public integration and final acceptance.
 The paused planning snapshot below records the audit context; its prohibition
 on implementation has been superseded by the explicit resume. Existing
 acceptance gates and frozen evidence remain unchanged.
@@ -17,24 +17,27 @@ native API paths or performance result.
 
 The independently reviewed TV comparison controller is merged as `9f834bb`;
 its root-reviewed experiment keeps actual `5e068a5` and `af7b2af` product labels.
-Run `40163025231` has passed all three preparations and the barrier. Windows and
-minimum measurements have completed; modern measurement and independent full
-raw-result acceptance remain pending. Raw preparation and completed measurement
-artifacts are retained byte-exactly. No new speedup is accepted yet.
+Run `40163025231` is terminal successful, with all ten raw artifacts independently
+authenticated. Its [policy-gap audit](evidence/tv-admission-comparison-policy-gap.json)
+keeps the measurements diagnostic: the legacy all-warn observer bypassed the
+changed default-policy finite-loop route. A separate passive default-policy70
+observer and fail-closed v2 receipts are being implemented before a fresh run.
+No new speedup is accepted.
 
-The original 199-path run `40161615893` is terminal failed and fully retained:
-each profile has the same stale Matrix helper-hash assertion failure in both
-modes. It grants no product acceptance. The [independently reviewed correction](evidence/public199-corrected-dispatch.json)
-`d92d9ff` was dispatched once as fresh run `40166462583`. Windows has passed;
-the remaining three profiles and independent complete artifact acceptance are
-required before increasing accepted coverage from 192.
+The original 199-path run `40161615893` remains terminal failed and fully retained.
+The corrected exact `d92d9ff` product/run `40166462583` now has
+[root whole-product admission](evidence/public199-whole-product-admission.json):
+four passing profiles, 813,192 XML checks with zero failures/errors/skips,
+three actual Release products and 20 SDK families. Its seven new partial paths
+are merged as `32f6488`. Accepted native-partial inventory is now 199; this does
+not establish full argument coverage or new performance.
 
 The [max-tree comparison consumer](evidence/max-tree-comparison-reviewed.json)
-is reviewed and merged as `9c18e27`, with 345 retained three-runtime metadata
-checks and 115 main-layout checks that loaded no numerical modules. It still
-requires genuine qualified 199-path products before any native preparation or
-measurement. Two merged consumer worktrees were [retired with archived proofs](evidence/max-tree-consumer-worktree-retirement.json);
-the remaining consumer worktree is retained for separate opaque-link review.
+is reviewed and merged as `9c18e27`, with 345 three-runtime metadata checks and
+115 main-layout checks. Genuine199 products are now admitted; certificate and
+exact timed-path review remain before native preparation/measurement. Two merged
+consumer worktrees were [retired with archived proofs](evidence/max-tree-consumer-worktree-retirement.json);
+the remaining worktree is retained for separate opaque-link review.
 
 The [shared experiment publisher](evidence/shared-experiment-publication.json)
 is merged as `c24f7b3`; its run `40162423182` published the authenticated TV
@@ -45,7 +48,8 @@ for `fadef4c` adds no public/SDK or performance acceptance.
 
 Reconstruction's [offset repair](evidence/reconstruction-offset-private-review.json)
 has scoped private admission. Its [public200 composition `b4a5c3a`](evidence/reconstruction-public200-source-review.json)
-has no source-review blocker, 1,947 metadata checks and four clean plans; its
+has 1,947 metadata checks and four clean plans; a subsequent source-only
+direct-C++ descriptor-overlap finding requires narrow hardening before freezing; its
 595 public checks were collected only. Whole-product/SDK acceptance is pending.
 
 The [metrics SIMD increment `0322181`](evidence/metrics-endian-range-private.json)
@@ -54,8 +58,10 @@ is merged as `edb897e` after independent private source/parity/closure review:
 PSNR checks. It is an unmeasured optimization of a retained endian-float32
 bottleneck. Compose this exact delta into the next cumulative200 candidate
 before whole qualification, avoiding a separate product build solely for it.
-The current fresh199 run intentionally remains frozen at `d92d9ff`.
+The admitted199 products remain pinned to `d92d9ff`; the separately merged
+metrics delta is not part of those binaries.
 
+Historical paused planning snapshot (superseded by active execution above):
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,
@@ -80,8 +86,8 @@ Use these documents together:
 - [Astra plan review](PLAN_REVIEW_ASTRA.md) explains the evidence and tradeoffs
   behind this revision.
 - [work_items.json](work_items.json) records packet ownership and proof pointers.
-  Its paused checkpoint records are current; older packet states and the old
-  dependency graph require reconciliation before they can launch work.
+  Its explicitly historical paused checkpoints are retained; current assignments
+  and admissions are recorded in execution_policy and packet checkpoints.
 - [api.json](api.json) is the observed API inventory. It describes implementation
   classification, not accepted full argument coverage or speed.
 - The appendix below retains the important historical checkpoints. Historical
@@ -91,11 +97,11 @@ Use these documents together:
 
 | Inventory classification | Public keys | Meaning |
 |---|---:|---|
-| Native-partial image functions | 192 | An advertised subset executes natively; full argument and performance closure is still required. |
+| Native-partial image functions | 199 | An advertised subset executes natively; full argument and performance closure is still required. |
 | Metadata functions | 3 | Separate from computational algorithms. |
 | Native-partial classes | 4 | Coordinate/state support exists; independent fitting and matrix solvers remain incomplete. |
 | Exception metadata provider | 1 | Compatibility identity, not a numerical implementation. |
-| Upstream-only | 277 | Available through compatibility machinery, not native completion. |
+| Upstream-only | 270 | Available through compatibility machinery, not native completion. |
 | Total | 477 | Includes aliases, classes, metadata, assets, and I/O; it is not an algorithm count. |
 
 The inventory includes 29 classes and 284 statically discovered member paths.

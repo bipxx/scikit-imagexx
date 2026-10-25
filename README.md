@@ -6,7 +6,7 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
-Every native public function has scoped parity tests. All 192 partially native
+Every native public function has scoped parity tests. All 199 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,

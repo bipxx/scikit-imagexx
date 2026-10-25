@@ -29350,7 +29350,7 @@
         "tests/test_public_qualification.py",
         "tests/test_rank_statistics_products.py"
       ],
-      "state": "preparing",
+      "state": "performance_pending",
       "public_registration": true,
       "depends_on": [
         "max-tree-native",
@@ -29399,8 +29399,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "main_commit": "32f6488"
       },
       "retention": {
         "active_paths": [
@@ -29430,16 +29430,24 @@
         "sdk_families": 20,
         "qualification_run": 40117331038,
         "public_acceptance": false
+      },
+      "current_checkpoint": {
+        "status": "exact-product-public-parity-accepted-performance-pending",
+        "evidence": {
+          "path": "coverage/evidence/public199-whole-product-admission.json",
+          "bytes": 4112,
+          "sha256": "aa074a5d12beb402938dd84fa3eacfa872d7d8c94c427207c2af2e1b887ea0fd"
+        }
       }
     },
     {
       "id": "matrix-transform-public199-integration",
       "kind": "public_integration",
       "apis": [],
-      "owner": "astra_max_api_paths",
+      "owner": "integrator",
       "branch": "integration/public199-skylakex",
       "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
-      "state": "preparing",
+      "state": "performance_pending",
       "owns": [
         "build/resume-20261025/public199-review",
         "build/genuine199-skylakex-hosted/3c87fbf"
@@ -29483,8 +29491,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "main_commit": "32f6488"
       },
       "retention": {
         "active_paths": [
@@ -29544,6 +29552,14 @@
         },
         "observer_pid": 98680,
         "retainer_pid": 92452
+      },
+      "current_checkpoint": {
+        "status": "exact-product-public-parity-accepted-performance-pending",
+        "evidence": {
+          "path": "coverage/evidence/public199-whole-product-admission.json",
+          "bytes": 4112,
+          "sha256": "aa074a5d12beb402938dd84fa3eacfa872d7d8c94c427207c2af2e1b887ea0fd"
+        }
       }
     },
     {
@@ -30338,7 +30354,7 @@
       "owner": "integrator",
       "branch": "integration/public199-matrix-repair",
       "base_sha": "3c87fbfdc425c953a280eaabf5934cada746f56d",
-      "state": "preparing",
+      "state": "performance_pending",
       "owns": [
         "build/worktrees/public199-matrix-repair",
         "build/resume-20261025/public199-matrix-repair"
@@ -30346,7 +30362,19 @@
       "depends_on": [],
       "candidate_source": "d92d9ff522047f4dd91c21620323454a0010863e",
       "public_acceptance": false,
-      "pending": "Exact corrected d92 dispatchedonce40166462583; all4genuine fresh products and independent artifact acceptance remainrequired."
+      "pending": "Exact corrected d92 dispatchedonce40166462583; all4genuine fresh products and independent artifact acceptance remainrequired.",
+      "merge": {
+        "commit": "d92d9ff522047f4dd91c21620323454a0010863e",
+        "main_commit": "32f6488"
+      },
+      "current_checkpoint": {
+        "status": "exact-product-public-parity-accepted-performance-pending",
+        "evidence": {
+          "path": "coverage/evidence/public199-whole-product-admission.json",
+          "bytes": 4112,
+          "sha256": "aa074a5d12beb402938dd84fa3eacfa872d7d8c94c427207c2af2e1b887ea0fd"
+        }
+      }
     },
     {
       "id": "reconstruction-offset-independent-review",
@@ -30422,7 +30450,7 @@
       "owner": "astra_max_api_paths",
       "branch": "feature/li-u16-bounded",
       "base_sha": "18442a1e260b9dd8489fb45bf60a3ff7072e5a4b",
-      "state": "implementing",
+      "state": "parity_passed",
       "owns": [
         "build/worktrees/li-u16-bounded",
         "build/resume-20261025/li-intake-diagnosis"
@@ -30440,7 +30468,8 @@
       "timings": 0,
       "binding_extraction_source": "18f45995af2534e8953a200b6d0006c506403ebd",
       "root_source_review": "Verbatim Li binding/log extraction read; bounded production-TU design accepted. Typed uint16 intake delta must be reviewed before private builds.",
-      "public_acceptance": false
+      "public_acceptance": false,
+      "current_checkpoint": "Independent private review669e9a passed; root source admission/merge pending. No installed-product or performance acceptance."
     },
     {
       "id": "h-extrema-kernel",
@@ -30453,7 +30482,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/h-extrema-kernel",
       "base_sha": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
-      "state": "contracting",
+      "state": "implementing",
       "owns": [
         "build/worktrees/h-extrema-kernel",
         "build/resume-20261025/h-extrema-diagnosis"
@@ -30461,7 +30490,8 @@
       "depends_on": [],
       "base_scope": "Explicit unqualified public200 source; cee private primitive only, no public/SDK acceptance inherited.",
       "pending": "Freeze full contract/additive real-resolution and limit cases before new outputs; preserve468Windows originals/14unsafe guard blocks, fill Linux captures. Exact discrete masks, no allclose.",
-      "public_acceptance": false
+      "public_acceptance": false,
+      "current_checkpoint": "Descriptor-overlap repair3f4ed95 frozen before first build; independent narrow review then bounded private validation."
     },
     {
       "id": "reconstruction-benchmark-contracts",
@@ -30473,7 +30503,7 @@
       "owner": "resize_api",
       "branch": "feature/reconstruction-benchmark-contracts",
       "base_sha": "18442a1e260b9dd8489fb45bf60a3ff7072e5a4b",
-      "state": "contracting",
+      "state": "contracted",
       "owns": [
         "build/worktrees/reconstruction-benchmark-contracts"
       ],
@@ -30482,7 +30512,36 @@
       "future_measurement_cases": 48,
       "untimed_independent_oracles": 16,
       "timings": 0,
-      "public_acceptance": false
+      "public_acceptance": false,
+      "current_checkpoint": "Independent reference-only reviewf88c433 passed. Root merge pending; mandatory prospective terrain supplement before timing."
+    },
+    {
+      "id": "reconstruction-descriptor-hardening",
+      "kind": "private_foundation",
+      "apis": [],
+      "owner": "astra_max_api_paths",
+      "owns": [
+        "src/reconstruction.cpp",
+        "tests/test_reconstruction_native.cpp"
+      ],
+      "depends_on": [],
+      "state": "implementing",
+      "current_checkpoint": "Source-only descriptor overlap finding; narrow successor to b4 composition, safe rejection tests, root prebuild review."
+    },
+    {
+      "id": "tv-admission-default-policy",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "owns": [
+        "benchmarks/tv_chambolle_admission_compare.py",
+        "tools/tv_chambolle_admission_artifacts.py",
+        "tests/test_tv_chambolle_admission_compare.py",
+        ".github/workflows/tv-chambolle-admission-compare.yml"
+      ],
+      "depends_on": [],
+      "state": "implementing",
+      "current_checkpoint": "Repair exact timed-policy eligibility and fresh-host compiled-completion evidence; old campaign remains diagnostic."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31209,16 +31268,16 @@
         "h-extrema-kernel"
       ],
       "astra_max_api_paths": [
-        "li-u16-bounded"
+        "reconstruction-descriptor-hardening"
       ],
       "resize_api": [
-        "reconstruction-benchmark-contracts"
+        "tv-admission-default-policy"
       ]
     },
     "current_three_agent_packets": {
       "astra_max_plan_audit": "h-extrema-kernel",
-      "astra_max_api_paths": "li-u16-bounded",
-      "resize_api": "reconstruction-benchmark-contracts"
+      "astra_max_api_paths": "reconstruction-descriptor-hardening",
+      "resize_api": "tv-admission-default-policy"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31424,12 +31483,12 @@
       "source": "9f834bbff351ebbb66f98271bc30c07789495efb",
       "before": "5e068a5a2267c3a917701d5348449972fad162a7",
       "after": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
-      "status": "dispatched-no-performance-acceptance",
+      "status": "terminal-diagnostic-policy-gap",
       "observer_unified_session": 73148,
       "proof": {
-        "path": "coverage/evidence/tv-admission-comparison-dispatch.json",
-        "bytes": 2654,
-        "sha256": "e6d40340cd7fc98acb51082b5e5193ecfa2bb75572cea33abfeecc5d81b05126"
+        "path": "coverage/evidence/tv-admission-comparison-policy-gap.json",
+        "bytes": 1544,
+        "sha256": "b01f03d2bc64360727edb66428835b46a5b8fcb9feb9400d5ed0037f65bbec27"
       },
       "prior_observer": {
         "session": 47189,
@@ -31438,17 +31497,22 @@
         "log": "build/resume-20261025/tv-admission-comparison/watch.log",
         "exit": "build/resume-20261025/tv-admission-comparison/watch-exit.json"
       },
-      "observer_log": "build/resume-20261025/tv-admission-comparison/watch-continuation-1.log"
+      "observer_log": "build/resume-20261025/tv-admission-comparison/watch-continuation-1.log",
+      "observer_exit_code": 0,
+      "performance_accepted": false
     },
     "current_corrected_public199_qualification": {
       "run": 40166462583,
       "source": "d92d9ff522047f4dd91c21620323454a0010863e",
       "proof": {
-        "path": "coverage/evidence/public199-corrected-dispatch.json",
-        "bytes": 2493,
-        "sha256": "649313b7d9697317fab885e3a33d3f2e6b8cbfe065852f8c924d4fad2fb179c6"
+        "path": "coverage/evidence/public199-whole-product-admission.json",
+        "bytes": 4112,
+        "sha256": "aa074a5d12beb402938dd84fa3eacfa872d7d8c94c427207c2af2e1b887ea0fd"
       },
-      "public_acceptance": false
+      "public_acceptance": true,
+      "accepted_image_paths": 199,
+      "main_merge": "32f6488",
+      "scope": "Exact d92d9ff products only; later main metric delta awaits cumulative qualification."
     },
     "current_metrics_endian_range": {
       "path": "coverage/evidence/metrics-endian-range-private.json",
@@ -31459,7 +31523,11 @@
       "reconstruction_base": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
       "metrics_increment": "0322181242535eb2337dd6ae717abeed1f9bfc75",
       "state": "compose-before-whole-qualification",
-      "source_has_not_been_qualified": true
+      "source_has_not_been_qualified": true,
+      "required_before_freeze": [
+        "Narrow reconstruction descriptor overlap review/hardening.",
+        "Compose reviewed increments with current main; authenticate new source without relabeling b4 or d92."
+      ]
     }
   },
   "parallel_review": {
