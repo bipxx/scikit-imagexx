@@ -2,50 +2,53 @@
 
 ## Current execution card — updated-plan resume
 
-Explicit user resume: implementation is active. The existing
-[work queue](work_items.json) owns current assignments and exact file ownership;
-older status paragraphs below are historical, even where they say “current”.
+Implementation is active. The [work queue](work_items.json) owns assignments and
+file ownership; older status paragraphs below are historical. Accepted coverage
+remains **199 native-partial image APIs**, against the unchanged full inventory.
 
-- A: review the footprint modern pipeline controller; the colocalization
-  capture-only runner successor is reviewed and normal validation is running.
-- B: review the precise TV controller dependency needed on main. The comparison
-  source passed review, but its after-product remains unaccepted.
-- C: footprint modern full 226-case pipeline controller is frozen for review,
-  using the admitted reference and reviewed actual module, with normal/scalar modes.
-- Root: shared integration, source/runner review, final admissions and existing
-  hosted-run observation. Accepted coverage remains199 native-partial image APIs.
+- A: Windows H checkout-rule / Windows-only diagnostic successor; preserve
+  successful Linux results.
+- B: footprint null-root and complex-radius source repair in a separate worktree.
+- C: colocalization test credit classification repair in a separate worktree.
+- Root: review and integrate bounded source, authorize exact gates and retain
+  hosted results. Original sources and failed runs remain frozen.
 
-Qualification40200919182/source741 failed all four profiles; no retry or new
-product acceptance. All four raw profiles identify the same diagnostic KeyError
-before the H886 loop; exact two-file fixea35 is source-admitted. The reviewed
-same-failed-binary diagnostic493 is mergedbf201df; one four-profile hosted run
-40228411066 is queued, with no rebuild or timing. Old qualification stays failed. Max-tree
-comparison40200431797 remains live; modern preparation passed. Follow the same
-run, never redispatch because an observer session disappeared.
+The complete modern colocalization normal gate finished: **1,055 passed,
+18 failed**, all 1,072 saved rows matching the nine original semantic fields.
+The failures are solely a final test assertion omitting the declared nonfinite
+provider route. All 236 ordinary native-only projections passed. The successor
+must preserve every semantic assertion, provider witness and zero-native-credit
+boundary; scalar has not run. Focused native controls passed modern 387,
+portable 195 and sanitizer 387.
 
-The small manifest-verification deduplication is merged as08730b7 with20 focused
-tests passing. Prior policy-blocked scratch stays preserved. No new framework,
-broader cleanup or relaxed scientific assertions are part of this resume.
+The complete footprint normal gate finished: **62 passed, 391 failed**. Null
+ndarray base handling caused 388 case failures plus the alignment guard failure;
+complex-radius octahedron caused two more. Downstream geometry is mostly
+unassessed. A six-file successor will fix the actual binding boundary and use
+explicit NumPy complex magnitudes with native L1 comparison. Keep all 226 frozen
+expectations. See [full causal diagnoses](evidence/private-normal-gate-failure-diagnosis.json).
 
-The footprint reference is merged09486ce:226fixed cases/runtime,678outer
-and129nested actual original entries, complete raw observations and all three
-minimum-runtime differences retained. It adds no native paths. Colocalization
-source `2a2bd3b` compiled in five bounded profiles. Modern actual-link review passed;
-the test-only 129-element expectation correction `3998e99` passed 387 native controls
-against unchanged kernels. The first modern normal Python gate exited 1 with
-pytest capture FileNotFoundError and no tests run. A metadata-only smoke
-reproduced the FD failure; explicit no-capture passed. The reviewed capture-only
-v2 runner now runs full normal parity; scalar has not run. Portable/sanitizer
-actual-link review passed and native controls passed 195/387 respectively.
-Footprint alignment successor `9bfc86a` is admitted. Its first build found a
-signed/unsigned mixed-auto deduction error; the explicit-type successor `ce3d10a`
-built four TUs successfully. Actual-link review passed; native controls passed
-2,921. Full Python parity, installed public/SDK acceptance and measurements for
-these new families remain pending. All earlier failures survive.
+H diagnostic `40228411066` uses exact failed741 binaries without rebuilding.
+Modern and minimum passed; Windows failed in stdlib metadata before the H
+product step; Debug was last observed active. Original whole qualification
+`40200919182` stays failed. Any successful diagnostic remains distinct from a
+fresh whole-product qualification.
 
-The updated [compilexx project notes](../../compilexx/scikit-imagexx-plan-inefficiencies.md)
-record these execution lessons, completed planning fixes and next actions. They
-are supporting notes; this card and the existing queue own live execution state.
+Max-tree comparison `40200431797` ended cancelled: minimum preparation hit the
+explicit six-hour limit; Windows and modern preparation passed, measurement was
+skipped. Three receipt ZIPs are retained and independently verified. Review a
+six-job profile/mode preparation split before another dispatch, preserving all
+cases, workers 1/4 and the isolated one-worker measurement method. See the
+[terminal record](evidence/max-tree-default-comparison-timeout.json).
+
+The TV comparator source and exact metadata dependency are integrated as
+`f3c35bf` / `f9df2f3`, with 702 metadata checks and all frozen pins matching.
+No failed production ancestry was merged. AFTER741 remains unaccepted;
+benchmark execution and new performance claims remain prohibited.
+
+Manifest-read deduplication and queue ownership repairs are complete. Preserve
+policy-blocked scratch paths and active inputs. The [compilexx project notes](../../compilexx/scikit-imagexx-plan-inefficiencies.md)
+record lessons; this card and the queue own live execution state.
 
 ## Historical execution notes
 
