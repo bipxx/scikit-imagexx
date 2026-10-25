@@ -89,6 +89,10 @@ void bind_footprint_shapes(py::module_& m){
     },py::arg("mask").noconvert(),py::arg("output").noconvert(),py::arg("zero").noconvert(),py::arg("one").noconvert());
     m.def("footprint_shapes_cross_plan",[](py::array_t<std::ptrdiff_t,py::array::c_style> sums,std::size_t height){
         dense(sums);if(sums.ndim()!=1)throw py::value_error("cross sums must be1D");
+        // C-contiguous does not imply alignment. The inherited typed stage
+        // reads ptrdiff_t directly; ordinary owned SUM preparation is aligned.
+        if(!(sums.flags()&py::detail::npy_api::NPY_ARRAY_ALIGNED_))
+            throw py::value_error("cross sums must be aligned");
         std::vector<skimagexx::FootprintCross> plan;
         {py::gil_scoped_release release;plan=skimagexx::footprint_cross_sums(sums.data(),std::size_t(sums.size()),height);}
         py::list output;for(auto p:plan)output.append(py::make_tuple(p.vertical,p.horizontal,p.repetitions));return output;

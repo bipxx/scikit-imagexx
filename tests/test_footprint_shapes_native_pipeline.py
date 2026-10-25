@@ -122,3 +122,17 @@ def test_exact_frozen_shape_sequence(runtime,index,workers,tmp_path):
     assert actual==runtime['expected'][index]
     if actual['error'] is None:
         assert returns, 'successful row without a real compiled stage return'
+
+
+def test_cross_plan_rejects_owned_unaligned_before_typed_read(runtime):
+    np,core=runtime['np'],runtime['core']
+    item=np.dtype(np.intp).itemsize
+    owner=np.zeros(1+3*item,dtype=np.uint8)
+    # Valid in-allocation view. Its zero bytes require no unaligned typed
+    # writes to prepare; rejection must happen before the inherited C++read.
+    sums=np.ndarray((3,),dtype=np.intp,buffer=owner,offset=1)
+    before=owner.tobytes()
+    assert sums.flags.c_contiguous and not sums.flags.aligned
+    with pytest.raises(ValueError,match='cross sums must be aligned'):
+        core.footprint_shapes_cross_plan(sums,1)
+    assert owner.tobytes()==before
