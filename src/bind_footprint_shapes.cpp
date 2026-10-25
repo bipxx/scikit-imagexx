@@ -33,7 +33,8 @@ void check(const py::array& input){
         std::uintptr_t low=0,high=0;
         for(py::ssize_t d=0;d<a.ndim();++d){
             if(a.shape(d)<0)throw py::value_error("negative footprint extent");
-            const auto stride=a.strides(d),mag=stride<0?std::uintptr_t(-(stride+1))+1:std::uintptr_t(stride);
+            const auto stride=a.strides(d);
+            const std::uintptr_t mag=stride<0?std::uintptr_t(-(stride+1))+1:std::uintptr_t(stride);
             auto& extent=stride<0?low:high;const auto count=std::uintptr_t(a.shape(d)-1);
             if(count&&mag>(limit-extent)/count)throw py::value_error("footprint extent overflows");extent+=count*mag;
         }
