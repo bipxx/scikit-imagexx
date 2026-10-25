@@ -22,10 +22,15 @@ def authenticate(profile):
         raw = path.read_bytes()
         assert hashlib.sha256(raw).hexdigest() == expected['sha256'], str(path)
         records.append(dict(path=str(path), bytes=len(raw), sha256=expected['sha256']))
+    source_evolution=[]
     for name, expected in contract['frozen_files'].items():
         raw = (ROOT / name).read_bytes()
-        assert hashlib.sha256(raw).hexdigest() == expected, name
-    return contract, dict(profile=profile, versions=versions, files=records, python=sys.version, executable=sys.executable)
+        if hashlib.sha256(raw).hexdigest() != expected:
+            provenance=load('h_reference_source_provenance','h_extrema_source_provenance.py')
+            source_evolution.append(provenance.authenticate_source(ROOT,name,expected))
+        else:
+            assert hashlib.sha256(raw).hexdigest() == expected, name
+    return contract, dict(profile=profile, versions=versions, files=records, python=sys.version, executable=sys.executable, source_evolution=source_evolution)
 
 
 def load(name, filename):

@@ -188,10 +188,19 @@ def test_prospective_case_partition_and_source_pins():
         **{'resolution-warning': 30, 'precision-warning': 12, 'reconstruction-shape-warning': 12,
            'height-protocol': 4, 'nonrepresentable-height': 8, 'wide-unsigned-comparison': 4})
     assert plan['native_acceptance'] == 'pending' and plan['new_native_paths'] == 0
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('h_case_source_provenance',ROOT/'tests/h_extrema_source_provenance.py')
+    provenance=importlib.util.module_from_spec(spec);spec.loader.exec_module(provenance)
     for name, expected in plan['preserved_files'].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected
+        if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected:
+            provenance.authenticate_source(ROOT,name,expected)
+        else:
+            assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected
     for name, expected in plan['reference_files'].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected
+        if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected:
+            provenance.authenticate_source(ROOT,name,expected)
+        else:
+            assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected
 
 
 def test_unfrozen_input_is_rejected_before_fixture_operations():

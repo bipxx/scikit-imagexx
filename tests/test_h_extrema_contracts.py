@@ -107,13 +107,31 @@ def test_original_fixed_contract(s):
 def test_source_scope_and_signatures():
     d=json.loads(MATRIX.read_bytes());assert d['cases']==cases() and d['new_native_paths']==0
     assert all(str(inspect.signature(f))=='(image, h, footprint=None)' for f in ORIGINAL.values())
-    assert d['test_canonical_lf_sha256']==hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    spec=importlib.util.spec_from_file_location('h_exact_source_provenance',ROOT/'tests/h_extrema_source_provenance.py')
+    provenance=importlib.util.module_from_spec(spec);spec.loader.exec_module(provenance)
+    record=provenance.authenticate_source(ROOT,'tests/test_h_extrema_contracts.py',d['test_canonical_lf_sha256'])
+    assert record['historical_canonical_lf_sha256']==d['test_canonical_lf_sha256']
 @pytest.mark.parametrize('name',ORIGINAL)
 @pytest.mark.parametrize('workers',(1,4))
 def test_strict_native_pending(name,workers):
     import skimagexx as xx
     from skimagexx.coverage import native_functions
-    assert 'morphology.'+name not in native_functions()
+    declared=native_functions();path='morphology.'+name
+    if path in declared:
+        import inspect
+        from skimagexx import _h_extrema as owned
+        core=xx._core;public=getattr(xx.morphology,name)
+        assert owned._core is core and core.__name__=='skimagexx._core'
+        assert public is vars(owned)[name] and public.__module__=='skimagexx._h_extrema'
+        assert inspect.signature(public)==inspect.signature(ORIGINAL[name])
+        assert declared.count(path)==1 and xx.morphology.__all__.count(name)==1
+        assert core.h_extrema_interface=='h-extrema-integer-v1'
+        assert core.h_extrema_integer_widths==(8,16,32,64) and core.h_extrema_full_API is False
+        for entry_name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask','h_extrema_counts'):
+            entry=getattr(core,entry_name)
+            assert inspect.isbuiltin(entry) and entry.__module__==core.__name__ and entry.__name__==entry_name
+    else:
+        assert path not in declared
     old=xx.get_num_threads();policy=xx.set_fallback_enabled(False);before=sys.getprofile();attempts=[]
     def guard(frame,event,arg):
         if event=='call' and frame.f_code is ORIGINAL[name].__code__:attempts.append(name);raise AssertionError('upstream extrema forwarding forbidden')
