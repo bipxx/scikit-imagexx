@@ -1,0 +1,193 @@
+{
+  "schema": "root-colocalization-native-build-checkpoint-v1",
+  "production_source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+  "native_test_successor": "3998e99625f6a84d5ff0b0f2c9a83e5a80865f7d",
+  "build_profiles": [
+    {
+      "profile": "modern",
+      "terminal": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\modern-v1\\terminal.json",
+        "bytes": 164,
+        "sha256": "c377e23953a4bbe5a0fc76dd2158407c5770825cdf410db193c8aab32153be8a"
+      },
+      "actual_capture": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\modern-v1\\actual-link-and-dependencies.json",
+        "bytes": 124598,
+        "sha256": "55effc28f6deec2ad4338a296b03b8aee9ee290fa4aa18ff8ad883f703530f32"
+      },
+      "products": [
+        {
+          "role": "module",
+          "binary": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/_colocalization_stage_core.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 588280,
+            "sha256": "0227375ca5bef570bafa539454a8882b6da57bae3e8676fc83bf1c7abf3adef0"
+          },
+          "link_map": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/module.map",
+            "bytes": 3142604,
+            "sha256": "2d418da572d3fcb6100b55b4aad25ca2e9024663b96b9176ee1b6a0387f37669"
+          },
+          "symbols": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/symbols-module.stdout",
+            "bytes": 149133,
+            "sha256": "da80920e4ac554ef3671a862c3c7d3907da476042027b37816ba67fae5f73bd0"
+          }
+        },
+        {
+          "role": "native",
+          "binary": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/colocalization_native",
+            "bytes": 213472,
+            "sha256": "8020f1ee325a71fa98a7ec2cd3d35484978e6d04a939a7d974a5ab04ac68465c"
+          },
+          "link_map": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/native.map",
+            "bytes": 2600348,
+            "sha256": "c027fe9009f9baa890731e21f56db04f0bf5d9bf827584cf92c3ee974e9142c7"
+          },
+          "symbols": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/modern-v1/symbols-native.stdout",
+            "bytes": 44728,
+            "sha256": "4f7c73120133c74b122e9de1f04786bd9a20ce62ef4febff7eeaea7360e837bb"
+          }
+        }
+      ],
+      "source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+      "new_TUs": 5,
+      "foundation_recompiled": false
+    },
+    {
+      "profile": "minimum",
+      "terminal": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\minimum-v1\\terminal.json",
+        "bytes": 165,
+        "sha256": "fd59013e5e179d68480785822831959f7314e39b833775f7314941b0cbabed12"
+      },
+      "actual_capture": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\minimum-v1\\actual-link-and-dependencies.json",
+        "bytes": 122111,
+        "sha256": "fdcb1b826443711320f5b3b0d1862a64c96d1be1b10ea798bdfd9aa200844ebb"
+      },
+      "products": [
+        {
+          "role": "module",
+          "binary": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/_colocalization_stage_core.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 586656,
+            "sha256": "62cd5bfd8a8decd6d9a72a31fd5ac473da1096fd95e3e7b41f636815c341992e"
+          },
+          "link_map": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/module.map",
+            "bytes": 3126430,
+            "sha256": "fd52ed2a729752d981574615d5d7f226caf4b5e97cb929b791a621d8dafe3c6f"
+          },
+          "symbols": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/symbols-module.stdout",
+            "bytes": 147498,
+            "sha256": "2bd7f57cfc2ef6e652ed826aaba58cb4d5e0c241c8d8f8e512c0fbb3c10c9224"
+          }
+        },
+        {
+          "role": "native",
+          "binary": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/colocalization_native",
+            "bytes": 213472,
+            "sha256": "8020f1ee325a71fa98a7ec2cd3d35484978e6d04a939a7d974a5ab04ac68465c"
+          },
+          "link_map": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/native.map",
+            "bytes": 2600816,
+            "sha256": "0b4d784fd304b22c12f0907bb41a2d98ed426fe9c67ca453f4aacef872c4c240"
+          },
+          "symbols": {
+            "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/colocalization-native/build/controller-v1/runs/minimum-v1/symbols-native.stdout",
+            "bytes": 44728,
+            "sha256": "4f7c73120133c74b122e9de1f04786bd9a20ce62ef4febff7eeaea7360e837bb"
+          }
+        }
+      ],
+      "source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+      "new_TUs": 5,
+      "foundation_recompiled": false
+    },
+    {
+      "profile": "windows",
+      "terminal": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\terminal.json",
+        "bytes": 165,
+        "sha256": "50cb83abdf80ffa2ba5565f7913edbd7e1a5848044340d691e17d19bf1f09cae"
+      },
+      "actual_capture": {
+        "path": "build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\actual-link-and-dependencies.json",
+        "bytes": 115121,
+        "sha256": "60ba574970180b56a60190f32bddccaa44222a8331fce2251b00b6be029a7fab"
+      },
+      "products": [
+        {
+          "role": "module",
+          "binary": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\cache\\Release\\_colocalization_stage_core.cp313-win_amd64.pyd",
+            "bytes": 294400,
+            "sha256": "1cc075e14785e9bc3a949f481f10d61b5584f5f3ac209df55d78afec0a090d8f"
+          },
+          "link_map": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\cache\\_colocalization_stage_core.map",
+            "bytes": 964237,
+            "sha256": "d9af258fcaed7f5006eaaef177f7086fd03429d7907013e29b147ce48ca927b0"
+          }
+        },
+        {
+          "role": "native",
+          "binary": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\cache\\Release\\colocalization_native.exe",
+            "bytes": 51712,
+            "sha256": "95966c46d986dc12c7f4a7ebcf5714f23a25a96f42f27acf3fc40a54e2d235cd"
+          },
+          "link_map": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\colocalization-native\\build\\controller-v1\\runs\\windows-v1\\cache\\colocalization_native.map",
+            "bytes": 101351,
+            "sha256": "537661269eb53fe88e402a31686ce8b97332cdc6e0edf18a1010059efe2fe1d9"
+          }
+        }
+      ],
+      "source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+      "new_TUs": 5,
+      "foundation_recompiled": false
+    }
+  ],
+  "modern_actual_link_review": {
+    "path": "build\\resume-20261025\\colocalization-modern-actual-link-independent-review\\final-review.json",
+    "bytes": 38860,
+    "sha256": "99a156c010b605cd1b3cd62392529e7ff29f9b4e4f1a8fa8998ce455671729fc"
+  },
+  "modern_native": {
+    "exit": {
+      "path": "build\\resume-20261025\\colocalization-modern-native-root-v2\\exit.json",
+      "bytes": 75,
+      "sha256": "7abb05338c635e091a65026b77d63649aa2a029c0ddb2adbed8c44cd129db005"
+    },
+    "stdout": {
+      "path": "build\\resume-20261025\\colocalization-modern-native-root-v2\\native.stdout",
+      "bytes": 71,
+      "sha256": "080d0de2c5ff41180996c0d8b2f50c181e2cb028f60c549ae2210813e1dec0f8"
+    },
+    "actual_relink_review": {
+      "path": "build\\resume-20261025\\colocalization-modern-native-root-v2\\actual-link-review.json",
+      "bytes": 1535,
+      "sha256": "d80896ce62cb24ce8fbd457f2e494cad0fe51e69232e2b729d358909a92f137b"
+    },
+    "reported_controls": 387,
+    "workers": [
+      1,
+      4
+    ],
+    "operation_timings": 0
+  },
+  "portable_sanitizer": "Separately authorized build-only successors active at original handles76811/70971; no success or execution inferred here.",
+  "next": "Finish independent runtime-controller review, then full536-case normal/scalar gates on unchanged modern module. Other-profile actual-link and numerical gates remain.",
+  "full_private_parity": false,
+  "new_API_credit": 0,
+  "public_accepted": false,
+  "performance_accepted": false
+}
