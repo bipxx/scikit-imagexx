@@ -212,6 +212,10 @@ coverage/evidence/private-normal-gate-failure-diagnosis.json -text
 coverage/evidence/max-tree-default-comparison-timeout.json -text
 coverage/evidence/footprint-root-complex-source-admission.json -text
 coverage/evidence/h-windows-checkout-source-admission.json -text
+coverage/evidence/colocalization-provider-credit-source-admission.json -text
+coverage/evidence/colocalization-modern-private-parity-checkpoint.json -text
+coverage/evidence/h-four-profile-installed-diagnostic.json -text
+coverage/evidence/h-windows-metadata-worktree-retirement.json -text
 coverage/contracts/tv-positive-zero-comparison-plan.json -text
 benchmarks/tv_positive_zero_compare.py -text
 tools/tv_positive_zero_artifacts.py -text

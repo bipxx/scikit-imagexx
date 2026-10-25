@@ -1,0 +1,66 @@
+{
+  "schema": "root-colocalization-modern-private-parity-v1",
+  "compiled_source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+  "assertion_source": "e3431ab935a1111f99c30464d34b0999e0e3d421",
+  "normal_actual_execution": {
+    "rows": 1072,
+    "original_pytest_passed": 1055,
+    "original_pytest_failed": 18,
+    "original_status_unchanged": true
+  },
+  "normal_assertion_replay": {
+    "receipt": {
+      "path": "build/worktrees/colocalization-provider-credit/build/normal-assertion-replay-v1/result.json",
+      "bytes": 53102,
+      "sha256": "78c2d0a06c223392919efd9917b01c9497315409ea6467e1592cc1d2c9737315"
+    },
+    "manifest": {
+      "path": "build/worktrees/colocalization-provider-credit/build/normal-assertion-replay-v1/final-manifest.json",
+      "bytes": 914,
+      "sha256": "14e2967d75b5fc4a79ee9efc2882922c6db5009b182a3439c67a69920244867d"
+    },
+    "passed_rows": 1072,
+    "ordinary_native_only_rows": 236,
+    "ordinary_refused_stages": 0,
+    "provider_only_rows": 34,
+    "provider_only_native_credit": 0,
+    "worker_labels": "Two occurrences per ID; workers1/4 proven by original phase inventory, not invented per raw row."
+  },
+  "fresh_scalar": {
+    "terminal": {
+      "path": "build/worktrees/colocalization-provider-credit/build/gates-modern-scalar-v2/outputs/scalar-v1/terminal.json",
+      "bytes": 512,
+      "sha256": "b80e9b37169c9b4ad59d20527a3f48b50f3a83ca4632667a930fffe89881ec56"
+    },
+    "before": {
+      "path": "build/worktrees/colocalization-provider-credit/build/gates-modern-scalar-v2/outputs/scalar-v1/actual-scalar-before.json",
+      "bytes": 370,
+      "sha256": "fc0e8fb7c3adb55af3dc2b0ea5e3d61b1d87e566e8491327db87e1bbe3971e7d"
+    },
+    "after": {
+      "path": "build/worktrees/colocalization-provider-credit/build/gates-modern-scalar-v2/outputs/scalar-v1/actual-scalar-after.json",
+      "bytes": 370,
+      "sha256": "fc0e8fb7c3adb55af3dc2b0ea5e3d61b1d87e566e8491327db87e1bbe3971e7d"
+    },
+    "node_raw_mapping": {
+      "path": "build/worktrees/colocalization-provider-credit/build/gates-modern-scalar-v2/outputs/scalar-v1/nodeid-to-raw-path.jsonl",
+      "bytes": 326064,
+      "sha256": "1bf0368200d3dee707eef1f5d0445305d0fdb5c3f0971857962016ce288db29b"
+    },
+    "passed_tests": 1073,
+    "actual_rows": 1072,
+    "phase_reports": 3219,
+    "independent_retained_output_review": {
+      "path": "build/resume-20261025/colocalization-modern-scalar-actual-independent-review/final-review.json",
+      "bytes": 3586,
+      "sha256": "dbcc31dd135c6f3824da0f0f9bd013e6e814563ccbf9d4ea089f0f13679a8ba7"
+    },
+    "ordinary_native_only_rows": 236,
+    "ordinary_refused_stages": 0
+  },
+  "modern_private_observable_parity_accepted": true,
+  "scope": "Modern profile only, bounded536-case original-observable contract with explicit provider frontiers; other profile numerical gates and installed public/SDK acceptance remain pending",
+  "provider_counter_scope": "Named NumPy function counters are instrumented; deferred native-stage counters separately expose other providers. No exhaustive primitive callback census claim.",
+  "accepted_public_native_partial_apis": 199,
+  "performance_accepted": false
+}

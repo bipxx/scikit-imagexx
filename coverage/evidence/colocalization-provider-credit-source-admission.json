@@ -1,0 +1,34 @@
+{
+  "schema": "root-colocalization-provider-credit-source-admission-v1",
+  "source": "e3431ab935a1111f99c30464d34b0999e0e3d421",
+  "base": "3998e99625f6a84d5ff0b0f2c9a83e5a80865f7d",
+  "manifest": {
+    "path": "build/worktrees/colocalization-provider-credit/build/source-proof-v1/manifest.json",
+    "bytes": 3360,
+    "sha256": "748784f035ed2667fe45c1c66682a58630460817defca7a2af9ce5163b8ae1d1"
+  },
+  "pipeline": {
+    "path": "build/worktrees/colocalization-provider-credit/tests/test_colocalization_native_pipeline.py",
+    "bytes": 17805,
+    "sha256": "95ef44d3353ce77d1e1b15375c12e755e31414a4640040fb23d563ab3e4fcf78"
+  },
+  "root_review": [
+    "Full two-file diff reviewed; factory-derived predicate uses only spec metadata and includes ten IDs, not nine failures",
+    "Entire prior post-observation semantic/native/provider accounting unchanged except final provider category",
+    "All fixture/observer/owner bodies, production kernels/binder/shell and original reference data unchanged",
+    "12 metadata checks across three runtimes passed; original Linux runner failures retained",
+    "Source ZIP contains explicit before/after revision prefixes; each Git blob compared separately"
+  ],
+  "source_only": true,
+  "retained_normal_assertion_replay_authorized": true,
+  "fresh_scalar_gate_requires_separate_controller_review": true,
+  "production_build_authorized": false,
+  "original_normal_pytest_remains_failed": true,
+  "original_normal_result": {
+    "passed": 1055,
+    "failed": 18,
+    "actual_rows": 1072
+  },
+  "accepted_public_native_partial_apis": 199,
+  "performance_accepted": false
+}

@@ -30766,7 +30766,7 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Full normalv2 terminal:1055PASS/18FAIL; all1072 raw rows exactly match nine public semantic fields; final credit assertion omits declared nonfinite providers. Independent e124d353/root failure diagnosis retained. Source-only classification successor in new provider-credit WT; no production/kernel/reference changes or scalar run.",
+      "current_checkpoint": "Modern private original-observable parity accepted:1072 retained normal rows passed exact e343 assertion replay; original1055/18 pytest unchanged. Fresh scalar1073PASS/1072rows/3219phases, independentdbcc31dd. All236ordinary rows per mode0providers/refusals; provider-only34credit0. Other profile numerical/public/SDK/performance gates pending.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
     },
@@ -30876,14 +30876,14 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Full normalv1 terminal:62PASS/391FAIL/452rawrows.389 failures are null-base storage/guard misuse;2 complex-radius L1 domain failures. Independent7b03e260. Narrow root-complex successor in separateWT; original ce3d source/raw gate preserved. Geometry mostly unassessed, no public/native-family/performance acceptance."
+      "current_checkpoint": "Sourcead6/root564568ef fixes actualnull-base andcomplexL1 defects. Four-TU modern build/actual12d8/native2925 passed;4-node binding smoke passed. Full normal454PASS andscalar454PASS/904rawrows, module771654; independent fullrawreview underway. Oldce3d391fail preserved; otherprofiles/public/performance pending."
     },
     {
       "id": "h203-same-product-installed-diagnostic",
       "kind": "tooling",
       "apis": [],
       "owner": "astra_max_plan_audit",
-      "state": "validating",
+      "state": "accepted",
       "branch": "feature/h203-same-product-diagnostic",
       "base_sha": "36088f2fb447ecd27aeb2531e7cafd168f3c6645",
       "owns": [
@@ -30895,7 +30895,7 @@
       "depends_on": [
         "h203-failure-diagnostic-projection"
       ],
-      "current_checkpoint": "One source493 hosted diagnostic40228411066:modern+minimumSUCCESS,WindowsFAILURE under read-only diagnosis,debugstillactive. Exactfailed741binaries only; no rebuild/timing. Original whole qualification remains failed."
+      "current_checkpoint": "Exact failed741 products passed installedH diagnostics all4profiles:Linux493/run40228411066;Windows869/run40231513839.28352rawrows/rootca1029b7 report verification, unsafe448zero calls. Oldwhole741qualification andold493Windowsmetadata failure remain failed. FreshEA35 fourprofilewhole203qualification40237475475 nowlive; no publicacceptance yet."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -32665,6 +32665,13 @@
       "archive": "build/cleanup/publication-retirement-20261025/preserved-ignored-proofs.zip",
       "archive_sha256": "7a571dc1bd25edc2a8ba35a6ba776e7d9f01030cf55ed4969b2dac826486928e",
       "preservation_index": "build/cleanup/publication-retirement-20261025/preservation-index.json",
+      "member_rule": "Find the exact former workspace-relative path in preservation-index.json and read its member sha256/<record.sha256>; bytes and original manifests are unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/h-installed-windows-metadata",
+      "archive": "build/cleanup/h-windows-metadata-retirement-20261025/preserved-ignored-proofs.zip",
+      "archive_sha256": "8b092fa75ea7f8e7a9f242295f5cf526af3cf72acbb88212160d37379ba8f348",
+      "preservation_index": "build/cleanup/h-windows-metadata-retirement-20261025/preservation-index.json",
       "member_rule": "Find the exact former workspace-relative path in preservation-index.json and read its member sha256/<record.sha256>; bytes and original manifests are unchanged."
     }
   ],
