@@ -211,6 +211,16 @@ bool reconstruction_ordered(const ReconstructionView& seed,const ReconstructionV
     return true;
 }
 
+bool reconstruction_negative_zero(const ReconstructionView& seed,const ReconstructionView& mask) {
+    Environment environment;environment.check();
+    for(const auto* v:{&seed,&mask}) {
+        const auto n=elements(*v);extent(*v);
+        if(v->type!=ReconstructionType::float16 && v->type!=ReconstructionType::float32 && v->type!=ReconstructionType::float64)continue;
+        for(std::size_t i=0;i<n;++i){auto x=number(*v,i).f;if(x==0 && std::signbit(x))return true;}
+    }
+    return false;
+}
+
 ReconstructionRequirements reconstruction_requirements(const ReconstructionView& seed,const ReconstructionView& mask,const ReconstructionFootprint& f,ReconstructionQueue requested) {
     auto n=elements(seed);elements(mask);elements(f.values);extent(seed);extent(mask);extent(f.values);
     if(seed.shape.size!=mask.shape.size || seed.shape.size!=f.values.shape.size || f.values.type!=ReconstructionType::boolean || f.offset.size!=seed.shape.size)throw std::invalid_argument("reconstruction rank/footprint mismatch");

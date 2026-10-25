@@ -59,6 +59,8 @@ struct ReconstructionInfo {
 // Nonempty real typed views only; the Python shell preserves other preentry cases.
 bool reconstruction_ordered(const ReconstructionView& seed,const ReconstructionView& mask,
     ReconstructionMethod);
+// Read-only negative-zero intake scan; avoids a Python image scan on ordinary calls.
+bool reconstruction_negative_zero(const ReconstructionView& seed,const ReconstructionView& mask);
 // Metadata-only sizing. No allocation and no writes. Rank0 means one scalar;
 // non-scalar dimensions must be positive. Overflow and footprint geometry
 // are rejected; the Python caller preserves its earlier source preentry errors.
