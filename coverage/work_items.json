@@ -30264,7 +30264,7 @@
       "owner": "resize_api",
       "branch": "feature/reconstruction-offset-guard",
       "base_sha": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
-      "state": "validating",
+      "state": "implementing",
       "owns": [
         "build/worktrees/reconstruction-owner-guard",
         "build/worktrees/reconstruction-public200"
@@ -30285,7 +30285,7 @@
         "kernel_header_and_source_oracles_unchanged": true,
         "local_operation_timings": false
       },
-      "pending_root_review": "e17 offset allocation extent gap independently confirmed; private admission blocked until separate binder repair and review.",
+      "pending_root_review": "Exactceea repaired private binder admitted; actual public200 integration and fresh whole/SDK qualification pending.",
       "public_candidate_preparation": {
         "worktree": "build/worktrees/reconstruction-public200",
         "branch": "integration/public200-reconstruction",
@@ -30306,7 +30306,12 @@
         "bytes": 1696,
         "sha256": "90d8b52c3c4f22849ec3c35fe5190a494d2a5f7cdb9a8eb3c3029e02e2d7cb29"
       },
-      "offset_repair_source": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8"
+      "offset_repair_source": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8",
+      "private_admission": {
+        "path": "coverage/evidence/reconstruction-offset-private-review.json",
+        "bytes": 1626,
+        "sha256": "75438e32675aafae9ad7b01198d14da374d6f8ddd30fb1f4ce63e290fcb8a9a0"
+      }
     },
     {
       "id": "public199-matrix-source-assertion-repair",
@@ -30332,7 +30337,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "read-only-ceea7b45",
       "base_sha": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8",
-      "state": "validating",
+      "state": "accepted",
       "owns": [
         "build/resume-20261025/reconstruction-offset-review"
       ],
@@ -30342,7 +30347,42 @@
         "numerical_calls": 0,
         "source_author": "resize_api",
         "scope": "Independent source, arithmetic-helper and final binder-gate proof audit only; no public acceptance."
+      },
+      "private_admission": {
+        "path": "coverage/evidence/reconstruction-offset-private-review.json",
+        "bytes": 1626,
+        "sha256": "75438e32675aafae9ad7b01198d14da374d6f8ddd30fb1f4ce63e290fcb8a9a0"
       }
+    },
+    {
+      "id": "metrics-endian-range",
+      "kind": "measured_bottleneck",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "branch": "feature/metrics-endian-range",
+      "base_sha": "044d7f5839d163435b56819a9b2c9d827212ff91",
+      "state": "contracting",
+      "owns": [
+        "build/worktrees/metrics-endian-range",
+        "build/resume-20261025/metric-bottleneck-diagnosis"
+      ],
+      "depends_on": [],
+      "measured_hypothesis": {
+        "path": "build/resume-20261025/metric-bottleneck-diagnosis/hypothesis.json",
+        "bytes": 18416,
+        "sha256": "dfd09123b12c51ec5ee97bf99d107cd42eb14ac9eaefa9391f6aad58a176980f"
+      },
+      "acceptance": {
+        "exact_raw_range_bits": true,
+        "unchanged_scalar_fallback": true,
+        "existing_disable_SIMD_respected": true,
+        "same_global_workers_default1": true,
+        "no_tolerance_change": true,
+        "retained_target_factory_unchanged": true,
+        "isolated_one_worker_comparison_required": true
+      },
+      "public_acceptance": false,
+      "performance_acceptance": false
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31066,7 +31106,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "reconstruction-offset-independent-review",
+        "metrics-endian-range",
         "nmi-native-private"
       ],
       "astra_max_api_paths": [
@@ -31077,7 +31117,7 @@
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "reconstruction-offset-independent-review",
+      "astra_max_plan_audit": "metrics-endian-range",
       "astra_max_api_paths": "matrix-transform-public199-integration",
       "resize_api": "reconstruction-owner-guard"
     },

@@ -47,8 +47,12 @@ skips. No donor product acceptance is inherited. Public core/SDK wiring, whole
 qualification and one-worker measurement remain pending. Reconstruction's earlier `095ea3d` blocker has a separately tested
 binder repair `e17ba10`, but root review identified a possible unchecked offset
 span extent, independently confirmed and [recorded as blocking](evidence/reconstruction-offset-extent-review.json), requiring repair before admission.
-Worker C prepares the actual public-200 integration on a separate branch; this
-adds no accepted public paths. Worker B reviews intake fixes while retaining and
+The [offset repair `ceea7b4`](evidence/reconstruction-offset-private-review.json)
+has scoped private admission after independent source and retained-gate review;
+the old findings remain unchanged. Worker C prepares the actual public-200
+integration on a separate branch; this adds no accepted public paths. Worker A
+now owns a measured PSNR byte-swapped-float32 range bottleneck, with unchanged
+reference inputs and exact scalar fallback; the SIMD hypothesis is unmeasured. Worker B reviews intake fixes while retaining and
 observing the same genuine qualification run `40161615893`.
 
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main

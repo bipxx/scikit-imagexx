@@ -129,3 +129,4 @@ coverage/contracts/normalized-mutual-information.json -text
 coverage/evidence/nmi-original-reference-audit.json -text
 coverage/evidence/nmi-private-native-review.json -text
 coverage/evidence/shared-publication-worktree-retirement.json -text
+coverage/evidence/reconstruction-offset-private-review.json -text

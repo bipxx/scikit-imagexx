@@ -1,0 +1,32 @@
+{
+  "schema": "reconstruction-offset-private-review-v1",
+  "source": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8",
+  "state": "scoped-private-repaired-binder-admitted",
+  "root_admission": {
+    "path": "build/resume-20261025/reconstruction-offset-review/root-admission.json",
+    "bytes": 4606,
+    "sha256": "02bef27bbb7f3c3bef24835870360c8f2dd0ae83bf2c514ac73f7c9e0d5ecd4d"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/reconstruction-offset-review/ceea7b45-private-review.json",
+    "bytes": 13940,
+    "sha256": "574d0b9c9401a48ca1493155e2879554cadecd97ffb9ae97b281bcc84301aa99"
+  },
+  "passed_binding_checks": 5400,
+  "explicit_portable_worker4_rejections": 550,
+  "pure_integer_metadata_assertions": 12582948,
+  "pure_integer_test_pointer_dereferences": 0,
+  "earlier_findings_and_raw_science_unchanged": true,
+  "donor_binary_acceptance_inherited": false,
+  "remaining_limits": [
+    "Earlier 095/e17 gate bytes remain authentic, but their incomplete intake is not admitted by this repair; their findings and raw products remain unchanged.",
+    "Unknown/non-ndarray owners remain conservatively rejected in the private binding.",
+    "Four OpenMP profiles plus portable are actual retained private builds, not platform-wide or public-product qualification.",
+    "SDK archive provenance is inherited from authenticated private donor closure; no binary acceptance is granted to those donor artifacts.",
+    "No raw references or numerical comparison policy changed."
+  ],
+  "public_acceptance": false,
+  "installed_SDK_acceptance": false,
+  "performance_acceptance": false,
+  "new_public_paths": 0
+}
