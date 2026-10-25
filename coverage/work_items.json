@@ -30754,7 +30754,7 @@
         "measure.manders_coloc_coeff",
         "measure.manders_overlap_coeff"
       ],
-      "owner": "astra_max_plan_audit",
+      "owner": "resize_api",
       "state": "validating",
       "owns": [
         "include/skimagexx/colocalization.hpp",
@@ -30766,7 +30766,7 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Production2a built five profiles; modern387/portable195/sanitizer387 focused native controls PASS. Original normalv1 failed FD capture before collection; metadata smoke reproduced it and no-capture passed. Capture-only v2 runner root257a2638 full normal1073/1072 gate active3902; scalar not launched. Full536/private/public/performance acceptance pending.",
+      "current_checkpoint": "Full normalv2 terminal:1055PASS/18FAIL; all1072 raw rows exactly match nine public semantic fields; final credit assertion omits declared nonfinite providers. Independent e124d353/root failure diagnosis retained. Source-only classification successor in new provider-credit WT; no production/kernel/reference changes or scalar run.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
     },
@@ -30856,7 +30856,7 @@
         "morphology.star",
         "morphology.footprint_from_sequence"
       ],
-      "owner": "resize_api",
+      "owner": "astra_max_api_paths",
       "state": "validating",
       "branch": "feature/footprint-shapes-native",
       "base_sha": "09486ceffd1273c33c0cbdcab864a5ae9fd3d86f",
@@ -30876,13 +30876,13 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Alignment9bfc source admitted; first build failed binder mixed-auto deduction. Exact compile-only ce3d successor built modern4TUs; actual-link review88c5186f PASS and focused native2921 controls PASS. Preparing full226-case normal/scalar private pipeline. No installed/public/performance acceptance."
+      "current_checkpoint": "Full normalv1 terminal:62PASS/391FAIL/452rawrows.389 failures are null-base storage/guard misuse;2 complex-radius L1 domain failures. Independent7b03e260. Narrow root-complex successor in separateWT; original ce3d source/raw gate preserved. Geometry mostly unassessed, no public/native-family/performance acceptance."
     },
     {
       "id": "h203-same-product-installed-diagnostic",
       "kind": "tooling",
       "apis": [],
-      "owner": "integrator",
+      "owner": "astra_max_plan_audit",
       "state": "validating",
       "branch": "feature/h203-same-product-diagnostic",
       "base_sha": "36088f2fb447ecd27aeb2531e7cafd168f3c6645",
@@ -30895,7 +30895,7 @@
       "depends_on": [
         "h203-failure-diagnostic-projection"
       ],
-      "current_checkpoint": "493 source independently reviewed a7a99c4a/root61f92879; mergedbf201df with32 metadata PASS. One hosted diagnostic dispatched run40228411066 using exact four failed741 products, no rebuild/timing. Original whole qualification remains failed; diagnostic results pending."
+      "current_checkpoint": "One source493 hosted diagnostic40228411066:modern+minimumSUCCESS,WindowsFAILURE under read-only diagnosis,debugstillactive. Exactfailed741binaries only; no rebuild/timing. Original whole qualification remains failed."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31611,19 +31611,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "colocalization-native-production"
+        "h203-same-product-installed-diagnostic"
       ],
       "astra_max_api_paths": [
-        "tv-positive-zero-comparison-successor"
+        "footprint-shapes-native-production"
       ],
       "resize_api": [
-        "footprint-shapes-native-production"
+        "colocalization-native-production"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "colocalization-native-production",
-      "astra_max_api_paths": "tv-positive-zero-comparison-successor",
-      "resize_api": "footprint-shapes-native-production"
+      "astra_max_plan_audit": "h203-same-product-installed-diagnostic",
+      "astra_max_api_paths": "footprint-shapes-native-production",
+      "resize_api": "colocalization-native-production"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

@@ -207,6 +207,8 @@ coverage/evidence/h-failed-product-diagnostic-inputs.json -text
 coverage/evidence/h-same-product-diagnostic-source-admission.json -text
 coverage/evidence/focused-native-validation-checkpoint.json -text
 coverage/evidence/tv-positive-zero-comparison-main-integration.json -text
+coverage/evidence/private-normal-gate-failure-diagnosis.json -text
+coverage/evidence/max-tree-default-comparison-timeout.json -text
 coverage/contracts/tv-positive-zero-comparison-plan.json -text
 benchmarks/tv_positive_zero_compare.py -text
 tools/tv_positive_zero_artifacts.py -text
