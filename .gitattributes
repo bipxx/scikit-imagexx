@@ -196,3 +196,6 @@ tests/footprint_shapes_reference.py -text
 tests/test_footprint_shapes_contracts.py -text
 coverage/contracts/footprint-shapes.json -text
 coverage/evidence/footprint-shapes-original-reference-admission.json -text
+
+tests/test_footprint_shapes_native_pipeline.py -text
+tests/test_footprint_portable_collection_metadata.py -text
