@@ -30109,10 +30109,10 @@
       "id": "reconstruction-native-kernel",
       "kind": "private_kernel",
       "apis": [],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/reconstruction-kernel",
       "base_sha": "b099375a45bcf184fb7f9d9078321b7cef638673",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "build/worktrees/reconstruction-native/include/skimagexx/reconstruction.hpp",
         "build/worktrees/reconstruction-native/src/reconstruction.cpp",
@@ -30128,16 +30128,26 @@
         "private_only": true,
         "signed_zero_provider_frontier_explicit": true,
         "local_operation_timings": false
+      },
+      "frozen_source": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
+      "independent_review": "build/resume-20261025/reconstruction-review",
+      "review_finding": "PrivatebinderPythonbasepropertydispatch caninvalidate retainedallocation metadata;095staysunmergeduntilseparateownerchainfix verified. No unsafe invocation.",
+      "provided_interfaces": {
+        "reconstruction-v1": {
+          "state": "frozen",
+          "definition": "{\"capabilities\": 3, \"header_sha256\": \"334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8\", \"interface\": \"reconstruction-v1\", \"public_acceptance\": false, \"source\": \"095ea3d8c3ca8eb580bf95ff2d02218d98f59552\"}",
+          "sha256": "04c14143b12c50fae0789b25dcb7baf2cd892190defcb18d058179269cea0551"
+        }
       }
     },
     {
       "id": "shared-experiment-publication",
       "kind": "tooling",
       "apis": [],
-      "owner": "astra_max_plan_audit",
+      "owner": "integrator",
       "branch": "feature/experiment-publication-shared",
       "base_sha": "9f834bbff351ebbb66f98271bc30c07789495efb",
-      "state": "implementing",
+      "state": "preparing",
       "owns": [
         "build/worktrees/experiment-publication-shared/tools/experiment_publication.py",
         "build/worktrees/experiment-publication-shared/tests/test_experiment_publication.py",
@@ -30157,6 +30167,74 @@
         "fixed_validator_registry": true,
         "no_numerical_imports": true,
         "root_review_before_dispatch": true
+      },
+      "merge": {
+        "commit": "3f86f14567579dc20c36fb5691551ded4de06768",
+        "main_commit": "c24f7b351510274c12ea58d763ff06e20048c9dd"
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "3f86f14567579dc20c36fb5691551ded4de06768",
+          "manifest": {
+            "path": "coverage/evidence/shared-experiment-publication.json",
+            "bytes": 2385,
+            "sha256": "7973405430c8edb89e28e6221ad01828ab86d589d18ecc788e82a2879a74586e"
+          }
+        }
+      },
+      "publication_run": 40162423182
+    },
+    {
+      "id": "nmi-native-private",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "branch": "feature/nmi-native",
+      "base_sha": "164fb40314cdfa9cb720e81554d2aecd7f2cee03",
+      "state": "contracting",
+      "owns": [
+        "build/worktrees/nmi-native"
+      ],
+      "depends_on": [],
+      "acceptance": {
+        "new_public_acceptance": 0,
+        "exact_histogram_edges_counts": true,
+        "prospective_output_tolerance": {
+          "rtol": 2e-12,
+          "atol": 2e-13
+        },
+        "provider_frontier": "O(bins)edgepreparationandfinalwarning-respectingdivisionexplicit; no upstreamNMI/histogramdd/entropyalgorithmforwarding.",
+        "default_global_workers": 1,
+        "one_worker_benchmark_required": true
+      }
+    },
+    {
+      "id": "reconstruction-owner-guard",
+      "kind": "private_fix",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/reconstruction-owner-guard",
+      "base_sha": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
+      "state": "implementing",
+      "owns": [
+        "build/worktrees/reconstruction-owner-guard"
+      ],
+      "depends_on": [
+        "reconstruction-native-kernel"
+      ],
+      "dependency_requirements": {
+        "reconstruction-native-kernel": {
+          "interface": "reconstruction-v1"
+        }
+      },
+      "acceptance": {
+        "private_only": true,
+        "full_owner_chain_checked_before_release": true,
+        "no_Python_base_property_dispatch": true,
+        "safe_regression_no_freed_memory_reads": true,
+        "kernel_header_and_source_oracles_unchanged": true,
+        "local_operation_timings": false
       }
     }
   ],
@@ -30881,19 +30959,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "shared-experiment-publication"
+        "nmi-native-private"
       ],
       "astra_max_api_paths": [
         "matrix-transform-public199-integration"
       ],
       "resize_api": [
-        "reconstruction-native-kernel"
+        "reconstruction-owner-guard"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "shared-experiment-publication",
+      "astra_max_plan_audit": "nmi-native-private",
       "astra_max_api_paths": "matrix-transform-public199-integration",
-      "resize_api": "reconstruction-native-kernel"
+      "resize_api": "reconstruction-owner-guard"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31086,7 +31164,14 @@
     },
     "ledger_freshness_boundary": "Current assignments and frozen source checkpoints were reconciled on explicit2026-10-25 resume; historical immutable proofs and failed runs remain unchanged. Agent liveness is checked separately.",
     "resumed_goal": "implment the updated plan using 3 agents",
-    "resumed_date": "2026-10-25"
+    "resumed_date": "2026-10-25",
+    "background_review": {
+      "owner": "astra_max_api_paths",
+      "packet": "reconstruction-native-kernel",
+      "source": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
+      "write_scope": "build/resume-20261025/reconstruction-review",
+      "qualification_retention_priority": true
+    }
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",

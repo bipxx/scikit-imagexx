@@ -28,6 +28,16 @@ requires genuine qualified 199-path products before any native preparation or
 measurement. Two merged consumer worktrees were [retired with archived proofs](evidence/max-tree-consumer-worktree-retirement.json);
 the remaining consumer worktree is retained for separate opaque-link review.
 
+The [shared experiment publisher](evidence/shared-experiment-publication.json)
+is merged as `c24f7b3` and its metadata-only publication run is `40162423182`.
+Actual artifact admission and the TV timing dispatch remain pending. Worker A
+now owns the normalized-mutual-information contract/native packet. Reconstruction
+has substantial passing private evidence, but [independent review found an
+allocation-owner validation blocker](evidence/reconstruction-private-review.json);
+source `095ea3d` remains unmerged while Worker C fixes the binder on a separate
+branch. Worker B reviews that fix while the original qualification observer and
+retainer continue following run `40161615893`.
+
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,

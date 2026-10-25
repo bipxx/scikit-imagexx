@@ -120,3 +120,5 @@ coverage/evidence/public199-skylakex-dispatch.json -text
 coverage/evidence/tv-admission-comparison-reviewed.json -text
 coverage/evidence/max-tree-comparison-reviewed.json -text
 coverage/evidence/max-tree-consumer-worktree-retirement.json -text
+coverage/evidence/shared-experiment-publication.json -text
+coverage/evidence/reconstruction-private-review.json -text

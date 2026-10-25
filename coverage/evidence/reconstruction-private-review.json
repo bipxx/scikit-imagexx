@@ -1,0 +1,34 @@
+{
+  "schema": "reconstruction-private-independent-review-v1",
+  "source": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
+  "reference_source": "600a403c1368b99e5d85200bc4f6eb6ed262ea0c",
+  "independent_review": {
+    "path": "build/resume-20261025/reconstruction-review/receipt095.json",
+    "bytes": 14250,
+    "sha256": "b67f4556cbfdb727f2dae884ab8499c7ee0abbbd7daa1735b04356a60886d3de"
+  },
+  "private_source_proof": {
+    "path": "build/worktrees/reconstruction-native/build/private-proof-v1/manifest.json",
+    "bytes": 78767,
+    "sha256": "b9183dd65b4e390b0e7c1662429356aa201dfcdcba38b28ec63cb8cd17d1217e"
+  },
+  "accepted_private": false,
+  "public_acceptance": false,
+  "native_assertions_recorded": 12507968,
+  "private_pipeline_passed_checks": 5110,
+  "explicit_portable_worker4_rejection_skips": 550,
+  "numeric_source_IDs_using_CPP_flood": 259,
+  "signed_zero_IDs_with_explicit_provider": 4,
+  "blocking_findings": [
+    {
+      "area": "private Python binder allocation-owner validation",
+      "finding": "Python-dispatched .base traversal may run an ndarray-subclass property that relocates an earlier input owner; immediate-view stamps do not detect the stale allocation descriptor.",
+      "unsafe_execution_performed": false,
+      "required_fix": "Use direct PyArray base-slot traversal; retain and stamp complete allocation-owner chains and recheck before sizing/release, with safe non-relocating callback regressions."
+    }
+  ],
+  "kernel_header_and_oracle_changes_authorized": false,
+  "next_source_branch": "feature/reconstruction-owner-guard",
+  "performance_acceptance": false,
+  "scope_boundary": "Passing private pipelines/native logs do not override this independent code-review blocker. Source095 remains unmerged; no publicAPIorSDKcountincrease."
+}
