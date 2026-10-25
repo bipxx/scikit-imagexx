@@ -29716,7 +29716,7 @@
       },
       "reviewed_consumer_source": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
       "genuine199_certificate": "Corrected d92d9ff/run40166462583 product qualified and root accepted; exact certificate publication still pending reviewed controller source.",
-      "current_checkpoint": "Source-only timer-policy audit: prepare-case direct callback prechecks use restored current policy, but sample sets np.seterr(all=warn) around timer. Do not publish this as ordinary default-policy performance without coherent reviewed policy binding. No timings have run; no numerical or route defect inferred.",
+      "current_checkpoint": "Defaultpolicy successor f8c7d2f root/nonauthor72fab accepted andmerged;516metadataPASS,343records407975842B. Full252default checks+freshpretime sweep/journals bound; observations/timingsstill0. Next exactd92/199certificate andfreshhostedcomparison; no dependencyonfailed201/H203.",
       "easiest_next_path": [
         "Reuse exact351legacy/252benchmark fixtures and existing direct prepare-case callbacks; no new reference campaign merely to change observer policy.",
         "Authenticate/record freshworker NumPy policy, make default precheck and timed callback policies identical, preserve source matrices and no-forward/native aggregate counts.",
@@ -30693,7 +30693,7 @@
       "state": "implementing",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "Frozenb5484fc positive-zero validation leaf and focused native tests; controller-v2 independent prebuild review found Git/env/count/binary-identity safeguards missing. Controller-only successor required before build. Optimization is unmeasured; fixed210historical targets retained."
+      "current_checkpoint": "b548leaf+v3controller independentlyreviewed8afd499e/actualb3cf184a,5boundedbuildsPASS19TUs30products. Rootgates70a9f95e onceperprofile:Windows81481terminal0/reaped; Linux18561/64766/15737/28202 activeoriginalhandles. No timing. Actualzero_bytescodegen8qwordORscalarwordscan(noSIMDinsidehelper); inheritedTVSIMDunchanged."
     },
     {
       "id": "li-original-observer-collection-policy",
@@ -30720,7 +30720,7 @@
       ],
       "depends_on": [],
       "state": "preparing",
-      "current_checkpoint": "Sourcef82 independentlyrevieweda07c7209 four201plans/7affectedmetadataPASS; rootadmissionca24e69. DispatchedONCE40189753345; authoritativeobserver89594 live build/genuine201-repaired-hosted/f82c0c2. Untimedfresh4hostqualification; no acceptanceuntilterminalindependentrawproductreview."
+      "current_checkpoint": "f82/run40189753345 TERMINALoverallFAIL; Windows/modern/minimumSUCCESSverify+stager,Debugonly17originalreferencebackendorderingfailures×2 modes. Publicresults andallotherfields EXACT; forensic722158e0. All7rawarchivesretainedorremainingretainer10705finishing; no productacceptance. Closedtie-listvalidation-policy successor underway, no library/numericdata changes; nextgenuinequalification intendedcombinedrepairedH203."
     },
     {
       "id": "h-extrema-object-preentry-metadata",
