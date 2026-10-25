@@ -139,7 +139,8 @@ def test_source_signature_and_fixed_scope():
     assert str(inspect.signature(ORIGINAL))=="(seed, mask, method='dilation', footprint=None, offset=None)"
     record=json.loads((ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes())
     old=record['original_source_UTF8'];current=Path(__file__).read_bytes().replace(b'\r\n',b'\n')
-    assert hashlib.sha256(old.encode()).hexdigest()==d['test_canonical_lf_sha256']==record['original_canonical_lf_sha256']
+    assert hashlib.sha256(old.encode()).hexdigest()==record['original_raw_sha256']
+    assert hashlib.sha256(old.encode().replace(b'\r\n',b'\n')).hexdigest()==d['test_canonical_lf_sha256']==record['original_canonical_lf_sha256']==record['original_normalized_lf_sha256']
     assert hashlib.sha256(current).hexdigest()==record['current_canonical_lf_sha256']
     assert hashlib.sha256(MATRIX.read_bytes()).hexdigest()==record['frozen_matrix_raw_sha256']
     parser=__import__('ast');a=parser.parse(old);b=parser.parse(current)
