@@ -6,7 +6,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('label',),
-    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio'),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
@@ -339,6 +339,10 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api=='metrics.normalized_mutual_information':
+        # Prospective entropy/ratio policy; exact counts, metadata and events
+        # have separate assertions in the frozen214-case public contract.
+        return (2e-12,2e-13)
     if api=='restoration.denoise_tv_bregman' or api in MAX_TREE_PATHS:return (0.,0.)
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential'):
         return (0.,0.)

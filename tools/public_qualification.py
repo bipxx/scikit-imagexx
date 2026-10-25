@@ -280,15 +280,16 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
             'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction')
+            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction', 'normalized_mutual_information')
 ORIGINAL_FAMILIES = FAMILIES[:14]
 TV_FAMILIES = FAMILIES[:17]
 BREGMAN_FAMILIES = FAMILIES[:18]
 MAX_TREE_FAMILIES = FAMILIES[:19]
 MATRIX_FAMILIES = FAMILIES[:20]
-PRODUCT_SCOPE = 'reconstruction21'
-PRODUCT_MEMBERS = 116
-SDK_MEMBERS = 66
+RECONSTRUCTION_FAMILIES = FAMILIES[:21]
+PRODUCT_SCOPE = 'nmi22'
+PRODUCT_MEMBERS = 118
+SDK_MEMBERS = 67
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -337,7 +338,12 @@ RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '3
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
 RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
 RECONSTRUCTION_SOURCE_PATHS = ('include/skimagexx/reconstruction.hpp', 'src/reconstruction.cpp', 'src/simd_reconstruction_avx2.cpp', 'src/bind_reconstruction.cpp', 'python/skimagexx/_reconstruction.py', 'tests/test_reconstruction_native.cpp', 'tests/test_reconstruction_contracts.py', 'tests/test_reconstruction_public.py', 'tests/test_reconstruction_native_pipeline.py', 'tests/test_reconstruction_binding.py', 'tests/test_reconstruction_owner_guards.py', 'tests/test_reconstruction_offset_guards.py', 'coverage/contracts/reconstruction.json', 'coverage/evidence/reconstruction-public-assertion-migration.json', 'tests/cmake_consumer/reconstruction_source_oracle.bin', 'tests/cmake_consumer/reconstruction_source_oracle.cmake')
+NMI_PATH = 'metrics.normalized_mutual_information'
+NMI_IMPORTED_SOURCE_PINS = {'include/skimagexx/normalized_mutual_information.hpp': '76e3cf0e895650f2aa79c0c61c596b8ce29bdc5f26b4bccd130e9d34108167f4', 'src/normalized_mutual_information.cpp': 'cc9150a323e2bee04cb18be0f32008b306c9ee312d8fa39569174fe5ad426ac3', 'src/bind_normalized_mutual_information.cpp': '423ee0bf149c3280b36a9229c4f3f783749b459a579359644c3623101222620d', 'python/skimagexx/_normalized_mutual_information.py': 'b968a0b15852178254be7f28d7384651bc0bd071b312714ac60ad720cf53c49d', 'tests/test_normalized_mutual_information_native.cpp': '0a5369154f1011067b17435fa851d6cf066ba0b9482d8b0ab1bdd469796476ba', 'tests/test_normalized_mutual_information.py': '98ec869f16cac1f0a9898218eeafa4a9a478ae79270fd61d5df694ebbc21bd0c', 'tests/test_normalized_mutual_information_cases.py': '02209513c6b724db9b7cb9e6b1d7a0a8b5021e3a6e2b1837cb6d1b34bb327b8b', 'coverage/contracts/normalized-mutual-information.json': 'b043549b814f9d2fc7aa4d31f6134eee2162782e8aec78c1b035e7f6b90845c1'}
+NMI_SOURCE_PATHS = (*NMI_IMPORTED_SOURCE_PINS, 'tests/test_normalized_mutual_information_public.py',
+    'coverage/evidence/nmi-public-integration.json')
 GROUPS = {
+    'public-NMI': ('test_normalized_mutual_information_public.py',),
     'public-Reconstruction': ('test_reconstruction_contracts.py','test_reconstruction_public.py'),
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -506,6 +512,14 @@ def plan(root, profile, expected=None):
         if path.is_file():
             raw=path.read_bytes();actual=hashlib.sha256(raw if name==RECONSTRUCTION_ORACLE_PATH else raw.replace(b'\r\n',b'\n')).hexdigest()
             if actual!=want:blockers.append('reconstruction source pin differs: '+name)
+    if NMI_PATH not in registry['functions']:
+        blockers.append('missing public NMI registry: '+NMI_PATH)
+    for name in NMI_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required NMI source: '+name)
+    for name,want in NMI_IMPORTED_SOURCE_PINS.items():
+        path=root/name
+        if path.is_file() and hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()!=want:
+            blockers.append('frozen NMI source pin differs: '+name)
     if MATRIX_PATH not in registry['functions']:
         blockers.append('missing public matrix registry: '+MATRIX_PATH)
     for name in MATRIX_SOURCE_PATHS:
@@ -598,8 +612,8 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Closed historical scopes; new production qualification requires reconstruction21."""
-    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66)}
+    """Closed historical scopes; new production qualification requires nmi22."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66), 'nmi22': (118,67)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
@@ -616,20 +630,23 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
         bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
-        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (bregman & set(source.namelist())),
+        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22') else not (bregman & set(source.namelist())),
                 'Bregman product scope/source header or helper differ')
         max_tree = {'include/skimagexx/max_tree.hpp', 'python/skimagexx/_max_tree.py'}
-        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21') else not (max_tree & set(source.namelist())),
+        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22') else not (max_tree & set(source.namelist())),
                 'max-tree product scope/source header or helper differ')
         matrix = {'include/skimagexx/matrix_transform.hpp', 'python/skimagexx/_matrix_transform.py'}
-        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21') else not (matrix & set(source.namelist())),
+        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21','nmi22') else not (matrix & set(source.namelist())),
                 'matrix product scope/source header or helper differ')
         reconstruction={'include/skimagexx/reconstruction.hpp','python/skimagexx/_reconstruction.py'}
-        require((reconstruction<=set(source.namelist())) if scope=='reconstruction21' else not(reconstruction&set(source.namelist())),
+        require((reconstruction<=set(source.namelist())) if scope in ('reconstruction21','nmi22') else not(reconstruction&set(source.namelist())),
                 'reconstruction product scope/source header or helper differ')
+        nmi={'include/skimagexx/normalized_mutual_information.hpp','python/skimagexx/_normalized_mutual_information.py'}
+        require((nmi<=set(source.namelist())) if scope=='nmi22' else not(nmi&set(source.namelist())),
+                'NMI product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -994,6 +1011,24 @@ def reconstruction_admission(core,morphology,wrapper,registered):
     require(tuple(morphology.__all__).count('reconstruction')==1,'reconstruction canonical export missing/duplicate')
 
 
+def nmi_admission(core,metrics,wrapper,registered):
+    """Ownership and ABI metadata only; no images or histogram construction."""
+    require(tuple(registered).count(NMI_PATH)==1,'missing/duplicate public NMI registry')
+    require(getattr(wrapper,'_core',None) is core,'NMI wrapper does not use sole installed core')
+    require(core.get_num_threads()==1,'NMI admission requires default global worker1')
+    require(getattr(core,'has_openmp',None) is True,'NMI qualification requires actual OpenMP')
+    for name in ('nmi_prepare','nmi_statistics','nmi_validate_inputs'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,
+                'missing owned compiled NMI entry: '+name)
+    function=vars(metrics).get('normalized_mutual_information')
+    require(function is vars(wrapper).get('normalized_mutual_information') and inspect.isfunction(function)
+            and function.__module__=='skimagexx._normalized_mutual_information'
+            and function.__name__=='normalized_mutual_information','NMI public ownership/forwarding mismatch')
+    require(str(inspect.signature(function))=='(image0, image1, *, bins=100)','NMI signature mismatch')
+    require(tuple(metrics.__all__).count('normalized_mutual_information')==1,'NMI canonical export missing/duplicate')
+
+
 def tv_admission(core, restoration, wrapper, registered):
     """Reject missing TV implementation before any contract fixture is built."""
     paths = tuple(registered)
@@ -1088,7 +1123,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -1123,6 +1158,8 @@ def admission(out, state):
                      importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions())
     reconstruction_admission(xx._core,importlib.import_module('skimagexx.morphology'),
                              importlib.import_module('skimagexx._reconstruction'),coverage.native_functions())
+    nmi_admission(xx._core,importlib.import_module('skimagexx.metrics'),
+                  importlib.import_module('skimagexx._normalized_mutual_information'),coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1393,7 +1430,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': FAMILIES}[scope]
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': RECONSTRUCTION_FAMILIES, 'nmi22': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 

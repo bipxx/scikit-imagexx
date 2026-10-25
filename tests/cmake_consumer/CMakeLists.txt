@@ -24,6 +24,7 @@ foreach(_include IN LISTS _includes)
         message(FATAL_ERROR "Header path escaped the relocated prefix: ${_include}")
     endif()
 endforeach()
+
 get_target_property(_links skimagexx::skimagexx INTERFACE_LINK_LIBRARIES)
 if(SKIMAGEXX_EXPECT_OPENMP)
     if(NOT "OpenMP::OpenMP_CXX" IN_LIST _links)
@@ -94,3 +95,13 @@ foreach(_family IN ITEMS components component_consumers consumer_layout metrics 
     endif()
     add_test(NAME installed_${_family}_consumer COMMAND ${_family}_consumer ${_family_test_args})
 endforeach()
+
+# The frozen NMI SDK assertions must remain active in Release builds.
+add_executable(normalized_mutual_information_consumer ../test_normalized_mutual_information_native.cpp)
+target_link_libraries(normalized_mutual_information_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(normalized_mutual_information_consumer PRIVATE /UNDEBUG)
+else()
+    target_compile_options(normalized_mutual_information_consumer PRIVATE -UNDEBUG)
+endif()
+add_test(NAME installed_normalized_mutual_information_consumer COMMAND normalized_mutual_information_consumer)

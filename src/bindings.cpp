@@ -40,6 +40,7 @@
 void bind_extra(pybind11::module_&);
 void bind_li(pybind11::module_&);
 void bind_metrics(pybind11::module_&);
+void bind_normalized_mutual_information(pybind11::module_&);
 void bind_footprint_dense(pybind11::module_&);
 void bind_footprint_decomposition(pybind11::module_&);
 void bind_footprint_util(pybind11::module_&);
@@ -814,6 +815,7 @@ PYBIND11_MODULE(_core, m) {
     });
     bind_extra(m);
     bind_metrics(m);
+    bind_normalized_mutual_information(m);
     bind_footprint_dense(m);
     bind_footprint_decomposition(m);
     bind_footprint_util(m);

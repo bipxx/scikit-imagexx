@@ -22,6 +22,193 @@ q = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(q)
 
 
+@pytest.fixture
+def complete_nmi_fake_artifact(complete_reconstruction_fake_artifact, tmp_path):
+    """Inert file-envelope metadata; never a compiled or accepted product."""
+    product, source, revision = complete_reconstruction_fake_artifact
+    additions = {
+        'include/skimagexx/normalized_mutual_information.hpp': b'// inert NMI header\n',
+        'skimagexx/_normalized_mutual_information.py': b'# inert NMI helper\n'}
+    with zipfile.ZipFile(product) as archive:
+        entries = {name: archive.read(name) for name in archive.namelist()
+                   if not name.endswith('/RECORD')}
+    entries.update(additions)
+    target = tmp_path / 'nmi-synthetic.whl'
+    wheel(target, entries)
+    source_target = tmp_path / 'nmi-source.zip'
+    with zipfile.ZipFile(source) as archive, zipfile.ZipFile(source_target, 'w') as output:
+        output.comment = archive.comment
+        for name in archive.namelist():
+            output.writestr(name, archive.read(name))
+        for name, raw in additions.items():
+            output.writestr('python/' + name if name.startswith('skimagexx/') else name, raw)
+    return target, source_target, revision
+
+
+def test_nmi118_67_current_scope_preserves_historical116_66(complete_nmi_fake_artifact,
+                                                       complete_reconstruction_fake_artifact):
+    result = q.inspect_wheel(*complete_nmi_fake_artifact)
+    assert result['product_scope'] == 'nmi22'
+    assert len(result['members_sha256']) == 118 and len(result['SDK_sha256']) == 67
+    assert q.product_census() == (118, 67)
+    assert q.product_census('reconstruction21') == (116, 66)
+    assert len(q.RECONSTRUCTION_FAMILIES) == 21 and q.RECONSTRUCTION_FAMILIES[-1] == 'reconstruction'
+    assert len(q.FAMILIES) == 22 and q.FAMILIES[:-1] == q.RECONSTRUCTION_FAMILIES
+    assert q.FAMILIES[-1] == 'normalized_mutual_information'
+    assert q.inspect_wheel(*complete_reconstruction_fake_artifact, scope='reconstruction21')['record_verified']
+    with pytest.raises(q.QualificationError, match='complete118'):
+        q.inspect_wheel(*complete_reconstruction_fake_artifact)
+    with pytest.raises(q.QualificationError, match='complete116'):
+        q.inspect_wheel(*complete_nmi_fake_artifact, scope='reconstruction21')
+
+
+@pytest.mark.parametrize('missing', ('include/skimagexx/normalized_mutual_information.hpp',
+                                   'python/skimagexx/_normalized_mutual_information.py'))
+def test_nmi_product_requires_actual_source_header_and_helper(complete_nmi_fake_artifact,
+                                                            tmp_path, missing):
+    product, source, revision = complete_nmi_fake_artifact
+    changed = tmp_path / 'missing-nmi-source.zip'
+    with zipfile.ZipFile(source) as archive, zipfile.ZipFile(changed, 'w') as output:
+        output.comment = archive.comment
+        for name in archive.namelist():
+            if name != missing:
+                output.writestr(name, archive.read(name))
+    with pytest.raises(q.QualificationError, match='NMI product scope/source'):
+        q.inspect_wheel(product, changed, revision)
+
+
+@pytest.mark.parametrize('missing', q.NMI_SOURCE_PATHS)
+def test_nmi_plan_requires_exact_sources_and_public_gate(tmp_path, monkeypatch, missing):
+    synthetic_complete_plan(tmp_path)
+    names = ['filters.rank.' + name for name in q.R5] + sorted(
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH,
+                                  q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS))
+    monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(
+        functions=names, image_count=201, metadata_count=3, registered_count=204))
+    assert not q.plan(tmp_path, 'modern', 201)['blockers']
+    (tmp_path / missing).unlink()
+    assert 'missing required NMI source: ' + missing in q.plan(tmp_path, 'modern', 201)['blockers']
+
+
+@pytest.mark.parametrize('path', q.NMI_IMPORTED_SOURCE_PINS)
+def test_nmi_frozen_kernel_policy_and_observer_hash_changes_block(tmp_path, monkeypatch, path):
+    synthetic_complete_plan(tmp_path)
+    names = ['filters.rank.' + name for name in q.R5] + sorted(
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH,
+                                  q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS))
+    monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(functions=names, image_count=201))
+    target = tmp_path / path
+    target.write_bytes(target.read_bytes() + b'\nchanged')
+    assert 'frozen NMI source pin differs: ' + path in q.plan(tmp_path, 'modern', 201)['blockers']
+
+
+def nmi_metadata_stub(monkeypatch):
+    """Every inert numerical callable raises if the metadata guard calls it."""
+    core = types.SimpleNamespace(__name__='unit_sole_core', get_num_threads=lambda: 1,
+                                 has_openmp=True)
+    for name in ('nmi_prepare', 'nmi_statistics', 'nmi_validate_inputs'):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('NMI metadata stub executed')
+        forbidden.__name__ = name
+        forbidden.__module__ = core.__name__
+        forbidden.unit_builtin = True
+        setattr(core, name, forbidden)
+    def normalized_mutual_information(image0, image1, *, bins=100):
+        raise AssertionError('NMI wrapper metadata stub executed')
+    normalized_mutual_information.__module__ = 'skimagexx._normalized_mutual_information'
+    wrapper = types.SimpleNamespace(_core=core, normalized_mutual_information=normalized_mutual_information)
+    metrics = types.SimpleNamespace(normalized_mutual_information=normalized_mutual_information,
+                                    __all__=['normalized_mutual_information'])
+    actual = q.inspect.isbuiltin
+    monkeypatch.setattr(q.inspect, 'isbuiltin', lambda f: actual(f) or getattr(f, 'unit_builtin', False))
+    return core, metrics, wrapper, [q.NMI_PATH]
+
+
+def test_nmi_metadata_admission_calls_no_image_or_provider(monkeypatch):
+    q.nmi_admission(*nmi_metadata_stub(monkeypatch))
+
+
+@pytest.mark.parametrize('fault', ('missing', 'duplicate', 'worker4', 'no-OpenMP', 'entry-missing',
+                                 'entry-name', 'entry-owner', 'python-entry', 'borrowed-builtin',
+                                 'wrong-core', 'wrong-alias', 'forwarding', 'signature', 'duplicate-export'))
+def test_nmi_metadata_admission_rejects_wrong_owner_before_any_fixture(monkeypatch, fault):
+    core, metrics, wrapper, paths = nmi_metadata_stub(monkeypatch)
+    if fault == 'missing': paths = []
+    elif fault == 'duplicate': paths *= 2
+    elif fault == 'worker4': core.get_num_threads = lambda: 4
+    elif fault == 'no-OpenMP': core.has_openmp = False
+    elif fault == 'entry-missing': del core.nmi_prepare
+    elif fault == 'entry-name': core.nmi_prepare.__name__ = 'borrowed'
+    elif fault == 'entry-owner': core.nmi_prepare.__module__ = 'upstream'
+    elif fault == 'python-entry': core.nmi_prepare.unit_builtin = False
+    elif fault == 'borrowed-builtin': core.nmi_prepare = core.nmi_statistics
+    elif fault == 'wrong-core': wrapper._core = object()
+    elif fault == 'wrong-alias': metrics.normalized_mutual_information = lambda *a: None
+    elif fault == 'forwarding': wrapper.normalized_mutual_information.__module__ = 'skimage.metrics'
+    elif fault == 'signature': wrapper.normalized_mutual_information.__signature__ = inspect.Signature()
+    else: metrics.__all__ *= 2
+    with pytest.raises(q.QualificationError):
+        q.nmi_admission(core, metrics, wrapper, paths)
+
+
+def test_nmi_exact_private_imports_and_original_reference_lineage_are_preserved():
+    def canonical(node):
+        if isinstance(node, ast.AST):
+            return [type(node).__name__, [[key, canonical(value)]
+                for key, value in ast.iter_fields(node) if not (key == 'type_params' and not value)]]
+        if isinstance(node, list):
+            return [canonical(value) for value in node]
+        if node is Ellipsis:
+            return ['literal', 'Ellipsis']
+        if isinstance(node, bytes):
+            return ['bytes', node.hex()]
+        if isinstance(node, complex):
+            return ['complex', node.real.hex(), node.imag.hex()]
+        return node
+    record = json.loads((ROOT / 'coverage/evidence/nmi-public-integration.json').read_bytes())
+    assert record['private_source'] == 'fadef4cf9994506017ab9d54f4e91917c77ea770'
+    assert record['original_source'] == '60c0bd03756d0577eecb08d8e51019faa1e0ba6a'
+    assert len(record['exact_imports']) == 8
+    for row in record['exact_imports']:
+        raw = (ROOT / row['path']).read_bytes().replace(b'\r\n', b'\n')
+        assert hashlib.sha256(raw).hexdigest() == row['git_sha256'] == q.NMI_IMPORTED_SOURCE_PINS[row['path']]
+    for selector, digest in record['unchanged_original_function_AST_sha256'].items():
+        path, name = selector.split('::')
+        tree = ast.parse((ROOT / path).read_bytes())
+        function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == name)
+        raw = json.dumps(canonical(function), sort_keys=True, separators=(',', ':')).encode()
+        assert hashlib.sha256(raw).hexdigest() == digest
+    contract = json.loads((ROOT / 'coverage/contracts/normalized-mutual-information.json').read_bytes())
+    for field, digest in record['unchanged_original_contract_fields_sha256'].items():
+        raw = json.dumps(contract[field], sort_keys=True, separators=(',', ':')).encode()
+        assert hashlib.sha256(raw).hexdigest() == digest
+    assert contract['comparison_policy']['floating']['rtol'] == 2e-12
+    assert contract['comparison_policy']['floating']['atol'] == 2e-13
+    assert 'probability<=0.99' in contract['native_scope']['limits']
+
+
+def test_nmi_direct_sdk_and_ordinary_core_wiring_keep_release_assertions_live():
+    cmake = (ROOT / 'CMakeLists.txt').read_text()
+    consumer = (ROOT / 'tests/cmake_consumer/CMakeLists.txt').read_text()
+    bindings = (ROOT / 'src/bindings.cpp').read_text()
+    assert 'target_sources(skimagexx PRIVATE src/normalized_mutual_information.cpp)' in cmake
+    assert 'target_sources(_core PRIVATE src/bind_normalized_mutual_information.cpp)' in cmake
+    assert bindings.count('    bind_normalized_mutual_information(m);') == 1
+    for name, text in (('test_normalized_mutual_information_native', cmake),
+                       ('normalized_mutual_information_consumer', consumer)):
+        assert 'target_compile_options(' + name + ' PRIVATE /UNDEBUG)' in text
+        assert 'target_compile_options(' + name + ' PRIVATE -UNDEBUG)' in text
+    assert 'target_link_libraries(normalized_mutual_information_consumer PRIVATE skimagexx::skimagexx)' in consumer
+    native = (ROOT / 'tests/test_normalized_mutual_information_native.cpp').read_text()
+    assert '#include "skimagexx/normalized_mutual_information.hpp"' in native
+    assert 'nmi_prepare(' in native and 'nmi_statistics(' in native and '../src/' not in native
+    public = (ROOT / 'tests/test_normalized_mutual_information_public.py').read_text()
+    assert "import_module('skimagexx._normalized_mutual_information')" in public
+    assert "core.__name__ == 'skimagexx._core'" in public
+    assert "types.ModuleType" not in public and 'pytest.skip(' not in public
+    assert q.GROUPS['public-NMI'] == ('test_normalized_mutual_information_public.py',)
+
+
 def wheel(path, entries, corrupt=None):
     entries = dict(entries)
     rows = []
@@ -296,13 +483,13 @@ def test_blocked_source_does_not_start_build(tmp_path,monkeypatch):
 
 
 def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch):
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=987))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for names in q.GROUPS.values():
         for name in names:(tmp_path/'tests'/name.split('::')[0]).touch()
     (tmp_path/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS+q.MATRIX_SOURCE_PATHS+q.RECONSTRUCTION_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS+q.MATRIX_SOURCE_PATHS+q.RECONSTRUCTION_SOURCE_PATHS+q.NMI_SOURCE_PATHS:
         path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(tmp_path/'tests'/('test_'+family+'_native.cpp')).touch()
     (tmp_path/'benchmarks').mkdir()
@@ -310,7 +497,7 @@ def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch
     populate_corrected_max_tree_metadata(tmp_path)
     assert not q.plan(tmp_path,'modern',987)['blockers']
     assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
-    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))+['filters.rank.generic.percentile'],image_count=987))
+    monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
 
@@ -566,7 +753,7 @@ def test_bilateral_report_cannot_seal_partial_or_substituted_observations(tmp_pa
 
 @pytest.mark.parametrize('missing',q.R6_SOURCE_PATHS)
 def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch,missing):
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES))
     for name in q.R6_SOURCE_PATHS:
@@ -577,7 +764,7 @@ def test_bilateral_source_helper_omission_is_a_plan_blocker(tmp_path,monkeypatch
 
 def test_bilateral_sdk_thirteenth_client_is_mandatory_in_plan(tmp_path,monkeypatch):
     assert len(q.ORIGINAL_FAMILIES)==14 and q.ORIGINAL_FAMILIES[-2:] == ('rank_bilateral','rank_decisions')
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=186))
     (tmp_path/'tests/cmake_consumer').mkdir(parents=True)
     (tmp_path/'tests/cmake_consumer/CMakeLists.txt').write_text('\n'.join('add_executable('+f+'_consumer x.cpp)' for f in q.FAMILIES if f!='rank_bilateral'))
     assert 'missing required installed SDK client: rank_bilateral' in q.plan(tmp_path,'modern')['blockers']
@@ -766,7 +953,7 @@ def synthetic_complete_plan(root):
     for group in q.GROUPS.values():
         for name in group:(root/'tests'/name.split('::')[0]).touch()
     (root/'tests/test_arraymap_dense_contracts.py').touch()
-    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS+q.MATRIX_SOURCE_PATHS+q.RECONSTRUCTION_SOURCE_PATHS:
+    for name in q.R6_SOURCE_PATHS+q.R7_SOURCE_PATHS+q.TV_SOURCE_PATHS+q.BREGMAN_SOURCE_PATHS+q.MAX_TREE_SOURCE_PATHS+q.MATRIX_SOURCE_PATHS+q.RECONSTRUCTION_SOURCE_PATHS+q.NMI_SOURCE_PATHS:
         path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.touch()
     for family in q.FAMILIES:(root/'tests'/('test_'+family+'_native.cpp')).touch()
     (root/'benchmarks').mkdir()
@@ -777,7 +964,7 @@ def synthetic_complete_plan(root):
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
 def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
     assert not q.plan(tmp_path,'modern',190)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required R7 source: '+missing in q.plan(tmp_path,'modern',190)['blockers']
@@ -786,7 +973,7 @@ def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,
 @pytest.mark.parametrize('failure',['missing','duplicate','wrong','source'])
 def test_sdk14_requires_exact_clients_and_existing_sources(tmp_path,monkeypatch,failure):
     synthetic_complete_plan(tmp_path)
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=190))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=190))
     path=tmp_path/'tests/cmake_consumer/CMakeLists.txt';text=path.read_text()
     if failure=='missing':text=text.replace('add_executable(rank_decisions_consumer x.cpp)','')
     elif failure=='duplicate':text+='\nadd_executable(rank_decisions_consumer x.cpp)'
@@ -938,7 +1125,7 @@ def test_plan_selects_full_public_counts_only_in_the_source_that_has_it(tmp_path
     # Explicitly create the absent-file before variant in either checkout.
     counts_source=tmp_path/'tests/test_rank_windowed_counts_pipeline.py'
     if counts_source.exists():counts_source.unlink()
-    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
+    monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=190,registered_count=193,metadata_count=3))
     before=q.plan(tmp_path,'modern',190);assert not before['blockers'] and 'public-counts' not in before['public_groups']
     (tmp_path/'tests/test_rank_windowed_counts_pipeline.py').touch()
     after=q.plan(tmp_path,'modern',190);assert not after['blockers']
@@ -966,7 +1153,7 @@ def test_tv_public_group_and_sdk17_keep_exact_original14():
     assert len(q.TV_FAMILIES)==17 and q.TV_FAMILIES[:14]==q.ORIGINAL_FAMILIES
     assert len(q.BREGMAN_FAMILIES)==18 and q.BREGMAN_FAMILIES[:17]==q.TV_FAMILIES
     assert len(q.MAX_TREE_FAMILIES)==19 and q.MAX_TREE_FAMILIES[:18]==q.BREGMAN_FAMILIES
-    assert len(q.FAMILIES)==21 and q.FAMILIES[:19]==q.MAX_TREE_FAMILIES
+    assert len(q.FAMILIES)==22 and q.FAMILIES[:19]==q.MAX_TREE_FAMILIES
     assert q.TV_FAMILIES[-3:]==('tv_chambolle','tv_reductions','tv_denoise')
     assert q.BREGMAN_FAMILIES[-1]=='tv_bregman' and q.MAX_TREE_FAMILIES[-1]=='max_tree'
     old={'tests':[{'name':'installed_'+f+'_consumer'} for f in q.ORIGINAL_FAMILIES]}
@@ -981,7 +1168,7 @@ def test_tv_public_group_and_sdk17_keep_exact_original14():
 @pytest.mark.parametrize('missing',q.TV_SOURCE_PATHS)
 def test_tv_source_and_registration_block_before_any_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=191))
     assert not q.plan(tmp_path,'modern',191)['blockers']
     (tmp_path/missing).unlink()
@@ -1095,7 +1282,7 @@ def test_complete110_wheel_reaches_bregman_source_guard(complete_bregman_fake_ar
 @pytest.mark.parametrize('missing',q.BREGMAN_SOURCE_PATHS)
 def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda root:dict(functions=names,image_count=192,metadata_count=3,registered_count=195))
     assert not q.plan(tmp_path,'modern',192)['blockers']
     (tmp_path/missing).unlink()
@@ -1104,9 +1291,9 @@ def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,mi
     assert 'missing public Bregman registry: '+q.BREGMAN_PATH in q.plan(tmp_path,'modern')['blockers']
 
 
-@pytest.mark.parametrize('scope,families',(('rank14',q.ORIGINAL_FAMILIES),('tv17',q.TV_FAMILIES),('bregman18',q.BREGMAN_FAMILIES),('max_tree19',q.MAX_TREE_FAMILIES),('matrix20',q.MATRIX_FAMILIES),('reconstruction21',q.FAMILIES)))
+@pytest.mark.parametrize('scope,families',(('rank14',q.ORIGINAL_FAMILIES),('tv17',q.TV_FAMILIES),('bregman18',q.BREGMAN_FAMILIES),('max_tree19',q.MAX_TREE_FAMILIES),('matrix20',q.MATRIX_FAMILIES),('reconstruction21',q.RECONSTRUCTION_FAMILIES),('nmi22',q.FAMILIES)))
 def test_each_exact_sdk_census_keeps_missing_duplicate_substitute_guards(scope,families):
-    assert len(families)=={'rank14':14,'tv17':17,'bregman18':18,'max_tree19':19,'matrix20':20,'reconstruction21':21}[scope]
+    assert len(families)=={'rank14':14,'tv17':17,'bregman18':18,'max_tree19':19,'matrix20':20,'reconstruction21':21,'nmi22':22}[scope]
     listing={'tests':[{'name':'installed_'+name+'_consumer'} for name in families]}
     q.validate_sdk_listing(listing,scope=scope)
     for change in ('missing','duplicate','substitute'):
@@ -1246,7 +1433,7 @@ def test_matrix114_requires_both_installed_source_members(complete_matrix_fake_a
 @pytest.mark.parametrize('missing',q.MATRIX_SOURCE_PATHS)
 def test_matrix_source_closure_is_required_before_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=199,metadata_count=3,registered_count=202))
     assert not q.plan(tmp_path,'modern',199)['blockers']
     (tmp_path/missing).unlink()
@@ -1502,7 +1689,7 @@ def test_actual_matrix_integrity_gate_checks_original_data_and_migrated_file(tmp
 @pytest.mark.parametrize('missing',q.MAX_TREE_SOURCE_PATHS)
 def test_max_tree_source_closure_blocks_before_build(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=198,metadata_count=3,registered_count=201))
     assert not q.plan(tmp_path,'modern',198)['blockers']
     (tmp_path/missing).unlink()
@@ -1512,7 +1699,7 @@ def test_max_tree_source_closure_blocks_before_build(tmp_path,monkeypatch,missin
 @pytest.mark.parametrize('missing',q.MAX_TREE_PATHS)
 def test_each_max_tree_public_registry_path_is_required_in_plan(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     names.remove(missing)
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=197,metadata_count=3,registered_count=200))
     assert 'missing public max-tree registry: '+missing in q.plan(tmp_path,'modern')['blockers']
@@ -1582,7 +1769,7 @@ def test_cursor_native_target_and_installed_pipeline_keep_closed_sdk_scopes():
     native=(ROOT/'tests/test_tv_denoise_cursor_native.cpp').read_text(encoding='utf-8-sig')
     assert '#include "skimagexx/tv_denoise.hpp"' in native and '#include "skimagexx/image.hpp"' in native
     assert '../src/' not in native and 'execution.hpp' not in native
-    assert q.PRODUCT_SCOPE=='reconstruction21' and q.PRODUCT_MEMBERS==116 and q.SDK_MEMBERS==66 and len(q.FAMILIES)==21
+    assert q.PRODUCT_SCOPE=='nmi22' and q.PRODUCT_MEMBERS==118 and q.SDK_MEMBERS==67 and len(q.FAMILIES)==22
     assert q.product_census('bregman18')==(110,63) and len(q.BREGMAN_FAMILIES)==18
     assert 'tv_denoise_cursor' not in q.FAMILIES
     assert {'tests/test_tv_denoise_cursor_native.cpp','tests/test_tv_chambolle_cursor_pipeline.py'}<=set(q.TV_SOURCE_PATHS)
@@ -1613,12 +1800,12 @@ def test_single_admission_private_source_is_a_prebuild_requirement(tmp_path,monk
     # Explicitly inert source envelope; no compilation or numerical calls.
     assert missing in q.TV_SOURCE_PATHS
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=199))
     complete=q.plan(tmp_path,'modern',199)
     assert not complete['blockers']
-    assert complete['product_members']==116 and complete['SDK_members']==66
-    assert complete['SDK_checks']==42 and len(complete['SDK_families'])==21
+    assert complete['product_members']==118 and complete['SDK_members']==67
+    assert complete['SDK_checks']==44 and len(complete['SDK_families'])==22
     (tmp_path/missing).unlink()
     assert 'missing required TV source: '+missing in q.plan(tmp_path,'modern',199)['blockers']
     assert q.product_census('bregman18') == (110, 63) and len(q.BREGMAN_FAMILIES) == 18
@@ -1628,7 +1815,7 @@ def test_single_admission_private_control_is_not_a_public_client_or_ctest():
     cmake=(ROOT/'CMakeLists.txt').read_text()
     assert 'test_tv_denoise_admission_native' not in cmake
     assert 'tv_denoise_admission' not in q.FAMILIES
-    assert len(q.FAMILIES)==21 and q.PRODUCT_MEMBERS==116 and q.SDK_MEMBERS==66
+    assert len(q.FAMILIES)==22 and q.PRODUCT_MEMBERS==118 and q.SDK_MEMBERS==67
     assert not (ROOT/'include/skimagexx/tv_denoise_internal.hpp').exists()
     assert q.product_census('bregman18') == (110, 63) and len(q.BREGMAN_FAMILIES) == 18
 def populate_corrected_max_tree_metadata(root):
@@ -1637,6 +1824,9 @@ def populate_corrected_max_tree_metadata(root):
         path=root/name;path.parent.mkdir(parents=True,exist_ok=True)
         path.write_bytes((ROOT/name).read_bytes())
     populate_reconstruction_metadata(root)
+    for name in q.NMI_IMPORTED_SOURCE_PINS:
+        path=root/name;path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes((ROOT/name).read_bytes())
 
 
 def test_corrected_max_tree_groups_keep_original_numerical_gate():
@@ -1655,7 +1845,7 @@ def test_corrected_max_tree_groups_keep_original_numerical_gate():
 @pytest.mark.parametrize('name',(*q.MAX_TREE_RUNTIME_SOURCE_PINS,q.MAX_TREE_ORACLE_PATH))
 def test_corrected_source_hash_mismatch_blocks_before_any_build(tmp_path,monkeypatch,name):
     synthetic_complete_plan(tmp_path)
-    registry=dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS)),image_count=199)
+    registry=dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)),image_count=199)
     monkeypatch.setattr(q,'registry_expectation',lambda _:registry)
     assert not q.plan(tmp_path,'windows',199)['blockers']
     path=tmp_path/name;path.write_bytes(path.read_bytes()+b'\r\nnot-authorized')
@@ -1671,7 +1861,7 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
         'test_matrix_transform_skylakex_routing.py')
     synthetic_complete_plan(tmp_path)
     functions = ['filters.rank.' + n for n in q.R5] + sorted(
-        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH} | set(q.MAX_TREE_PATHS))
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(functions=functions, image_count=199))
     assert not q.plan(tmp_path, 'windows', 199)['blockers']
     (tmp_path / name).unlink()
@@ -1699,15 +1889,15 @@ def complete_reconstruction_fake_artifact(complete_matrix_fake_artifact,tmp_path
     return out,archive,revision
 
 
-def test_reconstruction116_66_default_and_all_historical_scopes_closed(complete_reconstruction_fake_artifact,complete_matrix_fake_artifact):
-    result=q.inspect_wheel(*complete_reconstruction_fake_artifact)
+def test_reconstruction116_66_historical_scope_remains_closed(complete_reconstruction_fake_artifact,complete_matrix_fake_artifact):
+    result=q.inspect_wheel(*complete_reconstruction_fake_artifact,scope='reconstruction21')
     assert result['product_scope']=='reconstruction21' and len(result['members_sha256'])==116 and len(result['SDK_sha256'])==66
     assert q.inspect_wheel(*complete_matrix_fake_artifact,scope='matrix20')['record_verified']
-    with pytest.raises(q.QualificationError,match='complete116'):q.inspect_wheel(*complete_matrix_fake_artifact)
+    with pytest.raises(q.QualificationError,match='complete116'):q.inspect_wheel(*complete_matrix_fake_artifact,scope='reconstruction21')
     with pytest.raises(q.QualificationError,match='complete114'):q.inspect_wheel(*complete_reconstruction_fake_artifact,scope='matrix20')
     assert q.product_census('rank14')==(104,59) and q.product_census('tv17')==(108,62)
     assert q.product_census('bregman18')==(110,63) and q.product_census('max_tree19')==(112,64)
-    assert q.product_census('matrix20')==(114,65) and q.product_census()==(116,66)
+    assert q.product_census('matrix20')==(114,65) and q.product_census('reconstruction21')==(116,66)
 
 @pytest.mark.parametrize('missing',('include/skimagexx/reconstruction.hpp','python/skimagexx/_reconstruction.py'))
 def test_reconstruction_product_requires_source_header_and_helper(complete_reconstruction_fake_artifact,tmp_path,missing):
@@ -1716,12 +1906,12 @@ def test_reconstruction_product_requires_source_header_and_helper(complete_recon
         target.comment=z.comment
         for n in z.namelist():
             if n!=missing:target.writestr(n,z.read(n))
-    with pytest.raises(q.QualificationError,match='reconstruction product scope/source'):q.inspect_wheel(product,new,revision)
+    with pytest.raises(q.QualificationError,match='reconstruction product scope/source'):q.inspect_wheel(product,new,revision,scope='reconstruction21')
 
 @pytest.mark.parametrize('missing',q.RECONSTRUCTION_SOURCE_PATHS)
 def test_reconstruction_plan_requires_all_source_and_genuine_tests(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=200,metadata_count=3,registered_count=203))
     assert not q.plan(tmp_path,'modern',200)['blockers']
     (tmp_path/missing).unlink()
@@ -1730,7 +1920,7 @@ def test_reconstruction_plan_requires_all_source_and_genuine_tests(tmp_path,monk
 @pytest.mark.parametrize('path',tuple(q.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+(q.RECONSTRUCTION_ORACLE_PATH,))
 def test_reconstruction_plan_rejects_changed_compiled_oracle_source(tmp_path,monkeypatch,path):
     synthetic_complete_plan(tmp_path)
-    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH}|set(q.MAX_TREE_PATHS))
+    names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=200,metadata_count=3,registered_count=203))
     target=tmp_path/path;target.write_bytes(target.read_bytes()+b'\nchanged')
     assert 'reconstruction source pin differs: '+path in q.plan(tmp_path,'modern',200)['blockers']

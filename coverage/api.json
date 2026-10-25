@@ -5735,11 +5735,15 @@
       "api": "metrics.normalized_mutual_information",
       "kind": "callable",
       "signature": "(image0, image1, *, bins=100)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_normalized_mutual_information_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "metrics.normalized_root_mse",

@@ -1,0 +1,196 @@
+{
+  "schema": "nmi-public-source-integration-v1",
+  "status": "source-prepared-unbuilt-unqualified",
+  "base_source": "28350015823b36333085ce8ce04e3dcc70065572",
+  "private_source": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+  "original_source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+  "private_admission": "coverage/evidence/nmi-private-native-review.json",
+  "original_reference_audit": "coverage/evidence/nmi-original-reference-audit.json",
+  "prospective_plan": {
+    "path": "build/worktrees/nmi-public201/build/public-plan-v1/plan.json",
+    "sha256": "4970bfd19131a356d1252dd2af93947b7d26537f76719ae616857717506e137b"
+  },
+  "exact_imports": [
+    {
+      "path": "include/skimagexx/normalized_mutual_information.hpp",
+      "bytes": 1622,
+      "git_sha256": "76e3cf0e895650f2aa79c0c61c596b8ce29bdc5f26b4bccd130e9d34108167f4",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "7004431a031f6aaa8087de8eb7e6700140843efb"
+    },
+    {
+      "path": "src/normalized_mutual_information.cpp",
+      "bytes": 11769,
+      "git_sha256": "cc9150a323e2bee04cb18be0f32008b306c9ee312d8fa39569174fe5ad426ac3",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "2d4b853932e7a28bc63b5382f92792106519f330"
+    },
+    {
+      "path": "src/bind_normalized_mutual_information.cpp",
+      "bytes": 8438,
+      "git_sha256": "423ee0bf149c3280b36a9229c4f3f783749b459a579359644c3623101222620d",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "932ff30c6a463a85d55b005e64f2a4245a02999f"
+    },
+    {
+      "path": "python/skimagexx/_normalized_mutual_information.py",
+      "bytes": 2960,
+      "git_sha256": "b968a0b15852178254be7f28d7384651bc0bd071b312714ac60ad720cf53c49d",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "fdc4850ac8dde0c59b9ec1827c37f4f2d1c65fb7"
+    },
+    {
+      "path": "tests/test_normalized_mutual_information_native.cpp",
+      "bytes": 2590,
+      "git_sha256": "0a5369154f1011067b17435fa851d6cf066ba0b9482d8b0ab1bdd469796476ba",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "b96099d64c21da558827d0d3cc2e757226c99ac9"
+    },
+    {
+      "path": "tests/test_normalized_mutual_information.py",
+      "bytes": 15185,
+      "git_sha256": "98ec869f16cac1f0a9898218eeafa4a9a478ae79270fd61d5df694ebbc21bd0c",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "a2b49e10e8983fb9b14453099f2f463d7b1fd7f3",
+      "replaced_original": {
+        "source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+        "preserved_ancestor": "28350015823b36333085ce8ce04e3dcc70065572",
+        "git_blob": "8a2dce6b612e21b67716e364438656cae8ffaaf7",
+        "bytes": 4578,
+        "sha256": "838a9698cb030695c05bbe6cc9aaab0b08fa636abc47900e6a8e6933c0d07a80",
+        "current_equals_original": false
+      }
+    },
+    {
+      "path": "tests/test_normalized_mutual_information_cases.py",
+      "bytes": 6893,
+      "git_sha256": "02209513c6b724db9b7cb9e6b1d7a0a8b5021e3a6e2b1837cb6d1b34bb327b8b",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "c8088cb99bc487ada81dab647a926c7cbe6fc728",
+      "replaced_original": {
+        "source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+        "preserved_ancestor": "28350015823b36333085ce8ce04e3dcc70065572",
+        "git_blob": "9dbdcac8948ea3e0d9258779a3bbd6064bf704ac",
+        "bytes": 6485,
+        "sha256": "20d1a3c91c78686cbca7fbb6a863704683565a868869813c7b011acaef02cddd",
+        "current_equals_original": false
+      }
+    },
+    {
+      "path": "coverage/contracts/normalized-mutual-information.json",
+      "bytes": 7064,
+      "git_sha256": "b043549b814f9d2fc7aa4d31f6134eee2162782e8aec78c1b035e7f6b90845c1",
+      "source_commit": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "git_blob": "24cd51678a90968907739dccece250040d735fd8",
+      "replaced_original": {
+        "source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+        "preserved_ancestor": "28350015823b36333085ce8ce04e3dcc70065572",
+        "git_blob": "57b9c49b54a796e80bb8c25fe2b5c527ecfb8786",
+        "bytes": 5225,
+        "sha256": "9e001288578d0632f8267a4431d6e1f6d79e2f5e14b3c1bee82e1afc73b3d46c",
+        "current_equals_original": false
+      }
+    }
+  ],
+  "unchanged_original_function_AST_sha256": {
+    "tests/test_normalized_mutual_information.py::source_authentication": "dc1be1211c74d263b60b2034e25bf7dc42ce22522f4551c2a52f6750e083c744",
+    "tests/test_normalized_mutual_information.py::load_cases": "d0d56b3d80617ade6a7e2d00fb0f56227846194c135d1bbf6efac22d9b9a6b83",
+    "tests/test_normalized_mutual_information.py::observe": "69a9b2be505db9a8f36e7eb8bd8cf1439c23b2115ea967627f5a1d0a3786f811",
+    "tests/test_normalized_mutual_information.py::record_reference": "8657f8e237b6db2c2b3164817d728353dcb45418fbdb91f3d42167eb5d996329",
+    "tests/test_normalized_mutual_information_cases.py::cases": "18c296224b91d49fd08ea6996125f5b2a04e431483bf25b1824cccc3a0d73bc1"
+  },
+  "unchanged_original_contract_fields_sha256": {
+    "source_audit": "f639224742b669deb0c376c9c4161bef263624a5516d3d059589a5432be66864",
+    "comparison_policy": "6708b218b1a88c8ac94bb84b61f2d091aafa5b641c19374295b3a15b125d1c04"
+  },
+  "source_mapping": "The three original reference Git blobs remain in the ancestor history. Their raw hashes and object IDs above map to the exact fade successor bytes. Captured original scientific observations and their original LF/CRLF source authentication remain unchanged under nmi-original-reference-audit.json.",
+  "import_delta": "The observer appends frozen private tests; its original source-authentication/factory-loader/observer/recorder functions are unchanged. Factory cases() is unchanged; the already privately reviewed benchmark_cases selection retains adverse/provider IDs. The exact fade contract adds private intake/followup/direct-C++ boundaries without changing source_audit or comparison_policy.",
+  "new_public_path": "metrics.normalized_mutual_information",
+  "implementation": "native-partial",
+  "physical_source_census_expected": {
+    "image_paths": 201,
+    "registered_functions": 204,
+    "metadata_paths": 3,
+    "wheel_members": 118,
+    "SDK_members": 67,
+    "SDK_families": 22,
+    "normal_plus_scalar_SDK_checks": 44
+  },
+  "new_physical_members": [
+    "skimagexx/_normalized_mutual_information.py",
+    "include/skimagexx/normalized_mutual_information.hpp"
+  ],
+  "direct_symbols": [
+    "skimagexx::nmi_prepare",
+    "skimagexx::nmi_statistics"
+  ],
+  "installed_public_gate": {
+    "path": "tests/test_normalized_mutual_information_public.py",
+    "frozen_cases": 214,
+    "worker_limits": [
+      1,
+      4
+    ],
+    "uses_private_module": false,
+    "required_skips": 0,
+    "scope": "Reuse frozen assertions through the ordinary sole installed core. Previously skipped histogram-detail provider/exception frontiers receive full API parity and explicit strict refusals/errors; admitted histogram rows use the unchanged exact membership/count/edge/width/entropy assertion. Separate strict214 x workers1/4 checks original-call denial and owned compiled completion sequences; provider rows get no native credit."
+  },
+  "floating_policy": {
+    "rtol": 2e-12,
+    "atol": 2e-13,
+    "applies_to": [
+      "three finite entropy values",
+      "final finite normalized mutual information"
+    ],
+    "justification": "Double probability arithmetic with compensated reductions and libm log; approximately 12 significant decimal digits allow platform libm/reduction variation while integer membership is exact. Fixed before candidate outputs; no output-dependent tolerance or oracle fitting. NaN payloads are not an API promise. Nonconstant joint density is admitted only when max probability<=0.99, bounding Hjoint below by0.01 and the final division condition number below100; exact one-cell zero entropy is handled separately. This conditioning gate is fixed before candidate outputs.",
+    "legacy_policy": "Existing bitwise proofs remain unchanged and outside this new function policy."
+  },
+  "providers_and_frontiers": [
+    "Small NumPy edge linspace/diff vectors and warning-aware scalar addition/division remain declared providers.",
+    "Rare/ill-conditioned nonconstant density pmax>0.99, custom bins, exceptional protocols, extreme/subnormal/nonfinite and other frozen followups retain visible optional fallback.",
+    "Opaque/unknown/cyclic/overlong/escaping storage owners retain explicit refusal; unsafe/stale controls remain metadata-only and are never passed to upstream image routines. Safe foreign-owner compatibility is still incomplete.",
+    "C++ SDK callers supply valid readable MetricImageView storage and prepared finite edges/widths; no NumPy warning policy is claimed for direct C++ calls."
+  ],
+  "inherited_inventory_finding": {
+    "source": "28350015823b36333085ce8ce04e3dcc70065572",
+    "api": "morphology.reconstruction",
+    "finding": "Registry is native but stored inventory row remains upstream-only. Independent Agent A owns a separate metadata successor, to compose before final NMI201 source.",
+    "status": "awaiting exact successor"
+  },
+  "qualification": {
+    "current_public200_run": 40174473080,
+    "current_public200_source": "28350015823b36333085ce8ce04e3dcc70065572",
+    "unchanged": true,
+    "NMI_product_acceptance": false,
+    "fresh_composed_qualification_required": true,
+    "no_separate_public201_build": true
+  },
+  "validation_this_packet": {
+    "image_calls": 0,
+    "builds": 0,
+    "environments_created": 0,
+    "timings": 0,
+    "dispatches": 0,
+    "metadata_checks": {
+      "status": "755 passed before inventory successor; final source-only plans pending",
+      "log": {
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.log",
+        "sha256": "ef569e72770691846aa8e545ef9e7941cab4dbda95d49e494c0c8f89f09b48cb"
+      },
+      "XML": {
+        "path": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v2.xml",
+        "sha256": "ff6b0d885c45ff8b4b60ca7bd04970a46e33df35c6b644620d1201337309568f"
+      },
+      "failure_retained": "build/worktrees/nmi-public201/build/public-plan-v1/tooling-v1.log: systemPython had no pytest; reused existing .venv, no environment creation"
+    }
+  },
+  "no_performance_claim": true,
+  "AST_digest_format": "JSON [node_type, [[field,value],...]] from ast.iter_fields; omit empty type_params added in Python3.12. Ellipsis=[literal,Ellipsis], bytes=[bytes,hex], complex=[complex,real.hex(),imag.hex()]. No source locations; compact sorted-key JSON. All actual statements, operators, constants and arguments retained.",
+  "original_source_archive": {
+    "path": "build/worktrees/nmi-public201/build/public-plan-v1/original60-reference-three.zip",
+    "Git_source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+    "members": 3,
+    "bytes": 7512,
+    "sha256": "8a0a0a58a189a823876a04f5fc298bc5f4cea4aa0dba4f257bc55930d09d9cb3"
+  }
+}
