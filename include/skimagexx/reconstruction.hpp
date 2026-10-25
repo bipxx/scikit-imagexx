@@ -52,8 +52,13 @@ struct ReconstructionBuffers {
 struct ReconstructionInfo {
     ReconstructionQueue queue=ReconstructionQueue::indexed_heap;
     int preprocessing_workers=1;
+    bool preprocessing_simd=false;            // actual AVX2 lane work, not eligibility
     bool parallel_flood=false;                // dependent flood remains serial
 };
+// Read-only source-order predicate for intake before footprint/provider work.
+// Nonempty real typed views only; the Python shell preserves other preentry cases.
+bool reconstruction_ordered(const ReconstructionView& seed,const ReconstructionView& mask,
+    ReconstructionMethod);
 // Metadata-only sizing. No allocation and no writes. Rank0 means one scalar;
 // non-scalar dimensions must be positive. Overflow and footprint geometry
 // are rejected; the Python caller preserves its earlier source preentry errors.
@@ -62,7 +67,8 @@ ReconstructionRequirements reconstruction_requirements(
     const ReconstructionFootprint&,ReconstructionQueue=ReconstructionQueue::automatic);
 // All active spans, byte extents, dtype/shape/offsets, input ordering, finite
 // conversion domain, and zero-profile requirements are validated BEFORE ANY
-// output/workspace write. Inputs may alias each other; all active mutable
+// output/workspace write. Nearest rounding and gradual underflow are required;
+// caller FP state is restored on success/rejection. Inputs may alias each other; all active mutable
 // regions must be disjoint from inputs and each other. No hidden heap storage.
 // Output padding is initialized too: a returned interior view exposes this
 // owner through .base. The caller owns all storage and return-view creation.
