@@ -96,8 +96,9 @@ def threshold_li(image, *, tolerance=None, initial_guess=None, iter_callback=Non
         return fallback('filters','threshold_li',original_image,tolerance=tolerance,
                         initial_guess=initial_guess,iter_callback=iter_callback)
     if type(image) in (np.bool_,np.uint8,np.float32,np.float64):image=np.asarray(image)
-    if type(image) is not np.ndarray or image.dtype.type not in (np.bool_,np.uint8,np.float32,np.float64):return delegated()
+    if type(image) is not np.ndarray or image.dtype.type not in (np.bool_,np.uint8,np.uint16,np.float32,np.float64):return delegated()
     prepared=_core.li_prepare(image)
+    if prepared is None:return delegated()
     kind=prepared.kind
     scalar=image.dtype.type
     if kind==1:return np.nan

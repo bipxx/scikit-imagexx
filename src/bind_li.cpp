@@ -1,4 +1,5 @@
 #include "skimagexx/li.hpp"
+#include "li_u16_intake.hpp"
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
@@ -12,6 +13,18 @@
 
 namespace py = pybind11;
 namespace {
+std::shared_ptr<skimagexx::LiImage> prepare_uint16(const py::array& image) {
+    skimagexx::bindings::LiU16Intake intake(image);
+    if (!intake.supported()) return {};
+    intake.validate();
+    std::shared_ptr<skimagexx::LiImage> result;
+    {
+        py::gil_scoped_release release;
+        const auto values = intake.copy_logical();
+        result = std::make_shared<skimagexx::LiImage>(values.data(), values.size(), skimagexx::PixelType::uint16);
+    }
+    return result;
+}
 struct NumpyLiLog {
     struct Loop {PyUFuncGenericFunction function;void* data;};
     py::object owner;
@@ -87,6 +100,7 @@ void bind_li(py::module_& m) {
             return py::make_tuple(result.value,result.updated,result.status);
         },py::arg("tolerance"),py::arg("has_guess"),py::arg("guess"),py::arg("trace")=py::none(),py::arg("reduction_block")=0);
     m.def("li_prepare",[](py::array image){
+        if(image.dtype().kind()=='u' && image.itemsize()==2)return prepare_uint16(image);
         auto prepare=[&](auto dummy){
             using T=decltype(dummy);auto a=py::array_t<T,py::array::c_style>::ensure(image);
             if(!a)throw py::type_error("Li input conversion failed");

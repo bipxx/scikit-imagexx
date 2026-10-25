@@ -16,7 +16,9 @@ struct LiMath {
 };
 // Copies logical contiguous input, removes nonfinite samples in upstream order,
 // and shifts finite samples by their minimum. uint8 uses a bounded histogram.
-// Current image types: boolean, uint8, float32, float64. The object is immutable;
+// Current image types: boolean, uint8, float32, float64; uint16 is admitted
+// only for values0..255 and at most2^31-1 samples, reusing the byte histogram.
+// Other uint16 inputs return LiKind::unsupported. The object is immutable;
 // independent run/spacing calls are safe concurrently. Global workers are
 // captured for each operation; sums preserve NumPy's pairwise reduction tree.
 class LiImage {
