@@ -1,0 +1,75 @@
+{
+  "schema": "root-H203-failed-qualification-diagnosis-v1",
+  "source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "run": 40200919182,
+  "independent_review": {
+    "path": "build\\resume-20261025\\h203-failed-independent-review\\final-review.json",
+    "bytes": 15627,
+    "sha256": "247cb38a150fad69d8fb323fe60cd2be4f20b39f9c42a0b225381dddee016ea7"
+  },
+  "profiles": [
+    {
+      "profile": "minimum",
+      "artifact": 12603119252,
+      "outer_sha256": "d548de130193e3aa7c3bf764f3067687378b17630b2dea695bd8ac33ce581472",
+      "inventory": {
+        "path": "build\\genuine203-tv-zero-hosted\\7417676\\retained-v1\\12603119252\\inventory.json",
+        "bytes": 7874717,
+        "sha256": "6cf26d22144e7c11c01ad055d5a7b219de78ff2b7300a7e49db95fd34bd18cf9"
+      },
+      "SDK_checks": 46,
+      "H_case_tests_per_mode": 6,
+      "H_failures_per_mode": 1
+    },
+    {
+      "profile": "modern",
+      "artifact": 12603281687,
+      "outer_sha256": "f816edf49b4ab30b979f7e2848cbbd602f43807b54c61f9b80ae5b1aefe61b0a",
+      "inventory": {
+        "path": "build\\genuine203-tv-zero-hosted\\7417676\\retained-v1\\12603281687\\inventory.json",
+        "bytes": 6672417,
+        "sha256": "f60841bc2747ecd39cd2503fe8ef9b89fc9ca0f9a7d1ed7874eb2c35fb7d3db6"
+      },
+      "SDK_checks": 46,
+      "H_case_tests_per_mode": 6,
+      "H_failures_per_mode": 1
+    },
+    {
+      "profile": "debug",
+      "artifact": 12603569266,
+      "outer_sha256": "069ed6b942e41869d2a20702428b4b11ccade7b4dc28be920e5bcaa12f375d65",
+      "inventory": {
+        "path": "build\\genuine203-tv-zero-hosted\\7417676\\retained-v1\\12603569266\\inventory.json",
+        "bytes": 6632410,
+        "sha256": "47fa036fef90e1af15f3ca32eba7af31367c384de2e36b4ffecd17a1ff61317c"
+      },
+      "SDK_checks": 46,
+      "H_case_tests_per_mode": 6,
+      "H_failures_per_mode": 1
+    },
+    {
+      "profile": "windows",
+      "artifact": 12603661000,
+      "outer_sha256": "2c4c1a03dcd189fba2b1e90568f767f6128ba8bfb047e6e1891ffd9c468038b5",
+      "inventory": {
+        "path": "build\\genuine203-tv-zero-hosted\\7417676\\retained-v1\\12603661000\\inventory.json",
+        "bytes": 3456352,
+        "sha256": "bbbb474654b6f99944b9551ba2a2129867301939007f319e306f2d49e70d5d75"
+      },
+      "SDK_checks": 46,
+      "H_case_tests_per_mode": 6,
+      "H_failures_per_mode": 1
+    }
+  ],
+  "classification": "metadata gate defect; no H public numerical acceptance reached; not evidence of a kernel/product numerical defect",
+  "cause": "H public child diagnostic projection assumes old integration-record v1 top-level historical_source; actual closed v2 nests old record and has policy successor fields",
+  "location": "tests/test_h_extrema_public.py:78-80",
+  "boundary": "after original metadata authentication, before NumPy import/case fixtures/installed skimagexx import and886 image loop",
+  "retained_owned_bytes": 4708677576,
+  "retainer_terminal_exit": 0,
+  "retainer_handle": 45182,
+  "next": "Reviewed two-file diagnostic projection repair plus actual metadata-consumer regression before a separately frozen qualification. Preserve failed source/run/artifacts; no kernel change justified by this failure.",
+  "public_accepted": false,
+  "new_API_credit": 0,
+  "performance_accepted": false
+}

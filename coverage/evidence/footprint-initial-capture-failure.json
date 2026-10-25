@@ -1,0 +1,101 @@
+{
+  "schema": "root-footprint-initial-capture-failure-v1",
+  "source": "7a39824df911621e7006efb82db8c9f48e381e68",
+  "runner_sha256": "27909cf87af1cbd2a7609922985c8559a8a9b714c5579a1613709ee17c5a61ea",
+  "authorization_sha256": "0cdfcb8c6e04fcd1be5828406e93c8e0129a334cae0cb37391c631bb47118dbe",
+  "profiles": [
+    {
+      "profile": "windows",
+      "completed_before_failure": 25,
+      "actual_raw_outcomes": 26,
+      "raw_journal": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\windows\\raw-observations.jsonl",
+        "bytes": 40902,
+        "sha256": "787356baa28ae03ae0e5495c2494378f193673e4fca286494a71794bb68f2fd7"
+      },
+      "failure": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\windows\\failure.json",
+        "bytes": 920,
+        "sha256": "30ede11176f6989d11dd3914022ae4e8e154f84999b7aff19b86ece295e53804"
+      },
+      "exit": {
+        "path": "build\\resume-20261025\\footprint-capture-root-v1\\windows-exit.json",
+        "bytes": 15,
+        "sha256": "b728541de9166f7843e04cee774bf205b8d10fbb33ea0a9af99f592890360082"
+      },
+      "last_actual_entries": {
+        "nested_call": 1,
+        "nested_return": 1,
+        "outer_call": 1,
+        "outer_return": 1,
+        "total_call": 2,
+        "total_return": 2
+      }
+    },
+    {
+      "profile": "modern",
+      "completed_before_failure": 25,
+      "actual_raw_outcomes": 26,
+      "raw_journal": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\modern\\raw-observations.jsonl",
+        "bytes": 40891,
+        "sha256": "b4ec1720c057110825b36b3568ce0d5c4023606c9a4fd9009ce187c35643d7a9"
+      },
+      "failure": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\modern\\failure.json",
+        "bytes": 909,
+        "sha256": "7f94d5a4cbb53f9e36469dacb01b73c80f89d46a48774121ea7f15b745ab359a"
+      },
+      "exit": {
+        "path": "build\\resume-20261025\\footprint-capture-root-v1\\modern-exit.json",
+        "bytes": 15,
+        "sha256": "b728541de9166f7843e04cee774bf205b8d10fbb33ea0a9af99f592890360082"
+      },
+      "last_actual_entries": {
+        "nested_call": 1,
+        "nested_return": 1,
+        "outer_call": 1,
+        "outer_return": 1,
+        "total_call": 2,
+        "total_return": 2
+      }
+    },
+    {
+      "profile": "minimum",
+      "completed_before_failure": 25,
+      "actual_raw_outcomes": 26,
+      "raw_journal": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\minimum\\raw-observations.jsonl",
+        "bytes": 40771,
+        "sha256": "d15d57e3392ec34663bc9d7ee9ee9d1fbd6de09d536da462e82899a87ad304d8"
+      },
+      "failure": {
+        "path": "build\\worktrees\\footprint-shapes-contracts\\build\\footprint-shapes-captures-v1\\minimum\\failure.json",
+        "bytes": 789,
+        "sha256": "04c469fccbf6c5521d766fe305884828e34381b08c407540d8ad9d969da5f865"
+      },
+      "exit": {
+        "path": "build\\resume-20261025\\footprint-capture-root-v1\\minimum-exit.json",
+        "bytes": 15,
+        "sha256": "b728541de9166f7843e04cee774bf205b8d10fbb33ea0a9af99f592890360082"
+      },
+      "last_actual_entries": {
+        "nested_call": 1,
+        "nested_return": 1,
+        "outer_call": 1,
+        "outer_return": 1,
+        "total_call": 2,
+        "total_return": 2
+      }
+    }
+  ],
+  "classification": "Observer expected-count defect after a retained actual original result, not a numerical failure. All three first attempts terminal1/reaped; no retry.",
+  "source_findings": [
+    "octagon sequence branch for m<=2 and n<=2 recursively invokes octagon with decomposition=None",
+    "octahedron sequence branch recursively invokes octahedron(1, decomposition=None)"
+  ],
+  "next": "Source-only successor must audit all five APIs recursive calls, add corresponding metadata regressions, preserve factory226/future20 and old raw attempts, and use a new reviewed runner/outputprefix. No additional calls authorized by this receipt.",
+  "reference_accepted": false,
+  "new_API_credit": 0,
+  "performance_accepted": false
+}
