@@ -148,3 +148,5 @@ coverage/evidence/li-u16-installed-gate-source-review.json -text
 coverage/evidence/tv-default-policy-controller-review.json -text
 coverage/evidence/public200-cumulative-source-preflight.json -text
 coverage/evidence/tv-default-certificate-publication-dispatch.json -text
+coverage/evidence/reconstruction-descriptor-private-admission.json -text
+coverage/evidence/h-extrema-private-admission.json -text

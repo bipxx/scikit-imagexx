@@ -1,0 +1,47 @@
+{
+  "schema": "root-scoped-private-successor-admission-v1",
+  "source": "3f4ed95e9fb322985374f2af71522398dbd8db7f",
+  "root_private_accepted": true,
+  "author_proof": {
+    "path": "build/worktrees/h-extrema-kernel/build/private/proof-v1/manifest.json",
+    "bytes": 78732,
+    "sha256": "f835cda5d93a17f4303e9ed49b98332458985b3f42d6db6b90523fdfd37ffbe1"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/h-extrema-final-private-review/final-private-review.json",
+    "bytes": 11206,
+    "sha256": "81244082d156ee7e8989573b96b64837b48ea8f0f3489f8171b5b49dd44769be"
+  },
+  "details": {
+    "scope": "Bounded integer H-maxima/H-minima, builtin positive integer h; original816 partition preserved. Full floating/promoted-height API remains mandatory.",
+    "records": 352,
+    "retained_bytes": 187752129,
+    "Git_members": 12,
+    "selected_cases": 424,
+    "selected_partition": {
+      "native_reconstruction": 348,
+      "early": 52,
+      "exact_errors": 24
+    },
+    "mandatory_followup_cases": 378,
+    "unsafe_unexecuted_cases": 14,
+    "pipeline_passes": 14446,
+    "explicit_skips": 1884,
+    "native_controls": 3550280,
+    "actual_H_and_reconstruction_completions": 6264,
+    "Windows_compiler_inputs": 329,
+    "Linux_compiler_inputs": 664,
+    "donor_boundary": "Private proofs use exact cee/095 reconstruction objects and fresh Python output allocations; inherited direct-C++ descriptor gap is explicitly excluded. Public integration must link current77 and requalify; no binary acceptance inherited."
+  },
+  "workers": [
+    1,
+    4
+  ],
+  "normal_and_scalar": true,
+  "whole_product_accepted": false,
+  "public_paths_added": 0,
+  "SDK_accepted": false,
+  "performance_accepted": false,
+  "no_unsafe_old_alias_calls": true,
+  "source_and_scientific_history_preserved": true
+}
