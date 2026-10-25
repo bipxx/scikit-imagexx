@@ -24,7 +24,7 @@ def _zero_provider(seed,mask,footprint,offset,method):
     dtype=np.float32 if mask.dtype.type in (np.float16,np.float32) else np.float64
     negative=_core.reconstruction_negative_zero(seed,mask)
     if not negative:return None
-    shape=tuple(np.array(seed.shape)+(np.array(footprint.shape)-1));inside=tuple(slice(o,o+n) for o,n in zip(offset,seed.shape))
+    shape=tuple(np.array(seed.shape)+(np.array(footprint.shape)-1));inside=tuple(slice(int(o),int(o)+n) for o,n in zip(offset,seed.shape))
     pad=seed.min() if method=='dilation' else seed.max()
     images=np.full((2,)+shape,pad,dtype=dtype);images[(0,)+inside]=seed;images[(1,)+inside]=mask
     values=images.reshape(-1) if method=='dilation' else -images.reshape(-1)
