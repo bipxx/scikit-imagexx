@@ -6,12 +6,12 @@ Explicit user resume: implementation is active. The existing
 [work queue](work_items.json) owns current assignments and exact file ownership;
 older status paragraphs below are historical, even where they say “current”.
 
-- A: TV comparison successor source; retain original/before/after methodology,
-  with the new after-product fail-closed until genuine qualification succeeds.
-- B: finish the seven-file colocalization C++/binding/test source handoff, then
-  review its concrete build/dependency plan before numerical execution.
-- C: implement owned footprint shape/sequence stages against the admitted
-  three-runtime226-case reference, starting with concrete primitive reuse.
+- A: TV comparison successor source is frozen; independent modern gate-controller
+  review is complete. Keep the after-product fail-closed pending qualification.
+- B: review the frozen TV comparison source; colocalization source/build
+  checkpoints are complete, with numerical validation still pending.
+- C: footprint source and modern build-only recipe are frozen for root review,
+  using the admitted three-runtime 226-case reference and existing primitives.
 - Root: shared integration, source/runner review, final admissions and existing
   hosted-run observation. Accepted coverage remains199 native-partial image APIs.
 
@@ -29,8 +29,18 @@ broader cleanup or relaxed scientific assertions are part of this resume.
 The footprint reference is merged09486ce:226fixed cases/runtime,678outer
 and129nested actual original entries, complete raw observations and all three
 minimum-runtime differences retained. It adds no native paths. Colocalization
-source2a2 passed independent review; exact bounded controller and actual-link
-review remain before numerical execution. All first footprint failures survive.
+source `2a2bd3b` compiled in five bounded profiles. Modern actual-link review passed;
+the test-only 129-element expectation correction `3998e99` passed 387 native controls
+against unchanged kernels. The first modern normal Python gate exited 1 with
+pytest capture FileNotFoundError and no tests run; preserve the failure and
+diagnose the harness before further numerical launches. Scalar has not run.
+Portable/sanitizer builds passed without product execution; their actual-link
+reviews remain pending. Footprint alignment successor `9bfc86a` and its four-TU
+modern build-only recipe await root admission/review. All earlier failures survive.
+
+The updated [compilexx project notes](../../compilexx/scikit-imagexx-plan-inefficiencies.md)
+record these execution lessons, completed planning fixes and next actions. They
+are supporting notes; this card and the existing queue own live execution state.
 
 ## Historical execution notes
 
