@@ -194,3 +194,7 @@ coverage/evidence/h-extrema-floating-private-admission.json -text
 
 tests/h_extrema_public_authentication.py -text
 coverage/evidence/h-extrema-reconstruction-reference-integration.json -text
+tests/reconstruction_trace_policy.py -text
+tests/test_reconstruction_trace_policy.py -text
+coverage/evidence/reconstruction-trace-policy-observations.json -text
+coverage/evidence/reconstruction-trace-policy-migration.json -text
