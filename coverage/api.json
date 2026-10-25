@@ -6077,21 +6077,25 @@
       "api": "morphology.h_maxima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_h_extrema_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.h_minima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_h_extrema_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.isotropic_closing",
