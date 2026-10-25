@@ -18,9 +18,35 @@ def experiment(monkeypatch):
             products[role][profile]=dict(pin=pin,artifact=dict(id='123',digest='6'*64,run='111',name=pin['artifact_name']),core_sha256=('7' if role=='before' else '8')*64)
     return dict(schema='tv-chambolle-admission-experiment-v1',status='root-reviewed',controller_revision='c'*40,before_product_source=a.BEFORE_PRODUCT,intended_before_source=a.BEFORE_ANCHOR,after_product_source=a.AFTER_PRODUCT,original_version='0.26.0',rounds=7,workers=1,case_count=400,timed_count=70,factory_sha256=a.FROZEN_FACTORY_SHA256,manifest_sha256=a.sha(ROOT/'coverage/contracts/tv-chambolle-benchmark.json'),root_after_admission=dict(source=a.AFTER_PRODUCT,passed=True,sha256='9'*64),products=products,approved_after_source_sha256={n:(a.PRIVATE_HEADER_SHA256 if n==a.PRIVATE_HEADER else 'a'*64) for n in a.ALLOWED_DELTA},before_source_equivalence=bridge)
 
+def synthetic_defaults(report,profile=None):
+    # Inert wire metadata, never actual image/native evidence.
+    profile=profile or report['profile'];report['default_validation_schema']=a.DEFAULT_SCHEMA
+    report['default_checks']={};report['default_observation_assets']={}
+    M=a.read_json(ROOT/'coverage/contracts/tv-chambolle-benchmark.json')
+    obs=dict(result={'SYNTHETIC':'not image data'},error=None,warnings=[],events=[],before={},after={},pointer_stable=True,bases=dict(before={},after={},result=[]))
+    for mode in report['checks']:
+        report['default_checks'][mode]={}
+        for role in a.ROLES:
+            value=dict(schema=a.DEFAULT_SCHEMA,role=role,profile=profile,mode=mode,mismatches=[],checks=[])
+            for workers in (1,4):
+                records=[]
+                for i in range(330,400):
+                    rule=a.default_rule(i,M['case_inventory'][i]);count=0 if role=='original' else rule['finite_calls']
+                    stages={n:dict(c_call=0,c_return=0,c_exception=0) for n in ('divergence','gradient','norm','dual')}
+                    if role!='original' and rule['tagged']:
+                        for n in ('norm','dual'):stages[n]=dict(c_call=1,c_return=1,c_exception=0)
+                    returns=[dict(dtype=rule['dtype'],shape=rule['spatial_shape'],weight=rule['weight'],eps=rule['eps'],max_iterations=rule['max_iterations'],profile='1.24.4' if profile=='minimum' else '2.5.4',buffer_elements=8192,iterations=rule['max_iterations'],input_alias=rule['max_iterations']==1) for _ in range(count)]
+                    dispatch=dict(finite=dict(helper_calls=count,c_call=count,c_return=count,c_exception=0,accepted=count,rejected=0,returns=returns),stages=stages,original=dict(outer=int(role=='original'),inner=rule['channels'] if role=='original' else 0,denied=0),helper_marker='owned-_finite_call-real-builtin-v1')
+                    state=dict(policy=dict(a.DEFAULT_NP_POLICY),handler_is_none=True,providers_pristine=True,buffer_elements=8192,workers=workers)
+                    records.append(dict(case_index=i,observation_digest=a.digest(obs),observation_payload=a.pack_default_observation(obs),state_before=copy.deepcopy(state),state_after=copy.deepcopy(state),dispatch=dispatch))
+                value['checks'].append(dict(workers=workers,records=records,digests=[r['observation_digest'] for r in records]))
+            report['default_checks'][mode][role]=a.ingest_default_reply(report,value)
+    return report
+
+
 def synthetic_report(e,measure=False):
     M=a.read_json(ROOT/'coverage/contracts/tv-chambolle-benchmark.json');expected=[M['reference_profiles']['modern']['observations'][str(i)] for i in range(400)]
-    report=dict(schema='tv-admission-controlled-v1',status='complete-controlled-measurement' if measure else 'complete-parity-check',controller_revision=e['controller_revision'],before_product_source=a.BEFORE_PRODUCT,intended_before_source=a.BEFORE_ANCHOR,after_product_source=a.AFTER_PRODUCT,profile='modern',check_only=not measure,failures=[],checks={},worker_identities={},results=[])
+    report=dict(schema='tv-admission-controlled-v2',status='complete-controlled-measurement' if measure else 'complete-parity-check',controller_revision=e['controller_revision'],before_product_source=a.BEFORE_PRODUCT,intended_before_source=a.BEFORE_ANCHOR,after_product_source=a.AFTER_PRODUCT,profile='modern',check_only=not measure,failures=[],checks={},worker_identities={},results=[])
     for mode in (('normal',) if measure else ('normal','scalar')):
         report['checks'][mode]={r:dict(checks=[dict(workers=w,digests=expected[:]) for w in (1,4)],mismatches=[]) for r in a.ROLES};identities={}
         for index,role in enumerate(a.ROLES):
@@ -40,7 +66,7 @@ def synthetic_report(e,measure=False):
             digest=str(i+3)*64;report['worker_identities']['normal'][role]['startup_authentication']={'startup_receipt_sha256':digest}
             auth['startup_receipts'][role]=dict(path='authentication/claim-'+role+'-stdio-startup.json',sha256=digest,bytes=100)
         report['authentication_artifacts']=auth
-    return report
+    return synthetic_defaults(report)
 
 
 def test_unaccepted_after_blocks_before_any_fixture_import(tmp_path,monkeypatch,experiment):
@@ -77,7 +103,7 @@ def test_seven_rotations_balanced_and_complete():
 @pytest.mark.parametrize('bad',[(False,True,'true',1,False,330),(True,False,'true',1,False,330),(True,True,'false',1,False,330),(True,True,'true',4,False,330),(True,True,'true',True,False,330),(True,True,'true',1,True,330),(True,True,'true',1,False,329),(True,True,'true',1,False,400),(True,True,'true',1,False,True)])
 def test_sample_gate_blocks_before_clocks(bad,monkeypatch):
     monkeypatch.setattr(t.time,'perf_counter_ns',lambda:pytest.fail('timer reached'))
-    with pytest.raises(RuntimeError):t.sample_admission(*bad)
+    with pytest.raises(RuntimeError):t.sample_admission(*bad,default_validated=True)
 
 
 def test_actual_full_report_summary_serializes_all70_inert_rows(experiment):
@@ -183,7 +209,7 @@ def test_new_writer_returns_exact_receipt_path(tmp_path):
 def test_real_barrier_binds_all_report_observations(tmp_path,experiment,mutation):
     paths=[]
     for profile in a.PROFILES:
-        report=synthetic_report(experiment,False);report['profile']=profile
+        report=synthetic_report(experiment,False);report['profile']=profile;synthetic_defaults(report,profile)
         M=a.read_json(ROOT/'coverage/contracts/tv-chambolle-benchmark.json')
         expected=[M['reference_profiles'][profile]['observations'][str(i)] for i in range(400)]
         for mode in report['checks']:
@@ -192,7 +218,7 @@ def test_real_barrier_binds_all_report_observations(tmp_path,experiment,mutation
                 for row in report['checks'][mode][role]['checks']:row['digests']=expected
         report['source_comparison']={'common_sha256':'f'*64};report['experiment_sha256']='e'*64
         output=tmp_path/profile;output.mkdir();a.save_new(output/'report.json',report)
-        r=dict(schema='tv-admission-preparation-v1',passed=True,profile=profile,controller_revision=experiment['controller_revision'],generation='run',attempt='1',experiment_sha256='e'*64,report_sha256=a.sha(output/'report.json'),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256='f'*64,reports={mode:a.digest(report['checks'][mode]) for mode in ('normal','scalar')})
+        r=dict(schema='tv-admission-preparation-v2',passed=True,profile=profile,controller_revision=experiment['controller_revision'],generation='run',attempt='1',experiment_sha256='e'*64,report_sha256=a.sha(output/'report.json'),modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256='f'*64,reports={mode:a.digest(report['checks'][mode]) for mode in ('normal','scalar')},default_validation_schema=a.DEFAULT_SCHEMA,default_timed_count=70,default_reports={mode:a.digest(dict(checks=report['default_checks'][mode],assets=report['default_observation_assets'])) for mode in ('normal','scalar')})
         a.save_new(output/'preparation.json',r);paths.append(output/'preparation.json')
     assert set(t.verify_barrier(paths,experiment,'e'*64,'run','1'))==set(a.PROFILES)
     r=a.read_json(paths[0])
@@ -324,8 +350,108 @@ def test_actual_original_auth_files_are_uploaded_and_fail_closed(tmp_path,monkey
 
 def test_historical_science_and_controller_timing_bodies_are_unchanged():
     old=ast.parse((ROOT/'benchmarks/tv_chambolle_compare.py').read_bytes());new=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
-    for name in ('factory','rotating_triads','sample_admission','worker_main','summarize'):
-        left=next(n for n in old.body if isinstance(n,ast.FunctionDef) and n.name==name);right=next(n for n in new.body if isinstance(n,ast.FunctionDef) and n.name==name)
-        assert ast.dump(left,include_attributes=False)==ast.dump(right,include_attributes=False),name
+    def node(tree,name):return next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name)
+    def same(left,right):assert ast.dump(left,include_attributes=False)==ast.dump(right,include_attributes=False)
+    for name in ('factory','rotating_triads','summarize'):same(node(old,name),node(new,name))
+    gate=copy.deepcopy(node(new,'sample_admission'));gate.args.kwonlyargs=[];gate.args.kw_defaults=[];gate.body.pop()
+    same(node(old,'sample_admission'),gate)
+    left=node(old,'worker_main');right=node(new,'worker_main')
+    def branch(fn):return next(n for n in ast.walk(fn) if isinstance(n,ast.If) and ast.unparse(n.test)=="operation == 'validate'")
+    same(ast.Module(body=branch(left).body,type_ignores=[]),ast.Module(body=branch(right).body,type_ignores=[]))
+    def timer(fn):return next(n for n in ast.walk(fn) if isinstance(n,ast.With) and ast.unparse(n.items[0].context_expr)=='warnings.catch_warnings()')
+    same(timer(left),timer(right))
     assert a.text_sha(ROOT/'benchmarks/tv_chambolle.py')==a.FROZEN_FACTORY_SHA256
-    assert 'claim=output/\'authentication\'/\'claim.json\'' in (ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_text()
+    assert a.text_sha(ROOT/'benchmarks/rank_statistics_compare.py')==a.RANK_VALIDATOR_SHA256
+    assert "claim=output/'authentication'/'claim.json'" in (ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_text()
+
+
+@pytest.mark.parametrize('fault',['missing','partial','policy','handler','buffer','provider','worker','return','exception','accepted','upstream','profile','shape','parameter','alias','dispatch','asset','old'])
+def test_default70_rejects_wrong_timed_path_before_clocks(experiment,monkeypatch,fault):
+    report=synthetic_report(experiment,True);t.validate_report(report,experiment)
+    monkeypatch.setattr(t.time,'perf_counter_ns',lambda:pytest.fail('clock reached'))
+    group=report['default_checks']['normal'];row=group['after']['checks'][0]['records'][0];finite=row['dispatch']['finite']
+    if fault=='missing':report.pop('default_checks')
+    elif fault=='partial':group['after']['checks'][0]['records'].pop()
+    elif fault in ('policy','handler','buffer','provider','worker'):
+        key={'policy':'policy','handler':'handler_is_none','buffer':'buffer_elements','provider':'providers_pristine','worker':'workers'}[fault]
+        row['state_before'][key]={'divide':'warn','over':'warn','under':'warn','invalid':'warn'} if fault=='policy' else (4096 if fault=='buffer' else 3 if fault=='worker' else False)
+    elif fault=='return':finite['c_return']-=1
+    elif fault=='exception':finite['c_return']-=1;finite['c_exception']+=1
+    elif fault=='accepted':finite['accepted']=0
+    elif fault=='upstream':row['dispatch']['original']['denied']=1
+    elif fault=='profile':finite['returns'][0]['profile']='1.24.4'
+    elif fault=='shape':finite['returns'][0]['shape']=[1]
+    elif fault=='parameter':finite['returns'][0]['weight']*=2
+    elif fault=='alias':finite['returns'][0]['input_alias']=not finite['returns'][0]['input_alias']
+    elif fault=='dispatch':group['before']['checks'][0]['records'][0]['dispatch']['helper_marker']='boolean-label'
+    elif fault=='asset':next(iter(report['default_observation_assets'].values()))['sha256']='0'*64
+    else:report['schema']='tv-admission-controlled-v1'
+    with pytest.raises(RuntimeError):t.validate_report(report,experiment)
+
+
+@pytest.mark.parametrize('fault',['base','mutation','pointer','hash','size','trailing'])
+def test_default_raw_observation_integrity(fault):
+    value=dict(result=None,error=None,warnings=[],events=[],before={},after={},pointer_stable=True,bases=dict(before={},after={},result=[]))
+    if fault=='base':value['bases']['after']={'changed':True}
+    elif fault=='mutation':value['after']={'changed':True}
+    elif fault=='pointer':value['pointer_stable']=False
+    packed=a.pack_default_observation(value)
+    if fault=='hash':packed['sha256']='0'*64
+    elif fault=='size':packed['bytes']+=1
+    elif fault=='trailing':packed['payload']+='AAAA'
+    with pytest.raises(RuntimeError):a.unpack_default_observation(packed)
+
+
+def test_default_gate_cannot_be_replaced_by_legacy400_or_policy_interposition():
+    with pytest.raises(RuntimeError):t.sample_admission(True,True,'true',1,False,330)
+    t.sample_admission(True,True,'true',1,False,330,default_validated=True)
+    tree=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
+    for name in ('observe_default','default_state','check_default_worker'):
+        fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name)
+        assert not any(isinstance(n,ast.Attribute) and n.attr in ('seterr','seterrcall') for n in ast.walk(fn))
+    witness=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='DefaultWitness');source=ast.unparse(witness)
+    assert "event == 'return'" in source and "'c_return'" in source and 'type(arg) is tuple' in source
+    assert 'self.frame' not in source and 'self.image' not in source and 'setattr(' not in source
+
+
+@pytest.mark.parametrize('fault',['tagged-stage','channel','stopping','dtype','state-after','warnings','result','receipt-old','receipt-default'])
+def test_default70_remaining_stage_alias_and_receipt_boundaries(experiment,fault):
+    report=synthetic_report(experiment,True);t.validate_report(report,experiment)
+    group=report['default_checks']['normal'];rows=group['after']['checks'][0]['records']
+    if fault=='tagged-stage':rows[-1]['dispatch']['stages']['norm']=dict(c_call=0,c_return=0,c_exception=0)
+    elif fault=='channel':
+        row=next(r for r in rows if len(r['dispatch']['finite']['returns'])==3);row['dispatch']['finite']['returns'].pop()
+    elif fault=='stopping':rows[1]['dispatch']['finite']['returns'][0]['iterations']=1
+    elif fault=='dtype':rows[0]['dispatch']['finite']['returns'][0]['dtype']='float32'
+    elif fault=='state-after':rows[0]['state_after']['handler_is_none']=False
+    elif fault in ('warnings','result'):
+        row=rows[0];record=report['default_observation_assets'][row['observation_ref']['sha256']];obs=a.unpack_default_observation(record)
+        obs[fault]=[{'type':'RuntimeWarning','message':'changed'}] if fault=='warnings' else {'SYNTHETIC':'different output'}
+        packed=a.pack_default_observation(obs);report['default_observation_assets'][packed['sha256']]=packed
+        row['observation_ref']=dict(sha256=packed['sha256'],bytes=packed['bytes']);row['observation_digest']=a.digest(obs)
+        group['after']['checks'][0]['digests'][0]=row['observation_digest']
+    else:
+        receipt=dict(schema='tv-admission-preparation-v2',passed=True,profile='modern',controller_revision=experiment['controller_revision'],generation='run',attempt='1',experiment_sha256='e'*64,report_sha256='a'*64,modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256='f'*64,reports=dict(normal='b'*64,scalar='c'*64),default_validation_schema=a.DEFAULT_SCHEMA,default_timed_count=70,default_reports=dict(normal='d'*64,scalar='e'*64))
+        if fault=='receipt-old':receipt['schema']='tv-admission-preparation-v1'
+        else:receipt.pop('default_reports')
+        with pytest.raises(RuntimeError):a.validate_receipt(receipt,'e'*64,'run','1')
+        return
+    with pytest.raises(RuntimeError):t.validate_report(report,experiment)
+
+
+def test_default_validation_is_on_every_host_and_before_warm_calibration():
+    tree=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
+    controller=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='controller')
+    source=ast.unparse(controller)
+    assert source.index("operation='validate-default'")<source.index('preflight_only=True')<source.index("operation='warm'")<source.index("operation='sample'")
+    assert "('normal', 'scalar') if args.check_only else ('normal',)" in source
+    workflow=(ROOT/'.github/workflows/tv-chambolle-admission-compare.yml').read_text()
+    assert 'Legacy400 plus fresh default70' in workflow and 'Fresh host default70' in workflow
+
+
+def test_failed_default_dispatch_keeps_observed_wire_rows():
+    tree=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='check_default_worker');source=ast.unparse(fn)
+    assert source.index('records.append(row)')<source.index('unpack_default_observation')<source.index('validate_default_dispatch')
+    worker=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='worker_main')
+    assert "partial_default_checks=locals().get('default_checks')" in ast.unparse(worker)
