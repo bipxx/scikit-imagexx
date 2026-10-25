@@ -226,3 +226,4 @@ coverage/evidence/max-tree-preparation-mode-certificate.json -text
 coverage/evidence/footprint-modern-private-parity-checkpoint.json -text
 coverage/evidence/footprint-minimum-private-parity-checkpoint.json -text
 coverage/evidence/tv-positive-zero-ea35-source-admission.json -text
+coverage/evidence/public203-whole-product-admission.json -text

@@ -1,0 +1,224 @@
+{
+  "schema": "root-public203-whole-product-admission-v1",
+  "source": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+  "run": 40237475475,
+  "passed": true,
+  "root_accepted": true,
+  "independent_verification": {
+    "path": "build/resume-20261025/public203-ea35-independent-verification-v1/attempt-v3/final-review.json",
+    "bytes": 93638,
+    "sha256": "1940f55054e982ebfea99b728edec9a23c4babe8fbfcdedb306f0e16800bb593"
+  },
+  "complete_handoff": {
+    "path": "build/resume-20261025/public203-ea35-independent-verification-v1/handoff.json",
+    "bytes": 5555,
+    "sha256": "839d56b67da577b47d1e0e562a18f4ff11d5bb8a6ac0d2d8c1258a3a4009fc2d"
+  },
+  "evidence_manifest": {
+    "path": "build/resume-20261025/public203-ea35-independent-verification-v1/evidence-manifest.json",
+    "bytes": 32521,
+    "sha256": "c7faf52fa2cf6a59f3ca79d4fe6d8ca86d19579fbaba8df6cf80b090917a05c2"
+  },
+  "retention_terminal": {
+    "path": "build/resume-20261025/h203-ea35-qualification-dispatch-v1/retained-v1/terminal-retention.json",
+    "bytes": 227,
+    "sha256": "1d0ad3e125eaba03596275ac50b6fb402eb80ca6919013e47f051ea8dc81dca0"
+  },
+  "profiles": 4,
+  "XML_checks": 828304,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "scope": {
+    "image_paths": 203,
+    "metadata_paths": 3,
+    "registered_functions": 206,
+    "wheel_members": 120,
+    "SDK_members": 68,
+    "SDK_families": 23,
+    "SDK_checks_per_profile": 46
+  },
+  "new_partial_paths": [
+    "morphology.reconstruction",
+    "metrics.normalized_mutual_information",
+    "morphology.h_maxima",
+    "morphology.h_minima"
+  ],
+  "Release_products": [
+    {
+      "profile": "minimum",
+      "artifact_id": 12616648859,
+      "artifact_name": "rank-statistics-product-minimum",
+      "outer_sha256": "603c1c08979e365c7138a5b3ba9eaf12341fdea0737cbddd9f601574f86f7ea3",
+      "outer_bytes": 180785167,
+      "pin": {
+        "revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+        "qualification_sha256": "7f394938b11d379b115f56d62d373bf33ea8b30cb631b4bd9cc367e2cbf49dd7",
+        "product_sha256": "d45c734fb1020caf2860634fff4f34aafc574e6bc05bab085b40c577d604e1ba",
+        "wheel_sha256": "f78a6971472841ab75ad511fc644ce8782851b39ea0ebf0af4273dd200250a90",
+        "source_sha256": "1c11d9cf9e364e0468bd815967f3e7021031ea1ae3ba7cc0167374e4ef35020d",
+        "scope": {
+          "image_paths": 203,
+          "metadata_paths": 3,
+          "sdk_families": 23,
+          "sdk_members": 68,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform",
+            "reconstruction",
+            "normalized_mutual_information",
+            "h_extrema"
+          ]
+        },
+        "artifact_run": "40237475475",
+        "artifact_name": "rank-statistics-product-minimum"
+      },
+      "core_sha256": "8c0c5048988c9e4684d03d0391cf8b1b54bdef3002f06e104803776e2b3d4927"
+    },
+    {
+      "profile": "modern",
+      "artifact_id": 12616556391,
+      "artifact_name": "rank-statistics-product-modern",
+      "outer_sha256": "2a7563a4b6a8833c0e53f29bf23822710528f438ce840d3d2ac7e0aaa20d6626",
+      "outer_bytes": 178073761,
+      "pin": {
+        "revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+        "qualification_sha256": "3e3d8e1b3dfab67f10584039a6ed9305d8f2489c5d85968a06aeffd2f45106ec",
+        "product_sha256": "5a306254bd1a26d565453469d4ee858072bdcd296ef4cc9b1c49b4d23f5d4967",
+        "wheel_sha256": "b98af2c1735cc999352463e6df71f6b98a6ed0f8e614f2a1934519cbbdbacbd1",
+        "source_sha256": "1c11d9cf9e364e0468bd815967f3e7021031ea1ae3ba7cc0167374e4ef35020d",
+        "scope": {
+          "image_paths": 203,
+          "metadata_paths": 3,
+          "sdk_families": 23,
+          "sdk_members": 68,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform",
+            "reconstruction",
+            "normalized_mutual_information",
+            "h_extrema"
+          ]
+        },
+        "artifact_run": "40237475475",
+        "artifact_name": "rank-statistics-product-modern"
+      },
+      "core_sha256": "74e0660f68f7cc4b516c19f509e43360d5d53394e7f39011268f9b241e84b5d0"
+    },
+    {
+      "profile": "windows",
+      "artifact_id": 12617117391,
+      "artifact_name": "rank-statistics-product-windows",
+      "outer_sha256": "04b21d26721ec2517cdbd5d95a44b936c07cf175a2f74d20e980a1428d3fcf36",
+      "outer_bytes": 176935970,
+      "pin": {
+        "revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+        "qualification_sha256": "1e35b24d513160e29588a2196356a3ceed0ef9822075f99470be2f3974ccdad7",
+        "product_sha256": "8257df8e80ae18460e8f32e5f92392855cb20c19a2743d63a416273ac4734de3",
+        "wheel_sha256": "04447cb2ba244d03467136f780eb00235ea34c5e1331b41b26c8ee06bbbf9d1e",
+        "source_sha256": "a4e98e737290b866b394aa76f589fd2cea4bfbbb23f2ea8e143388e6601d1bea",
+        "scope": {
+          "image_paths": 203,
+          "metadata_paths": 3,
+          "sdk_families": 23,
+          "sdk_members": 68,
+          "sdk_family_names": [
+            "components",
+            "component_consumers",
+            "metrics",
+            "footprint_dense",
+            "rank",
+            "rank_distribution",
+            "rank_intensity",
+            "rank_alias",
+            "projective",
+            "rank_statistics",
+            "consumer_layout",
+            "rank_percentile",
+            "rank_bilateral",
+            "rank_decisions",
+            "tv_chambolle",
+            "tv_reductions",
+            "tv_denoise",
+            "tv_bregman",
+            "max_tree",
+            "matrix_transform",
+            "reconstruction",
+            "normalized_mutual_information",
+            "h_extrema"
+          ]
+        },
+        "artifact_run": "40237475475",
+        "artifact_name": "rank-statistics-product-windows"
+      },
+      "core_sha256": "74b711676d4241aa67098402783e1478bd8c46b7a24973ea7adbbb7b599adf88"
+    }
+  ],
+  "qualified_profiles": {
+    "debug": {
+      "passed": true,
+      "qualification_sha256": "6d5947777ec0cd1a29b3df33024361b68c16ad83c82d5498fab76f3e1e6aaf54",
+      "core_sha256": "ce60adcc550ca3edaebc7dc4507f91bb1639e5c2f17257431668a962e0144581",
+      "wheel_sha256": "4772bf3c3b41edfc232a93fe8a18011e670a31c1e0fb67d48958b854367fbccb"
+    },
+    "minimum": {
+      "passed": true,
+      "qualification_sha256": "7f394938b11d379b115f56d62d373bf33ea8b30cb631b4bd9cc367e2cbf49dd7",
+      "core_sha256": "8c0c5048988c9e4684d03d0391cf8b1b54bdef3002f06e104803776e2b3d4927",
+      "wheel_sha256": "f78a6971472841ab75ad511fc644ce8782851b39ea0ebf0af4273dd200250a90"
+    },
+    "modern": {
+      "passed": true,
+      "qualification_sha256": "3e3d8e1b3dfab67f10584039a6ed9305d8f2489c5d85968a06aeffd2f45106ec",
+      "core_sha256": "74e0660f68f7cc4b516c19f509e43360d5d53394e7f39011268f9b241e84b5d0",
+      "wheel_sha256": "b98af2c1735cc999352463e6df71f6b98a6ed0f8e614f2a1934519cbbdbacbd1"
+    },
+    "windows": {
+      "passed": true,
+      "qualification_sha256": "1e35b24d513160e29588a2196356a3ceed0ef9822075f99470be2f3974ccdad7",
+      "core_sha256": "74b711676d4241aa67098402783e1478bd8c46b7a24973ea7adbbb7b599adf88",
+      "wheel_sha256": "04447cb2ba244d03467136f780eb00235ea34c5e1331b41b26c8ee06bbbf9d1e"
+    }
+  },
+  "original_failed741_preserved": true,
+  "root_review": "Reviewed complete metadata verifier and corrected actualCTest protocol acrossall8logs, exactwhole203finalreceipt and4profile828304XML/zero failures. All53,278declaredqrecords/93,031retainedmembers/3Releaseproducts/source-runtime-wheel-SDK-build identities independentlyverified withimmutablebulkCRC/SHA receipts. Extra lib64 uploadcopies retained/reported withzeroadditionaltestcredit. Admits exactea35 bounded native-partial products only; parameter/provider/unsafe gaps remain explicit.",
+  "main_integration_pending": true,
+  "performance_acceptance": false,
+  "full_477_or_all_partitions_complete": false
+}
