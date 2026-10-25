@@ -123,3 +123,8 @@ tests/test_reconstruction_native_pipeline.py -text
 tests/test_reconstruction_owner_guards.py -text
 tests/test_reconstruction_offset_guards.py -text
 src/simd_reconstruction_avx2.cpp -text
+
+tests/test_h_extrema_floating_cases.py -text
+tests/h_extrema_floating_reference.py -text
+coverage/contracts/h-extrema-floating-plan.json -text
+coverage/contracts/h-extrema-floating.json -text
