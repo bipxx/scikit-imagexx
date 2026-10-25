@@ -447,3 +447,11 @@ def test_default_validation_is_on_every_host_and_before_warm_calibration():
     assert "('normal', 'scalar') if args.check_only else ('normal',)" in source
     workflow=(ROOT/'.github/workflows/tv-chambolle-admission-compare.yml').read_text()
     assert 'Legacy400 plus fresh default70' in workflow and 'Fresh host default70' in workflow
+
+
+def test_failed_default_dispatch_keeps_observed_wire_rows():
+    tree=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='check_default_worker');source=ast.unparse(fn)
+    assert source.index('records.append(row)')<source.index('unpack_default_observation')<source.index('validate_default_dispatch')
+    worker=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='worker_main')
+    assert "partial_default_checks=locals().get('default_checks')" in ast.unparse(worker)

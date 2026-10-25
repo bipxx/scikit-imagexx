@@ -89,10 +89,11 @@ def verify_authentication_artifacts(output,report):
     result=dict(schema='tv-admission-original-auth-artifacts-v1',original_raw_upload=True,claim=record(claim_path),startup_receipts=startup,permit=record(permit_path))
     validate_authentication_index(dict(report,authentication_artifacts=result));return result
 
-def default_state(np,xx,wrapper,workers):
+def default_state(np,xx,wrapper,workers,*,validate=True):
     state=dict(policy=np.geterr(),handler_is_none=np.geterrcall() is None,buffer_elements=np.getbufsize(),
                providers_pristine=wrapper._providers_pristine(),workers=xx.get_num_threads())
-    a.validate_default_state(state,workers);return state
+    if validate:a.validate_default_state(state,workers)
+    return state
 
 
 class DefaultWitness:
@@ -184,10 +185,9 @@ def observe_default(function,case,h,np,xx,wrapper,role,workers):
         observation=dict(result=result,error=error,warnings=[dict(type=type(w.message).__name__,message=str(w.message)) for w in notices],events=events,
             before=before,after=dict(image=h.contracts().array(image),owner=h.contracts().array(owner)),pointer_stable=image.ctypes.data==pointer,
             bases=dict(before=bases_before,after=dict(image=default_bases(image,np,h),owner=default_bases(owner,np,h)),result=default_bases(value,np,h)))
-        after_state=default_state(np,xx,wrapper,workers);require(after_state==before_state,'default policy/handler/buffer/provider/globalworker changed')
+        after_state=default_state(np,xx,wrapper,workers,validate=False)
         # These70 are declared finite. Preserve raw words rather than silently
         # using the legacy NaN-only normalization to admit a nonfinite result.
-        require(h.comparison(observation)==observation,'default finite result unexpectedly needs NaN normalization')
         return dict(observation_digest=a.digest(observation),observation_payload=a.pack_default_observation(observation),state_before=before_state,state_after=after_state,dispatch=witness.finish())
     finally:
         require(sys.getprofile() is previous,'default profiler was not restored')
@@ -203,6 +203,8 @@ def check_default_worker(h,np,xx,wrapper,role,profile,scalar,cases,value):
                 row=observe_default(h.resolve(role=='original'),cases[index],h,np,xx,wrapper,role,workers);row['case_index']=index
                 records.append(row);check['digests'].append(row['observation_digest'])
                 observation=a.unpack_default_observation(row['observation_payload'])
+                a.validate_default_state(row['state_after'],workers);require(row['state_before']==row['state_after'],'default policy/handler/buffer/provider/globalworker changed')
+                require(h.comparison(observation)==observation,'default finite result unexpectedly needs NaN normalization')
                 a.validate_default_dispatch(row['dispatch'],role,profile,a.default_rule(index,h.inventory(cases[index])))
                 require(observation['error'] is None,'default finite timed fixture failed')
         require(value['checks'][0]['digests']==value['checks'][1]['digests'],'default workers1/4 output differs')
