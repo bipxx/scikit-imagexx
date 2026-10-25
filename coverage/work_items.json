@@ -30236,7 +30236,17 @@
       "pending_review_findings": [
         "Repairs frozen; independent exact-source and final six-runtime-mode gate review pending."
       ],
-      "candidate_source": "fadef4cf9994506017ab9d54f4e91917c77ea770"
+      "candidate_source": "fadef4cf9994506017ab9d54f4e91917c77ea770",
+      "original_reference_merge": {
+        "source": "60c0bd03756d0577eecb08d8e51019faa1e0ba6a",
+        "main_merge": "b5fadfa252aab3f0510c506cae81902829632834",
+        "proof": {
+          "path": "coverage/evidence/nmi-original-reference-audit.json",
+          "bytes": 1219,
+          "sha256": "a363603d0f5b0b973d822a4d26fe9405ef4243043e48aa63003afac73294ac65"
+        },
+        "new_public_acceptance": false
+      }
     },
     {
       "id": "reconstruction-owner-guard",

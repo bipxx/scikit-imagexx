@@ -38,9 +38,11 @@ is merged as `c24f7b3` and its metadata-only publication run is `40162423182`.
 The published artifact has been authenticated against the reviewed raw SHA.
 The [TV comparison dispatch](evidence/tv-admission-comparison-dispatch.json)
 records the original run `40163025231`, still pending preparation and measurement;
-no new performance result is accepted. Worker A owns the NMI native packet and
-is repairing owner/extent and direct C++ entropy boundary findings before final
-private gates. Reconstruction's earlier `095ea3d` blocker has a separately tested
+no new performance result is accepted. NMI's [original reference freeze](evidence/nmi-original-reference-audit.json) is
+merged as `b5fadfa`: 214 original cases on each of three profiles, with explicit
+raw-contract newline mapping and no new native/public acceptance. The repaired
+private candidate `fadef4c` has passed its six final runs and awaits independent
+closure review; public core/SDK wiring and whole qualification remain pending. Reconstruction's earlier `095ea3d` blocker has a separately tested
 binder repair `e17ba10`, but root review identified a possible unchecked offset
 span extent, independently confirmed and [recorded as blocking](evidence/reconstruction-offset-extent-review.json), requiring repair before admission.
 Worker C prepares the actual public-200 integration on a separate branch; this

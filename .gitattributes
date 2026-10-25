@@ -126,3 +126,4 @@ coverage/evidence/tv-admission-comparison-dispatch.json -text
 coverage/evidence/reconstruction-offset-extent-review.json -text
 coverage/evidence/public199-matrix-source-failure.json -text
 coverage/contracts/normalized-mutual-information.json -text
+coverage/evidence/nmi-original-reference-audit.json -text
