@@ -198,3 +198,4 @@ coverage/contracts/footprint-shapes.json -text
 coverage/evidence/footprint-shapes-original-reference-admission.json -text
 coverage/evidence/colocalization-native-build-checkpoint.json -text
 coverage/evidence/colocalization-native-test129-correction.json -text
+coverage/evidence/footprint-shapes-native-source-admission.json -text

@@ -1,0 +1,38 @@
+{
+  "schema": "root-footprint-shapes-native-source-admission-v1",
+  "source": "9bfc86ae367e284d2750ef99398e65f2d1376844",
+  "reviewed_parent": "bd94ba3344a3f1f2808257a037b2deb50dc0a7a2",
+  "independent_parent_review": {
+    "path": "build/resume-20261025/footprint-native-source-independent-review/final-review.json",
+    "bytes": 6515,
+    "sha256": "bdb2f484098ec10568f0c9943348b421846f6cbe47fe8cc94ecc5d930016eab7"
+  },
+  "alignment_proof": {
+    "path": "build/worktrees/footprint-shapes-native/build/alignment-source-v2/manifest.json",
+    "bytes": 721,
+    "sha256": "439232031f533d4a8d005592b24c48fbdf6097caf5c65c6cb531f43ceb35061d"
+  },
+  "controller_manifest": {
+    "path": "build/worktrees/footprint-shapes-native/build/controller-v1/manifest.json",
+    "bytes": 1289,
+    "sha256": "84c0f448af97dcc9c1b4384974f1cf3a6a4fdf7848b86d90497a82daed950a50"
+  },
+  "handoff": {
+    "path": "build/worktrees/footprint-shapes-native/build/controller-v1/modern-handoff.json",
+    "bytes": 1580,
+    "sha256": "5dfb28d2dd4668dc1fdc8acf198c42b2f610501104798a30061cc1f6d169ec6c"
+  },
+  "disposition": "source-only admission; the demonstrated alignment blocker is resolved",
+  "root_checks": [
+    "binder raw inverse exact",
+    "all original pipeline ASTs exact",
+    "kernel/header/shell/native test unchanged",
+    "C-slot alignment before typed read and GIL release",
+    "four bounded new TUs; no foundation rebuild or new SIMD compiler flag"
+  ],
+  "accepted_public_native_partial_apis": 199,
+  "private_parity_accepted": false,
+  "performance_accepted": false,
+  "scientific_imports": 0,
+  "product_executions": 0
+}
