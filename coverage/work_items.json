@@ -29436,23 +29436,12 @@
       "id": "matrix-transform-public199-integration",
       "kind": "public_integration",
       "apis": [],
-      "owner": "resize_bench",
-      "branch": "integration/public199",
+      "owner": "astra_max_api_paths",
+      "branch": "integration/public199-skylakex",
       "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
       "state": "validating",
       "owns": [
-        "build/worktrees/matrix-transform-public/CMakeLists.txt",
-        "build/worktrees/matrix-transform-public/src/bindings.cpp",
-        "build/worktrees/matrix-transform-public/python/skimagexx/transform.py",
-        "build/worktrees/matrix-transform-public/python/skimagexx/coverage.py",
-        "build/worktrees/matrix-transform-public/tools/inventory.py",
-        "build/worktrees/matrix-transform-public/tools/public_qualification.py",
-        "build/worktrees/matrix-transform-public/tools/rank_statistics_products.py",
-        "build/worktrees/matrix-transform-public/tests/cmake_consumer/CMakeLists.txt",
-        "build/worktrees/matrix-transform-public/tests/test_matrix_transform_public.py",
-        "build/worktrees/matrix-transform-public/tests/test_matrix_transform_contracts.py",
-        "build/worktrees/matrix-transform-public/tests/test_public_qualification.py",
-        "build/worktrees/matrix-transform-public/tests/test_rank_statistics_products.py"
+        "build/resume-20261025/public199-review"
       ],
       "ownership_scope": "Exact isolated worktree paths distinguish independent candidate patches; root remains sole main/shared integration owner.",
       "public_registration": true,
@@ -29549,7 +29538,9 @@
           "bytes": 1246,
           "sha256": "0c13edbc485826ad2d57802d65a7961a919da8c1464e14eddda6819063cfa55b"
         }
-      }
+      },
+      "review_source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+      "source_worktree": "build/worktrees/public199-skylakex-readiness"
     },
     {
       "id": "max-tree-benchmark-reference",
@@ -29855,10 +29846,10 @@
       "id": "tv-finite-single-admission",
       "kind": "private_optimization",
       "apis": [],
-      "owner": "metrics_reductions",
+      "owner": "integrator",
       "branch": "feature/tv-finite-admission",
       "base_sha": "5e068a5a2267c3a917701d5348449972fad162a7",
-      "state": "validating",
+      "state": "performance_pending",
       "owns": [
         "src/tv_denoise.cpp",
         "src/bind_tv_chambolle.cpp",
@@ -29960,10 +29951,10 @@
       "id": "matrix-transform-skylakex-reference",
       "kind": "contract_reference",
       "apis": [],
-      "owner": "resize_bench",
+      "owner": "integrator",
       "branch": "feature/matrix-transform-skylakex",
       "base_sha": "52066265b89ceecf613c4a5f7d3b73c23b44d58d",
-      "state": "implementing",
+      "state": "contracted",
       "owns": [
         "tools/matrix_transform_skylakex_reference.py",
         "tests/test_matrix_transform_skylakex_reference.py",
@@ -30002,7 +29993,8 @@
           "build/matrix-windows-skylakex-arithmetic-audit"
         ],
         "protected_artifacts": []
-      }
+      },
+      "source_checkpoint": "52d20635fa294d1027d9eedb90dcdf6130de6485"
     },
     {
       "id": "iterative-threshold-contracts",
@@ -30011,10 +30003,10 @@
         "filters.threshold_li",
         "filters.threshold_multiotsu"
       ],
-      "owner": "resize_api",
+      "owner": "integrator",
       "branch": "feature/iterative-threshold-contracts",
       "base_sha": "0d9945460edab972f3af0942eaffaf159f6d4198",
-      "state": "contracting",
+      "state": "contracted",
       "owns": [
         "tests/test_iterative_threshold_contracts.py",
         "coverage/contracts/iterative-thresholds.json"
@@ -30049,6 +30041,61 @@
           "build/worktrees/iterative-threshold-contracts"
         ],
         "protected_artifacts": []
+      }
+    },
+    {
+      "id": "tv-single-admission-comparison-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "branch": "feature/tv-single-admission-compare",
+      "base_sha": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
+      "state": "validating",
+      "owns": [
+        "build/resume-20261025/tv-review",
+        "build/worktrees/tv-single-admission-compare/benchmarks/tv_chambolle_admission_compare.py",
+        "build/worktrees/tv-single-admission-compare/tools/tv_chambolle_admission_artifacts.py",
+        "build/worktrees/tv-single-admission-compare/tests/test_tv_chambolle_admission_compare.py",
+        "build/worktrees/tv-single-admission-compare/.github/workflows/tv-chambolle-admission-compare.yml"
+      ],
+      "depends_on": [
+        "tv-finite-single-admission"
+      ],
+      "dependency_requirements": {
+        "tv-finite-single-admission": {
+          "evidence_scope": "public_native",
+          "source_sha": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee"
+        }
+      },
+      "acceptance": {
+        "public_native": false,
+        "root_review_before_dispatch": true,
+        "local_operation_timings": false
+      }
+    },
+    {
+      "id": "reconstruction-native-kernel",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "resize_api",
+      "branch": "feature/reconstruction-kernel",
+      "base_sha": "b099375a45bcf184fb7f9d9078321b7cef638673",
+      "state": "implementing",
+      "owns": [
+        "build/worktrees/reconstruction-native/include/skimagexx/reconstruction.hpp",
+        "build/worktrees/reconstruction-native/src/reconstruction.cpp",
+        "build/worktrees/reconstruction-native/src/simd_reconstruction_avx2.cpp",
+        "build/worktrees/reconstruction-native/tests/test_reconstruction_native.cpp",
+        "build/worktrees/reconstruction-native/build/native-v1"
+      ],
+      "depends_on": [],
+      "acceptance": {
+        "new_public_acceptance": 0,
+        "preserve_reference_source": "600a403c1368b99e5d85200bc4f6eb6ed262ea0c",
+        "global_workers_default": 1,
+        "private_only": true,
+        "signed_zero_provider_frontier_explicit": true,
+        "local_operation_timings": false
       }
     }
   ],
@@ -30751,15 +30798,19 @@
     "exception_metadata_provider_names": 1
   },
   "execution_policy": {
-    "active_workers": [],
+    "active_workers": [
+      "astra_max_plan_audit",
+      "astra_max_api_paths",
+      "resize_api"
+    ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "On explicit goal resume, choose a ready packet and an idle one of the three recorded workers; bind the exact followup_task handoff after checking capacity. While paused, inspection and review do not launch implementation.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "paused",
-    "mode": "planning-review-only",
+    "implementation_goal_status": "active",
+    "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
       "metrics_reductions",
       "resize_api",
@@ -30768,21 +30819,21 @@
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "metrics_reductions": [
-        "tv-finite-single-admission",
-        "tv-chambolle-strided-cursor"
+      "astra_max_plan_audit": [
+        "tv-single-admission-comparison-review"
       ],
-      "resize_bench": [
-        "matrix-transform-skylakex-reference",
-        "matrix-transform-public199-integration",
-        "matrix-transform-profile-binding"
+      "astra_max_api_paths": [
+        "matrix-transform-public199-integration"
       ],
       "resize_api": [
-        "iterative-threshold-contracts",
-        "max-tree-public-benchmark-consumer"
+        "reconstruction-native-kernel"
       ]
     },
-    "current_three_agent_packets": {},
+    "current_three_agent_packets": {
+      "astra_max_plan_audit": "tv-single-admission-comparison-review",
+      "astra_max_api_paths": "matrix-transform-public199-integration",
+      "resize_api": "reconstruction-native-kernel"
+    },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -30923,7 +30974,7 @@
       "resize_api": "iterative-threshold-contracts",
       "resize_bench": "matrix-transform-skylakex-reference"
     },
-    "pause_rule": "No implementation launch, builds, measurements, hosted dispatch or merge of implementation candidates until explicit user resume. Current authorization covers Astra max plan review and planning artifacts only.",
+    "pause_rule": "An explicit later user pause stops new implementation; user resumed2026-10-25 with goal implement updated plan using3agents.",
     "paused_checkpoints": {
       "public199": {
         "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
@@ -30972,7 +31023,9 @@
         "unfinished_source_must_be_preserved": true
       }
     },
-    "ledger_freshness_boundary": "Historical packet state/queues and old current_* fields are preserved provenance, not live scheduling. paused_checkpoints supersedes them; reconcile source-scoped packet proofs before resuming. No evidence is promoted by this planning edit."
+    "ledger_freshness_boundary": "Current assignments and frozen source checkpoints were reconciled on explicit2026-10-25 resume; historical immutable proofs and failed runs remain unchanged. Agent liveness is checked separately.",
+    "resumed_goal": "implment the updated plan using 3 agents",
+    "resumed_date": "2026-10-25"
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
@@ -31720,7 +31773,7 @@
     "public_inventory_paths": 477,
     "historical_packets_not_completion_evidence": true,
     "review_completed_date": "2026-10-25",
-    "implementation_remains_paused": true,
+    "implementation_remains_paused": false,
     "api_routes": 477,
     "class_followup": {
       "classes": 29,
@@ -31738,6 +31791,7 @@
       "false measurement claim rejected",
       "class member omission rejected"
     ],
-    "remaining_evidence_boundary": "Planning routes and effort estimates are proposals, not newly implemented algorithms, accepted parity, or benchmark results."
+    "remaining_evidence_boundary": "Planning routes and effort estimates are proposals, not newly implemented algorithms, accepted parity, or benchmark results.",
+    "resumed_by_explicit_user_goal": "2026-10-25: implment the updated plan using3agents"
   }
 }

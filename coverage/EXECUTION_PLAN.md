@@ -1,5 +1,12 @@
 # Complete scikit-image implementation plan
 
+Execution resumed by explicit user request on 2026-10-25: implement this plan
+using three agents. Current assignments are in `work_items.json`: independent
+TV comparison review, independent public-199 candidate review, and reconstruction
+kernel validation. The paused planning snapshot below records the audit context;
+its prohibition on implementation has been superseded by this explicit resume.
+Existing acceptance gates and frozen evidence remain unchanged.
+
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,
