@@ -3,7 +3,7 @@
   "status": "root-accepted-qualified-public199",
   "source": "d92d9ff522047f4dd91c21620323454a0010863e",
   "run": "40166462583",
-  "controller_revision": "f8c7d2fd749e5c939454faee83bac918ba615ca1",
+  "controller_revision": "6b4a5635e4d55cd219d11ad2c13f90888bded310",
   "baseline": {
     "benchmarks/max_tree.py": "4b2419f98bd282585dbc041c090230653c421b38706f83ce3a6d7460a6547d13",
     "coverage/contracts/max-tree-benchmark.json": "09c9d36b548940d25dcd73cd9e59d5b5d8440bb4ae99ca1a0bdb404a8bb163bf",

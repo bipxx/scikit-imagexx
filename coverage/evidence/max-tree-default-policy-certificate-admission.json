@@ -1,10 +1,10 @@
 {
-  "schema": "root-max-tree-default-policy-certificate-admission-v1",
-  "controller_source": "f8c7d2fd749e5c939454faee83bac918ba615ca1",
+  "schema": "root-max-tree-default-policy-certificate-admission-v2",
+  "controller_source": "6b4a5635e4d55cd219d11ad2c13f90888bded310",
   "certificate": {
-    "path": "coverage/evidence/max-tree-default-policy-certificate.json",
+    "path": "coverage\\evidence\\max-tree-default-policy-certificate.json",
     "bytes": 6437,
-    "sha256": "decfba5b31256eff29bf8406a26d87fe108a3153733188a4eb664233044409a3"
+    "sha256": "714e1e3cf0015657c41f5573e8fd3075936b499ec92dae98b852bf37b6514b43"
   },
   "derivation": {
     "path": "build/resume-20261025/max-tree-default-comparison/certificate-v1/derivation.json",
@@ -25,5 +25,38 @@
   "numerical_calls": 0,
   "operation_timings": 0,
   "performance_accepted": false,
-  "failed_201_qualification_inherited": false
+  "failed_201_qualification_inherited": false,
+  "predecessor_admission": {
+    "path": "build\\resume-20261025\\max-tree-default-comparison\\certificate-v3\\prior-admission.json",
+    "bytes": 1757,
+    "sha256": "38b411e9ad5e31b6da65aa94a3a213a1a929311768d7cfeefbad83f45127691d"
+  },
+  "controller_checkout_admission": {
+    "path": "coverage\\evidence\\max-tree-controller-checkout-admission.json",
+    "bytes": 1419,
+    "sha256": "59b870fd077094c385e3fae71826b9f5713c604646c55906c9c7a9280a25172e"
+  },
+  "successor": "Only controller_revision forty bytes changed; all accepted product/runtime/baseline pins identical. Controller implementation raw-identical; -text checkout attribute and metadata controls added.",
+  "refreshed_artifact_APIs": [
+    {
+      "path": "build\\resume-20261025\\max-tree-default-comparison\\certificate-v3\\windows-artifact-api.json",
+      "bytes": 733,
+      "sha256": "55a1ca59e6fc06da1a768564e36f9a7c0e10c189da61c11e2f88af69c4a75083"
+    },
+    {
+      "path": "build\\resume-20261025\\max-tree-default-comparison\\certificate-v3\\modern-artifact-api.json",
+      "bytes": 732,
+      "sha256": "70f6b6768d157a4d53b38a3b3a4b0dbbb83aed46d36dcad2ce70099936d9099e"
+    },
+    {
+      "path": "build\\resume-20261025\\max-tree-default-comparison\\certificate-v3\\minimum-artifact-api.json",
+      "bytes": 733,
+      "sha256": "bed70ec166c3f9552922d348efdd7fb9cd614bef599231b647794d5bf8ea92f9"
+    }
+  ],
+  "successor_derivation": {
+    "path": "build\\resume-20261025\\max-tree-default-comparison\\certificate-v3\\derivation.json",
+    "bytes": 1228,
+    "sha256": "ecc2c12c22d6afe87e7935db90ddaabe53e60baa292ff1e2414849c9cc88f311"
+  }
 }
