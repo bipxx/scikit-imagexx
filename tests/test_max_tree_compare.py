@@ -544,3 +544,40 @@ def test_default_sweep_and_raw_retention_precede_timers_without_policy_override(
     precheck=ast.unparse(functions['default_precheck'])
     assert precheck.index('journal_append(journal, default_events(row)[-1])')<precheck.index("complete=backend == 'native'")
     old=functions['validate_all'];assert sum(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='errstate' for n in ast.walk(old))==2
+
+
+@pytest.mark.parametrize('autocrlf', ['false', 'true'])
+def test_controller_raw_bytes_survive_real_git_checkout(tmp_path, autocrlf):
+    # Cross-profile barrier hashes are raw bytes, unlike canonical-LF helpers.
+    name = 'benchmarks/max_tree_compare.py'
+    rule = (name + ' -text\n').encode()
+    attributes = (ROOT / '.gitattributes').read_bytes()
+    assert attributes.splitlines().count(rule.rstrip(b'\n')) == 1
+    source = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+    env = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+    env['GIT_ATTR_NOSYSTEM'] = '1'
+    results = {}
+    for marked in (False, True):
+        repo = tmp_path / ('marked' if marked else 'text-control')
+        repo.mkdir()
+        empty = repo / 'empty-global-attributes'
+        empty.write_bytes(b'')
+        actual = attributes if marked else attributes + (name + ' text eol=crlf\n').encode()
+        (repo / '.gitattributes').write_bytes(actual)
+        path = repo / name
+        path.parent.mkdir()
+        path.write_bytes(source)
+        def git(*args, conversion='false'):
+            return subprocess.run(['git', '-c', 'core.autocrlf=' + conversion,
+                '-c', 'core.attributesFile=' + str(empty), '-c', 'core.longpaths=true',
+                '-C', str(repo), *args], check=True, capture_output=True, env=env).stdout
+        git('init', '-q')
+        git('add', '.gitattributes', name)
+        # Exercise actual index materialization, not a hand-written EOL model.
+        checkout = repo / 'checkout'
+        git('checkout-index', '--all', '--force', '--prefix=' + checkout.as_posix() + '/', conversion=autocrlf)
+        results[marked] = (checkout / name).read_bytes()
+    assert results[True] == source
+    assert hashlib.sha256(results[True]).digest() == hashlib.sha256(source).digest()
+    assert results[False] == source.replace(b'\n', b'\r\n')
+    assert hashlib.sha256(results[False]).digest() != hashlib.sha256(source).digest()

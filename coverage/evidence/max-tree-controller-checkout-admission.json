@@ -1,0 +1,29 @@
+{
+  "schema": "root-max-tree-controller-checkout-admission-v1",
+  "predecessor": "f8c7d2fd749e5c939454faee83bac918ba615ca1",
+  "disposition": "Accepted byte-preserving controller attribute and two real Git-checkout metadata controls; controller implementation unchanged.",
+  "suite": {
+    "path": "build\\resume-20261025\\max-controller-checkout-full-v1\\tests.xml",
+    "bytes": 23704,
+    "sha256": "d37ca16f19bacf751943dc6ae41f5ad1579d45a1d633b1999c0f6f320ac907a3"
+  },
+  "exit": {
+    "path": "build\\resume-20261025\\max-controller-checkout-full-v1\\exit.json",
+    "bytes": 42,
+    "sha256": "14a6d638412d9c5ba398628b8caff59cd7e470650603dfb574c6696f74dbcb76"
+  },
+  "runner": {
+    "path": "build\\resume-20261025\\max-controller-checkout-full-v1\\run.py",
+    "bytes": 732,
+    "sha256": "06bd6d8554e86f73d620e69d89526a60864c5fc73264fc911ae96b75a8be593f"
+  },
+  "passed": 174,
+  "numerical_imports": 0,
+  "image_calls": 0,
+  "builds": 0,
+  "operation_timings": 0,
+  "controls": "Actual checkout-index under core.autocrlf=false/true: marked controller byte-exact; deliberate text eol=crlf control differs.",
+  "preserved": "Benchmark controller raw bytes and helper/workflow canonical-LF sources equal reviewed f8c7. Existing scientific controls remain unchanged.",
+  "prior_failed_preflight": "build/resume-20261025/max-tree-default-comparison/dispatch-v1; no POST occurred.",
+  "performance_accepted": false
+}

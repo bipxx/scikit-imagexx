@@ -173,3 +173,6 @@ coverage/evidence/max-tree-default-policy-source-plan.json -text
 coverage/evidence/max-tree-default-policy-source-admission.json -text
 coverage/evidence/max-tree-default-policy-certificate.json -text
 coverage/evidence/max-tree-default-policy-certificate-admission.json -text
+benchmarks/max_tree_compare.py -text
+coverage/evidence/max-tree-controller-checkout-admission.json -text
+coverage/evidence/tv-positive-zero-private-admission.json -text
