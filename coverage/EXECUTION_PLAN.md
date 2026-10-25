@@ -460,3 +460,32 @@ The following records remain authoritative only for their own exact sources:
 | Archive and worktree retention | [Released metadata scratch cleanup](evidence/released-metadata-scratch-cleanup-20261024.json) and [TV admission worktree retirement](evidence/tv-admission-public-worktree-retirement.json) preserve archived files, redirects, and protected/rejected paths. They are not instructions to delete other worktrees. |
 
 The merged publisher worktree has been [retired with all proof bytes archived](evidence/shared-publication-worktree-retirement.json); active environments, donor products and benchmark inputs remain protected.
+
+
+## Execution checkpoint: 2026-10-25, combined H203 and TV
+
+The authoritative current snapshot is
+[checkpoint v2](evidence/parallel-implementation-checkpoint-20261025-v2.json).
+Earlier handoff tables and checkpoints remain historical. Accepted image coverage
+is still 199 native-partial paths; no full-library or new speedup claim follows.
+
+Three workers are assigned independently: A reviews the frozen original-only
+colocalization reference; B implements its three owned native APIs in new files;
+C prepares source-first contracts for the remaining footprint family. The root
+owns shared integration, admissions, hosted qualification and performance review.
+
+TV's helper-only optimization has passed private parity and is merged to main.
+Combined source `7417676` includes it, H203 and the independently reviewed
+reconstruction internal-tie assertion repair. Hosted qualification run
+[40200919182](https://github.com/bipxx/scikit-imagexx/actions/runs/40200919182)
+was dispatched once for four fresh profiles; it has no product acceptance yet.
+The failed201 predecessor remains failed with all raw observations retained.
+
+Independent max-tree comparison
+[40200431797](https://github.com/bipxx/scikit-imagexx/actions/runs/40200431797)
+reuses exact accepted199 products, authenticates ordinary defaults on preparation
+hosts and gates new artifact-only one-worker measurement hosts. It does not
+depend on H203, rebuild a product, or measure current unqualified source.
+Keep every timing/regression and separate optional-worker scaling from the
+required one-worker original-library comparison. Source review, private parity,
+qualified product and measured performance remain separate acceptance boundaries.
