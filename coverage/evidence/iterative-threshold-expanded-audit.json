@@ -1,0 +1,70 @@
+{
+  "schema": "iterative-threshold-expanded-reference-and-audit-v1",
+  "reference_source": "1329cbb9a6f514a19936938936ba066ae8698dde",
+  "default_policy_source": "337ba1b5d759af3d056415a1f682b73f845242b0",
+  "main_merge": "767e2ca004bcc173a6f202d63e558726033b8a6f",
+  "qualified_native_product_source": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+  "root_review": {
+    "path": "build/resume-20261025/threshold-review/manifest.json",
+    "bytes": 1146,
+    "sha256": "ccc18431db5efea08475d9b83f48b3a059072bc349e295a596ec63800c120de3"
+  },
+  "reference_checks": {
+    "expanded_cases_per_runtime": 312,
+    "expanded_checks_per_runtime": 336,
+    "default_policy_cases_per_runtime": 40,
+    "default_policy_checks_per_runtime": 43,
+    "runtimes": 3,
+    "combined_checks": 1137
+  },
+  "expanded312_native_audit": {
+    "projections": 3744,
+    "per_projection": {
+      "exact_CPP_solver": 72,
+      "exact_provider_or_preparation": 32,
+      "explicit_unsupported": 198,
+      "source_allocation_failure_controls_not_injected": 3,
+      "unsafe_not_executed": 7
+    },
+    "complete_corpus_parity": false,
+    "admitted_solver_mismatches": 0,
+    "upstream_forwarding_attempts": 0
+  },
+  "Li_default40_native_audit": {
+    "projections": 480,
+    "actual_CPP_solver_exact_matches": 456,
+    "intentional_warning_policy_unsupported": 24,
+    "per_projection": {
+      "exact_CPP_solver": 38,
+      "underflow_warn_unsupported": 2
+    },
+    "actual_parallel_team_measured": false,
+    "full_API_parity": false
+  },
+  "source_artifacts": [
+    {
+      "path": "build/worktrees/iterative-threshold-contracts/build/iterative-threshold-evidence/manifest.json",
+      "bytes": 28755,
+      "sha256": "a196e9168ad86372c57aaaadac3dc55d4963cb316d785a925af255043b742e99"
+    },
+    {
+      "path": "build/worktrees/iterative-threshold-contracts/build/native-audit/manifest-v1.json",
+      "bytes": 72282,
+      "sha256": "747470e28247cef4057496fcf93dd067a1647cb759eea4bb38a0288c47f95436"
+    },
+    {
+      "path": "build/worktrees/li-default-policy-contracts/build/li-default-reference/manifest.json",
+      "bytes": 10994,
+      "sha256": "ea5702f875312d72c794ce67a59a83394095b99563dd0f51b8c1bc2ef8aea929"
+    }
+  ],
+  "scientific_contract_hashes": {
+    "coverage/contracts/iterative-thresholds.json": "34ea03c49663324c8169069884391fe3bacc311476a78dbe8999e6dbfbe3e95e",
+    "coverage/contracts/li-default-policy.json": "8c9e2ed1532535a80f3dda715cf91dfcdbc2323aa713a1c1094cb462a10ff44c"
+  },
+  "new_native_paths": 0,
+  "production_source_changes": 0,
+  "performance_acceptance": false,
+  "pending": "Extend admitted dtype/provider/error-policy/callback domains with unchanged public semantics; isolated original-library one-worker measurements remain required.",
+  "preserved_root_reader_failures": "v1 included internal source witnesses;v2 assumed executed fields on deliberately unexecuted unsafe metadata rows. Both scripts/failure receipts retained;v3 independently verifies exact frozen public-observation projection and unsafe zero-entry cases."
+}

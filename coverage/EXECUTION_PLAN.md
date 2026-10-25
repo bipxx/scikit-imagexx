@@ -7,6 +7,13 @@ kernel validation. The paused planning snapshot below records the audit context;
 its prohibition on implementation has been superseded by this explicit resume.
 Existing acceptance gates and frozen evidence remain unchanged.
 
+Resume progress: threshold references `1329cbb` and `337ba1b` are reviewed and
+merged as `767e2ca`. Their [expanded audit](evidence/iterative-threshold-expanded-audit.json)
+verifies 1,137 original-reference checks and distinguishes 456 default-policy
+Li solver matches from 24 unsupported warning-policy projections. The broader
+312-case audit retains its unsupported/provider/unsafe partitions. This adds no
+native API paths or performance result.
+
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,

@@ -30015,14 +30015,16 @@
       "contract": {
         "case_manifest": "coverage/contracts/iterative-thresholds.json",
         "uncovered_cases": [
-          "Root review and publication of expanded original312-case reference plus private actual-qualified audit; both APIs already have native-partial implementations and this packet adds zero public paths.",
-          "Extend existing native admitted domains, full hot-swap parity, global workers/SIMD and isolated one-worker original-library performance; current audit has72solver/32preparation matches,198unsupported,3provider controls and7unsafe cases per312projection."
+          "Extend existing native dtype/provider/error-policy/callback domains; expanded312corpus still198unsupported+3providercontrols+7unsafe perprojection.",
+          "Original-library one-worker performance and full hot-swap parity remain pending; no new paths added."
         ]
       },
       "parity": {
-        "source_sha": null,
-        "artifact_sha256": null,
-        "runs": []
+        "source_sha": "337ba1b5d759af3d056415a1f682b73f845242b0",
+        "artifact_sha256": "ccc18431db5efea08475d9b83f48b3a059072bc349e295a596ec63800c120de3",
+        "runs": [
+          "build/resume-20261025/threshold-review/manifest.json"
+        ]
       },
       "performance": {
         "reference": "scikit-image==0.26.0",
@@ -30033,14 +30035,29 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "337ba1b5d759af3d056415a1f682b73f845242b0",
+        "main_commit": "767e2ca004bcc173a6f202d63e558726033b8a6f"
       },
       "retention": {
         "active_paths": [
           "build/worktrees/iterative-threshold-contracts"
         ],
-        "protected_artifacts": []
+        "protected_artifacts": [
+          "build/worktrees/iterative-threshold-contracts/build/native-audit",
+          "build/worktrees/li-default-policy-contracts/build/li-default-reference"
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "337ba1b5d759af3d056415a1f682b73f845242b0",
+          "passing_contract_checks": 1137,
+          "manifest": {
+            "path": "coverage/evidence/iterative-threshold-expanded-audit.json",
+            "bytes": 3047,
+            "sha256": "6dc3ae976c4232f7ffbc24429957ae089b6cf35f7f3218b71ac282b6fbc5d9a0"
+          }
+        }
       }
     },
     {
