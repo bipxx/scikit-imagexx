@@ -17,12 +17,17 @@
   },
   "scope": "Four descriptor byte ranges added to checked readonly spans before stores; safe one-sample alias rejection tests. No arithmetic, provider, reference corpus, tolerance, signature or installed header changes.",
   "source_review": "Root read exact two-file diff; original finding d3237bf139b605bdd66e9b7de3eee00b7f26c902121c580f5537b01e1ab2ab99 retained.",
-  "private_successor_admission_pending": true,
+  "private_successor_admission_pending": false,
   "whole_product_accepted": false,
   "cumulative_main_base": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
   "includes_separately_reviewed": [
     "0322181242535eb2337dd6ae717abeed1f9bfc75",
     "2abd0acc9b421d80a6554a840e603c0bc731f5fc"
   ],
-  "source_only": true
+  "source_only": true,
+  "root_private_admission": {
+    "path": "coverage/evidence/reconstruction-descriptor-private-admission.json",
+    "bytes": 1557,
+    "sha256": "b7eceff09b635959aa6bdc27b7579851731dff342c2c3473ecaea4a45e5d9b53"
+  }
 }
