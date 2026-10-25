@@ -6,39 +6,44 @@ Implementation is active. The [work queue](work_items.json) owns assignments and
 file ownership; older status paragraphs below are historical. Accepted coverage
 remains **199 native-partial image APIs**, against the unchanged full inventory.
 
-- A: Windows H checkout-rule / Windows-only diagnostic successor; preserve
-  successful Linux results.
-- B: footprint null-root and complex-radius source repair in a separate worktree.
-- C: colocalization test credit classification repair in a separate worktree.
-- Root: review and integrate bounded source, authorize exact gates and retain
-  hosted results. Original sources and failed runs remain frozen.
+Status checked at **2026-10-25 22:05 UTC**. Three existing agents completed a
+parallel read-only review of the seven compilexx notebooks; no production builds
+were launched by that review. The queue's production assignments are recorded
+ownership, not a live process query. Applicable changes below refine existing
+handoffs and gates without adding another orchestration framework.
 
-The complete modern colocalization normal gate finished: **1,055 passed,
-18 failed**, all 1,072 saved rows matching the nine original semantic fields.
-The failures are solely a final test assertion omitting the declared nonfinite
-provider route. All 236 ordinary native-only projections passed. The successor
-must preserve every semantic assertion, provider witness and zero-native-credit
-boundary; scalar has not run. Focused native controls passed modern 387,
-portable 195 and sanitizer 387.
+Modern [colocalization private parity](evidence/colocalization-modern-private-parity-checkpoint.json)
+now has **1,072 passing normal assertion replays** and a fresh **1,073-pass scalar
+gate**. The original normal pytest outcome remains 1,055 passed / 18 failed;
+the source-derived test-only repair preserves every semantic assertion and zero
+native credit for provider-only rows. Other-profile parity and public/SDK
+integration remain pending. Focused native controls passed modern 387,
+portable 195 and sanitizer 387; minimum/Windows corrected native controls are next.
 
-The complete footprint normal gate finished: **62 passed, 391 failed**. Null
-ndarray base handling caused 388 case failures plus the alignment guard failure;
-complex-radius octahedron caused two more. Downstream geometry is mostly
-unassessed. A six-file successor will fix the actual binding boundary and use
-explicit NumPy complex magnitudes with native L1 comparison. Keep all 226 frozen
-expectations. See [full causal diagnoses](evidence/private-normal-gate-failure-diagnosis.json).
+Footprint source `ad6f4cf` repairs the actual null-root and finite-complex
+boundary defects. Modern normal and scalar gates each have **454 passed,
+zero failures/errors/skips**; independent review verifies **904 exact rows**
+against the frozen 226-case originals. NumPy providers remain explicit.
+Other profiles, public integration, SDK acceptance and performance are pending.
+The [original causal diagnoses](evidence/private-normal-gate-failure-diagnosis.json)
+and failed ce3d run remain unchanged. Raw review:
+`build/resume-20261025/footprint-ad6-modern-parity-independent-review/final-review.json`.
 
-H diagnostic `40228411066` uses exact failed741 binaries without rebuilding.
-Modern and minimum passed; Windows failed in stdlib metadata before the H
-product step; Debug was last observed active. Original whole qualification
-`40200919182` stays failed. Any successful diagnostic remains distinct from a
-fresh whole-product qualification.
+The [four-profile H diagnostic](evidence/h-four-profile-installed-diagnostic.json)
+passed on exact failed741 binaries: **28,352 rows**, including 448 blocked
+zero-call cases. Windows-only successor `40231513839` passed. Fresh ea35
+whole-product qualification [40237475475](https://github.com/bipxx/scikit-imagexx/actions/runs/40237475475)
+is in progress; retain and verify that exact run before accepting new coverage.
+Original whole qualification `40200919182` stays failed.
 
 Max-tree comparison `40200431797` ended cancelled: minimum preparation hit the
 explicit six-hour limit; Windows and modern preparation passed, measurement was
-skipped. Three receipt ZIPs are retained and independently verified. Review a
-six-job profile/mode preparation split before another dispatch, preserving all
-cases, workers 1/4 and the isolated one-worker measurement method. See the
+skipped. Three receipt ZIPs are retained and independently verified. The reviewed
+six-job profile/mode split is merged as `834b1ae`; successor
+[40237980827](https://github.com/bipxx/scikit-imagexx/actions/runs/40237980827)
+is in progress, preserving all cases, workers 1/4 and the isolated one-worker
+measurement method. Require all six fresh receipts; do not redispatch or relabel
+old partial receipts. No new timing is accepted. See the
 [terminal record](evidence/max-tree-default-comparison-timeout.json).
 
 The TV comparator source and exact metadata dependency are integrated as
@@ -53,7 +58,7 @@ record lessons; this card and the queue own live execution state.
 ## Historical execution notes
 
 Execution resumed by explicit user request on 2026-10-25: implement this plan
-using three agents. Current lanes: A owns the H floating production successor;
+using three agents. At that checkpoint, A owned the H floating production successor;
 B independently diagnoses failed public200 and reviews the new TV campaign;
 C owns H original references and the historical assertion migration plan.
 Root owns shared registration, CMake, public integration and final acceptance.
@@ -139,7 +144,7 @@ pending; old run40163025231 stays diagnostic. Agent C's prospective16 terrain
 supplement fills the original48 cohort's marker/barrier/high-cardinality gaps.
 Agents A/B are independently reviewing each other's sealed private successors.
 
-Current authoritative checkpoint: [parallel implementation evidence](evidence/parallel-implementation-checkpoint-20261025.json).
+Historical checkpoint: [parallel implementation evidence](evidence/parallel-implementation-checkpoint-20261025.json).
 Original public200 source2835001/run40174473080 is terminal failed across four
 profiles, fully retained and unaccepted. Independent actual-failure diagnosis is
 in progress. The inventory prebuild guard is merged as de5e669; candidate source
@@ -400,6 +405,9 @@ Keep four distinct gates:
    scalar/SIMD modes, default-one/optional workers, error/state behavior, and
    appropriate native/sanitizer/portable cases. A temporary adapter is private
    evidence only.
+   Before the broad campaign, reuse the relevant schema/checkout regressions and
+   run one ordinary owned-array call through each changed binding. Check the
+   required cohort identities, not only a nonempty green XML or total count.
 3. **Public product gate:** freeze source, wheel, SDK, dependency versions and
    build/runtime identity; run the existing genuine four-profile whole-product
    qualification for the actual cumulative candidate. The family gate catches
@@ -424,6 +432,12 @@ verified immutable object by content hash and exact source/dependency scope;
 never infer current behavior from a historical test count or relabel a product.
 Fresh changed-source execution remains necessary. Do not repeatedly copy and
 manually replay unchanged archives solely to create a new administrative seal.
+State the changed inputs and reused receipt/closure explicitly in the existing
+handoff. Do not add a separate manifest or controller just to repeat that split.
+Name the next missing gate, owner and public/SDK integration destination in each
+private family's existing packet. For future footprint observations, reuse the
+colocalization node-to-raw-file mapping so worker identity is independently
+recoverable. Preserve current evidence without inventing per-row labels.
 
 Prepare performance corpora with the contract, and measure each newly qualified
 family promptly. Existing comparisons already identify useful work: metrics,
@@ -433,6 +447,12 @@ absolute time and representative workload impact, not only large speedup ratios
 on tiny calls. Keep allocation/conversion/setup costs visible. Asset/I/O APIs
 need reproducible fixture and cache-state measurements; metadata and state-only
 APIs need relevant latency/behavior checks, not invented image throughput.
+At the next qualified function, update its existing performance record with the
+corpus, qualified product, measurement or precise blocker, worst retained
+absolute regression, and next owner. After the current review, reserve one
+execution lane for a measured bottleneck; choose its case from retained absolute
+costs rather than a geometric mean. Missing absolute-cost data is a reporting
+gap, not a reason to guess the most important case or claim it optimized.
 
 No local timing experiments. Hosted timing uses one native worker and one
 original provider thread, matched inputs, repeated paired rounds, and recorded
@@ -516,7 +536,7 @@ The merged publisher worktree has been [retired with all proof bytes archived](e
 
 ## Execution checkpoint: 2026-10-25, combined H203 and TV
 
-The authoritative current snapshot is
+The historical snapshot for this checkpoint is
 [checkpoint v2](evidence/parallel-implementation-checkpoint-20261025-v2.json).
 Earlier handoff tables and checkpoints remain historical. Accepted image coverage
 is still 199 native-partial paths; no full-library or new speedup claim follows.
