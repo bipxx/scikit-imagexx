@@ -94,6 +94,23 @@ template<class T> std::uint64_t bits(T value) {
 }
 bool zero_bytes(const void* pointer,std::size_t bytes) {
     const auto* data=static_cast<const unsigned char*>(pointer);
+    // Integer loads preserve the exact positive-zero byte contract, including
+    // arbitrary alignment and nonfinite bit patterns. Each load is wholly
+    // inside the certified extent; the remainder tests cannot overflow.
+    while(bytes>=64) {
+        std::uint64_t a,b,c,d,e,f,g,h;
+        std::memcpy(&a,data,8);std::memcpy(&b,data+8,8);
+        std::memcpy(&c,data+16,8);std::memcpy(&d,data+24,8);
+        std::memcpy(&e,data+32,8);std::memcpy(&f,data+40,8);
+        std::memcpy(&g,data+48,8);std::memcpy(&h,data+56,8);
+        if(a|b|c|d|e|f|g|h)return false;
+        data+=64;bytes-=64;
+    }
+    while(bytes>=8) {
+        std::uint64_t word;std::memcpy(&word,data,8);
+        if(word)return false;
+        data+=8;bytes-=8;
+    }
     for(std::size_t i=0;i<bytes;++i)if(data[i])return false;
     return true;
 }
