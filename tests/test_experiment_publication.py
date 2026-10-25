@@ -310,6 +310,7 @@ def test_positive_zero_workflow_keeps_complete_preparation_barrier_and_isolated_
     assert 'default: reviewed-experiment' in source
     assert 'source_revision:' in source and "os.environ['GITHUB_SHA'] != expected" in source
     assert "['git', 'rev-parse', 'HEAD']" in source
+    assert 'git fetch --no-tags --depth=1 origin ' + REVISION in source.split('  prepare:\n', 1)[0]
     assert 'contents: read' in source and 'actions: read' in source and ': write' not in source
     preparation = source.split('  prepare:\n', 1)[1].split('  barrier:\n', 1)[0]
     barrier = source.split('  barrier:\n', 1)[1].split('  measure:\n', 1)[0]

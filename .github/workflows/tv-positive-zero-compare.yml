@@ -42,6 +42,8 @@ jobs:
           if actual != expected or os.environ['GITHUB_SHA'] != expected:
               raise SystemExit('Selected workflow/controller revision differs.')
           PY
+      - name: Fetch only the synthetic publisher fixture controller
+        run: git fetch --no-tags --depth=1 origin 9340b1cd4232d89676335c301a41817d34280db9
       - run: python -m pip install pytest==9.1.1
       - run: python -m pytest -q --capture=sys tests/test_tv_positive_zero_compare.py tests/test_experiment_publication.py -p no:cacheprovider
         env:
