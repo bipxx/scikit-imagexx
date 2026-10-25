@@ -1,6 +1,7 @@
 #include "skimagexx/metrics.hpp"
 #include "skimagexx/image.hpp"
 #include <cmath>
+#include <cfenv>
 #include <cstring>
 #include <iostream>
 #include <limits>
@@ -8,6 +9,15 @@
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
+#if defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__i386__)
+#include <immintrin.h>
+#define METRIC_TEST_MXCSR 1
+#endif
+#ifdef SKIMAGEXX_AVX2
+namespace skimagexx::simd {
+bool metric_swapped_f32_range(const unsigned char*,std::size_t,MetricRawRange&);
+}
+#endif
 using namespace skimagexx;
 namespace {
 void require(bool value){if(!value)throw std::runtime_error("metric native check failed");}
@@ -137,6 +147,116 @@ void half_load_layouts() {
         }
     }
 }
+
+void swapped_raw_range_contract() {
+    std::fenv_t saved;require(std::fegetenv(&saved)==0);
+#ifdef METRIC_TEST_MXCSR
+    const auto saved_csr=_mm_getcsr();
+#endif
+    std::size_t checks=0;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2())for(std::size_t count=0;count<8;++count) {
+        MetricRawRange result{1,2,true};
+        // The explicit small-count contract makes null storage valid here:
+        // these calls must return without attempting any read.
+        require(!simd::metric_swapped_f32_range(nullptr,count,result));
+        require(result.low==1 && result.high==2 && result.has_nan);
+        ++checks;
+    }
+#endif
+    for(const int rounding:{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO})
+    for(const unsigned denormals:{0u,1u}) {
+        require(std::fesetround(rounding)==0);
+#ifdef METRIC_TEST_MXCSR
+        _mm_setcsr((_mm_getcsr()&~0x8040u)|(denormals ? 0x8040u:0u));
+#else
+        if(denormals)continue;
+#endif
+        for(const std::size_t width:{1u,2u,3u,4u,5u,6u,7u,8u,9u,10u,15u,16u,17u,31u,32u,33u,127u,128u,129u,513u})
+        for(unsigned pattern=0;pattern<10;++pattern)
+        for(unsigned alignment=0;alignment<2;++alignment) {
+            const auto n=3*width,bytes=n*4+alignment,control_bytes=(n-1)*8+4+alignment;
+            // Exact allocation ends expose any vector or scalar tail overread
+            // under ASan. The sparse control uses the unchanged scalar path.
+            auto storage=std::make_unique<unsigned char[]>(bytes),control=std::make_unique<unsigned char[]>(control_bytes);
+            std::memset(storage.get(),0xcd,bytes);std::memset(control.get(),0xcd,control_bytes);
+            for(std::size_t i=0;i<n;++i) {
+                std::uint32_t bits=(std::uint32_t(i%254)+1u)<<23;
+                bits|=std::uint32_t(i*48271u)&0x007fffffu;
+                if(i%3==0)bits|=0x80000000u;
+                if(pattern==9)bits=0xbf800000u;
+                if(pattern==8)bits=(i&1 ? 0x80000000u:0u)|std::uint32_t(i%0x007fffffu+1);
+                if(pattern==7)bits=i&1 ? 0x80000000u:0u;
+                if(pattern==6)bits=i&1 ? 0xffc00017u:0x7f800001u;
+                if((i==0 || i==n/2 || i==n-1) && pattern>=1 && pattern<=5) {
+                    const std::uint32_t special[]={0,0,0x00000001u,0x7f800000u,0x7fc00011u,0x7f800003u};
+                    bits=special[pattern]|(i&1 ? 0x80000000u:0u);
+                }
+                unsigned char native[4];std::memcpy(native,&bits,4);
+                for(std::size_t j=0;j<4;++j)storage[alignment+4*i+j]=control[alignment+8*i+j]=native[3-j];
+            }
+            const std::vector<unsigned char> before(storage.get(),storage.get()+bytes);
+            for(unsigned layout=0;layout<5;++layout) {
+                MetricImageView dense{storage.get()+alignment,PixelType::float32,false,true,{3,width},{std::ptrdiff_t(4*width),4}};
+                if(layout==1)dense.strides={4,12};
+                if(layout==2){dense.data=storage.get()+alignment+4*(n-1);dense.strides={-std::ptrdiff_t(4*width),-4};}
+                if(layout==3){dense.data=storage.get()+alignment+4*(width-1);dense.strides={std::ptrdiff_t(4*width),-4};}
+                if(layout==4){dense.shape={4,3,width};dense.strides={0,4,12};}
+                auto sparse=dense;
+                sparse.data=control.get()+alignment+2*(static_cast<const unsigned char*>(dense.data)-(storage.get()+alignment));
+                for(auto& stride:sparse.strides)stride*=2;
+                std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+#ifdef METRIC_TEST_MXCSR
+                _mm_setcsr(_mm_getcsr()&~0x02u); // Clear nonstandard denormal status identically.
+#endif
+                const auto actual=metric_raw_range(dense);const int actual_flags=std::fetestexcept(FE_ALL_EXCEPT);
+#ifdef METRIC_TEST_MXCSR
+                const auto actual_csr=_mm_getcsr();
+#endif
+                std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+#ifdef METRIC_TEST_MXCSR
+                _mm_setcsr(_mm_getcsr()&~0x02u);
+#endif
+                const auto expected=metric_raw_range(sparse);const int expected_flags=std::fetestexcept(FE_ALL_EXCEPT);
+                require(actual.low==expected.low && actual.high==expected.high && actual.has_nan==expected.has_nan);
+                require(actual_flags==expected_flags && std::fegetround()==rounding);
+#ifdef METRIC_TEST_MXCSR
+                require(actual_csr==_mm_getcsr());
+#endif
+                ++checks;
+            }
+#ifdef SKIMAGEXX_AVX2
+            if(has_avx2()) {
+                MetricRawRange result{0x0123456789abcdefULL,0xfedcba9876543210ULL,true};
+                std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+                const int flags=std::fetestexcept(FE_ALL_EXCEPT);
+#ifdef METRIC_TEST_MXCSR
+                const auto csr=_mm_getcsr();
+#endif
+                const bool admitted=simd::metric_swapped_f32_range(storage.get()+alignment,n,result);
+                require(admitted==(n>=8 && (pattern==0 || pattern==9)));
+                if(!admitted)require(result.low==0x0123456789abcdefULL && result.high==0xfedcba9876543210ULL && result.has_nan);
+                else {
+                    const MetricImageView sparse{control.get()+alignment,PixelType::float32,false,true,{n},{8}};
+                    const auto expected=metric_raw_range(sparse);
+                    require(result.low==expected.low && result.high==expected.high && result.has_nan==expected.has_nan);
+                }
+                require(flags==std::fetestexcept(FE_ALL_EXCEPT));
+#ifdef METRIC_TEST_MXCSR
+                require(csr==_mm_getcsr());
+#endif
+                ++checks;
+            }
+#endif
+            require(!std::memcmp(storage.get(),before.data(),bytes));
+        }
+    }
+    require(std::fesetenv(&saved)==0);
+#ifdef METRIC_TEST_MXCSR
+    _mm_setcsr(saved_csr);
+#endif
+    std::cout<<"Swapped float32 exact raw-range/FEnv checks passed: "<<checks<<"\n";
+}
 }
 void leaf_order_regression() {
     for(const auto n:{1u,3u,4u,7u,8u,9u,15u,16u,17u,31u,32u,33u,63u,64u,65u,127u,128u,129u,255u,256u,257u,8193u}) {
@@ -155,6 +275,7 @@ void leaf_order_regression() {
     }
 }
 int main() {
+    swapped_raw_range_contract();
     leaf_order_regression();
     reverse_rows<float>(PixelType::float32,true);reverse_rows<double>(PixelType::float64,false);
     require(get_num_threads()==1);
