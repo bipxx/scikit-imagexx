@@ -130,9 +130,13 @@ def observe(spec, factory, np, original, journal):
         raise
     journal(row)
     assert row['restored'] and row['entry_identity_preserved']
-    # Source ellipse(crosses) recursively calls the same Python function once
-    # with decomposition=None. These are genuine entries, not duplicate trials.
-    nested = int(spec['api'] == 'ellipse' and spec['kwargs'].get('decomposition') == 'crosses')
+    # Three source branches recurse once into their own dense generator. These
+    # are genuine entries, not independent cases or repeated capture attempts.
+    api, mode = spec['api'], spec['kwargs'].get('decomposition')
+    nested = int((api == 'ellipse' and mode == 'crosses') or
+                 (api == 'octahedron' and mode == 'sequence') or
+                 (api == 'octagon' and mode == 'sequence' and
+                  spec['args'][0] <= 2 and spec['args'][1] <= 2))
     assert counts == dict(outer_call=1, outer_return=1, nested_call=nested,
                           nested_return=nested, total_call=1+nested, total_return=1+nested)
     return row

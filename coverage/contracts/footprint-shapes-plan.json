@@ -2969,7 +2969,7 @@
   "original_calls": 0,
   "owned_source_sha256": {
     "tests/footprint_shapes_cases.py": "e1ce05c037c5d6f34233908fd6f802c5d8617b3c0e150fa4ecb6ed4e495f0439",
-    "tests/footprint_shapes_reference.py": "066e49eee815720176362e8b46f74f017a6094fdb346d22c24c49d8f88b49de8"
+    "tests/footprint_shapes_reference.py": "cd5014091819d9055da6c7a9a0a10794cf6382bd75efe89268cc2743151d4ea2"
   },
   "parity": {
     "errors": "exact class/module/message, ordered warnings",

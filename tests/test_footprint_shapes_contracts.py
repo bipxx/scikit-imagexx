@@ -41,11 +41,18 @@ class ProspectiveContracts(unittest.TestCase):
         self.assertEqual(counts['outer_call'], 2)
         self.assertEqual(counts['outer_return'], 2)
 
-    def test_source_declared_ellipse_recursion(self):
+    def test_source_declared_all_generator_recursion(self):
         rows = load_factory().cases()
-        crosses = [x for x in rows if x['api'] == 'ellipse'
-                   and x['kwargs'].get('decomposition') == 'crosses']
-        self.assertEqual(len(crosses), 20)
+        def expected(row):
+            api, mode = row['api'], row['kwargs'].get('decomposition')
+            return int((api == 'ellipse' and mode == 'crosses') or
+                       (api == 'octahedron' and mode == 'sequence') or
+                       (api == 'octagon' and mode == 'sequence' and
+                        row['args'][0] <= 2 and row['args'][1] <= 2))
+        self.assertEqual({api:sum(expected(x) for x in rows if x['api'] == api)
+                          for api in load_factory().APIS},
+                         dict(ellipse=20, octagon=6, octahedron=17, star=0,
+                              footprint_from_sequence=0))
         tree = ast.parse((ROOT / 'tests/footprint_shapes_reference.py').read_bytes())
         observe = next(x for x in tree.body if isinstance(x, ast.FunctionDef) and x.name == 'observe')
         assigned = next(x.value for x in observe.body if isinstance(x, ast.Assign)
@@ -53,7 +60,8 @@ class ProspectiveContracts(unittest.TestCase):
         expression = ast.Expression(assigned)
         for row in rows:
             self.assertEqual(eval(compile(expression, '<source-counter-rule>', 'eval'),
-                                  {'int': int}, {'spec': row}), int(row in crosses))
+                                  {'int': int}, {'spec': row, 'api':row['api'],
+                                                'mode':row['kwargs'].get('decomposition')}), expected(row))
 
     def test_unique_partition(self):
         factory = load_factory()
