@@ -203,8 +203,23 @@ LiImage::LiImage(const void* source,std::size_t n,PixelType type):impl_(new Impl
         const auto* values=static_cast<const unsigned char*>(source);const bool first=values[0]!=0;
         s.kind=LiKind::constant;s.early=first;
         for(std::size_t i=1;i<n;++i)if((values[i]!=0)!=first){s.kind=LiKind::boolean_error;break;}
-    } else if(type==PixelType::uint8) {
+    } else if(type==PixelType::uint8 || type==PixelType::uint16) {
+        std::vector<std::uint8_t> packed;
         const auto* values=static_cast<const std::uint8_t*>(source);
+        if(type==PixelType::uint16) {
+            // This bounded partition has exactly the existing byte histogram.
+            // Check the sample bound before touching caller storage. No uint16
+            // value outside 0..255 is admitted, including constant inputs.
+            if(n>2147483647){s.kind=LiKind::unsupported;return;}
+            const auto* wide=static_cast<const unsigned char*>(source);
+            packed.resize(n);
+            for(std::size_t i=0;i<n;++i) {
+                std::uint16_t value;std::memcpy(&value,wide+i*sizeof(value),sizeof(value));
+                if(value>255){s.kind=LiKind::unsupported;return;}
+                packed[i]=std::uint8_t(value);
+            }
+            values=packed.data();s.type=PixelType::uint8;
+        }
         if(constant_input(values,n)){s.kind=LiKind::constant;s.early=double(values[0]);return;}
         const auto counts=histogram_u8(values,1,n);
         std::size_t low=0,high=255;while(!counts[low])++low;while(!counts[high])--high;
