@@ -29496,7 +29496,7 @@
       "full_product_dispatch": {
         "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
         "run": 40161615893,
-        "status": "running-not-accepted",
+        "status": "modern-and-debug-failed-original-remaining-profiles-running-no-acceptance",
         "proof": {
           "path": "coverage/evidence/public199-skylakex-dispatch.json",
           "bytes": 1796,
@@ -29527,7 +29527,12 @@
         }
       },
       "review_source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
-      "source_worktree": "build/worktrees/public199-skylakex-readiness"
+      "source_worktree": "build/worktrees/public199-skylakex-readiness",
+      "latest_failure_diagnosis": {
+        "path": "coverage/evidence/public199-matrix-source-failure.json",
+        "bytes": 2040,
+        "sha256": "f9aff6f605b4a1a25bfe794c608aef67b4b9f3bb2b002141be0b43034e29db5f"
+      }
     },
     {
       "id": "max-tree-benchmark-reference",
@@ -30212,7 +30217,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/nmi-native",
       "base_sha": "164fb40314cdfa9cb720e81554d2aecd7f2cee03",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "build/worktrees/nmi-native"
       ],
@@ -30229,18 +30234,18 @@
         "one_worker_benchmark_required": true
       },
       "pending_review_findings": [
-        "Authenticate and retain full ndarray owner allocation extent before native reads.",
-        "Resolve direct C++ entropy normalization-underflow boundary without changing frozen oracle/tolerance."
-      ]
+        "Repairs frozen; independent exact-source and final six-runtime-mode gate review pending."
+      ],
+      "candidate_source": "fadef4cf9994506017ab9d54f4e91917c77ea770"
     },
     {
       "id": "reconstruction-owner-guard",
       "kind": "private_fix",
       "apis": [],
       "owner": "resize_api",
-      "branch": "feature/reconstruction-owner-guard",
+      "branch": "feature/reconstruction-offset-guard",
       "base_sha": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "build/worktrees/reconstruction-owner-guard",
         "build/worktrees/reconstruction-public200"
@@ -30281,7 +30286,25 @@
         "path": "coverage/evidence/reconstruction-offset-extent-review.json",
         "bytes": 1696,
         "sha256": "90d8b52c3c4f22849ec3c35fe5190a494d2a5f7cdb9a8eb3c3029e02e2d7cb29"
-      }
+      },
+      "offset_repair_source": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8"
+    },
+    {
+      "id": "public199-matrix-source-assertion-repair",
+      "kind": "integration_fix",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "integration/public199-matrix-repair",
+      "base_sha": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+      "state": "validating",
+      "owns": [
+        "build/worktrees/public199-matrix-repair",
+        "build/resume-20261025/public199-matrix-repair"
+      ],
+      "depends_on": [],
+      "candidate_source": "d92d9ff522047f4dd91c21620323454a0010863e",
+      "public_acceptance": false,
+      "pending": "Independent metadata correction review passed; retain remaining original profiles, then freshly qualify exact corrected whole product before public acceptance."
     }
   ],
   "unassigned_inventoried_apis": [

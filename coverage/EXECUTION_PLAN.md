@@ -19,7 +19,12 @@ its root-reviewed experiment keeps actual `5e068a5` and `af7b2af` product labels
 The [controller review](evidence/tv-admission-comparison-reviewed.json) has no
 new timing result. The [exact 199-path qualification](evidence/public199-skylakex-dispatch.json)
 was dispatched once as run `40161615893`; all four genuine outcomes and retained
-artifact acceptance are required before increasing coverage from 192.
+artifact acceptance are required before increasing coverage from 192. Modern Linux and Debug have since
+failed. The [retained modern diagnosis](evidence/public199-matrix-source-failure.json)
+identifies one stale helper-hash assertion in each mode, with 10,069 other Matrix
+checks passing per mode. Correction `d92d9ff` changes only that metadata assertion
+and its proof; it needs independent review and fresh whole qualification. The
+original run and products remain unaccepted.
 
 The [max-tree comparison consumer](evidence/max-tree-comparison-reviewed.json)
 is reviewed and merged as `9c18e27`, with 345 retained three-runtime metadata
