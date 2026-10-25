@@ -26,6 +26,17 @@ PROVIDERS = ("sum", "square", "multiply", "count_nonzero", "logical_and", "any",
 STAGES = ("coloc_binary", "coloc_count", "coloc_joint_count", "coloc_min_negative",
           "coloc_gather", "coloc_sum", "coloc_product")
 
+# Collection policy only; binary/runtime authentication stays in the fixture.
+_collection_path = os.environ.get("COLOCALIZATION_TEST_CONFIG")
+_collection_portable = False
+if _collection_path:
+    _collection_config = json.loads(Path(_collection_path).read_bytes())
+    assert _collection_config["profile"] in ("windows", "modern", "minimum", "portable", "sanitizer")
+    assert type(_collection_config["portable"]) is bool
+    assert _collection_config["portable"] == (_collection_config["profile"] == "portable")
+    _collection_portable = _collection_config["portable"]
+DECLARED_WORKERS = (1,) if _collection_portable else (1, 4)
+
 
 def _hash(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -250,7 +261,7 @@ def _observe(runtime, spec, root):
     return row
 
 
-@pytest.mark.parametrize("workers", (1, 4))
+@pytest.mark.parametrize("workers", DECLARED_WORKERS)
 @pytest.mark.parametrize("index", range(536))
 def test_frozen_public_semantics(coloc_runtime, tmp_path, index, workers):
     runtime = coloc_runtime
@@ -341,3 +352,29 @@ def test_owner_metadata_only(coloc_runtime):
     root.shape = (2, 4)
     with pytest.raises(ValueError, match="metadata changed"):
         guard.check()
+
+
+def test_declared_global_worker_budget(coloc_runtime, tmp_path):
+    core = coloc_runtime["core"]
+    portable = coloc_runtime["config"]["portable"]
+    before = core.get_num_threads()
+    error = observed = None
+    try:
+        core.set_num_threads(4)
+        observed = core.get_num_threads()
+    except Exception as exc:
+        error = dict(type=type(exc).__name__, message=str(exc))
+    finally:
+        core.set_num_threads(1)
+    after = core.get_num_threads()
+    with (tmp_path / "worker-budget.json").open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(dict(portable=portable, before=before, requested=4, observed=observed,
+                       error=error, after=after, image_calls=0), stream)
+        stream.write("\n")
+        stream.flush()
+    assert before == after == 1
+    if portable:
+        assert error == dict(type="ValueError", message="this build has no OpenMP support")
+        assert observed is None and core.has_avx2() is False
+    else:
+        assert error is None and observed == 4
