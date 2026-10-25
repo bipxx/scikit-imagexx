@@ -412,3 +412,38 @@ def test_default_gate_cannot_be_replaced_by_legacy400_or_policy_interposition():
     witness=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='DefaultWitness');source=ast.unparse(witness)
     assert "event == 'return'" in source and "'c_return'" in source and 'type(arg) is tuple' in source
     assert 'self.frame' not in source and 'self.image' not in source and 'setattr(' not in source
+
+
+@pytest.mark.parametrize('fault',['tagged-stage','channel','stopping','dtype','state-after','warnings','result','receipt-old','receipt-default'])
+def test_default70_remaining_stage_alias_and_receipt_boundaries(experiment,fault):
+    report=synthetic_report(experiment,True);t.validate_report(report,experiment)
+    group=report['default_checks']['normal'];rows=group['after']['checks'][0]['records']
+    if fault=='tagged-stage':rows[-1]['dispatch']['stages']['norm']=dict(c_call=0,c_return=0,c_exception=0)
+    elif fault=='channel':
+        row=next(r for r in rows if len(r['dispatch']['finite']['returns'])==3);row['dispatch']['finite']['returns'].pop()
+    elif fault=='stopping':rows[1]['dispatch']['finite']['returns'][0]['iterations']=1
+    elif fault=='dtype':rows[0]['dispatch']['finite']['returns'][0]['dtype']='float32'
+    elif fault=='state-after':rows[0]['state_after']['handler_is_none']=False
+    elif fault in ('warnings','result'):
+        row=rows[0];record=report['default_observation_assets'][row['observation_ref']['sha256']];obs=a.unpack_default_observation(record)
+        obs[fault]=[{'type':'RuntimeWarning','message':'changed'}] if fault=='warnings' else {'SYNTHETIC':'different output'}
+        packed=a.pack_default_observation(obs);report['default_observation_assets'][packed['sha256']]=packed
+        row['observation_ref']=dict(sha256=packed['sha256'],bytes=packed['bytes']);row['observation_digest']=a.digest(obs)
+        group['after']['checks'][0]['digests'][0]=row['observation_digest']
+    else:
+        receipt=dict(schema='tv-admission-preparation-v2',passed=True,profile='modern',controller_revision=experiment['controller_revision'],generation='run',attempt='1',experiment_sha256='e'*64,report_sha256='a'*64,modes=['normal','scalar'],workers=[1,4],case_count=400,timed_count=70,common_build_sha256='f'*64,reports=dict(normal='b'*64,scalar='c'*64),default_validation_schema=a.DEFAULT_SCHEMA,default_timed_count=70,default_reports=dict(normal='d'*64,scalar='e'*64))
+        if fault=='receipt-old':receipt['schema']='tv-admission-preparation-v1'
+        else:receipt.pop('default_reports')
+        with pytest.raises(RuntimeError):a.validate_receipt(receipt,'e'*64,'run','1')
+        return
+    with pytest.raises(RuntimeError):t.validate_report(report,experiment)
+
+
+def test_default_validation_is_on_every_host_and_before_warm_calibration():
+    tree=ast.parse((ROOT/'benchmarks/tv_chambolle_admission_compare.py').read_bytes())
+    controller=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='controller')
+    source=ast.unparse(controller)
+    assert source.index("operation='validate-default'")<source.index('preflight_only=True')<source.index("operation='warm'")<source.index("operation='sample'")
+    assert "('normal', 'scalar') if args.check_only else ('normal',)" in source
+    workflow=(ROOT/'.github/workflows/tv-chambolle-admission-compare.yml').read_text()
+    assert 'Legacy400 plus fresh default70' in workflow and 'Fresh host default70' in workflow
