@@ -30498,7 +30498,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/h-extrema-kernel",
       "base_sha": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "build/worktrees/h-extrema-kernel",
         "build/resume-20261025/h-extrema-diagnosis"
@@ -30507,7 +30507,7 @@
       "base_scope": "Explicit unqualified public200 source; cee private primitive only, no public/SDK acceptance inherited.",
       "pending": "Freeze full contract/additive real-resolution and limit cases before new outputs; preserve468Windows originals/14unsafe guard blocks, fill Linux captures. Exact discrete masks, no allclose.",
       "public_acceptance": false,
-      "current_checkpoint": "Descriptor-overlap repair3f4ed95 frozen before first build; independent narrow review then bounded private validation."
+      "current_checkpoint": "Exact3f4 private352record seal complete; independent B review in progress. No public/SDK/performance acceptance; float/promotions remain mandatory."
     },
     {
       "id": "reconstruction-benchmark-contracts",
@@ -30557,8 +30557,8 @@
         "tests/test_reconstruction_native.cpp"
       ],
       "depends_on": [],
-      "state": "implementing",
-      "current_checkpoint": "Source-only descriptor overlap finding; narrow successor to b4 composition, safe rejection tests, root prebuild review."
+      "state": "validating",
+      "current_checkpoint": "Exact77 private293record seal complete; independent A review in progress; source candidate bedab includes2strict successor pins and716metadata gates."
     },
     {
       "id": "tv-admission-default-policy",
@@ -30572,8 +30572,38 @@
         ".github/workflows/tv-chambolle-admission-compare.yml"
       ],
       "depends_on": [],
-      "state": "implementing",
-      "current_checkpoint": "Repair exact timed-policy eligibility and fresh-host compiled-completion evidence; old campaign remains diagnostic."
+      "state": "preparing",
+      "current_checkpoint": {
+        "controller_review": {
+          "path": "coverage/evidence/tv-default-policy-controller-review.json",
+          "bytes": 1840,
+          "sha256": "655b704c9dcb2ca312c13a31ed5a0bf8db9f77fc56f9fd0e67f114dbfe2e80a9"
+        },
+        "publication": {
+          "path": "coverage/evidence/tv-default-certificate-publication-dispatch.json",
+          "bytes": 1489,
+          "sha256": "da203145ac116156be6be5ac04778f6212141952e1a6b07133bb67349a8316e9"
+        },
+        "performance_accepted": false
+      },
+      "merge": {
+        "commit": "2a487d34e75ab3a5d088c0b65ae0027a91a8f292",
+        "main_commit": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99"
+      }
+    },
+    {
+      "id": "reconstruction-terrain-reference",
+      "kind": "contract_reference",
+      "apis": [],
+      "owner": "resize_api",
+      "owns": [
+        "benchmarks/reconstruction_terrain_cases.py",
+        "tests/test_reconstruction_terrain_contracts.py",
+        "coverage/contracts/reconstruction-terrain.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "current_checkpoint": "Root-approved prospective047feb:16 multi-marker/barrier/corridor/high-cardinality original-only cases; preserve old48 exactly. Fresh capture and reference proof pending; no native/timing credit."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31297,19 +31327,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "h-extrema-kernel"
-      ],
-      "astra_max_api_paths": [
         "reconstruction-descriptor-hardening"
       ],
+      "astra_max_api_paths": [
+        "h-extrema-kernel"
+      ],
       "resize_api": [
-        "tv-admission-default-policy"
+        "reconstruction-terrain-reference"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "h-extrema-kernel",
-      "astra_max_api_paths": "reconstruction-descriptor-hardening",
-      "resize_api": "tv-admission-default-policy"
+      "astra_max_plan_audit": "reconstruction-descriptor-hardening",
+      "astra_max_api_paths": "h-extrema-kernel",
+      "resize_api": "reconstruction-terrain-reference"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31552,15 +31582,37 @@
       "sha256": "0670495680ad67958b8d9d5bd643003a40066fa199cfd23deaa1cbd1379e435a"
     },
     "next_public200_cumulative_source": {
-      "reconstruction_base": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
-      "metrics_increment": "0322181242535eb2337dd6ae717abeed1f9bfc75",
-      "state": "compose-before-whole-qualification",
-      "source_has_not_been_qualified": true,
-      "required_before_freeze": [
-        "Narrow reconstruction descriptor overlap review/hardening.",
-        "Compose reviewed increments with current main; authenticate new source without relabeling b4 or d92."
-      ],
-      "Li_increment": "2abd0acc9b421d80a6554a840e603c0bc731f5fc"
+      "proof": {
+        "path": "coverage/evidence/public200-cumulative-source-preflight.json",
+        "bytes": 2928,
+        "sha256": "e7afc30cb64feef6dd27b868258e0b2d3a55ecfc84dab8c61edeb89eb9ae60a1"
+      },
+      "source": "bedab75d2105ff5a14641c186eeb8541baed8bc1",
+      "state": "metadata-passed-private-successor-review-before-whole-qualification",
+      "source_has_not_been_qualified": true
+    },
+    "current_TV_default_policy_controller": {
+      "source": "2a487d34e75ab3a5d088c0b65ae0027a91a8f292",
+      "main_merge": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
+      "proof": {
+        "path": "coverage/evidence/tv-default-policy-controller-review.json",
+        "bytes": 1840,
+        "sha256": "655b704c9dcb2ca312c13a31ed5a0bf8db9f77fc56f9fd0e67f114dbfe2e80a9"
+      }
+    },
+    "current_TV_default_certificate_publication": {
+      "proof": {
+        "path": "coverage/evidence/tv-default-certificate-publication-dispatch.json",
+        "bytes": 1489,
+        "sha256": "da203145ac116156be6be5ac04778f6212141952e1a6b07133bb67349a8316e9"
+      },
+      "run": 40173372973,
+      "state": "dispatched-once-follow-original-observer-to-terminal"
+    },
+    "review_rotation": {
+      "astra_max_plan_audit": "Independent77 proof; no source writes.",
+      "astra_max_api_paths": "Independent H3f4 proof; no source writes.",
+      "resize_api": "Own prospective terrain original-only capture, root source approved before outputs."
     }
   },
   "parallel_review": {

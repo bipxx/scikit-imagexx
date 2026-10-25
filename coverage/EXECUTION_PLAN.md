@@ -73,6 +73,19 @@ is merged as `dd32011`: 192 original observations and 270 checks, with no native
 or timing credit. Multiple markers, barrier/plateau/corridor and high-cardinality
 floating terrain supplements are mandatory before its first timing campaign.
 
+Latest integration checkpoint: [cumulative200 source `bedab75`](evidence/public200-cumulative-source-preflight.json)
+combines main's metrics/Li increments and reconstruction descriptor hardening.
+It has 716 metadata checks and four explicit200-path plans with zero blockers;
+whole-product qualification waits final independent private-successor admission.
+The initial strict staging mismatch and corrected successor pins are retained.
+
+TV's repaired controller is merged as `28cfc58`. Its independently reviewed new
+certificate is [publishing once as run40173372973](evidence/tv-default-certificate-publication-dispatch.json).
+Publication artifact acceptance and a new actual-default-path comparison remain
+pending; old run40163025231 stays diagnostic. Agent C's prospective16 terrain
+supplement fills the original48 cohort's marker/barrier/high-cardinality gaps.
+Agents A/B are independently reviewing each other's sealed private successors.
+
 Historical paused planning snapshot (superseded by active execution above):
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.

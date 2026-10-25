@@ -1,0 +1,66 @@
+{
+  "schema": "root-public200-cumulative-source-preflight-v1",
+  "source": "bedab75d2105ff5a14641c186eeb8541baed8bc1",
+  "branch": "integration/public200-cumulative",
+  "base": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
+  "reconstruction": "77aefdff4d656e45b2b651a8791ff5c672112e88",
+  "includes_metrics": "0322181242535eb2337dd6ae717abeed1f9bfc75",
+  "includes_Li": "2abd0acc9b421d80a6554a840e603c0bc731f5fc",
+  "metadata_checks": 716,
+  "metadata_XML": {
+    "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/checks.xml",
+    "bytes": 112489,
+    "sha256": "c7f815e0a0d338dc58cb6d2c15468d831589a9f36957bbc023fc8bc653441981"
+  },
+  "metadata_log": {
+    "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/checks.log",
+    "bytes": 832,
+    "sha256": "c4ce404d3a4af8cbfbe689da1d8590d165d744c799e3e0d133177eb5923b8615"
+  },
+  "retained_failed_staging_log": {
+    "path": "build/worktrees/public200-cumulative/build/composition-metadata-v1/checks.log",
+    "bytes": 2768,
+    "sha256": "7b9bc38af9a7d32c3e9c13218a37831e1842768428b0068e04d773d899ca968e"
+  },
+  "retained_failed_staging_XML": {
+    "path": "build/worktrees/public200-cumulative/build/composition-metadata-v1/checks.xml",
+    "bytes": 114157,
+    "sha256": "031d4d0615e7f1b2303d2c7f4da805a80d91659aa082073e9f8f3d6db58d939c"
+  },
+  "plans": {
+    "windows": {
+      "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/plan-windows.json",
+      "bytes": 11490,
+      "sha256": "926306c824a6df47c9c13c547c3291f0f5ca99e61831610b870be774cb62136b"
+    },
+    "modern": {
+      "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/plan-modern.json",
+      "bytes": 11463,
+      "sha256": "de982c317390a0b502cdb6ca7bf8d5e0a1fa91fb57d4ca87754fc94df5f7005a"
+    },
+    "minimum": {
+      "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/plan-minimum.json",
+      "bytes": 11466,
+      "sha256": "9da92d66e0db774e0dcb773f6cbf6c2afdb03b32ec43bdd398e98895f2dd94d9"
+    },
+    "debug": {
+      "path": "build/worktrees/public200-cumulative/build/composition-metadata-v2/plan-debug.json",
+      "bytes": 11460,
+      "sha256": "c69ab7865ab214b509cbebbcb449a14362cca4c7c22ee03ad75867542941777c"
+    }
+  },
+  "expected_scope": {
+    "images": 200,
+    "functions": 203,
+    "wheel_members": 116,
+    "SDK_members": 66,
+    "SDK_families": 21,
+    "SDK_checks": 42
+  },
+  "two_source_successor_pins": "Exact77 kernel/native-test hashes updated in both qualification and staging; original scientific matrix, goldens, old private/public sources retained.",
+  "whole_product_builds": 0,
+  "whole_product_accepted": false,
+  "new_public_paths_accepted": 0,
+  "performance_accepted": false,
+  "gate": "Final independent77 private admission and cumulative source review before one hosted four-profile qualification; main accepted product remains exact d92/199."
+}
