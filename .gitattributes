@@ -179,3 +179,6 @@ coverage/evidence/tv-positive-zero-private-admission.json -text
 coverage/evidence/h203-tv-zero-source-admission.json -text
 coverage/evidence/parallel-implementation-checkpoint-20261025-v2.json -text
 coverage/contracts/footprint-shapes-plan.json -text
+tests/footprint_shapes_cases.py -text
+tests/footprint_shapes_reference.py -text
+tests/test_footprint_shapes_contracts.py -text
