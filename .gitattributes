@@ -159,3 +159,7 @@ coverage/evidence/reconstruction-descriptor-private-admission.json -text
 coverage/evidence/nmi-public-integration.json -text
 coverage/evidence/public200-inventory-prebuild-gap.json -text
 tests/test_li_u16_pipeline.py -text
+tests/reconstruction_trace_policy.py -text
+tests/test_reconstruction_trace_policy.py -text
+coverage/evidence/reconstruction-trace-policy-observations.json -text
+coverage/evidence/reconstruction-trace-policy-migration.json -text
