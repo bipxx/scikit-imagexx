@@ -159,3 +159,38 @@ coverage/evidence/reconstruction-descriptor-private-admission.json -text
 coverage/evidence/nmi-public-integration.json -text
 coverage/evidence/public200-inventory-prebuild-gap.json -text
 tests/test_li_u16_pipeline.py -text
+
+# Exact H203 source and immutable scientific records; declare before materialization.
+include/skimagexx/h_extrema.hpp -text
+src/h_extrema.cpp -text
+src/bind_h_extrema.cpp -text
+python/skimagexx/_h_extrema.py -text
+tests/test_h_extrema_native.cpp -text
+tests/test_h_extrema_native_pipeline.py -text
+tests/test_h_extrema_floating_native.cpp -text
+tests/test_h_extrema_floating_pipeline.py -text
+coverage/contracts/h-extrema.json -text
+coverage/contracts/h-extrema-plan.json -text
+coverage/contracts/h-extrema-integer.json -text
+coverage/contracts/h-extrema-floating.json -text
+coverage/contracts/h-extrema-floating-plan.json -text
+coverage/contracts/h-extrema-object-preentry.json -text
+tests/test_h_extrema_contracts.py -text
+tests/test_h_extrema_boundaries.py -text
+tests/h_extrema_reference.py -text
+tests/h_extrema_floating_reference.py -text
+tests/test_h_extrema_floating_cases.py -text
+tests/h_extrema_source_provenance.py -text
+tests/test_h_extrema_source_provenance.py -text
+coverage/evidence/h-extrema-reference-assertion-migration.json -text
+coverage/evidence/h-extrema-reference-assertion-migration-9b.json -text
+tests/cmake_consumer/h_extrema_consumer.cpp -text
+tests/cmake_consumer/h_extrema_source_oracle.bin -text
+tests/cmake_consumer/h_extrema_source_oracle.cmake -text
+tests/test_h_extrema_public.py -text
+tests/test_h_extrema_public_metadata.py -text
+coverage/evidence/h-extrema-public203-source-composition.json -text
+coverage/evidence/h-extrema-floating-private-admission.json -text
+
+tests/h_extrema_public_authentication.py -text
+coverage/evidence/h-extrema-reconstruction-reference-integration.json -text

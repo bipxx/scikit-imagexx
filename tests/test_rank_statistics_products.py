@@ -59,14 +59,14 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20','reconstruction21','nmi22')
+    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22'):families += ['tv_bregman']
-    if scope in ('max_tree19','matrix20','reconstruction21','nmi22'):families += ['max_tree']
-    if scope in ('matrix20','reconstruction21','nmi22'):families += ['matrix_transform']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65,'reconstruction21':66,'nmi22':67}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114,'reconstruction21':116,'nmi22':118}[scope]
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):families += ['tv_bregman']
+    if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):families += ['max_tree']
+    if scope in ('matrix20','reconstruction21','nmi22','h_extrema23'):families += ['matrix_transform']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65,'reconstruction21':66,'nmi22':67,'h_extrema23':68}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114,'reconstruction21':116,'nmi22':118,'h_extrema23':120}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -82,20 +82,20 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22'):
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
-    if scope in ('max_tree19','matrix20','reconstruction21','nmi22'):
+    if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
         # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
         for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
-    if scope in ('matrix20','reconstruction21','nmi22'):
+    if scope in ('matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
         source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
-    if scope in ('reconstruction21','nmi22'):
+    if scope in ('reconstruction21','nmi22','h_extrema23'):
         families += ['reconstruction']
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
@@ -103,18 +103,26 @@ def synthetic(tmp_path, monkeypatch, request):
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.RECONSTRUCTION_ORACLE_PATH]=(ROOT/p.RECONSTRUCTION_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
-    if scope=='nmi22':
+    if scope in ('nmi22','h_extrema23'):
         families += ['normalized_mutual_information']
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
         for name in p.NMI_IMPORTED_SOURCE_PINS:
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source['tools/public_qualification.py']+=('NMI_IMPORTED_SOURCE_PINS='+repr(p.NMI_IMPORTED_SOURCE_PINS)+'\n').encode()
+    if scope=='h_extrema23':
+        families += ['h_extrema']
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
+        expected_checks=2*len(families)
+        for name in (*p.H_EXTREMA_RUNTIME_SOURCE_PINS,*p.H_EXTREMA_FROZEN_RAW_PINS):
+            source[name]=(ROOT/name).read_bytes()
+        for key in ('H_EXTREMA_RUNTIME_SOURCE_PINS','H_EXTREMA_FROZEN_RAW_PINS','H_EXTREMA_HISTORICAL_RAW_PINS','H_EXTREMA_ORACLE_PATH','H_EXTREMA_ORACLE_SHA256'):
+            source['tools/public_qualification.py']+=(key+'='+repr(getattr(p,key))+'\n').encode()
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    snapshot = {'revision': 'a' * 40, 'files_sha256': {n: body_hash(b) for n, b in source.items()}}
+    snapshot = {'revision': 'a' * 40, 'files_sha256': {n: body_hash(b.replace(b'\r\n',b'\n')) for n, b in source.items()}}
     with zipfile.ZipFile(q / 'source.zip', 'w') as archive:
         archive.comment = snapshot['revision'].encode()
         for name, data in source.items():
@@ -165,8 +173,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199,'reconstruction21':200,'nmi22':201}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202,'reconstruction21':203,'nmi22':204}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20','reconstruction21','nmi22') else [])+(['transform.matrix_transform'] if scope in ('matrix20','reconstruction21','nmi22') else [])+(['morphology.reconstruction'] if scope in ('reconstruction21','nmi22') else [])+([p.NMI_PATH] if scope=='nmi22' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199,'reconstruction21':200,'nmi22':201,'h_extrema23':203}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202,'reconstruction21':203,'nmi22':204,'h_extrema23':206}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['transform.matrix_transform'] if scope in ('matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['morphology.reconstruction'] if scope in ('reconstruction21','nmi22','h_extrema23') else [])+([p.NMI_PATH] if scope in ('nmi22','h_extrema23') else [])+(list(p.H_EXTREMA_PATHS) if scope=='h_extrema23' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -795,7 +803,7 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope_text(text)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('nmi22', 118, 67, 22)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('h_extrema23', 120, 68, 23)
     snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
     with nmi_source_archive(nmi_source_records) as archive:
         p.validate_nmi_source(archive, snapshot, scope)
@@ -876,3 +884,29 @@ def test_legacy_scopes_do_not_invent_nmi_requirements(scope):
     class ForbiddenArchive:
         def read(self, *args): raise AssertionError('legacy scope touched NMI source')
     p.validate_nmi_source(ForbiddenArchive(), {}, {'name': scope})
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema23'],indirect=True)
+def test_h203_complete_combined_product_stages_without_acceptance(synthetic):
+    s=synthetic
+    assert run(s)['status']=='staged-unaccepted'
+    sdk=json.loads((s.output/'sdk.json').read_bytes())
+    assert len(sdk['SDK_sha256'])==68 and len(sdk['families'])==23 and sdk['checks']==46
+    assert p.qualification_scope(s.output/'source')['name']=='h_extrema23'
+    registry=json.loads((s.output/'qualification.json').read_bytes())['expected_registry']
+    assert registry['image_count']==203 and registry['registered_count']==206
+    assert all(registry['functions'].count(name)==1 for name in (*p.H_EXTREMA_PATHS,p.NMI_PATH))
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==120
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema23'],indirect=True)
+@pytest.mark.parametrize('fault',('missing-H','duplicate-H','missing-NMI','image202','SDK44'))
+def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='missing-H':expected['functions'].remove(p.H_EXTREMA_PATHS[0])
+    elif fault=='duplicate-H':expected['functions'][0]=p.H_EXTREMA_PATHS[0]
+    elif fault=='missing-NMI':expected['functions'].remove(p.NMI_PATH)
+    elif fault=='image202':expected['image_count']=202
+    else:s.proof['SDK_checks']=44
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)

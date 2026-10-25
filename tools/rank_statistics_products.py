@@ -31,6 +31,15 @@ MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab6
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
 RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
+H_EXTREMA_PATHS = ('morphology.h_maxima', 'morphology.h_minima')
+H_EXTREMA_RUNTIME_SOURCE_PINS = {'include/skimagexx/h_extrema.hpp': 'e56ee6af110857ed50657aaf61d0ec1a8afc608c57c96a56a63eefeaab6dc9fd', 'src/h_extrema.cpp': '59cd1d8022926d1be06c2ecd2a68a817f9dbd8623b2d1f5f7871212a4ab2b817', 'src/bind_h_extrema.cpp': '732f4da1e6cd0d06c2c5126cc6d62df11cc4893ae59ea650ca41adc10cbdffe1', 'python/skimagexx/_h_extrema.py': '966f35f953e1bf630da84ddf0cd9de25662f0586c74d7cd1f93bbeb8b432790e'}
+H_EXTREMA_FROZEN_RAW_PINS = {'tests/test_h_extrema_native.cpp': '228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438', 'tests/test_h_extrema_native_pipeline.py': 'c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5', 'tests/test_h_extrema_floating_native.cpp': '41b347cd259b67af14bb162394d5ef63edf62825a8632c3a93cf9a052362daca', 'tests/test_h_extrema_floating_pipeline.py': '86d4f0491ea8fc89230a300b4b45d85f8a8ce92af1d381e7abe6e52b2f59f148', 'coverage/contracts/h-extrema.json': 'ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d', 'coverage/contracts/h-extrema-plan.json': '652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b', 'coverage/contracts/h-extrema-integer.json': 'e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51', 'coverage/contracts/h-extrema-floating.json': '566ed99dfcfe70ea9d24deb1e8237389de9ed838a32d3909571c29a8d9a2a8df', 'coverage/contracts/h-extrema-floating-plan.json': '67d6b11cbe3d78215aa637f167dd1cbf3a7543f568d44e9cda93dcea1cf901a0', 'coverage/contracts/h-extrema-object-preentry.json': '10383844bf54762cf09293f5270cd6d49713371bba5d558b172f0293e512dff8', 'tests/test_h_extrema_contracts.py': '82fd81ecc8a268878e4356231f2d046814619de1aabc2b0d925da14ed4c8c4d4', 'tests/test_h_extrema_boundaries.py': 'a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71', 'tests/h_extrema_reference.py': 'ac314e885d91bc91be5099cf5619d3ad2a6debc9de8cd237de50cd99160f42ce', 'tests/h_extrema_floating_reference.py': 'a6220e0d3bfdd4624fd15f896f51d73e2a3bc4e370500fefd14340f8c532bf04', 'tests/test_h_extrema_floating_cases.py': '171a6823112ff980b71fadae6788dc55daa26ff21c629a5fa2f554ff8f26fd4a', 'tests/h_extrema_source_provenance.py': '962d99e39beeadc6a534525e1b97aee22ad5ea40623b8cbaa7844e15f548929e', 'tests/test_h_extrema_source_provenance.py': 'e222069d656c99cd89e0bb4230825373331464e95c3fb86672817909d76da423', 'coverage/evidence/h-extrema-reference-assertion-migration.json': '923b435a24165befd53044dbd71df8b4a36fed2562c4f187b31f6300d9bdfb81', 'coverage/evidence/h-extrema-reference-assertion-migration-9b.json': 'bdf3c49437f9b2a33486efc41f3a237c4a39a0b2c66884636a880311ae261754', 'tests/cmake_consumer/h_extrema_source_oracle.bin': '091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5', 'tests/cmake_consumer/h_extrema_source_oracle.cmake': '4f09f0ff38d88e4d983e9e0e1c0d80233584928ad13c577e8b6ad57026dda2cd', 'coverage/evidence/h-extrema-floating-private-admission.json': 'f6e0fdf58c9171d2313dc38a854ed4d7948e73baeed4eff6ebffdd40caa06d20', 'tests/h_extrema_public_authentication.py': 'ab065c5a2a7b5db7a27f3d00b42818e3ed5c1bcd5be90ef7f7935699e6c75330', 'coverage/evidence/h-extrema-reconstruction-reference-integration.json': 'b0a29151aa5e8c29c907f59d6719dcae38eb3658ece5f8520de4b902da1a6513', 'tests/test_reconstruction_contracts.py': 'b18f5ab2777a4dda3a1fe244cb7edc75627d6fd9ccb59fcc3c08343c8c4189cb', 'coverage/evidence/reconstruction-public-assertion-migration.json': '21eb60b8665449d4ad7adf194e5f00c48e117d790b328652f69561337d6d18fc', 'coverage/contracts/reconstruction.json': '621981325f5e6939d3fb4d1c94e52910b369ef3ca798c326bdb93322a12b504c'}
+H_EXTREMA_HISTORICAL_RAW_PINS = {'tests/test_h_extrema_contracts.py': '00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151', 'tests/h_extrema_reference.py': 'bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf', 'tests/h_extrema_floating_reference.py': '389e5cffe1b399c0deb3c8dce8424a414b9b2329e16907e6afa86415fab0dfb0', 'tests/test_h_extrema_floating_cases.py': 'f127526cd66c5043edd66d82518db3abb2a8956d3b29f1931057566ec090de1e'}
+H_EXTREMA_LEGACY_RUNTIME_SOURCE_PINS = {'include/skimagexx/h_extrema.hpp': 'fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1', 'src/h_extrema.cpp': 'd67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f', 'src/bind_h_extrema.cpp': '0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86', 'python/skimagexx/_h_extrema.py': '60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a'}
+H_EXTREMA_LEGACY_FROZEN_RAW_PINS = {'coverage/contracts/h-extrema-integer.json': 'e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51', 'coverage/contracts/h-extrema-plan.json': '652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b', 'coverage/contracts/h-extrema.json': 'ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d', 'tests/h_extrema_reference.py': 'bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf', 'tests/test_h_extrema_boundaries.py': 'a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71', 'tests/test_h_extrema_contracts.py': '00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151', 'tests/test_h_extrema_native.cpp': '228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438', 'tests/test_h_extrema_native_pipeline.py': 'c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5'}
+H_EXTREMA_ORACLE_PATH = 'tests/cmake_consumer/h_extrema_source_oracle.bin'
+H_EXTREMA_ORACLE_SHA256 = '091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5'
+
 NMI_PATH = 'metrics.normalized_mutual_information'
 NMI_IMPORTED_SOURCE_PINS = {'include/skimagexx/normalized_mutual_information.hpp': '76e3cf0e895650f2aa79c0c61c596b8ce29bdc5f26b4bccd130e9d34108167f4',
  'src/normalized_mutual_information.cpp': 'cc9150a323e2bee04cb18be0f32008b306c9ee312d8fa39569174fe5ad426ac3',
@@ -179,7 +188,9 @@ def qualification_scope_text(text):
               'max_tree19': (112, 64, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree')),
               'matrix20': (114, 65, ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform')),
               'reconstruction21': (116,66,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction')),
-              'nmi22': (118,67,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction','normalized_mutual_information'))}
+              'nmi22': (118,67,('tv_chambolle','tv_reductions','tv_denoise','tv_bregman','max_tree','matrix_transform','reconstruction','normalized_mutual_information')),
+              'h_extrema22': (118,67,('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction', 'h_extrema')),
+              'h_extrema23': (120,68,('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction', 'normalized_mutual_information', 'h_extrema'))}
     require(values['PRODUCT_SCOPE'] in scopes, 'source TV/Bregman scope incomplete')
     members, sdk, suffix = scopes[values['PRODUCT_SCOPE']]
     require(type(values['PRODUCT_MEMBERS']) is int and type(values['SDK_MEMBERS']) is int
@@ -190,7 +201,7 @@ def qualification_scope_text(text):
 
 
 def validate_reconstruction_source(archive,snapshot,scope):
-    if scope['name'] not in ('reconstruction21','nmi22'):return
+    if scope['name'] not in ('reconstruction21','nmi22','h_extrema22','h_extrema23'):return
     tree=ast.parse(archive.read('tools/public_qualification.py'));declared={}
     for node in tree.body:
         if isinstance(node,ast.Assign):
@@ -207,7 +218,7 @@ def validate_reconstruction_source(archive,snapshot,scope):
 
 def validate_max_tree_source(archive, snapshot, scope):
     """Data-only source admission; old rank/TV/Bregman envelopes keep their scope."""
-    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22'):
+    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23'):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = {}
@@ -229,9 +240,56 @@ def validate_max_tree_source(archive, snapshot, scope):
                 'corrected max-tree source bytes differ: ' + name)
 
 
+def validate_h_extrema_source(archive,snapshot,scope):
+    """Closed source-only H lineage; no algorithm or candidate imports."""
+    if scope['name'] not in ('h_extrema22','h_extrema23'):return
+    legacy=scope['name']=='h_extrema22'
+    runtime=H_EXTREMA_LEGACY_RUNTIME_SOURCE_PINS if legacy else H_EXTREMA_RUNTIME_SOURCE_PINS
+    frozen=H_EXTREMA_LEGACY_FROZEN_RAW_PINS if legacy else H_EXTREMA_FROZEN_RAW_PINS
+    expected=dict(H_EXTREMA_RUNTIME_SOURCE_PINS=runtime,H_EXTREMA_FROZEN_RAW_PINS=frozen,
+                  H_EXTREMA_ORACLE_PATH=H_EXTREMA_ORACLE_PATH,H_EXTREMA_ORACLE_SHA256=H_EXTREMA_ORACLE_SHA256)
+    if not legacy:expected['H_EXTREMA_HISTORICAL_RAW_PINS']=H_EXTREMA_HISTORICAL_RAW_PINS
+    declared={}
+    for node in ast.parse(archive.read('tools/public_qualification.py')).body:
+        if isinstance(node,ast.Assign):
+            for target in node.targets:
+                if isinstance(target,ast.Name) and target.id in expected:
+                    require(target.id not in declared,'duplicate H source declaration')
+                    declared[target.id]=ast.literal_eval(node.value)
+    require(declared==expected,'H source pin declarations absent or changed')
+    for name,want in {**runtime,**frozen,H_EXTREMA_ORACLE_PATH:H_EXTREMA_ORACLE_SHA256}.items():
+        require(archive.namelist().count(name)==1,'H source absent or duplicate: '+name)
+        raw=archive.read(name);canonical=raw.replace(b'\r\n',b'\n')
+        checked=canonical if name in runtime else raw
+        require(hashlib.sha256(checked).hexdigest()==want and snapshot['files_sha256'].get(name)==hashlib.sha256(canonical).hexdigest(),
+                'H source bytes differ: '+name)
+    if not legacy:
+        name='tests/h_extrema_source_provenance.py';raw=archive.read(name)
+        namespace={'__name__':'_h_stager_closed_metadata','__file__':name}
+        exec(compile(raw,name,'exec'),namespace)  # Exact fixed stdlib reader authenticated above.
+        record=json.loads(archive.read('coverage/evidence/h-extrema-reference-assertion-migration.json'))
+        current={name:archive.read(name) for name in H_EXTREMA_HISTORICAL_RAW_PINS}
+        require(namespace['verify_record'](record,current,raw),'H closed metadata inverse failed')
+        require({name:entry['original_raw_sha256'] for name,entry in record['files'].items()}==H_EXTREMA_HISTORICAL_RAW_PINS,
+                'H historical source declaration differs')
+        name='tests/h_extrema_public_authentication.py'
+        adapter={'__name__':'_h_stager_cross_family_metadata','__file__':name}
+        exec(compile(archive.read(name),name,'exec'),adapter)
+        historical=adapter['validate_reconstruction'](archive.read)
+        old=json.loads(archive.read('coverage/contracts/h-extrema-plan.json'))
+        floating=json.loads(archive.read('coverage/contracts/h-extrema-floating-plan.json'))
+        for name,expected in {**old['frozen_files'],**floating['preserved_files'],**floating['reference_files']}.items():
+            if hashlib.sha256(archive.read(name)).hexdigest()==expected:continue
+            if name in H_EXTREMA_HISTORICAL_RAW_PINS:
+                require(expected==H_EXTREMA_HISTORICAL_RAW_PINS[name],'H historical pin mismatch')
+            else:
+                require(name==adapter['PATH'] and hashlib.sha256(historical).hexdigest()==expected,
+                        'H cross-family reference mismatch: '+name)
+
+
 def validate_nmi_source(archive, snapshot, scope):
     """Authenticate the frozen NMI imports without executing scientific code."""
-    if scope['name'] != 'nmi22':
+    if scope['name'] not in ('nmi22','h_extrema23'):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = None
@@ -346,24 +404,26 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
         validate_max_tree_source(archive, q['source'], scope)
         validate_reconstruction_source(archive,q['source'],scope)
         validate_nmi_source(archive,q['source'],scope)
-    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200,'nmi22':201}[scope['name']]
+        validate_h_extrema_source(archive,q['source'],scope)
+    image_count = {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200,'nmi22':201,'h_extrema22':202,'h_extrema23':203}[scope['name']]
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
             and expected['registered_count'] == len(set(expected['functions'])) == len(expected['functions']) == image_count+3,
             f'genuine{image_count}+3 registry qualification required')
     require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
-    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22')),
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23')),
             'qualified Bregman registry/source scope differs')
     max_tree = tuple('morphology.' + name for name in ('max_tree', 'max_tree_local_maxima',
                      'area_opening', 'area_closing', 'diameter_opening', 'diameter_closing'))
-    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22')
+    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23')
             else not any(name in expected['functions'] for name in max_tree),
             'qualified max-tree registry/source scope differs')
-    require(('morphology.reconstruction' in expected['functions'])==(scope['name'] in ('reconstruction21','nmi22')),
+    require(('morphology.reconstruction' in expected['functions'])==(scope['name'] in ('reconstruction21','nmi22','h_extrema22','h_extrema23')),
             'source reconstruction scope/registry differs')
-    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21','nmi22')),
+    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21','nmi22','h_extrema22','h_extrema23')),
             'qualified matrix registry/source scope differs')
-    require(expected['functions'].count(NMI_PATH) == 1 if scope['name'] == 'nmi22'
+    require(all(expected['functions'].count(n)==1 for n in H_EXTREMA_PATHS) if scope['name'] in ('h_extrema22','h_extrema23') else not any(n in expected['functions'] for n in H_EXTREMA_PATHS), 'H-extrema registry missing/partial/downgraded')
+    require(expected['functions'].count(NMI_PATH) == 1 if scope['name'] in ('nmi22','h_extrema23')
             else NMI_PATH not in expected['functions'], 'qualified NMI registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')

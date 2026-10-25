@@ -1,0 +1,96 @@
+{
+  "schema": "root-H829-floating-private-admission-v1",
+  "source": "829f95377295d9a0303282566a6765b6ff0784e2",
+  "disposition": "Accepted bounded private numerical/source/link evidence. No public/API/SDK/performance credit.",
+  "independent_review": {
+    "path": "build/resume-20261025/h-extrema-floating-numerical-independent-review/final-review.json",
+    "bytes": 10433,
+    "sha256": "36f3ad0a301c0c8b0c1a173d548080699f181a5f76af52de645e8f711f3357bd"
+  },
+  "proof": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\h-extrema-floating\\build\\floating-proof-v1\\manifest.json",
+    "bytes": 160512,
+    "sha256": "a567c7c060f533d5f297407cb2dbc9a18e60eb6c75f81cd7a2c1d176fb7eeeb1"
+  },
+  "root_review": {
+    "records_rehashed": 551,
+    "bytes_rehashed": 244028150,
+    "exact_Git_worktree_source_members": 6,
+    "reference_review_records_authenticated": true
+  },
+  "source_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\resume-20261025\\h-extrema-floating-prebuild-review\\review.json",
+    "bytes": 14771,
+    "sha256": "4791e0feb883e942d2cac51db3bf54e4dca05bfc8284b35c391d18444af76fe1"
+  },
+  "actual_link_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\resume-20261025\\h-extrema-floating-actual-link-review\\final-review.json",
+    "bytes": 10874,
+    "sha256": "e02a7515a4cdc4c5f01224f2ee2f413153ce172efab430aa4cb2f81f8f6ee87b"
+  },
+  "totals": {
+    "rows": 17720,
+    "safe_API_observations": 15696,
+    "Cpp_reconstruction": 12508,
+    "Cpp_integer_mask": 6264,
+    "Cpp_real_mask": 5792,
+    "final_provider": 396,
+    "preparation_provider": 8064,
+    "clipping_provider": 1080,
+    "actual_errors": 2056,
+    "post_flood_errors": 56,
+    "unsafe_blocks": 252,
+    "pytest_passed": 15726,
+    "explicit_skips": 2024,
+    "XML_nodes": 17750,
+    "guard_records": 140,
+    "native_assertions": 4664080,
+    "portable4_rejections": 1772
+  },
+  "scope": {
+    "fixed_IDs": 886,
+    "integer": 424,
+    "mandatory_float_promotion": 378,
+    "additive": 70,
+    "unsafe_metadata_only": 14,
+    "profiles": [
+      "windows",
+      "modern",
+      "minimum",
+      "portable",
+      "sanitizer"
+    ],
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "all_10_controllers_terminal_exit_zero": true,
+    "all_20_native_test_runs_terminal_exit_zero": true,
+    "ordinary_workers": [
+      1,
+      4
+    ],
+    "portable_workers": [
+      1
+    ],
+    "portable_4_explicitly_rejected": true,
+    "actual_original_numeric_forwarding_calls": 0
+  },
+  "limitations": [
+    "Raw kernel-stage projection for oldintegerseed intentionally excludes only original scratch layout/ownership, exacttype/dtype/metadata/shape/raw; all other stage fields exact",
+    "Portableworker4 rejected, no worker4parity credit; unsafe14 never called",
+    "56 postflood sourcewarning errors are C++reconstruction completions but NOT completedHmasks",
+    "NumPy preparation/clipping+396finalproviders remain; no wholeHAPI/public/SDK/timing credit",
+    "Private standalone modules, not installed production-core/public or SDK qualification.",
+    "Existing provider preparation/clipping and 396 final-provider observations remain explicit; this is not an all-argument all-C++ claim.",
+    "56 source-defined post-flood errors count reconstruction returns only, not completed H masks.",
+    "Sanitizer coverage applies to the changed/new and separately instrumented reused private TUs; the reused historical SDK is not wholly instrumented. Native LSan and CPython leak-disabled sanitizer scopes remain distinct.",
+    "New real-mask comparison remains serial; worker4 verifies the shared worker state and reconstruction scope, not parallelism of every H stage.",
+    "No new numerical execution, scientific imports, builds, environment creation or timing by reviewer; no performance/public/full-API credit."
+  ],
+  "retained_failures": "All original five controller metadata failures and prior source findings remain unchanged; no numerical failure or retry in the ten admitted gates.",
+  "next_step": "Source-only full installed H203 integration based exactf82, preserving frozen886cases/448metadata; then reviewed hosted whole-product qualification and isolated original-library one-worker benchmark.",
+  "public_accepted": false,
+  "new_API_credit": 0,
+  "performance_measured": false
+}
