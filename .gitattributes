@@ -159,3 +159,4 @@ coverage/evidence/nmi-public201-stager-source-review.json -text
 coverage/evidence/li-installed-observation-journal-source-review.json -text
 coverage/evidence/li-failed-product-diagnostic-inputs.json -text
 coverage/evidence/h-extrema-metadata-migration-source-review.json -text
+coverage/evidence/li-same-failed-product-diagnostic-source-review.json -text
