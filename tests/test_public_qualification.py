@@ -2051,3 +2051,13 @@ def test_actual_derived_h_public_assertion_AST_compiles_without_images(monkeypat
     # Compile real derived nodes as the child does. Never exec assertion code.
     compiled=compile(ast.Module(body=nodes,type_ignores=[]),'<actual-H-public-assertions-metadata>','exec')
     assert isinstance(compiled,types.CodeType)
+
+
+
+def test_registered_h_native_control_keeps_release_assertions_enabled():
+    native=(ROOT/'tests/test_h_extrema_native.cpp').read_text()
+    assert '#ifdef NDEBUG' in native and '#error' in native
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'target_compile_options(test_h_extrema_native PRIVATE /UNDEBUG)' in cmake
+    assert 'target_compile_options(test_h_extrema_native PRIVATE -UNDEBUG)' in cmake
+    assert 'add_test(NAME h_extrema_native COMMAND test_h_extrema_native)' in cmake
