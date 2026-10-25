@@ -170,3 +170,4 @@ tests/test_h_extrema_native_pipeline.py -text
 tests/cmake_consumer/h_extrema_source_oracle.bin -text
 coverage/evidence/h-extrema-public-source-composition.json -text
 coverage/evidence/reconstruction-descriptor-private-admission.json -text
+coverage/evidence/h-extrema-private-admission.json -text
