@@ -986,7 +986,7 @@ EFFORTS = {
 }
 NONCOMPUTE_FAMILIES = {"asset", "io", "ui", "metadata", "learn"}
 COMMON_POLICY = {
-    "scope": "Planning-only. Implementation goal remains paused. No API, evidence or measured-speed status is changed by this document.",
+    "scope": "Planning proposals, not live execution state. See coverage/work_items.json and coverage/EXECUTION_PLAN.md for current assignments and authorization. This document changes no API, evidence or measured-speed status.",
     "existing_proofs": "Existing strict/bitwise/source-qualified contracts and frozen evidence remain unchanged. A new prospective policy cannot relax them or relabel old failures.",
     "structural": "Exact signature/default/return container, dtype/shape/layout, integer results, labels, tie and branch decisions, warning/error classes/messages/order, callbacks, mutation/alias/state and namespace identity where the public contract specifies them.",
     "floating": "Before observing candidate results, declare per-output dtype/conditioning-aware rtol/atol or ULP bounds from algorithm stability and application needs, plus nonfinite/signed-zero rules. Validate with untouched holdouts. A separate bitwise track is mandatory for strict existing scopes or contracts requiring exact arithmetic. Numerical allclose alone cannot excuse changed labels, convergence branches or errors.",
@@ -1130,7 +1130,7 @@ def make_document():
     return dict(schema_version=1, artifact_kind="planning-only-per-api-routes",
                 reference_version=inventory["reference_version"], source_inventory="coverage/api.json",
                 source_inventory_sha256=hashlib.sha256(raw).hexdigest(),
-                accepted_baseline_context="main 12fad34 at planning review; authoritative current classifications copied from api.json. No execution work resumed.",
+                accepted_baseline_context="main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
                 scope_statement="Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
                 algorithm_count_note="26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
                 common_policy=COMMON_POLICY, summary_counts=counts, wave_definitions=WAVES,
@@ -1152,7 +1152,7 @@ def render_markdown(doc):
     summary = doc["summary_counts"]
     lines = [
         "# Easiest credible implementation path for every inventoried API", "",
-        "Planning-only review. **Implementation remains paused.** These are proposed routes and acceptance work, not new implementations, measured speedups or a change to the authoritative inventory.", "",
+        "These are proposed routes and acceptance work, not new implementations, measured speedups or a change to the authoritative inventory. Frozen checkpoints describe the historical planning review. Current execution state and authorization are in `work_items.json` and `EXECUTION_PLAN.md`.", "",
         doc["scope_statement"], "",
         "Current classification: 192 native-partial image entries, 277 upstream-only entries, four native-class-partial entries, three metadata functions and one exception-metadata-provider. Partial means partial; listed test/benchmark references do not prove the expanded proposal. " + doc["algorithm_count_note"], "",
         "Generated from `coverage/api.json` (scikit-image " + doc["reference_version"] + ") by `python tools/generate_api_implementation_paths.py`; verify without writes using `python tools/generate_api_implementation_paths.py --check`. Inventory SHA-256: `" + doc["source_inventory_sha256"] + "`.", "",

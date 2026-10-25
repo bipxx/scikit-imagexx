@@ -1,6 +1,6 @@
 # Easiest credible implementation path for every inventoried API
 
-Planning-only review. **Implementation remains paused.** These are proposed routes and acceptance work, not new implementations, measured speedups or a change to the authoritative inventory.
+These are proposed routes and acceptance work, not new implementations, measured speedups or a change to the authoritative inventory. Frozen checkpoints describe the historical planning review. Current execution state and authorization are in `work_items.json` and `EXECUTION_PLAN.md`.
 
 Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.
 
