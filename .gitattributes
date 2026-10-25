@@ -169,3 +169,10 @@ coverage/evidence/h-extrema-object-preentry-metadata-admission.json -text
 coverage/evidence/public201-repaired-source-admission.json -text
 coverage/evidence/li-observer-collection-source-admission.json -text
 coverage/evidence/h-extrema-floating-private-admission.json -text
+
+# Colocalization prospective scientific contracts and exact observer bytes.
+coverage/contracts/colocalization-plan.json -text
+coverage/contracts/colocalization.json -text
+tests/colocalization_cases.py -text
+tests/colocalization_reference.py -text
+tests/test_colocalization_contracts.py -text
