@@ -113,3 +113,5 @@ coverage/evidence/released-metadata-scratch-cleanup-20261024.json -text
 coverage/evidence/tv-admission-public-worktree-retirement.json -text
 coverage/evidence/max-tree-closing-dtype-private.json -text
 coverage/evidence/max-tree-sdk-oracle-private.json -text
+coverage/contracts/iterative-thresholds.json -text
+coverage/contracts/li-default-policy.json -text
