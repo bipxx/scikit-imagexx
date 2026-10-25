@@ -196,3 +196,7 @@ tests/footprint_shapes_reference.py -text
 tests/test_footprint_shapes_contracts.py -text
 coverage/contracts/footprint-shapes.json -text
 coverage/evidence/footprint-shapes-original-reference-admission.json -text
+tools/h_installed_diagnostic.py -text
+tests/test_h_installed_diagnostic.py -text
+.github/workflows/h-installed-diagnostic.yml -text
+coverage/evidence/h-failed-product-diagnostic-inputs.json -text
