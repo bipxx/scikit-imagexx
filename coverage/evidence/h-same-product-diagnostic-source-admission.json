@@ -1,0 +1,30 @@
+{
+  "schema": "root-h-same-product-diagnostic-source-admission-v1",
+  "source": "493589918ee7679f8fad4c095480741c3d108243",
+  "author_manifest": {
+    "path": "build/worktrees/h203-same-product-diagnostic/build/source-proof-v1/manifest.json",
+    "bytes": 3338,
+    "sha256": "d4bc968ce428aba105cd66b045ba4f97e3b5080c63815c26dc7c0e4b5fc1c248"
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/h203-same-product-diagnostic-independent-review/final-review.json",
+    "bytes": 4557,
+    "sha256": "a7a99c4abe2d656878985f1bc55627282e754d9dc2076009f100e3f983ce9882"
+  },
+  "root_review": [
+    "full script and workflow read",
+    "18 author records and source ZIP authenticated",
+    "four integrated controller/test/input/workflow members raw-exact",
+    "exact741 binaries and ea35-only test projection; no numerical expectation changes",
+    "offline hash-pinned binary installation then actual member/core/RECORD check",
+    "fresh normal/scalar full886 strict/default workers1/4; unsafe rows zero calls",
+    "raw failures retained; no whole-product acceptance"
+  ],
+  "diagnostic_execution_authorized": true,
+  "failed_source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "failed_run": 40200919182,
+  "failed_whole_product_remains_failed": true,
+  "product_build_authorized": false,
+  "performance_execution_authorized": false,
+  "accepted_public_native_partial_apis": 199
+}

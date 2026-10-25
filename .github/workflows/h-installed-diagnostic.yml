@@ -1,0 +1,71 @@
+name: h-installed-diagnostic
+on:
+  workflow_dispatch:
+    inputs:
+      controller_revision:
+        description: Exact reviewed controller commit, equal to the selected workflow ref
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnose:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: minimum
+            os: ubuntu-24.04
+            python: '3.11.17'
+          - profile: modern
+            os: ubuntu-24.04
+            python: '3.13.16'
+          - profile: debug
+            os: ubuntu-24.04
+            python: '3.13.16'
+          - profile: windows
+            os: windows-latest
+            python: '3.13.16'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_DYNAMIC: 'FALSE'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Standard-library guards before archived product preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONOPTIMIZE PYTHONPATH PYTHONHOME PYTEST_ADDOPTS PYTEST_PLUGINS
+          mkdir -p build
+          python -I -X utf8 -B -m unittest discover -s tests -p 'test_*installed_diagnostic.py' -v 2>&1 | tee 'build/h-diagnostic-metadata-${{ matrix.profile }}.log'
+      - name: Diagnose exact failed product without builds or timing
+        shell: bash
+        env:
+          CONTROLLER_REVISION: ${{ inputs.controller_revision }}
+        run: |
+          set -euo pipefail
+          unset PYTHONOPTIMIZE PYTHONPATH PYTHONHOME PYTEST_ADDOPTS PYTEST_PLUGINS
+          python -I -X utf8 -B tools/h_installed_diagnostic.py --profile '${{ matrix.profile }}' --output 'build/h-diagnostic-${{ matrix.profile }}' --controller-revision "$CONTROLLER_REVISION" 2>&1 | tee 'build/h-diagnostic-${{ matrix.profile }}.log'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h-failed-product-diagnostic-${{ matrix.profile }}
+          retention-days: 90
+          include-hidden-files: true
+          path: |
+            build/h-diagnostic-${{ matrix.profile }}/
+            !build/h-diagnostic-${{ matrix.profile }}/payload/**
+            build/h-diagnostic-${{ matrix.profile }}.log
+            build/h-diagnostic-metadata-${{ matrix.profile }}.log
