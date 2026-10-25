@@ -50,6 +50,13 @@ def cases():
         for size in (7, 8, 127, 128, 129, 8191, 8192, 8193):
             item(api, 'reduction', str(size), shape=[size], dtype='float32')
     assert len(rows) == 286 and len({r['id'] for r in rows}) == 286
+    # Preserve every original ID and byte-field value. Default means leave the
+    # actual pristine policy/handler untouched, not "all warn is equivalent".
+    original=list(rows)
+    for row in original:
+        if row['group']!='fp':
+            rows.append(dict(row,id=row['id']+'/policy-default',policy='default',clone_of=row['id']))
+    assert len(rows)==536 and len({r['id'] for r in rows})==536
     return rows
 
 
@@ -71,13 +78,19 @@ def certificate(spec):
         assert type(dim) is int and dim >= 0
         n *= dim
     assert n <= MAX_ELEMENTS
-    # At most 16-byte complex controls; stepped owner <=2N; unaligned owner
-    # +1; three conversion/mask copies, two gathered inputs, three typed
-    # products, min/sum iterator workspace and input snapshots. 112N+64KiB
-    # dominates those simultaneous allocations; zero/scalar use N>=1 below.
+    # Compute workspace ONLY: at most16-byte complex controls (small35px),
+    # stepped owner <=2N, conversion/mask copies, gathered inputs, typed
+    # products and iterator workspace. Observer raw streams are separately
+    # chunked/deduplicated; no full raw hex strings or JSON copies.
     bound = 112 * max(n, 1) + 65536
     assert bound <= MAX_WORKSPACE_BYTES
+    observer_scratch=16*1024*1024
+    # Separate conservative16MiB budget covers iterator/raw/compression buffers
+    # (each<=256KiB), zlib state, metadata/descriptors and bounded JSON copies.
+    # Raw raster bytes live on disk in deduplicated chunks, not hex strings.
     return dict(elements=n, byte_bound=bound, limit=MAX_WORKSPACE_BYTES,
+                compute_workspace_bound=bound,observer_scratch_bound=observer_scratch,
+                combined_live_bound=bound+observer_scratch,combined_limit=160*1024*1024,
                 safe_domain='Owned bounded NumPy arrays/Python scalars only; no Cython/image kernel',
                 unsafe_descriptor_probes=False)
 
@@ -178,4 +191,6 @@ def fixture(spec, np, events):
             # source computation/handler order determines whether it is observed.
             a[...] = 0;b[...] = 0
             if a.size:a.flat[0]=1
+    for actual in (a,b,roi):
+        if isinstance(actual,np.ndarray) and not any(actual is old for old in retained):retained.append(actual)
     return (a,b),({} if roi is None else {'mask':roi}),retained
