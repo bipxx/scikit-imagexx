@@ -1,0 +1,57 @@
+{
+  "schema": "root-Li-original-observer-collection-source-admission-v1",
+  "disposition": "Accepted exact one-file automatic pytest collection exclusion with fail-closed future-test guards.",
+  "source_files": {
+    "tests/conftest.py": {
+      "bytes": 358,
+      "raw_sha256": "5d7d7d49b38db54804857c2251e55c68edb33e44ee27e06d2566332a63d14ab5",
+      "canonical_lf_sha256": "5d7d7d49b38db54804857c2251e55c68edb33e44ee27e06d2566332a63d14ab5"
+    },
+    "tests/test_li_observer_collection.py": {
+      "bytes": 4243,
+      "raw_sha256": "0a6e943fabd909b455087cc9c868736dd0d1ea6ab0b840a43d8bee7c4798208f",
+      "canonical_lf_sha256": "0a6e943fabd909b455087cc9c868736dd0d1ea6ab0b840a43d8bee7c4798208f"
+    }
+  },
+  "independent_review": {
+    "path": "build/resume-20261025/li-observer-collection-independent-review/independent-review.json",
+    "bytes": 1672,
+    "sha256": "b3115f59277ef405a3ce2913ee312cfec919111a2ec87af10d099dee6176434c"
+  },
+  "validation": [
+    {
+      "path": "build/resume-20261025/li-observer-collection-independent-review/metadata.xml",
+      "bytes": 1386,
+      "sha256": "f102a730a89361905eced5c31a5a3bf4532a34c9d2c6ecd14ee0d9d9cc4f6049"
+    },
+    {
+      "path": "build/resume-20261025/li-observer-collection-independent-review/metadata.log",
+      "bytes": 100,
+      "sha256": "fb20512b2f489a2b2af48401fdbc4910f80fce1fc46d80d54112ab954c8b6115"
+    },
+    {
+      "path": "build/resume-20261025/li-observer-collection-independent-review/metadata.exit",
+      "bytes": 3,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "path": "build/resume-20261025/li-observer-collection-independent-review/run-metadata.py",
+      "bytes": 846,
+      "sha256": "ade79f7ce528f9004a402428e93b8c9b659165d842e91919017dee53f1976312"
+    }
+  ],
+  "checks": [
+    "One exactrelative collect_ignore entry forzero-test originalobserver; no glob/pattern/runtime skip/secondfile",
+    "Poolsetup originalprefix preservedcanonicalbytes andsemanticAST; sameexistingSetDefault1 semantics",
+    "Pinned actualobserver haszero collection candidate functions/classes/importalias/assignments; future addedtest failshash+ASTguards",
+    "Observernumericalsource unchanged; freshchildgate915raw-text unchanged,43originalcaptures precedexx",
+    "Current andhistoricalobserver/conftest useexplicitcanonicalLF comparison; gateusesdeclared-text/raw915, preservingWindowscheckouts withoutnormalizingoldarchives",
+    "Names-only CURRENT/canonical_pin finalcleanup reviewedandfinal8guardsrerun"
+  ],
+  "metadata_passes": 8,
+  "scientific_import_attempts": 0,
+  "image_calls": 0,
+  "whole_product_accepted": false,
+  "performance_measured": false,
+  "scope": "Collection/source metadata only; original source observer and installed Li86 fresh-child parity gate unchanged. Frozen201 source remains f82."
+}

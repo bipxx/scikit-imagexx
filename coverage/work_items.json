@@ -30626,7 +30626,7 @@
         "python/skimagexx/_h_extrema.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Frozen829f953 production and five bounded builds complete; actual-link independent audit sealing. No numerical gate/import/timing yet; all886 fixed cases retained."
+      "current_checkpoint": "Frozen829 source/build/link reviewed e02a7515; all10native/module/fullpipeline gates exit0, each1775XML/1772rows/14guards. Ordinary1747pass28explicit-skips,portable875pass900explicit-skips. Author sealing rawproof; independentnumericalreview/publicintegration/performance stillpending."
     },
     {
       "id": "h-extrema-floating-reference",
@@ -30693,13 +30693,13 @@
       "kind": "tooling",
       "apis": [],
       "owner": "resize_api",
-      "state": "contracting",
+      "state": "parity_passed",
       "owns": [
         "tests/conftest.py",
         "tests/test_li_observer_collection.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Bounded exact-one zero-test observer collection plan retained, not implemented. Hmetadata work took priority; no claim that broad collection is repaired. Future guard must use current gate91587055 pins."
+      "current_checkpoint": "Exact-one original-only zero-test observercollect_ignore implemented; unchangedpoolsetup/observer/gate915; final8metadataguardsPASS independently underimportdeny. coverage/evidence/li-observer-collection-source-admission.json; no image/product credit, not partoffrozen201."
     },
     {
       "id": "public201-failure-repair-integration",
@@ -30713,7 +30713,7 @@
       ],
       "depends_on": [],
       "state": "preparing",
-      "current_checkpoint": "Frozenpushed f82c0c26433fb60c233bfc888a5e8e1a0a925bb6 on4b82e8/a55/d719/87b; Li915 exact and raw/LF source consumers corrected. Initial857suite856PASS1FAIL retained; affected7tests PASS after correction. Independent Csource/4plans review pending; no dispatch/product acceptance."
+      "current_checkpoint": "Sourcef82 independentlyrevieweda07c7209 four201plans/7affectedmetadataPASS; rootadmissionca24e69. DispatchedONCE40189753345; authoritativeobserver89594 live build/genuine201-repaired-hosted/f82c0c2. Untimedfresh4hostqualification; no acceptanceuntilterminalindependentrawproductreview."
     },
     {
       "id": "h-extrema-object-preentry-metadata",
