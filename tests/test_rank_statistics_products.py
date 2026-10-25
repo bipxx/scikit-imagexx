@@ -58,14 +58,14 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20','reconstruction21')
+    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20','reconstruction21','h_extrema22')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope in ('bregman18','max_tree19','matrix20','reconstruction21'):families += ['tv_bregman']
-    if scope in ('max_tree19','matrix20','reconstruction21'):families += ['max_tree']
-    if scope in ('matrix20','reconstruction21'):families += ['matrix_transform']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65,'reconstruction21':66}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114,'reconstruction21':116}[scope]
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','h_extrema22'):families += ['tv_bregman']
+    if scope in ('max_tree19','matrix20','reconstruction21','h_extrema22'):families += ['max_tree']
+    if scope in ('matrix20','reconstruction21','h_extrema22'):families += ['matrix_transform']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65,'reconstruction21':66,'h_extrema22':67}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114,'reconstruction21':116,'h_extrema22':118}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -81,20 +81,20 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope in ('bregman18','max_tree19','matrix20','reconstruction21'):
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','h_extrema22'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
-    if scope in ('max_tree19','matrix20','reconstruction21'):
+    if scope in ('max_tree19','matrix20','reconstruction21','h_extrema22'):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
         # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
         for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
-    if scope in ('matrix20','reconstruction21'):
+    if scope in ('matrix20','reconstruction21','h_extrema22'):
         source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
         source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
-    if scope=='reconstruction21':
+    if scope in ('reconstruction21','h_extrema22'):
         families += ['reconstruction']
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
@@ -102,6 +102,18 @@ def synthetic(tmp_path, monkeypatch, request):
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.RECONSTRUCTION_ORACLE_PATH]=(ROOT/p.RECONSTRUCTION_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
+    if scope=='h_extrema22':
+        families += ['h_extrema']
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
+        expected_checks=2*len(families)
+        for name in p.H_EXTREMA_RUNTIME_SOURCE_PINS:source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        source[p.H_EXTREMA_ORACLE_PATH]=(ROOT/p.H_EXTREMA_ORACLE_PATH).read_bytes()
+        refs={}
+        for name in p.H_EXTREMA_FROZEN_RAW_PINS:
+            raw=b'INERT H source metadata; never scientific/native evidence\n';source[name]=raw;refs[name]=body_hash(raw)
+        monkeypatch.setattr(p,'H_EXTREMA_FROZEN_RAW_PINS',refs)
+        source['tools/public_qualification.py']+=('H_EXTREMA_RUNTIME_SOURCE_PINS='+repr(p.H_EXTREMA_RUNTIME_SOURCE_PINS)+'\nH_EXTREMA_FROZEN_RAW_PINS='+repr(refs)+'\nH_EXTREMA_ORACLE_PATH='+repr(p.H_EXTREMA_ORACLE_PATH)+'\nH_EXTREMA_ORACLE_SHA256='+repr(p.H_EXTREMA_ORACLE_SHA256)+'\n').encode()
+
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -157,8 +169,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199,'reconstruction21':200}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202,'reconstruction21':203}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20','reconstruction21') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20','reconstruction21') else [])+(['transform.matrix_transform'] if scope in ('matrix20','reconstruction21') else [])+(['morphology.reconstruction'] if scope=='reconstruction21' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199,'reconstruction21':200,'h_extrema22':202}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202,'reconstruction21':203,'h_extrema22':205}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20','reconstruction21','h_extrema22') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20','reconstruction21','h_extrema22') else [])+(['transform.matrix_transform'] if scope in ('matrix20','reconstruction21','h_extrema22') else [])+(['morphology.reconstruction'] if scope in ('reconstruction21','h_extrema22') else [])+(['morphology.h_maxima','morphology.h_minima'] if scope=='h_extrema22' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -692,3 +704,44 @@ def test_legacy_scopes_never_invent_reconstruction_requirements(scope):
     class ForbiddenArchive:
         def read(self,*a):raise AssertionError('legacy touched new reconstruction source')
     p.validate_reconstruction_source(ForbiddenArchive(),{},dict(name=scope))
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema22'],indirect=True)
+def test_h202_complete118_sdk67_remains_staged_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    assert p.qualification_scope(s.output/'source')['name']=='h_extrema22'
+    sdk=json.loads((s.output/'qualification/sdk.json').read_bytes())
+    assert len(sdk['SDK_sha256'])==67 and len(sdk['families'])==22 and sdk['checks']==44
+    assert s.proof['expected_registry']['image_count']==202 and s.proof['expected_registry']['registered_count']==205
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==118
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema22'],indirect=True)
+@pytest.mark.parametrize('fault',['missing','duplicate','downgrade','reconstruction'])
+def test_h202_partial_registry_cannot_stage(synthetic,fault):
+    s=synthetic
+    if fault=='missing':s.proof['expected_registry']['functions'].remove('morphology.h_minima')
+    elif fault=='duplicate':s.proof['expected_registry']['functions'].append('morphology.h_maxima')
+    elif fault=='downgrade':s.proof['expected_registry'].update(image_count=200,registered_count=203)
+    else:s.proof['expected_registry']['functions'].remove('morphology.reconstruction')
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema22'],indirect=True)
+@pytest.mark.parametrize('fault',['production','reference','oracle','omitted','declaration'])
+def test_h202_source_and_77_prerequisite_pins(synthetic,tmp_path,fault):
+    s=synthetic;data=dict(s.source);name=next(iter(p.H_EXTREMA_RUNTIME_SOURCE_PINS))
+    if fault=='production':data[name]+=b'changed'
+    elif fault=='reference':data[next(iter(p.H_EXTREMA_FROZEN_RAW_PINS))]+=b'changed'
+    elif fault=='oracle':data[p.H_EXTREMA_ORACLE_PATH]+=b'changed'
+    elif fault=='omitted':data.pop('src/h_extrema.cpp')
+    else:data['tools/public_qualification.py']=data['tools/public_qualification.py'].replace(b'H_EXTREMA_RUNTIME_SOURCE_PINS=',b'OLD_H_EXTREMA_RUNTIME_SOURCE_PINS=')
+    snapshot=dict(files_sha256={n:body_hash(raw.replace(b'\r\n',b'\n')) for n,raw in data.items()})
+    path=tmp_path/'altered.zip'
+    with zipfile.ZipFile(path,'w') as z:
+        for n,raw in data.items():z.writestr(n,raw)
+    with zipfile.ZipFile(path) as z:
+        with pytest.raises(RuntimeError):p.validate_h_extrema_source(z,snapshot,{'name':'h_extrema22'})
+    assert p.RECONSTRUCTION_RUNTIME_SOURCE_PINS['src/reconstruction.cpp']=='a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b'

@@ -1,0 +1,93 @@
+{
+  "schema": "h-extrema-public-source-composition-v1",
+  "private_h_source": "3f4ed95e9fb322985374f2af71522398dbd8db7f",
+  "cumulative_base": "bedab75d2105ff5a14641c186eeb8541baed8bc1",
+  "private_h_policy_raw_sha256": "e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51",
+  "private_source_raw_pins": {
+    "include/skimagexx/h_extrema.hpp": "fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1",
+    "src/h_extrema.cpp": "d67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f",
+    "src/bind_h_extrema.cpp": "0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86",
+    "python/skimagexx/_h_extrema.py": "60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a",
+    "tests/test_h_extrema_native.cpp": "228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438",
+    "tests/test_h_extrema_native_pipeline.py": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
+    "include/skimagexx/reconstruction.hpp": "334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8",
+    "src/reconstruction.cpp": "09c6c55262782c8228f62f1fe62e3cd394904f22be0c91f69ffc4a44fc36d9bc",
+    "src/simd_reconstruction_avx2.cpp": "f595d741a33f7180fa8881b97983ecd500b9dc0a9e8684ea4d538d905e8730b8",
+    "src/bind_reconstruction.cpp": "8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94",
+    "python/skimagexx/_reconstruction.py": "c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0"
+  },
+  "effective_source_raw_sha256": {
+    "coverage/contracts/h-extrema-integer.json": "e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51",
+    "coverage/contracts/h-extrema-plan.json": "652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b",
+    "coverage/contracts/h-extrema.json": "ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d",
+    "include/skimagexx/h_extrema.hpp": "fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1",
+    "python/skimagexx/_h_extrema.py": "60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a",
+    "src/bind_h_extrema.cpp": "0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86",
+    "src/h_extrema.cpp": "d67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f",
+    "tests/h_extrema_reference.py": "bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf",
+    "tests/test_h_extrema_boundaries.py": "a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71",
+    "tests/test_h_extrema_contracts.py": "00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151",
+    "tests/test_h_extrema_native.cpp": "228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438",
+    "tests/test_h_extrema_native_pipeline.py": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
+    "tests/cmake_consumer/h_extrema_source_oracle.bin": "091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5"
+  },
+  "effective_source_canonical_lf_sha256": {
+    "include/skimagexx/h_extrema.hpp": "fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1",
+    "src/h_extrema.cpp": "d67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f",
+    "src/bind_h_extrema.cpp": "0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86",
+    "python/skimagexx/_h_extrema.py": "60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a",
+    "tests/test_h_extrema_native.cpp": "228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438",
+    "tests/test_h_extrema_native_pipeline.py": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
+    "include/skimagexx/reconstruction.hpp": "334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8",
+    "src/reconstruction.cpp": "a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b",
+    "src/simd_reconstruction_avx2.cpp": "133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb",
+    "src/bind_reconstruction.cpp": "8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94",
+    "python/skimagexx/_reconstruction.py": "c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0"
+  },
+  "root_reconstruction_descriptor_successor": "77aefdff4d656e45b2b651a8791ff5c672112e88",
+  "source_successor_scope": "Current77descriptor guard compiled in cumulative library; all other reconstruction production declarations/shell unchanged. Raw text hashes and canonical-LF hashes kept distinct.",
+  "private_assertion_UTF8": "\"\"\"Actual private H/reconstruction composition against immutable source records.\"\"\"\nimport hashlib\nimport importlib.util\nimport inspect\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nimport types\n\nimport pytest\n\nif not os.environ.get('SKIMAGEXX_H_EXTREMA_CORE'):\n    pytest.skip('private H-extrema core explicitly required; no native/public claim', allow_module_level=True)\n\nROOT = Path(__file__).resolve().parents[1]\nPOLICY_PATH = ROOT/'coverage/contracts/h-extrema-integer.json'\nPOLICY = json.loads(POLICY_PATH.read_bytes())\nfor _name, _sha in POLICY['source_sha256'].items():\n    assert hashlib.sha256((ROOT/_name).read_bytes()).hexdigest() == _sha, _name\n\n\ndef load(name, path):\n    spec = importlib.util.spec_from_file_location(name, path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[name] = module\n    spec.loader.exec_module(module)\n    return module\n\n\ndef initial_native_spec(spec):\n    # Prospective input partition only. No expected/candidate output is consulted.\n    if spec['dtype'] not in ('u1', 'i1', 'u2', 'i2', 'u4', 'i4', 'u8', 'i8'):\n        return False\n    if 'family' in spec:\n        return spec['family'] in ('integer-saturation', 'full-integer-span', 'wide-integer-rounding', 'integer-cutoff')\n    return spec.get('layout') != 'tagged' and spec.get('height', 'one') in ('one', 'zero', 'two', 'out-of-range')\n\n\nREFERENCE = load('h_source_reference_auth', ROOT/'tests/h_extrema_reference.py')\n_profile = os.environ['SKIMAGEXX_H_EXTREMA_PROFILE']\nPLAN, SOURCE_AUTHENTICATION = REFERENCE.authenticate(_profile)\nLEGACY = load('h_private_legacy_observer', ROOT/'tests/test_h_extrema_contracts.py')\nBOUNDARIES = load('h_private_boundary_observer', ROOT/'tests/test_h_extrema_boundaries.py')\nimport numpy as np\n\nassert LEGACY.R.profile() == _profile\nMATRIX = json.loads((ROOT/'coverage/contracts/h-extrema.json').read_bytes())\nassert hashlib.sha256((ROOT/'coverage/contracts/h-extrema.json').read_bytes()).hexdigest() == POLICY['reference_matrix_sha256']\nSPECS = LEGACY.cases() + BOUNDARIES.cases()\nassert [spec['id'] for spec in SPECS] == POLICY['all_case_ids']\nassert [spec['id'] for spec in SPECS if initial_native_spec(spec) and spec['id'] not in PLAN['legacy_unsafe_ids']] == POLICY['initial_native_ids']\nMODULE_PATH = Path(os.environ['SKIMAGEXX_H_EXTREMA_CORE'])\nMODULE_SHA = hashlib.sha256(MODULE_PATH.read_bytes()).hexdigest()\nassert MODULE_SHA == os.environ['SKIMAGEXX_H_EXTREMA_CORE_SHA256']\nCORE = load('_h_extrema_core', MODULE_PATH)\nassert CORE.get_num_threads() == 1\nassert CORE.h_extrema_interface == 'h-extrema-integer-v1' and CORE.h_extrema_full_API is False\nassert CORE.reconstruction_interface == 'reconstruction-v1' and CORE.reconstruction_capabilities == 3\nfor _name in ('h_extrema_integer_range', 'h_extrema_integer_seed', 'h_extrema_integer_mask', 'reconstruction_run'):\n    _entry = getattr(CORE, _name)\n    assert inspect.isbuiltin(_entry) and _entry.__module__ == CORE.__name__\nif os.environ.get('SKIMAGEXX_DISABLE_SIMD'):\n    assert not CORE.has_avx2()\nPACKAGE = types.ModuleType('_h_extrema_owned')\nPACKAGE.__path__ = [str(ROOT/'python/skimagexx')]\nPACKAGE._core = CORE\nsys.modules[PACKAGE.__name__] = PACKAGE\nsys.modules[PACKAGE.__name__+'._core'] = CORE\nOWNED = load(PACKAGE.__name__+'._h_extrema', ROOT/'python/skimagexx/_h_extrema.py')\nassert OWNED._core is CORE and OWNED.reconstruction.__globals__['_core'] is CORE\nFORBIDDEN = {function.__code__ for function in LEGACY.ORIGINAL.values()}\nFORBIDDEN.add(LEGACY.ORIGINAL_REC.__code__)\nFORBIDDEN.add(LEGACY.R.SOURCE.rank_order.__code__)\nROWS = []\nGUARDS = []\nJOURNAL_PATH = Path(os.environ['SKIMAGEXX_H_EXTREMA_REPORT']).with_suffix('.jsonl')\nJOURNAL = JOURNAL_PATH.open('x', encoding='utf-8', newline='\\n')\n\n\n@pytest.fixture(scope='session', autouse=True)\ndef retained_report():\n    yield\n    JOURNAL.close()\n    CORE.set_num_threads(1)\n    report = dict(schema='h-extrema-actual-private-pipeline-v1', profile=_profile,\n                  source_authentication=SOURCE_AUTHENTICATION, module=dict(path=str(MODULE_PATH), sha256=MODULE_SHA),\n                  source_sha256=POLICY['source_sha256'], policy_sha256=hashlib.sha256(POLICY_PATH.read_bytes()).hexdigest(),\n                  has_avx2=CORE.has_avx2(), disable_simd=os.environ.get('SKIMAGEXX_DISABLE_SIMD'),\n                  default_workers=1, final_workers=CORE.get_num_threads(),\n                  observations=ROWS, guards=GUARDS, full_API_complete=False,\n                  original_algorithm_calls=0, operation_timings=0, public_acceptance=False)\n    with Path(os.environ['SKIMAGEXX_H_EXTREMA_REPORT']).open('x', encoding='utf-8', newline='\\n') as output:\n        json.dump(report, output, indent=2, allow_nan=False); output.write('\\n')\n\n\ndef retain(row):\n    ROWS.append(row)\n    JOURNAL.write(json.dumps(row, allow_nan=False)+'\\n'); JOURNAL.flush()\n\n\n@pytest.mark.parametrize('workers', (1, 4))\n@pytest.mark.parametrize('spec', SPECS, ids=lambda spec: spec['id'])\ndef test_exact_private_pipeline(spec, workers):\n    name = spec['id']\n    if workers == 4 and os.environ.get('SKIMAGEXX_EXPECT_OPENMP_OFF'):\n        with pytest.raises(ValueError, match='no OpenMP support'):\n            CORE.set_num_threads(4)\n        retain(dict(id=name, workers=workers, status='portable-worker4-explicit-rejection'))\n        pytest.skip('portable private foundation explicitly rejects worker4')\n    if name in PLAN['legacy_unsafe_ids']:\n        retain(dict(id=name, workers=workers, status='source-unsafe-blocked', actual_calls=0))\n        pytest.skip('unsafe original intake is not an upstream exception contract')\n    CORE.set_num_threads(workers)\n    assert CORE.get_num_threads() == workers\n    CORE.h_extrema_counts(True); CORE.reconstruction_counts(True)\n    expected = (MATRIX['additive_profiles'] if 'family' in spec else MATRIX['profiles'])[_profile]['observations'][name]\n    attempts = []\n    def guard(frame, event, arg):\n        if event == 'call' and frame.f_code in FORBIDDEN:\n            attempts.append(frame.f_code.co_name)\n            raise AssertionError('upstream H-extrema/reconstruction/rank-order forwarding forbidden')\n    previous = sys.getprofile()\n    sys.setprofile(guard)\n    try:\n        function = getattr(OWNED, spec['function'])\n        actual = BOUNDARIES.observe(spec, LEGACY, function) if 'family' in spec else LEGACY.observe(spec, function)\n    finally:\n        sys.setprofile(previous)\n    stats, reconstruction = CORE.h_extrema_counts(), CORE.reconstruction_counts()\n    selected = initial_native_spec(spec)\n    exact = LEGACY.public_observation(actual) == LEGACY.public_observation(expected)\n    row = dict(id=name, workers=workers, prospective_native=selected, actual=actual,\n               expected_reference='additive_profiles' if 'family' in spec else 'profiles',\n               expected_sha256=hashlib.sha256(json.dumps(expected, sort_keys=True).encode()).hexdigest(),\n               H_counts=stats, reconstruction_counts=reconstruction, forwarding_attempts=attempts,\n               public_observation_exact=exact, status='native' if selected else 'mandatory-followup')\n    retain(row)\n    assert not attempts and actual['original_numeric_completed'] == 0\n    if selected:\n        assert exact, name\n        assert reconstruction['run']['completed'] == expected['original_numeric_completed'], name\n        assert stats['mask']['completed'] == expected['original_numeric_completed'], name\n    else:\n        assert actual['error']['type'] == 'NotImplementedError'\n        assert all(value['completed'] == 0 for value in stats.values())\n        assert reconstruction['run']['completed'] == 0\n\n\ndef test_safe_metadata_only_intake_guards():\n    # This actual exported metadata function never dereferences image pixels.\n    # Stale/escaping storage is only passed to that metadata-only function.\n    validate = CORE.h_extrema_validate_metadata\n    for attribute in ('base', 'dtype', 'shape', 'strides', 'flags'):\n        def forbidden(self):\n            raise AssertionError('Python ndarray metadata attribute called')\n        subtype = type('MetadataTrap_'+attribute, (np.ndarray,), {attribute: property(forbidden)})\n        image = np.arange(8, dtype=np.uint16).view(subtype)\n        assert validate(image) == 8\n        GUARDS.append(dict(id='direct-C-slot/'+attribute, passed=True, pixel_reads=0))\n    root = np.arange(16, dtype=np.uint16)\n    view = root[8:]\n    root.resize((8,), refcheck=False)\n    with pytest.raises(ValueError, match='outside owning allocation'):\n        validate(view)\n    GUARDS.append(dict(id='preexisting-resized-owner/metadata-only', passed=True, pixel_reads=0))\n    image = np.arange(8, dtype=np.uint16)\n    indirect = np.lib.stride_tricks.as_strided(image, shape=(4,), strides=(2,))\n    with pytest.raises(ValueError, match='ndarray-backed storage'):\n        validate(indirect)\n    GUARDS.append(dict(id='in-bounds-unknown-owner', passed=True, pixel_reads=0))\n    for name, value in (('bytearray', bytearray(8)), ('bytes', bytes(8))):\n        image = np.frombuffer(value, dtype=np.uint16)\n        with pytest.raises(ValueError, match='ndarray-backed storage'):\n            validate(image)\n        GUARDS.append(dict(id='foreign-owner/'+name, passed=True, pixel_reads=0))\n    calls = []\n    class ScalarProbe:\n        def __index__(self): calls.append('index'); raise AssertionError('scalar conversion callback')\n        def __float__(self): calls.append('float'); raise AssertionError('scalar conversion callback')\n    image = np.arange(8, dtype=np.uint16)\n    with pytest.raises(TypeError, match='exact integer'):\n        CORE.h_extrema_integer_seed(image, ScalarProbe(), 0)\n    with pytest.raises(TypeError, match='exact integer'):\n        CORE.h_extrema_integer_seed(image, 1, ScalarProbe())\n    with pytest.raises(TypeError, match='exact float'):\n        CORE.h_extrema_integer_mask(image, np.arange(8, dtype=np.float64), ScalarProbe(), 0)\n    assert not calls\n    GUARDS.append(dict(id='scalar-protocols-rejected-before-native-read', passed=True, pixel_reads=0))\n",
+  "private_assertion_raw_sha256": "c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5",
+  "allowed_assertion_change": "ONLY unsafe-source pytest.skip replaced with Return after same blocked-no-call record. Portable branch and every numerical/provider/helper assertion unchanged.",
+  "private_main_AST_sha256": "0a54bf3bf100aa86f375f3ef2011ff30710d09be27e4cd09f9298e89389625c1",
+  "public_main_AST_sha256": "a1de92954e988d487d840651a4fc68ade84eae5d202506861d31ac8f6fae28b3",
+  "partition": {
+    "logical_ids": 816,
+    "selected_integer": 424,
+    "mandatory_float_promotion_followups": 378,
+    "source_unsafe_blocked": 14,
+    "workers": [
+      1,
+      4
+    ],
+    "total_projections": 1632
+  },
+  "SDK_source_oracle": {
+    "path": "tests/cmake_consumer/h_extrema_source_oracle.bin",
+    "sha256": "091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5",
+    "source_integer_masks": 16,
+    "widths": [
+      8,
+      16,
+      32,
+      64
+    ],
+    "methods": [
+      "dilation",
+      "erosion"
+    ],
+    "all3original_bytes_equal": true
+  },
+  "scope": {
+    "predicted_image_paths": 202,
+    "predicted_registered": 205,
+    "expected_wheel_members": 118,
+    "expected_SDK_members": 67,
+    "expected_families": 22,
+    "expected_SDK_checks": 44,
+    "public_qualification": false,
+    "wholeproduct_builds": 0,
+    "local_image_calls": 0,
+    "performance": false
+  }
+}

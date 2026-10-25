@@ -103,7 +103,8 @@ def test_every_native_function(native, original, name, dtype, shape):
             assert str(actual.value)==str(expected.value)
             return
         with pytest.raises(NotImplementedError):
-            getattr(native, name)(a)
+            if api in ('morphology.h_maxima','morphology.h_minima'):getattr(native,name)(a,1)
+            else:getattr(native, name)(a)
         return
     args, options = default_call(api,a)
     try:

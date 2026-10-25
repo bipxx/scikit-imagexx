@@ -11,6 +11,7 @@ from ._footprint_util import mirror_footprint, pad_footprint
 from ._components import label
 from . import _component_consumers as _consumers
 from ._reconstruction import reconstruction
+from ._h_extrema import h_maxima, h_minima
 from ._max_tree import (max_tree, max_tree_local_maxima, area_opening, area_closing,
                         diameter_opening, diameter_closing)
 
@@ -21,7 +22,7 @@ __all__ = ['erosion','dilation','opening','closing','white_tophat','black_tophat
            'binary_erosion','binary_dilation','binary_opening','binary_closing',
            'footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint','label',
            'remove_small_objects','remove_small_holes','max_tree','max_tree_local_maxima',
-           'area_opening','area_closing','diameter_opening','diameter_closing','reconstruction']
+           'area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima']
 _DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                     'int32','uint64','int64','float32','float64'))
 _MODES = ('reflect','constant','nearest','mirror','wrap','max','min','ignore')

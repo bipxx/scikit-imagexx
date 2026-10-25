@@ -280,15 +280,16 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
             'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction')
+            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction', 'h_extrema')
+RECONSTRUCTION_FAMILIES = FAMILIES[:21]
 ORIGINAL_FAMILIES = FAMILIES[:14]
 TV_FAMILIES = FAMILIES[:17]
 BREGMAN_FAMILIES = FAMILIES[:18]
 MAX_TREE_FAMILIES = FAMILIES[:19]
 MATRIX_FAMILIES = FAMILIES[:20]
-PRODUCT_SCOPE = 'reconstruction21'
-PRODUCT_MEMBERS = 116
-SDK_MEMBERS = 66
+PRODUCT_SCOPE = 'h_extrema22'
+PRODUCT_MEMBERS = 118
+SDK_MEMBERS = 67
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -332,12 +333,19 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'coverage/contracts/matrix-transform.json',
     'coverage/evidence/matrix-transform-public-assertion-migration.json',
     'coverage/evidence/matrix-transform-public-source-successor-assertion.json')
+H_EXTREMA_PATHS = ('morphology.h_maxima','morphology.h_minima')
+H_EXTREMA_RUNTIME_SOURCE_PINS = {'include/skimagexx/h_extrema.hpp': 'fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1', 'src/h_extrema.cpp': 'd67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f', 'src/bind_h_extrema.cpp': '0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86', 'python/skimagexx/_h_extrema.py': '60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a'}
+H_EXTREMA_FROZEN_RAW_PINS = {'coverage/contracts/h-extrema-integer.json': 'e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51', 'coverage/contracts/h-extrema-plan.json': '652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b', 'coverage/contracts/h-extrema.json': 'ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d', 'tests/h_extrema_reference.py': 'bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf', 'tests/test_h_extrema_boundaries.py': 'a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71', 'tests/test_h_extrema_contracts.py': '00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151', 'tests/test_h_extrema_native.cpp': '228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438', 'tests/test_h_extrema_native_pipeline.py': 'c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5'}
+H_EXTREMA_ORACLE_PATH = 'tests/cmake_consumer/h_extrema_source_oracle.bin'
+H_EXTREMA_ORACLE_SHA256 = '091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5'
+H_EXTREMA_SOURCE_PATHS = ('include/skimagexx/h_extrema.hpp', 'src/h_extrema.cpp', 'src/bind_h_extrema.cpp', 'python/skimagexx/_h_extrema.py', 'tests/test_h_extrema_native.cpp', 'tests/test_h_extrema_native_pipeline.py', 'tests/test_h_extrema_public.py', 'tests/test_h_extrema_contracts.py', 'tests/test_h_extrema_boundaries.py', 'tests/h_extrema_reference.py', 'coverage/contracts/h-extrema.json', 'coverage/contracts/h-extrema-plan.json', 'coverage/contracts/h-extrema-integer.json', 'coverage/evidence/h-extrema-public-source-composition.json', 'tests/cmake_consumer/h_extrema_consumer.cpp', 'tests/cmake_consumer/h_extrema_source_oracle.bin', 'tests/cmake_consumer/h_extrema_source_oracle.cmake')
 RECONSTRUCTION_PATH = 'morphology.reconstruction'
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
 RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
 RECONSTRUCTION_SOURCE_PATHS = ('include/skimagexx/reconstruction.hpp', 'src/reconstruction.cpp', 'src/simd_reconstruction_avx2.cpp', 'src/bind_reconstruction.cpp', 'python/skimagexx/_reconstruction.py', 'tests/test_reconstruction_native.cpp', 'tests/test_reconstruction_contracts.py', 'tests/test_reconstruction_public.py', 'tests/test_reconstruction_native_pipeline.py', 'tests/test_reconstruction_binding.py', 'tests/test_reconstruction_owner_guards.py', 'tests/test_reconstruction_offset_guards.py', 'coverage/contracts/reconstruction.json', 'coverage/evidence/reconstruction-public-assertion-migration.json', 'tests/cmake_consumer/reconstruction_source_oracle.bin', 'tests/cmake_consumer/reconstruction_source_oracle.cmake')
 GROUPS = {
+    'public-H-extrema': ('test_h_extrema_public.py',),
     'public-Reconstruction': ('test_reconstruction_contracts.py','test_reconstruction_public.py'),
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
@@ -497,6 +505,15 @@ def plan(root, profile, expected=None):
             actual_pin = hashlib.sha256(raw if name == MAX_TREE_ORACLE_PATH else raw.replace(b'\r\n', b'\n')).hexdigest()
             if actual_pin != expected_pin:
                 blockers.append('corrected max-tree source pin differs: ' + name)
+    for name in H_EXTREMA_PATHS:
+        if registry['functions'].count(name)!=1:blockers.append('missing/duplicate public H-extrema registry: '+name)
+    for name in H_EXTREMA_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required H-extrema source: '+name)
+    for name,want in {**H_EXTREMA_RUNTIME_SOURCE_PINS,**H_EXTREMA_FROZEN_RAW_PINS,H_EXTREMA_ORACLE_PATH:H_EXTREMA_ORACLE_SHA256}.items():
+        path=root/name
+        if path.is_file():
+            raw=path.read_bytes();actual=hashlib.sha256(raw if name==H_EXTREMA_ORACLE_PATH or name in H_EXTREMA_FROZEN_RAW_PINS else raw.replace(b'\r\n',b'\n')).hexdigest()
+            if actual!=want:blockers.append('H-extrema source pin differs: '+name)
     if RECONSTRUCTION_PATH not in registry['functions']:
         blockers.append('missing public reconstruction registry: '+RECONSTRUCTION_PATH)
     for name in RECONSTRUCTION_SOURCE_PATHS:
@@ -598,8 +615,8 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Closed historical scopes; new production qualification requires reconstruction21."""
-    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66)}
+    """Closed historical scopes; new production qualification requires h_extrema22."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66), 'h_extrema22': (118,67)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
@@ -616,20 +633,23 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21','h_extrema22') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
         bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
-        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (bregman & set(source.namelist())),
+        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21','h_extrema22') else not (bregman & set(source.namelist())),
                 'Bregman product scope/source header or helper differ')
         max_tree = {'include/skimagexx/max_tree.hpp', 'python/skimagexx/_max_tree.py'}
-        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21') else not (max_tree & set(source.namelist())),
+        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21','h_extrema22') else not (max_tree & set(source.namelist())),
                 'max-tree product scope/source header or helper differ')
         matrix = {'include/skimagexx/matrix_transform.hpp', 'python/skimagexx/_matrix_transform.py'}
-        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21') else not (matrix & set(source.namelist())),
+        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21','h_extrema22') else not (matrix & set(source.namelist())),
                 'matrix product scope/source header or helper differ')
         reconstruction={'include/skimagexx/reconstruction.hpp','python/skimagexx/_reconstruction.py'}
-        require((reconstruction<=set(source.namelist())) if scope=='reconstruction21' else not(reconstruction&set(source.namelist())),
+        require((reconstruction<=set(source.namelist())) if scope in ('reconstruction21','h_extrema22') else not(reconstruction&set(source.namelist())),
                 'reconstruction product scope/source header or helper differ')
+        h_extrema={'include/skimagexx/h_extrema.hpp','python/skimagexx/_h_extrema.py'}
+        require((h_extrema<=set(source.namelist())) if scope=='h_extrema22' else not(h_extrema&set(source.namelist())),
+                'H-extrema product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -975,6 +995,19 @@ def validate_matrix_rows(path):
             'ordinary matrix cohorts must execute actual C++')
 
 
+def h_extrema_admission(core,morphology,wrapper,registered):
+    require(all(tuple(registered).count(name)==1 for name in H_EXTREMA_PATHS),'missing/duplicate public H-extrema registry')
+    require(getattr(wrapper,'_core',None) is core and core.get_num_threads()==1,'H-extrema alternate core/default worker state')
+    require(getattr(core,'h_extrema_interface',None)=='h-extrema-integer-v1' and getattr(core,'h_extrema_full_API',None) is False,'H-extrema partial interface scope differs')
+    require(type(getattr(core,'h_extrema_integer_widths',None)) is tuple and core.h_extrema_integer_widths==(8,16,32,64) and all(type(x) is int for x in core.h_extrema_integer_widths),'H-extrema integer widths differ')
+    for name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask','h_extrema_counts'):
+        entry=getattr(core,name,None);require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,'missing owned compiled H-extrema entry: '+name)
+    for name in ('h_maxima','h_minima'):
+        function=vars(morphology).get(name)
+        require(function is vars(wrapper).get(name) and inspect.isfunction(function) and function.__module__=='skimagexx._h_extrema' and function.__name__==name,'H-extrema public ownership mismatch')
+        require(str(inspect.signature(function))=='(image, h, footprint=None)' and tuple(morphology.__all__).count(name)==1,'H-extrema signature/export mismatch')
+
+
 def reconstruction_admission(core,morphology,wrapper,registered):
     require(tuple(registered).count(RECONSTRUCTION_PATH)==1,'missing/duplicate public reconstruction registry')
     require(getattr(wrapper,'_core',None) is core,'reconstruction alternate core worker state')
@@ -1088,7 +1121,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -1121,6 +1154,8 @@ def admission(out, state):
                        importlib.import_module('skimagexx._max_tree'), coverage.native_functions())
     matrix_admission(xx._core, importlib.import_module('skimagexx.transform'),
                      importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions())
+    h_extrema_admission(xx._core,importlib.import_module('skimagexx.morphology'),
+                          importlib.import_module('skimagexx._h_extrema'),coverage.native_functions())
     reconstruction_admission(xx._core,importlib.import_module('skimagexx.morphology'),
                              importlib.import_module('skimagexx._reconstruction'),coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
@@ -1393,7 +1428,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': FAMILIES}[scope]
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': RECONSTRUCTION_FAMILIES, 'h_extrema22': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 
