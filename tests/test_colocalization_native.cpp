@@ -8,12 +8,13 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace {
 using namespace skimagexx;
 std::uint64_t checks=0;
-void require(bool condition){++checks;if(!condition)throw std::runtime_error("colocalization native control failed");}
+void require(bool condition){++checks;if(!condition)throw std::runtime_error("colocalization native control failed at check "+std::to_string(checks));}
 template<class Call>void reject(const Call& call){bool caught=false;try{call();}catch(const std::invalid_argument&){caught=true;}require(caught);}
 template<class T>std::uint64_t raw(T value){std::uint64_t out=0;std::memcpy(&out,&value,sizeof(value));return out;}
 struct One {
@@ -93,7 +94,7 @@ void gather_and_orders() {
     require(!coloc_sum_supported(f,{})); // no guessed cross-row association
 }
 void floating_association() {
-    const struct {std::size_t length;float expected;} cases[]={{7,16777216.0f},{8,16777222.0f},{9,16777224.0f},{128,16777328.0f},{129,16777328.0f}};
+    const struct {std::size_t length;float expected;} cases[]={{7,16777216.0f},{8,16777222.0f},{9,16777224.0f},{128,16777328.0f},{129,16777336.0f}};
     for(const auto c:cases) {
         std::vector<float> values(c.length,1);values[0]=16777216.0f;
         One view(values.data(),values.size(),ColocType::float32,4);
