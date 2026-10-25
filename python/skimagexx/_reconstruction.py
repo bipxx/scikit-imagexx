@@ -51,6 +51,7 @@ def reconstruction(seed,mask,method='dilation',footprint=None,offset=None):
         if offset.ndim!=footprint.ndim:raise ValueError('Offset and footprint ndims must be equal.')
         if not all([(0<=o<d) for o,d in zip(offset,footprint.shape)]):raise ValueError('Offset must be included inside footprint')
     footprint[tuple(slice(d,d+1) for d in offset)]=False
+    inside=tuple(slice(o,o+n) for o,n in zip(offset,seed.shape))
     # Preserve source error precedence: method and min/max before dtype rejection.
     if method=='dilation':
         if not seed.size:np.min(seed)
@@ -65,5 +66,4 @@ def reconstruction(seed,mask,method='dilation',footprint=None,offset=None):
     # (NumPy2.5 warns); retain the actual provider operation, not a synthesized
     # warning or a reshape substitution. The padded owner metadata stays exact.
     out.shape=np.array(seed.shape)+(np.array(footprint.shape)-1)
-    inside=tuple(slice(o,o+n) for o,n in zip(off,seed.shape))
     return out[inside]

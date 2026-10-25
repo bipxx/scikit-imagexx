@@ -52,6 +52,7 @@ void bind_reconstruction(py::module_& m) {
         py::array out(dtype,padded),bounds(dtype,std::vector<py::ssize_t>{py::ssize_t(r.samples)});
         std::vector<std::size_t> to(r.samples),from(r.padded_samples),nodes(r.samples),positions(r.samples),heads(r.bucket_heads);std::vector<std::ptrdiff_t> neighbors(r.neighbor_capacity);
         skimagexx::ReconstructionBuffers buffers{{static_cast<unsigned char*>(out.mutable_data()),std::size_t(out.nbytes())},{static_cast<unsigned char*>(bounds.mutable_data()),std::size_t(bounds.nbytes())},writable(to),writable(from),writable(nodes),writable(positions),writable(heads),writable(neighbors)};
+        sa.check();sb.check();sf.check();so.check();
         skimagexx::ReconstructionInfo result;{py::gil_scoped_release release;result=skimagexx::reconstruction_into(a.v,b.v,f,static_cast<skimagexx::ReconstructionMethod>(method),buffers,z,requested);}
         ++counters[3];py::dict info;info["queue"]=int(result.queue);info["preprocessing_workers"]=result.preprocessing_workers;info["preprocessing_simd"]=result.preprocessing_simd;info["parallel_flood"]=result.parallel_flood;
         return py::make_tuple(out,info);
