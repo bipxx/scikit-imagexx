@@ -13,6 +13,7 @@ import inspect
 from pathlib import Path
 import struct
 import sys
+import traceback
 import warnings
 import zlib
 
@@ -29,6 +30,45 @@ def semantic_projection(record):
     result=copy.deepcopy(record)
     result['events']=[e for e in result['events'] if e.get('event') not in TRACE_EVENTS]
     return result
+
+
+class RawJournal:
+    """Mandatory exclusive JSONL sink; every record is flushed before checks."""
+    def __init__(self,path):
+        self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
+        self.stream=self.path.open('x',encoding='utf-8',newline='\n');self.records=[]
+
+    def append(self,record):
+        raw=json.dumps(record,sort_keys=True,separators=(',',':'),allow_nan=False)
+        self.stream.write(raw+'\n');self.stream.flush()
+        ack=dict(sequence=len(self.records),sha256=sha(raw.encode()))
+        self.records.append(ack)
+        return ack
+
+    def compare_pair(self,first,second):
+        # Both exact raw observations must already have been flushed by THIS
+        # journal before even evaluating the semantic comparison.
+        for envelope in (first,second):
+            ack=envelope['journal'];assert self.records[ack['sequence']]==ack
+            expected=dict(kind='observation',actual=envelope['observation'])
+            assert sha(json.dumps(expected,sort_keys=True,separators=(',',':'),allow_nan=False).encode())==ack['sha256']
+        assert first['journal']['sequence']!=second['journal']['sequence']
+        same=semantic_projection(first['observation'])==semantic_projection(second['observation'])
+        self.append(dict(kind='trace-pristine-comparison',first=first['journal'],second=second['journal'],equal=same))
+        if not same:raise AssertionError('retained trace/pristine semantic observations differ')
+        return True
+
+    def close(self):self.stream.close()
+
+
+def retain_then_check(row,journal):
+    """Record actual failure/state FIRST; no failed check loses the evidence."""
+    ack=journal.append(dict(kind='observation',actual=row))
+    if row.get('observer_error') is not None or not all(row['checks'].values()):
+        failure=RuntimeError('observer/check failure after raw journal flush at '+str(row['phase']))
+        failure.raw_journal_ack=ack
+        raise failure
+    return dict(observation=row,journal=ack)
 
 
 class RawAssets:
@@ -112,7 +152,7 @@ def value(value,np,assets):
         return dict(kind='ndarray',module=type(value).__module__,type=type(value).__qualname__,dtype=value.dtype.str,shape=list(value.shape),strides=list(value.strides),
                     writeable=bool(value.flags.writeable),owndata=bool(value.flags.owndata),
                     aligned=bool(value.flags.aligned),C=bool(value.flags.c_contiguous),F=bool(value.flags.f_contiguous),**payload)
-    if isinstance(value,np.generic):return dict(kind='numpy-scalar',type=type(value).__name__,dtype=value.dtype.str,raw=value.tobytes().hex())
+    if isinstance(value,np.generic):return dict(kind='numpy-scalar',module=type(value).__module__,type=type(value).__name__,dtype=value.dtype.str,raw=value.tobytes().hex())
     if type(value) is float:return dict(kind='Python-float',raw_f64=struct.pack('=d',value).hex())
     if type(value) in (int,bool,str):return dict(kind='Python-'+type(value).__name__,value=value)
     return dict(kind='object',module=type(value).__module__,type=type(value).__qualname__)
@@ -121,6 +161,9 @@ def value(value,np,assets):
 def snapshots(arrays,np,assets):
     rows=[]
     for array in arrays:
+        if isinstance(array,np.generic):
+            rows.append(dict(scalar=value(array,np,assets),owner_chain=None,terminal_base=None))
+            continue
         chain=[];current=array;seen=set()
         while isinstance(current,np.ndarray) and id(current) not in seen:
             seen.add(id(current));chain.append(value(current,np,assets));current=current.base
@@ -134,27 +177,21 @@ def snapshots(arrays,np,assets):
     return rows
 
 
-def observe(spec,factory,original,np,assets):
+def observe(spec,factory,original,np,assets,journal):
     """One genuine original call; no image execution until root approves freeze."""
-    assert original.__name__=='skimage.measure._colocalization'
-    function=getattr(original,spec['api']);entry=function
-    assert function.__module__==original.__name__
-    source_path=Path(inspect.getsourcefile(function)).resolve()
-    assert source_path==Path(original.__file__).resolve()
-    auth=authenticate(source_path,inspect.getsourcefile(original.as_binary_ndarray))
-    assert sha(ast.dump(ast.parse(inspect.getsource(function)).body[0],include_attributes=False).encode())==auth['signatures'][spec['api']]['AST_sha256']
-    assert original.np is np
-    events=[];args,kwargs,arrays=factory.fixture(spec,np,events)
-    setup_events=list(events);events.clear()
-    before=snapshots(arrays,np,assets)
+    if not isinstance(journal,RawJournal):raise TypeError('mandatory RawJournal required before observer setup')
+    journal.append(dict(kind='observer-start',id=spec['id']))
+    row=dict(id=spec['id'],phase='authentication',result=None,error=None,observer_error=None,
+             warnings=[],setup_events=[],events=[],input_before=None,input_after=None,
+             result_aliases=None,state=None,restored=False,source_entry={'entry_calls':0,'entry_returns':0},
+             original_call_attempted=False,native_calls=0,checks={})
+    events=row['events'];scalar_reads=row['source_entry'];arrays=[];result=None
     old_policy=np.geterr();old_handler=np.geterrcall();old_buffer=np.getbufsize()
     old_np=original.np;old_binary=original.as_binary_ndarray;old_shape=original.check_shape_equality
     provider_names=('asarray','sum','square','multiply','count_nonzero','logical_and')
     providers={name:getattr(np,name) for name in provider_names}
-    scalar_reads={'entry_calls':0,'entry_returns':0}
     old_profile=sys.getprofile()
-    assert old_profile is None,'reference requires pristine passive-profile slot'
-    code=function.__code__
+    function=getattr(original,spec['api']);entry=function;code=function.__code__
     def profile(frame,event,arg):
         if frame.f_code is code:
             if event=='call':scalar_reads['entry_calls']+=1
@@ -177,8 +214,20 @@ def observe(spec,factory,original,np,assets):
         if spec['group']=='protocol' and spec['name']=='warning_mutation' and arrays[0].size:
             arrays[0].flat[-1]=arrays[0].flat[0]
             events.append(dict(event='finite-inallocation-mutation',index=-1))
-    result=None;error=None;recorded=[]
     try:
+        assert sys.flags.optimize==0 and old_profile is None,'reference requires optimize0 and pristine passive-profile slot'
+        assert original.__name__=='skimage.measure._colocalization' and function.__module__==original.__name__
+        source_path=Path(inspect.getsourcefile(function)).resolve()
+        assert source_path==Path(original.__file__).resolve()
+        auth=authenticate(source_path,inspect.getsourcefile(original.as_binary_ndarray))
+        assert sha(ast.dump(ast.parse(inspect.getsource(function)).body[0],include_attributes=False).encode())==auth['signatures'][spec['api']]['AST_sha256']
+        assert original.np is np
+        row['phase']='fixture'
+        args,kwargs,arrays=factory.fixture(spec,np,events)
+        row['setup_events']=list(events);events.clear()
+        row['phase']='input-snapshot'
+        row['input_before']=snapshots(arrays,np,assets)
+        row['phase']='policy-setup'
         if spec['policy']=='default':
             assert old_policy==dict(divide='warn',over='warn',under='ignore',invalid='warn')
             assert old_handler is None,'default controls require the actual pristine handler'
@@ -192,24 +241,41 @@ def observe(spec,factory,original,np,assets):
             warnings.simplefilter('always')
             sys.setprofile(profile)
             try:
+                row['phase']='original-call';row['original_call_attempted']=True
                 result=function(*args,**kwargs)
             except Exception as exc:
-                error=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc))
+                row['error']=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc))
             finally:sys.setprofile(old_profile)
-            recorded=[dict(module=type(w.message).__module__,category=w.category.__name__,message=str(w.message)) for w in caught]
-        after=snapshots(arrays,np,assets)
-        state=dict(policy_before=policy_before,policy_after=np.geterr(),
+            row['warnings']=[dict(module=type(w.message).__module__,category=w.category.__name__,message=str(w.message)) for w in caught]
+        row['phase']='result-snapshot'
+        row['result']=value(result,np,assets) if row['error'] is None else None
+        row['result_aliases']=[result is a for a in arrays]
+        row['state']=dict(policy_before=policy_before,policy_after=np.geterr(),
                    handler_identity_unchanged=np.geterrcall() is handler_before,
                    buffer_before=old_buffer,buffer_after=np.getbufsize(),entry_identity_unchanged=getattr(original,spec['api']) is entry,
                    providers_unchanged=all(getattr(np,k) is v for k,v in providers.items()))
+        row['phase']='post-snapshot'
+        row['input_after']=snapshots(arrays,np,assets)
+        row['phase']='complete'
+    except Exception as exc:
+        row['observer_error']=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc),traceback=traceback.format_exc())
     finally:
-        sys.setprofile(old_profile)
-        original.np=old_np;original.as_binary_ndarray=old_binary;original.check_shape_equality=old_shape
-        if spec['policy']!='default':np.seterr(**old_policy);np.seterrcall(old_handler)
-    assert np.geterr()==old_policy and np.geterrcall() is old_handler and np.getbufsize()==old_buffer
-    assert original.np is old_np and original.as_binary_ndarray is old_binary and original.check_shape_equality is old_shape
-    assert sys.getprofile() is old_profile and scalar_reads['entry_calls']==1 and scalar_reads['entry_returns']==1
-    return dict(id=spec['id'],result=value(result,np,assets) if error is None else None,error=error,warnings=recorded,
-                setup_events=setup_events,events=events,input_before=before,input_after=after,
-                result_aliases=[result is a for a in arrays],state=state,restored=True,
-                source_entry=scalar_reads,native_calls=0)
+        try:
+            sys.setprofile(old_profile)
+            original.np=old_np;original.as_binary_ndarray=old_binary;original.check_shape_equality=old_shape
+            if spec['policy']!='default':np.seterr(**old_policy);np.seterrcall(old_handler)
+            row['checks'].update(policy_restored=np.geterr()==old_policy,handler_restored=np.geterrcall() is old_handler,
+                buffer_restored=np.getbufsize()==old_buffer,provider_module_restored=original.np is old_np,
+                binary_helper_restored=original.as_binary_ndarray is old_binary,shape_helper_restored=original.check_shape_equality is old_shape,
+                profiler_restored=sys.getprofile() is old_profile)
+            row['restored']=all(row['checks'].values())
+        except Exception as exc:
+            row['restoration_error']=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc),traceback=traceback.format_exc())
+            row['checks']['restoration_completed']=False
+    row['checks'].update(original_entry_exact=scalar_reads==dict(entry_calls=1,entry_returns=1),
+                        no_observer_error=row['observer_error'] is None,complete=row['phase']=='complete')
+    if row['state'] is not None:
+        state=row['state'];row['checks'].update(call_policy_unchanged=state['policy_before']==state['policy_after'],
+            call_handler_unchanged=state['handler_identity_unchanged'],call_buffer_unchanged=state['buffer_before']==state['buffer_after'],
+            call_entry_unchanged=state['entry_identity_unchanged'],call_providers_unchanged=state['providers_unchanged'])
+    return retain_then_check(row,journal)

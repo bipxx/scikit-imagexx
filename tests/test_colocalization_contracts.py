@@ -157,6 +157,70 @@ class ProspectiveMetadata(unittest.TestCase):
         self.assertIn('block[start:start+count].tobytes',source)
         self.assertIn("terminal['byte_content']=assets.chunks",source)
 
+    def test_scalar_snapshot_has_no_array_owner(self):
+        tree=ast.parse((HERE/'colocalization_reference.py').read_bytes())
+        snapshot=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='snapshots')
+        loop=next(n for n in snapshot.body if isinstance(n,ast.For))
+        first=loop.body[0]
+        self.assertIsInstance(first,ast.If);self.assertIn('np.generic',ast.unparse(first.test))
+        text=ast.unparse(first)
+        self.assertIn('owner_chain=None',text);self.assertIn('terminal_base=None',text)
+        self.assertIsInstance(first.body[-1],ast.Continue)
+
+    def test_plan_current_observer_and_factory_hashes(self):
+        plan=json.loads((ROOT/'coverage/contracts/colocalization-plan.json').read_bytes())
+        for key,name in (('factory_source_sha256','colocalization_cases.py'),('observer_source_sha256','colocalization_reference.py')):
+            self.assertEqual(plan[key],hashlib.sha256((HERE/name).read_bytes()).hexdigest())
+
+    def test_failed_checks_raw_row_flushed_before_raise(self):
+        path=ROOT/'build/colocalization-reference/metadata-assets'/('journal-failure-'+str(os.getpid())+'-'+uuid.uuid4().hex+'.jsonl')
+        journal=REFERENCE.RawJournal(path)
+        row=dict(id='metadata-only',phase='post-snapshot',observer_error={'type':'SyntheticError'},checks={'restored':False},
+                 source_entry={'entry_calls':1,'entry_returns':1},result={'raw':'0000'})
+        try:
+            with self.assertRaises(RuntimeError) as caught:REFERENCE.retain_then_check(row,journal)
+            retained=[json.loads(line) for line in path.read_text().splitlines()]
+            self.assertEqual(retained,[dict(kind='observation',actual=row)])
+            self.assertEqual(caught.exception.raw_journal_ack['sequence'],0)
+        finally:journal.close()
+
+    def test_journal_pair_requires_both_exact_retained_rows(self):
+        path=ROOT/'build/colocalization-reference/metadata-assets'/('journal-pair-'+str(os.getpid())+'-'+uuid.uuid4().hex+'.jsonl')
+        journal=REFERENCE.RawJournal(path)
+        first=dict(id='metadata-only',phase='complete',events=[dict(event='numpy-sum')],checks={'ok':True},observer_error=None)
+        second=dict(first,events=[])
+        try:
+            a=REFERENCE.retain_then_check(first,journal);b=REFERENCE.retain_then_check(second,journal)
+            self.assertTrue(journal.compare_pair(a,b))
+            self.assertEqual(len(path.read_text().splitlines()),3)
+            corrupt=dict(b,observation=dict(second,id='changed'))
+            with self.assertRaises(AssertionError):journal.compare_pair(a,corrupt)
+        finally:journal.close()
+
+    def test_pair_mismatch_is_retained_before_failure(self):
+        path=ROOT/'build/colocalization-reference/metadata-assets'/('journal-mismatch-'+str(os.getpid())+'-'+uuid.uuid4().hex+'.jsonl')
+        journal=REFERENCE.RawJournal(path)
+        row=dict(id='metadata-only',phase='complete',events=[],checks={'ok':True},observer_error=None,result={'raw':'00'})
+        try:
+            a=REFERENCE.retain_then_check(row,journal)
+            b=REFERENCE.retain_then_check(dict(row,result={'raw':'01'}),journal)
+            with self.assertRaises(AssertionError):journal.compare_pair(a,b)
+            records=[json.loads(line) for line in path.read_text().splitlines()]
+            self.assertFalse(records[-1]['equal']);self.assertEqual(len(records),3)
+        finally:journal.close()
+
+    def test_partial_fixture_failure_is_not_original_error(self):
+        path=ROOT/'build/colocalization-reference/metadata-assets'/('journal-intake-'+str(os.getpid())+'-'+uuid.uuid4().hex+'.jsonl')
+        journal=REFERENCE.RawJournal(path)
+        row=dict(id='metadata-only',phase='fixture',original_call_attempted=False,error=None,
+                 observer_error={'type':'FixtureFailure'},checks={'entry':False},source_entry={'entry_calls':0,'entry_returns':0})
+        try:
+            with self.assertRaises(RuntimeError):REFERENCE.retain_then_check(row,journal)
+            actual=json.loads(path.read_text())['actual']
+            self.assertIsNone(actual['error']);self.assertFalse(actual['original_call_attempted'])
+            self.assertEqual(actual['source_entry']['entry_calls'],0)
+        finally:journal.close()
+
     def test_observer_restores_provider_and_state(self):
         tree=ast.parse((HERE/'colocalization_reference.py').read_bytes())
         observer=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='observe')

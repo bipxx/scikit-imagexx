@@ -1,5 +1,5 @@
 {
-  "schema": "colocalization-prospective-original-contract-plan-v2",
+  "schema": "colocalization-prospective-original-contract-plan-v3",
   "base": "a6c321893c924f9db3d99e11d3e8bcb86e4f2874",
   "phase": "successor source/specification only; ROOT review required before any original calls",
   "APIs": [
@@ -8266,7 +8266,7 @@
     ]
   },
   "factory_source_sha256": "adbee581546e2031377853393b354be0dff41731eac920eb839c37b6c9f9db59",
-  "observer_source_sha256": "7e27e62dcef1dfdde898e81d734aa171c931f802cf02788350bc7f8a9bb055fd",
+  "observer_source_sha256": "90361227ea1c79238ad14ffaae8315e49007bfd411bec13ca051f15d5e92227e",
   "safety": {
     "compiled_algorithm_entry": "None: all three pinned functions and both intake helpers are Python NumPy stages. scipy.stats.pearsonr is an unused module import for the separate fourth API, not called here.",
     "allowed": "Only independently owned bounded NumPy arrays, allocated in-bounds views, finite in-allocation callback mutation, lists and local Python conversion/object protocols. Empty/scalar/nonfinite inputs are defined Python/NumPy error observations, not unsafe Cython probes.",
@@ -8311,7 +8311,9 @@
     "future_candidates": 18,
     "future_candidates_original_calls_authorized": false,
     "state": "No default-policy setter or restoration setter. Exact default handler None required. All non-default policy scopes restore prior geterr/geterrcall; all scopes restore original module/provider/profile identities and verify buffers. Actual entry code-object call/return witness remains passive and scoped original-only.",
-    "outcomes": "All cases and adverse/error outcomes retained. No omissions, substitutions, forced-pass filtering or fixture changes after outputs."
+    "outcomes": "All cases and adverse/error outcomes retained. No omissions, substitutions, forced-pass filtering or fixture changes after outputs.",
+    "journal": "Mandatory exclusive RawJournal: actual row, checks and restoration/entry counts are flushed before any post-call refusal; observer intake/fixture/snapshot errors are phase-labeled separately from original errors. Partial original result/error/warnings remain if a later snapshot fails. Each trace/pristine pair comparison verifies both exact original journal acknowledgments before comparing; comparison itself is flushed before mismatch refusal.",
+    "observer_ABI": "observe(spec,factory,original,np,assets,journal) returns {observation,journal acknowledgment}; journal.compare_pair(trace,pristine) authenticates already-flushed raw observations and compares full semantic projections."
   },
   "future_whole_call_unit": "Whole unchanged original/public API call, including conversion/masks/gathers/products/allocation/destruction; fixture construction outside timer. No timer/controller exists in this packet; fresh actual timed-policy dispatch/parity and qualified public products remain mandatory.",
   "native_primitive_map": {
@@ -8353,6 +8355,21 @@
     "profile_private_outputs": true,
     "integrity": "Every chunk and concatenated raw-C stream has SHA256 and byte count; compressed chunks also SHA256/size; all referenced members must independently replay after capture.",
     "terminal_bytearray_content": "Preserved in full, including padding, with the same chunk protocol.",
-    "array_metadata": "Actual class/module, dtype/shape/strides/writeable/own/aligned/C/F and complete ndarray owner chain; scalar words unchanged."
+    "array_metadata": "Actual class/module, dtype/shape/strides/writeable/own/aligned/C/F and complete ndarray owner chain; scalar words unchanged.",
+    "scalar_inputs": "NumPy scalar retained inputs get exact scalar module/type/dtype/raw words with owner_chain=None and terminal_base=None; no fabricated ndarray allocation or base."
+  },
+  "metadata_successor": {
+    "source": "b8b1e5bfef9db04d40bb9fe28510cae5bd6759b5",
+    "plan_sha256": "32db243b3708b9a827f74f1a7a4c7305f758a7c0f85a846078bcbf65a21da968",
+    "proof_sha256": "ffce7e57c38bfef535fefad54177c9bd5cb9143d400d7a404be498e2017b76dd",
+    "all536_specs_and_factory_bytes_unchanged": true,
+    "one_authorized_NumPy_only_probe": {
+      "spec": "manders_overlap_coeff/shape/scalar",
+      "profile": "windows",
+      "result": "b8b NumPy float64 scalar inputs caused unknown-terminal snapshot AssertionError BEFORE any original call.",
+      "result_sha256": "cda7e4e915bb5963f9afff80bb08a67684489e1e7531365f7b414aa24bd8e9c7",
+      "original_calls": 0,
+      "repeats": 0
+    }
   }
 }
