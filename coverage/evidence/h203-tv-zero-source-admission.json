@@ -1,0 +1,47 @@
+{
+  "schema": "root-H203-TV-zero-source-admission-v1",
+  "source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "branch": "integration/h203-tv-zero",
+  "disposition": "Source/metadata admission for one genuine four-profile hosted qualification; no public/SDK/product or performance acceptance.",
+  "independent_review": {
+    "path": "build\\resume-20261025\\h203-combined-independent-review\\final-review.json",
+    "bytes": 5095,
+    "sha256": "5fc7342380089a0f6fef367ac3978f043b3f986a117bf9fb27426854779f7930"
+  },
+  "composition_independent_review": {
+    "path": "build\\resume-20261025\\h203-combined-independent-review\\tv-composition-appendix.json",
+    "bytes": 3726,
+    "sha256": "585438a94293e878f0b047ce951efcb882e66962833a6409ff675348f77fd206"
+  },
+  "proof": {
+    "path": "build\\worktrees\\h-extrema-public203\\build\\public-trace-policy-v1\\proof-v1\\manifest.json",
+    "bytes": 11994,
+    "sha256": "a90ac2e14d1928940fc981daa68f022505ced972bffb7b10ab26e52e672d252a"
+  },
+  "handoff": {
+    "path": "build\\worktrees\\h-extrema-public203\\build\\public-trace-policy-v1\\proof-v1\\source-handoff.json",
+    "bytes": 822,
+    "sha256": "ead326d6f2a84d1c9591ad8ee54101068b06743f6e5ed5a34507624176a2c086"
+  },
+  "root_rehashed_records": 61,
+  "root_rehashed_bytes": 2369866,
+  "composition_plans_rehashed": 4,
+  "expected_native_images": 203,
+  "expected_registrations": 206,
+  "expected_wheel_members": 120,
+  "expected_SDK_members": 68,
+  "expected_SDK_families": 23,
+  "expected_SDK_checks": 46,
+  "boundaries": [
+    "Failed f82 run40189753345 remains failed; immutable raw observations retained.",
+    "Explicit reviewed reconstruction internal-tie validation-policy change, not a numerical/oracle rewrite.",
+    "H provider/float/parallel frontiers and TV scalar-word-scan scope remain as admitted; no full-API/SIMD/speed claim.",
+    "Private TV focused test remains private; existing complete genuine public/native suites unchanged."
+  ],
+  "new_scientific_imports": 0,
+  "image_calls": 0,
+  "builds": 0,
+  "timings": 0,
+  "public_accepted": false,
+  "performance_accepted": false
+}
