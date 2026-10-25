@@ -30625,7 +30625,7 @@
         "morphology.h_minima"
       ],
       "owner": "astra_max_plan_audit",
-      "state": "implementing",
+      "state": "parity_passed",
       "owns": [
         "include/skimagexx/h_extrema.hpp",
         "src/h_extrema.cpp",
@@ -30633,7 +30633,7 @@
         "python/skimagexx/_h_extrema.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Frozen829 source/build/link reviewed e02a7515; all10native/module/fullpipeline gates exit0, each1775XML/1772rows/14guards. Ordinary1747pass28explicit-skips,portable875pass900explicit-skips. Author sealing rawproof; independentnumericalreview/publicintegration/performance stillpending."
+      "current_checkpoint": "Rootaccepted privateH829 coverage/evidence/h-extrema-floating-private-admission.json after independent36f3ad0a/551records244028150B rehash. All10gates15726PASS2024explicit-skips;17720rows,12508recon6264integer5792realCPPreturns,396finalprovider paths. Realmaskserial; no public/API/SDK/performance credit. AownsnewH203source-onlyintegration basedf82, fixed886casesunderbothglobalfallbackpolicies."
     },
     {
       "id": "h-extrema-floating-reference",

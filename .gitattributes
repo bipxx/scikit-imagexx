@@ -168,3 +168,4 @@ coverage/evidence/li-same-failed-product-installed-admission.json -text
 coverage/evidence/h-extrema-object-preentry-metadata-admission.json -text
 coverage/evidence/public201-repaired-source-admission.json -text
 coverage/evidence/li-observer-collection-source-admission.json -text
+coverage/evidence/h-extrema-floating-private-admission.json -text
