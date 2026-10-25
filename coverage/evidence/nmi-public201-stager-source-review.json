@@ -1,0 +1,87 @@
+{
+  "schema": "root-scoped-source-admission-v1",
+  "review": {
+    "schema": "independent-nmi-stager201-source-review-v1",
+    "source": "4b82e817d64d766147a4b71c3d90e831ed9b9198",
+    "base": "a55f45db8472b546171d4013e4a19cad4138c7ce",
+    "status": "PASS: scoped a55 NMI201 staging-source blocker closed; no product acceptance",
+    "proof": {
+      "path": "build/worktrees/nmi-stager201/build/proof-v1/manifest.json",
+      "bytes": 2787,
+      "sha256": "5bce524793a3cdfd9c98d289836593faf4d0f2dc0011f973476cbee3ea40700c"
+    },
+    "prior_finding": {
+      "path": "build/resume-20261025/nmi-public201-review/final-source-review.json",
+      "bytes": 7785,
+      "sha256": "910c1eff97ddb25d601185bf676947cd2298c3222f3a5b09597e92e7845ed21d"
+    },
+    "independent_script": {
+      "path": "build/resume-20261025/nmi-stager201/review.py",
+      "bytes": 8468,
+      "sha256": "2706433d1f194de55aa52df428759075b799fe82b7b583ede8abfd2e345b5042"
+    },
+    "source_changes": [
+      "tests/test_rank_statistics_products.py",
+      "tools/rank_statistics_products.py"
+    ],
+    "rehashed_records": 16,
+    "rehashed_bytes": 186167,
+    "Git_members": 2,
+    "independent_inverse": "Entire prior controller AST restored after removing only NMI literals, new validator/call/registry assertion and nmi22 entries; singleton reconstruction predicates restored to their original spelling.",
+    "old_test_functions": 43,
+    "old_test_functions_changed_only": [
+      "synthetic"
+    ],
+    "metadata_results": {
+      "windows": {
+        "tests": 247,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "modern": {
+        "tests": 247,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "minimum": {
+        "tests": 247,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "metadata_total": 741,
+    "reviewed_controls": [
+      "nmi22 is a closed exact118 wheel/67 SDK/22-family scope. All older scopes retain the same AST after the explicit additive projection.",
+      "Unique201 image/204 registration/3 metadata census requires NMI exactly once and preserves TV/Bregman/max-tree/matrix/reconstruction presence checks.",
+      "Eight immutable NMI imports must match both exact qualification declaration and source-snapshot hashes; duplicate declarations/dictionary keys/ZIP members and resealed altered imports reject.",
+      "Inherited reconstruction and max-tree source guards execute for nmi22 before output creation. All old qualification seals, source/core/wheel/SDK/build-identity/controller checks and staged-unaccepted boundary remain unchanged.",
+      "Source public-NMI/public-Reconstruction and conditional public-Li-u16 gates remain unchanged from a55. Whole qualification verifier remains the authority for required group completion; this stager does not invent runtime success.",
+      "Recorded247 metadata guards pass on each existing profile with scientific imports denied. This review only rehashes and parses evidence; no duplicate tests or numerical execution."
+    ],
+    "remaining": [
+      "Future combined H+NMI203 requires its own explicit cumulative scope, source pins, counts and exact final source review. nmi22 does not authorize an arbitrary larger scope.",
+      "No installed wheel/core/SDK execution, original-reference rerun, speed measurement or whole-product qualification acceptance follows from this repair."
+    ],
+    "scoped_blockers": [],
+    "actions": {
+      "source_edits": 0,
+      "numerical_imports": 0,
+      "image_calls": 0,
+      "builds": 0,
+      "new_environments": 0,
+      "timings": 0,
+      "dispatches": 0
+    },
+    "readers_released": true
+  },
+  "independent_or_non_author_review": {
+    "path": "build/resume-20261025/nmi-stager201/independent-review.json",
+    "bytes": 3491,
+    "sha256": "ff616dcd83728b216d07c7ab6063500d870db71088a4e4dd0dadf8e51d67c01e"
+  },
+  "root_disposition": "Admitted in stated source/reference scope only; does not establish public runtime, product qualification or performance.",
+  "root_source_read": "Exact NMI stager controller and synthetic-test diff read; independent AST inverse and247x3metadata proof accepted. a55 scoped staging blocker closed; inherited failed200 blockers still require repair."
+}
