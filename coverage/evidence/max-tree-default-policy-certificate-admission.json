@@ -1,0 +1,29 @@
+{
+  "schema": "root-max-tree-default-policy-certificate-admission-v1",
+  "controller_source": "f8c7d2fd749e5c939454faee83bac918ba615ca1",
+  "certificate": {
+    "path": "coverage/evidence/max-tree-default-policy-certificate.json",
+    "bytes": 6437,
+    "sha256": "decfba5b31256eff29bf8406a26d87fe108a3153733188a4eb664233044409a3"
+  },
+  "derivation": {
+    "path": "build/resume-20261025/max-tree-default-comparison/certificate-v1/derivation.json",
+    "bytes": 5484,
+    "sha256": "6d23f3e7ec7949952a85a9f7fe7e9751682a827f2c08d2bfd2443747fed5b444"
+  },
+  "accepted_product_admission": {
+    "path": "coverage/evidence/public199-whole-product-admission.json",
+    "bytes": 4112,
+    "sha256": "aa074a5d12beb402938dd84fa3eacfa872d7d8c94c427207c2af2e1b887ea0fd"
+  },
+  "accepted_source": "d92d9ff522047f4dd91c21620323454a0010863e",
+  "accepted_run": 40166462583,
+  "scope": "Exact existing qualifiedpublic199/SDK20 products, six max-tree operations, immutable351correctness/252timedcases.",
+  "validation": "All three profile qualification/wheel/source/product/core hashes joined to rootaccepted independent rawproof; exact original interpreterpatches3.13.16/3.13.16/3.11.17 and refreshed unexpired artifact APIs. Seven max-tree runtime source files equal acceptedproductsource. Fixed certificate metadata validator passed without numerical imports.",
+  "next": "Existing max-tree-compare workflow consumes exactinline certificate_json andSHA; no separate publisher required. Three fresh preparationhosts validate both workerlimits/modes/defaultpolicybefore newartifact-only measurementhosts.",
+  "no_new_product_build": true,
+  "numerical_calls": 0,
+  "operation_timings": 0,
+  "performance_accepted": false,
+  "failed_201_qualification_inherited": false
+}

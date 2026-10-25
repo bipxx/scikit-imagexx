@@ -171,3 +171,5 @@ coverage/evidence/li-observer-collection-source-admission.json -text
 coverage/evidence/h-extrema-floating-private-admission.json -text
 coverage/evidence/max-tree-default-policy-source-plan.json -text
 coverage/evidence/max-tree-default-policy-source-admission.json -text
+coverage/evidence/max-tree-default-policy-certificate.json -text
+coverage/evidence/max-tree-default-policy-certificate-admission.json -text

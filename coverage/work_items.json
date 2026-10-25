@@ -29715,8 +29715,8 @@
         }
       },
       "reviewed_consumer_source": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
-      "genuine199_certificate": "Corrected d92d9ff/run40166462583 product qualified and root accepted; exact certificate publication still pending reviewed controller source.",
-      "current_checkpoint": "Defaultpolicy successor f8c7d2f root/nonauthor72fab accepted andmerged;516metadataPASS,343records407975842B. Full252default checks+freshpretime sweep/journals bound; observations/timingsstill0. Next exactd92/199certificate andfreshhostedcomparison; no dependencyonfailed201/H203.",
+      "genuine199_certificate": "coverage/evidence/max-tree-default-policy-certificate.json",
+      "current_checkpoint": "Sourcef8c7 merged2557850; rootaccepted exactd92/401664 certificate decfba5b sourcepins/core/wheel/SDK/actualPythonpatches joinedoldindependentproof. Existing workflow takesinlinecertificate (no separate publisher). Next fresh3preparation+3artifact-onlymeasure jobs, worker1 all252cases; no timing/newdefaultnumericresult yet.",
       "easiest_next_path": [
         "Reuse exact351legacy/252benchmark fixtures and existing direct prepare-case callbacks; no new reference campaign merely to change observer policy.",
         "Authenticate/record freshworker NumPy policy, make default precheck and timed callback policies identical, preserve source matrices and no-forward/native aggregate counts.",
