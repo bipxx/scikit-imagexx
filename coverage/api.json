@@ -5735,11 +5735,15 @@
       "api": "metrics.normalized_mutual_information",
       "kind": "callable",
       "signature": "(image0, image1, *, bins=100)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_normalized_mutual_information_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "metrics.normalized_root_mse",
@@ -6077,21 +6081,29 @@
       "api": "morphology.h_maxima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_h_extrema_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.h_minima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_h_extrema_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.isotropic_closing",
@@ -6271,11 +6283,15 @@
       "api": "morphology.reconstruction",
       "kind": "callable",
       "signature": "(seed, mask, method='dilation', footprint=None, offset=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_reconstruction_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.remove_objects_by_distance",

@@ -277,17 +277,18 @@ R7_SOURCE_PATHS = (
 )
 LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor', 'corner_response',
     'kitchen', 'hessian', 'shape_index', 'hessian_det', 'sato', 'meijering', 'frangi'))
-FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
-            'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
-            'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform')
+FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank', 'rank_distribution', 'rank_intensity', 'rank_alias', 'projective', 'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions', 'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction', 'normalized_mutual_information', 'h_extrema')
 ORIGINAL_FAMILIES = FAMILIES[:14]
 TV_FAMILIES = FAMILIES[:17]
 BREGMAN_FAMILIES = FAMILIES[:18]
 MAX_TREE_FAMILIES = FAMILIES[:19]
-PRODUCT_SCOPE = 'matrix20'
-PRODUCT_MEMBERS = 114
-SDK_MEMBERS = 65
+MATRIX_FAMILIES = FAMILIES[:20]
+RECONSTRUCTION_FAMILIES = FAMILIES[:21]
+NMI_FAMILIES = FAMILIES[:22]
+H_EXTREMA_LEGACY_FAMILIES = FAMILIES[:21] + ('h_extrema',)
+PRODUCT_SCOPE = 'h_extrema23'
+PRODUCT_MEMBERS = 120
+SDK_MEMBERS = 68
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -329,8 +330,33 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'tests/test_matrix_transform_native_pipeline.py', 'tests/test_matrix_transform_binding.py',
     'tests/test_matrix_transform_public.py', 'tests/test_matrix_transform_skylakex_routing.py',
     'coverage/contracts/matrix-transform.json',
-    'coverage/evidence/matrix-transform-public-assertion-migration.json')
+    'coverage/evidence/matrix-transform-public-assertion-migration.json',
+    'coverage/evidence/matrix-transform-public-source-successor-assertion.json')
+RECONSTRUCTION_PATH = 'morphology.reconstruction'
+RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
+RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
+RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
+RECONSTRUCTION_TRACE_POLICY_PINS = {'tests/reconstruction_trace_policy.py': '946ad095e76630438440209eb065c7482543ff1e57d2dce7a3c499f768e364d6', 'tests/test_reconstruction_contracts.py': '38b12d918c120e86d09fa1b0be246bb82e25b483184da650fbbae695e2d11bcf', 'tests/test_reconstruction_trace_policy.py': '722a000c7d0087a5883362d030eb4a48ddef6527a6d96f99be0ca2aa8fe4d592', 'coverage/evidence/reconstruction-trace-policy-migration.json': 'ebc9b988148d0d87e49d5a93eb69a1f74a71688cd5cc6c6dea85b3137ccef978', 'coverage/evidence/reconstruction-trace-policy-observations.json': '39b8a1b0e07018198550e624abd3955cf49928e87521b91a0936ca859312ed2e'}
+RECONSTRUCTION_SOURCE_PATHS = ('include/skimagexx/reconstruction.hpp', 'src/reconstruction.cpp', 'src/simd_reconstruction_avx2.cpp', 'src/bind_reconstruction.cpp', 'python/skimagexx/_reconstruction.py', 'tests/test_reconstruction_native.cpp', 'tests/test_reconstruction_contracts.py', 'tests/test_reconstruction_public.py', 'tests/test_reconstruction_native_pipeline.py', 'tests/test_reconstruction_binding.py', 'tests/test_reconstruction_owner_guards.py', 'tests/test_reconstruction_offset_guards.py', 'coverage/contracts/reconstruction.json', 'coverage/evidence/reconstruction-public-assertion-migration.json', 'tests/cmake_consumer/reconstruction_source_oracle.bin', 'tests/cmake_consumer/reconstruction_source_oracle.cmake', 'tests/reconstruction_trace_policy.py', 'tests/test_reconstruction_trace_policy.py', 'coverage/evidence/reconstruction-trace-policy-migration.json', 'coverage/evidence/reconstruction-trace-policy-observations.json')
+H_EXTREMA_PATHS = ('morphology.h_maxima', 'morphology.h_minima')
+H_EXTREMA_RUNTIME_SOURCE_PINS = {'include/skimagexx/h_extrema.hpp': 'e56ee6af110857ed50657aaf61d0ec1a8afc608c57c96a56a63eefeaab6dc9fd', 'src/h_extrema.cpp': '59cd1d8022926d1be06c2ecd2a68a817f9dbd8623b2d1f5f7871212a4ab2b817', 'src/bind_h_extrema.cpp': '732f4da1e6cd0d06c2c5126cc6d62df11cc4893ae59ea650ca41adc10cbdffe1', 'python/skimagexx/_h_extrema.py': '966f35f953e1bf630da84ddf0cd9de25662f0586c74d7cd1f93bbeb8b432790e'}
+H_EXTREMA_FROZEN_RAW_PINS = {'tests/test_h_extrema_native.cpp': '228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438', 'tests/test_h_extrema_native_pipeline.py': 'c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5', 'tests/test_h_extrema_floating_native.cpp': '41b347cd259b67af14bb162394d5ef63edf62825a8632c3a93cf9a052362daca', 'tests/test_h_extrema_floating_pipeline.py': '86d4f0491ea8fc89230a300b4b45d85f8a8ce92af1d381e7abe6e52b2f59f148', 'coverage/contracts/h-extrema.json': 'ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d', 'coverage/contracts/h-extrema-plan.json': '652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b', 'coverage/contracts/h-extrema-integer.json': 'e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51', 'coverage/contracts/h-extrema-floating.json': '566ed99dfcfe70ea9d24deb1e8237389de9ed838a32d3909571c29a8d9a2a8df', 'coverage/contracts/h-extrema-floating-plan.json': '67d6b11cbe3d78215aa637f167dd1cbf3a7543f568d44e9cda93dcea1cf901a0', 'coverage/contracts/h-extrema-object-preentry.json': '10383844bf54762cf09293f5270cd6d49713371bba5d558b172f0293e512dff8', 'tests/test_h_extrema_contracts.py': '82fd81ecc8a268878e4356231f2d046814619de1aabc2b0d925da14ed4c8c4d4', 'tests/test_h_extrema_boundaries.py': 'a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71', 'tests/h_extrema_reference.py': 'ac314e885d91bc91be5099cf5619d3ad2a6debc9de8cd237de50cd99160f42ce', 'tests/h_extrema_floating_reference.py': 'a6220e0d3bfdd4624fd15f896f51d73e2a3bc4e370500fefd14340f8c532bf04', 'tests/test_h_extrema_floating_cases.py': '171a6823112ff980b71fadae6788dc55daa26ff21c629a5fa2f554ff8f26fd4a', 'tests/h_extrema_source_provenance.py': '962d99e39beeadc6a534525e1b97aee22ad5ea40623b8cbaa7844e15f548929e', 'tests/test_h_extrema_source_provenance.py': 'e222069d656c99cd89e0bb4230825373331464e95c3fb86672817909d76da423', 'coverage/evidence/h-extrema-reference-assertion-migration.json': '923b435a24165befd53044dbd71df8b4a36fed2562c4f187b31f6300d9bdfb81', 'coverage/evidence/h-extrema-reference-assertion-migration-9b.json': 'bdf3c49437f9b2a33486efc41f3a237c4a39a0b2c66884636a880311ae261754', 'tests/cmake_consumer/h_extrema_source_oracle.bin': '091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5', 'tests/cmake_consumer/h_extrema_source_oracle.cmake': '4f09f0ff38d88e4d983e9e0e1c0d80233584928ad13c577e8b6ad57026dda2cd', 'coverage/evidence/h-extrema-floating-private-admission.json': 'f6e0fdf58c9171d2313dc38a854ed4d7948e73baeed4eff6ebffdd40caa06d20', 'tests/h_extrema_public_authentication.py': 'd3850e055d900099e229b4356a8b40bc8524150b6a0679178838c33d174c7680', 'coverage/evidence/h-extrema-reconstruction-reference-integration.json': 'aaa12eeee8d07052427cc71ec2906308f6b27e5f9728085bd136b245ed48e0dd', 'tests/test_reconstruction_contracts.py': '920150a40c65ae5eb57bd3b17f96a269b040de3d26b2c83d6fdf69ed0d83d61a', 'coverage/evidence/reconstruction-public-assertion-migration.json': '21eb60b8665449d4ad7adf194e5f00c48e117d790b328652f69561337d6d18fc', 'coverage/contracts/reconstruction.json': '621981325f5e6939d3fb4d1c94e52910b369ef3ca798c326bdb93322a12b504c', 'coverage/evidence/reconstruction-trace-policy-migration.json': 'ebc9b988148d0d87e49d5a93eb69a1f74a71688cd5cc6c6dea85b3137ccef978', 'tests/reconstruction_trace_policy.py': '946ad095e76630438440209eb065c7482543ff1e57d2dce7a3c499f768e364d6'}
+H_EXTREMA_HISTORICAL_RAW_PINS = {'tests/test_h_extrema_contracts.py': '00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151', 'tests/h_extrema_reference.py': 'bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf', 'tests/h_extrema_floating_reference.py': '389e5cffe1b399c0deb3c8dce8424a414b9b2329e16907e6afa86415fab0dfb0', 'tests/test_h_extrema_floating_cases.py': 'f127526cd66c5043edd66d82518db3abb2a8956d3b29f1931057566ec090de1e'}
+H_EXTREMA_LEGACY_RUNTIME_SOURCE_PINS = {'include/skimagexx/h_extrema.hpp': 'fc934e0223908b2728d3b3f5493825d5221a8a83a037658ec9702a69952b0ad1', 'src/h_extrema.cpp': 'd67fce22ee797815671c94ccd8489795c1708a49e09019541e686009860e395f', 'src/bind_h_extrema.cpp': '0932da3b09ae5ec50879f7611f4f2842be159f1ae3bb17b5854e31d096f06b86', 'python/skimagexx/_h_extrema.py': '60b19c3130123043ae86294a2fc20a269e331275670ceb5d9bc5cef2d569869a'}
+H_EXTREMA_LEGACY_FROZEN_RAW_PINS = {'coverage/contracts/h-extrema-integer.json': 'e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51', 'coverage/contracts/h-extrema-plan.json': '652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b', 'coverage/contracts/h-extrema.json': 'ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d', 'tests/h_extrema_reference.py': 'bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf', 'tests/test_h_extrema_boundaries.py': 'a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71', 'tests/test_h_extrema_contracts.py': '00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151', 'tests/test_h_extrema_native.cpp': '228c3dc2e0e8041d9d49454b7b95cf3ab5947ebcf13a27145c94cdf70930c438', 'tests/test_h_extrema_native_pipeline.py': 'c04bfaea2b69744bb99336546b6e01ced556c9bebb87cf6d5b626c3a3bf106b5'}
+H_EXTREMA_ORACLE_PATH = 'tests/cmake_consumer/h_extrema_source_oracle.bin'
+H_EXTREMA_ORACLE_SHA256 = '091de3e03a728ada6e181a9ed22f7ceca071d66a5c8f1df968c09c39905716a5'
+
+NMI_PATH = 'metrics.normalized_mutual_information'
+NMI_IMPORTED_SOURCE_PINS = {'include/skimagexx/normalized_mutual_information.hpp': '76e3cf0e895650f2aa79c0c61c596b8ce29bdc5f26b4bccd130e9d34108167f4', 'src/normalized_mutual_information.cpp': 'cc9150a323e2bee04cb18be0f32008b306c9ee312d8fa39569174fe5ad426ac3', 'src/bind_normalized_mutual_information.cpp': '423ee0bf149c3280b36a9229c4f3f783749b459a579359644c3623101222620d', 'python/skimagexx/_normalized_mutual_information.py': 'b968a0b15852178254be7f28d7384651bc0bd071b312714ac60ad720cf53c49d', 'tests/test_normalized_mutual_information_native.cpp': '0a5369154f1011067b17435fa851d6cf066ba0b9482d8b0ab1bdd469796476ba', 'tests/test_normalized_mutual_information.py': '98ec869f16cac1f0a9898218eeafa4a9a478ae79270fd61d5df694ebbc21bd0c', 'tests/test_normalized_mutual_information_cases.py': '02209513c6b724db9b7cb9e6b1d7a0a8b5021e3a6e2b1837cb6d1b34bb327b8b', 'coverage/contracts/normalized-mutual-information.json': 'b043549b814f9d2fc7aa4d31f6134eee2162782e8aec78c1b035e7f6b90845c1'}
+NMI_SOURCE_PATHS = (*NMI_IMPORTED_SOURCE_PINS, 'tests/test_normalized_mutual_information_public.py',
+    'coverage/evidence/nmi-public-integration.json')
+H_EXTREMA_SOURCE_PATHS = ('include/skimagexx/h_extrema.hpp', 'src/h_extrema.cpp', 'src/bind_h_extrema.cpp', 'python/skimagexx/_h_extrema.py', 'tests/test_h_extrema_native.cpp', 'tests/test_h_extrema_native_pipeline.py', 'tests/test_h_extrema_floating_native.cpp', 'tests/test_h_extrema_floating_pipeline.py', 'coverage/contracts/h-extrema.json', 'coverage/contracts/h-extrema-plan.json', 'coverage/contracts/h-extrema-integer.json', 'coverage/contracts/h-extrema-floating.json', 'coverage/contracts/h-extrema-floating-plan.json', 'coverage/contracts/h-extrema-object-preentry.json', 'tests/test_h_extrema_contracts.py', 'tests/test_h_extrema_boundaries.py', 'tests/h_extrema_reference.py', 'tests/h_extrema_floating_reference.py', 'tests/test_h_extrema_floating_cases.py', 'tests/h_extrema_source_provenance.py', 'tests/test_h_extrema_source_provenance.py', 'coverage/evidence/h-extrema-reference-assertion-migration.json', 'coverage/evidence/h-extrema-reference-assertion-migration-9b.json', 'tests/cmake_consumer/h_extrema_source_oracle.bin', 'tests/cmake_consumer/h_extrema_source_oracle.cmake', 'tests/test_h_extrema_public.py', 'tests/test_h_extrema_public_metadata.py', 'tests/cmake_consumer/h_extrema_consumer.cpp', 'coverage/evidence/h-extrema-public203-source-composition.json', 'coverage/evidence/h-extrema-floating-private-admission.json', 'tests/h_extrema_public_authentication.py', 'coverage/evidence/h-extrema-reconstruction-reference-integration.json', 'tests/test_reconstruction_contracts.py', 'coverage/evidence/reconstruction-public-assertion-migration.json', 'coverage/contracts/reconstruction.json', 'coverage/evidence/reconstruction-trace-policy-migration.json', 'tests/reconstruction_trace_policy.py')
+
 GROUPS = {
+    'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::test_strict_native_pending', 'test_h_extrema_public.py'),
+    'public-NMI': ('test_normalized_mutual_information_public.py',),
+    'public-Reconstruction': ('test_reconstruction_contracts.py','test_reconstruction_public.py'),
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
                     'test_rank_alias_public.py', 'test_rank_statistics_public.py',
@@ -490,7 +516,6 @@ def validate_declared_inventory(root, namespace, registered):
             require((root / relative).is_file(), 'source inventory evidence file absent: ' + name + '/' + field)
 
 
-
 def sdk_family_declarations(cmake):
     """Read the repo's explicit literal/foreach ITEMS declarations, not execute CMake.
 
@@ -535,6 +560,31 @@ def plan(root, profile, expected=None):
             actual_pin = hashlib.sha256(raw if name == MAX_TREE_ORACLE_PATH else raw.replace(b'\r\n', b'\n')).hexdigest()
             if actual_pin != expected_pin:
                 blockers.append('corrected max-tree source pin differs: ' + name)
+    if RECONSTRUCTION_PATH not in registry['functions']:
+        blockers.append('missing public reconstruction registry: '+RECONSTRUCTION_PATH)
+    for name in RECONSTRUCTION_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required reconstruction source: '+name)
+    for name,want in {**RECONSTRUCTION_RUNTIME_SOURCE_PINS,**RECONSTRUCTION_TRACE_POLICY_PINS,RECONSTRUCTION_ORACLE_PATH:RECONSTRUCTION_ORACLE_SHA256}.items():
+        path=root/name
+        if path.is_file():
+            raw=path.read_bytes();actual=hashlib.sha256(raw if name==RECONSTRUCTION_ORACLE_PATH else raw.replace(b'\r\n',b'\n')).hexdigest()
+            if actual!=want:blockers.append('reconstruction source pin differs: '+name)
+    for name in H_EXTREMA_PATHS:
+        if name not in registry['functions']:blockers.append('missing public H-extrema registry: '+name)
+    for name in H_EXTREMA_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required H-extrema source: '+name)
+    try:
+        h_extrema_source_metadata(lambda name: (root/name).read_bytes())
+    except (OSError, AssertionError, ValueError, RuntimeError, KeyError) as error:
+        blockers.append('H-extrema source provenance differs: '+str(error))
+    if NMI_PATH not in registry['functions']:
+        blockers.append('missing public NMI registry: '+NMI_PATH)
+    for name in NMI_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required NMI source: '+name)
+    for name,want in NMI_IMPORTED_SOURCE_PINS.items():
+        path=root/name
+        if path.is_file() and hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()!=want:
+            blockers.append('frozen NMI source pin differs: '+name)
     if MATRIX_PATH not in registry['functions']:
         blockers.append('missing public matrix registry: '+MATRIX_PATH)
     for name in MATRIX_SOURCE_PATHS:
@@ -627,8 +677,8 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Closed historical scopes; new production qualification requires matrix20."""
-    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65)}
+    """Closed historical scopes; new production qualification requires h_extrema23."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66), 'nmi22': (118,67), 'h_extrema22': (118,67), 'h_extrema23': (120,68)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
@@ -645,17 +695,25 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20') else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22', 'h_extrema22', 'h_extrema23') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
         bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
-        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20') else not (bregman & set(source.namelist())),
+        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22', 'h_extrema22', 'h_extrema23') else not (bregman & set(source.namelist())),
                 'Bregman product scope/source header or helper differ')
         max_tree = {'include/skimagexx/max_tree.hpp', 'python/skimagexx/_max_tree.py'}
-        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20') else not (max_tree & set(source.namelist())),
+        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22', 'h_extrema22', 'h_extrema23') else not (max_tree & set(source.namelist())),
                 'max-tree product scope/source header or helper differ')
         matrix = {'include/skimagexx/matrix_transform.hpp', 'python/skimagexx/_matrix_transform.py'}
-        require((matrix <= set(source.namelist())) if scope == 'matrix20' else not (matrix & set(source.namelist())),
+        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21','nmi22', 'h_extrema22', 'h_extrema23') else not (matrix & set(source.namelist())),
                 'matrix product scope/source header or helper differ')
+        reconstruction={'include/skimagexx/reconstruction.hpp','python/skimagexx/_reconstruction.py'}
+        require((reconstruction<=set(source.namelist())) if scope in ('reconstruction21','nmi22', 'h_extrema22', 'h_extrema23') else not(reconstruction&set(source.namelist())),
+                'reconstruction product scope/source header or helper differ')
+        h_extrema={'include/skimagexx/h_extrema.hpp','python/skimagexx/_h_extrema.py'}
+        require((h_extrema<=set(source.namelist())) if scope in ('h_extrema22','h_extrema23') else not(h_extrema&set(source.namelist())), 'H-extrema product scope/source disagreement')
+        nmi={'include/skimagexx/normalized_mutual_information.hpp','python/skimagexx/_normalized_mutual_information.py'}
+        require((nmi<=set(source.namelist())) if scope in ('nmi22','h_extrema23') else not(nmi&set(source.namelist())),
+                'NMI product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -1001,6 +1059,100 @@ def validate_matrix_rows(path):
             'ordinary matrix cohorts must execute actual C++')
 
 
+def reconstruction_admission(core,morphology,wrapper,registered):
+    require(tuple(registered).count(RECONSTRUCTION_PATH)==1,'missing/duplicate public reconstruction registry')
+    require(getattr(wrapper,'_core',None) is core,'reconstruction alternate core worker state')
+    require(core.get_num_threads()==1,'reconstruction initial global workers must be1')
+    require(getattr(core,'has_openmp',None) is True,'public reconstruction worker4 requires actual OpenMP')
+    for name,want in (('reconstruction_interface','reconstruction-v1'),('reconstruction_capabilities',3),('reconstruction_parallel_flood',False)):
+        value=getattr(core,name,None)
+        require(type(value) is type(want) and value==want,'missing/wrong reconstruction capability: '+name)
+    for name in ('reconstruction_run','reconstruction_ordered','reconstruction_negative_zero','reconstruction_counts'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,'missing owned compiled reconstruction entry: '+name)
+    function=vars(morphology).get('reconstruction')
+    require(function is vars(wrapper).get('reconstruction') and inspect.isfunction(function)
+            and function.__module__=='skimagexx._reconstruction' and function.__name__=='reconstruction',
+            'reconstruction public ownership/forwarding mismatch')
+    require(str(inspect.signature(function))=="(seed, mask, method='dilation', footprint=None, offset=None)",'reconstruction signature mismatch')
+    require(tuple(morphology.__all__).count('reconstruction')==1,'reconstruction canonical export missing/duplicate')
+
+
+def h_extrema_source_metadata(read_bytes):
+    """Closed metadata-only inverse; historical scientific hashes stay distinct."""
+    for name, expected in H_EXTREMA_RUNTIME_SOURCE_PINS.items():
+        require(hashlib.sha256(read_bytes(name).replace(b'\r\n',b'\n')).hexdigest()==expected,
+                'H runtime source differs: '+name)
+    for name, expected in H_EXTREMA_FROZEN_RAW_PINS.items():
+        require(hashlib.sha256(read_bytes(name)).hexdigest()==expected,
+                'H exact source/reference bytes differ: '+name)
+    name='tests/h_extrema_source_provenance.py'
+    raw=read_bytes(name)  # Exact trusted closed-reader bytes were checked above.
+    namespace={'__name__':'_h_closed_source_verifier', '__file__':str(ROOT/name)}
+    exec(compile(raw,str(ROOT/name),'exec'),namespace)
+    record=json.loads(read_bytes('coverage/evidence/h-extrema-reference-assertion-migration.json'))
+    current={name:read_bytes(name) for name in H_EXTREMA_HISTORICAL_RAW_PINS}
+    require(namespace['verify_record'](record,current,raw),'H closed source inverse failed')
+    require({name:entry['original_raw_sha256'] for name,entry in record['files'].items()}
+            ==H_EXTREMA_HISTORICAL_RAW_PINS,'H historical source declaration differs')
+    adapter_name='tests/h_extrema_public_authentication.py'
+    adapter={'__name__':'_h_public_authentication_metadata','__file__':str(ROOT/adapter_name)}
+    exec(compile(read_bytes(adapter_name),str(ROOT/adapter_name),'exec'),adapter)
+    historical_reconstruction=adapter['validate_reconstruction'](read_bytes)
+    old=json.loads(read_bytes('coverage/contracts/h-extrema-plan.json'))
+    floating=json.loads(read_bytes('coverage/contracts/h-extrema-floating-plan.json'))
+    for name,expected in {**old['frozen_files'],**floating['preserved_files'],**floating['reference_files']}.items():
+        actual=hashlib.sha256(read_bytes(name)).hexdigest()
+        if actual==expected:continue
+        if name in H_EXTREMA_HISTORICAL_RAW_PINS:
+            require(expected==H_EXTREMA_HISTORICAL_RAW_PINS[name],'unlisted H historical pin')
+        else:
+            require(name==adapter['PATH'] and hashlib.sha256(historical_reconstruction).hexdigest()==expected,
+                    'unlisted cross-family H reference mismatch: '+name)
+    return {name:dict(historical_raw_sha256=H_EXTREMA_HISTORICAL_RAW_PINS[name],
+                     effective_raw_sha256=hashlib.sha256(raw).hexdigest()) for name,raw in current.items()}
+
+
+def h_extrema_admission(core,morphology,wrapper,registered):
+    require(all(tuple(registered).count(name)==1 for name in H_EXTREMA_PATHS),'missing/duplicate public H-extrema registry')
+    require(getattr(wrapper,'_core',None) is core,'H-extrema alternate core worker state')
+    require(core.get_num_threads()==1 and getattr(core,'has_openmp',None) is True,'H-extrema default1/OpenMP worker state differs')
+    for name,want in (('h_extrema_interface','h-extrema-integer-v1'),('h_extrema_real_interface','h-extrema-real-v1'),('h_extrema_full_API',False)):
+        value=getattr(core,name,None)
+        require(type(value) is type(want) and value==want,'H-extrema interface scope differs: '+name)
+    require(type(getattr(core,'h_extrema_integer_widths',None)) is tuple and core.h_extrema_integer_widths==(8,16,32,64)
+            and all(type(x) is int for x in core.h_extrema_integer_widths),'H-extrema integer widths differ')
+    for name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask',
+                 'h_extrema_counts','h_extrema_real_mask','h_extrema_real_counts'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,
+                'missing owned compiled H-extrema entry: '+name)
+    for name in ('h_maxima','h_minima'):
+        function=vars(morphology).get(name)
+        require(function is vars(wrapper).get(name) and inspect.isfunction(function)
+                and function.__module__=='skimagexx._h_extrema' and function.__name__==name,'H-extrema public ownership mismatch')
+        require(str(inspect.signature(function))=='(image, h, footprint=None)','H-extrema signature differs')
+        require(tuple(morphology.__all__).count(name)==1,'H-extrema export missing/duplicate')
+
+
+def nmi_admission(core,metrics,wrapper,registered):
+    """Ownership and ABI metadata only; no images or histogram construction."""
+    require(tuple(registered).count(NMI_PATH)==1,'missing/duplicate public NMI registry')
+    require(getattr(wrapper,'_core',None) is core,'NMI wrapper does not use sole installed core')
+    require(core.get_num_threads()==1,'NMI admission requires default global worker1')
+    require(getattr(core,'has_openmp',None) is True,'NMI qualification requires actual OpenMP')
+    for name in ('nmi_prepare','nmi_statistics','nmi_validate_inputs'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,
+                'missing owned compiled NMI entry: '+name)
+    function=vars(metrics).get('normalized_mutual_information')
+    require(function is vars(wrapper).get('normalized_mutual_information') and inspect.isfunction(function)
+            and function.__module__=='skimagexx._normalized_mutual_information'
+            and function.__name__=='normalized_mutual_information','NMI public ownership/forwarding mismatch')
+    require(str(inspect.signature(function))=='(image0, image1, *, bins=100)','NMI signature mismatch')
+    require(tuple(metrics.__all__).count('normalized_mutual_information')==1,'NMI canonical export missing/duplicate')
+
+
 def tv_admission(core, restoration, wrapper, registered):
     """Reject missing TV implementation before any contract fixture is built."""
     paths = tuple(registered)
@@ -1095,7 +1247,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -1128,6 +1280,12 @@ def admission(out, state):
                        importlib.import_module('skimagexx._max_tree'), coverage.native_functions())
     matrix_admission(xx._core, importlib.import_module('skimagexx.transform'),
                      importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions())
+    reconstruction_admission(xx._core,importlib.import_module('skimagexx.morphology'),
+                             importlib.import_module('skimagexx._reconstruction'),coverage.native_functions())
+    h_extrema_admission(xx._core,importlib.import_module('skimagexx.morphology'),
+                        importlib.import_module('skimagexx._h_extrema'),coverage.native_functions())
+    nmi_admission(xx._core,importlib.import_module('skimagexx.metrics'),
+                  importlib.import_module('skimagexx._normalized_mutual_information'),coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1398,7 +1556,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': FAMILIES}[scope]
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': RECONSTRUCTION_FAMILIES, 'nmi22': NMI_FAMILIES, 'h_extrema22': H_EXTREMA_LEGACY_FAMILIES, 'h_extrema23': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 

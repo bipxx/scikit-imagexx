@@ -1,0 +1,33 @@
+{
+  "schema": "reconstruction-descriptor-source-successor-v1",
+  "original_private_source": "ceea7b45d3138409ecb757ddf8a09a1b10f545b8",
+  "prior_public_composition": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
+  "descriptor_successor": "77aefdff4d656e45b2b651a8791ff5c672112e88",
+  "changes": {
+    "src/reconstruction.cpp": {
+      "previous_canonical_LF_sha256": "09c6c55262782c8228f62f1fe62e3cd394904f22be0c91f69ffc4a44fc36d9bc",
+      "current_canonical_LF_sha256": "a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b",
+      "raw_sha256": "a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b"
+    },
+    "tests/test_reconstruction_native.cpp": {
+      "previous_canonical_LF_sha256": "35b91fccde1364128b02388a6ef77b0f18e2b9146b8d9774611e92a563873c88",
+      "current_canonical_LF_sha256": "eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16",
+      "raw_sha256": "eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16"
+    }
+  },
+  "scope": "Four descriptor byte ranges added to checked readonly spans before stores; safe one-sample alias rejection tests. No arithmetic, provider, reference corpus, tolerance, signature or installed header changes.",
+  "source_review": "Root read exact two-file diff; original finding d3237bf139b605bdd66e9b7de3eee00b7f26c902121c580f5537b01e1ab2ab99 retained.",
+  "private_successor_admission_pending": false,
+  "whole_product_accepted": false,
+  "cumulative_main_base": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
+  "includes_separately_reviewed": [
+    "0322181242535eb2337dd6ae717abeed1f9bfc75",
+    "2abd0acc9b421d80a6554a840e603c0bc731f5fc"
+  ],
+  "source_only": true,
+  "root_private_admission": {
+    "path": "coverage/evidence/reconstruction-descriptor-private-admission.json",
+    "bytes": 1557,
+    "sha256": "b7eceff09b635959aa6bdc27b7579851731dff342c2c3473ecaea4a45e5d9b53"
+  }
+}

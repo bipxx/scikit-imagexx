@@ -40,6 +40,8 @@
 void bind_extra(pybind11::module_&);
 void bind_li(pybind11::module_&);
 void bind_metrics(pybind11::module_&);
+void bind_normalized_mutual_information(pybind11::module_&);
+void bind_h_extrema(pybind11::module_&);
 void bind_footprint_dense(pybind11::module_&);
 void bind_footprint_decomposition(pybind11::module_&);
 void bind_footprint_util(pybind11::module_&);
@@ -51,6 +53,7 @@ void bind_tv_chambolle(pybind11::module_&);
 void bind_tv_bregman(pybind11::module_&);
 void bind_max_tree(pybind11::module_&);
 void bind_matrix_transform(pybind11::module_&);
+void bind_reconstruction(pybind11::module_&);
 
 namespace py = pybind11;
 namespace {
@@ -813,6 +816,8 @@ PYBIND11_MODULE(_core, m) {
     });
     bind_extra(m);
     bind_metrics(m);
+    bind_normalized_mutual_information(m);
+    bind_h_extrema(m);
     bind_footprint_dense(m);
     bind_footprint_decomposition(m);
     bind_footprint_util(m);
@@ -824,6 +829,7 @@ PYBIND11_MODULE(_core, m) {
     bind_tv_bregman(m);
     bind_max_tree(m);
     bind_matrix_transform(m);
+    bind_reconstruction(m);
     m.def("clahe_has_zero", [](py::array_t<float,py::array::c_style|py::array::forcecast> image) {
         if(reinterpret_cast<std::uintptr_t>(image.data())%alignof(float))image=decltype(image)::ensure(image.attr("copy")());
         py::gil_scoped_release release;

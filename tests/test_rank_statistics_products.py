@@ -1,4 +1,5 @@
 """Synthetic metadata/tooling guards only; no real native/public qualification."""
+import ast
 import base64
 import csv
 import hashlib
@@ -58,14 +59,14 @@ def synthetic(tmp_path, monkeypatch, request):
     source_root.mkdir()
     monkeypatch.setattr(p, 'ROOT', source_root)
     scope=getattr(request,'param','rank14')
-    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20')
+    assert scope in ('rank14','tv17','bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23')
     families = ['synthetic-family-' + str(i) for i in range(14)]
     if scope!='rank14':families += ['tv_chambolle','tv_reductions','tv_denoise']
-    if scope in ('bregman18','max_tree19','matrix20'):families += ['tv_bregman']
-    if scope in ('max_tree19','matrix20'):families += ['max_tree']
-    if scope=='matrix20':families += ['matrix_transform']
-    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65}[scope]
-    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114}[scope]
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):families += ['tv_bregman']
+    if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):families += ['max_tree']
+    if scope in ('matrix20','reconstruction21','nmi22','h_extrema23'):families += ['matrix_transform']
+    expected_sdk={'rank14':59,'tv17':62,'bregman18':63,'max_tree19':64,'matrix20':65,'reconstruction21':66,'nmi22':67,'h_extrema23':68}[scope]
+    expected_members={'rank14':104,'tv17':108,'bregman18':110,'max_tree19':112,'matrix20':114,'reconstruction21':116,'nmi22':118,'h_extrema23':120}[scope]
     expected_checks=2*len(families)
     source = {name: b'# Inert synthetic controller, never executed.\n' for name in p.CONTROLLERS}
     source['tools/public_qualification.py'] = ('FAMILIES = ' + repr(tuple(families)) + '\n'+(f"PRODUCT_SCOPE={scope!r}\nPRODUCT_MEMBERS={expected_members}\nSDK_MEMBERS={expected_sdk}\n" if scope!='rank14' else '')).encode()
@@ -81,24 +82,47 @@ def synthetic(tmp_path, monkeypatch, request):
     if scope!='rank14':
         for name in ('tv_chambolle','tv_reductions','tv_denoise'):source['include/skimagexx/'+name+'.hpp']=b'// inert TVheader metadata\n'
         source['python/skimagexx/_tv_chambolle.py']=b'# inert TVhelper metadata\n'
-    if scope in ('bregman18','max_tree19','matrix20'):
+    if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/tv_bregman.hpp']=b'// inert Bregmanheader metadata\n'
         source['python/skimagexx/_tv_bregman.py']=b'# inert Bregmanhelper metadata\n'
-    if scope in ('max_tree19','matrix20'):
+    if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/max_tree.hpp']=b'// inert max-tree header metadata\n'
         # Real frozen source bytes in an INERT metadata wheel: never compiled/imported.
         for name in p.MAX_TREE_RUNTIME_SOURCE_PINS:
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.MAX_TREE_ORACLE_PATH]=(ROOT/p.MAX_TREE_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py'] += ('MAX_TREE_RUNTIME_SOURCE_PINS='+repr(p.MAX_TREE_RUNTIME_SOURCE_PINS)+'\nMAX_TREE_ORACLE_PATH='+repr(p.MAX_TREE_ORACLE_PATH)+'\nMAX_TREE_ORACLE_SHA256='+repr(p.MAX_TREE_ORACLE_SHA256)+'\n').encode()
-    if scope=='matrix20':
+    if scope in ('matrix20','reconstruction21','nmi22','h_extrema23'):
         source['include/skimagexx/matrix_transform.hpp']=b'// inert matrix header metadata\n'
         source['python/skimagexx/_matrix_transform.py']=b'# inert matrix helper metadata\n'
+    if scope in ('reconstruction21','nmi22','h_extrema23'):
+        families += ['reconstruction']
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
+        expected_checks=2*len(families)
+        for name in {**p.RECONSTRUCTION_RUNTIME_SOURCE_PINS,**p.RECONSTRUCTION_TRACE_POLICY_PINS}:
+            source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        source[p.RECONSTRUCTION_ORACLE_PATH]=(ROOT/p.RECONSTRUCTION_ORACLE_PATH).read_bytes()
+        source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_TRACE_POLICY_PINS='+repr(p.RECONSTRUCTION_TRACE_POLICY_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
+    if scope in ('nmi22','h_extrema23'):
+        families += ['normalized_mutual_information']
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
+        expected_checks=2*len(families)
+        for name in p.NMI_IMPORTED_SOURCE_PINS:
+            source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        source['tools/public_qualification.py']+=('NMI_IMPORTED_SOURCE_PINS='+repr(p.NMI_IMPORTED_SOURCE_PINS)+'\n').encode()
+    if scope=='h_extrema23':
+        families += ['h_extrema']
+        source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
+        expected_checks=2*len(families)
+        for name in (*p.H_EXTREMA_RUNTIME_SOURCE_PINS,*p.H_EXTREMA_FROZEN_RAW_PINS):
+            source[name]=(ROOT/name).read_bytes()
+        for key in ('H_EXTREMA_RUNTIME_SOURCE_PINS','H_EXTREMA_FROZEN_RAW_PINS','H_EXTREMA_HISTORICAL_RAW_PINS','H_EXTREMA_ORACLE_PATH','H_EXTREMA_ORACLE_SHA256'):
+            source['tools/public_qualification.py']+=(key+'='+repr(getattr(p,key))+'\n').encode()
     for name, data in source.items():
         target = source_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    snapshot = {'revision': 'a' * 40, 'files_sha256': {n: body_hash(b) for n, b in source.items()}}
+    snapshot = {'revision': 'a' * 40, 'files_sha256': {n: body_hash(b.replace(b'\r\n',b'\n')) for n, b in source.items()}}
     with zipfile.ZipFile(q / 'source.zip', 'w') as archive:
         archive.comment = snapshot['revision'].encode()
         for name, data in source.items():
@@ -149,8 +173,8 @@ def synthetic(tmp_path, monkeypatch, request):
     dump(q / 'state.json', {'source': snapshot, 'profile': 'modern', 'product_wheel': 'scikit-imagexx.whl', 'build_identity': binding})
     proof = {'schema': 'public-qualification-v2', 'passed': True, 'profile': 'modern', 'source': snapshot,
              'failures': [], 'no_timing': True, 'SDK_checks': expected_checks, 'build_identity': binding,
-             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202}[scope],
-                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20') else [])+(['transform.matrix_transform'] if scope=='matrix20' else [])}}
+             'expected_registry': {'image_count': {'rank14':190,'tv17':191,'bregman18':192,'max_tree19':198,'matrix20':199,'reconstruction21':200,'nmi22':201,'h_extrema23':203}[scope], 'metadata_count': 3, 'registered_count': {'rank14':193,'tv17':194,'bregman18':195,'max_tree19':201,'matrix20':202,'reconstruction21':203,'nmi22':204,'h_extrema23':206}[scope],
+                                   'functions': ['unit-only-path-' + str(i) for i in range(193)]+(['restoration.denoise_tv_chambolle'] if scope!='rank14' else [])+(['restoration.denoise_tv_bregman'] if scope in ('bregman18','max_tree19','matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['morphology.'+n for n in ('max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing')] if scope in ('max_tree19','matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['transform.matrix_transform'] if scope in ('matrix20','reconstruction21','nmi22','h_extrema23') else [])+(['morphology.reconstruction'] if scope in ('reconstruction21','nmi22','h_extrema23') else [])+([p.NMI_PATH] if scope in ('nmi22','h_extrema23') else [])+(list(p.H_EXTREMA_PATHS) if scope=='h_extrema23' else [])}}
     receipt = tmp_path / 'verify.json'
 
     def reseal():
@@ -635,3 +659,273 @@ def test_corrected_text_fixture_models_canonical_archive_but_keeps_binary_oracle
     with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
         p.validate_max_tree_source(archive, snapshot, {'name': 'matrix20'})
     assert source[p.MAX_TREE_ORACLE_PATH] == oracle == (ROOT / p.MAX_TREE_ORACLE_PATH).read_bytes()
+
+
+@pytest.mark.parametrize('synthetic',['reconstruction21'],indirect=True)
+def test_reconstruction200_full116_66_sdk21_stage_is_unaccepted(synthetic):
+    s=synthetic;result=run(s)
+    assert result['status']=='staged-unaccepted'
+    sdk=p.load(s.output/'sdk.json')
+    assert len(sdk['SDK_sha256'])==66 and len(sdk['families'])==21 and sdk['checks']==42
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==116
+    assert p.qualification_scope(s.output/'source')['name']=='reconstruction21'
+    registry=p.load(s.output/'qualification.json')['expected_registry']
+    assert registry['image_count']==200 and registry['registered_count']==203
+    assert registry['functions'].count('morphology.reconstruction')==1
+    assert not any(k in p.load(s.output/'product.json') for k in ('accepted_products','before','after'))
+
+@pytest.mark.parametrize('synthetic',['reconstruction21'],indirect=True)
+@pytest.mark.parametrize('fault',('image199','missing-reconstruction','duplicate-reconstruction','missing-matrix','missing-max-tree'))
+def test_reconstruction200_registry_cannot_downgrade_or_omit_prior_paths(synthetic,fault):
+    s=synthetic;e=s.proof['expected_registry']
+    if fault=='image199':e['image_count']=199
+    elif fault=='duplicate-reconstruction':e['functions'][0]='morphology.reconstruction'
+    else:
+        target={'missing-reconstruction':'morphology.reconstruction','missing-matrix':'transform.matrix_transform','missing-max-tree':'morphology.max_tree'}[fault]
+        e['functions'][e['functions'].index(target)]='unit-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)
+    assert not s.output.exists()
+
+@pytest.mark.parametrize('synthetic',['reconstruction21'],indirect=True)
+@pytest.mark.parametrize('name',tuple(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+tuple(p.RECONSTRUCTION_TRACE_POLICY_PINS)+(p.RECONSTRUCTION_ORACLE_PATH,))
+@pytest.mark.parametrize('fault',('missing','mutated','forged-snapshot','missing-declaration'))
+def test_reconstruction_source_closure_rejects_partial_or_resealed_bytes(synthetic,name,fault):
+    with zipfile.ZipFile(synthetic.q/'source.zip') as z:source={n:z.read(n) for n in z.namelist()}
+    snapshot={'files_sha256':{n:body_hash(raw) for n,raw in source.items()}}
+    if fault=='missing':del source[name]
+    elif fault=='mutated':source[name]+=b'changed';snapshot['files_sha256'][name]=body_hash(source[name])
+    elif fault=='forged-snapshot':snapshot['files_sha256'][name]='0'*64
+    else:source['tools/public_qualification.py']+=b'\nRECONSTRUCTION_RUNTIME_SOURCE_PINS={}\n'
+    stream=io.BytesIO()
+    with zipfile.ZipFile(stream,'w') as z:
+        for n,raw in source.items():z.writestr(n,raw)
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as z:
+        with pytest.raises(RuntimeError,match='reconstruction source'):p.validate_reconstruction_source(z,snapshot,{'name':'reconstruction21'})
+
+@pytest.mark.parametrize('scope',('rank14','tv17','bregman18','max_tree19','matrix20'))
+def test_legacy_scopes_never_invent_reconstruction_requirements(scope):
+    class ForbiddenArchive:
+        def read(self,*a):raise AssertionError('legacy touched new reconstruction source')
+    p.validate_reconstruction_source(ForbiddenArchive(),{},dict(name=scope))
+
+
+@pytest.mark.parametrize('fault', ('missing', 'duplicate', 'changed', 'extra-key'))
+def test_reconstruction_trace_policy_declaration_cannot_be_omitted_or_resealed(fault):
+    declared = dict(p.RECONSTRUCTION_TRACE_POLICY_PINS)
+    if fault == 'changed':declared[next(iter(declared))] = '0' * 64
+    elif fault == 'extra-key':declared['tests/unchecked_policy.py'] = '0' * 64
+    statements = [
+        'RECONSTRUCTION_RUNTIME_SOURCE_PINS=' + repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS),
+        'RECONSTRUCTION_ORACLE_PATH=' + repr(p.RECONSTRUCTION_ORACLE_PATH),
+        'RECONSTRUCTION_ORACLE_SHA256=' + repr(p.RECONSTRUCTION_ORACLE_SHA256)]
+    if fault != 'missing':statements.append('RECONSTRUCTION_TRACE_POLICY_PINS=' + repr(declared))
+    if fault == 'duplicate':statements.append('RECONSTRUCTION_TRACE_POLICY_PINS=' + repr(declared))
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        archive.writestr('tools/public_qualification.py', '\n'.join(statements))
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
+        with pytest.raises(RuntimeError, match='reconstruction source'):
+            p.validate_reconstruction_source(archive, {}, {'name': 'reconstruction21'})
+
+
+@pytest.mark.parametrize('synthetic', ['nmi22'], indirect=True)
+def test_nmi201_complete118_67_sdk22_stage_remains_unaccepted(synthetic):
+    s = synthetic
+    assert run(s)['status'] == 'staged-unaccepted'
+    sdk = p.load(s.output / 'sdk.json')
+    assert len(sdk['SDK_sha256']) == 67 and len(sdk['families']) == 22 and sdk['checks'] == 44
+    assert sdk['families'][-2:] == ['reconstruction', 'normalized_mutual_information']
+    assert len(c.verify_wheel(s.output / 'wheels/scikit-imagexx.whl')['members']) == 118
+    assert p.qualification_scope(s.output / 'source')['name'] == 'nmi22'
+    registry = p.load(s.output / 'qualification.json')['expected_registry']
+    assert registry['image_count'] == 201 and registry['registered_count'] == 204
+    assert registry['functions'].count(p.NMI_PATH) == 1
+    assert registry['functions'].count('morphology.reconstruction') == 1
+    assert not any(k in p.load(s.output / 'product.json') for k in ('accepted_products', 'before', 'after'))
+    assert (s.output / 'source.zip').read_bytes() == (s.q / 'source.zip').read_bytes()
+
+
+@pytest.mark.parametrize('synthetic', ['nmi22'], indirect=True)
+@pytest.mark.parametrize('fault', (
+    'image200', 'registered203', 'metadata2', 'missing-NMI', 'duplicate-NMI',
+    'missing-reconstruction', 'missing-matrix', 'missing-max-tree', 'missing-Bregman', 'missing-TV',
+))
+def test_nmi_registry_requires_unique_new_and_all_prior_paths(synthetic, fault):
+    s = synthetic; expected = s.proof['expected_registry']
+    if fault == 'image200': expected['image_count'] = 200
+    elif fault == 'registered203': expected['registered_count'] = 203
+    elif fault == 'metadata2': expected['metadata_count'] = 2
+    elif fault == 'duplicate-NMI': expected['functions'][0] = p.NMI_PATH
+    else:
+        target = {'missing-NMI': p.NMI_PATH, 'missing-reconstruction': 'morphology.reconstruction',
+                  'missing-matrix': 'transform.matrix_transform', 'missing-max-tree': 'morphology.max_tree',
+                  'missing-Bregman': 'restoration.denoise_tv_bregman',
+                  'missing-TV': 'restoration.denoise_tv_chambolle'}[fault]
+        expected['functions'][expected['functions'].index(target)] = 'unit-replacement'
+    s.reseal()
+    with pytest.raises(RuntimeError): run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('synthetic', ['rank14', 'reconstruction21'], indirect=True)
+def test_legacy_registry_cannot_claim_nmi_without_nmi_scope(synthetic):
+    synthetic.proof['expected_registry']['functions'][0] = p.NMI_PATH
+    synthetic.reseal()
+    with pytest.raises(RuntimeError, match='NMI registry/source'): run(synthetic)
+    assert not synthetic.output.exists()
+
+
+@pytest.mark.parametrize('fault', (
+    'SDK66', 'wheel116', 'family21', 'wrong-family', 'duplicate-family', 'missing-scope',
+    'reconstruction-scope', 'unknown-scope', 'float-wheel', 'float-SDK',
+))
+def test_nmi_source_census_cannot_downgrade_or_invent_a_scope(fault):
+    suffix = ('tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree',
+              'matrix_transform', 'reconstruction', 'normalized_mutual_information')
+    values = dict(FAMILIES=tuple('synthetic-' + str(i) for i in range(14)) + suffix,
+                  PRODUCT_SCOPE='nmi22', PRODUCT_MEMBERS=118, SDK_MEMBERS=67)
+    assert p.qualification_scope_text('\n'.join(k + '=' + repr(v) for k, v in values.items()))['name'] == 'nmi22'
+    if fault == 'SDK66': values['SDK_MEMBERS'] = 66
+    elif fault == 'wheel116': values['PRODUCT_MEMBERS'] = 116
+    elif fault == 'family21': values['FAMILIES'] = values['FAMILIES'][:-1]
+    elif fault == 'wrong-family': values['FAMILIES'] = values['FAMILIES'][:-1] + ('other',)
+    elif fault == 'duplicate-family': values['FAMILIES'] = values['FAMILIES'][:-1] + ('reconstruction',)
+    elif fault == 'missing-scope': del values['PRODUCT_SCOPE']
+    elif fault == 'reconstruction-scope': values['PRODUCT_SCOPE'] = 'reconstruction21'
+    elif fault == 'unknown-scope': values['PRODUCT_SCOPE'] = 'nmi23'
+    elif fault == 'float-wheel': values['PRODUCT_MEMBERS'] = 118.0
+    else: values['SDK_MEMBERS'] = 67.0
+    with pytest.raises(RuntimeError):
+        p.qualification_scope_text('\n'.join(k + '=' + repr(v) for k, v in values.items()))
+
+
+@pytest.fixture(scope='module')
+def nmi_source_records():
+    """Frozen source text only; never import/execute any scientific fixture."""
+    return {name: (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+            for name in p.NMI_IMPORTED_SOURCE_PINS} | {
+                'tools/public_qualification.py': ('NMI_IMPORTED_SOURCE_PINS=' + repr(p.NMI_IMPORTED_SOURCE_PINS) + '\n').encode()}
+
+
+def nmi_source_archive(source):
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        for name, raw in source.items(): archive.writestr(name, raw)
+    return zipfile.ZipFile(io.BytesIO(stream.getvalue()))
+
+
+def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records):
+    text = (ROOT / 'tools/public_qualification.py').read_text(encoding='utf-8')
+    declarations = [ast.literal_eval(node.value) for node in ast.parse(text).body
+                    if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name)
+                    and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
+    assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
+    scope = p.qualification_scope_text(text)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('h_extrema23', 120, 68, 23)
+    snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
+    with nmi_source_archive(nmi_source_records) as archive:
+        p.validate_nmi_source(archive, snapshot, scope)
+
+
+@pytest.mark.parametrize('name', tuple(p.NMI_IMPORTED_SOURCE_PINS))
+@pytest.mark.parametrize('fault', ('missing', 'mutated-resealed', 'forged-snapshot', 'missing-snapshot'))
+def test_nmi_source_pins_reject_missing_or_resealed_imports(nmi_source_records, name, fault):
+    source = dict(nmi_source_records)
+    snapshot = {'files_sha256': {key: body_hash(raw) for key, raw in source.items()}}
+    if fault == 'missing': del source[name]
+    elif fault == 'mutated-resealed':
+        source[name] += b'changed'; snapshot['files_sha256'][name] = body_hash(source[name])
+    elif fault == 'forged-snapshot': snapshot['files_sha256'][name] = '0' * 64
+    else: del snapshot['files_sha256'][name]
+    with nmi_source_archive(source) as archive:
+        with pytest.raises(RuntimeError, match='NMI source'):
+            p.validate_nmi_source(archive, snapshot, {'name': 'nmi22'})
+
+
+@pytest.mark.parametrize('fault', ('missing', 'empty', 'extra-key', 'wrong-hash', 'duplicate-declaration', 'duplicate-key', 'not-dict'))
+def test_nmi_declaration_is_exact_and_unique(nmi_source_records, fault):
+    source = dict(nmi_source_records); pins = dict(p.NMI_IMPORTED_SOURCE_PINS)
+    name = next(iter(pins))
+    if fault == 'empty': pins = {}
+    elif fault == 'extra-key': pins['src/unqualified.cpp'] = '0' * 64
+    elif fault == 'wrong-hash': pins[name] = '0' * 64
+    text = 'NMI_IMPORTED_SOURCE_PINS=' + repr(pins) + '\n'
+    if fault == 'missing': text = '# missing declaration\n'
+    elif fault == 'duplicate-declaration': text += text
+    elif fault == 'duplicate-key': text = 'NMI_IMPORTED_SOURCE_PINS={' + repr(name) + ':' + repr(pins[name]) + ',' + repr(pins)[1:] + '\n'
+    elif fault == 'not-dict': text = 'NMI_IMPORTED_SOURCE_PINS=[]\n'
+    source['tools/public_qualification.py'] = text.encode()
+    snapshot = {'files_sha256': {key: body_hash(raw) for key, raw in source.items()}}
+    with nmi_source_archive(source) as archive:
+        with pytest.raises(RuntimeError, match='NMI source'):
+            p.validate_nmi_source(archive, snapshot, {'name': 'nmi22'})
+
+
+@pytest.mark.parametrize('newline', (b'\n', b'\r\n'))
+def test_nmi_source_canonical_newlines_preserve_exact_pins(nmi_source_records, newline):
+    source = {name: raw.replace(b'\n', newline) for name, raw in nmi_source_records.items()}
+    snapshot = {'files_sha256': {name: body_hash(raw.replace(b'\r\n', b'\n')) for name, raw in source.items()}}
+    with nmi_source_archive(source) as archive:
+        p.validate_nmi_source(archive, snapshot, {'name': 'nmi22'})
+
+
+def test_nmi_source_rejects_duplicate_zip_member(nmi_source_records):
+    snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        for name, raw in nmi_source_records.items(): archive.writestr(name, raw)
+        name = next(iter(p.NMI_IMPORTED_SOURCE_PINS))
+        with pytest.warns(UserWarning, match='Duplicate name'):
+            archive.writestr(name, nmi_source_records[name])
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
+        with pytest.raises(RuntimeError, match='NMI source absent or duplicate'):
+            p.validate_nmi_source(archive, snapshot, {'name': 'nmi22'})
+
+
+@pytest.mark.parametrize('synthetic', ['nmi22'], indirect=True)
+@pytest.mark.parametrize('name,expected_error', (
+    ('src/max_tree.cpp', 'max-tree source'), ('src/reconstruction.cpp', 'reconstruction source'),
+    ('src/normalized_mutual_information.cpp', 'NMI source'),
+))
+def test_nmi_stage_calls_new_and_inherited_source_guards_before_output(synthetic, name, expected_error):
+    s = synthetic; source = dict(s.source); source[name] += b'changed'
+    s.proof['source']['files_sha256'][name] = body_hash(source[name])
+    with zipfile.ZipFile(s.q / 'source.zip', 'w') as archive:
+        for key, raw in source.items(): archive.writestr(key, raw)
+    s.reseal()
+    with pytest.raises(RuntimeError, match=expected_error): run(s)
+    assert not s.output.exists()
+
+
+@pytest.mark.parametrize('scope', ('rank14', 'tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21'))
+def test_legacy_scopes_do_not_invent_nmi_requirements(scope):
+    class ForbiddenArchive:
+        def read(self, *args): raise AssertionError('legacy scope touched NMI source')
+    p.validate_nmi_source(ForbiddenArchive(), {}, {'name': scope})
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema23'],indirect=True)
+def test_h203_complete_combined_product_stages_without_acceptance(synthetic):
+    s=synthetic
+    assert run(s)['status']=='staged-unaccepted'
+    sdk=json.loads((s.output/'sdk.json').read_bytes())
+    assert len(sdk['SDK_sha256'])==68 and len(sdk['families'])==23 and sdk['checks']==46
+    assert p.qualification_scope(s.output/'source')['name']=='h_extrema23'
+    registry=json.loads((s.output/'qualification.json').read_bytes())['expected_registry']
+    assert registry['image_count']==203 and registry['registered_count']==206
+    assert all(registry['functions'].count(name)==1 for name in (*p.H_EXTREMA_PATHS,p.NMI_PATH))
+    assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==120
+
+
+@pytest.mark.parametrize('synthetic',['h_extrema23'],indirect=True)
+@pytest.mark.parametrize('fault',('missing-H','duplicate-H','missing-NMI','image202','SDK44'))
+def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
+    s=synthetic;expected=s.proof['expected_registry']
+    if fault=='missing-H':expected['functions'].remove(p.H_EXTREMA_PATHS[0])
+    elif fault=='duplicate-H':expected['functions'][0]=p.H_EXTREMA_PATHS[0]
+    elif fault=='missing-NMI':expected['functions'].remove(p.NMI_PATH)
+    elif fault=='image202':expected['image_count']=202
+    else:s.proof['SDK_checks']=44
+    s.reseal()
+    with pytest.raises(RuntimeError):run(s)

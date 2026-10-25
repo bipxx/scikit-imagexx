@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "87eef1c48057d89ab7eed8e0acd61d35278f0bdbbc5631fdd94d319dce12c428",
+  "source_inventory_sha256": "d667b6ea65defc5093c48e3426b849de3399bd094970b5b06921950979c497d1",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 4,
-      "native-partial": 199,
-      "upstream-only": 270
+      "native-partial": 203,
+      "upstream-only": 266
     },
     "kinds": {
       "callable": 448,
@@ -12876,15 +12876,19 @@
       "api": "metrics.normalized_mutual_information",
       "kind": "callable",
       "signature": "(image0, image1, *, bins=100)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "metrics.normalized_mutual_information",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Pad unequal shapes, joint histogram and entropy ratio",
+      "easiest_credible_path": "Audit/extend existing native implementation: Pad unequal shapes, joint histogram and entropy ratio",
       "mandatory_route_dependencies": [
         "array",
         "histogram",
@@ -12892,7 +12896,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze constant/independent/identical images and mismatched shape against pinned upstream, including bins, zero entropy, shape padding and histogram edges; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered bins, zero entropy, shape padding and histogram edges. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "bins, zero entropy, shape padding and histogram edges",
       "parity_cases_to_freeze": "constant/independent/identical images and mismatched shape",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12903,10 +12907,10 @@
         "kind": "compute",
         "specific_workload": "constant/independent/identical images and mismatched shape",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_normalized_mutual_information_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -13931,22 +13935,26 @@
       "api": "morphology.h_maxima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.h_maxima",
       "identity_alias": false,
       "family": "tree",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse grayscale reconstruction of intensity-shifted seed then h-difference test",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse grayscale reconstruction of intensity-shifted seed then h-difference test",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze maxima at exactly h and dtype limits against pinned upstream, including integer saturation, floating resolution correction, h=0 and footprint; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered integer saturation, floating resolution correction, h=0 and footprint. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "integer saturation, floating resolution correction, h=0 and footprint",
       "parity_cases_to_freeze": "maxima at exactly h and dtype limits",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13957,32 +13965,36 @@
         "kind": "compute",
         "specific_workload": "maxima at exactly h and dtype limits",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_h_extrema_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.h_minima",
       "kind": "callable",
       "signature": "(image, h, footprint=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.h_minima",
       "identity_alias": false,
       "family": "tree",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse erosion reconstruction of upward-shifted seed then h-difference test",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse erosion reconstruction of upward-shifted seed then h-difference test",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze minima at exactly h and dtype limits against pinned upstream, including integer saturation, floating correction, h=0 and minima threshold; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered integer saturation, floating correction, h=0 and minima threshold. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "integer saturation, floating correction, h=0 and minima threshold",
       "parity_cases_to_freeze": "minima at exactly h and dtype limits",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -13993,10 +14005,10 @@
         "kind": "compute",
         "specific_workload": "minima at exactly h and dtype limits",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_h_extrema_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -14573,22 +14585,26 @@
       "api": "morphology.reconstruction",
       "kind": "callable",
       "signature": "(seed, mask, method='dilation', footprint=None, offset=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.reconstruction",
       "identity_alias": false,
       "family": "tree",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Review retained unbuilt draft, then stable queue/rank propagation constrained by mask",
+      "easiest_credible_path": "Audit/extend existing native implementation: Review retained unbuilt draft, then stable queue/rank propagation constrained by mask",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze plateau/sparse-marker/3D frozen-reference cases against pinned upstream, including seed-mask ordering, dilation/erosion, footprint/offset, integer extremes, signed-zero representative/provider decision and N-D output ownership; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered seed-mask ordering, dilation/erosion, footprint/offset, integer extremes, signed-zero representative/provider decision and N-D output ownership. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "seed-mask ordering, dilation/erosion, footprint/offset, integer extremes, signed-zero representative/provider decision and N-D output ownership",
       "parity_cases_to_freeze": "plateau/sparse-marker/3D frozen-reference cases",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -14599,10 +14615,10 @@
         "kind": "compute",
         "specific_workload": "plateau/sparse-marker/3D frozen-reference cases",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_reconstruction_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "frozen_checkpoint_note": "600a reference/draft retained and unbuilt; characterize/review before building after resume."
     },

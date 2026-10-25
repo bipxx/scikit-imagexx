@@ -1,0 +1,838 @@
+{
+  "schema": "h-extrema-floating-source-plan-v1",
+  "status": "prospective-frozen-source; original captures await root review",
+  "base": "3f4ed95e9fb322985374f2af71522398dbd8db7f",
+  "cases": [
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f2/ignore",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f2/warn",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f2/raise",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f2/call-record",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f2/call-mutate",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f4/ignore",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f4/warn",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f4/raise",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f4/call-record",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f4/call-mutate",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f8/ignore",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f8/warn",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f8/raise",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f8/call-record",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/resolution-warning/f8/call-mutate",
+      "function": "h_maxima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/u8/record",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "record",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/u8/error",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "error",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/u8/mutate",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "mutate",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/i8/record",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "record",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/i8/error",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "error",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/precision-warning/i8/mutate",
+      "function": "h_maxima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "mutate",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f4/record",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "record",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f4/error",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "error",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f4/mutate",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "mutate",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f8/record",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "record",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f8/error",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "error",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/reconstruction-shape-warning/f8/mutate",
+      "function": "h_maxima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "mutate",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_maxima/floating-addendum/height-protocol/record",
+      "function": "h_maxima",
+      "family": "height-protocol",
+      "dtype": "f4",
+      "mode": "record",
+      "input_basis": "Existing Height float-subclass probe fixture, with recorded __gt__/__eq__/__float__ hooks and a source-defined optional __eq__ exception.",
+      "expectation": "Record actual original events; no extra admission coercions or C++ mask credit for custom height."
+    },
+    {
+      "id": "h_maxima/floating-addendum/height-protocol/raise-at-zero-equality",
+      "function": "h_maxima",
+      "family": "height-protocol",
+      "dtype": "f4",
+      "mode": "raise-at-zero-equality",
+      "input_basis": "Existing Height float-subclass probe fixture, with recorded __gt__/__eq__/__float__ hooks and a source-defined optional __eq__ exception.",
+      "expectation": "Record actual original events; no extra admission coercions or C++ mask credit for custom height."
+    },
+    {
+      "id": "h_maxima/floating-addendum/nonrepresentable-height/python-float/-1",
+      "function": "h_maxima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "python-float",
+      "relation": -1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_maxima/floating-addendum/nonrepresentable-height/python-float/1",
+      "function": "h_maxima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "python-float",
+      "relation": 1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_maxima/floating-addendum/nonrepresentable-height/numpy-float64/-1",
+      "function": "h_maxima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "numpy-float64",
+      "relation": -1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_maxima/floating-addendum/nonrepresentable-height/numpy-float64/1",
+      "function": "h_maxima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "numpy-float64",
+      "relation": 1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_maxima/floating-addendum/wide-unsigned-comparison/1",
+      "function": "h_maxima",
+      "family": "wide-unsigned-comparison",
+      "dtype": "f8",
+      "increment": 1,
+      "input_basis": "For maxima image=[0,2**54,0,2**55,0]; minima image=[2**55,2**54,2**55,0,2**55]; h=np.uint64(2**53+increment).",
+      "expectation": "Real source Cython witness required; preserve inexact scalar comparison conversion through explicit semantic provider, no threshold rounding claim."
+    },
+    {
+      "id": "h_maxima/floating-addendum/wide-unsigned-comparison/3",
+      "function": "h_maxima",
+      "family": "wide-unsigned-comparison",
+      "dtype": "f8",
+      "increment": 3,
+      "input_basis": "For maxima image=[0,2**54,0,2**55,0]; minima image=[2**55,2**54,2**55,0,2**55]; h=np.uint64(2**53+increment).",
+      "expectation": "Real source Cython witness required; preserve inexact scalar comparison conversion through explicit semantic provider, no threshold rounding claim."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f2/ignore",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f2/warn",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f2/raise",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f2/call-record",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f2/call-mutate",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f2",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f4/ignore",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f4/warn",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f4/raise",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f4/call-record",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f4/call-mutate",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f4",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f8/ignore",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "ignore",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f8/warn",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "warn",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f8/raise",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "raise",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f8/call-record",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "call-record",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/resolution-warning/f8/call-mutate",
+      "function": "h_minima",
+      "family": "resolution-warning",
+      "dtype": "f8",
+      "mode": "call-mutate",
+      "input_basis": "Exact existing floating-real-limit/subnormal fixture; same safe finite values and positive typed height.",
+      "mutation": "For call-mutate only: after recording the first resolution-multiply callback, change the last image element to the first element; no shape/dtype/owner/extent change.",
+      "expectation": "Source decides completion versus early FloatingPointError; record actual callback and certified Cython completion when reached."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/u8/record",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "record",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/u8/error",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "error",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/u8/mutate",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "u8",
+      "mode": "mutate",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/i8/record",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "record",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/i8/error",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "error",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/precision-warning/i8/mutate",
+      "function": "h_minima",
+      "family": "precision-warning",
+      "dtype": "i8",
+      "mode": "mutate",
+      "input_basis": "Exact existing wide-height-promotion/python-fraction fixture around2**53, height1.5.",
+      "mutation": "For mutate only: actual UserWarning handler changes image[-1] to image[0] before astype; values remain finite/in-bounds and owner metadata unchanged.",
+      "expectation": "Actual warning stage precedes conversion. No manufactured warning and no silent exact-integer repair."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f4/record",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "record",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f4/error",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "error",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f4/mutate",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f4",
+      "mode": "mutate",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f8/record",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "record",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f8/error",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "error",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/reconstruction-shape-warning/f8/mutate",
+      "function": "h_minima",
+      "family": "reconstruction-shape-warning",
+      "dtype": "f8",
+      "mode": "mutate",
+      "input_basis": "Exact existing floating-cutoff/relation0/typed fixture, bounded finite image.",
+      "mutation": "For mutate only: DeprecationWarning handler changes image[-1] to image[0] after the completed reconstruction flood and before final residue.",
+      "expectation": "NumPy2 actual shape setter warns; minimum profile may have no event. Current image is used after the callback, not an earlier copy."
+    },
+    {
+      "id": "h_minima/floating-addendum/height-protocol/record",
+      "function": "h_minima",
+      "family": "height-protocol",
+      "dtype": "f4",
+      "mode": "record",
+      "input_basis": "Existing Height float-subclass probe fixture, with recorded __gt__/__eq__/__float__ hooks and a source-defined optional __eq__ exception.",
+      "expectation": "Record actual original events; no extra admission coercions or C++ mask credit for custom height."
+    },
+    {
+      "id": "h_minima/floating-addendum/height-protocol/raise-at-zero-equality",
+      "function": "h_minima",
+      "family": "height-protocol",
+      "dtype": "f4",
+      "mode": "raise-at-zero-equality",
+      "input_basis": "Existing Height float-subclass probe fixture, with recorded __gt__/__eq__/__float__ hooks and a source-defined optional __eq__ exception.",
+      "expectation": "Record actual original events; no extra admission coercions or C++ mask credit for custom height."
+    },
+    {
+      "id": "h_minima/floating-addendum/nonrepresentable-height/python-float/-1",
+      "function": "h_minima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "python-float",
+      "relation": -1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_minima/floating-addendum/nonrepresentable-height/python-float/1",
+      "function": "h_minima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "python-float",
+      "relation": 1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_minima/floating-addendum/nonrepresentable-height/numpy-float64/-1",
+      "function": "h_minima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "numpy-float64",
+      "relation": -1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_minima/floating-addendum/nonrepresentable-height/numpy-float64/1",
+      "function": "h_minima",
+      "family": "nonrepresentable-height",
+      "dtype": "f4",
+      "height_kind": "numpy-float64",
+      "relation": 1,
+      "input_basis": "Existing floating-cutoff f4 image; h=4 + relation*2**-23 as binary64. This lies between f32 values. Use original scalar-kind promotion unchanged.",
+      "expectation": "Real source Cython witness required. Typed native mask must decline without stores; one literal NumPy final stage preserves installed promotion semantics."
+    },
+    {
+      "id": "h_minima/floating-addendum/wide-unsigned-comparison/1",
+      "function": "h_minima",
+      "family": "wide-unsigned-comparison",
+      "dtype": "f8",
+      "increment": 1,
+      "input_basis": "For maxima image=[0,2**54,0,2**55,0]; minima image=[2**55,2**54,2**55,0,2**55]; h=np.uint64(2**53+increment).",
+      "expectation": "Real source Cython witness required; preserve inexact scalar comparison conversion through explicit semantic provider, no threshold rounding claim."
+    },
+    {
+      "id": "h_minima/floating-addendum/wide-unsigned-comparison/3",
+      "function": "h_minima",
+      "family": "wide-unsigned-comparison",
+      "dtype": "f8",
+      "increment": 3,
+      "input_basis": "For maxima image=[0,2**54,0,2**55,0]; minima image=[2**55,2**54,2**55,0,2**55]; h=np.uint64(2**53+increment).",
+      "expectation": "Real source Cython witness required; preserve inexact scalar comparison conversion through explicit semantic provider, no threshold rounding claim."
+    }
+  ],
+  "policy": {
+    "schema": "h-extrema-floating-prospective-numerical-policy-v1",
+    "status": "Proposed for root review; no candidate outputs or new original captures exist",
+    "source_base": "3f4ed95e9fb322985374f2af71522398dbd8db7f",
+    "reconstruction_dependency": "77aefdff4d656e45b2b651a8791ff5c672112e88",
+    "api": [
+      "morphology.h_maxima",
+      "morphology.h_minima"
+    ],
+    "objective": "Close every378 pending frozen case through an owned source-ordered composition, while retaining424 integer cases and14 unsafe source blocks. Providers and early/errors are counted separately; neither this matrix nor this increment means full H API completion.",
+    "source_sequence": [
+      "For a supported ndarray, validate current allocation metadata without reading pixels or invoking overridable Python attributes. Keep source np.ptp(image) and h>ptp as real operations. This check precedes zero-height handling, promotion and footprint conversion. Non-array and unsupported dtype source errors retain their literal operation order; unknown/stale storage is an explicit safety refusal before an image read.",
+      "If type(h) is floating and image dtype is integer, execute the actual h%1 decision. Fractional heights issue the real precision warning before image.astype(float). Integral heights use image.dtype.type(h). Never force int(h) at entry or repair the original u/i64-to-float64 loss.",
+      "Retain the actual h==0 decision and exact method-specific ValueError. Scalar protocols run exactly where the source invokes them, with no extra admission probes.",
+      "For floating image dtype, evaluate 2*finfo(dtype).resolution, then abs(image), then their multiplication, then image-h or image+h, then subtract/add the resolution. Keep separate NumPy operations with their actual dtype and warning boundaries. No fusion, epsilon substitution, wider temporary or precomputed copy across a callback.",
+      "For integer image with typed/array heights outside the existing exact positive-Python-int seed route, execute the literal local clipping helper with the original NumPy scalar and Python limit operands. Integer plus array-one height is not a floating-image branch and receives no resolution correction.",
+      "Call the owned reconstruction77 composition, including seed/mask ordering before footprint.astype, footprint/offset handling and actual post-flood shape assignment. Float16/32 mask means float32 reconstruction even if the seed is float64; other supported real masks mean float64. Keep the existing explicit negative-zero representative provider.",
+      "After any footprint or shape-warning callback, validate the current image, reconstruction, and any array height again. Compute residue from the current image in original operand order. Use the exact typed native mask only under its general admission invariant; otherwise execute one literal NumPy residue/comparison/astype stage and record it as a provider. Never retry an already executed side-effecting stage."
+    ],
+    "native_mask": {
+      "proposed_entry": "h_extrema_real_mask_into(image, reconstructed, exact_height, method, caller_uint8_span)",
+      "image_types": "Ordinary bounded integer/bool/float16/float32/float64 storage as actually used by the source; reconstruction must be float32 or float64 with the same shape. Existing integer APIs keep their old behavior and tests.",
+      "residue_precision": "float32 for float16/32 current image with float32 reconstruction; float64 for other supported current images with float64 reconstruction. Convert operands as the source does, then perform one subtraction rounded to that precision before comparison. No float64 subtraction followed by a late float32 cast.",
+      "threshold_invariant": "Only ordinary builtin/NumPy real scalar heights, or bounded plain one-element height arrays with source-compatible broadcasting, whose current numeric value is finite and exactly representable in the residue precision. Admission uses type/bit/integer metadata, not a trial ufunc or an expected result. Custom protocols are never coerced merely to test admission.",
+      "promotion_argument": "When the threshold is exactly representable in the residue precision, promoting both the already-rounded residue and threshold to any wider source comparison precision cannot change >=. This handles NumPy1 value-dependent and NumPy2 typed/weak promotion without assuming resolve_dtypes uses legacy rules. Nonrepresentable heights retain the literal source comparison provider.",
+      "range_and_state": "Finite operands only; nearest rounding and gradual underflow. Reject or select the semantic provider before output writes if the current hardware mode or operand range cannot guarantee source-compatible finite subtraction. Check conservatively without overflow in the check itself. Same-format finite subtraction that produces a subnormal is exact; subnormal inputs are not blanket-rejected. Preserve incoming floating flags and rounding/FTZ/DAZ state; no synthesized warning on this admitted no-warning residue route.",
+      "provisional_range_bound": "A simple sufficient bound is maxabs(image-converted-to-residue-type)<=max_finite/2 and maxabs(reconstructed)<=max_finite/2. This includes the frozen real-limit witnesses; if wider safe finite ranges are supported, prove the stronger condition from source before outputs rather than adapting to failures. Outside it, the literal NumPy final stage remains required and explicitly counted.",
+      "result": "Owning uint8 array with exact0/1 mask, shape, strides/order, subclass behavior and alias semantics matching the source-covered domain. Actual subclass result construction remains a NumPy provider; do not manufacture a subclass with view(type) or extra empty_like hooks.",
+      "write_contract": "Validate descriptor objects, shape/stride metadata, arithmetic extent, current owner allocation and all mutable-vs-readonly ranges before reads/writes as applicable. Output must be disjoint from both input descriptor objects and pixel/shape/stride storage. Unsupported admission must leave output unchanged.",
+      "prospective_frozen_targets": {
+        "windows": 280,
+        "modern": 280,
+        "minimum": 284
+      },
+      "target_caveat": "Targets are source-derived obligations for the existing ordinary successful pending rows, not measured completion. A miss is retained and reviewed, not hidden by changing membership.6 subclass and2 custom-height successful rows target real C++ reconstruction plus a final-stage provider."
+    },
+    "exact_comparison": {
+      "tolerance": "No allclose, rtol or atol for final masks or discrete decisions.",
+      "exact_fields": [
+        "signature",
+        "exception class/message and precedence per pinned profile",
+        "ordered warning categories/messages",
+        "protocol/callback events",
+        "input state before/after callbacks",
+        "output uint8 values and bytes",
+        "shape/strides/ownership/subclass metadata",
+        "seed dtype/bytes and reconstruction dtype/bytes at captured source stages",
+        "actual source/C++ completion and provider accounting"
+      ],
+      "source_variation": "Keep NumPy1/2-specific expected records independently. No cross-profile homogenization or post-output tolerance change.",
+      "existing_evidence": "Original816 observations, source468 labels, additive348 labels, initial424 selection, unsafe14 and prior integer/private receipts remain immutable. Additive fixtures have separate IDs and captures."
+    },
+    "callbacks_and_owners": {
+      "pinning": "Use direct C ndarray base slots and complete owner chains, including descriptor metadata stamps. Keep owner references through scalar/provider conversions and released-GIL work. Recheck current allocation extent after every possible callback and immediately before native reads. Python-level .base overrides must not run.",
+      "generic_metadata": "The provider-preflight storage check must handle empty, bool and complex storage metadata without replacing the source's original empty/bool/complex numerical error. Derive byte extent from real itemsize, not a fake numeric dtype. Unknown foreign roots and resized/stale/OOB views remain explicit safety frontiers.",
+      "safe_mutations": "New original callbacks may change finite in-allocation pixel values only. No stale/OOB ndarray is ever submitted to original H/reconstruction. Resized-owner controls are metadata-only native rejection tests.",
+      "warning_provider": "Use the source-equivalent warnings.warn partial semantics; newly pin skimage/_shared/_warnings.py for all3 existing profiles before new captures. Do not fabricate the NumPy2 shape deprecation or underflow messages."
+    },
+    "providers_and_remaining_work": [
+      "Initial floating range/resolution/shift and uncommon integer-height clipping remain explicit full-array NumPy semantic providers. Native reconstruction and, where admitted, native residue/mask perform genuine image work. This is not a claim that every H stage is C++.",
+      "Custom heights, subclasses, nonrepresentable heights, unsupported hardware FP modes or wider potentially warning-producing residue ranges retain exact literal final-stage providers. They remain in parity and future measurement accounting.",
+      "Subsequent provider retirement must implement source-compatible promotion, per-stage float16/32 rounding and warning callbacks. It may not widen away hard cases or forward the original H/reconstruction algorithm while claiming native closure.",
+      "Public safe fallback for not-yet-supported inputs is a separate B/C compatibility patch. This private owned expansion does not edit their public candidate and must never count that upstream fallback as native."
+    ],
+    "CPU_policy": {
+      "initial": "Baseline C++17 typed residue/threshold and portable half decode; shared SDK workers default1. Source flags prohibit contraction/fast-math and preserve the rounding contract. No unconditional AVX/F16C or fake platform macros.",
+      "parallelism": "Only independent scans/output chunks may use the sole process-global worker limit. Keep dependent reconstruction flood serial and nested provider pools from oversubscribing. Preserve exact output at workers1/4 and truthful portable worker4 rejection where applicable.",
+      "SIMD_followup": "After exact scalar admission, contiguous native-endian f32/f64 residue/threshold is the simplest candidate for an out-of-line runtime AVX2 leaf with scalar tails and normal/SIMD-disabled parity. This requires a separately reviewed new H-only leaf and link entry; no SIMD speed claim from source inspection.",
+      "measurement": "Future original0.26/native processes at globalworkers1, isolated from builds/tests, same fixed corpus including providers/adverse cases. Construction and warmup outside timing. Hypotheses target redundant pointwise passes and allocations; no current bottleneck or speed claim is inferred from source alone."
+    },
+    "proposed_addendum": {
+      "cases": 70,
+      "profiles": 3,
+      "original_calls_not_yet_run": true,
+      "case_definitions": "floating-plan-v2.json:additive_source_cases",
+      "freeze_order": "Root reviews this policy; exact additive factory and observer hooks are frozen before any new original capture or candidate output. Source-authenticated originals and genuine Cython witnesses precede candidate gates."
+    },
+    "no_execution": {
+      "candidate_calls": 0,
+      "original_calls": 0,
+      "builds": 0,
+      "timings": 0
+    },
+    "full_API_complete": false
+  },
+  "upstream_plan": {
+    "map_sha256": "4eb37e507454628f1bd3db72893eeb18f8f439c4db11b2d47c1b5fa2e08b586a",
+    "policy_sha256": "4a1d252fc844c3879d77de19ecc59e4de47a9cf5823bdca1225d52324612d12e",
+    "human_plan_sha256": "07fbc1e5c9dca3645f238054082ba99045b9f8d014458e2863ec963466b12f3d"
+  },
+  "warning_helpers": {
+    "windows": {
+      "profile": "windows",
+      "relative": "skimage/_shared/_warnings.py",
+      "path": "C:/Users/HEQ/Projects/scikit-imagexx/.venv/Lib/site-packages/skimage/_shared/_warnings.py",
+      "bytes": 5371,
+      "sha256": "e1dce9804056c9d7f1a6cf32db89907c168b77f388ef38ec0ffb61fc98c69ec6",
+      "source_fact": "functools.partial(warnings.warn, stacklevel=2), no additional Python frame"
+    },
+    "modern": {
+      "profile": "modern",
+      "relative": "skimage/_shared/_warnings.py",
+      "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/rank-percentile-contracts/build/healthy-reference-modern/skimage/_shared/_warnings.py",
+      "bytes": 5222,
+      "sha256": "10b361ada81033eb1efad9b252f71d295726face1ca5188790d4d331b6422673",
+      "source_fact": "functools.partial(warnings.warn, stacklevel=2), no additional Python frame"
+    },
+    "minimum": {
+      "profile": "minimum",
+      "relative": "skimage/_shared/_warnings.py",
+      "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/rank-percentile-contracts/build/healthy-reference-minimum/skimage/_shared/_warnings.py",
+      "bytes": 5222,
+      "sha256": "10b361ada81033eb1efad9b252f71d295726face1ca5188790d4d331b6422673",
+      "source_fact": "functools.partial(warnings.warn, stacklevel=2), no additional Python frame"
+    }
+  },
+  "preserved_files": {
+    "coverage/contracts/h-extrema.json": "ed02daef587eb7a408c578725a85e2fa9031a8beb5e63879dc32ee3667dcda0d",
+    "coverage/contracts/h-extrema-plan.json": "652ac143392a9005712fb8ab42a7bb53163da4be15ed848a2e88e3b004d6029b",
+    "coverage/contracts/h-extrema-integer.json": "e91c0947845184fded73472c66128efe889ae795c6a323d800f923560699af51",
+    "tests/h_extrema_reference.py": "bc9efc45e338d6c447284df244185d8101d4615e6f72abfe500ced05f71bdfbf",
+    "tests/test_h_extrema_contracts.py": "00ad418879bc5b4ffbeebca0f78497f03d06da9cc1b31f60cd8313aa80327151",
+    "tests/test_h_extrema_boundaries.py": "a12bbbc4ae1eb2a4fc6e24c924f363de5d7b7d2279eb2a7253b3757b75ea4a71",
+    "tests/test_reconstruction_contracts.py": "ee2db6cd6d5bd694ed06e3b1133445b680b205f8a802ea1fc9e0ae1d9f624868",
+    "coverage/contracts/reconstruction.json": "621981325f5e6939d3fb4d1c94e52910b369ef3ca798c326bdb93322a12b504c"
+  },
+  "reference_files": {
+    "tests/test_h_extrema_floating_cases.py": "f127526cd66c5043edd66d82518db3abb2a8956d3b29f1931057566ec090de1e",
+    "tests/h_extrema_floating_reference.py": "389e5cffe1b399c0deb3c8dce8424a414b9b2329e16907e6afa86415fab0dfb0"
+  },
+  "native_acceptance": "pending",
+  "new_native_paths": 0,
+  "original_captures": 0,
+  "observation_path": "coverage/contracts/h-extrema-floating.json",
+  "comparison": "Exact full serialized observation per profile; no tolerance, normalization or case removal",
+  "source_safety": "Only 70 finite allocated fixtures; unchanged legacy guarded_rec/guarded_loop certificate before genuine original Cython. Existing14 unsafe IDs never executed.",
+  "capture_policy": "Unchanged all-warn legacy recorder wraps explicit nested actual-call policy. Record actual warnings/callbacks/current image, genuine source Cython completion, result/dtype/ownership/alias/error and restoration. No synthetic warnings.",
+  "source_frontier": "Providers and original-only observations are not native admission. Future owned mask admission remains separately audited; all378+424+14 unchanged.",
+  "upstream_plan_note": "Approved plan/policy are retained verbatim by hash. Their provisional temporary public fallback discussion is superseded by root decision: no temporary bridge; owned floating expansion and all proven outcomes/default availability remain required."
+}
