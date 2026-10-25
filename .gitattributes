@@ -198,3 +198,5 @@ tests/reconstruction_trace_policy.py -text
 tests/test_reconstruction_trace_policy.py -text
 coverage/evidence/reconstruction-trace-policy-observations.json -text
 coverage/evidence/reconstruction-trace-policy-migration.json -text
+coverage/evidence/tv-positive-zero-private-admission.json -text
+coverage/evidence/h203-tv-zero-source-composition.json -text
