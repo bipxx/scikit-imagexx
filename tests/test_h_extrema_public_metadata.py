@@ -98,7 +98,9 @@ def test_cross_family_reconstruction_raw_inverse_is_distinct_from_original600():
 @pytest.mark.parametrize('fault',('wrong-current','wrong-old','extra-science','extra-body','scope','mapping','old-pin'))
 def test_cross_family_adapter_rejects_unlisted_successors(fault):
     auth=load('h203_cross_family_negative','tests/h_extrema_public_authentication.py')
-    record=json.loads((ROOT/auth.RECORD).read_bytes());current=(ROOT/auth.PATH).read_bytes()
+    integration=json.loads((ROOT/auth.RECORD).read_bytes())
+    record=json.loads(integration['historical_integration_UTF8'])
+    current=json.loads((ROOT/auth.POLICY_RECORD).read_bytes())['previous_source_UTF8'].encode()
     migration=(ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes()
     if fault=='wrong-current':record['current_raw_sha256']='0'*64
     elif fault=='wrong-old':record['historical_raw_sha256']='0'*64
@@ -110,6 +112,57 @@ def test_cross_family_adapter_rejects_unlisted_successors(fault):
         with pytest.raises(AssertionError,match='unknown historical'):auth.source_bytes(auth.PATH,'0'*64)
         return
     with pytest.raises(AssertionError):auth.verify_reconstruction(record,current,migration)
+
+
+def test_closed_chain_retains_the_exact_e39_verifier_and_runtime_authentication():
+    auth=load('h203_policy_chain_metadata','tests/h_extrema_public_authentication.py')
+    record=json.loads((ROOT/auth.RECORD).read_bytes())
+    old=record['historical_adapter_UTF8'].encode()
+    assert hashlib.sha256(old).hexdigest()==record['historical_adapter_raw_sha256']=='ab065c5a2a7b5db7a27f3d00b42818e3ed5c1bcd5be90ef7f7935699e6c75330'
+    previous={n.name:n for n in ast.parse(old).body if isinstance(n,ast.FunctionDef)}
+    current={n.name:n for n in ast.parse((ROOT/'tests/h_extrema_public_authentication.py').read_bytes()).body if isinstance(n,ast.FunctionDef)}
+    for name in ('sha','body','verify_reconstruction','source_bytes','load','authenticate_legacy','authenticate_floating'):
+        assert ast.dump(current[name],include_attributes=False)==ast.dump(previous[name],include_attributes=False)
+    text=ast.unparse(current['validate_reconstruction'])
+    assert text.index('verify_current_to_f82(')<text.index('verify_reconstruction(')
+    policy_raw=(ROOT/auth.POLICY_RECORD).read_bytes()
+    predecessor=auth.verify_current_to_f82(record,(ROOT/auth.PATH).read_bytes(),policy_raw,(ROOT/auth.POLICY_VALIDATOR).read_bytes())
+    assert hashlib.sha256(predecessor).hexdigest()==auth.CURRENT
+    assert hashlib.sha256(predecessor.replace(b'\r\n',b'\n')).hexdigest()==auth.CURRENT_LF
+    assert predecessor==json.loads(policy_raw)['previous_source_UTF8'].encode()
+    old_result=auth.verify_reconstruction(json.loads(record['historical_integration_UTF8']),predecessor,
+        (ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes())
+    assert auth.validate_reconstruction(lambda n:(ROOT/n).read_bytes())==old_result
+
+
+@pytest.mark.parametrize('fault',('current-pin','current-LF','current-bytes','policy-pin','policy-bytes',
+    'validator-pin','validator-bytes','extra-body','missing-body','body-order','policy-source',
+    'public-source','scope','historical-record','historical-record-pin','old-migration'))
+def test_two_step_policy_chain_rejects_unreviewed_sources_or_scope(fault):
+    auth=load('h203_policy_chain_negative','tests/h_extrema_public_authentication.py')
+    record=json.loads((ROOT/auth.RECORD).read_bytes())
+    updates={}
+    if fault=='current-pin':record['current_raw_sha256']='0'*64
+    elif fault=='current-LF':record['current_canonical_lf_sha256']=record['current_raw_sha256']
+    elif fault=='current-bytes':updates[auth.PATH]=(ROOT/auth.PATH).read_bytes().replace(b'def observe(',b'def changed_observe(',1)
+    elif fault=='policy-pin':record['reviewed_policy_migration_raw_sha256']='0'*64
+    elif fault=='policy-bytes':updates[auth.POLICY_RECORD]=(ROOT/auth.POLICY_RECORD).read_bytes()+b'\n'
+    elif fault=='validator-pin':record['reviewed_validator_raw_sha256']='0'*64
+    elif fault=='validator-bytes':updates[auth.POLICY_VALIDATOR]=(ROOT/auth.POLICY_VALIDATOR).read_bytes()+b'\n'
+    elif fault=='extra-body':record['allowed_assertion_bodies'].append('observe')
+    elif fault=='missing-body':record['allowed_assertion_bodies'].pop()
+    elif fault=='body-order':record['allowed_assertion_bodies'].reverse()
+    elif fault=='policy-source':record['reviewed_policy_source']='0'*40
+    elif fault=='public-source':record['previous_public_H_source']='0'*40
+    elif fault=='scope':record['schema']='general-historical-read-override'
+    elif fault=='historical-record':record['historical_integration_UTF8']+='\n'
+    elif fault=='historical-record-pin':record['historical_integration_raw_sha256']='0'*64
+    else:
+        name='coverage/evidence/reconstruction-public-assertion-migration.json'
+        updates[name]=(ROOT/name).read_bytes()+b'\n'
+    updates[auth.RECORD]=json.dumps(record).encode()
+    def read(name):return updates[name] if name in updates else (ROOT/name).read_bytes()
+    with pytest.raises(AssertionError):auth.validate_reconstruction(read)
 
 
 def test_original_authentication_precedes_sole_installed_import_and_fixture_calls():

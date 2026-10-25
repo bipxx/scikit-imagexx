@@ -1913,7 +1913,7 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
 
 
 def populate_reconstruction_metadata(root):
-    for name in (*q.RECONSTRUCTION_RUNTIME_SOURCE_PINS,q.RECONSTRUCTION_ORACLE_PATH):
+    for name in (*q.RECONSTRUCTION_RUNTIME_SOURCE_PINS,*q.RECONSTRUCTION_TRACE_POLICY_PINS,q.RECONSTRUCTION_ORACLE_PATH):
         target=Path(root)/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes())
 
 @pytest.fixture
@@ -1960,7 +1960,7 @@ def test_reconstruction_plan_requires_all_source_and_genuine_tests(tmp_path,monk
     (tmp_path/missing).unlink()
     assert 'missing required reconstruction source: '+missing in q.plan(tmp_path,'modern',200)['blockers']
 
-@pytest.mark.parametrize('path',tuple(q.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+(q.RECONSTRUCTION_ORACLE_PATH,))
+@pytest.mark.parametrize('path',tuple(q.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+tuple(q.RECONSTRUCTION_TRACE_POLICY_PINS)+(q.RECONSTRUCTION_ORACLE_PATH,))
 def test_reconstruction_plan_rejects_changed_compiled_oracle_source(tmp_path,monkeypatch,path):
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
@@ -2036,9 +2036,12 @@ def test_reconstruction_library_binding_sdk_linkage_and_source_oracle_argument()
     assert "package._core=" not in public and "types.ModuleType" not in public
 
 
-def test_reconstruction_metadata_migration_preserves_all_scientific_AST_and_raw_data():
+def test_reconstruction_policy_preserves_the_historical_metadata_chain_and_declares_comparison_change():
     record=json.loads((ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes())
-    old=record['original_source_UTF8'];current=(ROOT/'tests/test_reconstruction_contracts.py').read_bytes().replace(b'\r\n',b'\n')
+    policy=__import__('runpy').run_path(str(ROOT/'tests/reconstruction_trace_policy.py'))
+    successor=policy['authenticate_source'](ROOT,(ROOT/'tests/test_reconstruction_contracts.py').read_bytes())
+    assert successor['classification'].startswith('Scientific validation-policy successor')
+    old=record['original_source_UTF8'];current=successor['previous_source_UTF8'].encode().replace(b'\r\n',b'\n')
     assert hashlib.sha256(old.encode()).hexdigest()==record['original_raw_sha256']
     frozen=json.loads((ROOT/'coverage/contracts/reconstruction.json').read_bytes())
     assert hashlib.sha256(old.encode().replace(b'\r\n',b'\n')).hexdigest()==record['original_canonical_lf_sha256']==record['original_normalized_lf_sha256']==frozen['test_canonical_lf_sha256']

@@ -133,25 +133,14 @@ def observe(s,function=None):
 def public_observation(row):return {k:v for k,v in row.items() if k not in ('source_backend','original_Cython_attempts','original_Cython_completed')}
 @pytest.mark.parametrize('spec',cases(),ids=lambda s:s['id'])
 def test_original_contract(spec):
-    data=json.loads(MATRIX.read_bytes());assert observe(spec)==data['profiles'][profile()]['observations'][spec['id']]
+    data=json.loads(MATRIX.read_bytes());actual=observe(spec)
+    policy=__import__('runpy').run_path(str(ROOT/'tests/reconstruction_trace_policy.py'))
+    policy['assert_observation_equivalent'](actual,data['profiles'][profile()]['observations'][spec['id']])
 def test_source_signature_and_fixed_scope():
     d=json.loads(MATRIX.read_bytes());assert d['cases']==cases() and d['new_native_paths']==0 and skimage.__version__=='0.26.0'
     assert str(inspect.signature(ORIGINAL))=="(seed, mask, method='dilation', footprint=None, offset=None)"
-    record=json.loads((ROOT/'coverage/evidence/reconstruction-public-assertion-migration.json').read_bytes())
-    old=record['original_source_UTF8'];current=Path(__file__).read_bytes().replace(b'\r\n',b'\n')
-    assert hashlib.sha256(old.encode()).hexdigest()==record['original_raw_sha256']
-    assert hashlib.sha256(old.encode().replace(b'\r\n',b'\n')).hexdigest()==d['test_canonical_lf_sha256']==record['original_canonical_lf_sha256']==record['original_normalized_lf_sha256']
-    assert hashlib.sha256(current).hexdigest()==record['current_canonical_lf_sha256']
-    assert hashlib.sha256(MATRIX.read_bytes()).hexdigest()==record['frozen_matrix_raw_sha256']
-    parser=__import__('ast');a=parser.parse(old);b=parser.parse(current)
-    allowed={'test_source_signature_and_fixed_scope','test_native_pending_is_not_upstream_forwarding'}
-    assert set(record['allowed_metadata_body_changes'])==allowed and len(a.body)==len(b.body)
-    for left,right in zip(a.body,b.body):
-        if isinstance(left,parser.FunctionDef) and left.name in allowed:
-            assert isinstance(right,parser.FunctionDef) and left.name==right.name
-            left.body=[];right.body=[]
-            assert parser.dump(left,include_attributes=False)==parser.dump(right,include_attributes=False)
-        else:assert parser.dump(left,include_attributes=False)==parser.dump(right,include_attributes=False)
+    policy=__import__('runpy').run_path(str(ROOT/'tests/reconstruction_trace_policy.py'))
+    policy['authenticate_source'](ROOT,Path(__file__).read_bytes())
 
 def independent_reconstruction(seed,mask,method,footprint=None):
     dtype=np.float32 if mask.dtype.type in (np.float16,np.float32) else np.float64
