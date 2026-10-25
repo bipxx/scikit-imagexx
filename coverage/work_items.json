@@ -30160,7 +30160,7 @@
       "owner": "integrator",
       "branch": "feature/reconstruction-kernel",
       "base_sha": "b099375a45bcf184fb7f9d9078321b7cef638673",
-      "state": "validating",
+      "state": "performance_pending",
       "owns": [
         "build/worktrees/reconstruction-native/include/skimagexx/reconstruction.hpp",
         "build/worktrees/reconstruction-native/src/reconstruction.cpp",
@@ -30186,7 +30186,8 @@
           "definition": "{\"capabilities\": 3, \"header_sha256\": \"334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8\", \"interface\": \"reconstruction-v1\", \"public_acceptance\": false, \"source\": \"095ea3d8c3ca8eb580bf95ff2d02218d98f59552\"}",
           "sha256": "04c14143b12c50fae0789b25dcb7baf2cd892190defcb18d058179269cea0551"
         }
-      }
+      },
+      "current_checkpoint": "Private reconstruction/owner/descriptor successors admitted; public200 failed; genuine product and timing remain pending."
     },
     {
       "id": "shared-experiment-publication",
@@ -30498,7 +30499,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/h-extrema-kernel",
       "base_sha": "b4a5c3a1f52b529de1b428e31bcaaa5ca720bde0",
-      "state": "validating",
+      "state": "parity_passed",
       "owns": [
         "build/worktrees/h-extrema-kernel",
         "build/resume-20261025/h-extrema-diagnosis"
@@ -30507,7 +30508,7 @@
       "base_scope": "Explicit unqualified public200 source; cee private primitive only, no public/SDK acceptance inherited.",
       "pending": "Freeze full contract/additive real-resolution and limit cases before new outputs; preserve468Windows originals/14unsafe guard blocks, fill Linux captures. Exact discrete masks, no allclose.",
       "public_acceptance": false,
-      "current_checkpoint": "Exact3f4 private352record seal complete; independent B review in progress. No public/SDK/performance acceptance; float/promotions remain mandatory."
+      "current_checkpoint": "Integer3f4 privately admitted; all378 floating follow-ups and70 additive controls move to separate owned successor. Publicf814 compatibility blocked, no public/performance acceptance."
     },
     {
       "id": "reconstruction-benchmark-contracts",
@@ -30557,8 +30558,8 @@
         "tests/test_reconstruction_native.cpp"
       ],
       "depends_on": [],
-      "state": "validating",
-      "current_checkpoint": "Exact77 private293record seal complete; independent A review in progress; source candidate bedab includes2strict successor pins and716metadata gates."
+      "state": "parity_passed",
+      "current_checkpoint": "Exact77 privately admitted by independent/root reviews; original283 public200 failed and retained; no whole-product acceptance."
     },
     {
       "id": "tv-admission-default-policy",
@@ -30573,19 +30574,7 @@
       ],
       "depends_on": [],
       "state": "preparing",
-      "current_checkpoint": {
-        "controller_review": {
-          "path": "coverage/evidence/tv-default-policy-controller-review.json",
-          "bytes": 1840,
-          "sha256": "655b704c9dcb2ca312c13a31ed5a0bf8db9f77fc56f9fd0e67f114dbfe2e80a9"
-        },
-        "publication": {
-          "path": "coverage/evidence/tv-default-certificate-publication-dispatch.json",
-          "bytes": 1489,
-          "sha256": "da203145ac116156be6be5ac04778f6212141952e1a6b07133bb67349a8316e9"
-        },
-        "performance_accepted": false
-      },
+      "current_checkpoint": "Controller28c merged, certificate published/admitted; new40174240551 all8success,10artifacts retained, root raw audit4410intervals passed; independent performance review pending.",
       "merge": {
         "commit": "2a487d34e75ab3a5d088c0b65ae0027a91a8f292",
         "main_commit": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99"
@@ -30602,8 +30591,64 @@
         "coverage/contracts/reconstruction-terrain.json"
       ],
       "depends_on": [],
+      "state": "contracted",
+      "current_checkpoint": "Exact18049 original16 terrain reference reviewed/admitted/mergedccc6197;72checks,48first+48repeat captures; no native/timing credit."
+    },
+    {
+      "id": "h-extrema-floating-production",
+      "kind": "native_private",
+      "apis": [],
+      "target_apis": [
+        "morphology.h_maxima",
+        "morphology.h_minima"
+      ],
+      "owner": "astra_max_plan_audit",
+      "state": "implementing",
+      "owns": [
+        "include/skimagexx/h_extrema.hpp",
+        "src/h_extrema.cpp",
+        "src/bind_h_extrema.cpp",
+        "python/skimagexx/_h_extrema.py"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Approved source policy and70-case factory frozen; preserve424integer+378followup+14unsafe; source/donor review before private builds or candidate calls."
+    },
+    {
+      "id": "h-extrema-floating-reference",
+      "kind": "contract_reference",
+      "apis": [],
+      "owner": "integrator",
+      "state": "preparing",
+      "owns": [
+        "tests/test_h_extrema_floating_cases.py",
+        "tests/h_extrema_floating_reference.py",
+        "coverage/contracts/h-extrema-floating-plan.json",
+        "coverage/contracts/h-extrema-floating.json"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Prospective14236 root approved; sealed8fb original-only70cases per3profiles with exact repeats, no native credit; independent review pending."
+    },
+    {
+      "id": "h-extrema-historical-assertion-migration",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
       "state": "contracting",
-      "current_checkpoint": "Root-approved prospective047feb:16 multi-marker/barrier/corridor/high-cardinality original-only cases; preserve old48 exactly. Fresh capture and reference proof pending; no native/timing credit."
+      "owns": [
+        "tests/test_h_extrema_contracts.py"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Prepare source-only plan for authenticated metadata-body migration of historical native-pending assertion; no oracle/source changes before root plan approval."
+    },
+    {
+      "id": "public200-failure-independent-review",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_api_paths",
+      "state": "validating",
+      "owns": [],
+      "depends_on": [],
+      "current_checkpoint": "Authenticate retained original40174473080 per-profile logs/XML; diagnose all actual causes, no numerical rerun/success verifier. Then independently review TVv2raws."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31327,19 +31372,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "reconstruction-descriptor-hardening"
+        "h-extrema-floating-production"
       ],
       "astra_max_api_paths": [
-        "h-extrema-kernel"
+        "public200-failure-independent-review"
       ],
       "resize_api": [
-        "reconstruction-terrain-reference"
+        "h-extrema-historical-assertion-migration"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "reconstruction-descriptor-hardening",
-      "astra_max_api_paths": "h-extrema-kernel",
-      "resize_api": "reconstruction-terrain-reference"
+      "astra_max_plan_audit": "h-extrema-floating-production",
+      "astra_max_api_paths": "public200-failure-independent-review",
+      "resize_api": "h-extrema-historical-assertion-migration"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31530,7 +31575,7 @@
         "unfinished_source_must_be_preserved": true
       }
     },
-    "ledger_freshness_boundary": "Current assignments and frozen source checkpoints were reconciled on explicit2026-10-25 resume; historical immutable proofs and failed runs remain unchanged. Agent liveness is checked separately.",
+    "ledger_freshness_boundary": "Current assignments/status reconciled2026-10-25 at checkpoint; immutable historical proofs retained. Agent/process liveness checked separately.",
     "resumed_goal": "implment the updated plan using 3 agents",
     "resumed_date": "2026-10-25",
     "background_review": {
@@ -31588,7 +31633,7 @@
         "sha256": "e7afc30cb64feef6dd27b868258e0b2d3a55ecfc84dab8c61edeb89eb9ae60a1"
       },
       "source": "bedab75d2105ff5a14641c186eeb8541baed8bc1",
-      "state": "metadata-passed-private-successor-review-before-whole-qualification",
+      "state": "historical-preflight-superseded-by-terminal-failed2835001-run40174473080",
       "source_has_not_been_qualified": true
     },
     "current_TV_default_policy_controller": {
@@ -31607,12 +31652,56 @@
         "sha256": "da203145ac116156be6be5ac04778f6212141952e1a6b07133bb67349a8316e9"
       },
       "run": 40173372973,
-      "state": "dispatched-once-follow-original-observer-to-terminal"
+      "state": "terminal-success-artifact-root-admitted"
     },
     "review_rotation": {
-      "astra_max_plan_audit": "Independent77 proof; no source writes.",
-      "astra_max_api_paths": "Independent H3f4 proof; no source writes.",
-      "resize_api": "Own prospective terrain original-only capture, root source approved before outputs."
+      "astra_max_plan_audit": "H production author; NMI stager independent review completed.",
+      "astra_max_api_paths": "H plan independent review completed; public200 failure audit then TVv2independent review.",
+      "resize_api": "H70 original reference sealed; historical metadata assertion migration plan."
+    },
+    "latest_parallel_checkpoint": {
+      "path": "coverage/evidence/parallel-implementation-checkpoint-20261025.json",
+      "bytes": 4421,
+      "sha256": "b0e093ed0303651b3c6d3bf5737ed9ec9e3d924484fe2179399b35249bd525d9"
+    },
+    "current_TV_default_comparison": {
+      "source": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
+      "run": 40174240551,
+      "terminal": "all8 jobs successful",
+      "performance_accepted": false,
+      "root_raw_review": {
+        "path": "build/resume-20261025/tv-default-final-review/root-raw-review.json",
+        "bytes": 42083,
+        "sha256": "de28080127314592f70e323472b5bfcf3d205698eb03d397964e15684751ecbe"
+      },
+      "terminal_api": {
+        "path": "build/resume-20261025/tv-default-comparison/terminal-v1/run.json",
+        "bytes": 12220,
+        "sha256": "b665ecb969c4c5cdb47a436fde1234491e142b7cc1e69ec9b947ba10324d0c70"
+      },
+      "performance_retention": {
+        "path": "build/resume-20261025/tv-default-comparison/retained/performance-configuration.json",
+        "bytes": 553,
+        "sha256": "1fff4b42bed8c106cd8a8e9f90aca5d70c33fe4c531a9d5e125b680607e2bfaf"
+      },
+      "next": "independent full-evidence and profile-math review; old40163025231 remains diagnostic"
+    },
+    "current_failed_public200": {
+      "source": "28350015823b36333085ce8ce04e3dcc70065572",
+      "run": 40174473080,
+      "terminal": "all4 profiles failed",
+      "accepted": false,
+      "terminal_record": {
+        "path": "build/genuine200-cumulative-hosted/2835001/40174473080/terminal.json",
+        "bytes": 15360,
+        "sha256": "05af94f8d3472e1571e16c308e112234da57ae0ec4f1162ee38179fa831b50de"
+      },
+      "raw_retention": {
+        "path": "build/genuine200-cumulative-hosted/2835001/40174473080/retained-v1/manifest.json",
+        "bytes": 1348422,
+        "sha256": "8abdd2efde7068d43f12396350a0fc66b1ca19cb12ce93170bf687a00d20b0ed"
+      },
+      "diagnosis": "independent review in progress; stale inventory is a proven source blocker, not claimed sole job failure"
     }
   },
   "parallel_review": {
@@ -32373,12 +32462,12 @@
   "planning_revision": {
     "review_model": "gpt-6-astra",
     "reasoning_effort": "max",
-    "scope": "Planning only; implementation remains paused",
+    "scope": "Astra planning audit completed; implementation active under explicit resumed goal.",
     "per_api_roadmap": "coverage/API_IMPLEMENTATION_PATHS.json",
     "human_roadmap": "coverage/API_IMPLEMENTATION_PATHS.md",
     "audit": "coverage/PLAN_REVIEW_ASTRA.md",
-    "accepted_image_paths": 192,
-    "upstream_only_paths": 277,
+    "accepted_image_paths": 199,
+    "upstream_only_paths": 270,
     "public_inventory_paths": 477,
     "historical_packets_not_completion_evidence": true,
     "review_completed_date": "2026-10-25",
@@ -32401,7 +32490,11 @@
       "class member omission rejected"
     ],
     "remaining_evidence_boundary": "Planning routes and effort estimates are proposals, not newly implemented algorithms, accepted parity, or benchmark results.",
-    "resumed_by_explicit_user_goal": "2026-10-25: implment the updated plan using3agents"
+    "resumed_by_explicit_user_goal": "2026-10-25: implment the updated plan using3agents",
+    "historical_planning_counts": {
+      "accepted_image_paths": 192,
+      "upstream_only_paths": 277
+    }
   },
   "max_consumer_retirement": {
     "proof": {

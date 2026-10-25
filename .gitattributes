@@ -153,3 +153,4 @@ coverage/evidence/h-extrema-private-admission.json -text
 coverage/evidence/reconstruction-terrain-reference-admission.json -text
 coverage/contracts/reconstruction-terrain.json -text
 coverage/evidence/inventory-prebuild-guard-main-admission.json -text
+coverage/evidence/parallel-implementation-checkpoint-20261025.json -text

@@ -1,9 +1,10 @@
 # Complete scikit-image implementation plan
 
 Execution resumed by explicit user request on 2026-10-25: implement this plan
-using three agents. Current assignments are in `work_items.json`: H-extrema
-contracts/private source, reconstruction descriptor hardening, and TV exact-default-policy
-benchmark validation. Reviewed Li and reconstruction reference packets await root integration. Root owns cumulative public integration and final acceptance.
+using three agents. Current lanes: A owns the H floating production successor;
+B independently diagnoses failed public200 and reviews the new TV campaign;
+C owns H original references and the historical assertion migration plan.
+Root owns shared registration, CMake, public integration and final acceptance.
 The paused planning snapshot below records the audit context; its prohibition
 on implementation has been superseded by the explicit resume. Existing
 acceptance gates and frozen evidence remain unchanged.
@@ -85,6 +86,26 @@ Publication artifact acceptance and a new actual-default-path comparison remain
 pending; old run40163025231 stays diagnostic. Agent C's prospective16 terrain
 supplement fills the original48 cohort's marker/barrier/high-cardinality gaps.
 Agents A/B are independently reviewing each other's sealed private successors.
+
+Current authoritative checkpoint: [parallel implementation evidence](evidence/parallel-implementation-checkpoint-20261025.json).
+Original public200 source2835001/run40174473080 is terminal failed across four
+profiles, fully retained and unaccepted. Independent actual-failure diagnosis is
+in progress. The inventory prebuild guard is merged as de5e669; candidate source
+declarations must agree with registration before builds. Accepted products remain
+exact d92d9ff/199; privately admitted Li, metrics and reconstruction successors
+still require successful cumulative qualification.
+
+New TV comparison40174240551 completed all eight jobs successfully. All ten raw
+artifacts are authenticated; root raw/source/auth review validates4410 timing
+intervals and fresh default70 dispatch. Independent final evidence/math review
+is pending, so no new performance result is accepted. Old40163025231 remains
+diagnostic. NMI staging4b82e81 closes its scoped source blocker but is unqualified.
+H public202 remains blocked on preserved floating/default availability; the
+owned floating successor must cover all378 proven follow-ups, not a temporary
+narrow bridge. The additional70 source-frozen controls have original-only first
+captures and exact repeats; implementation and independent final review continue.
+Reconstruction's16-case terrain supplement is reviewed and merged as ccc6197.
+Earlier progress paragraphs above remain historical checkpoints.
 
 Historical paused planning snapshot (superseded by active execution above):
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
