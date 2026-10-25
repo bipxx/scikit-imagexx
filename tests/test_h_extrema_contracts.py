@@ -117,6 +117,7 @@ def test_strict_native_pending(name,workers):
     import skimagexx as xx
     from skimagexx.coverage import native_functions
     declared=native_functions();path='morphology.'+name
+    expected_exception=NotImplementedError;expected_source_error=None
     if path in declared:
         import inspect
         from skimagexx import _h_extrema as owned
@@ -130,6 +131,21 @@ def test_strict_native_pending(name,workers):
         for entry_name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask','h_extrema_counts'):
             entry=getattr(core,entry_name)
             assert inspect.isbuiltin(entry) and entry.__module__==core.__name__ and entry.__name__==entry_name
+        assert core.h_extrema_real_interface=='h-extrema-real-v1'
+        real_entry=core.h_extrema_real_mask
+        assert inspect.isbuiltin(real_entry) and real_entry.__module__==core.__name__ and real_entry.__name__=='h_extrema_real_mask'
+        raw_preentry=(ROOT/'coverage/contracts/h-extrema-object-preentry.json').read_bytes()
+        assert hashlib.sha256(raw_preentry).hexdigest()=='10383844bf54762cf09293f5270cd6d49713371bba5d558b172f0293e512dff8'
+        preentry=json.loads(raw_preentry);assert preentry['schema']=='h-exact-object-original-preentry-contract-v1'
+        raw_profile=preentry['profiles'][R.profile()]
+        profile_bytes=raw_profile['raw_report_utf8'].encode('utf-8')
+        assert len(profile_bytes)==raw_profile['raw_report_bytes'] and hashlib.sha256(profile_bytes).hexdigest()==raw_profile['raw_report_sha256']
+        profile_record=json.loads(profile_bytes);assert profile_record['profile']==R.profile()
+        source_observation=profile_record['observations'][name+'/preentry/exact-object-height1']
+        assert source_observation['original_H_entry_count']==1 and not source_observation['reconstruction_denial_attempts'] and source_observation['warnings']==[]
+        expected_source_error=source_observation['error']
+        assert expected_source_error['module']=='builtins' and expected_source_error['type']=='TypeError'
+        expected_exception=TypeError
     else:
         assert path not in declared
     old=xx.get_num_threads();policy=xx.set_fallback_enabled(False);before=sys.getprofile();attempts=[]
@@ -137,6 +153,8 @@ def test_strict_native_pending(name,workers):
         if event=='call' and frame.f_code is ORIGINAL[name].__code__:attempts.append(name);raise AssertionError('upstream extrema forwarding forbidden')
     try:
         xx.set_num_threads(workers);sys.setprofile(guard)
-        with pytest.raises(NotImplementedError):getattr(xx.morphology,name)(object(),1)
+        with pytest.raises(expected_exception) as caught:getattr(xx.morphology,name)(object(),1)
+        if expected_source_error is not None:
+            assert dict(module=type(caught.value).__module__,type=type(caught.value).__name__,message=str(caught.value))==expected_source_error
         assert not attempts
     finally:sys.setprofile(before);xx.set_num_threads(old);xx.set_fallback_enabled(policy)
