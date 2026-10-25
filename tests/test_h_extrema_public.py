@@ -35,7 +35,7 @@ def public_assertion_nodes():
     for node in ast.walk(numerical):
         if isinstance(node,ast.If) and ast.unparse(node.test)=="name in PLAN['legacy_unsafe_ids']":
             last=node.body[-1];assert isinstance(last,ast.Expr) and ast.unparse(last.value)=="pytest.skip('unsafe original intake is not an upstream exception contract')"
-            node.body[-1]=ast.Return(value=None);changes.append((node,last))
+            node.body[-1]=ast.copy_location(ast.Return(value=None),last);changes.append((node,last))
     assert len(changes)==1
     inverse=copy.deepcopy(numerical)
     for node in ast.walk(inverse):

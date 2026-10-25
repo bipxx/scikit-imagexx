@@ -2035,3 +2035,19 @@ def test_stale_reconstruction_inventory_blocks_prepare_before_environment_or_dow
     with pytest.raises(q.QualificationError, match='source inventory/registry mismatch.*morphology.reconstruction'):
         q.prepare(root / 'fresh', 'modern', 200)
     assert not any((root / 'fresh' / name).exists() for name in ('build-env', 'runtime-env', 'build-wheels', 'runtime-wheels', 'native-build'))
+
+
+
+def test_actual_derived_h_public_assertion_AST_compiles_without_images(monkeypatch):
+    original=builtins.__import__
+    def guarded(name,*args,**kwargs):
+        if name.split('.',1)[0] in ('numpy','scipy','skimage','skimagexx'):raise AssertionError('image import during H AST metadata compilation')
+        return original(name,*args,**kwargs)
+    monkeypatch.setattr(builtins,'__import__',guarded)
+    spec=importlib.util.spec_from_file_location('H_public_AST_metadata_only',ROOT/'tests/test_h_extrema_public.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    nodes=module.public_assertion_nodes()
+    assert {n.name for n in nodes}=={'initial_native_spec','retain','test_exact_private_pipeline','test_safe_metadata_only_intake_guards'}
+    # Compile real derived nodes as the child does. Never exec assertion code.
+    compiled=compile(ast.Module(body=nodes,type_ignores=[]),'<actual-H-public-assertions-metadata>','exec')
+    assert isinstance(compiled,types.CodeType)
