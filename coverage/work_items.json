@@ -30740,16 +30740,16 @@
       "kind": "tooling",
       "apis": [],
       "owner": "astra_max_plan_audit",
-      "state": "validating",
+      "state": "accepted",
       "owns": [],
       "depends_on": [],
-      "current_checkpoint": "Read-only independent final review of frozen72f original-only 536pairs/profile reference; no new calls/builds/timing."
+      "current_checkpoint": "Completed/root-admitted and merged1c5fa26; coverage/evidence/colocalization-original-reference-admission.json. Original-reference only; no native credit.",
+      "branch": "feature/colocalization-contracts-v3"
     },
     {
       "id": "colocalization-native-production",
       "kind": "private_foundation",
-      "apis": [],
-      "target_apis": [
+      "apis": [
         "measure.intersection_coeff",
         "measure.manders_coloc_coeff",
         "measure.manders_overlap_coeff"
@@ -30759,17 +30759,21 @@
       "owns": [
         "include/skimagexx/colocalization.hpp",
         "src/colocalization.cpp",
+        "src/simd_colocalization_avx2.cpp",
         "src/bind_colocalization.cpp",
-        "python/skimagexx/_colocalization.py"
+        "python/skimagexx/_colocalization.py",
+        "tests/test_colocalization_native.cpp",
+        "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "New isolated source files and prospective tests authored; stage/provider/reduction boundaries and bounded dependency/link plan being sealed. No compiled candidate or calls yet."
+      "current_checkpoint": "Existing seven-file WIP recovered; concrete stage/provider/source/dependency/link handoff being sealed. No candidate builds or numerical calls authorized yet.",
+      "branch": "feature/colocalization-native",
+      "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
     },
     {
       "id": "remaining-footprint-prospective-contracts",
       "kind": "tooling",
-      "apis": [],
-      "target_apis": [
+      "apis": [
         "morphology.ellipse",
         "morphology.octagon",
         "morphology.octahedron",
@@ -30777,10 +30781,48 @@
         "morphology.footprint_from_sequence"
       ],
       "owner": "resize_api",
-      "state": "contracting",
-      "owns": [],
+      "state": "contracted",
+      "owns": [
+        "tests/footprint_shapes_cases.py",
+        "tests/footprint_shapes_reference.py",
+        "tests/test_footprint_shapes_contracts.py",
+        "coverage/contracts/footprint-shapes-plan.json"
+      ],
       "depends_on": [],
-      "current_checkpoint": "Ownership/source audit then new-file prospective contracts; no original/candidate imports/calls, builds or timing authorized."
+      "current_checkpoint": "7a39824 source-only recursive counter successor;226reference/20future unchanged,30metadataPASS. Fixed capture runner/dependency proof sealed93639a75; root pre-capture review pending. No original calls.",
+      "branch": "feature/footprint-shapes-entry-depth"
+    },
+    {
+      "id": "tv-positive-zero-comparison-successor",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "state": "implementing",
+      "branch": "feature/tv-positive-zero-compare",
+      "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
+      "owns": [
+        "benchmarks/tv_positive_zero_compare.py",
+        "tools/tv_positive_zero_artifacts.py",
+        "tests/test_tv_positive_zero_compare.py",
+        "coverage/contracts/tv-positive-zero-comparison-plan.json"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Source-only successor of fixed admitted TV methodology. BEFOREaf7, AFTER741 is unaccepted after failedqualification40200919182; fail-closed. No timings/builds/calls/dispatch."
+    },
+    {
+      "id": "h203-failure-diagnostic-projection",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "resize_api",
+      "state": "validating",
+      "branch": "integration/h203-diagnostic-repair",
+      "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
+      "owns": [
+        "tests/test_h_extrema_public.py",
+        "tests/test_h_extrema_public_metadata.py"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Read-only all4 failedrawreview followed by approved narrow2filediagnostic projection fix/newmetadata regression. Modern verified failure KeyError historical_source before886image loop; full4profilefinding pending. No numerical/library/oracle changes or newbuild."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31024,9 +31066,6 @@
     "measure.grid_points_in_poly",
     "measure.inertia_tensor",
     "measure.inertia_tensor_eigvals",
-    "measure.intersection_coeff",
-    "measure.manders_coloc_coeff",
-    "measure.manders_overlap_coeff",
     "measure.marching_cubes",
     "measure.mesh_surface_area",
     "measure.moments",
@@ -31061,11 +31100,9 @@
     "morphology.convex_hull_image",
     "morphology.convex_hull_object",
     "morphology.dilation",
-    "morphology.ellipse",
     "morphology.erosion",
     "morphology.flood",
     "morphology.flood_fill",
-    "morphology.footprint_from_sequence",
     "morphology.h_maxima",
     "morphology.h_minima",
     "morphology.isotropic_closing",
@@ -31075,13 +31112,10 @@
     "morphology.local_maxima",
     "morphology.local_minima",
     "morphology.medial_axis",
-    "morphology.octagon",
-    "morphology.octahedron",
     "morphology.opening",
     "morphology.reconstruction",
     "morphology.remove_objects_by_distance",
     "morphology.skeletonize",
-    "morphology.star",
     "morphology.thin",
     "morphology.white_tophat",
     "registration.optical_flow_ilk",
@@ -31504,19 +31538,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "colocalization-original-reference-final-review"
+        "tv-positive-zero-comparison-successor"
       ],
       "astra_max_api_paths": [
         "colocalization-native-production"
       ],
       "resize_api": [
-        "remaining-footprint-prospective-contracts"
+        "h203-failure-diagnostic-projection"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "colocalization-original-reference-final-review",
+      "astra_max_plan_audit": "tv-positive-zero-comparison-successor",
       "astra_max_api_paths": "colocalization-native-production",
-      "resize_api": "remaining-footprint-prospective-contracts"
+      "resize_api": "h203-failure-diagnostic-projection"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31857,7 +31891,24 @@
       "path": "coverage/evidence/parallel-implementation-checkpoint-20261025-v2.json",
       "bytes": 2994,
       "sha256": "4c357fb82e9bb29affa6e2ef93f9ef254e13cbf75b1209403c10b890361900c8"
-    }
+    },
+    "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
+    "latest_hosted_status": {
+      "qualification": {
+        "run": 40200919182,
+        "source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+        "status": "terminal-failure-all-four",
+        "accepted": false,
+        "raw": "build/genuine203-tv-zero-hosted/7417676/retained-v1"
+      },
+      "max_tree": {
+        "run": 40200431797,
+        "status": "in_progress",
+        "modern_preparation": "success",
+        "performance_accepted": false
+      }
+    },
+    "assignment_note": "apis records exclusive planning ownership, not native acceptance. Inventory classifications remain in api.json; all8 formerly unassigned active targets now belong to their concrete packet. Historical packets retain their original evidence states; only current_three_agent_packets dispatches the three resumed lanes."
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",

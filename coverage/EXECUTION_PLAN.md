@@ -1,5 +1,32 @@
 # Complete scikit-image implementation plan
 
+## Current execution card — updated-plan resume
+
+Explicit user resume: implementation is active. The existing
+[work queue](work_items.json) owns current assignments and exact file ownership;
+older status paragraphs below are historical, even where they say “current”.
+
+- A: TV comparison successor source; retain original/before/after methodology,
+  with the new after-product fail-closed until genuine qualification succeeds.
+- B: finish the seven-file colocalization C++/binding/test source handoff, then
+  review its concrete build/dependency plan before numerical execution.
+- C: diagnose all four retained failed H203 profiles, then repair only the
+  stale metadata diagnostic projection and its focused regression.
+- Root: shared integration, source/runner review, final admissions and existing
+  hosted-run observation. Accepted coverage remains199 native-partial image APIs.
+
+Qualification40200919182/source741 failed all four profiles; no retry or new
+product acceptance. Verified modern evidence identifies a diagnostic KeyError
+before the H886 loop; remaining raw profiles are being reviewed. Max-tree
+comparison40200431797 remains live; modern preparation passed. Follow the same
+run, never redispatch because an observer session disappeared.
+
+The small manifest-verification deduplication is merged as08730b7 with20 focused
+tests passing. Prior policy-blocked scratch stays preserved. No new framework,
+broader cleanup or relaxed scientific assertions are part of this resume.
+
+## Historical execution notes
+
 Execution resumed by explicit user request on 2026-10-25: implement this plan
 using three agents. Current lanes: A owns the H floating production successor;
 B independently diagnoses failed public200 and reviews the new TV campaign;
