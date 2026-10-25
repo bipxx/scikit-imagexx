@@ -99,10 +99,10 @@ def synthetic(tmp_path, monkeypatch, request):
         families += ['reconstruction']
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
-        for name in p.RECONSTRUCTION_RUNTIME_SOURCE_PINS:
+        for name in {**p.RECONSTRUCTION_RUNTIME_SOURCE_PINS,**p.RECONSTRUCTION_TRACE_POLICY_PINS}:
             source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         source[p.RECONSTRUCTION_ORACLE_PATH]=(ROOT/p.RECONSTRUCTION_ORACLE_PATH).read_bytes()
-        source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
+        source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_TRACE_POLICY_PINS='+repr(p.RECONSTRUCTION_TRACE_POLICY_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
     if scope=='nmi22':
         families += ['normalized_mutual_information']
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
@@ -680,7 +680,7 @@ def test_reconstruction200_registry_cannot_downgrade_or_omit_prior_paths(synthet
     assert not s.output.exists()
 
 @pytest.mark.parametrize('synthetic',['reconstruction21'],indirect=True)
-@pytest.mark.parametrize('name',tuple(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+(p.RECONSTRUCTION_ORACLE_PATH,))
+@pytest.mark.parametrize('name',tuple(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+tuple(p.RECONSTRUCTION_TRACE_POLICY_PINS)+(p.RECONSTRUCTION_ORACLE_PATH,))
 @pytest.mark.parametrize('fault',('missing','mutated','forged-snapshot','missing-declaration'))
 def test_reconstruction_source_closure_rejects_partial_or_resealed_bytes(synthetic,name,fault):
     with zipfile.ZipFile(synthetic.q/'source.zip') as z:source={n:z.read(n) for n in z.namelist()}
@@ -700,6 +700,25 @@ def test_legacy_scopes_never_invent_reconstruction_requirements(scope):
     class ForbiddenArchive:
         def read(self,*a):raise AssertionError('legacy touched new reconstruction source')
     p.validate_reconstruction_source(ForbiddenArchive(),{},dict(name=scope))
+
+
+@pytest.mark.parametrize('fault', ('missing', 'duplicate', 'changed', 'extra-key'))
+def test_reconstruction_trace_policy_declaration_cannot_be_omitted_or_resealed(fault):
+    declared = dict(p.RECONSTRUCTION_TRACE_POLICY_PINS)
+    if fault == 'changed':declared[next(iter(declared))] = '0' * 64
+    elif fault == 'extra-key':declared['tests/unchecked_policy.py'] = '0' * 64
+    statements = [
+        'RECONSTRUCTION_RUNTIME_SOURCE_PINS=' + repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS),
+        'RECONSTRUCTION_ORACLE_PATH=' + repr(p.RECONSTRUCTION_ORACLE_PATH),
+        'RECONSTRUCTION_ORACLE_SHA256=' + repr(p.RECONSTRUCTION_ORACLE_SHA256)]
+    if fault != 'missing':statements.append('RECONSTRUCTION_TRACE_POLICY_PINS=' + repr(declared))
+    if fault == 'duplicate':statements.append('RECONSTRUCTION_TRACE_POLICY_PINS=' + repr(declared))
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w') as archive:
+        archive.writestr('tools/public_qualification.py', '\n'.join(statements))
+    with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as archive:
+        with pytest.raises(RuntimeError, match='reconstruction source'):
+            p.validate_reconstruction_source(archive, {}, {'name': 'reconstruction21'})
 
 
 @pytest.mark.parametrize('synthetic', ['nmi22'], indirect=True)
