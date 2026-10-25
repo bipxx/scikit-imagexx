@@ -21,6 +21,13 @@ new timing result. The [exact 199-path qualification](evidence/public199-skylake
 was dispatched once as run `40161615893`; all four genuine outcomes and retained
 artifact acceptance are required before increasing coverage from 192.
 
+The [max-tree comparison consumer](evidence/max-tree-comparison-reviewed.json)
+is reviewed and merged as `9c18e27`, with 345 retained three-runtime metadata
+checks and 115 main-layout checks that loaded no numerical modules. It still
+requires genuine qualified 199-path products before any native preparation or
+measurement. Two merged consumer worktrees were [retired with archived proofs](evidence/max-tree-consumer-worktree-retirement.json);
+the remaining consumer worktree is retained for separate opaque-link review.
+
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,

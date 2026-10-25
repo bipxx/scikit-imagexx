@@ -29619,7 +29619,7 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "validating",
+      "state": "preparing",
       "contract": {
         "case_manifest": "coverage/contracts/max-tree-benchmark.json",
         "uncovered_cases": [
@@ -29643,8 +29643,8 @@
         "regressions": []
       },
       "merge": {
-        "commit": null,
-        "main_commit": null
+        "commit": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
+        "main_commit": "9c18e27d097d902e647878694fe4d44ef257ced2"
       },
       "retention": {
         "active_paths": [
@@ -29668,7 +29668,20 @@
         "root_review": "pending",
         "native_acceptance": false,
         "operation_timings": 0
-      }
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
+          "manifest": {
+            "path": "coverage/evidence/max-tree-comparison-reviewed.json",
+            "bytes": 1608,
+            "sha256": "af18a16f419aab81454b95da13effc39a2c1da8951829faba579766a03ead1d8"
+          }
+        }
+      },
+      "reviewed_consumer_source": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
+      "genuine199_certificate": "pending-run40161615893"
     },
     {
       "id": "tv-chambolle-cursor-comparison",
@@ -31726,6 +31739,20 @@
       "archive": "build/cleanup/tv-admission-public-retirement-20261024/preserved-ignored-proof-files.zip",
       "archive_sha256": "ecc584af2484c0769a69f9d5bebf2ddbd6dedb74e9de4b785cf1c66f8bfaf267",
       "member_rule": "Full former workspace-relative file path is the exact ZIP member; raw bytes, lengths and SHA are in preservation-index.json."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-compare",
+      "archive": "build/cleanup/max-consumer-retirement-20261025/preserved-ignored-proofs-v2.zip",
+      "archive_sha256": "20b05f7dd96a5649c9cfea8c90fcd1a77d50b3fba12e1d872fcd9360ebd32f42",
+      "preservation_index": "build/cleanup/max-consumer-retirement-20261025/preservation-index.json",
+      "member_rule": "Find former full workspace-relative path in preservation-index.json, then read ZIP member sha256/<record.sha256>. Raw bytes are unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/max-tree-compare-followup",
+      "archive": "build/cleanup/max-consumer-retirement-20261025/preserved-ignored-proofs-v2.zip",
+      "archive_sha256": "20b05f7dd96a5649c9cfea8c90fcd1a77d50b3fba12e1d872fcd9360ebd32f42",
+      "preservation_index": "build/cleanup/max-consumer-retirement-20261025/preservation-index.json",
+      "member_rule": "Find former full workspace-relative path in preservation-index.json, then read ZIP member sha256/<record.sha256>. Raw bytes are unchanged."
     }
   ],
   "inventory_assessment_pending": {
@@ -31765,9 +31792,9 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/tv-admission-public-worktree-retirement.json",
-    "bytes": 1897,
-    "sha256": "d84b65933aefe187213a5ea44442da84b362abd737a2a83ee4f45b2f2edc3409"
+    "path": "coverage/evidence/max-tree-consumer-worktree-retirement.json",
+    "bytes": 1776,
+    "sha256": "3cd95e43cdcff6dda8cf10621c1dc135accbd2e7ea29c095efc6210242132e4a"
   },
   "post_cursor_cleanup": {
     "proofs": [
@@ -31841,5 +31868,17 @@
     ],
     "remaining_evidence_boundary": "Planning routes and effort estimates are proposals, not newly implemented algorithms, accepted parity, or benchmark results.",
     "resumed_by_explicit_user_goal": "2026-10-25: implment the updated plan using3agents"
+  },
+  "max_consumer_retirement": {
+    "proof": {
+      "path": "coverage/evidence/max-tree-consumer-worktree-retirement.json",
+      "bytes": 1776,
+      "sha256": "3cd95e43cdcff6dda8cf10621c1dc135accbd2e7ea29c095efc6210242132e4a"
+    },
+    "removed": [
+      "build/worktrees/max-tree-compare",
+      "build/worktrees/max-tree-compare-followup"
+    ],
+    "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   }
 }

@@ -1,0 +1,43 @@
+{
+  "schema": "max-tree-comparison-reviewed-v1",
+  "accepted_tooling": true,
+  "source": "551451aa259bb2c9c2a47eb8baea99aae4b1c19d",
+  "main_merge": "9c18e27d097d902e647878694fe4d44ef257ced2",
+  "root_review": {
+    "path": "build/resume-20261025/max-consumer-review/manifest.json",
+    "bytes": 904,
+    "sha256": "64df1134941dfdd23f26eb0b4fb665acac792d5a44b0dee976c099a1acc8e20f"
+  },
+  "metadata_checks": {
+    "frozen_three_runtime": 345,
+    "main_layout": 115,
+    "numerical_import_attempts": 0,
+    "numerical_modules_loaded": 0
+  },
+  "main_guards": {
+    "path": "build/resume-20261025/max-consumer-review/main-guards.xml",
+    "bytes": 15345,
+    "sha256": "16c1cd83dc4812f2f7b934719744fd0832d7180e10860dade6b5b0506bafb7f7"
+  },
+  "import_isolation": {
+    "path": "build/resume-20261025/max-consumer-review/main-import-isolation.json",
+    "bytes": 93,
+    "sha256": "6747475c5520d99a6a31e936356aa4caead81e8d7ddb0266cd0b47f2ac9845b6"
+  },
+  "benchmark_scope": {
+    "reference_rows": 351,
+    "safe_numeric_rows": 233,
+    "metadata_rows": 118,
+    "timed_candidates": 252,
+    "paired_rounds": 7,
+    "native_workers": 1,
+    "profiles": 3
+  },
+  "source_baseline_unchanged": true,
+  "timing_and_observer_function_ASTs_unchanged": true,
+  "actual_qualified_products_admitted": 0,
+  "actual_native_preparations": 0,
+  "operation_timings": 0,
+  "performance_acceptance": false,
+  "pending": "Successful exact199 qualification, retainedrootaccepted3profilecertificate, thenfulloriginal/nativepreparationworkers1/4normal/scalarandisolated252caseone-workermeasurements. No productpinsareinvented."
+}
