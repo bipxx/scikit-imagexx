@@ -997,7 +997,7 @@ def validate_matrix_rows(path):
 
 def h_extrema_admission(core,morphology,wrapper,registered):
     require(all(tuple(registered).count(name)==1 for name in H_EXTREMA_PATHS),'missing/duplicate public H-extrema registry')
-    require(getattr(wrapper,'_core',None) is core and core.get_num_threads()==1,'H-extrema alternate core/default worker state')
+    require(getattr(wrapper,'_core',None) is core and type(core.get_num_threads()) is int and core.get_num_threads()==1,'H-extrema alternate core/default worker state')
     require(getattr(core,'h_extrema_interface',None)=='h-extrema-integer-v1' and getattr(core,'h_extrema_full_API',None) is False,'H-extrema partial interface scope differs')
     require(type(getattr(core,'h_extrema_integer_widths',None)) is tuple and core.h_extrema_integer_widths==(8,16,32,64) and all(type(x) is int for x in core.h_extrema_integer_widths),'H-extrema integer widths differ')
     for name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask','h_extrema_counts'):

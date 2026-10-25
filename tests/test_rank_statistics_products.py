@@ -711,7 +711,7 @@ def test_h202_complete118_sdk67_remains_staged_unaccepted(synthetic):
     s=synthetic;result=run(s)
     assert result['status']=='staged-unaccepted'
     assert p.qualification_scope(s.output/'source')['name']=='h_extrema22'
-    sdk=json.loads((s.output/'qualification/sdk.json').read_bytes())
+    sdk=json.loads((s.output/'sdk.json').read_bytes())
     assert len(sdk['SDK_sha256'])==67 and len(sdk['families'])==22 and sdk['checks']==44
     assert s.proof['expected_registry']['image_count']==202 and s.proof['expected_registry']['registered_count']==205
     assert len(c.verify_wheel(s.output/'wheels/scikit-imagexx.whl')['members'])==118

@@ -1673,7 +1673,7 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
         'test_matrix_transform_skylakex_routing.py')
     synthetic_complete_plan(tmp_path,monkeypatch)
     functions = ['filters.rank.' + n for n in q.R5] + sorted(
-        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH} | set(q.MAX_TREE_PATHS))
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH} | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(functions=functions, image_count=199))
     assert not q.plan(tmp_path, 'windows', 199)['blockers']
     (tmp_path / name).unlink()
@@ -1790,11 +1790,11 @@ def test_reconstruction_metadata_rejected_before_fixture(monkeypatch,fault):
 
 def test_reconstruction_library_binding_sdk_linkage_and_source_oracle_argument():
     text=(ROOT/'CMakeLists.txt').read_text();consumer=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
-    assert 'src/matrix_transform.cpp src/reconstruction.cpp)' in text
-    assert 'src/bind_matrix_transform.cpp src/bind_reconstruction.cpp)' in text
+    assert 'src/matrix_transform.cpp src/reconstruction.cpp src/h_extrema.cpp)' in text
+    assert 'src/bind_matrix_transform.cpp src/bind_reconstruction.cpp src/bind_h_extrema.cpp)' in text
     assert 'src/simd_reconstruction_avx2.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-ffp-contract=off;-fno-fast-math"' in text
     assert 'add_test(NAME reconstruction_native COMMAND test_reconstruction_native "${SKIMAGEXX_RECONSTRUCTION_SOURCE_ORACLE}")' in text
-    assert 'matrix_transform reconstruction)' in consumer
+    assert 'matrix_transform reconstruction h_extrema)' in consumer
     assert 'list(APPEND _family_test_args "${SKIMAGEXX_RECONSTRUCTION_SOURCE_ORACLE}")' in consumer
     assert 'COMMAND ${_family}_consumer ${_family_test_args}' in consumer
     assert hashlib.sha256((ROOT/q.RECONSTRUCTION_ORACLE_PATH).read_bytes()).hexdigest()==q.RECONSTRUCTION_ORACLE_SHA256
@@ -1882,3 +1882,41 @@ def test_h_frozen_partition_and_no_ordinary_source_downgrade():
     assert 'h_extrema_consumer.cpp' in cmake and '${SKIMAGEXX_H_EXTREMA_SOURCE_ORACLE}' in cmake
     client=(ROOT/'tests/cmake_consumer/h_extrema_consumer.cpp').read_text()
     assert 'Reader r(argv[1])' in client and 'actual!=c.expected' in client and 'reconstruction_into(' in client
+
+
+
+def h_ownership_metadata_stub(monkeypatch):
+    # Inert ownership descriptors only; never invoke a pixel kernel or claim
+    # this namespace/builtin predicate is a real compiled/public product.
+    core=types.SimpleNamespace(__name__='_h_metadata_only_core',get_num_threads=lambda:1,
+        h_extrema_interface='h-extrema-integer-v1',h_extrema_full_API=False,h_extrema_integer_widths=(8,16,32,64))
+    entries=[]
+    for name in ('h_extrema_validate_metadata','h_extrema_integer_range','h_extrema_integer_seed','h_extrema_integer_mask','h_extrema_counts'):
+        def entry():raise AssertionError('metadata guard must not call numerical entry')
+        entry.__name__=name;entry.__module__=core.__name__;setattr(core,name,entry);entries.append(entry)
+    def h_maxima(image,h,footprint=None):raise AssertionError('metadata only')
+    def h_minima(image,h,footprint=None):raise AssertionError('metadata only')
+    for f in (h_maxima,h_minima):f.__module__='skimagexx._h_extrema'
+    wrapper=types.SimpleNamespace(_core=core,h_maxima=h_maxima,h_minima=h_minima)
+    morphology=types.SimpleNamespace(__all__=['h_maxima','h_minima'],h_maxima=h_maxima,h_minima=h_minima)
+    monkeypatch.setattr(q.inspect,'isbuiltin',lambda e:any(e is item for item in entries))
+    return core,morphology,wrapper,list(q.H_EXTREMA_PATHS)
+
+
+@pytest.mark.parametrize('fault',['interface','full','widths','entry','borrowed','core','identity','signature','export','registration','worker4','workerbool'])
+def test_h_admission_rejects_before_fixtures(monkeypatch,fault):
+    core,morphology,wrapper,names=h_ownership_metadata_stub(monkeypatch)
+    q.h_extrema_admission(core,morphology,wrapper,names)
+    if fault=='interface':core.h_extrema_interface='h-extrema-full-v9'
+    elif fault=='full':core.h_extrema_full_API=True
+    elif fault=='widths':core.h_extrema_integer_widths=[8,16,32,64]
+    elif fault=='entry':core.h_extrema_integer_mask=None
+    elif fault=='borrowed':core.h_extrema_integer_mask=core.h_extrema_integer_seed
+    elif fault=='core':wrapper._core=object()
+    elif fault=='identity':morphology.h_maxima=lambda *a:None
+    elif fault=='signature':wrapper.h_maxima.__defaults__=(1,)
+    elif fault=='export':morphology.__all__.append('h_minima')
+    elif fault=='registration':names.append('morphology.h_minima')
+    elif fault=='worker4':core.get_num_threads=lambda:4
+    else:core.get_num_threads=lambda:True
+    with pytest.raises(q.QualificationError):q.h_extrema_admission(core,morphology,wrapper,names)
