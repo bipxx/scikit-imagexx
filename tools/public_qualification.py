@@ -280,14 +280,15 @@ LEGACY_SDK_FAMILIES = frozenset(('gabor', 'symmetric_eigen', 'structure_tensor',
 FAMILIES = ('components', 'component_consumers', 'metrics', 'footprint_dense', 'rank',
             'rank_distribution', 'rank_intensity', 'rank_alias', 'projective',
             'rank_statistics', 'consumer_layout', 'rank_percentile', 'rank_bilateral', 'rank_decisions',
-            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform')
+            'tv_chambolle', 'tv_reductions', 'tv_denoise', 'tv_bregman', 'max_tree', 'matrix_transform', 'reconstruction')
 ORIGINAL_FAMILIES = FAMILIES[:14]
 TV_FAMILIES = FAMILIES[:17]
 BREGMAN_FAMILIES = FAMILIES[:18]
 MAX_TREE_FAMILIES = FAMILIES[:19]
-PRODUCT_SCOPE = 'matrix20'
-PRODUCT_MEMBERS = 114
-SDK_MEMBERS = 65
+MATRIX_FAMILIES = FAMILIES[:20]
+PRODUCT_SCOPE = 'reconstruction21'
+PRODUCT_MEMBERS = 116
+SDK_MEMBERS = 66
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -329,8 +330,15 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'tests/test_matrix_transform_native_pipeline.py', 'tests/test_matrix_transform_binding.py',
     'tests/test_matrix_transform_public.py', 'tests/test_matrix_transform_skylakex_routing.py',
     'coverage/contracts/matrix-transform.json',
-    'coverage/evidence/matrix-transform-public-assertion-migration.json')
+    'coverage/evidence/matrix-transform-public-assertion-migration.json',
+    'coverage/evidence/matrix-transform-public-source-successor-assertion.json')
+RECONSTRUCTION_PATH = 'morphology.reconstruction'
+RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
+RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
+RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
+RECONSTRUCTION_SOURCE_PATHS = ('include/skimagexx/reconstruction.hpp', 'src/reconstruction.cpp', 'src/simd_reconstruction_avx2.cpp', 'src/bind_reconstruction.cpp', 'python/skimagexx/_reconstruction.py', 'tests/test_reconstruction_native.cpp', 'tests/test_reconstruction_contracts.py', 'tests/test_reconstruction_public.py', 'tests/test_reconstruction_native_pipeline.py', 'tests/test_reconstruction_binding.py', 'tests/test_reconstruction_owner_guards.py', 'tests/test_reconstruction_offset_guards.py', 'coverage/contracts/reconstruction.json', 'coverage/evidence/reconstruction-public-assertion-migration.json', 'tests/cmake_consumer/reconstruction_source_oracle.bin', 'tests/cmake_consumer/reconstruction_source_oracle.cmake')
 GROUPS = {
+    'public-Reconstruction': ('test_reconstruction_contracts.py','test_reconstruction_public.py'),
     'public-rank': ('test_rank_public.py', 'test_rank_public_admission.py',
                     'test_rank_integer_warning.py', 'test_rank_intensity_public.py',
                     'test_rank_alias_public.py', 'test_rank_statistics_public.py',
@@ -489,6 +497,15 @@ def plan(root, profile, expected=None):
             actual_pin = hashlib.sha256(raw if name == MAX_TREE_ORACLE_PATH else raw.replace(b'\r\n', b'\n')).hexdigest()
             if actual_pin != expected_pin:
                 blockers.append('corrected max-tree source pin differs: ' + name)
+    if RECONSTRUCTION_PATH not in registry['functions']:
+        blockers.append('missing public reconstruction registry: '+RECONSTRUCTION_PATH)
+    for name in RECONSTRUCTION_SOURCE_PATHS:
+        if not (root/name).is_file():blockers.append('missing required reconstruction source: '+name)
+    for name,want in {**RECONSTRUCTION_RUNTIME_SOURCE_PINS,RECONSTRUCTION_ORACLE_PATH:RECONSTRUCTION_ORACLE_SHA256}.items():
+        path=root/name
+        if path.is_file():
+            raw=path.read_bytes();actual=hashlib.sha256(raw if name==RECONSTRUCTION_ORACLE_PATH else raw.replace(b'\r\n',b'\n')).hexdigest()
+            if actual!=want:blockers.append('reconstruction source pin differs: '+name)
     if MATRIX_PATH not in registry['functions']:
         blockers.append('missing public matrix registry: '+MATRIX_PATH)
     for name in MATRIX_SOURCE_PATHS:
@@ -581,8 +598,8 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Closed historical scopes; new production qualification requires matrix20."""
-    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65)}
+    """Closed historical scopes; new production qualification requires reconstruction21."""
+    census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
@@ -599,17 +616,20 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
-        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20') else not (tv & set(source.namelist())),
+        require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
         bregman = {'include/skimagexx/tv_bregman.hpp', 'python/skimagexx/_tv_bregman.py'}
-        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20') else not (bregman & set(source.namelist())),
+        require((bregman <= set(source.namelist())) if scope in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21') else not (bregman & set(source.namelist())),
                 'Bregman product scope/source header or helper differ')
         max_tree = {'include/skimagexx/max_tree.hpp', 'python/skimagexx/_max_tree.py'}
-        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20') else not (max_tree & set(source.namelist())),
+        require((max_tree <= set(source.namelist())) if scope in ('max_tree19', 'matrix20', 'reconstruction21') else not (max_tree & set(source.namelist())),
                 'max-tree product scope/source header or helper differ')
         matrix = {'include/skimagexx/matrix_transform.hpp', 'python/skimagexx/_matrix_transform.py'}
-        require((matrix <= set(source.namelist())) if scope == 'matrix20' else not (matrix & set(source.namelist())),
+        require((matrix <= set(source.namelist())) if scope in ('matrix20','reconstruction21') else not (matrix & set(source.namelist())),
                 'matrix product scope/source header or helper differ')
+        reconstruction={'include/skimagexx/reconstruction.hpp','python/skimagexx/_reconstruction.py'}
+        require((reconstruction<=set(source.namelist())) if scope=='reconstruction21' else not(reconstruction&set(source.namelist())),
+                'reconstruction product scope/source header or helper differ')
         for prefix, actual_prefix, suffix in [('python/skimagexx/', 'skimagexx/', '.py'), ('include/', 'include/', None)]:
             names = [n for n in source.namelist() if n.startswith(prefix) and not n.endswith('/') and (suffix is None or n.endswith(suffix))]
             mapping = {n: actual_prefix + n.removeprefix(prefix) for n in names}
@@ -955,6 +975,25 @@ def validate_matrix_rows(path):
             'ordinary matrix cohorts must execute actual C++')
 
 
+def reconstruction_admission(core,morphology,wrapper,registered):
+    require(tuple(registered).count(RECONSTRUCTION_PATH)==1,'missing/duplicate public reconstruction registry')
+    require(getattr(wrapper,'_core',None) is core,'reconstruction alternate core worker state')
+    require(core.get_num_threads()==1,'reconstruction initial global workers must be1')
+    require(getattr(core,'has_openmp',None) is True,'public reconstruction worker4 requires actual OpenMP')
+    for name,want in (('reconstruction_interface','reconstruction-v1'),('reconstruction_capabilities',3),('reconstruction_parallel_flood',False)):
+        value=getattr(core,name,None)
+        require(type(value) is type(want) and value==want,'missing/wrong reconstruction capability: '+name)
+    for name in ('reconstruction_run','reconstruction_ordered','reconstruction_negative_zero','reconstruction_counts'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,'missing owned compiled reconstruction entry: '+name)
+    function=vars(morphology).get('reconstruction')
+    require(function is vars(wrapper).get('reconstruction') and inspect.isfunction(function)
+            and function.__module__=='skimagexx._reconstruction' and function.__name__=='reconstruction',
+            'reconstruction public ownership/forwarding mismatch')
+    require(str(inspect.signature(function))=="(seed, mask, method='dilation', footprint=None, offset=None)",'reconstruction signature mismatch')
+    require(tuple(morphology.__all__).count('reconstruction')==1,'reconstruction canonical export missing/duplicate')
+
+
 def tv_admission(core, restoration, wrapper, registered):
     """Reject missing TV implementation before any contract fixture is built."""
     paths = tuple(registered)
@@ -1049,7 +1088,7 @@ def admission(out, state):
     xx.set_fallback_enabled(False)
     require(xx.get_num_threads() == 1, 'initial global workers must be1')
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
-    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform'):
+    for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -1082,6 +1121,8 @@ def admission(out, state):
                        importlib.import_module('skimagexx._max_tree'), coverage.native_functions())
     matrix_admission(xx._core, importlib.import_module('skimagexx.transform'),
                      importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions())
+    reconstruction_admission(xx._core,importlib.import_module('skimagexx.morphology'),
+                             importlib.import_module('skimagexx._reconstruction'),coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')
@@ -1352,7 +1393,7 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
     product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': FAMILIES}[scope]
+    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 
