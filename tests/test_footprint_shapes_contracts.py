@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,42 @@ def load_factory():
 
 
 class ProspectiveContracts(unittest.TestCase):
+    def test_passive_recursive_entry_counters(self):
+        path = ROOT / 'tests/footprint_shapes_reference.py'
+        spec = importlib.util.spec_from_file_location('prospective_reference', path)
+        reference = importlib.util.module_from_spec(spec); spec.loader.exec_module(reference)
+        def recursive(n):
+            if n: return recursive(n-1)
+            return 17
+        counts, profile = reference.entry_profiler(recursive.__code__)
+        self.assertIsNone(sys.getprofile())
+        sys.setprofile(profile)
+        try: result = recursive(2)
+        finally: sys.setprofile(None)
+        self.assertEqual(result, 17)
+        self.assertEqual(counts, dict(outer_call=1, outer_return=1, nested_call=2,
+                                     nested_return=2, total_call=3, total_return=3))
+        # A later ordinary call is another outer entry, not a lingering child.
+        sys.setprofile(profile)
+        try: recursive(0)
+        finally: sys.setprofile(None)
+        self.assertEqual(counts['outer_call'], 2)
+        self.assertEqual(counts['outer_return'], 2)
+
+    def test_source_declared_ellipse_recursion(self):
+        rows = load_factory().cases()
+        crosses = [x for x in rows if x['api'] == 'ellipse'
+                   and x['kwargs'].get('decomposition') == 'crosses']
+        self.assertEqual(len(crosses), 20)
+        tree = ast.parse((ROOT / 'tests/footprint_shapes_reference.py').read_bytes())
+        observe = next(x for x in tree.body if isinstance(x, ast.FunctionDef) and x.name == 'observe')
+        assigned = next(x.value for x in observe.body if isinstance(x, ast.Assign)
+                        and any(isinstance(t, ast.Name) and t.id == 'nested' for t in x.targets))
+        expression = ast.Expression(assigned)
+        for row in rows:
+            self.assertEqual(eval(compile(expression, '<source-counter-rule>', 'eval'),
+                                  {'int': int}, {'spec': row}), int(row in crosses))
+
     def test_unique_partition(self):
         factory = load_factory()
         rows = factory.cases()

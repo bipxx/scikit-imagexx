@@ -58,6 +58,25 @@ def arrays(value, np):
     return []
 
 
+def entry_profiler(code):
+    """Count same-code recursion without retaining a frame, argument or array."""
+    counts = dict(outer_call=0, outer_return=0, nested_call=0, nested_return=0,
+                  total_call=0, total_return=0)
+    depth = 0
+    def profile(frame, event, arg):
+        nonlocal depth
+        if frame.f_code is not code: return
+        if event == 'call':
+            counts['total_call'] += 1
+            counts['outer_call' if depth == 0 else 'nested_call'] += 1
+            depth += 1
+        elif event == 'return':
+            depth -= 1
+            counts['total_return'] += 1
+            counts['outer_return' if depth == 0 else 'nested_return'] += 1
+    return counts, profile
+
+
 def observe(spec, factory, np, original, journal):
     """One small original call; flush actual row before checking invariants.
 
@@ -71,11 +90,7 @@ def observe(spec, factory, np, original, journal):
         raise RuntimeError('wrong original entry')
     if sys.getprofile() is not None: raise RuntimeError('profiler already installed')
     state = (dict(np.geterr()), np.geterrcall(), np.getbufsize())
-    counts = dict(call=0, returned=0)
-    def profile(frame, event, arg):
-        if frame.f_code is function.__code__:
-            if event == 'call': counts['call'] += 1
-            elif event == 'return': counts['returned'] += 1
+    counts, profile = entry_profiler(function.__code__)
     try:
         args, kwargs = factory.fixture(spec, np)
         before = snapshot((args, kwargs), np)
@@ -115,5 +130,9 @@ def observe(spec, factory, np, original, journal):
         raise
     journal(row)
     assert row['restored'] and row['entry_identity_preserved']
-    assert counts == dict(call=1, returned=1)
+    # Source ellipse(crosses) recursively calls the same Python function once
+    # with decomposition=None. These are genuine entries, not duplicate trials.
+    nested = int(spec['api'] == 'ellipse' and spec['kwargs'].get('decomposition') == 'crosses')
+    assert counts == dict(outer_call=1, outer_return=1, nested_call=nested,
+                          nested_return=nested, total_call=1+nested, total_return=1+nested)
     return row
