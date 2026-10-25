@@ -449,8 +449,53 @@ def registry_expectation(root):
     declared = tuple(namespace['native_functions']())
     require(len(declared) == len(set(declared)), 'duplicate source registry paths')
     names = set(declared)
+    validate_declared_inventory(root, namespace, names)
     image_count = sum(namespace['execution_kind'](n) == 'native' for n in names)
     return dict(functions=sorted(names), image_count=image_count, registered_count=len(names), metadata_count=len(names)-image_count)
+
+
+def validate_declared_inventory(root, namespace, registered):
+    """Cheap source-only consistency gate, before any environment or product build.
+
+    The existing coverage metadata loader has no top-level package imports.
+    Do not import tools/inventory.py here: the later installed inventory gate
+    still independently checks the complete upstream API/signature contract.
+    """
+    path = root / 'coverage/api.json'
+    require(path.is_file(), 'source inventory absent: coverage/api.json')
+    try:
+        inventory = json.loads(path.read_text(encoding='utf-8'))
+    except (ValueError, UnicodeError) as error:
+        raise QualificationError('source inventory is not valid JSON') from error
+    require(isinstance(inventory, dict) and isinstance(inventory.get('entries'), list),
+            'source inventory entries must be a list')
+    entries = inventory['entries']
+    require(all(isinstance(row, dict) and isinstance(row.get('api'), str) and row['api'] for row in entries),
+            'source inventory has an invalid API key')
+    rows = {row['api']: row for row in entries}
+    require(len(rows) == len(entries), 'duplicate source inventory API keys')
+    declared = {name for name, row in rows.items() if row.get('implementation') in ('native-partial', 'metadata')}
+    require(declared == registered,
+            'source inventory/registry mismatch: missing native declarations ' + repr(sorted(registered - declared))
+            + '; extra native declarations ' + repr(sorted(declared - registered)))
+    for name in sorted(registered):
+        row = rows[name]
+        kind = namespace['execution_kind'](name)
+        require(kind in ('native', 'metadata'), 'unknown source execution kind: ' + name)
+        expected = 'metadata' if kind == 'metadata' else 'native-partial'
+        require(row.get('kind') == 'callable' and row.get('implementation') == expected
+                and row.get('execution_kind') == kind,
+                'source inventory classification differs: ' + name)
+        require(row.get('native_default_case_dtypes') == list(namespace['native_dtypes'](name)),
+                'source inventory default dtypes differ: ' + name)
+        for field in ('parity_test', 'benchmark'):
+            reference = row.get(field)
+            require(isinstance(reference, str) and reference, 'source inventory evidence absent: ' + name + '/' + field)
+            relative = PurePosixPath(reference.split('::', 1)[0])
+            require(not relative.is_absolute() and '..' not in relative.parts and '\\' not in str(relative)
+                    and not PureWindowsPath(str(relative)).drive,
+                    'source inventory evidence path invalid: ' + name + '/' + field)
+            require((root / relative).is_file(), 'source inventory evidence file absent: ' + name + '/' + field)
 
 
 def sdk_family_declarations(cmake):

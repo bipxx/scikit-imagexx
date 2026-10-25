@@ -593,7 +593,8 @@ def test_bilateral_groups_are_public_and_old_scopes_remain():
 
 def test_registry_separates_registered_image_and_metadata_counts(tmp_path):
     path=tmp_path/'python/skimagexx';path.mkdir(parents=True)
-    (path/'coverage.py').write_text('def native_functions(): return [str(i) for i in range(189)]\ndef execution_kind(n): return "native" if int(n)<186 else "metadata"\n')
+    (path/'coverage.py').write_text('def native_functions(): return [str(i) for i in range(189)]\ndef execution_kind(n): return "native" if int(n)<186 else "metadata"\ndef native_dtypes(n): return ("uint8",)\n')
+    synthetic_registry_inventory(tmp_path, [str(i) for i in range(189)], {str(i) for i in range(186,189)})
     r=q.registry_expectation(tmp_path)
     assert r['registered_count']==189 and r['image_count']==186 and r['metadata_count']==3
 
@@ -808,7 +809,9 @@ def test_decisions_group_is_public_and_sdk14_keeps_old13():
 
 def test_registered193_counts_are190_images_plus3_metadata(tmp_path):
     path=tmp_path/'python/skimagexx';path.mkdir(parents=True)
-    (path/'coverage.py').write_text('def native_functions():return tuple("image"+str(i) for i in range(190))+tuple("metadata"+str(i) for i in range(3))\ndef execution_kind(name):return "native" if name.startswith("image") else "metadata-native"\n')
+    (path/'coverage.py').write_text('def native_functions():return tuple("image"+str(i) for i in range(190))+tuple("metadata"+str(i) for i in range(3))\ndef execution_kind(name):return "native" if name.startswith("image") else "metadata"\ndef native_dtypes(name):return ("uint8",)\n')
+    metadata={'metadata'+str(i) for i in range(3)}
+    synthetic_registry_inventory(tmp_path, ['image'+str(i) for i in range(190)]+sorted(metadata), metadata)
     r=q.registry_expectation(tmp_path)
     assert r['registered_count']==193 and r['image_count']==190 and r['metadata_count']==3
 
@@ -1814,3 +1817,117 @@ def test_reconstruction_metadata_migration_preserves_all_scientific_AST_and_raw_
     for a,b in zip(left.body,right.body):
         if isinstance(a,ast.FunctionDef) and a.name in allowed:a.body=[];b.body=[]
         assert ast.dump(a,include_attributes=False)==ast.dump(b,include_attributes=False)
+
+
+def synthetic_registry_inventory(root, names, metadata=()):
+    """Internally closed metadata fixture; never a numerical/public proof."""
+    entries = [dict(api=name, kind='callable',
+                    implementation='metadata' if name in metadata else 'native-partial',
+                    execution_kind='metadata' if name in metadata else 'native',
+                    native_default_case_dtypes=['uint8'], parity_test='tests/synthetic.py',
+                    benchmark='benchmarks/synthetic.py') for name in names]
+    for relative in ('tests/synthetic.py', 'benchmarks/synthetic.py'):
+        path = root / relative; path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('# Synthetic metadata evidence path; no image implementation.\n')
+    (root / 'coverage').mkdir(exist_ok=True)
+    (root / 'coverage/api.json').write_text(json.dumps({'entries': entries}))
+
+
+@pytest.fixture
+def source_inventory_tree(tmp_path):
+    """Real registry/inventory text with inert evidence paths; no package import."""
+    for relative in ('python/skimagexx/coverage.py', 'coverage/api.json'):
+        path = tmp_path / relative; path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes((ROOT / relative).read_bytes())
+    entries = json.loads((tmp_path / 'coverage/api.json').read_bytes())['entries']
+    for row in entries:
+        if row['implementation'] not in ('native-partial', 'metadata'):
+            continue
+        for field in ('parity_test', 'benchmark'):
+            path = tmp_path / row[field].split('::', 1)[0]
+            path.parent.mkdir(parents=True, exist_ok=True); path.touch()
+    return tmp_path
+
+
+def test_actual_source_inventory_closure_has_no_image_package_import(monkeypatch):
+    original = builtins.__import__
+    def guarded(name, *args, **kwargs):
+        if name.split('.', 1)[0] in ('numpy', 'scipy', 'skimage', 'skimagexx'):
+            raise AssertionError('image package imported during source inventory guard')
+        return original(name, *args, **kwargs)
+    monkeypatch.setattr(builtins, '__import__', guarded)
+    result = q.registry_expectation(ROOT)
+    rows = json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']
+    assert result['image_count'] == sum(row['implementation'] == 'native-partial' for row in rows)
+    assert result['metadata_count'] == sum(row['implementation'] == 'metadata' for row in rows)
+    assert result['registered_count'] == len(result['functions']) == result['image_count'] + result['metadata_count']
+    assert q.RECONSTRUCTION_PATH in result['functions']
+
+
+@pytest.mark.parametrize('fault', (
+    'stale-reconstruction', 'missing-native-row', 'extra-native-row', 'duplicate-api',
+    'wrong-implementation', 'wrong-execution', 'wrong-dtypes', 'wrong-kind',
+    'missing-parity', 'missing-benchmark', 'missing-evidence-file',
+    'absolute-evidence', 'traversal-evidence', 'windows-evidence',
+    'invalid-api', 'invalid-entries', 'invalid-json', 'missing-inventory',
+))
+def test_source_inventory_inconsistency_rejected_before_build(source_inventory_tree, fault):
+    root = source_inventory_tree; path = root / 'coverage/api.json'
+    inventory = json.loads(path.read_bytes()); rows = inventory['entries']
+    row = next(row for row in rows if row['api'] == q.RECONSTRUCTION_PATH)
+    if fault == 'stale-reconstruction':
+        # Exact stale derived fields present at frozen283, without fabricating a
+        # failure from that still-running original hosted run.
+        row.update(implementation='upstream-only', native_default_case_dtypes=[],
+                   execution_kind='upstream', parity_test=None, benchmark=None)
+    elif fault == 'missing-native-row': rows.remove(row)
+    elif fault == 'extra-native-row': rows.append(dict(row, api='morphology.unregistered_synthetic'))
+    elif fault == 'duplicate-api': rows.append(dict(row))
+    elif fault == 'wrong-implementation': row['implementation'] = 'metadata'
+    elif fault == 'wrong-execution': row['execution_kind'] = 'upstream'
+    elif fault == 'wrong-dtypes': row['native_default_case_dtypes'] = ['uint8']
+    elif fault == 'wrong-kind': row['kind'] = 'class'
+    elif fault == 'missing-parity': row['parity_test'] = None
+    elif fault == 'missing-benchmark': row['benchmark'] = None
+    elif fault == 'missing-evidence-file': (root / row['parity_test']).unlink()
+    elif fault == 'absolute-evidence': row['parity_test'] = '/outside.py'
+    elif fault == 'traversal-evidence': row['parity_test'] = '../outside.py'
+    elif fault == 'windows-evidence': row['parity_test'] = 'C:/outside.py'
+    elif fault == 'invalid-api': row['api'] = 7
+    elif fault == 'invalid-entries': inventory['entries'] = {}
+    if fault == 'missing-inventory': path.unlink()
+    else: path.write_text('not JSON' if fault == 'invalid-json' else json.dumps(inventory))
+    with pytest.raises(q.QualificationError, match='source inventory'):
+        q.registry_expectation(root)
+
+
+def test_inventory_extra_native_declaration_after_registry_removal_is_rejected(source_inventory_tree):
+    path = source_inventory_tree / 'python/skimagexx/coverage.py'
+    tree = ast.parse(path.read_text())
+    declaration = next(node.value for node in tree.body if isinstance(node, ast.Assign)
+                       and any(isinstance(target, ast.Name) and target.id == 'NATIVE_FUNCTIONS' for target in node.targets))
+    names = next(value for key, value in zip(declaration.keys, declaration.values) if key.value == 'morphology')
+    assert sum(value.value == 'reconstruction' for value in names.elts) == 1
+    names.elts = [value for value in names.elts if value.value != 'reconstruction']
+    path.write_text(ast.unparse(tree))
+    with pytest.raises(q.QualificationError, match='extra native declarations.*morphology.reconstruction'):
+        q.registry_expectation(source_inventory_tree)
+
+
+def test_stale_reconstruction_inventory_blocks_prepare_before_environment_or_download(source_inventory_tree, monkeypatch):
+    root = source_inventory_tree; path = root / 'coverage/api.json'
+    inventory = json.loads(path.read_bytes())
+    row = next(row for row in inventory['entries'] if row['api'] == q.RECONSTRUCTION_PATH)
+    row.update(implementation='upstream-only', native_default_case_dtypes=[],
+               execution_kind='upstream', parity_test=None, benchmark=None)
+    path.write_text(json.dumps(inventory))
+    monkeypatch.setattr(q, 'ROOT', root)
+    monkeypatch.setattr(q, 'source_state', lambda _: {'revision': 'a' * 40})
+    def forbidden(*args, **kwargs):
+        raise AssertionError('environment/download/build reached despite stale source inventory')
+    monkeypatch.setattr(q, 'base_interpreter', forbidden)
+    monkeypatch.setattr(q, 'Journal', forbidden)
+    monkeypatch.setattr(q.subprocess, 'Popen', forbidden)
+    with pytest.raises(q.QualificationError, match='source inventory/registry mismatch.*morphology.reconstruction'):
+        q.prepare(root / 'fresh', 'modern', 200)
+    assert not any((root / 'fresh' / name).exists() for name in ('build-env', 'runtime-env', 'build-wheels', 'runtime-wheels', 'native-build'))

@@ -156,3 +156,4 @@ tests/test_reconstruction_offset_guards.py -text
 src/simd_reconstruction_avx2.cpp -text
 coverage/evidence/reconstruction-descriptor-source-successor.json -text
 coverage/evidence/reconstruction-descriptor-private-admission.json -text
+coverage/evidence/public200-inventory-prebuild-gap.json -text
