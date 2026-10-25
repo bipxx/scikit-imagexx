@@ -30261,7 +30261,7 @@
         "kernel_header_and_source_oracles_unchanged": true,
         "local_operation_timings": false
       },
-      "pending_root_review": "e17 binder gates reviewed; offset span allocation extent requires independent check before private admission.",
+      "pending_root_review": "e17 offset allocation extent gap independently confirmed; private admission blocked until separate binder repair and review.",
       "public_candidate_preparation": {
         "worktree": "build/worktrees/reconstruction-public200",
         "branch": "integration/public200-reconstruction",
@@ -30276,6 +30276,11 @@
           "SDK_families": 21,
           "SDK_checks": 42
         }
+      },
+      "offset_extent_review": {
+        "path": "coverage/evidence/reconstruction-offset-extent-review.json",
+        "bytes": 1696,
+        "sha256": "90d8b52c3c4f22849ec3c35fe5190a494d2a5f7cdb9a8eb3c3029e02e2d7cb29"
       }
     }
   ],

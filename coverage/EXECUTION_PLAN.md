@@ -37,7 +37,7 @@ no new performance result is accepted. Worker A owns the NMI native packet and
 is repairing owner/extent and direct C++ entropy boundary findings before final
 private gates. Reconstruction's earlier `095ea3d` blocker has a separately tested
 binder repair `e17ba10`, but root review identified a possible unchecked offset
-span extent requiring independent verification and repair before admission.
+span extent, independently confirmed and [recorded as blocking](evidence/reconstruction-offset-extent-review.json), requiring repair before admission.
 Worker C prepares the actual public-200 integration on a separate branch; this
 adds no accepted public paths. Worker B reviews intake fixes while retaining and
 observing the same genuine qualification run `40161615893`.

@@ -1,0 +1,18 @@
+{
+  "schema": "reconstruction-offset-extent-review-v1",
+  "source": "e17ba10d0bf94df29d82dae95d1b8ac9f91ce88a",
+  "finding_id": "reconstruction-e17-offset-span-outside-current-root",
+  "state": "blocked-pending-binder-repair",
+  "independent_finding": {
+    "path": "build/resume-20261025/reconstruction-review/e17-offset-extent-finding.json",
+    "bytes": 2598,
+    "sha256": "f9a28e5d7ff42226913067a980b8de1f7e0085ed26ea436ef26499eb60c396ea"
+  },
+  "finding": "Owners so retains/stamps the offset ndarray owner chain, but Input descriptors are created only for seed, mask and footprint. The offset is converted directly to ReconstructionSpan<const size_t>{offset.data(), offset.size()}. Dtype, rank, C-contiguity and alignment are checked; no complete offset byte span is compared with the current pinned root allocation. reconstruction_requirements verifies raw span arithmetic/size, then dereferences f.offset.data[d]. Thus an already stale ndarray offset view can pass unchanged metadata stamps while extending beyond its present root allocation.",
+  "minimum_repair": "After native contiguous size_t vector validation, validate the complete contiguous offset byte span against the pinned root allocation using overflow-safe address/range arithmetic, before requirements can dereference offsets. Keep the existing owner revalidation after conversions/allocations and immediately before release. Add a safe metadata-only extent rejection regression, with old e17 code never invoked on unsafe storage.",
+  "earlier_source_095_and_e17_not_admitted": true,
+  "private_acceptance": false,
+  "public_acceptance": false,
+  "performance_acceptance": false,
+  "unsafe_memory_reads_executed": false
+}
