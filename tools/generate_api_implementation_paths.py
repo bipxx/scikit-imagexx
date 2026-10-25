@@ -929,6 +929,12 @@ override("restoration.estimate_sigma",
          frontier="Native MAD reduction can reuse explicit wavelet coefficients; a Python wavelet transform is a disclosed provider until a C++ filter-bank backend is qualified.")
 override("util.apply_parallel",
          frontier="Dask lazy graph/object behavior remains a genuine provider contract. Owned eager C++ chunk arithmetic/executor does not claim replacement of arbitrary Python functions or distributed Dask.")
+override("morphology.mirror_footprint",
+         benchmark_kind="noncompute-boundary",
+         benchmark="Noncompute boundary: check reversed-view strides, sharing, sequence structure and iteration counts; optional wrapper-overhead timing is not an image-kernel speed claim.",
+         simd="No SIMD for axis-reversal view/sequence metadata; no pixel arithmetic is required by this route.",
+         workers="Serial view/sequence construction; no worker acceleration claimed.",
+         frontier="Owned metadata wrapper with NumPy-compatible reversed views and sequence handling; legitimate API behavior, not a native image kernel or standalone C++ array-provider completion.")
 override("restoration.calibrate_denoiser", benchmark_kind="compute-with-provider",
          benchmark="Time parameter-search orchestration and native masked-loss core separately with a fixed deterministic denoiser; record denoiser calls and include its cost in end-to-end latency.")
 override("restoration.cycle_spin", benchmark_kind="compute-with-provider",
@@ -1079,7 +1085,7 @@ def make_document():
                    easiest_credible_path=algorithm,
                    mandatory_route_dependencies=spec["dependencies"],
                    optional_route_dependencies=spec.get("optional_dependencies", []),
-                   optional_acceleration_dependency="workers" if spec["family"] not in NONCOMPUTE_FAMILIES else None,
+                   optional_acceleration_dependency="workers" if kind != "noncompute-boundary" else None,
                    next_concrete_action=next_action(entry, spec, canonical),
                    compatibility_hazards=spec["hazards"],
                    parity_cases_to_freeze=spec["workload"],

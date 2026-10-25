@@ -74,9 +74,9 @@
       "XS": 27
     },
     "benchmark_boundary": {
-      "compute": 401,
+      "compute": 400,
       "compute-with-provider": 4,
-      "noncompute-boundary": 72
+      "noncompute-boundary": 73
     },
     "identity_aliases": 26,
     "canonical_routes": 451,
@@ -5454,7 +5454,7 @@
         "provider"
       ],
       "optional_route_dependencies": [],
-      "optional_acceleration_dependency": null,
+      "optional_acceleration_dependency": "workers",
       "next_concrete_action": "Capture provider/state calls for hand-computed small GMM with K+2KD output and large descriptor batches; own the specified adapter and its d_pi/d_mu/d_sigma scaling/order, covariance convention, alpha and zero normalization contract. Split any native numerical backend into a separately qualified step.",
       "compatibility_hazards": "d_pi/d_mu/d_sigma scaling/order, covariance convention, alpha and zero normalization",
       "parity_cases_to_freeze": "hand-computed small GMM with K+2KD output and large descriptor batches",
@@ -14375,21 +14375,21 @@
         "geometry"
       ],
       "optional_route_dependencies": [],
-      "optional_acceleration_dependency": "workers",
+      "optional_acceleration_dependency": null,
       "next_concrete_action": "Audit the owned metadata contract for view sharing, sequence iteration count and arbitrary rank; add missing identity/state/error cases, without image-kernel completion credit.",
       "compatibility_hazards": "view sharing, sequence iteration count and arbitrary rank",
       "parity_cases_to_freeze": "asymmetric footprints and sequence views",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
-      "simd_strategy": "Vectorize coordinate predicates for large dense footprints; tiny metadata/sequences gain little.",
-      "optional_global_workers_strategy": "Usually serial; only large independent fills may use the global budget.",
+      "simd_strategy": "No SIMD for axis-reversal view/sequence metadata; no pixel arithmetic is required by this route.",
+      "optional_global_workers_strategy": "Serial view/sequence construction; no worker acceleration claimed.",
       "benchmark_plan": {
         "status": "proposal-not-measured-results",
-        "kind": "compute",
+        "kind": "noncompute-boundary",
         "specific_workload": "asymmetric footprints and sequence views",
-        "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
+        "one_worker_recipe": "Noncompute boundary: check reversed-view strides, sharing, sequence structure and iteration counts; optional wrapper-overhead timing is not an image-kernel speed claim.",
         "existing_inventory_reference": "benchmarks/footprints.py"
       },
-      "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
+      "native_provider_frontier": "Owned metadata wrapper with NumPy-compatible reversed views and sequence handling; legitimate API behavior, not a native image kernel or standalone C++ array-provider completion.",
       "existing_inventory_parity_reference": "tests/test_footprint_contracts.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
@@ -15013,7 +15013,7 @@
         "provider"
       ],
       "optional_route_dependencies": [],
-      "optional_acceleration_dependency": null,
+      "optional_acceleration_dependency": "workers",
       "next_concrete_action": "Capture provider/state calls for instrumented denoiser with deterministic parameter grid; own the specified adapter and its denoise_function identity/callbacks, approximate_loss, stride, extra_output and parameter order contract. Split any native numerical backend into a separately qualified step.",
       "compatibility_hazards": "denoise_function identity/callbacks, approximate_loss, stride, extra_output and parameter order",
       "parity_cases_to_freeze": "instrumented denoiser with deterministic parameter grid",
@@ -15051,7 +15051,7 @@
         "provider"
       ],
       "optional_route_dependencies": [],
-      "optional_acceleration_dependency": null,
+      "optional_acceleration_dependency": "workers",
       "next_concrete_action": "Capture provider/state calls for identity/custom denoisers and exhaustive shift grids; own the specified adapter and its shift_steps/channel_axis, deprecated num_workers, callbacks and sum order contract. Split any native numerical backend into a separately qualified step.",
       "compatibility_hazards": "shift_steps/channel_axis, deprecated num_workers, callbacks and sum order",
       "parity_cases_to_freeze": "identity/custom denoisers and exhaustive shift grids",
@@ -15125,7 +15125,7 @@
         "provider"
       ],
       "optional_route_dependencies": [],
-      "optional_acceleration_dependency": null,
+      "optional_acceleration_dependency": "workers",
       "next_concrete_action": "Capture provider/state calls for fixed masks and instrumented identity/linear denoisers; own the specified adapter and its masks generator, stride, denoiser_kwargs and callback/error order contract. Split any native numerical backend into a separately qualified step.",
       "compatibility_hazards": "masks generator, stride, denoiser_kwargs and callback/error order",
       "parity_cases_to_freeze": "fixed masks and instrumented identity/linear denoisers",
