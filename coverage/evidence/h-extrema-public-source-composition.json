@@ -89,5 +89,7 @@
     "wholeproduct_builds": 0,
     "local_image_calls": 0,
     "performance": false
-  }
+  },
+  "AST_hash_runtime": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "AST_comparison_policy": "Same-runtime complete ast.dump(include_attributes=False), no field stripping; stored hashes diagnostic to author runtime only."
 }

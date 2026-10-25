@@ -2,8 +2,8 @@
 
 The fresh child authenticates originals before importing the actual production
 package. Integer observations are numerical gates; unsupported float/promotion
-rows remain mandatory followups and unsafe originals remain14 blocked metadata
-rows. This source/collection preparation does not claim a qualified product.
+rows remain mandatory followups and unsafe originals remain14 logical blocked metadata
+IDs (28worker projections). This source/collection preparation does not claim a qualified product.
 """
 import ast
 import copy
@@ -49,6 +49,7 @@ def audit_installed(output):
     assert not any(n in os.environ for n in ('SKIMAGEXX_H_EXTREMA_CORE','SKIMAGEXX_EXPECT_OPENMP_OFF','SKIMAGEXX_RECONSTRUCTION_CORE'))
     evidence=json.loads(MIGRATION.read_bytes());policy=json.loads((ROOT/'coverage/contracts/h-extrema-integer.json').read_bytes())
     for name,want in evidence['effective_source_raw_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==want,name
+    for name,want in evidence['effective_source_canonical_lf_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==want,name
     profile='windows' if os.name=='nt' else 'minimum' if importlib.metadata.version('numpy')=='1.24.4' else 'modern'
     reference=load('installed_h_reference_auth',ROOT/'tests/h_extrema_reference.py');plan,authentication=reference.authenticate(profile)
     legacy=load('installed_h_exact_legacy',ROOT/'tests/test_h_extrema_contracts.py');boundaries=load('installed_h_exact_boundaries',ROOT/'tests/test_h_extrema_boundaries.py')
