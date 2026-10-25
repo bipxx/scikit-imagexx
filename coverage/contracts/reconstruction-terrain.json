@@ -1,0 +1,2409 @@
+{
+  "schema": "reconstruction-terrain-contract-v1",
+  "phase": "prospective-original-only",
+  "source_base": "28cfc5899f2ad53c24db1a6d69a7cfc95fcacb99",
+  "specifications": [
+    {
+      "id": "multiple-markers/u1/dilation",
+      "group": "multiple-markers",
+      "dtype": "u1",
+      "method": "dilation",
+      "shape": [
+        129,
+        131
+      ],
+      "layout": "C",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "multiple-markers/u1/erosion",
+      "group": "multiple-markers",
+      "dtype": "u1",
+      "method": "erosion",
+      "shape": [
+        129,
+        131
+      ],
+      "layout": "C",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "multiple-markers/u2/dilation",
+      "group": "multiple-markers",
+      "dtype": "u2",
+      "method": "dilation",
+      "shape": [
+        129,
+        131
+      ],
+      "layout": "step",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "multiple-markers/u2/erosion",
+      "group": "multiple-markers",
+      "dtype": "u2",
+      "method": "erosion",
+      "shape": [
+        129,
+        131
+      ],
+      "layout": "step",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "plateau-barrier-corridor/u1/dilation",
+      "group": "plateau-barrier-corridor",
+      "dtype": "u1",
+      "method": "dilation",
+      "shape": [
+        17,
+        19,
+        21
+      ],
+      "layout": "F",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "plateau-barrier-corridor/u1/erosion",
+      "group": "plateau-barrier-corridor",
+      "dtype": "u1",
+      "method": "erosion",
+      "shape": [
+        17,
+        19,
+        21
+      ],
+      "layout": "F",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "plateau-barrier-corridor/u2/dilation",
+      "group": "plateau-barrier-corridor",
+      "dtype": "u2",
+      "method": "dilation",
+      "shape": [
+        17,
+        19,
+        21
+      ],
+      "layout": "step",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "plateau-barrier-corridor/u2/erosion",
+      "group": "plateau-barrier-corridor",
+      "dtype": "u2",
+      "method": "erosion",
+      "shape": [
+        17,
+        19,
+        21
+      ],
+      "layout": "step",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f4/dilation/2d",
+      "group": "high-cardinality",
+      "dtype": "f4",
+      "method": "dilation",
+      "shape": [
+        257,
+        259
+      ],
+      "layout": "C",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f4/dilation/3d",
+      "group": "high-cardinality",
+      "dtype": "f4",
+      "method": "dilation",
+      "shape": [
+        31,
+        33,
+        35
+      ],
+      "layout": "step",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f4/erosion/2d",
+      "group": "high-cardinality",
+      "dtype": "f4",
+      "method": "erosion",
+      "shape": [
+        257,
+        259
+      ],
+      "layout": "C",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f4/erosion/3d",
+      "group": "high-cardinality",
+      "dtype": "f4",
+      "method": "erosion",
+      "shape": [
+        31,
+        33,
+        35
+      ],
+      "layout": "step",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f8/dilation/2d",
+      "group": "high-cardinality",
+      "dtype": "f8",
+      "method": "dilation",
+      "shape": [
+        257,
+        259
+      ],
+      "layout": "F",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f8/dilation/3d",
+      "group": "high-cardinality",
+      "dtype": "f8",
+      "method": "dilation",
+      "shape": [
+        31,
+        33,
+        35
+      ],
+      "layout": "C",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f8/erosion/2d",
+      "group": "high-cardinality",
+      "dtype": "f8",
+      "method": "erosion",
+      "shape": [
+        257,
+        259
+      ],
+      "layout": "F",
+      "footprint": "dense",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    },
+    {
+      "id": "high-cardinality/f8/erosion/3d",
+      "group": "high-cardinality",
+      "dtype": "f8",
+      "method": "erosion",
+      "shape": [
+        31,
+        33,
+        35
+      ],
+      "layout": "C",
+      "footprint": "axial",
+      "radius": 1,
+      "intended_future_measurement": true,
+      "native_credit": "pending-qualified-public",
+      "original_policy": "all-warn",
+      "expected_error": false
+    }
+  ],
+  "case_manifest": [
+    {
+      "spec": {
+        "id": "multiple-markers/u1/dilation",
+        "group": "multiple-markers",
+        "dtype": "u1",
+        "method": "dilation",
+        "shape": [
+          129,
+          131
+        ],
+        "layout": "C",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "|u1",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          131,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 16899,
+        "raw_bytes": 16899,
+        "sha256": "f23193506dd50dd598a74851b302af7c2c1cf5a66afa1e8634009370470da607"
+      },
+      "mask": {
+        "dtype": "|u1",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          131,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 16899,
+        "raw_bytes": 16899,
+        "sha256": "bd5969a2c70bb5567b529680130b85df8c7ee9126f0c540f07e0489bdd13d128"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "multiple-markers/u1/dilation",
+        "padded_shape": [
+          131,
+          133
+        ],
+        "plane": 17423,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 3534890,
+        "native_v1_planning_bound_bytes": 1986910,
+        "workspace_bound_bytes": 3534890,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 7,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 16897,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            96,
+            32
+          ],
+          "expected_output": 112.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              32,
+              65
+            ],
+            [
+              96,
+              65
+            ]
+          ],
+          "witness": [
+            96,
+            32
+          ],
+          "cut_axis": 0,
+          "cut_index": 64,
+          "corridor": [
+            65
+          ],
+          "right_level": 112,
+          "cut_level": 24,
+          "corridor_level": 48
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "multiple-markers/u1/erosion",
+        "group": "multiple-markers",
+        "dtype": "u1",
+        "method": "erosion",
+        "shape": [
+          129,
+          131
+        ],
+        "layout": "C",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "|u1",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          131,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 16899,
+        "raw_bytes": 16899,
+        "sha256": "99e5400ea0676312c6327664898d9fe1b51f4c6442e24ffd33ad97061e865c8d"
+      },
+      "mask": {
+        "dtype": "|u1",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          131,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 16899,
+        "raw_bytes": 16899,
+        "sha256": "b54586a9d0beb54f8a9ded161b4a5cbdf1e4fc0957ba5dbf09369a1badef9d44"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "multiple-markers/u1/erosion",
+        "padded_shape": [
+          131,
+          133
+        ],
+        "plane": 17423,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 3534890,
+        "native_v1_planning_bound_bytes": 1986910,
+        "workspace_bound_bytes": 3534890,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 7,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 16897,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            96,
+            32
+          ],
+          "expected_output": 143.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              32,
+              65
+            ],
+            [
+              96,
+              65
+            ]
+          ],
+          "witness": [
+            96,
+            32
+          ],
+          "cut_axis": 0,
+          "cut_index": 64,
+          "corridor": [
+            65
+          ],
+          "right_level": 112,
+          "cut_level": 24,
+          "corridor_level": 48
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "multiple-markers/u2/dilation",
+        "group": "multiple-markers",
+        "dtype": "u2",
+        "method": "dilation",
+        "shape": [
+          129,
+          131
+        ],
+        "layout": "step",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<u2",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          1052,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 136234,
+        "raw_bytes": 33798,
+        "sha256": "21246018809fe5bcb511c727cb8d313232b38d1188a05aa9f98e5ff34fc7dfd3"
+      },
+      "mask": {
+        "dtype": "<u2",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          1052,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 136234,
+        "raw_bytes": 33798,
+        "sha256": "03f988734e5569f20252d274857ca2bedf22aa58cf1ff9bee3061fb565b949f5"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "multiple-markers/u2/dilation",
+        "padded_shape": [
+          131,
+          133
+        ],
+        "plane": 17423,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 3773560,
+        "native_v1_planning_bound_bytes": 2747820,
+        "workspace_bound_bytes": 3773560,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 7,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 16897,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            96,
+            32
+          ],
+          "expected_output": 28784.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              32,
+              65
+            ],
+            [
+              96,
+              65
+            ]
+          ],
+          "witness": [
+            96,
+            32
+          ],
+          "cut_axis": 0,
+          "cut_index": 64,
+          "corridor": [
+            65
+          ],
+          "right_level": 112,
+          "cut_level": 24,
+          "corridor_level": 48
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "multiple-markers/u2/erosion",
+        "group": "multiple-markers",
+        "dtype": "u2",
+        "method": "erosion",
+        "shape": [
+          129,
+          131
+        ],
+        "layout": "step",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<u2",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          1052,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 136234,
+        "raw_bytes": 33798,
+        "sha256": "ee1ee042f48755ee5e2bde386048c09db98ee9d9aa3bc7b5616902b726e65d07"
+      },
+      "mask": {
+        "dtype": "<u2",
+        "shape": [
+          129,
+          131
+        ],
+        "strides": [
+          1052,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 136234,
+        "raw_bytes": 33798,
+        "sha256": "4d02379986ae51cde3993403b7668d363c22ff48799a605e37e2d8163e27883b"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "multiple-markers/u2/erosion",
+        "padded_shape": [
+          131,
+          133
+        ],
+        "plane": 17423,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 3773560,
+        "native_v1_planning_bound_bytes": 2747820,
+        "workspace_bound_bytes": 3773560,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 7,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 16897,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            96,
+            32
+          ],
+          "expected_output": 36751.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              32,
+              65
+            ],
+            [
+              96,
+              65
+            ]
+          ],
+          "witness": [
+            96,
+            32
+          ],
+          "cut_axis": 0,
+          "cut_index": 64,
+          "corridor": [
+            65
+          ],
+          "right_level": 112,
+          "cut_level": 24,
+          "corridor_level": 48
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "plateau-barrier-corridor/u1/dilation",
+        "group": "plateau-barrier-corridor",
+        "dtype": "u1",
+        "method": "dilation",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "layout": "F",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "|u1",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          1,
+          17,
+          323
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 6783,
+        "raw_bytes": 6783,
+        "sha256": "9b9c7b728fdfbba18dd962a466f181312f5f8ca4a48cdb515782cb903c0ddfec"
+      },
+      "mask": {
+        "dtype": "|u1",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          1,
+          17,
+          323
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 6783,
+        "raw_bytes": 6783,
+        "sha256": "26d4ee48ca120382858d04861165f31e496c18c2fa59f943385fbbaba68c2f3c"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "plateau-barrier-corridor/u1/dilation",
+        "padded_shape": [
+          19,
+          21,
+          23
+        ],
+        "plane": 9177,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 1865674,
+        "native_v1_planning_bound_bytes": 983430,
+        "workspace_bound_bytes": 1865674,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 5,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 6781,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            12,
+            4,
+            5
+          ],
+          "expected_output": 96.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              4,
+              9,
+              10
+            ],
+            [
+              12,
+              9,
+              10
+            ]
+          ],
+          "witness": [
+            12,
+            4,
+            5
+          ],
+          "cut_axis": 0,
+          "cut_index": 8,
+          "corridor": [
+            9,
+            10
+          ],
+          "right_level": 96,
+          "cut_level": 16,
+          "corridor_level": 64
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "plateau-barrier-corridor/u1/erosion",
+        "group": "plateau-barrier-corridor",
+        "dtype": "u1",
+        "method": "erosion",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "layout": "F",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "|u1",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          1,
+          17,
+          323
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 6783,
+        "raw_bytes": 6783,
+        "sha256": "caa56d54c5525690ba4bf6fcad36abef08aa82a5072f13f6b29225bd21bf4fce"
+      },
+      "mask": {
+        "dtype": "|u1",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          1,
+          17,
+          323
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 6783,
+        "raw_bytes": 6783,
+        "sha256": "34dd1842b74f4449bed3dc6444ec11d3304cba80b26d1267afc02976b042f953"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "plateau-barrier-corridor/u1/erosion",
+        "padded_shape": [
+          19,
+          21,
+          23
+        ],
+        "plane": 9177,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 1865674,
+        "native_v1_planning_bound_bytes": 983430,
+        "workspace_bound_bytes": 1865674,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 5,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 6781,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            12,
+            4,
+            5
+          ],
+          "expected_output": 159.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              4,
+              9,
+              10
+            ],
+            [
+              12,
+              9,
+              10
+            ]
+          ],
+          "witness": [
+            12,
+            4,
+            5
+          ],
+          "cut_axis": 0,
+          "cut_index": 8,
+          "corridor": [
+            9,
+            10
+          ],
+          "right_level": 96,
+          "cut_level": 16,
+          "corridor_level": 64
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "plateau-barrier-corridor/u2/dilation",
+        "group": "plateau-barrier-corridor",
+        "dtype": "u2",
+        "method": "dilation",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "layout": "step",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<u2",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          6708,
+          172,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 117390,
+        "raw_bytes": 13566,
+        "sha256": "0700f5399e3bfeb621e9e7c089c528c6ee3ab2a9afd62097c7037ec4cdc4efae"
+      },
+      "mask": {
+        "dtype": "<u2",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          6708,
+          172,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 117390,
+        "raw_bytes": 13566,
+        "sha256": "f98339a0b67abae3bcd3f0d5d1bcd52f5a1bbef58796872975f12a5ca2da838d"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "plateau-barrier-corridor/u2/dilation",
+        "padded_shape": [
+          19,
+          21,
+          23
+        ],
+        "plane": 9177,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 2086888,
+        "native_v1_planning_bound_bytes": 1726884,
+        "workspace_bound_bytes": 2086888,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 5,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 6781,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            12,
+            4,
+            5
+          ],
+          "expected_output": 24672.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              4,
+              9,
+              10
+            ],
+            [
+              12,
+              9,
+              10
+            ]
+          ],
+          "witness": [
+            12,
+            4,
+            5
+          ],
+          "cut_axis": 0,
+          "cut_index": 8,
+          "corridor": [
+            9,
+            10
+          ],
+          "right_level": 96,
+          "cut_level": 16,
+          "corridor_level": 64
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "plateau-barrier-corridor/u2/erosion",
+        "group": "plateau-barrier-corridor",
+        "dtype": "u2",
+        "method": "erosion",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "layout": "step",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<u2",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          6708,
+          172,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 117390,
+        "raw_bytes": 13566,
+        "sha256": "67d3cd5d05f15d588254e7e270244039a1f68e7428968779a30cb242c96c5ac5"
+      },
+      "mask": {
+        "dtype": "<u2",
+        "shape": [
+          17,
+          19,
+          21
+        ],
+        "strides": [
+          6708,
+          172,
+          4
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 117390,
+        "raw_bytes": 13566,
+        "sha256": "e1501132358f2eed978920ebf40c8b1272ee8d7a3795b16116eff6baa49645f3"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "plateau-barrier-corridor/u2/erosion",
+        "padded_shape": [
+          19,
+          21,
+          23
+        ],
+        "plane": 9177,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 2086888,
+        "native_v1_planning_bound_bytes": 1726884,
+        "workspace_bound_bytes": 2086888,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 2,
+        "mask_unique_values": 5,
+        "seed_unique_values": 3,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 6781,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": {
+          "point": [
+            12,
+            4,
+            5
+          ],
+          "expected_output": 40863.0,
+          "proof": "entire cut-plane bottleneck below right marker; uniform connected right plateau reaches exactly its marker level"
+        },
+        "topology": {
+          "markers": [
+            [
+              4,
+              9,
+              10
+            ],
+            [
+              12,
+              9,
+              10
+            ]
+          ],
+          "witness": [
+            12,
+            4,
+            5
+          ],
+          "cut_axis": 0,
+          "cut_index": 8,
+          "corridor": [
+            9,
+            10
+          ],
+          "right_level": 96,
+          "cut_level": 16,
+          "corridor_level": 64
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f4/dilation/2d",
+        "group": "high-cardinality",
+        "dtype": "f4",
+        "method": "dilation",
+        "shape": [
+          257,
+          259
+        ],
+        "layout": "C",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f4",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          1036,
+          4
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 266252,
+        "raw_bytes": 266252,
+        "sha256": "3127f4ad9be0ec5fcaf6ec72bbd4363a98daa113b3591514306a7eaba76ad89c"
+      },
+      "mask": {
+        "dtype": "<f4",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          1036,
+          4
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 266252,
+        "raw_bytes": 266252,
+        "sha256": "03a4309c54f3d0ee8171afba4668f626a79a6a909e9f6b8052101137895f359b"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f4/dilation/2d",
+        "padded_shape": [
+          259,
+          261
+        ],
+        "plane": 67599,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 14068796,
+        "native_v1_planning_bound_bytes": 7550512,
+        "workspace_bound_bytes": 14068796,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 66563,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 66560,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              64,
+              64
+            ],
+            [
+              128,
+              129
+            ],
+            [
+              192,
+              194
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f4/dilation/3d",
+        "group": "high-cardinality",
+        "dtype": "f4",
+        "method": "dilation",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "layout": "step",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f4",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          38056,
+          568,
+          8
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 1198764,
+        "raw_bytes": 143220,
+        "sha256": "349ee139643707165909bcb930b9cac6afce3a06dbd26918ec08e3094a371473"
+      },
+      "mask": {
+        "dtype": "<f4",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          38056,
+          568,
+          8
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 1198764,
+        "raw_bytes": 143220,
+        "sha256": "cddd476f8069923c74b7e84eea4afa64e59d33441cdec9d49c3e28a7a8b7e441"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f4/dilation/3d",
+        "padded_shape": [
+          33,
+          35,
+          37
+        ],
+        "plane": 42735,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 10961236,
+        "native_v1_planning_bound_bytes": 6664792,
+        "workspace_bound_bytes": 10961236,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 35805,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 35802,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              7,
+              8,
+              8
+            ],
+            [
+              15,
+              16,
+              17
+            ],
+            [
+              23,
+              24,
+              26
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f4/erosion/2d",
+        "group": "high-cardinality",
+        "dtype": "f4",
+        "method": "erosion",
+        "shape": [
+          257,
+          259
+        ],
+        "layout": "C",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f4",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          1036,
+          4
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 266252,
+        "raw_bytes": 266252,
+        "sha256": "2b09d0f42824255c158fea3b48ffebc57c91a3b0d8874907daf0e91367fefe93"
+      },
+      "mask": {
+        "dtype": "<f4",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          1036,
+          4
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 266252,
+        "raw_bytes": 266252,
+        "sha256": "fff76a3833b4cbf0a0079fe2b3c482c410561868e1982d6d313e2313bdfeb37d"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f4/erosion/2d",
+        "padded_shape": [
+          259,
+          261
+        ],
+        "plane": 67599,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 14068796,
+        "native_v1_planning_bound_bytes": 7550512,
+        "workspace_bound_bytes": 14068796,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 66563,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 66560,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              64,
+              64
+            ],
+            [
+              128,
+              129
+            ],
+            [
+              192,
+              194
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f4/erosion/3d",
+        "group": "high-cardinality",
+        "dtype": "f4",
+        "method": "erosion",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "layout": "step",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f4",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          38056,
+          568,
+          8
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 1198764,
+        "raw_bytes": 143220,
+        "sha256": "e050f7f1d849cb26a3231f35c19a61a898b30e8761a1913ba42b41ec0a91cbf0"
+      },
+      "mask": {
+        "dtype": "<f4",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          38056,
+          568,
+          8
+        ],
+        "C": false,
+        "F": false,
+        "writable": true,
+        "own": false,
+        "owner_bytes": 1198764,
+        "raw_bytes": 143220,
+        "sha256": "3128444287e0f4b6f701a5bc45e0251fa4d173896d15cb49a0b863b3954afe3e"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f4/erosion/3d",
+        "padded_shape": [
+          33,
+          35,
+          37
+        ],
+        "plane": 42735,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 10961236,
+        "native_v1_planning_bound_bytes": 6664792,
+        "workspace_bound_bytes": 10961236,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 35805,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 35802,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              7,
+              8,
+              8
+            ],
+            [
+              15,
+              16,
+              17
+            ],
+            [
+              23,
+              24,
+              26
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f8/dilation/2d",
+        "group": "high-cardinality",
+        "dtype": "f8",
+        "method": "dilation",
+        "shape": [
+          257,
+          259
+        ],
+        "layout": "F",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f8",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          8,
+          2056
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 532504,
+        "raw_bytes": 532504,
+        "sha256": "4d1f3db5af966b06179ebdd9a21865417cdcd24db3c8a2429ae0779d9563923a"
+      },
+      "mask": {
+        "dtype": "<f8",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          8,
+          2056
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 532504,
+        "raw_bytes": 532504,
+        "sha256": "91a5adf9e5fbae1ed7c9cdc1ff5818bd0a1a49dfa8b752db8e8ce394c7186e1b"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f8/dilation/2d",
+        "padded_shape": [
+          259,
+          261
+        ],
+        "plane": 67599,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 14601300,
+        "native_v1_planning_bound_bytes": 8619920,
+        "workspace_bound_bytes": 14601300,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 66563,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 66560,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              64,
+              64
+            ],
+            [
+              128,
+              129
+            ],
+            [
+              192,
+              194
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f8/dilation/3d",
+        "group": "high-cardinality",
+        "dtype": "f8",
+        "method": "dilation",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "layout": "C",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f8",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          9240,
+          280,
+          8
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 286440,
+        "raw_bytes": 286440,
+        "sha256": "606548fcf235788a8a8ae1ffb9d93ce9a0989f739d2322dad11085cd3c87cec5"
+      },
+      "mask": {
+        "dtype": "<f8",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          9240,
+          280,
+          8
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 286440,
+        "raw_bytes": 286440,
+        "sha256": "9b8dd28002a05263548b68bb7c1fc84fa7fb996f7a9be14b34c3a1cd814acf4b"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f8/dilation/3d",
+        "padded_shape": [
+          33,
+          35,
+          37
+        ],
+        "plane": 42735,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 9136588,
+        "native_v1_planning_bound_bytes": 5154560,
+        "workspace_bound_bytes": 9136588,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 35805,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 35802,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              7,
+              8,
+              8
+            ],
+            [
+              15,
+              16,
+              17
+            ],
+            [
+              23,
+              24,
+              26
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f8/erosion/2d",
+        "group": "high-cardinality",
+        "dtype": "f8",
+        "method": "erosion",
+        "shape": [
+          257,
+          259
+        ],
+        "layout": "F",
+        "footprint": "dense",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f8",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          8,
+          2056
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 532504,
+        "raw_bytes": 532504,
+        "sha256": "8cac88c0e52db381501b2d1113107647d7b420a1500475c353828e06ed528de9"
+      },
+      "mask": {
+        "dtype": "<f8",
+        "shape": [
+          257,
+          259
+        ],
+        "strides": [
+          8,
+          2056
+        ],
+        "C": false,
+        "F": true,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 532504,
+        "raw_bytes": 532504,
+        "sha256": "dfaa1a2cdbd7c3b28341dbfb9fcf0bf33879741bc92e12d09a9afe56b69a6cb8"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3
+        ],
+        "strides": [
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 9,
+        "raw_bytes": 9,
+        "sha256": "040a5a009f9b9d5e4771742174142e74fa2d3e0aaa3df5717f01ade338d75d0e"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f8/erosion/2d",
+        "padded_shape": [
+          259,
+          261
+        ],
+        "plane": 67599,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 14601300,
+        "native_v1_planning_bound_bytes": 8619920,
+        "workspace_bound_bytes": 14601300,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 66563,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 66560,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              64,
+              64
+            ],
+            [
+              128,
+              129
+            ],
+            [
+              192,
+              194
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    },
+    {
+      "spec": {
+        "id": "high-cardinality/f8/erosion/3d",
+        "group": "high-cardinality",
+        "dtype": "f8",
+        "method": "erosion",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "layout": "C",
+        "footprint": "axial",
+        "radius": 1,
+        "intended_future_measurement": true,
+        "native_credit": "pending-qualified-public",
+        "original_policy": "all-warn",
+        "expected_error": false
+      },
+      "seed": {
+        "dtype": "<f8",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          9240,
+          280,
+          8
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 286440,
+        "raw_bytes": 286440,
+        "sha256": "042324617802339aeb2787f26487cc66ed0f59473bd914da46b403eb692fdcfa"
+      },
+      "mask": {
+        "dtype": "<f8",
+        "shape": [
+          31,
+          33,
+          35
+        ],
+        "strides": [
+          9240,
+          280,
+          8
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 286440,
+        "raw_bytes": 286440,
+        "sha256": "99e84f432c256d16df33b4ad4a33276b8b64913963cb15e696a8d04413c0d7a6"
+      },
+      "footprint": {
+        "dtype": "|b1",
+        "shape": [
+          3,
+          3,
+          3
+        ],
+        "strides": [
+          9,
+          3,
+          1
+        ],
+        "C": true,
+        "F": false,
+        "writable": true,
+        "own": true,
+        "owner_bytes": 27,
+        "raw_bytes": 27,
+        "sha256": "66a70b6453fe74537fd8a1adf0701e652f3f741ce6a2b32253f2c08656676eb0"
+      },
+      "seed_is_mask": false,
+      "certificate": {
+        "schema": "source-reconstruction-entry-certificate-v1",
+        "case_id": "high-cardinality/f8/erosion/3d",
+        "padded_shape": [
+          33,
+          35,
+          37
+        ],
+        "plane": 42735,
+        "source_index_dtype": "int32",
+        "original_workspace_bound_bytes": 9136588,
+        "native_v1_planning_bound_bytes": 5154560,
+        "workspace_bound_bytes": 9136588,
+        "workspace_cap_bytes": 268435456,
+        "scope": "Per-call data/workspace increment bound, not an absolute process RSS promise; runtime import/allocator baseline separate",
+        "proof": "Finite same-shape supported plain arrays, seed/mask order, positive bounded spatial dimensions, centered odd finite footprint and padded rank0 halo. Pre-Cython prepared-array certificate is mandatory too."
+      },
+      "terrain": {
+        "marker_count": 3,
+        "mask_unique_values": 35805,
+        "seed_unique_values": 4,
+        "positive_connected_mask": true,
+        "expected_changed_elements": 35802,
+        "expected_result_differs_from_mask": true,
+        "nontrivial_output_witness": "global initial maximum strictly below terrain maximum: reconstruction cannot equal mask",
+        "topology": {
+          "markers": [
+            [
+              7,
+              8,
+              8
+            ],
+            [
+              15,
+              16,
+              17
+            ],
+            [
+              23,
+              24,
+              26
+            ]
+          ],
+          "witness": null,
+          "cut_axis": null
+        }
+      }
+    }
+  ],
+  "case_contract_sha256": "02f37e88bce757242b826255d774eeb5df0aa0ed034d4530d7620336a6cfa5b1",
+  "source_text_sha256": {
+    "benchmarks/reconstruction_terrain_cases.py": "8f37d8f0baa73793d15c443b51064b8b199d3e5a1a3de2bee1432b5e87d1c126",
+    "tests/test_reconstruction_terrain_contracts.py": "9a61bffa949087f72c0ed2e11277289909998e536db5f0f70817b584be031a4e"
+  },
+  "preserved_original48_raw_sha256": {
+    "coverage/contracts/reconstruction-benchmark.json": "570a6752d2cada8021ec067af36b3593d99e9e310d36f6557e363429d6255b71"
+  },
+  "preserved_original48_source_text_sha256": {
+    "benchmarks/reconstruction_cases.py": "f323f5c3d19a92e77620845d98a622b2b322441f8c02fedb92a80db5dded704a",
+    "tests/test_reconstruction_benchmark_contracts.py": "b58401734e9b8492c631f2dadc0e169981a6ae3b65ceb4a0ec217227a2ef36cb"
+  },
+  "preserved_original48_git_blobs": {
+    "benchmarks/reconstruction_cases.py": "f323f5c3d19a92e77620845d98a622b2b322441f8c02fedb92a80db5dded704a",
+    "tests/test_reconstruction_benchmark_contracts.py": "b58401734e9b8492c631f2dadc0e169981a6ae3b65ceb4a0ec217227a2ef36cb",
+    "coverage/contracts/reconstruction-benchmark.json": "570a6752d2cada8021ec067af36b3593d99e9e310d36f6557e363429d6255b71"
+  },
+  "reference_matrix_sha256": "621981325f5e6939d3fb4d1c94e52910b369ef3ca798c326bdb93322a12b504c",
+  "primary_source_pins": {
+    "grayreconstruct.py": "f87c127d396a7b6f58a7e2109b184d41d7db26d8021cca22c63ddfca7157114d",
+    "grayreconstruct.pyx": "b77fed8bbd23c49215c21f474e4061ff181286d9bdf2ebd6b3ecf0c9ea103df9",
+    "rank_order.py": "3546e2e6c3ed2935be5e6e9565cc27d05e69578e727da60378730426d1b2e279",
+    "shared_utils.py": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+    "LICENSE.txt": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527"
+  },
+  "scope": {
+    "future_measurement_candidates": 16,
+    "native_acceptance": false,
+    "new_native_paths": 0,
+    "numeric_policy": "Finite exact dtype/shape/strides/ownership/base and all result/input/footprint raw bytes; no tolerance or normalization. Per-runtime raw prepared links/ranks retained, no across-version tie identity assumption.",
+    "max_per_call_workspace_bound_bytes": 14601300,
+    "workspace_cap_bytes": 268435456,
+    "workspace_accounting": "Exact immutable48 certificate: original200bytes per paddedsite plusowners+fixed/footprint; native v1 typed buffers+queue/rank/head arrays+64bytes/site capture margin. Per-call incremental bound, not absolute processRSS.",
+    "terrain_coverage": [
+      "2D two markers at distinct levels; all-plane barrier with one gate; highplateaus",
+      "3D two markers, uniformplateaus separated by a cut-plane and single axial corridor",
+      "2D/3D unique dyadicf32/f64 serpentine masks, three distinct markers and maxseed below maxmask"
+    ],
+    "source_safety": "same frozen600 wrapper/Cython source; finite same-shaped plainarrays, dims>=4, centered radius1 dense/axial footprints; exact pre-Cython padded rank/link certificate reused without ASTchanges",
+    "unassessed": [
+      "additional marker counts/topologies; random/different correlated float terrains; spatiallyvarying longcurved corridors; arbitrarily deep adversarialchains",
+      "This16supplement does not replace original48 or assert broad native/performance admission",
+      "No signedzero cases added; original4 explicit-provider signedzero cases remain unchanged in48"
+    ]
+  },
+  "native_acceptance": false,
+  "accepted_product_pins": null,
+  "profiles": {}
+}
