@@ -1,0 +1,28 @@
+{
+  "schema": "prospective-max-tree-default-policy-controller-plan-v1",
+  "base": "74ce985",
+  "scope": "Controller/source only; no mathematical/library/case/reference changes or local numerical calls.",
+  "old_controller_sha256": "6479182ffc045f942a8f7e9f9cf55aa4b886dea5eca916128be9605fff947012",
+  "timed_numpy_policy": {
+    "divide": "warn",
+    "over": "warn",
+    "under": "ignore",
+    "invalid": "warn"
+  },
+  "preserve": [
+    "All351all-warn source observations and233pristine controls",
+    "All252frozenbenchmarkIDs,fixtures,result/ownership/mutation contracts onthreeprofiles",
+    "Ordinary installed exact199product/solecore/sharedworkers/no-forward/realnativeaggregate counters",
+    "Seven paired original/native one-worker rounds, same callbacks and full regressions"
+  ],
+  "changes": [
+    "Authenticate freshworker NumPy policy without changing it.",
+    "Before any timers require all252defaultpolicy original/native direct callback checks, including source-exact results/ownership/mutations/no warnings and actual aggregate C++ completion, in preparation normal/scalar workers1/4 and fresh measurementworker1.",
+    "Remove timedall-warn policy override; bind defaultpolicy and precheck evidence in reports, samples, validation and barrier.",
+    "Reject optimizedPython workers before reference imports; sanitize inherited optimization/test plugin env."
+  ],
+  "local_validation": "Purestdlib source/metadata guards only on existing runtimes; independent review before certificate/publication/hosted calls.",
+  "new_original_calls": 0,
+  "native_calls": 0,
+  "operation_timings": 0
+}
