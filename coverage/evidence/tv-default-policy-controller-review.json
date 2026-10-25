@@ -1,0 +1,29 @@
+{
+  "schema": "root-tv-default-policy-controller-review-v1",
+  "source": "2a487d34e75ab3a5d088c0b65ae0027a91a8f292",
+  "base": "9f834bbff351ebbb66f98271bc30c07789495efb",
+  "root_source_review_accepted": true,
+  "author_metadata_proof": {
+    "path": "build/worktrees/tv-admission-default-policy/build/default-policy-proof-v1/manifest.json",
+    "bytes": 6321,
+    "sha256": "15c0bb3e512dd901e9dc01b3d634a11364b92c5f019bc2459394815c440cadcc"
+  },
+  "root_rehashed_records": 29,
+  "exact_Git_ZIP_members": 4,
+  "metadata_checks_per_runtime": 140,
+  "runtimes": [
+    "windows",
+    "modern",
+    "minimum"
+  ],
+  "actionlint": "1.7.12 PASS with shellcheck disabled",
+  "source_scope": "Four existing controller/helper/test/workflow files only; legacy400 observer, frozen70 factory, triads, summaries and entire numerical timer unchanged by AST.",
+  "new_gate": "Separate passive default70 observer preserves actual NumPy policy/providers and full output/input/basechain/warning metadata; source-declared92 finite returns per native role/worker plus2Tagged stage cases. Every preparation normal/scalar and fresh measurement host normal, workers1/4, before any warmup/calibration/timing. v2 report/receipt and raw-observation bindings reject old or missing evidence.",
+  "original_diagnostic_campaign": 40163025231,
+  "remaining": "New exact-controller external certificate/publication then one fresh3prepare/3measure campaign; retain all failures and regressions.",
+  "actual_new_native_calls": 0,
+  "whole_products_built": 0,
+  "operation_timings": 0,
+  "performance_accepted": false,
+  "failures_retained": "Initial inert unit/setup/Windows-worktree Linux gitdir failures kept in manifest. Final Linux metadata uses explicit owned Git.exe argv/path adapter with unchanged controller source. No numerical or build qualification inferred."
+}
