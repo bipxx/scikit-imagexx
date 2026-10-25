@@ -37,6 +37,25 @@ HExtremaInfo h_extrema_integer_seed_into(const ReconstructionView&,std::uint64_t
 HExtremaInfo h_extrema_integer_mask_into(const ReconstructionView& image,
     const ReconstructionView& reconstructed,double height,ReconstructionMethod,
     ReconstructionSpan<unsigned char> output);
+// Additive real-stage ABI. The integer-v1 entry points above are unchanged.
+inline constexpr const char* h_extrema_real_interface = "h-extrema-real-v1";
+struct HExtremaRealInfo {
+    bool admitted=false;
+    HExtremaInfo execution{};
+};
+// Separate metadata loader: does not broaden integer-v1 dtype admission.
+std::size_t h_extrema_validate_real_view(const ReconstructionView&);
+// Exact source-precision residue followed by >=. F16/F32 image requires F32
+// reconstruction; integer/F64 image requires F64 reconstruction. Height must
+// represent the original scalar exactly in that residue precision; callers
+// certify conversion of any original integer/array scalar before supplying it.
+// Finite operands bounded by max_finite/2, nearest rounding, gradual underflow.
+// Other arithmetic states/ranges return admitted=false without output writes.
+// All invalid metadata/alias/shape conditions fail before writes. Serial work
+// preserves the caller FP environment; no NumPy warning contract is synthesized.
+HExtremaRealInfo h_extrema_real_mask_into(const ReconstructionView& image,
+    const ReconstructionView& reconstructed,double exact_height,ReconstructionMethod,
+    ReconstructionSpan<unsigned char> output);
 // Every function validates dimensions/allocation extent before input reads.
 // Mutable output must be disjoint from inputs and their metadata; every failure
 // is detected before writes. No hidden array allocation or Python callback.

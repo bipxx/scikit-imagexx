@@ -1,5 +1,6 @@
 #include "skimagexx/h_extrema.hpp"
 #include "skimagexx/image.hpp"
+#include "half.hpp"
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
@@ -209,5 +210,114 @@ HExtremaInfo h_extrema_integer_mask_into(const ReconstructionView& image,
         output.data[i]=static_cast<unsigned char>(residue>=height);
     }
     return {1,false};
+}
+
+namespace {
+std::size_t real_width(ReconstructionType type) {
+    if(type==ReconstructionType::boolean)return 1;
+    if(type==ReconstructionType::float16)return 2;
+    if(type==ReconstructionType::float32)return 4;
+    return width(type);
+}
+// Kept separate from the integer-v1 validator: its dtype rejection and error
+// behavior must not change when real-stage input support is added.
+Validated validate_real(const ReconstructionView& view) {
+    if(view.shape.size!=view.strides.size)throw std::invalid_argument("H-extrema shape/strides rank mismatch");
+    metadata(view.shape);metadata(view.strides);
+    std::size_t samples=1,negative=0,positive=0;
+    for(std::size_t axis=0;axis<view.shape.size;++axis) {
+        const auto length=view.shape.data[axis];
+        if(!length)throw std::invalid_argument("H-extrema requires nonempty input");
+        samples=multiply(samples,length);
+        const auto stride=view.strides.data[axis];
+        if(length==1)continue;
+        if(stride==std::numeric_limits<std::ptrdiff_t>::min())
+            throw std::overflow_error("H-extrema byte stride overflows");
+        const auto extent=multiply(length-1,std::size_t(stride<0 ? -stride : stride));
+        if(stride<0)negative=add(negative,extent);else positive=add(positive,extent);
+    }
+    positive=add(positive,real_width(view.type));
+    const auto pointer=reinterpret_cast<std::uintptr_t>(view.data);
+    const auto backing=range(view.allocation,view.allocation_bytes);
+    if(!view.data || pointer<negative || positive>std::numeric_limits<std::uintptr_t>::max()-pointer)
+        throw std::invalid_argument("H-extrema invalid input extent");
+    const Range extent{pointer-negative,pointer+positive};
+    if(extent.begin<backing.begin || extent.end>backing.end)
+        throw std::invalid_argument("H-extrema view outside owning allocation");
+    return {samples,extent};
+}
+double real_value(const ReconstructionView& view,std::size_t index) {
+    if(view.type==ReconstructionType::boolean)return load(view,index,1)!=0 ? 1. : 0.;
+    if(view.type==ReconstructionType::float16)
+        return double(detail::decode_half(std::uint16_t(load(view,index,2))));
+    if(view.type==ReconstructionType::float32) {
+        const auto bits=std::uint32_t(load(view,index,4));float value;
+        std::memcpy(&value,&bits,sizeof(value));return double(value);
+    }
+    if(view.type==ReconstructionType::float64)return floating(view,index);
+    const auto type=integer_type(view.type);
+    return integer_double(load(view,index,type.bytes),type);
+}
+bool exact_float32(double value) {
+    std::uint64_t bits;std::memcpy(&bits,&value,sizeof(bits));
+    const auto exponent=unsigned((bits>>52)&2047);
+    const auto fraction=bits&0xfffffffffffffULL;
+    if(exponent==2047)return false;
+    if(!exponent)return fraction==0; // F64 subnormals cannot be nonzero F32.
+    const int power=int(exponent)-1023;
+    if(power>127 || power<-149)return false;
+    const auto significand=fraction|(std::uint64_t(1)<<52);
+    const unsigned discard=power>=-126 ? 29u : unsigned(-power-97);
+    return (significand&((std::uint64_t(1)<<discard)-1))==0;
+}
+}
+
+std::size_t h_extrema_validate_real_view(const ReconstructionView& view) {
+    return validate_real(view).samples;
+}
+HExtremaRealInfo h_extrema_real_mask_into(const ReconstructionView& image,
+    const ReconstructionView& reconstructed,double height,ReconstructionMethod method,
+    ReconstructionSpan<unsigned char> output) {
+    const auto a=validate_real(image),b=validate_real(reconstructed);method_check(method);
+    const bool single=image.type==ReconstructionType::float16 || image.type==ReconstructionType::float32;
+    if(reconstructed.type!=(single ? ReconstructionType::float32 : ReconstructionType::float64))
+        throw std::invalid_argument("H-extrema real reconstruction precision mismatch");
+    if(image.shape.size!=reconstructed.shape.size || a.samples!=b.samples)
+        throw std::invalid_argument("H-extrema reconstruction shape mismatch");
+    for(std::size_t axis=0;axis<image.shape.size;++axis)
+        if(image.shape.data[axis]!=reconstructed.shape.data[axis])
+            throw std::invalid_argument("H-extrema reconstruction shape mismatch");
+    output_range(output,a.samples,image,a,&reconstructed,&b);
+    Environment environment;
+    if(std::fegetround()!=FE_TONEAREST)return {};
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+    if(_mm_getcsr()&((1u<<15)|(1u<<6)))return {};
+#endif
+    environment.check();
+    if(!std::isfinite(height) || height<0 || (single && !exact_float32(height)))return {};
+    const double bound=single ? double(std::numeric_limits<float>::max())/2. : std::numeric_limits<double>::max()/2.;
+    // Admission is input-defined and completes before the first store. No
+    // candidate/oracle mask or approximate threshold selects this branch.
+    for(std::size_t i=0;i<a.samples;++i) {
+        const auto value=real_value(image,i),rec=real_value(reconstructed,i);
+        if(!std::isfinite(value) || !std::isfinite(rec) || std::abs(value)>bound || std::abs(rec)>bound)return {};
+    }
+    if(single) {
+        const float threshold=static_cast<float>(height);
+        for(std::size_t i=0;i<a.samples;++i) {
+            const float value=static_cast<float>(real_value(image,i));
+            const float rec=static_cast<float>(real_value(reconstructed,i));
+            // Force one source F32 rounding even on excess-precision targets.
+            volatile float residue=method==ReconstructionMethod::dilation ? value-rec : rec-value;
+            output.data[i]=static_cast<unsigned char>(residue>=threshold);
+        }
+    } else {
+        for(std::size_t i=0;i<a.samples;++i) {
+            const double value=real_value(image,i),rec=real_value(reconstructed,i);
+            volatile double residue=method==ReconstructionMethod::dilation ? value-rec : rec-value;
+            output.data[i]=static_cast<unsigned char>(residue>=height);
+        }
+    }
+    return {true,{1,false}};
 }
 }
