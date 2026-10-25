@@ -449,12 +449,13 @@ def expected_digests(profile):
 
 
 def validate_report(report,cert):
-    require(report.get('schema')=='max-tree-public-comparison-v1' and report.get('passed') is True and not report.get('failures'),'failed/partial report')
+    require(report.get('schema')=='max-tree-public-comparison-v2' and report.get('passed') is True and not report.get('failures'),'failed/partial report')
     profile=report['profile'];M,matrix,old=expected_digests(profile);frame=cert['profiles'][profile]
     require(report['source']==cert['source'] and report['product_sha256']==frame['pin']['product_sha256'] and report['counts']==COUNTS,'wrong source/product/scope')
     require(type(report['check_only']) is bool and report['controller_sha256']==a.sha(__file__),'wrong controller/check-only source')
     require_default_policy(report['default_policy'])
-    require(set(report['identities'])==({'normal','scalar'} if report['check_only'] else {'normal'}),'worker modes missing')
+    mode=report.get('mode');require(mode in a.MODES and (report['check_only'] or mode=='normal'),'wrong preparation/measurement mode')
+    require(set(report['identities'])=={mode},'selected worker mode missing/substituted')
     require(set(report['integrity'])==set(report['identities']),'worker final policy/journal binding missing')
     for mode,identity in report['identities'].items():
         require(type(identity['pid']) is int and identity['pid']>0 and identity['source']==cert['source'] and identity['product_sha256']==frame['pin']['product_sha256'] and identity['core_sha256']==frame['core_sha256'] and type(identity['default_workers']) is int and identity['default_workers']==1 and identity['fallback_enabled'] is False and type(identity['scalar']) is bool and identity['scalar']==(mode=='scalar'),'actual worker source/core/default policy differs')
@@ -466,7 +467,7 @@ def validate_report(report,cert):
         for policy in (integrity['policy_before'],integrity['policy_after']):require_default_policy(policy)
         require(type(integrity['journal_sha256']) is str and len(integrity['journal_sha256'])==64 and type(integrity['journal_bytes']) is int and integrity['journal_bytes']>0 and type(integrity['journal_records']) is int and integrity['journal_records']>=1512,'raw default journal absent/partial')
     if report['check_only']:
-        require(set(report['checks'])=={'normal','scalar'} and not report['results'],'normal+scalar preparation cannot time')
+        require(set(report['checks'])=={report['mode']} and not report['results'],'selected-mode preparation cannot time')
         for mode,row in report['checks'].items():
             identity=report['identities'][mode];require(identity['default_workers']==1 and identity['scalar']==(mode=='scalar') and identity['fallback_enabled'] is False and identity['core_sha256']==frame['core_sha256'],'worker identity differs')
             require(row['original351']==old and row['original252']==[r['digest'] for r in M['profiles'][profile]['cases']],'all original observations required')
@@ -521,15 +522,16 @@ def verify_barrier(paths,cert,certificate_sha):
     rows=a.barrier(paths,certificate_sha,os.environ['GITHUB_RUN_ID'],os.environ['GITHUB_RUN_ATTEMPT'],cert)
     for path in paths:
         receipt=a.read(path);report=validate_report(a.read(Path(path).parent/'report.json'),cert)
+        require((report['profile'],report['mode'])==(receipt['profile'],receipt['mode']),'preparation report/receipt profile/mode differs')
         require(report['check_only'] is True and report['controller_sha256']==receipt['controller_sha256']==a.sha(__file__) and report['certificate_sha256']==certificate_sha,'preparation report/receipt source differs')
         require_default_policy(receipt['default_policy'])
         require(receipt['default_coverage']==default_coverage(report),'preparation barrier lacks complete default coverage')
-        for mode in ('normal','scalar'):verify_default_journal(Path(path).parent/mode/'default-observations.jsonl',report,mode)
+        mode=receipt['mode'];verify_default_journal(Path(path).parent/mode/'default-observations.jsonl',report,mode)
     return rows
 
 
 def default_coverage(report):
-    return {mode:[dict(workers=worker['workers'],cases=len(worker['default252']),sha256=a.digest(worker['default252'])) for worker in report['checks'][mode]['checks']] for mode in ('normal','scalar')}
+    return {mode:[dict(workers=worker['workers'],cases=len(worker['default252']),sha256=a.digest(worker['default252'])) for worker in report['checks'][mode]['checks']] for mode in report['checks']}
 
 
 def orders(index):
@@ -555,10 +557,11 @@ def controller(args):
     # Product/receipt verification precedes numerical imports and worker startup.
     seal=a.verify_product(args.product,args.profile,cert);output=Path(args.output);require(not output.exists(),'fresh output required');output.mkdir(parents=True)
     retained_claim=a.retain_claim(claim,output) if claim is not None else None
-    report=dict(schema='max-tree-public-comparison-v1',profile=args.profile,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False,measurement_claim=retained_claim,default_policy=dict(DEFAULT_POLICY),integrity={})
+    mode=args.mode if args.stage=='prepare' else 'normal'
+    report=dict(schema='max-tree-public-comparison-v2',profile=args.profile,mode=mode,source=cert['source'],product_sha256=seal['product_sha256'],certificate_sha256=args.certificate_sha256,controller_sha256=a.sha(__file__),counts=COUNTS,check_only=args.stage=='prepare',identities={},checks={},results=[],failures=[],passed=False,measurement_claim=retained_claim,default_policy=dict(DEFAULT_POLICY),integrity={})
     worker=None
     try:
-        for mode in (('normal','scalar') if args.stage=='prepare' else ('normal',)):
+        for mode in (report['mode'],):
             prefix=output/mode;prefix.mkdir();worker=Worker(args,prefix,scalar=mode=='scalar',measure=args.stage=='measure',nonce=nonce,claim=claim);report['identities'][mode]=worker.identity
             if args.stage=='prepare':report['checks'][mode]=worker.request(dict(operation='validate'))
             else:
@@ -584,7 +587,7 @@ def controller(args):
             try:worker.close()
             except BaseException as error:report['failures'].append(dict(phase='close',message=str(error)))
         a.save(output/'report.json',report)
-    if args.stage=='prepare':a.save(output/'preparation.json',dict(schema='max-tree-preparation-v1',passed=True,profile=args.profile,certificate_sha256=args.certificate_sha256,generation=os.environ['GITHUB_RUN_ID'],attempt=os.environ['GITHUB_RUN_ATTEMPT'],modes=['normal','scalar'],workers=[1,4],counts=COUNTS,report_sha256=a.sha(output/'report.json'),product_sha256=seal['product_sha256'],controller_sha256=a.sha(__file__),default_policy=dict(DEFAULT_POLICY),default_coverage=default_coverage(report)))
+    if args.stage=='prepare':a.save(output/'preparation.json',dict(schema='max-tree-preparation-v2',passed=True,profile=args.profile,mode=report['mode'],certificate_sha256=args.certificate_sha256,generation=os.environ['GITHUB_RUN_ID'],attempt=os.environ['GITHUB_RUN_ATTEMPT'],workers=[1,4],counts=COUNTS,report_sha256=a.sha(output/'report.json'),product_sha256=seal['product_sha256'],controller_sha256=a.sha(__file__),default_policy=dict(DEFAULT_POLICY),default_coverage=default_coverage(report)))
     return report
 
 
@@ -592,7 +595,9 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('stage',choices=('fetch','selectors','prepare','measure','worker','barrier'))
     parser.add_argument('--certificate',type=Path,required=True);parser.add_argument('--certificate-sha256',required=True);parser.add_argument('--profile',choices=a.PROFILES)
     parser.add_argument('--product',type=Path);parser.add_argument('--output',type=Path);parser.add_argument('--receipts',nargs='*',type=Path,default=[]);parser.add_argument('--permit',type=Path);parser.add_argument('--measure',action='store_true')
+    parser.add_argument('--mode',choices=a.MODES)
     args=parser.parse_args(argv)
+    require((args.stage=='prepare')==(args.mode is not None),'--mode is required only for preparation')
     if args.stage=='worker':return worker_main(args)
     cert=a.certificate(args.certificate,args.certificate_sha256,a.controller_revision())
     if args.stage=='fetch':return a.fetch(cert['profiles'][args.profile],args.output)

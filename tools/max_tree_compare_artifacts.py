@@ -4,6 +4,7 @@ import hashlib,importlib.util,json,os,re,subprocess,sys,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 PROFILES=('windows','modern','minimum')
+MODES=('normal','scalar')
 RUNTIME_SOURCE_PINS={
     'src/max_tree.cpp':'1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135',
     # a567 public header: authenticated comment-only evolution from private7d662.
@@ -118,22 +119,22 @@ def verify_installed(path):
 
 
 def validate_receipt(row,certificate_sha,run,attempt):
-    require(type(row) is dict and row.get('schema')=='max-tree-preparation-v1' and row.get('passed') is True,'failed/reference-only preparation')
+    require(type(row) is dict and row.get('schema')=='max-tree-preparation-v2' and row.get('passed') is True,'failed/reference-only preparation')
     require(row.get('profile') in PROFILES and row.get('certificate_sha256')==certificate_sha and row.get('generation')==str(run) and row.get('attempt')==str(attempt),'stale/wrong-run certificate preparation')
-    require(row.get('modes')==['normal','scalar'] and row.get('workers')==[1,4] and all(type(v) is int for v in row['workers']) and row.get('counts')=={'reference':351,'numeric':233,'metadata':118,'candidates':252},'partial original/native worker preparation')
+    require(row.get('mode') in MODES and row.get('workers')==[1,4] and all(type(v) is int for v in row['workers']) and row.get('counts')=={'reference':351,'numeric':233,'metadata':118,'candidates':252},'partial original/native worker preparation')
     for name in ('report_sha256','product_sha256','controller_sha256'):require(isinstance(row.get(name),str) and re.fullmatch('[0-9a-f]{64}',row[name]),'preparation closure absent')
     return row
 
 
 def barrier(paths,certificate_sha,run,attempt,cert):
-    require(len(paths)==3,'ALL3 successful fresh preparation receipts required before fixtures/timers');rows={}
+    require(len(paths)==6,'ALL6 successful fresh profile/mode preparation receipts required before fixtures/timers');rows={}
     for path in paths:
-        row=validate_receipt(read(path),certificate_sha,run,attempt);profile=row['profile']
-        require(profile not in rows,'duplicate preparation profile')
+        row=validate_receipt(read(path),certificate_sha,run,attempt);profile=row['profile'];mode=row['mode']
+        require(mode not in rows.setdefault(profile,{}),'duplicate preparation profile/mode')
         require(row['product_sha256']==cert['profiles'][profile]['pin']['product_sha256'],'prepared product differs')
         report_path=Path(path).parent/'report.json';require(sha(report_path)==row['report_sha256'],'preparation report changed')
-        rows[profile]=row
-    require(set(rows)==set(PROFILES),'missing preparation profile');return rows
+        rows[profile][mode]=row
+    require(set(rows)==set(PROFILES) and all(set(modes)==set(MODES) for modes in rows.values()),'missing preparation profile/mode');return rows
 
 
 def claim(paths,certificate_sha,run,attempt,cert,profile,nonce):
