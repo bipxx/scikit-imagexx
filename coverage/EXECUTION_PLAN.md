@@ -10,20 +10,27 @@ older status paragraphs below are historical, even where they say “current”.
   with the new after-product fail-closed until genuine qualification succeeds.
 - B: finish the seven-file colocalization C++/binding/test source handoff, then
   review its concrete build/dependency plan before numerical execution.
-- C: diagnose all four retained failed H203 profiles, then repair only the
-  stale metadata diagnostic projection and its focused regression.
+- C: implement owned footprint shape/sequence stages against the admitted
+  three-runtime226-case reference, starting with concrete primitive reuse.
 - Root: shared integration, source/runner review, final admissions and existing
   hosted-run observation. Accepted coverage remains199 native-partial image APIs.
 
 Qualification40200919182/source741 failed all four profiles; no retry or new
-product acceptance. Verified modern evidence identifies a diagnostic KeyError
-before the H886 loop; remaining raw profiles are being reviewed. Max-tree
+product acceptance. All four raw profiles identify the same diagnostic KeyError
+before the H886 loop; exact two-file fixea35 is source-admitted. Review a
+same-failed-binary installed diagnostic before paying for another full build. Max-tree
 comparison40200431797 remains live; modern preparation passed. Follow the same
 run, never redispatch because an observer session disappeared.
 
 The small manifest-verification deduplication is merged as08730b7 with20 focused
 tests passing. Prior policy-blocked scratch stays preserved. No new framework,
 broader cleanup or relaxed scientific assertions are part of this resume.
+
+The footprint reference is merged09486ce:226fixed cases/runtime,678outer
+and129nested actual original entries, complete raw observations and all three
+minimum-runtime differences retained. It adds no native paths. Colocalization
+source2a2 passed independent review; exact bounded controller and actual-link
+review remain before numerical execution. All first footprint failures survive.
 
 ## Historical execution notes
 

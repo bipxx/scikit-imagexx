@@ -30755,7 +30755,7 @@
         "measure.manders_overlap_coeff"
       ],
       "owner": "astra_max_api_paths",
-      "state": "implementing",
+      "state": "validating",
       "owns": [
         "include/skimagexx/colocalization.hpp",
         "src/colocalization.cpp",
@@ -30766,20 +30766,13 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Existing seven-file WIP recovered; concrete stage/provider/source/dependency/link handoff being sealed. No candidate builds or numerical calls authorized yet.",
+      "current_checkpoint": "Frozen2a2sevenfiles; independent71abed6 androotc0c36bce source/donorsadmitted. Author preparing exact5profile boundedcontroller; no C++compile/runtimegate yet. Hsameproductdiagnosticplan separate source-only work.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849"
     },
     {
       "id": "remaining-footprint-prospective-contracts",
       "kind": "tooling",
-      "apis": [
-        "morphology.ellipse",
-        "morphology.octagon",
-        "morphology.octahedron",
-        "morphology.star",
-        "morphology.footprint_from_sequence"
-      ],
       "owner": "resize_api",
       "state": "contracted",
       "owns": [
@@ -30789,8 +30782,27 @@
         "coverage/contracts/footprint-shapes-plan.json"
       ],
       "depends_on": [],
-      "current_checkpoint": "7a39824 source-only recursive counter successor;226reference/20future unchanged,30metadataPASS. Fixed capture runner/dependency proof sealed93639a75; root pre-capture review pending. No original calls.",
-      "branch": "feature/footprint-shapes-entry-depth"
+      "current_checkpoint": "Sourceb3/fixed226capturedsuccessfully3runtimes;678outer+129nested actual entries,32sourceerrors/profile. Rootadmittedde12cc25; exactdata2121657b merged09486ce. Priorv1failures retained. Future20 unexecuted; no native credit.",
+      "branch": "feature/footprint-shapes-entry-depth",
+      "apis": [],
+      "target_apis": [
+        "morphology.ellipse",
+        "morphology.octagon",
+        "morphology.octahedron",
+        "morphology.star",
+        "morphology.footprint_from_sequence"
+      ],
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "b3c61fcc565c15860465eb374b395cd143d84414",
+          "manifest": {
+            "path": "coverage/evidence/footprint-shapes-original-reference-admission.json",
+            "sha256": "de12cc255e48e5194d8b03e3d4aafa1877e7ca85049665a7342a028dca59a8c5"
+          },
+          "passing_contract_checks": 678
+        }
+      }
     },
     {
       "id": "tv-positive-zero-comparison-successor",
@@ -30814,7 +30826,7 @@
       "kind": "tooling",
       "apis": [],
       "owner": "resize_api",
-      "state": "validating",
+      "state": "accepted",
       "branch": "integration/h203-diagnostic-repair",
       "base_sha": "7417676bbb628e75feac1be49aac900bc5af7b15",
       "owns": [
@@ -30822,7 +30834,39 @@
         "tests/test_h_extrema_public_metadata.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Read-only all4 failedrawreview followed by approved narrow2filediagnostic projection fix/newmetadata regression. Modern verified failure KeyError historical_source before886image loop; full4profilefinding pending. No numerical/library/oracle changes or newbuild."
+      "current_checkpoint": "Rootfourprofilefailurediagnosis/ea35exacttwofileprojectionfixsourceadmittedf39fb0a9,255metadataPASS/4dryplans. No numerical orproductacceptance; review samefailed741binarydiagnostic reuse beforeanotherfullbuild."
+    },
+    {
+      "id": "footprint-shapes-native-production",
+      "kind": "private_foundation",
+      "apis": [
+        "morphology.ellipse",
+        "morphology.octagon",
+        "morphology.octahedron",
+        "morphology.star",
+        "morphology.footprint_from_sequence"
+      ],
+      "owner": "resize_api",
+      "state": "implementing",
+      "branch": "feature/footprint-shapes-native",
+      "base_sha": "09486ceffd1273c33c0cbdcab864a5ae9fd3d86f",
+      "owns": [
+        "include/skimagexx/footprint_shapes.hpp",
+        "src/footprint_shapes.cpp",
+        "src/bind_footprint_shapes.cpp",
+        "python/skimagexx/_footprint_shapes.py",
+        "tests/test_footprint_shapes_native.cpp",
+        "tests/test_footprint_shapes_native_pipeline.py"
+      ],
+      "depends_on": [
+        "remaining-footprint-prospective-contracts"
+      ],
+      "dependency_requirements": {
+        "remaining-footprint-prospective-contracts": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "current_checkpoint": "Source-only own-stage implementation against admitted226reference; first concrete primitive/dependency/frontier reuse plan. No calls/builds before frozen source/link review."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31544,13 +31588,13 @@
         "colocalization-native-production"
       ],
       "resize_api": [
-        "h203-failure-diagnostic-projection"
+        "footprint-shapes-native-production"
       ]
     },
     "current_three_agent_packets": {
       "astra_max_plan_audit": "tv-positive-zero-comparison-successor",
       "astra_max_api_paths": "colocalization-native-production",
-      "resize_api": "h203-failure-diagnostic-projection"
+      "resize_api": "footprint-shapes-native-production"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -31908,7 +31952,18 @@
         "performance_accepted": false
       }
     },
-    "assignment_note": "apis records exclusive planning ownership, not native acceptance. Inventory classifications remain in api.json; all8 formerly unassigned active targets now belong to their concrete packet. Historical packets retain their original evidence states; only current_three_agent_packets dispatches the three resumed lanes."
+    "assignment_note": "apis records exclusive planning ownership, not native acceptance. Inventory classifications remain in api.json; all8 formerly unassigned active targets now belong to their concrete packet. Historical packets retain their original evidence states; only current_three_agent_packets dispatches the three resumed lanes.",
+    "latest_completed_references": {
+      "footprints": {
+        "source": "b3c61fcc565c15860465eb374b395cd143d84414",
+        "data_sha256": "2121657b2e5164414a492aa5a5f901c9a09a20ed5389ab44b39e441381460694",
+        "admission": "coverage/evidence/footprint-shapes-original-reference-admission.json"
+      },
+      "colocalization_native_source": {
+        "source": "2a2bd3bbfe624107c7468bfbc479b057ee53f95f",
+        "admission": "coverage/evidence/colocalization-native-source-admission.json"
+      }
+    }
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
