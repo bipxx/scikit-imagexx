@@ -1,9 +1,9 @@
 # Complete scikit-image implementation plan
 
 Execution resumed by explicit user request on 2026-10-25: implement this plan
-using three agents. Current assignments are in `work_items.json`: independent
-TV comparison review, independent public-199 candidate review, and reconstruction
-kernel validation. The paused planning snapshot below records the audit context;
+using three agents. Current assignments are in `work_items.json`: NMI native
+intake repair, public-199 observation and independent review, and reconstruction
+public integration. The paused planning snapshot below records the audit context;
 its prohibition on implementation has been superseded by this explicit resume.
 Existing acceptance gates and frozen evidence remain unchanged.
 
@@ -30,13 +30,17 @@ the remaining consumer worktree is retained for separate opaque-link review.
 
 The [shared experiment publisher](evidence/shared-experiment-publication.json)
 is merged as `c24f7b3` and its metadata-only publication run is `40162423182`.
-Actual artifact admission and the TV timing dispatch remain pending. Worker A
-now owns the normalized-mutual-information contract/native packet. Reconstruction
-has substantial passing private evidence, but [independent review found an
-allocation-owner validation blocker](evidence/reconstruction-private-review.json);
-source `095ea3d` remains unmerged while Worker C fixes the binder on a separate
-branch. Worker B reviews that fix while the original qualification observer and
-retainer continue following run `40161615893`.
+The published artifact has been authenticated against the reviewed raw SHA.
+The [TV comparison dispatch](evidence/tv-admission-comparison-dispatch.json)
+records the original run `40163025231`, still pending preparation and measurement;
+no new performance result is accepted. Worker A owns the NMI native packet and
+is repairing owner/extent and direct C++ entropy boundary findings before final
+private gates. Reconstruction's earlier `095ea3d` blocker has a separately tested
+binder repair `e17ba10`, but root review identified a possible unchecked offset
+span extent requiring independent verification and repair before admission.
+Worker C prepares the actual public-200 integration on a separate branch; this
+adds no accepted public paths. Worker B reviews intake fixes while retaining and
+observing the same genuine qualification run `40161615893`.
 
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.

@@ -29890,7 +29890,12 @@
           1
         ],
         "raw_results": [],
-        "regressions": []
+        "regressions": [],
+        "campaign": {
+          "path": "coverage/evidence/tv-admission-comparison-dispatch.json",
+          "bytes": 2654,
+          "sha256": "e6d40340cd7fc98acb51082b5e5193ecfa2bb75572cea33abfeecc5d81b05126"
+        }
       },
       "merge": {
         "commit": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
@@ -30067,7 +30072,7 @@
       "owner": "integrator",
       "branch": "feature/tv-single-admission-compare",
       "base_sha": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
-      "state": "preparing",
+      "state": "measuring",
       "owns": [
         "build/resume-20261025/tv-review",
         "build/worktrees/tv-single-admission-compare/benchmarks/tv_chambolle_admission_compare.py",
@@ -30103,6 +30108,16 @@
       "merge": {
         "commit": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
         "main_commit": "9f834bbff351ebbb66f98271bc30c07789495efb"
+      },
+      "full_comparison_dispatch": {
+        "source": "9f834bbff351ebbb66f98271bc30c07789495efb",
+        "run": 40163025231,
+        "status": "dispatched-preparation-pending",
+        "proof": {
+          "path": "coverage/evidence/tv-admission-comparison-dispatch.json",
+          "bytes": 2654,
+          "sha256": "e6d40340cd7fc98acb51082b5e5193ecfa2bb75572cea33abfeecc5d81b05126"
+        }
       }
     },
     {
@@ -30147,7 +30162,7 @@
       "owner": "integrator",
       "branch": "feature/experiment-publication-shared",
       "base_sha": "9f834bbff351ebbb66f98271bc30c07789495efb",
-      "state": "preparing",
+      "state": "accepted",
       "owns": [
         "build/worktrees/experiment-publication-shared/tools/experiment_publication.py",
         "build/worktrees/experiment-publication-shared/tests/test_experiment_publication.py",
@@ -30183,7 +30198,12 @@
           }
         }
       },
-      "publication_run": 40162423182
+      "publication_run": 40162423182,
+      "actual_raw_artifact_admission": {
+        "path": "build/resume-20261025/tv-publication/retained/admission.json",
+        "bytes": 918,
+        "sha256": "113d7857cba96a893a13418ab93821a4f979b0fb5523a65dd068d99e79c51285"
+      }
     },
     {
       "id": "nmi-native-private",
@@ -30192,7 +30212,7 @@
       "owner": "astra_max_plan_audit",
       "branch": "feature/nmi-native",
       "base_sha": "164fb40314cdfa9cb720e81554d2aecd7f2cee03",
-      "state": "contracting",
+      "state": "implementing",
       "owns": [
         "build/worktrees/nmi-native"
       ],
@@ -30207,7 +30227,11 @@
         "provider_frontier": "O(bins)edgepreparationandfinalwarning-respectingdivisionexplicit; no upstreamNMI/histogramdd/entropyalgorithmforwarding.",
         "default_global_workers": 1,
         "one_worker_benchmark_required": true
-      }
+      },
+      "pending_review_findings": [
+        "Authenticate and retain full ndarray owner allocation extent before native reads.",
+        "Resolve direct C++ entropy normalization-underflow boundary without changing frozen oracle/tolerance."
+      ]
     },
     {
       "id": "reconstruction-owner-guard",
@@ -30218,7 +30242,8 @@
       "base_sha": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
       "state": "implementing",
       "owns": [
-        "build/worktrees/reconstruction-owner-guard"
+        "build/worktrees/reconstruction-owner-guard",
+        "build/worktrees/reconstruction-public200"
       ],
       "depends_on": [
         "reconstruction-native-kernel"
@@ -30235,6 +30260,22 @@
         "safe_regression_no_freed_memory_reads": true,
         "kernel_header_and_source_oracles_unchanged": true,
         "local_operation_timings": false
+      },
+      "pending_root_review": "e17 binder gates reviewed; offset span allocation extent requires independent check before private admission.",
+      "public_candidate_preparation": {
+        "worktree": "build/worktrees/reconstruction-public200",
+        "branch": "integration/public200-reconstruction",
+        "base_sha": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+        "qualification_dispatched": false,
+        "accepted_public_paths": 0,
+        "derived_product_counts": {
+          "image_paths": 200,
+          "functions": 203,
+          "wheel_members": 116,
+          "SDK_members": 66,
+          "SDK_families": 21,
+          "SDK_checks": 42
+        }
       }
     }
   ],
@@ -31171,6 +31212,27 @@
       "source": "095ea3d8c3ca8eb580bf95ff2d02218d98f59552",
       "write_scope": "build/resume-20261025/reconstruction-review",
       "qualification_retention_priority": true
+    },
+    "current_TV_single_admission_comparison": {
+      "run": 40163025231,
+      "source": "9f834bbff351ebbb66f98271bc30c07789495efb",
+      "before": "5e068a5a2267c3a917701d5348449972fad162a7",
+      "after": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
+      "status": "dispatched-no-performance-acceptance",
+      "observer_unified_session": 73148,
+      "proof": {
+        "path": "coverage/evidence/tv-admission-comparison-dispatch.json",
+        "bytes": 2654,
+        "sha256": "e6d40340cd7fc98acb51082b5e5193ecfa2bb75572cea33abfeecc5d81b05126"
+      },
+      "prior_observer": {
+        "session": 47189,
+        "exit_code": 1,
+        "reason": "Network observation aborted; authoritative same-run API still queued.",
+        "log": "build/resume-20261025/tv-admission-comparison/watch.log",
+        "exit": "build/resume-20261025/tv-admission-comparison/watch-exit.json"
+      },
+      "observer_log": "build/resume-20261025/tv-admission-comparison/watch-continuation-1.log"
     }
   },
   "parallel_review": {
