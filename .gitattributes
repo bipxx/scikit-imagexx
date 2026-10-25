@@ -220,6 +220,7 @@ coverage/contracts/tv-positive-zero-comparison-plan.json -text
 benchmarks/tv_positive_zero_compare.py -text
 tools/tv_positive_zero_artifacts.py -text
 tests/test_tv_positive_zero_compare.py -text
+.github/workflows/tv-positive-zero-compare.yml -text
 coverage/evidence/max-tree-preparation-mode-plan.json -text
 coverage/evidence/max-tree-preparation-mode-source-admission.json -text
 coverage/evidence/max-tree-preparation-mode-certificate.json -text
