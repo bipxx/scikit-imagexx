@@ -76,8 +76,9 @@ def audit_installed(output):
     float_plan, authentication = reference.authenticate_floating(profile)
     cross = json.loads((ROOT / reference.RECORD).read_bytes())
     authentication['reconstruction_reference_metadata'] = {key:cross[key] for key in
-        ('historical_source','current_source','historical_raw_sha256','historical_canonical_lf_sha256',
-         'current_raw_sha256','current_canonical_lf_sha256','allowed_body')}
+        ('schema','previous_public_H_source','reviewed_policy_source','current_raw_sha256',
+         'current_canonical_lf_sha256','reviewed_policy_migration_raw_sha256',
+         'reviewed_validator_raw_sha256','allowed_assertion_bodies')}
     legacy = load('h_public_original_legacy', ROOT / 'tests/test_h_extrema_contracts.py')
     boundaries = load('h_public_original_boundaries', ROOT / 'tests/test_h_extrema_boundaries.py')
     floating = load('h_public_original_floating', ROOT / 'tests/test_h_extrema_floating_cases.py')

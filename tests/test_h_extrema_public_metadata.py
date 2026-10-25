@@ -176,6 +176,36 @@ def test_original_authentication_precedes_sole_installed_import_and_fixture_call
     assert '3544' in source and "len(blocked) == 28" in source
 
 
+def test_actual_child_diagnostic_projection_uses_closed_v2_record():
+    # Execute only the actual metadata assignment from the child, never the
+    # installed audit or its image loop. Authentication already validates this
+    # record before the projection; no second source-auth layer is introduced.
+    tree=ast.parse((ROOT/'tests/test_h_extrema_public.py').read_bytes())
+    audit=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='audit_installed')
+    projections=[n for n in audit.body if isinstance(n,ast.Assign) and
+                 any(isinstance(t,ast.Subscript) and isinstance(t.value,ast.Name) and
+                     t.value.id=='authentication' and isinstance(t.slice,ast.Constant) and
+                     t.slice.value=='reconstruction_reference_metadata' for t in n.targets)]
+    assert len(projections)==1
+    auth=load('h203_projection_authentication','tests/h_extrema_public_authentication.py')
+    cross=json.loads((ROOT/auth.RECORD).read_bytes())
+    code=compile(ast.Module(body=projections,type_ignores=[]),'<actual-child-projection>','exec')
+    namespace={'cross':cross,'authentication':{}}
+    exec(code,namespace)
+    projected=namespace['authentication']['reconstruction_reference_metadata']
+    assert projected=={key:cross[key] for key in (
+        'schema','previous_public_H_source','reviewed_policy_source','current_raw_sha256',
+        'current_canonical_lf_sha256','reviewed_policy_migration_raw_sha256',
+        'reviewed_validator_raw_sha256','allowed_assertion_bodies')}
+    assert projected['schema']=='h-reconstruction-closed-trace-policy-integration-v2'
+    assert projected['reviewed_policy_source']=='67325657613921fffad5964ddd31a5cba5f32613'
+    assert len(projected['allowed_assertion_bodies'])==2
+    # The historical v1 remains preserved inside the record. It is not the
+    # current projection schema and must fail here rather than masquerade as v2.
+    historical=json.loads(cross['historical_integration_UTF8'])
+    with pytest.raises(KeyError):exec(code,{'cross':historical,'authentication':{}})
+
+
 def h_stub(monkeypatch):
     core=types.SimpleNamespace(__name__='unit_core',get_num_threads=lambda:1,has_openmp=True,
         h_extrema_interface='h-extrema-integer-v1',h_extrema_real_interface='h-extrema-real-v1',
