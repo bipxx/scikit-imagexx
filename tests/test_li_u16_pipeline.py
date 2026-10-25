@@ -13,7 +13,15 @@ import subprocess
 import sys
 
 
-def audit_installed_product():
+def write_observation(journal, workers, case, actual, completions, events, attempts):
+    """Retain the decisive raw outcome before any route/completion assertion."""
+    journal.write(json.dumps(dict(schema='li-u16-installed-observation-v1',
+        workers=workers, case=case, observation=actual, compiled_completions=completions,
+        compiled_events=events, forbidden_attempts=attempts), allow_nan=False) + '\n')
+    journal.flush()
+
+
+def audit_installed_product(observation_path):
     observer_path = Path(__file__).with_name('test_li_u16_bounded.py')
     spec = importlib.util.spec_from_file_location('li_u16_public_original', observer_path)
     observer = importlib.util.module_from_spec(spec)
@@ -32,6 +40,7 @@ def audit_installed_product():
     forbidden = {observer.ORIGINAL.__code__, observer.BASE.SOURCE.histogram.__code__}
     previous_fallback = xx.set_fallback_enabled(False)
     totals = collections.Counter()
+    journal = Path(observation_path).open('x', encoding='utf-8', newline='\n')
     try:
         for workers in (1, 4):
             xx.set_num_threads(workers)
@@ -39,14 +48,24 @@ def audit_installed_product():
             for case in cases:
                 completions = []
                 attempts = []
+                compiled_events = []
 
                 def guard(frame, event, arg):
                     if event == 'call' and frame.f_code in forbidden:
                         attempts.append(frame.f_code.co_name)
                         raise AssertionError('original numerical forwarding during strict Li call')
-                    if event == 'c_return':
+                    if event in ('c_call', 'c_return', 'c_exception'):
                         owner = getattr(arg, '__self__', None)
-                        if (owner is not None and type(owner).__module__ == 'skimagexx._core'
+                        module = getattr(arg, '__module__', None)
+                        owner_module = type(owner).__module__ if owner is not None else None
+                        if module == 'skimagexx._core' or owner_module == 'skimagexx._core':
+                            compiled_events.append(dict(event=event, module=module,
+                                name=getattr(arg, '__name__', None),
+                                qualname=getattr(arg, '__qualname__', None),
+                                owner_module=owner_module,
+                                owner_type=type(owner).__name__ if owner is not None else None))
+                        if (event == 'c_return' and owner is not None
+                                and owner_module == 'skimagexx._core'
                                 and getattr(arg, '__name__', None) == 'run'):
                             completions.append('run')
 
@@ -56,6 +75,7 @@ def audit_installed_product():
                     actual = observer.observe(case, xx.filters.threshold_li)
                 finally:
                     sys.setprofile(previous_profile)
+                write_observation(journal, workers, case, actual, completions, compiled_events, attempts)
                 assert not attempts, (case['id'], attempts)
                 route = case['proposed_route']
                 assert len(completions) == int(route == 'solver'), (case['id'], completions)
@@ -78,15 +98,16 @@ def audit_installed_product():
     finally:
         xx.set_num_threads(1)
         xx.set_fallback_enabled(previous_fallback)
+        journal.close()
     assert totals == dict(solver=42, early=10, **{'native-error': 4, 'provider': 30})
     print(json.dumps(dict(profile=observer.AUTH['profile'], observations=sum(totals.values()),
                           actual_CPP_solver_completions=totals['solver'], routes=dict(totals),
                           private_adapter=False, operation_timings=0), sort_keys=True))
 
 
-def test_installed_li_u16_exact_original_parity():
+def test_installed_li_u16_exact_original_parity(tmp_path):
     result = subprocess.run([sys.executable, '-X', 'utf8', '-B', str(Path(__file__).resolve()),
-                             '--audit-installed-product'], capture_output=True, text=True,
+                             '--audit-installed-product', str(tmp_path / 'observations.jsonl')], capture_output=True, text=True,
                             encoding='utf-8', timeout=180)
     assert result.returncode == 0, result.stdout + result.stderr
     report = json.loads(result.stdout)
@@ -96,5 +117,5 @@ def test_installed_li_u16_exact_original_parity():
 
 
 if __name__ == '__main__':
-    assert sys.argv[1:] == ['--audit-installed-product']
-    audit_installed_product()
+    assert len(sys.argv) == 3 and sys.argv[1] == '--audit-installed-product'
+    audit_installed_product(sys.argv[2])

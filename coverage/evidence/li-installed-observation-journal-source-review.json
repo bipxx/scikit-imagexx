@@ -1,0 +1,48 @@
+{
+  "schema": "li-installed-journal-source-review-v1",
+  "source_donor": "87b99a57b935e09d64ff569fe2ed900122118603",
+  "base": "e8de8bfbef1cd9f199df1bb8ac8d917a54311d9e",
+  "main_port_scope": [
+    {
+      "path": "tests/test_li_u16_pipeline.py",
+      "bytes": 6461,
+      "sha256": "f869d60773fd56529857a1b7dfcf69d11b9225177a611ec522012f8961ea5844"
+    },
+    {
+      "path": "tests/test_li_u16_pipeline_metadata.py",
+      "bytes": 1780,
+      "sha256": "f10bbdc05943f1dff900f8af0f85e92805ee4ed5bb08932e5d5be6b9b3dbaddf"
+    }
+  ],
+  "independent_review": {
+    "path": "build/resume-20261025/public201-failure-repair/independent-source-review.json",
+    "sha256": "80cee51e3457f66e9771521a705c22132d1c86f811c44398a0a8a140a5d5cff5"
+  },
+  "metadata_checks": 2,
+  "metadata_results": [
+    {
+      "path": "build/resume-20261025/li-installed-journal-main/metadata.xml",
+      "sha256": "12389ae8233fc222592b549416333aaf47431fc2d7963244e05314295ec3cbab"
+    },
+    {
+      "path": "build/resume-20261025/li-installed-journal-main/metadata.log",
+      "sha256": "7a1a8845c577be5b8c106736d829d0206f2d20638f38f6e51d1a84cea2e80dc9"
+    },
+    {
+      "path": "build/resume-20261025/li-installed-journal-main/metadata-exit.json",
+      "sha256": "9bb69160e1d7146f9eca4dc5d7884abbf7eca108862a4b56f824ef8c664fab3d"
+    }
+  ],
+  "disposition": "Admit only reviewed Li forensic journal/test source. Full raw caught outcome and observed core C events flush before unchanged completion/route/parity assertions. Qualifier seals the JSONL under its existing basetemp manifest.",
+  "unchanged": [
+    "Original86cases and42CPPsolver requirement",
+    "Completion predicate and every original audit assertion AST",
+    "Production kernels/binders/PythonAPI",
+    "Defaultworkers1/global optionalworkers",
+    "Accepted199 products and all raw failed200 records"
+  ],
+  "limits": [
+    "No Li runtime cause or fix claimed; same failed283binary hosted diagnostic pending.",
+    "No local image calls, candidate imports, builds or timings."
+  ]
+}
