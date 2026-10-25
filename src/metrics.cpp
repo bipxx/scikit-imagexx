@@ -12,6 +12,13 @@
 #include <stdexcept>
 #include <type_traits>
 
+#ifdef SKIMAGEXX_AVX2
+namespace skimagexx::simd {
+// Internal speculative range leaf; no installed SDK surface is added.
+bool metric_swapped_f32_range(const unsigned char*,std::size_t,MetricRawRange&);
+}
+#endif
+
 namespace skimagexx {
 namespace {
 template<class T> T read(const unsigned char* data,bool swap) {
@@ -180,9 +187,9 @@ template<class T,bool Boolean=false,bool Half=false> MetricRawRange raw_range(co
     // Repeated broadcast values cannot change min/max or NaN presence.
     for(std::size_t axis=0;axis<lengths.size();++axis)if(view.strides[axis]==0){n/=lengths[axis];lengths[axis]=1;}
     if constexpr(!Half) {
-        // Numeric bounds do not depend on traversal order. Dense native
-        // layouts (including F-order and reversals) can share the SIMD range
-        // scan without allocating a normalized image.
+        // Dense layouts (including F-order and reversals) can scan physical
+        // storage without allocating a normalized image. The swapped-f32
+        // leaf rejects zero ties and exceptional values before any FP work.
         auto dense=[&](bool fortran) {
             std::size_t stride=sizeof(T);
             for(std::size_t i=0;i<lengths.size();++i) {
@@ -194,11 +201,15 @@ template<class T,bool Boolean=false,bool Half=false> MetricRawRange raw_range(co
             }
             return true;
         };
-        if(!view.swap && (dense(false) || dense(true))) {
+        if((!view.swap || std::is_same_v<T,float>) && (dense(false) || dense(true))) {
             std::ptrdiff_t first=0;
             for(std::size_t axis=0;axis<lengths.size();++axis)if(view.strides[axis]<0)first+=std::ptrdiff_t(lengths[axis]-1)*view.strides[axis];
             const auto* data=static_cast<const unsigned char*>(view.data)+first;
-            if(std::uintptr_t(data)%alignof(T)==0) {
+#ifdef SKIMAGEXX_AVX2
+            if constexpr(std::is_same_v<T,float>)
+                if(view.swap && n>=8 && has_avx2() && simd::metric_swapped_f32_range(data,n,result))return result;
+#endif
+            if(!view.swap && std::uintptr_t(data)%alignof(T)==0) {
                 const auto info=detail::resize_range_into(data,n,view.type,&low,&high);
                 result.has_nan=info.has_nan;
                 std::memcpy(&result.low,&low,sizeof(T));std::memcpy(&result.high,&high,sizeof(T));return result;

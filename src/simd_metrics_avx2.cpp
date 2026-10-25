@@ -122,6 +122,42 @@ __m256d load(const MetricImageView& view,std::ptrdiff_t offset,std::ptrdiff_t st
     }
 }
 }
+bool metric_swapped_f32_range(const unsigned char* data,std::size_t count,MetricRawRange& result) {
+    if(count<8)return false;
+    const auto reverse=_mm256_setr_epi8(3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12,
+                                        3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12);
+    const auto exponent=_mm256_set1_epi32(0x7f800000),sign=_mm256_set1_epi32(-2147483647-1);
+    auto low=_mm256_set1_epi32(-1),high=_mm256_setzero_si256();
+    std::size_t i=0;
+    for(;i+8<=count;i+=8) {
+        const auto bits=_mm256_shuffle_epi8(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+4*i)),reverse);
+        const auto exp=_mm256_and_si256(bits,exponent);
+        const auto rejected=_mm256_or_si256(_mm256_cmpeq_epi32(exp,_mm256_setzero_si256()),_mm256_cmpeq_epi32(exp,exponent));
+        if(_mm256_movemask_epi8(rejected))return false;
+        // Integer ordering is exact for finite normal IEEE754 values. Reject
+        // zeros/subnormals/NaNs/Inf so DAZ, zero ties and FP exception behavior
+        // remain entirely in the unchanged scalar path. No FP instruction is
+        // executed even speculatively, and false never modifies the output.
+        const auto key=_mm256_xor_si256(bits,_mm256_or_si256(_mm256_srai_epi32(bits,31),sign));
+        low=_mm256_min_epu32(low,key);high=_mm256_max_epu32(high,key);
+    }
+    alignas(32) std::uint32_t lows[8],highs[8];
+    _mm256_store_si256(reinterpret_cast<__m256i*>(lows),low);_mm256_store_si256(reinterpret_cast<__m256i*>(highs),high);
+    std::uint32_t minimum=lows[0],maximum=highs[0];
+    for(int lane=1;lane<8;++lane){if(lows[lane]<minimum)minimum=lows[lane];if(highs[lane]>maximum)maximum=highs[lane];}
+    for(;i<count;++i) {
+        std::uint32_t bits;std::memcpy(&bits,data+4*i,4);
+        bits=((bits&0x000000ffu)<<24)|((bits&0x0000ff00u)<<8)|((bits&0x00ff0000u)>>8)|((bits&0xff000000u)>>24);
+        const auto exp=bits&0x7f800000u;
+        if(exp==0 || exp==0x7f800000u)return false;
+        const auto key=bits^((bits&0x80000000u) ? 0xffffffffu:0x80000000u);
+        if(key<minimum)minimum=key;if(key>maximum)maximum=key;
+    }
+    result.low=minimum^((minimum&0x80000000u) ? 0x80000000u:0xffffffffu);
+    result.high=maximum^((maximum&0x80000000u) ? 0x80000000u:0xffffffffu);
+    result.has_nan=false;
+    return true;
+}
 bool metric_leaf_classify(const double* error,const double* energy,const double* values,std::size_t count,
                          MetricNormalization mode,MetricSums& result) {
     // Inspect exponent bits before any floating range comparison. Exceptional
