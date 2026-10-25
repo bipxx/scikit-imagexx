@@ -190,3 +190,7 @@ coverage/evidence/h203-failed-qualification-diagnosis.json -text
 coverage/evidence/footprint-initial-capture-failure.json -text
 coverage/evidence/h203-diagnostic-projection-source-admission.json -text
 coverage/evidence/colocalization-native-source-admission.json -text
+coverage/contracts/footprint-shapes-plan.json -text
+tests/footprint_shapes_cases.py -text
+tests/footprint_shapes_reference.py -text
+tests/test_footprint_shapes_contracts.py -text
