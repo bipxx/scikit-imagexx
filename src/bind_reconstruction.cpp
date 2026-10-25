@@ -37,6 +37,18 @@ struct Owners {
     }
     void check()const {for(const auto& node:nodes)node.check();}
 };
+// Pure integer arithmetic: certify the entire contiguous offset span against
+// the retained actual root, without touching any offset value.
+bool offset_span_inside(std::uintptr_t data,std::size_t bytes,std::uintptr_t root,std::size_t root_bytes) noexcept {
+    const auto limit=std::numeric_limits<std::uintptr_t>::max();
+    if(data<root || root_bytes>limit-root)return false;
+    const auto displacement=data-root;
+    return displacement<=root_bytes && bytes<=root_bytes-displacement;
+}
+void check_offset_span(const Owners& owner) {
+    owner.check();const auto& view=owner.nodes.front();const auto& root=owner.nodes.back();
+    if(view.bytes<0 || root.bytes<0 || !offset_span_inside(reinterpret_cast<std::uintptr_t>(view.data),std::size_t(view.bytes),reinterpret_cast<std::uintptr_t>(root.data),std::size_t(root.bytes)))throw py::value_error("reconstruction offset span outside owning allocation");
+}
 struct Input {
     py::array a;std::vector<std::size_t> shape;std::vector<std::ptrdiff_t> strides;
     skimagexx::ReconstructionView v;
@@ -68,6 +80,7 @@ void bind_reconstruction(py::module_& m) {
         if(!offset.dtype().equal(py::dtype::of<std::size_t>())||offset.ndim()!=1||!(offset.flags()&py::array::c_style)||reinterpret_cast<std::uintptr_t>(offset.data())%alignof(std::size_t))throw py::type_error("reconstruction offset must be native contiguous size_t vector");
         skimagexx::ReconstructionZero z;if(!zero.is_none()){z.supplied=true;z.negative=zero.cast<bool>();}
         sa.check();sb.check();sf.check();so.check();Input a(sa),b(sb),fp(sf);sa.check();sb.check();sf.check();so.check();
+        check_offset_span(so);
         auto offsets=skimagexx::ReconstructionSpan<const std::size_t>{static_cast<const std::size_t*>(offset.data()),std::size_t(offset.size())};
         skimagexx::ReconstructionFootprint f{fp.v,offsets};auto requested=static_cast<skimagexx::ReconstructionQueue>(queue);auto r=skimagexx::reconstruction_requirements(a.v,b.v,f,requested);
         std::vector<py::ssize_t> padded;for(std::size_t d=0;d<a.shape.size();++d)padded.push_back(py::ssize_t(a.shape[d]+fp.shape[d]-1));
@@ -75,7 +88,7 @@ void bind_reconstruction(py::module_& m) {
         py::array out(dtype,padded),bounds(dtype,std::vector<py::ssize_t>{py::ssize_t(r.samples)});
         std::vector<std::size_t> to(r.samples),from(r.padded_samples),nodes(r.samples),positions(r.samples),heads(r.bucket_heads);std::vector<std::ptrdiff_t> neighbors(r.neighbor_capacity);
         skimagexx::ReconstructionBuffers buffers{{static_cast<unsigned char*>(out.mutable_data()),std::size_t(out.nbytes())},{static_cast<unsigned char*>(bounds.mutable_data()),std::size_t(bounds.nbytes())},writable(to),writable(from),writable(nodes),writable(positions),writable(heads),writable(neighbors)};
-        sa.check();sb.check();sf.check();so.check();
+        sa.check();sb.check();sf.check();so.check();check_offset_span(so);
         skimagexx::ReconstructionInfo result;{py::gil_scoped_release release;result=skimagexx::reconstruction_into(a.v,b.v,f,static_cast<skimagexx::ReconstructionMethod>(method),buffers,z,requested);}
         ++counters[3];py::dict info;info["queue"]=int(result.queue);info["preprocessing_workers"]=result.preprocessing_workers;info["preprocessing_simd"]=result.preprocessing_simd;info["parallel_flood"]=result.parallel_flood;
         return py::make_tuple(out,info);
