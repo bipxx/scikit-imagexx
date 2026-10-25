@@ -29441,7 +29441,8 @@
       "base_sha": "c2c0d035b805265728bb183f859c855a3f1554a5",
       "state": "validating",
       "owns": [
-        "build/resume-20261025/public199-review"
+        "build/resume-20261025/public199-review",
+        "build/genuine199-skylakex-hosted/3c87fbf"
       ],
       "ownership_scope": "Exact isolated worktree paths distinguish independent candidate patches; root remains sole main/shared integration owner.",
       "public_registration": true,
@@ -29493,28 +29494,14 @@
         "protected_artifacts": []
       },
       "full_product_dispatch": {
-        "source": "a567c5d775bdc82f3b3aba7a1e8ba9a33fc50679",
-        "run": 40117331038,
-        "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40117331038",
-        "status": "terminal-failed-not-accepted",
-        "previous_failed_run": 40115365507,
-        "previous_failure": "Before product build: synthetic metadata fixture incorrectly imported NumPy; minimum interpreter AST witness was version-specific. Both fixed in metadata only;570 bootstrap guards pass on3.11 and3.13 with numerical imports blocked.",
-        "runtime_source_changed_from_c05": false,
-        "all_four_jobs_failed": true,
-        "retained_manifest": {
-          "path": "build/genuine199-corrected-hosted-observation/40117331038/retained-v1/manifest.json",
-          "bytes": 899847,
-          "sha256": "dbab8e1490c5c05c8cd91a6eee76a8a4a70eabb581dba70138851791170b7397"
-        },
-        "failures": [
-          "Windows: natural initial certificate refuses actual SkylakeX runtime before public groups.",
-          "Linux:12shared closing dtype metadata failures;19of20SDKclients pass, max-tree client lacks original-oracle argument."
-        ],
-        "private_fixes": {
-          "dtype_source": "c98ec8e026a8e067ad1ecc6d90bb6d3a7c567b83",
-          "SDK_registration_source": "ca32dfa1679393a512f449e0939fd690b00f747c"
-        },
-        "next": "Original-only Windows runtime characterization, then compose/requalify exact fixes; no public199 acceptance."
+        "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+        "run": 40161615893,
+        "status": "running-not-accepted",
+        "proof": {
+          "path": "coverage/evidence/public199-skylakex-dispatch.json",
+          "bytes": 1796,
+          "sha256": "ef5ef63be5eb585dd77d0c8a2acd8478e7a04f25790251449316f997f2d19eb2"
+        }
       },
       "diagnostic_probe": {
         "run": 40121459877,
@@ -30064,10 +30051,10 @@
       "id": "tv-single-admission-comparison-review",
       "kind": "tooling",
       "apis": [],
-      "owner": "astra_max_plan_audit",
+      "owner": "integrator",
       "branch": "feature/tv-single-admission-compare",
       "base_sha": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
-      "state": "validating",
+      "state": "preparing",
       "owns": [
         "build/resume-20261025/tv-review",
         "build/worktrees/tv-single-admission-compare/benchmarks/tv_chambolle_admission_compare.py",
@@ -30088,6 +30075,21 @@
         "public_native": false,
         "root_review_before_dispatch": true,
         "local_operation_timings": false
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
+          "manifest": {
+            "path": "coverage/evidence/tv-admission-comparison-reviewed.json",
+            "bytes": 1663,
+            "sha256": "1cabece189a568d6c8ad0ed5a57a18d468cdc6b70ff4304d9032e4299950ebcb"
+          }
+        }
+      },
+      "merge": {
+        "commit": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
+        "main_commit": "9f834bbff351ebbb66f98271bc30c07789495efb"
       }
     },
     {
@@ -30113,6 +30115,35 @@
         "private_only": true,
         "signed_zero_provider_frontier_explicit": true,
         "local_operation_timings": false
+      }
+    },
+    {
+      "id": "shared-experiment-publication",
+      "kind": "tooling",
+      "apis": [],
+      "owner": "astra_max_plan_audit",
+      "branch": "feature/experiment-publication-shared",
+      "base_sha": "9f834bbff351ebbb66f98271bc30c07789495efb",
+      "state": "implementing",
+      "owns": [
+        "build/worktrees/experiment-publication-shared/tools/experiment_publication.py",
+        "build/worktrees/experiment-publication-shared/tests/test_experiment_publication.py",
+        "build/worktrees/experiment-publication-shared/.github/workflows/experiment-publication.yml"
+      ],
+      "depends_on": [
+        "tv-single-admission-comparison-review"
+      ],
+      "dependency_requirements": {
+        "tv-single-admission-comparison-review": {
+          "evidence_scope": "tooling",
+          "source_sha": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd"
+        }
+      },
+      "acceptance": {
+        "metadata_only": true,
+        "fixed_validator_registry": true,
+        "no_numerical_imports": true,
+        "root_review_before_dispatch": true
       }
     }
   ],
@@ -30837,7 +30868,7 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "astra_max_plan_audit": [
-        "tv-single-admission-comparison-review"
+        "shared-experiment-publication"
       ],
       "astra_max_api_paths": [
         "matrix-transform-public199-integration"
@@ -30847,7 +30878,7 @@
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "tv-single-admission-comparison-review",
+      "astra_max_plan_audit": "shared-experiment-publication",
       "astra_max_api_paths": "matrix-transform-public199-integration",
       "resize_api": "reconstruction-native-kernel"
     },

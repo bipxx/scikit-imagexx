@@ -14,6 +14,13 @@ Li solver matches from 24 unsupported warning-policy projections. The broader
 312-case audit retains its unsupported/provider/unsafe partitions. This adds no
 native API paths or performance result.
 
+The independently reviewed TV comparison controller is merged as `9f834bb`;
+its root-reviewed experiment keeps actual `5e068a5` and `af7b2af` product labels.
+The [controller review](evidence/tv-admission-comparison-reviewed.json) has no
+new timing result. The [exact 199-path qualification](evidence/public199-skylakex-dispatch.json)
+was dispatched once as run `40161615893`; all four genuine outcomes and retained
+artifact acceptance are required before increasing coverage from 192.
+
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
 This revision authorizes no implementation, build, image call, measurement,

@@ -116,3 +116,5 @@ coverage/evidence/max-tree-sdk-oracle-private.json -text
 coverage/contracts/iterative-thresholds.json -text
 coverage/contracts/li-default-policy.json -text
 coverage/evidence/iterative-threshold-expanded-audit.json -text
+coverage/evidence/public199-skylakex-dispatch.json -text
+coverage/evidence/tv-admission-comparison-reviewed.json -text
