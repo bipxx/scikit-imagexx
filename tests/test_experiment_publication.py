@@ -14,7 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('publication_under_test', ROOT / 'tools/experiment_publication.py')
 p = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(p)
-REVISION = '9f834bbff351ebbb66f98271bc30c07789495efb'
+# Synthetic certificates use the current compatible controller snapshot;
+# previously published experiment bytes and controller revisions stay frozen.
+REVISION = '9340b1cd4232d89676335c301a41817d34280db9'
 
 
 @pytest.fixture(autouse=True)
