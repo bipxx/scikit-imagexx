@@ -1,0 +1,41 @@
+{
+  "schema": "root-h-windows-checkout-source-admission-v1",
+  "source": "869893eb869f014fa782e8a8054261a639f94059",
+  "base": "493589918ee7679f8fad4c095480741c3d108243",
+  "manifest": {
+    "path": "build/worktrees/h-installed-windows-metadata/build/source-proof-v1/manifest.json",
+    "bytes": 3397,
+    "sha256": "ac0ab0188cdad00fa10441c91d123f25c4aaafb8031ea39173c2ade274b6e838"
+  },
+  "handoff": {
+    "path": "build/worktrees/h-installed-windows-metadata/build/source-proof-v1/source-handoff.json",
+    "bytes": 1431,
+    "sha256": "3472b780eb7790a3694a4a9fb8e6ffaed8340e7b3f9742dc9085ddae81787e57"
+  },
+  "root_review": [
+    "Three-file diff reviewed; only helper checkout rule, all/windows selector and three metadata controls",
+    "All original metadata AST nodes unchanged; diagnostic tools/fixed input raw bytes exact493",
+    "Real Git checkout demonstrates CRLF44e37e54 without rule versus exact3a86441c with rule",
+    "All four OS/interpreter mappings preserved; followup explicitly Windows only",
+    "35 stdlib checks per Windows/modern and actionlint passed; source/proof failures retained"
+  ],
+  "original_run": 40228411066,
+  "original_run_conclusion": "failure",
+  "original_profiles": {
+    "modern": "success",
+    "minimum": "success",
+    "debug": "success",
+    "windows": "metadata failure before product diagnostic"
+  },
+  "windows_failure_review": {
+    "path": "build/resume-20261025/h-same-product-diagnostic-windows-failure-review/final-review.json",
+    "bytes": 3298,
+    "sha256": "be8f93cc5bdf746aefb1001cf44355e3005c55ccaf95ed19bbc7726c3d799925"
+  },
+  "crlf_on_failed_host": "supported inference; actual failed host helper bytes were not logged",
+  "windows_diagnostic_only_authorized": true,
+  "product_build_authorized": false,
+  "whole_product_acceptance": false,
+  "performance_accepted": false,
+  "accepted_public_native_partial_apis": 199
+}
