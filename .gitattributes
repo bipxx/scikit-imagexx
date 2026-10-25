@@ -144,3 +144,4 @@ coverage/contracts/li-u16-bounded.json -text
 coverage/evidence/li-u16-private-admission.json -text
 coverage/contracts/reconstruction-benchmark.json -text
 coverage/evidence/reconstruction-benchmark-reference-admission.json -text
+coverage/evidence/li-u16-installed-gate-source-review.json -text

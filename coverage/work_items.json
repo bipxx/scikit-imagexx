@@ -30450,7 +30450,7 @@
       "owner": "astra_max_api_paths",
       "branch": "feature/li-u16-bounded",
       "base_sha": "18442a1e260b9dd8489fb45bf60a3ff7072e5a4b",
-      "state": "parity_passed",
+      "state": "performance_pending",
       "owns": [
         "build/worktrees/li-u16-bounded",
         "build/resume-20261025/li-intake-diagnosis"
@@ -30469,7 +30469,23 @@
       "binding_extraction_source": "18f45995af2534e8953a200b6d0006c506403ebd",
       "root_source_review": "Verbatim Li binding/log extraction read; bounded production-TU design accepted. Typed uint16 intake delta must be reviewed before private builds.",
       "public_acceptance": false,
-      "current_checkpoint": "Independent private review669e9a passed; root source admission/merge pending. No installed-product or performance acceptance."
+      "current_checkpoint": {
+        "status": "private-admitted-source-merged-installed-gate-source-reviewed-not-executed",
+        "private_admission": {
+          "path": "coverage/evidence/li-u16-private-admission.json",
+          "bytes": 2596,
+          "sha256": "393a4c832bdd28622b26dc4222346f33f2e8f2df6159239a5ad234b439354560"
+        },
+        "installed_gate_source_review": {
+          "path": "coverage/evidence/li-u16-installed-gate-source-review.json",
+          "bytes": 2220,
+          "sha256": "97e23832f41b906d130108aeb07dbbd2985698c867cb9fb27c8c2e042e6f3976"
+        }
+      },
+      "merge": {
+        "commit": "2abd0acc9b421d80a6554a840e603c0bc731f5fc",
+        "main_commit": "4d8f54f"
+      }
     },
     {
       "id": "h-extrema-kernel",
@@ -30513,7 +30529,23 @@
       "untimed_independent_oracles": 16,
       "timings": 0,
       "public_acceptance": false,
-      "current_checkpoint": "Independent reference-only reviewf88c433 passed. Root merge pending; mandatory prospective terrain supplement before timing."
+      "current_checkpoint": {
+        "status": "reference-only-admitted-merged-no-timing",
+        "proof": {
+          "path": "coverage/evidence/reconstruction-benchmark-reference-admission.json",
+          "bytes": 2040,
+          "sha256": "fd73ea1a72bb65f7ab5a2312a8ed703cddf6d1f22f21d242131076634b2f4a25"
+        },
+        "mandatory_before_first_timing": [
+          "multiple markers",
+          "plateaus/barriers/corridors",
+          "high-cardinality floating terrain"
+        ]
+      },
+      "merge": {
+        "commit": "af7ae2a294d41f8d6bcd44abe4a604511419bb9f",
+        "main_commit": "dd32011"
+      }
     },
     {
       "id": "reconstruction-descriptor-hardening",
@@ -31527,7 +31559,8 @@
       "required_before_freeze": [
         "Narrow reconstruction descriptor overlap review/hardening.",
         "Compose reviewed increments with current main; authenticate new source without relabeling b4 or d92."
-      ]
+      ],
+      "Li_increment": "2abd0acc9b421d80a6554a840e603c0bc731f5fc"
     }
   },
   "parallel_review": {

@@ -61,6 +61,18 @@ before whole qualification, avoiding a separate product build solely for it.
 The admitted199 products remain pinned to `d92d9ff`; the separately merged
 metrics delta is not part of those binaries.
 
+Li's bounded uint16 extension `2abd0ac` is [privately admitted](evidence/li-u16-private-admission.json)
+and merged as `4d8f54f`: values0..255 reuse the unchanged byte histogram/solver,
+with checked owner extents and alignment-safe copies. The independently reviewed
+[installed gate](evidence/li-u16-installed-gate-source-review.json) requires 86 exact
+observations and 42 actual solver completions per mode, plus an assertion-enabled
+native CTest. Its runtime execution, cumulative product and timing remain pending.
+
+The [reconstruction benchmark reference](evidence/reconstruction-benchmark-reference-admission.json)
+is merged as `dd32011`: 192 original observations and 270 checks, with no native
+or timing credit. Multiple markers, barrier/plateau/corridor and high-cardinality
+floating terrain supplements are mandatory before its first timing campaign.
+
 Historical paused planning snapshot (superseded by active execution above):
 Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
 `12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.

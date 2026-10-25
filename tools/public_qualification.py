@@ -363,6 +363,8 @@ def groups_for_source(root):
     groups = dict(_BASE_GROUPS)
     if (Path(root) / 'tests/test_rank_windowed_counts_pipeline.py').is_file():
         groups['public-counts'] = ('test_rank_windowed_counts_pipeline.py',)
+    if (Path(root) / 'tests/test_li_u16_pipeline.py').is_file():
+        groups['public-Li-u16'] = ('test_li_u16_pipeline.py',)
     return groups
 
 
