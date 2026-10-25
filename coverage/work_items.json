@@ -30751,19 +30751,15 @@
     "exception_metadata_provider_names": 1
   },
   "execution_policy": {
-    "active_workers": [
-      "metrics_reductions",
-      "resize_api",
-      "resize_bench"
-    ],
+    "active_workers": [],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "On explicit goal resume, choose a ready packet and an idle one of the three recorded workers; bind the exact followup_task handoff after checking capacity. While paused, inspection and review do not launch implementation.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "active",
-    "mode": "executing",
+    "implementation_goal_status": "paused",
+    "mode": "planning-review-only",
     "reserved_worker_lanes": [
       "metrics_reductions",
       "resize_api",
@@ -30786,11 +30782,7 @@
         "max-tree-public-benchmark-consumer"
       ]
     },
-    "current_three_agent_packets": {
-      "metrics_reductions": "tv-finite-single-admission",
-      "resize_api": "iterative-threshold-contracts",
-      "resize_bench": "matrix-transform-skylakex-reference"
-    },
+    "current_three_agent_packets": {},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -30925,7 +30917,62 @@
       "accepted_measured_baseline": true,
       "performance_target_met": false,
       "all108_regressions_retained": true
-    }
+    },
+    "assignments_before_pause_historical": {
+      "metrics_reductions": "tv-finite-single-admission",
+      "resize_api": "iterative-threshold-contracts",
+      "resize_bench": "matrix-transform-skylakex-reference"
+    },
+    "pause_rule": "No implementation launch, builds, measurements, hosted dispatch or merge of implementation candidates until explicit user resume. Current authorization covers Astra max plan review and planning artifacts only.",
+    "paused_checkpoints": {
+      "public199": {
+        "source": "3c87fbfdc425c953a280eaabf5934cada746f56d",
+        "worktree": "build/worktrees/public199-skylakex-readiness",
+        "evidence_path": "build/worktrees/public199-skylakex-readiness/build/composition/manifest.json",
+        "kind": "integration-candidate",
+        "status": "frozen-handoff/root-review-pending",
+        "public_acceptance": false,
+        "next_action": "Root review then one genuine four-profile whole-product qualification; metadata guards alone do not admit199."
+      },
+      "tv_comparison": {
+        "source": "8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd",
+        "worktree": "build/worktrees/tv-single-admission-compare",
+        "evidence_path": "build/worktrees/tv-single-admission-compare/build/admission-controller-review/manifest.json",
+        "kind": "measurement-controller-draft",
+        "status": "frozen-handoff/root-review-pending",
+        "public_acceptance": false,
+        "next_action": "Root review frozen controller/header projection and six genuine product frames before isolated original/5e/af7 measurement."
+      },
+      "iterative_threshold_reference": {
+        "source": "1329cbb9a6f514a19936938936ba066ae8698dde",
+        "worktree": "build/worktrees/iterative-threshold-contracts",
+        "evidence_path": "build/worktrees/iterative-threshold-contracts/build/iterative-threshold-evidence/manifest.json",
+        "kind": "reference-and-private-audit",
+        "status": "frozen-handoff/root-review-pending",
+        "public_acceptance": false,
+        "next_action": "Review expanded312reference and actual qualified native findings; no new native paths."
+      },
+      "li_default_reference": {
+        "source": "337ba1b5d759af3d056415a1f682b73f845242b0",
+        "worktree": "build/worktrees/li-default-policy-contracts",
+        "evidence_path": "build/worktrees/li-default-policy-contracts/build/li-default-reference/manifest.json",
+        "kind": "reference-and-private-audit",
+        "status": "frozen-handoff/root-review-pending",
+        "public_acceptance": false,
+        "next_action": "Review40-case supplement including38actual solver cases and2intentional error-policy exclusions."
+      },
+      "reconstruction_reference": {
+        "source": "600a403c1368b99e5d85200bc4f6eb6ed262ea0c",
+        "worktree": "build/worktrees/reconstruction-native",
+        "evidence_path": "build/worktrees/reconstruction-native/build/reference/manifest.json",
+        "kind": "reference-with-unbuilt-draft-kernel",
+        "status": "frozen-handoff/root-review-pending",
+        "public_acceptance": false,
+        "next_action": "Review source-backed reference; preserve dirty kernel draft. Resolve signed-zero provider/native frontier before native ABI/build.",
+        "unfinished_source_must_be_preserved": true
+      }
+    },
+    "ledger_freshness_boundary": "Historical packet state/queues and old current_* fields are preserved provenance, not live scheduling. paused_checkpoints supersedes them; reconcile source-scoped packet proofs before resuming. No evidence is promoted by this planning edit."
   },
   "parallel_review": {
     "completed_at_utc": "2026-10-23T13:50:10.721071+00:00",
@@ -31660,5 +31707,37 @@
     "removed": "build/worktrees/tv-admission-public",
     "head": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
     "all_readers_released": true
+  },
+  "planning_revision": {
+    "review_model": "gpt-6-astra",
+    "reasoning_effort": "max",
+    "scope": "Planning only; implementation remains paused",
+    "per_api_roadmap": "coverage/API_IMPLEMENTATION_PATHS.json",
+    "human_roadmap": "coverage/API_IMPLEMENTATION_PATHS.md",
+    "audit": "coverage/PLAN_REVIEW_ASTRA.md",
+    "accepted_image_paths": 192,
+    "upstream_only_paths": 277,
+    "public_inventory_paths": 477,
+    "historical_packets_not_completion_evidence": true,
+    "review_completed_date": "2026-10-25",
+    "implementation_remains_paused": true,
+    "api_routes": 477,
+    "class_followup": {
+      "classes": 29,
+      "static_members": 284
+    },
+    "families": 23,
+    "shared_primitives": 17,
+    "identity_aliases": 26,
+    "check_command": "python tools/generate_api_implementation_paths.py --check",
+    "independent_metadata_negative_checks": [
+      "duplicate API rejected",
+      "inventory-status drift rejected",
+      "dangling dependency rejected",
+      "missing route rejected",
+      "false measurement claim rejected",
+      "class member omission rejected"
+    ],
+    "remaining_evidence_boundary": "Planning routes and effort estimates are proposals, not newly implemented algorithms, accepted parity, or benchmark results."
   }
 }

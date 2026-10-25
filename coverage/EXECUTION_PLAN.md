@@ -1,362 +1,337 @@
-# Parallel implementation and validation plan
+# Complete scikit-image implementation plan
 
-Implement the complete scikit-image API in optimized C++ with interchangeable
-Python calls, per-function parity, optional process-global workers (default one),
-and isolated one-worker comparisons against scikit-image 0.26.0. This includes
-classes, nested namespaces, data and I/O. Private helpers and compatibility
-forwarding do not count as completed public implementations.
+Planning revision: 2026-10-25, audited on 2026-10-24–25 from main
+`12fad3488178f52d52d8b4fd161e59790fe63d17`. The implementation goal is **paused**.
+This revision authorizes no implementation, build, image call, measurement,
+hosted dispatch, implementation-candidate merge/push, or cleanup. Validation and
+publication of these planning documents are permitted. The assignments below are
+the execution plan for an explicit resume, not a claim that workers are running.
 
-The current inventory contains 477 public paths: 192 native-partial image entries,
-three metadata functions, four partial native classes, one exception metadata
-provider, and 277 upstream-only entries. The expansion adds 19
-source-backed public/legacy rank.generic aliases of existing algorithms, not
-19 additional algorithms. Three assessed public bilateral aliases add no algorithms. Imported dependencies are excluded from that count. It includes 29 classes with
-284 statically discovered member paths; constructors, state, runtime fields and
-additional namespaces still need assessment. These counts describe implementation
-classification, not verified parity or performance.
+Implement the complete pinned scikit-image 0.26.0 public API in optimized C++,
+with interchangeable Python calls, CPU SIMD where useful, one optional
+process-global worker setting that defaults to one, per-function parity, and
+isolated one-worker comparisons with the original library. Classes, their state
+and members, nested namespaces, data, and I/O remain in scope. A Python wrapper,
+upstream forwarding, a metadata count, or a private helper is not a completed
+native algorithm.
 
-The accepted whole7b product adds four R4 algorithms/eight public paths and
-byte-preserving consumer scans:171 partially native image paths. Eight actual
-normal/scalar Release/Debug profiles and fresh strict1379-case corpus checks
-pass; full104-member packages and59-member SDK/source equality authenticate
-explicitly inherited unaffected scopes. The published one-worker R4 comparison
-retains all 376 timings per runtime and all 120 slower cases. Large windowed
-histograms and selected noise-filter cases remain optimization targets.
-Failed whole8 and whole9 trials are retained without public acceptance. The
-whole9 products passed all 104 SDK checks but exposed three bilateral endian
-error-parity rows and two metadata issues. Corrected source `05e79eb`, run
-40063203314, passed all four actual products in normal/scalar modes and complete
-independent source/runtime/artifact review. The accepted checkpoint now has
-186 partially native image paths: nine percentile algorithms and three bilateral
-algorithms add 15 paths. The reverse-stride metrics change is parity accepted;
-its speed remains unmeasured. Whole11 now qualifies local Otsu, majority and their
-two generic aliases, bringing the accepted count to 190 partial image paths and
-31 canonical rank algorithms. Both exact controlled sources pass all four
-products: 649,056 before checks and 672,856 after checks, with 224 combined SDK
-checks and equal actual common build inputs. Controlled one-worker counts run `40084877921` has independently verified all three profiles and passed the root audit; the [full report, CSV and raw archive](../benchmarks/rank-statistics-counts-comparison.md) are published. All 376 IDs, seven paired rounds and every slower case are retained. These results apply to the frozen 190-path source pair.
-Whole12 now admits joined source `f87120c`: TV-Chambolle raises the count to 191
-partial image paths. All four actual products pass 698,448 selected mixed checks
-and 136 SDK client checks, with complete 108-member wheels and 62-member SDKs.
-The previous failed TV run remains failed. Its published initial one-worker
-baseline retains all 70 cases per runtime, including 34/38/36 slower observations
-on Windows/modern/minimum Linux. Those timings remain tied to `f87120c`.
-Whole13 admits Bregman source `3cdd363`: 192 partial image paths, 704,760 mixed
-checks and 144 SDK checks with complete 110-member wheels and 63-member SDK18.
-The qualified source `5e068a5` adds logical strided-address cursors without
-adding API paths. All four normal/scalar profiles pass 707,800 mixed checks and
-144 SDK checks. Its separate original/before/after comparison uses all 400 frozen
-observations before timing the fixed 70 cases in seven paired one-worker rounds.
-The [reviewed controller and certificate](evidence/tv-cursor-comparison-controller.json)
-preserve actual before `3cdd363` and after `5e068a5` product labels.
-Run `40119412201` is now complete and independently accepted. Its [published
-report, full CSV and raw archive](../benchmarks/tv-chambolle-cursor-comparison.md)
-retain all 210 rows, 4,410 samples and 129 cases slower than either comparator.
-One-worker geometric means are 1.316x/1.152x/1.244x versus original and
-1.207x/1.306x/1.194x versus prior C++; remaining regressions stay open.
-The combined 199-path/114-wheel/65-SDK20 candidate remains unaccepted: run
-`40117331038` failed all four jobs. Windows rejected matrix runtime authentication
-before public parity groups; Linux exposed closing-result dtype metadata and
-a missing original-oracle argument in the standalone max-tree SDK client.
-Private dtype fix `c98ec8e` and SDK registration fix `ca32dfa` have executed
-evidence but still need genuine whole-product integration. Fresh metadata probe
-`40121459877` identifies the unforced Windows OpenBLAS SkylakeX runtime; it
-does not execute or admit matrix arithmetic. Original-only characterization is
-the next independent runtime gate. Private matrix binding and six max-tree
-APIs have separate scoped parity proofs; neither increases accepted public counts.
-The [max-tree benchmark reference](evidence/max-tree-benchmark-reference.json)
-preserves all 351 source observations and 252 finite candidates per runtime;
-native admission and one-worker measurements remain pending.
-The TV single-admission source `585d568` has passed independent private
-review: 429,718 checked-entry assertions, 22,778 mixed pipeline checks and the
-unchanged 400-case provider corpus. Exact composed source `af7b2af` passed all
-[four qualification jobs](https://github.com/bipxx/scikit-imagexx/actions/runs/40128026938)
-and independent root review of 1,669 records: 707,800 mixed XML checks and 144
-SDK checks. It is merged and pushed as `bbc1fc1`; actual qualified packages keep
-their `af7b2af` labels. The [public evidence](evidence/tv-single-admission-whole.json)
-records 192 partial image paths, 110 wheel members and 63 SDK members across
-18 families. Its independent old-source control stays private-only. The new
-one-worker original/`5e068a5`/`af7b2af` comparison and exact two-edge private-header
-adapter remain pending; this increment adds no API paths or speed claim.
-The [closing dtype correction](evidence/max-tree-closing-dtype-private.json) and
-[SDK oracle registration](evidence/max-tree-sdk-oracle-private.json) also have
-independently verified private evidence. Their combined `cfb5c40` candidate still
-needs Windows matrix admission and fresh complete qualification.
-The integrator owns shared
-wiring, exact-source performance dispatch, prompt merges and cleanup.
+Use these documents together:
 
-Before resuming, [43 released metadata cache and temporary directories](evidence/released-metadata-scratch-cleanup-20261024.json)
-were removed after preserving 133,816 files and verifying every archived payload.
-The net logical payload reduction at accounting was 3.33 GB after retained
-archives, indices and receipts. All unfinished source, environments, original and
-qualified products, raw results and 170 protected receipts remain intact. Two
-redundant partial archives (17.7 MB) remain because automatic approval review
-blocked their deletion. The three workers have resumed the TV comparison
-adapter, a separate default-policy Li reference supplement, and the corrected
-199-path qualification candidate; those lanes add no accepted public paths yet.
-The merged TV admission worktree was then [retired normally](evidence/tv-admission-public-worktree-retirement.json)
-after all three readers released it; its 48 remaining ignored proof files are
-preserved in a verified archive with exact path redirects.
+- [Per-API implementation paths](API_IMPLEMENTATION_PATHS.md) and their
+  [machine-readable records](API_IMPLEMENTATION_PATHS.json) give every one of the
+  477 inventoried keys an easiest viable route, dependencies, hazards, native
+  frontier, SIMD/worker policy, next action, and measurement recipe.
+- [Astra plan review](PLAN_REVIEW_ASTRA.md) explains the evidence and tradeoffs
+  behind this revision.
+- [work_items.json](work_items.json) records packet ownership and proof pointers.
+  Its paused checkpoint records are current; older packet states and the old
+  dependency graph require reconciliation before they can launch work.
+- [api.json](api.json) is the observed API inventory. It describes implementation
+  classification, not accepted full argument coverage or speed.
+- The appendix below retains the important historical checkpoints. Historical
+  source labels, raw results, failures, and proof scopes must not be rewritten.
 
-## What changed after review
+## Accepted scope and frozen handoffs
 
-The previous sequence waited for each foundation, wrapper and benchmark in turn.
-Only shared integration needs that ordering. Kernel families, Python contracts,
-benchmark preparation and class discovery can proceed independently.
+| Inventory classification | Public keys | Meaning |
+|---|---:|---|
+| Native-partial image functions | 192 | An advertised subset executes natively; full argument and performance closure is still required. |
+| Metadata functions | 3 | Separate from computational algorithms. |
+| Native-partial classes | 4 | Coordinate/state support exists; independent fitting and matrix solvers remain incomplete. |
+| Exception metadata provider | 1 | Compatibility identity, not a numerical implementation. |
+| Upstream-only | 277 | Available through compatibility machinery, not native completion. |
+| Total | 477 | Includes aliases, classes, metadata, assets, and I/O; it is not an algorithm count. |
 
-Use four active agent slots: one integrator and three workers. Each worker owns
-an isolated worktree, explicit files and its own build cache. Frozen candidate
-wheels may be shared read-only. The integrator owns shared CMake/binding entry
-points, public exports, aliases, registry/inventory changes, installation and
-merges. Workers must not revert another worker's changes or edit shared files.
+The inventory includes 29 classes and 284 statically discovered member paths.
+Runtime fields, generated attributes, constructor/state behavior, and additional
+public namespaces need their own completion audit. The 19 `rank.generic` and
+three bilateral aliases reuse canonical algorithms but still need public path
+and signature checks. The old ledger's 391 unassigned API keys are assignment
+accounting, not 391 unimplemented algorithms.
 
-Test and benchmark paths in the inventory establish that files exist. They do
-not prove a passing contract, a measured source revision, or a speedup. Track
-those separately in [work_items.json](work_items.json) and packet evidence.
-
-## Three-agent review and worker lanes
-
-| Lane | Agent | Independent responsibility | Current checkpoint |
+| Checkpoint | Evidence already available | First action after resume | Acceptance boundary |
 |---|---|---|---|
-| Integrator | `root` | Shared core/SDK, registry/inventory, hosted measurements, prompt merges and cleanup | Qualified 192-path source `5e068a5` and its controlled TV report are merged; 199 remains a separate candidate. Review private fixes, retain failures and promptly merge validated increments. The clean merged report worktree is retired. |
-| Worker 1 | `metrics_reductions` | Exact TV qualification observation and raw retention | Follow the original `40128026938` observer/retainer through all four outcomes. Preserve genuine192/SDK18 products, all failures and the real5e before products; public acceptance and new speed evidence remain pending. |
-| Worker 2 | `resize_api` | Li and multi-Otsu original contracts | Capture genuine0.26 defaults, dtype/layout/histogram behavior and Li callbacks on existing runtimes, untimed. The separate corrected199 candidate and consumer `551451a` are frozen for root review; neither has public/native measurement acceptance. |
-| Worker 3 | `resize_bench` | Original-only Windows SkylakeX characterization | Controller `ac8a288` adds observed predivision trace provenance and fixed FMA product witnesses while preserving full374/4000 data. Root source review precedes any hosted reference; no production profile/allowlist change or native acceptance follows from metadata guards. |
+| Accepted TV admission, actual source `af7b2af`, merged as `bbc1fc1` | [Four-product qualification](evidence/tv-single-admission-whole.json): 707,800 mixed checks, 144 SDK checks, 110 wheel members, 63 SDK members, 18 SDK families | Consume the actual immutable `af7b2af` products for the new comparison | Accepted 192-partial-path parity; this change adds no API paths and has no new speed result. |
+| Combined 199-path candidate `3c87fbfdc425c953a280eaabf5934cada746f56d` | `build/worktrees/public199-skylakex-readiness/build/composition/manifest.json`: 2,001 metadata guards, four plans with zero listed blockers, zero whole-product builds | Review the composed source and runtime admission, then qualify that exact source once across all four profiles | Not whole-qualified. Never promote seven APIs from plans, metadata guards, or a failed predecessor. |
+| TV comparison controller `8dad040aef9c1cb0c7c4135ad8eff0fc8a136ddd` | `build/worktrees/tv-single-admission-compare/build/admission-controller-review/manifest.json`: four new files, 312 metadata guards, immutable product-pair checks | Review the exact header projection, common inputs, original/`5e068a5`/`af7b2af` roles and genuine product frames; reuse the fixed corpus | Draft controller only; no numerical experiment or timing has run. |
+| Iterative thresholds `1329cbb` and Li default supplement `337ba1b` | Original reference and actual qualified-kernel audit are frozen; the separate Li supplement has 38 solver cases and two intentional error-policy exclusions | Review source-backed findings; separate executed solver cases from metadata, unsupported inputs, and expected errors; choose one concrete coverage gap | Root review pending. The expanded 312-case reference does not mean 312 native solver matches. |
+| Reconstruction reference `600a403c1368b99e5d85200bc4f6eb6ed262ea0c` | 309 checks per runtime: 259 actual original Cython cases, 13 preentry rejects, three unsafe intake cases, plus other checks | Review the reference; decide signed-zero/provider behavior; preserve and then validate the unfinished scalar C++ draft | Reference only. The draft is unbuilt and has no native acceptance or timing. |
 
-The agent names are reused from earlier packets; they do not describe their
-current assignments. The recorded three-agent review and safe checkpoints are
-visible with `tools/work_queue.py --agents`. Live process state is checked with
-the collaboration agent tools, rather than inferred from this ledger.
+These handoffs have exact paths and next actions in the paused ledger. No frozen
+source is silently rebased, relabelled as main, or replaced with a reconstructed
+product. If matrix-specific admission still blocks a bounded 199-candidate
+preflight, prepare a separate fresh max-tree-only candidate from reviewed
+sources. That candidate must earn its own complete product qualification;
+failed 199 evidence cannot accept its six APIs. Do not rerun or cancel an already
+live campaign merely because an observer timed out.
 
-All three reviewers identified the same avoidable dependency: independent
-decomposition work waited for dense-kernel completion. The revised queue releases
-it from a versioned, hashed atom interface and requires joint kernel parity at
-integration. Component-consumer original contracts are also independent of native
-labeling. Their implementation waits for the frozen labeling interface.
+## Decide the contract before choosing the implementation
 
-## Retained checkpoints
+For each API row, freeze a small contract matrix before inspecting new candidate
+outputs. Cover the pinned signature/defaults, dtype and promotion, dimensions,
+channel/axis semantics, memory layout and overlap, allocation/view behavior,
+mutation, warnings/errors, callbacks, exceptional values, and provider calls.
+Select cases by behavioral partitions and boundary conditions, not by maximizing
+assertion counts. Add the relevant upstream tests and generated adversarial
+cases; record unassessed partitions explicitly. A common registry smoke test is
+necessary but does not replace this matrix.
 
-The following records describe their measured source revisions; the ledger above
-owns current assignment and readiness. A historical passing source does not
-establish complete parity or performance of a later cumulative package.
+Use the least complex route that satisfies the complete contract:
 
-The read-only planning reviewer completed its audit. Native half identity
-(`aed3349`) and public resize/rescale (`21ac60b`) are merged. The exact registered
-wheels passed 9,968 tests in each of six runtime/SIMD profiles, and the 373-case
-corpus passed untimed checks on all three runtimes at workers one and four.
-Performance run [39957875987](https://github.com/bipxx/scikit-imagexx/actions/runs/39957875987)
-uses source `66e5f78`; all six preparation/measurement jobs completed successfully. Observe this same run;
-do not restart it because of a queue or timeout. The [baseline report](../benchmarks/resize-public-initial.md) retains every sample
-and 49/52/61 slower cases across Windows/modern/minimum. Row-span normalization
-copies are the first measured-bottleneck trial. Actual complete packages pass
-10,918 public and 6,506 shared checks in each of six profiles; the unchanged
-373-case remeasurement is queued as
-[39987242238](https://github.com/bipxx/scikit-imagexx/actions/runs/39987242238).
+1. Reuse an already accepted canonical implementation for true aliases, while
+   checking each public path independently.
+2. Compose existing native primitives when their dtype, boundary, ordering, and
+   ownership rules match. Do not introduce another kernel or provider adapter
+   just to obtain a new API name.
+3. Port a simple scalar C++ implementation of the reference algorithm where a
+   primitive is missing. Establish finite, empty, exceptional, strided, and
+   mutable-input behavior before adding fast paths.
+4. Add SIMD and optional parallel work to independently computable hot loops.
+   Preserve scalar dispatch and the existing global worker setting. Measure the
+   public call, including conversions and allocation, before tuning further.
+5. For FFT, sparse/dense linear algebra, and codecs, evaluate a suitable C++
+   library behind a repository-owned contract instead of recreating a numerical
+   ecosystem. Pin and document its build and threading behavior. A call to the
+   original scikit-image algorithm, or a NumPy/SciPy algorithm provider, remains
+   an explicit native gap. Genuine external protocols such as user callbacks,
+   custom estimators, and codec plugins must retain their defined integration
+   behavior without being counted as native solvers.
 
-The private metrics baseline (`03581ae`, integrated as `99abcfc`) passed 4,082
-tests in each of six profiles through the actual shared `_core`. It is merged as
-`147bd8b`; original worker ancestry is retained by `1945c2e`. Follow-up `070fc64`
-fixes buffered reductions and default-policy details, passing six 4,308-case
-profiles plus native sanitizers. Stateful callback policies and exact combined
-optimized wheels remain registration gates. Private parity is scoped evidence.
-Metrics benchmark tooling (`6c74563`, merged as `d94ef6c`) has a fixed 1,231-case
-corpus, including 19 expected errors; its one-worker timing workflow is now queued.
-The combined public metrics, footprints and label package at `05c3506` now passes
-14,963 public-suite checks and 6,506 metadata/shared API checks in each of six
-runtime/SIMD profiles. All 18 dedicated untimed corpus runs pass at workers one
-and four, plus native tests, sanitizers and external SDK consumers. Counts include
-reference and metadata assertions; they are not distinct algorithm counts.
-The [acceptance record](evidence/public-wave1.json) seals 702 retained artifacts.
-These public integrations are parity-passed with performance pending. The one-worker
-[metrics](https://github.com/bipxx/scikit-imagexx/actions/runs/39983272390),
-[footprint](https://github.com/bipxx/scikit-imagexx/actions/runs/39983468427) and
-[label](https://github.com/bipxx/scikit-imagexx/actions/runs/39983471905)
-measurement workflows completed successfully. Their raw samples and every
-regression are retained in the three baseline reports. Metrics are slower
-overall (0.67–0.85x); footprint raster generation is 2.16–2.50x while decomposition
-and view setup remain slower. Labeling raster ratios are 0.82–1.40x with major
-large multivalued/high-connectivity regressions. These measurements leave
-optimization work, rather than proving completion of the performance objective.
+### Numerical parity policy
 
-Four public transform classes and canonical exception metadata now pass six
-7,520-check mixed public/state/shared profiles, supplementary standalone exception
-checks and a 296-case strict public corpus at workers one/four. Model classes
-remain partial: NumPy/SciPy matrix/fitting providers and external provider thread
-pools are explicit, with independent C++ solvers and performance still pending.
-Installed SDK foundations pass 26 native tests on Windows/Linux plus portable,
-sanitizer and external consumer gates. Private rank adds nine algorithms and
-component consumers add four public wrappers, accepted through eight actual
-Release/Debug package profiles with 5,795 checks each and three 474-path inventory
-checks. Returned ArrayMap stays internal. Nine rank algorithms still await their
-separate public package gates. Debug validation reproduced generic array
-dtype-reference access after GIL release; the four fixed bindings are undergoing
-full regression checks without disabling assertions. Completed worktrees are removed only after
-evidence archiving and clean/ancestor checks.
+Structural behavior is exact: public routing, signature, shape, dtype/metadata,
+container structure, view and mutation semantics, labels, parent/traverser
+identities, stable ties, state transitions, warnings/errors, and callback order.
+Byte-preserving copies/rearrangements and integer/discrete algorithms retain
+their exact values. Preserve sign bits, NaN behavior, and arithmetic ordering
+where they are observable in the advertised contract or already required by an
+accepted strict proof.
 
-## Dependency and merge order
+For floating arithmetic, each contract chooses exactness or a justified
+absolute/relative/ULP or residual-based comparison in advance. Use dtype,
+conditioning, reference guarantees, and the algorithm's error propagation to
+justify that choice. A generic `allclose` threshold is not a contract. Existing
+strict proofs remain valid and unchanged; any different future numerical policy
+is a separately reviewed prospective contract, with independent cases that were
+not used to select it. Do not widen tolerances after looking at failures, adapt
+to an oracle result, dispatch on fixture identities, or claim a provider result
+as a C++ result.
+
+Iterative algorithms need more than a final value check. Li callbacks, TV
+stopping, reconstruction ordering, local optima, threshold ties, and random/model
+solvers can amplify small differences. Check observable iteration/callback
+behavior, convergence/failure semantics, downstream masks or labels, and
+conditioning/near-boundary cases. Retain source-faithful ordering where those
+semantics require it. CPU-specific bitwise imitation is justified only by a
+required observable contract; it is not the default prerequisite for adding an
+unrelated API.
+
+## Three workers and one integrator
+
+On resume, reconcile the frozen checkpoints first, then use the same three
+workers for bounded follow-up packets. Worker names are handles, not permanent
+specialties. The ledger must record actual source, worktree, writable paths,
+read-only dependencies, runtime handles, exit gate, and next handoff.
+
+| Role | First bounded packet after resume | Continuing lane |
+|---|---|---|
+| Root / integrator | Review the 199 candidate delta and checkpoint receipts; reconcile stale packets; authorize one exact candidate's qualification | Shared CMake/core/exports/SDK/registry wiring, final independent acceptance, prompt merge/push and safe cleanup. Delegate mechanical evidence verification; review code, scope, exceptions, and the verifier's receipt. |
+| Worker A | Finish the frozen TV comparison review/preflight using existing products; hand observation to the existing controller once running | Close measured regressions in metrics, TV, rank, resize, or labeling, one measured hypothesis at a time. A running remote job alone does not occupy this worker. |
+| Worker B | Review the threshold/Li native frontier and implement one justified missing contract partition | Native-partial breadth, simple draw/util/reduction APIs, and region statistics. Reuse shared primitives and obtain an independent reviewer before handoff. |
+| Worker C | Resolve reconstruction's reference/provider boundary and finish the smallest scalar native packet from the preserved draft | Neighborhood, morphology, connectivity, then a dependent family. During external waits, take an independent class/state or data/I/O contract packet from lane P. |
+
+Root assigns independent review to a worker who did not author the changed
+algorithm. Rotate reviews as packets finish; do not add a fourth worker or make
+root manually reproduce every mechanical validation. A worker is not alone in
+the repository and must preserve others' changes. Each worker owns an isolated
+worktree and cache; shared product artifacts are read-only.
+
+Bound work in progress:
+
+- One active implementation packet per worker, with at most one frozen handoff
+  awaiting integration. A packet normally changes one shared primitive or a
+  small coherent API family, not an entire namespace.
+- Root keeps at most two new integration candidates waiting for review. Drain
+  the existing frozen backlog before creating more competing controllers or
+  cumulative products. A blocker is recorded with the exact missing dependency;
+  the worker then takes an independent ready packet.
+- Commit reviewable source and its scoped proof promptly. Merge and push a
+  validated increment promptly on resume; performance-pending status may remain
+  explicit after parity acceptance. Do not hold completed private kernels or
+  tooling until unrelated algorithms finish.
+- Prepare the next contract and timing cases during another packet's build or
+  remote measurement. Keep builds/tests off the measurement host and never touch
+  packages in use by the measurement.
+
+## Waves and shared primitives
+
+Waves describe dependency order, not whole-library barriers. An API may start
+when its own dependencies are ready. The per-API roadmap assigns each key one
+primary wave and records the actual prerequisites. Lane P starts early and runs
+alongside the numerical work so data, I/O, and class state do not become a late
+unplanned project.
+
+| Wave | Deliverable and easiest route | Release criterion |
+|---|---|---|
+| W0 — frozen checkpoint closure | Review/qualify the 199 candidate, measure qualified TV, classify threshold gaps, resolve reconstruction's entry boundary | Each checkpoint gets its true accepted/pending result; no invented new coverage. |
+| W1 — cheap independent APIs and partial-contract closure | Existing native dtype/layout/keyword gaps; direct draw loops; util views/copies and conversions; basic statistics/moments; canonical alias reuse | Small public contracts with minimal new machinery, plus per-function timing. |
+| W2 — neighborhood, ordering, connectivity | Reuse histogram/reduction/boundary primitives; rolling windows; reconstruction queue; stable union-find/tree traversal; rank and morphology extensions | Exact topology/tie/output-buffer behavior and safe boundary handling; dependencies shared by later families. |
+| W3 — geometry, resampling, solvers, classes | Existing typed resampling/integral primitives; coordinate generation; C++ least-squares/SVD/QR where justified; common fitting/state layer | Full constructor/state/member behavior and actual solver paths, not class metadata alone. |
+| W4 — FFT, multiscale, registration, restoration, features | One FFT/convolution layer, pyramids and gradients; direct C++ ports of feature/denoising loops; reuse stable eigensolvers | Fixed numerical policies, boundary/normalization correctness, actual one-worker provider control. |
+| W5 — dependent graph, segmentation, model solvers | Graph construction/traversal over accepted labels and features; source-faithful watershed and optimization; reuse sparse/dense solver facilities | Exact discrete decisions plus full state/callback/randomness and convergence coverage. |
+| P — providers, assets, I/O, class/state contracts | Asset manifest/cache and loader rules; codec adapters; collection laziness; plotting/UI adapters; external model protocols and runtime attributes | Exact API behavior and measured relevant work, explicit dependency/native frontier, no fake SIMD or image-kernel speed claim. |
+
+Start from the current implementations rather than building a second foundation:
+
+| Shared facility | Existing starting points | Ownership and extension rule |
+|---|---|---|
+| Typed array intake, strides, conversion and output ownership | `src/image.cpp`, `src/bind_numeric.hpp`, typed resampling bindings | One owned descriptor/boundary contract; extend it for a real family need, avoiding implicit copies that alter mutation or dtype semantics. |
+| Global workers and CPU dispatch | `src/execution.hpp`, `src/image.cpp`, `src/simd.hpp`, existing `simd_*_avx2.cpp` | Preserve portable scalar operation and one worker default. Choose a workload-size threshold; prohibit nested provider oversubscription. |
+| Histograms, reductions, ordering | `src/threshold.cpp`, `src/li.cpp`, `src/multiotsu.cpp`, `src/rank.cpp`, `src/metrics.cpp` | Reuse code where arithmetic/tie contracts match. Do not force numerically different reductions through one implementation merely to share code. |
+| Neighborhoods and boundaries | `src/gaussian_nd.cpp`, `src/morphology.cpp`, `src/morphology_boolean.cpp`, footprints and rank | Share offsets/modes/halos after freezing their rules; keep feedback/output-alias traversals serial when required. |
+| Connectivity and ordered queues | `src/components.cpp`, `src/component_consumers.cpp`, reviewed max-tree work, reconstruction draft | Stable labels and parents are public results. Parallelize independent preparation before changing dependent traversal. |
+| Geometry and scale | `src/resample.cpp`, `src/resize_range.cpp`, `src/resize_clip.cpp`, `src/projective.cpp`, integral/downscale code | Compose native coordinates, sampling, and dtype policy; separate state/wrappers from the numerical solver. |
+| FFT, sparse solvers, codecs and assets | New narrowly scoped facilities only when a roadmap family needs them | Compare viable libraries against the pinned contract; do not create a general framework before the first consumer. |
+
+SIMD applies to independent pixels, coordinates, scans, arithmetic, and selected
+reduction stages. Parallelism applies to independent rows, tiles, channels, or
+preparation work after a measured size threshold. Tree/queue dependencies,
+Gauss-Seidel updates, callback order, stable tie reduction, lazy I/O state, and
+metadata often require serial execution. They still honor the global worker
+policy, but forcing a parallel algorithm is not an acceptance criterion.
+
+## Qualification, evidence reuse, and early measurement
 
 ```mermaid
 flowchart LR
-    R[Range foundation: merged] --> A[Resize wrapper parity]
-    F[Native endian-half identity finish] --> I
-    A --> I[Exports, aliases, registry and inventory]
-    H[Fixed benchmark harness] --> B[Isolated one-worker measurements]
-    I --> B
-    B --> T[Profile and improve retained slow cases]
-    M[Independent error metrics contract and kernels] --> MI[Metrics integration]
-    MC[Stateful FP stages and combined wheel parity] --> MI
-    L[Label contracts] --> LK[Label kernels] --> LI[Label integration]
-    LC[Independent component-consumer contracts] --> CC[Component consumers]
-    LK -. Frozen label interface .-> CC
-    P[Footprint contracts] --> PK[Dense footprint kernels]
-    P --> D[Decomposition tables and formulas]
-    PK -. Frozen atom interface .-> D
-    P --> U[Mirror and pad utilities]
-    PK --> PI[Combined footprint parity and integration]
-    D --> PI
-    U --> PI
-    C[Completed transform class contracts] --> CK[Class implementation] --> CI[Class integration]
+    A[Per-API contract and numerical policy] --> K[Small native kernel or composition]
+    A --> H[Original cases and timing corpus]
+    S[Frozen shared interface] --> K
+    K --> P[Actual installed family parity and SDK]
+    P --> Q[Exact cumulative product qualification]
+    H --> M[Isolated original vs native measurement]
+    Q --> M
+    M --> R[Retained regression and bottleneck packet]
+    R --> K
 ```
 
-1. Workers freeze interfaces early: shape/dtype/ownership rules, worker policy,
-   error/warning behavior and any runtime math providers. They report changes
-   before another packet depends on them.
-2. Workers submit a commit, advertised contract, exact commands/results, source
-   and artifact hashes, unresolved cases and required shared wiring. Commit
-   validated increments promptly; do not accumulate completed work in worktrees.
-3. The integrator reviews and applies shared wiring. For resize/rescale, exercise
-   the complete existing contract against the candidate without weakening the
-   pending/native guards. Temporary in-memory candidate adapters are test tools,
-   not public registration or coverage evidence.
-4. Merge validated private kernels and benchmark tooling independently. Register
-   public functions only with their tested wrapper, aliases, default API cases
-   and regenerated inventory. Record `parity_passed / performance_pending` until
-   exact-source measurements exist. A green path-existence test is insufficient.
-5. Freeze the candidate wheel, installed SDK, source fingerprint, dependency
-   versions and corpus hash. Benchmark the original and native public calls in
-   an isolated Actions job, including allocations and normalization. Require one
-   worker; additional worker counts are supplementary results.
-6. Return measured bottlenecks to their owning worker. Keep every workload, raw
-   sample and rejected trial. Merge validated improvements and remeasure the same
-   corpus against the exact baseline; do not remove adverse cases.
+Keep four distinct gates:
 
-Registration/build edits pass through one integrator. That short integration
-step is the serialization point; independent implementation and contract work
-continues while another packet builds, runs CI or waits for measurements.
+1. **Reference gate:** original source and safe original calls establish the
+   contract. Metadata checks, expected failures, and unsafe blocked inputs are
+   reported separately from successful numerical calls.
+2. **Native family gate:** execute the real C++ binding and installed interface
+   with fallback disabled. Check the changed family, dependent shared primitives,
+   scalar/SIMD modes, default-one/optional workers, error/state behavior, and
+   appropriate native/sanitizer/portable cases. A temporary adapter is private
+   evidence only.
+3. **Public product gate:** freeze source, wheel, SDK, dependency versions and
+   build/runtime identity; run the existing genuine four-profile whole-product
+   qualification for the actual cumulative candidate. The family gate catches
+   defects early; it does not replace this release gate. Unaffected private
+   evidence may be referenced only with explicit identical dependency closure.
+4. **Performance gate:** consume the actual qualified artifacts and original
+   0.26.0 in isolated one-worker roles. Verify the frozen corpus first, then time
+   complete public calls. Retain every case, sample, regression and failed trial.
 
-## Next independent packets
+Use one reusable proof/measurement format and the existing qualification tools
+for future families. A family supplies cases, comparisons, expected scope, and
+commands; it should not need a new controller, retainer, publisher, and bespoke
+certificate for each API. Any tool consolidation is a separate future packet:
+preserve historical controllers and raw bytes, and validate the shared tool on
+known success, failure, and tampered-input fixtures before adopting it.
 
-| Priority | Packet and scope | Shared dependency / handoff |
-|---|---|---|
-| Accepted cumulative increment | Whole11 sources `66860ae`/`94d2d3f` | 190 native-partial image paths; all eight genuine products, complete selected corpora, source/build/runtime closure and six Release envelopes verified. Full argument and performance parity remain separate. |
-| Accepted rank increment | Rank Otsu/majority plus their two generic aliases | Both four-profile runs pass; exactly three counts-optimization paths differ and common compiler/header/link inputs match in all four profiles. Source merged promptly; all three controlled one-worker profiles are measured and independently/root verified. |
-| Isolated measured bottleneck | Counts-only R4 windowed histogram update | Controlled run40084877921 passes all three profiles. Histogram cohort gains1.239x/1.159x/1.181x versus prior C++; every before/original regression remains in the published report/CSV/raw ZIP. More bottlenecks remain. |
-| Private native foundation | TV typed stages and spatial reductions | `2319db7` stages and `0eaf632` reductions have scoped private evidence. NumPy 1.24.4/2.5.4 reduction association and scalar promotion differ; preserve both exact profiles. These are not public function acceptance. |
-| Private complete finite loop | TV kernel `f8f38b6` | C++ now owns finite divergence/output, square/sum, gradient/norm/sum, denominator/dual, energy and strict stopping. Validate actual new bindings and default wrapper calls; stage capability 63 cannot substitute for finite-loop capability 3. |
-| Live shared integration | Public TV core, registry and complete SDK | Joined `f87120c`, run `40087742726`: candidate191 paths,108wheel/62SDK,17families/34checks. Original b550 failed metadata/intake gates and is retained.985preflight checks pass; fresh combined-product acceptance is pending. |
-| Performance follow-up | TV original-library comparison | The reference-only benchmark authoring has 330 untimed source cases and 70 fixed timing candidates. Consume actual qualified artifacts and exact wheel/SDK/source pins; finish the default-policy parity barrier before isolated one-worker samples. |
+A handoff needs source and owned-path deltas, full dependency fingerprints,
+commands/results, actual artifact hashes, native/reference/provider/metadata
+case counts, unresolved cases, process handles, and one independent verifier
+receipt. Root reviews that bounded packet and its exceptions. Reuse an existing
+verified immutable object by content hash and exact source/dependency scope;
+never infer current behavior from a historical test count or relabel a product.
+Fresh changed-source execution remains necessary. Do not repeatedly copy and
+manually replay unchanged archives solely to create a new administrative seal.
 
-Keep all other inventoried names explicitly unassigned until a bounded packet
-claims them. Repeat the process for remaining transforms/pyramids, measurements,
-features, segmentation, restoration, registration, graph, draw, data, I/O and
-utilities. Review additional namespaces and runtime class attributes rather than
-treating the current static inventory as exhaustive.
+Prepare performance corpora with the contract, and measure each newly qualified
+family promptly. Existing comparisons already identify useful work: metrics,
+large multivalued/high-connectivity labeling, footprint decomposition, rank
+windowed histograms/noise-filter cases, and TV raster/volume cases. Prioritize
+absolute time and representative workload impact, not only large speedup ratios
+on tiny calls. Keep allocation/conversion/setup costs visible. Asset/I/O APIs
+need reproducible fixture and cache-state measurements; metadata and state-only
+APIs need relevant latency/behavior checks, not invented image throughput.
 
-## Execute the queue
+No local timing experiments. Hosted timing uses one native worker and one
+original provider thread, matched inputs, repeated paired rounds, and recorded
+runtime/CPU identities. Additional worker counts are supplementary. Do not time
+alongside builds/tests, rebuild a package being timed, discard adverse cases, or
+claim a later source inherits an earlier speedup. A measured baseline with
+regressions is progress, not completion of the optimization objective.
 
-The integrator uses the ledger checker before assigning work and after every
-handoff. These commands only inspect the plan; they do not launch agents, mutate
-source, compile, time code or cancel jobs.
+## Completion tracking and operations
+
+Report progress by evidence rather than assertion totals:
+
+- 477 public keys: contract assessed / native partial / full advertised native
+  contract passed / measured / performance target met; split aliases, metadata,
+  assets, and providers from canonical computational algorithms.
+- 29 classes and all 284 static member paths: constructor/state/member/solver
+  status, plus runtime-discovered fields and namespaces still to assess.
+- Per family: tested dtype/layout/parameter partitions, native cases versus
+  reference/provider/metadata cases, unsupported partitions, and retained
+  regressions with absolute cost and next owner.
+- Queue health: active owners and writable paths, frozen handoff age, blockers,
+  exact live handles, next merge, and clean obsolete worktrees eligible for
+  removal. These operational measures are not implementation acceptance.
+
+The goal is complete only when every inventoried and newly discovered in-scope
+public contract is accounted for, required computation is genuinely native,
+per-function and class/state parity passes, installed C++/Python products are
+qualified, and original-library one-worker evidence establishes the declared
+performance result for each relevant API. Do not mark the goal complete with
+unsupported argument partitions, hidden algorithm providers, unmeasured APIs,
+or unresolved optimization targets disguised by aggregate averages.
+
+These commands inspect the queue; they do not resume the goal or launch work:
 
 ```powershell
 .venv/Scripts/python.exe tools/work_queue.py --check
 .venv/Scripts/python.exe tools/work_queue.py --check --verify-local-proofs
 .venv/Scripts/python.exe tools/work_queue.py --agents
 .venv/Scripts/python.exe tools/work_queue.py --ready
-.venv/Scripts/python.exe tools/work_queue.py --packet footprints-decomposition
+.venv/Scripts/python.exe tools/work_queue.py --packet <reviewed-packet-id>
+.venv/Scripts/python.exe tools/generate_api_implementation_paths.py --check
 ```
 
-Each scoped packet records exact owned paths, a base revision, read/link
-dependencies, its build policy, a concrete `collaboration.followup_task` handoff
-and acceptance gates. `--ready` lists scoped queued packets whose required proof
-scope or frozen interface is available, excluding occupied writable files.
-It does not change goal status or assert spare
-capacity: the integrator keeps at most three worker agents active, reuses a
-completed agent with `followup_task`, and supplies the printed handoff with an
-explicit isolated worktree and branch. Unscoped inventory items are not launched.
-The checker rejects cycles, missing dependencies, excess worker owners, escaping
-paths and concurrent ownership of the same file, including Windows case aliases.
-It validates interface hashes and requires source/hash-bearing evidence manifests
-with numeric native/pending counts. Registration explicitly requires private
-native proofs; measurement requires actual public-native and harness proofs.
-Reference contracts and expected failures cannot release either gate.
-The optional local-proof check hashes retained manifest bytes in this workspace;
-a fresh checkout needs those preserved artifacts before that check can pass.
+The checker catches cycles, malformed proofs, ownership conflicts and inventory
+accounting. It does not prove that a packet's state is current, that an agent is
+live, that a proof covers all arguments, or that a performance target was met.
+On resume, root reconciles the old packet states with the paused checkpoint map
+and the per-API roadmap before choosing any ready packet.
 
-Current handoffs run in parallel:
+Follow [AGENTS.md](../AGENTS.md) after each validated merge. Remove an obsolete
+worktree only with `git worktree remove`, after confirming its commits are
+ancestors of main and its tracked/untracked source work is clean. Retain active
+environments, running-job files, exact baseline/qualified products, raw results,
+rejected trials, and unfinished source. Resolve every cleanup path inside the
+workspace before deletion; never delete the whole `build/` directory. Existing
+cleanup rejection records stay explicit. No cleanup is authorized by this
+planning revision.
 
-1. Worker 1 observes joined TV run `40087742726` at exact `f87120c` through
-   terminal, retaining each complete source/build/runtime/public/SDK closure.
-   Root accepts and merges only genuinely successful products. The completed
-   controlled counts run and its full raw archive stay immutable.
-2. Worker 3 closes the general matrix binding/pipeline proof, then qualifies
-   actual hosted NumPy/OpenBLAS dispatch profiles. Haswell-only private proof
-   cannot establish native execution on a different default BLAS core. Keep
-   the 374 original observations, 4,000 general cohorts and every old certified
-   route; homogeneous-buffer fusion and wider casting remain follow-ups.
-3. Worker 2 implements the six max-tree/attribute-filter primitives from the
-   351-ID source contract: 233 safe numeric IDs and 118 metadata-only IDs.
-   Stable parent/traverser/tie/label identities and safe source boundaries
-   remain exact. Optional parallel work must respect tree dependencies.
-4. Root reviews and wires ready Bregman bridge `54dcc71` into the sole core,
-   public restoration namespace, inventory and installed SDK on an isolated
-   candidate. Use safe original geometry; never execute unchecked singleton
-   Cython calls for a generic smoke test. Fresh public parity and fixed-corpus
-   one-worker comparison remain required; serial Gauss-Seidel is an explicit
-   optimization target.
-5. Root integrates passing increments promptly. Public TV measurements consume
-   qualified artifacts after all preparation profiles pass. Repeat this for
-   remaining APIs, classes/state, nested namespaces, data and I/O. The current
-   190 accepted partial image paths do not satisfy the full-library objective.
+## Appendix: retained historical evidence
 
-All active packets use their own ignored cache. An agent's handoff includes its
-live process handles; observation timeouts leave those jobs active. A finished
-agent reports terminal handles, source SHA, exact artifacts and evidence paths
-before the integrator schedules worktree cleanup.
-Build environments must be retained: Python, NumPy and pybind11 CMake paths must
-not point into an expired temporary build-isolation directory. Interface changes
-create a new version/hash and an explicit dependent handoff; frozen interfaces are
-not edited silently. Standalone adapters never create a second worker policy in
-the installed main `_core`.
+The prior narrative is preserved in Git at
+[`12fad348` / `coverage/EXECUTION_PLAN.md`](https://github.com/bipxx/scikit-imagexx/blob/12fad3488178f52d52d8b4fd161e59790fe63d17/coverage/EXECUTION_PLAN.md).
+Its old live assignments, handoff instructions, and counts are historical.
+The following records remain authoritative only for their own exact sources:
 
-## Evidence and coordination rules
-
-- `implementation` and packet state are separate. Suggested packet states are
-  `queued`, `contracting`, `implementing`, `validating`, `parity_passed`,
-  `performance_pending`, `measuring`, `measured`, and `accepted`.
-- Per-API evidence must identify the tested contract, source SHA, wheel/binary
-  hash, runtime profile, strict fallback-disabled result, scalar/SIMD result,
-  default-one/global-worker behavior and original-library measurement. Class
-  evidence also covers state and members. Null evidence means pending.
-- Do not claim all-API completion from representative cases or native-partial
-  registration. Every advertised contract and remaining inventory item must
-  survive the completion audit. Measure non-image APIs according to their actual
-  semantics; do not invent an image-kernel speedup for asset loading or metadata.
-- Only the integrator changes this task ledger. Workers report evidence and
-  request integration; they do not edit another packet's registry or inventory.
-  Planning-ledger-only updates do not trigger the full build/test workflow;
-  product, contract-test and integration changes still do.
-- Never run local timing experiments. Untimed parity and `--check-only` are
-  allowed. Never overlap measurements with builds/tests on their measurement
-  host, or rebuild/delete a package a benchmark is using.
-- Poll the same live process/Actions handle after observation timeouts. A timeout
-  is not terminal and does not authorize cancellation or restart.
-- After merging, remove only obsolete, clean worktrees whose commits are
-  ancestors of `main`, after auditing retained files. Preserve active
-  environments/caches, exact baselines/SDKs, running-job files, raw results,
-  rejected trials and unfinished source. Never delete the whole `build/` tree.
-  Previously rejected deletion paths remain protected.
-
-The integrator fills a free worker slot from the ready queue, prioritizing work
-that does not share writable files or require an unfinished interface. When a
-measurement job is running remotely, workers can continue independent contracts
-and kernels in their own worktrees. Reuse existing agents for follow-up packets.
+| Checkpoint | Retained evidence and limitation |
+|---|---|
+| Resize/rescale and half identity | Sources `aed3349`/`21ac60b`; six actual 9,968-check profiles and the 373-case corpus. [Resize initial report](../benchmarks/resize-public-initial.md) measures source `66e5f78` and retains 49/52/61 slower cases. Later optimization sources require their own results. |
+| First public metrics, footprints, and labels | [public-wave1](evidence/public-wave1.json) seals the public/SDK/corpus evidence. Reports for [metrics](../benchmarks/metrics-public-initial.md), [footprints](../benchmarks/footprints-public-initial.md), and [components](../benchmarks/components-public-initial.md) preserve measured regressions; a measured baseline is not optimization completion. |
+| Transform classes and component consumers | [integrated-wave2](evidence/integrated-wave2.json), [integrated-wave3](evidence/integrated-wave3.json), and [component consumers](evidence/component-consumers-public.json) retain their exact scopes. Four classes remain partial with explicit numerical providers. |
+| Rank expansion and corrected 186-path source | [public-wave7](evidence/public-wave7.json), [failed wave9](evidence/public-wave9-failed-trial.json), and [public-wave10](evidence/public-wave10.json) retain accepted and rejected trials. The corrected `05e79eb` does not erase endian/metadata failures of its predecessors. |
+| Rank Otsu/majority and counts optimization | [public-wave11](evidence/public-wave11.json) covers the exact before/after products and the 190-path scope. [Counts comparison](../benchmarks/rank-statistics-counts-comparison.md) retains all 376 IDs, seven rounds, raw samples, and every slower case from run `40084877921`. |
+| TV-Chambolle and Bregman additions | [public-wave12](evidence/public-wave12.json) accepts `f87120c` at 191 paths; [public-wave13](evidence/public-wave13.json) accepts `3cdd363` at 192. The initial TV measurement remains tied to `f87120c`; Bregman and later changes have independent performance gates. |
+| TV strided cursor | [Cursor public evidence](evidence/tv-chambolle-cursor-public.json) qualifies `5e068a5`. [Controlled comparison](../benchmarks/tv-chambolle-cursor-comparison.md), run `40119412201`, retains 210 rows, 4,410 samples, and 129 union regressions. Actual before/after products stay `3cdd363`/`5e068a5`; reported gains cannot be relabelled as `af7b2af` results. |
+| Matrix and max-tree private work | [General matrix kernel](evidence/matrix-transform-general-kernel.json), [profile tooling](evidence/matrix-transform-profile-tooling.json), [max-tree bridge](evidence/max-tree-private-bridge.json), [closing dtype correction](evidence/max-tree-closing-dtype-private.json), and [SDK oracle correction](evidence/max-tree-sdk-oracle-private.json) retain their scoped private proofs. The failed combined run `40117331038` remains failed. |
+| Max-tree measurement preparation | [Benchmark reference](evidence/max-tree-benchmark-reference.json) retains 351 source observations and 252 finite candidates per runtime; it is not a native measurement result. |
+| Archive and worktree retention | [Released metadata scratch cleanup](evidence/released-metadata-scratch-cleanup-20261024.json) and [TV admission worktree retirement](evidence/tv-admission-public-worktree-retirement.json) preserve archived files, redirects, and protected/rejected paths. They are not instructions to delete other worktrees. |
