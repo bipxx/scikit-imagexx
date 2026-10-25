@@ -39,6 +39,7 @@ def unpack_array(record,assets):
 
 
 def assert_terrain_outcome(row,observation,assets):
+    state=observation['outer_state'];assert state['before']==state['after'] and state['handler_identity_stable'] and state['compiled_entry_restored']
     assert observation['error'] is None,row['id']
     assert len(observation['source_backend'])==1 and observation['source_backend'][0]['completed']
     assert observation['before']==observation['after'] and not any(observation['aliases'].values())
@@ -54,13 +55,27 @@ def assert_terrain_outcome(row,observation,assets):
         else:assert result.min()>=seed.min()>mask.min()
 
 
+def observe_terrain(row,source,assets):
+    # Read-only outer state witnesses supplement the unchanged seven helpers.
+    # The inherited observer's declared all-warn context is not a fresh-host
+    # timing-policy or native-dispatch acceptance gate.
+    def state():
+        return dict(error_policy=np.geterr(),errcall_is_none=np.geterrcall() is None,
+            iterator_buffer=np.getbufsize(),source_entry_module=source.reconstruction_loop.__module__)
+    before=state();handler=np.geterrcall();entry=source.reconstruction_loop
+    observed=observe(row,source,assets)
+    observed['outer_state']=dict(before=before,after=state(),handler_identity_stable=np.geterrcall() is handler,
+        compiled_entry_restored=source.reconstruction_loop is entry)
+    return observed
+
+
 def record(primary,output):
     data=matrix();assert data['phase']=='prospective-original-only' and data['profiles']=={}
     assert data['specifications']==CASES.specifications() and data['case_manifest']==CASES.case_manifest()
     for name,want in data['source_text_sha256'].items():assert digest((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==want
     source,auth=source_auth(primary);assets={};observations={}
     for row in CASES.specifications():
-        observation=observe(row,source,assets);observations[row['id']]=observation
+        observation=observe_terrain(row,source,assets);observations[row['id']]=observation
         # First raw failure retained; never repair/remove a prospective case.
         report=dict(schema='reconstruction-terrain-reference-profile-v1',profile=profile(),source=auth,
             observations=observations,assets=assets,native_acceptance=False,operation_timings=0)
@@ -111,7 +126,7 @@ def test_unsafe_entries_reject_before_Cython(fault):
 def test_original_frozen_parity(row):
     data=matrix();assert set(data['profiles'])=={'windows','modern','minimum'},'fresh originals pending; not a native admission'
     source,_=source_auth(Path(os.environ['SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE']));assets={}
-    actual=observe(row,source,assets);assert_terrain_outcome(row,actual,assets)
+    actual=observe_terrain(row,source,assets);assert_terrain_outcome(row,actual,assets)
     assert actual==data['profiles'][profile()]['observations'][row['id']]
 
 

@@ -2361,7 +2361,7 @@
   "case_contract_sha256": "02f37e88bce757242b826255d774eeb5df0aa0ed034d4530d7620336a6cfa5b1",
   "source_text_sha256": {
     "benchmarks/reconstruction_terrain_cases.py": "8f37d8f0baa73793d15c443b51064b8b199d3e5a1a3de2bee1432b5e87d1c126",
-    "tests/test_reconstruction_terrain_contracts.py": "9a61bffa949087f72c0ed2e11277289909998e536db5f0f70817b584be031a4e"
+    "tests/test_reconstruction_terrain_contracts.py": "6360cdd32cdfc530170dff2a8607e549bdb76d4fcdc9b4c7bb7197c1f2fd66d8"
   },
   "preserved_original48_raw_sha256": {
     "coverage/contracts/reconstruction-benchmark.json": "570a6752d2cada8021ec067af36b3593d99e9e310d36f6557e363429d6255b71"
