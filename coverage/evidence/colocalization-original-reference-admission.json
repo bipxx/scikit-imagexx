@@ -1,0 +1,48 @@
+{
+  "schema": "root-colocalization-original-reference-admission-v1",
+  "source": "72f835eecc0615881133a0b553788cbfacc51c4c",
+  "capture_source": "3326fd589c6cefc02e717b540ef01fcebf55e9b3",
+  "disposition": "Accepted original-only three-runtime reference and source packet, not an owned numerical implementation.",
+  "APIs": [
+    "measure.intersection_coeff",
+    "measure.manders_coloc_coeff",
+    "measure.manders_overlap_coeff"
+  ],
+  "independent_review": {
+    "path": "build/resume-20261025/colocalization-original-independent-review/final-review.json",
+    "bytes": 2892,
+    "sha256": "6a54e6d03a8cb6db4dcbd61316f836656f7bfbd0af9dade4d454f9507a00458f"
+  },
+  "proof": {
+    "path": "build/worktrees/colocalization-contracts-v2/build/colocalization-reference-v3/original-proof-manifest.json",
+    "bytes": 127545,
+    "sha256": "223c9242f60b993455961b7c14cec33c6bf48b6eb67fa2ccf0e053a642bc19d2"
+  },
+  "root_raw_rehash": {
+    "path": "build/resume-20261025/colocalization-original-root/root-rehash.json",
+    "bytes": 245,
+    "sha256": "d2f720188db28bfe0a4eefdced18eb72a1be069d17dafff7de737f980e2e42cc"
+  },
+  "pairs_per_profile": 536,
+  "exact_trace_pristine_pairs": 1608,
+  "actual_original_entries": 3216,
+  "successful_returns": 2322,
+  "source_errors": 894,
+  "preserved_assets": 423,
+  "raw_stream_references": 27672,
+  "raw_stream_byte_occurrences": 18991896,
+  "metadata_checks_per_profile": 24,
+  "permitted_trace_event_types": 8,
+  "all_other_full_pair_fields_typed_exact": true,
+  "runtime_specific_differences_retained": 141,
+  "boundaries": [
+    "Frozen536 cases and18 future benchmark specifications unchanged; future18 never executed.",
+    "NumPy1/2 scalar representation, errors, warnings and input/protocol behavior remain distinct.",
+    "Runtime authentication covers actual interpreter and recorded provider files, not full OS loader closure.",
+    "No candidate calls, build, new environment, timing or native API credit from this reference packet."
+  ],
+  "future_benchmark_calls": 0,
+  "new_native_API_credit": 0,
+  "public_accepted": false,
+  "performance_accepted": false
+}

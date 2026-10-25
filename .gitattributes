@@ -178,3 +178,4 @@ coverage/evidence/max-tree-controller-checkout-admission.json -text
 coverage/evidence/tv-positive-zero-private-admission.json -text
 coverage/evidence/h203-tv-zero-source-admission.json -text
 coverage/evidence/parallel-implementation-checkpoint-20261025-v2.json -text
+coverage/evidence/colocalization-original-reference-admission.json -text
