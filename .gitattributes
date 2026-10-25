@@ -128,3 +128,9 @@ tests/test_h_extrema_floating_cases.py -text
 tests/h_extrema_floating_reference.py -text
 coverage/contracts/h-extrema-floating-plan.json -text
 coverage/contracts/h-extrema-floating.json -text
+
+tests/test_h_extrema_contracts.py -text
+tests/h_extrema_reference.py -text
+tests/h_extrema_source_provenance.py -text
+tests/test_h_extrema_source_provenance.py -text
+coverage/evidence/h-extrema-reference-assertion-migration.json -text
