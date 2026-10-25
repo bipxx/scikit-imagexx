@@ -1,4 +1,4 @@
-"""TV zero-scan successor: immutable af7 versus root-admitted741 products.
+"""TV zero-scan successor: immutable af7 versus root-admitted ea35 products.
 
 Only reviewed artifact-only Actions may execute the fixed comparison. Different
 complete cores/links remain explicit; this is not a helper-causality experiment.

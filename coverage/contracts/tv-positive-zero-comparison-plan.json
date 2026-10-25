@@ -1,10 +1,10 @@
 {
-  "schema": "tv-positive-zero-comparison-source-plan-v1",
+  "schema": "tv-positive-zero-comparison-source-plan-v2",
   "status": "prospective-source-only",
-  "base": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "base": "178b91ce18ef2d241f22415d821cd590e1f0f3d3",
   "attributes_first": "f69a789ff5a5fb1d807d4a9063e9e6f0e67ea00a",
   "before_source": "af7b2afb8f6cd0f30f408e3318631d5c9ffafbee",
-  "after_source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+  "after_source": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "failed_after_run": "40200919182",
   "after_whole_product_accepted": false,
   "owned_new_paths": [
@@ -1831,17 +1831,17 @@
     "tests/test_h_extrema_public.py": {
       "before": null,
       "after": {
-        "bytes": 12726,
-        "sha256": "f419088f1fa3e14d3aec3fde31614c31593b91083ac8e58f0074174af15a662f",
-        "canonical_lf_sha256": "f419088f1fa3e14d3aec3fde31614c31593b91083ac8e58f0074174af15a662f"
+        "bytes": 12786,
+        "sha256": "6b4499e14a8fcd831933557e3e6bf3edeecce4a77e5fb3b95c3b6f22916575a8",
+        "canonical_lf_sha256": "6b4499e14a8fcd831933557e3e6bf3edeecce4a77e5fb3b95c3b6f22916575a8"
       }
     },
     "tests/test_h_extrema_public_metadata.py": {
       "before": null,
       "after": {
-        "bytes": 16542,
-        "sha256": "ee03b95dc44315902e18003a6933b53ed91cc53ecd9de4cc140eceee2269cf4c",
-        "canonical_lf_sha256": "ee03b95dc44315902e18003a6933b53ed91cc53ecd9de4cc140eceee2269cf4c"
+        "bytes": 18617,
+        "sha256": "f434b882629a815e32c17b99ca83d51e1b385a01aa45d86d234b3e7c5e5074f3",
+        "canonical_lf_sha256": "f434b882629a815e32c17b99ca83d51e1b385a01aa45d86d234b3e7c5e5074f3"
       }
     },
     "tests/test_h_extrema_source_provenance.py": {
@@ -2270,7 +2270,7 @@
     }
   },
   "validation_design": [
-    "Authenticate exact certificate raw hash and closed source/role/scope fields before product or fixture imports. AFTER requires actual root acceptance of four successful profiles; failed40200919182 is never admissible.",
+    "Authenticate exact certificate raw hash and closed source/role/scope fields before product or fixture imports. AFTER requires genuine root acceptance of ea35a2481880301b8ce7b4eb2d77665adb813ca2 from exact run40237475475 with four successful profiles and independent product admission. No artifact IDs or admission hashes are known in this source-only plan; failed741 run40200919182 is never admissible.",
     "Use the unchanged generic per-role rank verifier for complete product/source/wheel/runtime/SDK/build identity authentication; no same-scope pair call or mutation of historical module globals. Add exact role-specific physical member census and sole core from existing qualified package/runtime receipts.",
     "Verify all declared TV source slice hashes and whole-file zero_bytes inverse. Preserve every full source delta and full raw build identity. Compare each selected TV TU source/argv/FP-LTO/actual dependency and tool/runtime input; changed core registration and non-TV TU/link context remain authenticated and explicitly reported, not normalized away.",
     "Reuse exact factory/legacy observe/native no-forward/default observation and dispatch guards, rotating triad/order/calibration/loop/timing arithmetic and original one-use startup frames. New controller namespace uses only new helper; no runtime historical-global patch.",
@@ -2279,7 +2279,7 @@
     "Retain original failure replies/raw observations, all70 timings and regressions, complete profile barrier, startup/claim records and final source/runtime/CPU integrity. No ignored IDs or selected successful subset."
   ],
   "attribution": {
-    "allowed": "Qualified whole-product TV performance for explicit af7 versus741 products; source equivalence only for the declared TV source slice except zero_bytes.",
+    "allowed": "Qualified whole-product TV performance for explicit af7 versus ea35 products; source equivalence only for the declared TV source slice except zero_bytes. The zero helper has no measured speedup yet.",
     "forbidden": [
       "whole-core equivalence",
       "isolated causal speedup of zero_bytes",
@@ -2288,7 +2288,7 @@
     ]
   },
   "metadata_tests": [
-    "closed certificate roles/scopes/root-admission failure including exactfailedrun",
+    "closed certificate roles/scopes/root-admission failure, exact ea35 source/run, predecessor schema and failed741 rejection",
     "typed bounds and missing/extra fields/profiles",
     "historical old-AFTER frames exact without rewriting oldcertificate",
     "wrong source/header/helper inverse or undeclared TV dependency/flag/runtime drift",
@@ -2300,5 +2300,44 @@
     "optimized Python/environment controls and exact raw controller checkout behavior",
     "source AST inverse for preserved scientific/factory/timer functions and no old-module-global mutation"
   ],
-  "approval_boundary": "Source/metadata implementation authorized by root; no original/native/image calls, module imports, builds, environments, clocks or dispatch. Root reviews frozen successor before any external use. A changed AFTER revision requires an explicit reviewed plan successor."
+  "approval_boundary": "Source/metadata implementation authorized by root; no original/native/image calls, module imports, builds, environments, clocks or dispatch. Root reviews frozen successor before any external use. A changed AFTER revision requires an explicit reviewed plan successor.",
+  "after_qualification_run": "40237475475",
+  "predecessor": {
+    "controller_source": "f9df2f32b78a1c07299c368e4883ecbae3f9b7d5",
+    "plan_sha256": "d36b7f63e3b7afeb832fd77c07ffabebaed9c349c4cc04dc802496909c101184",
+    "after_source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+    "failed_after_run": "40200919182",
+    "preservation": "The predecessor plan, failed741 source/run and raw proof remain immutable in Git and retained build evidence."
+  },
+  "after_source_projection": {
+    "from_source": "7417676bbb628e75feac1be49aac900bc5af7b15",
+    "to_source": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
+    "changed_files": {
+      "tests/test_h_extrema_public.py": {
+        "old_after": {
+          "bytes": 12726,
+          "sha256": "f419088f1fa3e14d3aec3fde31614c31593b91083ac8e58f0074174af15a662f",
+          "canonical_lf_sha256": "f419088f1fa3e14d3aec3fde31614c31593b91083ac8e58f0074174af15a662f"
+        },
+        "after": {
+          "bytes": 12786,
+          "sha256": "6b4499e14a8fcd831933557e3e6bf3edeecce4a77e5fb3b95c3b6f22916575a8",
+          "canonical_lf_sha256": "6b4499e14a8fcd831933557e3e6bf3edeecce4a77e5fb3b95c3b6f22916575a8"
+        }
+      },
+      "tests/test_h_extrema_public_metadata.py": {
+        "old_after": {
+          "bytes": 16542,
+          "sha256": "ee03b95dc44315902e18003a6933b53ed91cc53ecd9de4cc140eceee2269cf4c",
+          "canonical_lf_sha256": "ee03b95dc44315902e18003a6933b53ed91cc53ecd9de4cc140eceee2269cf4c"
+        },
+        "after": {
+          "bytes": 18617,
+          "sha256": "f434b882629a815e32c17b99ca83d51e1b385a01aa45d86d234b3e7c5e5074f3",
+          "canonical_lf_sha256": "f434b882629a815e32c17b99ca83d51e1b385a01aa45d86d234b3e7c5e5074f3"
+        }
+      }
+    },
+    "scope": "Two H test files only: correct the authenticated diagnostic projection and add its metadata regression. No production/library, TV slice, scientific fixtures, numerical assertions, or timing changes."
+  }
 }

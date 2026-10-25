@@ -1,4 +1,4 @@
-"""Closed af7-to-741 TV comparison admission; standard-library metadata only.
+"""Closed af7-to-ea35 TV comparison admission; standard-library metadata only.
 
 The historical campaign remains immutable. Full products are authenticated by
 its unchanged generic verifier; only the explicitly declared TV source/build
@@ -16,10 +16,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = 'coverage/contracts/tv-positive-zero-comparison-plan.json'
-PLAN_SHA256 = 'd36b7f63e3b7afeb832fd77c07ffabebaed9c349c4cc04dc802496909c101184'
+PLAN_SHA256 = 'c2f8d61020734f78582c9e74561369261d07b2426f3ccf31a76ad48f8b708023'
 BEFORE_PRODUCT = 'af7b2afb8f6cd0f30f408e3318631d5c9ffafbee'
-AFTER_PRODUCT = '7417676bbb628e75feac1be49aac900bc5af7b15'
-EXPERIMENT_SCHEMA = 'tv-positive-zero-experiment-v1'
+AFTER_PRODUCT = 'ea35a2481880301b8ce7b4eb2d77665adb813ca2'
+EXPERIMENT_SCHEMA = 'tv-positive-zero-experiment-v2'
 REPORT_SCHEMA = 'tv-positive-zero-controlled-v1'
 RECEIPT_SCHEMA = 'tv-positive-zero-preparation-v1'
 CERTIFICATE_LIMIT = 64 * 1024
@@ -123,8 +123,8 @@ def validate_experiment(value, controller_revision):
             'AFTER genuine four-profile root admission pending')
     require(admission['source'] == AFTER_PRODUCT and admission['passed'] is True
             and _hash(admission['sha256']), 'AFTER root admission pending')
-    require(type(admission['run']) is str and admission['run'].isdigit()
-            and admission['run'] != PLAN['failed_after_run'], 'failed original741 run cannot admit AFTER')
+    require(type(admission['run']) is str and admission['run'] == PLAN['after_qualification_run'],
+            'exact ea35 qualification run required; failed741 remains inadmissible')
     require(type(admission['profiles']) is dict
             and set(admission['profiles']) == {*PROFILES, 'debug'}, 'all four qualified profiles required')
     for record in admission['profiles'].values():
