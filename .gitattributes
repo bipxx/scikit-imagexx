@@ -117,3 +117,4 @@ coverage/evidence/max-tree-sdk-oracle-private.json -text
 coverage/contracts/reconstruction.json -text
 tests/cmake_consumer/reconstruction_source_oracle.bin -text
 coverage/evidence/reconstruction-public-assertion-migration.json -text
+coverage/evidence/matrix-transform-public-source-successor-assertion.json -text
