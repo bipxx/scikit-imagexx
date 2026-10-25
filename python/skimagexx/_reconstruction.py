@@ -61,5 +61,9 @@ def reconstruction(seed,mask,method='dilation',footprint=None,offset=None):
     off=np.array(list(offset),dtype=np.uintp)
     zero=_zero_provider(seed,mask,footprint,off,method)
     out,info=_core.reconstruction_run(seed,mask,footprint,off,0 if method=='dilation' else 1,zero)
+    # The source assigns shape after the numerical loop. This is observable
+    # (NumPy2.5 warns); retain the actual provider operation, not a synthesized
+    # warning or a reshape substitution. The padded owner metadata stays exact.
+    out.shape=np.array(seed.shape)+(np.array(footprint.shape)-1)
     inside=tuple(slice(o,o+n) for o,n in zip(off,seed.shape))
     return out[inside]
