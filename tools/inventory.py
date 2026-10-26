@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('filters.window',),'tests/test_window_public.py','benchmarks/coverage.py'),
     (('filters.filter_forward','filters.filter_inverse','filters.wiener'),'tests/test_lpi_filter_public.py','benchmarks/coverage.py'),
     (('filters.butterworth',),'tests/test_butterworth_public.py','benchmarks/coverage.py'),
     (tuple('measure.'+name for name in ('intersection_coeff','manders_coloc_coeff','manders_overlap_coeff')),

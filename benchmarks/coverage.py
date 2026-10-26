@@ -87,7 +87,12 @@ def main():
     lpi_scope = ('Python Gaussian impulse callback and NumPy coordinates, casting, padding, products, '
                  'gain/Wiener arithmetic, permutation, cropping and absolute value; owned C++ FFT only. '
                  'Each timed call includes the default callback and construction of a new filter and transfer cache.')
+    window_scope = ('SciPy signal.get_window and NumPy radial coordinates and clipping remain providers; '
+                    'owned C++ order-0/1 sampling. Default Hann/order1, shape-only with no pixel input; '
+                    'the dtype label denotes the float64 output, not an input-pixel dtype.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'filters.window' in apis:
+        provider_frontiers['filters.window'] = window_scope
     if 'filters.butterworth' in apis:
         provider_frontiers['filters.butterworth'] = (
             'NumPy padding, frequency-grid/mask arithmetic, spectrum multiplication and cropping; owned C++ FFT only')
@@ -105,6 +110,9 @@ def main():
                 tagged=np.dtype(dtype,metadata={'units':'linear','source':'benchmark'})
                 gray=gray.view(tagged);rgb=rgb.view(tagged)
             for api in apis:
+                # Window consumes only shape, so fixture pixel dtypes are not distinct cases.
+                if api == 'filters.window' and dtype != np.float64:
+                    continue
                 module, name = api.rsplit('.', 1)
                 if np.dtype(dtype).name not in native_dtypes(api):
                     continue
@@ -160,7 +168,8 @@ def main():
              'Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. '
              'Identity calls return the input unchanged; metadata calls return small values/arrays without processing pixels. '
              'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.'
-             + (' ' + lpi_scope if lpi_apis.intersection(apis) else ''), '',
+             + (' ' + lpi_scope if lpi_apis.intersection(apis) else '')
+             + (' ' + window_scope if 'filters.window' in apis else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')

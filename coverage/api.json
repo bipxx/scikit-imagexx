@@ -2734,11 +2734,15 @@
       "api": "filters.window",
       "kind": "callable",
       "signature": "(window_type, shape, warp_kwargs=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_window_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.rank.autolevel",

@@ -1,4 +1,5 @@
 """CI artifact/data-flow guards; no native or measurement acceptance claim."""
+import ast
 import importlib.util
 import json
 from pathlib import Path
@@ -181,7 +182,8 @@ def test_original_timing_commands_and_corpora_preserved():
     assert timing_commands(blocks['measure']) == ORIGINAL_COMMANDS['modern']
     assert timing_commands(blocks['measure-minimum']) == ORIGINAL_COMMANDS['minimum'] + [
         'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json',
-        'python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json']
+        'python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json',
+        'python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -201,3 +203,66 @@ def test_lpi_contracts_precede_measurement_artifact_freeze():
     assert preparation.count('tests/test_lpi_filter_public.py') == 2
     assert 'build/ci-artifacts/' in preparation
     assert 'build/ci-lpi.md' in blocks['measure-minimum']
+
+
+def test_window_contracts_precede_measurement_artifact_freeze():
+    blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    preparation = blocks['numpy-minimum']
+    required = """      - name: Window owned sampling parity
+        run: python -m pytest -q tests/test_window_public.py --junitxml=build/ci-artifacts/window-normal.xml
+      - name: Window owned sampling parity with SIMD disabled
+        run: python -m pytest -q tests/test_window_public.py --junitxml=build/ci-artifacts/window-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+"""
+    assert required in preparation
+    assert preparation.index('tests/test_lpi_filter_public.py') < preparation.index(required)
+    assert preparation.index(required) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.count('tests/test_window_public.py') == 2
+    assert 'build/ci-artifacts/' in preparation
+    assert 'build/ci-window.md' in blocks['measure-minimum']
+
+
+def test_window_shape_only_benchmark_has_two_cases_without_changing_other_apis():
+    tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    guards = [n for n in ast.walk(main) if isinstance(n, ast.If)
+              and any(isinstance(v, ast.Constant) and v.value == 'filters.window' for v in ast.walk(n.test))
+              and len(n.body) == 1 and isinstance(n.body[0], ast.Continue)]
+    assert len(guards) == 1 and not guards[0].orelse
+    predicate = compile(ast.Expression(guards[0].test), '<window fixture predicate>', 'eval')
+    entries = json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']
+    assert len(entries) == 477 and any(e['api'] == 'filters.window' for e in entries)
+    for entry in entries:
+        selected = [(size, dtype) for size in (256, 1024) for dtype in ('uint8', 'float32', 'float64')
+                    if not eval(predicate, {'np': SimpleNamespace(float64='float64'),
+                                            'api': entry['api'], 'dtype': dtype})]
+        expected = [(256, 'float64'), (1024, 'float64')] if entry['api'] == 'filters.window' else [
+            (size, dtype) for size in (256, 1024) for dtype in ('uint8', 'float32', 'float64')]
+        assert selected == expected, entry['api']
+
+
+def test_window_provider_metadata_does_not_claim_fft_workers():
+    tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    scope_node = next(n for n in main.body if isinstance(n, ast.Assign)
+                      and any(isinstance(t, ast.Name) and t.id == 'window_scope' for t in n.targets))
+    scope = ast.literal_eval(scope_node.value)
+    for text in ('SciPy signal.get_window', 'NumPy radial coordinates and clipping',
+                 'owned C++ order-0/1 sampling', 'Default Hann/order1', 'no pixel input', 'float64 output'):
+        assert text in scope
+    frontier = next(n for n in main.body if isinstance(n, ast.If)
+                    and isinstance(n.test, ast.Compare) and isinstance(n.test.left, ast.Constant)
+                    and n.test.left.value == 'filters.window')
+    assert len(frontier.body) == 1 and isinstance(frontier.body[0], ast.Assign)
+    values = {'apis': ['filters.window'], 'provider_frontiers': {}, 'window_scope': scope}
+    exec(compile(ast.Module(body=[frontier], type_ignores=[]), '<window provider metadata>', 'exec'), values)
+    assert values['provider_frontiers'] == {'filters.window': scope}
+    fft_guard = next(n for n in main.body if isinstance(n, ast.If)
+                     and any(isinstance(v, ast.Import) and any(a.name == 'scipy.fft' for a in v.names)
+                             for v in n.body))
+    condition = compile(ast.Expression(fft_guard.test), '<reference FFT selection>', 'eval')
+    lpi = {'filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'}
+    assert not eval(condition, {'lpi_apis': lpi, 'apis': ['filters.window']})
+    for api in lpi | {'filters.butterworth'}:
+        assert eval(condition, {'lpi_apis': lpi, 'apis': [api]})

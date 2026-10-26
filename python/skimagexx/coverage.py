@@ -23,7 +23,7 @@ NATIVE_FUNCTIONS = {
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
               'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace',
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
-    'filters': ('filter_forward','filter_inverse','wiener','butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
+    'filters': ('window','filter_forward','filter_inverse','wiener','butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
@@ -49,6 +49,21 @@ def matrix_transform_contract():
         workers='Shared sole_core global setter, default1 and optional4; packed SIMD disabled by SKIMAGEXX_DISABLE_SIMD without changing fused arithmetic',
         performance='Unmeasured end-to-end public pipeline; homogeneous allocation fusion remains future work')
 
+
+
+def window_contract():
+    """Owned sampling; window generation and coordinate math remain providers."""
+    return dict(api='filters.window', implementation='native-partial', entrypoints=('window_sample',),
+        kernel='Owned float64 order0/1 grid-constant sampling at source float32 coordinates; ordered endpoint weights and zero-weight taps',
+        providers='SciPy signal.get_window(fftbins=False); source NumPy shape normalization, radial coordinate construction and clipping',
+        workers='Existing process-global worker snapshot, default1; optional OpenMP above the existing parallel threshold; portable builds refuse parallel workers',
+        simd='Scalar baseline and runtime AVX2 packed arithmetic; strict floating-point flags and no FMA',
+        dtype_scope='Shape factory with no pixel input; provider and output float64, coordinates float32. Shared uint8/f32/f64 fixture labels supply shapes only',
+        option_scope='Orders0/1; higher interpolation orders and mixed-empty shapes remain explicit unsupported partitions',
+        numerical_policy='Prospective8*eps64 relative plus32*eps64*max(1, finite reference peak) absolute; exact masks, boundary zeros, metadata, warnings, errors and caller state',
+        public_parity_test='tests/test_window_public.py', fully_native=False,
+        component_evidence='89 frozen specifications, 179 nodes per runtime/dispatch mode; four genuine component modes, not combined product qualification',
+        performance_evidence=None)
 
 
 def butterworth_contract():
@@ -307,6 +322,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'filters.window':
+        return ('hann', image.shape), {}
     if api in ('filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'):
         import numpy as np
         def impulse_response(r, c):
@@ -395,6 +412,14 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'filters.window':
+        if expected is None:
+            raise ValueError('Window tolerance requires the actual reference output')
+        import numpy as np
+        finite = np.abs(expected[np.isfinite(expected)])
+        peak = max(1.0, float(finite.max()) if finite.size else 0.0)
+        eps = np.finfo(np.float64).eps
+        return 8 * eps, 32 * eps * peak
     if api in ('filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'):
         if image is None or expected is None:
             raise ValueError('LPI tolerance requires the actual input and reference output')

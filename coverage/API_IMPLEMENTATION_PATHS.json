@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "549b49bb687dea9111db17ee75046af652da0693002947b559687ed4d4db5ecf",
+  "source_inventory_sha256": "670657b7726a96a6a0065c4858ce054c86003463c7218abf436c5773a588b257",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -25,9 +25,9 @@
     "current_implementation": {
       "exception-metadata-provider": 1,
       "metadata": 3,
-      "native-class-partial": 4,
-      "native-partial": 211,
-      "upstream-only": 258
+      "native-class-partial": 5,
+      "native-partial": 216,
+      "upstream-only": 252
     },
     "kinds": {
       "callable": 448,
@@ -6193,8 +6193,8 @@
       "api": "filters.LPIFilter2D",
       "kind": "class",
       "signature": "(impulse_response, **filter_params)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "native-class-partial",
+      "current_execution_kind": "stateful-class",
       "current_native_default_case_dtypes": [],
       "canonical_api": "filters.LPIFilter2D",
       "identity_alias": false,
@@ -6208,7 +6208,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Capture constructor/state/member contracts and implement the first owned class slice; first use repeated same/different shapes and custom impulses. Enumerate the static-member appendix and dynamic fields before declaring class parity.",
+      "next_concrete_action": "Audit and extend the owned partial class; first use repeated same/different shapes and custom impulses. Enumerate the static-member appendix and dynamic fields before declaring class parity.",
       "compatibility_hazards": "callable evaluation grid, parameter state, cache shape and real result",
       "parity_cases_to_freeze": "repeated same/different shapes and custom impulses",
       "numerical_policy": "Exact shapes, padding, phase/normalization and clipping; predeclare complex/real numerical tolerance and separate strict track when required.",
@@ -6222,7 +6222,7 @@
         "existing_inventory_reference": null
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_lpi_filter_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "class_member_scope": "Separate follow-up required for 2 static members and unassessed dynamic state."
     },
@@ -6270,22 +6270,26 @@
       "api": "filters.butterworth",
       "kind": "callable",
       "signature": "(image, cutoff_frequency_ratio=0.005, high_pass=True, order=2.0, channel_axis=None, *, squared_butterworth=True, npad=0)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "filters.butterworth",
       "identity_alias": false,
       "family": "fft",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Construct N-D frequency-distance mask then FFT filter",
+      "easiest_credible_path": "Audit/extend existing native implementation: Construct N-D frequency-distance mask then FFT filter",
       "mandatory_route_dependencies": [
         "array",
         "fft"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze low/high pass, order/cutoff sweep and channel axes against pinned upstream, including squared_butterworth, high_pass, npad, odd/even grids and channels; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered squared_butterworth, high_pass, npad, odd/even grids and channels. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "squared_butterworth, high_pass, npad, odd/even grids and channels",
       "parity_cases_to_freeze": "low/high pass, order/cutoff sweep and channel axes",
       "numerical_policy": "Exact shapes, padding, phase/normalization and clipping; predeclare complex/real numerical tolerance and separate strict track when required.",
@@ -6296,10 +6300,10 @@
         "kind": "compute",
         "specific_workload": "low/high pass, order/cutoff sweep and channel axes",
         "one_worker_recipe": "Odd/even and prime/composite 2D/3D shapes, real/complex inputs, cold versus warmed FFT plans, allocation-inclusive public calls.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_butterworth_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -6506,22 +6510,26 @@
       "api": "filters.filter_forward",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, predefined_filter=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "filters.filter_forward",
       "identity_alias": false,
       "family": "fft",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse LPIFilter2D transfer function and FFT forward convolution",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse LPIFilter2D transfer function and FFT forward convolution",
       "mandatory_route_dependencies": [
         "array",
         "fft"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze impulse/delta and repeated filter use against pinned upstream, including predefined_filter versus impulse_response, shape crop and normalization; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered predefined_filter versus impulse_response, shape crop and normalization. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "predefined_filter versus impulse_response, shape crop and normalization",
       "parity_cases_to_freeze": "impulse/delta and repeated filter use",
       "numerical_policy": "Exact shapes, padding, phase/normalization and clipping; predeclare complex/real numerical tolerance and separate strict track when required.",
@@ -6532,32 +6540,36 @@
         "kind": "compute",
         "specific_workload": "impulse/delta and repeated filter use",
         "one_worker_recipe": "Odd/even and prime/composite 2D/3D shapes, real/complex inputs, cold versus warmed FFT plans, allocation-inclusive public calls.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_lpi_filter_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "filters.filter_inverse",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, max_gain=2, predefined_filter=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "filters.filter_inverse",
       "identity_alias": false,
       "family": "fft",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse transfer function with magnitude-limited inverse",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse transfer function with magnitude-limited inverse",
       "mandatory_route_dependencies": [
         "array",
         "fft"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze near-zero spectral responses and gain sweep against pinned upstream, including zero response, max_gain clipping and parameter precedence; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered zero response, max_gain clipping and parameter precedence. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "zero response, max_gain clipping and parameter precedence",
       "parity_cases_to_freeze": "near-zero spectral responses and gain sweep",
       "numerical_policy": "Exact shapes, padding, phase/normalization and clipping; predeclare complex/real numerical tolerance and separate strict track when required.",
@@ -6568,10 +6580,10 @@
         "kind": "compute",
         "specific_workload": "near-zero spectral responses and gain sweep",
         "one_worker_recipe": "Odd/even and prime/composite 2D/3D shapes, real/complex inputs, cold versus warmed FFT plans, allocation-inclusive public calls.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_lpi_filter_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -7981,22 +7993,26 @@
       "api": "filters.wiener",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "filters.wiener",
       "identity_alias": false,
       "family": "fft",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse LPI transfer function and conjugate-over-power-plus-K multiplier",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse LPI transfer function and conjugate-over-power-plus-K multiplier",
       "mandatory_route_dependencies": [
         "array",
         "fft"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze weak/zero transfer spectra and K sweep against pinned upstream, including K broadcasting/range, predefined filter and real/complex output; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered K broadcasting/range, predefined filter and real/complex output. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "K broadcasting/range, predefined filter and real/complex output",
       "parity_cases_to_freeze": "weak/zero transfer spectra and K sweep",
       "numerical_policy": "Exact shapes, padding, phase/normalization and clipping; predeclare complex/real numerical tolerance and separate strict track when required.",
@@ -8007,25 +8023,29 @@
         "kind": "compute",
         "specific_workload": "weak/zero transfer spectra and K sweep",
         "one_worker_recipe": "Odd/even and prime/composite 2D/3D shapes, real/complex inputs, cold versus warmed FFT plans, allocation-inclusive public calls.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_lpi_filter_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "filters.window",
       "kind": "callable",
       "signature": "(window_type, shape, warp_kwargs=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "filters.window",
       "identity_alias": false,
       "family": "resample",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Generate named 1D window through reviewed formulas/provider then radially resample to N-D",
+      "easiest_credible_path": "Audit/extend existing native implementation: Generate named 1D window through reviewed formulas/provider then radially resample to N-D",
       "mandatory_route_dependencies": [
         "array",
         "pointwise",
@@ -8034,7 +8054,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze named windows and odd/even anisotropic shapes against pinned upstream, including window_type parameter tuples, center/radius convention and warp_kwargs; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered window_type parameter tuples, center/radius convention and warp_kwargs. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "window_type parameter tuples, center/radius convention and warp_kwargs",
       "parity_cases_to_freeze": "named windows and odd/even anisotropic shapes",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -8045,10 +8065,10 @@
         "kind": "compute",
         "specific_workload": "named windows and odd/even anisotropic shapes",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_window_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -19080,7 +19100,7 @@
     },
     {
       "class_api": "filters.LPIFilter2D",
-      "current_implementation": "upstream-only",
+      "current_implementation": "native-class-partial",
       "static_member_count": 2,
       "static_members": [
         {
@@ -19089,9 +19109,9 @@
           "signature": "(self, data)",
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
-          "current_implementation": "upstream-only",
-          "current_execution_kind": "upstream",
-          "existing_parity_reference": null,
+          "current_implementation": "native-class-member-partial",
+          "current_execution_kind": "owned-cpp-fft-with-numpy-providers",
+          "existing_parity_reference": "tests/test_lpi_filter_public.py",
           "existing_benchmark_reference": null
         },
         {
@@ -19100,9 +19120,9 @@
           "signature": "(self, impulse_response, **filter_params)",
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
-          "current_implementation": "upstream-only",
-          "current_execution_kind": "upstream",
-          "existing_parity_reference": null,
+          "current_implementation": "native-class-member-partial",
+          "current_execution_kind": "owned-python-state",
+          "existing_parity_reference": "tests/test_lpi_filter_public.py",
           "existing_benchmark_reference": null
         }
       ],

@@ -351,3 +351,12 @@ python/skimagexx/_lpi_filter.py -text
 # Prospective window source contracts: preserve exact test bytes.
 tests/window_cases.py -text
 tests/test_window_public.py -text
+
+src/bind_window.cpp -text
+
+src/window_internal.hpp -text
+src/window.cpp -text
+src/simd_window_avx2.cpp -text
+tests/test_window_native.cpp -text
+
+python/skimagexx/_window.py -text
