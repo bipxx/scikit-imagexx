@@ -327,3 +327,5 @@ benchmarks/phase3-f32-same-host.zip -text
 benchmarks/phase3-f32-packed-same-host.zip -text
 tests/test_octahedron_integer.py -text
 benchmarks/phase3-octahedron-integer-same-host.zip -text
+tests/butterworth_cases.py -text
+tests/test_butterworth_public.py -text
