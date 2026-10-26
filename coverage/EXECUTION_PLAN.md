@@ -95,10 +95,18 @@ Private component checks are 254 public / 2,997 native per mode, followed by
 the target remain published, as do 16 colocalization regressions. This does
 not expand whole-product acceptance or claim all-profile speedups.
 
-Next byte-affine candidate `887aff6` is in
-[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824);
-installed gates and performance remain pending. Kept colocalization v5 is
-unchanged, and packed v6 stays rejected.
+The [byte-affine candidate](../benchmarks/phase3-byte-affine-same-host.md)
+`887aff6` passes 785 installed checks per mode but remains **HOLD/unmerged**.
+Controlled run 40288858109 gives 0.999459× direct / 0.999468× normalized over
+fixed21: stepped intersection improves 2.313035×, offset by direct losses in
+all 14 Manders cases. Preserve all results and investigate generated code
+before another experiment; do not change the metric or repeat identical code.
+Kept colocalization v5 remains unchanged; packed v6 stays rejected.
+
+The next new filter is Butterworth: freeze representative source-first tests
+before implementing an owned FFT and mask stages. Older SciPy uses PocketFFT;
+modern SciPy uses DUCC. Define the numerical policy prospectively and preserve
+exact API/metadata/warning behavior. This pending packet earns no native credit.
 
 ## Historical execution card — public203 integration checkpoint
 

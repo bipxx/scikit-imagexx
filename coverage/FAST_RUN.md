@@ -130,10 +130,17 @@ cases on one 9V45 host. Both candidate medians beat both baselines in every
 target. All 35 direct and 28 normalized losses outside the target are
 published; the same 16 colocalization regressions remain.
 
-Next: byte-affine candidate `887aff6` is in
-[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824).
-Its installed gates and performance decision are pending. Kept colocalization
-v5 remains unchanged; v6 remains rejected.
+**Held: [byte-affine candidate](../benchmarks/phase3-byte-affine-same-host.md).**
+Source `887aff6` passes its 785-check installed gates per mode, but controlled
+run 40288858109 gives **0.999459× direct / 0.999468× normalized** over fixed21.
+Stepped intersection improves 2.313035×; all 14 Manders cases lose directly.
+The target gain does not establish an aggregate improvement. Source remains
+unmerged while generated-code differences are investigated; v5 stays kept.
+
+Next feature work is a test-first Butterworth packet in its own worktree.
+It requires an owned FFT, a prospectively fixed numerical policy for the
+PocketFFT/DUCC reference backends, and global-worker-compatible execution.
+No new implementation or coverage credit is claimed for this pending packet.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
