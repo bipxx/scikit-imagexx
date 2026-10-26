@@ -28,6 +28,10 @@ def block_reduce(image, block_size=2, func=np.sum, cval=0, func_kwargs=None):
     Ordinary default real sums use owned typed block arithmetic. Custom funcs,
     reducer kwargs, complex padding and exceptional/type-frontier reductions
     retain literal primitive calls. They do not acquire owned-sum credit.
+    Half sums additionally require the original padded storage to be native,
+    aligned and C-contiguous, with block volume no larger than np.getbufsize().
+    Half F/reversed/swapped/unaligned or larger buffered reductions remain
+    literal providers; native support for those source orders is open work.
     """
     if np.isscalar(block_size):
         block_size = (block_size,) * image.ndim
