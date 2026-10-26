@@ -440,3 +440,8 @@ tests/test_shannon_entropy_native.cpp -text
 python/skimagexx/_shannon_entropy.py -text
 python/skimagexx/_shannon_entropy_checks.py -text
 benchmarks/shannon-entropy-minimum-initial.json -text
+
+src/block_reduce_internal.hpp -text
+src/block_reduce.cpp -text
+src/simd_block_reduce_avx2.cpp -text
+tests/test_block_reduce_native.cpp -text
