@@ -147,7 +147,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api in MOMENTS_FUNCTIONS or api == 'measure.inertia_tensor':
+                    if api == 'measure.inertia_tensor':
+                        error = moments_default_error(api, data, actual, expected)
+                    elif api in MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, data, actual, expected)
                     elif api in DERIVED_MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, call_args[0], actual, expected)
