@@ -10,6 +10,9 @@
 #include <limits>
 #include <stdexcept>
 #include <vector>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 #ifdef NDEBUG
 #error Native controls require assertions
 #endif
@@ -59,9 +62,23 @@ template<class T>void run(int workers){
 }
 }
 int main(int argc,char**argv){
-    require(skimagexx::has_avx2()==(std::getenv("SKIMAGEXX_DISABLE_SIMD")==nullptr));
+    const bool vectorized=skimagexx::has_avx2();
+    require(std::getenv("SKIMAGEXX_DISABLE_SIMD")==nullptr || !vectorized);
     require(argc==2);journal.open(argv[1],std::ios::binary);require(bool(journal));
-    for(int workers:{1,4}){run<float>(workers);run<double>(workers);}
+    std::vector<int> budgets{1};int maximum=1;
+#ifdef _OPENMP
+    maximum=omp_get_max_threads();if(maximum>=4)budgets.push_back(4);
+#endif
+    for(int workers:budgets){run<float>(workers);run<double>(workers);}
+#ifndef _OPENMP
+    bool refused=false;
+    try{skimagexx::set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}
+    require(refused && skimagexx::get_num_threads()==1);
+    float powers[2]={1,1},output[2];refused=false;
+    try{skimagexx::detail::moments_coords_reduce(powers,1,1,2,output,4);}
+    catch(const std::invalid_argument&){refused=true;}
+    require(refused);
+#endif
     journal.close();require(skimagexx::get_num_threads()==1);
-    std::cout<<checks<<" controls / "<<calls<<" calls PASS\n";
+    std::cout<<checks<<" controls / "<<calls<<" calls PASS; actual_avx2="<<vectorized<<" omp_max_threads="<<maximum<<" worker4_exercised="<<(budgets.size()==2)<<"\n";
 }
