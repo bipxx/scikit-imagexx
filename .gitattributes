@@ -387,3 +387,6 @@ tests/test_moments_derived_public.py -text
 src/moments_hu.hpp -text
 src/moments_hu.cpp -text
 tests/test_moments_hu_native.cpp -text
+
+python/skimagexx/_moments_derived.py -text
+src/bind_moments_derived.cpp -text
