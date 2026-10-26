@@ -39,7 +39,7 @@ def moments_normalized(mu,order=3,spacing=None):
     if (type(mu) is np.ndarray and type(order) is int and order==3 and spacing is None
             and np.__version__ in ("1.24.4","2.5.4") and mu.shape==(4,4)
             and mu.dtype.char in ("f","d") and mu.dtype.isnative
-            and mu.dtype.metadata is None and mu.flags.c_contiguous and mu.flags.aligned):
+            and mu.dtype.metadata is None and (mu.flags.c_contiguous or mu.flags.f_contiguous) and mu.flags.aligned):
         batch=_core.moments_normalize(mu,np.__version__=="2.5.4" and mu.dtype.itemsize==4)
         storage_checked=True
         if batch is not None:return batch

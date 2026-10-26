@@ -153,6 +153,12 @@ jobs:
         run: python -m pytest -q tests/test_moments_derived_public.py --junitxml=build/ci-artifacts/moments-derived-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Real C and Fortran normalized moment tensors
+        run: python -m pytest -q tests/test_normalized_layouts_public.py --junitxml=build/ci-artifacts/normalized-layouts-normal.xml
+      - name: Real C and Fortran normalized moment tensors with SIMD disabled
+        run: python -m pytest -q tests/test_normalized_layouts_public.py --junitxml=build/ci-artifacts/normalized-layouts-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Immutable bytes storage parity
         run: python -m pytest -q tests/test_immutable_buffer_roots_public.py --junitxml=build/ci-artifacts/immutable-bytes-normal.xml
       - name: Immutable bytes storage parity with SIMD disabled
