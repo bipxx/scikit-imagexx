@@ -444,3 +444,4 @@ tests/rgb2yuv_storage_cases.py -text
 tests/test_rgb2yuv_storage_public.py -text
 src/bind_color_status.cpp -text
 tests/test_color_status_native.cpp -text
+benchmarks/rgb2yuv-storage-minimum-initial.json -text
