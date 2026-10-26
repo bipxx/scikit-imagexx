@@ -70,7 +70,7 @@ def test_coords_signature(reference_runtime,api):
 def test_coords_owned(reference_runtime,spec,workers,worker_results,monkeypatch,tmp_path):
     np,original,_=reference_runtime
     coords,options,captured,observed=reference_case(spec,np,original);expected,error,messages,checks=observed
-    (tmp_path/'original.json').write_text(json.dumps(dict(id=spec['id'],input=encode(coords,np),center=encode(captured.get('center'),np),powers=encode(captured.get('powers'),np),calc=encode(captured.get('calc'),np),result=encode(expected,np),error=error,warnings=messages,checks=checks))+'\n')
+    (tmp_path/'original.json').write_text(json.dumps(dict(id=spec['id'],input=encode(coords,np),center=encode(captured.get('center'),np),powers=encode(captured.get('powers'),np),calc=encode(captured.get('calc'),np),result=encode(expected,np),error=error,warnings=messages,checks=checks),default=json_value)+'\n')
     bound=validate(spec,captured,observed,np)
     coords,options=fixture(spec,np)
     import skimage.measure as upstream
