@@ -451,3 +451,6 @@ src/block_reduce_internal.hpp -text
 src/block_reduce.cpp -text
 src/simd_block_reduce_avx2.cpp -text
 tests/test_block_reduce_native.cpp -text
+python/skimagexx/_block_reduce.py -text
+python/skimagexx/_block_reduce_checks.py -text
+src/bind_block_reduce.cpp -text
