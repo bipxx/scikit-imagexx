@@ -454,3 +454,6 @@ tests/test_block_reduce_native.cpp -text
 python/skimagexx/_block_reduce.py -text
 python/skimagexx/_block_reduce_checks.py -text
 src/bind_block_reduce.cpp -text
+benchmarks/rgb2yuv-storage-minimum-initial.json -text
+.github/workflows/rgb2yuv-storage-same-host.yml -text
+tests/test_rgb2yuv_storage_same_host.py -text
