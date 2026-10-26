@@ -2,7 +2,7 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source registers 221 partial image APIs plus 3 metadata functions and 5 partial native classes. Raw/central moments and centroid add owned typed SIMD projections. Normalized/Hu moments add typed division/polynomial arithmetic; their NumPy preparation, scalar-power and analytical providers remain explicit. Combined supported-profile wheel/SDK qualification remains at 203 image APIs; component evidence is separate from installed acceptance and measured speed.
+Phase-2 source registers 221 partial image APIs plus 3 metadata functions and 5 partial native classes. Raw/central moments and centroid add owned typed SIMD projections. Normalized/Hu moments add typed division/polynomial arithmetic and a measured batch route for bounded C-contiguous 4x4 real defaults. NumPy providers and the unaccelerated Fortran-layout normalization path remain explicit. Combined supported-profile wheel/SDK qualification remains at 203 image APIs; component evidence is separate from installed acceptance and measured speed.
 
 Qualified product: `ea35a2481880301b8ce7b4eb2d77665adb813ca2`, Actions run `40237475475`: four profiles, 828,304 XML checks with no failures/errors/skips, three Release products. The qualified composition includes reconstruction, normalized mutual information, H-extrema, the metrics SIMD increment and the bounded TV zero-scan change. This is partial per-function scope, not full API parity or performance acceptance.
 
