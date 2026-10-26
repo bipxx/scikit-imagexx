@@ -94,9 +94,16 @@ def main():
                      'analytical central-moment and centroid-ratio Python/NumPy shell remain providers; '
                      'owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.')
     derived_scope = 'Fixed owning 4x4 moment tensors are prepared outside timing; dtype is the actual mu/nu input dtype, not an image label. Normalization uses bounded native batch arithmetic for assessed contiguous 4x4 real defaults; its scalar fallback retains NumPy powers, first division, promotion and assignment with an owned final divide. Hu keeps dtype conversion and output wrapping around owned C++ polynomial arithmetic. Each timed public call includes its allocation, eligibility checks and conversions. Integer normalization has exact source-error coverage and no timing row.'
+    inertia_scope = ('Automatic central moments use owned per-axis projections; NumPy coordinate powers, '
+                     'analytical preparation, diagonal summation and indexing remain providers. Finite real tensor '
+                     'assembly is owned C++; exceptional arithmetic retains local NumPy expressions. Both timed '
+                     'public calls include moments, tensor allocation and preparation; genuine original central '
+                     'moments are separately prepared outside timing only for the frozen per-cell checker.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})
+    if 'measure.inertia_tensor' in apis:
+        provider_frontiers['measure.inertia_tensor'] = inertia_scope
     if 'filters.window' in apis:
         provider_frontiers['filters.window'] = window_scope
     if 'filters.butterworth' in apis:
@@ -140,7 +147,7 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api in MOMENTS_FUNCTIONS:
+                    if api in MOMENTS_FUNCTIONS or api == 'measure.inertia_tensor':
                         error = moments_default_error(api, data, actual, expected)
                     elif api in DERIVED_MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, call_args[0], actual, expected)
@@ -188,6 +195,7 @@ def main():
              + (' ' + lpi_scope if lpi_apis.intersection(apis) else '')
              + (' ' + window_scope if 'filters.window' in apis else '')
              + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else '')
+             + (' ' + inertia_scope if 'measure.inertia_tensor' in apis else '')
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:

@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('measure.inertia_tensor',),'tests/test_inertia_tensor_public.py','benchmarks/coverage.py'),
     (('measure.moments_normalized','measure.moments_hu'),'tests/test_moments_derived_public.py','benchmarks/coverage.py'),
     (('measure.moments','measure.moments_central','measure.centroid'),'tests/test_moments_public.py','benchmarks/coverage.py'),
     (('filters.window',),'tests/test_window_public.py','benchmarks/coverage.py'),
