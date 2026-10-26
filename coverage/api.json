@@ -5503,11 +5503,15 @@
       "api": "measure.inertia_tensor_eigvals",
       "kind": "callable",
       "signature": "(image, mu=None, T=None, *, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_inertia_eigvals_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.intersection_coeff",

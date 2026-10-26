@@ -99,11 +99,17 @@ def main():
                      'assembly is owned C++; exceptional arithmetic retains local NumPy expressions. Both timed '
                      'public calls include moments, tensor allocation and preparation; genuine original central '
                      'moments are separately prepared outside timing only for the frozen per-cell checker.')
+    eigvals_scope = ('Default image calls include owned moments, inertia assembly and the existing C++ symmetric eigensolver; '
+                     'NumPy preparation, clipping and scalar-list wrapping remain providers. Unsupported solver domains '
+                     'retain NumPy eigvalsh primitives without native solver credit. Genuine original central moments '
+                     'and tensor are prepared outside timing only for the frozen solver-plus-Weyl checker.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})
     if 'measure.inertia_tensor' in apis:
         provider_frontiers['measure.inertia_tensor'] = inertia_scope
+    if 'measure.inertia_tensor_eigvals' in apis:
+        provider_frontiers['measure.inertia_tensor_eigvals'] = eigvals_scope
     if 'filters.window' in apis:
         provider_frontiers['filters.window'] = window_scope
     if 'filters.butterworth' in apis:
@@ -147,7 +153,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.inertia_tensor':
+                    if api == 'measure.inertia_tensor_eigvals':
+                        error = moments_default_error(api, data, actual, expected)
+                    elif api == 'measure.inertia_tensor':
                         error = moments_default_error(api, data, actual, expected)
                     elif api in MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, data, actual, expected)
@@ -198,6 +206,7 @@ def main():
              + (' ' + window_scope if 'filters.window' in apis else '')
              + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + inertia_scope if 'measure.inertia_tensor' in apis else '')
+             + (' ' + eigvals_scope if 'measure.inertia_tensor_eigvals' in apis else '')
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:

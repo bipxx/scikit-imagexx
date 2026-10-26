@@ -33,6 +33,10 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api=='measure.inertia_tensor_eigvals':
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
+        assert all(a.dtype.metadata==e.dtype.metadata for a,e in zip(actual,expected)),path
+        return
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected),path
         assert len(actual)==len(expected),path

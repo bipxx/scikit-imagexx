@@ -321,3 +321,20 @@ def inertia_tensor(image, mu=None, *, spacing=None):
         result[dims] = -mu[tuple(mu_index)] / mu0
         result.T[dims] = -mu[tuple(mu_index)] / mu0
     return result
+
+
+def inertia_tensor_eigvals(image, mu=None, T=None, *, spacing=None):
+    """Return clipped inertia eigenvalues with an owned finite real solve.
+
+    NumPy retains unsupported dtype/nonfinite eigvalsh primitives, clipping
+    and scalar-list wrapping. Supplying T bypasses image, mu and spacing.
+    """
+    if T is None:
+        T = inertia_tensor(image, mu, spacing=spacing)
+    eigvals = None
+    if type(T) is np.ndarray and T.dtype.char in ('f', 'd'):
+        eigvals = _core.inertia_eigvals(T)
+    if eigvals is None:
+        eigvals = np.linalg.eigvalsh(T)
+    eigvals = np.clip(eigvals, 0, None, out=eigvals)
+    return sorted(eigvals, reverse=True)
