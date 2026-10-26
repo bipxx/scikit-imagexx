@@ -360,3 +360,4 @@ src/simd_window_avx2.cpp -text
 tests/test_window_native.cpp -text
 
 python/skimagexx/_window.py -text
+benchmarks/lpi-minimum-initial.json -text
