@@ -47,41 +47,41 @@ Earlier kept [float64 v3](../benchmarks/phase3-f64-same-host.md) gave
 +2.94% normalized / +2.03% direct on one 7763 host. Its cross-CPU HOLD is
 historical and resolved; that earlier apparent 12% is not a causal code gain.
 
-**Current kept: [byte-mask v4](../benchmarks/phase3-byte-same-host.md), exact
-source/main `0135305`.** A controlled EPYC 9V74 ABBA job gives fixed21 aggregate
-**0.0918373561074× baseline vs 0.2091629408619× candidate**:
-**2.277537× normalized / 2.287450× direct**. All seven intersection cases
-improve; five (tiny/cache/memory/volume/cache-F) beat scikit-image in both
-candidate passes. Stepped/masked and all 14 MCC/MOC cases remain slower:
-**16 colocalization original-library regressions remain**. All nine normalized
-and nine direct losses, all 73 workloads and 4,088 samples are published.
-Four exact correctness reports and before/after identities pass.
+Earlier kept [byte-mask v4](../benchmarks/phase3-byte-same-host.md), source
+`0135305`, established five original-library intersection wins. Its retained
+9V74 measurements are historical, not factors for cumulative cross-CPU gains.
 
-Scope is one minimum-Linux host, with no universal-profile, cumulative
-cross-CPU or combined-product claim. Byte-v4's five original-library wins remain
-kept. **Float32 v5 is on HOLD and off main:** candidate `c53198a`
-[preparation 40273141051](https://github.com/bipxx/scikit-imagexx/actions/runs/40273141051)
-failed **741 passed / 44 failed**. All failures are MOC final-result +1 ULP;
-the other eight semantic fields match. The failures include all eight integer
-dtypes and float32. CPU/pow causation is unproven, with no actual CPU model or
-loaded system libm recorded. The [local failure receipt](../build/phase3-f32-failed-preparation-v5/failure-review.json)
-retains exact rows and product/runtime evidence. No timing was launched.
+**Current kept: [float32 v5](../benchmarks/phase3-f32-same-host.md), main/checked
+source `5b03eded`, exact compiled product `c53198a`.** The unchanged wheel was
+reused. One 9V45 ABBA job gives fixed21 scores **0.2042894437937× →
+0.2181707370842×**, or **1.067949× normalized / 1.059884× direct gain**.
+All ten targeted float32 cases improve 1.093572–1.247566×, with both candidate
+medians below both baseline medians. Five normalized and seven direct losses
+are retained. The same five cases beat scikit-image; **16 colocalization
+regressions remain**. All 73 workloads, 4,088 samples, reference drift and
+product identities are published; no universal-profile or full-product
+qualification follows.
 
-The [same-host diagnostic 40275501905](https://github.com/bipxx/scikit-imagexx/actions/runs/40275501905)
-now has an [independent raw review](evidence/colocalization-live-reference-checkpoint.json):
-all four old/new normal/scalar processes match fresh originals exactly for
-**536 cases and all nine fields**. Fresh originals and both native products
-reproduce the same 44 result-word-only +1-ULP frozen differences on EPYC 9V45.
-V5 is therefore unnecessary for that discrepancy on this host; the precise
-runtime cause remains unknown. The receipt binds CPU/libm metadata, products,
-raw artifact `12629484753` and all 44 field words.
+The initial [preparation 40273141051](https://github.com/bipxx/scikit-imagexx/actions/runs/40273141051)
+remains 741 passed / 44 failed. [Diagnostic 40275501905](https://github.com/bipxx/scikit-imagexx/actions/runs/40275501905)
+and its [raw receipt](evidence/colocalization-live-reference-checkpoint.json)
+prove old/new native observations exactly match fresh originals for all 536
+normal/scalar cases, while all reproduce the same 44 frozen MOC word
+differences. V5 is unnecessary for that discrepancy on this host; its precise
+runtime cause is still unknown. The diagnostic keeps `acceptance=false`.
 
-This is diagnostic evidence only (`acceptance=false`). The failed preparation
-remains failed; no performance, KEEP or full-product credit follows. Next is
-independent review of a proposed MOC-result-word live-reference rule with
-exact fresh matching and all other frozen fields unchanged. No tolerance or
-policy change is accepted yet. Root owns launches and integration; C++ and
-focused-test ownership remain separate.
+The separately accepted test policy uses a fresh original only for successful
+MOC floating result words, preserving frozen metadata and every other field;
+full native/fresh matching remains exact, with no tolerance relaxation or
+fixture/matrix/helper rewrite. [New preparation 40277634220](https://github.com/bipxx/scikit-imagexx/actions/runs/40277634220)
+passes 785 public checks per mode, 1,318 smoke, 21 metadata tests plus 30
+subtests, and 73 corpus checks per mode. Its raw fresh-reference pairs are
+verified; the old failure is not relabelled. The separate controlled
+measurement, not the diagnostic alone, supports KEEP.
+
+Next: root's explicit SSE float32 sum and an independent octahedron worktree
+are underway, with no measured results. Ownership stays separate; root owns
+launches and integration.
 
 ## Historical execution card — public203 integration checkpoint
 
