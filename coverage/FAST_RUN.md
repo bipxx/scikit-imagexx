@@ -51,17 +51,38 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 ## Phase 3: benchmark one thread
 
-**Next:** prepare actual Release products for the eight additions and run complete-public-call, one-thread comparisons using the existing measurement tools. Record the actual tested product; retain raw samples, every regression, absolute runtime penalties and the next bottleneck owner. Keep builds and tests off measurement hosts. Development timings do not establish full product acceptance or a speedup.
+**Measured and kept:** both initial Linux profiles and the first colocalization
+optimization have completed isolated one-thread measurements. The
+[minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52 footprint
+workloads faster than scikit-image; the
+[modern baseline](../benchmarks/phase3-modern-initial.md) has 50/52, with two
+large dense octahedron regressions. All 21 colocalization workloads are slower
+than the original on both baselines. Each summary links the exact raw report;
+every regression is retained.
+
+[Affine v1](../benchmarks/phase3-affine-v1.md), source `5bc2109`, is merged.
+On minimum Linux, its fixed 21-case geometric mean of original/current ratios
+improved from **0.0342836736027× to 0.0574776398746×**, or **1.676531×**.
+All 21 ratios improved, but **all 21 calls remain slower than scikit-image**.
+This compares normalized ratios from separate hosted runs, not direct paired
+baseline/candidate latencies on one host. No modern/Windows optimization result
+or combined-product qualification follows from it.
+
+**Next:** width-v2 source and tests are in progress, with no measurement yet.
+Keep the same 21-case metric, all 73 workload specifications, exact parity gates
+and every adverse result. Root owns experiment launches and keep decisions;
+the C++ and focused-test owners work separately. Measure the complete public
+call and retain the actual tested product, raw samples and absolute penalties.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
 seven paired rounds, exact untimed parity before any timing, and every slower
-case retained with its absolute latency penalty. It reuses a completed Release
-wheel job from run `40256588339`, source `1d377456856685a670333f29b364bd73c2cd9cf0`,
-and verifies that the current compiled/product source is unchanged. Select
-`runtime=minimum` first because its artifact is available; `modern` uses the same
-workload set when that producer artifact is published. Preparation checks the
-installed public contracts, scalar dispatch and complete registry smoke; a
+case retained with its absolute latency penalty. It reuses an authenticated
+Release wheel selected by `producer_run` and `producer_revision`, requiring
+the measurement checkout's product source to match. The initial profiles use
+producer `1d37745`; affine v1 uses its own `5bc2109` product. Preparation passed
+785 installed public checks in each normal/scalar mode, 1,318 registry smoke
+checks, 13 benchmark metadata checks and 73 corpus checks in each mode. A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
 requires `source_revision` to match the selected workflow commit exactly.
@@ -71,8 +92,8 @@ both workflow files pass actionlint. Separately, five frozen original source
 files and their license now supply the reconstruction tests' missing CI input:
 all 80 affected original-reference tests pass without assertion changes. Exact
 historical Git objects are fetched at depth one. Remaining H trace/provenance and
-publication/import-isolation failures remain separate phase-4 work; this setup
-does not turn an unrelated failed broad suite into accepted product coverage.
+publication/import-isolation failures remain separate phase-4 work; scoped results
+do not turn an unrelated failed broad suite into accepted product coverage.
 
 ## Phase 4: accept supported profiles
 

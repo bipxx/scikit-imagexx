@@ -311,3 +311,5 @@ tests/data/reconstruction-primary-0.26/rank_order.py -text
 tests/data/reconstruction-primary-0.26/shared_utils.py -text
 tests/data/reconstruction-primary-0.26/LICENSE.txt -text
 benchmarks/phase3-minimum-initial.json -text
+benchmarks/phase3-modern-initial.json -text
+benchmarks/phase3-affine-v1.json -text

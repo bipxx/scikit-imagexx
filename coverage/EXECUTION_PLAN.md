@@ -21,25 +21,33 @@ smoke passes 16. Its 1,608 original semantic projections are now a self-containe
 224 KB compressed test fixture, checked against the existing frozen matrix.
 AVX2 and portable CMake configurations confirm baseline/leaf ISA separation,
 strict FP and optional-worker test wiring. Accepted combined binaries remain
-public203; combined wheel/SDK qualification and one-thread performance for the
-additions are pending. Next phase: isolated one-thread comparisons using actual
-Release products. Existing full contracts retain their scope; older
+public203; combined wheel/SDK qualification for the additions is pending.
+One-thread performance results are now available below. Existing full contracts retain their scope; older
 campaign priorities below do not supersede this phased route.
 
-Phase 3 campaign source is now executable: 73 workloads across the eight new
-APIs, strict parity before seven paired one-worker rounds, reused exact Release
-wheels, and fresh offline measurement hosts. Minimum Linux is first because
-its completed producer artifact is available; modern Linux follows the same
-workflow. Source-only metadata checks pass 31 and actionlint passes both YAML
-files. Missing original reconstruction source inputs are supplied and all 80
-affected tests pass. Broader H/publication/import-isolation failures stay
-unaccepted and separate; no new speedup is established until the actual run.
+Phase 3 has measured all 73 fixed workloads on fresh offline Linux hosts after
+785 public checks in each dispatch mode, 1,318 smoke checks and exact corpus
+parity. The [minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52
+footprint workloads faster than the original; the
+[modern baseline](../benchmarks/phase3-modern-initial.md) has 50/52. All 21
+colocalization workloads are slower on both baselines.
 
-## Current execution card — updated-plan resume
+Merged [affine v1](../benchmarks/phase3-affine-v1.md), source `5bc2109`, improves
+the minimum-profile fixed 21-case geometric-mean ratio from 0.0342836736027× to
+0.0574776398746×: **1.676531× normalized improvement**, with every case improving.
+All 21 remain slower than scikit-image. These are original/current ratios from
+separate hosted runs, not same-host paired candidate/baseline timings. All raw
+samples and regressions are published; no all-profile or whole-product claim
+follows. Width-v2 source/tests are the next active optimization packet and have
+no measured result yet. Root owns launches and integration; C++ and focused-test
+ownership remain separate. Keep the fixed metric, all 73 cases and exact gates.
 
-Implementation is active. The [work queue](work_items.json) owns assignments and
-file ownership; older status paragraphs below are historical. Accepted coverage
-is **203 native-partial image APIs**, against the unchanged full inventory.
+## Historical execution card — public203 integration checkpoint
+
+The following card preserves an earlier checkpoint; it does not replace the
+current phased priority above. The [work queue](work_items.json) records file
+ownership. Accepted qualified coverage remains **203 native-partial image APIs**,
+against the unchanged full inventory.
 
 Execution checkpoint: **public203 main integration, 2026-10-25**. A prepared
 the artifact-only TV workflow/publication/certificate handoff; B prepared the
