@@ -75,8 +75,9 @@ def compare(actual,expected,bound,spec,np):
         for powers in __import__('itertools').product(range(spec["order"]+1),repeat=expected.ndim):
             visited[powers]=True
             if sum(powers)<2:assert np.isnan(actual[powers]) and np.isnan(expected[powers])
-        np.testing.assert_array_equal(actual[~visited],expected[~visited])
-        np.testing.assert_array_equal(np.signbit(actual[~visited]),np.signbit(expected[~visited]))
+        for a,e in components:
+            np.testing.assert_array_equal(a[~visited],e[~visited])
+            np.testing.assert_array_equal(np.signbit(a[~visited]),np.signbit(e[~visited]))
 
 
 @pytest.fixture(scope="module")
