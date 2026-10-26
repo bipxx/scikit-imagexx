@@ -51,7 +51,7 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 ## Phase 3: benchmark one thread
 
-**Measured and kept:** both initial Linux profiles and five colocalization
+**Measured and kept:** both initial Linux profiles and successive colocalization
 optimizations have completed isolated one-thread measurements. The
 [minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52 footprint
 workloads faster than scikit-image; the
@@ -80,7 +80,7 @@ Earlier kept [byte masks v4](../benchmarks/phase3-byte-same-host.md), source
 `0135305`, established five intersection wins over the original library on one
 9V74 host. Its raw reports and all losses remain unchanged.
 
-**Current kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md).** Main/checked
+**Earlier kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md).** Main/checked
 source `5b03eded` reuses the exact wheel compiled from `c53198a`, without a
 rebuild. The controlled 9V45 ABBA job gives fixed21 scores
 **0.2042894437937× baseline vs 0.2181707370842× candidate**, or
@@ -118,7 +118,7 @@ controls per mode and [788 passing installed checks per mode](https://github.com
 establish correctness, not a speedup. [Controlled ABBA 40286133008](https://github.com/bipxx/scikit-imagexx/actions/runs/40286133008)
 gives **0.986506× normalized / 0.994889× direct gain**, with 13 normalized and
 10 direct fixed21 losses. The exact raw ZIP, all ten float32 targets and all
-losses are published. **Kept v5 is unchanged**; no identical rerun is planned.
+losses are published. The packed path remains excluded; no identical rerun is planned.
 
 **Kept and merged: [integer octahedron](../benchmarks/phase3-octahedron-integer-same-host.md).**
 Main `f079c6d` preserves the exact measured product source `9da7ccf`.
@@ -130,10 +130,41 @@ cases on one 9V45 host. Both candidate medians beat both baselines in every
 target. All 35 direct and 28 normalized losses outside the target are
 published; the same 16 colocalization regressions remain.
 
-Next: byte-affine candidate `887aff6` is in
-[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824).
-Its installed gates and performance decision are pending. Kept colocalization
-v5 remains unchanged; v6 remains rejected.
+**Held: [byte-affine candidate](../benchmarks/phase3-byte-affine-same-host.md).**
+Source `887aff6` passes its 785-check installed gates per mode, but controlled
+run 40288858109 gives **0.999459× direct / 0.999468× normalized** over fixed21.
+Stepped intersection improves 2.313035×; all 14 Manders cases lose directly.
+The target gain does not establish an aggregate improvement. Source remains
+unmerged. Completed local and hosted-object comparisons found unchanged Manders
+hot-loop instructions; no cause is inferred from placement alone, and no
+identical rerun is planned.
+
+**Current kept colocalization: [finite float32 scan](../benchmarks/phase3-finite-scan-same-host.md).**
+Exact measured source `552d445` is merged in main and already includes the
+kept octahedron change. On one Xeon 6973P-C host, controlled ABBA run
+[40295836642](https://github.com/bipxx/scikit-imagexx/actions/runs/40295836642)
+gives fixed21 **1.253970× direct / 1.184646× normalized gain**; scores move
+**0.3476071029603× → 0.4117914024166×**. All ten float32 Manders targets
+improve, **1.513748× direct / 1.426518× normalized** in aggregate, with both
+candidate medians below both baselines. All 14 Manders cases give 1.349543×
+direct gain. All 73 workloads, 4,088 samples, **35 direct / 39 normalized
+losses** and absolute penalties are published. Five intersection cases beat
+the original; **16 colocalization cases remain slower**.
+
+Both product preparations passed **799 public checks per normal/scalar mode**,
+1,318 smoke checks, 21 metadata tests plus 30 subtests and 73 corpus checks per
+mode. Baseline and candidate each passed **20,975 native controls per mode**.
+The new integer scan emits baseline SSE2, not a newly added AVX2 leaf; floating
+reductions and provider boundaries stay unchanged. This is one minimum-Linux
+host, not a cumulative cross-CPU gain or full supported-profile acceptance.
+
+Butterworth is active in its separate feature branch: **700 component checks
+pass**, with a privately tested owned FFT and an explicit NumPy mask provider.
+The whole-Release gate and six timing cases remain pending. Its branch registry
+is **212 image APIs + 3 metadata functions**, not yet main; main remains
+**211 + 3**, and accepted combined binary coverage remains **203 image APIs**.
+The prospective numerical policy distinguishes the PocketFFT/DUCC reference
+backends; component correctness grants no whole-product or performance credit.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
@@ -143,10 +174,12 @@ Release wheel selected by `producer_run` and `producer_revision`, requiring
 the measurement checkout's product source to match. The initial profiles use
 producer `1d37745`; affine v1 uses `5bc2109`, width v2 uses `4a78e94`, and
 f64 v3 uses `ac87e23`; byte v4 uses `0135305`; float32 v5 reuses compiled
-`c53198a` under checked source `5b03eded`.
-The kept campaigns passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
-checks and 73 corpus checks in each mode; v5 has 21 metadata tests plus 30
-subtests (earlier campaigns had 13 metadata tests). A
+`c53198a` under checked source `5b03eded`; the current finite scan uses exact
+`552d445` against the kept-octahedron baseline `9da7ccf`.
+Earlier colocalization campaigns passed 785 installed public checks per mode;
+current octahedron/finite-scan preparations pass 799 per mode. They retain
+1,318 registry smoke checks and 73 corpus checks per mode, with 21 metadata
+tests plus 30 subtests (earlier campaigns had 13 metadata tests). A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
 requires `source_revision` to match the selected workflow commit exactly.

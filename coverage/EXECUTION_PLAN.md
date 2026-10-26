@@ -51,7 +51,7 @@ Earlier kept [byte-mask v4](../benchmarks/phase3-byte-same-host.md), source
 `0135305`, established five original-library intersection wins. Its retained
 9V74 measurements are historical, not factors for cumulative cross-CPU gains.
 
-**Current kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md), main/checked
+**Earlier kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md), main/checked
 source `5b03eded`, exact compiled product `c53198a`.** The unchanged wheel was
 reused. One 9V45 ABBA job gives fixed21 scores **0.2042894437937× →
 0.2181707370842×**, or **1.067949× normalized / 1.059884× direct gain**.
@@ -84,7 +84,7 @@ measurement, not the diagnostic alone, supports KEEP.
 all raw reports and losses. Actual `movups`/`addps`, 2,787 native controls per
 mode and [788 installed tests per mode](https://github.com/bipxx/scikit-imagexx/actions/runs/40285975359)
 passed. Same-host ABBA gives **0.986506× normalized / 0.994889× direct gain**,
-with 13 normalized and 10 direct fixed21 losses. Kept v5 remains unchanged.
+with 13 normalized and 10 direct fixed21 losses. The packed path remains excluded.
 
 **Integer octahedron is kept and merged in main `f079c6d`**, with product
 source exact to measured `9da7ccf`. Its [published same-host comparison](../benchmarks/phase3-octahedron-integer-same-host.md)
@@ -95,10 +95,41 @@ Private component checks are 254 public / 2,997 native per mode, followed by
 the target remain published, as do 16 colocalization regressions. This does
 not expand whole-product acceptance or claim all-profile speedups.
 
-Next byte-affine candidate `887aff6` is in
-[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824);
-installed gates and performance remain pending. Kept colocalization v5 is
-unchanged, and packed v6 stays rejected.
+The [byte-affine candidate](../benchmarks/phase3-byte-affine-same-host.md)
+`887aff6` passes 785 installed checks per mode but remains **HOLD/unmerged**.
+Controlled run 40288858109 gives 0.999459× direct / 0.999468× normalized over
+fixed21: stepped intersection improves 2.313035×, offset by direct losses in
+all 14 Manders cases. Local and actual hosted SDK objects have unchanged
+Manders hot-loop instructions; placement alone does not establish causality.
+Preserve all results; do not change the metric or repeat identical code.
+Packed v6 stays rejected.
+
+**Current kept colocalization: [finite float32 scan](../benchmarks/phase3-finite-scan-same-host.md).**
+Exact measured source `552d445` is merged in main and already includes the
+kept octahedron change. On one Xeon 6973P-C host, controlled ABBA run
+[40295836642](https://github.com/bipxx/scikit-imagexx/actions/runs/40295836642)
+gives fixed21 **1.253970× direct / 1.184646× normalized gain**; scores move
+**0.3476071029603× → 0.4117914024166×**. All ten float32 Manders targets
+improve, **1.513748× direct / 1.426518× normalized** in aggregate, with both
+candidate medians below both baselines. All 14 Manders cases give 1.349543×
+direct gain. All 73 workloads, 4,088 samples, **35 direct / 39 normalized
+losses** and absolute penalties are published. Five intersection cases beat
+the original; **16 colocalization cases remain slower**.
+
+Both product preparations passed **799 public checks per normal/scalar mode**,
+1,318 smoke checks, 21 metadata tests plus 30 subtests and 73 corpus checks per
+mode. Baseline and candidate each passed **20,975 native controls per mode**.
+The new integer scan emits baseline SSE2, not a newly added AVX2 leaf; floating
+reductions and provider boundaries stay unchanged. This is one minimum-Linux
+host, not a cumulative cross-CPU gain or full supported-profile acceptance.
+
+Butterworth is active in its separate feature branch: **700 component checks
+pass**, with a privately tested owned FFT and an explicit NumPy mask provider.
+The whole-Release gate and six timing cases remain pending. Its branch registry
+is **212 image APIs + 3 metadata functions**, not yet main; main remains
+**211 + 3**, and accepted combined binary coverage remains **203 image APIs**.
+The prospective numerical policy distinguishes the PocketFFT/DUCC reference
+backends; component correctness grants no whole-product or performance credit.
 
 ## Historical execution card — public203 integration checkpoint
 

@@ -337,3 +337,6 @@ src/simd_fft_avx2.cpp -text
 tests/test_fft_native.cpp -text
 python/skimagexx/_butterworth.py -text
 src/bind_fft.cpp -text
+benchmarks/phase3-byte-affine-same-host.zip -text
+benchmarks/phase3-finite-scan-same-host.zip -text
+third_party/pocketfft/*.h whitespace=-blank-at-eol
