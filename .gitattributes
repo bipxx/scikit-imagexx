@@ -378,3 +378,5 @@ python/skimagexx/_moments_checks.py -text
 benchmarks/moments-minimum-initial.json -text
 tests/moments_derived_cases.py -text
 tests/test_moments_derived_public.py -text
+python/skimagexx/_moments_derived.py -text
+src/bind_moments_derived.cpp -text
