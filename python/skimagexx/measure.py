@@ -13,9 +13,9 @@ def __getattr__(name):
     return module_attribute('measure', name)
 
 
-from ._moments import centroid, moments, moments_central
+from ._moments import centroid, inertia_tensor, moments, moments_central
 
-__all__ += ['moments', 'moments_central', 'centroid']
+__all__ += ['moments', 'moments_central', 'centroid', 'inertia_tensor']
 
 from ._moments_derived import moments_hu, moments_normalized
 

@@ -1,4 +1,8 @@
 #include "moments_internal.hpp"
+#include "inertia_internal.hpp"
+#include <cfenv>
+#include <limits>
+#include <stdexcept>
 #include "bind_array_storage.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -54,9 +58,46 @@ template<class T> py::tuple project(const py::array& calc, const py::array& powe
     }
     return py::make_tuple(output, status);
 }
+
+// The tiny assembly retains the GIL; scalar conversions precede the final
+// allocation/buffer boundary. Exceptional arithmetic is left to the literal
+// NumPy path so its warning/error order is not reconstructed here.
+template<class T> py::object inertia(const py::array& diagonal,const py::array& mixed,
+                                     const py::object& sum,const py::object& zero) {
+    if(diagonal.ndim()!=1 || mixed.ndim()!=1)
+        throw py::value_error("inertia assembly requires one-dimensional inputs");
+    const auto n=diagonal.shape(0);
+    if(n && n>std::numeric_limits<py::ssize_t>::max()/n)
+        throw py::value_error("inertia tensor size overflow");
+    const auto pairs=n*(n-1)/2;
+    const T total=sum.cast<T>(),mass=zero.cast<T>();
+    py::array output(diagonal.dtype(),Shape{n,n});
+    check<T>(diagonal,Shape{n});
+    check<T>(mixed,Shape{pairs});
+    auto* result=static_cast<T*>(output.mutable_data());
+    // Capture only native arithmetic; the established buffers remain live.
+    std::fenv_t saved;
+    if(std::feholdexcept(&saved))throw std::runtime_error("cannot capture inertia floating environment");
+    skimagexx::detail::inertia_tensor(static_cast<const T*>(diagonal.data()),
+        static_cast<const T*>(mixed.data()),std::size_t(n),total,mass,
+        result);
+    const int flags=std::fetestexcept(FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID);
+    std::fesetenv(&saved);
+    if(flags)return py::none();
+    return output;
+}
+
 }
 
 void bind_moments(py::module_& module) {
+    module.def("inertia_tensor",[](const py::array& diagonal,const py::array& mixed,
+                                    const py::object& total,const py::object& mass)->py::object {
+        if(py::array_t<float,0>::check_(diagonal) && py::array_t<float,0>::check_(mixed))
+            return inertia<float>(diagonal,mixed,total,mass);
+        if(py::array_t<double,0>::check_(diagonal) && py::array_t<double,0>::check_(mixed))
+            return inertia<double>(diagonal,mixed,total,mass);
+        throw py::type_error("inertia assembly requires matching native float32 or float64");
+    },py::arg("diagonal").noconvert(),py::arg("mixed").noconvert(),py::arg("total"),py::arg("mass"));
     module.def("moments_project", [](const py::array& calc, const py::array& powers,
                                      std::size_t axis, int workers) {
         // The source frontend chooses the common dtype once from actual
