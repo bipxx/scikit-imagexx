@@ -52,7 +52,8 @@ def test_timing_commands_only_on_fresh_artifact_hosts():
 def test_minimum_only_and_debug_assertions_are_enforced():
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     condition = "if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only"
-    assert all(condition in blocks[n] for n in ('check', 'measure', 'debug-gil'))
+    assert all(condition in blocks[n] for n in ('check', 'debug-gil'))
+    assert "if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only)" in blocks['measure']
     assert all('inputs.minimum_only' not in blocks[n] for n in ('numpy-minimum', 'measure-minimum'))
     debug = blocks['debug-gil']
     assert '--config-settings=cmake.build-type=Debug' in debug
@@ -418,3 +419,21 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     assert prepared is not image and prepared.shape == (4, 4) and prepared.dtype is descriptor
     assert prepared.values == expected and options == {}
     assert namespace['default_call']('measure.moments', image) == ((image,), {})
+
+
+def test_prepare_only_retains_verified_minimum_artifact_without_timing():
+    workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+    assert 'prepare_only:\n        description: Prepare verified offline artifacts without standalone timing\n        type: boolean\n        default: false' in workflow
+    blocks = jobs(workflow)
+    minimum = blocks['measure-minimum']
+    condition = "if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only"
+    assert not minimum.lstrip().startswith('if:')
+    steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
+    timed = [step for step in steps if step.startswith('run: python benchmarks/')]
+    assert len(timed) == 6 and all(condition in step for step in timed)
+    assert all(condition not in step for step in steps if step not in timed)
+    assert minimum.count('ci_measurement_artifacts.py verify') == 2
+    assert 'name: ci-performance-minimum' in minimum
+    assert 'build/prepared/ci-artifacts/' in minimum and 'build/prepared/wheels/' in minimum
+    assert 'prepare_only' not in blocks['numpy-minimum']
+    assert 'prepare_only' not in blocks['check'] and 'prepare_only' not in blocks['debug-gil']
