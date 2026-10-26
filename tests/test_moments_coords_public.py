@@ -96,7 +96,16 @@ def test_coords_owned(reference_runtime,spec,workers,worker_results,monkeypatch,
         if error is None:
             compare(actual,expected,bound,np)
             if spec['route']=='native':assert len(returns)==1,'ordinary products AND reduction must be owned'
-        words=(encode(actual,np),actual_error,actual_messages);assert worker_results.setdefault(spec['id'],words)==words
+        if spec['route']=='provider' and actual_error is None:
+            # Saved originals themselves change NaN sign across calls. Keep
+            # masks/finite words/signed zeros exact, as in the per-call check.
+            if spec['id'] in worker_results:
+                previous,previous_error,previous_messages=worker_results[spec['id']]
+                assert actual_error==previous_error and actual_messages==previous_messages
+                compare(actual,previous,np.zeros(previous.shape,dtype=np.float64),np)
+            else:worker_results[spec['id']]=(actual,actual_error,actual_messages)
+        else:
+            words=(encode(actual,np),actual_error,actual_messages);assert worker_results.setdefault(spec['id'],words)==words
         assert xx.get_num_threads()==workers and _compat._fallback_enabled is False
     finally:sys.setprofile(prior);xx.set_num_threads(1);xx.set_fallback_enabled(old)
 
