@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "description": "Four retained genuine original central-moment outputs; no new image or moments computation. Words are little-endian element bytes in logical C order; construct independent C/F copies before normalization.",
+  "policy": "Reuse moments_derived_cases.error_limits and test_moments_derived_public.observe/compare unchanged; real normalization24 rounding units.",
+  "cases": [
+    {
+      "id": "u8-auto",
+      "dtype": "<f8",
+      "shape": [
+        4,
+        4
+      ],
+      "logical_c_words_hex": [
+        "0000000000405740",
+        "0000000000000000",
+        "985d76d965d76340",
+        "00413fef853b2140",
+        "0000000000000000",
+        "e04f3ffdf4d33ec0",
+        "009686d542be10c0",
+        "0000000000000000",
+        "e491471e79645a40",
+        "007608d20826f3bf",
+        "0000000000000000",
+        "0000000000000000",
+        "00941a8ec75a0dc0",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ],
+      "origin": {
+        "api": "measure.moments_central",
+        "case_id": "moments_central-2d-uint8",
+        "image_shape": [
+          4,
+          5
+        ],
+        "image_dtype": "uint8",
+        "image_layout": "C",
+        "order": 3,
+        "center": null,
+        "spacing": null,
+        "source_sha256": "5caffe9e049832ab87e1c28a63798639f48146f219d13cf91f43a8beace9f257",
+        "profiles": {
+          "modern": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/modern-normal/moments-arrays-1-moments_central-2d-uint8.zip",
+            "archive_sha256": "d7ccc069598c7c8ba8d224ea0f385793defc033fba33c496e2034af82c95ba77",
+            "member": "expected",
+            "member_sha256": "09601523a77a0554ac805d0604b346d392557e1dc4c953dec0553d12676d34e7",
+            "metadata": {
+              "dtype": "<f8",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                8,
+                32
+              ],
+              "owndata": true,
+              "writeable": true,
+              "base_type": "NoneType"
+            }
+          },
+          "minimum": {
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/minimum-normal/moments-arrays-1-moments_central-2d-uint8.zip",
+            "archive_sha256": "d7ccc069598c7c8ba8d224ea0f385793defc033fba33c496e2034af82c95ba77",
+            "member": "expected",
+            "member_sha256": "09601523a77a0554ac805d0604b346d392557e1dc4c953dec0553d12676d34e7",
+            "metadata": {
+              "dtype": "<f8",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                8,
+                32
+              ],
+              "owndata": true,
+              "writeable": true,
+              "base_type": "NoneType"
+            }
+          }
+        }
+      },
+      "saved_summary": {
+        "mass": 93.0,
+        "max_abs": 158.73118279569894
+      }
+    },
+    {
+      "id": "f32-auto",
+      "dtype": "<f4",
+      "shape": [
+        4,
+        4
+      ],
+      "logical_c_words_hex": [
+        "0000ba41",
+        "00000000",
+        "2fbb1e42",
+        "2fdc0940",
+        "00000000",
+        "a89ff6c0",
+        "17f285bf",
+        "00000000",
+        "c923d341",
+        "473099be",
+        "00000000",
+        "00000000",
+        "3cd66abf",
+        "00000000",
+        "00000000",
+        "00000000"
+      ],
+      "origin": {
+        "api": "measure.moments_central",
+        "case_id": "moments_central-2d-float32",
+        "image_shape": [
+          4,
+          5
+        ],
+        "image_dtype": "float32",
+        "image_layout": "C",
+        "order": 3,
+        "center": null,
+        "spacing": null,
+        "source_sha256": "5caffe9e049832ab87e1c28a63798639f48146f219d13cf91f43a8beace9f257",
+        "profiles": {
+          "modern": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/modern-normal/moments-arrays-1-moments_central-2d-float32.zip",
+            "archive_sha256": "d3895d1c0e6b3c72a2e861f10d804e62cd57b4ae19ee2d12eb4816b865691a1e",
+            "member": "expected",
+            "member_sha256": "4ad9e4803edf214891208e5e7a13a08cc3413bedffec50a5af0c47a11ae38a6e",
+            "metadata": {
+              "dtype": "<f4",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                4,
+                16
+              ],
+              "owndata": true,
+              "writeable": true,
+              "base_type": "NoneType"
+            }
+          },
+          "minimum": {
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/minimum-normal/moments-arrays-1-moments_central-2d-float32.zip",
+            "archive_sha256": "d3895d1c0e6b3c72a2e861f10d804e62cd57b4ae19ee2d12eb4816b865691a1e",
+            "member": "expected",
+            "member_sha256": "4ad9e4803edf214891208e5e7a13a08cc3413bedffec50a5af0c47a11ae38a6e",
+            "metadata": {
+              "dtype": "<f4",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                4,
+                16
+              ],
+              "owndata": true,
+              "writeable": true,
+              "base_type": "NoneType"
+            }
+          }
+        }
+      },
+      "saved_summary": {
+        "mass": 23.25,
+        "max_abs": 39.682796478271484
+      }
+    },
+    {
+      "id": "central-layout-step",
+      "dtype": "<f8",
+      "shape": [
+        4,
+        4
+      ],
+      "logical_c_words_hex": [
+        "0000000000403740",
+        "0000000000c029c0",
+        "0000000000684740",
+        "0000000000ee50c0",
+        "0000000000e02140",
+        "00000000005029c0",
+        "00000000007c3940",
+        "0000000000254ac0",
+        "0000000000d43d40",
+        "0000000000be36c0",
+        "0000000040f15040",
+        "00000000e0b55ac0",
+        "0000000000d73e40",
+        "0000000040ff44c0",
+        "0000000070fe5440",
+        "0000000034c565c0"
+      ],
+      "origin": {
+        "api": "measure.moments_central",
+        "case_id": "central-layout-step",
+        "image_shape": [
+          4,
+          5
+        ],
+        "image_dtype": "float64",
+        "image_layout": "step",
+        "order": 3,
+        "center": [
+          1.25,
+          2.5
+        ],
+        "spacing": null,
+        "source_sha256": "5caffe9e049832ab87e1c28a63798639f48146f219d13cf91f43a8beace9f257",
+        "profiles": {
+          "modern": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/modern-normal/moments-arrays-1-central-layout-step.zip",
+            "archive_sha256": "b9c442886701b04e8a7c9279edd0334ce802905857b6271b48f55ebe5050141e",
+            "member": "expected",
+            "member_sha256": "4815608305a5d3ad097e00b71722cdacee9e08e1bff9c2ba37cc5729a24ceb72",
+            "metadata": {
+              "dtype": "<f8",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                8,
+                32
+              ],
+              "owndata": false,
+              "writeable": true,
+              "base_type": "ndarray"
+            }
+          },
+          "minimum": {
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/minimum-normal/moments-arrays-1-central-layout-step.zip",
+            "archive_sha256": "b9c442886701b04e8a7c9279edd0334ce802905857b6271b48f55ebe5050141e",
+            "member": "expected",
+            "member_sha256": "4815608305a5d3ad097e00b71722cdacee9e08e1bff9c2ba37cc5729a24ceb72",
+            "metadata": {
+              "dtype": "<f8",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                8,
+                32
+              ],
+              "owndata": false,
+              "writeable": true,
+              "base_type": "ndarray"
+            }
+          }
+        }
+      },
+      "saved_summary": {
+        "mass": 23.25,
+        "max_abs": 174.16259765625
+      }
+    },
+    {
+      "id": "supplied-fractional-anisotropic",
+      "dtype": "<f4",
+      "shape": [
+        4,
+        4
+      ],
+      "logical_c_words_hex": [
+        "0000ba41",
+        "00805e42",
+        "00e89143",
+        "005db844",
+        "00005341",
+        "00c0be41",
+        "0018fd42",
+        "80651744",
+        "00406141",
+        "0050c641",
+        "00650543",
+        "a0a02144",
+        "00b07541",
+        "000cbe41",
+        "8095ff42",
+        "98f21444"
+      ],
+      "origin": {
+        "api": "measure.moments_central",
+        "case_id": "supplied-fractional-anisotropic",
+        "image_shape": [
+          4,
+          5
+        ],
+        "image_dtype": "float32",
+        "image_layout": "C",
+        "order": 3,
+        "center": [
+          0.25,
+          1.5
+        ],
+        "spacing": [
+          0.5,
+          2.0
+        ],
+        "source_sha256": "5caffe9e049832ab87e1c28a63798639f48146f219d13cf91f43a8beace9f257",
+        "profiles": {
+          "modern": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/modern-normal/moments-arrays-1-supplied-fractional-anisotropic.zip",
+            "archive_sha256": "ffc0d82f30e89f18d91c2ddd911f6d5f45a0a267cebb6483af3a2afca0b92d3b",
+            "member": "expected",
+            "member_sha256": "db8d9bf9971c2ab636a7b829992ecb4261d4286829100dbefc88d10b3d1cd16a",
+            "metadata": {
+              "dtype": "<f4",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                4,
+                16
+              ],
+              "owndata": false,
+              "writeable": true,
+              "base_type": "ndarray"
+            }
+          },
+          "minimum": {
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "skimage": "0.26.0",
+            "archive": "build/moments-private-v1/moments-component-v3/minimum-normal/moments-arrays-1-supplied-fractional-anisotropic.zip",
+            "archive_sha256": "ffc0d82f30e89f18d91c2ddd911f6d5f45a0a267cebb6483af3a2afca0b92d3b",
+            "member": "expected",
+            "member_sha256": "db8d9bf9971c2ab636a7b829992ecb4261d4286829100dbefc88d10b3d1cd16a",
+            "metadata": {
+              "dtype": "<f4",
+              "dtype_metadata": null,
+              "shape": [
+                4,
+                4
+              ],
+              "strides": [
+                4,
+                16
+              ],
+              "owndata": false,
+              "writeable": true,
+              "base_type": "ndarray"
+            }
+          }
+        }
+      },
+      "saved_summary": {
+        "mass": 23.25,
+        "max_abs": 1474.90625
+      }
+    }
+  ]
+}
