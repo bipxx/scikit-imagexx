@@ -421,6 +421,7 @@ benchmarks/inertia-eigvals-minimum-initial.json -text
 .github/workflows/inertia-pipeline-same-host.yml -text
 tests/test_inertia_pipeline_same_host.py -text
 benchmarks/inertia-pipeline-k3-same-host.zip -text
+benchmarks/inertia-streaming-same-host.zip -text
 tests/moments_coords_cases.py -text
 tests/test_moments_coords_public.py -text
 src/coords_internal.hpp -text
