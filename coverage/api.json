@@ -6013,11 +6013,15 @@
       "api": "morphology.ellipse",
       "kind": "callable",
       "signature": "(width, height, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_shapes_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.erosion",
@@ -6057,11 +6061,15 @@
       "api": "morphology.footprint_from_sequence",
       "kind": "callable",
       "signature": "(footprints)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_shapes_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.footprint_rectangle",
@@ -6235,21 +6243,29 @@
       "api": "morphology.octagon",
       "kind": "callable",
       "signature": "(m, n, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_shapes_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.octahedron",
       "kind": "callable",
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_shapes_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.opening",
@@ -6341,11 +6357,15 @@
       "api": "morphology.star",
       "kind": "callable",
       "signature": "(a, dtype=<class 'numpy.uint8'>)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_footprint_shapes_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "morphology.thin",

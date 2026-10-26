@@ -7,10 +7,18 @@ isolated one-thread benchmarks, and full supported-profile acceptance. Use the
 [fast-run guide](FAST_RUN.md) for executable commands. The initial Windows
 development smoke gate passed 1,286 checks: all 477 API surfaces, 206 registered
 function signatures, 602 supported-dtype parity cases and one registry check.
-This reuses the retained public203 package without rebuilding. The 266
-upstream-only entries remain numerical gaps; existing full contracts and
-qualification evidence retain their scope. Older campaign priorities below
-are historical and do not supersede this phased route.
+That phase-1 run used the retained public203 package without rebuilding.
+Phase 2 now integrates five footprint public routes: source coverage is 208
+partial image APIs, with 261 upstream-only entries. The new public component
+contract passes 240 checks in normal and scalar modes, including two large
+ellipse cases above the optional parallel-fill threshold. Inventory/runner
+checks bring the normal scoped run to 735 passing tests; the five-feature
+shared smoke also passes 26 checks. The CMake portable configuration verifies
+strict FP and worker-refusal test wiring without rebuilding the whole product.
+Accepted combined binaries remain public203; combined wheel/SDK qualification
+and one-thread performance for the additions are pending. Next source batch:
+three colocalization APIs. Existing full contracts retain their scope; older
+campaign priorities below do not supersede this phased route.
 
 ## Current execution card — updated-plan resume
 

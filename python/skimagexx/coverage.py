@@ -12,7 +12,8 @@ NATIVE_FUNCTIONS = {
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
-                   'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima'),
+                   'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -276,6 +277,18 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'morphology.ellipse':
+        return (max(1, image.shape[-1]//16), max(1, image.shape[0]//16)), {'dtype': image.dtype}
+    if api == 'morphology.octagon':
+        side = max(1, max(image.shape)//32)
+        return (side, side), {'dtype': image.dtype}
+    if api == 'morphology.octahedron':
+        return (max(1, max(image.shape)//64),), {'dtype': image.dtype}
+    if api == 'morphology.star':
+        return (max(1, max(image.shape)//32),), {'dtype': image.dtype}
+    if api == 'morphology.footprint_from_sequence':
+        import numpy as np
+        return (((np.ones((3,)*image.ndim, dtype=image.dtype), max(1, max(image.shape)//32)),),), {}
     if api=='morphology.reconstruction':return (image,image),{}
     if api in ('morphology.h_maxima','morphology.h_minima'):return (image,1),{}
     if api=='morphology.remove_small_objects':
@@ -340,6 +353,9 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api in ('morphology.ellipse', 'morphology.octagon', 'morphology.octahedron',
+               'morphology.star', 'morphology.footprint_from_sequence'):
+        return (0., 0.)
     if api in ('morphology.h_maxima','morphology.h_minima'):return (0.,0.)
     if api=='metrics.normalized_mutual_information':
         # Prospective entropy/ratio policy; exact counts, metadata and events

@@ -280,3 +280,16 @@ coverage/evidence/public203-main-integration.json -text
 tools/run_feature_tests.py -text
 tests/test_feature_api_surface.py -text
 tests/test_feature_test_runner.py -text
+include/skimagexx/footprint_shapes.hpp -text
+src/footprint_shapes.cpp -text
+src/bind_footprint_shapes.cpp -text
+python/skimagexx/_footprint_shapes.py -text
+tests/test_footprint_shapes_native.cpp -text
+tests/test_footprint_shapes_native_pipeline.py -text
+tests/test_footprint_shapes_public.py -text
+CMakeLists.txt -text
+src/bindings.cpp -text
+python/skimagexx/coverage.py -text
+python/skimagexx/morphology.py -text
+tools/inventory.py -text
+coverage/api.json -text

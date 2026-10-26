@@ -30884,8 +30884,8 @@
         "morphology.star",
         "morphology.footprint_from_sequence"
       ],
-      "owner": "astra_max_api_paths",
-      "state": "validating",
+      "owner": "integrator",
+      "state": "parity_passed",
       "branch": "feature/footprint-shapes-native",
       "base_sha": "09486ceffd1273c33c0cbdcab864a5ae9fd3d86f",
       "owns": [
@@ -30904,15 +30904,15 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "current_checkpoint": "Modern/minimum/Windows/portable boundedprivate rawparity accepted (portable229nodes/226serial rows/1budgetrefusal,0parallelcredit). Win/min/native2925PASS,portable1464PASS; sanitizer4TUbuild/actualc15 andnative2925normal+scalarPASS, fullPythonfamilygate source188352 pendingrootstartup/runtimeauthorization. No publicAPI/SDK/performancecredit yet.",
+      "current_checkpoint": "Phase2 public source integration: five APIs wired into sole core/CMake/morphology/registry. Public component contract240PASS normal+scalar (226 frozen,5 registration,5 worker4,2 guards,2 large ellipse), normal735 with inventory/runner, shared smoke26PASS; retained exactad6 component, not combined208 wheel/SDK/performance acceptance. Earlier private raw results unchanged.",
       "modern_private_checkpoint": {
         "path": "coverage/evidence/footprint-modern-private-parity-checkpoint.json",
         "sha256": "17665b6f36aa3ed64cc51b7137b3eef7e7990faa3988f815bc87ecc458141588"
       },
       "next_gate": {
-        "owner": "astra_max_api_paths",
-        "action": "Windowsv3 actual-link admission then native2925 and full226 normal/scalar; portable229 serial family gate then sanitizer.",
-        "integration_destination": "integrator: existing public Python namespace/sole core and installed SDK family after required private profile gates"
+        "owner": "integrator",
+        "action": "Next source batch: three colocalization APIs. Phase3 isolated one-thread public-call comparison; phase4 combined wheel/SDK and supported-profile acceptance remain required.",
+        "integration_destination": "main public source; accepted binary baseline remains203"
       },
       "minimum_private_checkpoint": {
         "path": "coverage/evidence/footprint-minimum-private-parity-checkpoint.json",
@@ -31634,14 +31634,15 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 203,
+    "native_partial_image_names": 208,
     "metadata_names": 3,
-    "upstream_only_names": 266,
+    "upstream_only_names": 261,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Accepted exactea35/run40237475475:203partialimage paths,3metadata,4partialclasses,1exception,266upstream-only/477; maincompositiond434 matches all298 computationalGitpaths. Full argument/class/state/data/I/O/performance scope remains incomplete.",
+    "note": "Current public source:208 partial image APIs,3metadata,4partialclasses,1exception,261upstream-only/477. Qualified binary baseline remains exactea35/run40237475475 with203 image APIs; five footprint source additions have scoped component parity, not combined-product or timing acceptance.",
     "native_class_names": 4,
-    "exception_metadata_provider_names": 1
+    "exception_metadata_provider_names": 1,
+    "accepted_binary_image_names": 203
   },
   "execution_policy": {
     "active_workers": [
@@ -32851,7 +32852,9 @@
     "historical_planning_counts": {
       "accepted_image_paths": 192,
       "upstream_only_paths": 277
-    }
+    },
+    "source_image_paths": 208,
+    "source_upstream_only_paths": 261
   },
   "max_consumer_retirement": {
     "proof": {

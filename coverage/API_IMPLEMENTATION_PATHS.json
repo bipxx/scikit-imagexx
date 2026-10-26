@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "d667b6ea65defc5093c48e3426b849de3399bd094970b5b06921950979c497d1",
+  "source_inventory_sha256": "03497d6ef4425844a4f76fb8d72799a86859355b2138aaae04f6bff79cef300f",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 4,
-      "native-partial": 203,
-      "upstream-only": 266
+      "native-partial": 208,
+      "upstream-only": 261
     },
     "kinds": {
       "callable": 448,
@@ -13711,22 +13711,26 @@
       "api": "morphology.ellipse",
       "kind": "callable",
       "signature": "(width, height, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.ellipse",
       "identity_alias": false,
       "family": "footprint",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Construct exact discrete ellipse footprint and optional crosses sequence",
+      "easiest_credible_path": "Audit/extend existing native implementation: Construct exact discrete ellipse footprint and optional crosses sequence",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze eccentric and zero-width/height cases against pinned upstream, including width/height semantics, dtype and decomposition equivalence; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered width/height semantics, dtype and decomposition equivalence. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "width/height semantics, dtype and decomposition equivalence",
       "parity_cases_to_freeze": "eccentric and zero-width/height cases",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
@@ -13737,10 +13741,10 @@
         "kind": "compute",
         "specific_workload": "eccentric and zero-width/height cases",
         "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_footprint_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -13859,22 +13863,26 @@
       "api": "morphology.footprint_from_sequence",
       "kind": "callable",
       "signature": "(footprints)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.footprint_from_sequence",
       "identity_alias": false,
       "family": "footprint",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Apply repeated dilations to singleton seed to materialize sequence support",
+      "easiest_credible_path": "Audit/extend existing native implementation: Apply repeated dilations to singleton seed to materialize sequence support",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze asymmetric/even footprints and repeated sequence steps against pinned upstream, including tuple validation, dimensionality, repetitions and origin/shape; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered tuple validation, dimensionality, repetitions and origin/shape. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "tuple validation, dimensionality, repetitions and origin/shape",
       "parity_cases_to_freeze": "asymmetric/even footprints and repeated sequence steps",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
@@ -13885,10 +13893,10 @@
         "kind": "compute",
         "specific_workload": "asymmetric/even footprints and repeated sequence steps",
         "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_footprint_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -14433,22 +14441,26 @@
       "api": "morphology.octagon",
       "kind": "callable",
       "signature": "(m, n, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.octagon",
       "identity_alias": false,
       "family": "footprint",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Build octagonal binary support and optional rectangle/diamond decomposition",
+      "easiest_credible_path": "Audit/extend existing native implementation: Build octagonal binary support and optional rectangle/diamond decomposition",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze flat/degenerate/large octagons against pinned upstream, including m/n edge lengths, degenerate shapes and decomposition order; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered m/n edge lengths, degenerate shapes and decomposition order. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "m/n edge lengths, degenerate shapes and decomposition order",
       "parity_cases_to_freeze": "flat/degenerate/large octagons",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
@@ -14459,32 +14471,36 @@
         "kind": "compute",
         "specific_workload": "flat/degenerate/large octagons",
         "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_footprint_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.octahedron",
       "kind": "callable",
       "signature": "(radius, dtype=<class 'numpy.uint8'>, *, decomposition=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.octahedron",
       "identity_alias": false,
       "family": "footprint",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Generate 3D L1 ball and optional repeated small-footprint decomposition",
+      "easiest_credible_path": "Audit/extend existing native implementation: Generate 3D L1 ball and optional repeated small-footprint decomposition",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze radius zero and volume footprints against pinned upstream, including radius/dtype and exact sequence support; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered radius/dtype and exact sequence support. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "radius/dtype and exact sequence support",
       "parity_cases_to_freeze": "radius zero and volume footprints",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
@@ -14495,10 +14511,10 @@
         "kind": "compute",
         "specific_workload": "radius zero and volume footprints",
         "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_footprint_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -14776,22 +14792,26 @@
       "api": "morphology.star",
       "kind": "callable",
       "signature": "(a, dtype=<class 'numpy.uint8'>)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "morphology.star",
       "identity_alias": false,
       "family": "footprint",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Union axis-aligned and rotated-square supports using exact source shape convention",
+      "easiest_credible_path": "Audit/extend existing native implementation: Union axis-aligned and rotated-square supports using exact source shape convention",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze small exhaustive star footprints against pinned upstream, including a=0/small sizes, parity and boundary cells; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered a=0/small sizes, parity and boundary cells. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "a=0/small sizes, parity and boundary cells",
       "parity_cases_to_freeze": "small exhaustive star footprints",
       "numerical_policy": "Exact footprint cells, dtype, shape, decomposition sequence/order and iteration counts.",
@@ -14802,10 +14822,10 @@
         "kind": "compute",
         "specific_workload": "small exhaustive star footprints",
         "one_worker_recipe": "Radius/shape sweeps, strict/non-strict boundaries, dense and sequence output; include tiny construction overhead.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_footprint_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

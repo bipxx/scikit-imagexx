@@ -2,9 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
+Phase-2 source now registers 208 partial image APIs. The five footprint additions have focused public-route component tests; combined wheel/SDK qualification and timing remain pending. The accepted binary baseline remains 203.
+
 Qualified product: `ea35a2481880301b8ce7b4eb2d77665adb813ca2`, Actions run `40237475475`: four profiles, 828,304 XML checks with no failures/errors/skips, three Release products. The qualified composition includes reconstruction, normalized mutual information, H-extrema, the metrics SIMD increment and the bounded TV zero-scan change. This is partial per-function scope, not full API parity or performance acceptance.
 
-477 public callable names inventoried in 20 modules; 203 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 208 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -353,11 +355,11 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.diamond` | native-partial | yes (partial input contract) | yes |
 | `morphology.dilation` | native-partial | yes (partial input contract) | yes |
 | `morphology.disk` | native-partial | yes (partial input contract) | yes |
-| `morphology.ellipse` | upstream-only | pending | pending |
+| `morphology.ellipse` | native-partial | yes (partial input contract) | yes |
 | `morphology.erosion` | native-partial | yes (partial input contract) | yes |
 | `morphology.flood` | upstream-only | pending | pending |
 | `morphology.flood_fill` | upstream-only | pending | pending |
-| `morphology.footprint_from_sequence` | upstream-only | pending | pending |
+| `morphology.footprint_from_sequence` | native-partial | yes (partial input contract) | yes |
 | `morphology.footprint_rectangle` | native-partial | yes (partial input contract) | yes |
 | `morphology.h_maxima` | native-partial | yes (partial input contract) | yes |
 | `morphology.h_minima` | native-partial | yes (partial input contract) | yes |
@@ -372,8 +374,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.max_tree_local_maxima` | native-partial | yes (partial input contract) | yes |
 | `morphology.medial_axis` | upstream-only | pending | pending |
 | `morphology.mirror_footprint` | metadata | yes (partial input contract) | yes |
-| `morphology.octagon` | upstream-only | pending | pending |
-| `morphology.octahedron` | upstream-only | pending | pending |
+| `morphology.octagon` | native-partial | yes (partial input contract) | yes |
+| `morphology.octahedron` | native-partial | yes (partial input contract) | yes |
 | `morphology.opening` | native-partial | yes (partial input contract) | yes |
 | `morphology.pad_footprint` | native-partial | yes (partial input contract) | yes |
 | `morphology.reconstruction` | native-partial | yes (partial input contract) | yes |
@@ -381,7 +383,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.remove_small_holes` | native-partial | yes (partial input contract) | yes |
 | `morphology.remove_small_objects` | native-partial | yes (partial input contract) | yes |
 | `morphology.skeletonize` | upstream-only | pending | pending |
-| `morphology.star` | upstream-only | pending | pending |
+| `morphology.star` | native-partial | yes (partial input contract) | yes |
 | `morphology.thin` | upstream-only | pending | pending |
 | `morphology.white_tophat` | native-partial | yes (partial input contract) | yes |
 | `registration.optical_flow_ilk` | upstream-only | pending | pending |
