@@ -5,7 +5,7 @@ import warnings
 import numpy as np
 import pytest
 import skimagexx as xx
-from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS
+from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -29,7 +29,7 @@ def calls(api,dtype):
         expected=reference(*arguments,**options)
         actual=native(*arguments,**options)
         if arguments and expected is arguments[0]:assert actual is arguments[0]
-    return actual,expected,arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS else data
+    return actual,expected,arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else data
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):

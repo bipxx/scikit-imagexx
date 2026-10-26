@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "8a86bc9df4d75979c2d8aeb026a529efb97a7802849a747d8d07fbf880f1781e",
+  "source_inventory_sha256": "d35029e6d1242ecffabe288999522dcdabe5b25c20bbf52db244976aae383c1a",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 223,
-      "upstream-only": 245
+      "native-partial": 225,
+      "upstream-only": 243
     },
     "kinds": {
       "callable": 448,
@@ -12224,22 +12224,26 @@
       "api": "measure.moments_coords",
       "kind": "callable",
       "signature": "(coords, order=3)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.moments_coords",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Accumulate coordinate monomials for point sets",
+      "easiest_credible_path": "Audit/extend existing native implementation: Accumulate coordinate monomials for point sets",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze integer/float point clouds against pinned upstream, including coordinate orientation, empty points and order; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered coordinate orientation, empty points and order. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "coordinate orientation, empty points and order",
       "parity_cases_to_freeze": "integer/float point clouds",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12250,32 +12254,36 @@
         "kind": "compute",
         "specific_workload": "integer/float point clouds",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_moments_coords_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "measure.moments_coords_central",
       "kind": "callable",
       "signature": "(coords, center=None, order=3)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.moments_coords_central",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Center point coordinates then accumulate monomials",
+      "easiest_credible_path": "Audit/extend existing native implementation: Center point coordinates then accumulate monomials",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze translated point clouds and explicit centers against pinned upstream, including inferred center, empty points and floating cancellation; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered inferred center, empty points and floating cancellation. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "inferred center, empty points and floating cancellation",
       "parity_cases_to_freeze": "translated point clouds and explicit centers",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12286,10 +12294,10 @@
         "kind": "compute",
         "specific_workload": "translated point clouds and explicit centers",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_moments_coords_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

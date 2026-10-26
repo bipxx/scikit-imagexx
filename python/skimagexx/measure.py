@@ -25,3 +25,8 @@ __all__ += ['moments_normalized', 'moments_hu']
 from ._moments import inertia_tensor_eigvals
 
 __all__ += ['inertia_tensor_eigvals']
+
+
+from ._moments import moments_coords, moments_coords_central
+
+__all__ += ['moments_coords', 'moments_coords_central']
