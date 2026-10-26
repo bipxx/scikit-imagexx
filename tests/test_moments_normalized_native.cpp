@@ -1,0 +1,139 @@
+// Literal controls frozen before candidate calls. Saved 0.26 original words
+// and independent exact binary/120-digit Decimal arithmetic are the oracles.
+#include "moments_normalized.hpp"
+#include "skimagexx/image.hpp"
+#include <array>
+#include <cfenv>
+#include <cmath>
+#include <cstdint>
+#include <cstring>
+#include <cstdlib>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <string>
+
+namespace {
+std::size_t checks=0,calls=0;
+#ifdef _OPENMP
+constexpr int worker_budgets[]={1,4};
+#else
+constexpr int worker_budgets[]={1};
+#endif
+void require(bool value,const std::string& context) {
+    ++checks;
+    if(!value)throw std::runtime_error(context+" check "+std::to_string(checks));
+}
+template<class T> bool same(T a,T b) {
+    if(std::isnan(b))return std::isnan(a) && !std::signbit(a);
+    return std::memcmp(&a,&b,sizeof(T))==0;
+}
+template<class T> void captured(const char* name,bool power32,
+        const std::array<T,16>& values,const std::array<T,16>& expected) {
+    // Exact 16-element input allocation lets ASan catch a vector overread.
+    const auto input=values;const auto before=input;
+    for(int workers:worker_budgets) {
+        skimagexx::set_num_threads(workers);
+        std::array<T,18> output;output.fill(T(-87.5));
+        std::feclearexcept(FE_ALL_EXCEPT);
+        skimagexx::detail::moments_normalize_default(input.data(),power32,output.data()+1);
+        ++calls;
+        const auto flags=std::fetestexcept(FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID);
+        require(flags==0,std::string(name)+" unexpected FP flags");
+        require(skimagexx::get_num_threads()==workers,std::string(name)+" worker state");
+        require(std::memcmp(input.data(),before.data(),sizeof(input))==0,std::string(name)+" input changed");
+        require(output.front()==T(-87.5) && output.back()==T(-87.5),std::string(name)+" output bounds");
+        for(std::size_t i=0;i<16;++i)
+            require(same(output[i+1],expected[i]),std::string(name)+" value "+std::to_string(i));
+    }
+}
+void controls() {
+    captured<float>("minimum-normalized-2d-float32",false,
+        {{0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p+5f, 0x1.0000000000000p+8f, std::numeric_limits<float>::quiet_NaN(), 0x1.0000000000000p+4f, 0x1.0000000000000p+7f, 0x1.8000000000000p+9f, 0x1.8000000000000p+6f, 0x1.c000000000000p+8f, 0x1.0000000000000p+8f, 0x1.0000000000000p+11f, 0x1.4000000000000p+8f, 0x1.8000000000000p+10f, 0x1.c000000000000p+12f, 0x1.0000000000000p+12f}});
+    captured<double>("minimum-normalized-2d-float64",false,
+        {{0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.8000000000000p-3, 0x1.0000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.8000000000000p-3, 0x1.8000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.4000000000000p-2, 0x1.8000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x1.8000000000000p+5, 0x1.0000000000000p+8, std::numeric_limits<double>::quiet_NaN(), 0x1.0000000000000p+4, 0x1.0000000000000p+7, 0x1.8000000000000p+9, 0x1.8000000000000p+6, 0x1.c000000000000p+8, 0x1.0000000000000p+8, 0x1.0000000000000p+11, 0x1.4000000000000p+8, 0x1.8000000000000p+10, 0x1.c000000000000p+12, 0x1.0000000000000p+12}});
+    captured<float>("minimum-normalized-exact-mass-one",false,
+        {{0x1.0000000000000p+0f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f}});
+    captured<float>("modern-normalized-2d-float32",true,
+        {{0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p+5f, 0x1.0000000000000p+8f, std::numeric_limits<float>::quiet_NaN(), 0x1.0000000000000p+4f, 0x1.0000000000000p+7f, 0x1.8000000000000p+9f, 0x1.8000000000000p+6f, 0x1.c000000000000p+8f, 0x1.0000000000000p+8f, 0x1.0000000000000p+11f, 0x1.4000000000000p+8f, 0x1.8000000000000p+10f, 0x1.c000000000000p+12f, 0x1.0000000000000p+12f}});
+    captured<double>("modern-normalized-2d-float64",false,
+        {{0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.8000000000000p-3, 0x1.0000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.8000000000000p-3, 0x1.8000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4, 0x1.0000000000000p-3, 0x1.4000000000000p-2, 0x1.8000000000000p-2, 0x1.c000000000000p-2, 0x1.0000000000000p-4}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x1.8000000000000p+5, 0x1.0000000000000p+8, std::numeric_limits<double>::quiet_NaN(), 0x1.0000000000000p+4, 0x1.0000000000000p+7, 0x1.8000000000000p+9, 0x1.8000000000000p+6, 0x1.c000000000000p+8, 0x1.0000000000000p+8, 0x1.0000000000000p+11, 0x1.4000000000000p+8, 0x1.8000000000000p+10, 0x1.c000000000000p+12, 0x1.0000000000000p+12}});
+    captured<float>("modern-normalized-exact-mass-one",true,
+        {{0x1.0000000000000p+0f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, std::numeric_limits<float>::quiet_NaN(), 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f, 0x1.8000000000000p-3f, 0x1.0000000000000p-2f, 0x1.4000000000000p-2f, 0x1.8000000000000p-2f, 0x1.c000000000000p-2f, 0x1.0000000000000p-4f, 0x1.0000000000000p-3f}});
+    captured<float>("binary-mass--18-float-power32-0",false,
+        {{0x1.0000000000000p-18f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+62f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-3f, 0x1.0000000000000p+33f, -0x0.0p+0f, 0x1.0000000000000p+53f, -0x1.0000000000000p+84f, 0x1.0000000000000p+15f, -0x1.0000000000000p+51f, 0x1.0000000000000p+45f, -0x1.0000000000000p+71f, 0x1.0000000000000p+102f, -0x1.0000000000000p+33f}});
+    captured<float>("binary-mass--4-float-power32-0",false,
+        {{0x1.0000000000000p-4f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+27f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-31f, 0x1.0000000000000p-2f, -0x0.0p+0f, 0x1.0000000000000p+25f, -0x1.0000000000000p+49f, 0x1.0000000000000p-27f, -0x1.0000000000000p+2f, 0x1.0000000000000p+10f, -0x1.0000000000000p+29f, 0x1.0000000000000p+53f, -0x1.0000000000000p-23f}});
+    captured<float>("binary-mass-0-float-power32-0",false,
+        {{0x1.0000000000000p+0f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+17f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}});
+    captured<float>("binary-mass-2-float-power32-0",false,
+        {{0x1.0000000000000p+2f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+12f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-43f, 0x1.0000000000000p-17f, -0x0.0p+0f, 0x1.0000000000000p+13f, -0x1.0000000000000p+34f, 0x1.0000000000000p-45f, -0x1.0000000000000p-19f, 0x1.0000000000000p-5f, -0x1.0000000000000p+11f, 0x1.0000000000000p+32f, -0x1.0000000000000p-47f}});
+    captured<float>("binary-mass-18-float-power32-0",false,
+        {{0x1.0000000000000p+18f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p-28f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-75f, 0x1.0000000000000p-57f, -0x0.0p+0f, 0x1.0000000000000p-19f, -0x1.0000000000000p-6f, 0x1.0000000000000p-93f, -0x1.0000000000000p-75f, 0x1.0000000000000p-45f, -0x1.0000000000000p-37f, 0x1.0000000000000p-24f, -0x1.0000000000000p-111f}});
+    captured<float>("sqrt2-power-float-power32-0",false,
+        {{0x1.0000000000000p+1f, 0x1.0f0f100000000p+0f, -0x0.0p+0f, 0x1.2d2d2e0000000p+0f, 0x1.3c3c3c0000000p+0f, 0x1.4b4b4c0000000p+0f, 0x1.5a5a5a0000000p+0f, 0x1.69696a0000000p+0f, 0x1.7878780000000p+0f, 0x1.8787880000000p+0f, 0x1.9696960000000p+0f, 0x1.a5a5a60000000p+0f, 0x1.b4b4b40000000p+0f, 0x1.c3c3c40000000p+0f, 0x1.d2d2d20000000p+0f, 0x1.e1e1e20000000p+0f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), -0x0.0p+0f, 0x1.a9ed880000000p-3f, std::numeric_limits<float>::quiet_NaN(), 0x1.4b4b4c0000000p-2f, 0x1.e9d1280000000p-3f, 0x1.69696a0000000p-3f, 0x1.7878780000000p-2f, 0x1.14da660000000p-2f, 0x1.9696960000000p-3f, 0x1.2a26460000000p-3f, 0x1.34cc340000000p-2f, 0x1.c3c3c40000000p-3f, 0x1.4a18160000000p-3f, 0x1.e1e1e20000000p-4f}});
+    captured<float>("binary-mass--18-float-power32-1",true,
+        {{0x1.0000000000000p-18f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+62f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-3f, 0x1.0000000000000p+33f, -0x0.0p+0f, 0x1.0000000000000p+53f, -0x1.0000000000000p+84f, 0x1.0000000000000p+15f, -0x1.0000000000000p+51f, 0x1.0000000000000p+45f, -0x1.0000000000000p+71f, 0x1.0000000000000p+102f, -0x1.0000000000000p+33f}});
+    captured<float>("binary-mass--4-float-power32-1",true,
+        {{0x1.0000000000000p-4f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+27f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-31f, 0x1.0000000000000p-2f, -0x0.0p+0f, 0x1.0000000000000p+25f, -0x1.0000000000000p+49f, 0x1.0000000000000p-27f, -0x1.0000000000000p+2f, 0x1.0000000000000p+10f, -0x1.0000000000000p+29f, 0x1.0000000000000p+53f, -0x1.0000000000000p-23f}});
+    captured<float>("binary-mass-0-float-power32-1",true,
+        {{0x1.0000000000000p+0f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+17f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}});
+    captured<float>("binary-mass-2-float-power32-1",true,
+        {{0x1.0000000000000p+2f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p+12f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-43f, 0x1.0000000000000p-17f, -0x0.0p+0f, 0x1.0000000000000p+13f, -0x1.0000000000000p+34f, 0x1.0000000000000p-45f, -0x1.0000000000000p-19f, 0x1.0000000000000p-5f, -0x1.0000000000000p+11f, 0x1.0000000000000p+32f, -0x1.0000000000000p-47f}});
+    captured<float>("binary-mass-18-float-power32-1",true,
+        {{0x1.0000000000000p+18f, -0x1.0000000000000p-12f, 0x0.0p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f, 0x1.0000000000000p-12f, -0x0.0p+0f, 0x1.0000000000000p+17f, -0x1.0000000000000p+39f, 0x1.0000000000000p-39f, -0x1.0000000000000p-12f, 0x1.0000000000000p+0f, -0x1.0000000000000p+17f, 0x1.0000000000000p+39f, -0x1.0000000000000p-39f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), 0x0.0p+0f, -0x1.0000000000000p-28f, std::numeric_limits<float>::quiet_NaN(), -0x1.0000000000000p-75f, 0x1.0000000000000p-57f, -0x0.0p+0f, 0x1.0000000000000p-19f, -0x1.0000000000000p-6f, 0x1.0000000000000p-93f, -0x1.0000000000000p-75f, 0x1.0000000000000p-45f, -0x1.0000000000000p-37f, 0x1.0000000000000p-24f, -0x1.0000000000000p-111f}});
+    captured<float>("sqrt2-power-float-power32-1",true,
+        {{0x1.0000000000000p+1f, 0x1.0f0f100000000p+0f, -0x0.0p+0f, 0x1.2d2d2e0000000p+0f, 0x1.3c3c3c0000000p+0f, 0x1.4b4b4c0000000p+0f, 0x1.5a5a5a0000000p+0f, 0x1.69696a0000000p+0f, 0x1.7878780000000p+0f, 0x1.8787880000000p+0f, 0x1.9696960000000p+0f, 0x1.a5a5a60000000p+0f, 0x1.b4b4b40000000p+0f, 0x1.c3c3c40000000p+0f, 0x1.d2d2d20000000p+0f, 0x1.e1e1e20000000p+0f}},
+        {{std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(), -0x0.0p+0f, 0x1.a9ed8a0000000p-3f, std::numeric_limits<float>::quiet_NaN(), 0x1.4b4b4c0000000p-2f, 0x1.e9d1280000000p-3f, 0x1.69696a0000000p-3f, 0x1.7878780000000p-2f, 0x1.14da660000000p-2f, 0x1.9696960000000p-3f, 0x1.2a26460000000p-3f, 0x1.34cc360000000p-2f, 0x1.c3c3c40000000p-3f, 0x1.4a18160000000p-3f, 0x1.e1e1e20000000p-4f}});
+    captured<double>("binary-mass--18-double-power32-0",false,
+        {{0x1.0000000000000p-18, -0x1.0000000000000p-12, 0x0.0p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x0.0p+0, -0x1.0000000000000p+62, std::numeric_limits<double>::quiet_NaN(), -0x1.0000000000000p-3, 0x1.0000000000000p+33, -0x0.0p+0, 0x1.0000000000000p+53, -0x1.0000000000000p+84, 0x1.0000000000000p+15, -0x1.0000000000000p+51, 0x1.0000000000000p+45, -0x1.0000000000000p+71, 0x1.0000000000000p+102, -0x1.0000000000000p+33}});
+    captured<double>("binary-mass--4-double-power32-0",false,
+        {{0x1.0000000000000p-4, -0x1.0000000000000p-12, 0x0.0p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x0.0p+0, -0x1.0000000000000p+27, std::numeric_limits<double>::quiet_NaN(), -0x1.0000000000000p-31, 0x1.0000000000000p-2, -0x0.0p+0, 0x1.0000000000000p+25, -0x1.0000000000000p+49, 0x1.0000000000000p-27, -0x1.0000000000000p+2, 0x1.0000000000000p+10, -0x1.0000000000000p+29, 0x1.0000000000000p+53, -0x1.0000000000000p-23}});
+    captured<double>("binary-mass-0-double-power32-0",false,
+        {{0x1.0000000000000p+0, -0x1.0000000000000p-12, 0x0.0p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x0.0p+0, -0x1.0000000000000p+17, std::numeric_limits<double>::quiet_NaN(), -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}});
+    captured<double>("binary-mass-2-double-power32-0",false,
+        {{0x1.0000000000000p+2, -0x1.0000000000000p-12, 0x0.0p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x0.0p+0, -0x1.0000000000000p+12, std::numeric_limits<double>::quiet_NaN(), -0x1.0000000000000p-43, 0x1.0000000000000p-17, -0x0.0p+0, 0x1.0000000000000p+13, -0x1.0000000000000p+34, 0x1.0000000000000p-45, -0x1.0000000000000p-19, 0x1.0000000000000p-5, -0x1.0000000000000p+11, 0x1.0000000000000p+32, -0x1.0000000000000p-47}});
+    captured<double>("binary-mass-18-double-power32-0",false,
+        {{0x1.0000000000000p+18, -0x1.0000000000000p-12, 0x0.0p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39, 0x1.0000000000000p-12, -0x0.0p+0, 0x1.0000000000000p+17, -0x1.0000000000000p+39, 0x1.0000000000000p-39, -0x1.0000000000000p-12, 0x1.0000000000000p+0, -0x1.0000000000000p+17, 0x1.0000000000000p+39, -0x1.0000000000000p-39}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0x0.0p+0, -0x1.0000000000000p-28, std::numeric_limits<double>::quiet_NaN(), -0x1.0000000000000p-75, 0x1.0000000000000p-57, -0x0.0p+0, 0x1.0000000000000p-19, -0x1.0000000000000p-6, 0x1.0000000000000p-93, -0x1.0000000000000p-75, 0x1.0000000000000p-45, -0x1.0000000000000p-37, 0x1.0000000000000p-24, -0x1.0000000000000p-111}});
+    captured<double>("sqrt2-power-double-power32-0",false,
+        {{0x1.0000000000000p+1, 0x1.0f0f0f0f0f0f1p+0, -0x0.0p+0, 0x1.2d2d2d2d2d2d3p+0, 0x1.3c3c3c3c3c3c4p+0, 0x1.4b4b4b4b4b4b5p+0, 0x1.5a5a5a5a5a5a6p+0, 0x1.6969696969696p+0, 0x1.7878787878788p+0, 0x1.8787878787878p+0, 0x1.969696969696ap+0, 0x1.a5a5a5a5a5a5ap+0, 0x1.b4b4b4b4b4b4cp+0, 0x1.c3c3c3c3c3c3cp+0, 0x1.d2d2d2d2d2d2dp+0, 0x1.e1e1e1e1e1e1ep+0}},
+        {{std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), -0x0.0p+0, 0x1.a9ed87895afc3p-3, std::numeric_limits<double>::quiet_NaN(), 0x1.4b4b4b4b4b4b5p-2, 0x1.e9d128aac23bap-3, 0x1.6969696969696p-3, 0x1.7878787878788p-2, 0x1.14da64e614bd8p-2, 0x1.969696969696ap-3, 0x1.2a2645468c7d5p-3, 0x1.34cc3576c85d4p-2, 0x1.c3c3c3c3c3c3cp-3, 0x1.4a1815d7401d1p-3, 0x1.e1e1e1e1e1e1ep-4}});
+}
+}
+int main() {
+    require(skimagexx::get_num_threads()==1,"default worker budget");
+    const char* disabled=std::getenv("SKIMAGEXX_DISABLE_SIMD");
+    if(disabled && std::string(disabled)=="1")require(!skimagexx::has_avx2(),"scalar dispatch");
+#ifndef _OPENMP
+    bool refused=false;
+    try {skimagexx::set_num_threads(4);}
+    catch(const std::invalid_argument& error) {refused=std::string(error.what())=="this build has no OpenMP support";}
+    require(refused && skimagexx::get_num_threads()==1,"portable worker4 refusal");
+    require(!skimagexx::has_avx2(),"portable scalar foundation");
+#endif
+    controls();skimagexx::set_num_threads(1);
+    require(skimagexx::get_num_threads()==1,"restored worker budget");
+    std::cout<<checks<<" controls PASS; "<<calls<<" calls; AVX2="<<skimagexx::has_avx2()<<"\n";
+}

@@ -1,10 +1,12 @@
 #include "bind_array_storage.hpp"
 #include "half.hpp"
 #include "moments_hu.hpp"
+#include "moments_normalized.hpp"
 #include <pybind11/complex.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cfenv>
+#include <cmath>
 #include <complex>
 #include <cstdint>
 #include <cstring>
@@ -48,6 +50,30 @@ template<class T> py::tuple divide(const py::object&a,const py::object&b,bool ha
     }
     return py::make_tuple(value,flags);
 }
+template<class T> py::object normalize_default(const py::array&input,bool float32_power) {
+    py::array_t<T> result({4,4});
+    T* output=result.mutable_data();
+    // The one storage check follows the last allocation and precedes all
+    // typed reads. Rejected probes publish no arithmetic result.
+    skimagexx::bindings::check_array_storage(input);
+    if(Py_TYPE(input.ptr())!=py::detail::npy_api::get().PyArray_Type_ ||
+       !py::array_t<T,py::array::c_style>::check_(input) || input.ndim()!=2 ||
+       input.shape(0)!=4 || input.shape(1)!=4 ||
+       !input.dtype().attr("metadata").is_none() ||
+       reinterpret_cast<std::uintptr_t>(input.data())%alignof(T))return py::none();
+    if constexpr(std::is_same_v<T,double>){if(float32_power)return py::none();}
+    Capture capture;
+    const auto data=static_cast<const T*>(input.data());
+    const double mass=double(data[0]);
+    if(!std::isfinite(mass) || mass<1e-6 || mass>1e6)return py::none();
+    for(std::size_t i=0;i<16;++i){
+        const double value=double(data[i]),magnitude=std::abs(value);
+        if(!std::isfinite(value) || (value!=0 && (magnitude<1e-12 || magnitude>1e12)))return py::none();
+    }
+    skimagexx::detail::moments_normalize_default(data,float32_power,output);
+    if(capture.flags())return py::none();
+    return result;
+}
 template<class T> void check_hu(const py::array&input) {
     skimagexx::bindings::check_array_storage(input);
     if(!py::array_t<T,0>::check_(input))throw py::type_error("Hu moments require native float32 or float64");
@@ -76,6 +102,9 @@ template<class T> py::array hu(const py::array&input) {
 }
 
 void bind_moments_derived(py::module_&module) {
+    module.def("moments_normalize",[](const py::array&input,bool float32_power){
+        return py::array_t<float,0>::check_(input)?normalize_default<float>(input,float32_power):normalize_default<double>(input,float32_power);
+    },py::arg("mu").noconvert(),py::arg("float32_power"));
     module.def("moments_normalize",[](const py::object&a,const py::object&b,char dtype){
         if(dtype=='e')return divide<float>(a,b,true);
         if(dtype=='f')return divide<float>(a,b);

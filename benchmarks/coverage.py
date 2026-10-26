@@ -93,12 +93,7 @@ def main():
     moments_scope = ('NumPy dtype promotion, coordinate powers and layout preparation, and the literal '
                      'analytical central-moment and centroid-ratio Python/NumPy shell remain providers; '
                      'owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.')
-    derived_scope = ('Fixed owning 4x4 moment tensors are prepared outside timing; dtype is the actual '
-                     'mu/nu input dtype, not an image label. Normalization keeps NumPy scalar powers, '
-                     'first division, promotion and assignment providers with an owned final scalar divide; '
-                     'Hu keeps dtype conversion and output wrapping around owned C++ polynomial arithmetic. '
-                     'Each timed public call includes its own allocation and conversions. Integer '
-                     'normalization raises the source NaN-assignment error and has no timing row.')
+    derived_scope = 'Fixed owning 4x4 moment tensors are prepared outside timing; dtype is the actual mu/nu input dtype, not an image label. Normalization uses bounded native batch arithmetic for assessed contiguous 4x4 real defaults; its scalar fallback retains NumPy powers, first division, promotion and assignment with an owned final divide. Hu keeps dtype conversion and output wrapping around owned C++ polynomial arithmetic. Each timed public call includes its allocation, eligibility checks and conversions. Integer normalization has exact source-error coverage and no timing row.'
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})

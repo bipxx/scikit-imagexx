@@ -391,3 +391,7 @@ tests/test_moments_hu_native.cpp -text
 python/skimagexx/_moments_derived.py -text
 src/bind_moments_derived.cpp -text
 python/skimagexx/_moments_derived_checks.py -text
+src/moments_normalized.hpp -text
+src/moments_normalized.cpp -text
+tests/test_moments_normalized_native.cpp -text
+tests/test_moments_normalized_batch_public.py -text
