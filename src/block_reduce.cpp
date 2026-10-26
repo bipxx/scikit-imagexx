@@ -73,6 +73,10 @@ unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,
     if(!p.count)return 0;
     constexpr bool real=std::is_floating_point_v<Acc>;const auto rank=in.shape.size();
     const auto* data=static_cast<const unsigned char*>(in.data);auto* output=static_cast<unsigned char*>(out);
+    std::size_t half_segment=1;
+    if constexpr(Half)for(std::size_t d=rank;d--;){
+        half_segment*=factors[d];if(p.blocks[d]>1)break;
+    }
     const bool vectorized=has_avx2();(void)vectorized;std::atomic<unsigned> flags{0};
     partition(p.count,active_workers(p.input_count),[&](auto begin,auto end,auto){
         Capture capture(real);if(!capture.valid()){flags.fetch_or(16u,std::memory_order_relaxed);return;}
@@ -96,11 +100,19 @@ unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,
                 else if constexpr(Boolean)return value!=0;
                 else return Acc(value);
             };
-            Acc sum=0;
-            if constexpr(real)sum=Acc(Acc(0)+pairwise<Acc>(0,p.volume,get));
-            else for(std::size_t i=0;i<p.volume;++i)sum+=get(i); // unsigned modular arithmetic, including signed input bits.
-            if constexpr(Half){const auto word=half_store(sum);std::memcpy(output+target,&word,2);}
-            else std::memcpy(output+target,&sum,sizeof(sum));
+            if constexpr(Half){
+                // HALF_add stores after each contiguous reduction segment.
+                // A nontrivial output axis separates adjacent C-order segments.
+                std::uint16_t word=0;
+                for(std::size_t begin=0;begin<p.volume;begin+=half_segment)
+                    word=half_store(decode_half(word)+pairwise<float>(begin,half_segment,get));
+                std::memcpy(output+target,&word,2);
+            }else{
+                Acc sum=0;
+                if constexpr(real)sum=Acc(Acc(0)+pairwise<Acc>(0,p.volume,get));
+                else for(std::size_t i=0;i<p.volume;++i)sum+=get(i); // unsigned modular arithmetic, including signed input bits.
+                std::memcpy(output+target,&sum,sizeof(sum));
+            }
             ++index;
         }
         if constexpr(real)flags.fetch_or(capture.flags(),std::memory_order_relaxed);

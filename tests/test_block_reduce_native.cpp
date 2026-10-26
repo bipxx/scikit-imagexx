@@ -61,6 +61,31 @@ void half_and_rank(){
     for(auto value:result)require(value==6);save(result,0);
     require(detail::block_reduce_sum({nullptr,PixelType::float32,false,{2,0,4}},{1,2,2},nullptr,{0,0,0})==0);
 }
+
+void half_segment_regression(){
+    // Frozen original dtype-float16 cell [0,2], with its actual 6x8/2x2 geometry.
+    // HALF_add stores a half after each iterator segment, not once per block.
+    std::vector<std::uint16_t> input(48,0),output(14,0x5555);
+    const std::array<float,4> values{-.71435546875f,-.5712890625f,.428466796875f,.5712890625f};
+    const std::array<std::size_t,4> locations{4,5,12,13};
+    for(std::size_t i=0;i<4;++i)input[locations[i]]=detail::encode_half(values[i]);
+    const auto before=input;
+    std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);const auto prior=std::fetestexcept(FE_ALL_EXCEPT);
+    const auto status=detail::block_reduce_sum({input.data(),PixelType::uint16,true,{6,8}},{2,2},output.data()+1,{8,2});
+    require(std::fetestexcept(FE_ALL_EXCEPT)==prior);std::feclearexcept(FE_ALL_EXCEPT);
+    require(status==0&&input==before);require(output.front()==0x5555&&output.back()==0x5555);
+    save(output,status);require(output[3]==0xb491);
+    // With no intervening output axis, all four inputs form one inner segment.
+    std::array<std::uint16_t,4> contiguous{};
+    for(std::size_t i=0;i<4;++i)contiguous[i]=detail::encode_half(values[i]);
+    std::vector<std::uint16_t> single(1);
+    require(detail::block_reduce_sum({contiguous.data(),PixelType::uint16,true,{2,2}},{2,2},single.data(),{2,2})==0);
+    require(single[0]==0xb493);save(single,0);
+    // Intermediate half overflow is observable even when the exact block sum is zero.
+    input[4]=input[5]=0x7bff;input[12]=input[13]=0xfbff;
+    const auto overflow=detail::block_reduce_sum({input.data(),PixelType::uint16,true,{6,8}},{2,2},output.data()+1,{8,2});
+    require(overflow==2&&output[3]==0x7c00);save(output,overflow);
+}
 template<class T>void cancellation(PixelType type){
     for(std::size_t n:{7,8,9,127,128,129,8193}){
         std::vector<T> input(n,1),out(1);input.front()=T(16777216);input.back()=-input.front();
@@ -137,6 +162,7 @@ int main(int argc,char**argv){
         ordinary<float>(PixelType::float32,4,96,2,3,true);ordinary<double>(PixelType::float64,4,96,2,3,true);
         packed_cancellation<float>(PixelType::float32);packed_cancellation<double>(PixelType::float64);
         exceptions<float>(PixelType::float32);exceptions<double>(PixelType::float64);
+        half_segment_regression();
     }
     set_num_threads(1);journal.close();std::cout<<checks<<" block sum controls PASS avx2="<<has_avx2()<<" workers="<<get_num_threads()<<'\n';
 }
