@@ -275,3 +275,56 @@ def moments_raw_to_central(moments_raw):
             moments_central[orders] += val
 
     return moments_central
+
+
+def inertia_tensor(image, mu=None, *, spacing=None):
+    """Assemble the tensor from owned moments and source NumPy preparation.
+
+    Real finite float32/64 tensor arithmetic runs in C++. NumPy keeps the
+    diagonal sum and indexing; exceptional, integer and complex arithmetic
+    retains the literal source expressions, without upstream forwarding.
+    """
+    if mu is None:
+        mu = moments_central(image, order=2, spacing=spacing)
+    _check_array(mu)
+    mu0 = mu[(0,) * image.ndim]
+    result = np.zeros((image.ndim, image.ndim), dtype=mu.dtype)
+    corners2 = tuple(2 * np.eye(image.ndim, dtype=int))
+    d = np.diag(result)
+    d.flags.writeable = True
+    _check_array(mu)
+    total = np.sum(mu[corners2])
+    # A warning handler in the sum can invalidate external supplied storage.
+    _check_array(mu)
+    diagonal = mu[corners2]
+    if (type(mu) is np.ndarray and mu.dtype.char in ('f', 'd')
+            and np.ndim(mu0) == 0 and np.isfinite(mu0) and mu0 != 0
+            and np.isfinite(total) and np.all(np.isfinite(diagonal))):
+        pairs = list(itertools.combinations(range(image.ndim), 2))
+        values = []
+        for dims in pairs:
+            mu_index = np.zeros(image.ndim, dtype=int)
+            mu_index[list(dims)] = 1
+            _check_array(mu)
+            values.append(mu[tuple(mu_index)])
+        dtype = mu.dtype.newbyteorder('=')
+        mixed = np.asarray(values, dtype=dtype)
+        if np.all(np.isfinite(mixed)):
+            tensor = _core.inertia_tensor(np.ascontiguousarray(diagonal, dtype=dtype),
+                                          mixed, total, mu0)
+            if tensor is not None:
+                # Keep the original early allocation, including byte order,
+                # dtype metadata and owning C-contiguous storage.
+                result[...] = tensor
+                return result
+    # A native FP-status refusal publishes no result. Keep the original
+    # NumPy operation/warning order, including the two scalar pair expressions.
+    d[:] = (total - diagonal) / mu0
+    for dims in itertools.combinations(range(image.ndim), 2):
+        mu_index = np.zeros(image.ndim, dtype=int)
+        mu_index[list(dims)] = 1
+        _check_array(mu)
+        result[dims] = -mu[tuple(mu_index)] / mu0
+        _check_array(mu)
+        result.T[dims] = -mu[tuple(mu_index)] / mu0
+    return result
