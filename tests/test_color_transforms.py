@@ -149,7 +149,7 @@ def test_array_like_and_identity(name):
     assert getattr(xx,name) is getattr(xx.color,name)
 
 
-@pytest.mark.parametrize('name',FUNCTIONS)
+@pytest.mark.parametrize('name',[n for n in FUNCTIONS if n != 'rgb2yuv'])
 def test_unsupported_dtype_uses_explicit_fallback(name):
     a = np.zeros((7,3),dtype=np.float16)
     with pytest.raises(NotImplementedError):

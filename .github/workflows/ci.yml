@@ -187,6 +187,18 @@ jobs:
         run: python -m pytest -q tests/test_shannon_entropy_public.py --junitxml=build/ci-artifacts/shannon-entropy-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: RGB half and byte-order public parity
+        run: python -m pytest -q tests/test_rgb2yuv_storage_public.py --junitxml=build/ci-artifacts/rgb2yuv-storage-normal.xml
+      - name: RGB half and byte-order public parity with SIMD disabled
+        run: python -m pytest -q tests/test_rgb2yuv_storage_public.py --junitxml=build/ci-artifacts/rgb2yuv-storage-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Shared color transform regressions
+        run: python -m pytest -q tests/test_color_transforms.py --junitxml=build/ci-artifacts/color-transforms-regression-normal.xml
+      - name: Shared color transform regressions with SIMD disabled
+        run: python -m pytest -q tests/test_color_transforms.py --junitxml=build/ci-artifacts/color-transforms-regression-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Immutable bytes storage parity
         run: python -m pytest -q tests/test_immutable_buffer_roots_public.py --junitxml=build/ci-artifacts/immutable-bytes-normal.xml
       - name: Immutable bytes storage parity with SIMD disabled
@@ -365,6 +377,8 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api measure.shannon_entropy --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-shannon-entropy.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+      - run: python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -384,6 +398,7 @@ jobs:
             build/ci-inertia-eigvals.md
             build/ci-moments-coords.md
             build/ci-shannon-entropy.md
+            build/ci-rgb2yuv-storage.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:
