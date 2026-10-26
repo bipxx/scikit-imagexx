@@ -1,0 +1,777 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-26T13:56:55.073381+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "source_sha256": "472bd63a02b8697dfa2552248bcba9493c5d22f414f00df6c7026a7f275b7b88",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "fallback_enabled": false,
+    "avx2": true,
+    "selected_apis": [
+      "measure.moments",
+      "measure.moments_central",
+      "measure.centroid"
+    ],
+    "dtype_metadata": false,
+    "reference_fft_workers": null,
+    "provider_frontiers": {
+      "measure.moments": "NumPy dtype promotion, coordinate powers and layout preparation, and the literal analytical central-moment and centroid-ratio Python/NumPy shell remain providers; owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.",
+      "measure.moments_central": "NumPy dtype promotion, coordinate powers and layout preparation, and the literal analytical central-moment and centroid-ratio Python/NumPy shell remain providers; owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.",
+      "measure.centroid": "NumPy dtype promotion, coordinate powers and layout preparation, and the literal analytical central-moment and centroid-ratio Python/NumPy shell remain providers; owned typed C++ per-axis projections capture floating-point flags and use the shared global workers."
+    },
+    "special_default_arguments": {
+      "color.deltaE_cie76": "second input is first[..., ::-1]; raw Lab values",
+      "color.deltaE_ciede94": "second input is first[..., ::-1]; raw Lab; graphic-arts weights",
+      "color.deltaE_ciede2000": "second input is first[..., ::-1]; raw Lab; kL=kC=kH=1",
+      "color.deltaE_cmc": "second input is first[..., ::-1]; raw Lab; kL=kC=1",
+      "color.convert_colorspace": "fromspace='RGB', tospace='HSV'",
+      "color.separate_stains": "conv_matrix=hed_from_rgb",
+      "color.combine_stains": "conv_matrix=rgb_from_hed"
+    },
+    "repeat": 7,
+    "timing": "allocation-inclusive, warmed Python calls; original reference pools limited to one thread"
+  },
+  "results": [
+    {
+      "api": "measure.moments",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 16384.0,
+      "reference_ms": 0.2930062380952381,
+      "cpp_ms": 0.16371311764705881,
+      "speedup": 1.7897541889521407,
+      "samples_ms": [
+        [
+          0.29045571428571426,
+          0.28247904761904763,
+          0.30588314285714285,
+          0.2930062380952381,
+          0.29449661904761903,
+          0.4203314285714286,
+          0.28857890476190473
+        ],
+        [
+          0.1669544411764706,
+          0.16371311764705881,
+          0.16612379411764705,
+          0.1746449705882353,
+          0.15966732352941176,
+          0.16091732352941177,
+          0.16367508823529411
+        ]
+      ],
+      "loops": [
+        21,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.30348857692307696,
+      "cpp_ms": 0.17852517647058821,
+      "speedup": 1.6999763446422151,
+      "samples_ms": [
+        [
+          0.29904261538461535,
+          0.3040226538461539,
+          0.31211046153846156,
+          0.30348857692307696,
+          0.3027048076923077,
+          0.29795096153846157,
+          0.30631423076923076
+        ],
+        [
+          0.17852517647058821,
+          0.17709838235294117,
+          0.17971441176470587,
+          0.17760314705882352,
+          0.1787429411764706,
+          0.1802139117647059,
+          0.17849479411764704
+        ]
+      ],
+      "loops": [
+        26,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.27770775,
+      "cpp_ms": 0.14686705,
+      "speedup": 1.8908785190415411,
+      "samples_ms": [
+        [
+          0.2869325,
+          0.279891,
+          0.2797474166666667,
+          0.2736865,
+          0.2724333333333333,
+          0.27770775,
+          0.27184016666666666
+        ],
+        [
+          0.14686705,
+          0.1491385,
+          0.1565704,
+          0.14611315,
+          0.145801025,
+          0.143961875,
+          0.148282425
+        ]
+      ],
+      "loops": [
+        24,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 1048576.0,
+      "reference_ms": 0.23543175757575757,
+      "cpp_ms": 0.11319610638297872,
+      "speedup": 2.079857382896338,
+      "samples_ms": [
+        [
+          0.2397758787878788,
+          0.2383610303030303,
+          0.23543175757575757,
+          0.23830069696969697,
+          0.2305690303030303,
+          0.23531730303030304,
+          0.23401178787878787
+        ],
+        [
+          0.11296974468085105,
+          0.11069868085106384,
+          0.11319610638297872,
+          0.11622982978723405,
+          0.11376717021276596,
+          0.11577772340425532,
+          0.11023802127659574
+        ]
+      ],
+      "loops": [
+        33,
+        47
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 38048.0,
+      "reference_ms": 0.25635510714285714,
+      "cpp_ms": 0.13009272340425532,
+      "speedup": 1.9705568492578103,
+      "samples_ms": [
+        [
+          0.26033325,
+          0.2546444285714286,
+          0.25635510714285714,
+          0.2557693928571429,
+          0.2570249642857143,
+          0.27888467857142857,
+          0.2548938571428571
+        ],
+        [
+          0.1298064680851064,
+          0.1311035744680851,
+          0.13009272340425532,
+          0.1280192765957447,
+          0.12655806382978724,
+          0.1302003829787234,
+          0.13108287234042554
+        ]
+      ],
+      "loops": [
+        28,
+        47
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2447387857142857,
+      "cpp_ms": 0.11341822727272728,
+      "speedup": 2.1578435106888323,
+      "samples_ms": [
+        [
+          0.2447387857142857,
+          0.23989121428571428,
+          0.24342564285714288,
+          0.2523458571428571,
+          0.24846325,
+          0.24099507142857143,
+          0.24977857142857143
+        ],
+        [
+          0.11503715909090909,
+          0.12081497727272728,
+          0.11163031818181818,
+          0.11341822727272728,
+          0.11291909090909091,
+          0.10997793181818183,
+          0.15003370454545456
+        ]
+      ],
+      "loops": [
+        28,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.001953125,
+      "reference_ms": 0.25803261538461536,
+      "cpp_ms": 0.14312411764705882,
+      "speedup": 1.8028590822192425,
+      "samples_ms": [
+        [
+          0.26031876923076924,
+          0.2502342307692308,
+          0.26007184615384615,
+          0.25692326923076925,
+          0.25803261538461536,
+          0.25572484615384616,
+          0.2759198461538461
+        ],
+        [
+          0.14312411764705882,
+          0.1408705,
+          0.14272070588235294,
+          0.1477524411764706,
+          0.15147617647058823,
+          0.14081629411764704,
+          0.1500175588235294
+        ]
+      ],
+      "loops": [
+        26,
+        34
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 7.62939453125e-05,
+      "reference_ms": 0.29367035999999996,
+      "cpp_ms": 0.16667064516129032,
+      "speedup": 1.761980099829875,
+      "samples_ms": [
+        [
+          0.29367035999999996,
+          0.29089196,
+          0.29942952,
+          0.30132744,
+          0.29733316,
+          0.28777571999999996,
+          0.28489524
+        ],
+        [
+          0.1691162258064516,
+          0.16667064516129032,
+          0.15884993548387097,
+          0.16394367741935484,
+          0.1603524193548387,
+          0.16867409677419354,
+          0.18103132258064517
+        ]
+      ],
+      "loops": [
+        25,
+        31
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 1.4210854715202004e-14,
+      "reference_ms": 0.2663655714285714,
+      "cpp_ms": 0.1371588918918919,
+      "speedup": 1.9420218970456522,
+      "samples_ms": [
+        [
+          0.27084342857142857,
+          0.2855556666666667,
+          0.25711357142857144,
+          0.26118638095238095,
+          0.2595299523809524,
+          0.2663655714285714,
+          0.2685873333333333
+        ],
+        [
+          0.14180513513513515,
+          0.13937464864864865,
+          0.1343828918918919,
+          0.13481154054054054,
+          0.1371588918918919,
+          0.1407334054054054,
+          0.13657835135135135
+        ]
+      ],
+      "loops": [
+        21,
+        37
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 1073741824.0,
+      "reference_ms": 1.5836628333333334,
+      "cpp_ms": 2.0326345,
+      "speedup": 0.7791183478059304,
+      "samples_ms": [
+        [
+          1.981337,
+          1.6702263333333331,
+          1.5380298333333333,
+          1.7611775,
+          1.5836628333333334,
+          1.5807606666666667,
+          1.5561815
+        ],
+        [
+          2.35352875,
+          1.969788,
+          2.0326345,
+          2.29830275,
+          2.07978475,
+          1.82373725,
+          1.87488775
+        ]
+      ],
+      "loops": [
+        6,
+        4
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 16.0,
+      "reference_ms": 1.560184,
+      "cpp_ms": 1.797894,
+      "speedup": 0.8677841963986753,
+      "samples_ms": [
+        [
+          1.560184,
+          1.5308491666666668,
+          1.5226105,
+          1.7091853333333333,
+          1.6081018333333332,
+          1.5191006666666667,
+          1.598856
+        ],
+        [
+          1.6889525,
+          1.776718,
+          1.7136853333333333,
+          1.9247608333333333,
+          2.2218065,
+          1.797894,
+          1.9292708333333333
+        ]
+      ],
+      "loops": [
+        6,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.5282495,
+      "cpp_ms": 2.5810112000000003,
+      "speedup": 0.5921126959852014,
+      "samples_ms": [
+        [
+          1.480634,
+          1.5282495,
+          1.4843858333333333,
+          1.5759868333333333,
+          1.6253655,
+          1.5333956666666668,
+          1.4798976666666668
+        ],
+        [
+          2.8137354,
+          2.5753624,
+          2.6214042,
+          2.5810112000000003,
+          2.5812454,
+          2.5568,
+          2.5575134
+        ]
+      ],
+      "loops": [
+        6,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 1.5762598695796736e+16,
+      "reference_ms": 1.0524004,
+      "cpp_ms": 0.7038730909090909,
+      "speedup": 1.4951564615728765,
+      "samples_ms": [
+        [
+          1.0274969,
+          1.0416142,
+          1.067175,
+          1.0524004,
+          1.073637,
+          1.0381727,
+          1.0727443
+        ],
+        [
+          0.6807672727272727,
+          0.7088451818181818,
+          0.6346257272727273,
+          0.7439188181818183,
+          0.7193393636363636,
+          0.7038730909090909,
+          0.6772426363636364
+        ]
+      ],
+      "loops": [
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 161844224.0,
+      "reference_ms": 1.0585548999999999,
+      "cpp_ms": 0.75551325,
+      "speedup": 1.4011069958071547,
+      "samples_ms": [
+        [
+          1.0826898,
+          1.0546366,
+          1.0740587,
+          1.0843429,
+          1.0535063999999998,
+          1.0313481,
+          1.0585548999999999
+        ],
+        [
+          0.70223125,
+          0.759294,
+          0.7636435,
+          0.715145375,
+          0.75551325,
+          0.862484,
+          0.72246775
+        ]
+      ],
+      "loops": [
+        10,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.000335693359375,
+      "reference_ms": 1.0877733,
+      "cpp_ms": 0.6554913076923078,
+      "speedup": 1.6594778408726183,
+      "samples_ms": [
+        [
+          1.0654477,
+          1.0690505,
+          1.145985,
+          1.0877733,
+          1.0637775,
+          1.1006774,
+          1.0987738
+        ],
+        [
+          0.6554913076923078,
+          0.6560337692307693,
+          0.6561193846153847,
+          0.6415522307692307,
+          0.7064156923076923,
+          0.6438688461538461,
+          0.6522244615384615
+        ]
+      ],
+      "loops": [
+        10,
+        13
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 12582912.0,
+      "reference_ms": 1.2943346666666666,
+      "cpp_ms": 1.6714703999999998,
+      "speedup": 0.774368883030574,
+      "samples_ms": [
+        [
+          1.333311888888889,
+          1.2870855555555556,
+          1.2943346666666666,
+          1.3086936666666666,
+          1.3521635555555556,
+          1.24957,
+          1.217909888888889
+        ],
+        [
+          1.6714703999999998,
+          1.6897786000000001,
+          1.7266792,
+          1.5526626000000001,
+          1.974205,
+          1.6538656,
+          1.5278642
+        ]
+      ],
+      "loops": [
+        9,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.moments_central",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.421875,
+      "reference_ms": 1.3390305,
+      "cpp_ms": 1.7020734,
+      "speedup": 0.7867054969544792,
+      "samples_ms": [
+        [
+          1.3390305,
+          1.389871625,
+          1.355204375,
+          1.300007875,
+          1.22975425,
+          1.295496875,
+          1.3743765
+        ],
+        [
+          1.7020734,
+          1.8738598,
+          1.5937952,
+          1.5510636,
+          1.572127,
+          1.7350748,
+          2.3240817999999996
+        ]
+      ],
+      "loops": [
+        8,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.centroid",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 5.115907697472721e-13,
+      "reference_ms": 1.2834887142857143,
+      "cpp_ms": 2.3169382,
+      "speedup": 0.5539589766726253,
+      "samples_ms": [
+        [
+          1.2834887142857143,
+          1.2067384285714287,
+          1.2913491428571429,
+          1.3000925714285714,
+          1.232052857142857,
+          1.410145,
+          1.245414857142857
+        ],
+        [
+          2.3407346,
+          2.3715342,
+          2.335016,
+          2.3169382,
+          2.2817046000000003,
+          2.3105544,
+          2.3095187999999998
+        ]
+      ],
+      "loops": [
+        7,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
