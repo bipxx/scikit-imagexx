@@ -121,3 +121,24 @@ SKIMAGEXX_MOMENTS_DEFINE(std::complex<float>)
 SKIMAGEXX_MOMENTS_DEFINE(std::complex<double>)
 #undef SKIMAGEXX_MOMENTS_DEFINE
 }
+
+// Fixed default normalized moments: four independent double divisions per row.
+#include "moments_normalized.hpp"
+
+namespace skimagexx::simd {
+void moments_normalize_default(const float* input, const double* denominator, float* out) {
+    for (int row = 0; row != 4; ++row) {
+        const auto divisor = _mm256_loadu_pd(denominator + row);
+        const auto values = _mm256_cvtps_pd(_mm_loadu_ps(input + 4 * row));
+        _mm_storeu_ps(out + 4 * row, _mm256_cvtpd_ps(_mm256_div_pd(values, divisor)));
+    }
+}
+
+void moments_normalize_default(const double* input, const double* denominator, double* out) {
+    for (int row = 0; row != 4; ++row) {
+        const auto divisor = _mm256_loadu_pd(denominator + row);
+        const auto values = _mm256_loadu_pd(input + 4 * row);
+        _mm256_storeu_pd(out + 4 * row, _mm256_div_pd(values, divisor));
+    }
+}
+}  // namespace skimagexx::simd

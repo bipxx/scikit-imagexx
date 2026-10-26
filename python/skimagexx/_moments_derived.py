@@ -1,7 +1,7 @@
 """Derived moments: source scalar providers plus owned arithmetic stages.
 
-Normalization deliberately keeps NumPy powers, first division, promotion and
-output assignment. The final division is native for assessed scalar dtypes and
+Assessed 4x4 real defaults use the bounded owned batch stage. Other inputs
+keep NumPy powers, first division, promotion and output assignment. The final division is native for assessed scalar dtypes and
 ignore/warn/raise/call policies; print/log and other dtypes are primitive NumPy
 providers, never upstream whole-function forwarding. No speed claim is made.
 """
@@ -35,7 +35,16 @@ def _divide(first,denominator):
 
 
 def moments_normalized(mu,order=3,spacing=None):
-    if isinstance(mu,np.ndarray):_core.fft_check(mu)
+    storage_checked=False
+    if (type(mu) is np.ndarray and type(order) is int and order==3 and spacing is None
+            and np.__version__ in ("1.24.4","2.5.4") and mu.shape==(4,4)
+            and mu.dtype.char in ("f","d") and mu.dtype.isnative
+            and mu.dtype.metadata is None and mu.flags.c_contiguous and mu.flags.aligned):
+        batch=_core.moments_normalize(mu,np.__version__=="2.5.4" and mu.dtype.itemsize==4)
+        storage_checked=True
+        if batch is not None:return batch
+        # None is a metadata probe, not an accepted numerical completion.
+    if not storage_checked and isinstance(mu,np.ndarray):_core.fft_check(mu)
     if np.any(np.array(mu.shape)<=order):
         raise ValueError("Shape of image moments must be >= `order`")
     if spacing is None:spacing=np.ones(mu.ndim)

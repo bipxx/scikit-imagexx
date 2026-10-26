@@ -394,3 +394,8 @@ python/skimagexx/_moments_derived_checks.py -text
 benchmarks/moments-derived-minimum-initial.json -text
 .github/workflows/moments-derived-same-host.yml -text
 tests/test_moments_derived_same_host.py -text
+
+src/moments_normalized.hpp -text
+src/moments_normalized.cpp -text
+tests/test_moments_normalized_native.cpp -text
+tests/test_moments_normalized_batch_public.py -text
