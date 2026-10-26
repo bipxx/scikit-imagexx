@@ -1,0 +1,223 @@
+name: block-reduce-same-host
+on:
+  workflow_dispatch:
+    inputs:
+      baseline_run:
+        type: string
+        required: true
+        default: '40417700622'
+      baseline_revision:
+        type: string
+        required: true
+        default: '21e0ba92c527aede8fb7995c9c10ee7ede77384b'
+      candidate_run:
+        type: string
+        required: true
+      candidate_revision:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BASELINE_RUN: ${{ inputs.baseline_run }}
+      BASELINE_REVISION: ${{ inputs.baseline_revision }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      CANDIDATE_REVISION: ${{ inputs.candidate_revision }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate successful CI products
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          for role in ('baseline', 'candidate'):
+              run, revision = (os.environ[role.upper() + suffix] for suffix in ('_RUN', '_REVISION'))
+              assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[0-9a-f]{40}', revision)
+              base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+              def api(endpoint):
+                  raw = subprocess.check_output(['gh', 'api', base + endpoint])
+                  Path('results', role + '-' + endpoint.split('?')[0].split('/')[-1] + '.json').write_bytes(raw)
+                  return json.loads(raw)
+              record = api('runs/' + run)
+              assert str(record['id']) == run and record['head_sha'] == revision
+              assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+              assert record['path'] == '.github/workflows/ci.yml'
+              assert record['status'] == 'completed' and record['conclusion'] == 'success'
+              listing = api('runs/' + run + '/artifacts?per_page=100')
+              assert listing['total_count'] == len(listing['artifacts'])
+              matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+              assert len(matches) == 1
+              item = matches[0]
+              assert not item['expired'] and 0 < item['size_in_bytes'] < 512 * 1024**2
+              assert item['workflow_run']['id'] == int(run) and item['workflow_run']['head_sha'] == revision
+              assert re.fullmatch('sha256:[0-9a-f]{64}', item['digest'])
+              Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.baseline_revision }}
+          path: snapshots/baseline
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.candidate_revision }}
+          path: snapshots/candidate
+          fetch-depth: 1
+      - name: Download exact CI ZIPs and install both runtimes offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          for role in baseline candidate; do
+            id=$(python -c "import json; print(json.load(open('results/$role-selection.json'))['id'])")
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > "$RUNNER_TEMP/$role-prepared.zip"
+            ROLE="$role" python - <<'PY'
+          import hashlib, json, os, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          role = os.environ['ROLE']; folder = Path('snapshots', role, 'build')
+          selected = json.loads(Path('results', role + '-selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], role + '-prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results', role + '-archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and 'sha256:' + actual['sha256'] == selected['digest']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall(folder)
+          prepared = folder / 'prepared/ci-artifacts'
+          # latest_only baselines and prepare_only candidates need no standalone timing JSONs here.
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          assert manifest['source']['revision'] == os.environ[role.upper() + '_REVISION']
+          assert len(manifest['wheels']) == 14
+          for family, count in (('inertia-tensor', 115), ('inertia-eigvals', 69), ('moments', 203), ('window', 179),
+                                ('lpi', 161), ('butterworth', 175), ('moments-derived', 155),
+                                ('normalized-layouts', 22), ('immutable-bytes', 134),
+                                ('moments-coords', 98), ('shannon-entropy', 61), ('rgb2yuv-storage', 37),
+                                ('block-reduce', 145), ('color-transforms-regression', 1848)):
+              for mode in ('normal', 'scalar'):
+                  tree = ET.fromstring((prepared / (family + '-' + mode + '.xml')).read_bytes())
+                  assert len(tree.findall('.//testcase')) == count
+                  assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert smoke['outcomes'] == {'passed': 1381} and len(smoke['results']) == 1381
+          assert smoke['implementations']['native-partial'] + smoke['implementations']['metadata'] == 230
+          if role == 'candidate':
+              old, new = (json.loads(Path('snapshots', r, 'build/prepared/ci-artifacts/measurement.json').read_bytes()) for r in ('baseline', 'candidate'))
+              for key in ('python', 'implementation', 'cache_tag', 'machine', 'system', 'dependency_libraries_sha256'):
+                  assert old['runtime'][key] == new['runtime'][key], key
+              assert {k: v for k, v in old['runtime']['versions'].items() if k != 'scikit-imagexx'} == {k: v for k, v in new['runtime']['versions'].items() if k != 'scikit-imagexx'}
+              for name in ('numpy', 'scipy', 'skimage'):
+                  assert old['runtime']['packages_sha256'][name] == new['runtime']['packages_sha256'][name], name
+              assert {k: v for k, v in old['wheels'].items() if v['name'] != 'scikit-imagexx'} == {k: v for k, v in new['wheels'].items() if v['name'] != 'scikit-imagexx'}
+              common = {'.github/workflows/ci.yml', 'benchmarks/coverage.py', 'benchmarks/rgb2yuv_storage.py', 'benchmarks/run.py',
+                        'benchmarks/provenance.py', 'tools/ci_measurement_artifacts.py',
+                        'tools/run_feature_tests.py', 'tests/inertia_tensor_cases.py', 'tests/test_inertia_tensor_public.py',
+                        'tests/inertia_eigvals_cases.py', 'tests/test_inertia_eigvals_public.py',
+                        'tests/moments_cases.py', 'tests/test_moments_public.py',
+                        'tests/moments_derived_cases.py', 'tests/test_moments_derived_public.py',
+                        'tests/window_cases.py', 'tests/test_window_public.py',
+                        'tests/lpi_filter_cases.py', 'tests/test_lpi_filter_public.py',
+                        'tests/butterworth_cases.py', 'tests/test_butterworth_public.py',
+                        'benchmarks/normalized_layouts_cases.json', 'tests/test_normalized_layouts_public.py',
+                        'tests/test_immutable_buffer_roots_public.py',
+                        'tests/moments_coords_cases.py', 'tests/test_moments_coords_public.py',
+                        'tests/shannon_entropy_cases.py', 'tests/test_shannon_entropy_public.py',
+                        'tests/rgb2yuv_storage_cases.py', 'tests/test_rgb2yuv_storage_public.py', 'tests/test_color_transforms.py',
+                        'tests/block_reduce_cases.py', 'tests/test_block_reduce_public.py'}
+              def fixed(name):
+                  return (name in common or name in ('CMakeLists.txt', 'pyproject.toml')
+                          or name.startswith(('src/', 'include/', 'python/skimagexx/', 'cmake/', 'third_party/')))
+              for value in (old, new):
+                  assert common <= value['source']['files_sha256'].keys()
+              mutable = {'src/block_reduce.cpp', 'src/block_reduce_internal.hpp', 'src/simd_block_reduce_avx2.cpp'}
+              old_fixed, new_fixed = ({k: v for k, v in value['source']['files_sha256'].items()
+                                      if fixed(k) and k not in mutable} for value in (old, new))
+              assert old_fixed == new_fixed, 'only the three declared block-reduction files may change production'
+              assert all(mutable <= value['source']['files_sha256'].keys() for value in (old, new))
+          PY
+            python -m venv "$RUNNER_TEMP/env-$role"
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links "snapshots/$role/build/prepared/wheels" -r "snapshots/$role/build/prepared/ci-artifacts/runtime-lock.txt" 2>&1 | tee "results/$role-offline-install.log"
+          done
+      - name: Measure the fixed6 default block-sum cases in ABBA order
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          for pass in 1-baseline 2-candidate 3-candidate 4-baseline; do
+            role=${pass#*-}; py="$RUNNER_TEMP/env-$role/bin/python"; output="$GITHUB_WORKSPACE/results/$pass"
+            mkdir "$output"
+            cd "$GITHUB_WORKSPACE/snapshots/$role"
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-before.log"
+            status=0
+            "$py" benchmarks/coverage.py --api measure.block_reduce --sizes 256 1024 --threads 1 --repeat 7 --output "$output/block-reduce.json" 2>&1 | tee "$output/block-reduce.log" || status=$?
+            echo "$status" > "$output/benchmark-exit.txt"
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
+            test "$status" -eq 0
+          done
+      - name: Check all four complete raw reports
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, math, runpy, statistics
+          from pathlib import Path
+          expected = {(api, size, dtype, 1) for api in ('measure.block_reduce',)
+                      for size in (256, 1024) for dtype in ('uint8', 'float32', 'float64')}
+          for name in ('1-baseline', '2-candidate', '3-candidate', '4-baseline'):
+              source = Path('snapshots', name.split('-', 1)[1])
+              fingerprint = runpy.run_path(str(source / 'benchmarks/provenance.py'))['source_fingerprint'](source)
+              report = json.loads(Path('results', name, 'block-reduce.json').read_bytes())
+              meta, rows = report['metadata'], report['results']
+              assert all(meta[key] == value for key, value in fingerprint.items())
+              assert meta['repeat'] == 7 and meta['fallback_enabled'] is False and meta['avx2'] is True
+              assert meta['reference'] == '0.26.0' and meta['numpy'] == '1.24.4'
+              assert meta['selected_apis'] == ['measure.block_reduce'] and meta['reference_fft_workers'] is None
+              assert set(meta['provider_frontiers']) == {'measure.block_reduce'}
+              assert len(rows) == 6 and {(r['api'], r['size'], r['dtype'], r['threads']) for r in rows} == expected
+              for row in rows:
+                  assert row['backend'] == 'native' and row['sample_labels'] == ['scikit-image', 'current']
+                  assert math.isfinite(row['max_abs_error']) and row['max_abs_error'] >= 0
+                  assert list(map(len, row['samples_ms'])) == [7, 7] and all(n > 0 for n in row['loops'])
+                  assert all(math.isfinite(v) and v > 0 for side in row['samples_ms'] for v in side)
+                  a, b = map(statistics.median, row['samples_ms'])
+                  assert (a, b, a / b) == (row['reference_ms'], row['cpp_ms'], row['speedup'])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: block-reduce-same-host-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
