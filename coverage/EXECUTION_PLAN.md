@@ -2,6 +2,8 @@
 
 ## Current priority: phased fast run
 
+**Kept float32 tiled streaming:** [the fixed12 one-thread comparison](../benchmarks/inertia-f32-streaming-same-host.md) gives **1.119084834x direct / 1.122603981x normalized gain** over the kept double-streaming product. The two 1024-square float32 targets improve **1.922135447x / 1.842475618x**, both repeating against both baselines under both metrics. All twelve cases beat scikit-image in both candidate passes. All **672 samples**, **four direct/two normalized losses** and ten controls (1.004335502x direct) are retained. Tensor256 float32 and eigenvalues1024 uint8 repeat direct losses; the largest penalty is +6.511 microseconds. Source `e360eee` is merged as `b29377e`; it enables the existing typed K=3 tile for float32 without changing formulas, reduction order, workers or numerical policy. Genuine preparation passes nine normal/scalar pairs and 1,365 smoke checks; 2,256 component checks preserve 2,224 numerical records and arrays exactly. The measured source predates coordinate/Shannon additions; full supported-profile qualification stays 203 image APIs.
+
 The user's latest direction is tests first, then small implementation groups,
 isolated one-thread benchmarks, and full supported-profile acceptance. Use the
 [fast-run guide](FAST_RUN.md) for executable commands. The initial Windows
