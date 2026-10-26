@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, parity_tolerance, native_classes, class_metadata_providers
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, native_classes, class_metadata_providers
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -135,8 +135,7 @@ def test_every_native_function(native, original, name, dtype, shape):
             np.testing.assert_array_equal(value,reference)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
-    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=a,expected=expected)
-    np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
+    assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
 
 
 @pytest.mark.parametrize('name', ['sobel', 'prewitt', 'scharr'])

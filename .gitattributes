@@ -366,3 +366,12 @@ benchmarks/window-minimum-initial.json -text
 # Prospective moments-family contracts.
 tests/moments_cases.py -text
 tests/test_moments_public.py -text
+src/moments_internal.hpp -text
+src/moments.cpp -text
+src/simd_moments_avx2.cpp -text
+tests/test_moments_native.cpp -text
+
+src/bind_moments.cpp -text
+src/bind_array_storage.hpp -text
+python/skimagexx/_moments.py -text
+python/skimagexx/_moments_checks.py -text

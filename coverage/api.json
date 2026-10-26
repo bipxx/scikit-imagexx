@@ -5445,11 +5445,15 @@
       "api": "measure.centroid",
       "kind": "callable",
       "signature": "(image, *, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_moments_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.euler_number",
@@ -5581,21 +5585,29 @@
       "api": "measure.moments",
       "kind": "callable",
       "signature": "(image, order=3, *, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_moments_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.moments_central",
       "kind": "callable",
       "signature": "(image, center=None, order=3, *, spacing=None, **kwargs)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_moments_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.moments_coords",

@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "670657b7726a96a6a0065c4858ce054c86003463c7218abf436c5773a588b257",
+  "source_inventory_sha256": "012229099b58b46435a2ae9e090ccaef7e92b982ade99a784d2675bd96990511",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 216,
-      "upstream-only": 252
+      "native-partial": 219,
+      "upstream-only": 249
     },
     "kinds": {
       "callable": 448,
@@ -11682,22 +11682,26 @@
       "api": "measure.centroid",
       "kind": "callable",
       "signature": "(image, *, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.centroid",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Compute zeroth/first raw moments then coordinate ratios",
+      "easiest_credible_path": "Audit/extend existing native implementation: Compute zeroth/first raw moments then coordinate ratios",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze weighted 2D/3D impulses and zero mass against pinned upstream, including spacing, zero mass, signed/nonfinite weights and dimensionality; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered spacing, zero mass, signed/nonfinite weights and dimensionality. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "spacing, zero mass, signed/nonfinite weights and dimensionality",
       "parity_cases_to_freeze": "weighted 2D/3D impulses and zero mass",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -11708,10 +11712,10 @@
         "kind": "compute",
         "specific_workload": "weighted 2D/3D impulses and zero mass",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_moments_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12132,22 +12136,26 @@
       "api": "measure.moments",
       "kind": "callable",
       "signature": "(image, order=3, *, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.moments",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse separable coordinate-power reductions for raw N-D moments",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse separable coordinate-power reductions for raw N-D moments",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze high order, spacing and large-coordinate images against pinned upstream, including order, spacing, accumulator precision and dimensionality; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered order, spacing, accumulator precision and dimensionality. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "order, spacing, accumulator precision and dimensionality",
       "parity_cases_to_freeze": "high order, spacing and large-coordinate images",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12158,32 +12166,36 @@
         "kind": "compute",
         "specific_workload": "high order, spacing and large-coordinate images",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_moments_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "measure.moments_central",
       "kind": "callable",
       "signature": "(image, center=None, order=3, *, spacing=None, **kwargs)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.moments_central",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse raw/coordinate reductions about supplied or inferred centroid",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse raw/coordinate reductions about supplied or inferred centroid",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze large-offset objects and explicit centers against pinned upstream, including center=None, order, deprecated kwargs and cancellation; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered center=None, order, deprecated kwargs and cancellation. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "center=None, order, deprecated kwargs and cancellation",
       "parity_cases_to_freeze": "large-offset objects and explicit centers",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12194,10 +12206,10 @@
         "kind": "compute",
         "specific_workload": "large-offset objects and explicit centers",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_moments_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

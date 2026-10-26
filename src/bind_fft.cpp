@@ -1,4 +1,5 @@
 #include "fft_internal.hpp"
+#include "bind_array_storage.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -136,6 +137,10 @@ template<class T> py::array complex_transform(const py::array& input, const Shap
     }
     return output;
 }
+}
+
+namespace skimagexx::bindings {
+void check_array_storage(const py::array& value) { check_storage(value); }
 }
 
 void bind_fft(py::module_& module) {

@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, moments_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -90,7 +90,11 @@ def main():
     window_scope = ('SciPy signal.get_window and NumPy radial coordinates and clipping remain providers; '
                     'owned C++ order-0/1 sampling. Default Hann/order1, shape-only with no pixel input; '
                     'the dtype label denotes the float64 output, not an input-pixel dtype.')
+    moments_scope = ('NumPy dtype promotion, coordinate powers and layout preparation, and the literal '
+                     'analytical central-moment and centroid-ratio Python/NumPy shell remain providers; '
+                     'owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     if 'filters.window' in apis:
         provider_frontiers['filters.window'] = window_scope
     if 'filters.butterworth' in apis:
@@ -129,8 +133,11 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)
-                    error=comparison_error(actual,expected,rtol,atol)
+                    if api in MOMENTS_FUNCTIONS:
+                        error = moments_default_error(api, data, actual, expected)
+                    else:
+                        rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)
+                        error=comparison_error(actual,expected,rtol,atol)
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     assert xx.get_num_threads() == threads
@@ -169,7 +176,8 @@ def main():
              'Identity calls return the input unchanged; metadata calls return small values/arrays without processing pixels. '
              'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.'
              + (' ' + lpi_scope if lpi_apis.intersection(apis) else '')
-             + (' ' + window_scope if 'filters.window' in apis else ''), '',
+             + (' ' + window_scope if 'filters.window' in apis else '')
+             + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')

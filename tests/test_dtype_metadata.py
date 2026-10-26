@@ -5,7 +5,7 @@ import warnings
 import numpy as np
 import pytest
 import skimagexx as xx
-from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,parity_tolerance
+from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -50,8 +50,7 @@ def compare(actual,expected,api,dtype,path='result',image=None):
         return
     a,e=np.asarray(actual),np.asarray(expected)
     assert a.shape==e.shape and a.dtype==e.dtype,path
-    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image,expected=expected)
-    np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)
+    assert_default_parity(api,np.dtype(dtype),a,e,image=image)
     assert a.dtype.metadata==e.dtype.metadata,f'{path}: native metadata={a.dtype.metadata!r}; reference={e.dtype.metadata!r}'
 
 

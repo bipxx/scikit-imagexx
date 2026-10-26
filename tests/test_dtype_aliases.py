@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import pytest
 import skimagexx as xx
-from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,parity_tolerance
+from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -42,7 +42,6 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     if isinstance(expected,tuple):
         assert type(actual) is type(expected) and len(actual)==len(expected)
     pairs=zip(actual,expected) if isinstance(expected,tuple) else [(actual,expected)]
-    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image,expected=expected)
     for a,b in pairs:
         if api=='segmentation.relabel_sequential' and type(b).__name__=='ArrayMap':
             assert type(a).__name__==type(b).__name__
@@ -53,7 +52,7 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
                 assert value.dtype.metadata==reference.dtype.metadata
             continue
         assert np.asarray(a).dtype==np.asarray(b).dtype and np.asarray(a).shape==np.asarray(b).shape
-        np.testing.assert_allclose(a,b,rtol=rtol,atol=atol)
+        assert_default_parity(api,np.dtype(dtype),a,b,image=image)
 
 
 @pytest.mark.parametrize('dtype',['float32','float64'])

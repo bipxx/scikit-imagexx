@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source registers 216 partial image APIs plus 3 metadata functions and 5 partial native classes. Window adds owned order0/1 sampling with SciPy/NumPy providers and frozen public contracts; combined supported-profile wheel/SDK qualification remains at 203 image APIs. Component checks and linked benchmark targets do not establish combined-product acceptance or measured speed.
+Phase-2 source registers 219 partial image APIs plus 3 metadata functions and 5 partial native classes. Raw/central moments and centroid add owned typed SIMD projections with NumPy preparation/analytical providers and frozen contracts. Combined supported-profile wheel/SDK qualification remains at 203 image APIs; component evidence is separate from installed acceptance and measured speed.
 
 Qualified product: `ea35a2481880301b8ce7b4eb2d77665adb813ca2`, Actions run `40237475475`: four profiles, 828,304 XML checks with no failures/errors/skips, three Release products. The qualified composition includes reconstruction, normalized mutual information, H-extrema, the metrics SIMD increment and the bounded TV zero-scan change. This is partial per-function scope, not full API parity or performance acceptance.
 
-477 public callable names inventoried in 20 modules; 216 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 219 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -301,7 +301,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.approximate_polygon` | upstream-only | pending | pending |
 | `measure.block_reduce` | upstream-only | pending | pending |
 | `measure.blur_effect` | upstream-only | pending | pending |
-| `measure.centroid` | upstream-only | pending | pending |
+| `measure.centroid` | native-partial | yes (partial input contract) | yes |
 | `measure.euler_number` | upstream-only | pending | pending |
 | `measure.find_contours` | upstream-only | pending | pending |
 | `measure.grid_points_in_poly` | upstream-only | pending | pending |
@@ -313,8 +313,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.manders_overlap_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.marching_cubes` | upstream-only | pending | pending |
 | `measure.mesh_surface_area` | upstream-only | pending | pending |
-| `measure.moments` | upstream-only | pending | pending |
-| `measure.moments_central` | upstream-only | pending | pending |
+| `measure.moments` | native-partial | yes (partial input contract) | yes |
+| `measure.moments_central` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_coords` | upstream-only | pending | pending |
 | `measure.moments_coords_central` | upstream-only | pending | pending |
 | `measure.moments_hu` | upstream-only | pending | pending |

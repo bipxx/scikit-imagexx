@@ -1,11 +1,12 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
+MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 NATIVE_FUNCTIONS = {
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman'),
     'segmentation': ('clear_border','relabel_sequential'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('moments','moments_central','centroid','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -49,6 +50,24 @@ def matrix_transform_contract():
         workers='Shared sole_core global setter, default1 and optional4; packed SIMD disabled by SKIMAGEXX_DISABLE_SIMD without changing fused arithmetic',
         performance='Unmeasured end-to-end public pipeline; homogeneous allocation fusion remains future work')
 
+
+
+def moments_contract(api):
+    """Owned contractions with explicitly retained preparation/formula providers."""
+    if api not in MOMENTS_FUNCTIONS:
+        raise KeyError(api)
+    return dict(api=api, implementation='native-partial', entrypoints=('moments_project',),
+        kernel='Per-axis C++ float32/float64/complex64/complex128 contractions; ascending reduction with SIMD across independent outputs',
+        providers='NumPy image conversion, coordinate powers, result layout, literal owned raw-to-central analytical formulas and centroid division; no upstream moments/einsum/dot/matmul forwarding',
+        workers='One shared process-global snapshot per projection; default1; optional OpenMP by work threshold; portable builds refuse parallel workers',
+        simd='Scalar baseline; runtime AVX2 real contiguous load/broadcast paths and generic real/complex lanes; no FMA or horizontal reassociation',
+        floating_errors='Per-axis native FP capture/restore; source dot remains silent, source bmm_einsum/matmul reports flags using its policy snapshot',
+        numerical_policy='Frozen component epsilon and axis-length weighted cell scales; signed-mass conditioning bounded at8 with g*kappa<1/4; source structural zeros and nonfinite/warning/error/state behavior exact',
+        scope='100 frozen specifications across three APIs; orders0..4, bounded1D..4D, standard image types/layouts and finite complex spacing/centers',
+        gaps='Extended/replaced protocols, forged/stale storage, complex nonfinite parameters, ill-conditioned signed mass and print/log FP handling remain unassessed',
+        public_parity_test='tests/test_moments_public.py', fully_native=False,
+        component_evidence='Four genuine runtime/dispatch modes, 203 checks each plus unchanged families; not combined product qualification',
+        performance_evidence=None)
 
 
 def window_contract():
@@ -410,8 +429,26 @@ def default_call(api, image):
     return (image,), {}
 
 
+def moments_default_error(api, image, actual, expected):
+    """Validate the frozen cell-specific default policy and return finite error."""
+    from ._moments_checks import default_error
+    return default_error(api, image, actual, expected)
+
+
+def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api in MOMENTS_FUNCTIONS:
+        moments_default_error(api, image, actual, expected)
+        return
+    import numpy as np
+    rtol, atol = parity_tolerance(api, dtype, image=image, expected=expected)
+    np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
+
+
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in MOMENTS_FUNCTIONS:
+        raise ValueError('Moments use cell-specific bounds; call assert_default_parity')
     if api == 'filters.window':
         if expected is None:
             raise ValueError('Window tolerance requires the actual reference output')

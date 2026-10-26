@@ -11,3 +11,8 @@ __path__ = []
 
 def __getattr__(name):
     return module_attribute('measure', name)
+
+
+from ._moments import centroid, moments, moments_central
+
+__all__ += ['moments', 'moments_central', 'centroid']

@@ -183,7 +183,8 @@ def test_original_timing_commands_and_corpora_preserved():
     assert timing_commands(blocks['measure-minimum']) == ORIGINAL_COMMANDS['minimum'] + [
         'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json',
         'python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json',
-        'python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json']
+        'python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json',
+        'python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -264,5 +265,86 @@ def test_window_provider_metadata_does_not_claim_fft_workers():
     condition = compile(ast.Expression(fft_guard.test), '<reference FFT selection>', 'eval')
     lpi = {'filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'}
     assert not eval(condition, {'lpi_apis': lpi, 'apis': ['filters.window']})
+    for api in lpi | {'filters.butterworth'}:
+        assert eval(condition, {'lpi_apis': lpi, 'apis': [api]})
+
+
+def test_moments_contracts_precede_measurement_artifact_freeze():
+    blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    preparation = blocks['numpy-minimum']
+    required = """      - name: Moments owned projection parity
+        run: python -m pytest -q tests/test_moments_public.py --junitxml=build/ci-artifacts/moments-normal.xml
+      - name: Moments owned projection parity with SIMD disabled
+        run: python -m pytest -q tests/test_moments_public.py --junitxml=build/ci-artifacts/moments-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+"""
+    assert required in preparation
+    assert preparation.index('tests/test_window_public.py') < preparation.index(required)
+    assert preparation.index(required) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.count('tests/test_moments_public.py') == 2
+    assert 'build/ci-artifacts/' in preparation
+    assert 'build/ci-moments.md' in blocks['measure-minimum']
+
+
+def test_moments_benchmark_routes_only_three_apis_to_cellwise_check():
+    source = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    declaration = next(n for n in source.body if isinstance(n, ast.Assign)
+                       and any(isinstance(t, ast.Name) and t.id == 'MOMENTS_FUNCTIONS' for t in n.targets))
+    family = ast.literal_eval(declaration.value)
+    assert set(family) == {'measure.moments', 'measure.moments_central', 'measure.centroid'}
+    tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    route = next(n for n in ast.walk(main) if isinstance(n, ast.If)
+                 and isinstance(n.test, ast.Compare) and isinstance(n.test.left, ast.Name)
+                 and n.test.left.id == 'api' and any(isinstance(v, ast.Name) and v.id == 'MOMENTS_FUNCTIONS'
+                                                   for v in ast.walk(n.test)))
+    old = ast.parse('rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)\n'
+                    'error=comparison_error(actual,expected,rtol,atol)').body
+    assert [ast.dump(n) for n in route.orelse] == [ast.dump(n) for n in old]
+    code = compile(ast.Module(body=[route], type_ignores=[]), '<moments parity selection>', 'exec')
+    for entry in json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']:
+        calls = []
+        def moments(api, image, actual, expected):
+            calls.append(('moments', api, image, actual, expected)); return 17
+        def tolerance(api, dtype, *, image, expected):
+            calls.append(('old tolerance', api, dtype, image, expected)); return 1, 2
+        def compare(actual, expected, rtol, atol):
+            calls.append(('old comparison', actual, expected, rtol, atol)); return 23
+        values = dict(api=entry['api'], MOMENTS_FUNCTIONS=family, dtype='dtype', data='image',
+                      actual='actual', expected='expected', np=SimpleNamespace(dtype=lambda x: x),
+                      moments_default_error=moments, parity_tolerance=tolerance, comparison_error=compare)
+        exec(code, values)
+        if entry['api'] in family:
+            assert calls == [('moments', entry['api'], 'image', 'actual', 'expected')] and values['error'] == 17
+        else:
+            assert calls == [('old tolerance', entry['api'], 'dtype', 'image', 'expected'),
+                             ('old comparison', 'actual', 'expected', 1, 2)] and values['error'] == 23
+
+
+def test_moments_provider_metadata_does_not_claim_fft_workers():
+    tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    scope_node = next(n for n in main.body if isinstance(n, ast.Assign)
+                      and any(isinstance(t, ast.Name) and t.id == 'moments_scope' for t in n.targets))
+    scope = ast.literal_eval(scope_node.value)
+    for text in ('NumPy dtype promotion', 'coordinate powers', 'layout preparation',
+                 'analytical central-moment', 'centroid-ratio', 'owned typed C++ per-axis projections',
+                 'floating-point flags', 'shared global workers'):
+        assert text in scope
+    family = ('measure.moments', 'measure.moments_central', 'measure.centroid')
+    update = next(n for n in main.body if isinstance(n, ast.Expr) and isinstance(n.value, ast.Call)
+                  and isinstance(n.value.func, ast.Attribute) and n.value.func.attr == 'update'
+                  and isinstance(n.value.func.value, ast.Name) and n.value.func.value.id == 'provider_frontiers')
+    values = dict(apis=[*family, 'filters.window'], MOMENTS_FUNCTIONS=family,
+                  provider_frontiers={'filters.window': 'old scope'}, moments_scope=scope)
+    exec(compile(ast.Module(body=[update], type_ignores=[]), '<moments provider metadata>', 'exec'), values)
+    assert values['provider_frontiers'] == {'filters.window': 'old scope', **dict.fromkeys(family, scope)}
+    fft_guard = next(n for n in main.body if isinstance(n, ast.If)
+                     and any(isinstance(v, ast.Import) and any(a.name == 'scipy.fft' for a in v.names)
+                             for v in n.body))
+    condition = compile(ast.Expression(fft_guard.test), '<reference FFT selection>', 'eval')
+    lpi = {'filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'}
+    assert not eval(condition, {'lpi_apis': lpi, 'apis': family})
     for api in lpi | {'filters.butterworth'}:
         assert eval(condition, {'lpi_apis': lpi, 'apis': [api]})

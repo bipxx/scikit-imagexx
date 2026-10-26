@@ -141,6 +141,12 @@ jobs:
         run: python -m pytest -q tests/test_window_public.py --junitxml=build/ci-artifacts/window-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Moments owned projection parity
+        run: python -m pytest -q tests/test_moments_public.py --junitxml=build/ci-artifacts/moments-normal.xml
+      - name: Moments owned projection parity with SIMD disabled
+        run: python -m pytest -q tests/test_moments_public.py --junitxml=build/ci-artifacts/moments-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Current installed registry smoke
         run: python tools/run_feature_tests.py --phase smoke --report build/ci-artifacts/feature-smoke.json
       - run: python tools/diagnose_distance_precision.py
@@ -297,6 +303,7 @@ jobs:
       - run: python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json
       - run: python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json
       - run: python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json
+      - run: python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -310,6 +317,7 @@ jobs:
             build/ci-butterworth.md
             build/ci-lpi.md
             build/ci-window.md
+            build/ci-moments.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

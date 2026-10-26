@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('measure.moments','measure.moments_central','measure.centroid'),'tests/test_moments_public.py','benchmarks/coverage.py'),
     (('filters.window',),'tests/test_window_public.py','benchmarks/coverage.py'),
     (('filters.filter_forward','filters.filter_inverse','filters.wiener'),'tests/test_lpi_filter_public.py','benchmarks/coverage.py'),
     (('filters.butterworth',),'tests/test_butterworth_public.py','benchmarks/coverage.py'),
