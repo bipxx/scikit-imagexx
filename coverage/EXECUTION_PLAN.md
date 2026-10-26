@@ -43,15 +43,20 @@ separate hosted runs, not same-host paired candidate/baseline timings. All raw
 samples and regressions are published; no all-profile or whole-product claim
 follows.
 
-[Float64 v3](../benchmarks/phase3-f64-v3.md), source `ac87e23`, is measured but
-**on HOLD, unmerged**. Its 0.1030780647074× score is 1.120901× the kept v2
-ratio, but v3 ran on EPYC 7763 versus v2's EPYC 9V45. Two normalized cases
-worsen; all 21 remain slower than scikit-image. One masked-overlap return
-differs by one ULP across hosts, with exact original/candidate agreement within
-each run. The kept score remains **0.0919599844761×**; no causal code gain is
-established. An artifact-only same-host ABBA workflow is in progress, with no
-result yet. Root owns launches and integration; C++ and focused-test ownership
-remain separate. Keep the fixed metric, all 73 cases and exact gates.
+[Float64 v3 is kept](../benchmarks/phase3-f64-same-host.md): measured source
+`ac87e23` is integrated in main `bae051a` with unchanged product source. One
+controlled EPYC 7763 ABBA job gives baseline aggregate **0.0972754125233×**,
+candidate **0.1001371138738×**, **+2.94% normalized / +2.03% direct**. The four
+targeted float64 memory/volume cases have 1.126–1.196× direct speedups. All nine
+normalized and 14 direct losses remain published; all 21 colocalization calls
+are still slower than the original. Four exact 73-case checks and 4,088 raw
+samples are retained in the compact artifact.
+
+The earlier cross-CPU HOLD is resolved by this controlled result; its apparent
+12% improvement and one-ULP cross-host difference remain historical evidence,
+not a causal code-gain claim. Next: byte-binary specialization source/control
+review is pending, with no performance result. Keep the metric, all cases and
+exact gates; root owns launches/integration and C++/test ownership stays separate.
 
 ## Historical execution card — public203 integration checkpoint
 

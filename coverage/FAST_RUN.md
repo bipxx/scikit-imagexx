@@ -51,7 +51,7 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 ## Phase 3: benchmark one thread
 
-**Measured and kept:** both initial Linux profiles and two colocalization
+**Measured and kept:** both initial Linux profiles and three colocalization
 optimizations have completed isolated one-thread measurements. The
 [minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52 footprint
 workloads faster than scikit-image; the
@@ -71,20 +71,26 @@ This compares normalized ratios from separate hosted runs, not direct paired
 baseline/candidate latencies on one host. No modern/Windows optimization result
 or combined-product qualification follows from it.
 
-[Float64 v3](../benchmarks/phase3-f64-v3.md), source `ac87e23`, is measured but
-**on HOLD and unmerged**. Its score is 0.1030780647074×, nominally 1.120901×
-over width v2, but its EPYC 7763 host differs from v2's EPYC 9V45. Nineteen
-normalized ratios improve and two worsen; all 21 calls remain slower than the
-original. One masked-overlap return differs by one ULP across hosts while
-original/candidate agree exactly within each run. This is no code-attributed
-gain or keep decision; **the kept score remains 0.0919599844761×**.
+[Float64 v3 is now kept](../benchmarks/phase3-f64-same-host.md). Source
+`ac87e23` is integrated in main `bae051a` with unchanged product source. The
+controlled ABBA run on one EPYC 7763 host compares baseline aggregate
+**0.0972754125233×** with candidate **0.1001371138738×**: **+2.94% normalized
+and +2.03% direct public-call speedup**. The four targeted float64 memory/volume
+cases have 1.126–1.196× direct speedups. All nine normalized and 14 direct losses are
+retained; all 21 calls remain slower than scikit-image. The compact raw ZIP
+contains all four 73-case reports and 4,088 samples.
 
-**Next:** an artifact-only same-host ABBA comparison workflow is in progress,
-with no result yet. Reuse the frozen products to resolve the CPU confound.
-Keep the same 21-case metric, all 73 workload specifications, exact parity gates
-and every adverse result. Root owns experiment launches and keep decisions;
-the C++ and focused-test owners work separately. Measure the complete public
-call and retain the actual tested product, raw samples and absolute penalties.
+The [earlier cross-CPU v3 result](../benchmarks/phase3-f64-v3.md) and its two
+losses/one-ULP cross-host difference remain historical evidence. Its apparent
+12% gain is not a causal code claim. The controlled comparison has exact
+correctness observations across all four reports; no modern/Windows optimization
+or combined-product acceptance follows from this minimum-Linux result.
+
+**Next:** byte-binary specialization source/control review is pending; no
+performance result exists. Keep the fixed 21-case metric, all 73 workloads,
+exact parity gates and adverse cases. Root owns launches and keep decisions;
+the C++ and focused-test owners remain separate. Reuse authenticated products
+for controlled comparisons instead of rebuilding on measurement hosts.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
@@ -92,7 +98,8 @@ seven paired rounds, exact untimed parity before any timing, and every slower
 case retained with its absolute latency penalty. It reuses an authenticated
 Release wheel selected by `producer_run` and `producer_revision`, requiring
 the measurement checkout's product source to match. The initial profiles use
-producer `1d37745`; affine v1 uses `5bc2109` and width v2 uses `4a78e94`.
+producer `1d37745`; affine v1 uses `5bc2109`, width v2 uses `4a78e94`, and
+f64 v3 uses `ac87e23`.
 Preparation passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
 checks, 13 benchmark metadata checks and 73 corpus checks in each mode. A
 separate host installs hash-locked wheels offline and performs measurement.

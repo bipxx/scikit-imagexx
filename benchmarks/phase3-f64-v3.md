@@ -1,6 +1,8 @@
-# Float64 direct reads v3 — measured, on hold
+# Float64 direct reads v3: historical cross-host measurement
 
-**HOLD: source `ac87e23` is not merged into main.** The kept width-v2 score remains **0.0919599844761×**. A higher cross-host metric does not establish that the two-line code change is faster; a same-host artifact comparison is required before a keep decision.
+**Historical HOLD resolved:** v3 was subsequently kept after the [controlled same-host ABBA comparison](phase3-f64-same-host.md), then merged in main `bae051a` with product source equal to `ac87e23`. That comparison found +2.94% normalized and +2.03% direct aggregate gains. The raw report and all figures below remain the original cross-host observation.
+
+At this earlier checkpoint, source `ac87e23` was unmerged and on HOLD; width v2 remained the kept baseline. The apparent 12% difference below did not establish a causal code gain because the CPU model changed.
 
 Run [40267273827](https://github.com/bipxx/scikit-imagexx/actions/runs/40267273827) used the exact wheel from producer `40266743521`, source `ac87e239c5c98b96f9703b431a091d79e25bbfa7`. Profile: Linux, CPython 3.11.17, NumPy 1.24.4, SciPy 1.15.3, scikit-image 0.26.0, one library worker and one thread in every loaded upstream pool. **v3 ran on AMD EPYC 7763; kept width-v2 ran on AMD EPYC 9V45.**
 
@@ -14,11 +16,11 @@ The source replaces two known-float64 dispatches with the same existing memcpy/b
 |---|---:|---:|
 | [Initial minimum](phase3-minimum-initial.md) | 0.03428367360269× | 0.372811× |
 | [Kept width v2](phase3-width-v2.md) | 0.09195998447613× | 1.000000× |
-| Held f64 v3 | 0.10307806470738× | 1.120901× |
+| F64 v3 (cross-host) | 0.10307806470738× | 1.120901× |
 
 The v3 score is 3.006623× the initial baseline ratio. Nineteen normalized case ratios improve over v2 and two worsen. **All 21 colocalization calls remain slower than scikit-image.** Changes in unchanged routines and the different CPU model prevent a causal interpretation. Normalization is `(original/current)_v3 / (original/current)_v2`, not paired baseline/candidate timing on one host.
 
-## Both losses against kept v2
+## Both cross-run losses against v2
 
 | Workload | v2 original/current | v3 original/current | v3/v2 normalized ratio | Relative loss |
 |---|---:|---:|---:|---:|
@@ -55,6 +57,6 @@ One result also changes across hosts: `measure.manders_overlap_coeff/future/mask
 
 The worst added latency is Manders overlap/memory: 3.099946 ms original versus 42.120167 ms v3, **+39.020221 ms**. Complete public-call timings include allocation, orchestration, explicit providers and output destruction; they do not isolate kernel time.
 
-[Exact raw checks, identities and all seven paired samples](phase3-f64-v3.json) preserve all 73 workloads. Full performance/preparation archives and SHA/CRC records remain in `build/phase3-f64-results-v3/` (artifacts `12627241021` and `12627440319`). Independent review passed the scoped measurement while explicitly withholding a keep decision.
+[Exact raw checks, identities and all seven paired samples](phase3-f64-v3.json) preserve all 73 workloads. Full performance/preparation archives and SHA/CRC records remain in `build/phase3-f64-results-v3/` (artifacts `12627241021` and `12627440319`). The original independent review passed this scoped measurement while withholding a keep decision; the later controlled comparison resolved that hold.
 
-An artifact-only same-host ABBA comparison workflow is in progress, with no result yet. It must reuse the frozen products and preserve every workload and adverse case. This result covers one minimum Linux profile and grants no whole-product acceptance or cross-profile speed claim.
+The completed [same-host ABBA result](phase3-f64-same-host.md) reuses these frozen products and preserves every workload and adverse case. This historical cross-host result still grants no whole-product acceptance, cross-profile speed claim or 12% causal code gain.

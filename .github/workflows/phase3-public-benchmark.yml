@@ -20,6 +20,10 @@ on:
         type: choice
         options: [minimum, modern]
         default: minimum
+      prepare_only:
+        description: Stop after verified artifacts; use same-host replay for measurements
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -242,6 +246,7 @@ jobs:
           path: build/phase3/
 
   measure:
+    if: ${{ !inputs.prepare_only }}
     # A separate host starts only after every preparation step has passed.
     # Install prepared wheels offline; never compile or run pytest here.
     needs: prepare
