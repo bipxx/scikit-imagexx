@@ -227,9 +227,28 @@ def _transform(name, image, channel_axis):
                 np.subtract(probe, amount, out=probe)
     if moved.shape[-1] != 3:
         raise ValueError(f'the input array must have size 3 along `channel_axis`, got {moved.shape}')
+    prepared_rgb = False
+    if name == 'rgb2yuv':
+        # Source _prepare_colorarray promotes half and normalizes byte order.
+        if not moved.dtype.isnative and moved.dtype.kind == 'f' and moved.itemsize in (2,4,8):
+            moved = _core.edge_native(moved)
+            prepared_rgb = True
+        if moved.dtype == np.float16:
+            moved = _core.edge_half(moved)
+            prepared_rgb = True
     if moved.dtype.type not in _COLOR_TYPES or not moved.dtype.isnative:
         return fallback('color', name, image, channel_axis=channel_axis)
-    result = retain_dtype_metadata(_core.color_transform(moved, _TRANSFORMS[name]),moved)
+    if prepared_rgb:
+        snapshot = np.geterr(), np.geterrcall()
+        if any(mode not in ('ignore','warn','raise','call') for mode in snapshot[0].values()):
+            return fallback('color', name, image, channel_axis=channel_axis)
+        result, flags = _core.color_transform(moved, _TRANSFORMS[name], True)
+        # RGB is direct matmul on both pinned NumPy profiles.
+        from ._moments import _dispatch_matmul
+        _dispatch_matmul(flags, snapshot)
+        result = retain_dtype_metadata(result,moved)
+    else:
+        result = retain_dtype_metadata(_core.color_transform(moved, _TRANSFORMS[name]),moved)
     return result if axis == -1 else np.moveaxis(result, -1, axis)
 
 

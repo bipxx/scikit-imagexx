@@ -440,3 +440,7 @@ tests/test_shannon_entropy_native.cpp -text
 python/skimagexx/_shannon_entropy.py -text
 python/skimagexx/_shannon_entropy_checks.py -text
 benchmarks/shannon-entropy-minimum-initial.json -text
+tests/rgb2yuv_storage_cases.py -text
+tests/test_rgb2yuv_storage_public.py -text
+src/bind_color_status.cpp -text
+tests/test_color_status_native.cpp -text

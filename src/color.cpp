@@ -5,6 +5,8 @@
 #include "execution.hpp"
 #include "simd.hpp"
 #include <stdexcept>
+#include <atomic>
+#include <cfenv>
 
 namespace skimagexx {
 namespace detail {
@@ -23,12 +25,25 @@ const std::array<double,256>& srgb_decode_table() {
 }
 }
 namespace {
+class ColorCapture {
+    std::fenv_t saved_;bool active_,valid_;
+public:
+    explicit ColorCapture(bool active):active_(active),valid_(!active||std::feholdexcept(&saved_)==0){}
+    ~ColorCapture(){if(active_&&valid_)std::fesetenv(&saved_);}
+    bool valid()const{return valid_;}
+    unsigned flags()const {
+        const int f=std::fetestexcept(FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID);
+        return ((f&FE_DIVBYZERO)?1u:0u)|((f&FE_OVERFLOW)?2u:0u)|((f&FE_UNDERFLOW)?4u:0u)|((f&FE_INVALID)?8u:0u);
+    }
+};
 template<class Input> void color_execute(const void* source, void* destination, std::size_t n, const detail::ColorSpec& spec, PixelType input_type,
-                                        std::ptrdiff_t pixel_stride = 3, std::ptrdiff_t channel_stride = 1) {
+                                        std::ptrdiff_t pixel_stride = 3, std::ptrdiff_t channel_stride = 1, std::atomic<unsigned>* status = nullptr) {
     const auto* p = static_cast<const Input*>(source);
     auto* out = static_cast<detail::ColorOutput<Input>*>(destination);
     const bool vectorized = has_avx2();
     detail::partition(n,detail::active_workers(n),[&](auto begin, auto end, auto) {
+        ColorCapture capture(status!=nullptr);
+        if(!capture.valid()){status->fetch_or(16u,std::memory_order_relaxed);return;}
         std::size_t consumed = 0;
 #ifdef SKIMAGEXX_AVX2
         if (vectorized) consumed = simd::color_transform(p+std::ptrdiff_t(begin)*pixel_stride,out+3*begin,end-begin,input_type,spec,pixel_stride,channel_stride);
@@ -36,8 +51,24 @@ template<class Input> void color_execute(const void* source, void* destination, 
         (void)vectorized; (void)input_type;
 #endif
         for (auto i = begin+consumed; i < end; ++i) detail::color_pixel(p+std::ptrdiff_t(i)*pixel_stride,out+3*i,spec,channel_stride);
+        if(status)status->fetch_or(capture.flags(),std::memory_order_relaxed);
     });
 }
+}
+namespace detail {
+template<class T>unsigned color_status(const T* input,T* output,std::size_t count,ColorTransform transform){
+    const auto& spec=color_spec(transform);
+    if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(3*sizeof(T)))throw std::overflow_error("color extent overflow");
+    if(!count)return 0;
+    if(!input||!output)throw std::invalid_argument("nonnull color buffers required");
+    std::atomic<unsigned> status{0};
+    color_execute<T>(input,output,count,spec,std::is_same_v<T,float>?PixelType::float32:PixelType::float64,3,1,&status);
+    const auto result=status.load(std::memory_order_relaxed);
+    if(result&16u)throw std::runtime_error("cannot capture color floating environment");
+    return result;
+}
+unsigned color_transform_status_into(const float* a,float* out,std::size_t n,ColorTransform op){return color_status(a,out,n,op);}
+unsigned color_transform_status_into(const double* a,double* out,std::size_t n,ColorTransform op){return color_status(a,out,n,op);}
 }
 void color_transform_into(const void* source, void* out, std::size_t n, PixelType input_type, ColorTransform transform) {
     const auto& spec = detail::color_spec(transform);

@@ -38,6 +38,7 @@
 #include <type_traits>
 #include <memory>
 void bind_extra(pybind11::module_&);
+void bind_color_status(pybind11::module_&);
 void bind_li(pybind11::module_&);
 void bind_metrics(pybind11::module_&);
 void bind_normalized_mutual_information(pybind11::module_&);
@@ -832,6 +833,7 @@ PYBIND11_MODULE(_core, m) {
     bind_colocalization(m);
     bind_fft(m);
     bind_window(m);
+    bind_color_status(m);
     bind_moments(m);
     bind_moments_derived(m);
     bind_shannon_entropy(m);

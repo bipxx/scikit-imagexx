@@ -7,6 +7,10 @@
 #include <type_traits>
 
 namespace skimagexx::detail {
+// Native aligned C triples, disjoint output; global worker budget is reused.
+// Returns standard divide/over/under/invalid bits and restores every worker FEnv.
+unsigned color_transform_status_into(const float*,float*,std::size_t,ColorTransform);
+unsigned color_transform_status_into(const double*,double*,std::size_t,ColorTransform);
 struct ColorSpec {
     std::array<double,9> matrix;
     bool input_offset = false, output_offset = false;
