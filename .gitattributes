@@ -436,3 +436,5 @@ src/shannon_entropy.hpp -text
 src/shannon_entropy.cpp -text
 src/bind_shannon_entropy.cpp -text
 tests/test_shannon_entropy_native.cpp -text
+python/skimagexx/_shannon_entropy.py -text
+python/skimagexx/_shannon_entropy_checks.py -text

@@ -8,7 +8,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -467,8 +467,17 @@ def moments_default_error(api, image, actual, expected):
     return default_error(api, image, actual, expected)
 
 
+def shannon_default_error(image, actual, expected):
+    """Validate the frozen entropy-only policy after default base conversion."""
+    from ._shannon_entropy_checks import default_error
+    return default_error(image, actual, expected)
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'measure.shannon_entropy':
+        shannon_default_error(image, actual, expected)
+        return
     if api in COORDS_MOMENTS_FUNCTIONS or api in MOMENTS_FUNCTIONS or api in DERIVED_MOMENTS_FUNCTIONS or api == 'measure.inertia_tensor' or api == 'measure.inertia_tensor_eigvals':
         moments_default_error(api, image, actual, expected)
         return
@@ -479,6 +488,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'measure.shannon_entropy':
+        raise ValueError('Shannon entropy uses its reference-specific bound; call assert_default_parity')
     if api in COORDS_MOMENTS_FUNCTIONS or api in MOMENTS_FUNCTIONS or api in DERIVED_MOMENTS_FUNCTIONS or api == 'measure.inertia_tensor' or api == 'measure.inertia_tensor_eigvals':
         raise ValueError('Moments use cell-specific bounds; call assert_default_parity')
     if api == 'filters.window':

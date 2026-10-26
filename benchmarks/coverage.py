@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -109,7 +109,14 @@ def main():
                     'products and reduction are owned C++. K1, complex and exceptional domains use NumPy '
                     'primitives without reduction credit. Genuine reference monomials are captured outside '
                     'timing for the frozen 2*gamma_(N+D)*S policy.')
+    shannon_scope = ('Ordinary real sorted unique counts and binary64 entropy arithmetic are owned C++. '
+                     'NumPy array preparation and unsupported unique types remain explicit providers; '
+                     'NumPy scalar boxing and Python logarithmic base conversion retain source semantics. '
+                     'Each timed default image call includes counts, entropy and allocation. Genuine reference '
+                     'nats are captured outside timing for the frozen entropy-only and base-division policy.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.shannon_entropy' in apis:
+        provider_frontiers['measure.shannon_entropy'] = shannon_scope
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: coords_scope for api in apis if api in COORDS_MOMENTS_FUNCTIONS})
@@ -160,7 +167,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api in COORDS_MOMENTS_FUNCTIONS:
+                    if api == 'measure.shannon_entropy':
+                        error = shannon_default_error(call_args[0], actual, expected)
+                    elif api in COORDS_MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, call_args[0], actual, expected)
                     elif api == 'measure.inertia_tensor_eigvals':
                         error = moments_default_error(api, data, actual, expected)
@@ -218,7 +227,8 @@ def main():
              + (' ' + inertia_scope if 'measure.inertia_tensor' in apis else '')
              + (' ' + eigvals_scope if 'measure.inertia_tensor_eigvals' in apis else '')
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
-             + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
+             + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
+             + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')

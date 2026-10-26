@@ -30,3 +30,8 @@ __all__ += ['inertia_tensor_eigvals']
 from ._moments import moments_coords, moments_coords_central
 
 __all__ += ['moments_coords', 'moments_coords_central']
+
+
+from ._shannon_entropy import shannon_entropy
+
+__all__ += ['shannon_entropy']

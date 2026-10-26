@@ -51,6 +51,7 @@ void bind_fft(pybind11::module_&);
 void bind_window(pybind11::module_&);
 void bind_moments(pybind11::module_&);
 void bind_moments_derived(pybind11::module_&);
+void bind_shannon_entropy(pybind11::module_&);
 void bind_components(pybind11::module_&);
 void bind_component_consumers(pybind11::module_&);
 void bind_rank(pybind11::module_&);
@@ -833,6 +834,7 @@ PYBIND11_MODULE(_core, m) {
     bind_window(m);
     bind_moments(m);
     bind_moments_derived(m);
+    bind_shannon_entropy(m);
     bind_components(m);
     bind_component_consumers(m);
     bind_rank(m);
