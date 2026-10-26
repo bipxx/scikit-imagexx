@@ -38,7 +38,11 @@ template<class T> py::tuple divide(const py::object&a,const py::object&b,bool ha
     // native arithmetic; no borrowed array allocation is read or released.
     const T first=a.cast<T>(),denominator=b.cast<T>();T value;unsigned flags;
     {
-        Capture capture;value=first/denominator;
+        Capture capture;
+        // Materialize real arithmetic before testing/restoring the FP scope.
+        // Strict FP flags alone do not stop GCC deferring a consumed-later divide.
+        if constexpr(std::is_floating_point_v<T>){volatile T quotient=first/denominator;value=quotient;}
+        else value=first/denominator;
         if constexpr(std::is_same_v<T,float>){if(half)value=half_round(value);}
         flags=capture.flags();
     }
