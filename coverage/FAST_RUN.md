@@ -53,6 +53,27 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 **Next:** prepare actual Release products for the eight additions and run complete-public-call, one-thread comparisons using the existing measurement tools. Record the actual tested product; retain raw samples, every regression, absolute runtime penalties and the next bottleneck owner. Keep builds and tests off measurement hosts. Development timings do not establish full product acceptance or a speedup.
 
+The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
+`benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
+seven paired rounds, exact untimed parity before any timing, and every slower
+case retained with its absolute latency penalty. It reuses a completed Release
+wheel job from run `40256588339`, source `1d377456856685a670333f29b364bd73c2cd9cf0`,
+and verifies that the current compiled/product source is unchanged. Select
+`runtime=minimum` first because its artifact is available; `modern` uses the same
+workload set when that producer artifact is published. Preparation checks the
+installed public contracts, scalar dispatch and complete registry smoke; a
+separate host installs hash-locked wheels offline and performs measurement.
+There are no builds or pytest runs on that measurement host. The workflow also
+requires `source_revision` to match the selected workflow commit exactly.
+
+The benchmark/control-flow and existing artifact-isolation tests pass 31 checks;
+both workflow files pass actionlint. Separately, five frozen original source
+files and their license now supply the reconstruction tests' missing CI input:
+all 80 affected original-reference tests pass without assertion changes. Exact
+historical Git objects are fetched at depth one. Remaining H trace/provenance and
+publication/import-isolation failures remain separate phase-4 work; this setup
+does not turn an unrelated failed broad suite into accepted product coverage.
+
 ## Phase 4: accept supported profiles
 
 Run the full required supported-profile qualification before acceptance, including actual installed Python/C++ SDK interfaces, scalar/SIMD behavior, worker policy and source/runtime/product identity. Compact phase-1 checks accelerate diagnosis; they do not replace full contracts, profile gates or performance evidence. Report private parity, public-product acceptance and measured performance as separate states.

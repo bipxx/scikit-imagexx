@@ -26,6 +26,15 @@ additions are pending. Next phase: isolated one-thread comparisons using actual
 Release products. Existing full contracts retain their scope; older
 campaign priorities below do not supersede this phased route.
 
+Phase 3 campaign source is now executable: 73 workloads across the eight new
+APIs, strict parity before seven paired one-worker rounds, reused exact Release
+wheels, and fresh offline measurement hosts. Minimum Linux is first because
+its completed producer artifact is available; modern Linux follows the same
+workflow. Source-only metadata checks pass 31 and actionlint passes both YAML
+files. Missing original reconstruction source inputs are supplied and all 80
+affected tests pass. Broader H/publication/import-isolation failures stay
+unaccepted and separate; no new speedup is established until the actual run.
+
 ## Current execution card — updated-plan resume
 
 Implementation is active. The [work queue](work_items.json) owns assignments and

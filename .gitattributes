@@ -302,3 +302,11 @@ tests/test_colocalization_native.cpp -text
 tests/test_colocalization_public.py -text
 tests/data/colocalization_public_semantics.json.gz -text
 python/skimagexx/measure.py -text
+benchmarks/phase3_public.py -text
+tests/test_phase3_public_benchmark.py -text
+.github/workflows/phase3-public-benchmark.yml -text
+tests/data/reconstruction-primary-0.26/grayreconstruct.py -text
+tests/data/reconstruction-primary-0.26/grayreconstruct.pyx -text
+tests/data/reconstruction-primary-0.26/rank_order.py -text
+tests/data/reconstruction-primary-0.26/shared_utils.py -text
+tests/data/reconstruction-primary-0.26/LICENSE.txt -text

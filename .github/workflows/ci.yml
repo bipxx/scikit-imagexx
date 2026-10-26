@@ -31,6 +31,14 @@ jobs:
       OMP_WAIT_POLICY: PASSIVE
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch exact historical metadata snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin 9f834bbff351ebbb66f98271bc30c07789495efb
+          git fetch --no-tags --depth=1 origin 52066265b89ceecf613c4a5f7d3b73c23b44d58d
+          git cat-file -e '9f834bbff351ebbb66f98271bc30c07789495efb^{commit}'
+          git cat-file -e '52066265b89ceecf613c4a5f7d3b73c23b44d58d:include/skimagexx/matrix_transform.hpp'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -41,6 +49,24 @@ jobs:
       - run: python tools/diagnose_color_precision.py
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/ci_measurement_artifacts.py inventory
+      - name: Authenticate frozen original reconstruction source
+        shell: bash
+        run: |
+          python - <<'PY'
+          import ast, hashlib, os
+          from pathlib import Path
+          root = Path.cwd()
+          tree = ast.parse((root / 'benchmarks/reconstruction_cases.py').read_bytes())
+          node = next(n for n in tree.body if isinstance(n, ast.Assign)
+                      and any(isinstance(t, ast.Name) and t.id == 'PRIMARY_SOURCE_PINS' for t in n.targets))
+          pins = ast.literal_eval(node.value)
+          source = root / 'tests/data/reconstruction-primary-0.26'
+          assert {p.name for p in source.iterdir() if p.is_file()} == set(pins)
+          for name, digest in pins.items():
+              assert hashlib.sha256((source / name).read_bytes()).hexdigest() == digest, name
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
+              stream.write('SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE=' + source.as_posix() + '\n')
+          PY
       - run: python -m pytest -q
       - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
       - run: python -m pytest -q

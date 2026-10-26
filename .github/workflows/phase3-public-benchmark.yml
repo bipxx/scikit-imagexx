@@ -1,0 +1,288 @@
+name: phase3-public-benchmark
+on:
+  workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Exact 40-hex workflow/benchmark revision matching the selected ref
+        required: true
+        type: string
+      producer_run:
+        description: Existing parity-and-native run containing the selected Linux Release wheel
+        required: true
+        type: string
+      producer_revision:
+        description: Exact 40-hex source revision of that producer run
+        required: true
+        type: string
+      runtime:
+        description: Linux runtime (minimum artifact is ready first; modern is independent)
+        required: true
+        type: choice
+        options: [minimum, modern]
+        default: minimum
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+
+jobs:
+  prepare:
+    # First campaign uses minimum Linux; modern reuses the same fixed stages.
+    # No product is built by this workflow.
+    name: prepare-${{ inputs.runtime }}-linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    outputs:
+      python-version: ${{ steps.python.outputs.version }}
+    env:
+      SOURCE_REVISION: ${{ inputs.source_revision }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      SELECTED_RUNTIME: ${{ inputs.runtime }}
+    steps:
+      - name: Select the fixed runtime and producer profile
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          profiles = {
+              'minimum': dict(RUNTIME_PYTHON='3.11', RUNTIME_NUMPY='1.24.4', RUNTIME_SCIPY='1.15.3',
+                  PRODUCER_ARTIFACT='numpy-minimum-ciede2000', PRODUCER_JOB='numpy-minimum',
+                  PRODUCER_BUILD_COMMAND='pip wheel . --no-deps --wheel-dir build/wheels'),
+              'modern': dict(RUNTIME_PYTHON='3.13', RUNTIME_NUMPY='2.5.4', RUNTIME_SCIPY='1.18.1',
+                  PRODUCER_ARTIFACT='parity-package-ubuntu-latest', PRODUCER_JOB='check (ubuntu-latest)',
+                  PRODUCER_BUILD_COMMAND='pip wheel ".[test]" cmake --wheel-dir build/wheels'),
+          }
+          profile = profiles[os.environ['SELECTED_RUNTIME']]
+          with open(os.environ['GITHUB_ENV'], 'a') as stream:
+              for key, value in profile.items():
+                  stream.write(key + '=' + value + '\n')
+          PY
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.RUNTIME_PYTHON }}
+      - name: Authenticate producer, source equivalence and fixed Linux artifact
+        id: producer
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p build/phase3/preparation build/phase3/wheels
+          python - <<'PY'
+          import os, re, subprocess, sys
+          assert sys.flags.optimize == 0
+          for key in ('SOURCE_REVISION', 'PRODUCER_REVISION'):
+              assert re.fullmatch('[0-9a-f]{40}', os.environ[key]), key
+          assert re.fullmatch('[1-9][0-9]*', os.environ['PRODUCER_RUN'])
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          assert head == os.environ['SOURCE_REVISION'] == os.environ['GITHUB_SHA']
+          PY
+          git fetch --no-tags --depth=1 origin "$PRODUCER_REVISION"
+          git diff --exit-code "$PRODUCER_REVISION" HEAD -- CMakeLists.txt pyproject.toml src include/skimagexx python/skimagexx > build/phase3/preparation/product-source-diff.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN" > build/phase3/preparation/producer-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN/jobs?filter=latest&per_page=100" > build/phase3/preparation/producer-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN/artifacts?per_page=100" > build/phase3/preparation/producer-artifacts.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          folder = Path('build/phase3/preparation')
+          run = json.loads((folder / 'producer-run.json').read_text())
+          assert str(run['id']) == os.environ['PRODUCER_RUN']
+          assert run['head_sha'] == os.environ['PRODUCER_REVISION']
+          assert run['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert run['path'] == '.github/workflows/ci.yml'
+          jobs = json.loads((folder / 'producer-jobs.json').read_text())
+          assert jobs['total_count'] == len(jobs['jobs'])
+          selected = [j for j in jobs['jobs'] if j['name'] == os.environ['PRODUCER_JOB']]
+          assert len(selected) == 1 and selected[0]['status'] == 'completed'
+          job = selected[0]
+          assert job['head_sha'] == run['head_sha']
+          build = [s for s in job['steps'] if os.environ['PRODUCER_BUILD_COMMAND'] in s['name']]
+          assert len(build) == 1 and build[0]['conclusion'] == 'success'
+          artifacts = json.loads((folder / 'producer-artifacts.json').read_text())
+          assert artifacts['total_count'] == len(artifacts['artifacts'])
+          selected = [a for a in artifacts['artifacts'] if a['name'] == os.environ['PRODUCER_ARTIFACT']]
+          assert len(selected) == 1
+          artifact = selected[0]
+          assert not artifact['expired'] and artifact['size_in_bytes'] > 0
+          assert artifact['workflow_run']['id'] == run['id']
+          assert artifact['workflow_run']['head_sha'] == run['head_sha']
+          (folder / 'producer-selection.json').write_text(json.dumps(dict(
+              producer_run=run['id'], producer_revision=run['head_sha'], runtime=os.environ['SELECTED_RUNTIME'],
+              producer_job=job['id'], producer_job_conclusion=job['conclusion'],
+              artifact_id=artifact['id'], artifact_digest=artifact.get('digest'),
+              current_revision=os.environ['SOURCE_REVISION'], product_source_equal=True,
+              whole_product_acceptance=False), indent=2) + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write('job-id=' + str(job['id']) + '\n')
+          PY
+          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$(python -c "import json; print(json.load(open('build/phase3/preparation/producer-selection.json'))['producer_job'])")/logs" > build/phase3/preparation/producer-build.log
+          git archive --format=zip --output=build/phase3/preparation/source.zip HEAD
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PRODUCER_ARTIFACT }}
+          run-id: ${{ inputs.producer_run }}
+          github-token: ${{ github.token }}
+          path: build/producer
+      - name: Retain the exact product wheel and install archived runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, shutil, zipfile
+          from pathlib import Path
+          wheels = list(Path('build/producer/wheels').glob('scikit_imagexx-*.whl'))
+          assert len(wheels) == 1, 'expected one producer product wheel'
+          wheel = wheels[0]
+          with zipfile.ZipFile(wheel) as archive:
+              cores = [n for n in archive.namelist() if n.startswith('skimagexx/') and n.endswith(('.so', '.pyd'))]
+              assert len(cores) == 1 and Path(cores[0]).name.startswith('_core.'), cores
+              core_sha = hashlib.sha256(archive.read(cores[0])).hexdigest()
+          shutil.copy2(wheel, Path('build/phase3/wheels') / wheel.name)
+          Path('build/phase3/preparation/producer-wheel.json').write_text(json.dumps(dict(
+              filename=wheel.name, wheel_sha256=hashlib.sha256(wheel.read_bytes()).hexdigest(),
+              core_member=cores[0], core_sha256=core_sha), indent=2) + '\n')
+          PY
+          # The producer need not pass unrelated broad metadata tests. This
+          # workflow requires its build step and our complete focused gates.
+          python -m pip install --no-index --only-binary=:all: --find-links build/producer/wheels "numpy==$RUNTIME_NUMPY" "scipy==$RUNTIME_SCIPY" scikit-image==0.26.0 pytest 2>&1 | tee build/phase3/preparation/runtime-install.log
+          python -m pip install --no-index --no-deps build/phase3/wheels/scikit_imagexx-*.whl 2>&1 | tee build/phase3/preparation/product-install.log
+          python -m pip download --only-binary=:all: --no-deps --dest build/phase3/wheels threadpoolctl 2>&1 | tee build/phase3/preparation/threadpool-download.log
+          python -m pip install --no-index --no-deps --find-links build/phase3/wheels threadpoolctl
+          python tools/preserve_baseline.py --wheel build/phase3/wheels/scikit_imagexx-*.whl --source-root . --output build/phase3/exact-package
+      - name: Record exact interpreter and prepare offline runtime lock
+        id: python
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -c "import platform; print('version=' + platform.python_version())" >> "$GITHUB_OUTPUT"
+          python -m pip freeze --exclude scikit-imagexx > build/phase3/preparation/runtime-freeze.txt
+          python -m pip download --only-binary=:all: --no-deps --find-links build/producer/wheels --find-links build/phase3/wheels --dest build/phase3/wheels -r build/phase3/preparation/runtime-freeze.txt 2>&1 | tee build/phase3/preparation/runtime-download.log
+          python tools/ci_measurement_artifacts.py freeze --wheel-dir build/phase3/wheels --artifact build/phase3/preparation/measurement.json
+      - name: Benchmark metadata regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_phase3_public_benchmark.py --junitxml build/phase3/preparation/benchmark-metadata.xml 2>&1 | tee build/phase3/preparation/benchmark-metadata.log
+      - name: Public footprint and colocalization contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py --basetemp build/phase3/preparation/normal-cases --junitxml build/phase3/preparation/public-normal.xml 2>&1 | tee build/phase3/preparation/public-normal.log
+      - name: Public contracts with scalar dispatch
+        shell: bash
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py --basetemp build/phase3/preparation/scalar-cases --junitxml build/phase3/preparation/public-scalar.xml 2>&1 | tee build/phase3/preparation/public-scalar.log
+      - name: Current registry fast smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/run_feature_tests.py --phase smoke --report build/phase3/preparation/fast-smoke.json 2>&1 | tee build/phase3/preparation/fast-smoke.log
+      - name: Require the complete focused and registry test projections
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          from pathlib import Path
+          folder = Path('build/phase3/preparation')
+          for mode in ('normal', 'scalar'):
+              cases = ET.parse(folder / ('public-' + mode + '.xml')).getroot().findall('.//testcase')
+              assert len(cases) == 785, (mode, len(cases))
+              assert all(not any(case.findall(tag) for tag in ('failure', 'error', 'skipped')) for case in cases)
+          entries = json.loads(Path('coverage/api.json').read_text())['entries']
+          native = [e for e in entries if e['implementation'] in ('native-partial', 'metadata')]
+          assert len(entries) == 477 and len(native) == 214
+          expected = len(entries) + sum(1 + len(e['native_default_case_dtypes']) for e in native) + 1
+          smoke = json.loads((folder / 'fast-smoke.json').read_text())
+          assert smoke['status'] == 'passed' and smoke['selected_entries'] == 477
+          assert set(smoke['collected_by_api']) == {e['api'] for e in entries}
+          assert smoke['outcomes'] == {'passed': expected}, smoke['outcomes']
+          PY
+      - name: Untimed complete benchmark corpus
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/phase3_public.py --check-only --wheel build/phase3/wheels/scikit_imagexx-*.whl --prepared-source build/phase3/exact-package/baseline-source.json --output build/phase3/preparation/corpus-normal.json 2>&1 | tee build/phase3/preparation/corpus-normal.log
+      - name: Untimed complete scalar corpus
+        shell: bash
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+        run: |
+          set -euo pipefail
+          python benchmarks/phase3_public.py --check-only --wheel build/phase3/wheels/scikit_imagexx-*.whl --prepared-source build/phase3/exact-package/baseline-source.json --output build/phase3/preparation/corpus-scalar.json 2>&1 | tee build/phase3/preparation/corpus-scalar.log
+      - name: Verify unchanged prepared inputs
+        run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/phase3/wheels --artifact build/phase3/preparation/measurement.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase3-prepared-${{ inputs.runtime }}-linux
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
+          path: build/phase3/
+
+  measure:
+    # A separate host starts only after every preparation step has passed.
+    # Install prepared wheels offline; never compile or run pytest here.
+    needs: prepare
+    name: measure-${{ inputs.runtime }}-linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ needs.prepare.outputs.python-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-prepared-${{ inputs.runtime }}-linux
+          path: build/prepared
+      - name: Install exact offline runtime and product
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/results
+          python -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links build/prepared/wheels -r build/prepared/preparation/runtime-lock.txt 2>&1 | tee build/results/offline-install.log
+      - name: Verify prepared source, runtime, wheel, installed package and SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/preparation/measurement.json 2>&1 | tee build/results/identity-before.log
+      - name: Measure all eight public APIs with one worker and seven paired rounds
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/phase3_public.py --wheel build/prepared/wheels/scikit_imagexx-*.whl --prepared-source build/prepared/exact-package/baseline-source.json --output build/results/phase3-public.json 2>&1 | tee build/results/phase3-public.log
+      - name: Verify inputs remain unchanged after measurement
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/preparation/measurement.json 2>&1 | tee build/results/identity-after.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase3-performance-${{ inputs.runtime }}-linux
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
+          path: build/results/
