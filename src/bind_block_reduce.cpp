@@ -138,7 +138,10 @@ void bind_block_reduce(py::module_& module) {
         if(status || !finite_output(output,code))return py::none();
         if((signed_result||unsigned_result) && integer_bytes<8) {
             const py::dtype narrowed(std::string(signed_result?"i":"u")+std::to_string(integer_bytes));
-            return output.attr("astype")(narrowed,py::arg("order")="K",py::arg("copy")=true);
+            py::array result(narrowed, output_shape,
+                             reduction_output_strides(input, blocks, output_shape, narrowed.itemsize()));
+            np.attr("copyto")(result, output, py::arg("casting")="unsafe");
+            return result;
         }
         return output;
     },py::arg("image").noconvert(),py::arg("factors"));
