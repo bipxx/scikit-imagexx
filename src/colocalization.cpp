@@ -101,8 +101,9 @@ template<class T> T read(const unsigned char* data,bool swapped) {
 template<class T> void write(void* output,std::size_t index,T value) {
     std::memcpy(static_cast<unsigned char*>(output)+index*sizeof(T),&value,sizeof(T));
 }
-std::uint64_t bits(const ColocView& v,const unsigned char* data) {
-    switch(coloc_itemsize(v.type)) {
+std::uint64_t bits(const ColocView& v,const unsigned char* data,std::size_t item) {
+    // Callers cache the byte width after validating the view's dtype.
+    switch(item) {
     case 1:return *data;
     case 2:return read<std::uint16_t>(data,v.swapped);
     case 4:return read<std::uint32_t>(data,v.swapped);
@@ -111,7 +112,7 @@ std::uint64_t bits(const ColocView& v,const unsigned char* data) {
 }
 bool floating(Type type) {return type==Type::float16 || type==Type::float32 || type==Type::float64;}
 bool signed_integer(Type type) {return type==Type::int8 || type==Type::int16 || type==Type::int32 || type==Type::int64;}
-std::uint64_t mask(Type type) {const auto n=coloc_itemsize(type);return n==8 ? ~std::uint64_t(0):(std::uint64_t(1)<<(n*8))-1;}
+std::uint64_t low_bits_mask(std::size_t item) {return item==8 ? ~std::uint64_t(0):(std::uint64_t(1)<<(item*8))-1;}
 bool nan(Type type,std::uint64_t value) {
     if(type==Type::float16)return (value&0x7c00)==0x7c00 && (value&0x03ff);
     if(type==Type::float32)return (value&0x7f800000)==0x7f800000 && (value&0x007fffff);
@@ -313,8 +314,9 @@ bool coloc_sum_supported(const ColocView& v,ColocReductionPlan plan) {
 bool coloc_all_finite(const ColocView& v) {
     const auto n=coloc_validate(v);if(!floating(v.type))return true;
     const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
+    const auto item=coloc_itemsize(v.type);
     const auto exponent=v.type==Type::float16 ? 0x7c00ULL:v.type==Type::float32 ? 0x7f800000ULL:0x7ff0000000000000ULL;
-    for(std::size_t i=0;i<n;++i)if((bits(v,input[i])&exponent)==exponent)return false;
+    for(std::size_t i=0;i<n;++i)if((bits(v,input[i],item)&exponent)==exponent)return false;
     return true;
 }
 ColocType coloc_square_type(Type t) {coloc_itemsize(t);return t==Type::boolean ? Type::int8:t;}
@@ -324,23 +326,28 @@ ColocType coloc_sum_type(Type t) {
 }
 ColocPredicate coloc_binary_valid(const ColocView& v) {
     const auto n=coloc_validate(v);const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
-    for(std::size_t i=0;i<n;++i)if(!binary(v.type,bits(v,input[i])))return {false,0};
+    const auto item=coloc_itemsize(v.type);
+    for(std::size_t i=0;i<n;++i)if(!binary(v.type,bits(v,input[i],item)))return {false,0};
     return {true,0};
 }
 ColocExecution coloc_binary_into(const ColocView& v,const ColocOrder& order,ColocBuffer out) {
     const auto n=coloc_validate(v);order_check(v,order);output_check(out,n,v,nullptr,&order);
     if(!coloc_binary_valid(v).value)throw std::domain_error("colocalization nonbinary input");
     const ReadAccess input(v,order,n);
-    return partition(n,[&](auto begin,auto end){for(auto i=begin;i<end;++i)write<std::uint8_t>(out.data,i,!zero(v.type,bits(v,input[i])));});
+    const auto item=coloc_itemsize(v.type);
+    return partition(n,[&](auto begin,auto end){for(auto i=begin;i<end;++i)write<std::uint8_t>(out.data,i,!zero(v.type,bits(v,input[i],item)));});
 }
 std::uint64_t coloc_count_nonzero(const ColocView& v) {return count_impl(v,nullptr);}
 std::uint64_t coloc_joint_count(const ColocView& a,const ColocView& b) {return count_impl(a,&b);}
 ColocPredicate coloc_min_negative(const ColocView& v) {
     const auto n=coloc_validate(v);if(!n)throw std::invalid_argument("zero-size array to reduction operation minimum which has no identity");
     bool negative=false,has_nan=false;const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
+    const auto item=coloc_itemsize(v.type);
+    const auto sign=std::uint64_t(1)<<(item*8-1);
+    const bool can_negative=floating(v.type) || signed_integer(v.type);
     for(std::size_t i=0;i<n;++i) {
-        const auto value=bits(v,input[i]);has_nan|=nan(v.type,value);
-        if(floating(v.type) || signed_integer(v.type))negative|=(value&(std::uint64_t(1)<<(coloc_itemsize(v.type)*8-1))) && !zero(v.type,value);
+        const auto value=bits(v,input[i],item);has_nan|=nan(v.type,value);
+        if(can_negative)negative|=(value&sign) && !zero(v.type,value);
     }
     return {negative && !has_nan,0};
 }
@@ -375,12 +382,15 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     if(plan.profile!=ColocProfile::numpy_1244 && plan.profile!=ColocProfile::numpy_254)throw std::invalid_argument("unknown colocalization NumPy profile");
     if(!plan.buffer_elements)throw std::invalid_argument("colocalization reduction buffer must be positive");
     ColocScalar result;result.type=coloc_sum_type(v.type);
+    const auto item=coloc_itemsize(v.type);
     if(!floating(v.type)) {
         const ReadAccess input(v,order,n);
+        const bool extend=signed_integer(v.type) && item<8;
+        const auto sign=std::uint64_t(1)<<(item*8-1),extension=~low_bits_mask(item);
         std::uint64_t sum=0;for(std::size_t i=0;i<n;++i) {
-            auto value=bits(v,input[i]);
+            auto value=bits(v,input[i],item);
             if(v.type==Type::boolean)value=value!=0;
-            else if(signed_integer(v.type) && coloc_itemsize(v.type)<8 && (value&(std::uint64_t(1)<<(coloc_itemsize(v.type)*8-1))))value|=~mask(v.type);
+            else if(extend && (value&sign))value|=extension;
             sum+=value;
         }result.bits=sum;return result;
     }
@@ -390,7 +400,7 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     // NpyIter reduction: single-stride aligned/native input needs no cast
     // buffer in2.5 and GROWINNER exposes the entire inner loop. In1.24 the
     // buffered reduction loop stops at the supplied iterator buffer size.
-    const bool needs_buffer=v.swapped || (reinterpret_cast<std::uintptr_t>(v.data)%coloc_itemsize(v.type)) || (magnitude(step)%coloc_itemsize(v.type));
+    const bool needs_buffer=v.swapped || (reinterpret_cast<std::uintptr_t>(v.data)%item) || (magnitude(step)%item);
     const auto block=(plan.profile==ColocProfile::numpy_1244 || needs_buffer) ? plan.buffer_elements:std::max(n,std::size_t(1));
     Capture capture;
     if(v.type==Type::float64) {
@@ -423,14 +433,18 @@ ColocExecution product(const ColocView& a,const ColocView* b,const ColocOrder& o
             throw ColocProviderRequired("colocalization nonfinite product is a provider frontier");
     }
     const ReadAccess first_input(a,order,n),second_input(b ? *b:a,order,n);
+    // Square preserves input width (including bool -> int8); multiply admits
+    // only the same dtype or a one-byte boolean second operand.
+    const auto second_item=b && b->type==Type::boolean ? std::size_t(1):item;
+    const auto product_mask=low_bits_mask(item);
     Capture capture;
     auto body=[&](std::size_t begin,std::size_t end) {
         for(auto i=begin;i<end;++i) {
             const auto* first=first_input[i];const auto* second=b ? second_input[i]:first;
             if(!floating(a.type)) {
-                auto x=bits(a,first);if(a.type==Type::boolean)x=x!=0;
-                auto y=b ? bits(*b,second):x;if(b && b->type==Type::boolean)y=y!=0;
-                const auto value=(x*y)&mask(output_type);
+                auto x=bits(a,first,item);if(a.type==Type::boolean)x=x!=0;
+                auto y=b ? bits(*b,second,second_item):x;if(b && b->type==Type::boolean)y=y!=0;
+                const auto value=(x*y)&product_mask;
                 if(item==1)write<std::uint8_t>(out.data,i,std::uint8_t(value));
                 else if(item==2)write<std::uint16_t>(out.data,i,std::uint16_t(value));
                 else if(item==4)write<std::uint32_t>(out.data,i,std::uint32_t(value));
