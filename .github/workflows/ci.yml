@@ -339,6 +339,8 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api measure.moments_normalized --api measure.moments_hu --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-derived.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+      - run: python benchmarks/coverage.py --api measure.inertia_tensor --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-tensor.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -354,6 +356,7 @@ jobs:
             build/ci-window.md
             build/ci-moments.md
             build/ci-moments-derived.md
+            build/ci-inertia-tensor.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:
