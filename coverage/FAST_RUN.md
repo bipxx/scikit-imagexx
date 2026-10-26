@@ -112,10 +112,20 @@ passes 785 public checks per mode, 1,318 smoke checks, **21 metadata tests plus
 plus three worker-4 samples per mode against their fresh originals. The
 separate controlled measurement supplies the KEEP evidence.
 
-**Next:** explicit SSE float32 summation is under development in the root
-branch; an independent octahedron experiment has its own worktree. Neither
-has measured results. Keep the fixed21 metric, all 73 workloads and exact
-gates; root owns launches and integration.
+**Rejected: [packed float32 v6](../benchmarks/phase3-f32-packed-same-host.md).**
+Candidate `8641d0c` remains unmerged. Actual `movups`/`addps`, 2,787 native
+controls per mode and [788 passing installed checks per mode](https://github.com/bipxx/scikit-imagexx/actions/runs/40285975359)
+establish correctness, not a speedup. [Controlled ABBA 40286133008](https://github.com/bipxx/scikit-imagexx/actions/runs/40286133008)
+gives **0.986506× normalized / 0.994889× direct gain**, with 13 normalized and
+10 direct fixed21 losses. The exact raw ZIP, all ten float32 targets and all
+losses are published. **Kept v5 is unchanged**; no identical rerun is planned.
+
+The independent octahedron source `9da7ccf` retains reviewed 254 public
+component checks and 2,997 native controls per mode.
+[CI 40285568194](https://github.com/bipxx/scikit-imagexx/actions/runs/40285568194)
+and its [799-check preparation 40286601199](https://github.com/bipxx/scikit-imagexx/actions/runs/40286601199)
+succeeded. [Controlled ABBA 40286815914](https://github.com/bipxx/scikit-imagexx/actions/runs/40286815914)
+is in progress under C's separate ownership; no performance result is claimed.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,

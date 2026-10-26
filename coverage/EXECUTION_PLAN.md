@@ -79,9 +79,18 @@ subtests, and 73 corpus checks per mode. Its raw fresh-reference pairs are
 verified; the old failure is not relabelled. The separate controlled
 measurement, not the diagnostic alone, supports KEEP.
 
-Next: root's explicit SSE float32 sum and an independent octahedron worktree
-are underway, with no measured results. Ownership stays separate; root owns
-launches and integration.
+**Packed float32 v6 is rejected:** candidate `8641d0c` remains unmerged;
+[the published comparison](../benchmarks/phase3-f32-packed-same-host.md) retains
+all raw reports and losses. Actual `movups`/`addps`, 2,787 native controls per
+mode and [788 installed tests per mode](https://github.com/bipxx/scikit-imagexx/actions/runs/40285975359)
+passed. Same-host ABBA gives **0.986506× normalized / 0.994889× direct gain**,
+with 13 normalized and 10 direct fixed21 losses. Kept v5 remains unchanged.
+
+Octahedron source `9da7ccf` has independent 254-public/2,997-native component
+checks per mode. [CI 40285568194](https://github.com/bipxx/scikit-imagexx/actions/runs/40285568194)
+and [799-check preparation 40286601199](https://github.com/bipxx/scikit-imagexx/actions/runs/40286601199)
+succeeded; [controlled ABBA 40286815914](https://github.com/bipxx/scikit-imagexx/actions/runs/40286815914)
+is in progress under C's separate ownership. Its performance decision is pending.
 
 ## Historical execution card — public203 integration checkpoint
 
