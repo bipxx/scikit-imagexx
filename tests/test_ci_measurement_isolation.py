@@ -191,7 +191,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json',
         'python benchmarks/coverage.py --api measure.moments_coords --api measure.moments_coords_central --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-coords.json',
         'python benchmarks/coverage.py --api measure.shannon_entropy --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-shannon-entropy.json',
-        'python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json']
+        'python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json',
+        'python benchmarks/coverage.py --api measure.block_reduce --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-block-reduce.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -467,7 +468,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 11 and all(condition in step for step in timed)
+    assert len(timed) == 12 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
