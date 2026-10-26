@@ -160,6 +160,8 @@ host, not a cumulative cross-CPU gain or full supported-profile acceptance.
 
 **Butterworth is kept in main `936481f`.** Its [first minimum-Linux Release result](../benchmarks/butterworth-minimum-initial.md) has **5/6 wins against the original**, geometric mean **1.112821796×**. The retained uint8 256² loss is **+0.2204691 ms**. Genuine installed gates pass **175 normal + 175 scalar tests and 1,322 smoke checks**; prior components pass 700 and shared defaults 72, with 8,046,020 native controls across six modes. This is owned C++ FFT with NumPy mask/padding/product/crop providers, not a prior-C++ gain or full API/profile claim. Main now has **212 partial image APIs  + 3 metadata functions = 215**, with 257 upstream-only entries; the separate qualified combined baseline remains public203. Next is the independent 80-spec LPI test-first worktree, with no native credit.
 
+The [legacy regression comparison after Butterworth integration](../benchmarks/phase3-butterworth-legacy-same-host.md) is flat across the unchanged 73 cases: **1.000748117× direct / 0.999452166× normalized**, with **44 direct and 46 normalized losses** retained. Both candidate passes are slower than both baseline passes for intersection stepped, masked and cache-F cases (direct gains **0.918100× / 0.894351× / 0.877160×**). This one-host result establishes neither a cause nor a waiver. Preparation passes **974 public checks in each normal/scalar mode, 1,322 smoke checks, 21 metadata tests plus 30 subtests, and all 73 corpus checks per mode**. The corpus contains no Butterworth cases; its six-case first result and pending LPI work remain separate.
+
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
 seven paired rounds, exact untimed parity before any timing, and every slower
@@ -171,9 +173,10 @@ f64 v3 uses `ac87e23`; byte v4 uses `0135305`; float32 v5 reuses compiled
 `c53198a` under checked source `5b03eded`; the current finite scan uses exact
 `552d445` against the kept-octahedron baseline `9da7ccf`.
 Earlier colocalization campaigns passed 785 installed public checks per mode;
-current octahedron/finite-scan preparations pass 799 per mode. They retain
-1,318 registry smoke checks and 73 corpus checks per mode, with 21 metadata
-tests plus 30 subtests (earlier campaigns had 13 metadata tests). A
+octahedron/finite-scan preparations passed 799 per mode and 1,318 smoke checks.
+Current Butterworth integration preparation passes 974 per mode and 1,322
+smoke checks. All retain 73 corpus checks per mode, with 21 metadata tests
+plus 30 subtests (earlier campaigns had 13 metadata tests). A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
 requires `source_revision` to match the selected workflow commit exactly.
