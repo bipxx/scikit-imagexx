@@ -5457,11 +5457,15 @@
       "api": "measure.intersection_coeff",
       "kind": "callable",
       "signature": "(image0_mask, image1_mask, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_colocalization_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.label",
@@ -5481,21 +5485,29 @@
       "api": "measure.manders_coloc_coeff",
       "kind": "callable",
       "signature": "(image0, image1_mask, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_colocalization_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.manders_overlap_coeff",
       "kind": "callable",
       "signature": "(image0, image1, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_colocalization_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.marching_cubes",

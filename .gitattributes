@@ -293,3 +293,12 @@ python/skimagexx/coverage.py -text
 python/skimagexx/morphology.py -text
 tools/inventory.py -text
 coverage/api.json -text
+include/skimagexx/colocalization.hpp -text
+src/colocalization.cpp -text
+src/simd_colocalization_avx2.cpp -text
+src/bind_colocalization.cpp -text
+python/skimagexx/_colocalization.py -text
+tests/test_colocalization_native.cpp -text
+tests/test_colocalization_public.py -text
+tests/data/colocalization_public_semantics.json.gz -text
+python/skimagexx/measure.py -text

@@ -15,6 +15,8 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (tuple('measure.'+name for name in ('intersection_coeff','manders_coloc_coeff','manders_overlap_coeff')),
+     'tests/test_colocalization_public.py','benchmarks/coverage.py'),
     (tuple('morphology.'+name for name in ('ellipse','octagon','octahedron','star','footprint_from_sequence')),
      'tests/test_footprint_shapes_public.py','benchmarks/coverage.py'),
     (('morphology.h_maxima','morphology.h_minima'),'tests/test_h_extrema_public.py','benchmarks/coverage.py'),

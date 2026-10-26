@@ -5,7 +5,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('label',),
+    'measure': ('label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -277,6 +277,13 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'measure.intersection_coeff':
+        mask = image > (127 if str(image.dtype) == 'uint8' else .5)
+        return (mask, mask[::-1]), {}
+    if api == 'measure.manders_coloc_coeff':
+        return (image, image > (127 if str(image.dtype) == 'uint8' else .5)), {}
+    if api == 'measure.manders_overlap_coeff':
+        return (image, image[::-1]), {}
     if api == 'morphology.ellipse':
         return (max(1, image.shape[-1]//16), max(1, image.shape[0]//16)), {'dtype': image.dtype}
     if api == 'morphology.octagon':
@@ -353,6 +360,8 @@ def default_call(api, image):
 
 def parity_tolerance(api, dtype):
     """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+    if api in ('measure.intersection_coeff', 'measure.manders_coloc_coeff', 'measure.manders_overlap_coeff'):
+        return (0., 0.)
     if api in ('morphology.ellipse', 'morphology.octagon', 'morphology.octahedron',
                'morphology.star', 'morphology.footprint_from_sequence'):
         return (0., 0.)

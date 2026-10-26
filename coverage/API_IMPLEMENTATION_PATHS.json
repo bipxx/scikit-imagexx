@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "03497d6ef4425844a4f76fb8d72799a86859355b2138aaae04f6bff79cef300f",
+  "source_inventory_sha256": "549b49bb687dea9111db17ee75046af652da0693002947b559687ed4d4db5ecf",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 4,
-      "native-partial": 208,
-      "upstream-only": 261
+      "native-partial": 211,
+      "upstream-only": 258
     },
     "kinds": {
       "callable": 448,
@@ -11880,22 +11880,26 @@
       "api": "measure.intersection_coeff",
       "kind": "callable",
       "signature": "(image0_mask, image1_mask, mask=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.intersection_coeff",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Count boolean mask intersection divided by first-image support",
+      "easiest_credible_path": "Audit/extend existing native implementation: Count boolean mask intersection divided by first-image support",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze empty/disjoint/full-overlap masks against pinned upstream, including optional mask and zero denominator; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered optional mask and zero denominator. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "optional mask and zero denominator",
       "parity_cases_to_freeze": "empty/disjoint/full-overlap masks",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -11906,10 +11910,10 @@
         "kind": "compute",
         "specific_workload": "empty/disjoint/full-overlap masks",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_colocalization_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -11956,22 +11960,26 @@
       "api": "measure.manders_coloc_coeff",
       "kind": "callable",
       "signature": "(image0, image1_mask, mask=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.manders_coloc_coeff",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Sum nonnegative image0 signal inside image1_mask over total signal",
+      "easiest_credible_path": "Audit/extend existing native implementation: Sum nonnegative image0 signal inside image1_mask over total signal",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse masks and zero/negative signals against pinned upstream, including negativity, optional mask and zero total; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered negativity, optional mask and zero total. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "negativity, optional mask and zero total",
       "parity_cases_to_freeze": "sparse masks and zero/negative signals",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -11982,32 +11990,36 @@
         "kind": "compute",
         "specific_workload": "sparse masks and zero/negative signals",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_colocalization_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "measure.manders_overlap_coeff",
       "kind": "callable",
       "signature": "(image0, image1, mask=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.manders_overlap_coeff",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Normalize cross intensity product by energy product",
+      "easiest_credible_path": "Audit/extend existing native implementation: Normalize cross intensity product by energy product",
       "mandatory_route_dependencies": [
         "array",
         "reduce"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze proportional/orthogonal/zero channels against pinned upstream, including range/shape validation, mask and zero energy; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered range/shape validation, mask and zero energy. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "range/shape validation, mask and zero energy",
       "parity_cases_to_freeze": "proportional/orthogonal/zero channels",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12018,10 +12030,10 @@
         "kind": "compute",
         "specific_workload": "proportional/orthogonal/zero channels",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_colocalization_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

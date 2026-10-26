@@ -30767,8 +30767,8 @@
         "measure.manders_coloc_coeff",
         "measure.manders_overlap_coeff"
       ],
-      "owner": "resize_api",
-      "state": "validating",
+      "owner": "integrator",
+      "state": "parity_passed",
       "owns": [
         "include/skimagexx/colocalization.hpp",
         "src/colocalization.cpp",
@@ -30779,13 +30779,13 @@
         "tests/test_colocalization_native_pipeline.py"
       ],
       "depends_on": [],
-      "current_checkpoint": "Modern/minimum/Windows boundedprivate rawparity accepted:Win06fa/minc5e809 each2144exactrows; all141minimumprofiledifferences retained. Portable538normalPASS/scalar81247live; source24a attrs-first415,0worker4numericcredit. Nativeall5profiles focusedcontrols passed; sanitizerfullfamilygate andpublic/SDK/performance pending.",
+      "current_checkpoint": "Phase2 public source integration:3measure APIs/core/CMake/registry with exact tolerances.545 public component tests normal+scalar PASS,1040 normal with inventory/runner,16 focused smoke;536frozen observations preserved plus large realparallel-count cases. Selfcontained fixture1608 originalsemantic projections across3profiles, pinned toexistingmatrix; provider-only outcomes retain zero nativecredit. Source211 image APIs, qualified binary203; combined wheel/SDK/performance pending.",
       "branch": "feature/colocalization-native",
       "base_sha": "1c5fa26ba5896f0309da95ac0581839dab3ae849",
       "next_gate": {
-        "owner": "resize_api",
-        "action": "Minimum and Windows1073-node normal/scalar source handoffs frozen; root launch follows independent original-module and corrected-native actual-link admission.",
-        "integration_destination": "integrator: existing public measure namespace and installed SDK family after required private profile gates"
+        "owner": "integrator",
+        "action": "Phase3: actual Release products and isolated one-thread original-library comparison for eight source additions. Phase4: combined wheel/SDK and supported-profile acceptance.",
+        "integration_destination": "main public source; accepted combined binary baseline remains203"
       }
     },
     {
@@ -31634,12 +31634,12 @@
   "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 208,
+    "native_partial_image_names": 211,
     "metadata_names": 3,
-    "upstream_only_names": 261,
+    "upstream_only_names": 258,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current public source:208 partial image APIs,3metadata,4partialclasses,1exception,261upstream-only/477. Qualified binary baseline remains exactea35/run40237475475 with203 image APIs; five footprint source additions have scoped component parity, not combined-product or timing acceptance.",
+    "note": "Current public source:211 partial image APIs,3metadata,4partialclasses,1exception,258upstream-only/477. Qualified binary baseline remains exactea35/run40237475475 with203 image APIs; eight phase2source additions have focused component parity, not combined-product or timing acceptance.",
     "native_class_names": 4,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 203
@@ -32853,8 +32853,8 @@
       "accepted_image_paths": 192,
       "upstream_only_paths": 277
     },
-    "source_image_paths": 208,
-    "source_upstream_only_paths": 261
+    "source_image_paths": 211,
+    "source_upstream_only_paths": 258
   },
   "max_consumer_retirement": {
     "proof": {

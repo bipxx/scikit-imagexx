@@ -1,8 +1,9 @@
-"""Native connected-component labels and explicit compatibility measurement APIs."""
+"""Native labels, partial colocalization and explicit compatibility APIs."""
 from ._components import label
+from ._colocalization import intersection_coeff, manders_coloc_coeff, manders_overlap_coeff
 from ._compat import module_attribute
 
-__all__ = ['label']
+__all__ = ['label', 'intersection_coeff', 'manders_coloc_coeff', 'manders_overlap_coeff']
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
