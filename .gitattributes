@@ -325,3 +325,4 @@ coverage/evidence/colocalization-live-reference-checkpoint.json -text
 tests/test_colocalization_reduction_lanes.py -text
 benchmarks/phase3-f32-same-host.zip -text
 benchmarks/phase3-f32-packed-same-host.zip -text
+tests/test_octahedron_integer.py -text

@@ -23,6 +23,11 @@ void footprint_shapes_hull(FootprintConstBytes input,FootprintBytes output,
 // strict real-part boundary when the finite complex radius has negative imag.
 void footprint_shapes_l1(FootprintConstBytes x,FootprintConstBytes y,FootprintConstBytes z,
                          FootprintBytes output,std::size_t count,double radius,bool inclusive=true);
+// Exact builtin nonnegative integer-radius generator. Axis validation also
+// bounds the original dense3-grid allocation (24*axis^3 <= PTRDIFF_MAX), which
+// guarantees exact binary64 mgrid coordinates and L1 sums. Output is byte0/1.
+std::size_t footprint_shapes_octahedron_axis(std::size_t radius);
+void footprint_shapes_octahedron(FootprintBytes output,std::size_t radius);
 // Reference-free dtype atoms. Numeric/string zero and one are prepared by the
 // original NumPy conversion stage. No object pointer/reference copying.
 void footprint_shapes_atoms(FootprintConstBytes mask,FootprintBytes output,

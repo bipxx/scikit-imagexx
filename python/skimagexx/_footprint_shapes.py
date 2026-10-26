@@ -8,6 +8,7 @@ No upstream footprint generator, hull or dilation algorithm is called.
 from collections.abc import Sequence
 from numbers import Integral
 import warnings
+from sys import maxsize as _MAX_SIZE
 import numpy as np
 from . import _core
 
@@ -63,17 +64,21 @@ def ellipse(width, height, dtype=np.uint8, *, decomposition=None):
 def octahedron(radius, dtype=np.uint8, *, decomposition=None):
     if decomposition is None:
         n = 2*radius+1
-        Z, Y, X = np.mgrid[-radius:radius:n*1j, -radius:radius:n*1j, -radius:radius:n*1j]
-        # mgrid determines original rounding/count and owns all coordinate
-        # buffers. Native L1 comparison is the pixel stage, not NumPy's sum.
-        if X.dtype.kind == 'c':
-            # Keep NumPy's complex absolute-value provider. Its finite complex
-            # ordering compares real parts first, then 0 <= radius.imag on a
-            # tie; the owned stage still computes (absX+absY)+absZ and the mask.
-            mask = _core.footprint_shapes_l1(np.abs(X), np.abs(Y), np.abs(Z),
-                                             radius.real, radius.imag >= 0)
+        if (type(radius) is int and radius >= 0 and radius <= (_MAX_SIZE-1)//2
+                and n**3 <= _MAX_SIZE//24):
+            mask = _core.footprint_shapes_l1(radius)
         else:
-            mask = _core.footprint_shapes_l1(X, Y, Z, radius)
+            Z, Y, X = np.mgrid[-radius:radius:n*1j, -radius:radius:n*1j, -radius:radius:n*1j]
+            # mgrid determines original rounding/count and owns all coordinate
+            # buffers. Native L1 comparison is the pixel stage, not NumPy's sum.
+            if X.dtype.kind == 'c':
+                # Keep NumPy's complex absolute-value provider. Its finite complex
+                # ordering compares real parts first, then 0 <= radius.imag on a
+                # tie; the owned stage still computes (absX+absY)+absZ and the mask.
+                mask = _core.footprint_shapes_l1(np.abs(X), np.abs(Y), np.abs(Z),
+                                                 radius.real, radius.imag >= 0)
+            else:
+                mask = _core.footprint_shapes_l1(X, Y, Z, radius)
         footprint = np.array(mask.astype(bool), dtype=dtype)
     elif decomposition == 'sequence':
         fp = octahedron(1, dtype=dtype, decomposition=None)

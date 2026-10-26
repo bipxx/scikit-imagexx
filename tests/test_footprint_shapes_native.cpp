@@ -11,6 +11,32 @@ std::size_t checks=0;
 void require(bool value){++checks;if(!value)throw std::runtime_error("footprint control failed");}
 template<class F>void rejects(F body){bool failed=false;try{body();}catch(const std::exception&){failed=true;}require(failed);}
 using namespace skimagexx;
+void integer_octahedron(){
+    for(std::size_t radius:{0u,1u,2u,3u,8u,32u,47u}){
+        const auto n=2*radius+1,count=n*n*n;
+        require(footprint_shapes_octahedron_axis(radius)==n);
+        std::vector<unsigned char> output(count+2,99);
+        footprint_shapes_octahedron({output.data()+1,count},radius);
+        require(output.front()==99&&output.back()==99);
+        std::size_t foreground=0;bool exact=true;
+        for(std::size_t z=0;z<n;++z)for(std::size_t y=0;y<n;++y)for(std::size_t x=0;x<n;++x){
+            const auto dz=z>radius?z-radius:radius-z,dy=y>radius?y-radius:radius-y,dx=x>radius?x-radius:radius-x;
+            const auto actual=output[1+(z*n+y)*n+x];
+            exact=exact&&(actual==unsigned(dx+dy+dz<=radius));foreground+=actual;
+        }
+        require(exact);
+        require(foreground==(4*radius*radius*radius+6*radius*radius+8*radius+3)/3);
+    }
+    std::array<unsigned char,27> output;output.fill(77);const auto before=output;
+    rejects([&]{footprint_shapes_octahedron({output.data(),26},1);});require(output==before);
+    rejects([&]{footprint_shapes_octahedron({output.data(),27},std::size_t(-1));});require(output==before);
+    rejects([&]{footprint_shapes_octahedron_axis(std::size_t(-1));});
+    const auto rounding=std::fegetround();require(std::fesetround(FE_DOWNWARD)==0);
+    std::feraiseexcept(FE_DIVBYZERO);const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+    footprint_shapes_octahedron({output.data(),27},1);
+    require(std::fegetround()==FE_DOWNWARD&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    require(std::fesetround(rounding)==0);std::feclearexcept(FE_ALL_EXCEPT);
+}
 void run(){
     for(std::size_t h:{0u,1u,2u,4u,8u})for(std::size_t w:{0u,1u,3u,5u,8u}){
         const auto rows=2*h+1,cols=2*w+1;std::vector<unsigned char> output(rows*cols+2,99);
@@ -64,7 +90,7 @@ int main(){
 #ifdef SKIMAGEXX_FOOTPRINT_SHAPES_PORTABLE
         if(workers==4){rejects([&]{skimagexx::set_num_threads(4);});continue;}
 #endif
-        skimagexx::set_num_threads(workers);run();
+        skimagexx::set_num_threads(workers);run();integer_octahedron();
     }
     skimagexx::set_num_threads(1);std::cout<<"footprint native controls="<<checks<<'\n';
 }
