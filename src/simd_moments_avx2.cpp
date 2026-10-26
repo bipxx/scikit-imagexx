@@ -18,7 +18,7 @@ template<>struct Ops<double> {
     static void store(double*p,V v){_mm256_storeu_pd(p,v);}static V add(V a,V b){return _mm256_add_pd(a,b);}
     static V sub(V a,V b){return _mm256_sub_pd(a,b);}static V mul(V a,V b){return _mm256_mul_pd(a,b);}
 };
-// Only complete worker-owned blocks: each input vector feeds K2/K4 outputs.
+// Only complete worker-owned blocks: each input vector feeds K2/K3/K4 outputs.
 template<std::size_t K,class T> void fused_project(const T*calc,const T*powers,
         std::size_t n,std::size_t inner,T*out,std::size_t begin,std::size_t end) {
     using V=Ops<T>;
@@ -62,8 +62,9 @@ template<class T> void project(const T*calc,const T*powers,std::size_t n,std::si
                                std::size_t inner,T*out,std::size_t begin,std::size_t end) {
     using R=typename detail::MomentsValue<T>::real;using V=Ops<R>;
     if constexpr(!detail::MomentsValue<T>::complex) {
-        if((K==2 || K==4) && inner>=V::width && begin%(K*inner)==0 && end%(K*inner)==0) {
+        if((K==2 || K==3 || K==4) && inner>=V::width && begin%(K*inner)==0 && end%(K*inner)==0) {
             if(K==2)fused_project<2>(calc,powers,n,inner,out,begin,end);
+            else if(K==3)fused_project<3>(calc,powers,n,inner,out,begin,end);
             else fused_project<4>(calc,powers,n,inner,out,begin,end);
             return;
         }
