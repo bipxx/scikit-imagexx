@@ -286,16 +286,12 @@ def inertia_tensor(image, mu=None, *, spacing=None):
     """
     if mu is None:
         mu = moments_central(image, order=2, spacing=spacing)
-    _check_array(mu)
     mu0 = mu[(0,) * image.ndim]
     result = np.zeros((image.ndim, image.ndim), dtype=mu.dtype)
     corners2 = tuple(2 * np.eye(image.ndim, dtype=int))
     d = np.diag(result)
     d.flags.writeable = True
-    _check_array(mu)
     total = np.sum(mu[corners2])
-    # A warning handler in the sum can invalidate external supplied storage.
-    _check_array(mu)
     diagonal = mu[corners2]
     if (type(mu) is np.ndarray and mu.dtype.char in ('f', 'd')
             and np.ndim(mu0) == 0 and np.isfinite(mu0) and mu0 != 0
@@ -305,7 +301,6 @@ def inertia_tensor(image, mu=None, *, spacing=None):
         for dims in pairs:
             mu_index = np.zeros(image.ndim, dtype=int)
             mu_index[list(dims)] = 1
-            _check_array(mu)
             values.append(mu[tuple(mu_index)])
         dtype = mu.dtype.newbyteorder('=')
         mixed = np.asarray(values, dtype=dtype)
@@ -323,8 +318,6 @@ def inertia_tensor(image, mu=None, *, spacing=None):
     for dims in itertools.combinations(range(image.ndim), 2):
         mu_index = np.zeros(image.ndim, dtype=int)
         mu_index[list(dims)] = 1
-        _check_array(mu)
         result[dims] = -mu[tuple(mu_index)] / mu0
-        _check_array(mu)
         result.T[dims] = -mu[tuple(mu_index)] / mu0
     return result
