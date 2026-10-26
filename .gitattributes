@@ -447,3 +447,4 @@ tests/test_color_status_native.cpp -text
 benchmarks/rgb2yuv-storage-minimum-initial.json -text
 .github/workflows/rgb2yuv-storage-same-host.yml -text
 tests/test_rgb2yuv_storage_same_host.py -text
+benchmarks/rgb2yuv-u8-same-host.zip -text
