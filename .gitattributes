@@ -404,3 +404,5 @@ benchmarks/normalized_layouts.py -text
 .github/workflows/normalized-layouts-same-host.yml -text
 tests/test_normalized_layouts_benchmark.py -text
 benchmarks/normalized_layouts_cases.json -text
+tests/test_normalized_layouts_public.py -text
+benchmarks/moments-normalized-layouts-same-host.zip -text

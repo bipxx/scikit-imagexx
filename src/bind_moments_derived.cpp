@@ -51,13 +51,16 @@ template<class T> py::tuple divide(const py::object&a,const py::object&b,bool ha
     return py::make_tuple(value,flags);
 }
 template<class T> py::object normalize_default(const py::array&input,bool float32_power) {
-    py::array_t<T> result({4,4});
+    const bool fortran=!(input.flags()&py::array::c_style) && (input.flags()&py::array::f_style);
+    const py::ssize_t item=sizeof(T);
+    py::array_t<T> result({4,4},{fortran?item:4*item,fortran?4*item:item});
     T* output=result.mutable_data();
     // The one storage check follows the last allocation and precedes all
     // typed reads. Rejected probes publish no arithmetic result.
     skimagexx::bindings::check_array_storage(input);
     if(Py_TYPE(input.ptr())!=py::detail::npy_api::get().PyArray_Type_ ||
-       !py::array_t<T,py::array::c_style>::check_(input) || input.ndim()!=2 ||
+       !py::array_t<T,0>::check_(input) || input.ndim()!=2 ||
+       !(input.flags()&(fortran?py::array::f_style:py::array::c_style)) ||
        input.shape(0)!=4 || input.shape(1)!=4 ||
        !input.dtype().attr("metadata").is_none() ||
        reinterpret_cast<std::uintptr_t>(input.data())%alignof(T))return py::none();
@@ -70,6 +73,7 @@ template<class T> py::object normalize_default(const py::array&input,bool float3
         const double value=double(data[i]),magnitude=std::abs(value);
         if(!std::isfinite(value) || (value!=0 && (magnitude<1e-12 || magnitude>1e12)))return py::none();
     }
+    // Transposing physical C/F order preserves degree i+j and low cells0,1,4.
     skimagexx::detail::moments_normalize_default(data,float32_power,output);
     if(capture.flags())return py::none();
     return result;
