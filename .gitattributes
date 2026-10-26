@@ -340,3 +340,7 @@ src/bind_fft.cpp -text
 benchmarks/phase3-byte-affine-same-host.zip -text
 benchmarks/phase3-finite-scan-same-host.zip -text
 third_party/pocketfft/*.h whitespace=-blank-at-eol
+
+# Prospective LPI source contracts: preserve exact test bytes.
+tests/lpi_filter_cases.py -text
+tests/test_lpi_filter_public.py -text
