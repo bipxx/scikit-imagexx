@@ -5633,21 +5633,29 @@
       "api": "measure.moments_hu",
       "kind": "callable",
       "signature": "(nu)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_moments_derived_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.moments_normalized",
       "kind": "callable",
       "signature": "(mu, order=3, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_moments_derived_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "measure.pearson_corr_coeff",

@@ -16,3 +16,7 @@ def __getattr__(name):
 from ._moments import centroid, moments, moments_central
 
 __all__ += ['moments', 'moments_central', 'centroid']
+
+from ._moments_derived import moments_hu, moments_normalized
+
+__all__ += ['moments_normalized', 'moments_hu']
