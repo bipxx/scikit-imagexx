@@ -377,3 +377,6 @@ python/skimagexx/_moments.py -text
 python/skimagexx/_moments_checks.py -text
 benchmarks/moments-minimum-initial.json -text
 tests/test_immutable_buffer_roots_public.py -text
+
+.github/workflows/moments-same-host.yml -text
+tests/test_moments_same_host.py -text
