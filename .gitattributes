@@ -431,3 +431,11 @@ src/simd_coords_avx2.cpp -text
 tests/test_moments_coords_native.cpp -text
 python/skimagexx/_moments_coords_checks.py -text
 benchmarks/inertia-f32-streaming-same-host.zip -text
+tests/shannon_entropy_cases.py -text
+tests/test_shannon_entropy_public.py -text
+src/shannon_entropy.hpp -text
+src/shannon_entropy.cpp -text
+src/bind_shannon_entropy.cpp -text
+tests/test_shannon_entropy_native.cpp -text
+python/skimagexx/_shannon_entropy.py -text
+python/skimagexx/_shannon_entropy_checks.py -text
