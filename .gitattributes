@@ -375,3 +375,4 @@ src/bind_moments.cpp -text
 src/bind_array_storage.hpp -text
 python/skimagexx/_moments.py -text
 python/skimagexx/_moments_checks.py -text
+tests/test_immutable_buffer_roots_public.py -text
