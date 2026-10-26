@@ -439,3 +439,4 @@ src/bind_shannon_entropy.cpp -text
 tests/test_shannon_entropy_native.cpp -text
 python/skimagexx/_shannon_entropy.py -text
 python/skimagexx/_shannon_entropy_checks.py -text
+benchmarks/shannon-entropy-minimum-initial.json -text
