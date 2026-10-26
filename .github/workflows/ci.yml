@@ -20,6 +20,10 @@ on:
         description: Prepare verified offline artifacts without standalone timing
         type: boolean
         default: false
+      latest_only:
+        description: Time only the newest minimum-Linux API batch; retain all build and parity gates
+        type: boolean
+        default: false
 jobs:
   check:
     if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only
@@ -271,7 +275,7 @@ jobs:
             build/ci-artifacts/
             build/frangi-generic-cpu/
   measure:
-    if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only && !inputs.latest_only)
     # Matrix-wide correctness barrier; every measurement starts on a fresh VM.
     needs: check
     strategy:
@@ -364,27 +368,27 @@ jobs:
       - name: Verify source, wheel, runtime, package and SDK before measurements
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
       - run: python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.moments_normalized --api measure.moments_hu --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-derived.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.inertia_tensor --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-tensor.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.moments_coords --api measure.moments_coords_central --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-coords.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.shannon_entropy --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-shannon-entropy.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/coverage.py --api measure.block_reduce --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-block-reduce.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
