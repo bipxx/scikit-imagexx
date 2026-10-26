@@ -134,6 +134,16 @@ void fused_worker_blocks(int workers,bool complete) {
         check(answer[1+(o*4+k)*inner+x]==expected[k]);
     check(answer.front()==-81&&answer.back()==-81);skimagexx::set_num_threads(1);
 }
+void wide_double_remainders() {
+    for(std::size_t inner:{std::size_t(12),std::size_t(13)})for(std::size_t K:{std::size_t(2),std::size_t(4)}) {
+        std::vector<double> values(3*inner),answer(K*inner+2,-89);
+        for(std::size_t j=0;j<3;++j)for(std::size_t x=0;x<inner;++x)values[j*inner+x]=double((j+1)*(x+1));
+        const double p2[]={1,0,1,1,1,2},p4[]={1,0,0,0,1,1,1,1,1,2,4,8},expected[]={6,8,14,26};
+        check(moments_project(values.data(),{3,inner},K==2?p2:p4,K,0,answer.data()+1,1)==0);
+        for(std::size_t k=0;k<K;++k)for(std::size_t x=0;x<inner;++x)check(answer[1+k*inner+x]==expected[k]*(x+1));
+        check(answer.front()==-89&&answer.back()==-89);
+    }
+}
 void guards() {
     double a=1,p=1,out=-7;
     const auto rejects=[&](const std::vector<std::size_t>&s,std::size_t K,std::size_t axis,int workers) {
@@ -161,7 +171,7 @@ void large(int workers) {
 int main() {
     check(skimagexx::get_num_threads()==1);
     literal<float>();literal<double>();literal<std::complex<float>>();literal<std::complex<double>>();
-    complex_literal<float>();complex_literal<double>();floating<float>();floating<double>();contiguous_fast_paths<float>();contiguous_fast_paths<double>();fused_powers<float>();fused_powers<double>();guards();large(1);fused_worker_blocks(1,true);fused_worker_blocks(1,false);
+    complex_literal<float>();complex_literal<double>();floating<float>();floating<double>();contiguous_fast_paths<float>();contiguous_fast_paths<double>();fused_powers<float>();fused_powers<double>();wide_double_remainders();guards();large(1);fused_worker_blocks(1,true);fused_worker_blocks(1,false);
 #ifdef _OPENMP
     large(4);fused_worker_blocks(4,true);fused_worker_blocks(4,false);
 #else
