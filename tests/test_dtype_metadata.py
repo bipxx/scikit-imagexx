@@ -50,7 +50,7 @@ def compare(actual,expected,api,dtype,path='result',image=None):
         return
     a,e=np.asarray(actual),np.asarray(expected)
     assert a.shape==e.shape and a.dtype==e.dtype,path
-    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image)
+    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image,expected=expected)
     np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)
     assert a.dtype.metadata==e.dtype.metadata,f'{path}: native metadata={a.dtype.metadata!r}; reference={e.dtype.metadata!r}'
 

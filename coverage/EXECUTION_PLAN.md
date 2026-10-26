@@ -8,8 +8,8 @@ isolated one-thread benchmarks, and full supported-profile acceptance. Use the
 development smoke gate passed 1,286 checks: all 477 API surfaces, 206 registered
 function signatures, 602 supported-dtype parity cases and one registry check.
 That phase-1 run used the retained public203 package without rebuilding.
-Phase 2 integrates five footprint and three colocalization public routes:
-source coverage is 211 partial image APIs, with 258 upstream-only entries. The footprint component
+Phase 2 integrates five footprint, three colocalization, one Butterworth and three LPI public functions, plus the partial `LPIFilter2D` class.
+Current source coverage is 215 partial image APIs + 3 metadata functions (218 total), five partial classes and 253 upstream-only entries. The footprint component
 contract passes 240 checks in normal and scalar modes, including two large
 ellipse cases above the optional parallel-fill threshold. Inventory/runner
 checks bring the normal scoped run to 735 passing tests; the five-feature
@@ -24,6 +24,10 @@ strict FP and optional-worker test wiring. Accepted combined binaries remain
 public203; combined wheel/SDK qualification for the additions is pending.
 One-thread performance results are now available below. Existing full contracts retain their scope; older
 campaign priorities below do not supersede this phased route.
+
+**LPI source integration adds `filters.filter_forward`, `filter_inverse`, `wiener` and the partial `LPIFilter2D` class.** Modern and minimum profiles each pass 336 component checks in normal and scalar modes (161 LPI + 175 Butterworth), totaling **1,344 passes: 644 LPI + 700 Butterworth**. Six native modes pass **8,056,540 controls**. The corrected full-real FFT route resolves the 92 retained earlier failures without changing the frozen 80 LPI or 87 Butterworth specifications or numerical policy. NumPy arithmetic/array stages and Python callbacks remain providers; this is partial native FFT execution. The source-derived shared projection passes 54 analytic comparisons while all 645 previous API/dtype budgets remain unchanged. The actual source registry also passes 98 shared checks per runtime/dispatch mode (392 total): signatures, all three default dtypes and shapes, both worker settings, equivalent descriptors and dtype metadata. The exact smoke selector collects 1,334 nodes; collection does not establish their execution. Installed Release validation, supported-profile qualification and LPI performance are still pending; the workflow is wired for 1,135 contracts per mode, 1,334 derived smoke checks and 18 prospective one-thread cases. Accepted combined coverage remains 203 image APIs.
+
+Component proof: `build/fft-full-real-proof-v1/manifest.json` in the LPI worktree, SHA-256 `05107d5e9ab0edd9b08c2c4963b47867692ab2de999be2008161f6c70b391e2a`. It records component execution, not an installed whole-product admission.
 
 Phase 3 has measured all 73 fixed workloads on fresh offline Linux hosts after
 785 public checks in each dispatch mode, 1,318 smoke checks and exact corpus
@@ -123,13 +127,9 @@ The new integer scan emits baseline SSE2, not a newly added AVX2 leaf; floating
 reductions and provider boundaries stay unchanged. This is one minimum-Linux
 host, not a cumulative cross-CPU gain or full supported-profile acceptance.
 
-Butterworth is active in its separate feature branch: **700 component checks
-pass**, with a privately tested owned FFT and an explicit NumPy mask provider.
-The whole-Release gate and six timing cases remain pending. Its branch registry
-is **212 image APIs + 3 metadata functions**, not yet main; main remains
-**211 + 3**, and accepted combined binary coverage remains **203 image APIs**.
-The prospective numerical policy distinguishes the PocketFFT/DUCC reference
-backends; component correctness grants no whole-product or performance credit.
+**Butterworth is kept in main `936481f`.** Its [first minimum-Linux Release result](../benchmarks/butterworth-minimum-initial.md) has **5/6 wins against the original**, geometric mean **1.112821796×**. The retained uint8 256² loss is **+0.2204691 ms**. Genuine installed gates pass **175 normal + 175 scalar tests and 1,322 smoke checks**; prior components pass 700 and shared defaults 72, with 8,046,020 native controls across six modes. This is owned C++ FFT with NumPy mask/padding/product/crop providers, not a prior-C++ gain or full API/profile claim. At that Butterworth checkpoint, source coverage was **212 partial image APIs + 3 metadata functions = 215**, with 257 upstream-only entries. The later LPI component integration is described above; the separate qualified combined baseline remains public203.
+
+The [legacy regression comparison after Butterworth integration](../benchmarks/phase3-butterworth-legacy-same-host.md) is flat across the unchanged 73 cases: **1.000748117× direct / 0.999452166× normalized**, with **44 direct and 46 normalized losses** retained. Both candidate passes are slower than both baseline passes for intersection stepped, masked and cache-F cases (direct gains **0.918100× / 0.894351× / 0.877160×**). This one-host result establishes neither a cause nor a waiver. Preparation passes **974 public checks in each normal/scalar mode, 1,322 smoke checks, 21 metadata tests plus 30 subtests, and all 73 corpus checks per mode**. The corpus contains no Butterworth cases; its six-case first result and pending LPI work remain separate.
 
 ## Historical execution card — public203 integration checkpoint
 

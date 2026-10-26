@@ -90,17 +90,19 @@ template<class T> Array<T> prepare(const py::array& input) {
     }
     return result;
 }
-template<class T> py::array real_forward(const py::array& input, const Shape& axes, int workers) {
+template<class T> py::array real_forward(const py::array& input, const Shape& axes, int workers,
+                                            bool full = false, bool forward = true) {
     auto values = prepare<T>(input);
     const auto shape = dimensions(values);
     validate(shape, axes);
     auto output_shape = shape;
-    output_shape[axes.back()] = shape[axes.back()] / 2 + 1;
+    if (!full) output_shape[axes.back()] = shape[axes.back()] / 2 + 1;
     py::array_t<std::complex<T>> output(output_shape);
     check_prepared(values, shape);
     {
         py::gil_scoped_release release;
-        skimagexx::detail::fft_r2c(shape, axes, values.data(), output.mutable_data(), workers);
+        if (full) skimagexx::detail::fft_r2c_full(shape, axes, values.data(), output.mutable_data(), forward, workers);
+        else skimagexx::detail::fft_r2c(shape, axes, values.data(), output.mutable_data(), workers);
     }
     return output;
 }
@@ -121,6 +123,8 @@ template<class T> py::array real_inverse(const py::array& input, const Shape& sh
 }
 template<class T> py::array complex_transform(const py::array& input, const Shape& axes,
                                               bool forward, int workers) {
+    if (input.dtype().kind() != 'c')
+        return real_forward<T>(input, axes, workers, true, forward);
     auto values = prepare<std::complex<T>>(input);
     const auto shape = dimensions(values);
     validate(shape, axes);

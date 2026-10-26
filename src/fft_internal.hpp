@@ -24,4 +24,9 @@ void fft_c2r(const std::vector<std::size_t>& shape, const std::vector<std::size_
 void fft_c2c(const std::vector<std::size_t>& shape, const std::vector<std::size_t>& axes,
              const std::complex<double>* input, std::complex<double>* output,
              bool forward, int workers);
+// Full real-input DFT: same full complex shape as input, both signs supported.
+void fft_r2c_full(const std::vector<std::size_t>& shape, const std::vector<std::size_t>& axes,
+                  const float* input, std::complex<float>* output, bool forward, int workers);
+void fft_r2c_full(const std::vector<std::size_t>& shape, const std::vector<std::size_t>& axes,
+                  const double* input, std::complex<double>* output, bool forward, int workers);
 }

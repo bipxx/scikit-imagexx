@@ -23,7 +23,7 @@ NATIVE_FUNCTIONS = {
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
               'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace',
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
-    'filters': ('butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
+    'filters': ('filter_forward','filter_inverse','wiener','butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
@@ -192,7 +192,7 @@ def rank_contract(api):
 # Classes have state, constructors and members; they are never image-call rows.
 # Populate only after the isolated public class contract is validated. The
 # implementation/provider facts below describe candidates, not passing evidence.
-NATIVE_CLASSES = {'transform': ('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')}
+NATIVE_CLASSES = {'filters': ('LPIFilter2D',), 'transform': ('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')}
 CLASS_METADATA_PROVIDERS = {'util': ('FailedEstimationAccessError',)}
 _CLASS_BASE_MEMBERS = ('__init__','__call__','__array__','__add__','__repr__','__nice__',
                        '__str__','identity','inverse','estimate','from_estimate',
@@ -242,6 +242,19 @@ def class_contract(api):
             compatibility_boundaries=['Canonical alias and native failure helpers share identity independent of algorithm fallback policy; unported compatible models retain the same catch type.'],
             public_parity_test='tests/test_transform_exception_public.py',frozen_contract=None,
             parity_evidence=None,performance_evidence=None)
+    if api == 'filters.LPIFilter2D':
+        return dict(version='lpi-filter-class-v1', registered=api in native_classes(),
+            implementation='native-class-partial',
+            members={'__init__':'owned-python-state', '__call__':'owned-cpp-fft-with-numpy-providers'},
+            state=dict(cache='Public mutable complex transfer array; shape-only reuse; inverse/Wiener mutate near-zero cache entries',
+                       parameters='Owned impulse callback and filter_params; source callback coordinates and kwargs'),
+            providers=dict(fft='Owned C++ scalar/runtime AVX2 PocketFFT, real-input full-spectrum and complex transforms',
+                           arrays='NumPy coordinate grids, casting, padding, products, reciprocal/gain/Wiener arithmetic, permutation, cropping and absolute value',
+                           callback='User impulse_response and duck predefined_filter providers; no upstream LPI or Python FFT calls'),
+            workers=dict(fft='Existing process-global worker snapshot, default1; optional OpenMP; portable builds refuse parallel workers'),
+            compatibility_boundaries=['Frozen 80 source specifications on minimum and modern runtimes; extended FFT precision, other storage/protocol partitions and hostile callback mutation remain unassessed.'],
+            public_parity_test='tests/test_lpi_filter_public.py', frozen_contract='tests/lpi_filter_cases.py',
+            parity_evidence=None, performance_evidence=None)
     if module!='transform' or not separator or name not in _CLASS_EXTRA_MEMBERS:
         raise KeyError(api)
     members=_CLASS_BASE_MEMBERS+_CLASS_EXTRA_MEMBERS[name]
@@ -294,6 +307,11 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in ('filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'):
+        import numpy as np
+        def impulse_response(r, c):
+            return np.exp(-(r*r + c*c) / 2)
+        return (image,), {'impulse_response': impulse_response}
     if api == 'measure.intersection_coeff':
         mask = image > (127 if str(image.dtype) == 'uint8' else .5)
         return (mask, mask[::-1]), {}
@@ -375,8 +393,25 @@ def default_call(api, image):
     return (image,), {}
 
 
-def parity_tolerance(api, dtype, image=None):
-    """Floating error budgets; Butterworth uses its frozen default-input policy."""
+def parity_tolerance(api, dtype, image=None, expected=None):
+    """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in ('filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'):
+        if image is None or expected is None:
+            raise ValueError('LPI tolerance requires the actual input and reference output')
+        import numpy as np
+        # Same prospective formula as the frozen public LPI contracts. This
+        # scales with the reference output, never the candidate or its error.
+        count = 1
+        for size in image.shape:
+            count *= 2 * int(size) - 1
+        levels = max(1, (max(2, count) - 1).bit_length())
+        eps = np.finfo(expected.real.dtype).eps
+        peak = 0.0
+        for value in (image, expected):
+            finite = np.abs(value[np.isfinite(value)])
+            if finite.size:
+                peak = max(peak, float(finite.max()))
+        return 32 * eps * levels, 64 * eps * levels * peak
     if api == 'filters.butterworth':
         if image is None:
             raise ValueError('Butterworth tolerance requires the actual default input image')

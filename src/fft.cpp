@@ -7,6 +7,8 @@
 namespace skimagexx::detail {
 #ifdef SKIMAGEXX_AVX2
 namespace fft_avx2 {
+void r2c_full(const std::vector<std::size_t>&,const std::vector<std::size_t>&,const float*,std::complex<float>*,bool,int);
+void r2c_full(const std::vector<std::size_t>&,const std::vector<std::size_t>&,const double*,std::complex<double>*,bool,int);
 void r2c(const std::vector<std::size_t>&,const std::vector<std::size_t>&,const float*,std::complex<float>*,int);
 void c2r(const std::vector<std::size_t>&,const std::vector<std::size_t>&,const std::complex<float>*,float*,int);
 void c2c(const std::vector<std::size_t>&,const std::vector<std::size_t>&,const std::complex<float>*,std::complex<float>*,bool,int);
@@ -50,5 +52,17 @@ void fft_c2c(const std::vector<std::size_t>& shape,const std::vector<std::size_t
     if (has_avx2()) { fft_avx2::c2c(shape,axes,input,output,forward,workers); return; }
 #endif
     fft_scalar::c2c(shape,axes,input,output,forward,workers);
+}
+void fft_r2c_full(const std::vector<std::size_t>& shape,const std::vector<std::size_t>& axes,const float* input,std::complex<float>* output,bool forward,int workers) {
+#ifdef SKIMAGEXX_AVX2
+    if (has_avx2()) { fft_avx2::r2c_full(shape,axes,input,output,forward,workers); return; }
+#endif
+    fft_scalar::r2c_full(shape,axes,input,output,forward,workers);
+}
+void fft_r2c_full(const std::vector<std::size_t>& shape,const std::vector<std::size_t>& axes,const double* input,std::complex<double>* output,bool forward,int workers) {
+#ifdef SKIMAGEXX_AVX2
+    if (has_avx2()) { fft_avx2::r2c_full(shape,axes,input,output,forward,workers); return; }
+#endif
+    fft_scalar::r2c_full(shape,axes,input,output,forward,workers);
 }
 }

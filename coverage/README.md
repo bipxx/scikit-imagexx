@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source now registers 211 partial image APIs. The five footprint and three colocalization additions have focused public-route component tests; combined wheel/SDK qualification and timing remain pending. The accepted binary baseline remains 203.
+Phase-2 source registers 215 partial image APIs plus 3 metadata functions and 5 partial native classes. LPI adds three functions and one class with frozen public contracts; combined supported-profile wheel/SDK qualification remains at 203 image APIs. Component checks and linked benchmark targets do not establish combined-product acceptance or measured speed.
 
 Qualified product: `ea35a2481880301b8ce7b4eb2d77665adb813ca2`, Actions run `40237475475`: four profiles, 828,304 XML checks with no failures/errors/skips, three Release products. The qualified composition includes reconstruction, normalized mutual information, H-extrema, the metrics SIMD increment and the bounded TV zero-scan change. This is partial per-function scope, not full API parity or performance acceptance.
 
-477 public callable names inventoried in 20 modules; 211 have partially native image implementations and 3 have metadata-only execution. 4 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 215 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -163,16 +163,16 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `feature.shape_index` | native-partial | yes (partial input contract) | yes |
 | `feature.structure_tensor` | native-partial | yes (partial input contract) | yes |
 | `feature.structure_tensor_eigenvalues` | native-partial | yes (partial input contract) | yes |
-| `filters.LPIFilter2D` | upstream-only | pending | pending |
+| `filters.LPIFilter2D` | native-class-partial | yes (partial input contract) | pending |
 | `filters.apply_hysteresis_threshold` | native-partial | yes (partial input contract) | yes |
-| `filters.butterworth` | upstream-only | pending | pending |
+| `filters.butterworth` | native-partial | yes (partial input contract) | yes |
 | `filters.correlate_sparse` | native-partial | yes (partial input contract) | yes |
 | `filters.difference_of_gaussians` | native-partial | yes (partial input contract) | yes |
 | `filters.farid` | native-partial | yes (partial input contract) | yes |
 | `filters.farid_h` | native-partial | yes (partial input contract) | yes |
 | `filters.farid_v` | native-partial | yes (partial input contract) | yes |
-| `filters.filter_forward` | upstream-only | pending | pending |
-| `filters.filter_inverse` | upstream-only | pending | pending |
+| `filters.filter_forward` | native-partial | yes (partial input contract) | yes |
+| `filters.filter_inverse` | native-partial | yes (partial input contract) | yes |
 | `filters.frangi` | native-partial | yes (partial input contract) | yes |
 | `filters.gabor` | native-partial | yes (partial input contract) | yes |
 | `filters.gabor_kernel` | native-partial | yes (partial input contract) | yes |
@@ -208,7 +208,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `filters.threshold_yen` | native-partial | yes (partial input contract) | yes |
 | `filters.try_all_threshold` | upstream-only | pending | pending |
 | `filters.unsharp_mask` | native-partial | yes (partial input contract) | yes |
-| `filters.wiener` | upstream-only | pending | pending |
+| `filters.wiener` | native-partial | yes (partial input contract) | yes |
 | `filters.window` | upstream-only | pending | pending |
 | `filters.rank.autolevel` | native-partial | yes (partial input contract) | yes |
 | `filters.rank.autolevel_percentile` | native-partial | yes (partial input contract) | yes |
@@ -307,10 +307,10 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.grid_points_in_poly` | upstream-only | pending | pending |
 | `measure.inertia_tensor` | upstream-only | pending | pending |
 | `measure.inertia_tensor_eigvals` | upstream-only | pending | pending |
-| `measure.intersection_coeff` | upstream-only | pending | pending |
+| `measure.intersection_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.label` | native-partial | yes (partial input contract) | yes |
-| `measure.manders_coloc_coeff` | upstream-only | pending | pending |
-| `measure.manders_overlap_coeff` | upstream-only | pending | pending |
+| `measure.manders_coloc_coeff` | native-partial | yes (partial input contract) | yes |
+| `measure.manders_overlap_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.marching_cubes` | upstream-only | pending | pending |
 | `measure.mesh_surface_area` | upstream-only | pending | pending |
 | `measure.moments` | upstream-only | pending | pending |
@@ -501,7 +501,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `feature.Cascade` | 11 | pending |
 | `feature.ORB` | 4 | pending |
 | `feature.SIFT` | 5 | pending |
-| `filters.LPIFilter2D` | 2 | pending |
+| `filters.LPIFilter2D` | 2 | partial implementation; evidence separate |
 | `future.TrainableSegmenter` | 4 | pending |
 | `graph.MCP` | 10 | pending |
 | `graph.MCP_Connect` | 11 | pending |

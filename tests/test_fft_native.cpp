@@ -83,6 +83,32 @@ template<class T> void large(int workers) {
     fft_c2r(shape,axes,out.data(),back.data(),workers);
     for(std::size_t i=0;i<n;++i)check(std::abs(back[i]-in[i])<std::numeric_limits<T>::epsilon()*32);
 }
+// Full real DFT controls: compare every frequency against the independent
+// direct DFT, including batch/subset/reordered axes and negative-exponent sign.
+template<class T> void full_real(const Shape& shape,const Shape& axes,int workers) {
+    const auto n=product(shape);
+    std::vector<T> input(n+2,T(91));
+    std::vector<std::complex<T>> output(n+2,{T(123),T(-456)}),complex_input(n);
+    for(std::size_t i=0;i<n;++i) {
+        input[i+1]=T(int(i%13)-6)/T(8);
+        complex_input[i]={input[i+1],0};
+    }
+    const auto saved=input;
+    const auto expected=dft(complex_input,shape,axes);
+    std::size_t transformed=1;for(auto axis:axes)transformed*=shape[axis];
+    const auto tolerance=std::numeric_limits<T>::epsilon()*n*64;
+    for(bool forward:{true,false}) {
+        fft_r2c_full(shape,axes,input.data()+1,output.data()+1,forward,workers);
+        check(input==saved);
+        check(output.front()==std::complex<T>(T(123),T(-456)));
+        check(output.back()==std::complex<T>(T(123),T(-456)));
+        for(std::size_t i=0;i<n;++i) {
+            const auto want=forward ? expected[i] : std::conj(expected[i])/static_cast<long double>(transformed);
+            check(std::abs(std::complex<long double>(output[i+1])-want)<tolerance);
+        }
+    }
+}
+
 void invalid(int workers) {
     double in[4]={1,2,3,4}; std::complex<double> out[4]={{77,88},{77,88},{77,88},{77,88}};
     for(auto args:std::vector<std::pair<Shape,Shape>>{{{},{}},{{2,0},{0}},{{2,2},{2}},{{2,2},{0,0}},{{std::numeric_limits<std::size_t>::max(),2},{0}}}) {
@@ -121,8 +147,10 @@ int main() {
         for(auto shape:std::vector<Shape>{{1},{2},{5},{7},{8},{3,4},{3,5},{2,3,4}}) {
             Shape axes;for(std::size_t a=0;a<shape.size();++a)axes.push_back(a);
             small<float>(shape,axes,workers);small<double>(shape,axes,workers);
+            full_real<float>(shape,axes,workers);full_real<double>(shape,axes,workers);
         }
         for(auto axes:std::vector<Shape>{{0},{1},{2},{2,0},{1,0}}) {small<float>({2,3,5},axes,workers);small<double>({2,3,5},axes,workers);}
+        for(auto axes:std::vector<Shape>{{0},{1},{2},{2,0},{1,0}}) {full_real<float>({2,3,5},axes,workers);full_real<double>({2,3,5},axes,workers);}
         invalid(workers);thread_hook(workers);large<float>(workers);large<double>(workers);
         check(std::fegetround()==rounding);
     }

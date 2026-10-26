@@ -2048,10 +2048,10 @@
       "api": "filters.LPIFilter2D",
       "kind": "class",
       "signature": "(impulse_response, **filter_params)",
-      "implementation": "upstream-only",
+      "implementation": "native-class-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
+      "execution_kind": "stateful-class",
+      "parity_test": "tests/test_lpi_filter_public.py",
       "benchmark": null,
       "members": [
         {
@@ -2060,9 +2060,9 @@
           "signature": "(self, data)",
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "owned-cpp-fft-with-numpy-providers",
+          "parity_test": "tests/test_lpi_filter_public.py",
           "benchmark": null
         },
         {
@@ -2071,12 +2071,40 @@
           "signature": "(self, impulse_response, **filter_params)",
           "defined_by": "skimage.filters.lpi_filter.LPIFilter2D",
           "inherited": false,
-          "implementation": "upstream-only",
-          "execution_kind": "upstream",
-          "parity_test": null,
+          "implementation": "native-class-member-partial",
+          "execution_kind": "owned-python-state",
+          "parity_test": "tests/test_lpi_filter_public.py",
           "benchmark": null
         }
-      ]
+      ],
+      "class_contract": {
+        "version": "lpi-filter-class-v1",
+        "registered": true,
+        "implementation": "native-class-partial",
+        "members": {
+          "__init__": "owned-python-state",
+          "__call__": "owned-cpp-fft-with-numpy-providers"
+        },
+        "state": {
+          "cache": "Public mutable complex transfer array; shape-only reuse; inverse/Wiener mutate near-zero cache entries",
+          "parameters": "Owned impulse callback and filter_params; source callback coordinates and kwargs"
+        },
+        "providers": {
+          "fft": "Owned C++ scalar/runtime AVX2 PocketFFT, real-input full-spectrum and complex transforms",
+          "arrays": "NumPy coordinate grids, casting, padding, products, reciprocal/gain/Wiener arithmetic, permutation, cropping and absolute value",
+          "callback": "User impulse_response and duck predefined_filter providers; no upstream LPI or Python FFT calls"
+        },
+        "workers": {
+          "fft": "Existing process-global worker snapshot, default1; optional OpenMP; portable builds refuse parallel workers"
+        },
+        "compatibility_boundaries": [
+          "Frozen 80 source specifications on minimum and modern runtimes; extended FFT precision, other storage/protocol partitions and hostile callback mutation remain unassessed."
+        ],
+        "public_parity_test": "tests/test_lpi_filter_public.py",
+        "frozen_contract": "tests/lpi_filter_cases.py",
+        "parity_evidence": null,
+        "performance_evidence": null
+      }
     },
     {
       "api": "filters.apply_hysteresis_threshold",
@@ -2180,21 +2208,29 @@
       "api": "filters.filter_forward",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, predefined_filter=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_lpi_filter_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.filter_inverse",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, max_gain=2, predefined_filter=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_lpi_filter_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.frangi",
@@ -2684,11 +2720,15 @@
       "api": "filters.wiener",
       "kind": "callable",
       "signature": "(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_lpi_filter_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.window",

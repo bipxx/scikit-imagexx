@@ -180,6 +180,24 @@ def test_original_timing_commands_and_corpora_preserved():
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     assert timing_commands(blocks['measure']) == ORIGINAL_COMMANDS['modern']
     assert timing_commands(blocks['measure-minimum']) == ORIGINAL_COMMANDS['minimum'] + [
-        'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json']
+        'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json',
+        'python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
+
+
+def test_lpi_contracts_precede_measurement_artifact_freeze():
+    blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    preparation = blocks['numpy-minimum']
+    required = """      - name: LPI owned FFT parity
+        run: python -m pytest -q tests/test_lpi_filter_public.py --junitxml=build/ci-artifacts/lpi-normal.xml
+      - name: LPI owned FFT parity with SIMD disabled
+        run: python -m pytest -q tests/test_lpi_filter_public.py --junitxml=build/ci-artifacts/lpi-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+"""
+    assert required in preparation
+    assert preparation.index(required) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.count('tests/test_lpi_filter_public.py') == 2
+    assert 'build/ci-artifacts/' in preparation
+    assert 'build/ci-lpi.md' in blocks['measure-minimum']

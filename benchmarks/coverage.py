@@ -78,11 +78,19 @@ def main():
                     'area_opening','area_closing','diameter_opening','diameter_closing')}
     if max_tree_paths.intersection(apis) and min(args.sizes) < 4:
         parser.error('max-tree original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
+    lpi_apis = {'filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'}
     reference_fft_workers = None
-    if 'filters.butterworth' in apis:
+    if (lpi_apis | {'filters.butterworth'}).intersection(apis):
         import scipy.fft as reference_fft
         reference_fft_workers = {'before': reference_fft.get_workers()}
         assert reference_fft_workers['before'] == 1
+    lpi_scope = ('Python Gaussian impulse callback and NumPy coordinates, casting, padding, products, '
+                 'gain/Wiener arithmetic, permutation, cropping and absolute value; owned C++ FFT only. '
+                 'Each timed call includes the default callback and construction of a new filter and transfer cache.')
+    provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'filters.butterworth' in apis:
+        provider_frontiers['filters.butterworth'] = (
+            'NumPy padding, frequency-grid/mask arithmetic, spectrum multiplication and cropping; owned C++ FFT only')
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []
@@ -113,7 +121,7 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data)
+                    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)
                     error=comparison_error(actual,expected,rtol,atol)
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
@@ -134,9 +142,7 @@ def main():
                            **fingerprint, 'fallback_enabled': False, 'avx2': xx.has_avx2(),
                            'selected_apis': apis, 'dtype_metadata':args.dtype_metadata,
                            'reference_fft_workers': reference_fft_workers,
-                           'provider_frontiers': {'filters.butterworth':
-                               'NumPy padding, frequency-grid/mask arithmetic, spectrum multiplication and cropping; owned C++ FFT only'}
-                               if 'filters.butterworth' in apis else {},
+                           'provider_frontiers': provider_frontiers,
                            'special_default_arguments': {'color.deltaE_cie76':'second input is first[..., ::-1]; raw Lab values',
                                'color.deltaE_ciede94':'second input is first[..., ::-1]; raw Lab; graphic-arts weights',
                                'color.deltaE_ciede2000':'second input is first[..., ::-1]; raw Lab; kL=kC=kH=1',
@@ -153,7 +159,8 @@ def main():
              'forwarding to scikit-image cannot count as native performance. Reference thread pools use one thread. '
              'Numbers are medians of warmed allocation-inclusive calls on seeded synthetic images. '
              'Identity calls return the input unchanged; metadata calls return small values/arrays without processing pixels. '
-             'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.', '',
+             'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.'
+             + (' ' + lpi_scope if lpi_apis.intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')

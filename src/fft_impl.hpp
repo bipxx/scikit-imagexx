@@ -66,4 +66,20 @@ template<class T> void c2c(const std::vector<std::size_t>& shape, const std::vec
     const auto scale=forward ? T(1) : T(1.L/static_cast<long double>(l.transform_size));
     POCKETFFT_NAMESPACE::c2c(shape,l.full_complex,l.full_complex,axes,forward,input,output,scale,std::size_t(workers));
 }
+template<class T> void r2c_full(const std::vector<std::size_t>& shape, const std::vector<std::size_t>& axes,
+                               const T* input, std::complex<T>* output, bool forward, int workers) {
+    auto l=layout(shape,axes,sizeof(T),workers);
+    if (!input || !output) throw std::invalid_argument("FFT null buffer");
+    const auto scale=forward ? T(1) : T(1.L/static_cast<long double>(l.transform_size));
+    POCKETFFT_NAMESPACE::r2c(shape,l.real,l.full_complex,axes,forward,input,output,scale,std::size_t(workers));
+    // SciPy c2c_sym_internal: preserve its complete serial iteration order,
+    // including self-conjugate/boundary planes and every transformed axis.
+    POCKETFFT_NAMESPACE::detail::ndarr<std::complex<T>> values(output,shape,l.full_complex);
+    POCKETFFT_NAMESPACE::detail::rev_iter iter(values,axes);
+    while (iter.remaining()>0) {
+        auto value=values[iter.ofs()];
+        values[iter.rev_ofs()]=std::conj(value);
+        iter.advance();
+    }
+}
 }

@@ -11,10 +11,10 @@ Use `tools/run_feature_tests.py` to select existing tests and write one report. 
 | Phase selector | Scope | Meaning |
 |---|---|---|
 | `surface` | All 477 inventoried public API keys | Check the public surface. Presence/signature or declared compatibility behavior does not establish native numerical implementation. |
-| `smoke` (default) | Surface checks plus existing parity cases for the current source registry (211 native-partial image APIs and 3 metadata functions) | Compact worker-1 projection across supported `uint8`, `float32` and `float64` routes, using shape `3×19` or source-safe `7×19` where required. Unsupported dtype rejection tests remain in the full contracts; existing tolerances are unchanged. |
+| `smoke` (default) | Surface checks plus existing parity cases for the current source registry (215 native-partial image APIs and 3 metadata functions) | Compact worker-1 projection across supported `uint8`, `float32` and `float64` routes, using shape `3×19` or source-safe `7×19` where required. Unsupported dtype rejection tests remain in the full contracts; existing tolerances are unchanged. |
 | `contract` | Existing inventoried parity targets for the selected implemented APIs | Run their existing full contract matrices. Do not replace them with the compact smoke projection or weaken their assertions. |
 
-The current source has 258 upstream-only APIs pending native implementations: report them as numerical gaps, never numerical passes. An implemented API may also retain unsupported dtype, layout or parameter partitions; surface and smoke results do not close those gaps. Original-unsafe shapes remain blocked according to the existing tests; never use a generic small array to bypass source safety.
+The current source has 253 upstream-only APIs pending native implementations: report them as numerical gaps, never numerical passes. An implemented API may also retain unsupported dtype, layout or parameter partitions; surface and smoke results do not close those gaps. Original-unsafe shapes remain blocked according to the existing tests; never use a generic small array to bypass source safety.
 
 ```powershell
 python tools/run_feature_tests.py
@@ -26,7 +26,7 @@ python tools/run_feature_tests.py --phase smoke --package-dir C:/path/to/unpacke
 
 `--api` is a repeatable fnmatch glob over public API keys. `--package-dir` optionally identifies the parent directory containing the explicit installed or unpacked package to test; omission uses the selected interpreter's installed package. `--report` defaults to `build/feature-tests/report.json`. The default phase is `smoke`. A selected upstream-only API runs its surface check and remains listed in `numerical_gaps`. Shared contract files may exercise additional APIs. The runner is a small selector/report wrapper around existing parity targets, not a new qualification framework.
 
-The initial phase-1 command below is **historical only**, for its matching public203 source revision. It must not be used to imply that the retained203 package can test the current211-image registry; that mismatch correctly fails before pytest.
+The initial phase-1 command below is **historical only**, for its matching public203 source revision. It must not be used to imply that the retained203 package can test the current215-image registry; that mismatch correctly fails before pytest.
 
 ```powershell
 # Historical matching-source phase-1 invocation, not a current-tree command:
@@ -37,7 +37,11 @@ For current-tree tests, use an installed build of the current revision, or an ex
 
 ## Phase 2: implement small groups
 
-The two source batches bring the inventory to **211 native-partial image APIs + 3 metadata functions = 214 registered functions**, with **258 upstream-only entries**. Accepted qualified binary coverage remains **203 image APIs**. Component tests do not qualify a combined wheel/SDK or establish performance.
+The initial two source batches added eight routes. Butterworth and the three LPI functions bring the current inventory to **215 native-partial image APIs + 3 metadata functions = 218 registered functions**, plus **5 partial classes**, with **253 upstream-only entries**. Accepted qualified binary coverage remains **203 image APIs**. Component tests do not qualify a combined wheel/SDK or establish performance.
+
+**LPI source integration adds `filters.filter_forward`, `filter_inverse`, `wiener` and the partial `LPIFilter2D` class.** Modern and minimum profiles each pass 336 component checks in normal and scalar modes (161 LPI + 175 Butterworth), totaling **1,344 passes: 644 LPI + 700 Butterworth**. Six native modes pass **8,056,540 controls**. The corrected full-real FFT route resolves the 92 retained earlier failures without changing the frozen 80 LPI or 87 Butterworth specifications or numerical policy. NumPy arithmetic/array stages and Python callbacks remain providers; this is partial native FFT execution. The source-derived shared projection passes 54 analytic comparisons while all 645 previous API/dtype budgets remain unchanged. The actual source registry also passes 98 shared checks per runtime/dispatch mode (392 total): signatures, all three default dtypes and shapes, both worker settings, equivalent descriptors and dtype metadata. The exact smoke selector collects 1,334 nodes; collection does not establish their execution. Installed Release validation, supported-profile qualification and LPI performance are still pending; the workflow is wired for 1,135 contracts per mode, 1,334 derived smoke checks and 18 prospective one-thread cases. Accepted combined coverage remains 203 image APIs.
+
+Component proof: `build/fft-full-real-proof-v1/manifest.json` in the LPI worktree, SHA-256 `05107d5e9ab0edd9b08c2c4963b47867692ab2de999be2008161f6c70b391e2a`. It records component execution, not an installed whole-product admission.
 
 **First source batch completed:** `morphology.ellipse`, `octagon`, `octahedron`, `star`, and `footprint_from_sequence` are integrated into the Python public source routes.
 
@@ -158,13 +162,9 @@ The new integer scan emits baseline SSE2, not a newly added AVX2 leaf; floating
 reductions and provider boundaries stay unchanged. This is one minimum-Linux
 host, not a cumulative cross-CPU gain or full supported-profile acceptance.
 
-Butterworth is active in its separate feature branch: **700 component checks
-pass**, with a privately tested owned FFT and an explicit NumPy mask provider.
-The whole-Release gate and six timing cases remain pending. Its branch registry
-is **212 image APIs + 3 metadata functions**, not yet main; main remains
-**211 + 3**, and accepted combined binary coverage remains **203 image APIs**.
-The prospective numerical policy distinguishes the PocketFFT/DUCC reference
-backends; component correctness grants no whole-product or performance credit.
+**Butterworth is kept in main `936481f`.** Its [first minimum-Linux Release result](../benchmarks/butterworth-minimum-initial.md) has **5/6 wins against the original**, geometric mean **1.112821796×**. The retained uint8 256² loss is **+0.2204691 ms**. Genuine installed gates pass **175 normal + 175 scalar tests and 1,322 smoke checks**; prior components pass 700 and shared defaults 72, with 8,046,020 native controls across six modes. This is owned C++ FFT with NumPy mask/padding/product/crop providers, not a prior-C++ gain or full API/profile claim. At that Butterworth checkpoint, source coverage was **212 partial image APIs + 3 metadata functions = 215**, with 257 upstream-only entries. The later LPI component integration is described above; the separate qualified combined baseline remains public203.
+
+The [legacy regression comparison after Butterworth integration](../benchmarks/phase3-butterworth-legacy-same-host.md) is flat across the unchanged 73 cases: **1.000748117× direct / 0.999452166× normalized**, with **44 direct and 46 normalized losses** retained. Both candidate passes are slower than both baseline passes for intersection stepped, masked and cache-F cases (direct gains **0.918100× / 0.894351× / 0.877160×**). This one-host result establishes neither a cause nor a waiver. Preparation passes **974 public checks in each normal/scalar mode, 1,322 smoke checks, 21 metadata tests plus 30 subtests, and all 73 corpus checks per mode**. The corpus contains no Butterworth cases; its six-case first result and pending LPI work remain separate.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
@@ -177,9 +177,11 @@ f64 v3 uses `ac87e23`; byte v4 uses `0135305`; float32 v5 reuses compiled
 `c53198a` under checked source `5b03eded`; the current finite scan uses exact
 `552d445` against the kept-octahedron baseline `9da7ccf`.
 Earlier colocalization campaigns passed 785 installed public checks per mode;
-current octahedron/finite-scan preparations pass 799 per mode. They retain
-1,318 registry smoke checks and 73 corpus checks per mode, with 21 metadata
-tests plus 30 subtests (earlier campaigns had 13 metadata tests). A
+octahedron/finite-scan preparations passed 799 per mode and 1,318 smoke checks.
+Recorded Butterworth integration preparation passes 974 per mode and 1,322
+smoke checks. New LPI preparation is wired for 1,135 per mode and 1,334 smoke
+checks; its execution is pending. All retain 73 corpus checks per mode, with 21 metadata tests
+plus 30 subtests (earlier campaigns had 13 metadata tests). A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
 requires `source_revision` to match the selected workflow commit exactly.

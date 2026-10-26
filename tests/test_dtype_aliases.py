@@ -42,7 +42,7 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     if isinstance(expected,tuple):
         assert type(actual) is type(expected) and len(actual)==len(expected)
     pairs=zip(actual,expected) if isinstance(expected,tuple) else [(actual,expected)]
-    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image)
+    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image,expected=expected)
     for a,b in pairs:
         if api=='segmentation.relabel_sequential' and type(b).__name__=='ArrayMap':
             assert type(a).__name__==type(b).__name__

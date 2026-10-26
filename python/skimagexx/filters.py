@@ -1423,3 +1423,8 @@ def butterworth(image, cutoff_frequency_ratio=0.005, high_pass=True, order=2.0,
 
 
 __all__.append('butterworth')
+
+
+from ._lpi_filter import LPIFilter2D, filter_forward, filter_inverse, wiener
+
+__all__.extend(("LPIFilter2D", "filter_forward", "filter_inverse", "wiener"))
