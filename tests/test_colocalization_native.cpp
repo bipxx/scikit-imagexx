@@ -76,6 +76,32 @@ void integer_products() {
     require(coloc_square_type(ColocType::boolean)==ColocType::int8);
     require((squared==std::array<unsigned char,4>{1,1,0,1}) && status==0);
 }
+void swapped_signed_boolean_products() {
+    // Negative values survive a boolean product. Squares alone cannot detect
+    // losing the sign bit, and byte-swapped 64-bit reads must not narrow.
+    for(const auto type:{ColocType::int32,ColocType::int64}) {
+        const std::size_t item=type==ColocType::int32 ? 4:8;
+        std::array<unsigned char,26> storage;storage.fill(0xa5);
+        const std::array<std::uint64_t,3> words{~std::uint64_t(2),2,0}; // -3,2,0
+        for(std::size_t i=0;i<3;++i)for(std::size_t j=0;j<item;++j)
+            storage[1+i*item+j]=static_cast<unsigned char>(words[i]>>(8*(item-1-j)));
+        const auto before=storage;
+        One a(storage.data()+1,3,type,item,true);
+        a.value.allocation=storage.data();a.value.allocation_bytes=storage.size();
+        const unsigned char masks[]{255,2,0};One mask_view(masks,3,ColocType::boolean,1);
+        require(coloc_sum(a.value,{}).bits==~std::uint64_t(0));
+        require(coloc_min_negative(a.value).value);
+        std::array<unsigned char,26> output;output.fill(0xa5);unsigned status=99;
+        coloc_multiply_into(a.value,mask_view.value,coloc_keep_order(a.value,mask_view.value),{output.data()+1,3*item},status);
+        require(status==0);
+        for(std::size_t i=0;i<3;++i) {
+            std::uint64_t actual=0;std::memcpy(&actual,output.data()+1+i*item,item);
+            const auto expected=item==8 ? words[i]:words[i]&0xffffffffULL;
+            require(actual==expected);
+        }
+        require(output.front()==0xa5 && output[1+3*item]==0xa5 && storage==before);
+    }
+}
 void gather_and_orders() {
     const std::uint16_t a[]={0x0102,0x0304,0x0506,0x0708};const unsigned char mask[]={0,2,255,0};
     One image(a,4,ColocType::uint16,2,true),selection(mask,4,ColocType::boolean,1);
@@ -235,7 +261,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();integer_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
+        set_num_threads(workers);bool_counts();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';
