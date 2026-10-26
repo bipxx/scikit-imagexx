@@ -4,6 +4,7 @@
 #include <pybind11/pybind11.h>
 #include <cstdint>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -11,6 +12,45 @@ namespace py = pybind11;
 namespace {
 using Shape = std::vector<py::ssize_t>;
 Shape shape(const py::array& a) { return Shape(a.shape(), a.shape()+a.ndim()); }
+
+// NumPy's reduction iterator orders all block-view axes before allocating
+// its surviving axes. Zero strides (including unit axes) are ambiguous and
+// keep C priority; empty_like(order="K") instead sorts broadcast zeros first.
+Shape reduction_output_strides(const py::array& input,
+        const std::vector<std::size_t>& blocks, const Shape& output_shape,
+        py::ssize_t itemsize) {
+    const auto rank=output_shape.size();
+    Shape result(rank,0), order(2*rank);
+    if(input.size()==0)return result; // NumPy zero-size owning allocations.
+    std::vector<std::size_t> magnitude(2*rank);
+    for(std::size_t i=0;i<rank;++i) {
+        const auto stride=input.strides(i);
+        const auto absolute=stride<0?std::size_t(-(stride+1))+1:std::size_t(stride);
+        magnitude[i]=output_shape[i]==1?0:absolute*blocks[i];
+        magnitude[rank+i]=blocks[i]==1?0:absolute;
+    }
+    for(std::size_t i=0;i<order.size();++i)order[i]=order.size()-1-i;
+    for(std::size_t i=1;i<order.size();++i) {
+        const auto axis=order[i];auto position=i;
+        for(auto j=py::ssize_t(i)-1;j>=0;--j) {
+            const auto left=magnitude[axis],right=magnitude[order[j]];
+            if(left && right) {
+                if(right<=left)break;
+                position=std::size_t(j);
+            }
+        }
+        for(auto j=i;j>position;--j)order[j]=order[j-1];
+        order[position]=axis;
+    }
+    auto stride=itemsize;
+    for(const auto axis:order)if(std::size_t(axis)<rank) {
+        result[axis]=stride;
+        if(output_shape[axis]>std::numeric_limits<py::ssize_t>::max()/stride)
+            throw py::value_error("array is too big; `arr.size * arr.dtype.itemsize` is larger than the maximum possible size.");
+        stride*=output_shape[axis];
+    }
+    return result;
+}
 
 bool finite_output(const py::array& output, char code) {
     if(code!='e' && code!='f' && code!='d')return true;
@@ -80,8 +120,8 @@ void bind_block_reduce(py::module_& module) {
         const auto promoted_bytes=py::dtype::from_args(np.attr("int_")).itemsize();
         const auto integer_bytes=bytes>promoted_bytes?bytes:promoted_bytes;
         const py::dtype output_dtype=signed_result?py::dtype("int64"):unsigned_result?py::dtype("uint64"):native;
-        py::tuple sizes(output_shape.size());for(std::size_t i=0;i<output_shape.size();++i)sizes[i]=py::int_(output_shape[i]);
-        py::array output=np.attr("empty_like")(input,py::arg("dtype")=output_dtype,py::arg("order")="K",py::arg("subok")=false,py::arg("shape")=sizes).cast<py::array>();
+        py::array output(output_dtype, output_shape,
+                         reduction_output_strides(input, blocks, output_shape, output_dtype.itemsize()));
         if(!(output.flags()&py::array::c_style) && !(output.flags()&py::array::f_style))return py::none();
         // Conversion and allocation can invoke callbacks. This is the final
         // established-buffer check before native reads, with no Python inside.
