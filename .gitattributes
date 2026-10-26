@@ -411,3 +411,4 @@ tests/test_inertia_tensor_public.py -text
 src/inertia_internal.hpp -text
 src/inertia.cpp -text
 python/skimagexx/_inertia_checks.py -text
+benchmarks/inertia-tensor-minimum-initial.json -text

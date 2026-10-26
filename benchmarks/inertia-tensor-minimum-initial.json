@@ -1,0 +1,281 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-26T18:45:27.945217+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "source_sha256": "0d62e7c3c2a623e96903d89dd35ad16b396fdcda720f8f74636953ec9affb359",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "fallback_enabled": false,
+    "avx2": true,
+    "selected_apis": [
+      "measure.inertia_tensor"
+    ],
+    "dtype_metadata": false,
+    "reference_fft_workers": null,
+    "provider_frontiers": {
+      "measure.inertia_tensor": "Automatic central moments use owned per-axis projections; NumPy coordinate powers, analytical preparation, diagonal summation and indexing remain providers. Finite real tensor assembly is owned C++; exceptional arithmetic retains local NumPy expressions. Both timed public calls include moments, tensor allocation and preparation; genuine original central moments are separately prepared outside timing only for the frozen per-cell checker."
+    },
+    "special_default_arguments": {
+      "color.deltaE_cie76": "second input is first[..., ::-1]; raw Lab values",
+      "color.deltaE_ciede94": "second input is first[..., ::-1]; raw Lab; graphic-arts weights",
+      "color.deltaE_ciede2000": "second input is first[..., ::-1]; raw Lab; kL=kC=kH=1",
+      "color.deltaE_cmc": "second input is first[..., ::-1]; raw Lab; kL=kC=1",
+      "color.convert_colorspace": "fromspace='RGB', tospace='HSV'",
+      "color.separate_stains": "conv_matrix=hed_from_rgb",
+      "color.combine_stains": "conv_matrix=rgb_from_hed"
+    },
+    "repeat": 7,
+    "timing": "allocation-inclusive, warmed Python calls; original reference pools limited to one thread"
+  },
+  "results": [
+    {
+      "api": "measure.inertia_tensor",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3168473333333333,
+      "cpp_ms": 0.255819125,
+      "speedup": 1.2385599916868348,
+      "samples_ms": [
+        [
+          0.32173646666666667,
+          0.3168473333333333,
+          0.3229497333333333,
+          0.3145710333333333,
+          0.32012276666666667,
+          0.3091218,
+          0.31629156666666663
+        ],
+        [
+          0.25982225,
+          0.25517228125,
+          0.25780596875,
+          0.25999978125,
+          0.2539725,
+          0.255819125,
+          0.25488015625
+        ]
+      ],
+      "loops": [
+        30,
+        32
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.inertia_tensor",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.001953125,
+      "reference_ms": 0.28396639024390247,
+      "cpp_ms": 0.19337083333333335,
+      "speedup": 1.4685068339877305,
+      "samples_ms": [
+        [
+          0.28953365853658536,
+          0.2829090243902439,
+          0.28396639024390247,
+          0.28515031707317073,
+          0.28155968292682926,
+          0.2840873414634147,
+          0.2800001707317073
+        ],
+        [
+          0.19337083333333335,
+          0.1910345625,
+          0.19212304166666666,
+          0.19386172916666666,
+          0.19006710416666667,
+          0.19398883333333333,
+          0.19362422916666666
+        ]
+      ],
+      "loops": [
+        41,
+        48
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.inertia_tensor",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 7.275957614183426e-12,
+      "reference_ms": 0.29428028205128204,
+      "cpp_ms": 0.24046052499999998,
+      "speedup": 1.2238195107129624,
+      "samples_ms": [
+        [
+          0.29276974358974356,
+          0.2902504358974359,
+          0.29428028205128204,
+          0.29428976923076927,
+          0.2957018974358974,
+          0.2917976923076923,
+          0.2944857948717949
+        ],
+        [
+          0.238859525,
+          0.24740457500000002,
+          0.240858025,
+          0.23925802499999999,
+          0.238590275,
+          0.24046052499999998,
+          0.2407959
+        ]
+      ],
+      "loops": [
+        39,
+        40
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.inertia_tensor",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.609295625,
+      "cpp_ms": 6.9883725,
+      "speedup": 0.23028188966744403,
+      "samples_ms": [
+        [
+          1.645552375,
+          1.593529875,
+          1.609295625,
+          1.623258,
+          1.61466325,
+          1.588276125,
+          1.579351875
+        ],
+        [
+          7.00567,
+          6.9708,
+          6.9438185,
+          6.9883725,
+          7.054417,
+          6.907631,
+          7.0913505
+        ]
+      ],
+      "loops": [
+        8,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.inertia_tensor",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.34375,
+      "reference_ms": 1.2494617777777777,
+      "cpp_ms": 2.2049405,
+      "speedup": 0.5666646232756746,
+      "samples_ms": [
+        [
+          1.2494617777777777,
+          1.2587357777777777,
+          1.2484142222222223,
+          1.2556656666666668,
+          1.244046,
+          1.2227004444444445,
+          1.251420888888889
+        ],
+        [
+          2.2049405,
+          2.250546,
+          2.196538,
+          2.2133661666666664,
+          2.1815798333333336,
+          2.2063646666666665,
+          2.1960453333333336
+        ]
+      ],
+      "loops": [
+        9,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.inertia_tensor",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 3.346940502524376e-10,
+      "reference_ms": 1.416546125,
+      "cpp_ms": 6.7392645,
+      "speedup": 0.21019298545115717,
+      "samples_ms": [
+        [
+          1.4199825,
+          1.4723735,
+          1.416546125,
+          1.417895,
+          1.415719625,
+          1.390336875,
+          1.39598125
+        ],
+        [
+          6.7584555,
+          6.697331,
+          6.7392645,
+          6.6805595,
+          6.797259,
+          6.8258725,
+          6.6998155
+        ]
+      ],
+      "loops": [
+        8,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
