@@ -32,15 +32,19 @@ footprint workloads faster than the original; the
 [modern baseline](../benchmarks/phase3-modern-initial.md) has 50/52. All 21
 colocalization workloads are slower on both baselines.
 
-Merged [affine v1](../benchmarks/phase3-affine-v1.md), source `5bc2109`, improves
-the minimum-profile fixed 21-case geometric-mean ratio from 0.0342836736027× to
-0.0574776398746×: **1.676531× normalized improvement**, with every case improving.
-All 21 remain slower than scikit-image. These are original/current ratios from
+Merged [affine v1](../benchmarks/phase3-affine-v1.md) and
+[width v2](../benchmarks/phase3-width-v2.md) improve the minimum-profile fixed
+21-case geometric-mean ratio along **0.0342836736027× → 0.0574776398746× →
+0.0919599844761×**. Width v2's measured source `4a78e94` is integrated in
+main `78976b7` with unchanged product source. Its **1.599926× improvement over
+v1** is **2.682326× over baseline**; every case improves over v1, and all 21
+remain slower than scikit-image. These are original/current ratios from
 separate hosted runs, not same-host paired candidate/baseline timings. All raw
 samples and regressions are published; no all-profile or whole-product claim
-follows. Width-v2 source/tests are the next active optimization packet and have
-no measured result yet. Root owns launches and integration; C++ and focused-test
-ownership remain separate. Keep the fixed metric, all 73 cases and exact gates.
+follows. The known-float64 load change f64-v3 is the next source/test packet,
+with no performance result yet. Root owns launches and integration; C++ and
+focused-test ownership remain separate. Keep the fixed metric, all 73 cases
+and exact gates.
 
 ## Historical execution card — public203 integration checkpoint
 

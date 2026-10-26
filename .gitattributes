@@ -313,3 +313,4 @@ tests/data/reconstruction-primary-0.26/LICENSE.txt -text
 benchmarks/phase3-minimum-initial.json -text
 benchmarks/phase3-modern-initial.json -text
 benchmarks/phase3-affine-v1.json -text
+benchmarks/phase3-width-v2.json -text

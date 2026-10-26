@@ -51,8 +51,8 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 ## Phase 3: benchmark one thread
 
-**Measured and kept:** both initial Linux profiles and the first colocalization
-optimization have completed isolated one-thread measurements. The
+**Measured and kept:** both initial Linux profiles and two colocalization
+optimizations have completed isolated one-thread measurements. The
 [minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52 footprint
 workloads faster than scikit-image; the
 [modern baseline](../benchmarks/phase3-modern-initial.md) has 50/52, with two
@@ -60,15 +60,18 @@ large dense octahedron regressions. All 21 colocalization workloads are slower
 than the original on both baselines. Each summary links the exact raw report;
 every regression is retained.
 
-[Affine v1](../benchmarks/phase3-affine-v1.md), source `5bc2109`, is merged.
-On minimum Linux, its fixed 21-case geometric mean of original/current ratios
-improved from **0.0342836736027× to 0.0574776398746×**, or **1.676531×**.
-All 21 ratios improved, but **all 21 calls remain slower than scikit-image**.
+[Affine v1](../benchmarks/phase3-affine-v1.md) and
+[width v2](../benchmarks/phase3-width-v2.md) are merged. Width v2's measured
+source `4a78e94` is integrated in main `78976b7` with unchanged product source.
+On minimum Linux, the fixed 21-case geometric mean of original/current ratios
+progresses **0.0342836736027× → 0.0574776398746× → 0.0919599844761×**.
+Width v2 improves **1.599926× over v1**, or **2.682326× over baseline**. Every
+case improves over v1, but **all 21 calls remain slower than scikit-image**.
 This compares normalized ratios from separate hosted runs, not direct paired
 baseline/candidate latencies on one host. No modern/Windows optimization result
 or combined-product qualification follows from it.
 
-**Next:** width-v2 source and tests are in progress, with no measurement yet.
+**Next:** f64-v3's known-float64 load change is in progress, with no performance result yet.
 Keep the same 21-case metric, all 73 workload specifications, exact parity gates
 and every adverse result. Root owns experiment launches and keep decisions;
 the C++ and focused-test owners work separately. Measure the complete public
@@ -80,8 +83,8 @@ seven paired rounds, exact untimed parity before any timing, and every slower
 case retained with its absolute latency penalty. It reuses an authenticated
 Release wheel selected by `producer_run` and `producer_revision`, requiring
 the measurement checkout's product source to match. The initial profiles use
-producer `1d37745`; affine v1 uses its own `5bc2109` product. Preparation passed
-785 installed public checks in each normal/scalar mode, 1,318 registry smoke
+producer `1d37745`; affine v1 uses `5bc2109` and width v2 uses `4a78e94`.
+Preparation passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
 checks, 13 benchmark metadata checks and 73 corpus checks in each mode. A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
