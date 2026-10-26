@@ -48,7 +48,7 @@ def block_reduce(image, block_size=2, func=np.sum, cval=0, func_kwargs=None):
         else:
             after_width = 0
         pad_width.append((0, after_width))
-    if np.any(np.asarray(pad_width)):
+    if np.asarray(pad_width).any():
         # Padding is the first external pixel read. Its allocated result is a
         # new boundary, admitted independently by the native binding if used.
         if type(image) is np.ndarray:
