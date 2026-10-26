@@ -189,6 +189,22 @@ bool single_stride(const ColocView& v,const ColocOrder& order,std::ptrdiff_t& st
     }
     if(!found)step=std::ptrdiff_t(coloc_itemsize(v.type));return true;
 }
+struct ReadAccess {
+    const ColocView& view;
+    const ColocOrder& order;
+    std::ptrdiff_t step=0;
+    bool affine;
+    ReadAccess(const ColocView& v,const ColocOrder& o,std::size_t n)
+        :view(v),order(o),affine(!n || single_stride(v,o,step)){}
+    const unsigned char* operator[](std::size_t i)const {
+        // The validated view bounds every signed offset; single_stride proves
+        // that this traversal is affine, including negative/broadcast strides.
+        return affine ? static_cast<const unsigned char*>(view.data)+std::ptrdiff_t(i)*step
+                      :pointer(view,order,i);
+    }
+};
+// Inputs to this internal ordering helper have already been validated.
+ColocOrder keep_order(const ColocView& v,const ColocView* other);
 template<class Body> ColocExecution partition(std::size_t n,const Body& body) {
     const int workers=detail::active_workers(n);
     detail::partition(n,workers,[&](auto begin,auto end,auto){body(begin,end);});
@@ -199,9 +215,12 @@ std::uint64_t count_impl(const ColocView& a,const ColocView* b) {
     const auto n=coloc_validate(a);boolean_required(a);
     if(b){coloc_validate(*b);boolean_required(*b);shapes(a,*b);}
     if(!n)return 0;
-    const auto order=c_order(a);const int workers=detail::active_workers(n);
+    // Integer counts are independent of traversal order. A common KEEPORDER
+    // also exposes dense F-order operands to the existing byte-count leaf.
+    const auto order=keep_order(a,b);const int workers=detail::active_workers(n);
     std::vector<std::uint64_t> counts(std::size_t(workers),0);
-    std::ptrdiff_t sa=0,sb=0;const bool dense=single_stride(a,order,sa) && sa==1 && (!b || (single_stride(*b,order,sb) && sb==1));
+    const ReadAccess first(a,order,n),second(b ? *b:a,order,n);
+    const bool dense=first.affine && first.step==1 && (!b || (second.affine && second.step==1));
     detail::partition(n,workers,[&](auto begin,auto end,auto id) {
         std::uint64_t value=0;
 #ifdef SKIMAGEXX_AVX2
@@ -209,7 +228,7 @@ std::uint64_t count_impl(const ColocView& a,const ColocView* b) {
             b ? static_cast<const unsigned char*>(b->data)+begin:nullptr,end-begin);
         else
 #endif
-        for(auto i=begin;i<end;++i)value+=(*pointer(a,order,i)!=0) && (!b || *pointer(*b,order,i)!=0);
+        for(auto i=begin;i<end;++i)value+=(*first[i]!=0) && (!b || *second[i]!=0);
         counts[id]=value;
     });
     std::uint64_t result=0;for(auto value:counts)result+=value;return result;
@@ -252,7 +271,6 @@ bool coloc_fp_supported()noexcept {
 }
 namespace {
 ColocOrder keep_order(const ColocView& v,const ColocView* other) {
-    coloc_validate(v);if(other){coloc_validate(*other);shapes(v,*other);}
     auto order=c_order(v);
     // npyiter_find_best_axis_ordering's stable insertion sort. Zero/broadcast
     // strides are ambiguous; conflicting operands retain C-axis priority.
@@ -280,8 +298,10 @@ ColocOrder keep_order(const ColocView& v,const ColocView* other) {
     return order;
 }
 }
-ColocOrder coloc_keep_order(const ColocView& v) {return keep_order(v,nullptr);}
-ColocOrder coloc_keep_order(const ColocView& a,const ColocView& b) {return keep_order(a,&b);}
+ColocOrder coloc_keep_order(const ColocView& v) {coloc_validate(v);return keep_order(v,nullptr);}
+ColocOrder coloc_keep_order(const ColocView& a,const ColocView& b) {
+    coloc_validate(a);coloc_validate(b);shapes(a,b);return keep_order(a,&b);
+}
 bool coloc_sum_supported(const ColocView& v,ColocReductionPlan plan) {
     const auto n=coloc_validate(v);
     if(plan.profile!=ColocProfile::numpy_1244 && plan.profile!=ColocProfile::numpy_254)return false;
@@ -292,9 +312,9 @@ bool coloc_sum_supported(const ColocView& v,ColocReductionPlan plan) {
 }
 bool coloc_all_finite(const ColocView& v) {
     const auto n=coloc_validate(v);if(!floating(v.type))return true;
-    const auto order=c_order(v);
+    const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
     const auto exponent=v.type==Type::float16 ? 0x7c00ULL:v.type==Type::float32 ? 0x7f800000ULL:0x7ff0000000000000ULL;
-    for(std::size_t i=0;i<n;++i)if((bits(v,pointer(v,order,i))&exponent)==exponent)return false;
+    for(std::size_t i=0;i<n;++i)if((bits(v,input[i])&exponent)==exponent)return false;
     return true;
 }
 ColocType coloc_square_type(Type t) {coloc_itemsize(t);return t==Type::boolean ? Type::int8:t;}
@@ -303,22 +323,23 @@ ColocType coloc_sum_type(Type t) {
     return t==Type::boolean || signed_integer(t) ? Type::int64:Type::uint64;
 }
 ColocPredicate coloc_binary_valid(const ColocView& v) {
-    const auto n=coloc_validate(v);const auto order=c_order(v);
-    for(std::size_t i=0;i<n;++i)if(!binary(v.type,bits(v,pointer(v,order,i))))return {false,0};
+    const auto n=coloc_validate(v);const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
+    for(std::size_t i=0;i<n;++i)if(!binary(v.type,bits(v,input[i])))return {false,0};
     return {true,0};
 }
 ColocExecution coloc_binary_into(const ColocView& v,const ColocOrder& order,ColocBuffer out) {
     const auto n=coloc_validate(v);order_check(v,order);output_check(out,n,v,nullptr,&order);
     if(!coloc_binary_valid(v).value)throw std::domain_error("colocalization nonbinary input");
-    return partition(n,[&](auto begin,auto end){for(auto i=begin;i<end;++i)write<std::uint8_t>(out.data,i,!zero(v.type,bits(v,pointer(v,order,i))));});
+    const ReadAccess input(v,order,n);
+    return partition(n,[&](auto begin,auto end){for(auto i=begin;i<end;++i)write<std::uint8_t>(out.data,i,!zero(v.type,bits(v,input[i])));});
 }
 std::uint64_t coloc_count_nonzero(const ColocView& v) {return count_impl(v,nullptr);}
 std::uint64_t coloc_joint_count(const ColocView& a,const ColocView& b) {return count_impl(a,&b);}
 ColocPredicate coloc_min_negative(const ColocView& v) {
     const auto n=coloc_validate(v);if(!n)throw std::invalid_argument("zero-size array to reduction operation minimum which has no identity");
-    bool negative=false,has_nan=false;const auto order=c_order(v);
+    bool negative=false,has_nan=false;const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
     for(std::size_t i=0;i<n;++i) {
-        const auto value=bits(v,pointer(v,order,i));has_nan|=nan(v.type,value);
+        const auto value=bits(v,input[i]);has_nan|=nan(v.type,value);
         if(floating(v.type) || signed_integer(v.type))negative|=(value&(std::uint64_t(1)<<(coloc_itemsize(v.type)*8-1))) && !zero(v.type,value);
     }
     return {negative && !has_nan,0};
@@ -328,6 +349,7 @@ ColocExecution coloc_gather_into(const ColocView& v,const ColocView& mask_view,C
     output_check(out,multiply(selected,coloc_itemsize(v.type)),v,&mask_view);
     if(coloc_count_nonzero(mask_view)!=selected)throw std::invalid_argument("colocalization gather count changed");
     const auto order=c_order(v);const int workers=detail::active_workers(n);
+    const ReadAccess input(v,order,n),selection(mask_view,order,n);
     std::vector<std::size_t> counts(std::size_t(workers),0),starts(std::size_t(workers),0);
     auto bounds=[&](std::size_t task) {
         const auto block=n/std::size_t(workers),extra=n%std::size_t(workers);
@@ -335,15 +357,15 @@ ColocExecution coloc_gather_into(const ColocView& v,const ColocView& mask_view,C
         return std::pair<std::size_t,std::size_t>{begin,begin+block+(task<extra)};
     };
     detail::partition(std::size_t(workers),workers,[&](auto first,auto last,auto){
-        for(auto task=first;task<last;++task){const auto span=bounds(task);for(auto i=span.first;i<span.second;++i)counts[task]+=*pointer(mask_view,order,i)!=0;}
+        for(auto task=first;task<last;++task){const auto span=bounds(task);for(auto i=span.first;i<span.second;++i)counts[task]+=*selection[i]!=0;}
     });
     for(std::size_t i=1;i<counts.size();++i)starts[i]=starts[i-1]+counts[i-1];
     const auto item=coloc_itemsize(v.type);
     detail::partition(std::size_t(workers),workers,[&](auto first,auto last,auto){
       for(auto task=first;task<last;++task) {
-        const auto span=bounds(task);auto next=starts[task];for(auto i=span.first;i<span.second;++i)if(*pointer(mask_view,order,i)) {
+        const auto span=bounds(task);auto next=starts[task];for(auto i=span.first;i<span.second;++i)if(*selection[i]) {
             auto* target=static_cast<unsigned char*>(out.data)+next++*item;
-            std::memcpy(target,pointer(v,order,i),item);
+            std::memcpy(target,input[i],item);
         }
       }
     });return {workers,false};
@@ -354,8 +376,9 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     if(!plan.buffer_elements)throw std::invalid_argument("colocalization reduction buffer must be positive");
     ColocScalar result;result.type=coloc_sum_type(v.type);
     if(!floating(v.type)) {
+        const ReadAccess input(v,order,n);
         std::uint64_t sum=0;for(std::size_t i=0;i<n;++i) {
-            auto value=bits(v,pointer(v,order,i));
+            auto value=bits(v,input[i]);
             if(v.type==Type::boolean)value=value!=0;
             else if(signed_integer(v.type) && coloc_itemsize(v.type)<8 && (value&(std::uint64_t(1)<<(coloc_itemsize(v.type)*8-1))))value|=~mask(v.type);
             sum+=value;
@@ -371,11 +394,11 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     const auto block=(plan.profile==ColocProfile::numpy_1244 || needs_buffer) ? plan.buffer_elements:std::max(n,std::size_t(1));
     Capture capture;
     if(v.type==Type::float64) {
-        double sum=0;auto get=[&](auto i){return real<double>(v,pointer(v,order,i));};
+        double sum=0;auto get=[&](auto i){return real<double>(v,static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step);};
         for(std::size_t begin=0;begin<n;) {const auto length=std::min(block,n-begin);sum=double(sum+pairwise<double>(begin,length,get));begin+=length;}
         std::memcpy(&result.bits,&sum,8);
     } else {
-        float sum=0;std::uint16_t half_sum=0;auto get=[&](auto i){return real<float>(v,pointer(v,order,i));};
+        float sum=0;std::uint16_t half_sum=0;auto get=[&](auto i){return real<float>(v,static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step);};
         for(std::size_t begin=0;begin<n;) {
             const auto length=std::min(block,n-begin);
             sum=float(sum+pairwise<float>(begin,length,get));
@@ -399,10 +422,11 @@ ColocExecution product(const ColocView& a,const ColocView* b,const ColocOrder& o
         if(!coloc_all_finite(a) || (b && !coloc_all_finite(*b)))
             throw ColocProviderRequired("colocalization nonfinite product is a provider frontier");
     }
+    const ReadAccess first_input(a,order,n),second_input(b ? *b:a,order,n);
     Capture capture;
     auto body=[&](std::size_t begin,std::size_t end) {
         for(auto i=begin;i<end;++i) {
-            const auto* first=pointer(a,order,i);const auto* second=b ? pointer(*b,order,i):first;
+            const auto* first=first_input[i];const auto* second=b ? second_input[i]:first;
             if(!floating(a.type)) {
                 auto x=bits(a,first);if(a.type==Type::boolean)x=x!=0;
                 auto y=b ? bits(*b,second):x;if(b && b->type==Type::boolean)y=y!=0;

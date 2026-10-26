@@ -117,6 +117,99 @@ void floating_association() {
     std::feraiseexcept(FE_DIVBYZERO);const auto before=std::fetestexcept(FE_ALL_EXCEPT);
     require(coloc_sum(dv.value,{}).fp_status==0);require(std::fetestexcept(FE_ALL_EXCEPT)==before);std::feclearexcept(FE_ALL_EXCEPT);
 }
+// The same twelve logical sites exercise address selection independently of
+// physical order. Poisoned padding and output canaries expose accidental dense
+// access; the second operand/mask always uses a different, logical C layout.
+void multidimensional_addresses() {
+    for(const std::size_t rank:{2,3})for(int layout=0;layout<6;++layout) {
+        std::array<std::size_t,3> shape=rank==2 ? std::array<std::size_t,3>{3,4,1}:std::array<std::size_t,3>{2,2,3};
+        std::array<std::ptrdiff_t,3> strides{};
+        if(rank==2)strides={8,2,0};else strides={12,6,2};
+        if(layout==1){if(rank==2)strides={2,6,0};else strides={2,4,8};} // F
+        if(layout==2){if(rank==2)strides={14,2,0};else strides={24,8,2};} // padded
+        if(layout==3)strides[rank-1]=-2; // only the last axis reverses
+        if(layout==4)for(std::size_t d=0;d+1<rank;++d)strides[d]=0; // broadcast
+        const bool swapped=layout==5;
+        std::array<unsigned char,96> storage;storage.fill(0xa5);
+        auto* origin=storage.data()+1+(layout==3 ? 2*(shape[rank-1]-1):0);
+        std::array<std::uint16_t,12> rhs{},expected{};
+        std::array<unsigned char,12> mask{};
+        for(std::size_t i=0;i<12;++i) {
+            const auto x=std::uint16_t(layout==4 ? i%shape[rank-1]+1:i+1);
+            expected[i]=x;rhs[i]=std::uint16_t(i+2);mask[i]=i%3 ? (i%2 ? 2:255):0;
+            std::size_t q=i;std::ptrdiff_t offset=0;
+            for(std::size_t d=rank;d-->0;){offset+=std::ptrdiff_t(q%shape[d])*strides[d];q/=shape[d];}
+            const auto word=std::uint16_t(swapped ? (x<<8)|(x>>8):x);
+            std::memcpy(origin+offset,&word,2);
+        }
+        ColocView a{origin,storage.data(),storage.size(),{shape.data(),rank},{strides.data(),rank},ColocType::uint16,swapped};
+        auto truth=a;truth.type=ColocType::boolean; // each low byte is nonzero (including swapped storage)
+        // Swapped uint16 low bytes are zero, so bool truth uses the other byte.
+        if(swapped)truth.data=origin+1;
+        std::array<std::ptrdiff_t,3> c=rank==2 ? std::array<std::ptrdiff_t,3>{8,2,0}:std::array<std::ptrdiff_t,3>{12,6,2};
+        auto b=a;b.data=rhs.data();b.allocation=rhs.data();b.allocation_bytes=sizeof(rhs);b.strides.data=c.data();b.swapped=false;
+        auto selection=b;selection.data=mask.data();selection.allocation=mask.data();selection.allocation_bytes=sizeof(mask);selection.type=ColocType::boolean;
+        auto mc=c;for(auto& s:mc)s/=2;selection.strides.data=mc.data();
+        const auto before=storage;
+        require(coloc_count_nonzero(truth)==12);require(coloc_joint_count(truth,selection)==8);
+        std::array<std::uint16_t,10> gathered;gathered.fill(0xbeef);
+        coloc_gather_into(a,selection,{gathered.data()+1,16},8);
+        std::size_t selected=1;
+        for(std::size_t i=0;i<12;++i)if(mask[i]) {
+            const auto x=expected[i];require(gathered[selected++]==std::uint16_t(swapped ? (x<<8)|(x>>8):x));
+        }
+        require(gathered.front()==0xbeef && gathered.back()==0xbeef);
+        ColocOrder order;order.rank=rank;for(std::size_t d=0;d<rank;++d)order.axes[d]=rank-1-d;
+        std::array<std::uint16_t,14> product;product.fill(0xbeef);unsigned flags=99;
+        coloc_multiply_into(a,b,order,{product.data()+1,24},flags);require(flags==0);
+        for(std::size_t i=0;i<12;++i)require(product[i+1]==expected[i]*rhs[i]);
+        require(product.front()==0xbeef && product.back()==0xbeef);
+        coloc_square_into(a,order,{product.data()+1,24},flags);require(flags==0);
+        for(std::size_t i=0;i<12;++i)require(product[i+1]==expected[i]*expected[i]);
+        require(storage==before);
+    }
+}
+void affine_reduction_edges() {
+    // Exact dyadics isolate missing/repeated sites at iterator buffer boundaries;
+    // the original 128/129 cancellation-sensitive literals remain above.
+    for(const std::size_t n:{128,129,8191,8192,8193})for(bool fortran:{false,true}) {
+        std::array<std::size_t,3> shape{1,1,n};
+        if(n==128 || n==8192)shape={2,2,n/4};
+        else if(n==129 || n==8193)shape={1,3,n/3};
+        std::array<std::ptrdiff_t,3> fs=fortran ? std::array<std::ptrdiff_t,3>{4,4*std::ptrdiff_t(shape[0]),4*std::ptrdiff_t(shape[0]*shape[1])}:std::array<std::ptrdiff_t,3>{4*std::ptrdiff_t(shape[1]*shape[2]),4*std::ptrdiff_t(shape[2]),4};
+        std::vector<float> f(n,0.5f);std::vector<double> d(n,0.5);
+        ColocView fv{f.data(),f.data(),n*4,{shape.data(),3},{fs.data(),3},ColocType::float32,false};
+        auto ds=fs;for(auto& s:ds)s*=2;
+        auto dv=fv;dv.data=d.data();dv.allocation=d.data();dv.allocation_bytes=n*8;dv.strides.data=ds.data();dv.type=ColocType::float64;
+        for(auto profile:{ColocProfile::numpy_1244,ColocProfile::numpy_254})for(std::size_t buffer:{128,8192}) {
+            const auto a=coloc_sum(fv,{profile,buffer}),b=coloc_sum(dv,{profile,buffer});
+            require(a.bits==raw(float(n)*0.5f) && a.fp_status==0);
+            require(b.bits==raw(double(n)*0.5) && b.fp_status==0);
+        }
+        // Reverse every non-singleton axis: still affine, with a negative step.
+        fv.data=f.data()+n-1;dv.data=d.data()+n-1;
+        for(auto& s:fs)s=-s;for(auto& s:ds)s=-s;
+        require(coloc_sum(fv,{}).bits==raw(float(n)*0.5f));
+        require(coloc_sum(dv,{}).bits==raw(double(n)*0.5));
+        for(auto& s:fs)s=-s;for(auto& s:ds)s=-s;fv.data=f.data();dv.data=d.data();
+        if(n==129 || n==8193) {
+            std::vector<unsigned char> bytes(n*4+2,0xa5);
+            const std::uint32_t swapped_half=0x0000003f;
+            for(std::size_t i=0;i<n;++i)std::memcpy(bytes.data()+1+4*i,&swapped_half,4);
+            auto unaligned=fv;unaligned.data=bytes.data()+1;unaligned.allocation=bytes.data();unaligned.allocation_bytes=bytes.size();unaligned.swapped=true;
+            for(auto profile:{ColocProfile::numpy_1244,ColocProfile::numpy_254}) {
+                const auto sum=coloc_sum(unaligned,{profile,128});
+                require(sum.bits==raw(float(n)*0.5f) && sum.fp_status==0);
+            }
+            require(bytes.front()==0xa5 && bytes.back()==0xa5);
+        }
+        // A padded row must not be silently admitted as an affine float sum.
+        if(!fortran && n==128) {
+            f.resize(n+4,0.5f);fv.data=f.data();fv.allocation=f.data();fv.allocation_bytes=f.size()*4;
+            fs[1]+=4;fs[0]+=8;require(!coloc_sum_supported(fv,{}));
+        }
+    }
+}
 void reject_before_write() {
     const double one=1;One input(&one,1,ColocType::float64,8);const auto order=coloc_keep_order(input.value);
     std::array<unsigned char,sizeof(ColocView)> before{};std::memcpy(before.data(),&input.value,sizeof(input.value));
@@ -142,7 +235,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();integer_products();gather_and_orders();floating_association();reject_before_write();
+        set_num_threads(workers);bool_counts();integer_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';
