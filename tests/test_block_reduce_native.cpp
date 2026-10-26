@@ -145,9 +145,16 @@ void invalid_geometry(){
 }
 int main(int argc,char**argv){
     if(argc!=2)return 2;journal.open(argv[1],std::ios::binary);require(bool(journal));
+    require(get_num_threads()==1);
     std::vector<int> workers{1};
 #ifdef _OPENMP
     workers.push_back(4);
+#else
+    bool refused=false;
+    try{set_num_threads(4);}catch(const std::invalid_argument& error){
+        refused=std::string(error.what())=="this build has no OpenMP support";
+    }
+    require(refused && get_num_threads()==1);
 #endif
     for(int worker:workers){set_num_threads(worker);
         integer<std::int8_t>(PixelType::int8);integer<std::uint8_t>(PixelType::uint8);
