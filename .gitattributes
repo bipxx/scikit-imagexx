@@ -412,3 +412,5 @@ src/inertia_internal.hpp -text
 src/inertia.cpp -text
 python/skimagexx/_inertia_checks.py -text
 benchmarks/inertia-tensor-minimum-initial.json -text
+tests/inertia_eigvals_cases.py -text
+tests/test_inertia_eigvals_public.py -text
