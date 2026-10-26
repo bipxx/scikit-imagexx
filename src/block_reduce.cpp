@@ -84,6 +84,13 @@ unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,
             std::size_t rem=index,base=0,target=0;
             for(std::size_t d=rank;d--;){const auto coordinate=rem%p.blocks[d];rem/=p.blocks[d];base+=coordinate*factors[d]*p.strides[d];target+=coordinate*strides[d];}
 #ifdef SKIMAGEXX_AVX2
+            if constexpr(std::is_same_v<Input,std::uint8_t> && !Boolean){
+                if(vectorized&&rank==2&&factors[0]==2&&factors[1]==2&&strides[1]==sizeof(Acc)){
+                    const auto remaining=std::min(end-index,p.blocks[1]-index%p.blocks[1]);
+                    const auto done=simd::block_reduce_row(data+base,reinterpret_cast<std::uint64_t*>(output+target),in.shape[1],remaining);
+                    if(done){index+=done;continue;}
+                }
+            }
             if constexpr(std::is_floating_point_v<Input>){
                 if(vectorized&&rank==2&&strides[1]==sizeof(Acc)){
                     const auto remaining=std::min(end-index,p.blocks[1]-index%p.blocks[1]);

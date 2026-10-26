@@ -44,6 +44,18 @@ template<class T>std::size_t row(const T* input,T* output,std::size_t columns,st
     return i;
 }
 }
+std::size_t block_reduce_row(const std::uint8_t* input,std::uint64_t* output,std::size_t columns,std::size_t count){
+    const auto ones=_mm_set1_epi8(1);std::size_t i=0;
+    for(;count-i>=8;i+=8){
+        const auto top=_mm_loadu_si128(reinterpret_cast<const __m128i*>(input+2*i));
+        const auto bottom=_mm_loadu_si128(reinterpret_cast<const __m128i*>(input+columns+2*i));
+        // Each pair is <=510 and each four-pixel sum <=1020: no saturation.
+        const auto sums=_mm_add_epi16(_mm_maddubs_epi16(top,ones),_mm_maddubs_epi16(bottom,ones));
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),_mm256_cvtepu16_epi64(sums));
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i+4),_mm256_cvtepu16_epi64(_mm_srli_si128(sums,8)));
+    }
+    return i;
+}
 std::size_t block_reduce_row(const float* a,float* out,std::size_t columns,std::size_t fy,std::size_t fx,std::size_t n){return row(a,out,columns,fy,fx,n);}
 std::size_t block_reduce_row(const double* a,double* out,std::size_t columns,std::size_t fy,std::size_t fx,std::size_t n){return row(a,out,columns,fy,fx,n);}
 }
