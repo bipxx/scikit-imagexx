@@ -318,3 +318,5 @@ benchmarks/phase3-f64-v3.json -text
 .github/workflows/phase3-same-host.yml -text
 benchmarks/phase3-f64-same-host.zip -text
 benchmarks/phase3-byte-same-host.zip -text
+.github/workflows/colocalization-reference-diagnostic.yml -text
+tools/colocalization_reference_diagnostic.py -text

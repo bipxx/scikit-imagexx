@@ -58,9 +58,21 @@ and nine direct losses, all 73 workloads and 4,088 samples are published.
 Four exact correctness reports and before/after identities pass.
 
 Scope is one minimum-Linux host, with no universal-profile, cumulative
-cross-CPU or combined-product claim. Next: guarded float32 loads for ten
-workloads are in source/control work; no performance result exists. Root owns
-launches/integration; C++ and focused-test ownership remain separate.
+cross-CPU or combined-product claim. Byte-v4's five original-library wins remain
+kept. **Float32 v5 is on HOLD and off main:** candidate `c53198a`
+[preparation 40273141051](https://github.com/bipxx/scikit-imagexx/actions/runs/40273141051)
+failed **741 passed / 44 failed**. All failures are MOC final-result +1 ULP;
+the other eight semantic fields match. The failures include all eight integer
+dtypes and float32. CPU/pow causation is unproven, with no actual CPU model or
+loaded system libm recorded. The [local failure receipt](../build/phase3-f32-failed-preparation-v5/failure-review.json)
+retains exact rows and product/runtime evidence. No timing was launched.
+
+Next is a separate same-host correctness comparison of kept `0135305`,
+candidate `c53198a` and fresh original results for all 536 cases in normal/scalar
+modes. A NumPy-version profile alone does not settle possible host variation;
+require fresh-reference proof before changing any validation policy. Existing
+references and regular benchmark gates remain unchanged. Root owns launches
+and integration; C++ and focused-test ownership remain separate.
 
 ## Historical execution card — public203 integration checkpoint
 
