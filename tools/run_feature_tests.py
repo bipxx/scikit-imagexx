@@ -54,6 +54,8 @@ class FeatureSelection:
                    if item.path.name == 'test_feature_api_surface.py' else None)
             if item.path.name == 'test_api.py' and 'native' in parameters and 'name' in parameters:
                 api = parameters['native'].__name__.split('.', 1)[1] + '.' + parameters['name']
+            elif item.path.name in ('test_dtype_aliases.py', 'test_dtype_metadata.py'):
+                api = parameters.get('api')
             selected = api is None or api in self.entries
             if self.phase == 'smoke' and item.path.name == 'test_api.py':
                 selected = (item.originalname == 'test_registry_matches_per_function_tests'
