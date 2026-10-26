@@ -16,6 +16,10 @@ on:
         description: Run only the minimum-NumPy parity and performance job
         type: boolean
         default: false
+      prepare_only:
+        description: Prepare verified offline artifacts without standalone timing
+        type: boolean
+        default: false
 jobs:
   check:
     if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only
@@ -225,7 +229,7 @@ jobs:
             build/ci-artifacts/
             build/frangi-generic-cpu/
   measure:
-    if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only
+    if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only)
     # Matrix-wide correctness barrier; every measurement starts on a fresh VM.
     needs: check
     strategy:
@@ -318,11 +322,17 @@ jobs:
       - name: Verify source, wheel, runtime, package and SDK before measurements
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
       - run: python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api measure.moments_normalized --api measure.moments_hu --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-derived.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
