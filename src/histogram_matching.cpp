@@ -112,7 +112,7 @@ template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,K
     }
 }
 Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pixels,std::ptrdiff_t component,std::size_t channel,
-    PixelType type,bool source,bool require_nonnegative,int workers) {
+    PixelType type,bool source,bool require_nonnegative,int workers,bool values=true) {
     Distribution result;
     result.keys.resize(count);
     const auto read=reader(type);
@@ -146,11 +146,11 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         std::vector<std::size_t> histogram(std::size_t(span)+1);
         const auto capacity=std::min(count,histogram.size());
         result.counts.reserve(capacity);
-        if(source)result.ends.reserve(capacity);else result.values.reserve(capacity);
+        if(source)result.ends.reserve(capacity);else if(values)result.values.reserve(capacity);
         for(auto key:result.keys)++histogram[std::size_t(key-result.low)];
         for(std::size_t i=0;i<histogram.size();++i)if(histogram[i]) {
             result.counts.push_back(histogram[i]);
-            if(source)result.ends.push_back(i);else result.values.push_back(value_from_key(result.low+i,type));
+            if(source)result.ends.push_back(i);else if(values)result.values.push_back(value_from_key(result.low+i,type));
         }
         return result;
     }
@@ -171,11 +171,11 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
             for(std::size_t i=0;i<result.hash_keys.size();++i)if(result.hash_positions[i])unique.push_back(result.hash_keys[i]);
             std::sort(unique.begin(),unique.end());
             auto previous=std::move(result.counts);result.counts.clear();result.counts.reserve(unique.size());
-            if(!source)result.values.reserve(unique.size());
+            if(!source && values)result.values.reserve(unique.size());
             for(std::size_t i=0;i<unique.size();++i) {
                 const auto slot=hash_slot(unique[i],result.hash_keys,result.hash_positions);
                 result.counts.push_back(previous[result.hash_positions[slot]-1]);
-                if(!source)result.values.push_back(value_from_key(unique[i],type));
+                if(!source && values)result.values.push_back(value_from_key(unique[i],type));
                 result.hash_positions[slot]=i+1;
             }
             return result;
@@ -209,12 +209,12 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
             }
         }
     } else {
-        result.counts.reserve(count);result.values.reserve(count);
+        result.counts.reserve(count);if(values)result.values.reserve(count);
         radix_sort(result.keys,workers,[](auto key){return key;},result.high<=UINT32_MAX ? 4 : 8);
         for(std::size_t i=0;i<count;) {
             const auto start=i,key=result.keys[i];
             while(i<count && result.keys[i]==key)++i;
-            result.counts.push_back(i-start);result.values.push_back(value_from_key(key,type));
+            result.counts.push_back(i-start);if(values)result.values.push_back(value_from_key(key,type));
         }
     }
     return result;
@@ -327,6 +327,17 @@ unsigned match_histograms_into(const void* source,const void* reference,void* ou
     return match_histograms_strided_into(source,reference,output,count,reference_count,channels,st,rt,ot,
         {std::ptrdiff_t(channels),1,std::ptrdiff_t(channels),1},unsigned_source,half_round,swap_output,channel_flags);
 }
+std::vector<std::size_t> histogram_sorted_counts(const void* input,std::size_t count,PixelType type,int workers) {
+    if(workers<1 || workers>1024)throw std::invalid_argument("entropy worker snapshot outside [1,1024]");
+#ifndef _OPENMP
+    if(workers!=1)throw std::invalid_argument("this build has no OpenMP support");
+#endif
+    if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/pixel_size(type) || (count&&!input))
+        throw std::invalid_argument("entropy input extent overflow or null storage");
+    if(!count)return {};
+    return distribution(input,count,1,0,0,type,false,false,count>=detail::parallel_min?workers:1,false).counts;
+}
+
 unsigned match_histograms_strided_into(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
     std::size_t channels,PixelType st,PixelType rt,PixelType ot,HistogramMatchingStrides strides,
     bool unsigned_source,bool half_round,bool swap_output,unsigned* channel_flags) {
