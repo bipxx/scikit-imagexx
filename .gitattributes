@@ -340,3 +340,5 @@ src/bind_fft.cpp -text
 benchmarks/phase3-byte-affine-same-host.zip -text
 benchmarks/phase3-finite-scan-same-host.zip -text
 third_party/pocketfft/*.h whitespace=-blank-at-eol
+
+benchmarks/butterworth-minimum-initial.json -text

@@ -8,8 +8,8 @@ isolated one-thread benchmarks, and full supported-profile acceptance. Use the
 development smoke gate passed 1,286 checks: all 477 API surfaces, 206 registered
 function signatures, 602 supported-dtype parity cases and one registry check.
 That phase-1 run used the retained public203 package without rebuilding.
-Phase 2 integrates five footprint and three colocalization public routes:
-source coverage is 211 partial image APIs, with 258 upstream-only entries. The footprint component
+Phase 2 integrates five footprint, three colocalization and one Butterworth public route:
+current source coverage is 212 partial image APIs  + 3 metadata functions (215 total), with 257 upstream-only entries. The footprint component
 contract passes 240 checks in normal and scalar modes, including two large
 ellipse cases above the optional parallel-fill threshold. Inventory/runner
 checks bring the normal scoped run to 735 passing tests; the five-feature
@@ -123,13 +123,7 @@ The new integer scan emits baseline SSE2, not a newly added AVX2 leaf; floating
 reductions and provider boundaries stay unchanged. This is one minimum-Linux
 host, not a cumulative cross-CPU gain or full supported-profile acceptance.
 
-Butterworth is active in its separate feature branch: **700 component checks
-pass**, with a privately tested owned FFT and an explicit NumPy mask provider.
-The whole-Release gate and six timing cases remain pending. Its branch registry
-is **212 image APIs + 3 metadata functions**, not yet main; main remains
-**211 + 3**, and accepted combined binary coverage remains **203 image APIs**.
-The prospective numerical policy distinguishes the PocketFFT/DUCC reference
-backends; component correctness grants no whole-product or performance credit.
+**Butterworth is kept in main `936481f`.** Its [first minimum-Linux Release result](../benchmarks/butterworth-minimum-initial.md) has **5/6 wins against the original**, geometric mean **1.112821796×**. The retained uint8 256² loss is **+0.2204691 ms**. Genuine installed gates pass **175 normal + 175 scalar tests and 1,322 smoke checks**; prior components pass 700 and shared defaults 72, with 8,046,020 native controls across six modes. This is owned C++ FFT with NumPy mask/padding/product/crop providers, not a prior-C++ gain or full API/profile claim. Main now has **212 partial image APIs  + 3 metadata functions = 215**, with 257 upstream-only entries; the separate qualified combined baseline remains public203. Next is the independent 80-spec LPI test-first worktree, with no native credit.
 
 ## Historical execution card — public203 integration checkpoint
 
