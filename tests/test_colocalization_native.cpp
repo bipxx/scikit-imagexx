@@ -198,6 +198,29 @@ void floating_association() {
     std::feraiseexcept(FE_DIVBYZERO);const auto before=std::fetestexcept(FE_ALL_EXCEPT);
     require(coloc_sum(dv.value,{}).fp_status==0);require(std::fetestexcept(FE_ALL_EXCEPT)==before);std::feclearexcept(FE_ALL_EXCEPT);
 }
+void float32_lane_extremes() {
+    // The genuine NumPy controls in test_colocalization_reduction_lanes.py
+    // distinguish eight-lane recurrence from horizontal/chunk reassociation.
+    const float maximum=std::numeric_limits<float>::max();
+    for(int kind=0;kind<3;++kind) {
+        std::vector<float> values(kind==2 ? 32:16,maximum);
+        if(kind!=1)for(std::size_t i=kind==0 ? 8:16;i<values.size();++i)values[i]=-maximum;
+        One view(values.data(),values.size(),ColocType::float32,4);
+        for(auto profile:{ColocProfile::numpy_1244,ColocProfile::numpy_254}) {
+            std::fenv_t saved;require(std::fegetenv(&saved)==0);
+            std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+            const auto before=std::fetestexcept(FE_ALL_EXCEPT),round=std::fegetround();
+            const auto sum=coloc_sum(view.value,{profile,16});
+            const auto after=std::fetestexcept(FE_ALL_EXCEPT),after_round=std::fegetround();
+            require(std::fesetenv(&saved)==0);
+            require(after==before && after_round==round && sum.type==ColocType::float32);
+            const bool invalid=kind==2 && profile==ColocProfile::numpy_1244;
+            float value;std::memcpy(&value,&sum.bits,4);
+            require(invalid ? std::isnan(value):sum.bits==raw(kind==0 ? 0.0f:std::numeric_limits<float>::infinity()));
+            require(sum.fp_status==unsigned(kind==0 ? 0:coloc_overflow|(invalid ? coloc_invalid:0)));
+        }
+    }
+}
 // The same twelve logical sites exercise address selection independently of
 // physical order. Poisoned padding and output canaries expose accidental dense
 // access; the second operand/mask always uses a different, logical C layout.
@@ -316,7 +339,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();byte_binary_conversion();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
+        set_num_threads(workers);bool_counts();byte_binary_conversion();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();float32_lane_extremes();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';

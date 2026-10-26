@@ -162,18 +162,41 @@ template<class T> T real(const ColocView& v,const unsigned char* data) {
     if(v.type==Type::float32)return T(read<float>(data,v.swapped));
     return T(read<double>(data,v.swapped));
 }
-template<class T,class Get> T pairwise(std::size_t start,std::size_t n,const Get& get) {
+struct Float32Getter {
+    const unsigned char* data;std::ptrdiff_t step;bool swapped;
+    float operator()(std::size_t i)const {return read<float>(data+std::ptrdiff_t(i)*step,swapped);}
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+    __m128 packed4(std::size_t i)const {
+        if(step==4 && !swapped) {
+            __m128 result;std::memcpy(&result,data+std::ptrdiff_t(i)*step,sizeof(result));return result;
+        }
+        return _mm_setr_ps((*this)(i),(*this)(i+1),(*this)(i+2),(*this)(i+3));
+    }
+#endif
+};
+template<class T,bool Packed=false,class Get> T pairwise(std::size_t start,std::size_t n,const Get& get) {
     // Exact primary NumPy FLOAT/DOUBLE/HALF_pairwise_sum; BSD notice is in
     // third_party/numpy-LICENSE.txt. Do not reassociate or contract.
     if(n<8) {T sum=-T(0);for(std::size_t i=0;i<n;++i)sum=T(sum+get(start+i));return sum;}
     if(n<=128) {
         T lanes[8];for(std::size_t j=0;j<8;++j)lanes[j]=get(start+j);
-        std::size_t i=8;for(;i<n-n%8;i+=8)for(std::size_t j=0;j<8;++j)lanes[j]=T(lanes[j]+get(start+i+j));
+        std::size_t i=8;
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+        if constexpr(Packed && std::is_same_v<T,float>) {
+            __m128 low=_mm_loadu_ps(lanes),high=_mm_loadu_ps(lanes+4);
+            for(;i<n-n%8;i+=8) {
+                low=_mm_add_ps(low,get.packed4(start+i));
+                high=_mm_add_ps(high,get.packed4(start+i+4));
+            }
+            _mm_storeu_ps(lanes,low);_mm_storeu_ps(lanes+4,high);
+        }
+#endif
+        for(;i<n-n%8;i+=8)for(std::size_t j=0;j<8;++j)lanes[j]=T(lanes[j]+get(start+i+j));
         T sum=T(T(T(lanes[0]+lanes[1])+T(lanes[2]+lanes[3]))+T(T(lanes[4]+lanes[5])+T(lanes[6]+lanes[7])));
         for(;i<n;++i)sum=T(sum+get(start+i));return sum;
     }
     auto left=n/2;left-=left%8;
-    const T a=pairwise<T>(start,left,get),b=pairwise<T>(start+left,n-left,get);
+    const T a=pairwise<T,Packed>(start,left,get),b=pairwise<T,Packed>(start+left,n-left,get);
     return T(a+b);
 }
 bool single_stride(const ColocView& v,const ColocOrder& order,std::ptrdiff_t& step) {
@@ -416,16 +439,17 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     // buffered reduction loop stops at the supplied iterator buffer size.
     const bool needs_buffer=v.swapped || (reinterpret_cast<std::uintptr_t>(v.data)%item) || (magnitude(step)%item);
     const auto block=(plan.profile==ColocProfile::numpy_1244 || needs_buffer) ? plan.buffer_elements:std::max(n,std::size_t(1));
+    const bool packed=v.type==Type::float32 && has_avx2();
     Capture capture;
     if(v.type==Type::float64) {
         double sum=0;auto get=[&](auto i){return read<double>(static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step,v.swapped);};
         for(std::size_t begin=0;begin<n;) {const auto length=std::min(block,n-begin);sum=double(sum+pairwise<double>(begin,length,get));begin+=length;}
         std::memcpy(&result.bits,&sum,8);
     } else if(v.type==Type::float32) {
-        float sum=0;auto get=[&](auto i){return read<float>(static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step,v.swapped);};
+        float sum=0;const Float32Getter get{static_cast<const unsigned char*>(v.data),step,v.swapped};
         for(std::size_t begin=0;begin<n;) {
             const auto length=std::min(block,n-begin);
-            sum=float(sum+pairwise<float>(begin,length,get));begin+=length;
+            sum=float(sum+(packed ? pairwise<float,true>(begin,length,get):pairwise<float>(begin,length,get)));begin+=length;
         }
         std::uint32_t word;std::memcpy(&word,&sum,4);result.bits=word;
     } else {
