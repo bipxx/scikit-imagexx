@@ -1,5 +1,6 @@
 #pragma once
 #include "convert.hpp"
+#include <vector>
 namespace skimagexx {
 // Contiguous channel-last real buffers, with independent spatial sample counts.
 // Source/template types may differ. Output has source_count*channels elements;
@@ -22,4 +23,7 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
     PixelType source_type,PixelType reference_type,PixelType output_type,
     HistogramMatchingStrides strides,bool unsigned_source=false,bool half_round=false,
     bool swap_output=false,unsigned* channel_flags=nullptr);
+// Sorted canonical symbol counts, without histogram-matching value/order output.
+// Contiguous aligned native real input; float16 callers prepare losslessly as f32.
+std::vector<std::size_t> histogram_sorted_counts(const void* input,std::size_t count,PixelType type,int workers);
 }
