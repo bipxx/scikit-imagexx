@@ -58,9 +58,30 @@ and nine direct losses, all 73 workloads and 4,088 samples are published.
 Four exact correctness reports and before/after identities pass.
 
 Scope is one minimum-Linux host, with no universal-profile, cumulative
-cross-CPU or combined-product claim. Next: guarded float32 loads for ten
-workloads are in source/control work; no performance result exists. Root owns
-launches/integration; C++ and focused-test ownership remain separate.
+cross-CPU or combined-product claim. Byte-v4's five original-library wins remain
+kept. **Float32 v5 is on HOLD and off main:** candidate `c53198a`
+[preparation 40273141051](https://github.com/bipxx/scikit-imagexx/actions/runs/40273141051)
+failed **741 passed / 44 failed**. All failures are MOC final-result +1 ULP;
+the other eight semantic fields match. The failures include all eight integer
+dtypes and float32. CPU/pow causation is unproven, with no actual CPU model or
+loaded system libm recorded. The [local failure receipt](../build/phase3-f32-failed-preparation-v5/failure-review.json)
+retains exact rows and product/runtime evidence. No timing was launched.
+
+The [same-host diagnostic 40275501905](https://github.com/bipxx/scikit-imagexx/actions/runs/40275501905)
+now has an [independent raw review](evidence/colocalization-live-reference-checkpoint.json):
+all four old/new normal/scalar processes match fresh originals exactly for
+**536 cases and all nine fields**. Fresh originals and both native products
+reproduce the same 44 result-word-only +1-ULP frozen differences on EPYC 9V45.
+V5 is therefore unnecessary for that discrepancy on this host; the precise
+runtime cause remains unknown. The receipt binds CPU/libm metadata, products,
+raw artifact `12629484753` and all 44 field words.
+
+This is diagnostic evidence only (`acceptance=false`). The failed preparation
+remains failed; no performance, KEEP or full-product credit follows. Next is
+independent review of a proposed MOC-result-word live-reference rule with
+exact fresh matching and all other frozen fields unchanged. No tolerance or
+policy change is accepted yet. Root owns launches and integration; C++ and
+focused-test ownership remain separate.
 
 ## Historical execution card — public203 integration checkpoint
 

@@ -218,12 +218,36 @@ def _observe(runtime, spec, root):
     return row
 
 
+def _reference_expectation(spec, fresh, frozen):
+    """Keep the frozen contract; pair MOC floating scalar bits with this host."""
+    expected = {key: frozen[key] for key in SEMANTIC_FIELDS}
+    result = frozen["result"]
+    width = {"float16": 2, "float32": 4, "float64": 8}.get(result.get("type")) if isinstance(result, dict) else None
+    if (spec["api"] == "manders_overlap_coeff" and fresh["error"] is None and frozen["error"] is None
+            and width and result.get("kind") == "numpy-scalar" and result.get("module") == "numpy"
+            and result.get("dtype") in (f"<f{width}", f">f{width}")):
+        assert isinstance(fresh["result"], dict), (spec["id"], "result")
+        raw = fresh["result"].get("raw")
+        assert isinstance(raw, str) and len(raw) == 2 * width and all(c in "0123456789abcdef" for c in raw)
+        expected["result"] = dict(result, raw=raw)
+    for key in SEMANTIC_FIELDS:
+        assert fresh[key] == expected[key], (spec["id"], "original-versus-frozen", key)
+    return expected
+
+
 def _check_case(runtime,spec,tmp_path,workers):
     core=runtime['core'];assert core.get_num_threads()==1
+    observer = runtime["observer"]
+    journal = observer.RawJournal(tmp_path / "original.jsonl")
+    try:
+        fresh = observer.observe(spec, runtime["factory"], runtime["original"], runtime["np"],
+                                 observer.RawAssets(tmp_path / "original-assets"), journal)["observation"]
+    finally:
+        journal.close()
     core.set_num_threads(workers)
     try:actual=_observe(runtime,spec,tmp_path)
     finally:core.set_num_threads(1)
-    expected = runtime["expected"][spec["id"]]
+    expected = _reference_expectation(spec, observer.semantic_projection(fresh), runtime["expected"][spec["id"]])
     assert actual["observer_error"] is None and actual["phase"] == "complete"
     assert actual["restored"] and not actual["forbidden_calls"]
     for key in SEMANTIC_FIELDS:

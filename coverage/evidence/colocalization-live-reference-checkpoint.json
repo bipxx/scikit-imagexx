@@ -1,0 +1,5531 @@
+{
+  "acceptance": false,
+  "all_four_fresh_semantic_observations_identical": true,
+  "controller_revision": "81560aefd661de674b821bf47c959a171c6e5308",
+  "evidence_members": {
+    "baseline-archive.json": {
+      "bytes": 973,
+      "sha256": "4e02f8ac451122854ded5ae82cf8cd74b12d1a5cd4344a3564570dcb9c9a32ea"
+    },
+    "baseline-artifacts.json": {
+      "bytes": 763,
+      "sha256": "24ba0d405c4d6cc4179c726f37900af78db4f0e3c652e7f8b353f2145da0002f"
+    },
+    "baseline-install.log": {
+      "bytes": 3228,
+      "sha256": "d37a69ebb798aed2c3c2d1d85f00b31347ba0423ecfe6ca9305b1dc81d2c8648"
+    },
+    "baseline-normal/diagnostic-exit.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "baseline-normal/diagnostic.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baseline-normal/identity-after.log": {
+      "bytes": 183,
+      "sha256": "bbdd9ca51879510f850f132fc3465a6c0295a9c98c93ef17a33dbb03b9284565"
+    },
+    "baseline-normal/identity-before.log": {
+      "bytes": 183,
+      "sha256": "bbdd9ca51879510f850f132fc3465a6c0295a9c98c93ef17a33dbb03b9284565"
+    },
+    "baseline-normal/raw/comparison.jsonl": {
+      "bytes": 314273,
+      "sha256": "2359b4de51222ae3708c6f38940152597ee090cf82dc4273f647a9421e09b722"
+    },
+    "baseline-normal/raw/native-runtime.json": {
+      "bytes": 251,
+      "sha256": "a915842501acd984cbe30d3409e1f239c7615a701be43bf8781eb1eaa77360ab"
+    },
+    "baseline-normal/raw/original-complete.json": {
+      "bytes": 57,
+      "sha256": "5a0f130afa0736b0e5cb89bb7f94a64d53c34bdf498b31288b1fb440a03793d6"
+    },
+    "baseline-normal/raw/original.jsonl": {
+      "bytes": 3833794,
+      "sha256": "48b551d8fb5f507b596bce0180925a7f335d9298707a13730dbc2fd3e39a6490"
+    },
+    "baseline-normal/raw/runtime-before.json": {
+      "bytes": 3734,
+      "sha256": "36ad2c970229416c2963967369a921db43441b4bb1760f27536ba58547311b1d"
+    },
+    "baseline-normal/raw/summary.json": {
+      "bytes": 6368,
+      "sha256": "01f698430058628929fca7dada5fe38be3026263db14ad035ecf2186cbb4ff13"
+    },
+    "baseline-run.json": {
+      "bytes": 12209,
+      "sha256": "5ddbb8a5f1f04bede4c07ace670251ef1b7ea0b41f2a438f12e567d6baac7984"
+    },
+    "baseline-scalar/diagnostic-exit.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "baseline-scalar/diagnostic.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baseline-scalar/identity-after.log": {
+      "bytes": 183,
+      "sha256": "bbdd9ca51879510f850f132fc3465a6c0295a9c98c93ef17a33dbb03b9284565"
+    },
+    "baseline-scalar/identity-before.log": {
+      "bytes": 183,
+      "sha256": "bbdd9ca51879510f850f132fc3465a6c0295a9c98c93ef17a33dbb03b9284565"
+    },
+    "baseline-scalar/raw/comparison.jsonl": {
+      "bytes": 314273,
+      "sha256": "2359b4de51222ae3708c6f38940152597ee090cf82dc4273f647a9421e09b722"
+    },
+    "baseline-scalar/raw/native-runtime.json": {
+      "bytes": 252,
+      "sha256": "cc76283c2a106fa363b3911655589b38a589301aa3ca118ab1a504127e1c3fdf"
+    },
+    "baseline-scalar/raw/original-complete.json": {
+      "bytes": 57,
+      "sha256": "5a0f130afa0736b0e5cb89bb7f94a64d53c34bdf498b31288b1fb440a03793d6"
+    },
+    "baseline-scalar/raw/original.jsonl": {
+      "bytes": 3833794,
+      "sha256": "48b551d8fb5f507b596bce0180925a7f335d9298707a13730dbc2fd3e39a6490"
+    },
+    "baseline-scalar/raw/runtime-before.json": {
+      "bytes": 3733,
+      "sha256": "6f6cb2ff08d906b2bb9fbf61d0b2fb99886c245b13d37924ff1e7960cc270d46"
+    },
+    "baseline-scalar/raw/summary.json": {
+      "bytes": 6368,
+      "sha256": "01f698430058628929fca7dada5fe38be3026263db14ad035ecf2186cbb4ff13"
+    },
+    "candidate-archive.json": {
+      "bytes": 971,
+      "sha256": "2eda2da8030a82817360f38d16be3d96c52fa093200904179a0b1dddce62d7c1"
+    },
+    "candidate-artifacts.json": {
+      "bytes": 761,
+      "sha256": "3b4cdd9eddb3073fc43240cdfe09bee02b375dcb3b72c70207ad266283dd96ba"
+    },
+    "candidate-install.log": {
+      "bytes": 3259,
+      "sha256": "b4e9b1483e9b89ff49aa03ca204459cafc9273a9ff5d712cface90eb14e35d8e"
+    },
+    "candidate-normal/diagnostic-exit.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "candidate-normal/diagnostic.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "candidate-normal/identity-after.log": {
+      "bytes": 183,
+      "sha256": "dbdb6af92769c1013c32792df507618b405bdd120f948e8a96ab820256e0a98d"
+    },
+    "candidate-normal/identity-before.log": {
+      "bytes": 183,
+      "sha256": "dbdb6af92769c1013c32792df507618b405bdd120f948e8a96ab820256e0a98d"
+    },
+    "candidate-normal/raw/comparison.jsonl": {
+      "bytes": 314273,
+      "sha256": "2359b4de51222ae3708c6f38940152597ee090cf82dc4273f647a9421e09b722"
+    },
+    "candidate-normal/raw/native-runtime.json": {
+      "bytes": 252,
+      "sha256": "36ba375f22aaf87221d097df12a2cc8b17077d8554184e1459ac3e1e3760d4c5"
+    },
+    "candidate-normal/raw/original-complete.json": {
+      "bytes": 57,
+      "sha256": "5a0f130afa0736b0e5cb89bb7f94a64d53c34bdf498b31288b1fb440a03793d6"
+    },
+    "candidate-normal/raw/original.jsonl": {
+      "bytes": 3833794,
+      "sha256": "48b551d8fb5f507b596bce0180925a7f335d9298707a13730dbc2fd3e39a6490"
+    },
+    "candidate-normal/raw/runtime-before.json": {
+      "bytes": 3740,
+      "sha256": "202a2ec445482d4f9688cf5eae9696f553404585383806fae43d5ad78a02d94a"
+    },
+    "candidate-normal/raw/summary.json": {
+      "bytes": 6369,
+      "sha256": "dd9724e0e7cd40e7a70ee39799a68f68bd7fdcae92106d86673446539180c4e2"
+    },
+    "candidate-run.json": {
+      "bytes": 12194,
+      "sha256": "8adfbf99692ceec27b7ac8e8adccc1f6b9850a8f11716b40bcf0573e15211ccd"
+    },
+    "candidate-scalar/diagnostic-exit.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "candidate-scalar/diagnostic.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "candidate-scalar/identity-after.log": {
+      "bytes": 183,
+      "sha256": "dbdb6af92769c1013c32792df507618b405bdd120f948e8a96ab820256e0a98d"
+    },
+    "candidate-scalar/identity-before.log": {
+      "bytes": 183,
+      "sha256": "dbdb6af92769c1013c32792df507618b405bdd120f948e8a96ab820256e0a98d"
+    },
+    "candidate-scalar/raw/comparison.jsonl": {
+      "bytes": 314273,
+      "sha256": "2359b4de51222ae3708c6f38940152597ee090cf82dc4273f647a9421e09b722"
+    },
+    "candidate-scalar/raw/native-runtime.json": {
+      "bytes": 253,
+      "sha256": "1590f5ca4231244864df949b6c959d54a18a6e93fcc3c05c6d9d33d5c6f84e49"
+    },
+    "candidate-scalar/raw/original-complete.json": {
+      "bytes": 57,
+      "sha256": "5a0f130afa0736b0e5cb89bb7f94a64d53c34bdf498b31288b1fb440a03793d6"
+    },
+    "candidate-scalar/raw/original.jsonl": {
+      "bytes": 3833794,
+      "sha256": "48b551d8fb5f507b596bce0180925a7f335d9298707a13730dbc2fd3e39a6490"
+    },
+    "candidate-scalar/raw/runtime-before.json": {
+      "bytes": 3739,
+      "sha256": "81794178b5b6e27fccff1041b61c52d1e714a8a989cda97be1d04ca386e59c58"
+    },
+    "candidate-scalar/raw/summary.json": {
+      "bytes": 6369,
+      "sha256": "dd9724e0e7cd40e7a70ee39799a68f68bd7fdcae92106d86673446539180c4e2"
+    }
+  },
+  "findings": [
+    "Both kept byte-v4 and f32-v5 match the fresh original exactly across all nine semantic fields for all536 cases in normal and scalar modes on this one host.",
+    "The fresh original and both native products reproduce exactly the same44 result-only +1ULP discrepancies against the frozen minimum profile; the other eight fields match. These words also match the failed-preparation observations.",
+    "The v5 change is not necessary to produce this discrepancy on the observed host: the unchanged kept product and genuine original both reproduce it.",
+    "This does not identify whether CPU dispatch, libm, interpreter or another platform factor explains the difference from the historical frozen profile; no controlled component substitution was performed.",
+    "No original failed public-gate outcome is relabelled and no tolerance/reference/gate policy is changed. No timing or KEEP decision follows."
+  ],
+  "lossless_assets": {
+    "all_compressed_and_decoded_sha256_verified": true,
+    "all_members_referenced": true,
+    "chunk_references": 36128,
+    "compressed_bytes": 131440,
+    "decoded_bytes": 4107396,
+    "stream_references": 36896,
+    "unique_members": 4800
+  },
+  "machine": {
+    "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+    "libm_maps_available": true,
+    "loaded_libm": [
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+      }
+    ],
+    "numpy": "1.24.4",
+    "numpy_cpu_features": {
+      "ASIMD": false,
+      "ASIMDDP": false,
+      "ASIMDFHM": false,
+      "ASIMDHP": false,
+      "AVX": true,
+      "AVX2": true,
+      "AVX5124FMAPS": false,
+      "AVX5124VNNIW": false,
+      "AVX512BITALG": true,
+      "AVX512BW": true,
+      "AVX512CD": true,
+      "AVX512DQ": true,
+      "AVX512ER": false,
+      "AVX512F": true,
+      "AVX512IFMA": true,
+      "AVX512PF": false,
+      "AVX512VBMI": true,
+      "AVX512VBMI2": true,
+      "AVX512VL": true,
+      "AVX512VNNI": true,
+      "AVX512VPOPCNTDQ": true,
+      "AVX512_CLX": true,
+      "AVX512_CNL": true,
+      "AVX512_ICL": true,
+      "AVX512_KNL": false,
+      "AVX512_KNM": false,
+      "AVX512_SKX": true,
+      "F16C": true,
+      "FMA3": true,
+      "FMA4": false,
+      "FPHP": false,
+      "MMX": true,
+      "NEON": false,
+      "NEON_FP16": false,
+      "NEON_VFPV4": false,
+      "POPCNT": true,
+      "SSE": true,
+      "SSE2": true,
+      "SSE3": true,
+      "SSE41": true,
+      "SSE42": true,
+      "SSSE3": true,
+      "VSX": false,
+      "VSX2": false,
+      "VSX3": false,
+      "VSX4": false,
+      "VX": false,
+      "VXE": false,
+      "VXE2": false,
+      "XOP": false
+    },
+    "platform": {
+      "machine": "x86_64",
+      "node": "runnervmtai0g",
+      "processor": "x86_64",
+      "release": "6.17.0-1022-azure",
+      "system": "Linux",
+      "version": "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026"
+    },
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]"
+  },
+  "method": "Standard-library ZIP/JSON/Git-source/byte-hash review only; no image/native/scientific imports or calls, builds, tests, installs, timings or reruns. Old138/139MB archives were neither downloaded nor rehashed; only existing small measurement/product-pin members were read.",
+  "original_authentication": {
+    "record_sha256": "aaa8883ddc494f695c966c3aa2290c189a0b4e54756d9b708c1a15ccf1124679",
+    "signatures": {
+      "intersection_coeff": {
+        "AST_sha256": "e8dcf00fa983a3e1137fcc3e3866d1fcc26519b36cb90fe17576efe86cdbbb5f",
+        "arguments": "image0_mask, image1_mask, mask=None"
+      },
+      "manders_coloc_coeff": {
+        "AST_sha256": "91d826cc610d3a46a1bb2b195accd7252f4bd3a2e07209e7efdca24df06fae15",
+        "arguments": "image0, image1_mask, mask=None"
+      },
+      "manders_overlap_coeff": {
+        "AST_sha256": "b7e6cb739675619eca6f16541a7cdefa81f9ff309486b33ccda97db21e0c6112",
+        "arguments": "image0, image1, mask=None"
+      }
+    },
+    "sources": [
+      {
+        "RECORD_hash": "sha256=bP4bblGicAX_tH5Zd0TLmAuGXB8TnO30frBUPuUxaAU",
+        "bytes": 12328,
+        "sha256": "6cfe1b6e51a27005ffb47e597744cb980b865c1f139cedf47eb0543ee5316805"
+      },
+      {
+        "RECORD_hash": "sha256=sKIyVwyOmQq3bNb-b1SmcWGmkSFNv2xSllbhOnmesfE",
+        "bytes": 36621,
+        "sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1"
+      }
+    ],
+    "version": "0.26.0"
+  },
+  "original_then_native_order_evidence": "Exact reviewed controller performs complete 536-row original loop, checks no skimagexx module, writes original-complete marker, then enters public fixture importing skimagexx. All raw rows and markers are present, with original source-entry counts/checks and native_calls=0. No separate wall-clock event trace is claimed.",
+  "performance_acceptance": false,
+  "processes": [
+    {
+      "comparison_rows": 536,
+      "comparisons": {
+        "native_vs_fresh": {
+          "differing_cases": [],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 0,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 536
+        },
+        "native_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        },
+        "original_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        }
+      },
+      "drift_words": [
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        }
+      ],
+      "native_rows": 536,
+      "native_runtime": {
+        "core": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "dd59554376bff76c8b2f23a2900a6090fb0ac6a711c360cec3a4dd6f3cc01067",
+        "has_avx2": true,
+        "workers": 1
+      },
+      "original_complete_before_native_import_marker": {
+        "observations": 536,
+        "skimagexx_imported": false
+      },
+      "original_journal_records": 1072,
+      "original_rows": 536,
+      "process": "baseline-normal",
+      "statistics": {
+        "admitted_stages": 2127,
+        "array_provider_calls": 179,
+        "c_exceptions": 12,
+        "c_returns": 2318,
+        "native_returns": 387,
+        "native_source_errors": 149,
+        "original_returns": 387,
+        "original_source_errors": 149,
+        "refused_stages": 191,
+        "rows_with_array_providers": 54
+      }
+    },
+    {
+      "comparison_rows": 536,
+      "comparisons": {
+        "native_vs_fresh": {
+          "differing_cases": [],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 0,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 536
+        },
+        "native_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        },
+        "original_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        }
+      },
+      "drift_words": [
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        }
+      ],
+      "native_rows": 536,
+      "native_runtime": {
+        "core": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "dd59554376bff76c8b2f23a2900a6090fb0ac6a711c360cec3a4dd6f3cc01067",
+        "has_avx2": false,
+        "workers": 1
+      },
+      "original_complete_before_native_import_marker": {
+        "observations": 536,
+        "skimagexx_imported": false
+      },
+      "original_journal_records": 1072,
+      "original_rows": 536,
+      "process": "baseline-scalar",
+      "statistics": {
+        "admitted_stages": 2127,
+        "array_provider_calls": 179,
+        "c_exceptions": 12,
+        "c_returns": 2318,
+        "native_returns": 387,
+        "native_source_errors": 149,
+        "original_returns": 387,
+        "original_source_errors": 149,
+        "refused_stages": 191,
+        "rows_with_array_providers": 54
+      }
+    },
+    {
+      "comparison_rows": 536,
+      "comparisons": {
+        "native_vs_fresh": {
+          "differing_cases": [],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 0,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 536
+        },
+        "native_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        },
+        "original_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        }
+      },
+      "drift_words": [
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        }
+      ],
+      "native_rows": 536,
+      "native_runtime": {
+        "core": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "6e0737be2622f5e04d600726eb58eb44fcfde9f5f6207884beb6995bfde56525",
+        "has_avx2": true,
+        "workers": 1
+      },
+      "original_complete_before_native_import_marker": {
+        "observations": 536,
+        "skimagexx_imported": false
+      },
+      "original_journal_records": 1072,
+      "original_rows": 536,
+      "process": "candidate-normal",
+      "statistics": {
+        "admitted_stages": 2127,
+        "array_provider_calls": 179,
+        "c_exceptions": 12,
+        "c_returns": 2318,
+        "native_returns": 387,
+        "native_source_errors": 149,
+        "original_returns": 387,
+        "original_source_errors": 149,
+        "refused_stages": 191,
+        "rows_with_array_providers": 54
+      }
+    },
+    {
+      "comparison_rows": 536,
+      "comparisons": {
+        "native_vs_fresh": {
+          "differing_cases": [],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 0,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 536
+        },
+        "native_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        },
+        "original_vs_frozen": {
+          "differing_cases": [
+            "manders_overlap_coeff/dtype/uint8",
+            "manders_overlap_coeff/dtype/uint16",
+            "manders_overlap_coeff/dtype/uint32",
+            "manders_overlap_coeff/dtype/uint64",
+            "manders_overlap_coeff/dtype/int8",
+            "manders_overlap_coeff/dtype/int16",
+            "manders_overlap_coeff/dtype/int32",
+            "manders_overlap_coeff/dtype/int64",
+            "manders_overlap_coeff/dtype/float32",
+            "manders_overlap_coeff/layout/C",
+            "manders_overlap_coeff/layout/F",
+            "manders_overlap_coeff/layout/step",
+            "manders_overlap_coeff/layout/reverse",
+            "manders_overlap_coeff/layout/transpose",
+            "manders_overlap_coeff/layout/readonly",
+            "manders_overlap_coeff/layout/unaligned",
+            "manders_overlap_coeff/layout/endian",
+            "manders_overlap_coeff/protocol/array_provider0",
+            "manders_overlap_coeff/protocol/array_provider1",
+            "manders_overlap_coeff/protocol/array_provider_roi",
+            "manders_overlap_coeff/protocol/tagged",
+            "manders_overlap_coeff/reduction/8193",
+            "manders_overlap_coeff/dtype/uint8/policy-default",
+            "manders_overlap_coeff/dtype/uint16/policy-default",
+            "manders_overlap_coeff/dtype/uint32/policy-default",
+            "manders_overlap_coeff/dtype/uint64/policy-default",
+            "manders_overlap_coeff/dtype/int8/policy-default",
+            "manders_overlap_coeff/dtype/int16/policy-default",
+            "manders_overlap_coeff/dtype/int32/policy-default",
+            "manders_overlap_coeff/dtype/int64/policy-default",
+            "manders_overlap_coeff/dtype/float32/policy-default",
+            "manders_overlap_coeff/layout/C/policy-default",
+            "manders_overlap_coeff/layout/F/policy-default",
+            "manders_overlap_coeff/layout/step/policy-default",
+            "manders_overlap_coeff/layout/reverse/policy-default",
+            "manders_overlap_coeff/layout/transpose/policy-default",
+            "manders_overlap_coeff/layout/readonly/policy-default",
+            "manders_overlap_coeff/layout/unaligned/policy-default",
+            "manders_overlap_coeff/layout/endian/policy-default",
+            "manders_overlap_coeff/protocol/array_provider0/policy-default",
+            "manders_overlap_coeff/protocol/array_provider1/policy-default",
+            "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+            "manders_overlap_coeff/protocol/tagged/policy-default",
+            "manders_overlap_coeff/reduction/8193/policy-default"
+          ],
+          "field_mismatches": {
+            "error": 0,
+            "events": 0,
+            "input_after": 0,
+            "input_before": 0,
+            "result": 44,
+            "result_aliases": 0,
+            "setup_events": 0,
+            "state": 0,
+            "warnings": 0
+          },
+          "matching_cases": 492
+        }
+      },
+      "drift_words": [
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/uint64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a08aa71a2496f03f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int8/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "a18aa71a2496f03f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int16/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/int64/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/dtype/float32/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/C/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/F/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/step/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/reverse/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/transpose/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/readonly/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/unaligned/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/layout/endian/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider0/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider1/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/array_provider_roi/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "29592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/protocol/tagged/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "2a592f2d6ec5e83f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        },
+        {
+          "fresh_original": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "frozen": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1e9119244ef4e63f",
+            "type": "float64"
+          },
+          "id": "manders_overlap_coeff/reduction/8193/policy-default",
+          "native": {
+            "dtype": "<f8",
+            "kind": "numpy-scalar",
+            "module": "numpy",
+            "raw": "1f9119244ef4e63f",
+            "type": "float64"
+          },
+          "positive_f64_word_delta": 1
+        }
+      ],
+      "native_rows": 536,
+      "native_runtime": {
+        "core": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "6e0737be2622f5e04d600726eb58eb44fcfde9f5f6207884beb6995bfde56525",
+        "has_avx2": false,
+        "workers": 1
+      },
+      "original_complete_before_native_import_marker": {
+        "observations": 536,
+        "skimagexx_imported": false
+      },
+      "original_journal_records": 1072,
+      "original_rows": 536,
+      "process": "candidate-scalar",
+      "statistics": {
+        "admitted_stages": 2127,
+        "array_provider_calls": 179,
+        "c_exceptions": 12,
+        "c_returns": 2318,
+        "native_returns": 387,
+        "native_source_errors": 149,
+        "original_returns": 387,
+        "original_source_errors": 149,
+        "refused_stages": 191,
+        "rows_with_array_providers": 54
+      }
+    }
+  ],
+  "products": {
+    "baseline": {
+      "artifact_id": 12627936362,
+      "measurement_sha256": "33fac6941dbcc790ba65e74e0f1224c9b34c55f90f4e3a47a67d5e7f2980c7bc",
+      "prepared_conclusion": "success",
+      "prepared_run": 40270607172,
+      "runtime_versions": {
+        "imageio": "2.38.1",
+        "iniconfig": "2.3.1",
+        "lazy-loader": "0.6",
+        "networkx": "3.6.1",
+        "numpy": "1.24.4",
+        "packaging": "26.3",
+        "pillow": "13.0.0",
+        "pluggy": "1.7.0",
+        "pygments": "2.21.0",
+        "pytest": "9.1.1",
+        "scikit-image": "0.26.0",
+        "scikit-imagexx": "0.1.0",
+        "scipy": "1.15.3",
+        "threadpoolctl": "3.7.0",
+        "tifffile": "2026.3.3"
+      },
+      "source": "0135305a02f8ca9f9efd3b2f6d0853ad95ba42c2",
+      "wheel": {
+        "core_member": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "dd59554376bff76c8b2f23a2900a6090fb0ac6a711c360cec3a4dd6f3cc01067",
+        "filename": "scikit_imagexx-0.1.0-cp311-cp311-linux_x86_64.whl",
+        "wheel_sha256": "618668f7110832bc435edd962c7d07f6bfa2e750bee5878742d413283148b48c"
+      },
+      "zip_sha256": "f7d613095a27ec08deb6f33f92d21b0b40d41409494e87da564d2c95eedafc90"
+    },
+    "candidate": {
+      "artifact_id": 12629445656,
+      "measurement_sha256": "4aa77a8b2fff7148ef5728062d87c918e0850880bfa1a65674d6115e9795dbc1",
+      "prepared_conclusion": "failure",
+      "prepared_run": 40273141051,
+      "runtime_versions": {
+        "imageio": "2.38.1",
+        "iniconfig": "2.3.1",
+        "lazy-loader": "0.6",
+        "networkx": "3.6.1",
+        "numpy": "1.24.4",
+        "packaging": "26.3",
+        "pillow": "13.0.0",
+        "pluggy": "1.7.0",
+        "pygments": "2.21.0",
+        "pytest": "9.1.1",
+        "scikit-image": "0.26.0",
+        "scikit-imagexx": "0.1.0",
+        "scipy": "1.15.3",
+        "threadpoolctl": "3.7.0",
+        "tifffile": "2026.3.3"
+      },
+      "source": "c53198aff0a502fdfe236c6b46834bbc58547abd",
+      "wheel": {
+        "core_member": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "6e0737be2622f5e04d600726eb58eb44fcfde9f5f6207884beb6995bfde56525",
+        "filename": "scikit_imagexx-0.1.0-cp311-cp311-linux_x86_64.whl",
+        "wheel_sha256": "06b043b1559d9923ee02ad26dd3b4bd090d50139177df826eec9649396041aec"
+      },
+      "zip_sha256": "1ffd1ea68b36ea165c41dd26cc141367822e768eacd5ea54b097dfa139604b13"
+    }
+  },
+  "protected_source_hashes": {
+    "coverage/contracts/colocalization.json": "5c391fadf3af48db242bf9f172990590b1188fcf207085aac301af03f3619668",
+    "tests/colocalization_cases.py": "adbee581546e2031377853393b354be0dff41731eac920eb839c37b6c9f9db59",
+    "tests/colocalization_reference.py": "90361227ea1c79238ad14ffaae8315e49007bfd411bec13ca051f15d5e92227e",
+    "tests/data/colocalization_public_semantics.json.gz": "fbdbc3a5b17050d4b461338baa00253633162d1ba7148406903d16e880d3aea8",
+    "tests/test_colocalization_public.py": "17072b2d0a5fbf6d43ce91f8f6f9056f4caf9e39d5651e759429a470d40498b4",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7"
+  },
+  "retained_api_and_job_log": {
+    "artifacts.json": {
+      "bytes": 744,
+      "sha256": "68eab468743e7c8b7f171c0ce749fe5d652a5b28b8b89f78a021fb742b4a3e6c"
+    },
+    "job-121417275027.log": {
+      "bytes": 60706,
+      "sha256": "edf52e30d3180d92547a776628a485cc65ad141fbee25e61b4d315eedbc35d10"
+    },
+    "jobs.json": {
+      "bytes": 3354,
+      "sha256": "99983e7a6a1d63c7b0d64e7f4570fb5b233ea64e4bef417077134d7dd2d0e2d8"
+    },
+    "retention.json": {
+      "bytes": 425,
+      "sha256": "516f8ba71b285ae3fe4ca8253d6103b7414d0d70b26ea4162b476c87d126a92f"
+    },
+    "run.json": {
+      "bytes": 12214,
+      "sha256": "2d5fb726bbeef84f915c5856209faccc745df79a095aa7481506eb9b28b47518"
+    }
+  },
+  "retention": {
+    "artifact_id": 12629484753,
+    "bytes": 4539137,
+    "crc_passed": true,
+    "diagnostic_acceptance": false,
+    "extracted": [],
+    "filename": "12629484753.zip",
+    "free_bytes_before": 312115789824,
+    "members": 6992,
+    "revision": "81560aefd661de674b821bf47c959a171c6e5308",
+    "run_conclusion": "success",
+    "run_id": 40275501905,
+    "sha256": "5ceebee8ea2a99c728596b1104deca1611a95527b1f0a4ee48e76a8bf0a5902c"
+  },
+  "run_id": 40275501905,
+  "scope": "Four one-worker diagnostic processes on one minimum-Linux host; each has536 original and536 installed outcomes. Provider/refusal outcomes remain explicit and are not counted as full C++ completion.",
+  "semantic_fields": [
+    "result",
+    "error",
+    "warnings",
+    "events",
+    "setup_events",
+    "input_before",
+    "input_after",
+    "result_aliases",
+    "state"
+  ],
+  "source_pins": {
+    ".github/workflows/colocalization-reference-diagnostic.yml": "fb6a904a36ae2a3de6870268e3572339177110caf158505a98eb39b76f1f8653",
+    "tools/colocalization_reference_diagnostic.py": "1455654658129fd96ff4c5f37ed5f44b2ad42d0d4b49917d52ba2177d7c9e3bd"
+  },
+  "status": "PASS_SCOPED_DIAGNOSTIC_RAW_REVIEW",
+  "trace_events_removed_only": [
+    "binary-conversion",
+    "numpy-asarray",
+    "numpy-count_nonzero",
+    "numpy-logical_and",
+    "numpy-multiply",
+    "numpy-square",
+    "numpy-sum",
+    "shape-check"
+  ],
+  "whole_product_acceptance": false
+}

@@ -88,10 +88,38 @@ The compact ZIP retains all four 73-case reports and 4,088 samples; their exact
 correctness observations and before/after product identities pass.
 
 This is one minimum-Linux host, not a universal-profile or cumulative
-cross-CPU speed claim. **Next:** guarded float32 loads for ten workloads are in
-source/control work, with no performance result. Keep the fixed21 metric,
-all 73 workloads and exact gates. Root owns launches/keep decisions; C++ and
-focused-test ownership remain separate.
+cross-CPU speed claim. The five byte-v4 original-library wins remain unchanged.
+
+**Float32 v5 HOLD:** candidate `c53198a` remains off main. Its
+[preparation run 40273141051](https://github.com/bipxx/scikit-imagexx/actions/runs/40273141051)
+failed with **741 passed / 44 failed**. All 44 failures are MOC final-float64
+results one ULP above the frozen originals; the other eight semantic fields
+match exactly. They include all eight integer dtypes and float32, so the
+changed float32 path alone does not isolate the cause. CPU/pow attribution is
+**unproven**; the failed preparation did not record the actual CPU model or
+loaded system libm. The [local raw failure review](../build/phase3-f32-failed-preparation-v5/failure-review.json)
+links every failed case and the retained partial artifact. Later preparation
+gates and timing did not run.
+
+The subsequent [diagnostic run 40275501905](https://github.com/bipxx/scikit-imagexx/actions/runs/40275501905)
+compared both exact products with fresh originals on one EPYC 9V45 host.
+The [independent raw review](evidence/colocalization-live-reference-checkpoint.json)
+verifies **536/536 native-versus-fresh matches in all four processes**
+(old/new × normal/scalar), across all nine semantic fields. Fresh originals
+and both products reproduce the same **44 result-word-only +1-ULP differences**
+from the frozen fixture. Thus v5 is unnecessary for this discrepancy on this
+host; the precise runtime cause remains unknown. The receipt records CPU
+features, loaded libm SHA, exact products and all 44 field words. Its 4.5 MB
+raw artifact `12629484753` remains in Actions and locally under
+`build/phase3-f32-reference-diagnostic-v5/`.
+
+This is diagnostic evidence with `acceptance=false`: failed preparation
+40273141051 remains failed, with no performance, KEEP or full-product credit.
+**Next:** independently review the proposed live-reference rule for the MOC
+result word, requiring exact fresh-original matching and unchanged frozen
+checks for every other field. That policy change is not yet accepted; there
+is no tolerance relaxation. Keep the fixed21 metric and all 73 workloads.
+Root owns launches/keep decisions; C++ and focused-test ownership remain separate.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
@@ -101,7 +129,7 @@ Release wheel selected by `producer_run` and `producer_revision`, requiring
 the measurement checkout's product source to match. The initial profiles use
 producer `1d37745`; affine v1 uses `5bc2109`, width v2 uses `4a78e94`, and
 f64 v3 uses `ac87e23`; byte v4 uses `0135305`.
-Preparation passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
+The kept campaigns passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
 checks, 13 benchmark metadata checks and 73 corpus checks in each mode. A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
