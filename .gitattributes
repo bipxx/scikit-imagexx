@@ -376,3 +376,5 @@ src/bind_array_storage.hpp -text
 python/skimagexx/_moments.py -text
 python/skimagexx/_moments_checks.py -text
 benchmarks/moments-minimum-initial.json -text
+tests/moments_derived_cases.py -text
+tests/test_moments_derived_public.py -text
