@@ -106,7 +106,7 @@ template<class T> typename Vector<T>::R encode(typename Vector<T>::R x) {
     const auto nonlinear = V::sub(V::mul(V::set(T(1.055)),power(adjusted,T(1.0/2.4))),V::set(T(0.055)));
     return V::clip(V::choose(linear,nonlinear,mask));
 }
-std::size_t linear_double(const double* p, double* out, std::size_t n, const detail::ColorSpec& spec) {
+template<class Input> std::size_t linear_double(const Input* p, double* out, std::size_t n, const detail::ColorSpec& spec) {
     // Keep triples interleaved: replicate input components directly into output
     // lanes instead of unpacking and then repacking three channel vectors.
     __m256d weights[3][3], before[3], after[3];
@@ -121,9 +121,19 @@ std::size_t linear_double(const double* p, double* out, std::size_t n, const det
         before[block] = spec.input_offset ? _mm256_loadu_pd(offsets) : _mm256_setzero_pd();
         after[block] = spec.output_offset ? _mm256_loadu_pd(offsets) : _mm256_setzero_pd();
     }
+    const auto load = [](const Input* input) {
+        if constexpr (std::is_same_v<Input,double>) return _mm256_loadu_pd(input);
+        else {
+            // Exactly four bytes: three loads cover twelve bytes/four RGB pixels.
+            // Do not overread the final packet with a sixteen-byte load.
+            std::int32_t packed;std::memcpy(&packed,input,sizeof(packed));
+            const auto integers=_mm_cvtepu8_epi32(_mm_cvtsi32_si128(packed));
+            return _mm256_mul_pd(_mm256_cvtepi32_pd(integers),_mm256_set1_pd(1.0/255.0));
+        }
+    };
     std::size_t i = 0;
     for (; i+4 <= n; i += 4) {
-        auto a = _mm256_loadu_pd(p+3*i), b = _mm256_loadu_pd(p+3*i+4), c = _mm256_loadu_pd(p+3*i+8);
+        auto a = load(p+3*i), b = load(p+3*i+4), c = load(p+3*i+8);
         if (spec.input_offset) { a = _mm256_sub_pd(a,before[0]); b = _mm256_sub_pd(b,before[1]); c = _mm256_sub_pd(c,before[2]); }
         const auto finish = [&](int block, __m256d red, __m256d green, __m256d blue) {
             auto value = _mm256_add_pd(_mm256_add_pd(_mm256_mul_pd(red,weights[block][0]),
@@ -150,6 +160,9 @@ template<class Input> std::size_t run(const Input* p, detail::ColorOutput<Input>
     using R = typename V::R;
     if constexpr (std::is_same_v<Input,double>)
         if (spec.transfer == 0 && pixel_stride == 3 && channel_stride == 1) return linear_double(p,out,n,spec);
+    if constexpr (std::is_same_v<Input,std::uint8_t>)
+        if (spec.transfer == 0 && !spec.input_offset && pixel_stride == 3 && channel_stride == 1)
+            return linear_double(p,out,n,spec);
     const double* lookup = nullptr;
     if constexpr (std::is_same_v<Input,std::uint8_t>)
         if (spec.transfer == 1) lookup = detail::srgb_decode_table().data();
