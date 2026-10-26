@@ -361,3 +361,4 @@ tests/test_window_native.cpp -text
 
 python/skimagexx/_window.py -text
 benchmarks/lpi-minimum-initial.json -text
+benchmarks/window-minimum-initial.json -text
