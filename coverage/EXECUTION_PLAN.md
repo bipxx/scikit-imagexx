@@ -51,7 +51,7 @@ Earlier kept [byte-mask v4](../benchmarks/phase3-byte-same-host.md), source
 `0135305`, established five original-library intersection wins. Its retained
 9V74 measurements are historical, not factors for cumulative cross-CPU gains.
 
-**Current kept: [float32 v5](../benchmarks/phase3-f32-same-host.md), main/checked
+**Current kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md), main/checked
 source `5b03eded`, exact compiled product `c53198a`.** The unchanged wheel was
 reused. One 9V45 ABBA job gives fixed21 scores **0.2042894437937× →
 0.2181707370842×**, or **1.067949× normalized / 1.059884× direct gain**.
@@ -86,11 +86,19 @@ mode and [788 installed tests per mode](https://github.com/bipxx/scikit-imagexx/
 passed. Same-host ABBA gives **0.986506× normalized / 0.994889× direct gain**,
 with 13 normalized and 10 direct fixed21 losses. Kept v5 remains unchanged.
 
-Octahedron source `9da7ccf` has independent 254-public/2,997-native component
-checks per mode. [CI 40285568194](https://github.com/bipxx/scikit-imagexx/actions/runs/40285568194)
-and [799-check preparation 40286601199](https://github.com/bipxx/scikit-imagexx/actions/runs/40286601199)
-succeeded; [controlled ABBA 40286815914](https://github.com/bipxx/scikit-imagexx/actions/runs/40286815914)
-is in progress under C's separate ownership. Its performance decision is pending.
+**Integer octahedron is kept and merged in main `f079c6d`**, with product
+source exact to measured `9da7ccf`. Its [published same-host comparison](../benchmarks/phase3-octahedron-integer-same-host.md)
+gives **12.138864× normalized / 12.070450× direct gain** across all 12 targets
+on one 9V45 host; both candidate medians beat both baselines in each target.
+Private component checks are 254 public / 2,997 native per mode, followed by
+799 installed checks per mode. All 35 direct and 28 normalized losses outside
+the target remain published, as do 16 colocalization regressions. This does
+not expand whole-product acceptance or claim all-profile speedups.
+
+Next byte-affine candidate `887aff6` is in
+[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824);
+installed gates and performance remain pending. Kept colocalization v5 is
+unchanged, and packed v6 stays rejected.
 
 ## Historical execution card — public203 integration checkpoint
 

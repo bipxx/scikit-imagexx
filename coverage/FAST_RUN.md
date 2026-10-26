@@ -80,7 +80,7 @@ Earlier kept [byte masks v4](../benchmarks/phase3-byte-same-host.md), source
 `0135305`, established five intersection wins over the original library on one
 9V74 host. Its raw reports and all losses remain unchanged.
 
-**Current kept: [float32 v5](../benchmarks/phase3-f32-same-host.md).** Main/checked
+**Current kept colocalization: [float32 v5](../benchmarks/phase3-f32-same-host.md).** Main/checked
 source `5b03eded` reuses the exact wheel compiled from `c53198a`, without a
 rebuild. The controlled 9V45 ABBA job gives fixed21 scores
 **0.2042894437937× baseline vs 0.2181707370842× candidate**, or
@@ -120,12 +120,20 @@ gives **0.986506× normalized / 0.994889× direct gain**, with 13 normalized and
 10 direct fixed21 losses. The exact raw ZIP, all ten float32 targets and all
 losses are published. **Kept v5 is unchanged**; no identical rerun is planned.
 
-The independent octahedron source `9da7ccf` retains reviewed 254 public
-component checks and 2,997 native controls per mode.
-[CI 40285568194](https://github.com/bipxx/scikit-imagexx/actions/runs/40285568194)
-and its [799-check preparation 40286601199](https://github.com/bipxx/scikit-imagexx/actions/runs/40286601199)
-succeeded. [Controlled ABBA 40286815914](https://github.com/bipxx/scikit-imagexx/actions/runs/40286815914)
-is in progress under C's separate ownership; no performance result is claimed.
+**Kept and merged: [integer octahedron](../benchmarks/phase3-octahedron-integer-same-host.md).**
+Main `f079c6d` preserves the exact measured product source `9da7ccf`.
+The independent review retains 254 public component checks and 2,997 native
+controls per mode; [preparation 40286601199](https://github.com/bipxx/scikit-imagexx/actions/runs/40286601199)
+passes 799 installed checks per mode. [Controlled ABBA 40286815914](https://github.com/bipxx/scikit-imagexx/actions/runs/40286815914)
+gives **12.138864× normalized / 12.070450× direct gain** over all 12 octahedron
+cases on one 9V45 host. Both candidate medians beat both baselines in every
+target. All 35 direct and 28 normalized losses outside the target are
+published; the same 16 colocalization regressions remain.
+
+Next: byte-affine candidate `887aff6` is in
+[CI 40287675824](https://github.com/bipxx/scikit-imagexx/actions/runs/40287675824).
+Its installed gates and performance decision are pending. Kept colocalization
+v5 remains unchanged; v6 remains rejected.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
