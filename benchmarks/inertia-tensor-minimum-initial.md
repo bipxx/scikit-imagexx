@@ -24,3 +24,5 @@ The genuine installed product passes all eight public contract groups in normal 
 All three large-image losses require follow-up. A concrete candidate is the missing K=3 fused projection: the existing SIMD fusion handles K=2/K=4, while order-2 inertia moments use K=3. This is a hypothesis to test with unchanged reduction order and a fixed six-case controlled comparison, not an attributed cause or a promised speedup.
 
 Raw JSON SHA-256: `16f976c72d7895ad9724bd2ba36acb0841f6934d81a1f6a02059e0054be56045`. The retained parent artifact is `12677104157` with SHA-256 `e1ad53ca1cb162393a547fed7ef9ef8b6ab9876ba2f97951db4c0cc7afcc281e`. Source coverage is 222 native-partial image APIs plus three metadata functions; full supported-profile qualification stays 203 image APIs.
+
+The subsequent [controlled K=3 comparison](inertia-k3-same-host.md) keeps all first-run losses visible and measures the fix separately: 2.415797494x direct gain, with all six candidate cases beating the original in both passes on that host.
