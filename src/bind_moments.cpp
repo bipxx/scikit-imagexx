@@ -1,4 +1,5 @@
 #include "moments_internal.hpp"
+#include "coords_internal.hpp"
 #include "inertia_internal.hpp"
 #include "skimagexx/symmetric_eigen.hpp"
 #include <cfenv>
@@ -113,9 +114,36 @@ template<class T> py::object inertia_eigenvalues(const py::array& input) {
     return output;
 }
 
+
+// Powers are the frontend's private native C copy, not the external point view.
+template<class T>py::object coords_reduce(const py::array& powers,int workers){
+    if(powers.ndim()!=3)return py::none();
+    const auto shape=dimensions(powers);
+    const auto N=shape[0],D=shape[1],K=shape[2];
+    if(N<1||D<1||D>3||K<2)return py::none();
+    py::array_t<T> output(Shape(std::size_t(D),K));
+    // One actual pointer boundary after output allocation, no FFT guards on
+    // earlier NumPy-only power/intermediate arrays.
+    check<T>(powers,shape);
+    const auto* input=static_cast<const T*>(powers.data());auto* result=output.mutable_data();
+    unsigned flags;
+    {
+        py::gil_scoped_release release;
+        flags=skimagexx::detail::moments_coords_reduce(input,
+            std::size_t(N),std::size_t(D),std::size_t(K),result,workers);
+    }
+    if(flags)return py::none();
+    return output;
+}
+
 }
 
 void bind_moments(py::module_& module) {
+    module.def("moments_coords_reduce",[](const py::array& powers,int workers)->py::object {
+        if(powers.dtype().char_()=='f')return coords_reduce<float>(powers,workers);
+        if(powers.dtype().char_()=='d')return coords_reduce<double>(powers,workers);
+        return py::none();
+    },py::arg("powers").noconvert(),py::arg("workers"));
     module.def("inertia_eigvals",[](const py::array& input)->py::object {
         if(input.dtype().char_()=='f')return inertia_eigenvalues<float>(input);
         if(input.dtype().char_()=='d')return inertia_eigenvalues<double>(input);
