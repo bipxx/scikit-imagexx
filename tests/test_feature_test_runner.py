@@ -101,3 +101,22 @@ def test_collection_selects_exact_namespaces_supported_cases_and_worker_one():
         node.nodeid: None if node.nodeid == 'registry-1' else 'morphology.label'
         for node in wanted
     }
+
+
+@pytest.mark.parametrize('filename', ['test_dtype_aliases.py', 'test_dtype_metadata.py'])
+def test_contract_selection_distinguishes_window_from_windowed_histogram(filename):
+    entry = dict(api='filters.window', native_default_case_dtypes=list(SUPPORTED))
+    plugin = FeatureSelection([entry], 'contract')
+    wanted = [item('window-' + str(worker), 'test_default',
+                   dict(api='filters.window', configuration=worker), filename)
+              for worker in (1, 4)]
+    unrelated = item('windowed-histogram', 'test_default',
+                     dict(api='filters.rank.windowed_histogram', configuration=1), filename)
+    deselected = []
+    config = SimpleNamespace(hook=SimpleNamespace(
+        pytest_deselected=lambda items: deselected.extend(items)))
+    items = [unrelated, *wanted]
+    plugin.pytest_collection_modifyitems(None, config, items)
+    assert items == wanted and deselected == [unrelated]
+    assert plugin.collected == {'filters.window': 2}
+    assert all(api == 'filters.window' for api in plugin.item_apis.values())

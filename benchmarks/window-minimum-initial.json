@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-26T11:57:09.373161+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "source_sha256": "3ee814cdbcfd9af47e5d4eefe088b360a1100ebb1596445852fffd7622de69fd",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "fallback_enabled": false,
+    "avx2": true,
+    "selected_apis": [
+      "filters.window"
+    ],
+    "dtype_metadata": false,
+    "reference_fft_workers": null,
+    "provider_frontiers": {
+      "filters.window": "SciPy signal.get_window and NumPy radial coordinates and clipping remain providers; owned C++ order-0/1 sampling. Default Hann/order1, shape-only with no pixel input; the dtype label denotes the float64 output, not an input-pixel dtype."
+    },
+    "special_default_arguments": {
+      "color.deltaE_cie76": "second input is first[..., ::-1]; raw Lab values",
+      "color.deltaE_ciede94": "second input is first[..., ::-1]; raw Lab; graphic-arts weights",
+      "color.deltaE_ciede2000": "second input is first[..., ::-1]; raw Lab; kL=kC=kH=1",
+      "color.deltaE_cmc": "second input is first[..., ::-1]; raw Lab; kL=kC=1",
+      "color.convert_colorspace": "fromspace='RGB', tospace='HSV'",
+      "color.separate_stains": "conv_matrix=hed_from_rgb",
+      "color.combine_stains": "conv_matrix=rgb_from_hed"
+    },
+    "repeat": 7,
+    "timing": "allocation-inclusive, warmed Python calls; original reference pools limited to one thread"
+  },
+  "results": [
+    {
+      "api": "filters.window",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.6902026,
+      "cpp_ms": 0.3915857586206897,
+      "speedup": 6.87002154898557,
+      "samples_ms": [
+        [
+          2.6233922,
+          2.6868856,
+          2.7243184,
+          2.7314144,
+          2.652708,
+          2.7115434,
+          2.6902026
+        ],
+        [
+          0.4097839655172414,
+          0.4153735862068966,
+          0.3915857586206897,
+          0.3925281724137931,
+          0.3852311724137931,
+          0.3875537586206897,
+          0.38785010344827586
+        ]
+      ],
+      "loops": [
+        5,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.window",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 39.051996,
+      "cpp_ms": 5.0499115,
+      "speedup": 7.73320403733808,
+      "samples_ms": [
+        [
+          40.050265,
+          38.71792,
+          38.868082,
+          38.782073,
+          39.096621,
+          39.624853,
+          39.051996
+        ],
+        [
+          5.015016,
+          5.0499115,
+          5.028787,
+          5.058426,
+          5.0762075,
+          5.088442,
+          4.997868
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
