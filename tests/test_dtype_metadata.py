@@ -29,14 +29,14 @@ def calls(api,dtype):
         expected=reference(*arguments,**options)
         actual=native(*arguments,**options)
         if arguments and expected is arguments[0]:assert actual is arguments[0]
-    return actual,expected
+    return actual,expected,data
 
 
-def compare(actual,expected,api,dtype,path='result'):
+def compare(actual,expected,api,dtype,path='result',image=None):
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected),path
         assert len(actual)==len(expected),path
-        for index,(a,e) in enumerate(zip(actual,expected)):compare(a,e,api,dtype,f'{path}[{index}]')
+        for index,(a,e) in enumerate(zip(actual,expected)):compare(a,e,api,dtype,f'{path}[{index}]',image=image)
         return
     if api=='segmentation.relabel_sequential' and type(expected).__name__=='ArrayMap':
         # These results store sparse mapping vectors. Array conversion is a
@@ -50,7 +50,8 @@ def compare(actual,expected,api,dtype,path='result'):
         return
     a,e=np.asarray(actual),np.asarray(expected)
     assert a.shape==e.shape and a.dtype==e.dtype,path
-    np.testing.assert_allclose(a,e,rtol=parity_tolerance(api,np.dtype(dtype))[0],atol=parity_tolerance(api,np.dtype(dtype))[1])
+    rtol,atol=parity_tolerance(api,np.dtype(dtype),image=image)
+    np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)
     assert a.dtype.metadata==e.dtype.metadata,f'{path}: native metadata={a.dtype.metadata!r}; reference={e.dtype.metadata!r}'
 
 
@@ -63,8 +64,8 @@ def configuration(request):
 
 @pytest.mark.parametrize('api,dtype',CASES)
 def test_every_native_entry_dtype_metadata(api,dtype):
-    actual,expected=calls(api,dtype)
-    compare(actual,expected,api,dtype)
+    actual,expected,image=calls(api,dtype)
+    compare(actual,expected,api,dtype,image=image)
 
 
 @pytest.mark.parametrize('name',['deltaE_cie76','deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'])

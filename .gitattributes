@@ -329,3 +329,11 @@ tests/test_octahedron_integer.py -text
 benchmarks/phase3-octahedron-integer-same-host.zip -text
 tests/butterworth_cases.py -text
 tests/test_butterworth_public.py -text
+third_party/pocketfft/** -text
+src/fft_internal.hpp -text
+src/fft_impl.hpp -text
+src/fft.cpp -text
+src/simd_fft_avx2.cpp -text
+tests/test_fft_native.cpp -text
+python/skimagexx/_butterworth.py -text
+src/bind_fft.cpp -text

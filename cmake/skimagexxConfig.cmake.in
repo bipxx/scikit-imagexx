@@ -1,6 +1,7 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
+find_dependency(Threads)
 if(@SKIMAGEXX_OPENMP@)
     find_dependency(OpenMP COMPONENTS CXX)
 endif()

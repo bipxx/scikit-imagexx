@@ -179,6 +179,7 @@ ORIGINAL_COMMANDS = {'modern': ['python benchmarks/coverage.py --sizes 64 --thre
 def test_original_timing_commands_and_corpora_preserved():
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     assert timing_commands(blocks['measure']) == ORIGINAL_COMMANDS['modern']
-    assert timing_commands(blocks['measure-minimum']) == ORIGINAL_COMMANDS['minimum']
+    assert timing_commands(blocks['measure-minimum']) == ORIGINAL_COMMANDS['minimum'] + [
+        'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)

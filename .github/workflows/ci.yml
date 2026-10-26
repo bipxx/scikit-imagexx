@@ -123,6 +123,14 @@ jobs:
       - run: |
           python -m pip install --no-deps build/wheels/*.whl
       - run: python -c "import numpy,skimagexx; assert numpy.__version__ == '1.24.4'; assert skimagexx.get_num_threads() == 1"
+      - name: Butterworth owned FFT parity
+        run: python -m pytest -q tests/test_butterworth_public.py --junitxml=build/ci-artifacts/butterworth-normal.xml
+      - name: Butterworth owned FFT parity with SIMD disabled
+        run: python -m pytest -q tests/test_butterworth_public.py --junitxml=build/ci-artifacts/butterworth-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Current installed registry smoke
+        run: python tools/run_feature_tests.py --phase smoke --report build/ci-artifacts/feature-smoke.json
       - run: python tools/diagnose_distance_precision.py
       - run: python -m pytest -q tests/test_integral.py tests/test_integral_singletons.py tests/test_downscale.py tests/test_downscale_allocation.py tests/test_low_contrast.py tests/test_threshold_minimum.py tests/test_label_color.py
       - run: python -m pytest -q tests/test_resize_contract.py tests/test_resize_native_pipeline.py tests/test_resize_half_identity.py
@@ -274,6 +282,7 @@ jobs:
       - name: Verify source, wheel, runtime, package and SDK before measurements
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
       - run: python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json
+      - run: python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -284,6 +293,7 @@ jobs:
           retention-days: 90
           path: |
             build/ci-*.json
+            build/ci-butterworth.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

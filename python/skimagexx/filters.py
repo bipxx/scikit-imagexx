@@ -1411,3 +1411,15 @@ def threshold_multiotsu(image=None, classes=3, nbins=256, *, hist=None):
     return centers[indices]
 
 __all__.append('threshold_multiotsu')
+
+
+from ._butterworth import butterworth as _butterworth
+
+
+def butterworth(image, cutoff_frequency_ratio=0.005, high_pass=True, order=2.0,
+                channel_axis=None, *, squared_butterworth=True, npad=0):
+    return _butterworth(image, cutoff_frequency_ratio, high_pass, order, channel_axis,
+                        squared_butterworth=squared_butterworth, npad=npad)
+
+
+__all__.append('butterworth')

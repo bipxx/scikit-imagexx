@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('filters.butterworth',),'tests/test_butterworth_public.py','benchmarks/coverage.py'),
     (tuple('measure.'+name for name in ('intersection_coeff','manders_coloc_coeff','manders_overlap_coeff')),
      'tests/test_colocalization_public.py','benchmarks/coverage.py'),
     (tuple('morphology.'+name for name in ('ellipse','octagon','octahedron','star','footprint_from_sequence')),

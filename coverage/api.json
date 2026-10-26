@@ -2096,11 +2096,15 @@
       "api": "filters.butterworth",
       "kind": "callable",
       "signature": "(image, cutoff_frequency_ratio=0.005, high_pass=True, order=2.0, channel_axis=None, *, squared_butterworth=True, npad=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_butterworth_public.py",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "filters.correlate_sparse",

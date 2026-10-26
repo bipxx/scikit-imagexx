@@ -135,7 +135,7 @@ def test_every_native_function(native, original, name, dtype, shape):
             np.testing.assert_array_equal(value,reference)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
-    rtol,atol = parity_tolerance(api,np.dtype(dtype))
+    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=a)
     np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol)
 
 

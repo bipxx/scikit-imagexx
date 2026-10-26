@@ -23,7 +23,7 @@ NATIVE_FUNCTIONS = {
               'lab2lch','lch2lab','xyz_tristimulus_values','xyz2luv','luv2xyz','rgb2luv','luv2rgb',
               'separate_stains','combine_stains','rgb2hed','hed2rgb','deltaE_cie76','convert_colorspace',
               'deltaE_ciede94','deltaE_ciede2000','deltaE_cmc'),
-    'filters': ('frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
+    'filters': ('butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
@@ -48,6 +48,23 @@ def matrix_transform_contract():
         wider_dtype_scope='Non-float64 matrices retain certified dyadic native scope; wider general casting remains unassessed',
         workers='Shared sole_core global setter, default1 and optional4; packed SIMD disabled by SKIMAGEXX_DISABLE_SIMD without changing fused arithmetic',
         performance='Unmeasured end-to-end public pipeline; homogeneous allocation fusion remains future work')
+
+
+
+def butterworth_contract():
+    """Owned Fourier stages; mask/protocol providers remain explicitly partial."""
+    return dict(api='filters.butterworth', implementation='native-partial',
+        entrypoints=('fft_r2c', 'fft_c2r', 'fft_c2c'),
+        kernel='Pinned PocketFFT real/complex ND transforms; inverse spatial normalization; no Python FFT provider',
+        providers='NumPy padding, frequency-grid/mask arithmetic, spectrum multiplication and cropping',
+        workers='One process-global worker snapshot; default1; OpenMP actual-team execution; portable builds refuse parallel workers',
+        simd='Scalar baseline and runtime-dispatched AVX2 leaf; GNU/Clang vectors; MSVC vectorization unassessed',
+        buffers='Bounded ndarray-backed storage; native aligned C-contiguous prepared buffers; output allocation boundaries revalidated',
+        dtype_scope='Builtin f16/f32/f64, integers/bool and c64/c128; extended FFT precision and other storage/protocol partitions remain explicit gaps',
+        numerical_policy='Prospective8*eps*L relative plus32*eps*L*input_peak absolute, L=ceil(log2(max(2,padded spatial count))); exact metadata/nonfinite masks/warnings/errors',
+        public_parity_test='tests/test_butterworth_public.py',
+        component_evidence='Two runtime profiles, normal/scalar, 175 checks per mode; not whole-product qualification',
+        performance_evidence=None, fully_native=False)
 
 
 def native_functions():
@@ -358,8 +375,22 @@ def default_call(api, image):
     return (image,), {}
 
 
-def parity_tolerance(api, dtype):
-    """Floating error budgets; CIE scaling amplifies cbrt/matrix roundoff."""
+def parity_tolerance(api, dtype, image=None):
+    """Floating error budgets; Butterworth uses its frozen default-input policy."""
+    if api == 'filters.butterworth':
+        if image is None:
+            raise ValueError('Butterworth tolerance requires the actual default input image')
+        import numpy as np
+        # Frozen before candidate output: defaults have no padding/channel axis.
+        # Full keyword contracts retain their independent padded-spatial policy.
+        levels = max(1, (max(2, int(image.size)) - 1).bit_length())
+        input_dtype = image.dtype
+        single = (input_dtype.kind == 'f' and input_dtype.itemsize in (2, 4)
+                  or input_dtype.kind == 'c' and input_dtype.itemsize == 8)
+        eps = np.finfo(np.float32 if single else np.float64).eps
+        finite = np.abs(image[np.isfinite(image)])
+        peak = float(finite.max()) if finite.size else 0.0
+        return 8 * eps * levels, 32 * eps * levels * peak
     if api in ('measure.intersection_coeff', 'measure.manders_coloc_coeff', 'measure.manders_overlap_coeff'):
         return (0., 0.)
     if api in ('morphology.ellipse', 'morphology.octagon', 'morphology.octahedron',

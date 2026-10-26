@@ -1,6 +1,7 @@
 """Every native public function versus original scikit-image, strict dispatch."""
 from run import measure
 import argparse
+import fnmatch
 from datetime import datetime, timezone
 from provenance import source_fingerprint
 import importlib
@@ -12,6 +13,21 @@ import numpy as np
 import skimage
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance
+
+
+def select_apis(apis, modules=None, patterns=None):
+    apis = [api for api in apis if modules is None or api.rsplit('.', 1)[0] in modules]
+    if patterns:
+        selected = set()
+        for pattern in patterns:
+            matches = [api for api in apis if fnmatch.fnmatchcase(api, pattern)]
+            if not matches:
+                raise ValueError(f'API pattern {pattern!r} matches no registered entry points in selected modules')
+            selected.update(matches)
+        apis = [api for api in apis if api in selected]
+    if not apis:
+        raise ValueError('module selection matches no registered entry points')
+    return apis
 
 
 def dtype_metadata(value):
@@ -44,6 +60,7 @@ def main():
     parser.add_argument('--threads', nargs='+', type=int, default=[1, 4])
     parser.add_argument('--repeat', type=int, default=7)
     parser.add_argument('--modules', nargs='+', help='Benchmark only these registry modules; default covers all')
+    parser.add_argument('--api', action='append', help='Repeatable API glob intersected with --modules; every pattern must match')
     parser.add_argument('--output', type=Path, default=Path('benchmarks/function-coverage.json'))
     args = parser.parse_args()
     if min(args.sizes+args.threads+[args.repeat]) < 1:
@@ -51,15 +68,21 @@ def main():
     xx.set_fallback_enabled(False)
     # Binary morphology deprecation text is tested separately before timing.
     warnings.filterwarnings('ignore',message=r'`binary_.*` is deprecated since version 0.26',category=FutureWarning)
-    apis = [api for api in native_functions() if args.modules is None or api.rsplit('.',1)[0] in args.modules]
-    if not apis:
-        parser.error('module selection matches no registered entry points')
+    try:
+        apis = select_apis(native_functions(), args.modules, args.api)
+    except ValueError as error:
+        parser.error(str(error))
     if 'restoration.denoise_tv_bregman' in apis and min(args.sizes) < 4:
         parser.error('Bregman original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
     max_tree_paths={'morphology.'+name for name in ('max_tree','max_tree_local_maxima',
                     'area_opening','area_closing','diameter_opening','diameter_closing')}
     if max_tree_paths.intersection(apis) and min(args.sizes) < 4:
         parser.error('max-tree original-library benchmarks require both spatial axes >=4; unsafe geometry remains untimed intake metadata')
+    reference_fft_workers = None
+    if 'filters.butterworth' in apis:
+        import scipy.fft as reference_fft
+        reference_fft_workers = {'before': reference_fft.get_workers()}
+        assert reference_fft_workers['before'] == 1
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []
@@ -87,11 +110,14 @@ def main():
                 expected = reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
+                    assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
-                    rtol,atol = parity_tolerance(api,np.dtype(dtype))
+                    assert xx.get_num_threads() == threads
+                    rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data)
                     error=comparison_error(actual,expected,rtol,atol)
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
+                    assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     results.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name,
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
@@ -99,11 +125,18 @@ def main():
                                     error,
                                     **timing})
                     print(f'{api:24} {size} {np.dtype(dtype).name} t={threads}: {timing["speedup"]:.2f}x',flush=True)
+    if reference_fft_workers is not None:
+        reference_fft_workers['after'] = reference_fft.get_workers()
+        assert reference_fft_workers['after'] == 1
     assert set(r['api'] for r in results) == set(apis)
     report = {'metadata': {'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'platform': platform.platform(),
                            'cpu': platform.processor(), 'reference': skimage.__version__, 'numpy': np.__version__,
                            **fingerprint, 'fallback_enabled': False, 'avx2': xx.has_avx2(),
                            'selected_apis': apis, 'dtype_metadata':args.dtype_metadata,
+                           'reference_fft_workers': reference_fft_workers,
+                           'provider_frontiers': {'filters.butterworth':
+                               'NumPy padding, frequency-grid/mask arithmetic, spectrum multiplication and cropping; owned C++ FFT only'}
+                               if 'filters.butterworth' in apis else {},
                            'special_default_arguments': {'color.deltaE_cie76':'second input is first[..., ::-1]; raw Lab values',
                                'color.deltaE_ciede94':'second input is first[..., ::-1]; raw Lab; graphic-arts weights',
                                'color.deltaE_ciede2000':'second input is first[..., ::-1]; raw Lab; kL=kC=kH=1',

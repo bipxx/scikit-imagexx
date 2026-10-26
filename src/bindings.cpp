@@ -47,6 +47,7 @@ void bind_footprint_decomposition(pybind11::module_&);
 void bind_footprint_util(pybind11::module_&);
 void bind_footprint_shapes(pybind11::module_&);
 void bind_colocalization(pybind11::module_&);
+void bind_fft(pybind11::module_&);
 void bind_components(pybind11::module_&);
 void bind_component_consumers(pybind11::module_&);
 void bind_rank(pybind11::module_&);
@@ -825,6 +826,7 @@ PYBIND11_MODULE(_core, m) {
     bind_footprint_util(m);
     bind_footprint_shapes(m);
     bind_colocalization(m);
+    bind_fft(m);
     bind_components(m);
     bind_component_consumers(m);
     bind_rank(m);

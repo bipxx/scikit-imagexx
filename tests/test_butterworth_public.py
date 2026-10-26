@@ -145,7 +145,7 @@ def test_butterworth_owned_fft(reference_runtime, spec, workers, monkeypatch):
     def profile(frame, event, argument):
         if event == "c_return" and getattr(argument, "__module__", None) == xx._core.__name__:
             name = getattr(argument, "__name__", "")
-            if name not in ("get_num_threads", "set_num_threads", "has_avx2"):
+            if name in ("fft_r2c", "fft_c2r", "fft_c2c"):
                 completions.append(name)
 
     try:
