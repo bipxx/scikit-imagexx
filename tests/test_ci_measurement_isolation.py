@@ -53,7 +53,7 @@ def test_minimum_only_and_debug_assertions_are_enforced():
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     condition = "if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only"
     assert all(condition in blocks[n] for n in ('check', 'debug-gil'))
-    assert "if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only)" in blocks['measure']
+    assert "if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only && !inputs.latest_only)" in blocks['measure']
     assert all('inputs.minimum_only' not in blocks[n] for n in ('numpy-minimum', 'measure-minimum'))
     debug = blocks['debug-gil']
     assert '--config-settings=cmake.build-type=Debug' in debug
@@ -191,7 +191,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json',
         'python benchmarks/coverage.py --api measure.moments_coords --api measure.moments_coords_central --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-coords.json',
         'python benchmarks/coverage.py --api measure.shannon_entropy --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-shannon-entropy.json',
-        'python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json']
+        'python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json',
+        'python benchmarks/coverage.py --api measure.block_reduce --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-block-reduce.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -463,14 +464,28 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert 'prepare_only:\n        description: Prepare verified offline artifacts without standalone timing\n        type: boolean\n        default: false' in workflow
     blocks = jobs(workflow)
     minimum = blocks['measure-minimum']
-    condition = "if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only"
+    condition = "github.event_name != 'workflow_dispatch' || !inputs.prepare_only"
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 11 and all(condition in step for step in timed)
+    assert len(timed) == 12 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
     assert 'build/prepared/ci-artifacts/' in minimum and 'build/prepared/wheels/' in minimum
     assert 'prepare_only' not in blocks['numpy-minimum']
     assert 'prepare_only' not in blocks['check'] and 'prepare_only' not in blocks['debug-gil']
+
+
+def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
+    workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+    assert "latest_only:\n        description: Time only the newest minimum-Linux API batch; retain all build and parity gates\n        type: boolean\n        default: false" in workflow
+    blocks = jobs(workflow)
+    minimum = blocks['measure-minimum']
+    timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
+    skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
+    assert len(timed) == 12 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and '--api measure.block_reduce ' in timed[-1]
+    assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
+    assert 'latest_only' not in blocks['numpy-minimum']
+    assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']

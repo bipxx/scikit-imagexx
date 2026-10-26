@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -114,7 +114,16 @@ def main():
                      'NumPy scalar boxing and Python logarithmic base conversion retain source semantics. '
                      'Each timed default image call includes counts, entropy and allocation. Genuine reference '
                      'nats are captured outside timing for the frozen entropy-only and base-division policy.')
+    block_scope = ('Ordinary default sums own typed block arithmetic and output partitioning. '
+                   'NumPy padding, block-view metadata, storage/layout preparation and allocation remain providers; '
+                   'custom functions/kwargs, complex padding and exceptional/type-frontier sums use literal '
+                   'primitive reducers without native sum credit. Half sums require original padded native/aligned C '
+                   'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
+                   'literal providers and open native-coverage work. Timed default image calls include the entire '
+                   'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.block_reduce' in apis:
+        provider_frontiers['measure.block_reduce'] = block_scope
     if 'measure.shannon_entropy' in apis:
         provider_frontiers['measure.shannon_entropy'] = shannon_scope
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
@@ -167,7 +176,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.shannon_entropy':
+                    if api == 'measure.block_reduce':
+                        error = block_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.shannon_entropy':
                         error = shannon_default_error(call_args[0], actual, expected)
                     elif api in COORDS_MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, call_args[0], actual, expected)
@@ -228,7 +239,8 @@ def main():
              + (' ' + eigvals_scope if 'measure.inertia_tensor_eigvals' in apis else '')
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
-             + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else ''), '',
+             + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + block_scope if 'measure.block_reduce' in apis else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')

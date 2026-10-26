@@ -35,3 +35,8 @@ __all__ += ['moments_coords', 'moments_coords_central']
 from ._shannon_entropy import shannon_entropy
 
 __all__ += ['shannon_entropy']
+
+
+from ._block_reduce import block_reduce
+
+__all__ += ['block_reduce']

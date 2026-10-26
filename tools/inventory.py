@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('measure.block_reduce',),'tests/test_block_reduce_public.py','benchmarks/coverage.py'),
     (('measure.shannon_entropy',),'tests/test_shannon_entropy_public.py','benchmarks/coverage.py'),
     (('measure.moments_coords','measure.moments_coords_central'),'tests/test_moments_coords_public.py','benchmarks/coverage.py'),
     (('measure.inertia_tensor',),'tests/test_inertia_tensor_public.py','benchmarks/coverage.py'),
