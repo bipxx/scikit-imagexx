@@ -41,10 +41,17 @@ v1** is **2.682326× over baseline**; every case improves over v1, and all 21
 remain slower than scikit-image. These are original/current ratios from
 separate hosted runs, not same-host paired candidate/baseline timings. All raw
 samples and regressions are published; no all-profile or whole-product claim
-follows. The known-float64 load change f64-v3 is the next source/test packet,
-with no performance result yet. Root owns launches and integration; C++ and
-focused-test ownership remain separate. Keep the fixed metric, all 73 cases
-and exact gates.
+follows.
+
+[Float64 v3](../benchmarks/phase3-f64-v3.md), source `ac87e23`, is measured but
+**on HOLD, unmerged**. Its 0.1030780647074× score is 1.120901× the kept v2
+ratio, but v3 ran on EPYC 7763 versus v2's EPYC 9V45. Two normalized cases
+worsen; all 21 remain slower than scikit-image. One masked-overlap return
+differs by one ULP across hosts, with exact original/candidate agreement within
+each run. The kept score remains **0.0919599844761×**; no causal code gain is
+established. An artifact-only same-host ABBA workflow is in progress, with no
+result yet. Root owns launches and integration; C++ and focused-test ownership
+remain separate. Keep the fixed metric, all 73 cases and exact gates.
 
 ## Historical execution card — public203 integration checkpoint
 

@@ -71,7 +71,16 @@ This compares normalized ratios from separate hosted runs, not direct paired
 baseline/candidate latencies on one host. No modern/Windows optimization result
 or combined-product qualification follows from it.
 
-**Next:** f64-v3's known-float64 load change is in progress, with no performance result yet.
+[Float64 v3](../benchmarks/phase3-f64-v3.md), source `ac87e23`, is measured but
+**on HOLD and unmerged**. Its score is 0.1030780647074×, nominally 1.120901×
+over width v2, but its EPYC 7763 host differs from v2's EPYC 9V45. Nineteen
+normalized ratios improve and two worsen; all 21 calls remain slower than the
+original. One masked-overlap return differs by one ULP across hosts while
+original/candidate agree exactly within each run. This is no code-attributed
+gain or keep decision; **the kept score remains 0.0919599844761×**.
+
+**Next:** an artifact-only same-host ABBA comparison workflow is in progress,
+with no result yet. Reuse the frozen products to resolve the CPU confound.
 Keep the same 21-case metric, all 73 workload specifications, exact parity gates
 and every adverse result. Root owns experiment launches and keep decisions;
 the C++ and focused-test owners work separately. Measure the complete public
