@@ -314,6 +314,14 @@ bool coloc_sum_supported(const ColocView& v,ColocReductionPlan plan) {
 bool coloc_all_finite(const ColocView& v) {
     const auto n=coloc_validate(v);if(!floating(v.type))return true;
     const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
+    if(v.type==Type::float32 && !v.swapped && input.affine && input.step==4) {
+        const auto* data=static_cast<const unsigned char*>(v.data);std::uint32_t nonfinite=0;
+        for(std::size_t i=0;i<n;++i) {
+            std::uint32_t word;std::memcpy(&word,data+4*i,4);
+            nonfinite|=(word&0x7f800000u)==0x7f800000u;
+        }
+        return nonfinite==0;
+    }
     const auto item=coloc_itemsize(v.type);
     const auto exponent=v.type==Type::float16 ? 0x7c00ULL:v.type==Type::float32 ? 0x7f800000ULL:0x7ff0000000000000ULL;
     for(std::size_t i=0;i<n;++i)if((bits(v,input[i],item)&exponent)==exponent)return false;

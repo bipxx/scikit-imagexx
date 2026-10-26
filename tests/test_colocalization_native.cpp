@@ -99,6 +99,45 @@ void byte_binary_conversion() {
         require(refused && out==std::vector<unsigned char>(n+2,0xa5));
     }
 }
+void finite_float32_bits() {
+    const struct {std::uint32_t word;bool finite;} cases[]={
+        {0,true},{0x80000000u,true},{1,true},{0x80000001u,true},
+        {0x007fffffu,true},{0x807fffffu,true},{0x00800000u,true},{0x80800000u,true},
+        {0x7f7fffffu,true},{0xff7fffffu,true},{0x7f800000u,false},{0xff800000u,false},
+        {0x7fc12345u,false},{0xffc12345u,false},{0x7f800001u,false},{0xff800001u,false}};
+    std::fenv_t saved;require(std::fegetenv(&saved)==0);
+    for(int rounding:{FE_TONEAREST,FE_DOWNWARD}) {
+        require(std::fesetround(rounding)==0);std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+        for(int layout=0;layout<5;++layout)for(const std::size_t n:{0,1,2,3,4,5,6,7,8,9,15,16,17,31,32,33,129})for(const auto c:cases) {
+            // Aligned, unaligned, swapped, reverse, and step-two storage. The
+            // last logical value exercises every tail; padding stays poisoned.
+            std::vector<std::uint32_t> storage(2*n+4,0xa5a5a5a5u);
+            auto* bytes=reinterpret_cast<unsigned char*>(storage.data());
+            auto* first=bytes+(layout==0 ? 4:1)+(layout==3 && n ? 4*(n-1):0);
+            const std::ptrdiff_t step=layout==3 ? -4:layout==4 ? 8:4;
+            for(std::size_t i=0;i<n;++i) {
+                const std::uint32_t word=i+1==n ? c.word:0x3f800000u;
+                unsigned char encoded[4];std::memcpy(encoded,&word,4);
+                for(std::size_t j=0;j<4;++j)first[std::ptrdiff_t(i)*step+std::ptrdiff_t(j)]=encoded[layout==2 ? 3-j:j];
+            }
+            const auto before=storage;
+            One view(n ? first:nullptr,n,ColocType::float32,4,layout==2);view.stride=step;
+            view.value.allocation=n ? storage.data():nullptr;view.value.allocation_bytes=n ? storage.size()*4:0;
+            require(coloc_all_finite(view.value)==(!n || c.finite));
+            require(std::fetestexcept(FE_ALL_EXCEPT)==FE_DIVBYZERO && std::fegetround()==rounding);
+            require(storage==before);
+            if(n && !c.finite && rounding==FE_TONEAREST) {
+                std::vector<unsigned char> output(n*4+2,0x6d);const auto untouched=output;
+                unsigned flags=99;bool refused=false;
+                try{coloc_square_into(view.value,coloc_keep_order(view.value),{output.data()+1,n*4},flags);}
+                catch(const ColocProviderRequired&){refused=true;}
+                require(refused && output==untouched && flags==99 && storage==before);
+                require(std::fetestexcept(FE_ALL_EXCEPT)==FE_DIVBYZERO && std::fegetround()==rounding);
+            }
+        }
+    }
+    require(std::fesetenv(&saved)==0);
+}
 void integer_products() {
     struct Kind{ColocType type;unsigned bytes;bool signed_value;};
     const Kind kinds[]={{ColocType::uint8,1,false},{ColocType::int8,1,true},
@@ -316,7 +355,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();byte_binary_conversion();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
+        set_num_threads(workers);bool_counts();byte_binary_conversion();finite_float32_bits();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';
