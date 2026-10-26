@@ -1,5 +1,17 @@
 # Complete scikit-image implementation plan
 
+## Current priority: phased fast run
+
+The user's latest direction is tests first, then small implementation groups,
+isolated one-thread benchmarks, and full supported-profile acceptance. Use the
+[fast-run guide](FAST_RUN.md) for executable commands. The initial Windows
+development smoke gate passed 1,286 checks: all 477 API surfaces, 206 registered
+function signatures, 602 supported-dtype parity cases and one registry check.
+This reuses the retained public203 package without rebuilding. The 266
+upstream-only entries remain numerical gaps; existing full contracts and
+qualification evidence retain their scope. Older campaign priorities below
+are historical and do not supersede this phased route.
+
 ## Current execution card — updated-plan resume
 
 Implementation is active. The [work queue](work_items.json) owns assignments and

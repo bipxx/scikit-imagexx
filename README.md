@@ -6,6 +6,9 @@ reproducible benchmarks. The native port is in progress. Python compatibility
 namespaces let applications swap backends while unsupported calls use explicitly
 reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
+For development, use the [phased fast-run guide](coverage/FAST_RUN.md) to run
+per-feature surface, compact parity and full contract tests without rebuilding.
+
 Every native public function has scoped parity tests. All 199 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.

@@ -276,3 +276,7 @@ coverage/evidence/reconstruction-trace-policy-observations.json -text
 coverage/evidence/reconstruction-trace-policy-migration.json -text
 coverage/evidence/h203-tv-zero-source-composition.json -text
 coverage/evidence/public203-main-integration.json -text
+
+tools/run_feature_tests.py -text
+tests/test_feature_api_surface.py -text
+tests/test_feature_test_runner.py -text
