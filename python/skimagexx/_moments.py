@@ -338,3 +338,44 @@ def inertia_tensor_eigvals(image, mu=None, T=None, *, spacing=None):
         eigvals = np.linalg.eigvalsh(T)
     eigvals = np.clip(eigvals, 0, None, out=eigvals)
     return sorted(eigvals, reverse=True)
+
+
+def moments_coords(coords, order=3):
+    """Calculate raw coordinate moments using owned ordinary reductions."""
+    return moments_coords_central(coords, 0, order=order)
+
+
+def moments_coords_central(coords, center=None, order=3):
+    """Retain NumPy preparation around owned finite real products and sums.
+
+    Tuple conversion, centering and typed powers keep their source ordering.
+    K1, complex, exceptional arithmetic and unsupported reduction domains use
+    the literal NumPy primitive path without owned-reduction credit.
+    """
+    if isinstance(coords, tuple):
+        coords = np.stack(coords, axis=-1)
+    checked = np.asanyarray(coords)
+    if checked.size == 0:
+        raise ValueError('The parameter `image` cannot be an empty array')
+    if checked.ndim != 2:
+        raise ValueError('The parameter `image` must be a 2-dimensional array')
+    ndim = coords.shape[1]
+    float_type = _supported_float_type(coords.dtype)
+    if center is None:
+        center = np.mean(coords, axis=0, dtype=float)
+    coords = coords.astype(float_type, copy=False) - center
+    coords = np.stack([coords**c for c in range(order + 1)], axis=-1)
+    if coords.dtype.char in ('f', 'd') and coords.shape[2] > 1:
+        # These powers are private NumPy intermediates. Normalize their logical
+        # layout once at the native boundary; the binding checks the allocation.
+        prepared = np.ascontiguousarray(coords)
+        result = _core.moments_coords_reduce(prepared, _core.get_num_threads())
+        if result is not None:
+            return result
+    coords = coords.reshape(coords.shape + (1,) * (ndim - 1))
+    calc = 1
+    for axis in range(ndim):
+        isolated_axis = coords[:, axis]
+        isolated_axis = np.moveaxis(isolated_axis, 1, 1 + axis)
+        calc = calc * isolated_axis
+    return np.sum(calc, axis=0)

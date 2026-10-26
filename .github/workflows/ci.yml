@@ -175,6 +175,12 @@ jobs:
         run: python -m pytest -q tests/test_inertia_eigvals_public.py --junitxml=build/ci-artifacts/inertia-eigvals-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Coordinate moments owned products and reductions
+        run: python -m pytest -q tests/test_moments_coords_public.py --junitxml=build/ci-artifacts/moments-coords-normal.xml
+      - name: Coordinate moments owned products and reductions with SIMD disabled
+        run: python -m pytest -q tests/test_moments_coords_public.py --junitxml=build/ci-artifacts/moments-coords-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Immutable bytes storage parity
         run: python -m pytest -q tests/test_immutable_buffer_roots_public.py --junitxml=build/ci-artifacts/immutable-bytes-normal.xml
       - name: Immutable bytes storage parity with SIMD disabled
@@ -349,6 +355,8 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - run: python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+      - run: python benchmarks/coverage.py --api measure.moments_coords --api measure.moments_coords_central --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-coords.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -366,6 +374,7 @@ jobs:
             build/ci-moments-derived.md
             build/ci-inertia-tensor.md
             build/ci-inertia-eigvals.md
+            build/ci-moments-coords.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

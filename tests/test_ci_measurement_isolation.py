@@ -188,7 +188,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json',
         'python benchmarks/coverage.py --api measure.moments_normalized --api measure.moments_hu --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-derived.json',
         'python benchmarks/coverage.py --api measure.inertia_tensor --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-tensor.json',
-        'python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json']
+        'python benchmarks/coverage.py --api measure.inertia_tensor_eigvals --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-inertia-eigvals.json',
+        'python benchmarks/coverage.py --api measure.moments_coords --api measure.moments_coords_central --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-coords.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -361,6 +362,8 @@ def test_moments_provider_metadata_does_not_claim_fft_workers():
 
 def test_derived_benchmark_has_five_actual_tensor_cases():
     source = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    coords_family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
+                         and any(isinstance(t, ast.Name) and t.id == 'COORDS_MOMENTS_FUNCTIONS' for t in n.targets))
     family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
     dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
@@ -385,7 +388,7 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
               and any(isinstance(t, ast.Name) and t.id in ('case_size', 'case_dtype') for t in n.targets)]
     code = compile(ast.Module(body=labels, type_ignores=[]), '<actual input labels>', 'exec')
     for api in (*family, 'measure.moments'):
-        values = dict(api=api, DERIVED_MOMENTS_FUNCTIONS=family, size=1024, dtype='fixture dtype',
+        values = dict(api=api, DERIVED_MOMENTS_FUNCTIONS=family, COORDS_MOMENTS_FUNCTIONS=coords_family, size=1024, dtype='fixture dtype',
                       call_args=(SimpleNamespace(dtype=SimpleNamespace(name='actual dtype')),),
                       np=SimpleNamespace(dtype=lambda x: SimpleNamespace(name=x)))
         exec(code, values)
@@ -398,6 +401,8 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     # Execute the real preparer's control/data flow with a small storage spy;
     # this metadata test neither imports NumPy nor claims numerical parity.
     tree = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    coords_family = next(ast.literal_eval(n.value) for n in tree.body if isinstance(n, ast.Assign)
+                         and any(isinstance(t, ast.Name) and t.id == 'COORDS_MOMENTS_FUNCTIONS' for t in n.targets))
     function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'default_call')
     class Tensor:
         def __init__(self, shape, dtype):
@@ -413,6 +418,7 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Tensor(shape, dtype))
     namespace = dict(DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+                     COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
     (prepared,), options = namespace['default_call'](api, image)
@@ -421,6 +427,33 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     assert prepared is not image and prepared.shape == (4, 4) and prepared.dtype is descriptor
     assert prepared.values == expected and options == {}
     assert namespace['default_call']('measure.moments', image) == ((image,), {})
+
+
+@pytest.mark.parametrize('api', ['measure.moments_coords', 'measure.moments_coords_central'])
+@pytest.mark.parametrize('shape', [(1, 1), (3, 19), (256, 256)])
+def test_coordinate_default_preparation_uses_actual_points(api, shape):
+    tree = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'default_call')
+    family = next(n for n in tree.body if isinstance(n, ast.Assign)
+                  and any(isinstance(t, ast.Name) and t.id == 'COORDS_MOMENTS_FUNCTIONS' for t in n.targets))
+    class Points:
+        def __init__(self, shape, dtype):
+            self.shape, self.dtype, self.flat = shape, dtype, self
+            self.size = shape[0]*shape[1]
+        def __setitem__(self, index, values):
+            assert index == slice(None)
+            self.values = values
+    descriptor = SimpleNamespace(name='float32', metadata={'unit': 'coordinate'})
+    image = SimpleNamespace(shape=shape, size=shape[0]*shape[1], dtype=descriptor,
+                            flat=range(shape[0]*shape[1]))
+    def import_numpy(name, *args, **kwargs):
+        assert name == 'numpy'
+        return SimpleNamespace(empty=lambda shape, dtype: Points(shape, dtype))
+    namespace = dict(__builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+    exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
+    (points,), options = namespace['default_call'](api, image)
+    assert points is not image and points.shape == (shape[0], 2) and points.dtype is descriptor
+    assert points.values == [i % image.size for i in range(2*shape[0])] and options == {}
 
 
 def test_prepare_only_retains_verified_minimum_artifact_without_timing():
@@ -432,7 +465,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 8 and all(condition in step for step in timed)
+    assert len(timed) == 9 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
