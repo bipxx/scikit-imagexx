@@ -99,6 +99,26 @@ void byte_binary_conversion() {
         require(refused && out==std::vector<unsigned char>(n+2,0xa5));
     }
 }
+void affine_byte_prewrite() {
+    const std::array<unsigned char,6> logical{0,1,0,1,0,1};
+    for(auto type:{ColocType::uint8,ColocType::int8})for(std::ptrdiff_t step:{2,-2}) {
+        std::array<unsigned char,14> input;input.fill(0xa5);
+        auto* first=input.data()+(step>0 ? 1:11);
+        for(std::size_t i=0;i<6;++i)first[std::ptrdiff_t(i)*step]=logical[i];
+        One view(first,6,type,1);view.stride=step;
+        view.value.allocation=input.data();view.value.allocation_bytes=input.size();
+        const auto before=input;std::array<unsigned char,8> out;out.fill(0x6d);
+        require(coloc_binary_valid(view.value).value);
+        coloc_binary_into(view.value,coloc_keep_order(view.value),{out.data()+1,6});
+        require(std::memcmp(out.data()+1,logical.data(),6)==0 && out.front()==0x6d && out.back()==0x6d && input==before);
+        first[5*step]=type==ColocType::int8 ? 128:2;const auto invalid=input;out.fill(0x6d);
+        require(!coloc_binary_valid(view.value).value);
+        bool refused=false;
+        try{coloc_binary_into(view.value,coloc_keep_order(view.value),{out.data()+1,6});}
+        catch(const std::domain_error&){refused=true;}
+        require(refused && out==std::array<unsigned char,8>{0x6d,0x6d,0x6d,0x6d,0x6d,0x6d,0x6d,0x6d} && input==invalid);
+    }
+}
 void integer_products() {
     struct Kind{ColocType type;unsigned bytes;bool signed_value;};
     const Kind kinds[]={{ColocType::uint8,1,false},{ColocType::int8,1,true},
@@ -316,7 +336,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();byte_binary_conversion();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
+        set_num_threads(workers);bool_counts();byte_binary_conversion();affine_byte_prewrite();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';

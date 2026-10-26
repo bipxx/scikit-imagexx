@@ -326,11 +326,13 @@ ColocType coloc_sum_type(Type t) {
 }
 ColocPredicate coloc_binary_valid(const ColocView& v) {
     const auto n=coloc_validate(v);const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
-    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine && input.step==1) {
+    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine) {
         // Only integer bytes 0/1 are valid; bool deliberately permits other
         // nonzero representations. This read-only reduction can vectorize.
         const auto* data=static_cast<const unsigned char*>(v.data);std::uint8_t invalid=0;
-        for(std::size_t i=0;i<n;++i)invalid=std::uint8_t(invalid|(data[i]&0xfeu));
+        const auto step=input.step;
+        if(step==1)for(std::size_t i=0;i<n;++i)invalid=std::uint8_t(invalid|(data[i]&0xfeu));
+        else for(std::size_t i=0;i<n;++i)invalid=std::uint8_t(invalid|(data[std::ptrdiff_t(i)*step]&0xfeu));
         return {invalid==0,0};
     }
     const auto item=coloc_itemsize(v.type);
@@ -341,11 +343,14 @@ ColocExecution coloc_binary_into(const ColocView& v,const ColocOrder& order,Colo
     const auto n=coloc_validate(v);order_check(v,order);output_check(out,n,v,nullptr,&order);
     if(!coloc_binary_valid(v).value)throw std::domain_error("colocalization nonbinary input");
     const ReadAccess input(v,order,n);
-    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine && input.step==1) {
+    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine) {
         const auto* source=static_cast<const unsigned char*>(v.data);
         auto* target=static_cast<unsigned char*>(out.data);
+        const auto step=input.step;
         return partition(n,[&](auto begin,auto end){
-            if(begin<end)std::memcpy(target+begin,source+begin,end-begin);
+            if(step==1) {
+                if(begin<end)std::memcpy(target+begin,source+begin,end-begin);
+            } else for(auto i=begin;i<end;++i)target[i]=source[std::ptrdiff_t(i)*step];
         });
     }
     const auto item=coloc_itemsize(v.type);
