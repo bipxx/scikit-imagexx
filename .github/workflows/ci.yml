@@ -163,6 +163,12 @@ jobs:
         run: python -m pytest -q tests/test_normalized_layouts_public.py --junitxml=build/ci-artifacts/normalized-layouts-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Inertia tensor owned assembly parity
+        run: python -m pytest -q tests/test_inertia_tensor_public.py --junitxml=build/ci-artifacts/inertia-tensor-normal.xml
+      - name: Inertia tensor owned assembly parity with SIMD disabled
+        run: python -m pytest -q tests/test_inertia_tensor_public.py --junitxml=build/ci-artifacts/inertia-tensor-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Immutable bytes storage parity
         run: python -m pytest -q tests/test_immutable_buffer_roots_public.py --junitxml=build/ci-artifacts/immutable-bytes-normal.xml
       - name: Immutable bytes storage parity with SIMD disabled

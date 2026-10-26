@@ -189,14 +189,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py tests/test_octahedron_integer.py tests/test_butterworth_public.py tests/test_lpi_filter_public.py tests/test_window_public.py tests/test_moments_public.py tests/test_moments_derived_public.py tests/test_normalized_layouts_public.py tests/test_immutable_buffer_roots_public.py --basetemp build/phase3/preparation/normal-cases --junitxml build/phase3/preparation/public-normal.xml 2>&1 | tee build/phase3/preparation/public-normal.log
+          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py tests/test_octahedron_integer.py tests/test_butterworth_public.py tests/test_lpi_filter_public.py tests/test_window_public.py tests/test_moments_public.py tests/test_moments_derived_public.py tests/test_normalized_layouts_public.py tests/test_inertia_tensor_public.py tests/test_immutable_buffer_roots_public.py --basetemp build/phase3/preparation/normal-cases --junitxml build/phase3/preparation/public-normal.xml 2>&1 | tee build/phase3/preparation/public-normal.log
       - name: Public contracts with scalar dispatch
         shell: bash
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
         run: |
           set -euo pipefail
-          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py tests/test_octahedron_integer.py tests/test_butterworth_public.py tests/test_lpi_filter_public.py tests/test_window_public.py tests/test_moments_public.py tests/test_moments_derived_public.py tests/test_normalized_layouts_public.py tests/test_immutable_buffer_roots_public.py --basetemp build/phase3/preparation/scalar-cases --junitxml build/phase3/preparation/public-scalar.xml 2>&1 | tee build/phase3/preparation/public-scalar.log
+          python -m pytest -q tests/test_footprint_shapes_public.py tests/test_colocalization_public.py tests/test_octahedron_integer.py tests/test_butterworth_public.py tests/test_lpi_filter_public.py tests/test_window_public.py tests/test_moments_public.py tests/test_moments_derived_public.py tests/test_normalized_layouts_public.py tests/test_inertia_tensor_public.py tests/test_immutable_buffer_roots_public.py --basetemp build/phase3/preparation/scalar-cases --junitxml build/phase3/preparation/public-scalar.xml 2>&1 | tee build/phase3/preparation/public-scalar.log
       - name: Current registry fast smoke
         shell: bash
         run: |
@@ -211,11 +211,11 @@ jobs:
           folder = Path('build/phase3/preparation')
           for mode in ('normal', 'scalar'):
               cases = ET.parse(folder / ('public-' + mode + '.xml')).getroot().findall('.//testcase')
-              assert len(cases) == 1828, (mode, len(cases))
+              assert len(cases) == 1943, (mode, len(cases))
               assert all(not any(case.findall(tag) for tag in ('failure', 'error', 'skipped')) for case in cases)
           entries = json.loads(Path('coverage/api.json').read_text())['entries']
           native = [e for e in entries if e['implementation'] in ('native-partial', 'metadata')]
-          assert len(entries) == 477 and len(native) == 224
+          assert len(entries) == 477 and len(native) == 225
           expected = len(entries) + sum(1 + len(e['native_default_case_dtypes']) for e in native) + 1
           smoke = json.loads((folder / 'fast-smoke.json').read_text())
           assert smoke['status'] == 'passed' and smoke['selected_entries'] == 477
