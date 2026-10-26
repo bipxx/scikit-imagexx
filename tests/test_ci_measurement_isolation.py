@@ -184,7 +184,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/coverage.py --api filters.butterworth --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-butterworth.json',
         'python benchmarks/coverage.py --api filters.filter_forward --api filters.filter_inverse --api filters.wiener --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-lpi.json',
         'python benchmarks/coverage.py --api filters.window --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-window.json',
-        'python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json']
+        'python benchmarks/coverage.py --api measure.moments --api measure.moments_central --api measure.centroid --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments.json',
+        'python benchmarks/coverage.py --api measure.moments_normalized --api measure.moments_hu --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-moments-derived.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -287,7 +288,7 @@ def test_moments_contracts_precede_measurement_artifact_freeze():
     assert 'build/ci-moments.md' in blocks['measure-minimum']
 
 
-def test_moments_benchmark_routes_only_three_apis_to_cellwise_check():
+def test_moments_benchmark_routes_projection_and_derived_cellwise_checks():
     source = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
     declaration = next(n for n in source.body if isinstance(n, ast.Assign)
                        and any(isinstance(t, ast.Name) and t.id == 'MOMENTS_FUNCTIONS' for t in n.targets))
@@ -301,7 +302,9 @@ def test_moments_benchmark_routes_only_three_apis_to_cellwise_check():
                                                    for v in ast.walk(n.test)))
     old = ast.parse('rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)\n'
                     'error=comparison_error(actual,expected,rtol,atol)').body
-    assert [ast.dump(n) for n in route.orelse] == [ast.dump(n) for n in old]
+    derived = ('measure.moments_normalized', 'measure.moments_hu')
+    assert len(route.orelse) == 1 and isinstance(route.orelse[0], ast.If)
+    assert [ast.dump(n) for n in route.orelse[0].orelse] == [ast.dump(n) for n in old]
     code = compile(ast.Module(body=[route], type_ignores=[]), '<moments parity selection>', 'exec')
     for entry in json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']:
         calls = []
@@ -311,12 +314,15 @@ def test_moments_benchmark_routes_only_three_apis_to_cellwise_check():
             calls.append(('old tolerance', api, dtype, image, expected)); return 1, 2
         def compare(actual, expected, rtol, atol):
             calls.append(('old comparison', actual, expected, rtol, atol)); return 23
-        values = dict(api=entry['api'], MOMENTS_FUNCTIONS=family, dtype='dtype', data='image',
+        values = dict(api=entry['api'], MOMENTS_FUNCTIONS=family, DERIVED_MOMENTS_FUNCTIONS=derived,
+                      call_args=('prepared moments',), dtype='dtype', data='image',
                       actual='actual', expected='expected', np=SimpleNamespace(dtype=lambda x: x),
                       moments_default_error=moments, parity_tolerance=tolerance, comparison_error=compare)
         exec(code, values)
         if entry['api'] in family:
             assert calls == [('moments', entry['api'], 'image', 'actual', 'expected')] and values['error'] == 17
+        elif entry['api'] in derived:
+            assert calls == [('moments', entry['api'], 'prepared moments', 'actual', 'expected')] and values['error'] == 17
         else:
             assert calls == [('old tolerance', entry['api'], 'dtype', 'image', 'expected'),
                              ('old comparison', 'actual', 'expected', 1, 2)] and values['error'] == 23
@@ -348,3 +354,67 @@ def test_moments_provider_metadata_does_not_claim_fft_workers():
     assert not eval(condition, {'lpi_apis': lpi, 'apis': family})
     for api in lpi | {'filters.butterworth'}:
         assert eval(condition, {'lpi_apis': lpi, 'apis': [api]})
+
+
+def test_derived_benchmark_has_five_actual_tensor_cases():
+    source = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
+                  and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
+    dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
+    namespace = {}
+    exec(compile(ast.Module(body=[dtype_function], type_ignores=[]), '<supported default dtypes>', 'exec'), namespace)
+    main = next(n for n in ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes()).body
+                if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    guard = next(n for n in ast.walk(main) if isinstance(n, ast.If)
+                 and any(isinstance(v, ast.Name) and v.id == 'DERIVED_MOMENTS_FUNCTIONS' for v in ast.walk(n.test))
+                 and len(n.body) == 1 and isinstance(n.body[0], ast.Continue))
+    predicate = compile(ast.Expression(guard.test), '<fixed tensor deduplication>', 'eval')
+    selected = [(api, dtype) for api in family for size_index in range(3)
+                for dtype in ('uint8', 'float32', 'float64')
+                if dtype in namespace['native_dtypes'](api)
+                and not eval(predicate, dict(api=api, size_index=size_index, DERIVED_MOMENTS_FUNCTIONS=family))]
+    assert selected == [('measure.moments_normalized', 'float32'), ('measure.moments_normalized', 'float64'),
+                        ('measure.moments_hu', 'uint8'), ('measure.moments_hu', 'float32'), ('measure.moments_hu', 'float64')]
+    for entry in json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']:
+        if entry['api'] not in family:
+            assert not eval(predicate, dict(api=entry['api'], size_index=2, DERIVED_MOMENTS_FUNCTIONS=family))
+    labels = [n for n in ast.walk(main) if isinstance(n, ast.Assign)
+              and any(isinstance(t, ast.Name) and t.id in ('case_size', 'case_dtype') for t in n.targets)]
+    code = compile(ast.Module(body=labels, type_ignores=[]), '<actual input labels>', 'exec')
+    for api in (*family, 'measure.moments'):
+        values = dict(api=api, DERIVED_MOMENTS_FUNCTIONS=family, size=1024, dtype='fixture dtype',
+                      call_args=(SimpleNamespace(dtype=SimpleNamespace(name='actual dtype')),),
+                      np=SimpleNamespace(dtype=lambda x: SimpleNamespace(name=x)))
+        exec(code, values)
+        assert (values['case_size'], values['case_dtype']) == ((4, 'actual dtype') if api in family else (1024, 'fixture dtype'))
+
+
+@pytest.mark.parametrize('api', ['measure.moments_normalized', 'measure.moments_hu'])
+@pytest.mark.parametrize('shape', [(1, 1), (3, 19), (519, 521)])
+def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
+    # Execute the real preparer's control/data flow with a small storage spy;
+    # this metadata test neither imports NumPy nor claims numerical parity.
+    tree = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
+    function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'default_call')
+    class Tensor:
+        def __init__(self, shape, dtype):
+            self.shape, self.dtype, self.flat = shape, dtype, self
+            self.values = [None] * 16
+        def __setitem__(self, index, value):
+            if isinstance(index, slice):self.values[index] = value
+            else:self.values[4 * index[0] + index[1]] = value
+    descriptor = SimpleNamespace(name='float32', metadata={'unit': 'moment'})
+    image = SimpleNamespace(shape=shape, size=shape[0] * shape[1], dtype=descriptor,
+                            flat=range(shape[0] * shape[1]))
+    def import_numpy(name, *args, **kwargs):
+        assert name == 'numpy'
+        return SimpleNamespace(empty=lambda shape, dtype: Tensor(shape, dtype))
+    namespace = dict(DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+                     __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+    exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
+    (prepared,), options = namespace['default_call'](api, image)
+    expected = [i % image.size for i in range(16)]
+    if api.endswith('normalized'):expected[0], expected[1], expected[4] = 4, 0, 0
+    assert prepared is not image and prepared.shape == (4, 4) and prepared.dtype is descriptor
+    assert prepared.values == expected and options == {}
+    assert namespace['default_call']('measure.moments', image) == ((image,), {})

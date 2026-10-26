@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, moments_default_error
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, moments_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -93,8 +93,15 @@ def main():
     moments_scope = ('NumPy dtype promotion, coordinate powers and layout preparation, and the literal '
                      'analytical central-moment and centroid-ratio Python/NumPy shell remain providers; '
                      'owned typed C++ per-axis projections capture floating-point flags and use the shared global workers.')
+    derived_scope = ('Fixed owning 4x4 moment tensors are prepared outside timing; dtype is the actual '
+                     'mu/nu input dtype, not an image label. Normalization keeps NumPy scalar powers, '
+                     'first division, promotion and assignment providers with an owned final scalar divide; '
+                     'Hu keeps dtype conversion and output wrapping around owned C++ polynomial arithmetic. '
+                     'Each timed public call includes its own allocation and conversions. Integer '
+                     'normalization raises the source NaN-assignment error and has no timing row.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
+    provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})
     if 'filters.window' in apis:
         provider_frontiers['filters.window'] = window_scope
     if 'filters.butterworth' in apis:
@@ -103,7 +110,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []
-    for size in args.sizes:
+    for size_index, size in enumerate(args.sizes):
         for dtype in (np.uint8, np.float32, np.float64):
             rng = np.random.default_rng(2026)
             gray = rng.integers(0, 256, (size, size), dtype=np.uint8)
@@ -114,6 +121,9 @@ def main():
                 tagged=np.dtype(dtype,metadata={'units':'linear','source':'benchmark'})
                 gray=gray.view(tagged);rgb=rgb.view(tagged)
             for api in apis:
+                # Derived moments have fixed 4x4 inputs, independent of image size.
+                if api in DERIVED_MOMENTS_FUNCTIONS and size_index != 0:
+                    continue
                 # Window consumes only shape, so fixture pixel dtypes are not distinct cases.
                 if api == 'filters.window' and dtype != np.float64:
                     continue
@@ -127,6 +137,8 @@ def main():
                 if args.dtype_metadata and call_args and isinstance(call_args[0],np.ndarray) and call_args[0].dtype.metadata is None:
                     first=call_args[0].view(np.dtype(call_args[0].dtype,metadata={'units':'linear','source':'benchmark'}))
                     call_args=(first,*call_args[1:])
+                case_size = 4 if api in DERIVED_MOMENTS_FUNCTIONS else size
+                case_dtype = call_args[0].dtype.name if api in DERIVED_MOMENTS_FUNCTIONS else np.dtype(dtype).name
                 expected = reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
@@ -135,6 +147,8 @@ def main():
                     assert xx.get_num_threads() == threads
                     if api in MOMENTS_FUNCTIONS:
                         error = moments_default_error(api, data, actual, expected)
+                    elif api in DERIVED_MOMENTS_FUNCTIONS:
+                        error = moments_default_error(api, call_args[0], actual, expected)
                     else:
                         rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)
                         error=comparison_error(actual,expected,rtol,atol)
@@ -142,12 +156,13 @@ def main():
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
-                    results.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name,
+                    results.append({'api': api, 'size': case_size, 'dtype': case_dtype,
+                                    **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     error,
                                     **timing})
-                    print(f'{api:24} {size} {np.dtype(dtype).name} t={threads}: {timing["speedup"]:.2f}x',flush=True)
+                    print(f'{api:24} {case_size} {case_dtype} t={threads}: {timing["speedup"]:.2f}x',flush=True)
     if reference_fft_workers is not None:
         reference_fft_workers['after'] = reference_fft.get_workers()
         assert reference_fft_workers['after'] == 1
@@ -177,7 +192,8 @@ def main():
              'Speedup is reference/current; below 1 means slower. This does not prove full API parity or universal performance.'
              + (' ' + lpi_scope if lpi_apis.intersection(apis) else '')
              + (' ' + window_scope if 'filters.window' in apis else '')
-             + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
+             + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else '')
+             + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
