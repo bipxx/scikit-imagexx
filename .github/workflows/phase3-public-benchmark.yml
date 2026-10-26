@@ -132,7 +132,8 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
               stream.write('job-id=' + str(job['id']) + '\n')
           PY
-          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$(python -c "import json; print(json.load(open('build/phase3/preparation/producer-selection.json'))['producer_job'])")/logs" > build/phase3/preparation/producer-build.log
+          # Preserve raw compiler ANSI bytes in a file, without rendering them.
+          gh api --allow-escape-sequences "repos/$GITHUB_REPOSITORY/actions/jobs/$(python -c "import json; print(json.load(open('build/phase3/preparation/producer-selection.json'))['producer_job'])")/logs" > build/phase3/preparation/producer-build.log
           git archive --format=zip --output=build/phase3/preparation/source.zip HEAD
       - uses: actions/download-artifact@v4
         with:
