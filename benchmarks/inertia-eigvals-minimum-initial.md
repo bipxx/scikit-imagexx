@@ -24,3 +24,5 @@ The genuine installed product passes all nine public contract groups in normal/s
 The [kept K=3 tensor experiment](inertia-k3-same-host.md) measured only the tensor API. Its gain must not be inferred for this eigenvalue API. A fresh combined product and separate 12-case controlled comparison are being prepared for both APIs; this initial raw report remains unchanged.
 
 Raw JSON SHA-256: `accd393189c8049fb7265b6e11c28c32749ec5d4f741d87af9642bdd3ce731c5`. Parent artifact12679444364 SHA-256: `cccfc10f578ac33edc4707e52992c8f70e49ed6d20ad5c1b132cfa5107d84282`.
+
+The subsequent [combined 12-case comparison](inertia-pipeline-k3-same-host.md) directly measures the K=3 effect on eigenvalues: 3.008486573x direct gain on that host, with four of six eigenvalue cases beating the original in both candidate passes. The initial data above remain unchanged.
