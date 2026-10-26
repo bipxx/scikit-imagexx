@@ -391,3 +391,4 @@ tests/test_moments_hu_native.cpp -text
 python/skimagexx/_moments_derived.py -text
 src/bind_moments_derived.cpp -text
 python/skimagexx/_moments_derived_checks.py -text
+benchmarks/moments-derived-minimum-initial.json -text
