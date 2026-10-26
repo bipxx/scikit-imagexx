@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import pytest
 import skimagexx as xx
-from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity
+from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -52,7 +52,8 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
                 assert value.dtype.metadata==reference.dtype.metadata
             continue
         assert np.asarray(a).dtype==np.asarray(b).dtype and np.asarray(a).shape==np.asarray(b).shape
-        assert_default_parity(api,np.dtype(dtype),a,b,image=image)
+        assert_default_parity(api,np.dtype(dtype),a,b,
+                              image=arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS else image)
 
 
 @pytest.mark.parametrize('dtype',['float32','float64'])

@@ -1,5 +1,6 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
+DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman'),
     'segmentation': ('clear_border','relabel_sequential'),
@@ -315,6 +316,7 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api == 'measure.moments_normalized':return ('float32','float64')
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
         return ('uint8',)
     if api.startswith('filters.rank.'):
@@ -341,6 +343,16 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in DERIVED_MOMENTS_FUNCTIONS:
+        import numpy as np
+        # These APIs consume moment tensors, not the fixture image. Prepare
+        # one owning 4x4 tensor before either parity calls or timed calls.
+        moment = np.empty((4, 4), dtype=image.dtype)
+        moment.flat[:] = [image.flat[i % image.size] for i in range(16)]
+        if api == 'measure.moments_normalized':
+            moment[0, 0] = 4
+            moment[1, 0] = moment[0, 1] = 0
+        return (moment,), {}
     if api == 'filters.window':
         return ('hann', image.shape), {}
     if api in ('filters.filter_forward', 'filters.filter_inverse', 'filters.wiener'):
@@ -431,13 +443,16 @@ def default_call(api, image):
 
 def moments_default_error(api, image, actual, expected):
     """Validate the frozen cell-specific default policy and return finite error."""
+    if api in DERIVED_MOMENTS_FUNCTIONS:
+        from ._moments_derived_checks import derived_default_error
+        return derived_default_error(api, image, expected, actual)
     from ._moments_checks import default_error
     return default_error(api, image, actual, expected)
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
-    if api in MOMENTS_FUNCTIONS:
+    if api in MOMENTS_FUNCTIONS or api in DERIVED_MOMENTS_FUNCTIONS:
         moments_default_error(api, image, actual, expected)
         return
     import numpy as np
@@ -447,7 +462,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
-    if api in MOMENTS_FUNCTIONS:
+    if api in MOMENTS_FUNCTIONS or api in DERIVED_MOMENTS_FUNCTIONS:
         raise ValueError('Moments use cell-specific bounds; call assert_default_parity')
     if api == 'filters.window':
         if expected is None:

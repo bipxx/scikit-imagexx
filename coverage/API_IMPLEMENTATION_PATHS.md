@@ -6,7 +6,7 @@ Exactly 477 inventoried public entries across 20 modules, plus a separate 29-cla
 
 Current classification: 221 native-partial image entries, 247 upstream-only entries, 5 native-class-partial entries, 3 metadata functions and 1 exception-metadata-provider. Partial means partial; listed test/benchmark references do not prove the expanded proposal. 26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.
 
-Generated from `coverage/api.json` (scikit-image 0.26.0) by `python tools/generate_api_implementation_paths.py`; verify without writes using `python tools/generate_api_implementation_paths.py --check`. Inventory SHA-256: `5cb406aab7ba4fa582bb7390edfc93c2dda1734e3c6adc2efc9c65fb297996e3`.
+Generated from `coverage/api.json` (scikit-image 0.26.0) by `python tools/generate_api_implementation_paths.py`; verify without writes using `python tools/generate_api_implementation_paths.py --check`. Inventory SHA-256: `93b2582266a28fb98ec9707f2b6cc0ae8574e71a7bac587edf1b9c79797331ec`.
 
 ## How to use the routes
 

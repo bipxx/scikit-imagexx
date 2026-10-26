@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "5cb406aab7ba4fa582bb7390edfc93c2dda1734e3c6adc2efc9c65fb297996e3",
+  "source_inventory_sha256": "93b2582266a28fb98ec9707f2b6cc0ae8574e71a7bac587edf1b9c79797331ec",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -12331,7 +12331,6 @@
       "current_implementation": "native-partial",
       "current_execution_kind": "native",
       "current_native_default_case_dtypes": [
-        "uint8",
         "float32",
         "float64"
       ],

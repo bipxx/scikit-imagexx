@@ -5649,7 +5649,6 @@
       "signature": "(mu, order=3, spacing=None)",
       "implementation": "native-partial",
       "native_default_case_dtypes": [
-        "uint8",
         "float32",
         "float64"
       ],

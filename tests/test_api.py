@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, native_classes, class_metadata_providers
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -95,6 +95,14 @@ def test_every_native_function(native, original, name, dtype, shape):
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api == 'measure.moments_normalized':
+            # Integer output cannot store the source's required low-order NaN.
+            # Safe 4x4 geometry reaches that error; it is not numeric credit.
+            args, options = default_call(api, a)
+            with pytest.raises(ValueError) as expected:getattr(original, name)(*args, **options)
+            with pytest.raises(ValueError) as actual:getattr(native, name)(*args, **options)
+            assert str(actual.value) == str(expected.value)
+            return
         if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
             # These integer-only algorithms preserve original defined dtype
             # rejection; this is separate from successful default-case dtypes.
@@ -135,7 +143,8 @@ def test_every_native_function(native, original, name, dtype, shape):
             np.testing.assert_array_equal(value,reference)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
-    assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+    assert_default_parity(api,np.dtype(dtype),actual,expected,
+                          image=args[0] if api in DERIVED_MOMENTS_FUNCTIONS else a)
 
 
 @pytest.mark.parametrize('name', ['sobel', 'prewitt', 'scharr'])
