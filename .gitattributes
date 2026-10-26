@@ -361,3 +361,7 @@ tests/test_window_native.cpp -text
 
 python/skimagexx/_window.py -text
 benchmarks/lpi-minimum-initial.json -text
+
+# Prospective moments-family contracts.
+tests/moments_cases.py -text
+tests/test_moments_public.py -text
