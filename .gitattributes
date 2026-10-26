@@ -421,3 +421,5 @@ benchmarks/inertia-eigvals-minimum-initial.json -text
 .github/workflows/inertia-pipeline-same-host.yml -text
 tests/test_inertia_pipeline_same_host.py -text
 benchmarks/inertia-pipeline-k3-same-host.zip -text
+tests/shannon_entropy_cases.py -text
+tests/test_shannon_entropy_public.py -text
