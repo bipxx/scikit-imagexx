@@ -1,0 +1,780 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-26T11:13:14.598020+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "source_sha256": "869697187dc059a10dba919a815345152d900dce3da26e774ac5210eac8de2ac",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "fallback_enabled": false,
+    "avx2": true,
+    "selected_apis": [
+      "filters.filter_forward",
+      "filters.filter_inverse",
+      "filters.wiener"
+    ],
+    "dtype_metadata": false,
+    "reference_fft_workers": {
+      "before": 1,
+      "after": 1
+    },
+    "provider_frontiers": {
+      "filters.filter_forward": "Python Gaussian impulse callback and NumPy coordinates, casting, padding, products, gain/Wiener arithmetic, permutation, cropping and absolute value; owned C++ FFT only. Each timed call includes the default callback and construction of a new filter and transfer cache.",
+      "filters.filter_inverse": "Python Gaussian impulse callback and NumPy coordinates, casting, padding, products, gain/Wiener arithmetic, permutation, cropping and absolute value; owned C++ FFT only. Each timed call includes the default callback and construction of a new filter and transfer cache.",
+      "filters.wiener": "Python Gaussian impulse callback and NumPy coordinates, casting, padding, products, gain/Wiener arithmetic, permutation, cropping and absolute value; owned C++ FFT only. Each timed call includes the default callback and construction of a new filter and transfer cache."
+    },
+    "special_default_arguments": {
+      "color.deltaE_cie76": "second input is first[..., ::-1]; raw Lab values",
+      "color.deltaE_ciede94": "second input is first[..., ::-1]; raw Lab; graphic-arts weights",
+      "color.deltaE_ciede2000": "second input is first[..., ::-1]; raw Lab; kL=kC=kH=1",
+      "color.deltaE_cmc": "second input is first[..., ::-1]; raw Lab; kL=kC=1",
+      "color.convert_colorspace": "fromspace='RGB', tospace='HSV'",
+      "color.separate_stains": "conv_matrix=hed_from_rgb",
+      "color.combine_stains": "conv_matrix=rgb_from_hed"
+    },
+    "repeat": 7,
+    "timing": "allocation-inclusive, warmed Python calls; original reference pools limited to one thread"
+  },
+  "results": [
+    {
+      "api": "filters.filter_forward",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.129497,
+      "cpp_ms": 18.925498,
+      "speedup": 1.3806504325540072,
+      "samples_ms": [
+        [
+          26.188876,
+          25.921526,
+          25.599885,
+          26.129497,
+          26.545955,
+          26.87412,
+          25.995064
+        ],
+        [
+          19.001721,
+          18.177899,
+          18.17305,
+          18.815502,
+          18.925498,
+          19.093763,
+          19.286503
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 33.765312,
+      "cpp_ms": 26.453612,
+      "speedup": 1.2763970379545901,
+      "samples_ms": [
+        [
+          34.502251,
+          33.765312,
+          33.877842,
+          33.634146,
+          33.825672,
+          33.500914,
+          33.744971
+        ],
+        [
+          26.453612,
+          26.382489,
+          26.524434,
+          26.687835,
+          26.802641,
+          26.346346,
+          26.317954
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 37.271004,
+      "cpp_ms": 29.905631,
+      "speedup": 1.24628716244108,
+      "samples_ms": [
+        [
+          37.271004,
+          37.098681,
+          37.612354,
+          37.191955,
+          37.603456,
+          37.1621,
+          37.647489
+        ],
+        [
+          29.859264,
+          29.746965,
+          30.238164,
+          29.905631,
+          30.081601,
+          29.788362,
+          29.976765
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_forward",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 14.628122,
+      "cpp_ms": 10.645726,
+      "speedup": 1.3740840220760895,
+      "samples_ms": [
+        [
+          14.885866,
+          14.881107,
+          14.430382,
+          14.628122,
+          14.450068,
+          14.425284,
+          15.906005
+        ],
+        [
+          10.816925,
+          10.784515,
+          10.353207,
+          10.645726,
+          10.40729,
+          10.493079,
+          12.555922
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 16.167156,
+      "cpp_ms": 12.163818,
+      "speedup": 1.3291185382747424,
+      "samples_ms": [
+        [
+          16.237246,
+          16.135517,
+          16.260491,
+          16.044395,
+          16.167156,
+          16.061197,
+          16.241735
+        ],
+        [
+          12.180239,
+          12.193935,
+          12.102384,
+          12.163818,
+          12.156234,
+          12.234191,
+          12.145083
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 16.413916,
+      "cpp_ms": 12.628669,
+      "speedup": 1.2997344375721622,
+      "samples_ms": [
+        [
+          16.608292,
+          16.382819,
+          16.455315,
+          16.53299,
+          16.381486,
+          16.413916,
+          16.33087
+        ],
+        [
+          12.657974,
+          12.308288,
+          12.628669,
+          12.348885,
+          12.302418,
+          12.701315,
+          12.701083
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_forward",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 22.027138,
+      "cpp_ms": 15.137848,
+      "speedup": 1.4551036580628898,
+      "samples_ms": [
+        [
+          22.534478,
+          21.896083,
+          22.027138,
+          22.349763,
+          26.735384,
+          22.019563,
+          21.997593
+        ],
+        [
+          14.922835,
+          15.067666,
+          15.229791,
+          15.466723,
+          15.141966,
+          15.137848,
+          15.050262
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 31.216447,
+      "cpp_ms": 24.061199,
+      "speedup": 1.2973770342866122,
+      "samples_ms": [
+        [
+          31.305243,
+          31.086201,
+          31.492872,
+          31.068399,
+          31.674152,
+          31.216447,
+          31.086002
+        ],
+        [
+          24.117258,
+          24.327156,
+          24.061199,
+          23.924153,
+          23.767228,
+          24.284776,
+          23.84886
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 29.295531,
+      "cpp_ms": 22.374071,
+      "speedup": 1.3093518385634872,
+      "samples_ms": [
+        [
+          29.931232,
+          29.259072,
+          29.249415,
+          29.271045,
+          29.295531,
+          29.849408,
+          29.539468
+        ],
+        [
+          22.475742,
+          22.374071,
+          22.076336,
+          22.478588,
+          22.226055,
+          22.31396,
+          23.077228
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_forward",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 427.529804,
+      "cpp_ms": 300.820511,
+      "speedup": 1.4212122789725599,
+      "samples_ms": [
+        [
+          429.676187,
+          426.849059,
+          428.475515,
+          423.721354,
+          427.529804,
+          427.468669,
+          431.020038
+        ],
+        [
+          299.375226,
+          301.388264,
+          300.820511,
+          300.330866,
+          302.594663,
+          299.51069,
+          302.658988
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 579.26392,
+      "cpp_ms": 452.610859,
+      "speedup": 1.2798277117783423,
+      "samples_ms": [
+        [
+          586.286962,
+          579.26392,
+          579.128468,
+          582.794868,
+          575.711744,
+          578.48843,
+          581.649204
+        ],
+        [
+          452.610859,
+          452.875644,
+          455.261868,
+          452.032986,
+          455.323684,
+          452.322489,
+          452.562587
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 583.246893,
+      "cpp_ms": 459.071714,
+      "speedup": 1.270491897481621,
+      "samples_ms": [
+        [
+          588.994373,
+          582.290695,
+          582.639116,
+          583.246893,
+          587.287261,
+          588.455297,
+          582.687406
+        ],
+        [
+          457.825146,
+          463.703481,
+          457.72517,
+          457.340228,
+          459.534529,
+          461.46981,
+          459.071714
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_forward",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 222.870425,
+      "cpp_ms": 154.539139,
+      "speedup": 1.4421616843613967,
+      "samples_ms": [
+        [
+          223.664673,
+          222.978658,
+          222.870425,
+          223.023793,
+          222.184283,
+          222.489494,
+          222.337368
+        ],
+        [
+          154.310382,
+          155.269675,
+          154.455604,
+          154.705852,
+          155.008538,
+          154.433802,
+          154.539139
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 301.153339,
+      "cpp_ms": 231.783861,
+      "speedup": 1.2992851948393422,
+      "samples_ms": [
+        [
+          301.507231,
+          301.153339,
+          300.602028,
+          300.286558,
+          302.280469,
+          299.977098,
+          301.899977
+        ],
+        [
+          232.792318,
+          233.022018,
+          231.697639,
+          230.69298,
+          231.449534,
+          231.783861,
+          232.316967
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 301.442897,
+      "cpp_ms": 231.306255,
+      "speedup": 1.303219824297445,
+      "samples_ms": [
+        [
+          299.878644,
+          298.756924,
+          299.418922,
+          301.442897,
+          302.548937,
+          307.607123,
+          305.746231
+        ],
+        [
+          232.272456,
+          230.939743,
+          231.306255,
+          231.668078,
+          230.944205,
+          231.254265,
+          248.289478
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_forward",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 418.845502,
+      "cpp_ms": 291.618651,
+      "speedup": 1.4362781686415524,
+      "samples_ms": [
+        [
+          417.12332,
+          420.598202,
+          418.845502,
+          414.848182,
+          419.709292,
+          415.603475,
+          425.669771
+        ],
+        [
+          291.985463,
+          292.331029,
+          290.995853,
+          291.169179,
+          291.644385,
+          291.222059,
+          291.618651
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.filter_inverse",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 579.889779,
+      "cpp_ms": 452.642207,
+      "speedup": 1.281121755841916,
+      "samples_ms": [
+        [
+          577.263453,
+          576.883843,
+          580.458501,
+          583.896163,
+          580.958243,
+          579.889779,
+          578.761819
+        ],
+        [
+          451.652656,
+          453.608355,
+          452.053937,
+          452.84654,
+          451.796945,
+          452.642207,
+          453.79792
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "filters.wiener",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 584.417388,
+      "cpp_ms": 459.205386,
+      "speedup": 1.272671022199204,
+      "samples_ms": [
+        [
+          584.630419,
+          582.134135,
+          585.013353,
+          584.417388,
+          583.718419,
+          583.977704,
+          587.63111
+        ],
+        [
+          457.194643,
+          463.366392,
+          460.12152,
+          458.700221,
+          459.205386,
+          456.683797,
+          459.386675
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}

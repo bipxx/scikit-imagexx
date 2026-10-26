@@ -347,3 +347,4 @@ benchmarks/phase3-butterworth-legacy-same-host.zip -text
 tests/lpi_filter_cases.py -text
 tests/test_lpi_filter_public.py -text
 python/skimagexx/_lpi_filter.py -text
+benchmarks/lpi-minimum-initial.json -text
