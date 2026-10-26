@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, moments_default_error
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -103,9 +103,16 @@ def main():
                      'NumPy preparation, clipping and scalar-list wrapping remain providers. Unsupported solver domains '
                      'retain NumPy eigvalsh primitives without native solver credit. Genuine original central moments '
                      'and tensor are prepared outside timing only for the frozen solver-plus-Weyl checker.')
+    coords_scope = ('Coordinate inputs are owning N-by-2 point clouds prepared outside timing from the first '
+                    '2*N seeded gray values; size denotes points and dtype is the actual coordinate dtype. '
+                    'NumPy tuple/center/cast/power preparation remains explicit; ordinary finite real typed '
+                    'products and reduction are owned C++. K1, complex and exceptional domains use NumPy '
+                    'primitives without reduction credit. Genuine reference monomials are captured outside '
+                    'timing for the frozen 2*gamma_(N+D)*S policy.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     provider_frontiers.update({api: moments_scope for api in apis if api in MOMENTS_FUNCTIONS})
     provider_frontiers.update({api: derived_scope for api in apis if api in DERIVED_MOMENTS_FUNCTIONS})
+    provider_frontiers.update({api: coords_scope for api in apis if api in COORDS_MOMENTS_FUNCTIONS})
     if 'measure.inertia_tensor' in apis:
         provider_frontiers['measure.inertia_tensor'] = inertia_scope
     if 'measure.inertia_tensor_eigvals' in apis:
@@ -145,15 +152,17 @@ def main():
                 if args.dtype_metadata and call_args and isinstance(call_args[0],np.ndarray) and call_args[0].dtype.metadata is None:
                     first=call_args[0].view(np.dtype(call_args[0].dtype,metadata={'units':'linear','source':'benchmark'}))
                     call_args=(first,*call_args[1:])
-                case_size = 4 if api in DERIVED_MOMENTS_FUNCTIONS else size
-                case_dtype = call_args[0].dtype.name if api in DERIVED_MOMENTS_FUNCTIONS else np.dtype(dtype).name
+                case_size = 4 if api in DERIVED_MOMENTS_FUNCTIONS else call_args[0].shape[0] if api in COORDS_MOMENTS_FUNCTIONS else size
+                case_dtype = call_args[0].dtype.name if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else np.dtype(dtype).name
                 expected = reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.inertia_tensor_eigvals':
+                    if api in COORDS_MOMENTS_FUNCTIONS:
+                        error = moments_default_error(api, call_args[0], actual, expected)
+                    elif api == 'measure.inertia_tensor_eigvals':
                         error = moments_default_error(api, data, actual, expected)
                     elif api == 'measure.inertia_tensor':
                         error = moments_default_error(api, data, actual, expected)
@@ -169,7 +178,8 @@ def main():
                     assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     results.append({'api': api, 'size': case_size, 'dtype': case_dtype,
-                                    **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS else {}),
+                                    **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
+                                    **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     error,
@@ -207,7 +217,8 @@ def main():
              + (' ' + moments_scope if set(MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + inertia_scope if 'measure.inertia_tensor' in apis else '')
              + (' ' + eigvals_scope if 'measure.inertia_tensor_eigvals' in apis else '')
-             + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
+             + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
+             + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
