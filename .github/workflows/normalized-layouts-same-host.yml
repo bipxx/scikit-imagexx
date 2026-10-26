@@ -160,6 +160,8 @@ jobs:
               old_fixed, new_fixed = ({k: v for k, v in value['source']['files_sha256'].items()
                                       if fixed(k) and k not in mutable} for value in (old, new))
               assert old_fixed == new_fixed, 'production changed outside the F-layout frontend/binder surface'
+              assert new['source']['files_sha256']['benchmarks/normalized_layouts_cases.json'] == hashlib.sha256(Path('common/benchmarks/normalized_layouts_cases.json').read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+              assert new['source']['files_sha256']['tests/test_normalized_layouts_public.py'] == 'df1786d5663dbd824f09dc8bdb0f9c15d335eb905459bcd9e6109317c8389c47'
               def module(name, path):
                   spec = importlib.util.spec_from_file_location(name, path)
                   value = importlib.util.module_from_spec(spec); spec.loader.exec_module(value)

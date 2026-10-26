@@ -68,7 +68,8 @@ def pair_gate(old, new):
     branch = next(n for n in ast.parse(SCRIPTS[1]).body if isinstance(n, ast.If) and ast.unparse(n.test) == "role == 'candidate'")
     start = next(i for i, n in enumerate(branch.body) if isinstance(n, ast.For) and ast.unparse(n.target) == 'key')
     stop = next(i for i, n in enumerate(branch.body) if isinstance(n, ast.FunctionDef) and n.name == 'module')
-    exec(compile(ast.Module(branch.body[start:stop], type_ignores=[]), 'pair-source-gate', 'exec'), {'old': old, 'new': new})
+    exec(compile(ast.Module(branch.body[start:stop], type_ignores=[]), 'pair-source-gate', 'exec'), {'old': old, 'new': new, 'hashlib': hashlib,
+         'Path': lambda name: SimpleNamespace(read_bytes=lambda: b'fixture\r\n')})
 
 
 def manifest():
@@ -85,10 +86,18 @@ def manifest():
     return dict(runtime=runtime, wheels=wheels, source={'files_sha256': dict.fromkeys(common, 'same')})
 
 
+def candidate(old):
+    value = deepcopy(old)
+    value['source']['files_sha256'].update({
+        'benchmarks/normalized_layouts_cases.json': hashlib.sha256(b'fixture\n').hexdigest(),
+        'tests/test_normalized_layouts_public.py': 'df1786d5663dbd824f09dc8bdb0f9c15d335eb905459bcd9e6109317c8389c47'})
+    return value
+
+
 def test_only_frontend_and_binder_production_may_change():
-    old = manifest(); new = deepcopy(old)
+    old = manifest(); new = candidate(old)
     for path in ('src/bind_moments_derived.cpp', 'python/skimagexx/_moments_derived.py',
-                 '.github/workflows/ci.yml', 'tests/test_normalized_layouts_public.py'):
+                 '.github/workflows/ci.yml'):
         new['source']['files_sha256'][path] = 'new'
     new['wheels']['product.whl']['sha256'] = 'new'
     pair_gate(old, new)
@@ -96,9 +105,10 @@ def test_only_frontend_and_binder_production_may_change():
 
 @pytest.mark.parametrize('path', ['CMakeLists.txt', 'src/moments_normalized.cpp', 'src/new.cpp', 'benchmarks/run.py',
                                   'benchmarks/coverage.py', 'python/skimagexx/_moments_derived_checks.py',
-                                  'python/skimagexx/coverage.py', 'tests/moments_derived_cases.py'])
+                                  'python/skimagexx/coverage.py', 'tests/moments_derived_cases.py',
+                                  'benchmarks/normalized_layouts_cases.json', 'tests/test_normalized_layouts_public.py'])
 def test_other_source_changes_reject(path):
-    old = manifest(); new = deepcopy(old); new['source']['files_sha256'][path] = 'changed'
+    old = manifest(); new = candidate(old); new['source']['files_sha256'][path] = 'changed'
     with pytest.raises(AssertionError): pair_gate(old, new)
 
 
@@ -155,3 +165,11 @@ def test_output_layout_check_preserves_the_original_contract(field):
         result = harness.check_output_layout(actual, expected)
         assert result['output_dtype'] == '<f8' and result['output_strides'] == [32, 8]
         assert result['output_flags'] == vars(expected.flags)
+
+
+@pytest.mark.parametrize('path', ['benchmarks/normalized_layouts_cases.json', 'tests/test_normalized_layouts_public.py'])
+def test_missing_candidate_cohort_source_rejects(path):
+    old = manifest(); new = candidate(old)
+    assert path not in old['source']['files_sha256']  # Baseline intentionally predates the cohort.
+    del new['source']['files_sha256'][path]
+    with pytest.raises(KeyError): pair_gate(old, new)
