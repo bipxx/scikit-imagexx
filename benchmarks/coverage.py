@@ -117,7 +117,9 @@ def main():
     block_scope = ('Ordinary default sums own typed block arithmetic and output partitioning. '
                    'NumPy padding, block-view metadata, storage/layout preparation and allocation remain providers; '
                    'custom functions/kwargs, complex padding and exceptional/type-frontier sums use literal '
-                   'primitive reducers without native sum credit. Timed default image calls include the entire '
+                   'primitive reducers without native sum credit. Half sums require original padded native/aligned C '
+                   'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
+                   'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
     if 'measure.block_reduce' in apis:

@@ -55,6 +55,19 @@ void bind_block_reduce(py::module_& module) {
         }
         skimagexx::bindings::check_array_storage(input);
         auto np=py::module_::import("numpy");
+        // Half reductions retain source iterator boundaries only for this
+        // unbuffered C-layout domain. Do not normalize unsupported layouts
+        // into the admitted domain: the caller replays its literal reducer.
+        if(half) {
+            if(!(input.flags()&py::array::c_style) || !input.dtype().attr("isnative").cast<bool>() ||
+               reinterpret_cast<std::uintptr_t>(input.data())%std::size_t(bytes))return py::none();
+            const auto limit=py::cast<std::size_t>(np.attr("getbufsize")());
+            std::size_t volume=1;
+            for(const auto factor:blocks) {
+                if(volume>limit/factor)return py::none();
+                volume*=factor;
+            }
+        }
         const auto native=py::reinterpret_borrow<py::dtype>(input.dtype().attr("newbyteorder")("="));
         py::array prepared=np.attr("ascontiguousarray")(input,py::arg("dtype")=native).cast<py::array>();
         // ascontiguousarray promotes rank-zero input to rank one; keep the
