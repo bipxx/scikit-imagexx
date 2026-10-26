@@ -101,10 +101,24 @@ loaded system libm. The [local raw failure review](../build/phase3-f32-failed-pr
 links every failed case and the retained partial artifact. Later preparation
 gates and timing did not run.
 
-**Next:** compare kept `0135305`, candidate `c53198a` and a fresh original on
-one host across all 536 cases in normal/scalar modes. This is a separate
-correctness diagnosis; frozen references and regular benchmark success gates
-remain unchanged. Keep the fixed21 metric, all 73 workloads and exact gates.
+The subsequent [diagnostic run 40275501905](https://github.com/bipxx/scikit-imagexx/actions/runs/40275501905)
+compared both exact products with fresh originals on one EPYC 9V45 host.
+The [independent raw review](evidence/colocalization-live-reference-checkpoint.json)
+verifies **536/536 native-versus-fresh matches in all four processes**
+(old/new × normal/scalar), across all nine semantic fields. Fresh originals
+and both products reproduce the same **44 result-word-only +1-ULP differences**
+from the frozen fixture. Thus v5 is unnecessary for this discrepancy on this
+host; the precise runtime cause remains unknown. The receipt records CPU
+features, loaded libm SHA, exact products and all 44 field words. Its 4.5 MB
+raw artifact `12629484753` remains in Actions and locally under
+`build/phase3-f32-reference-diagnostic-v5/`.
+
+This is diagnostic evidence with `acceptance=false`: failed preparation
+40273141051 remains failed, with no performance, KEEP or full-product credit.
+**Next:** independently review the proposed live-reference rule for the MOC
+result word, requiring exact fresh-original matching and unchanged frozen
+checks for every other field. That policy change is not yet accepted; there
+is no tolerance relaxation. Keep the fixed21 metric and all 73 workloads.
 Root owns launches/keep decisions; C++ and focused-test ownership remain separate.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with

@@ -320,3 +320,5 @@ benchmarks/phase3-f64-same-host.zip -text
 benchmarks/phase3-byte-same-host.zip -text
 .github/workflows/colocalization-reference-diagnostic.yml -text
 tools/colocalization_reference_diagnostic.py -text
+tests/test_colocalization_reference_expectation.py -text
+coverage/evidence/colocalization-live-reference-checkpoint.json -text
