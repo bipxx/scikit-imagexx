@@ -414,3 +414,5 @@ python/skimagexx/_inertia_checks.py -text
 benchmarks/inertia-tensor-minimum-initial.json -text
 .github/workflows/inertia-tensor-same-host.yml -text
 tests/test_inertia_tensor_same_host.py -text
+tests/inertia_eigvals_cases.py -text
+tests/test_inertia_eigvals_public.py -text

@@ -1,5 +1,6 @@
 #include "moments_internal.hpp"
 #include "inertia_internal.hpp"
+#include "skimagexx/symmetric_eigen.hpp"
 #include <cfenv>
 #include <limits>
 #include <stdexcept>
@@ -10,6 +11,7 @@
 #include <cstdint>
 #include <cstring>
 #include <vector>
+#include <type_traits>
 
 namespace py = pybind11;
 namespace {
@@ -87,9 +89,38 @@ template<class T> py::object inertia(const py::array& diagonal,const py::array& 
     return output;
 }
 
+
+// NumPy eigvalsh's default UPLO is lower, including nonsymmetric supplied T.
+// Reuse the existing finite symmetric solver; no new eigenvalue math.
+template<class T> py::object inertia_eigenvalues(const py::array& input) {
+    if(input.ndim()!=2 || input.shape(0)!=input.shape(1) ||
+       input.shape(0)<1 || input.shape(0)>64)return py::none();
+    auto values=prepare<T>(input);
+    const auto n=values.shape(0),count=n*(n+1)/2;
+    py::array_t<T> output(n);
+    std::vector<T> packed(static_cast<std::size_t>(count));
+    std::vector<const void*> fields(static_cast<std::size_t>(count));
+    // Preparation/output allocation is the last callback boundary before
+    // reading the established typed C buffer. The tiny solve retains the GIL.
+    check<T>(values,Shape{n,n});
+    const auto* data=values.data();
+    std::size_t field=0;
+    for(py::ssize_t r=0;r<n;++r)for(py::ssize_t c=r;c<n;++c,++field) {
+        packed[field]=data[c*n+r];fields[field]=packed.data()+field;
+    }
+    if(!skimagexx::symmetric_eigenvalues_into(fields.data(),output.mutable_data(),
+        1,std::size_t(n),std::is_same_v<T,float>,false))return py::none();
+    return output;
+}
+
 }
 
 void bind_moments(py::module_& module) {
+    module.def("inertia_eigvals",[](const py::array& input)->py::object {
+        if(input.dtype().char_()=='f')return inertia_eigenvalues<float>(input);
+        if(input.dtype().char_()=='d')return inertia_eigenvalues<double>(input);
+        return py::none();
+    },py::arg("T").noconvert());
     module.def("inertia_tensor",[](const py::array& diagonal,const py::array& mixed,
                                     const py::object& total,const py::object& mass)->py::object {
         if(py::array_t<float,0>::check_(diagonal) && py::array_t<float,0>::check_(mixed))
