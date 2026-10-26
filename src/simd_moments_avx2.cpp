@@ -23,14 +23,14 @@ template<>struct Ops<double> {
 template<std::size_t K,class T> void fused_project(const T*calc,const T*powers,
         std::size_t n,std::size_t inner,T*out,std::size_t begin,std::size_t end) {
     using V=Ops<T>;
-    if constexpr(K==3 && std::is_same_v<T,double>) {
+    if constexpr(K==3) {
         if(n>=256 && inner>=512) {
-            // Bounded3KiB column tile, each cell still accumulates ascending j.
+            // At most3KiB column tile, each cell still accumulates ascending j.
             for(auto outer=begin/(K*inner);outer<end/(K*inner);++outer) {
                 std::size_t rest=0;
                 while(inner-rest>=V::width) {
                     const auto columns=std::min(std::size_t(128),inner-rest)/V::width*V::width;
-                    alignas(32) double sums[3][128]{};
+                    alignas(32) T sums[3][128]{};
                     for(std::size_t j=0;j<n;++j) {
                         const auto w0=V::broadcast(powers[j*K]),w1=V::broadcast(powers[j*K+1]),w2=V::broadcast(powers[j*K+2]);
                         const auto* values=calc+(outer*n+j)*inner+rest;
