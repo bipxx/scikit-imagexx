@@ -421,6 +421,13 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
         double sum=0;auto get=[&](auto i){return read<double>(static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step,v.swapped);};
         for(std::size_t begin=0;begin<n;) {const auto length=std::min(block,n-begin);sum=double(sum+pairwise<double>(begin,length,get));begin+=length;}
         std::memcpy(&result.bits,&sum,8);
+    } else if(v.type==Type::float32) {
+        float sum=0;auto get=[&](auto i){return read<float>(static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step,v.swapped);};
+        for(std::size_t begin=0;begin<n;) {
+            const auto length=std::min(block,n-begin);
+            sum=float(sum+pairwise<float>(begin,length,get));begin+=length;
+        }
+        std::uint32_t word;std::memcpy(&word,&sum,4);result.bits=word;
     } else {
         float sum=0;std::uint16_t half_sum=0;auto get=[&](auto i){return real<float>(v,static_cast<const unsigned char*>(v.data)+std::ptrdiff_t(i)*step);};
         for(std::size_t begin=0;begin<n;) {
@@ -467,7 +474,8 @@ ColocExecution product(const ColocView& a,const ColocView* b,const ColocOrder& o
                 const double x=read<double>(first,a.swapped),y=b ? (b->type==Type::boolean ? double(*second!=0):read<double>(second,b->swapped)):x;
                 write<double>(out.data,i,double(x*y));
             } else {
-                const float x=real<float>(a,first),y=b ? (b->type==Type::boolean ? float(*second!=0):real<float>(*b,second)):x;
+                const float x=a.type==Type::float32 ? read<float>(first,a.swapped):real<float>(a,first);
+                const float y=b ? (b->type==Type::boolean ? float(*second!=0):(b->type==Type::float32 ? read<float>(second,b->swapped):real<float>(*b,second))):x;
                 const float value=float(x*y);
                 if(a.type==Type::float16)write<std::uint16_t>(out.data,i,half(value));else write<float>(out.data,i,value);
             }
