@@ -24,6 +24,25 @@ template<std::size_t K,class T> void fused_project(const T*calc,const T*powers,
     using V=Ops<T>;
     for(auto outer=begin/(K*inner);outer<end/(K*inner);++outer) {
         std::size_t rest=0;
+        if constexpr(std::is_same_v<T,double>) {
+            for(;inner-rest>=8;rest+=8) {
+                typename V::V first[K],second[K];
+                for(std::size_t k=0;k<K;++k){first[k]=V::zero();second[k]=V::zero();}
+                for(std::size_t j=0;j<n;++j) {
+                    const auto values=calc+(outer*n+j)*inner+rest;
+                    const auto a=V::load(values),b=V::load(values+4);
+                    for(std::size_t k=0;k<K;++k) {
+                        const auto weight=V::broadcast(powers[j*K+k]);
+                        first[k]=V::add(first[k],V::mul(a,weight));
+                        second[k]=V::add(second[k],V::mul(b,weight));
+                    }
+                }
+                for(std::size_t k=0;k<K;++k) {
+                    auto target=out+(outer*K+k)*inner+rest;
+                    V::store(target,first[k]);V::store(target+4,second[k]);
+                }
+            }
+        }
         for(;inner-rest>=V::width;rest+=V::width) {
             typename V::V sums[K];for(auto&sum:sums)sum=V::zero();
             for(std::size_t j=0;j<n;++j) {
