@@ -13,7 +13,8 @@ struct BlockReduceInput {
 // Output is separate dense C/F storage with the supplied BYTE strides; the
 // caller owns both allocations and keeps their descriptors stable for the call.
 // bool/signed -> int64 bits, unsigned -> uint64; f16/f32/f64 retain output type,
-// with f32 accumulation and one final storage rounding for f16. Rank zero has
+// with f32 inner-segment accumulation and half stores between segments for f16.
+// Half segment geometry follows the prepared native-C view. Rank zero has
 // one input/output value. Empty arrays need no data pointer.
 // Returns divide=1, overflow=2, underflow=4, invalid=8, restoring worker FEnv.
 unsigned block_reduce_sum(const BlockReduceInput&, const std::vector<std::size_t>& factors,
