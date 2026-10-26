@@ -406,3 +406,5 @@ tests/test_normalized_layouts_benchmark.py -text
 benchmarks/normalized_layouts_cases.json -text
 tests/test_normalized_layouts_public.py -text
 benchmarks/moments-normalized-layouts-same-host.zip -text
+tests/inertia_tensor_cases.py -text
+tests/test_inertia_tensor_public.py -text
