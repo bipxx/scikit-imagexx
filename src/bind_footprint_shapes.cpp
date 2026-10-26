@@ -81,6 +81,14 @@ void bind_footprint_shapes(py::module_& m){
         for(const auto& a:{x,y,z})dense(a);const auto a=source(x),b=source(y),c=source(z);auto out=target(result);
         {py::gil_scoped_release release;skimagexx::footprint_shapes_l1(a,b,c,out,std::size_t(x.size()),radius,inclusive);}return result;
     },py::arg("x").noconvert(),py::arg("y").noconvert(),py::arg("z").noconvert(),py::arg("radius"),py::arg("inclusive")=true);
+    m.def("footprint_shapes_l1",[](py::int_ value){
+        if(!PyLong_CheckExact(value.ptr()))throw py::type_error("integer octahedron requires exact int");
+        const auto radius=py::cast<std::size_t>(value);
+        const auto n=skimagexx::footprint_shapes_octahedron_axis(radius);
+        py::array_t<std::uint8_t> result({py::ssize_t(n),py::ssize_t(n),py::ssize_t(n)});
+        auto output=target(result);
+        {py::gil_scoped_release release;skimagexx::footprint_shapes_octahedron(output,radius);}return result;
+    },py::arg("radius").noconvert());
     m.def("footprint_shapes_atoms",[](py::array mask,py::array output,py::array zero,py::array one){
         u8(mask);for(const auto& a:{output,zero,one}){dense(a);if(a.dtype().has_fields()||a.dtype().attr("hasobject").cast<bool>())throw py::type_error("reference-free atoms required");}
         if(mask.size()!=output.size()||zero.size()!=1||one.size()!=1||!zero.dtype().is(output.dtype())||!one.dtype().is(output.dtype()))throw py::value_error("footprint atoms mismatch");

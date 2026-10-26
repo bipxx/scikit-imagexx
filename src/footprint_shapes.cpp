@@ -112,6 +112,32 @@ void footprint_shapes_l1(FootprintConstBytes x,FootprintConstBytes y,FootprintCo
         static_cast<unsigned char*>(target.data)[i]=inclusive?sum<=radius:sum<radius;
     }
 }
+std::size_t footprint_shapes_octahedron_axis(std::size_t radius){
+    const auto maximum=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());
+    if(radius>(maximum-1)/2)throw std::overflow_error("octahedron axis overflows");
+    const auto n=2*radius+1;
+    const auto count=product(product(n,n),n);
+    product(count,3*sizeof(double)); // preserve original dense mgrid addressability
+    return n;
+}
+void footprint_shapes_octahedron(FootprintBytes target,std::size_t radius){
+    const auto n=footprint_shapes_octahedron_axis(radius),plane=n*n,count=plane*n;
+    out(target,count);
+    auto* data=static_cast<unsigned char*>(target.data);
+    detail::partition(n,detail::active_workers(count),[&](auto begin,auto end,auto){
+        for(auto z=begin;z<end;++z){
+            auto* slice=data+z*plane;std::memset(slice,0,plane);
+            const auto dz=z>radius?z-radius:radius-z;
+            for(std::size_t y=0;y<n;++y){
+                const auto dy=y>radius?y-radius:radius-y;
+                if(dz+dy<=radius){
+                    const auto remaining=radius-dz-dy;
+                    std::memset(slice+y*n+radius-remaining,1,2*remaining+1);
+                }
+            }
+        }
+    });
+}
 void footprint_shapes_atoms(FootprintConstBytes mask,FootprintBytes target,FootprintConstBytes zero,FootprintConstBytes one,std::size_t n,std::size_t item){
     if(!item||zero.bytes!=item||one.bytes!=item||mask.bytes!=n)throw std::invalid_argument("footprint atoms size mismatch");
     out(target,product(n,item));for(auto source:{mask,zero,one}){range(source.data,source.bytes);disjoint(target,source);}
