@@ -326,6 +326,13 @@ ColocType coloc_sum_type(Type t) {
 }
 ColocPredicate coloc_binary_valid(const ColocView& v) {
     const auto n=coloc_validate(v);const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
+    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine && input.step==1) {
+        // Only integer bytes 0/1 are valid; bool deliberately permits other
+        // nonzero representations. This read-only reduction can vectorize.
+        const auto* data=static_cast<const unsigned char*>(v.data);std::uint8_t invalid=0;
+        for(std::size_t i=0;i<n;++i)invalid=std::uint8_t(invalid|(data[i]&0xfeu));
+        return {invalid==0,0};
+    }
     const auto item=coloc_itemsize(v.type);
     for(std::size_t i=0;i<n;++i)if(!binary(v.type,bits(v,input[i],item)))return {false,0};
     return {true,0};
@@ -334,6 +341,13 @@ ColocExecution coloc_binary_into(const ColocView& v,const ColocOrder& order,Colo
     const auto n=coloc_validate(v);order_check(v,order);output_check(out,n,v,nullptr,&order);
     if(!coloc_binary_valid(v).value)throw std::domain_error("colocalization nonbinary input");
     const ReadAccess input(v,order,n);
+    if((v.type==Type::uint8 || v.type==Type::int8) && input.affine && input.step==1) {
+        const auto* source=static_cast<const unsigned char*>(v.data);
+        auto* target=static_cast<unsigned char*>(out.data);
+        return partition(n,[&](auto begin,auto end){
+            if(begin<end)std::memcpy(target+begin,source+begin,end-begin);
+        });
+    }
     const auto item=coloc_itemsize(v.type);
     return partition(n,[&](auto begin,auto end){for(auto i=begin;i<end;++i)write<std::uint8_t>(out.data,i,!zero(v.type,bits(v,input[i],item)));});
 }

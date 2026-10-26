@@ -44,6 +44,61 @@ void bool_counts() {
         if(n){first.value.data=a.data()+n;first.stride=-1;require(coloc_count_nonzero(first.value)==expected);}
     }
 }
+void byte_binary_conversion() {
+    for(auto type:{ColocType::uint8,ColocType::int8})for(unsigned value=0;value<256;++value) {
+        const auto byte=static_cast<unsigned char>(value);One view(&byte,1,type,1);
+        require(coloc_binary_valid(view.value).value==(value<=1));
+    }
+    One empty(nullptr,0,ColocType::uint8,1);
+    require(coloc_binary_valid(empty.value).value);
+    require(coloc_binary_into(empty.value,coloc_keep_order(empty.value),{nullptr,0}).worker_limit==1);
+    const std::array<unsigned char,6> logical{0,1,1,0,1,0};
+    const std::array<unsigned char,6> fortran_order{0,0,1,1,1,0};
+    for(auto type:{ColocType::uint8,ColocType::int8})for(int layout=0;layout<4;++layout) {
+        std::array<std::size_t,2> shape{2,3};
+        const std::array<std::ptrdiff_t,2> strides=layout==1 ? std::array<std::ptrdiff_t,2>{1,2}:
+            layout==2 ? std::array<std::ptrdiff_t,2>{3,-1}:layout==3 ? std::array<std::ptrdiff_t,2>{6,2}:std::array<std::ptrdiff_t,2>{3,1};
+        std::array<unsigned char,16> input;input.fill(0xa5);
+        auto* first=input.data()+(layout==2 ? 3:1);
+        for(std::size_t i=0;i<6;++i)first[std::ptrdiff_t(i/3)*strides[0]+std::ptrdiff_t(i%3)*strides[1]]=logical[i];
+        const auto before=input;
+        ColocView view{first,input.data(),input.size(),{shape.data(),2},{strides.data(),2},type,false};
+        require(coloc_binary_valid(view).value);
+        std::array<unsigned char,8> out;out.fill(0xa5);
+        ColocOrder c;c.rank=2;c.axes[0]=1;c.axes[1]=0;
+        coloc_binary_into(view,c,{out.data()+1,6});
+        require(std::memcmp(out.data()+1,logical.data(),6)==0);
+        coloc_binary_into(view,coloc_keep_order(view),{out.data()+1,6});
+        require(std::memcmp(out.data()+1,(layout==1 ? fortran_order:logical).data(),6)==0);
+        require(out.front()==0xa5 && out.back()==0xa5 && input==before);
+    }
+    const std::int8_t invalid[]{0,1,0,1,0,-1};One signed_view(invalid,6,ColocType::int8,1);
+    std::array<unsigned char,8> untouched;untouched.fill(0x6d);const auto before=untouched;
+    require(!coloc_binary_valid(signed_view.value).value);
+    bool refused=false;
+    try{coloc_binary_into(signed_view.value,coloc_keep_order(signed_view.value),{untouched.data()+1,6});}
+    catch(const std::domain_error&){refused=true;}
+    require(refused && untouched==before); // late negative must refuse BEFORE any store
+    const unsigned char noncanonical[]{2,0,255,128};One boolean(noncanonical,4,ColocType::boolean,1);
+    std::array<unsigned char,4> normalized{};
+    require(coloc_binary_valid(boolean.value).value);
+    coloc_binary_into(boolean.value,coloc_keep_order(boolean.value),{normalized.data(),4});
+    require((normalized==std::array<unsigned char,4>{1,0,1,1})); // bool is not raw-copy eligible
+    for(const std::size_t n:{1,31,32,33,262151}) {
+        std::vector<unsigned char> input(n),out(n+2,0xa5);
+        for(std::size_t i=0;i<n;++i)input[i]=i%7==0;
+        One view(input.data(),n,ColocType::uint8,1);
+        require(coloc_binary_valid(view.value).value);
+        const auto execution=coloc_binary_into(view.value,coloc_keep_order(view.value),{out.data()+1,n});
+        require(std::memcmp(out.data()+1,input.data(),n)==0 && out.front()==0xa5 && out.back()==0xa5);
+        require(execution.worker_limit==(n>=262144 ? get_num_threads():1));
+        input.back()=2;out.assign(n+2,0xa5);refused=false;
+        require(!coloc_binary_valid(view.value).value);
+        try{coloc_binary_into(view.value,coloc_keep_order(view.value),{out.data()+1,n});}
+        catch(const std::domain_error&){refused=true;}
+        require(refused && out==std::vector<unsigned char>(n+2,0xa5));
+    }
+}
 void integer_products() {
     struct Kind{ColocType type;unsigned bytes;bool signed_value;};
     const Kind kinds[]={{ColocType::uint8,1,false},{ColocType::int8,1,true},
@@ -261,7 +316,7 @@ int main() {
 #ifdef SKIMAGEXX_COLOC_PORTABLE
         if(workers==4){bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}require(refused);continue;}
 #endif
-        set_num_threads(workers);bool_counts();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
+        set_num_threads(workers);bool_counts();byte_binary_conversion();integer_products();swapped_signed_boolean_products();gather_and_orders();floating_association();multidimensional_addresses();affine_reduction_edges();reject_before_write();
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';
