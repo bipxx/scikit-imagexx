@@ -70,4 +70,4 @@ Baseline input: run `40266173692`, source `4a78e945a5eccfb14c0887f5187378c5f4d76
 
 This is one minimum-Linux host with two repeats per product, without a statistical significance claim. Timings include allocation, owned orchestration, declared NumPy providers and output destruction. They do not establish full native API coverage, cross-profile speed or combined-product acceptance. The earlier cross-host one-ULP masked-overlap difference remains recorded; this same-host comparison has exact agreement across all four reports.
 
-Next: a byte-binary specialization is under source/control review; no performance result is available.
+The subsequent [byte-mask v4 comparison](phase3-byte-same-host.md) is now measured and kept. Its separate same-host result preserves this earlier v3 evidence unchanged.

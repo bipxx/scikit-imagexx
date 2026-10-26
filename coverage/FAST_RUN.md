@@ -51,7 +51,7 @@ Choose small, independently mergeable API groups or concrete gaps in existing na
 
 ## Phase 3: benchmark one thread
 
-**Measured and kept:** both initial Linux profiles and three colocalization
+**Measured and kept:** both initial Linux profiles and four colocalization
 optimizations have completed isolated one-thread measurements. The
 [minimum baseline](../benchmarks/phase3-minimum-initial.md) has 52/52 footprint
 workloads faster than scikit-image; the
@@ -66,31 +66,32 @@ source `4a78e94` is integrated in main `78976b7` with unchanged product source.
 On minimum Linux, the fixed 21-case geometric mean of original/current ratios
 progresses **0.0342836736027× → 0.0574776398746× → 0.0919599844761×**.
 Width v2 improves **1.599926× over v1**, or **2.682326× over baseline**. Every
-case improves over v1, but **all 21 calls remain slower than scikit-image**.
+case improves over v1, but **all 21 calls were slower than scikit-image in that v2 campaign**.
 This compares normalized ratios from separate hosted runs, not direct paired
 baseline/candidate latencies on one host. No modern/Windows optimization result
 or combined-product qualification follows from it.
 
-[Float64 v3 is now kept](../benchmarks/phase3-f64-same-host.md). Source
-`ac87e23` is integrated in main `bae051a` with unchanged product source. The
-controlled ABBA run on one EPYC 7763 host compares baseline aggregate
-**0.0972754125233×** with candidate **0.1001371138738×**: **+2.94% normalized
-and +2.03% direct public-call speedup**. The four targeted float64 memory/volume
-cases have 1.126–1.196× direct speedups. All nine normalized and 14 direct losses are
-retained; all 21 calls remain slower than scikit-image. The compact raw ZIP
-contains all four 73-case reports and 4,088 samples.
+Earlier kept [float64 v3](../benchmarks/phase3-f64-same-host.md), source
+`ac87e23`, showed +2.94% normalized and +2.03% direct gain on one EPYC 7763
+ABBA job. Its earlier cross-CPU HOLD and one-ULP difference remain historical
+evidence; no cumulative cross-CPU code-gain claim follows.
 
-The [earlier cross-CPU v3 result](../benchmarks/phase3-f64-v3.md) and its two
-losses/one-ULP cross-host difference remain historical evidence. Its apparent
-12% gain is not a causal code claim. The controlled comparison has exact
-correctness observations across all four reports; no modern/Windows optimization
-or combined-product acceptance follows from this minimum-Linux result.
+**Current kept increment: [dense byte masks v4](../benchmarks/phase3-byte-same-host.md).**
+Source/main `0135305` is the exact measured product. One EPYC 9V74 ABBA job
+compares fixed21 aggregates **0.0918373561074× baseline vs 0.2091629408619×
+candidate**, giving **2.277537× normalized / 2.287450× direct**. All seven
+intersection workloads improve; tiny, cache, memory, volume and cache-F beat
+scikit-image in both candidate passes. Stepped and masked remain slower, as do
+all 14 MCC/MOC workloads: **16 colocalization regressions remain**. All nine
+normalized and nine direct losses are published, with every original penalty.
+The compact ZIP retains all four 73-case reports and 4,088 samples; their exact
+correctness observations and before/after product identities pass.
 
-**Next:** byte-binary specialization source/control review is pending; no
-performance result exists. Keep the fixed 21-case metric, all 73 workloads,
-exact parity gates and adverse cases. Root owns launches and keep decisions;
-the C++ and focused-test owners remain separate. Reuse authenticated products
-for controlled comparisons instead of rebuilding on measurement hosts.
+This is one minimum-Linux host, not a universal-profile or cumulative
+cross-CPU speed claim. **Next:** guarded float32 loads for ten workloads are in
+source/control work, with no performance result. Keep the fixed21 metric,
+all 73 workloads and exact gates. Root owns launches/keep decisions; C++ and
+focused-test ownership remain separate.
 
 The executable campaign is `.github/workflows/phase3-public-benchmark.yml` with
 `benchmarks/phase3_public.py`: 73 fixed workloads, all eight APIs, one worker,
@@ -99,12 +100,17 @@ case retained with its absolute latency penalty. It reuses an authenticated
 Release wheel selected by `producer_run` and `producer_revision`, requiring
 the measurement checkout's product source to match. The initial profiles use
 producer `1d37745`; affine v1 uses `5bc2109`, width v2 uses `4a78e94`, and
-f64 v3 uses `ac87e23`.
+f64 v3 uses `ac87e23`; byte v4 uses `0135305`.
 Preparation passed 785 installed public checks in each normal/scalar mode, 1,318 registry smoke
 checks, 13 benchmark metadata checks and 73 corpus checks in each mode. A
 separate host installs hash-locked wheels offline and performs measurement.
 There are no builds or pytest runs on that measurement host. The workflow also
 requires `source_revision` to match the selected workflow commit exactly.
+
+For new controlled candidates, `prepare_only=true` retains all preparation
+gates and artifacts while skipping redundant standalone timing. Then reuse the
+frozen baseline/candidate artifacts in `.github/workflows/phase3-same-host.yml`
+for ABBA measurement. The default `false` behavior remains available.
 
 The benchmark/control-flow and existing artifact-isolation tests pass 31 checks;
 both workflow files pass actionlint. Separately, five frozen original source
