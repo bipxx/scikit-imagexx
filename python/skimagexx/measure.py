@@ -20,3 +20,8 @@ __all__ += ['moments', 'moments_central', 'centroid', 'inertia_tensor']
 from ._moments_derived import moments_hu, moments_normalized
 
 __all__ += ['moments_normalized', 'moments_hu']
+
+
+from ._moments import inertia_tensor_eigvals
+
+__all__ += ['inertia_tensor_eigvals']
