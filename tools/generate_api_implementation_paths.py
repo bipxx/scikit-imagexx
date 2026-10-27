@@ -567,6 +567,15 @@ block_reduce | Pad to block multiples then use native standard reducers over blo
 add("measure", "resample", """
 profile_line | Generate perpendicular line samples, reuse interpolation, then width reduction | inclusive endpoint, linewidth, order/mode and reduce_func=None/callback | fractional/reversed/zero-length profiles
 """, effort="M")
+override("measure.blur_effect",
+         algorithm="Add source-ordered reflect uniform_filter1d; reuse float64 sparse correlation with source nonzero Sobel taps and one output cast; retain literal cropped NumPy reductions initially",
+         hazards="channel-axis move/color conversion and printed errors; dtype/half behavior; h_size=1 sliding recurrence; positive tiny axes produce empty crop and NaN warnings; NumPy float64 epsilon promotion; final reducer receives the actual scalar list once",
+         workload="positive 1D/2D/3D ramps, constants and textures; tiny extents <=3, odd/even/unit filter sizes, RGB channels, layouts and callback/error state; exclude zero spatial axes until source C safety is certified",
+         simd="Vectorize independent uniform-filter lines while retaining each double running sum and entering-minus-leaving order; reuse sparse-correlation output-lane SIMD without reordering its source taps",
+         workers="Use one global budget across independent lines or correlation output tiles; retain axis-list order and final callback order, with no nested pools or splitting a line recurrence",
+         numerical_policy="Freeze exact typed uniform-filter/Sobel intermediates and public scalar/list metadata, words, warnings and callbacks before implementation; retain literal epsilon/clamp/cropped-sum/ratio promotion and explicit exceptional/provider frontiers",
+         benchmark="One worker with upstream pool limits; positive 2D/3D uint8/float32/float64 images, several h_size values and edge density; prepare inputs outside the timer and include conversion, all filtering, allocations, crop reductions and final public reducer. Verify actual owned stages first and retain every slower case",
+         frontier="Initial new owned work is the ordered moving uniform filter plus assessed sparse Sobel. Color/conversion routes require their own exact admission; irregular cropped sums, epsilon clamps, ratio and user reducer remain explicit NumPy providers. Copying the crop for a different reduction tree does not establish parity.")
 override("measure.profile_line",
          algorithm="Keep literal float64 line/perpendicular coordinates; add a 2D order-0/1 typed sampler beside resample, then preserve flip/channel assembly and literal width reduction",
          hazards="inclusive endpoint and ceil length; default bool order; mode remapping; source C-order four-tap accumulation; integer half-away rounding/clipping before reduction; negative-stride None output; TypeError callback retry and mutation",
