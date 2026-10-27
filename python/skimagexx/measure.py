@@ -66,3 +66,7 @@ __all__ += ['mesh_surface_area']
 from ._profile_line import profile_line
 
 __all__ += ['profile_line']
+
+from ._blur_effect import blur_effect
+
+__all__ += ['blur_effect']
