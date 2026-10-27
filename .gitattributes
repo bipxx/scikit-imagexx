@@ -515,3 +515,4 @@ tests/test_polygon_native.cpp -text
 benchmarks/polygon.py -text
 tests/test_polygon_benchmark.py -text
 benchmarks/euler-number-minimum-initial.json -text
+benchmarks/polygon-minimum-initial.json -text
