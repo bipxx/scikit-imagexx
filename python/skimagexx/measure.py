@@ -55,3 +55,7 @@ __all__ += ['perimeter']
 from ._euler_number import euler_number
 
 __all__ += ['euler_number']
+
+from ._polygon import points_in_poly, grid_points_in_poly
+
+__all__ += ['points_in_poly', 'grid_points_in_poly']

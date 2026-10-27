@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "087ce4f6f7d26eca01c2854379befbe3eb1e7a1cd0acc20c230ade8960e7b30c",
+  "source_inventory_sha256": "c51753e3e1284759cf246a58a5b48599ad0c3dc43ccf315011290e5e107999de",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 230,
-      "upstream-only": 238
+      "native-partial": 232,
+      "upstream-only": 236
     },
     "kinds": {
       "callable": 448,
@@ -11803,22 +11803,26 @@
       "api": "measure.grid_points_in_poly",
       "kind": "callable",
       "signature": "(shape, verts, binarize=True)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.grid_points_in_poly",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse exact point-in-polygon evaluator on grid, retaining vertex/edge/interior codes",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse exact point-in-polygon evaluator on grid, retaining vertex/edge/interior codes",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze polygons passing through grid vertices/edges against pinned upstream, including binarize false classification, coordinate orientation and edge ties; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered binarize false classification, coordinate orientation and edge ties. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "binarize false classification, coordinate orientation and edge ties",
       "parity_cases_to_freeze": "polygons passing through grid vertices/edges",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -11829,10 +11833,10 @@
         "kind": "compute",
         "specific_workload": "polygons passing through grid vertices/edges",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_polygon_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12510,22 +12514,26 @@
       "api": "measure.points_in_poly",
       "kind": "callable",
       "signature": "(points, verts)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.points_in_poly",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Port ray-crossing/winding-compatible inclusion tests with edge handling",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port ray-crossing/winding-compatible inclusion tests with edge handling",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze points on/inside/outside polygon boundaries against pinned upstream, including vertex hits, horizontal edges, nonfinite points and self-crossings; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered vertex hits, horizontal edges, nonfinite points and self-crossings. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "vertex hits, horizontal edges, nonfinite points and self-crossings",
       "parity_cases_to_freeze": "points on/inside/outside polygon boundaries",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -12536,10 +12544,10 @@
         "kind": "compute",
         "specific_workload": "points on/inside/outside polygon boundaries",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_polygon_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
