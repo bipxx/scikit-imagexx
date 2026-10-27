@@ -515,3 +515,9 @@ tests/test_polygon_native.cpp -text
 benchmarks/polygon.py -text
 tests/test_polygon_benchmark.py -text
 benchmarks/euler-number-minimum-initial.json -text
+tests/mesh_surface_area_cases.py -text
+tests/test_mesh_surface_area_public.py -text
+
+python/skimagexx/_mesh_surface_area.py -text
+python/skimagexx/_mesh_surface_area_checks.py -text
+src/bind_mesh_surface_area.cpp -text

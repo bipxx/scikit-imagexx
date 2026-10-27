@@ -59,3 +59,6 @@ __all__ += ['euler_number']
 from ._polygon import points_in_poly, grid_points_in_poly
 
 __all__ += ['points_in_poly', 'grid_points_in_poly']
+from ._mesh_surface_area import mesh_surface_area
+
+__all__ += ['mesh_surface_area']
