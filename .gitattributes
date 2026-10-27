@@ -503,3 +503,8 @@ tests/test_euler_number_benchmark.py -text
 
 tests/polygon_cases.py -text
 tests/test_polygon_public.py -text
+
+python/skimagexx/_polygon.py -text
+python/skimagexx/_polygon_checks.py -text
+src/bind_polygon.cpp -text
+tests/test_polygon_intake.py -text
