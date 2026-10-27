@@ -550,3 +550,5 @@ python/skimagexx/_blur_effect.py -text
 python/skimagexx/_blur_effect_checks.py -text
 src/bind_uniform_filter.cpp -text
 tests/test_blur_effect_intake.py -text
+src/uniform_filter.hpp -text
+tests/test_uniform_filter_native.cpp -text

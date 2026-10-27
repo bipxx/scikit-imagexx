@@ -2,6 +2,12 @@
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include "simd.hpp"
+#include "uniform_filter.hpp"
+#include <atomic>
+#include <cfenv>
+#if defined(__SSE2__) || defined(_M_X64) || defined(_M_IX86_FP)
+#include <xmmintrin.h>
+#endif
 #include <algorithm>
 #include <cstring>
 #include <limits>
@@ -29,8 +35,27 @@ std::vector<std::size_t> strides(const std::vector<std::size_t>& shape) {
     for(auto i=shape.size();i-->1;)out[i-1]=checked_product(out[i],shape[i]);
     return out;
 }
-template<class T> void mean_axis(const T* input,T* output,std::size_t count,const std::vector<std::size_t>& shape,
-    std::size_t axis,std::size_t window,GaussianBorder border,double cval,int workers) {
+// Only the new single-axis primitive enables capture; old adaptive calls
+// instantiate the disabled scope and retain their arithmetic/state behavior.
+bool uniform_environment() {
+    if(std::fegetround()!=FE_TONEAREST)return false;
+#if defined(__SSE2__) || defined(_M_X64) || defined(_M_IX86_FP)
+    if(_mm_getcsr()&0x8040)return false;
+#endif
+    return true;
+}
+template<bool Enabled> class MeanCapture {
+    std::fenv_t saved_;std::atomic<bool>* refused_;bool active_=false,ready_=true;
+public:
+    explicit MeanCapture(std::atomic<bool>* refused):refused_(refused) {
+        if constexpr(Enabled){active_=std::feholdexcept(&saved_)==0;ready_=active_&&uniform_environment();if(!ready_)refused_->store(true);}
+    }
+    bool ready()const{return ready_;}
+    ~MeanCapture(){if constexpr(Enabled)if(active_){if(std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW))refused_->store(true);std::fesetenv(&saved_);}}
+};
+
+template<class T,bool Guard=false> void mean_axis(const T* input,T* output,std::size_t count,const std::vector<std::size_t>& shape,
+    std::size_t axis,std::size_t window,GaussianBorder border,double cval,int workers,std::atomic<bool>* refused=nullptr) {
     const auto pitch=strides(shape);const auto length=shape[axis],step=pitch[axis];
     if(window>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())-length)throw std::overflow_error("adaptive window overflow");
     const auto padded=length+window-1,lines=count/length,groups=(lines+3)/4;
@@ -40,6 +65,7 @@ template<class T> void mean_axis(const T* input,T* output,std::size_t count,cons
         // Independent first-axis lines already occupy adjacent memory lanes.
         // Stream them directly instead of packing and scattering full lines.
         detail::partition(groups,std::min(workers,int(std::min(groups,std::size_t(std::numeric_limits<int>::max())))),[&](auto begin,auto end,auto) {
+            MeanCapture<Guard> capture(refused);if(!capture.ready())return;
             auto column=begin*4;const auto stop=std::min(end*4,lines);
 #ifdef SKIMAGEXX_AVX2
             if(has_avx2())column=simd::adaptive_mean_columns(input,output,length,step,window,mapping.data(),column,stop,cval,std::is_same_v<T,float>);
@@ -56,6 +82,7 @@ template<class T> void mean_axis(const T* input,T* output,std::size_t count,cons
     const auto capacity=std::min(std::size_t(4),lines);
     detail::partition(groups,team,[&](auto begin,auto end,auto) {
         std::vector<double> buffer(checked_product(padded,capacity)),result(checked_product(length,capacity));
+        MeanCapture<Guard> capture(refused);if(!capture.ready())return;
         for(auto group=begin;group<end;++group) {
             const auto first=group*4,lanes=std::min(std::size_t(4),lines-first);
             std::size_t base[4]{};
@@ -158,5 +185,41 @@ void adaptive_offset_into(const void* input,void* output,std::size_t count,Pixel
     checked_product(count,1);
     if(source==PixelType::float32){if(target==PixelType::float32)offset(static_cast<const float*>(input),static_cast<float*>(output),count,value);else offset(static_cast<const float*>(input),static_cast<double*>(output),count,value);}
     else {if(target==PixelType::float32)offset(static_cast<const double*>(input),static_cast<float*>(output),count,value);else offset(static_cast<const double*>(input),static_cast<double*>(output),count,value);}
+}
+}
+
+namespace skimagexx::detail {
+namespace {
+template<class T> bool uniform_input(const T* input,std::size_t count) {
+    using Word=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
+    constexpr Word sign=sizeof(T)==4?Word(0x80000000u):Word(UINT64_C(0x8000000000000000));
+    constexpr Word exponent=sizeof(T)==4?Word(0x7f800000u):Word(UINT64_C(0x7ff0000000000000));
+    constexpr Word extreme=sizeof(T)==4?Word(0x7e7fffffu):Word(UINT64_C(0x7fcfffffffffffff));
+    for(std::size_t i=0;i<count;++i){Word bits;std::memcpy(&bits,input+i,sizeof(T));bits&=~sign;
+        if((bits&exponent)==exponent||(!(bits&exponent)&&bits)||bits>=extreme)return false;}
+    return true;
+}
+template<class T> bool uniform(const void* input,void* output,std::size_t count,
+    const std::vector<std::size_t>& shape,std::size_t axis,std::size_t window,int workers) {
+    if(!uniform_environment()||!uniform_input(static_cast<const T*>(input),count))return false;
+    std::atomic<bool> refused{false};
+    mean_axis<T,true>(static_cast<const T*>(input),static_cast<T*>(output),count,shape,axis,window,
+                      GaussianBorder::reflect,0.,count>=parallel_min?workers:1,&refused);
+    return !refused.load();
+}
+}
+bool uniform_filter1d_into(const void* input,void* output,PixelType type,
+    const std::vector<std::size_t>& shape,std::size_t axis,std::size_t window,int workers) {
+    if(shape.empty()||shape.size()>3||axis>=shape.size()||!window)throw std::invalid_argument("uniform filter shape, axis or window invalid");
+    if(workers<1||workers>1024)throw std::invalid_argument("uniform worker snapshot outside [1,1024]");
+#ifndef _OPENMP
+    if(workers!=1)throw std::invalid_argument("this build has no OpenMP support");
+#endif
+    if(type!=PixelType::float32&&type!=PixelType::float64)throw std::invalid_argument("uniform float32/64 input required");
+    std::size_t count=1;for(auto n:shape){if(!n)throw std::invalid_argument("uniform axes must be nonempty");count=checked_product(count,n);}
+    if(!input||!output)throw std::invalid_argument("nonnull prepared uniform buffers required");
+    if(window>100000)return false;
+    return type==PixelType::float32?uniform<float>(input,output,count,shape,axis,window,workers)
+                                  :uniform<double>(input,output,count,shape,axis,window,workers);
 }
 }
