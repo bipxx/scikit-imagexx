@@ -43,6 +43,10 @@ std::size_t zoom_sample(const double*,double*,const detail::ZoomPlan&,
                         std::size_t begin,std::size_t end);
 std::size_t zoom_sample_typed(const void*,void*,const detail::ZoomPlan&,
                              std::size_t begin,std::size_t end,PixelType source,PixelType target);
+// Profile plans contain two axes of four paired query points, not a Cartesian grid.
+bool profile_all_finite(const void*,std::size_t count,bool single);
+std::size_t profile_sample_typed(const void*,void*,const detail::ZoomPlan&,
+                                std::size_t lanes,PixelType);
 }
 #endif
 

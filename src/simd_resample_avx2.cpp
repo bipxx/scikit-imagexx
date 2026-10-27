@@ -82,7 +82,7 @@ template<class T,bool Boolean> void store(T* output,__m256d value) {
         }
     }
 }
-template<class Input,class Output,bool Boolean=false>
+template<class Input,class Output,bool Boolean=false,bool Paired=false>
 std::size_t sample(const Input* input,Output* output,const detail::ZoomPlan& plan,
                         std::size_t begin,std::size_t end) {
     // NumPy has at most 64 image axes. This fixed coordinate scratch stays on
@@ -92,8 +92,10 @@ std::size_t sample(const Input* input,Output* output,const detail::ZoomPlan& pla
     const detail::ZoomPoint* points[64][4];
     const auto zero=_mm256_setzero_si256();
     for(;end-begin>=4;begin+=4) {
-        for(std::size_t axis=0;axis<rank;++axis)for(std::size_t lane=0;lane<4;++lane)
-            points[axis][lane]=&plan.axes[axis][((begin+lane)/plan.output_strides[axis])%plan.axes[axis].size()];
+        for(std::size_t axis=0;axis<rank;++axis)for(std::size_t lane=0;lane<4;++lane) {
+            if constexpr(Paired)points[axis][lane]=&plan.axes[axis][lane];
+            else points[axis][lane]=&plan.axes[axis][((begin+lane)/plan.output_strides[axis])%plan.axes[axis].size()];
+        }
         auto total=_mm256_setzero_pd();
         for(std::size_t corner=0;corner<plan.corners;++corner) {
             const auto* taps=plan.footprint.data()+corner*rank;
@@ -138,5 +140,36 @@ std::size_t zoom_sample_typed(const void* input,void* output,const detail::ZoomP
 std::size_t zoom_sample(const double* input,double* output,const detail::ZoomPlan& plan,
                         std::size_t begin,std::size_t end) {
     return zoom_sample_typed(input,output,plan,begin,end,PixelType::float64,PixelType::float64);
+}
+bool profile_all_finite(const void* source,std::size_t count,bool single) {
+    std::size_t i=0;
+    if(single) {
+        const auto* input=static_cast<const float*>(source);
+        const auto mask=_mm256_set1_epi32(0x7f800000);
+        for(;count-i>=8;i+=8) {
+            const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i));
+            if(_mm256_movemask_epi8(_mm256_cmpeq_epi32(_mm256_and_si256(words,mask),mask)))return false;
+        }
+        for(;i<count;++i){std::uint32_t word;std::memcpy(&word,input+i,4);if((word&0x7f800000u)==0x7f800000u)return false;}
+    } else {
+        const auto* input=static_cast<const double*>(source);
+        const auto mask=_mm256_set1_epi64x(INT64_C(0x7ff0000000000000));
+        for(;count-i>=4;i+=4) {
+            const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i));
+            if(_mm256_movemask_epi8(_mm256_cmpeq_epi64(_mm256_and_si256(words,mask),mask)))return false;
+        }
+        for(;i<count;++i){std::uint64_t word;std::memcpy(&word,input+i,8);if((word&UINT64_C(0x7ff0000000000000))==UINT64_C(0x7ff0000000000000))return false;}
+    }
+    return true;
+}
+std::size_t profile_sample_typed(const void* input,void* output,const detail::ZoomPlan& plan,
+                                std::size_t lanes,PixelType type) {
+    switch(type) {
+        case PixelType::boolean:return sample<std::uint8_t,std::uint8_t,true,true>(static_cast<const std::uint8_t*>(input),static_cast<std::uint8_t*>(output),plan,0,lanes);
+#define PROFILE_SAMPLE(tag,T) case PixelType::tag:return sample<T,T,false,true>(static_cast<const T*>(input),static_cast<T*>(output),plan,0,lanes);
+        PROFILE_SAMPLE(uint8,std::uint8_t) PROFILE_SAMPLE(float32,float) PROFILE_SAMPLE(float64,double)
+#undef PROFILE_SAMPLE
+        default:return 0;
+    }
 }
 } // namespace skimagexx::simd

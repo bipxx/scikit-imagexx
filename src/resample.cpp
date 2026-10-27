@@ -244,6 +244,9 @@ namespace skimagexx::detail {
 namespace {
 template<class T>bool profile_finite(const T* input,std::size_t count){
     if constexpr(std::is_floating_point_v<T>){
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2())return simd::profile_all_finite(input,count,std::is_same_v<T,float>);
+#endif
         using Word=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
         constexpr Word mask=sizeof(T)==4?Word(0x7f800000u):Word(UINT64_C(0x7ff0000000000000));
         for(std::size_t i=0;i<count;++i){Word bits;std::memcpy(&bits,input+i,sizeof(T));if((bits&mask)==mask)return false;}
@@ -295,7 +298,7 @@ template<class T,bool Boolean=false>bool profile(const ProfileInput& input,const
             if(!accepted)break;
             std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-            if(vectorized)done=simd::zoom_sample_typed(data,output+i,plan,0,lanes,input.type,input.type);
+            if(vectorized)done=simd::profile_sample_typed(data,output+i,plan,lanes,input.type);
 #else
             (void)vectorized;
 #endif
