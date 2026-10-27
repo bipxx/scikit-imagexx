@@ -7,7 +7,9 @@ import numpy as np
 def default_error(image, actual, expected):
     if image is None:
         raise ValueError('Crofton verification requires the original input')
-    assert type(actual) is type(expected) is np.float64
+    actual, expected = np.asarray(actual), np.asarray(expected)
+    assert actual.shape == expected.shape == ()
+    assert actual.dtype == expected.dtype == np.dtype('float64')
     assert np.isfinite(actual) and np.isfinite(expected)
     from scipy import ndimage as ndi
     from ._perimeter_crofton import _coefficients
