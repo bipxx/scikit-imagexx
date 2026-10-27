@@ -475,3 +475,6 @@ src/simd_perimeter_crofton_avx2.cpp -text
 tests/test_perimeter_crofton_native.cpp -text
 tests/perimeter_cases.py -text
 tests/test_perimeter_public.py -text
+python/skimagexx/_perimeter.py -text
+python/skimagexx/_perimeter_checks.py -text
+src/bind_perimeter.cpp -text
