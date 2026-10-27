@@ -521,3 +521,7 @@ tests/test_mesh_surface_area_public.py -text
 python/skimagexx/_mesh_surface_area.py -text
 python/skimagexx/_mesh_surface_area_checks.py -text
 src/bind_mesh_surface_area.cpp -text
+src/mesh_surface_area.hpp -text
+src/mesh_surface_area.cpp -text
+src/simd_mesh_surface_area_avx2.cpp -text
+tests/test_mesh_surface_area_native.cpp -text
