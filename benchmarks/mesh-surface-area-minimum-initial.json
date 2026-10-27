@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-27T03:19:02.410917+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "source_sha256": "e091683998f090f67031f95b38f3aec6dab9957fed9ef9fead3b463ed11b02af",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "e091683998f090f67031f95b38f3aec6dab9957fed9ef9fead3b463ed11b02af",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "7db0a2a5890ee78691f2a74e0a57971dbd421bd11038036e77ce1c913465bf0b",
+    "harness_sha256": "13e5400c9df27889e0daae802a8144bdb47de300148dbfc9c6b8c0179298cfc5",
+    "height_formula": "z=.125*(x*x+2*y*y+x*y)",
+    "height_formula_sha256": "0e899a8abb9624d754d191ee6c05eec630f3b57e78d36c756d4f505859702cc6",
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "threads": 1,
+    "repeat": 7,
+    "raw_samples": 84,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "command": [
+      "benchmarks/mesh_surface_area.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "build/ci-mesh-surface-area.json"
+    ],
+    "selected_apis": [
+      "measure.mesh_surface_area"
+    ],
+    "provider_frontier": "Six actual float32/float64 meshes use unit-grid cells64/128/256 and z=.125*(x*x+2*y*y+x*y). Vertices and two triangles/cell are generated outside timing; no marching_cubes or geometry extraction is timed. Every public call includes full fancy indexing (including all face entries), C-buffer preparation, owned cross/norm/reduction, typed NumPy scalar boxing and literal /2.0. The frozen exact-rational 2*gamma_(F+16)*S check runs before timing on the full (verts,faces) context. Finite normal native work must complete the actual C stage; unsupported/exceptional primitive frontiers are not timed in this cohort. Output dtype records preserve NumPy1/2 scalar-promotion differences. This first original/current comparison is neither prior-C++ gain nor full-API qualification."
+  },
+  "results": [
+    {
+      "case_id": "cells64:float32",
+      "api": "measure.mesh_surface_area",
+      "cells": 64,
+      "dtype": "float32",
+      "vertex_count": 4225,
+      "face_count": 8192,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        4225,
+        3
+      ],
+      "face_shape": [
+        8192,
+        3
+      ],
+      "vertex_dtype_str": "<f4",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "f65440fef27ac7097952848e51d1c4e273a549e4d798b6c569fcae1c0425a040",
+        "22b08a118fb8a3de2095f7b925880951d70e42e6560688f1988b3ff9b57fa11a"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.0763574838638306,
+      "reference_result": 1.0763574838638306,
+      "output_raw_hex": "000000a0c238f13f",
+      "reference_raw_hex": "000000a0c238f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9246135454545454,
+      "cpp_ms": 0.390899,
+      "speedup": 2.3653515241905083,
+      "samples_ms": [
+        [
+          0.9538154545454546,
+          0.9214212727272727,
+          0.9142696363636363,
+          0.9248922727272727,
+          0.9265508181818183,
+          0.9246135454545454,
+          0.9160585454545455
+        ],
+        [
+          0.3931332,
+          0.38986804999999997,
+          0.3925005,
+          0.3874205,
+          0.390899,
+          0.38910865,
+          0.3953959
+        ]
+      ],
+      "loops": [
+        11,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "cells64:float64",
+      "api": "measure.mesh_surface_area",
+      "cells": 64,
+      "dtype": "float64",
+      "vertex_count": 4225,
+      "face_count": 8192,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        4225,
+        3
+      ],
+      "face_shape": [
+        8192,
+        3
+      ],
+      "vertex_dtype_str": "<f8",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "4c5b218098be24ef010146fd463af826db80dde4418ecba1c3a9f6544e787b83",
+        "22b08a118fb8a3de2095f7b925880951d70e42e6560688f1988b3ff9b57fa11a"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.07635748652701,
+      "reference_result": 1.07635748652701,
+      "output_raw_hex": "2603b7a0c238f13f",
+      "reference_raw_hex": "2603b7a0c238f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9821086,
+      "cpp_ms": 0.4572035,
+      "speedup": 2.148077606580002,
+      "samples_ms": [
+        [
+          0.9904231,
+          0.9814374,
+          0.9816998,
+          0.9772114000000001,
+          0.9861390999999999,
+          0.994146,
+          0.9821086
+        ],
+        [
+          0.46032085,
+          0.4572035,
+          0.45208790000000004,
+          0.46199945000000003,
+          0.45301965,
+          0.4496874,
+          0.45990705
+        ]
+      ],
+      "loops": [
+        10,
+        20
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "cells128:float32",
+      "api": "measure.mesh_surface_area",
+      "cells": 128,
+      "dtype": "float32",
+      "vertex_count": 16641,
+      "face_count": 32768,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        16641,
+        3
+      ],
+      "face_shape": [
+        32768,
+        3
+      ],
+      "vertex_dtype_str": "<f4",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "5e3742ab7eb16f40c16f2e7b87760ff05538ea810e65f05f139f0f1a6ea0bb00",
+        "e9c884d8f7943dd88f86ac2796b5a32727e7dc5f427996d2339770354e2bb052"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.0763590335845947,
+      "reference_result": 1.0763590335845947,
+      "output_raw_hex": "00000040c438f13f",
+      "reference_raw_hex": "00000040c438f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.5890596666666665,
+      "cpp_ms": 1.5462723333333332,
+      "speedup": 2.3211044971163983,
+      "samples_ms": [
+        [
+          3.6473686666666665,
+          3.4990616666666665,
+          3.5890596666666665,
+          3.7691523333333334,
+          3.4950103333333336,
+          3.5465766666666667,
+          3.6298963333333334
+        ],
+        [
+          1.5775726666666667,
+          1.5427793333333333,
+          1.5129503333333332,
+          1.5491378333333332,
+          1.5109165,
+          1.5462723333333332,
+          1.5466966666666668
+        ]
+      ],
+      "loops": [
+        3,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "cells128:float64",
+      "api": "measure.mesh_surface_area",
+      "cells": 128,
+      "dtype": "float64",
+      "vertex_count": 16641,
+      "face_count": 32768,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        16641,
+        3
+      ],
+      "face_shape": [
+        32768,
+        3
+      ],
+      "vertex_dtype_str": "<f8",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "3d9815a8c3a30015c94e3884f50b97bf926546e6e2a3fe945d71aa71c48d650f",
+        "e9c884d8f7943dd88f86ac2796b5a32727e7dc5f427996d2339770354e2bb052"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.0763590068588997,
+      "reference_result": 1.0763590068588997,
+      "output_raw_hex": "9a6cd338c438f13f",
+      "reference_raw_hex": "9a6cd338c438f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.960149,
+      "cpp_ms": 1.790764,
+      "speedup": 2.2114298701559783,
+      "samples_ms": [
+        [
+          4.149964,
+          3.9784263333333336,
+          3.9523783333333333,
+          4.006592666666666,
+          3.960149,
+          3.9542613333333336,
+          3.9084793333333336
+        ],
+        [
+          1.7824183333333332,
+          1.7896735,
+          1.8093403333333333,
+          1.8366798333333332,
+          1.8388771666666668,
+          1.7819341666666668,
+          1.790764
+        ]
+      ],
+      "loops": [
+        3,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "cells256:float32",
+      "api": "measure.mesh_surface_area",
+      "cells": 256,
+      "dtype": "float32",
+      "vertex_count": 66049,
+      "face_count": 131072,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        66049,
+        3
+      ],
+      "face_shape": [
+        131072,
+        3
+      ],
+      "vertex_dtype_str": "<f4",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "32237f925ea9f05da78a0eb3df27f8a42c8bda74859e02f4b48ebfef1ceca880",
+        "c15fdef41b8f2995016fa2c928579adb55e20d8af26f1cc4b07dd177e4b2e93b"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.0763593912124634,
+      "reference_result": 1.0763593912124634,
+      "output_raw_hex": "000000a0c438f13f",
+      "reference_raw_hex": "000000a0c438f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 14.03699,
+      "cpp_ms": 6.0919175,
+      "speedup": 2.304198965268325,
+      "samples_ms": [
+        [
+          14.296815,
+          13.84516,
+          14.03699,
+          14.109514,
+          13.97291,
+          13.899472,
+          14.056777
+        ],
+        [
+          6.2256315,
+          5.943364,
+          5.9620545,
+          5.988263,
+          6.0919175,
+          6.1291865,
+          6.17105
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "cells256:float64",
+      "api": "measure.mesh_surface_area",
+      "cells": 256,
+      "dtype": "float64",
+      "vertex_count": 66049,
+      "face_count": 131072,
+      "backend": "native",
+      "threads": 1,
+      "vertex_shape": [
+        66049,
+        3
+      ],
+      "face_shape": [
+        131072,
+        3
+      ],
+      "vertex_dtype_str": "<f8",
+      "face_dtype_str": "<i8",
+      "input_sha256": [
+        "6b3eae6b3305e7426cab104fac33446fbf99d77855a25a9621faea031172e2ff",
+        "c15fdef41b8f2995016fa2c928579adb55e20d8af26f1cc4b07dd177e4b2e93b"
+      ],
+      "result_type": [
+        "numpy",
+        "float64"
+      ],
+      "reference_result_type": [
+        "numpy",
+        "float64"
+      ],
+      "output_dtype_str": "<f8",
+      "reference_dtype_str": "<f8",
+      "result": 1.076359386940981,
+      "reference_result": 1.076359386940981,
+      "output_raw_hex": "4a77da9ec438f13f",
+      "reference_raw_hex": "4a77da9ec438f13f",
+      "actual_C_returns": [
+        "mesh_surface_area"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 15.380633,
+      "cpp_ms": 7.5506,
+      "speedup": 2.0370080523402114,
+      "samples_ms": [
+        [
+          15.321282,
+          15.380633,
+          15.464309,
+          15.302746,
+          15.249567,
+          15.656219,
+          15.472294
+        ],
+        [
+          7.5506,
+          7.818532,
+          7.478855,
+          7.288531,
+          7.742961,
+          7.36324,
+          7.581157
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
