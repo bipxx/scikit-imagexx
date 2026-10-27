@@ -81,4 +81,4 @@ def test_both_mesh_modes_and_phase3_counts_are_in_preparation():
         assert producer.count(target)==1 and producer.index(target)<producer.index('ci_measurement_artifacts.py freeze')
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
     assert phase3.count('tests/test_mesh_surface_area_public.py')==2
-    assert 'len(cases) == 2831'in phase3 and 'len(native) == 236'in phase3 and 'expected == 1405'in phase3
+    assert 'len(cases) == 2924'in phase3 and 'len(native) == 237'in phase3 and 'expected == 1409'in phase3
