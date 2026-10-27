@@ -488,3 +488,7 @@ benchmarks/perimeter-crofton-minimum-initial.json -text
 tests/test_perimeter_crofton_same_host.py -text
 tests/euler_number_cases.py -text
 tests/test_euler_number_public.py -text
+python/skimagexx/_euler_number.py -text
+python/skimagexx/_euler_number_checks.py -text
+src/bind_euler_number.cpp -text
+tests/test_euler_number_intake.py -text

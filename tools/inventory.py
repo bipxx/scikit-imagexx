@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('measure.euler_number',),'tests/test_euler_number_public.py','benchmarks/euler_number.py'),
     (('measure.perimeter',),'tests/test_perimeter_public.py','benchmarks/coverage.py'),
     (('measure.perimeter_crofton',),'tests/test_perimeter_crofton_public.py','benchmarks/coverage.py'),
     (('measure.block_reduce',),'tests/test_block_reduce_public.py','benchmarks/coverage.py'),

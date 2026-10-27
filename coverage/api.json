@@ -5463,11 +5463,15 @@
       "api": "measure.euler_number",
       "kind": "callable",
       "signature": "(image, connectivity=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_euler_number_public.py",
+      "benchmark": "benchmarks/euler_number.py"
     },
     {
       "api": "measure.find_contours",

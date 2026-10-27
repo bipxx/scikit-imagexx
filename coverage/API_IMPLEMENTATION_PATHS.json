@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "129efcae7fa67e0f35d0e633bf6efba254301ec8a7320211a00507e7e72db56b",
+  "source_inventory_sha256": "087ce4f6f7d26eca01c2854379befbe3eb1e7a1cd0acc20c230ade8960e7b30c",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 229,
-      "upstream-only": 239
+      "native-partial": 230,
+      "upstream-only": 238
     },
     "kinds": {
       "callable": 448,
@@ -11726,15 +11726,19 @@
       "api": "measure.euler_number",
       "kind": "callable",
       "signature": "(image, connectivity=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.euler_number",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Use connectivity-specific 2D/3D neighborhood configuration LUT sums",
+      "easiest_credible_path": "Audit/extend existing native implementation: Use connectivity-specific 2D/3D neighborhood configuration LUT sums",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood",
@@ -11742,7 +11746,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze holes/tunnels/cavities and border-touching objects against pinned upstream, including foreground/background dual connectivity, padding and 3D unsupported connectivity; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered foreground/background dual connectivity, padding and 3D unsupported connectivity. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "foreground/background dual connectivity, padding and 3D unsupported connectivity",
       "parity_cases_to_freeze": "holes/tunnels/cavities and border-touching objects",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -11753,10 +11757,10 @@
         "kind": "compute",
         "specific_workload": "holes/tunnels/cavities and border-touching objects",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/euler_number.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_euler_number_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
