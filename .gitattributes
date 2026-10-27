@@ -493,3 +493,7 @@ python/skimagexx/_euler_number.py -text
 python/skimagexx/_euler_number_checks.py -text
 src/bind_euler_number.cpp -text
 tests/test_euler_number_intake.py -text
+src/euler_number.hpp -text
+src/euler_number.cpp -text
+src/simd_euler_number_avx2.cpp -text
+tests/test_euler_number_native.cpp -text
