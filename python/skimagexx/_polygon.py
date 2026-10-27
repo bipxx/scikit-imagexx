@@ -6,8 +6,6 @@ from . import _core
 
 def points_in_poly(points, verts):
     """Test points with source raw bool labels and memoryview-backed output."""
-    if type(points)is np.ndarray:_core.fft_check(points)
-    if type(verts)is np.ndarray:_core.fft_check(verts)
     points = np.asarray(points)
     verts = np.asarray(verts)
     x = points[:, 0].astype(np.float64)
@@ -22,7 +20,6 @@ def points_in_poly(points, verts):
 
 def grid_points_in_poly(shape, verts, binarize=True):
     """Classify a grid, retaining literal source binarize truth/copy semantics."""
-    if type(verts)is np.ndarray:_core.fft_check(verts)
     verts = np.asarray(verts)
     vx = verts[:, 0].astype(np.float64)
     vy = verts[:, 1].astype(np.float64)
