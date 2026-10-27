@@ -8,7 +8,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -360,6 +360,11 @@ def default_call(api, image):
         verts = np.array([[0, 0], [0, max(1, columns-1)],
                           [max(1, rows-1), max(1, columns-1)], [max(1, rows-1), 0]], dtype=np.float64)
         return (image.shape, verts), {}
+    if api == 'measure.mesh_surface_area':
+        import numpy as np
+        verts = np.empty((3, 3), dtype=image.dtype)
+        verts.flat[:] = [image.flat[i % image.size] for i in range(9)]
+        return (verts, np.array([[0, 1, 2]], dtype=np.intp)), {}
     if api in COORDS_MOMENTS_FUNCTIONS:
         import numpy as np
         coords = np.empty((image.shape[0], 2), dtype=image.dtype)
@@ -493,6 +498,10 @@ def polygon_default_error(image, actual, expected):
     """Compare exact classifications and source raw bool label words."""
     from ._polygon_checks import default_error
     return default_error(image, actual, expected)
+def mesh_default_error(call_input, actual, expected):
+    """Validate the frozen mesh geometry envelope from the actual (verts,faces)."""
+    from ._mesh_surface_area_checks import default_error
+    return default_error(call_input, actual, expected)
 
 
 def euler_default_error(image, actual, expected):
@@ -524,6 +533,9 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
     if api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
         polygon_default_error(image, actual, expected)
         return
+    if api == 'measure.mesh_surface_area':
+        mesh_default_error(image, actual, expected)
+        return
     if api == 'measure.euler_number':
         euler_default_error(image, actual, expected)
         return
@@ -551,6 +563,8 @@ def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
     if api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
         raise ValueError('Polygon classification uses exact bytes; call assert_default_parity')
+    if api == 'measure.mesh_surface_area':
+        raise ValueError('Mesh uses its geometric envelope; call assert_default_parity')
     if api == 'measure.euler_number':
         raise ValueError('Euler uses its exact integer domain; call assert_default_parity')
     if api == 'measure.perimeter':

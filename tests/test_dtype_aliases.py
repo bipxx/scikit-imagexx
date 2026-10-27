@@ -53,7 +53,7 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
             continue
         assert np.asarray(a).dtype==np.asarray(b).dtype and np.asarray(a).shape==np.asarray(b).shape
         assert_default_parity(api,np.dtype(dtype),a,b,
-                              image=arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' or api == 'measure.euler_number' else image)
+                              image=arguments if api == 'measure.mesh_surface_area' else arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' or api == 'measure.euler_number' else image)
 
 
 @pytest.mark.parametrize('dtype',['float32','float64'])

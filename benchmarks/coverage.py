@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -133,6 +133,13 @@ def main():
                    'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
                    'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
+    mesh_scope = ('Full fancy indexing and native C preparation remain explicit providers; finite normal '
+                  'float32/float64 cross products, norms and the profile-aware reduction are owned C++. '
+                  'The final typed NumPy scalar /2.0 retains profile promotion. Integer/half/complex, '
+                  'subclass and exceptional paths retain literal primitives with no native geometry credit. '
+                  'This generic default is one triangle; benchmarks/mesh_surface_area.py is the canonical '
+                  'six actual-float32/float64 curved-mesh cohort. The frozen rational geometry checker '
+                  'uses the complete (verts,faces) call context outside timing.')
     polygon_scope = ('Source float64 coordinate copies and output memoryview/binarize adaptation remain providers; '
                      'ordered dual-ray classification is owned C++ with exact raw label/metadata parity. '
                      'The dedicated polygon harness varies query size and vertex count; this generic default '
@@ -143,6 +150,8 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.mesh_surface_area' in apis:
+        provider_frontiers['measure.mesh_surface_area'] = mesh_scope
     for name in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
         if name in apis:
             provider_frontiers[name] = polygon_scope
@@ -206,7 +215,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
+                    if api == 'measure.mesh_surface_area':
+                        error = mesh_default_error(call_args, actual, expected)
+                    elif api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
                         error = polygon_default_error(call_args[0], actual, expected)
                     elif api == 'measure.euler_number':
                         error = euler_default_error(call_args[0], actual, expected)
@@ -235,6 +246,8 @@ def main():
                     timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
+                    if api == 'measure.mesh_surface_area' and call_args[0].dtype.char not in ('f', 'd'):
+                        backend = 'primitive-provider'
                     results.append({'api': api, 'size': case_size, 'dtype': case_dtype,
                                     **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
@@ -278,6 +291,7 @@ def main():
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + mesh_scope if 'measure.mesh_surface_area' in apis else '')
              + (' ' + polygon_scope if any(a in apis for a in ('measure.points_in_poly', 'measure.grid_points_in_poly')) else '')
              + (' ' + euler_scope if 'measure.euler_number' in apis else '')
              + (' ' + perimeter_scope if 'measure.perimeter' in apis else '')
