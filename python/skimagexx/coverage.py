@@ -8,7 +8,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -473,6 +473,12 @@ def shannon_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def crofton_default_error(image, actual, expected):
+    """Validate the frozen sixteen-term Crofton weighted-sum policy."""
+    from ._perimeter_crofton_checks import default_error
+    return default_error(image, actual, expected)
+
+
 def block_default_error(image, actual, expected):
     """Validate the frozen per-block default-sum policy."""
     from ._block_reduce_checks import default_error
@@ -481,6 +487,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'measure.perimeter_crofton':
+        crofton_default_error(image, actual, expected)
+        return
     if api == 'measure.block_reduce':
         block_default_error(image, actual, expected)
         return
@@ -497,6 +506,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'measure.perimeter_crofton':
+        raise ValueError('Crofton uses its histogram-specific bound; call assert_default_parity')
     if api == 'measure.block_reduce':
         raise ValueError('Block sum uses per-block bounds; call assert_default_parity')
     if api == 'measure.shannon_entropy':
