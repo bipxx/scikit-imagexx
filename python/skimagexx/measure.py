@@ -55,3 +55,7 @@ __all__ += ['perimeter']
 from ._euler_number import euler_number
 
 __all__ += ['euler_number']
+
+from ._mesh_surface_area import mesh_surface_area
+
+__all__ += ['mesh_surface_area']

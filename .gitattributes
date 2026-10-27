@@ -502,3 +502,7 @@ benchmarks/euler_number.py -text
 tests/test_euler_number_benchmark.py -text
 tests/mesh_surface_area_cases.py -text
 tests/test_mesh_surface_area_public.py -text
+
+python/skimagexx/_mesh_surface_area.py -text
+python/skimagexx/_mesh_surface_area_checks.py -text
+src/bind_mesh_surface_area.cpp -text

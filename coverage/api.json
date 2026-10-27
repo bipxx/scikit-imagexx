@@ -5591,11 +5591,15 @@
       "api": "measure.mesh_surface_area",
       "kind": "callable",
       "signature": "(verts, faces)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_mesh_surface_area_public.py",
+      "benchmark": "benchmarks/mesh_surface_area.py"
     },
     {
       "api": "measure.moments",
