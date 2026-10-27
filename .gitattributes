@@ -544,3 +544,5 @@ tests/test_profile_line_public.py -text
 python/skimagexx/_profile_line.py -text
 python/skimagexx/_profile_line_checks.py -text
 src/bind_profile_line.cpp -text
+src/uniform_filter.hpp -text
+tests/test_uniform_filter_native.cpp -text
