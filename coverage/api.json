@@ -5744,11 +5744,15 @@
       "api": "measure.profile_line",
       "kind": "callable",
       "signature": "(image, src, dst, linewidth=1, order=None, mode='reflect', cval=0.0, *, reduce_func=<function mean>)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_profile_line_public.py",
+      "benchmark": "benchmarks/profile_line.py"
     },
     {
       "api": "measure.ransac",

@@ -53,6 +53,7 @@ void bind_window(pybind11::module_&);
 void bind_moments(pybind11::module_&);
 void bind_moments_derived(pybind11::module_&);
 void bind_polygon(pybind11::module_&);
+void bind_profile_line(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -843,6 +844,7 @@ PYBIND11_MODULE(_core, m) {
     bind_moments(m);
     bind_moments_derived(m);
     bind_polygon(m);
+    bind_profile_line(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

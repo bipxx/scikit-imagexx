@@ -323,7 +323,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.perimeter` | upstream-only | pending | pending |
 | `measure.perimeter_crofton` | upstream-only | pending | pending |
 | `measure.points_in_poly` | upstream-only | pending | pending |
-| `measure.profile_line` | upstream-only | pending | pending |
+| `measure.profile_line` | native-partial | yes (partial input contract) | yes |
 | `measure.ransac` | upstream-only | pending | pending |
 | `measure.regionprops` | upstream-only | pending | pending |
 | `measure.regionprops_table` | upstream-only | pending | pending |
