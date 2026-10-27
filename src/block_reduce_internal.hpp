@@ -22,6 +22,8 @@ unsigned block_reduce_sum(const BlockReduceInput&, const std::vector<std::size_t
 }
 
 namespace skimagexx::simd {
+// Eight uint8 2x2 blocks per bounded packet; exact uint64 output sums.
+std::size_t block_reduce_row(const std::uint8_t*, std::uint64_t*, std::size_t columns, std::size_t count);
 // Independent adjacent output blocks in one 2D row; returns the processed count.
 std::size_t block_reduce_row(const float*, float*, std::size_t columns,
                             std::size_t factor_rows, std::size_t factor_columns, std::size_t count);
