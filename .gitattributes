@@ -487,3 +487,4 @@ benchmarks/perimeter-crofton-minimum-initial.json -text
 .github/workflows/perimeter-crofton-same-host.yml -text
 tests/test_perimeter_crofton_same_host.py -text
 benchmarks/perimeter-minimum-initial.json -text
+benchmarks/perimeter-crofton-packed-same-host.zip -text
