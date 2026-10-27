@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "c51753e3e1284759cf246a58a5b48599ad0c3dc43ccf315011290e5e107999de",
+  "source_inventory_sha256": "0de713648764abd681fb1bce2a82d6636ee9f73b12f1963385051016a4da44db",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -11833,7 +11833,7 @@
         "kind": "compute",
         "specific_workload": "polygons passing through grid vertices/edges",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": "benchmarks/coverage.py"
+        "existing_inventory_reference": "benchmarks/polygon.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
       "existing_inventory_parity_reference": "tests/test_polygon_public.py",
@@ -12544,7 +12544,7 @@
         "kind": "compute",
         "specific_workload": "points on/inside/outside polygon boundaries",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": "benchmarks/coverage.py"
+        "existing_inventory_reference": "benchmarks/polygon.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
       "existing_inventory_parity_reference": "tests/test_polygon_public.py",
