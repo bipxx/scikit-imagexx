@@ -567,6 +567,15 @@ block_reduce | Pad to block multiples then use native standard reducers over blo
 add("measure", "resample", """
 profile_line | Generate perpendicular line samples, reuse interpolation, then width reduction | inclusive endpoint, linewidth, order/mode and reduce_func=None/callback | fractional/reversed/zero-length profiles
 """, effort="M")
+override("measure.profile_line",
+         algorithm="Keep literal float64 line/perpendicular coordinates; add a 2D order-0/1 typed sampler beside resample, then preserve flip/channel assembly and literal width reduction",
+         hazards="inclusive endpoint and ceil length; default bool order; mode remapping; source C-order four-tap accumulation; integer half-away rounding/clipping before reduction; negative-stride None output; TypeError callback retry and mutation",
+         workload="fractional/reversed/zero-length profiles, linewidth 0/1/many, RGB channels, raw sampled pixels, strided/endian storage, reducer callbacks and safe Python intake errors; exclude zero spatial axes and unsafe C coordinates from original capture",
+         simd="Batch independent query coordinates across lanes; preserve axis-0 then axis-1 multiplication and ordered four-tap accumulation without FMA; reuse boundary/weight/cast helpers, not the separable zoom API",
+         workers="Partition independent sampled output coordinates under the single global worker budget; keep coordinate construction, channel assembly and arbitrary reducer callbacks in source order",
+         numerical_policy="Exact sampled pixel bytes and public result dtype/words/layout/events for the assessed order-0/1 contract, including integer rounding before reduction; higher-order/provider behavior remains explicit, with no post-observation tolerance fitting",
+         benchmark="One worker and matching upstream pool limits; positive 2D/RGB images with uint8/float32/float64, long profiles and widths 1/9/33. Key workload by sampled output count and width; include public coordinate generation, allocation, sampling and reduction in timing, prepare input images outside; verify actual owned sampling before timing and retain every slower case",
+         frontier="Initial native sampler covers order 0/1 ordinary uint8/bool/float32/float64 storage. Literal NumPy coordinates and width reducers remain providers; higher spline orders, unsupported storage and nonfinite sampled pixels/cval use disclosed primitive sampling. No source-unsafe empty-spatial reference calls or whole-profile forwarding credit.")
 add("measure", "component", """
 label | Extend existing deterministic equality-based union-find labels | signed/unsigned dtype, background, connectivity, return_num and numbering | adversarial equal-value components and strided 2D/3D
 regionprops | Build own lazy region objects around component bounds/moments/geometry primitives | cache, spacing/offset, intensity channels, property aliases and extra_properties | every property on tiny canonical and irregular regions
@@ -1089,7 +1098,7 @@ def make_document():
                    next_concrete_action=next_action(entry, spec, canonical),
                    compatibility_hazards=spec["hazards"],
                    parity_cases_to_freeze=spec["workload"],
-                   numerical_policy=fam["numerical_policy"],
+                   numerical_policy=spec.get("numerical_policy", fam["numerical_policy"]),
                    simd_strategy=spec.get("simd", fam["simd"]),
                    optional_global_workers_strategy=spec.get("workers", fam["workers"]),
                    benchmark_plan=dict(status="proposal-not-measured-results", kind=kind,
