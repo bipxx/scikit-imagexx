@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error
+from skimagexx.coverage import euler_default_error, polygon_default_error
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -133,12 +133,19 @@ def main():
                    'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
                    'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
+    polygon_scope = ('Source float64 coordinate copies and output memoryview/binarize adaptation remain providers; '
+                     'ordered dual-ray classification is owned C++ with exact raw label/metadata parity. '
+                     'The dedicated polygon harness varies query size and vertex count; this generic default '
+                     'uses the declared points/grid rectangle fixtures.')
     euler_scope = ('NumPy binary conversion, padding, LUT selection and scalar boxing remain providers; '
                    'configuration histograms and bounded exact integer LUT arithmetic are owned C++. '
                    'Default image preparation is outside timing; each public call includes its binary/pad '
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    for name in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
+        if name in apis:
+            provider_frontiers[name] = polygon_scope
     if 'measure.euler_number' in apis:
         provider_frontiers['measure.euler_number'] = euler_scope
     if 'measure.perimeter' in apis:
@@ -199,7 +206,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.euler_number':
+                    if api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
+                        error = polygon_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.euler_number':
                         error = euler_default_error(call_args[0], actual, expected)
                     elif api == 'measure.perimeter':
                         error = perimeter_default_error(call_args[0], actual, expected)
@@ -269,6 +278,7 @@ def main():
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + polygon_scope if any(a in apis for a in ('measure.points_in_poly', 'measure.grid_points_in_poly')) else '')
              + (' ' + euler_scope if 'measure.euler_number' in apis else '')
              + (' ' + perimeter_scope if 'measure.perimeter' in apis else '')
              + (' ' + crofton_scope if 'measure.perimeter_crofton' in apis else '')

@@ -5487,11 +5487,15 @@
       "api": "measure.grid_points_in_poly",
       "kind": "callable",
       "signature": "(shape, verts, binarize=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_polygon_public.py",
+      "benchmark": "benchmarks/polygon.py"
     },
     {
       "api": "measure.inertia_tensor",
@@ -5722,11 +5726,15 @@
       "api": "measure.points_in_poly",
       "kind": "callable",
       "signature": "(points, verts)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_polygon_public.py",
+      "benchmark": "benchmarks/polygon.py"
     },
     {
       "api": "measure.profile_line",
