@@ -50,3 +50,8 @@ __all__ += ['perimeter_crofton']
 from ._perimeter import perimeter
 
 __all__ += ['perimeter']
+
+
+from ._euler_number import euler_number
+
+__all__ += ['euler_number']
