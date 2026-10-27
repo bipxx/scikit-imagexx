@@ -159,4 +159,3 @@ int main(int argc,char** argv){
 #endif
     journal.close();check(bool(journal));std::printf("%zu Polygon controls PASS avx2=%d workers=%d\n",controls,int(skimagexx::has_avx2()),skimagexx::get_num_threads());
 }
-
