@@ -533,3 +533,6 @@ benchmarks/mesh-surface-area-minimum-initial.json -text
 
 tests/profile_line_cases.py -text
 tests/test_profile_line_public.py -text
+python/skimagexx/_profile_line.py -text
+python/skimagexx/_profile_line_checks.py -text
+src/bind_profile_line.cpp -text
