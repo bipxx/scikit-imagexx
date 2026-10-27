@@ -508,3 +508,7 @@ python/skimagexx/_polygon.py -text
 python/skimagexx/_polygon_checks.py -text
 src/bind_polygon.cpp -text
 tests/test_polygon_intake.py -text
+src/polygon.hpp -text
+src/polygon.cpp -text
+src/simd_polygon_avx2.cpp -text
+tests/test_polygon_native.cpp -text
