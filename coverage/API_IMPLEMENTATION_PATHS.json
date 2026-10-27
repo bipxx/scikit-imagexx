@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "57cd06e692d6a0fa351bc1452014ddf639c1c9f3cd9a31424db3f9781379c724",
+  "source_inventory_sha256": "9e231da15fa7f362c8773567d9d0ad1f3c5b18a76105cd6ae1bbef6e4c6e6a0a",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 234,
-      "upstream-only": 234
+      "native-partial": 235,
+      "upstream-only": 233
     },
     "kinds": {
       "callable": 448,
@@ -11650,22 +11650,26 @@
       "api": "measure.blur_effect",
       "kind": "callable",
       "signature": "(image, h_size=11, channel_axis=None, reduce_func=<function max>)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.blur_effect",
       "identity_alias": false,
       "family": "stencil",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Add source-ordered reflect uniform_filter1d; reuse float64 sparse correlation with source nonzero Sobel taps and one output cast; retain literal cropped NumPy reductions initially",
+      "easiest_credible_path": "Audit/extend existing native implementation: Add source-ordered reflect uniform_filter1d; reuse float64 sparse correlation with source nonzero Sobel taps and one output cast; retain literal cropped NumPy reductions initially",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze positive 1D/2D/3D ramps, constants and textures; tiny extents <=3, odd/even/unit filter sizes, RGB channels, layouts and callback/error state; exclude zero spatial axes until source C safety is certified against pinned upstream, including channel-axis move/color conversion and printed errors; dtype/half behavior; h_size=1 sliding recurrence; positive tiny axes produce empty crop and NaN warnings; NumPy float64 epsilon promotion; final reducer receives the actual scalar list once; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered channel-axis move/color conversion and printed errors; dtype/half behavior; h_size=1 sliding recurrence; positive tiny axes produce empty crop and NaN warnings; NumPy float64 epsilon promotion; final reducer receives the actual scalar list once. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "channel-axis move/color conversion and printed errors; dtype/half behavior; h_size=1 sliding recurrence; positive tiny axes produce empty crop and NaN warnings; NumPy float64 epsilon promotion; final reducer receives the actual scalar list once",
       "parity_cases_to_freeze": "positive 1D/2D/3D ramps, constants and textures; tiny extents <=3, odd/even/unit filter sizes, RGB channels, layouts and callback/error state; exclude zero spatial axes until source C safety is certified",
       "numerical_policy": "Freeze exact typed uniform-filter/Sobel intermediates and public scalar/list metadata, words, warnings and callbacks before implementation; retain literal epsilon/clamp/cropped-sum/ratio promotion and explicit exceptional/provider frontiers",
@@ -11676,10 +11680,10 @@
         "kind": "compute",
         "specific_workload": "positive 1D/2D/3D ramps, constants and textures; tiny extents <=3, odd/even/unit filter sizes, RGB channels, layouts and callback/error state; exclude zero spatial axes until source C safety is certified",
         "one_worker_recipe": "One worker with upstream pool limits; positive 2D/3D uint8/float32/float64 images, several h_size values and edge density; prepare inputs outside the timer and include conversion, all filtering, allocations, crop reductions and final public reducer. Verify actual owned stages first and retain every slower case",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/blur_effect.py"
       },
       "native_provider_frontier": "Initial new owned work is the ordered moving uniform filter plus assessed sparse Sobel. Color/conversion routes require their own exact admission; irregular cropped sums, epsilon clamps, ratio and user reducer remain explicit NumPy providers. Copying the crop for a different reduction tree does not establish parity.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_blur_effect_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

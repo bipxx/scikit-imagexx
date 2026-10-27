@@ -5439,11 +5439,15 @@
       "api": "measure.blur_effect",
       "kind": "callable",
       "signature": "(image, h_size=11, channel_axis=None, reduce_func=<function max>)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_blur_effect_public.py",
+      "benchmark": "benchmarks/blur_effect.py"
     },
     {
       "api": "measure.centroid",
