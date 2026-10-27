@@ -460,3 +460,5 @@ tests/test_rgb2yuv_storage_same_host.py -text
 benchmarks/rgb2yuv-u8-same-host.zip -text
 benchmarks/block-reduce-minimum-initial.json -text
 tests/test_block_reduce_integer_width.py -text
+tests/perimeter_crofton_cases.py -text
+tests/test_perimeter_crofton_public.py -text
