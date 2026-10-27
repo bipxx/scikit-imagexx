@@ -486,3 +486,5 @@ benchmarks/perimeter-crofton-minimum-initial.json -text
 
 .github/workflows/perimeter-crofton-same-host.yml -text
 tests/test_perimeter_crofton_same_host.py -text
+tests/euler_number_cases.py -text
+tests/test_euler_number_public.py -text
