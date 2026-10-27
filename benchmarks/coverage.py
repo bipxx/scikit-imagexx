@@ -12,6 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
+from skimagexx.coverage import euler_default_error
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -132,7 +133,14 @@ def main():
                    'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
                    'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
+    euler_scope = ('NumPy binary conversion, padding, LUT selection and scalar boxing remain providers; '
+                   'configuration histograms and bounded exact integer LUT arithmetic are owned C++. '
+                   'Default image preparation is outside timing; each public call includes its binary/pad '
+                   'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
+                   'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.euler_number' in apis:
+        provider_frontiers['measure.euler_number'] = euler_scope
     if 'measure.perimeter' in apis:
         provider_frontiers['measure.perimeter'] = perimeter_scope
     if 'measure.perimeter_crofton' in apis:
@@ -191,7 +199,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.perimeter':
+                    if api == 'measure.euler_number':
+                        error = euler_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.perimeter':
                         error = perimeter_default_error(call_args[0], actual, expected)
                     elif api == 'measure.perimeter_crofton':
                         error = crofton_default_error(call_args[0], actual, expected)
@@ -259,6 +269,7 @@ def main():
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + euler_scope if 'measure.euler_number' in apis else '')
              + (' ' + perimeter_scope if 'measure.perimeter' in apis else '')
              + (' ' + crofton_scope if 'measure.perimeter_crofton' in apis else '')
              + (' ' + block_scope if 'measure.block_reduce' in apis else ''), '',

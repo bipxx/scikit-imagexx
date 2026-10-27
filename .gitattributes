@@ -497,3 +497,5 @@ src/euler_number.hpp -text
 src/euler_number.cpp -text
 src/simd_euler_number_avx2.cpp -text
 tests/test_euler_number_native.cpp -text
+benchmarks/euler_number.py -text
+tests/test_euler_number_benchmark.py -text
