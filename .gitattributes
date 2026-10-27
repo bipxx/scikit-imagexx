@@ -529,3 +529,6 @@ tests/test_mesh_surface_area_native.cpp -text
 
 benchmarks/mesh_surface_area.py -text
 tests/test_mesh_benchmark.py -text
+
+tests/profile_line_cases.py -text
+tests/test_profile_line_public.py -text
