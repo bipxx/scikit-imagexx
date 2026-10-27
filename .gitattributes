@@ -463,3 +463,7 @@ tests/test_block_reduce_integer_width.py -text
 .github/workflows/block-reduce-same-host.yml -text
 tests/test_block_reduce_same_host.py -text
 benchmarks/block-reduce-u8-same-host.zip -text
+
+python/skimagexx/_perimeter_crofton.py -text
+python/skimagexx/_perimeter_crofton_checks.py -text
+src/bind_perimeter_crofton.cpp -text
