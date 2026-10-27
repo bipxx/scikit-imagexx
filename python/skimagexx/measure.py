@@ -45,3 +45,8 @@ __all__ += ['block_reduce']
 from ._perimeter_crofton import perimeter_crofton
 
 __all__ += ['perimeter_crofton']
+
+
+from ._perimeter import perimeter
+
+__all__ += ['perimeter']
