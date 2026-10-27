@@ -1,0 +1,281 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-27T01:06:29.915151+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "source_sha256": "50aa1615e2083e73d2ef4bbdd822162724ce6b815a31a03a61282b41050a6a39",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "fallback_enabled": false,
+    "avx2": true,
+    "selected_apis": [
+      "measure.perimeter"
+    ],
+    "dtype_metadata": false,
+    "reference_fft_workers": null,
+    "provider_frontiers": {
+      "measure.perimeter": "Literal uint8 casting, source coefficient construction and scalar boxing remain explicit providers. Binary erosion, byte border subtraction, modulo-256 stencil counts and the 50-term sum are owned C++. Default cases use the existing seed 2026 gray image thresholded above 127 for uint8 or above 0.5 for floats, then cast back to the same dtype: binary masks with roughly half the pixels foreground, not arbitrary labels. Mask construction stays outside timing; public casting, allocation, erosion, counts and sum stay inside. The frozen exact-rational 2*gamma_100*S checker runs outside timing."
+    },
+    "special_default_arguments": {
+      "color.deltaE_cie76": "second input is first[..., ::-1]; raw Lab values",
+      "color.deltaE_ciede94": "second input is first[..., ::-1]; raw Lab; graphic-arts weights",
+      "color.deltaE_ciede2000": "second input is first[..., ::-1]; raw Lab; kL=kC=kH=1",
+      "color.deltaE_cmc": "second input is first[..., ::-1]; raw Lab; kL=kC=1",
+      "color.convert_colorspace": "fromspace='RGB', tospace='HSV'",
+      "color.separate_stains": "conv_matrix=hed_from_rgb",
+      "color.combine_stains": "conv_matrix=rgb_from_hed"
+    },
+    "repeat": 7,
+    "timing": "allocation-inclusive, warmed Python calls; original reference pools limited to one thread"
+  },
+  "results": [
+    {
+      "api": "measure.perimeter",
+      "size": 256,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.8124656666666668,
+      "cpp_ms": 0.16218588888888888,
+      "speedup": 11.175236508450867,
+      "samples_ms": [
+        [
+          1.9653533333333333,
+          1.8124656666666668,
+          1.7797881666666668,
+          1.8340056666666666,
+          1.8061206666666667,
+          1.8202168333333333,
+          1.8067265
+        ],
+        [
+          0.16323116666666665,
+          0.1628422962962963,
+          0.16109477777777778,
+          0.17070616666666666,
+          0.16068105555555556,
+          0.16218588888888888,
+          0.16087733333333334
+        ]
+      ],
+      "loops": [
+        6,
+        54
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.perimeter",
+      "size": 256,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.8149585,
+      "cpp_ms": 0.17320145652173913,
+      "speedup": 10.478887051230993,
+      "samples_ms": [
+        [
+          1.8550248333333332,
+          1.8044223333333334,
+          1.7777026666666667,
+          1.801936,
+          1.82554,
+          1.8149585,
+          1.8201548333333333
+        ],
+        [
+          0.17305291304347828,
+          0.17360917391304348,
+          0.17776232608695652,
+          0.1746436956521739,
+          0.16704215217391305,
+          0.17320145652173913,
+          0.1708074347826087
+        ]
+      ],
+      "loops": [
+        6,
+        46
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.perimeter",
+      "size": 256,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.8326048333333333,
+      "cpp_ms": 0.18203284090909091,
+      "speedup": 10.067440711143739,
+      "samples_ms": [
+        [
+          1.8486611666666668,
+          1.8326048333333333,
+          1.803312,
+          1.8404041666666668,
+          1.8467811666666667,
+          1.8072276666666667,
+          1.8165566666666668
+        ],
+        [
+          0.17755429545454543,
+          0.18203284090909091,
+          0.17776331818181818,
+          0.18225347727272725,
+          0.17957577272727274,
+          0.18486879545454543,
+          0.18343613636363634
+        ]
+      ],
+      "loops": [
+        6,
+        44
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.perimeter",
+      "size": 1024,
+      "dtype": "uint8",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.589239,
+      "cpp_ms": 1.6573937142857142,
+      "speedup": 16.042801882749472,
+      "samples_ms": [
+        [
+          26.583036,
+          26.327331,
+          26.589239,
+          26.644261,
+          26.859921,
+          26.654369,
+          26.587424
+        ],
+        [
+          1.6894734285714286,
+          1.703782857142857,
+          1.6386617142857143,
+          1.6573937142857142,
+          1.6334964285714286,
+          1.6447674285714287,
+          1.6577442857142857
+        ]
+      ],
+      "loops": [
+        1,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.perimeter",
+      "size": 1024,
+      "dtype": "float32",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.894035,
+      "cpp_ms": 1.8358358333333333,
+      "speedup": 14.649477100121969,
+      "samples_ms": [
+        [
+          26.956571,
+          26.894035,
+          26.939139,
+          26.876562,
+          26.642838,
+          26.908963,
+          26.629443
+        ],
+        [
+          1.8358358333333333,
+          1.781752,
+          1.8444351666666667,
+          1.8098925,
+          1.8683361666666667,
+          1.9324988333333333,
+          1.7795193333333332
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "api": "measure.perimeter",
+      "size": 1024,
+      "dtype": "float64",
+      "threads": 1,
+      "backend": "native",
+      "layout": "standard",
+      "output_dtype_metadata": null,
+      "max_abs_error": 0.0,
+      "reference_ms": 26.775514,
+      "cpp_ms": 1.9031776666666667,
+      "speedup": 14.068846261156562,
+      "samples_ms": [
+        [
+          26.894476,
+          26.553292,
+          26.775514,
+          26.929721,
+          27.093746,
+          26.749676,
+          26.524738
+        ],
+        [
+          1.8558308333333333,
+          1.9437815,
+          1.9702758333333332,
+          1.9031776666666667,
+          1.9352138333333333,
+          1.8305676666666668,
+          1.8896691666666667
+        ]
+      ],
+      "loops": [
+        1,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
