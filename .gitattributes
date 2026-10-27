@@ -473,3 +473,4 @@ src/perimeter_crofton.hpp -text
 src/perimeter_crofton.cpp -text
 src/simd_perimeter_crofton_avx2.cpp -text
 tests/test_perimeter_crofton_native.cpp -text
+benchmarks/perimeter-crofton-minimum-initial.json -text
