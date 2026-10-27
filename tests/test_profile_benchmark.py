@@ -41,7 +41,7 @@ def test_exact_public_and_pre_reducer_checks_precede_timing():
 
 def test_harness_reports_actual_sample_work_storage_and_provider_scope():
     tree=ast.parse(SOURCE.read_bytes());keywords={n.arg for n in ast.walk(tree)if isinstance(n,ast.keyword)}
-    assert {'sampled_values','profile_length','input_dtype_str','sample_sha256','pre_reducer_metadata',
+    assert {'api','sampled_values','profile_length','input_dtype_str','sample_sha256','pre_reducer_metadata',
             'output_shape','output_strides','output_raw_hex','reference_raw_hex','actual_C_returns','native_accepted',
             'harness_sha256','source_before','core_sha256','reference_pool_limits','provider_frontier'}<=keywords
     text=SOURCE.read_text(encoding='utf-8')

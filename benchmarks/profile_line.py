@@ -86,7 +86,7 @@ def main():
         timing=measure(lambda:reference(*call_args,**options),lambda:native(*call_args,**options),args.repeat,19)
         assert xx.get_num_threads()==1 and np.geterr()==policy and np.geterrcall()is handler and np.getbufsize()==buffer
         assert hashlib.sha256(image.tobytes()).hexdigest()==input_sha
-        rows.append(dict(**spec,backend='native',threads=1,input_dtype_str=image.dtype.str,
+        rows.append(dict(**spec,api='measure.profile_line',backend='native',threads=1,input_dtype_str=image.dtype.str,
             input_sha256=input_sha,pre_reducer_metadata=captured[0],sample_sha256=pixel_sha,
             output_dtype_str=actual.dtype.str,output_shape=list(actual.shape),output_strides=list(actual.strides),
             output_raw_hex=actual.tobytes().hex(),reference_raw_hex=expected.tobytes().hex(),
