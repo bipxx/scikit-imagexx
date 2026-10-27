@@ -500,3 +500,7 @@ src/simd_euler_number_avx2.cpp -text
 tests/test_euler_number_native.cpp -text
 benchmarks/euler_number.py -text
 tests/test_euler_number_benchmark.py -text
+src/mesh_surface_area.hpp -text
+src/mesh_surface_area.cpp -text
+src/simd_mesh_surface_area_avx2.cpp -text
+tests/test_mesh_surface_area_native.cpp -text
