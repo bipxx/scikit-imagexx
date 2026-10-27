@@ -478,3 +478,7 @@ tests/test_perimeter_public.py -text
 python/skimagexx/_perimeter.py -text
 python/skimagexx/_perimeter_checks.py -text
 src/bind_perimeter.cpp -text
+src/perimeter.hpp -text
+src/perimeter.cpp -text
+src/simd_perimeter_avx2.cpp -text
+tests/test_perimeter_native.cpp -text
