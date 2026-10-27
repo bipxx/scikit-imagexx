@@ -56,7 +56,8 @@ def euler_number(image, connectivity=None):
     Snum above2**53, unsupported ranks and unassessed subclass preparation
     retain literal primitive operations, without owned weighted credit.
     """
-    if type(image) is np.ndarray:
+    native_input = type(image) is np.ndarray
+    if native_input:
         _core.fft_check(image)
     image = (image > 0).astype(int)
     image = np.pad(image, pad_width=1, mode='constant')
@@ -64,7 +65,7 @@ def euler_number(image, connectivity=None):
         connectivity = image.ndim
     config, coefs, bins = _configuration(image.ndim, connectivity)
     workers = _core.get_num_threads()
-    if type(image) is np.ndarray and image.ndim in (2, 3):
+    if native_input and type(image) is np.ndarray and image.ndim in (2, 3):
         # Keep the source's padded image/coefs objects intact for callbacks and
         # witnesses. This separate byte copy crosses the native buffer boundary.
         prepared = np.ascontiguousarray(image, dtype=np.uint8)
