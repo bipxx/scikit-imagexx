@@ -1,5 +1,6 @@
 #include "perimeter_crofton.hpp"
 #include <immintrin.h>
+#include <cstring>
 
 namespace skimagexx::simd {
 std::size_t crofton_threshold(const void* input,PixelType type,std::uint8_t* output,std::size_t count){
@@ -26,6 +27,17 @@ std::size_t crofton_threshold(const void* input,PixelType type,std::uint8_t* out
         default:return i;
         }
         if(bytes==1)_mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),_mm256_and_si256(mask,_mm256_set1_epi8(1)));
+        else if(bytes==4||bytes==8){
+            const auto words=_mm_packs_epi32(_mm256_castsi256_si128(mask),_mm256_extracti128_si256(mask,1));
+            const auto packed=_mm_and_si128(_mm_packs_epi16(words,words),_mm_set1_epi8(1));
+            if(bytes==4)_mm_storel_epi64(reinterpret_cast<__m128i*>(output+i),packed);
+            else{
+                // Each 64-bit mask produced two identical bytes; keep one per lane.
+                const auto distinct=_mm_shuffle_epi8(packed,_mm_setr_epi8(0,2,4,6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+                const auto value=std::uint32_t(_mm_cvtsi128_si32(distinct));
+                std::memcpy(output+i,&value,sizeof(value));
+            }
+        }
         else{
             const auto bits=std::uint32_t(_mm256_movemask_epi8(mask));
             for(std::size_t j=0;j<lanes;++j)output[i+j]=(bits>>(j*bytes))&1u;
