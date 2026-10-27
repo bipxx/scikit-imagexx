@@ -194,7 +194,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/rgb2yuv_storage.py --threads 1 --repeat 7 --output build/ci-rgb2yuv-storage.json',
         'python benchmarks/coverage.py --api measure.block_reduce --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-block-reduce.json',
         'python benchmarks/coverage.py --api measure.perimeter_crofton --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-perimeter-crofton.json',
-        'python benchmarks/coverage.py --api measure.perimeter --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-perimeter.json']
+        'python benchmarks/coverage.py --api measure.perimeter --sizes 256 1024 --threads 1 --repeat 7 --output build/ci-perimeter.json',
+        'python benchmarks/euler_number.py --threads 1 --repeat 7 --output build/ci-euler-number.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -470,7 +471,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 14 and all(condition in step for step in timed)
+    assert len(timed) == 15 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -486,14 +487,14 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 14 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and '--api measure.perimeter ' in timed[-1]
+    assert len(timed) == 15 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/euler_number.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
 
 
-@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter'))
+@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter', 'euler-number'))
 def test_measure_contracts_precede_freeze(stem):
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     preparation = blocks['numpy-minimum']
@@ -508,7 +509,8 @@ def test_measure_contracts_precede_freeze(stem):
 
 
 @pytest.mark.parametrize('api,checker_name', (('measure.perimeter_crofton', 'crofton_default_error'),
-                                             ('measure.perimeter', 'perimeter_default_error')))
+                                             ('measure.perimeter', 'perimeter_default_error'),
+                                             ('measure.euler_number', 'euler_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
