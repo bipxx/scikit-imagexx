@@ -236,3 +236,101 @@ void zoom_into(const double* input,double* output,const std::vector<std::size_t>
     zoom_typed_into(input,output,PixelType::float64,shape,target,options);
 }
 } // namespace skimagexx::detail
+
+#include <cfenv>
+#include <type_traits>
+
+namespace skimagexx::detail {
+namespace {
+template<class T>bool profile_finite(const T* input,std::size_t count){
+    if constexpr(std::is_floating_point_v<T>){
+        using Word=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
+        constexpr Word mask=sizeof(T)==4?Word(0x7f800000u):Word(UINT64_C(0x7ff0000000000000));
+        for(std::size_t i=0;i<count;++i){Word bits;std::memcpy(&bits,input+i,sizeof(T));if((bits&mask)==mask)return false;}
+    }
+    return true;
+}
+bool profile_point(ZoomPoint& point,double coordinate,std::size_t length,
+                   std::size_t stride,int order,GaussianBorder border){
+    // Bound before floor/integer conversion; huge/unrepresentable source
+    // coordinates are outside the assessed ordinary profile domain.
+    const auto bound=double(std::numeric_limits<std::ptrdiff_t>::max()/4);
+    if(!std::isfinite(coordinate)||coordinate<=-bound||coordinate>=bound)return false;
+    if(border!=GaussianBorder::constant&&border!=GaussianBorder::nearest)
+        coordinate=map_coordinate(coordinate,std::ptrdiff_t(length),border);
+    const auto start=std::ptrdiff_t(std::floor(coordinate+(order?0.:.5)));
+    if(order)point.weights=spline_weights(coordinate,order);
+    for(int tap=0;tap<=order;++tap){
+        auto index=start+tap;
+        if(border==GaussianBorder::constant&&(index<0||std::size_t(index)>=length))point.offsets[tap]=-1;
+        else{
+            index=std::ptrdiff_t(map_coordinate(double(index),std::ptrdiff_t(length),border));
+            point.offsets[tap]=index*std::ptrdiff_t(stride);
+        }
+    }
+    return true;
+}
+template<class T,bool Boolean=false>bool profile(const ProfileInput& input,const double* coordinates,
+                std::size_t count,T* output,int order,GaussianBorder border,double cval,int workers){
+    const auto* data=static_cast<const T*>(input.data);
+    if(!profile_finite(data,input.height*input.width)||!std::isfinite(cval)||std::fegetround()!=FE_TONEAREST)return false;
+    const int team=count>=parallel_min?workers:1;const bool vectorized=has_avx2();
+    std::vector<ZoomPlan> plans(static_cast<std::size_t>(team));
+    std::vector<std::vector<const ZoomPoint*>> points(static_cast<std::size_t>(team),std::vector<const ZoomPoint*>(2));
+    std::vector<unsigned char> refused(static_cast<std::size_t>(team),0);
+    for(auto& plan:plans){
+        plan.axes.assign(2,std::vector<ZoomPoint>(4));plan.output_strides={1,1};
+        plan.count=4;plan.corners=order?4:1;plan.order=order;plan.cval=cval;
+        plan.footprint=order?std::vector<std::uint8_t>{0,0,0,1,1,0,1,1}:std::vector<std::uint8_t>{0,0};
+    }
+    partition(count,team,[&](auto begin,auto end,auto worker){
+        std::fenv_t saved;if(std::feholdexcept(&saved)){refused[worker]=1;return;}
+        auto& plan=plans[worker];auto& current=points[worker];bool accepted=std::fegetround()==FE_TONEAREST;
+        for(auto i=begin;i<end&&accepted;){
+            const auto lanes=std::min(std::size_t(4),end-i);
+            for(std::size_t lane=0;lane<lanes;++lane){
+                accepted&=profile_point(plan.axes[0][lane],coordinates[i+lane],input.height,input.width,order,border);
+                accepted&=profile_point(plan.axes[1][lane],coordinates[count+i+lane],input.width,1,order,border);
+            }
+            if(!accepted)break;
+            std::size_t done=0;
+#ifdef SKIMAGEXX_AVX2
+            if(vectorized)done=simd::zoom_sample_typed(data,output+i,plan,0,lanes,input.type,input.type);
+#else
+            (void)vectorized;
+#endif
+            for(;done<lanes;++done){
+                current[0]=&plan.axes[0][done];current[1]=&plan.axes[1][done];
+                output[i+done]=resize_sample_cast<T,Boolean>(sample(data,plan,current));
+            }
+            i+=lanes;
+        }
+        refused[worker]=!accepted||std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW);
+        std::fesetenv(&saved);
+    });
+    for(auto value:refused)if(value)return false;
+    return true;
+}
+}
+bool profile_sample(const ProfileInput& input,const double* coordinates,std::size_t count,
+                    void* output,int order,GaussianBorder border,double cval,int workers){
+    if(order!=0&&order!=1)throw std::invalid_argument("profile sampling supports order0 or1");
+    if(workers<1||workers>1024)throw std::invalid_argument("profile worker snapshot outside [1,1024]");
+#ifndef _OPENMP
+    if(workers!=1)throw std::invalid_argument("this build has no OpenMP support");
+#endif
+    validate_border(border);
+    if(!input.height||!input.width)throw std::invalid_argument("profile spatial axes must be nonempty");
+    size({input.height,input.width});
+    if(count>limit/2)throw std::overflow_error("profile coordinate extent overflow");
+    if(!count)return true;
+    if(!input.data||!coordinates||!output)throw std::invalid_argument("nonnull prepared profile buffers required");
+    switch(input.type){
+        case PixelType::boolean:return profile<std::uint8_t,true>(input,coordinates,count,static_cast<std::uint8_t*>(output),order,border,cval,workers);
+#define PROFILE(tag,T) case PixelType::tag:return profile<T>(input,coordinates,count,static_cast<T*>(output),order,border,cval,workers);
+        PROFILE(uint8,std::uint8_t) PROFILE(float32,float) PROFILE(float64,double)
+#undef PROFILE
+        default:throw std::invalid_argument("unsupported prepared profile storage type");
+    }
+}
+}
