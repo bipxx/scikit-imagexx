@@ -5495,7 +5495,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_polygon_public.py",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/polygon.py"
     },
     {
       "api": "measure.inertia_tensor",
@@ -5734,7 +5734,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_polygon_public.py",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/polygon.py"
     },
     {
       "api": "measure.profile_line",
