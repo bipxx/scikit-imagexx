@@ -40,3 +40,8 @@ __all__ += ['shannon_entropy']
 from ._block_reduce import block_reduce
 
 __all__ += ['block_reduce']
+
+
+from ._perimeter_crofton import perimeter_crofton
+
+__all__ += ['perimeter_crofton']

@@ -465,3 +465,7 @@ tests/test_block_reduce_same_host.py -text
 benchmarks/block-reduce-u8-same-host.zip -text
 tests/perimeter_crofton_cases.py -text
 tests/test_perimeter_crofton_public.py -text
+
+python/skimagexx/_perimeter_crofton.py -text
+python/skimagexx/_perimeter_crofton_checks.py -text
+src/bind_perimeter_crofton.cpp -text
