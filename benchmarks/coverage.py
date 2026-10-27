@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -114,6 +114,12 @@ def main():
                      'NumPy scalar boxing and Python logarithmic base conversion retain source semantics. '
                      'Each timed default image call includes counts, entropy and allocation. Genuine reference '
                      'nats are captured outside timing for the frozen entropy-only and base-division policy.')
+    perimeter_scope = ('Literal uint8 casting, source coefficient construction and scalar boxing remain explicit providers. '
+                       'Binary erosion, byte border subtraction, modulo-256 stencil counts and the 50-term sum are owned C++. '
+                       'Default cases use the existing seed 2026 gray image thresholded above 127 for uint8 or above 0.5 '
+                       'for floats, then cast back to the same dtype: binary masks with roughly half the pixels foreground, not arbitrary labels. '
+                       'Mask construction stays outside timing; public casting, allocation, erosion, counts and sum stay inside. '
+                       'The frozen exact-rational 2*gamma_100*S checker runs outside timing.')
     crofton_scope = ('Ordinary real thresholding, zero-boundary 2x2 stencil histogram and the 16-term weighted sum '
                      'are owned C++. NumPy/Python coefficient construction, scalar boxing and input/storage '
                      'preparation remain explicit; special input types retain NumPy/SciPy count providers. '
@@ -127,6 +133,8 @@ def main():
                    'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.perimeter' in apis:
+        provider_frontiers['measure.perimeter'] = perimeter_scope
     if 'measure.perimeter_crofton' in apis:
         provider_frontiers['measure.perimeter_crofton'] = crofton_scope
     if 'measure.block_reduce' in apis:
@@ -183,7 +191,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.perimeter_crofton':
+                    if api == 'measure.perimeter':
+                        error = perimeter_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.perimeter_crofton':
                         error = crofton_default_error(call_args[0], actual, expected)
                     elif api == 'measure.block_reduce':
                         error = block_default_error(call_args[0], actual, expected)
@@ -249,6 +259,7 @@ def main():
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + perimeter_scope if 'measure.perimeter' in apis else '')
              + (' ' + crofton_scope if 'measure.perimeter_crofton' in apis else '')
              + (' ' + block_scope if 'measure.block_reduce' in apis else ''), '',
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
