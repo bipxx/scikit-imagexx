@@ -483,3 +483,6 @@ src/perimeter.cpp -text
 src/simd_perimeter_avx2.cpp -text
 tests/test_perimeter_native.cpp -text
 benchmarks/perimeter-crofton-minimum-initial.json -text
+
+.github/workflows/perimeter-crofton-same-host.yml -text
+tests/test_perimeter_crofton_same_host.py -text
