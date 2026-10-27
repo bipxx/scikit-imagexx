@@ -25,8 +25,7 @@ def perimeter_crofton(image, directions=4):
     if image.ndim != 2:
         raise NotImplementedError('`perimeter_crofton` supports 2D images only')
     workers = _core.get_num_threads()
-    if (type(image) is np.ndarray and image.dtype.kind in 'biuf'
-            and image.dtype.itemsize in (1, 2, 4, 8)):
+    if type(image) is np.ndarray and image.dtype.char in '?bBhHiIlLqQefd':
         h = _core.crofton_counts(image, workers)
     else:
         from scipy import ndimage as ndi
