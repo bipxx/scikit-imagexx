@@ -536,3 +536,4 @@ tests/test_profile_line_public.py -text
 
 benchmarks/profile_line.py -text
 tests/test_profile_benchmark.py -text
+tests/test_profile_line_native.cpp -text
