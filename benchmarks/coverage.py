@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -133,6 +133,12 @@ def main():
                    'storage and block volume<=np.getbufsize(); other half layouts or buffered reductions remain '
                    'literal providers and open native-coverage work. Timed default image calls include the entire '
                    'padding, summation and allocation path; the frozen per-block 2*gamma_m*S checker runs outside timing.')
+    profile_scope = ('NumPy line/perpendicular coordinates, channel stacking, flipping and width reducers remain '
+                     'providers; ordinary bool/uint8/float32/float64 order-0/1 sampling is owned C++. Higher '
+                     'orders, unsupported storage and exceptional sampling retain SciPy map_coordinates. '
+                     'Timed public calls include coordinates, allocation, sampling and reduction. Exact output '
+                     'metadata and words are checked before timing; benchmarks/profile_line.py is the canonical '
+                     '18-case width1/9/33 cohort with passive accepted-sampling and pre-reducer pixel checks.')
     mesh_scope = ('Full fancy indexing and native C preparation remain explicit providers; finite normal '
                   'float32/float64 cross products, norms and the profile-aware reduction are owned C++. '
                   'The final typed NumPy scalar /2.0 retains profile promotion. Integer/half/complex, '
@@ -150,6 +156,8 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.profile_line' in apis:
+        provider_frontiers['measure.profile_line'] = profile_scope
     if 'measure.mesh_surface_area' in apis:
         provider_frontiers['measure.mesh_surface_area'] = mesh_scope
     for name in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
@@ -215,7 +223,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.mesh_surface_area':
+                    if api == 'measure.profile_line':
+                        error = profile_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.mesh_surface_area':
                         error = mesh_default_error(call_args, actual, expected)
                     elif api in ('measure.points_in_poly', 'measure.grid_points_in_poly'):
                         error = polygon_default_error(call_args[0], actual, expected)
@@ -291,6 +301,7 @@ def main():
              + (' ' + derived_scope if set(DERIVED_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + coords_scope if set(COORDS_MOMENTS_FUNCTIONS).intersection(apis) else '')
              + (' ' + shannon_scope if 'measure.shannon_entropy' in apis else '')
+             + (' ' + profile_scope if 'measure.profile_line' in apis else '')
              + (' ' + mesh_scope if 'measure.mesh_surface_area' in apis else '')
              + (' ' + polygon_scope if any(a in apis for a in ('measure.points_in_poly', 'measure.grid_points_in_poly')) else '')
              + (' ' + euler_scope if 'measure.euler_number' in apis else '')

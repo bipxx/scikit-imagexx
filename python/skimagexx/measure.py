@@ -62,3 +62,7 @@ __all__ += ['points_in_poly', 'grid_points_in_poly']
 from ._mesh_surface_area import mesh_surface_area
 
 __all__ += ['mesh_surface_area']
+
+from ._profile_line import profile_line
+
+__all__ += ['profile_line']
