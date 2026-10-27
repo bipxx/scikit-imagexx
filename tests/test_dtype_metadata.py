@@ -29,7 +29,7 @@ def calls(api,dtype):
         expected=reference(*arguments,**options)
         actual=native(*arguments,**options)
         if arguments and expected is arguments[0]:assert actual is arguments[0]
-    return actual,expected,arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else data
+    return actual,expected,arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' else data
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):

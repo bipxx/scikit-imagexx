@@ -144,7 +144,7 @@ def test_every_native_function(native, original, name, dtype, shape):
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
     assert_default_parity(api,np.dtype(dtype),actual,expected,
-                          image=args[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else a)
+                          image=args[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' else a)
 
 
 @pytest.mark.parametrize('name', ['sobel', 'prewitt', 'scharr'])
