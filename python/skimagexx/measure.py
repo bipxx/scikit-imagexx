@@ -74,3 +74,7 @@ __all__ += ['blur_effect']
 from ._approximate_polygon import approximate_polygon
 
 __all__ += ['approximate_polygon']
+
+from ._subdivide_polygon import subdivide_polygon
+
+__all__ += ['subdivide_polygon']
