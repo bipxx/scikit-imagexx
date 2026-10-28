@@ -610,3 +610,5 @@ benchmarks/regular-seeds-minimum-initial.json -text
 coverage/evidence/rank-bilateral-fixture-reuse.json -text
 
 benchmarks/label-points-zero-provider-same-host.json -text
+benchmarks/label-points-metadata-same-host.json -text
+benchmarks/montage-minimum-initial.json -text
