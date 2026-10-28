@@ -36,10 +36,14 @@ template<class V,class Get>typename V::R pairwise(std::size_t begin,std::size_t 
 template<class T>std::size_t row(const T* input,T* output,std::size_t columns,std::size_t fy,std::size_t fx,std::size_t count){
     using V=Vector<T>;
     if(fx>std::size_t(INT_MAX)/(V::width-1))return 0;
+    // MSVC folds an intrinsic add of literal +0 even under /fp:strict.
+    // Load the reduction identity once so packed negative zeros retain the
+    // same final +0 addition as the scalar NumPy-ordered path.
+    volatile T identity=T(0);const auto zero=V::fill(identity);
     std::size_t i=0;
     for(;count-i>=V::width;i+=V::width){
         const auto get=[&](std::size_t position){return V::load(input+i*fx+(position/fx)*columns+position%fx,int(fx));};
-        V::store(output+i,V::add(V::fill(0),pairwise<V>(0,fy*fx,get)));
+        V::store(output+i,V::add(zero,pairwise<V>(0,fy*fx,get)));
     }
     return i;
 }
