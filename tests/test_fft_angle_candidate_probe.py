@@ -32,6 +32,32 @@ def test_overlay_rejects_nonbuiltin_or_spoof_before_mutation(bad):
     assert all(getattr(core,n) is v for n,v in old.items())
 
 
+@pytest.mark.parametrize('kind',('lpi','bw'))
+def test_provider_traps_deny_and_restore_without_scientific_import(monkeypatch,kind):
+    sentinel=lambda *args,**kwargs:'original'
+    class Filter:
+        __call__=sentinel
+        _prepare=sentinel
+    names=('LPIFilter2D','filter_forward','filter_inverse','wiener') if kind=='lpi' else ('butterworth',)
+    original=types.SimpleNamespace(**{n:Filter if n=='LPIFilter2D' else sentinel for n in names})
+    helpers=('_min_limit','_center','_pad') if kind=='lpi' else ('_get_nd_butterworth_filter',)
+    for n in helpers:setattr(original,n,sentinel)
+    public=types.ModuleType('skimage.filters')
+    for n in names:setattr(public,n,getattr(original,n))
+    skimage=types.ModuleType('skimage');skimage.__path__=[];skimage.filters=public
+    scipy=types.ModuleType('scipy');scipy.__path__=[];scipy.fftpack=types.ModuleType('scipy.fftpack')
+    fft=types.ModuleType('numpy.fft');fft.fftn=sentinel
+    for name,module in (('skimage',skimage),('skimage.filters',public),('scipy',scipy),('scipy.fftpack',scipy.fftpack),('numpy.fft',fft)):
+        monkeypatch.setitem(sys.modules,name,module)
+    with pytest.raises(RuntimeError,match='inert operation failed'):
+        with p.deny_upstream(types.SimpleNamespace(FFT_ENTRIES={'fftn'}),original,kind):
+            with pytest.raises(AssertionError,match='provider forbidden'):getattr(original,helpers[0])()
+            with pytest.raises(AssertionError,match='provider forbidden'):fft.fftn()
+            raise RuntimeError('inert operation failed')
+    assert all(getattr(original,n) is sentinel for n in helpers) and fft.fftn is sentinel
+    assert Filter.__call__ is sentinel and Filter._prepare is sentinel
+
+
 def test_pre_candidate_boundary_refs_are_fixed_and_independent():
     model=p.load('metadata_angle_model',ROOT/'tools/fft_angle_contract.py');ns=set(model.DENOMINATORS)
     for b in range(1,65):ns.update(n for d in (-2,-1,0,1,2) if 1<=(n:=(1<<b)+d)<1<<64)
