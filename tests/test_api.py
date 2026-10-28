@@ -42,7 +42,8 @@ VALUE_CASES = [
     (native, original, name, dtype, shape)
     for native, original, name in FUNCTIONS
     # Shape constructors use one descriptor carrier, not image dtype cases.
-    for dtype in ((np.float64,) if native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel')
+    for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
+                  or (native is xx.measure and name == 'approximate_polygon')
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in LEVEL_SET_FUNCTIONS
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))

@@ -33079,13 +33079,13 @@
       "depends_on": [
         "montage-shared"
       ],
-      "state": "measuring",
+      "state": "measured",
       "source_merged": false,
       "freeze_sha": "6fa8b9dafb3d42a05c7427040b0989b30d01a15a",
       "freeze_utc": "2026-10-28T19:54:15.637024Z",
       "deadline_utc": "2026-10-28T21:54:15.637024Z",
       "variant_limit": 1,
-      "scope": "Genuine pair admitted:172wheel81SDK,8238focused1443smoke27timingsskipped; all13deps/Python/publicheaders unchanged. Only Montage object plus new SIMD object differ. Root single fixed ABBA dispatch live; no timing outcome or source merge yet.",
+      "scope": "Closed single variant DISCARD; target11.7x direct and originalwins bothpasses, global1.311x direct/1.315xnormalized, but RGB-first .857/.859 fails .97 control floors. All504samples and every perpass regression retained. No source merge/retune/rerun.",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -33111,18 +33111,25 @@
       },
       "measurement": {
         "run": 40761382968,
-        "controller": "827d5026f60441046036be91be2e211d079b1771",
         "root_POSTs": 1,
-        "raw_samples_expected": 504,
-        "decision": "pending"
-      }
+        "raw_samples": 504,
+        "decision": "DISCARD",
+        "direct_gain": 1.3108615812946642,
+        "normalized_gain": 1.3154892124932902,
+        "candidate_original": 1.633641020788668,
+        "publication": "benchmarks/montage-stride2-simd-same-host.json",
+        "publication_sha256": "4e2bc59c7d79979ab942b52717559769695f4d989c1c438e4bb0555a30307938",
+        "root_review": {
+          "path": "build/montage-stride2-simd-same-host-v1/root-recomputation.json",
+          "sha256": "2dca392565a5b755dcc49179560cd72697993ccaa696f4afd1be700f085a6079"
+        }
+      },
+      "decision": "DISCARD"
     },
     {
       "id": "approximate-polygon-reference",
       "kind": "contract",
-      "apis": [
-        "measure.approximate_polygon"
-      ],
+      "apis": [],
       "owner": "profile_candidate_audit",
       "branch": "main",
       "base_sha": "09f4b8040a63d87593da2e3aa383f060dbe0a0c4",
@@ -33145,7 +33152,206 @@
           },
           "passing_contract_checks": 120
         }
+      },
+      "target_apis": [
+        "measure.approximate_polygon"
+      ]
+    },
+    {
+      "id": "approximate-polygon-native",
+      "kind": "native",
+      "apis": [],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "src/approximate_polygon.cpp",
+        "src/simd_approximate_polygon_avx2.cpp",
+        "include/skimagexx/approximate_polygon.hpp",
+        "tests/test_approximate_polygon_native.cpp"
+      ],
+      "depends_on": [
+        "approximate-polygon-reference"
+      ],
+      "dependency_requirements": {
+        "approximate-polygon-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "51eac357937cb64b1156653a32699274a07624ae",
+          "manifest": {
+            "path": "build/worktrees/approximate-polygon-native-v1/build/native-v3/handoff.json",
+            "sha256": "d7c7e076e879c96046eca137acf3dbf2d12898177fd7fa64cc717e82a9178261"
+          },
+          "native_contract_checks": 157428,
+          "native_pending": 0
+        }
+      },
+      "scope": "Six modes each26238 groupedchecks/1014calls,48 savedf64records+analytic/refusal/callbackcontrols; byteidentical streams. Real262147point workers4 control, callback callerthread and AVX2 codegen verified. Portable driver setup correction only; production unchanged."
+    },
+    {
+      "id": "approximate-polygon-frontend",
+      "kind": "frontend",
+      "apis": [],
+      "owner": "blur_integration_resume",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "src/bind_approximate_polygon.cpp",
+        "python/skimagexx/_approximate_polygon.py",
+        "tests/test_approximate_polygon_pipeline.py"
+      ],
+      "depends_on": [
+        "approximate-polygon-native"
+      ],
+      "dependency_requirements": {
+        "approximate-polygon-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "b9711b9975d43bb0fc4718d7471de29412e698f9",
+          "manifest": {
+            "path": "build/worktrees/approximate-polygon-frontend-v1/build/component-v1/handoff.json",
+            "sha256": "001d741203f6bb44e138ea3d19d0c3058e53d0475deb869e3b51875cd438cc1f"
+          },
+          "native_contract_checks": 528,
+          "native_pending": 0
+        }
+      },
+      "scope": "Four private modes first numerical attempt:528checks,480 exact frozen observations,192 actual builtin/native-result acceptances. No whole-original forwarding or extra captures."
+    },
+    {
+      "id": "approximate-polygon-shared",
+      "kind": "integration",
+      "apis": [
+        "measure.approximate_polygon"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/measure.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_approximate_polygon_integration.py"
+      ],
+      "depends_on": [
+        "approximate-polygon-native",
+        "approximate-polygon-frontend"
+      ],
+      "dependency_requirements": {
+        "approximate-polygon-native": {
+          "evidence_scope": "native_private"
+        },
+        "approximate-polygon-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "160427e353d336d8143ff7550760269c873c4555",
+          "manifest": {
+            "path": "build/worktrees/approximate-polygon-shared-v1/build/public-v1/handoff.json",
+            "sha256": "de3e89a8cff6eb59f8068072e119caa094a14c60e4ea71d4f0494f5bed6715c1"
+          },
+          "native_contract_checks": 572,
+          "native_pending": 0
+        }
+      },
+      "scope": "Four public modes first numerical attempt:572checks,480 exact observations,192 registered native accepts+64 independent default accepts. Source174wheel82SDK,246image+3metadata. Actual5193/1445 collection only; genuine product/performance pending.",
+      "public_registration": true,
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/approximate-installed-sdk-component-v1/handoff.json",
+          "sha256": "65edd49249a435ff2d87f19988b0f1fee9d957173f8cab257de4ddcb3fd5207d"
+        },
+        "SDK_members": 82,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled SDK82 from unchanged genuineSDK81+newheader/mathobjects, not genuine current or26families."
       }
+    },
+    {
+      "id": "approximate-polygon-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "measure.approximate_polygon"
+      ],
+      "owner": "blur_integration_resume",
+      "branch": "main",
+      "state": "performance_pending",
+      "owns": [
+        ".github/workflows/approximate-polygon-initial.yml"
+      ],
+      "depends_on": [
+        "approximate-polygon-shared"
+      ],
+      "dependency_requirements": {
+        "approximate-polygon-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "scope": "Nine frozen geometry/layout workloads,126samples,oneworker. Finalharness518c2568/contract2d4ce2b9 fixed before calls; controller73inert+root73CIguards passed. Genuine prepare-only artifact required before isolated initial timing."
+    },
+    {
+      "id": "montage-wrapper-simd-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/montage-wrapper-simd-v1",
+      "base_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+      "state": "implementing",
+      "source_merged": false,
+      "owns": [
+        "src/montage.cpp",
+        "src/montage_dispatch.cpp",
+        "src/montage_dispatch.hpp",
+        "src/simd_montage_avx2.cpp",
+        "tests/test_montage_native.cpp",
+        "CMakeLists.txt",
+        "coverage/contracts/montage-wrapper-simd-candidate.json"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "freeze_sha": "5e2515944f911e5d5b1c2c0ffc3279da2134aeb7",
+      "freeze_utc": "2026-10-28T20:35:00.116019Z",
+      "deadline_utc": "2026-10-28T22:35:00.116019Z",
+      "scope": "New separate wrapper variant, old generic definition rename only/body exact; public C++ entry optimized, header/binder/Python unchanged. Strict oldgeneric entry+workers machine-code equivalence after symbol normalization required beforetiming; stop onfailure. Prior fixed504sample gates plus RGB eachpass direct+normalized floor.97. Root dispatch only, no local timing."
+    },
+    {
+      "id": "subdivide-polygon-reference",
+      "kind": "contract",
+      "apis": [
+        "measure.subdivide_polygon"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "contract/subdivide-polygon-v1",
+      "base_sha": "8413526a3e9148d1a586f583369b4d22ffaae206",
+      "state": "contracting",
+      "source_merged": false,
+      "owns": [
+        "tests/subdivide_polygon_contract.py",
+        "tests/test_subdivide_polygon_public.py",
+        "coverage/contracts/subdivide-polygon.json"
+      ],
+      "depends_on": [],
+      "scope": "Prospective60cases/max129input512outputpoints,degrees1..7 and fullconvolution semantics;64 fixture/observer checks perprofile. ZERO target original calls; rootreview/capture still required. No native implementation or parity acceptance."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -33405,7 +33611,6 @@
     "measure.regionprops",
     "measure.regionprops_table",
     "measure.shannon_entropy",
-    "measure.subdivide_polygon",
     "metrics.adapted_rand_error",
     "metrics.contingency_table",
     "metrics.hausdorff_distance",
@@ -33819,12 +34024,12 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 245,
+    "native_partial_image_names": 246,
     "metadata_names": 3,
-    "upstream_only_names": 223,
+    "upstream_only_names": 222,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current source:245 native-partial images,3 metadata,5 partial classes,1 exception,223 upstream-only of477. Exact4e/run40710464380 remains latest full acceptance at241. New constructors/SDK81 have scoped component proof; genuine preparation and timing pending.",
+    "note": "Current source246 image paths/3metadata/5partialclasses/1exception/222upstream-only of477. Exact4e/run40710464380 stays latest full241 qualification. Constructors have genuine minimum+isolated12case evidence; polygon has six native modes/private528/public572/assembledSDK82 proof, pending genuine release/performance.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 241
@@ -33852,19 +34057,19 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "blur_benchmark": [
-        "montage-stride2-simd-optimization"
+        "montage-wrapper-simd-optimization"
       ],
       "profile_candidate_audit": [
-        "approximate-polygon-reference"
+        "subdivide-polygon-reference"
       ],
       "blur_integration_resume": [
-        "rolling-ball-kernels-measurement"
+        "approximate-polygon-measurement"
       ]
     },
     "current_three_agent_packets": {
-      "blur_benchmark": "montage-stride2-simd-optimization",
-      "profile_candidate_audit": "approximate-polygon-reference",
-      "blur_integration_resume": "rolling-ball-kernels-measurement"
+      "blur_benchmark": "montage-wrapper-simd-optimization",
+      "profile_candidate_audit": "subdivide-polygon-reference",
+      "blur_integration_resume": "approximate-polygon-measurement"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

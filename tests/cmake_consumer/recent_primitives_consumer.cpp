@@ -9,6 +9,7 @@
 #include <skimagexx/profile_line.hpp>
 #include <skimagexx/montage.hpp>
 #include <skimagexx/rolling_ball_kernels.hpp>
+#include <skimagexx/approximate_polygon.hpp>
 #include <skimagexx/image.hpp>
 #include <array>
 #include <cfenv>
@@ -22,6 +23,13 @@ namespace {
 void check(bool value){if(!value)throw std::runtime_error("installed recent primitive mismatch");}
 void stages(int workers){
     const auto global=get_num_threads(),rounding=std::fegetround(),flags=std::fetestexcept(FE_ALL_EXCEPT);
+    const double polygon_points[]={0.,0.,1.,1.,0.,2.};
+    const ApproximatePolygonInput polygon{polygon_points,3,2,1};
+    std::array<std::uint8_t,3> polygon_keep{};std::array<double,3> polygon_distances{};
+    check(approximate_polygon_select(polygon,1.,polygon_keep.data(),polygon_distances.data(),workers));
+    check((polygon_keep==std::array<std::uint8_t,3>{1,0,1}));
+    check(approximate_polygon_select(polygon,0.5,polygon_keep.data(),polygon_distances.data(),workers));
+    check((polygon_keep==std::array<std::uint8_t,3>{1,1,1}));
     const RegularSeedsAxis grid_axes[]={{0,2,2,3},{1,1,2,1}};
     const RegularSeedsGrid grid{grid_axes,2,4,12};std::array<std::uint32_t,12> seeds;
     seeds.fill(99);regular_seeds_assign(grid,seeds.data(),RegularSeedsType::u32,workers);

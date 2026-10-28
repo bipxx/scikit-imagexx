@@ -15,7 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error
-from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error
+from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -158,6 +158,10 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.approximate_polygon' in apis:
+        provider_frontiers['measure.approximate_polygon'] = ('Full native RDP selection with NumPy scalar trig and original-coordinate gather providers; '
+            'default coordinates use row indices and the first image column. Float64 carrier only; '
+            'benchmarks/approximate_polygon.py is the canonical geometry/layout cohort.')
     for api in ROLLING_KERNEL_FUNCTIONS:
         if api in apis:
             provider_frontiers[api] = ('Geometry constructor: image shape supplies radius/rank or requested axes; '
@@ -269,7 +273,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api in ROLLING_KERNEL_FUNCTIONS:
+                    if api == 'measure.approximate_polygon':
+                        error = approximate_polygon_default_error(data,actual,expected)
+                    elif api in ROLLING_KERNEL_FUNCTIONS:
                         error = rolling_kernel_default_error(api,data.shape,actual,expected)
                     elif api == 'util.montage':
                         error = montage_default_error(data,actual,expected)

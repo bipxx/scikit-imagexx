@@ -213,7 +213,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/unique_rows.py --threads 1 --repeat 7 --output build/ci-unique-rows.json',
         'python benchmarks/regular_seeds.py --threads 1 --repeat 7 --output build/ci-regular-seeds.json',
         'python benchmarks/montage.py --threads 1 --repeat 7 --output build/ci-montage.json',
-        'python benchmarks/rolling_ball_kernels.py --threads 1 --repeat 7 --output build/ci-rolling-ball-kernels.json']
+        'python benchmarks/rolling_ball_kernels.py --threads 1 --repeat 7 --output build/ci-rolling-ball-kernels.json',
+        'python benchmarks/approximate_polygon.py --threads 1 --repeat 7 --output build/ci-approximate-polygon.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -492,7 +493,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 27 and all(condition in step for step in timed)
+    assert len(timed) == 28 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -508,8 +509,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 27 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/rolling_ball_kernels.py ' in timed[-1]
+    assert len(timed) == 28 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/approximate_polygon.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -530,6 +531,7 @@ def test_measure_contracts_precede_freeze(stem):
 
 
 @pytest.mark.parametrize('api,checker_name', (('measure.perimeter_crofton', 'crofton_default_error'),
+                                             ('measure.approximate_polygon', 'approximate_polygon_default_error'),
                                              ('measure.perimeter', 'perimeter_default_error'),
                                              ('measure.euler_number', 'euler_default_error'),
                                              ('measure.blur_effect', 'blur_default_error'),
@@ -607,8 +609,8 @@ def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
         assert command.count('tests/test_map_array_pipeline.py')==1
         assert 'public-'+mode+'.xml' in command
     assert workflow.count('tests/test_regular_seeds_public.py tests/test_regular_seeds_pipeline.py') == 2
-    assert 'assert len(cases) == 4918' in workflow
-    assert 'len(native) == 248' in workflow and 'assert expected == 1443' in workflow
+    assert 'assert len(cases) == 5193' in workflow
+    assert 'len(native) == 249' in workflow and 'assert expected == 1445' in workflow
     contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
     assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 
@@ -673,3 +675,15 @@ def test_rolling_kernel_benchmark_uses_exact_inf_aware_checker(api):
     timer = next(n for n in ast.walk(main) if isinstance(n, ast.Call)
                  and isinstance(n.func, ast.Name) and n.func.id == 'measure')
     assert branch.lineno < timer.lineno
+
+
+def test_polygon_registered_and_owned_pipeline_gates_precede_freeze():
+    preparation = jobs((ROOT / '.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal', 'scalar'):
+        command = ('python -m pytest -q tests/test_approximate_polygon_integration.py '
+                   'tests/test_approximate_polygon_pipeline.py --junitxml=build/ci-artifacts/'
+                   'approximate-polygon-' + mode + '.xml')
+        assert preparation.count(command) == 1
+        assert preparation.index(command) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.split('approximate-polygon-scalar.xml', 1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")

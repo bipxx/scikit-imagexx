@@ -5415,11 +5415,13 @@
       "api": "measure.approximate_polygon",
       "kind": "callable",
       "signature": "(coords, tolerance)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_approximate_polygon_integration.py::test_polygon_registered_public_frozen_contract",
+      "benchmark": "benchmarks/approximate_polygon.py"
     },
     {
       "api": "measure.block_reduce",

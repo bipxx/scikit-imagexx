@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current245",
+  "scope": "current246",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -452,7 +452,8 @@
     "util.map_array",
     "util.montage",
     "util.regular_seeds",
-    "util.unique_rows"
+    "util.unique_rows",
+    "measure.approximate_polygon"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -501,7 +502,8 @@
     "util.regular_seeds": "tests/test_regular_seeds_public.py",
     "util.montage": "tests/test_montage_integration.py",
     "restoration.ball_kernel": "tests/test_rolling_ball_kernels_integration.py",
-    "restoration.ellipsoid_kernel": "tests/test_rolling_ball_kernels_integration.py"
+    "restoration.ellipsoid_kernel": "tests/test_rolling_ball_kernels_integration.py",
+    "measure.approximate_polygon": "tests/test_approximate_polygon_integration.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -549,7 +551,9 @@
     "tests/test_montage_pipeline.py",
     "tests/test_montage_integration.py",
     "tests/test_rolling_ball_kernels_integration.py",
-    "tests/test_rolling_ball_kernels_pipeline.py"
+    "tests/test_rolling_ball_kernels_pipeline.py",
+    "tests/test_approximate_polygon_integration.py",
+    "tests/test_approximate_polygon_pipeline.py"
   ],
   "SDK_scope": "current26 required installed clients (23 legacy plus colocalization, footprint_shapes and recent prepared primitives); source readiness is not qualification acceptance",
   "required_client_families": [
@@ -569,6 +573,7 @@
     "include/skimagexx/uniform_filter.hpp",
     "include/skimagexx/profile_line.hpp",
     "include/skimagexx/montage.hpp",
-    "include/skimagexx/rolling_ball_kernels.hpp"
+    "include/skimagexx/rolling_ball_kernels.hpp",
+    "include/skimagexx/approximate_polygon.hpp"
   ]
 }

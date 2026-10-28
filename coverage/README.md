@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source registers 245 partial image APIs, 3 metadata functions and 5 partial native classes. Ball and ellipsoid constructors add owned reductions, square roots, scaling and masks after the prior color, filter, threshold, morphology and geometry increments. Current source requires 172 wheel files and 81 SDK files; component checks and source readiness are separate from genuine product qualification and measured performance. See the [fast-run guide](FAST_RUN.md) for current evidence and provider partitions.
+Phase-2 source registers 246 partial image APIs, 3 metadata functions and 5 partial native classes. Polygon approximation adds owned RDP selection and SIMD distances after ball/ellipsoid constructors after the prior color, filter, threshold, morphology and geometry increments. Current source requires 174 wheel files and 82 SDK files; component checks and source readiness are separate from genuine product qualification and measured performance. See the [fast-run guide](FAST_RUN.md) for current evidence and provider partitions.
 
-Latest qualified product: `4e657ee64fb71e4d707d32e9539fdb4d7cc528af`, Actions run `40710464380`: 241 image APIs across four profiles, 895,864 public XML checks with no failures, errors or skips, 200 installed-SDK checks and three Release products. The later 245-API source and SDK changes require fresh qualification. This remains partial per-function scope, not full API parity or library-wide performance acceptance.
+Latest qualified product: `4e657ee64fb71e4d707d32e9539fdb4d7cc528af`, Actions run `40710464380`: 241 image APIs across four profiles, 895,864 public XML checks with no failures, errors or skips, 200 installed-SDK checks and three Release products. The later 246-API source and SDK changes require fresh qualification. This remains partial per-function scope, not full API parity or library-wide performance acceptance.
 
-477 public callable names inventoried in 20 modules; 245 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 246 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -298,7 +298,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.EllipseModel` | upstream-only | pending | pending |
 | `measure.LineModelND` | upstream-only | pending | pending |
 | `measure.RansacModelProtocol` | upstream-only | pending | pending |
-| `measure.approximate_polygon` | upstream-only | pending | pending |
+| `measure.approximate_polygon` | native-partial | yes (partial input contract) | yes |
 | `measure.block_reduce` | native-partial | yes (partial input contract) | yes |
 | `measure.blur_effect` | native-partial | yes (partial input contract) | yes |
 | `measure.centroid` | native-partial | yes (partial input contract) | yes |

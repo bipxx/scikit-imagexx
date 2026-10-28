@@ -822,9 +822,9 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current245', 172, 81, 26)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current246', 174, 82, 26)
     # Historical literal envelopes remain independently closed.
-    legacy=p.qualification_scope_text(text.replace("CURRENT_PRODUCT_SCOPE = 'current245'\n",''))
+    legacy=p.qualification_scope_text(text.replace("CURRENT_PRODUCT_SCOPE = 'current246'\n",''))
     assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
     snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
     with nmi_source_archive(nmi_source_records) as archive:
@@ -935,20 +935,20 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
-def test_current_stager_scope_uses_source_closure_and_exact245_registry(profile):
+def test_current_stager_scope_uses_source_closure_and_exact246_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current245' and scope['members']==172 and scope['sdk']==81
-    assert scope['image_count']==245 and scope['metadata_count']==3 and len(scope['functions'])==248
+    assert scope['name']=='current246' and scope['members']==174 and scope['sdk']==82
+    assert scope['image_count']==246 and scope['metadata_count']==3 and len(scope['functions'])==249
     assert len(scope['families'])==26 and 'current26 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
     text=(ROOT/'tools/public_qualification.py').read_text()
     with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
 
 
-def test_current_stager_rejects_old_scope_claim_with_current245_source():
+def test_current_stager_rejects_old_scope_claim_with_current246_source():
     text=(ROOT/'tools/public_qualification.py').read_text(encoding='utf-8')
-    assert p.CURRENT_PRODUCT_SCOPE=='current245'
-    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current245'", "CURRENT_PRODUCT_SCOPE = 'current240'")
+    assert p.CURRENT_PRODUCT_SCOPE=='current246'
+    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current246'", "CURRENT_PRODUCT_SCOPE = 'current240'")
     assert stale!=text
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for f in (ROOT/prefix).rglob('*') if f.is_file()]
@@ -961,7 +961,7 @@ def test_current_stager_never_bypasses_historical_source_guards(guard):
     class NoSource:
         def read(self,*args):raise RuntimeError('inherited source guard reached')
     with pytest.raises((RuntimeError,KeyError)):
-        getattr(p,guard)(NoSource(),{},dict(name='current245'))
+        getattr(p,guard)(NoSource(),{},dict(name='current246'))
 
 
 @pytest.mark.parametrize('declaration',("FAMILIES + ('colocalization',)", "FAMILIES + ('colocalization','footprint_shapes')", "FAMILIES + ('colocalization','footprint_shapes','unmapped')", "FAMILIES + ['colocalization','footprint_shapes']", "('replacement',)"))
